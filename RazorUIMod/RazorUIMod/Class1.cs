@@ -15,6 +15,31 @@ using System.Drawing.Drawing2D;
 
 namespace RazorUIMod
 {
+    public class XCheckBox : CheckBox
+    {
+        public XCheckBox()
+        {
+            this.SetStyle(ControlStyles.UserPaint, true);
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+        }
+
+        protected override void OnPaint(PaintEventArgs pevent)
+        {
+            base.OnPaint(pevent);
+            pevent.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+            pevent.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            pevent.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            if (this.Checked)
+            {
+                pevent.Graphics.DrawImage(Properties.Resources.XCheckBox_ON, 0, 1, 16, 17);
+            }
+            else
+            {
+                pevent.Graphics.DrawImage(Properties.Resources.XCheckBox_OFF, 0, 1, 16, 17);
+            }
+        }
+    }
+
     public partial class XButton : Button
     {
         #region Fields

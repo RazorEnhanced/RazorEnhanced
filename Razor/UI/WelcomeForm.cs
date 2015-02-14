@@ -19,9 +19,10 @@ namespace Assistant
 
 	public class WelcomeForm : System.Windows.Forms.Form
 	{
+
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox clientList;
-		private System.Windows.Forms.CheckBox patchEncy;
+		private RazorUIMod.XCheckBox patchEncy;
         private RazorUIMod.XButton okay;
         private RazorUIMod.XButton quit;
 		private System.Windows.Forms.Label label3;
@@ -38,11 +39,11 @@ namespace Assistant
 
         private RazorUIMod.XButton browse;
         private RazorUIMod.XButton makeDef;
-		
-		private System.Windows.Forms.CheckBox showAtStart;
+
+        private RazorUIMod.XCheckBox showAtStart;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ComboBox langSel;
-		private System.Windows.Forms.CheckBox useEnc;
+		private RazorUIMod.XCheckBox useEnc;
         private RazorUIMod.XButton dataBrowse;
 		private System.Windows.Forms.ComboBox dataDir;
 		private System.Windows.Forms.GroupBox groupBox3;
@@ -84,21 +85,21 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorUIMod.Colortable colortable1 = new RazorUIMod.Colortable();
+            RazorUIMod.Office2010Blue office2010Blue1 = new RazorUIMod.Office2010Blue();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             this.label1 = new System.Windows.Forms.Label();
             this.clientList = new System.Windows.Forms.ComboBox();
             this.browse = new RazorUIMod.XButton();
-            this.patchEncy = new System.Windows.Forms.CheckBox();
+            this.patchEncy = new RazorUIMod.XCheckBox();
             this.okay = new RazorUIMod.XButton();
             this.quit = new RazorUIMod.XButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.showAtStart = new System.Windows.Forms.CheckBox();
+            this.showAtStart = new RazorUIMod.XCheckBox();
             this.serverList = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.port = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.useEnc = new System.Windows.Forms.CheckBox();
+            this.useEnc = new RazorUIMod.XCheckBox();
             this.makeDef = new RazorUIMod.XButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
@@ -130,40 +131,65 @@ namespace Assistant
             // 
             // browse
             // 
+            office2010Blue1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010Blue1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010Blue1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010Blue1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010Blue1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010Blue1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010Blue1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue1.TextColor = System.Drawing.Color.White;
+            this.browse.ColorTable = office2010Blue1;
             this.browse.Location = new System.Drawing.Point(329, 18);
             this.browse.Name = "browse";
             this.browse.Size = new System.Drawing.Size(77, 24);
             this.browse.TabIndex = 2;
             this.browse.Text = "Browse...";
+            this.browse.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
             this.browse.Click += new System.EventHandler(this.browse_Click);
             // 
             // patchEncy
             // 
+            this.patchEncy.BackColor = System.Drawing.SystemColors.Control;
             this.patchEncy.Location = new System.Drawing.Point(10, 48);
             this.patchEncy.Name = "patchEncy";
             this.patchEncy.Size = new System.Drawing.Size(168, 24);
             this.patchEncy.TabIndex = 3;
             this.patchEncy.Text = "Patch client encryption";
+            this.patchEncy.UseVisualStyleBackColor = true;
             this.patchEncy.CheckedChanged += new System.EventHandler(this.patchEncy_CheckedChanged);
             // 
             // okay
             // 
+            this.okay.ColorTable = office2010Blue1;
             this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.okay.Location = new System.Drawing.Point(10, 263);
             this.okay.Name = "okay";
             this.okay.Size = new System.Drawing.Size(86, 23);
             this.okay.TabIndex = 6;
             this.okay.Text = "&Okay";
+            this.okay.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
             this.okay.Click += new System.EventHandler(this.okay_Click);
             // 
             // quit
             // 
+            this.quit.ColorTable = office2010Blue1;
             this.quit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.quit.Location = new System.Drawing.Point(106, 263);
             this.quit.Name = "quit";
             this.quit.Size = new System.Drawing.Size(86, 23);
             this.quit.TabIndex = 7;
             this.quit.Text = "&Quit";
+            this.quit.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
             this.quit.Click += new System.EventHandler(this.quit_Click);
             // 
             // label3
@@ -234,11 +260,13 @@ namespace Assistant
             // 
             // makeDef
             // 
+            this.makeDef.ColorTable = office2010Blue1;
             this.makeDef.Location = new System.Drawing.Point(214, 67);
             this.makeDef.Name = "makeDef";
             this.makeDef.Size = new System.Drawing.Size(192, 23);
             this.makeDef.TabIndex = 4;
             this.makeDef.Text = "Make These Settings Default";
+            this.makeDef.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
             this.makeDef.Click += new System.EventHandler(this.makeDef_Click);
             // 
             // groupBox2
@@ -280,24 +308,7 @@ namespace Assistant
             // 
             // dataBrowse
             // 
-            colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable1.TextColor = System.Drawing.Color.White;
-            this.dataBrowse.ColorTable = colortable1;
+            this.dataBrowse.ColorTable = office2010Blue1;
             this.dataBrowse.Location = new System.Drawing.Point(329, 23);
             this.dataBrowse.Name = "dataBrowse";
             this.dataBrowse.Size = new System.Drawing.Size(77, 23);
