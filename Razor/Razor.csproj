@@ -379,6 +379,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RazorUIMod\RazorUIMod\RazorUIMod.csproj">
+      <Project>{d670b613-7706-4fb5-878c-1e2b5b254607}</Project>
+      <Name>RazorUIMod</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UltimaSDK\Ultima.csproj">
       <Project>{5d66ace6-b2a4-400f-b5a5-24525959ac5c}</Project>
       <Name>Ultima</Name>
