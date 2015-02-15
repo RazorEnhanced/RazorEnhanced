@@ -124,4 +124,7 @@
   <data name="XCheckBox_ON" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\XCheckBox.ON.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="XComboBox_Arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\XComboBox.Arrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

@@ -15,6 +15,107 @@ using System.Drawing.Drawing2D;
 
 namespace RazorUIMod
 {
+    public class XTextBox : UserControl
+    {
+        TextBox textBox;
+
+        public XTextBox()
+        {
+            textBox = new TextBox()
+            {
+                BorderStyle = BorderStyle.FixedSingle,
+                Location = new Point(-1, -1),
+                Anchor = AnchorStyles.Top | AnchorStyles.Bottom |
+                         AnchorStyles.Left | AnchorStyles.Right
+            };
+            Control container = new ContainerControl()
+            {
+                Dock = DockStyle.Fill,
+                Padding = new Padding(-1)
+            };
+            container.Controls.Add(textBox);
+            this.Controls.Add(container);
+
+            DefaultBorderColor = Color.FromArgb(31, 72, 161);
+            FocusedBorderColor = Color.FromArgb(236, 199, 87);
+            BackColor = DefaultBorderColor;
+            Padding = new Padding(1);
+            Size = textBox.Size;
+        }
+
+
+        public Color DefaultBorderColor { get; set; }
+        public Color FocusedBorderColor { get; set; }
+
+        public override string Text
+        {
+            get { return textBox.Text; }
+            set { textBox.Text = value; }
+        }
+
+        protected override void OnEnter(EventArgs e)
+        {
+            BackColor = FocusedBorderColor;
+            base.OnEnter(e);
+        }
+
+        protected override void OnLeave(EventArgs e)
+        {
+            BackColor = DefaultBorderColor;
+            base.OnLeave(e);
+        }
+
+        protected override void SetBoundsCore(int x, int y,
+            int width, int height, BoundsSpecified specified)
+        {
+            base.SetBoundsCore(x, y, width, textBox.PreferredHeight, specified);
+        }
+    }
+    public class XComboBox : ComboBox
+    {
+        public XComboBox()
+        {
+            this.SetStyle(ControlStyles.UserPaint, true);
+        }
+
+        protected override void OnPaint(PaintEventArgs pevent)
+        {
+                base.OnPaint(pevent);
+                Pen Colore1Pen = new Pen(Color.FromArgb(31, 72, 161));
+                Colore1Pen.Width = 1;
+                Pen Colore2Pen = new Pen(Color.FromArgb(68, 135, 228));
+                Colore2Pen.Width = 1;
+
+                //Freccia selezione
+                pevent.Graphics.DrawImage(Properties.Resources.XComboBox_Arrow, Convert.ToInt32(DropDownWidth - 21), 2, 19, 24);
+                
+                //angoli
+                pevent.Graphics.DrawLine(Colore1Pen, 2, 0, 0, 2);
+                pevent.Graphics.DrawLine(Colore2Pen, 2, 1, 1, 2);
+
+                pevent.Graphics.DrawLine(Colore1Pen, 0, 25, 2, 27);
+                pevent.Graphics.DrawLine(Colore2Pen, 1, 25, 2, 26);
+
+                pevent.Graphics.DrawLine(Colore1Pen, Convert.ToInt32(DropDownWidth - 3), 0, DropDownWidth, 3);
+                pevent.Graphics.DrawLine(Colore2Pen, Convert.ToInt32(DropDownWidth - 3), 1, Convert.ToInt32(DropDownWidth - 2), 2);
+
+                pevent.Graphics.DrawLine(Colore1Pen, DropDownWidth, 24, 27, Convert.ToInt32(DropDownWidth - 3));
+                pevent.Graphics.DrawLine(Colore2Pen, Convert.ToInt32(DropDownWidth -1) , 24, 26, Convert.ToInt32(DropDownWidth - 3));
+
+                //Verticale sinistra e destra
+                pevent.Graphics.DrawLine(Colore1Pen, 0, 3, 0, 25);
+                pevent.Graphics.DrawLine(Colore2Pen, 1, 3, 1, 25);
+                pevent.Graphics.DrawLine(Colore1Pen, Convert.ToInt32(DropDownWidth - 1), 3, Convert.ToInt32(DropDownWidth - 1), 25);
+                pevent.Graphics.DrawLine(Colore2Pen, Convert.ToInt32(DropDownWidth - 2), 3, Convert.ToInt32(DropDownWidth - 2), 25);
+
+                //Orizzontale sopra e sotto
+                pevent.Graphics.DrawLine(Colore1Pen, 3, 0, Convert.ToInt32(DropDownWidth - 3), 0);
+                pevent.Graphics.DrawLine(Colore2Pen, 3, 1, Convert.ToInt32(DropDownWidth - 3), 1);
+
+                pevent.Graphics.DrawLine(Colore1Pen, 3, 27, Convert.ToInt32(DropDownWidth - 3), 27);
+                pevent.Graphics.DrawLine(Colore2Pen, 3, 26, Convert.ToInt32(DropDownWidth - 3), 26);
+        }
+    }
     public class XCheckBox : CheckBox
     {
         public XCheckBox()

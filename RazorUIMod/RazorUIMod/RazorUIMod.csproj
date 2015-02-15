@@ -58,10 +58,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\XCheckBox.ON.png" />
+    <EmbeddedResource Include="Resources\XCheckBox.OFF.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\XCheckBox.OFF.png" />
+    <EmbeddedResource Include="Resources\XComboBox.Arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XCheckBox.ON.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

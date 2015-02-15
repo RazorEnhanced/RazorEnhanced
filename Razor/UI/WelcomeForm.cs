@@ -21,14 +21,14 @@ namespace Assistant
 	{
 
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox clientList;
+        private RazorUIMod.XComboBox clientList;
 		private RazorUIMod.XCheckBox patchEncy;
         private RazorUIMod.XButton okay;
         private RazorUIMod.XButton quit;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ComboBox serverList;
+        private RazorUIMod.XComboBox serverList;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TextBox port;
+        private RazorUIMod.XTextBox port;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.OpenFileDialog openFile;
@@ -42,10 +42,10 @@ namespace Assistant
 
         private RazorUIMod.XCheckBox showAtStart;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.ComboBox langSel;
+        private RazorUIMod.XComboBox langSel;
 		private RazorUIMod.XCheckBox useEnc;
         private RazorUIMod.XButton dataBrowse;
-		private System.Windows.Forms.ComboBox dataDir;
+        private RazorUIMod.XComboBox dataDir;
 		private System.Windows.Forms.GroupBox groupBox3;
 
 		public string ClientPath{ get{ return m_ClientPath; } }
@@ -88,25 +88,25 @@ namespace Assistant
             RazorUIMod.Office2010Blue office2010Blue1 = new RazorUIMod.Office2010Blue();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             this.label1 = new System.Windows.Forms.Label();
-            this.clientList = new System.Windows.Forms.ComboBox();
+            this.clientList = new RazorUIMod.XComboBox();
             this.browse = new RazorUIMod.XButton();
             this.patchEncy = new RazorUIMod.XCheckBox();
             this.okay = new RazorUIMod.XButton();
             this.quit = new RazorUIMod.XButton();
             this.label3 = new System.Windows.Forms.Label();
             this.showAtStart = new RazorUIMod.XCheckBox();
-            this.serverList = new System.Windows.Forms.ComboBox();
+            this.serverList = new RazorUIMod.XComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.port = new System.Windows.Forms.TextBox();
+            this.port = new RazorUIMod.XTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.useEnc = new RazorUIMod.XCheckBox();
             this.makeDef = new RazorUIMod.XButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.label5 = new System.Windows.Forms.Label();
-            this.langSel = new System.Windows.Forms.ComboBox();
+            this.langSel = new RazorUIMod.XComboBox();
             this.dataBrowse = new RazorUIMod.XButton();
-            this.dataDir = new System.Windows.Forms.ComboBox();
+            this.dataDir = new RazorUIMod.XComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -124,9 +124,10 @@ namespace Assistant
             // clientList
             // 
             this.clientList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clientList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.clientList.Location = new System.Drawing.Point(92, 18);
             this.clientList.Name = "clientList";
-            this.clientList.Size = new System.Drawing.Size(231, 24);
+            this.clientList.Size = new System.Drawing.Size(231, 28);
             this.clientList.TabIndex = 1;
             // 
             // browse
@@ -151,7 +152,7 @@ namespace Assistant
             this.browse.ColorTable = office2010Blue1;
             this.browse.Location = new System.Drawing.Point(329, 18);
             this.browse.Name = "browse";
-            this.browse.Size = new System.Drawing.Size(77, 24);
+            this.browse.Size = new System.Drawing.Size(77, 28);
             this.browse.TabIndex = 2;
             this.browse.Text = "Browse...";
             this.browse.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
@@ -160,7 +161,7 @@ namespace Assistant
             // patchEncy
             // 
             this.patchEncy.BackColor = System.Drawing.SystemColors.Control;
-            this.patchEncy.Location = new System.Drawing.Point(10, 48);
+            this.patchEncy.Location = new System.Drawing.Point(10, 47);
             this.patchEncy.Name = "patchEncy";
             this.patchEncy.Size = new System.Drawing.Size(168, 24);
             this.patchEncy.TabIndex = 3;
@@ -213,7 +214,7 @@ namespace Assistant
             // 
             this.serverList.Location = new System.Drawing.Point(62, 18);
             this.serverList.Name = "serverList";
-            this.serverList.Size = new System.Drawing.Size(236, 24);
+            this.serverList.Size = new System.Drawing.Size(236, 28);
             this.serverList.TabIndex = 11;
             this.serverList.SelectedIndexChanged += new System.EventHandler(this.serverList_SelectedIndexChanged);
             this.serverList.TextChanged += new System.EventHandler(this.serverList_TextChanged);
@@ -228,8 +229,13 @@ namespace Assistant
             // 
             // port
             // 
-            this.port.Location = new System.Drawing.Point(355, 18);
+            this.port.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.port.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.port.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.port.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.port.Location = new System.Drawing.Point(356, 20);
             this.port.Name = "port";
+            this.port.Padding = new System.Windows.Forms.Padding(1);
             this.port.Size = new System.Drawing.Size(48, 22);
             this.port.TabIndex = 13;
             this.port.TextChanged += new System.EventHandler(this.port_TextChanged);
@@ -302,7 +308,7 @@ namespace Assistant
             this.langSel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.langSel.Location = new System.Drawing.Point(82, 226);
             this.langSel.Name = "langSel";
-            this.langSel.Size = new System.Drawing.Size(67, 24);
+            this.langSel.Size = new System.Drawing.Size(67, 28);
             this.langSel.TabIndex = 18;
             this.langSel.SelectedIndexChanged += new System.EventHandler(this.langSel_SelectedIndexChanged);
             // 
@@ -311,7 +317,7 @@ namespace Assistant
             this.dataBrowse.ColorTable = office2010Blue1;
             this.dataBrowse.Location = new System.Drawing.Point(329, 23);
             this.dataBrowse.Name = "dataBrowse";
-            this.dataBrowse.Size = new System.Drawing.Size(77, 23);
+            this.dataBrowse.Size = new System.Drawing.Size(77, 27);
             this.dataBrowse.TabIndex = 21;
             this.dataBrowse.Text = "Browse...";
             this.dataBrowse.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
@@ -321,7 +327,7 @@ namespace Assistant
             // 
             this.dataDir.Location = new System.Drawing.Point(10, 23);
             this.dataDir.Name = "dataDir";
-            this.dataDir.Size = new System.Drawing.Size(309, 24);
+            this.dataDir.Size = new System.Drawing.Size(309, 28);
             this.dataDir.TabIndex = 22;
             this.dataDir.SelectedIndexChanged += new System.EventHandler(this.dataDir_SelectedIndexChanged);
             this.dataDir.TextChanged += new System.EventHandler(this.dataDir_TextChanged);
@@ -362,7 +368,6 @@ namespace Assistant
             this.Load += new System.EventHandler(this.WelcomeForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
 
