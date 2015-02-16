@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
+using RazorEnhanced.UI;
 
 namespace Assistant
 {
@@ -21,15 +22,17 @@ namespace Assistant
 		private System.Windows.Forms.TextBox message;
 		private bool m_CanIgnore;
 
-		public MessageDialog( string title, string message ) : this( title, false, message )
+		public MessageDialog(string title, string message)
+			: this(title, false, message)
 		{
 		}
 
-		public MessageDialog( string title, bool ignorable, string message, params object[] msgArgs ) : this( title, ignorable, String.Format( message, msgArgs ) )
+		public MessageDialog(string title, bool ignorable, string message, params object[] msgArgs)
+			: this(title, ignorable, String.Format(message, msgArgs))
 		{
 		}
 
-		public MessageDialog( string title, bool ignorable, string message )
+		public MessageDialog(string title, bool ignorable, string message)
 		{
 			m_Title = title;
 			m_Message = message;
@@ -47,16 +50,16 @@ namespace Assistant
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		protected override void Dispose( bool disposing )
+		protected override void Dispose(bool disposing)
 		{
-			if( disposing )
+			if (disposing)
 			{
-				if(components != null)
+				if (components != null)
 				{
 					components.Dispose();
 				}
 			}
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 		}
 
 		#region Windows Form Designer generated code
@@ -66,46 +69,46 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.message = new System.Windows.Forms.TextBox();
-            this.okay = new RazorUIMod.XButton();
-            this.SuspendLayout();
-            // 
-            // message
-            // 
-            this.message.Location = new System.Drawing.Point(10, 9);
-            this.message.Multiline = true;
-            this.message.Name = "message";
-            this.message.ReadOnly = true;
-            this.message.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.message.Size = new System.Drawing.Size(662, 369);
-            this.message.TabIndex = 0;
-            // 
-            // okay
-            // 
-            this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okay.Location = new System.Drawing.Point(10, 388);
-            this.okay.Name = "okay";
-            this.okay.Size = new System.Drawing.Size(96, 27);
-            this.okay.TabIndex = 1;
-            this.okay.Text = "&Okay";
-            this.okay.Click += new System.EventHandler(this.okay_Click);
-            // 
-            // MessageDialog
-            // 
-            this.AcceptButton = this.okay;
-            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
-            this.ClientSize = new System.Drawing.Size(684, 424);
-            this.ControlBox = false;
-            this.Controls.Add(this.okay);
-            this.Controls.Add(this.message);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "MessageDialog";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Message";
-            this.Load += new System.EventHandler(this.MessageDialog_Load);
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			this.message = new System.Windows.Forms.TextBox();
+			this.okay = new XButton();
+			this.SuspendLayout();
+			// 
+			// message
+			// 
+			this.message.Location = new System.Drawing.Point(10, 9);
+			this.message.Multiline = true;
+			this.message.Name = "message";
+			this.message.ReadOnly = true;
+			this.message.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+			this.message.Size = new System.Drawing.Size(662, 369);
+			this.message.TabIndex = 0;
+			// 
+			// okay
+			// 
+			this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.okay.Location = new System.Drawing.Point(10, 388);
+			this.okay.Name = "okay";
+			this.okay.Size = new System.Drawing.Size(96, 27);
+			this.okay.TabIndex = 1;
+			this.okay.Text = "&Okay";
+			this.okay.Click += new System.EventHandler(this.okay_Click);
+			// 
+			// MessageDialog
+			// 
+			this.AcceptButton = this.okay;
+			this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+			this.ClientSize = new System.Drawing.Size(684, 424);
+			this.ControlBox = false;
+			this.Controls.Add(this.okay);
+			this.Controls.Add(this.message);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.Name = "MessageDialog";
+			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "Message";
+			this.Load += new System.EventHandler(this.MessageDialog_Load);
+			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 		#endregion
@@ -114,10 +117,10 @@ namespace Assistant
 		{
 			this.Text = m_Title;
 			this.message.Text = m_Message;
-			this.message.Select( 0, 0 );
+			this.message.Select(0, 0);
 			this.BringToFront();
 
-			if ( m_CanIgnore )
+			if (m_CanIgnore)
 				this.okay.Text = "&Ignore";
 		}
 

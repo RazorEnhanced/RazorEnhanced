@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Net;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using RazorEnhanced.UI;
 
 namespace Assistant
 {
@@ -21,14 +22,14 @@ namespace Assistant
 	{
 
 		private System.Windows.Forms.Label label1;
-        private RazorUIMod.XComboBox clientList;
-		private RazorUIMod.XCheckBox patchEncy;
-        private RazorUIMod.XButton okay;
-        private RazorUIMod.XButton quit;
+		private XComboBox clientList;
+		private XCheckBox patchEncy;
+		private XButton okay;
+		private XButton quit;
 		private System.Windows.Forms.Label label3;
-        private RazorUIMod.XComboBox serverList;
+		private XComboBox serverList;
 		private System.Windows.Forms.Label label4;
-        private RazorUIMod.XTextBox port;
+		private XTextBox port;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.OpenFileDialog openFile;
@@ -37,25 +38,25 @@ namespace Assistant
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-        private RazorUIMod.XButton browse;
-        private RazorUIMod.XButton makeDef;
+		private XButton browse;
+		private XButton makeDef;
 
-        private RazorUIMod.XCheckBox showAtStart;
+		private XCheckBox showAtStart;
 		private System.Windows.Forms.Label label5;
-        private RazorUIMod.XComboBox langSel;
-		private RazorUIMod.XCheckBox useEnc;
-        private RazorUIMod.XButton dataBrowse;
-        private RazorUIMod.XComboBox dataDir;
+		private XComboBox langSel;
+		private XCheckBox useEnc;
+		private XButton dataBrowse;
+		private XComboBox dataDir;
 		private System.Windows.Forms.GroupBox groupBox3;
 
-		public string ClientPath{ get{ return m_ClientPath; } }
-		public ClientLaunch Client{ get{ return m_Launch; } } 
-		public bool PatchEncryption{ get{ return m_PatchEncy; } }
-		public string DataDirectory{ get{ if ( m_DataDir == "" || m_DataDir == "(Auto Detect)" ) m_DataDir = null; return m_DataDir; } }
+		public string ClientPath { get { return m_ClientPath; } }
+		public ClientLaunch Client { get { return m_Launch; } }
+		public bool PatchEncryption { get { return m_PatchEncy; } }
+		public string DataDirectory { get { if (m_DataDir == "" || m_DataDir == "(Auto Detect)") m_DataDir = null; return m_DataDir; } }
 
 		private bool m_PatchEncy = false;
 		private string m_ClientPath = "";
-        private ClientLaunch m_Launch = ClientLaunch.Custom;
+		private ClientLaunch m_Launch = ClientLaunch.Custom;
 		private string m_DataDir = "";
 
 		public WelcomeForm()
@@ -66,16 +67,16 @@ namespace Assistant
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		protected override void Dispose( bool disposing )
+		protected override void Dispose(bool disposing)
 		{
-			if( disposing )
+			if (disposing)
 			{
-				if(components != null)
+				if (components != null)
 				{
 					components.Dispose();
 				}
 			}
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 		}
 
 		#region Windows Form Designer generated code
@@ -85,298 +86,299 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorUIMod.Office2010Blue office2010Blue1 = new RazorUIMod.Office2010Blue();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
-            this.label1 = new System.Windows.Forms.Label();
-            this.clientList = new RazorUIMod.XComboBox();
-            this.browse = new RazorUIMod.XButton();
-            this.patchEncy = new RazorUIMod.XCheckBox();
-            this.okay = new RazorUIMod.XButton();
-            this.quit = new RazorUIMod.XButton();
-            this.label3 = new System.Windows.Forms.Label();
-            this.showAtStart = new RazorUIMod.XCheckBox();
-            this.serverList = new RazorUIMod.XComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.port = new RazorUIMod.XTextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.useEnc = new RazorUIMod.XCheckBox();
-            this.makeDef = new RazorUIMod.XButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.openFile = new System.Windows.Forms.OpenFileDialog();
-            this.label5 = new System.Windows.Forms.Label();
-            this.langSel = new RazorUIMod.XComboBox();
-            this.dataBrowse = new RazorUIMod.XButton();
-            this.dataDir = new RazorUIMod.XComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(10, 23);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 19);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Load Client:";
-            // 
-            // clientList
-            // 
-            this.clientList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clientList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clientList.Location = new System.Drawing.Point(92, 18);
-            this.clientList.Name = "clientList";
-            this.clientList.Size = new System.Drawing.Size(231, 28);
-            this.clientList.TabIndex = 1;
-            // 
-            // browse
-            // 
-            office2010Blue1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010Blue1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010Blue1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010Blue1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010Blue1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010Blue1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010Blue1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue1.TextColor = System.Drawing.Color.White;
-            this.browse.ColorTable = office2010Blue1;
-            this.browse.Location = new System.Drawing.Point(329, 18);
-            this.browse.Name = "browse";
-            this.browse.Size = new System.Drawing.Size(77, 28);
-            this.browse.TabIndex = 2;
-            this.browse.Text = "Browse...";
-            this.browse.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.browse.Click += new System.EventHandler(this.browse_Click);
-            // 
-            // patchEncy
-            // 
-            this.patchEncy.BackColor = System.Drawing.SystemColors.Control;
-            this.patchEncy.Location = new System.Drawing.Point(10, 47);
-            this.patchEncy.Name = "patchEncy";
-            this.patchEncy.Size = new System.Drawing.Size(168, 24);
-            this.patchEncy.TabIndex = 3;
-            this.patchEncy.Text = "Patch client encryption";
-            this.patchEncy.UseVisualStyleBackColor = true;
-            this.patchEncy.CheckedChanged += new System.EventHandler(this.patchEncy_CheckedChanged);
-            // 
-            // okay
-            // 
-            this.okay.ColorTable = office2010Blue1;
-            this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okay.Location = new System.Drawing.Point(10, 263);
-            this.okay.Name = "okay";
-            this.okay.Size = new System.Drawing.Size(86, 23);
-            this.okay.TabIndex = 6;
-            this.okay.Text = "&Okay";
-            this.okay.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.okay.Click += new System.EventHandler(this.okay_Click);
-            // 
-            // quit
-            // 
-            this.quit.ColorTable = office2010Blue1;
-            this.quit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.quit.Location = new System.Drawing.Point(106, 263);
-            this.quit.Name = "quit";
-            this.quit.Size = new System.Drawing.Size(86, 23);
-            this.quit.TabIndex = 7;
-            this.quit.Text = "&Quit";
-            this.quit.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.quit.Click += new System.EventHandler(this.quit_Click);
-            // 
-            // label3
-            // 
-            this.label3.Location = new System.Drawing.Point(10, 23);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 19);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Server:";
-            // 
-            // showAtStart
-            // 
-            this.showAtStart.Location = new System.Drawing.Point(216, 263);
-            this.showAtStart.Name = "showAtStart";
-            this.showAtStart.Size = new System.Drawing.Size(202, 23);
-            this.showAtStart.TabIndex = 10;
-            this.showAtStart.Text = "Show this when Razor starts";
-            this.showAtStart.CheckedChanged += new System.EventHandler(this.showAtStart_CheckedChanged);
-            // 
-            // serverList
-            // 
-            this.serverList.Location = new System.Drawing.Point(62, 18);
-            this.serverList.Name = "serverList";
-            this.serverList.Size = new System.Drawing.Size(236, 28);
-            this.serverList.TabIndex = 11;
-            this.serverList.SelectedIndexChanged += new System.EventHandler(this.serverList_SelectedIndexChanged);
-            this.serverList.TextChanged += new System.EventHandler(this.serverList_TextChanged);
-            // 
-            // label4
-            // 
-            this.label4.Location = new System.Drawing.Point(312, 23);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(38, 19);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "Port:";
-            // 
-            // port
-            // 
-            this.port.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.port.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.port.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.port.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.port.Location = new System.Drawing.Point(356, 20);
-            this.port.Name = "port";
-            this.port.Padding = new System.Windows.Forms.Padding(1);
-            this.port.Size = new System.Drawing.Size(48, 22);
-            this.port.TabIndex = 13;
-            this.port.TextChanged += new System.EventHandler(this.port_TextChanged);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.useEnc);
-            this.groupBox1.Controls.Add(this.makeDef);
-            this.groupBox1.Controls.Add(this.browse);
-            this.groupBox1.Controls.Add(this.clientList);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.patchEncy);
-            this.groupBox1.Location = new System.Drawing.Point(5, 5);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(413, 97);
-            this.groupBox1.TabIndex = 14;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Client Options";
-            // 
-            // useEnc
-            // 
-            this.useEnc.Location = new System.Drawing.Point(10, 67);
-            this.useEnc.Name = "useEnc";
-            this.useEnc.Size = new System.Drawing.Size(168, 23);
-            this.useEnc.TabIndex = 5;
-            this.useEnc.Text = "Use OSI Encryption";
-            this.useEnc.CheckedChanged += new System.EventHandler(this.useEnc_CheckedChanged);
-            // 
-            // makeDef
-            // 
-            this.makeDef.ColorTable = office2010Blue1;
-            this.makeDef.Location = new System.Drawing.Point(214, 67);
-            this.makeDef.Name = "makeDef";
-            this.makeDef.Size = new System.Drawing.Size(192, 23);
-            this.makeDef.TabIndex = 4;
-            this.makeDef.Text = "Make These Settings Default";
-            this.makeDef.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.makeDef.Click += new System.EventHandler(this.makeDef_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.port);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.serverList);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Location = new System.Drawing.Point(5, 166);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(413, 56);
-            this.groupBox2.TabIndex = 15;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Server";
-            // 
-            // openFile
-            // 
-            this.openFile.DefaultExt = "exe";
-            this.openFile.FileName = "client.exe";
-            this.openFile.Filter = "Executable Files|*.exe";
-            this.openFile.Title = "Select Client";
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(10, 231);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 18);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Language:";
-            // 
-            // langSel
-            // 
-            this.langSel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.langSel.Location = new System.Drawing.Point(82, 226);
-            this.langSel.Name = "langSel";
-            this.langSel.Size = new System.Drawing.Size(67, 28);
-            this.langSel.TabIndex = 18;
-            this.langSel.SelectedIndexChanged += new System.EventHandler(this.langSel_SelectedIndexChanged);
-            // 
-            // dataBrowse
-            // 
-            this.dataBrowse.ColorTable = office2010Blue1;
-            this.dataBrowse.Location = new System.Drawing.Point(329, 23);
-            this.dataBrowse.Name = "dataBrowse";
-            this.dataBrowse.Size = new System.Drawing.Size(77, 27);
-            this.dataBrowse.TabIndex = 21;
-            this.dataBrowse.Text = "Browse...";
-            this.dataBrowse.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.dataBrowse.Click += new System.EventHandler(this.dataBrowse_Click);
-            // 
-            // dataDir
-            // 
-            this.dataDir.Location = new System.Drawing.Point(10, 23);
-            this.dataDir.Name = "dataDir";
-            this.dataDir.Size = new System.Drawing.Size(309, 28);
-            this.dataDir.TabIndex = 22;
-            this.dataDir.SelectedIndexChanged += new System.EventHandler(this.dataDir_SelectedIndexChanged);
-            this.dataDir.TextChanged += new System.EventHandler(this.dataDir_TextChanged);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.dataDir);
-            this.groupBox3.Controls.Add(this.dataBrowse);
-            this.groupBox3.Location = new System.Drawing.Point(5, 106);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(413, 56);
-            this.groupBox3.TabIndex = 23;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "UO Data Directory";
-            // 
-            // WelcomeForm
-            // 
-            this.AcceptButton = this.okay;
-            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
-            this.CancelButton = this.quit;
-            this.ClientSize = new System.Drawing.Size(423, 293);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.langSel);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.showAtStart);
-            this.Controls.Add(this.quit);
-            this.Controls.Add(this.okay);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "WelcomeForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Welcome to Razor! Modded";
-            this.Closing += new System.ComponentModel.CancelEventHandler(this.WelcomeForm_Closing);
-            this.Load += new System.EventHandler(this.WelcomeForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.ResumeLayout(false);
+			Office2010Blue office2010Blue1 = new Office2010Blue();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
+			this.label1 = new System.Windows.Forms.Label();
+			this.clientList = new XComboBox();
+			this.browse = new XButton();
+			this.patchEncy = new XCheckBox();
+			this.okay = new XButton();
+			this.quit = new XButton();
+			this.label3 = new System.Windows.Forms.Label();
+			this.showAtStart = new XCheckBox();
+			this.serverList = new XComboBox();
+			this.label4 = new System.Windows.Forms.Label();
+			this.port = new XTextBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.useEnc = new XCheckBox();
+			this.makeDef = new XButton();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.openFile = new System.Windows.Forms.OpenFileDialog();
+			this.label5 = new System.Windows.Forms.Label();
+			this.langSel = new XComboBox();
+			this.dataBrowse = new XButton();
+			this.dataDir = new XComboBox();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.groupBox1.SuspendLayout();
+			this.groupBox2.SuspendLayout();
+			this.groupBox3.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(8, 20);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(68, 16);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Load Client:";
+			// 
+			// clientList
+			// 
+			this.clientList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.clientList.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.clientList.Location = new System.Drawing.Point(77, 16);
+			this.clientList.Name = "clientList";
+			this.clientList.Size = new System.Drawing.Size(192, 24);
+			this.clientList.TabIndex = 1;
+			// 
+			// browse
+			// 
+			office2010Blue1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010Blue1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010Blue1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010Blue1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010Blue1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010Blue1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010Blue1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010Blue1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010Blue1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010Blue1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010Blue1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010Blue1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010Blue1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010Blue1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010Blue1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010Blue1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010Blue1.TextColor = System.Drawing.Color.White;
+			this.browse.ColorTable = office2010Blue1;
+			this.browse.Location = new System.Drawing.Point(274, 16);
+			this.browse.Name = "browse";
+			this.browse.Size = new System.Drawing.Size(64, 24);
+			this.browse.TabIndex = 2;
+			this.browse.Text = "Browse...";
+			this.browse.Theme = Theme.MSOffice2010_BLUE;
+			this.browse.Click += new System.EventHandler(this.browse_Click);
+			// 
+			// patchEncy
+			// 
+			this.patchEncy.BackColor = System.Drawing.Color.LightSteelBlue;
+			this.patchEncy.Location = new System.Drawing.Point(6, 41);
+			this.patchEncy.Name = "patchEncy";
+			this.patchEncy.Size = new System.Drawing.Size(140, 21);
+			this.patchEncy.TabIndex = 3;
+			this.patchEncy.Text = "Patch client encryption";
+			this.patchEncy.UseVisualStyleBackColor = false;
+			this.patchEncy.CheckedChanged += new System.EventHandler(this.patchEncy_CheckedChanged);
+			// 
+			// okay
+			// 
+			this.okay.ColorTable = office2010Blue1;
+			this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
+			this.okay.Location = new System.Drawing.Point(7, 249);
+			this.okay.Name = "okay";
+			this.okay.Size = new System.Drawing.Size(72, 20);
+			this.okay.TabIndex = 6;
+			this.okay.Text = "&Okay";
+			this.okay.Theme = Theme.MSOffice2010_BLUE;
+			this.okay.Click += new System.EventHandler(this.okay_Click);
+			// 
+			// quit
+			// 
+			this.quit.ColorTable = office2010Blue1;
+			this.quit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.quit.Location = new System.Drawing.Point(87, 249);
+			this.quit.Name = "quit";
+			this.quit.Size = new System.Drawing.Size(72, 20);
+			this.quit.TabIndex = 7;
+			this.quit.Text = "&Quit";
+			this.quit.Theme = Theme.MSOffice2010_BLUE;
+			this.quit.Click += new System.EventHandler(this.quit_Click);
+			// 
+			// label3
+			// 
+			this.label3.Location = new System.Drawing.Point(8, 20);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(44, 16);
+			this.label3.TabIndex = 9;
+			this.label3.Text = "Server:";
+			// 
+			// showAtStart
+			// 
+			this.showAtStart.Location = new System.Drawing.Point(179, 249);
+			this.showAtStart.Name = "showAtStart";
+			this.showAtStart.Size = new System.Drawing.Size(168, 20);
+			this.showAtStart.TabIndex = 10;
+			this.showAtStart.Text = "Show this when Razor starts";
+			this.showAtStart.CheckedChanged += new System.EventHandler(this.showAtStart_CheckedChanged);
+			// 
+			// serverList
+			// 
+			this.serverList.Location = new System.Drawing.Point(52, 16);
+			this.serverList.Name = "serverList";
+			this.serverList.Size = new System.Drawing.Size(196, 24);
+			this.serverList.TabIndex = 11;
+			this.serverList.SelectedIndexChanged += new System.EventHandler(this.serverList_SelectedIndexChanged);
+			this.serverList.TextChanged += new System.EventHandler(this.serverList_TextChanged);
+			// 
+			// label4
+			// 
+			this.label4.Location = new System.Drawing.Point(260, 20);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(32, 16);
+			this.label4.TabIndex = 12;
+			this.label4.Text = "Port:";
+			// 
+			// port
+			// 
+			this.port.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.port.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.port.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.port.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			this.port.Location = new System.Drawing.Point(297, 17);
+			this.port.Name = "port";
+			this.port.Padding = new System.Windows.Forms.Padding(1);
+			this.port.Size = new System.Drawing.Size(40, 20);
+			this.port.TabIndex = 13;
+			this.port.TextChanged += new System.EventHandler(this.port_TextChanged);
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.useEnc);
+			this.groupBox1.Controls.Add(this.makeDef);
+			this.groupBox1.Controls.Add(this.browse);
+			this.groupBox1.Controls.Add(this.clientList);
+			this.groupBox1.Controls.Add(this.label1);
+			this.groupBox1.Controls.Add(this.patchEncy);
+			this.groupBox1.Location = new System.Drawing.Point(4, 4);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(344, 99);
+			this.groupBox1.TabIndex = 14;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Client Options";
+			// 
+			// useEnc
+			// 
+			this.useEnc.Location = new System.Drawing.Point(6, 68);
+			this.useEnc.Name = "useEnc";
+			this.useEnc.Size = new System.Drawing.Size(140, 20);
+			this.useEnc.TabIndex = 5;
+			this.useEnc.Text = "Use OSI Encryption";
+			this.useEnc.CheckedChanged += new System.EventHandler(this.useEnc_CheckedChanged);
+			// 
+			// makeDef
+			// 
+			this.makeDef.ColorTable = office2010Blue1;
+			this.makeDef.Location = new System.Drawing.Point(178, 58);
+			this.makeDef.Name = "makeDef";
+			this.makeDef.Size = new System.Drawing.Size(160, 20);
+			this.makeDef.TabIndex = 4;
+			this.makeDef.Text = "Make These Settings Default";
+			this.makeDef.Theme = Theme.MSOffice2010_BLUE;
+			this.makeDef.Click += new System.EventHandler(this.makeDef_Click);
+			// 
+			// groupBox2
+			// 
+			this.groupBox2.Controls.Add(this.port);
+			this.groupBox2.Controls.Add(this.label3);
+			this.groupBox2.Controls.Add(this.serverList);
+			this.groupBox2.Controls.Add(this.label4);
+			this.groupBox2.Location = new System.Drawing.Point(4, 163);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(344, 48);
+			this.groupBox2.TabIndex = 15;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Server";
+			// 
+			// openFile
+			// 
+			this.openFile.DefaultExt = "exe";
+			this.openFile.FileName = "client.exe";
+			this.openFile.Filter = "Executable Files|*.exe";
+			this.openFile.Title = "Select Client";
+			// 
+			// label5
+			// 
+			this.label5.Location = new System.Drawing.Point(7, 221);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(60, 16);
+			this.label5.TabIndex = 17;
+			this.label5.Text = "Language:";
+			// 
+			// langSel
+			// 
+			this.langSel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.langSel.Location = new System.Drawing.Point(67, 217);
+			this.langSel.Name = "langSel";
+			this.langSel.Size = new System.Drawing.Size(56, 24);
+			this.langSel.TabIndex = 18;
+			this.langSel.SelectedIndexChanged += new System.EventHandler(this.langSel_SelectedIndexChanged);
+			// 
+			// dataBrowse
+			// 
+			this.dataBrowse.ColorTable = office2010Blue1;
+			this.dataBrowse.Location = new System.Drawing.Point(274, 20);
+			this.dataBrowse.Name = "dataBrowse";
+			this.dataBrowse.Size = new System.Drawing.Size(64, 23);
+			this.dataBrowse.TabIndex = 21;
+			this.dataBrowse.Text = "Browse...";
+			this.dataBrowse.Theme = Theme.MSOffice2010_BLUE;
+			this.dataBrowse.Click += new System.EventHandler(this.dataBrowse_Click);
+			// 
+			// dataDir
+			// 
+			this.dataDir.Location = new System.Drawing.Point(8, 20);
+			this.dataDir.Name = "dataDir";
+			this.dataDir.Size = new System.Drawing.Size(258, 24);
+			this.dataDir.TabIndex = 22;
+			this.dataDir.SelectedIndexChanged += new System.EventHandler(this.dataDir_SelectedIndexChanged);
+			this.dataDir.TextChanged += new System.EventHandler(this.dataDir_TextChanged);
+			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.dataDir);
+			this.groupBox3.Controls.Add(this.dataBrowse);
+			this.groupBox3.Location = new System.Drawing.Point(4, 109);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(344, 48);
+			this.groupBox3.TabIndex = 23;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "UO Data Directory";
+			// 
+			// WelcomeForm
+			// 
+			this.AcceptButton = this.okay;
+			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+			this.BackColor = System.Drawing.Color.LightSteelBlue;
+			this.CancelButton = this.quit;
+			this.ClientSize = new System.Drawing.Size(359, 283);
+			this.Controls.Add(this.groupBox3);
+			this.Controls.Add(this.langSel);
+			this.Controls.Add(this.label5);
+			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.showAtStart);
+			this.Controls.Add(this.quit);
+			this.Controls.Add(this.okay);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
+			this.Name = "WelcomeForm";
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "Welcome to Razor! Modded";
+			this.Closing += new System.ComponentModel.CancelEventHandler(this.WelcomeForm_Closing);
+			this.Load += new System.EventHandler(this.WelcomeForm_Load);
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox2.ResumeLayout(false);
+			this.groupBox3.ResumeLayout(false);
+			this.ResumeLayout(false);
 
 		}
 		#endregion
 
 		private class ServerEntry
 		{
-			public ServerEntry( string addr, int p )
+			public ServerEntry(string addr, int p)
 			{
 				Address = addr;
 				Port = p;
@@ -394,39 +396,40 @@ namespace Assistant
 		private class LoginCFG_SE : ServerEntry
 		{
 			public string RealAddress;
-			public LoginCFG_SE() : base( "Use Last", 0 )
+			public LoginCFG_SE()
+				: base("Use Last", 0)
 			{
-				RealAddress = Config.GetRegString( Registry.CurrentUser, "LastServer" );
-				Port = Utility.ToInt32( Config.GetRegString( Registry.CurrentUser, "LastPort" ), 0 );
+				RealAddress = Config.GetRegString(Registry.CurrentUser, "LastServer");
+				Port = Utility.ToInt32(Config.GetRegString(Registry.CurrentUser, "LastPort"), 0);
 
-				if ( RealAddress == null || RealAddress == "" || Port == 0 )
+				if (RealAddress == null || RealAddress == "" || Port == 0)
 				{
 					RealAddress = "";
 					Port = 0;
-				
-					try 
+
+					try
 					{
 						string fileName = Ultima.Files.GetFilePath("Login.cfg");
-						if ( fileName == null || fileName == "" )
+						if (fileName == null || fileName == "")
 							return;
 						string server = null, port = null;
 
-						if ( File.Exists( fileName ) )
+						if (File.Exists(fileName))
 						{
-							using ( FileStream file = new FileStream( fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite ) )
-							using ( StreamReader cfg = new StreamReader( file ) )
+							using (FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+							using (StreamReader cfg = new StreamReader(file))
 							{
 								string line;
-								while ( (line = cfg.ReadLine()) != null )
+								while ((line = cfg.ReadLine()) != null)
 								{
 									line = line.Trim();
-									if ( line != "" && Char.ToUpper( line[0] ) == 'L' && line.Length > 12 )
+									if (line != "" && Char.ToUpper(line[0]) == 'L' && line.Length > 12)
 									{
-										int comma = line.IndexOf( ',' );
-										if ( comma > 12 )
+										int comma = line.IndexOf(',');
+										if (comma > 12)
 										{
-											server = line.Substring( 12, comma-12 );
-											port = line.Substring( comma+1 );
+											server = line.Substring(12, comma - 12);
+											port = line.Substring(comma + 1);
 
 											break;
 										}
@@ -435,13 +438,13 @@ namespace Assistant
 							}
 						}
 
-						if ( server != null )
+						if (server != null)
 						{
-							Address = "(Use Last: "+server+")";
+							Address = "(Use Last: " + server + ")";
 							RealAddress = server;
 						}
-						if ( port != null )
-							Port = Utility.ToInt32( port, 0 );
+						if (port != null)
+							Port = Utility.ToInt32(port, 0);
 					}
 					catch
 					{
@@ -463,7 +466,8 @@ namespace Assistant
 		private class Custom_SE : ServerEntry
 		{
 			public string RealAddress;
-			public Custom_SE( string name, string addr ) : base( name, 0 )
+			public Custom_SE(string name, string addr)
+				: base(name, 0)
 			{
 				RealAddress = addr;
 			}
@@ -479,41 +483,41 @@ namespace Assistant
 		{
 			private string m_Path;
 			private string m_Show;
-			public PathElipsis( string path )
+			public PathElipsis(string path)
 			{
 				m_Path = path;
-				m_Show = GetPathElipsis( path, 23 );
+				m_Show = GetPathElipsis(path, 23);
 			}
 
-			public string GetPath(){return m_Path;}
-			public void SetPath(string value){m_Path=value;m_Show=GetPathElipsis(m_Path, 23);}
+			public string GetPath() { return m_Path; }
+			public void SetPath(string value) { m_Path = value; m_Show = GetPathElipsis(m_Path, 23); }
 			public override string ToString()
 			{
 				return m_Show;
 			}
 
-			private static char[] pathChars = new char[]{ Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar, Path.PathSeparator, Path.VolumeSeparatorChar };
-			public static string GetPathElipsis( string path, int PathMaxLength )
+			private static char[] pathChars = new char[] { Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar, Path.PathSeparator, Path.VolumeSeparatorChar };
+			public static string GetPathElipsis(string path, int PathMaxLength)
 			{
-				if ( path.Length <= PathMaxLength )
+				if (path.Length <= PathMaxLength)
 					return path;
 
-				System.Text.StringBuilder sb = new System.Text.StringBuilder( path );
+				System.Text.StringBuilder sb = new System.Text.StringBuilder(path);
 				int remlen = path.Length - PathMaxLength - 3;
 
-				int ls = path.LastIndexOfAny( pathChars );
-				if ( ls == -1 )
+				int ls = path.LastIndexOfAny(pathChars);
+				if (ls == -1)
 					ls = 15 + remlen;
 
-				if ( ls - remlen < 4 )
-					ls = remlen+4;
+				if (ls - remlen < 4)
+					ls = remlen + 4;
 
-				if ( ls > remlen && remlen > 0 )
+				if (ls > remlen && remlen > 0)
 				{
 					try
 					{
-						sb.Remove( ls - remlen, remlen );
-						sb.Insert( ls - remlen, "..." );
+						sb.Remove(ls - remlen, remlen);
+						sb.Insert(ls - remlen, "...");
 					}
 					catch
 					{
@@ -525,59 +529,59 @@ namespace Assistant
 
 		private void WelcomeForm_Load(object sender, System.EventArgs e)
 		{
-			Language.LoadControlNames( this );
+			Language.LoadControlNames(this);
 
 			this.BringToFront();
 
-			langSel.Items.AddRange( Language.GetPackNames() );
+			langSel.Items.AddRange(Language.GetPackNames());
 			langSel.SelectedItem = Language.Current;
 
-			showAtStart.Checked = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "ShowWindow" ), 1 ) == 1;
+			showAtStart.Checked = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ShowWindow"), 1) == 1;
 
-			clientList.Items.Add( Language.GetString( LocString.Auto2D ) );
-			clientList.Items.Add( Language.GetString( LocString.Auto3D ) );
-			for (int i=1; ;i++)
+			clientList.Items.Add(Language.GetString(LocString.Auto2D));
+			clientList.Items.Add(Language.GetString(LocString.Auto3D));
+			for (int i = 1; ; i++)
 			{
-				string val = String.Format( "Client{0}", i );
-				string cli = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, val );
-				if ( cli == null || cli == "" )
+				string val = String.Format("Client{0}", i);
+				string cli = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, val);
+				if (cli == null || cli == "")
 					break;
-				if ( File.Exists( cli )	)
-					clientList.Items.Add( new PathElipsis( cli ) );
-				Config.DeleteRegValue( Microsoft.Win32.Registry.CurrentUser, val );
+				if (File.Exists(cli))
+					clientList.Items.Add(new PathElipsis(cli));
+				Config.DeleteRegValue(Microsoft.Win32.Registry.CurrentUser, val);
 			}
-			int sel = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "DefClient" ), 0 );
-			if ( sel >= clientList.Items.Count )
+			int sel = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "DefClient"), 0);
+			if (sel >= clientList.Items.Count)
 			{
 				sel = 0;
-				Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "DefClient", "0" );
+				Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "DefClient", "0");
 			}
 			clientList.SelectedIndex = sel;
 
-			dataDir.Items.Add( Language.GetString( LocString.AutoDetect ) );
-			for ( int i=1; ;i++)
+			dataDir.Items.Add(Language.GetString(LocString.AutoDetect));
+			for (int i = 1; ; i++)
 			{
-				string val = String.Format( "Dir{0}", i );
-				string dir = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, val );
-				if ( dir == null || dir == "" )
+				string val = String.Format("Dir{0}", i);
+				string dir = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, val);
+				if (dir == null || dir == "")
 					break;
-				if ( Directory.Exists( dir ) )
-					dataDir.Items.Add( dir );
-				Config.DeleteRegValue( Microsoft.Win32.Registry.CurrentUser, val );
+				if (Directory.Exists(dir))
+					dataDir.Items.Add(dir);
+				Config.DeleteRegValue(Microsoft.Win32.Registry.CurrentUser, val);
 			}
 
 			try
 			{
-				dataDir.SelectedIndex = Convert.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "LastDir" ) );
+				dataDir.SelectedIndex = Convert.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "LastDir"));
 			}
 			catch
 			{
 				dataDir.SelectedIndex = 0;
 			}
 
-			patchEncy.Checked = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "PatchEncy" ), 1 ) != 0;
-			useEnc.Checked = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "ServerEnc" ), 0 ) != 0;
-			
+			patchEncy.Checked = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "PatchEncy"), 1) != 0;
+			useEnc.Checked = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ServerEnc"), 0) != 0;
+
 			LoginCFG_SE lse = new LoginCFG_SE();
 			Custom_SE cse;
 
@@ -590,20 +594,20 @@ namespace Assistant
 			//serverList.Items.Add( lse=new LoginCFG_SE() );
 			//serverList.SelectedItem = lse;
 
-			for (int i=1; ;i++)
+			for (int i = 1; ; i++)
 			{
 				ServerEntry se;
-				string sval = String.Format( "Server{0}", i );
-				string serv = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, sval );
-				if ( serv == null )
+				string sval = String.Format("Server{0}", i);
+				string serv = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, sval);
+				if (serv == null)
 					break;
-				string pval = String.Format( "Port{0}", i );
-				int port = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, pval ), 0 );
-				serverList.Items.Add( se=new ServerEntry( serv, port ) );
-				if ( serv == lse.RealAddress && port == lse.Port )
+				string pval = String.Format("Port{0}", i);
+				int port = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, pval), 0);
+				serverList.Items.Add(se = new ServerEntry(serv, port));
+				if (serv == lse.RealAddress && port == lse.Port)
 					serverList.SelectedItem = se;
-				Config.DeleteRegValue( Microsoft.Win32.Registry.CurrentUser, sval );
-				Config.DeleteRegValue( Microsoft.Win32.Registry.CurrentUser, pval );
+				Config.DeleteRegValue(Microsoft.Win32.Registry.CurrentUser, sval);
+				Config.DeleteRegValue(Microsoft.Win32.Registry.CurrentUser, pval);
 			}
 
 			if (entries == null)
@@ -614,7 +618,7 @@ namespace Assistant
 			}
 			else
 			{
-				foreach(var entry in entries)
+				foreach (var entry in entries)
 				{
 					if (String.IsNullOrEmpty(entry.name))
 						continue;
@@ -639,42 +643,42 @@ namespace Assistant
 			_ShowTimer.Enabled = true;
 			_ShowTimer.Tick += new EventHandler(timer_Tick);
 		}
-		
+
 		private System.Windows.Forms.Timer _ShowTimer;
 		private void timer_Tick(object sender, EventArgs e)
 		{
 			this.TopMost = false;
 			this.BringToFront();
 
-			if ( _ShowTimer != null )
+			if (_ShowTimer != null)
 				_ShowTimer.Stop();
 		}
 
 		private void browse_Click(object sender, System.EventArgs e)
 		{
-			if ( openFile.ShowDialog( this ) == DialogResult.OK )
+			if (openFile.ShowDialog(this) == DialogResult.OK)
 			{
-				PathElipsis pe = new PathElipsis( openFile.FileName );
-				clientList.Items.Add( pe );
+				PathElipsis pe = new PathElipsis(openFile.FileName);
+				clientList.Items.Add(pe);
 				clientList.SelectedItem = pe;
 			}
 		}
 
 		private void makeDef_Click(object sender, System.EventArgs e)
 		{
-			Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "DefClient", ( clientList.SelectedIndex >= 0 ? clientList.SelectedIndex : 0 ).ToString() );
-			Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "PatchEncy", patchEncy.Checked ? "1" : "0" );
-			Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "ServerEnc", useEnc.Checked ? "1" : "0" );
-			MessageBox.Show( this, Language.GetString( LocString.SaveOK ), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information );
+			Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "DefClient", (clientList.SelectedIndex >= 0 ? clientList.SelectedIndex : 0).ToString());
+			Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "PatchEncy", patchEncy.Checked ? "1" : "0");
+			Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "ServerEnc", useEnc.Checked ? "1" : "0");
+			MessageBox.Show(this, Language.GetString(LocString.SaveOK), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
 		private void serverList_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			port.Enabled = !( serverList.SelectedItem is Custom_SE || serverList.SelectedItem is LoginCFG_SE );
+			port.Enabled = !(serverList.SelectedItem is Custom_SE || serverList.SelectedItem is LoginCFG_SE);
 
-			if ( serverList.SelectedItem != null )
+			if (serverList.SelectedItem != null)
 			{
-				if ( serverList.SelectedItem is LoginCFG_SE && ((ServerEntry)serverList.SelectedItem).Port == 0 )
+				if (serverList.SelectedItem is LoginCFG_SE && ((ServerEntry)serverList.SelectedItem).Port == 0)
 					port.Text = "";
 				else
 					port.Text = ((ServerEntry)serverList.SelectedItem).Port.ToString();
@@ -684,25 +688,25 @@ namespace Assistant
 		private void serverList_TextChanged(object sender, System.EventArgs e)
 		{
 			string txt = serverList.Text;
-			if ( ( serverList.SelectedItem is Custom_SE || serverList.SelectedItem is LoginCFG_SE ) && txt != (serverList.SelectedItem).ToString() ) 
+			if ((serverList.SelectedItem is Custom_SE || serverList.SelectedItem is LoginCFG_SE) && txt != (serverList.SelectedItem).ToString())
 			{
 				port.Text = "";
 				serverList.BeginUpdate();
 				serverList.SelectedIndex = -1;
 				serverList.Text = txt;
-				serverList.Select( txt.Length, 0 );
+				serverList.Select(txt.Length, 0);
 				serverList.EndUpdate();
 			}
 		}
-		
+
 		private void port_TextChanged(object sender, System.EventArgs e)
 		{
-			if ( port.Text != "" )
+			if (port.Text != "")
 			{
-				if ( ( serverList.SelectedItem is LoginCFG_SE && ((ServerEntry)serverList.SelectedItem).Port == 0 ) || serverList.SelectedItem is Custom_SE )
+				if ((serverList.SelectedItem is LoginCFG_SE && ((ServerEntry)serverList.SelectedItem).Port == 0) || serverList.SelectedItem is Custom_SE)
 					port.Text = "";
-				else if ( serverList.SelectedItem != null )
-					((ServerEntry)serverList.SelectedItem).Port = Utility.ToInt32( port.Text, 0 );
+				else if (serverList.SelectedItem != null)
+					((ServerEntry)serverList.SelectedItem).Port = Utility.ToInt32(port.Text, 0);
 			}
 		}
 
@@ -710,7 +714,7 @@ namespace Assistant
 		{
 			m_PatchEncy = patchEncy.Checked;
 
-			if ( clientList.SelectedIndex < 2 )
+			if (clientList.SelectedIndex < 2)
 			{
 				m_Launch = (ClientLaunch)clientList.SelectedIndex;
 			}
@@ -719,17 +723,17 @@ namespace Assistant
 				m_Launch = ClientLaunch.Custom;
 				m_ClientPath = ((PathElipsis)clientList.SelectedItem).GetPath();
 			}
-			
+
 			ServerEntry se = null;
-			if ( serverList.SelectedItem != null )
+			if (serverList.SelectedItem != null)
 			{
-				if ( serverList.SelectedItem is Custom_SE )
+				if (serverList.SelectedItem is Custom_SE)
 				{
 					int port = ((Custom_SE)serverList.SelectedItem).Port;
 
 					string addr = ((Custom_SE)serverList.SelectedItem).RealAddress;
 
-					if ( addr == "login.ultimaonline.com" )
+					if (addr == "login.ultimaonline.com")
 					{
 						ClientCommunication.ServerEncrypted = true;
 					}
@@ -737,43 +741,43 @@ namespace Assistant
 					if (port == 0)
 						port = 2593; // runuo default
 
-					se = new ServerEntry( addr, port );
+					se = new ServerEntry(addr, port);
 				}
-				else if ( !(serverList.SelectedItem is LoginCFG_SE) )
+				else if (!(serverList.SelectedItem is LoginCFG_SE))
 				{
 					se = (ServerEntry)serverList.SelectedItem;
-					se.Port = Utility.ToInt32( port.Text.Trim(), 0 );
-					if ( se.Port <= 0 || se.Port > 65535 )
+					se.Port = Utility.ToInt32(port.Text.Trim(), 0);
+					if (se.Port <= 0 || se.Port > 65535)
 					{
-						MessageBox.Show( this, Language.GetString( LocString.NeedPort ), "Need Port", MessageBoxButtons.OK, MessageBoxIcon.Information );
+						MessageBox.Show(this, Language.GetString(LocString.NeedPort), "Need Port", MessageBoxButtons.OK, MessageBoxIcon.Information);
 						return;
 					}
 				}
 			}
-			else if ( serverList.Text != "" )
+			else if (serverList.Text != "")
 			{
-				int thePort = Utility.ToInt32( port.Text.Trim(), 0 );
-				if ( thePort <= 0 || thePort > 65535 )
+				int thePort = Utility.ToInt32(port.Text.Trim(), 0);
+				if (thePort <= 0 || thePort > 65535)
 				{
-					MessageBox.Show( this, Language.GetString( LocString.NeedPort ), "Need Port", MessageBoxButtons.OK, MessageBoxIcon.Information );
+					MessageBox.Show(this, Language.GetString(LocString.NeedPort), "Need Port", MessageBoxButtons.OK, MessageBoxIcon.Information);
 					return;
 				}
-				se = new ServerEntry( serverList.Text.Trim(), thePort );
+				se = new ServerEntry(serverList.Text.Trim(), thePort);
 			}
 
-			if ( se != null && se.Address != null )
+			if (se != null && se.Address != null)
 			{
-				if ( !( serverList.SelectedItem is Custom_SE ) )
+				if (!(serverList.SelectedItem is Custom_SE))
 				{
-					serverList.Items.Remove( se );
-					serverList.Items.Insert( 1, se );
+					serverList.Items.Remove(se);
+					serverList.Items.Insert(1, se);
 				}
 
 				//if ( se.Address != "" )
 				//	WriteLoginCFG( se.Address, se.Port );
 
-				Config.SetRegString( Registry.CurrentUser, "LastServer", se.Address );
-				Config.SetRegString( Registry.CurrentUser, "LastPort", se.Port.ToString() );
+				Config.SetRegString(Registry.CurrentUser, "LastServer", se.Address);
+				Config.SetRegString(Registry.CurrentUser, "LastPort", se.Port.ToString());
 			}
 
 			SaveData();
@@ -789,56 +793,56 @@ namespace Assistant
 
 		private void SaveData()
 		{
-			for (int i=0;i<serverList.Items.Count;i++)
+			for (int i = 0; i < serverList.Items.Count; i++)
 			{
-				for (int j=i+1;j<serverList.Items.Count;j++)
+				for (int j = i + 1; j < serverList.Items.Count; j++)
 				{
 					ServerEntry si = (ServerEntry)serverList.Items[i];
 					ServerEntry sj = (ServerEntry)serverList.Items[j];
-					if ( si.Address == sj.Address && si.Port == sj.Port )
-						serverList.Items.RemoveAt( j );
+					if (si.Address == sj.Address && si.Port == sj.Port)
+						serverList.Items.RemoveAt(j);
 				}
 			}
-		
+
 			int num = 1;
-			for (int i=0;i<serverList.Items.Count;i++)
+			for (int i = 0; i < serverList.Items.Count; i++)
 			{
 				ServerEntry se = (ServerEntry)serverList.Items[i];
-				if ( se is Custom_SE || se is LoginCFG_SE )
+				if (se is Custom_SE || se is LoginCFG_SE)
 					continue;
-				
-				if ( se.Address != "" )
+
+				if (se.Address != "")
 				{
-					Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, String.Format( "Server{0}", num ), se.Address );
-					Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, String.Format( "Port{0}", num ), se.Port.ToString() );
+					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, String.Format("Server{0}", num), se.Address);
+					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, String.Format("Port{0}", num), se.Port.ToString());
 					num++;
 				}
 			}
 
-			for(int i=2;i<clientList.Items.Count;i++)
-				Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, String.Format( "Client{0}", i-1 ), ((PathElipsis)clientList.Items[i]).GetPath() );
+			for (int i = 2; i < clientList.Items.Count; i++)
+				Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, String.Format("Client{0}", i - 1), ((PathElipsis)clientList.Items[i]).GetPath());
 
 			num = 1;
-			if ( dataDir.SelectedIndex == -1 )
+			if (dataDir.SelectedIndex == -1)
 			{
 				string dir = dataDir.Text;
 				dir = dir.Trim();
 
-				if ( dir.Length > 0 && dir != "(Auto Detect)" )
+				if (dir.Length > 0 && dir != "(Auto Detect)")
 				{
-					Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "Dir1", dir );
-					Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "LastDir", "1" );
+					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "Dir1", dir);
+					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "LastDir", "1");
 					m_DataDir = dir;
 					num = 2;
 				}
 			}
 
-			if ( num == 1 )
+			if (num == 1)
 			{
-				Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "LastDir", (dataDir.SelectedIndex != -1 ? dataDir.SelectedIndex : 0).ToString() );
+				Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "LastDir", (dataDir.SelectedIndex != -1 ? dataDir.SelectedIndex : 0).ToString());
 				try
 				{
-					if ( dataDir.SelectedIndex != 0 )
+					if (dataDir.SelectedIndex != 0)
 						m_DataDir = dataDir.SelectedItem as string;
 					else
 						m_DataDir = null;
@@ -848,8 +852,8 @@ namespace Assistant
 				}
 			}
 
-			for (int i=1;i<dataDir.Items.Count;i++)
-				Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, String.Format( "Dir{0}", num++ ), (string)dataDir.Items[i] );
+			for (int i = 1; i < dataDir.Items.Count; i++)
+				Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, String.Format("Dir{0}", num++), (string)dataDir.Items[i]);
 		}
 
 		/*private const string RazorLine = "; Razor Generated Entry";
@@ -896,37 +900,37 @@ namespace Assistant
 
 		private void showAtStart_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "ShowWelcome", ( showAtStart.Checked ? 1 : 0 ).ToString() );
+			Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "ShowWelcome", (showAtStart.Checked ? 1 : 0).ToString());
 		}
 
 		private void langSel_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			string lang = langSel.SelectedItem as string;
 
-			if ( lang != null && lang != Language.Current )
+			if (lang != null && lang != Language.Current)
 			{
-				if ( !Language.Load( lang ) )
+				if (!Language.Load(lang))
 				{
-					MessageBox.Show( "There was an error loading that language.", "Language Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+					MessageBox.Show("There was an error loading that language.", "Language Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					langSel.SelectedItem = Language.Current;
 				}
 				else
 				{
-					Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "DefaultLanguage", Language.Current );
-					Language.LoadControlNames( this );
+					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "DefaultLanguage", Language.Current);
+					Language.LoadControlNames(this);
 
-					clientList.Items[0] = Language.GetString( LocString.Auto2D );
-					clientList.Items[1] = Language.GetString( LocString.Auto2D );
-					dataDir.Items[0] = Language.GetString( LocString.AutoDetect );
+					clientList.Items[0] = Language.GetString(LocString.Auto2D);
+					clientList.Items[1] = Language.GetString(LocString.Auto2D);
+					dataDir.Items[0] = Language.GetString(LocString.AutoDetect);
 				}
 			}
 		}
 
 		private void patchEncy_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if ( !patchEncy.Checked )
+			if (!patchEncy.Checked)
 			{
-				if ( MessageBox.Show( this, Language.GetString( LocString.NoPatchWarning ), Language.GetString( LocString.Confirm ), MessageBoxButtons.YesNo, MessageBoxIcon.Question ) == DialogResult.No )
+				if (MessageBox.Show(this, Language.GetString(LocString.NoPatchWarning), Language.GetString(LocString.Confirm), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 					patchEncy.Checked = true;
 			}
 		}
@@ -942,11 +946,11 @@ namespace Assistant
 
 			folder.Description = "Select a UO Data Directory...";
 
-			if ( m_DataDir != null )
+			if (m_DataDir != null)
 				folder.SelectedPath = m_DataDir;
 
 			folder.ShowNewFolderButton = false;
-			if ( folder.ShowDialog() == DialogResult.OK )
+			if (folder.ShowDialog() == DialogResult.OK)
 			{
 				dataDir.SelectedIndex = -1;
 				dataDir.Text = m_DataDir = folder.SelectedPath;

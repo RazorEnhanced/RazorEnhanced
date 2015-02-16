@@ -4,6 +4,7 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Forms;
 using Assistant.Macros;
+using RazorEnhanced.UI;
 
 namespace Assistant
 {
@@ -16,18 +17,18 @@ namespace Assistant
 		private int m_Idx;
 		private MacroAction m_Action;
 
-        private RazorUIMod.XButton insert;
-        private RazorUIMod.XTextBox txtAmount;
-        private RazorUIMod.XButton cancel;
-        private RazorUIMod.XComboBox varList;
-        private RazorUIMod.XComboBox opList;
+		private XButton insert;
+		private XTextBox txtAmount;
+		private XButton cancel;
+		private XComboBox varList;
+		private XComboBox opList;
 		private System.Windows.Forms.Label label1;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public MacroInsertIf( Macro m, int idx )
+		public MacroInsertIf(Macro m, int idx)
 		{
 			m_Macro = m;
 			m_Idx = idx;
@@ -35,12 +36,12 @@ namespace Assistant
 			// Required for Windows Form Designer support
 			//
 			InitializeComponent();
-			
-			foreach ( Counter c in Counter.List )
-				varList.Items.Add( c.Name );
+
+			foreach (Counter c in Counter.List)
+				varList.Items.Add(c.Name);
 		}
 
-		public MacroInsertIf( MacroAction a )
+		public MacroInsertIf(MacroAction a)
 		{
 			m_Action = a;
 			//
@@ -48,23 +49,23 @@ namespace Assistant
 			//
 			InitializeComponent();
 
-			foreach ( Counter c in Counter.List )
-				varList.Items.Add( c.Name );
+			foreach (Counter c in Counter.List)
+				varList.Items.Add(c.Name);
 		}
 
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		protected override void Dispose( bool disposing )
+		protected override void Dispose(bool disposing)
 		{
-			if( disposing )
+			if (disposing)
 			{
-				if(components != null)
+				if (components != null)
 				{
 					components.Dispose();
 				}
 			}
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 		}
 
 		#region Windows Form Designer generated code
@@ -74,59 +75,59 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorUIMod.Colortable colortable1 = new RazorUIMod.Colortable();
-            RazorUIMod.Colortable colortable2 = new RazorUIMod.Colortable();
-            this.insert = new RazorUIMod.XButton();
-            this.txtAmount = new RazorUIMod.XTextBox();
-            this.varList = new RazorUIMod.XComboBox();
-            this.cancel = new RazorUIMod.XButton();
-            this.opList = new RazorUIMod.XComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.SuspendLayout();
-            // 
-            // insert
-            // 
-            colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable1.TextColor = System.Drawing.Color.White;
-            this.insert.ColorTable = colortable1;
-            this.insert.Location = new System.Drawing.Point(38, 42);
-            this.insert.Name = "insert";
-            this.insert.Size = new System.Drawing.Size(92, 27);
-            this.insert.TabIndex = 0;
-            this.insert.Text = "&Insert";
-            this.insert.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.insert.Click += new System.EventHandler(this.insert_Click);
-            // 
-            // txtAmount
-            // 
-            this.txtAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.txtAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.txtAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtAmount.Location = new System.Drawing.Point(177, 12);
-            this.txtAmount.Name = "txtAmount";
-            this.txtAmount.Padding = new System.Windows.Forms.Padding(1);
-            this.txtAmount.Size = new System.Drawing.Size(96, 22);
-            this.txtAmount.TabIndex = 7;
-            // 
-            // varList
-            // 
-            this.varList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.varList.Items.AddRange(new object[] {
+			Colortable colortable1 = new Colortable();
+			Colortable colortable2 = new Colortable();
+			this.insert = new XButton();
+			this.txtAmount = new XTextBox();
+			this.varList = new XComboBox();
+			this.cancel = new XButton();
+			this.opList = new XComboBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.SuspendLayout();
+			// 
+			// insert
+			// 
+			colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			colortable1.TextColor = System.Drawing.Color.White;
+			this.insert.ColorTable = colortable1;
+			this.insert.Location = new System.Drawing.Point(38, 42);
+			this.insert.Name = "insert";
+			this.insert.Size = new System.Drawing.Size(92, 27);
+			this.insert.TabIndex = 0;
+			this.insert.Text = "&Insert";
+			this.insert.Theme = Theme.MSOffice2010_BLUE;
+			this.insert.Click += new System.EventHandler(this.insert_Click);
+			// 
+			// txtAmount
+			// 
+			this.txtAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.txtAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.txtAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			this.txtAmount.Location = new System.Drawing.Point(177, 12);
+			this.txtAmount.Name = "txtAmount";
+			this.txtAmount.Padding = new System.Windows.Forms.Padding(1);
+			this.txtAmount.Size = new System.Drawing.Size(96, 22);
+			this.txtAmount.TabIndex = 7;
+			// 
+			// varList
+			// 
+			this.varList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.varList.Items.AddRange(new object[] {
             "Hits",
             "Mana",
             "Stamina",
@@ -136,78 +137,78 @@ namespace Assistant
             "Mounted",
             "R Hand Empty",
             "L Hand Empty"});
-            this.varList.Location = new System.Drawing.Point(29, 9);
-            this.varList.Name = "varList";
-            this.varList.Size = new System.Drawing.Size(96, 28);
-            this.varList.TabIndex = 8;
-            this.varList.SelectedIndexChanged += new System.EventHandler(this.varList_SelectedIndexChanged);
-            // 
-            // cancel
-            // 
-            colortable2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            colortable2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            colortable2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            colortable2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            colortable2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            colortable2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            colortable2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable2.TextColor = System.Drawing.Color.White;
-            this.cancel.ColorTable = colortable2;
-            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancel.Location = new System.Drawing.Point(151, 42);
-            this.cancel.Name = "cancel";
-            this.cancel.Size = new System.Drawing.Size(91, 27);
-            this.cancel.TabIndex = 10;
-            this.cancel.Text = "&Cancel";
-            this.cancel.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.cancel.Click += new System.EventHandler(this.cancel_Click);
-            // 
-            // opList
-            // 
-            this.opList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.opList.Items.AddRange(new object[] {
+			this.varList.Location = new System.Drawing.Point(29, 9);
+			this.varList.Name = "varList";
+			this.varList.Size = new System.Drawing.Size(96, 28);
+			this.varList.TabIndex = 8;
+			this.varList.SelectedIndexChanged += new System.EventHandler(this.varList_SelectedIndexChanged);
+			// 
+			// cancel
+			// 
+			colortable2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			colortable2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			colortable2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			colortable2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			colortable2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			colortable2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			colortable2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			colortable2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			colortable2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			colortable2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			colortable2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			colortable2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			colortable2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			colortable2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			colortable2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			colortable2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			colortable2.TextColor = System.Drawing.Color.White;
+			this.cancel.ColorTable = colortable2;
+			this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.cancel.Location = new System.Drawing.Point(151, 42);
+			this.cancel.Name = "cancel";
+			this.cancel.Size = new System.Drawing.Size(91, 27);
+			this.cancel.TabIndex = 10;
+			this.cancel.Text = "&Cancel";
+			this.cancel.Theme = Theme.MSOffice2010_BLUE;
+			this.cancel.Click += new System.EventHandler(this.cancel_Click);
+			// 
+			// opList
+			// 
+			this.opList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.opList.Items.AddRange(new object[] {
             "<=",
             ">="});
-            this.opList.Location = new System.Drawing.Point(127, 9);
-            this.opList.Name = "opList";
-            this.opList.Size = new System.Drawing.Size(48, 28);
-            this.opList.TabIndex = 11;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(10, 14);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(19, 23);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "If:";
-            // 
-            // MacroInsertIf
-            // 
-            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
-            this.ClientSize = new System.Drawing.Size(284, 77);
-            this.ControlBox = false;
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.opList);
-            this.Controls.Add(this.cancel);
-            this.Controls.Add(this.varList);
-            this.Controls.Add(this.txtAmount);
-            this.Controls.Add(this.insert);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "MacroInsertIf";
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Insert If...";
-            this.Load += new System.EventHandler(this.MacroInsertIf_Load);
-            this.ResumeLayout(false);
+			this.opList.Location = new System.Drawing.Point(127, 9);
+			this.opList.Name = "opList";
+			this.opList.Size = new System.Drawing.Size(48, 28);
+			this.opList.TabIndex = 11;
+			// 
+			// label1
+			// 
+			this.label1.Location = new System.Drawing.Point(10, 14);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(19, 23);
+			this.label1.TabIndex = 12;
+			this.label1.Text = "If:";
+			// 
+			// MacroInsertIf
+			// 
+			this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+			this.ClientSize = new System.Drawing.Size(284, 77);
+			this.ControlBox = false;
+			this.Controls.Add(this.label1);
+			this.Controls.Add(this.opList);
+			this.Controls.Add(this.cancel);
+			this.Controls.Add(this.varList);
+			this.Controls.Add(this.txtAmount);
+			this.Controls.Add(this.insert);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.Name = "MacroInsertIf";
+			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+			this.Text = "Insert If...";
+			this.Load += new System.EventHandler(this.MacroInsertIf_Load);
+			this.ResumeLayout(false);
 
 		}
 		#endregion
@@ -224,45 +225,48 @@ namespace Assistant
 
 			try
 			{
-				if ( varList.SelectedIndex == (int)IfAction.IfVarType.SysMessage )
-					a = new IfAction( (IfAction.IfVarType)varList.SelectedIndex, txtAmount.Text );
-				else if ( varList.SelectedIndex >= (int)IfAction.IfVarType.BeginCountersMarker )
-					a = new IfAction( IfAction.IfVarType.Counter, (sbyte)opList.SelectedIndex, Utility.ToInt32( txtAmount.Text, 0 ), varList.SelectedItem as string );
+				if (varList.SelectedIndex == (int)IfAction.IfVarType.SysMessage)
+					a = new IfAction((IfAction.IfVarType)varList.SelectedIndex, txtAmount.Text);
+				else if (varList.SelectedIndex >= (int)IfAction.IfVarType.BeginCountersMarker)
+					a = new IfAction(IfAction.IfVarType.Counter, (sbyte)opList.SelectedIndex, Utility.ToInt32(txtAmount.Text, 0), varList.SelectedItem as string);
 				else
-					a = new IfAction( (IfAction.IfVarType)varList.SelectedIndex, (sbyte)opList.SelectedIndex, Utility.ToInt32( txtAmount.Text, 0 ) );
+					a = new IfAction((IfAction.IfVarType)varList.SelectedIndex, (sbyte)opList.SelectedIndex, Utility.ToInt32(txtAmount.Text, 0));
 			}
 			catch
 			{
 				return;
 			}
 
-			if ( m_Action == null )
-				m_Macro.Insert( m_Idx+1, a );
+			if (m_Action == null)
+				m_Macro.Insert(m_Idx + 1, a);
 			else
-				m_Action.Parent.Convert( m_Action, a );
+				m_Action.Parent.Convert(m_Action, a);
 			this.DialogResult = DialogResult.OK;
 			this.Close();
 		}
 
 		private void MacroInsertIf_Load(object sender, System.EventArgs e)
 		{
-			Language.LoadControlNames( this );
+			Language.LoadControlNames(this);
 
-			if ( m_Action is IfAction )
+			if (m_Action is IfAction)
 			{
-				try { varList.SelectedIndex = (int)((IfAction)m_Action).Variable; } catch {}
-				try { opList.SelectedIndex = (int)((IfAction)m_Action).Op; } catch {}
+				try { varList.SelectedIndex = (int)((IfAction)m_Action).Variable; }
+				catch { }
+				try { opList.SelectedIndex = (int)((IfAction)m_Action).Op; }
+				catch { }
 				try
 				{
-					if ( varList.SelectedIndex != 3 && ( varList.SelectedIndex <= 5 || varList.SelectedIndex >= (int)IfAction.IfVarType.BeginCountersMarker ) )
+					if (varList.SelectedIndex != 3 && (varList.SelectedIndex <= 5 || varList.SelectedIndex >= (int)IfAction.IfVarType.BeginCountersMarker))
 						txtAmount.Text = ((IfAction)m_Action).Value.ToString();
 				}
 				catch
 				{
 				}
 
-				if ( ((IfAction)m_Action).Counter != null && ((IfAction)m_Action).Variable == IfAction.IfVarType.Counter )
-					try { varList.SelectedItem = ((IfAction)m_Action).Counter; } catch {}
+				if (((IfAction)m_Action).Counter != null && ((IfAction)m_Action).Variable == IfAction.IfVarType.Counter)
+					try { varList.SelectedItem = ((IfAction)m_Action).Counter; }
+					catch { }
 			}
 		}
 
@@ -271,15 +275,15 @@ namespace Assistant
 			try
 			{
 				opList.Visible = varList.SelectedIndex < 3 || varList.SelectedIndex == 5 || varList.SelectedIndex >= (int)IfAction.IfVarType.BeginCountersMarker;
-				txtAmount.Visible = varList.SelectedIndex != 3 && ( varList.SelectedIndex <= 5 || varList.SelectedIndex >= (int)IfAction.IfVarType.BeginCountersMarker );
+				txtAmount.Visible = varList.SelectedIndex != 3 && (varList.SelectedIndex <= 5 || varList.SelectedIndex >= (int)IfAction.IfVarType.BeginCountersMarker);
 			}
 			catch
 			{
 			}
 
-			if ( !opList.Visible )
+			if (!opList.Visible)
 			{
-				if ( txtAmount.Visible )
+				if (txtAmount.Visible)
 				{
 					varList.Size = new System.Drawing.Size(80, 21);
 
