@@ -236,9 +236,23 @@ namespace Assistant
 		private TextBox statusBox;
         private RazorUIMod.XButton exportProfile;
         private RazorUIMod.XButton importProfile;
-        private RazorUIMod.XButton adveditorMacro;
         private RazorUIMod.XButton macroImport;
         private RazorUIMod.XButton exportMacro;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private ListView AutolootlistView;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private RazorUIMod.XCheckBox autolootEnable;
+        private GroupBox groupBox12;
+        private RazorUIMod.XButton autolootImport;
+        private RazorUIMod.XButton autolootExport;
+        private GroupBox groupBox11;
+        private RazorUIMod.XButton autolootSaveButton;
+        private RazorUIMod.XButton autolootRemoveItemButton;
+        private RazorUIMod.XButton autolootAddItemButton;
+        private Label autolootContainerLabel;
+        private RazorUIMod.XButton autolootContainerButton;
 
 		private bool m_CanClose = true;
 
@@ -299,10 +313,8 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            RazorUIMod.Colortable colortable2 = new RazorUIMod.Colortable();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            RazorUIMod.Office2010Blue office2010Blue2 = new RazorUIMod.Office2010Blue();
             RazorUIMod.Office2010Blue office2010Blue1 = new RazorUIMod.Office2010Blue();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorUIMod.XButton();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabs = new System.Windows.Forms.TabControl();
@@ -466,7 +478,6 @@ namespace Assistant
             this.macrosTab = new System.Windows.Forms.TabPage();
             this.macroTree = new System.Windows.Forms.TreeView();
             this.macroActGroup = new System.Windows.Forms.GroupBox();
-            this.adveditorMacro = new RazorUIMod.XButton();
             this.macroImport = new RazorUIMod.XButton();
             this.exportMacro = new RazorUIMod.XButton();
             this.waitDisp = new System.Windows.Forms.Label();
@@ -520,7 +531,22 @@ namespace Assistant
             this.issuesLink = new System.Windows.Forms.LinkLabel();
             this.homeLink = new System.Windows.Forms.LinkLabel();
             this.wikiLink = new System.Windows.Forms.LinkLabel();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.AutolootlistView = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
+            this.autolootEnable = new RazorUIMod.XCheckBox();
+            this.autolootContainerButton = new RazorUIMod.XButton();
+            this.autolootContainerLabel = new System.Windows.Forms.Label();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.autolootAddItemButton = new RazorUIMod.XButton();
+            this.autolootRemoveItemButton = new RazorUIMod.XButton();
+            this.autolootSaveButton = new RazorUIMod.XButton();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.autolootExport = new RazorUIMod.XButton();
+            this.autolootImport = new RazorUIMod.XButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -550,33 +576,37 @@ namespace Assistant
             this.screenshotTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
             this.statusTab.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox12.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
             // 
-            colortable2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            colortable2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            colortable2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            colortable2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            colortable2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            colortable2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            colortable2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            colortable2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            colortable2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            colortable2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            colortable2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            colortable2.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = colortable2;
+            office2010Blue1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010Blue1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010Blue1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010Blue1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010Blue1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010Blue1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010Blue1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue1.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010Blue1;
             this.playMacro.Location = new System.Drawing.Point(373, 21);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(72, 23);
             this.playMacro.TabIndex = 9;
             this.playMacro.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            this.playMacro.Click += new System.EventHandler(this.playMacro_Click);
             // 
             // m_NotifyIcon
             // 
@@ -598,6 +628,8 @@ namespace Assistant
             this.tabs.Controls.Add(this.videoTab);
             this.tabs.Controls.Add(this.screenshotTab);
             this.tabs.Controls.Add(this.statusTab);
+            this.tabs.Controls.Add(this.tabPage1);
+            this.tabs.Controls.Add(this.tabPage2);
             this.tabs.Location = new System.Drawing.Point(0, 0);
             this.tabs.Multiline = true;
             this.tabs.Name = "tabs";
@@ -649,24 +681,7 @@ namespace Assistant
             // 
             // btnMap
             // 
-            office2010Blue2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010Blue2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010Blue2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010Blue2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010Blue2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010Blue2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010Blue2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue2.TextColor = System.Drawing.Color.White;
-            this.btnMap.ColorTable = office2010Blue2;
+            this.btnMap.ColorTable = office2010Blue1;
             this.btnMap.Location = new System.Drawing.Point(3, 289);
             this.btnMap.Name = "btnMap";
             this.btnMap.Size = new System.Drawing.Size(195, 26);
@@ -1672,12 +1687,11 @@ namespace Assistant
             // cntName
             // 
             this.cntName.Text = "Name (Format)";
-            this.cntName.Width = 119;
+            this.cntName.Width = 130;
             // 
             // cntCount
             // 
             this.cntCount.Text = "Count";
-            this.cntCount.Width = 40;
             // 
             // delCounter
             // 
@@ -2003,17 +2017,16 @@ namespace Assistant
             // skillHDRName
             // 
             this.skillHDRName.Text = "Skill Name";
-            this.skillHDRName.Width = 82;
+            this.skillHDRName.Width = 180;
             // 
             // skillHDRvalue
             // 
             this.skillHDRvalue.Text = "Value";
-            this.skillHDRvalue.Width = 40;
             // 
             // skillHDRbase
             // 
             this.skillHDRbase.Text = "Base";
-            this.skillHDRbase.Width = 40;
+            this.skillHDRbase.Width = 50;
             // 
             // skillHDRdelta
             // 
@@ -2028,7 +2041,7 @@ namespace Assistant
             // skillHDRlock
             // 
             this.skillHDRlock.Text = "Lock";
-            this.skillHDRlock.Width = 25;
+            this.skillHDRlock.Width = 55;
             // 
             // agentsTab
             // 
@@ -2273,7 +2286,7 @@ namespace Assistant
             this.macrosTab.Name = "macrosTab";
             this.macrosTab.Size = new System.Drawing.Size(640, 323);
             this.macrosTab.TabIndex = 7;
-            this.macrosTab.Text = "Macros";
+            this.macrosTab.Text = "Old Macros";
             // 
             // macroTree
             // 
@@ -2289,7 +2302,6 @@ namespace Assistant
             // 
             // macroActGroup
             // 
-            this.macroActGroup.Controls.Add(this.adveditorMacro);
             this.macroActGroup.Controls.Add(this.macroImport);
             this.macroActGroup.Controls.Add(this.exportMacro);
             this.macroActGroup.Controls.Add(this.waitDisp);
@@ -2304,17 +2316,6 @@ namespace Assistant
             this.macroActGroup.TabStop = false;
             this.macroActGroup.Text = "Actions";
             this.macroActGroup.Visible = false;
-            // 
-            // adveditorMacro
-            // 
-            this.adveditorMacro.ColorTable = office2010Blue1;
-            this.adveditorMacro.Location = new System.Drawing.Point(373, 151);
-            this.adveditorMacro.Name = "adveditorMacro";
-            this.adveditorMacro.Size = new System.Drawing.Size(72, 23);
-            this.adveditorMacro.TabIndex = 8;
-            this.adveditorMacro.Text = "Adv. Editor";
-            this.adveditorMacro.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
-            this.adveditorMacro.Click += new System.EventHandler(this.adveditorMacro_Click);
             // 
             // macroImport
             // 
@@ -2912,11 +2913,163 @@ namespace Assistant
             this.wikiLink.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.wikiLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.wikiLink_LinkClicked);
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 46);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(640, 323);
+            this.tabPage1.TabIndex = 12;
+            this.tabPage1.Text = "New Macro";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPage2.Controls.Add(this.groupBox12);
+            this.tabPage2.Controls.Add(this.groupBox11);
+            this.tabPage2.Controls.Add(this.autolootContainerLabel);
+            this.tabPage2.Controls.Add(this.autolootContainerButton);
+            this.tabPage2.Controls.Add(this.autolootEnable);
+            this.tabPage2.Controls.Add(this.AutolootlistView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 46);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(640, 323);
+            this.tabPage2.TabIndex = 13;
+            this.tabPage2.Text = "Autoloot";
+            // 
+            // AutolootlistView
+            // 
+            this.AutolootlistView.CheckBoxes = true;
+            this.AutolootlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.AutolootlistView.GridLines = true;
+            this.AutolootlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.AutolootlistView.LabelWrap = false;
+            this.AutolootlistView.Location = new System.Drawing.Point(8, 6);
+            this.AutolootlistView.MultiSelect = false;
+            this.AutolootlistView.Name = "AutolootlistView";
+            this.AutolootlistView.Size = new System.Drawing.Size(216, 309);
+            this.AutolootlistView.TabIndex = 12;
+            this.AutolootlistView.UseCompatibleStateImageBehavior = false;
+            this.AutolootlistView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Item Name";
+            this.columnHeader1.Width = 119;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Graphycs";
+            this.columnHeader2.Width = 80;
+            // 
             // timerTimer
             // 
             this.timerTimer.Enabled = true;
             this.timerTimer.Interval = 5;
             this.timerTimer.Tick += new System.EventHandler(this.timerTimer_Tick);
+            // 
+            // autolootEnable
+            // 
+            this.autolootEnable.Location = new System.Drawing.Point(240, 16);
+            this.autolootEnable.Name = "autolootEnable";
+            this.autolootEnable.Size = new System.Drawing.Size(240, 23);
+            this.autolootEnable.TabIndex = 13;
+            this.autolootEnable.Text = "Enable autoloot";
+            // 
+            // autolootContainerButton
+            // 
+            this.autolootContainerButton.ColorTable = office2010Blue1;
+            this.autolootContainerButton.Location = new System.Drawing.Point(473, 15);
+            this.autolootContainerButton.Name = "autolootContainerButton";
+            this.autolootContainerButton.Size = new System.Drawing.Size(158, 23);
+            this.autolootContainerButton.TabIndex = 14;
+            this.autolootContainerButton.Text = "Set Container";
+            this.autolootContainerButton.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            // 
+            // autolootContainerLabel
+            // 
+            this.autolootContainerLabel.Location = new System.Drawing.Point(470, 52);
+            this.autolootContainerLabel.Name = "autolootContainerLabel";
+            this.autolootContainerLabel.Size = new System.Drawing.Size(161, 21);
+            this.autolootContainerLabel.TabIndex = 43;
+            this.autolootContainerLabel.Text = "Container 0x00000000";
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.autolootSaveButton);
+            this.groupBox11.Controls.Add(this.autolootRemoveItemButton);
+            this.groupBox11.Controls.Add(this.autolootAddItemButton);
+            this.groupBox11.Location = new System.Drawing.Point(240, 92);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(397, 56);
+            this.groupBox11.TabIndex = 44;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Item Edit";
+            // 
+            // autolootAddItemButton
+            // 
+            this.autolootAddItemButton.ColorTable = office2010Blue1;
+            this.autolootAddItemButton.Location = new System.Drawing.Point(6, 21);
+            this.autolootAddItemButton.Name = "autolootAddItemButton";
+            this.autolootAddItemButton.Size = new System.Drawing.Size(125, 23);
+            this.autolootAddItemButton.TabIndex = 45;
+            this.autolootAddItemButton.Text = "Add Item";
+            this.autolootAddItemButton.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            // 
+            // autolootRemoveItemButton
+            // 
+            this.autolootRemoveItemButton.ColorTable = office2010Blue1;
+            this.autolootRemoveItemButton.Location = new System.Drawing.Point(137, 21);
+            this.autolootRemoveItemButton.Name = "autolootRemoveItemButton";
+            this.autolootRemoveItemButton.Size = new System.Drawing.Size(125, 23);
+            this.autolootRemoveItemButton.TabIndex = 46;
+            this.autolootRemoveItemButton.Text = "Remove Item";
+            this.autolootRemoveItemButton.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            // 
+            // autolootSaveButton
+            // 
+            this.autolootSaveButton.ColorTable = office2010Blue1;
+            this.autolootSaveButton.Location = new System.Drawing.Point(266, 21);
+            this.autolootSaveButton.Name = "autolootSaveButton";
+            this.autolootSaveButton.Size = new System.Drawing.Size(125, 23);
+            this.autolootSaveButton.TabIndex = 47;
+            this.autolootSaveButton.Text = "Save Dat";
+            this.autolootSaveButton.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.autolootImport);
+            this.groupBox12.Controls.Add(this.autolootExport);
+            this.groupBox12.Location = new System.Drawing.Point(240, 171);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(397, 56);
+            this.groupBox12.TabIndex = 45;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Autoloot Profile";
+            // 
+            // autolootExport
+            // 
+            this.autolootExport.ColorTable = office2010Blue1;
+            this.autolootExport.Location = new System.Drawing.Point(6, 21);
+            this.autolootExport.Name = "autolootExport";
+            this.autolootExport.Size = new System.Drawing.Size(125, 23);
+            this.autolootExport.TabIndex = 48;
+            this.autolootExport.Text = "Export";
+            this.autolootExport.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            // 
+            // autolootImport
+            // 
+            this.autolootImport.ColorTable = office2010Blue1;
+            this.autolootImport.Location = new System.Drawing.Point(137, 21);
+            this.autolootImport.Name = "autolootImport";
+            this.autolootImport.Size = new System.Drawing.Size(125, 23);
+            this.autolootImport.TabIndex = 49;
+            this.autolootImport.Text = "Import";
+            this.autolootImport.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
             // 
             // MainForm
             // 
@@ -2970,6 +3123,9 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
             this.statusTab.ResumeLayout(false);
             this.statusTab.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -4720,7 +4876,7 @@ namespace Assistant
 			if ( MacroManager.Playing )
 			{
 				MacroManager.Stop();
-				//OnMacroStop();
+				OnMacroStop();
 			}
 			else
 			{
@@ -6248,5 +6404,8 @@ namespace Assistant
         {
             MessageBox.Show("TODO!", "TODO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         }
+
+
+
 	}
 }
