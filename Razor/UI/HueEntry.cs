@@ -12,11 +12,11 @@ namespace Assistant
 	public class HueEntry : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.TextBox hueNum;
-		private System.Windows.Forms.Button inGame;
+        private RazorUIMod.XTextBox hueNum;
+        private RazorUIMod.XButton inGame;
 		private System.Windows.Forms.Label preview;
-		private System.Windows.Forms.Button okay;
-		private System.Windows.Forms.Button cancel;
+        private RazorUIMod.XButton okay;
+        private RazorUIMod.XButton cancel;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -67,91 +67,154 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.label1 = new System.Windows.Forms.Label();
-			this.hueNum = new System.Windows.Forms.TextBox();
-			this.inGame = new System.Windows.Forms.Button();
-			this.preview = new System.Windows.Forms.Label();
-			this.okay = new System.Windows.Forms.Button();
-			this.cancel = new System.Windows.Forms.Button();
-			this.SuspendLayout();
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(8, 8);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(72, 16);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Hue Number:";
-			// 
-			// hueNum
-			// 
-			this.hueNum.Location = new System.Drawing.Point(76, 4);
-			this.hueNum.Name = "hueNum";
-			this.hueNum.Size = new System.Drawing.Size(50, 20);
-			this.hueNum.TabIndex = 1;
-			this.hueNum.Text = "";
-			this.hueNum.TextChanged += new System.EventHandler(this.hueNum_TextChanged);
-			// 
-			// inGame
-			// 
-			this.inGame.Location = new System.Drawing.Point(4, 28);
-			this.inGame.Name = "inGame";
-			this.inGame.Size = new System.Drawing.Size(124, 20);
-			this.inGame.TabIndex = 2;
-			this.inGame.Text = "Select in Game";
-			this.inGame.Click += new System.EventHandler(this.inGame_Click);
-			// 
-			// preview
-			// 
-			this.preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.preview.Location = new System.Drawing.Point(4, 52);
-			this.preview.Name = "preview";
-			this.preview.Size = new System.Drawing.Size(124, 20);
-			this.preview.TabIndex = 3;
-			this.preview.Text = "Preview";
-			this.preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// okay
-			// 
-			this.okay.Location = new System.Drawing.Point(10, 80);
-			this.okay.Name = "okay";
-			this.okay.Size = new System.Drawing.Size(52, 20);
-			this.okay.TabIndex = 4;
-			this.okay.Text = "&Okay";
-			this.okay.Click += new System.EventHandler(this.okay_Click);
-			// 
-			// cancel
-			// 
-			this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancel.Location = new System.Drawing.Point(70, 80);
-			this.cancel.Name = "cancel";
-			this.cancel.Size = new System.Drawing.Size(52, 20);
-			this.cancel.TabIndex = 5;
-			this.cancel.Text = "Cancel";
-			this.cancel.Click += new System.EventHandler(this.cancel_Click);
-			// 
-			// HueEntry
-			// 
-			this.AcceptButton = this.okay;
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(130, 108);
-			this.ControlBox = false;
-			this.Controls.Add(this.hueNum);
-			this.Controls.Add(this.cancel);
-			this.Controls.Add(this.okay);
-			this.Controls.Add(this.preview);
-			this.Controls.Add(this.inGame);
-			this.Controls.Add(this.label1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
-			this.Name = "HueEntry";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Select a Hue";
-			this.Load += new System.EventHandler(this.HueEntry_Load);
-			this.ResumeLayout(false);
+            RazorUIMod.Colortable colortable1 = new RazorUIMod.Colortable();
+            RazorUIMod.Colortable colortable2 = new RazorUIMod.Colortable();
+            RazorUIMod.Colortable colortable3 = new RazorUIMod.Colortable();
+            this.label1 = new System.Windows.Forms.Label();
+            this.hueNum = new RazorUIMod.XTextBox();
+            this.inGame = new RazorUIMod.XButton();
+            this.preview = new System.Windows.Forms.Label();
+            this.okay = new RazorUIMod.XButton();
+            this.cancel = new RazorUIMod.XButton();
+            this.SuspendLayout();
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(10, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 19);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Hue Number:";
+            // 
+            // hueNum
+            // 
+            this.hueNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.hueNum.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.hueNum.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.hueNum.Location = new System.Drawing.Point(91, 5);
+            this.hueNum.Name = "hueNum";
+            this.hueNum.Padding = new System.Windows.Forms.Padding(1);
+            this.hueNum.Size = new System.Drawing.Size(60, 22);
+            this.hueNum.TabIndex = 1;
+            this.hueNum.TextChanged += new System.EventHandler(this.hueNum_TextChanged);
+            // 
+            // inGame
+            // 
+            colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable1.TextColor = System.Drawing.Color.White;
+            this.inGame.ColorTable = colortable1;
+            this.inGame.Location = new System.Drawing.Point(5, 32);
+            this.inGame.Name = "inGame";
+            this.inGame.Size = new System.Drawing.Size(149, 23);
+            this.inGame.TabIndex = 2;
+            this.inGame.Text = "Select in Game";
+            this.inGame.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            this.inGame.Click += new System.EventHandler(this.inGame_Click);
+            // 
+            // preview
+            // 
+            this.preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.preview.Location = new System.Drawing.Point(5, 60);
+            this.preview.Name = "preview";
+            this.preview.Size = new System.Drawing.Size(149, 23);
+            this.preview.TabIndex = 3;
+            this.preview.Text = "Preview";
+            this.preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // okay
+            // 
+            colortable2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            colortable2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            colortable2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            colortable2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            colortable2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            colortable2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            colortable2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable2.TextColor = System.Drawing.Color.White;
+            this.okay.ColorTable = colortable2;
+            this.okay.Location = new System.Drawing.Point(12, 92);
+            this.okay.Name = "okay";
+            this.okay.Size = new System.Drawing.Size(62, 23);
+            this.okay.TabIndex = 4;
+            this.okay.Text = "&Okay";
+            this.okay.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            this.okay.Click += new System.EventHandler(this.okay_Click);
+            // 
+            // cancel
+            // 
+            colortable3.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable3.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable3.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable3.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable3.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            colortable3.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            colortable3.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable3.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable3.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            colortable3.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            colortable3.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable3.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable3.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            colortable3.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            colortable3.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable3.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable3.TextColor = System.Drawing.Color.White;
+            this.cancel.ColorTable = colortable3;
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancel.Location = new System.Drawing.Point(84, 92);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(62, 23);
+            this.cancel.TabIndex = 5;
+            this.cancel.Text = "Cancel";
+            this.cancel.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
+            // 
+            // HueEntry
+            // 
+            this.AcceptButton = this.okay;
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+            this.CancelButton = this.cancel;
+            this.ClientSize = new System.Drawing.Size(161, 122);
+            this.ControlBox = false;
+            this.Controls.Add(this.hueNum);
+            this.Controls.Add(this.cancel);
+            this.Controls.Add(this.okay);
+            this.Controls.Add(this.preview);
+            this.Controls.Add(this.inGame);
+            this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "HueEntry";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Select a Hue";
+            this.Load += new System.EventHandler(this.HueEntry_Load);
+            this.ResumeLayout(false);
 
 		}
 		#endregion

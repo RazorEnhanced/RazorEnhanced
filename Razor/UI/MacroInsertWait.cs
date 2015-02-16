@@ -16,18 +16,18 @@ namespace Assistant
 		private int m_Idx;
 		private MacroAction m_Action;
 
-		private System.Windows.Forms.Button insert;
-		private System.Windows.Forms.RadioButton radioPause;
-		private System.Windows.Forms.TextBox pause;
+        private RazorUIMod.XButton insert;
+        private RazorUIMod.XRadioButton radioPause;
+        private RazorUIMod.XTextBox pause;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.RadioButton radioGump;
-		private System.Windows.Forms.RadioButton radioStat;
-		private System.Windows.Forms.TextBox statAmount;
-		private System.Windows.Forms.Button cancel;
-		private System.Windows.Forms.RadioButton radioTarg;
-		private System.Windows.Forms.ComboBox statList;
-		private System.Windows.Forms.ComboBox statOpList;
-		private System.Windows.Forms.RadioButton radioMenu;
+        private RazorUIMod.XRadioButton radioGump;
+        private RazorUIMod.XRadioButton radioStat;
+        private RazorUIMod.XTextBox statAmount;
+        private RazorUIMod.XButton cancel;
+        private RazorUIMod.XRadioButton radioTarg;
+        private RazorUIMod.XComboBox statList;
+        private RazorUIMod.XComboBox statOpList;
+        private RazorUIMod.XRadioButton radioMenu;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -82,158 +82,204 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.insert = new System.Windows.Forms.Button();
-			this.radioPause = new System.Windows.Forms.RadioButton();
-			this.pause = new System.Windows.Forms.TextBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.radioGump = new System.Windows.Forms.RadioButton();
-			this.radioTarg = new System.Windows.Forms.RadioButton();
-			this.radioStat = new System.Windows.Forms.RadioButton();
-			this.statAmount = new System.Windows.Forms.TextBox();
-			this.statList = new System.Windows.Forms.ComboBox();
-			this.cancel = new System.Windows.Forms.Button();
-			this.statOpList = new System.Windows.Forms.ComboBox();
-			this.radioMenu = new System.Windows.Forms.RadioButton();
-			this.SuspendLayout();
-			// 
-			// insert
-			// 
-			this.insert.Location = new System.Drawing.Point(8, 116);
-			this.insert.Name = "insert";
-			this.insert.Size = new System.Drawing.Size(64, 24);
-			this.insert.TabIndex = 0;
-			this.insert.Text = "&Insert";
-			this.insert.Click += new System.EventHandler(this.insert_Click);
-			// 
-			// radioPause
-			// 
-			this.radioPause.Location = new System.Drawing.Point(8, 4);
-			this.radioPause.Name = "radioPause";
-			this.radioPause.Size = new System.Drawing.Size(76, 20);
-			this.radioPause.TabIndex = 1;
-			this.radioPause.Text = "Pause for:";
-			this.radioPause.CheckedChanged += new System.EventHandler(this.radioPause_CheckedChanged);
-			// 
-			// pause
-			// 
-			this.pause.Enabled = false;
-			this.pause.Location = new System.Drawing.Point(84, 4);
-			this.pause.Name = "pause";
-			this.pause.Size = new System.Drawing.Size(40, 20);
-			this.pause.TabIndex = 2;
-			this.pause.Text = "";
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(128, 7);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(72, 16);
-			this.label1.TabIndex = 3;
-			this.label1.Text = "milliseconds";
-			// 
-			// radioGump
-			// 
-			this.radioGump.Location = new System.Drawing.Point(8, 24);
-			this.radioGump.Name = "radioGump";
-			this.radioGump.Size = new System.Drawing.Size(96, 20);
-			this.radioGump.TabIndex = 4;
-			this.radioGump.Text = "Wait for Gump";
-			// 
-			// radioTarg
-			// 
-			this.radioTarg.Location = new System.Drawing.Point(8, 64);
-			this.radioTarg.Name = "radioTarg";
-			this.radioTarg.Size = new System.Drawing.Size(100, 20);
-			this.radioTarg.TabIndex = 5;
-			this.radioTarg.Text = "Wait for Target";
-			// 
-			// radioStat
-			// 
-			this.radioStat.Location = new System.Drawing.Point(8, 84);
-			this.radioStat.Name = "radioStat";
-			this.radioStat.Size = new System.Drawing.Size(64, 20);
-			this.radioStat.TabIndex = 6;
-			this.radioStat.Text = "Wait for ";
-			this.radioStat.CheckedChanged += new System.EventHandler(this.radioStat_CheckedChanged);
-			// 
-			// statAmount
-			// 
-			this.statAmount.Enabled = false;
-			this.statAmount.Location = new System.Drawing.Point(180, 84);
-			this.statAmount.Name = "statAmount";
-			this.statAmount.Size = new System.Drawing.Size(40, 20);
-			this.statAmount.TabIndex = 7;
-			this.statAmount.Text = "";
-			// 
-			// statList
-			// 
-			this.statList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.statList.Enabled = false;
-			this.statList.Items.AddRange(new object[] {
-														  "Hits",
-														  "Mana",
-														  "Stamina"});
-			this.statList.Location = new System.Drawing.Point(72, 84);
-			this.statList.Name = "statList";
-			this.statList.Size = new System.Drawing.Size(64, 21);
-			this.statList.TabIndex = 8;
-			// 
-			// cancel
-			// 
-			this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancel.Location = new System.Drawing.Point(80, 116);
-			this.cancel.Name = "cancel";
-			this.cancel.Size = new System.Drawing.Size(64, 24);
-			this.cancel.TabIndex = 10;
-			this.cancel.Text = "&Cancel";
-			this.cancel.Click += new System.EventHandler(this.cancel_Click);
-			// 
-			// statOpList
-			// 
-			this.statOpList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.statOpList.Enabled = false;
-			this.statOpList.Items.AddRange(new object[] {
-															"<=",
-															">="});
-			this.statOpList.Location = new System.Drawing.Point(136, 84);
-			this.statOpList.Name = "statOpList";
-			this.statOpList.Size = new System.Drawing.Size(44, 21);
-			this.statOpList.TabIndex = 11;
-			// 
-			// radioMenu
-			// 
-			this.radioMenu.Location = new System.Drawing.Point(8, 44);
-			this.radioMenu.Name = "radioMenu";
-			this.radioMenu.Size = new System.Drawing.Size(176, 20);
-			this.radioMenu.TabIndex = 12;
-			this.radioMenu.Text = "Wait for old-style Menu/Dialog";
-			// 
-			// MacroInsertWait
-			// 
-			this.AcceptButton = this.insert;
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(226, 148);
-			this.ControlBox = false;
-			this.Controls.Add(this.radioMenu);
-			this.Controls.Add(this.statOpList);
-			this.Controls.Add(this.cancel);
-			this.Controls.Add(this.statList);
-			this.Controls.Add(this.statAmount);
-			this.Controls.Add(this.radioStat);
-			this.Controls.Add(this.radioTarg);
-			this.Controls.Add(this.radioGump);
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.pause);
-			this.Controls.Add(this.radioPause);
-			this.Controls.Add(this.insert);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Name = "MacroInsertWait";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Insert Wait/Pause...";
-			this.Load += new System.EventHandler(this.MacroInsertWait_Load);
-			this.ResumeLayout(false);
+            RazorUIMod.Colortable colortable1 = new RazorUIMod.Colortable();
+            RazorUIMod.Colortable colortable2 = new RazorUIMod.Colortable();
+            this.insert = new RazorUIMod.XButton();
+            this.radioPause = new RazorUIMod.XRadioButton();
+            this.pause = new RazorUIMod.XTextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.radioGump = new RazorUIMod.XRadioButton();
+            this.radioTarg = new RazorUIMod.XRadioButton();
+            this.radioStat = new RazorUIMod.XRadioButton();
+            this.statAmount = new RazorUIMod.XTextBox();
+            this.statList = new RazorUIMod.XComboBox();
+            this.cancel = new RazorUIMod.XButton();
+            this.statOpList = new RazorUIMod.XComboBox();
+            this.radioMenu = new RazorUIMod.XRadioButton();
+            this.SuspendLayout();
+            // 
+            // insert
+            // 
+            colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable1.TextColor = System.Drawing.Color.White;
+            this.insert.ColorTable = colortable1;
+            this.insert.Location = new System.Drawing.Point(12, 134);
+            this.insert.Name = "insert";
+            this.insert.Size = new System.Drawing.Size(97, 28);
+            this.insert.TabIndex = 0;
+            this.insert.Text = "&Insert";
+            this.insert.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            this.insert.Click += new System.EventHandler(this.insert_Click);
+            // 
+            // radioPause
+            // 
+            this.radioPause.Location = new System.Drawing.Point(10, 5);
+            this.radioPause.Name = "radioPause";
+            this.radioPause.Size = new System.Drawing.Size(91, 23);
+            this.radioPause.TabIndex = 1;
+            this.radioPause.Text = "Pause for:";
+            this.radioPause.CheckedChanged += new System.EventHandler(this.radioPause_CheckedChanged);
+            // 
+            // pause
+            // 
+            this.pause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.pause.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.pause.Enabled = false;
+            this.pause.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.pause.Location = new System.Drawing.Point(101, 5);
+            this.pause.Name = "pause";
+            this.pause.Padding = new System.Windows.Forms.Padding(1);
+            this.pause.Size = new System.Drawing.Size(48, 22);
+            this.pause.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(154, 8);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(86, 19);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "milliseconds";
+            // 
+            // radioGump
+            // 
+            this.radioGump.Location = new System.Drawing.Point(10, 28);
+            this.radioGump.Name = "radioGump";
+            this.radioGump.Size = new System.Drawing.Size(115, 23);
+            this.radioGump.TabIndex = 4;
+            this.radioGump.Text = "Wait for Gump";
+            // 
+            // radioTarg
+            // 
+            this.radioTarg.Location = new System.Drawing.Point(10, 74);
+            this.radioTarg.Name = "radioTarg";
+            this.radioTarg.Size = new System.Drawing.Size(120, 23);
+            this.radioTarg.TabIndex = 5;
+            this.radioTarg.Text = "Wait for Target";
+            // 
+            // radioStat
+            // 
+            this.radioStat.Location = new System.Drawing.Point(10, 97);
+            this.radioStat.Name = "radioStat";
+            this.radioStat.Size = new System.Drawing.Size(76, 23);
+            this.radioStat.TabIndex = 6;
+            this.radioStat.Text = "Wait for ";
+            this.radioStat.CheckedChanged += new System.EventHandler(this.radioStat_CheckedChanged);
+            // 
+            // statAmount
+            // 
+            this.statAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.statAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.statAmount.Enabled = false;
+            this.statAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.statAmount.Location = new System.Drawing.Point(220, 100);
+            this.statAmount.Name = "statAmount";
+            this.statAmount.Padding = new System.Windows.Forms.Padding(1);
+            this.statAmount.Size = new System.Drawing.Size(48, 22);
+            this.statAmount.TabIndex = 7;
+            // 
+            // statList
+            // 
+            this.statList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.statList.Enabled = false;
+            this.statList.Items.AddRange(new object[] {
+            "Hits",
+            "Mana",
+            "Stamina"});
+            this.statList.Location = new System.Drawing.Point(86, 97);
+            this.statList.Name = "statList";
+            this.statList.Size = new System.Drawing.Size(77, 28);
+            this.statList.TabIndex = 8;
+            // 
+            // cancel
+            // 
+            colortable2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            colortable2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            colortable2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            colortable2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            colortable2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            colortable2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            colortable2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            colortable2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            colortable2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            colortable2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            colortable2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            colortable2.TextColor = System.Drawing.Color.White;
+            this.cancel.ColorTable = colortable2;
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancel.Location = new System.Drawing.Point(171, 134);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(97, 28);
+            this.cancel.TabIndex = 10;
+            this.cancel.Text = "&Cancel";
+            this.cancel.Theme = RazorUIMod.Theme.MSOffice2010_BLUE;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
+            // 
+            // statOpList
+            // 
+            this.statOpList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.statOpList.Enabled = false;
+            this.statOpList.Items.AddRange(new object[] {
+            "<=",
+            ">="});
+            this.statOpList.Location = new System.Drawing.Point(165, 97);
+            this.statOpList.Name = "statOpList";
+            this.statOpList.Size = new System.Drawing.Size(53, 28);
+            this.statOpList.TabIndex = 11;
+            // 
+            // radioMenu
+            // 
+            this.radioMenu.Location = new System.Drawing.Point(10, 51);
+            this.radioMenu.Name = "radioMenu";
+            this.radioMenu.Size = new System.Drawing.Size(211, 23);
+            this.radioMenu.TabIndex = 12;
+            this.radioMenu.Text = "Wait for old-style Menu/Dialog";
+            // 
+            // MacroInsertWait
+            // 
+            this.AcceptButton = this.insert;
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+            this.CancelButton = this.cancel;
+            this.ClientSize = new System.Drawing.Size(276, 180);
+            this.ControlBox = false;
+            this.Controls.Add(this.radioMenu);
+            this.Controls.Add(this.statOpList);
+            this.Controls.Add(this.cancel);
+            this.Controls.Add(this.statList);
+            this.Controls.Add(this.statAmount);
+            this.Controls.Add(this.radioStat);
+            this.Controls.Add(this.radioTarg);
+            this.Controls.Add(this.radioGump);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.pause);
+            this.Controls.Add(this.radioPause);
+            this.Controls.Add(this.insert);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "MacroInsertWait";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Insert Wait/Pause...";
+            this.Load += new System.EventHandler(this.MacroInsertWait_Load);
+            this.ResumeLayout(false);
 
 		}
 		#endregion

@@ -66,6 +66,12 @@
   <ItemGroup>
     <None Include="Resources\XCheckBox.ON.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XRadioButton.OFF.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\XRadioButton.ON.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

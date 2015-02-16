@@ -87,10 +87,10 @@ namespace Assistant
 		}
 
 		private string m_String;
-		private System.Windows.Forms.Button ok;
-		private System.Windows.Forms.Button cancel;
+        private RazorUIMod.XButton ok;
+        private RazorUIMod.XButton cancel;
 		private System.Windows.Forms.Label Prompt;
-		private System.Windows.Forms.TextBox EntryBox;
+        private RazorUIMod.XTextBox EntryBox;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -130,65 +130,65 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.Prompt = new System.Windows.Forms.Label();
-			this.EntryBox = new System.Windows.Forms.TextBox();
-			this.ok = new System.Windows.Forms.Button();
-			this.cancel = new System.Windows.Forms.Button();
-			this.SuspendLayout();
-			// 
-			// Prompt
-			// 
-			this.Prompt.Location = new System.Drawing.Point(4, 2);
-			this.Prompt.Name = "Prompt";
-			this.Prompt.Size = new System.Drawing.Size(210, 16);
-			this.Prompt.TabIndex = 0;
-			this.Prompt.Text = ":";
-			// 
-			// EntryBox
-			// 
-			this.EntryBox.Location = new System.Drawing.Point(4, 20);
-			this.EntryBox.Name = "EntryBox";
-			this.EntryBox.Size = new System.Drawing.Size(210, 20);
-			this.EntryBox.TabIndex = 1;
-			this.EntryBox.Text = "";
-			// 
-			// ok
-			// 
-			this.ok.Location = new System.Drawing.Point(32, 46);
-			this.ok.Name = "ok";
-			this.ok.Size = new System.Drawing.Size(72, 20);
-			this.ok.TabIndex = 2;
-			this.ok.Text = "Okay";
-			this.ok.Click += new System.EventHandler(this.ok_Click);
-			// 
-			// cancel
-			// 
-			this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancel.Location = new System.Drawing.Point(112, 46);
-			this.cancel.Name = "cancel";
-			this.cancel.Size = new System.Drawing.Size(72, 20);
-			this.cancel.TabIndex = 3;
-			this.cancel.Text = "Cancel";
-			this.cancel.Click += new System.EventHandler(this.cancel_Click);
-			// 
-			// InputBox
-			// 
-			this.AcceptButton = this.ok;
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.CancelButton = this.cancel;
-			this.ClientSize = new System.Drawing.Size(218, 72);
-			this.ControlBox = false;
-			this.Controls.Add(this.cancel);
-			this.Controls.Add(this.ok);
-			this.Controls.Add(this.EntryBox);
-			this.Controls.Add(this.Prompt);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Name = "InputBox";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Input";
-			this.Load += new System.EventHandler(this.InputBox_Load);
-			this.ResumeLayout(false);
+            this.Prompt = new System.Windows.Forms.Label();
+            this.EntryBox = new RazorUIMod.XTextBox();
+            this.ok = new RazorUIMod.XButton();
+            this.cancel = new RazorUIMod.XButton();
+            this.SuspendLayout();
+            // 
+            // Prompt
+            // 
+            this.Prompt.Location = new System.Drawing.Point(5, 2);
+            this.Prompt.Name = "Prompt";
+            this.Prompt.Size = new System.Drawing.Size(252, 19);
+            this.Prompt.TabIndex = 0;
+            this.Prompt.Text = ":";
+            // 
+            // EntryBox
+            // 
+            this.EntryBox.Location = new System.Drawing.Point(5, 23);
+            this.EntryBox.Name = "EntryBox";
+            this.EntryBox.Size = new System.Drawing.Size(252, 22);
+            this.EntryBox.TabIndex = 1;
+            // 
+            // ok
+            // 
+            this.ok.Location = new System.Drawing.Point(38, 53);
+            this.ok.Name = "ok";
+            this.ok.Size = new System.Drawing.Size(87, 23);
+            this.ok.TabIndex = 2;
+            this.ok.Text = "Okay";
+            this.ok.Click += new System.EventHandler(this.ok_Click);
+            // 
+            // cancel
+            // 
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancel.Location = new System.Drawing.Point(134, 53);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(87, 23);
+            this.cancel.TabIndex = 3;
+            this.cancel.Text = "Cancel";
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
+            // 
+            // InputBox
+            // 
+            this.AcceptButton = this.ok;
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+            this.CancelButton = this.cancel;
+            this.ClientSize = new System.Drawing.Size(264, 89);
+            this.ControlBox = false;
+            this.Controls.Add(this.cancel);
+            this.Controls.Add(this.ok);
+            this.Controls.Add(this.EntryBox);
+            this.Controls.Add(this.Prompt);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "InputBox";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Input";
+            this.Load += new System.EventHandler(this.InputBox_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 		#endregion
