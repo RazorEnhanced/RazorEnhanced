@@ -10,6 +10,10 @@ using System.Runtime.InteropServices;
 using Assistant.Filters;
 using Assistant.Macros;
 using RazorEnhanced.UI;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
 
 namespace Assistant
 {
@@ -254,6 +258,13 @@ namespace Assistant
 		private XButton autolootAddItemButton;
 		private Label autolootContainerLabel;
 		private XButton autolootContainerButton;
+        private XButton xButton2;
+        private XButton xButton1;
+        private ListView advMacroList;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private OpenFileDialog openFileDialog1;
+        private XButton xButton3;
 
 		private bool m_CanClose = true;
 
@@ -533,6 +544,12 @@ namespace Assistant
             this.homeLink = new System.Windows.Forms.LinkLabel();
             this.wikiLink = new System.Windows.Forms.LinkLabel();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.xButton3 = new RazorEnhanced.UI.XButton();
+            this.xButton2 = new RazorEnhanced.UI.XButton();
+            this.xButton1 = new RazorEnhanced.UI.XButton();
+            this.advMacroList = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.autolootImport = new RazorEnhanced.UI.XButton();
@@ -548,6 +565,7 @@ namespace Assistant
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -577,6 +595,7 @@ namespace Assistant
             this.screenshotTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
             this.statusTab.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox11.SuspendLayout();
@@ -2934,6 +2953,10 @@ namespace Assistant
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.xButton3);
+            this.tabPage1.Controls.Add(this.xButton2);
+            this.tabPage1.Controls.Add(this.xButton1);
+            this.tabPage1.Controls.Add(this.advMacroList);
             this.tabPage1.Location = new System.Drawing.Point(4, 46);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -2941,6 +2964,66 @@ namespace Assistant
             this.tabPage1.TabIndex = 12;
             this.tabPage1.Text = "New Macro";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // xButton3
+            // 
+            this.xButton3.ColorTable = office2010Blue1;
+            this.xButton3.Location = new System.Drawing.Point(505, 36);
+            this.xButton3.Name = "xButton3";
+            this.xButton3.Size = new System.Drawing.Size(102, 23);
+            this.xButton3.TabIndex = 15;
+            this.xButton3.Text = "Delete";
+            this.xButton3.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.xButton3.Click += new System.EventHandler(this.xButton3_Click);
+            // 
+            // xButton2
+            // 
+            this.xButton2.ColorTable = office2010Blue1;
+            this.xButton2.Location = new System.Drawing.Point(382, 36);
+            this.xButton2.Name = "xButton2";
+            this.xButton2.Size = new System.Drawing.Size(102, 23);
+            this.xButton2.TabIndex = 14;
+            this.xButton2.Text = "Load C# Script";
+            this.xButton2.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.xButton2.Click += new System.EventHandler(this.xButton2_Click);
+            // 
+            // xButton1
+            // 
+            this.xButton1.ColorTable = office2010Blue1;
+            this.xButton1.Location = new System.Drawing.Point(263, 36);
+            this.xButton1.Name = "xButton1";
+            this.xButton1.Size = new System.Drawing.Size(102, 23);
+            this.xButton1.TabIndex = 13;
+            this.xButton1.Text = "Start Selected";
+            this.xButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.xButton1.Click += new System.EventHandler(this.xButton1_Click);
+            // 
+            // advMacroList
+            // 
+            this.advMacroList.CheckBoxes = true;
+            this.advMacroList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4});
+            this.advMacroList.GridLines = true;
+            this.advMacroList.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.advMacroList.LabelWrap = false;
+            this.advMacroList.Location = new System.Drawing.Point(8, 6);
+            this.advMacroList.MultiSelect = false;
+            this.advMacroList.Name = "advMacroList";
+            this.advMacroList.Size = new System.Drawing.Size(231, 311);
+            this.advMacroList.TabIndex = 12;
+            this.advMacroList.UseCompatibleStateImageBehavior = false;
+            this.advMacroList.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Filename";
+            this.columnHeader3.Width = 130;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Exe Status";
+            this.columnHeader4.Width = 90;
             // 
             // tabPage2
             // 
@@ -3090,6 +3173,10 @@ namespace Assistant
             this.timerTimer.Interval = 5;
             this.timerTimer.Tick += new System.EventHandler(this.timerTimer_Tick);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
@@ -3142,6 +3229,7 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
             this.statusTab.ResumeLayout(false);
             this.statusTab.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
@@ -6425,7 +6513,43 @@ namespace Assistant
 			MessageBox.Show("TODO!", "TODO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 		}
 
+        private void xButton2_Click(object sender, EventArgs e)
+        {
+            DialogResult result = openFileDialog1.ShowDialog();
+            if (result == DialogResult.OK) // Test result.
+            {
+                ListViewItem item = new ListViewItem(new[] { openFileDialog1.FileName, "Stop" });
+                advMacroList.Items.Add(item);
+            }
 
+          
+        }
 
+        private void xButton3_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem eachItem in advMacroList.SelectedItems)
+            {
+                advMacroList.Items.Remove(eachItem);
+            }
+        }
+
+        private void xButton1_Click(object sender, EventArgs e)
+        {
+            var csc = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
+        var parameters = new CompilerParameters(new[] { "mscorlib.dll", "System.Core.dll" }, "foo.exe", true);
+        parameters.GenerateExecutable = true;
+        CompilerResults results = csc.CompileAssemblyFromSource(parameters,
+        @"using 
+            System.Linq;
+            class Program {
+              public static void Main(string[] args) {
+              
+              }
+            }"
+        
+        );
+        results.Errors.Cast<CompilerError>().ToList().ForEach(error => Console.WriteLine(error.ErrorText));
+
+        }
 	}
 }
