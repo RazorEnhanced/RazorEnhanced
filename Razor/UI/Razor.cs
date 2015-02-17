@@ -10,10 +10,7 @@ using System.Runtime.InteropServices;
 using Assistant.Filters;
 using Assistant.Macros;
 using RazorEnhanced.UI;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.CSharp;
-using System.CodeDom.Compiler;
+
 
 namespace Assistant
 {
@@ -6535,20 +6532,7 @@ namespace Assistant
 
         private void xButton1_Click(object sender, EventArgs e)
         {
-            var csc = new CSharpCodeProvider(new Dictionary<string, string>() { { "CompilerVersion", "v3.5" } });
-        var parameters = new CompilerParameters(new[] { "mscorlib.dll", "System.Core.dll" }, "foo.exe", true);
-        parameters.GenerateExecutable = true;
-        CompilerResults results = csc.CompileAssemblyFromSource(parameters,
-        @"using 
-            System.Linq;
-            class Program {
-              public static void Main(string[] args) {
-              
-              }
-            }"
-        
-        );
-        results.Errors.Cast<CompilerError>().ToList().ForEach(error => Console.WriteLine(error.ErrorText));
+           
 
         }
 	}
