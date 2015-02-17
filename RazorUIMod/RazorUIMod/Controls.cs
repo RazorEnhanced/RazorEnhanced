@@ -90,10 +90,24 @@ namespace RazorEnhanced.UI
 
 	public class XComboBox : ComboBox
 	{
-		public XComboBox()
+        public XComboBox()
 		{
-			this.SetStyle(ControlStyles.UserPaint, true);
+            this.DrawMode = DrawMode.OwnerDrawVariable;
+            this.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.SetStyle(ControlStyles.UserPaint, true);
 		}
+        protected override void OnDrawItem(DrawItemEventArgs e)
+        {
+            e.DrawBackground();
+            var index = e.Index;
+            if (index < 0 || index >= Items.Count) return;
+            using (var brush = new SolidBrush(e.ForeColor))
+            {
+                Rectangle rec = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - ItemHeight) / 2), e.Bounds.Width, ItemHeight -1);
+                e.Graphics.DrawString(this.Items[e.Index].ToString(), e.Font, new SolidBrush(this.ForeColor), rec);
+            }
+            e.DrawFocusRectangle();
+        }    
 
 		protected override void OnPaint(PaintEventArgs pevent)
 		{
