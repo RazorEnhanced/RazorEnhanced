@@ -75,59 +75,60 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-			Colortable colortable1 = new Colortable();
-			Colortable colortable2 = new Colortable();
-			this.insert = new XButton();
-			this.txtAmount = new XTextBox();
-			this.varList = new XComboBox();
-			this.cancel = new XButton();
-			this.opList = new XComboBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.SuspendLayout();
-			// 
-			// insert
-			// 
-			colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable1.TextColor = System.Drawing.Color.White;
-			this.insert.ColorTable = colortable1;
-			this.insert.Location = new System.Drawing.Point(38, 42);
-			this.insert.Name = "insert";
-			this.insert.Size = new System.Drawing.Size(92, 27);
-			this.insert.TabIndex = 0;
-			this.insert.Text = "&Insert";
-			this.insert.Theme = Theme.MSOffice2010_BLUE;
-			this.insert.Click += new System.EventHandler(this.insert_Click);
-			// 
-			// txtAmount
-			// 
-			this.txtAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.txtAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.txtAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.txtAmount.Location = new System.Drawing.Point(177, 12);
-			this.txtAmount.Name = "txtAmount";
-			this.txtAmount.Padding = new System.Windows.Forms.Padding(1);
-			this.txtAmount.Size = new System.Drawing.Size(96, 22);
-			this.txtAmount.TabIndex = 7;
-			// 
-			// varList
-			// 
-			this.varList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.varList.Items.AddRange(new object[] {
+            RazorEnhanced.UI.Office2010Blue office2010Blue1 = new RazorEnhanced.UI.Office2010Blue();
+            this.insert = new RazorEnhanced.UI.XButton();
+            this.txtAmount = new RazorEnhanced.UI.XTextBox();
+            this.varList = new RazorEnhanced.UI.XComboBox();
+            this.cancel = new RazorEnhanced.UI.XButton();
+            this.opList = new RazorEnhanced.UI.XComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.SuspendLayout();
+            // 
+            // insert
+            // 
+            office2010Blue1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010Blue1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010Blue1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010Blue1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010Blue1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010Blue1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010Blue1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue1.TextColor = System.Drawing.Color.White;
+            this.insert.ColorTable = office2010Blue1;
+            this.insert.Location = new System.Drawing.Point(38, 42);
+            this.insert.Name = "insert";
+            this.insert.Size = new System.Drawing.Size(92, 27);
+            this.insert.TabIndex = 0;
+            this.insert.Text = "&Insert";
+            this.insert.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.insert.Click += new System.EventHandler(this.insert_Click);
+            // 
+            // txtAmount
+            // 
+            this.txtAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.txtAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.txtAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.txtAmount.Location = new System.Drawing.Point(181, 10);
+            this.txtAmount.Name = "txtAmount";
+            this.txtAmount.Padding = new System.Windows.Forms.Padding(1);
+            this.txtAmount.Size = new System.Drawing.Size(96, 22);
+            this.txtAmount.TabIndex = 7;
+            // 
+            // varList
+            // 
+            this.varList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.varList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.varList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.varList.Items.AddRange(new object[] {
             "Hits",
             "Mana",
             "Stamina",
@@ -137,78 +138,63 @@ namespace Assistant
             "Mounted",
             "R Hand Empty",
             "L Hand Empty"});
-			this.varList.Location = new System.Drawing.Point(29, 9);
-			this.varList.Name = "varList";
-			this.varList.Size = new System.Drawing.Size(96, 28);
-			this.varList.TabIndex = 8;
-			this.varList.SelectedIndexChanged += new System.EventHandler(this.varList_SelectedIndexChanged);
-			// 
-			// cancel
-			// 
-			colortable2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			colortable2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			colortable2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			colortable2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			colortable2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			colortable2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			colortable2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable2.TextColor = System.Drawing.Color.White;
-			this.cancel.ColorTable = colortable2;
-			this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancel.Location = new System.Drawing.Point(151, 42);
-			this.cancel.Name = "cancel";
-			this.cancel.Size = new System.Drawing.Size(91, 27);
-			this.cancel.TabIndex = 10;
-			this.cancel.Text = "&Cancel";
-			this.cancel.Theme = Theme.MSOffice2010_BLUE;
-			this.cancel.Click += new System.EventHandler(this.cancel_Click);
-			// 
-			// opList
-			// 
-			this.opList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.opList.Items.AddRange(new object[] {
+            this.varList.Location = new System.Drawing.Point(29, 9);
+            this.varList.Name = "varList";
+            this.varList.Size = new System.Drawing.Size(96, 25);
+            this.varList.TabIndex = 8;
+            this.varList.SelectedIndexChanged += new System.EventHandler(this.varList_SelectedIndexChanged);
+            // 
+            // cancel
+            // 
+            this.cancel.ColorTable = office2010Blue1;
+            this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancel.Location = new System.Drawing.Point(151, 42);
+            this.cancel.Name = "cancel";
+            this.cancel.Size = new System.Drawing.Size(91, 27);
+            this.cancel.TabIndex = 10;
+            this.cancel.Text = "&Cancel";
+            this.cancel.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.cancel.Click += new System.EventHandler(this.cancel_Click);
+            // 
+            // opList
+            // 
+            this.opList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.opList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.opList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.opList.Items.AddRange(new object[] {
             "<=",
             ">="});
-			this.opList.Location = new System.Drawing.Point(127, 9);
-			this.opList.Name = "opList";
-			this.opList.Size = new System.Drawing.Size(48, 28);
-			this.opList.TabIndex = 11;
-			// 
-			// label1
-			// 
-			this.label1.Location = new System.Drawing.Point(10, 14);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(19, 23);
-			this.label1.TabIndex = 12;
-			this.label1.Text = "If:";
-			// 
-			// MacroInsertIf
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
-			this.ClientSize = new System.Drawing.Size(284, 77);
-			this.ControlBox = false;
-			this.Controls.Add(this.label1);
-			this.Controls.Add(this.opList);
-			this.Controls.Add(this.cancel);
-			this.Controls.Add(this.varList);
-			this.Controls.Add(this.txtAmount);
-			this.Controls.Add(this.insert);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Name = "MacroInsertIf";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Insert If...";
-			this.Load += new System.EventHandler(this.MacroInsertIf_Load);
-			this.ResumeLayout(false);
+            this.opList.Location = new System.Drawing.Point(127, 9);
+            this.opList.Name = "opList";
+            this.opList.Size = new System.Drawing.Size(48, 25);
+            this.opList.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(10, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(19, 23);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "If:";
+            // 
+            // MacroInsertIf
+            // 
+            this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
+            this.ClientSize = new System.Drawing.Size(284, 77);
+            this.ControlBox = false;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.opList);
+            this.Controls.Add(this.cancel);
+            this.Controls.Add(this.varList);
+            this.Controls.Add(this.txtAmount);
+            this.Controls.Add(this.insert);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Name = "MacroInsertIf";
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Text = "Insert If...";
+            this.Load += new System.EventHandler(this.MacroInsertIf_Load);
+            this.ResumeLayout(false);
 
 		}
 		#endregion

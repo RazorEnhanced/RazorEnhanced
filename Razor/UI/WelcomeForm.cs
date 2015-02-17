@@ -124,11 +124,12 @@ namespace Assistant
             // 
             // clientList
             // 
+            this.clientList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.clientList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.clientList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.clientList.Location = new System.Drawing.Point(92, 18);
             this.clientList.Name = "clientList";
-            this.clientList.Size = new System.Drawing.Size(231, 28);
+            this.clientList.Size = new System.Drawing.Size(231, 25);
             this.clientList.TabIndex = 1;
             // 
             // browse
@@ -153,7 +154,7 @@ namespace Assistant
             this.browse.ColorTable = office2010Blue1;
             this.browse.Location = new System.Drawing.Point(329, 18);
             this.browse.Name = "browse";
-            this.browse.Size = new System.Drawing.Size(77, 28);
+            this.browse.Size = new System.Drawing.Size(77, 24);
             this.browse.TabIndex = 2;
             this.browse.Text = "Browse...";
             this.browse.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -213,10 +214,12 @@ namespace Assistant
             // 
             // serverList
             // 
+            this.serverList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.serverList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serverList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.serverList.Location = new System.Drawing.Point(62, 18);
             this.serverList.Name = "serverList";
-            this.serverList.Size = new System.Drawing.Size(236, 28);
+            this.serverList.Size = new System.Drawing.Size(236, 25);
             this.serverList.TabIndex = 11;
             this.serverList.SelectedIndexChanged += new System.EventHandler(this.serverList_SelectedIndexChanged);
             this.serverList.TextChanged += new System.EventHandler(this.serverList_TextChanged);
@@ -307,11 +310,12 @@ namespace Assistant
             // 
             // langSel
             // 
+            this.langSel.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.langSel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.langSel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.langSel.Location = new System.Drawing.Point(80, 250);
             this.langSel.Name = "langSel";
-            this.langSel.Size = new System.Drawing.Size(68, 28);
+            this.langSel.Size = new System.Drawing.Size(68, 25);
             this.langSel.TabIndex = 18;
             this.langSel.SelectedIndexChanged += new System.EventHandler(this.langSel_SelectedIndexChanged);
             // 
@@ -320,7 +324,7 @@ namespace Assistant
             this.dataBrowse.ColorTable = office2010Blue1;
             this.dataBrowse.Location = new System.Drawing.Point(329, 23);
             this.dataBrowse.Name = "dataBrowse";
-            this.dataBrowse.Size = new System.Drawing.Size(77, 27);
+            this.dataBrowse.Size = new System.Drawing.Size(77, 25);
             this.dataBrowse.TabIndex = 21;
             this.dataBrowse.Text = "Browse...";
             this.dataBrowse.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -328,10 +332,12 @@ namespace Assistant
             // 
             // dataDir
             // 
+            this.dataDir.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.dataDir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dataDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.dataDir.Location = new System.Drawing.Point(10, 23);
             this.dataDir.Name = "dataDir";
-            this.dataDir.Size = new System.Drawing.Size(309, 28);
+            this.dataDir.Size = new System.Drawing.Size(309, 25);
             this.dataDir.TabIndex = 22;
             this.dataDir.SelectedIndexChanged += new System.EventHandler(this.dataDir_SelectedIndexChanged);
             this.dataDir.TextChanged += new System.EventHandler(this.dataDir_TextChanged);
