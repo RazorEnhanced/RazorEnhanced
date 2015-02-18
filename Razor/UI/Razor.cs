@@ -3043,7 +3043,8 @@ namespace Assistant
             this.advMacroList.TabIndex = 12;
             this.advMacroList.UseCompatibleStateImageBehavior = false;
             this.advMacroList.View = System.Windows.Forms.View.Details;
-            // 
+            this.advMacroList.ItemCheck += advMacroListView_ItemCheck;
+            //
             // Hfilename
             // 
             this.Hfilename.Text = "Filename";
@@ -6564,6 +6565,7 @@ namespace Assistant
 			foreach (ListViewItem eachItem in advMacroList.SelectedItems)
 			{
 				advMacroList.Items.Remove(eachItem);
+                RazorEnhanced.Macro.SaveList(advMacroList);
 			}
 		}
 
@@ -6596,7 +6598,10 @@ namespace Assistant
 			}
 
 		}
-
+        private void advMacroListView_ItemCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
+        {
+            RazorEnhanced.Macro.SaveList(advMacroList);
+        }
 		private static void CompileAndRun(string code)
 		{
 			CompilerParameters CompilerParams = new CompilerParameters();
