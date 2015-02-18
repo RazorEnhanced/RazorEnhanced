@@ -22,14 +22,14 @@ namespace Assistant
 	{
 
 		private System.Windows.Forms.Label label1;
-		private XComboBox clientList;
-		private XCheckBox patchEncy;
-		private XButton okay;
-		private XButton quit;
+        private RazorComboBox clientList;
+        private RazorCheckBox patchEncy;
+        private RazorButton okay;
+        private RazorButton quit;
 		private System.Windows.Forms.Label label3;
-		private XComboBox serverList;
+        private RazorComboBox serverList;
 		private System.Windows.Forms.Label label4;
-		private XTextBox port;
+		private RazorTextBox port;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.OpenFileDialog openFile;
@@ -38,15 +38,15 @@ namespace Assistant
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		private XButton browse;
-		private XButton makeDef;
+        private RazorButton browse;
+        private RazorButton makeDef;
 
-		private XCheckBox showAtStart;
+        private RazorCheckBox showAtStart;
 		private System.Windows.Forms.Label label5;
-		private XComboBox langSel;
-		private XCheckBox useEnc;
-		private XButton dataBrowse;
-		private XComboBox dataDir;
+        private RazorComboBox langSel;
+        private RazorCheckBox useEnc;
+        private RazorButton dataBrowse;
+        private RazorComboBox dataDir;
 		private System.Windows.Forms.GroupBox groupBox3;
 
 		public string ClientPath { get { return m_ClientPath; } }
@@ -89,25 +89,25 @@ namespace Assistant
             RazorEnhanced.UI.Office2010Blue office2010Blue1 = new RazorEnhanced.UI.Office2010Blue();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             this.label1 = new System.Windows.Forms.Label();
-            this.clientList = new RazorEnhanced.UI.XComboBox();
-            this.browse = new RazorEnhanced.UI.XButton();
-            this.patchEncy = new RazorEnhanced.UI.XCheckBox();
-            this.okay = new RazorEnhanced.UI.XButton();
-            this.quit = new RazorEnhanced.UI.XButton();
+            this.clientList = new RazorEnhanced.UI.RazorComboBox();
+            this.browse = new RazorEnhanced.UI.RazorButton();
+            this.patchEncy = new RazorEnhanced.UI.RazorCheckBox();
+            this.okay = new RazorEnhanced.UI.RazorButton();
+            this.quit = new RazorEnhanced.UI.RazorButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.showAtStart = new RazorEnhanced.UI.XCheckBox();
-            this.serverList = new RazorEnhanced.UI.XComboBox();
+            this.showAtStart = new RazorEnhanced.UI.RazorCheckBox();
+            this.serverList = new RazorEnhanced.UI.RazorComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.port = new RazorEnhanced.UI.XTextBox();
+            this.port = new RazorEnhanced.UI.RazorTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.useEnc = new RazorEnhanced.UI.XCheckBox();
-            this.makeDef = new RazorEnhanced.UI.XButton();
+            this.useEnc = new RazorEnhanced.UI.RazorCheckBox();
+            this.makeDef = new RazorEnhanced.UI.RazorButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.openFile = new System.Windows.Forms.OpenFileDialog();
             this.label5 = new System.Windows.Forms.Label();
-            this.langSel = new RazorEnhanced.UI.XComboBox();
-            this.dataBrowse = new RazorEnhanced.UI.XButton();
-            this.dataDir = new RazorEnhanced.UI.XComboBox();
+            this.langSel = new RazorEnhanced.UI.RazorComboBox();
+            this.dataBrowse = new RazorEnhanced.UI.RazorButton();
+            this.dataDir = new RazorEnhanced.UI.RazorComboBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();

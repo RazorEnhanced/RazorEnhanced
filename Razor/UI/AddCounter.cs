@@ -14,18 +14,18 @@ namespace Assistant
 	{
 
 		private System.Windows.Forms.Label label1;
-		private XTextBox name;
+        private RazorTextBox name;
 		private System.Windows.Forms.Label label2;
-		private XTextBox format;
+        private RazorTextBox format;
 		private System.Windows.Forms.Label label3;
-		private XTextBox itemid;
+        private RazorTextBox itemid;
 		private System.Windows.Forms.Label label4;
-		private XTextBox hue;
-		private XButton Add;
-		private XButton cancel;
-		private XButton target;
-		private XButton delete;
-		private XCheckBox dispImg;
+        private RazorTextBox hue;
+        private RazorButton Add;
+        private RazorButton cancel;
+        private RazorButton target;
+        private RazorButton delete;
+        private RazorCheckBox dispImg;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -79,18 +79,18 @@ namespace Assistant
 			Colortable colortable3 = new Colortable();
 			Colortable colortable4 = new Colortable();
 			this.label1 = new System.Windows.Forms.Label();
-			this.name = new XTextBox();
+            this.name = new RazorTextBox();
 			this.label2 = new System.Windows.Forms.Label();
-			this.format = new XTextBox();
+            this.format = new RazorTextBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.itemid = new XTextBox();
+            this.itemid = new RazorTextBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.hue = new XTextBox();
-			this.Add = new XButton();
-			this.cancel = new XButton();
-			this.target = new XButton();
-			this.delete = new XButton();
-			this.dispImg = new XCheckBox();
+            this.hue = new RazorTextBox();
+            this.Add = new RazorButton();
+            this.cancel = new RazorButton();
+            this.target = new RazorButton();
+            this.delete = new RazorButton();
+            this.dispImg = new RazorCheckBox();
 			this.SuspendLayout();
 			// 
 			// label1

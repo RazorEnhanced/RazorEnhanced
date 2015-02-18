@@ -13,11 +13,11 @@ namespace Assistant
 	public class HueEntry : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Label label1;
-		private XTextBox hueNum;
-		private XButton inGame;
+        private RazorTextBox hueNum;
+        private RazorButton inGame;
 		private System.Windows.Forms.Label preview;
-		private XButton okay;
-		private XButton cancel;
+        private RazorButton okay;
+        private RazorButton cancel;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -73,11 +73,11 @@ namespace Assistant
 			Colortable colortable2 = new Colortable();
 			Colortable colortable3 = new Colortable();
 			this.label1 = new System.Windows.Forms.Label();
-			this.hueNum = new XTextBox();
-			this.inGame = new XButton();
+            this.hueNum = new RazorTextBox();
+            this.inGame = new RazorButton();
 			this.preview = new System.Windows.Forms.Label();
-			this.okay = new XButton();
-			this.cancel = new XButton();
+            this.okay = new RazorButton();
+            this.cancel = new RazorButton();
 			this.SuspendLayout();
 			// 
 			// label1

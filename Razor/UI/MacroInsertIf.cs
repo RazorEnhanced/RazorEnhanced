@@ -17,11 +17,11 @@ namespace Assistant
 		private int m_Idx;
 		private MacroAction m_Action;
 
-		private XButton insert;
-		private XTextBox txtAmount;
-		private XButton cancel;
-		private XComboBox varList;
-		private XComboBox opList;
+        private RazorButton insert;
+        private RazorTextBox txtAmount;
+        private RazorButton cancel;
+        private RazorComboBox varList;
+        private RazorComboBox opList;
 		private System.Windows.Forms.Label label1;
 		/// <summary>
 		/// Required designer variable.
@@ -76,11 +76,11 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             RazorEnhanced.UI.Office2010Blue office2010Blue = new RazorEnhanced.UI.Office2010Blue();
-            this.insert = new RazorEnhanced.UI.XButton();
-            this.txtAmount = new RazorEnhanced.UI.XTextBox();
-            this.varList = new RazorEnhanced.UI.XComboBox();
-            this.cancel = new RazorEnhanced.UI.XButton();
-            this.opList = new RazorEnhanced.UI.XComboBox();
+            this.insert = new RazorEnhanced.UI.RazorButton();
+            this.txtAmount = new RazorEnhanced.UI.RazorTextBox();
+            this.varList = new RazorEnhanced.UI.RazorComboBox();
+            this.cancel = new RazorEnhanced.UI.RazorButton();
+            this.opList = new RazorEnhanced.UI.RazorComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 

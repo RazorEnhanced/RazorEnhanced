@@ -70,7 +70,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.message = new System.Windows.Forms.TextBox();
-			this.okay = new XButton();
+            this.okay = new RazorButton();
 			this.SuspendLayout();
 			// 
 			// message

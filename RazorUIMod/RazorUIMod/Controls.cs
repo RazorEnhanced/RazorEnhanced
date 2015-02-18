@@ -7,9 +7,9 @@ using System.Drawing.Drawing2D;
 
 namespace RazorEnhanced.UI
 {
-	public class XRadioButton : RadioButton
+	public class RazorRadioButton : RadioButton
 	{
-		public XRadioButton()
+        public RazorRadioButton()
 		{
 			this.SetStyle(ControlStyles.UserPaint, true);
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -32,11 +32,11 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	public class XTextBox : UserControl
+	public class RazorTextBox : UserControl
 	{
 		TextBox textBox;
 
-		public XTextBox()
+        public RazorTextBox()
 		{
 			textBox = new TextBox()
 			{
@@ -88,9 +88,9 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	public class XComboBox : ComboBox
+	public class RazorComboBox : ComboBox
 	{
-		public XComboBox()
+        public RazorComboBox()
 		{
 		//	this.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.SetStyle(ControlStyles.UserPaint, true);
@@ -149,9 +149,9 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	public class XCheckBox : CheckBox
+	public class RazorCheckBox : CheckBox
 	{
-		public XCheckBox()
+        public RazorCheckBox()
 		{
 			this.SetStyle(ControlStyles.UserPaint, true);
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -174,7 +174,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	public partial class XButton : Button
+	public partial class RazorButton : Button
 	{
 		#region Fields
 
@@ -188,7 +188,7 @@ namespace RazorEnhanced.UI
 
 		#region Constructor
 
-		public XButton()
+        public RazorButton()
 		{
 			this.SetStyle(ControlStyles.SupportsTransparentBackColor |
 					  ControlStyles.Opaque |

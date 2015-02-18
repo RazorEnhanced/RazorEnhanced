@@ -88,10 +88,10 @@ namespace Assistant
 		}
 
 		private string m_String;
-		private XButton ok;
-		private XButton cancel;
+        private RazorButton ok;
+        private RazorButton cancel;
 		private System.Windows.Forms.Label Prompt;
-		private XTextBox EntryBox;
+        private RazorTextBox EntryBox;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -132,9 +132,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.Prompt = new System.Windows.Forms.Label();
-			this.EntryBox = new XTextBox();
-			this.ok = new XButton();
-			this.cancel = new XButton();
+            this.EntryBox = new RazorTextBox();
+            this.ok = new RazorButton();
+            this.cancel = new RazorButton();
 			this.SuspendLayout();
 			// 
 			// Prompt

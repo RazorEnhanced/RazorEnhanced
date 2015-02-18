@@ -17,18 +17,18 @@ namespace Assistant
 		private int m_Idx;
 		private MacroAction m_Action;
 
-		private XButton insert;
-		private XRadioButton radioPause;
-		private XTextBox pause;
+        private RazorButton insert;
+        private RazorRadioButton radioPause;
+        private RazorTextBox pause;
 		private System.Windows.Forms.Label label1;
-		private XRadioButton radioGump;
-		private XRadioButton radioStat;
-		private XTextBox statAmount;
-		private XButton cancel;
-		private XRadioButton radioTarg;
-		private XComboBox statList;
-		private XComboBox statOpList;
-		private XRadioButton radioMenu;
+        private RazorRadioButton radioGump;
+        private RazorRadioButton radioStat;
+        private RazorTextBox statAmount;
+        private RazorButton cancel;
+        private RazorRadioButton radioTarg;
+        private RazorComboBox statList;
+        private RazorComboBox statOpList;
+        private RazorRadioButton radioMenu;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -84,18 +84,18 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             RazorEnhanced.UI.Office2010Blue office2010Blue = new RazorEnhanced.UI.Office2010Blue();
-            this.insert = new RazorEnhanced.UI.XButton();
-            this.radioPause = new RazorEnhanced.UI.XRadioButton();
-            this.pause = new RazorEnhanced.UI.XTextBox();
+            this.insert = new RazorEnhanced.UI.RazorButton();
+            this.radioPause = new RazorEnhanced.UI.RazorRadioButton();
+            this.pause = new RazorEnhanced.UI.RazorTextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.radioGump = new RazorEnhanced.UI.XRadioButton();
-            this.radioTarg = new RazorEnhanced.UI.XRadioButton();
-            this.radioStat = new RazorEnhanced.UI.XRadioButton();
-            this.statAmount = new RazorEnhanced.UI.XTextBox();
-            this.statList = new RazorEnhanced.UI.XComboBox();
-            this.cancel = new RazorEnhanced.UI.XButton();
-            this.statOpList = new RazorEnhanced.UI.XComboBox();
-            this.radioMenu = new RazorEnhanced.UI.XRadioButton();
+            this.radioGump = new RazorEnhanced.UI.RazorRadioButton();
+            this.radioTarg = new RazorEnhanced.UI.RazorRadioButton();
+            this.radioStat = new RazorEnhanced.UI.RazorRadioButton();
+            this.statAmount = new RazorEnhanced.UI.RazorTextBox();
+            this.statList = new RazorEnhanced.UI.RazorComboBox();
+            this.cancel = new RazorEnhanced.UI.RazorButton();
+            this.statOpList = new RazorEnhanced.UI.RazorComboBox();
+            this.radioMenu = new RazorEnhanced.UI.RazorRadioButton();
             this.SuspendLayout();
             // 
             // insert
