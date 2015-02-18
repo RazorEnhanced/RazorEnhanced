@@ -9,7 +9,7 @@ namespace RazorEnhanced.UI
 {
 	public class RazorRadioButton : RadioButton
 	{
-        public RazorRadioButton()
+		public RazorRadioButton()
 		{
 			this.SetStyle(ControlStyles.UserPaint, true);
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -23,11 +23,11 @@ namespace RazorEnhanced.UI
 			pevent.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 			if (this.Checked)
 			{
-				pevent.Graphics.DrawImage(Properties.Resources.XRadioButton_ON, 0, 2, 16, 17);
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorRadioButton_On, 0, 2, 16, 17);
 			}
 			else
 			{
-				pevent.Graphics.DrawImage(Properties.Resources.XRadioButton_OFF, 0, 2, 16, 17);
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorRadioButton_Off, 0, 2, 16, 17);
 			}
 		}
 	}
@@ -36,7 +36,7 @@ namespace RazorEnhanced.UI
 	{
 		TextBox textBox;
 
-        public RazorTextBox()
+		public RazorTextBox()
 		{
 			textBox = new TextBox()
 			{
@@ -90,9 +90,9 @@ namespace RazorEnhanced.UI
 
 	public class RazorComboBox : ComboBox
 	{
-        public RazorComboBox()
+		public RazorComboBox()
 		{
-		//	this.DropDownStyle = ComboBoxStyle.DropDownList;
+			//	this.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.SetStyle(ControlStyles.UserPaint, true);
 		}
 		protected override void OnDrawItem(DrawItemEventArgs e)
@@ -118,7 +118,7 @@ namespace RazorEnhanced.UI
 			Colore2Pen.Width = 1;
 
 			//Freccia selezione
-			pevent.Graphics.DrawImage(Properties.Resources.XComboBox_Arrow, Width - 15, 2, 15, 21);
+			pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorComboBox_Arrow, Width - 15, 2, 15, 21);
 
 			//angoli
 			pevent.Graphics.DrawLine(Colore1Pen, 0, 2, 2, 0);
@@ -151,7 +151,7 @@ namespace RazorEnhanced.UI
 
 	public class RazorCheckBox : CheckBox
 	{
-        public RazorCheckBox()
+		public RazorCheckBox()
 		{
 			this.SetStyle(ControlStyles.UserPaint, true);
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -165,11 +165,11 @@ namespace RazorEnhanced.UI
 			pevent.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 			if (this.Checked)
 			{
-				pevent.Graphics.DrawImage(Properties.Resources.XCheckBox_ON, 0, 2, 16, 17);
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorCheckBox_On, 0, 2, 16, 17);
 			}
 			else
 			{
-				pevent.Graphics.DrawImage(Properties.Resources.XCheckBox_OFF, 0, 2, 16, 17);
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorRadioButton_Off, 0, 2, 16, 17);
 			}
 		}
 	}
@@ -188,7 +188,7 @@ namespace RazorEnhanced.UI
 
 		#region Constructor
 
-        public RazorButton()
+		public RazorButton()
 		{
 			this.SetStyle(ControlStyles.SupportsTransparentBackColor |
 					  ControlStyles.Opaque |

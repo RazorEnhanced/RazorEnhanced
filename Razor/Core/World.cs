@@ -77,7 +77,7 @@ namespace Assistant
 			m_Items.Remove( item.Serial );
 		}
 
-		public static PlayerData Player
+		internal static PlayerData Player
 		{
 			get{ return m_Player; }
 			set{ m_Player = value; }

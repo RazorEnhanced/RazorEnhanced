@@ -59,5 +59,55 @@ namespace Assistant.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazorCheckBox_Off {
+            get {
+                object obj = ResourceManager.GetObject("RazorCheckBox_Off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazorCheckBox_On {
+            get {
+                object obj = ResourceManager.GetObject("RazorCheckBox_On", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazorComboBox_Arrow {
+            get {
+                object obj = ResourceManager.GetObject("RazorComboBox_Arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazorRadioButton_Off {
+            get {
+                object obj = ResourceManager.GetObject("RazorRadioButton_Off", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap RazorRadioButton_On {
+            get {
+                object obj = ResourceManager.GetObject("RazorRadioButton_On", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
