@@ -90,24 +90,23 @@ namespace RazorEnhanced.UI
 
 	public class XComboBox : ComboBox
 	{
-        public XComboBox()
+		public XComboBox()
 		{
-            this.DrawMode = DrawMode.OwnerDrawVariable;
-            this.DropDownStyle = ComboBoxStyle.DropDownList;
-            this.SetStyle(ControlStyles.UserPaint, true);
+			this.DropDownStyle = ComboBoxStyle.DropDownList;
+			this.SetStyle(ControlStyles.UserPaint, true);
 		}
-        protected override void OnDrawItem(DrawItemEventArgs e)
-        {
-            e.DrawBackground();
-            var index = e.Index;
-            if (index < 0 || index >= Items.Count) return;
-            using (var brush = new SolidBrush(e.ForeColor))
-            {
-                Rectangle rec = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - ItemHeight) / 2), e.Bounds.Width, ItemHeight -1);
-                e.Graphics.DrawString(this.Items[e.Index].ToString(), e.Font, new SolidBrush(this.ForeColor), rec);
-            }
-            e.DrawFocusRectangle();
-        }    
+		protected override void OnDrawItem(DrawItemEventArgs e)
+		{
+			e.DrawBackground();
+			var index = e.Index;
+			if (index < 0 || index >= Items.Count) return;
+			using (var brush = new SolidBrush(e.ForeColor))
+			{
+				Rectangle rec = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - ItemHeight) / 2), e.Bounds.Width, ItemHeight - 1);
+				e.Graphics.DrawString(this.Items[e.Index].ToString(), e.Font, new SolidBrush(this.ForeColor), rec);
+			}
+			e.DrawFocusRectangle();
+		}
 
 		protected override void OnPaint(PaintEventArgs pevent)
 		{
@@ -125,28 +124,28 @@ namespace RazorEnhanced.UI
 			pevent.Graphics.DrawLine(Colore1Pen, 0, 2, 2, 0);
 			pevent.Graphics.DrawLine(Colore2Pen, 1, 2, 2, 1);
 
-			pevent.Graphics.DrawLine(Colore1Pen, 0, 21, 2, 23);
-			pevent.Graphics.DrawLine(Colore2Pen, 1, 21, 2, 22);
+			pevent.Graphics.DrawLine(Colore1Pen, 0, Height - 3, 2, Height - 1);
+			pevent.Graphics.DrawLine(Colore2Pen, 1, Height - 2, 2, Height - 2);
 
 			pevent.Graphics.DrawLine(Colore1Pen, Width - 2, 0, Width, 2);
 			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, 1, Width - 1, 2);
 
-			pevent.Graphics.DrawLine(Colore1Pen, Width - 2, 23, Width, 21);
-			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, 22, Width - 1, 22);
+			pevent.Graphics.DrawLine(Colore1Pen, Width - 2, Height - 1, Width, Height - 3);
+			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, Height - 2, Width - 1, Height - 2);
 
 			//Verticale sinistra e destra
-			pevent.Graphics.DrawLine(Colore1Pen, 0, 3, 0, 21);
-			pevent.Graphics.DrawLine(Colore2Pen, 1, 3, 1, 21);
+			pevent.Graphics.DrawLine(Colore1Pen, 0, 3, 0, Height - 3);
+			pevent.Graphics.DrawLine(Colore2Pen, 1, 3, 1, Height - 3);
 
-			pevent.Graphics.DrawLine(Colore1Pen, Width - 1, 3, Width - 1, 21);
-			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, 2, Width - 2, 21);
+			pevent.Graphics.DrawLine(Colore1Pen, Width - 1, 3, Width - 1, Height - 3);
+			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, 2, Width - 2, Height - 3);
 
 			//Orizzontale sopra e sotto
 			pevent.Graphics.DrawLine(Colore1Pen, 3, 0, Width - 3, 0);
 			pevent.Graphics.DrawLine(Colore2Pen, 3, 1, Width - 3, 1);
 
-			pevent.Graphics.DrawLine(Colore1Pen, 3, 23, Width - 3, 23);
-			pevent.Graphics.DrawLine(Colore2Pen, 3, 22, Width - 3, 22);
+			pevent.Graphics.DrawLine(Colore1Pen, 3, Height - 1, Width - 3, Height - 1);
+			pevent.Graphics.DrawLine(Colore2Pen, 3, Height - 2, Width - 3, Height - 2);
 		}
 	}
 
