@@ -265,7 +265,7 @@
     <Compile Include="Core\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\Macro.cs" />
+    <Compile Include="RazorEnhanced\Scripts.cs" />
     <Compile Include="RazorEnhanced\Spells.cs" />
     <Compile Include="RazorEnhanced\Maps.cs" />
     <Compile Include="RazorEnhanced\Player.cs" />

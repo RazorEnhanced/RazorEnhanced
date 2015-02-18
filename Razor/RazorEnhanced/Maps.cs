@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
-	public class Maos
+	public class Maps
 	{
 	}
 }

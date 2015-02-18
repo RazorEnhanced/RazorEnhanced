@@ -10,7 +10,7 @@ using Assistant;
 
 namespace RazorEnhanced
 {
-	public class Macro
+	public class Scripts
 	{
         public static void LoadList(ListView a)
         {

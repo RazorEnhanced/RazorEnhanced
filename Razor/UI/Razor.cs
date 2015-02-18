@@ -3512,7 +3512,7 @@ namespace Assistant
 
 			m_Initializing = false;
             //Load macro list
-            RazorEnhanced.Macro.LoadList(advMacroList);
+            RazorEnhanced.Scripts.LoadList(advMacroList);
 
 		}
 
@@ -6554,7 +6554,7 @@ namespace Assistant
 			{
 				ListViewItem item = new ListViewItem(new[] { openFileDialog1.FileName, "Idle" });
 				advMacroList.Items.Add(item);
-                RazorEnhanced.Macro.SaveList(advMacroList);
+                RazorEnhanced.Scripts.SaveList(advMacroList);
 			}
 
 
@@ -6565,7 +6565,7 @@ namespace Assistant
 			foreach (ListViewItem eachItem in advMacroList.SelectedItems)
 			{
 				advMacroList.Items.Remove(eachItem);
-                RazorEnhanced.Macro.SaveList(advMacroList);
+                RazorEnhanced.Scripts.SaveList(advMacroList);
 			}
 		}
 
@@ -6600,7 +6600,7 @@ namespace Assistant
 		}
         private void advMacroListView_ItemCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
         {
-            RazorEnhanced.Macro.SaveList(advMacroList);
+            RazorEnhanced.Scripts.SaveList(advMacroList);
         }
 		private static void CompileAndRun(string code)
 		{
