@@ -92,7 +92,7 @@ namespace RazorEnhanced.UI
 	{
 		public XComboBox()
 		{
-			this.DropDownStyle = ComboBoxStyle.DropDownList;
+		//	this.DropDownStyle = ComboBoxStyle.DropDownList;
 			this.SetStyle(ControlStyles.UserPaint, true);
 		}
 		protected override void OnDrawItem(DrawItemEventArgs e)
@@ -118,7 +118,7 @@ namespace RazorEnhanced.UI
 			Colore2Pen.Width = 1;
 
 			//Freccia selezione
-			pevent.Graphics.DrawImage(Properties.Resources.XComboBox_Arrow, Width - 15, 2, 15, 20);
+			pevent.Graphics.DrawImage(Properties.Resources.XComboBox_Arrow, Width - 15, 2, 15, 21);
 
 			//angoli
 			pevent.Graphics.DrawLine(Colore1Pen, 0, 2, 2, 0);
