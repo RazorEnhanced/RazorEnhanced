@@ -265,6 +265,8 @@ namespace Assistant
 		private ColumnHeader columnHeader4;
 		private OpenFileDialog openFileDialog1;
         private RazorButton xButton3;
+        private GroupBox groupBox13;
+        private ListBox ExList;
 
 		private bool m_CanClose = true;
 
@@ -325,6 +327,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010Blue office2010Blue2 = new RazorEnhanced.UI.Office2010Blue();
             RazorEnhanced.UI.Office2010Blue office2010Blue1 = new RazorEnhanced.UI.Office2010Blue();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -566,6 +569,8 @@ namespace Assistant
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.ExList = new System.Windows.Forms.ListBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -599,28 +604,29 @@ namespace Assistant
             this.tabPage2.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox11.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
             // 
-            office2010Blue1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010Blue1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010Blue1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010Blue1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010Blue1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010Blue1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010Blue1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010Blue1;
+            office2010Blue2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010Blue2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010Blue2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010Blue2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010Blue2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010Blue2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010Blue2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010Blue2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010Blue2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010Blue2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010Blue2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010Blue2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010Blue2;
             this.playMacro.Location = new System.Drawing.Point(373, 21);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(72, 23);
@@ -658,6 +664,7 @@ namespace Assistant
             this.tabs.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabs.TabIndex = 0;
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_IndexChanged);
+            this.tabs.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabs_Selecting);
             this.tabs.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabs_KeyDown);
             // 
             // generalTab
@@ -952,9 +959,9 @@ namespace Assistant
             this.moreOptTab.Controls.Add(this.txtSpellFormat);
             this.moreOptTab.Controls.Add(this.chkForceSpellHue);
             this.moreOptTab.Controls.Add(this.chkForceSpeechHue);
-            this.moreOptTab.Location = new System.Drawing.Point(4, 46);
+            this.moreOptTab.Location = new System.Drawing.Point(4, 25);
             this.moreOptTab.Name = "moreOptTab";
-            this.moreOptTab.Size = new System.Drawing.Size(640, 347);
+            this.moreOptTab.Size = new System.Drawing.Size(640, 368);
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             // 
@@ -1285,9 +1292,9 @@ namespace Assistant
             this.moreMoreOptTab.Controls.Add(this.smartLT);
             this.moreMoreOptTab.Controls.Add(this.gameSize);
             this.moreMoreOptTab.Controls.Add(this.chkPartyOverhead);
-            this.moreMoreOptTab.Location = new System.Drawing.Point(4, 46);
+            this.moreMoreOptTab.Location = new System.Drawing.Point(4, 25);
             this.moreMoreOptTab.Name = "moreMoreOptTab";
-            this.moreMoreOptTab.Size = new System.Drawing.Size(640, 347);
+            this.moreMoreOptTab.Size = new System.Drawing.Size(640, 368);
             this.moreMoreOptTab.TabIndex = 10;
             this.moreMoreOptTab.Text = "More Options";
             // 
@@ -1579,9 +1586,9 @@ namespace Assistant
             this.displayTab.Controls.Add(this.checkNewConts);
             this.displayTab.Controls.Add(this.groupBox3);
             this.displayTab.Controls.Add(this.groupBox2);
-            this.displayTab.Location = new System.Drawing.Point(4, 46);
+            this.displayTab.Location = new System.Drawing.Point(4, 25);
             this.displayTab.Name = "displayTab";
-            this.displayTab.Size = new System.Drawing.Size(640, 347);
+            this.displayTab.Size = new System.Drawing.Size(640, 368);
             this.displayTab.TabIndex = 1;
             this.displayTab.Text = "Display/Counters";
             // 
@@ -1758,9 +1765,9 @@ namespace Assistant
             // 
             this.dressTab.Controls.Add(this.groupBox6);
             this.dressTab.Controls.Add(this.groupBox5);
-            this.dressTab.Location = new System.Drawing.Point(4, 46);
+            this.dressTab.Location = new System.Drawing.Point(4, 25);
             this.dressTab.Name = "dressTab";
-            this.dressTab.Size = new System.Drawing.Size(640, 347);
+            this.dressTab.Size = new System.Drawing.Size(640, 368);
             this.dressTab.TabIndex = 3;
             this.dressTab.Text = "Arm/Dress";
             this.dressTab.Click += new System.EventHandler(this.dressTab_Click);
@@ -1935,9 +1942,9 @@ namespace Assistant
             this.skillsTab.Controls.Add(this.setlocks);
             this.skillsTab.Controls.Add(this.resetDelta);
             this.skillsTab.Controls.Add(this.skillList);
-            this.skillsTab.Location = new System.Drawing.Point(4, 46);
+            this.skillsTab.Location = new System.Drawing.Point(4, 25);
             this.skillsTab.Name = "skillsTab";
-            this.skillsTab.Size = new System.Drawing.Size(640, 347);
+            this.skillsTab.Size = new System.Drawing.Size(640, 368);
             this.skillsTab.TabIndex = 2;
             this.skillsTab.Text = "Skills";
             // 
@@ -2083,9 +2090,9 @@ namespace Assistant
             this.agentsTab.Controls.Add(this.agentB1);
             this.agentsTab.Controls.Add(this.agentB2);
             this.agentsTab.Controls.Add(this.agentB3);
-            this.agentsTab.Location = new System.Drawing.Point(4, 46);
+            this.agentsTab.Location = new System.Drawing.Point(4, 25);
             this.agentsTab.Name = "agentsTab";
-            this.agentsTab.Size = new System.Drawing.Size(640, 347);
+            this.agentsTab.Size = new System.Drawing.Size(640, 368);
             this.agentsTab.TabIndex = 6;
             this.agentsTab.Text = "Agents";
             // 
@@ -2184,9 +2191,9 @@ namespace Assistant
             this.hotkeysTab.Controls.Add(this.hotkeyTree);
             this.hotkeysTab.Controls.Add(this.groupBox8);
             this.hotkeysTab.Controls.Add(this.dohotkey);
-            this.hotkeysTab.Location = new System.Drawing.Point(4, 46);
+            this.hotkeysTab.Location = new System.Drawing.Point(4, 25);
             this.hotkeysTab.Name = "hotkeysTab";
-            this.hotkeysTab.Size = new System.Drawing.Size(640, 347);
+            this.hotkeysTab.Size = new System.Drawing.Size(640, 368);
             this.hotkeysTab.TabIndex = 4;
             this.hotkeysTab.Text = "Hot Keys";
             // 
@@ -3177,10 +3184,30 @@ namespace Assistant
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // groupBox13
+            // 
+            this.groupBox13.Controls.Add(this.ExList);
+            this.groupBox13.Location = new System.Drawing.Point(654, 12);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(356, 385);
+            this.groupBox13.TabIndex = 1;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Exception";
+            // 
+            // ExList
+            // 
+            this.ExList.FormattingEnabled = true;
+            this.ExList.ItemHeight = 16;
+            this.ExList.Location = new System.Drawing.Point(7, 22);
+            this.ExList.Name = "ExList";
+            this.ExList.Size = new System.Drawing.Size(338, 356);
+            this.ExList.TabIndex = 0;
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
-            this.ClientSize = new System.Drawing.Size(647, 373);
+            this.ClientSize = new System.Drawing.Size(649, 400);
+            this.Controls.Add(this.groupBox13);
             this.Controls.Add(this.tabs);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -3233,6 +3260,7 @@ namespace Assistant
             this.tabPage2.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
+            this.groupBox13.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -6533,8 +6561,24 @@ namespace Assistant
 			}
 		}
 
+        void tabs_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (tabs.SelectedTab == tabPage1)
+            {
+                this.Width = 1029;
+            }
+            else
+            {
+                this.Width = 667;
+            }   
+        }
+
 		private void xButton1_Click(object sender, EventArgs e)
 		{
+            if (advMacroList.Items.Count <=0)
+            {
+                MessageBox.Show("Script list is empty!");
+            }
 			foreach (ListViewItem item in advMacroList.Items)
 			{
 				if (item.Checked)
@@ -6545,9 +6589,16 @@ namespace Assistant
 					}
 					catch (Exception ex)
 					{
-						MessageBox.Show(ex.Message);
+                        ExList.Items.Add(System.DateTime.Now);
+                        ExList.Items.Add("File: "+item.Text);
+                        ExList.Items.Add("EX: "+ex.Message);
+                        ExList.Items.Add("-----------------------------------------");
 					}
 				}
+                else
+                {
+                    MessageBox.Show("No script selected");
+                }
 			}
 
 		}
