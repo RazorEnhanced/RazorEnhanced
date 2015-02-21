@@ -1,4 +1,5 @@
 using System;
+using RazorEnhanced;
 
 namespace Test
 {
@@ -6,7 +7,7 @@ namespace Test
 	{
 		public static void Run()
 		{
-			System.Windows.Forms.MessageBox.Show("Hits: " + Assistant.World.Player.Hits.ToString());
+			System.Windows.Forms.MessageBox.Show("Hits: " + RazorEnhanced.Player.Hits.ToString());
 		}
 	}
 }

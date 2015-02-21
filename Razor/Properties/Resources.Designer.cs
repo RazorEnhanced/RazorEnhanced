@@ -63,6 +63,16 @@ namespace Assistant.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap green {
+            get {
+                object obj = ResourceManager.GetObject("green", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RazorCheckBox_Off {
             get {
                 object obj = ResourceManager.GetObject("RazorCheckBox_Off", resourceCulture);
@@ -106,6 +116,26 @@ namespace Assistant.Properties {
         internal static System.Drawing.Bitmap RazorRadioButton_On {
             get {
                 object obj = ResourceManager.GetObject("RazorRadioButton_On", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap red {
+            get {
+                object obj = ResourceManager.GetObject("red", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap yellow {
+            get {
+                object obj = ResourceManager.GetObject("yellow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

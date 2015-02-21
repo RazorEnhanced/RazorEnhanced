@@ -38,7 +38,7 @@ namespace RazorEnhanced
         public static int Luck { get { return Assistant.World.Player.Luck; } }
         public static int Body { get { return Assistant.World.Player.Body; } }
         public static bool InParty { get { return Assistant.World.Player.InParty; } }
-        public static Assistant.Serial Serial { get { return Assistant.World.Player.Serial.; } }
+        public static Assistant.Serial Serial { get { return Assistant.World.Player.Serial; } }
         // Follower
         public static int FollowersMax { get { return Assistant.World.Player.FollowersMax; } }
         public static int Followers { get { return Assistant.World.Player.Followers; } }
@@ -47,8 +47,5 @@ namespace RazorEnhanced
         public static int Weight { get { return Assistant.World.Player.Weight; } }
         // Position
         public static Assistant.Point3D Position { get { return Assistant.World.Player.Position; } }
-
-
-       
 	}
 }

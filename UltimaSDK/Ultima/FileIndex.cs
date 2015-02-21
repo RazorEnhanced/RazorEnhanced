@@ -52,7 +52,7 @@ namespace Ultima
 				if (MulPath == null)
 					Stream = null;
 				else
-					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 			}
 
 			if (Stream == null)
@@ -117,7 +117,7 @@ namespace Ultima
 
 			if ((Stream == null) || (!Stream.CanRead) || (!Stream.CanSeek))
 			{
-				Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+				Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 			}
 
 			if (Stream.Length < e.lookup)
@@ -206,9 +206,9 @@ namespace Ultima
 			 */
 			if (MulPath != null && MulPath.EndsWith(".uop"))
 			{
-				using (FileStream index = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+				using (FileStream index = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
-					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
 					FileInfo fi = new FileInfo(MulPath);
 					string uopPattern = fi.Name.Replace(fi.Extension, "").ToLowerInvariant();
@@ -295,9 +295,9 @@ namespace Ultima
 			}
 			else if ((idxPath != null) && (MulPath != null))
 			{
-				using (FileStream index = new FileStream(idxPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+				using (FileStream index = new FileStream(idxPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
-					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 					int count = (int)(index.Length / 12);
 					IdxLength = index.Length;
 					GCHandle gc = GCHandle.Alloc(Index, GCHandleType.Pinned);
@@ -369,9 +369,9 @@ namespace Ultima
 
 			if ((idxPath != null) && (MulPath != null))
 			{
-				using (FileStream index = new FileStream(idxPath, FileMode.Open, FileAccess.Read, FileShare.Read))
+				using (FileStream index = new FileStream(idxPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
 				{
-					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+					Stream = new FileStream(MulPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 					int count = (int)(index.Length / 12);
 					IdxLength = index.Length;
 					Index = new Entry3D[count];

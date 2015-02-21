@@ -3,77 +3,164 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
-using System.Linq;
-using System.Data;
+using System.Text;
+using System.Collections;
+using System.CodeDom;
+using System.CodeDom.Compiler;
+using System.Reflection;
+using System.Diagnostics;
+using Microsoft.CSharp;
 using Assistant;
+using System.Data;
+
 
 
 namespace RazorEnhanced
 {
-	public class Scripts
+	internal class Scripts
 	{
-        public static void LoadList(ListView a)
-        {
-            if (File.Exists(Path.Combine(Config.GetUserDirectory(), "enhancedmacro.xml")))
-            {
-                try
-                {
-                    DataSet doc = new DataSet();
-                    doc.ReadXml(Path.Combine(Config.GetUserDirectory(), "enhancedmacro.xml"));
-                    ListViewItem item;
-                    foreach (DataRow EM in doc.Tables["List"].Rows)
-                    {
-                        item = new ListViewItem(new string[] { EM["Hfilename"].ToString(), EM["Hstatus"].ToString() });
-                        if (EM["check"].ToString() == "1")
-                        {
-                            item.Checked = true;
-                        }
-                        else
-                        {
-                            item.Checked = false;
-                        }
-                        a.Items.Add(item);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error to load enhancedmacro.xml: " + ex);
-                }
-            }
-            else
-            {
-                File.Create(Path.Combine(Config.GetUserDirectory(), "enhancedmacro.xml"));
-            }
+		internal static AppDomain m_Domain = AppDomain.CreateDomain("scripts");
 
-        }
+		internal static string[] GetReferenceAssemblies()
+		{
+			ArrayList refs = new ArrayList(1);
 
-        public static void SaveList(ListView a)
-        {
-            XmlWriterSettings settings = new XmlWriterSettings() { Indent = true, IndentChars = "  " };
-            try
-            {
-                using (XmlWriter doc = XmlWriter.Create(Path.Combine(Config.GetUserDirectory(), "enhancedmacro.xml")))
-                {
-                    doc.WriteStartDocument();
-                    doc.WriteStartElement("EnanchedMacro");
-                    foreach (ListViewItem one in a.Items)
-                    {
-                        doc.WriteStartElement("List");
-                        doc.WriteElementString("Hfilename", one.SubItems[0].Text);
-                        doc.WriteElementString("Hstatus", "Idle");
-                        if (one.Checked)
-                            doc.WriteElementString("check", "1");
-                        else
-                            doc.WriteElementString("check", "0");
-                        doc.WriteEndElement();
-                    }
-                    doc.WriteEndElement();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error to write enhancedmacro.xml: " + ex);
-            }
-        }
+			refs.Add(Engine.ExePath);
+
+			string path = Path.Combine(Directory.GetCurrentDirectory(), "Scripts/References.cfg");
+
+			if (File.Exists(path))
+			{
+				using (StreamReader ip = new StreamReader(path))
+				{
+					string line;
+
+					while ((line = ip.ReadLine()) != null)
+					{
+						if (line.Length > 0 && !line.StartsWith("#"))
+							refs.Add(line);
+					}
+				}
+			}
+
+			return (string[])refs.ToArray(typeof(string));
+		}
+
+		private static Assembly Compile(string file)
+		{
+			CompilerParameters CompilerParams = new CompilerParameters();
+			string outputDirectory = Directory.GetCurrentDirectory();
+
+			CompilerParams.GenerateInMemory = false;
+			CompilerParams.TreatWarningsAsErrors = false;
+			CompilerParams.GenerateExecutable = false;
+			CompilerParams.OutputAssembly = Path.Combine(Directory.GetCurrentDirectory(), "Scripts", Path.GetFileNameWithoutExtension(file) + ".dll");
+			CompilerParams.CompilerOptions = "/optimize";
+
+			string[] references = GetReferenceAssemblies();
+			CompilerParams.ReferencedAssemblies.AddRange(references);
+
+			CSharpCodeProvider provider = new CSharpCodeProvider();
+			CompilerResults compile = provider.CompileAssemblyFromFile(CompilerParams, file);
+
+			if (compile.Errors.HasErrors)
+			{
+				string text = "Compile error: ";
+				foreach (CompilerError ce in compile.Errors)
+				{
+					text += "rn" + ce.ToString();
+				}
+				throw new Exception(text);
+			}
+
+			Assembly assembly = compile.CompiledAssembly;
+			return assembly;
+		}
+
+		private static Assembly Load(string file)
+		{
+			Assembly assembly = Assembly.LoadFile(file);
+			return assembly;
+		}
+
+		internal static void Reset()
+		{
+			AppDomain.Unload(m_Domain);
+			m_Domain = AppDomain.CreateDomain("scripts");
+		}
+
+		internal static string CompileOrLoad(string script)
+		{
+			string status = "Idle";
+			Assembly assembly = null;
+
+			if (File.Exists(script))
+			{
+				string extension = Path.GetExtension(script).ToLower();
+				string name = Path.GetFileNameWithoutExtension(script);
+
+				try
+				{
+					if (extension == ".cs")
+					{
+						assembly = Compile(script);
+					}
+					else if (extension == ".dll")
+					{
+						assembly = Load(script);
+					}
+					if (assembly != null)
+					{
+						status = "Loaded";
+						m_Domain.Load(assembly.GetName());
+					}
+				}
+				catch (Exception ex)
+				{
+					status = "ERROR! " + ex.Message;
+				}
+			}
+			return status;
+		}
+
+		internal static void InitializeAssemblies()
+		{
+			foreach (Assembly assembly in m_Domain.GetAssemblies())
+			{
+				Type[] types = assembly.GetTypes();
+				for (int i = 0; i < types.Length; ++i)
+				{
+					MethodInfo m = types[i].GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
+
+					if (m != null)
+						m.Invoke(null, null);
+				}
+			}
+		}
+
+		private static int? RunAssembly(Assembly assembly)
+		{
+			Module module = assembly.GetModules()[0];
+			MethodInfo methInfo = null;
+
+			if (module != null)
+			{
+				foreach (Type mt in module.GetTypes())
+				{
+
+					if (mt != null)
+					{
+						methInfo = mt.GetMethod("Run");
+					}
+
+					if (methInfo != null && methInfo.ReturnType == typeof(int))
+					{
+						return (int)methInfo.Invoke(null, null);
+					}
+				}
+			}
+
+			return null;
+		}
 	}
 }

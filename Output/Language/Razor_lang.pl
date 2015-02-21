@@ -606,3 +606,4 @@ MacroInsertIf::insert=&wstaw
 1519=Wskaz najblizszego humanoidalnego Crima
 1520=Wskaz najblizszego Crima
 1521=UWAGA: Profil '{0}' jest uzywany przez drugiego Razora!\nJesli wprowadzisz zmiany w tym profilu, dane moga zostac utracone. Zalecane jest uzywanie innych profili do kazdego wlaczonego Razora.
+1600=Mysticism

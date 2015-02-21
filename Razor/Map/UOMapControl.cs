@@ -19,22 +19,22 @@ namespace Assistant.MapUO
 		private ArrayList m_MapButtons;
 		private Point prevPoint;
 		private Mobile m_Focus;
-	    private const double RotateAngle = Math.PI / 4 + Math.PI;
+		private const double RotateAngle = Math.PI / 4 + Math.PI;
 		private Bitmap m_Background;
-        private DateTime LastRefresh;
+		private DateTime LastRefresh;
 
 		public Mobile FocusMobile
 		{
-			get 
+			get
 			{
-				if ( m_Focus == null || m_Focus.Deleted || !PacketHandlers.Party.Contains( m_Focus.Serial ) )
+				if (m_Focus == null || m_Focus.Deleted || !PacketHandlers.Party.Contains(m_Focus.Serial))
 				{
 					/*if ( World.Player == null )
 						return new Mobile( Serial.Zero );
 					else*/
 					return World.Player;
 				}
-				return m_Focus; 
+				return m_Focus;
 			}
 			set { m_Focus = value; }
 		}
@@ -49,64 +49,64 @@ namespace Assistant.MapUO
 			m_MapButtons = UOMapRuneButton.Load("test.xml");
 		}
 
-		private static Font m_BoldFont = new Font( "Courier New", 8, FontStyle.Bold );
-		private static Font m_SmallFont = new Font( "Arial", 6 );
-		private static Font m_RegFont = new Font( "Arial", 8 );
-        public override void Refresh()
-        {
-            TimeSpan now =  DateTime.Now - LastRefresh;
-            if (now.TotalMilliseconds <= 100)
-                return;
-            LastRefresh = DateTime.Now;
-            base.Refresh();
-        }
+		private static Font m_BoldFont = new Font("Courier New", 8, FontStyle.Bold);
+		private static Font m_SmallFont = new Font("Arial", 6);
+		private static Font m_RegFont = new Font("Arial", 8);
+		public override void Refresh()
+		{
+			TimeSpan now = DateTime.Now - LastRefresh;
+			if (now.TotalMilliseconds <= 100)
+				return;
+			LastRefresh = DateTime.Now;
+			base.Refresh();
+		}
 
-        private PointF AdjustPoint(PointF center, PointF pos)
-        {
-            PointF newp = new PointF(center.X - pos.X, center.Y - pos.Y);
-            float dis = (float)Distance(center, pos);
-            dis += dis * 0.50f;
-            float slope = 0;
-            if (newp.X != 0)
-                slope = (float)newp.Y / (float)newp.X;
-            else
-                return new PointF(0 + center.X, -1f * (newp.Y + (newp.Y * 0.25f)) + center.Y);
-            slope *= -1;
-            //Both of these algorithms oddly produce the same results.
-           //float x = dis / (float)(Math.Sqrt(1f + Math.Pow(slope, 2)));
-            float x = newp.X + (newp.X * 0.5f);
-           // if (newp.X > 0)
-                x *= -1;
-            float y = (-1) * slope * x;
+		private PointF AdjustPoint(PointF center, PointF pos)
+		{
+			PointF newp = new PointF(center.X - pos.X, center.Y - pos.Y);
+			float dis = (float)Distance(center, pos);
+			dis += dis * 0.50f;
+			float slope = 0;
+			if (newp.X != 0)
+				slope = (float)newp.Y / (float)newp.X;
+			else
+				return new PointF(0 + center.X, -1f * (newp.Y + (newp.Y * 0.25f)) + center.Y);
+			slope *= -1;
+			//Both of these algorithms oddly produce the same results.
+			//float x = dis / (float)(Math.Sqrt(1f + Math.Pow(slope, 2)));
+			float x = newp.X + (newp.X * 0.5f);
+			// if (newp.X > 0)
+			x *= -1;
+			float y = (-1) * slope * x;
 
-            PointF def = new PointF(x + center.X, y + center.Y);
+			PointF def = new PointF(x + center.X, y + center.Y);
 
-            return def;
-        }
+			return def;
+		}
 		public double Distance(PointF center, PointF pos)
 		{
 
 			PointF newp = new PointF(center.X - pos.X, center.Y - pos.Y);
-			double distX = Math.Pow(newp.X,2);
+			double distX = Math.Pow(newp.X, 2);
 			double distY = Math.Pow(newp.Y, 2);
 			return Math.Sqrt(distX + distY);
 		}
 		private PointF RotatePoint(PointF center, PointF pos)
 		{
 			PointF newp = new PointF(center.X - pos.X, center.Y - pos.Y);
-			double x = newp.X * Math.Cos(RotateAngle ) - newp.Y * Math.Sin(RotateAngle);
-			double y = newp.X * Math.Sin(RotateAngle ) + newp.Y * Math.Sin(RotateAngle);
-            return AdjustPoint(center, new PointF((float)(x) + center.X, (float)(y) + center.Y));
+			double x = newp.X * Math.Cos(RotateAngle) - newp.Y * Math.Sin(RotateAngle);
+			double y = newp.X * Math.Sin(RotateAngle) + newp.Y * Math.Sin(RotateAngle);
+			return AdjustPoint(center, new PointF((float)(x) + center.X, (float)(y) + center.Y));
 		}
-		
+
 		public void FullUpdate()
 		{
-			if ( !Active )
+			if (!Active)
 				return;
 
-			if ( m_Background != null )
+			if (m_Background != null)
 				m_Background.Dispose();
-			m_Background = new Bitmap( this.Width, this.Height );
+			m_Background = new Bitmap(this.Width, this.Height);
 
 			int xLong = 0, yLat = 0;
 			int xMins = 0, yMins = 0;
@@ -123,22 +123,22 @@ namespace Assistant.MapUO
 
 			Graphics gfx = Graphics.FromImage(m_Background);
 
-			gfx.FillRectangle( Brushes.Black, 0, 0, this.Width, this.Height );
-			
-			gfx.TranslateTransform( -xtrans, -ytrans, MatrixOrder.Append );
+			gfx.FillRectangle(Brushes.Black, 0, 0, this.Width, this.Height);
+
+			gfx.TranslateTransform(-xtrans, -ytrans, MatrixOrder.Append);
 			gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 			gfx.PageUnit = GraphicsUnit.Pixel;
-			gfx.ScaleTransform( 1.5f, 1.5f, MatrixOrder.Append );
-			gfx.RotateTransform( 45, MatrixOrder.Append );
-			gfx.TranslateTransform( xtrans, ytrans, MatrixOrder.Append );
+			gfx.ScaleTransform(1.5f, 1.5f, MatrixOrder.Append);
+			gfx.RotateTransform(45, MatrixOrder.Append);
+			gfx.TranslateTransform(xtrans, ytrans, MatrixOrder.Append);
 
-			Ultima.Map map = Map.GetMap( this.FocusMobile.Map );
-			if ( map == null )
+			Ultima.Map map = Map.GetMap(this.FocusMobile.Map);
+			if (map == null)
 				map = Ultima.Map.Felucca;
 
-			gfx.DrawImage( map.GetImage( mapOrigin.X, mapOrigin.Y, w + offset.X, h + offset.Y, true ), -offset.X, -offset.Y );
-			
-			gfx.ScaleTransform( 1.0f, 1.0f, MatrixOrder.Append );
+			gfx.DrawImage(map.GetImage(mapOrigin.X, mapOrigin.Y, w + offset.X, h + offset.Y, true), -offset.X, -offset.Y);
+
+			gfx.ScaleTransform(1.0f, 1.0f, MatrixOrder.Append);
 
 			ArrayList regions = new ArrayList();
 			ArrayList mButtons = new ArrayList();
@@ -153,14 +153,14 @@ namespace Assistant.MapUO
 				mButtons = ButtonList(focus.X, focus.Y, this.Height);
 			}
 
-			foreach ( Assistant.MapUO.Region region in regions )
-				gfx.DrawRectangle( Pens.LimeGreen, (region.X) - ((mapOrigin.X << 3) + offset.X), (region.Y) - ((mapOrigin.Y << 3) + offset.Y), region.Width, region.Length );
-			
-			gfx.DrawLine( Pens.Silver, pntPlayer.X-2, pntPlayer.Y-2, pntPlayer.X+2, pntPlayer.Y+2 );
-			gfx.DrawLine( Pens.Silver, pntPlayer.X-2, pntPlayer.Y+2, pntPlayer.X+2, pntPlayer.Y-2 );
-			gfx.FillRectangle( Brushes.Red, pntPlayer.X, pntPlayer.Y, 1, 1 );
+			foreach (Assistant.MapUO.Region region in regions)
+				gfx.DrawRectangle(Pens.LimeGreen, (region.X) - ((mapOrigin.X << 3) + offset.X), (region.Y) - ((mapOrigin.Y << 3) + offset.Y), region.Width, region.Length);
+
+			gfx.DrawLine(Pens.Silver, pntPlayer.X - 2, pntPlayer.Y - 2, pntPlayer.X + 2, pntPlayer.Y + 2);
+			gfx.DrawLine(Pens.Silver, pntPlayer.X - 2, pntPlayer.Y + 2, pntPlayer.X + 2, pntPlayer.Y - 2);
+			gfx.FillRectangle(Brushes.Red, pntPlayer.X, pntPlayer.Y, 1, 1);
 			//gfx.DrawEllipse( Pens.Silver, pntPlayer.X - 2, pntPlayer.Y - 2, 4, 4 );
-			
+
 			gfx.DrawString("W", m_BoldFont, Brushes.Red, pntPlayer.X - 35, pntPlayer.Y - 5);
 			gfx.DrawString("E", m_BoldFont, Brushes.Red, pntPlayer.X + 25, pntPlayer.Y - 5);
 			gfx.DrawString("N", m_BoldFont, Brushes.Red, pntPlayer.X - 5, pntPlayer.Y - 35);
@@ -168,16 +168,17 @@ namespace Assistant.MapUO
 
 			gfx.ResetTransform();
 
-			
-			if (Format(new Point(focus.X, focus.Y), Ultima.Map.Felucca, ref xLong, ref yLat, ref xMins, ref yMins, ref xEast, ref ySouth))
-			{
-				string locString = String.Format( "{0}°{1}'{2} {3}°{4}'{5} | ({6},{7})", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W", World.Player.Position.X, World.Player.Position.Y );
-				SizeF size = gfx.MeasureString( locString, m_RegFont );
-				gfx.FillRectangle( Brushes.Wheat, 0, 0, size.Width + 2, size.Height + 2 );
-				gfx.DrawRectangle( Pens.Black, 0, 0, size.Width + 2, size.Height + 2 );
-				gfx.DrawString( locString, m_RegFont, Brushes.Black, 1, 1 );
-			}
-			
+			string locString;
+			if (Format(new Point(focus.X, focus.Y), map, ref xLong, ref yLat, ref xMins, ref yMins, ref xEast, ref ySouth))
+				locString = String.Format("{0}°{1}'{2} {3}°{4}'{5} | ({6},{7})", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W", World.Player.Position.X, World.Player.Position.Y);
+			else
+				locString = String.Format("({0},{1})", World.Player.Position.X, World.Player.Position.Y);
+
+			SizeF size = gfx.MeasureString(locString, m_RegFont);
+			gfx.FillRectangle(Brushes.Wheat, 0, 0, size.Width + 2, size.Height + 2);
+			gfx.DrawRectangle(Pens.Black, 0, 0, size.Width + 2, size.Height + 2);
+			gfx.DrawString(locString, m_RegFont, Brushes.Black, 1, 1);
+
 			gfx.ResetTransform();
 			gfx.Dispose();
 
@@ -186,13 +187,15 @@ namespace Assistant.MapUO
 
 		protected override void OnPaint(PaintEventArgs pe)
 		{
-			try
+			base.OnPaint(pe);
+
+			if (Active)
 			{
-				if (Active)
+				try
 				{
 					Graphics gfx = pe.Graphics;
 
-					gfx.DrawImageUnscaled( m_Background, 0, 0 );
+					gfx.DrawImageUnscaled(m_Background, 0, 0);
 
 					int w = (this.Width) >> 3;
 					int h = (this.Height) >> 3;
@@ -202,15 +205,15 @@ namespace Assistant.MapUO
 					Point offset = new Point(focus.X & 7, focus.Y & 7);
 					Point mapOrigin = new Point((focus.X >> 3) - (w / 2), (focus.Y >> 3) - (h / 2));
 
-					gfx.TranslateTransform( -xtrans, -ytrans, MatrixOrder.Append );
+					gfx.TranslateTransform(-xtrans, -ytrans, MatrixOrder.Append);
 					gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 					gfx.PageUnit = GraphicsUnit.Pixel;
-					gfx.ScaleTransform( 1.5f, 1.5f, MatrixOrder.Append );
-					gfx.RotateTransform( 45, MatrixOrder.Append );
-					gfx.TranslateTransform( xtrans, ytrans, MatrixOrder.Append );
-					gfx.ScaleTransform( 1.0f, 1.0f, MatrixOrder.Append );
+					gfx.ScaleTransform(1.5f, 1.5f, MatrixOrder.Append);
+					gfx.RotateTransform(45, MatrixOrder.Append);
+					gfx.TranslateTransform(xtrans, ytrans, MatrixOrder.Append);
+					gfx.ScaleTransform(1.0f, 1.0f, MatrixOrder.Append);
 					gfx.ResetTransform();
-					
+
 					//Point pntTest2 = new Point((3256) - (mapOrigin.X << 3) - offset.X, (326) - (mapOrigin.Y << 3) - offset.Y);
 					//PointF pntTest2F = RotatePoint(new Point(xtrans, ytrans), pntTest2);
 					//gfx.FillRectangle(Brushes.LimeGreen, pntTest2F.X, pntTest2F.Y, 4, 4);
@@ -234,21 +237,21 @@ namespace Assistant.MapUO
 						PointF drawPointF = RotatePoint(new Point(xtrans,ytrans),drawPoint);
 						//gfx.FillRectangle(Brushes.Gold, drawPointF.X, drawPointF.Y, 2f, 2f);
 					}*/
-					foreach ( Serial s in PacketHandlers.Party )
+					foreach (Serial s in PacketHandlers.Party)
 					{
-						Mobile mob = World.FindMobile( s );
-						if ( mob == null )
+						Mobile mob = World.FindMobile(s);
+						if (mob == null)
 							continue;
 
 						if (mob == this.FocusMobile && mob == World.Player)
 							continue;
-						
+
 						string name = mob.Name;
-						if ( name == null || name.Length < 1 )
+						if (name == null || name.Length < 1)
 							name = "(Not Seen)";
 						if (name != null && name.Length > 8)
 							name = name.Substring(0, 8);
-						Point drawPoint = new Point((mob.Position.X) - (mapOrigin.X << 3) - offset.X, (mob.Position.Y) - (mapOrigin.Y << 3) - offset.Y );
+						Point drawPoint = new Point((mob.Position.X) - (mapOrigin.X << 3) - offset.X, (mob.Position.Y) - (mapOrigin.Y << 3) - offset.Y);
 						if (drawPoint.X < 0)
 							drawPoint.X = 0;
 						if (drawPoint.X > this.Width)
@@ -258,7 +261,7 @@ namespace Assistant.MapUO
 						if (drawPoint.Y > this.Height)
 							drawPoint.Y = this.Height;
 
-						PointF drawPointF = RotatePoint(new Point(xtrans,ytrans),drawPoint);
+						PointF drawPointF = RotatePoint(new Point(xtrans, ytrans), drawPoint);
 						gfx.FillRectangle(Brushes.Gold, drawPointF.X, drawPointF.Y, 2f, 2f);
 						gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
 					}
@@ -281,16 +284,18 @@ namespace Assistant.MapUO
 						}
 					}
 				}
+				catch
+				{
+				}
 			}
-			catch { }
-			base.OnPaint(pe);
 		}
+
 		public void MapClick(System.Windows.Forms.MouseEventArgs e)
 		{
 			if (Active)
 			{
 				Point clickedbox = MousePointToMapPoint(new Point(e.X, e.Y));
-				UOMapRuneButton button = ButtonCheck(new Rectangle( clickedbox.X - 2, clickedbox.Y - 2, 5, 5 ));
+				UOMapRuneButton button = ButtonCheck(new Rectangle(clickedbox.X - 2, clickedbox.Y - 2, 5, 5));
 				if (button != null)
 					button.OnClick(e);
 			}
@@ -302,7 +307,7 @@ namespace Assistant.MapUO
 			int w = (this.Width) >> 3;
 			int h = (this.Height) >> 3;
 			Point3D focus = this.FocusMobile.Position;
-		
+
 			Point mapOrigin = new Point((focus.X >> 3) - (w / 2), (focus.Y >> 3) - (h / 2));
 			Point pnt1 = new Point((mapOrigin.X << 3) + (p.X), (mapOrigin.Y << 3) + (p.Y));
 			Point check = new Point(pnt1.X - focus.X, pnt1.Y - focus.Y);
@@ -323,7 +328,7 @@ namespace Assistant.MapUO
 			ArrayList buttons = new ArrayList();
 			foreach (UOMapRuneButton mbutton in this.m_MapButtons)
 			{
-				Rectangle rec2 = new Rectangle( mbutton.X, mbutton.Y, 10, 10 );
+				Rectangle rec2 = new Rectangle(mbutton.X, mbutton.Y, 10, 10);
 				if (rec2.IntersectsWith(rec))
 					return mbutton;
 
@@ -351,7 +356,7 @@ namespace Assistant.MapUO
 				if (this.InvokeRequired)
 				{
 					UpdateMapCallback d = new UpdateMapCallback(UpdateMap);
-					this.Invoke(d, new object[0] );
+					this.Invoke(d, new object[0]);
 				}
 				else
 				{
@@ -454,7 +459,7 @@ namespace Assistant.MapUO
 					return false;
 				}
 			}
-			else if ( x >= 0 && y >= 0 && x < map.Width && y < map.Height )
+			else if (x >= 0 && y >= 0 && x < map.Width && y < map.Height)
 			{
 				xCenter = 1323; yCenter = 1624;
 			}
@@ -470,13 +475,7 @@ namespace Assistant.MapUO
 		public bool Active
 		{
 			get { return m_Active; }
-			set { m_Active = value; if ( value ) { FullUpdate(); } }
-		}
-
-		public ArrayList MapButtons
-		{
-			get { return m_MapButtons; }
-			set { m_MapButtons = value; }
+			set { m_Active = value; if (value) { FullUpdate(); } }
 		}
 	}
 }

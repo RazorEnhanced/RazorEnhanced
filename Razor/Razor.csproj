@@ -266,12 +266,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\Scripts.cs" />
+    <Compile Include="RazorEnhanced\Settings.cs" />
     <Compile Include="RazorEnhanced\Spells.cs" />
     <Compile Include="RazorEnhanced\Maps.cs" />
     <Compile Include="RazorEnhanced\Player.cs" />
     <Compile Include="RazorEnhanced\UI\Controls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\Items.cs" />
     <Compile Include="UI\AddCounter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -362,11 +364,14 @@
     <EmbeddedResource Include="UI\WelcomeForm.resx">
       <DependentUpon>WelcomeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <Content Include="RazorEnhanced\Resources\green.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />
     <Content Include="RazorEnhanced\Resources\RazorRadioButton.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorRadioButton.On.png" />
+    <Content Include="RazorEnhanced\Resources\red.png" />
+    <Content Include="RazorEnhanced\Resources\yellow.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />
   </ItemGroup>

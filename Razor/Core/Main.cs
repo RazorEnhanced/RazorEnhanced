@@ -11,39 +11,39 @@ using System.Runtime.InteropServices;
 
 namespace Assistant
 {
-	public class Engine
+	internal class Engine
 	{
-		private static void CurrentDomain_UnhandledException( object sender, UnhandledExceptionEventArgs e )
+		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
-			if ( e.IsTerminating )
+			if (e.IsTerminating)
 			{
 				ClientCommunication.Close();
 				m_Running = false;
 
-				new MessageDialog( "Unhandled Exception", !e.IsTerminating, e.ExceptionObject.ToString() ).ShowDialog( Engine.ActiveWindow );
+				new MessageDialog("Unhandled Exception", !e.IsTerminating, e.ExceptionObject.ToString()).ShowDialog(Engine.ActiveWindow);
 			}
 
-			LogCrash( e.ExceptionObject as Exception );
+			LogCrash(e.ExceptionObject as Exception);
 		}
 
-		public static void LogCrash( object exception )
+		internal static void LogCrash(object exception)
 		{
-			if ( exception == null || ( exception is ThreadAbortException ) )
+			if (exception == null || (exception is ThreadAbortException))
 				return;
 
-			using ( StreamWriter txt = new StreamWriter( "Crash.log", true ) )
+			using (StreamWriter txt = new StreamWriter("Crash.log", true))
 			{
 				txt.AutoFlush = true;
-				txt.WriteLine( "Exception @ {0}", DateTime.Now.ToString( "MM-dd-yy HH:mm:ss.ffff" ) );
-				txt.WriteLine( exception.ToString() );
-				txt.WriteLine( "" );
-				txt.WriteLine( "" );
+				txt.WriteLine("Exception @ {0}", DateTime.Now.ToString("MM-dd-yy HH:mm:ss.ffff"));
+				txt.WriteLine(exception.ToString());
+				txt.WriteLine("");
+				txt.WriteLine("");
 			}
 		}
 
 		private static Version m_ClientVersion = null;
 
-		static string GetManagedString(IntPtr toManage)
+		private static string GetManagedString(IntPtr toManage)
 		{
 			// Receive the pointer to ANSI character array
 			// from API.
@@ -58,38 +58,38 @@ namespace Assistant
 			// Console.WriteLine("Returned string : " + str);
 		}
 
-		public static Version ClientVersion
+		internal static Version ClientVersion
 		{
 			get
 			{
-				if ( m_ClientVersion == null || m_ClientVersion.Major < 2 )
+				if (m_ClientVersion == null || m_ClientVersion.Major < 2)
 				{
 					IntPtr version = ClientCommunication.GetUOVersion();
-					string[] split = GetManagedString(version).Split( '.' );
+					string[] split = GetManagedString(version).Split('.');
 
-					if ( split.Length < 3 )
-						return new Version( 4, 0, 0, 0 );
+					if (split.Length < 3)
+						return new Version(4, 0, 0, 0);
 
 					int rev = 0;
 
-					if ( split.Length > 3 )
-						rev = Utility.ToInt32( split[3], 0 ) ;
+					if (split.Length > 3)
+						rev = Utility.ToInt32(split[3], 0);
 
-					m_ClientVersion = new Version( 
-						Utility.ToInt32( split[0], 0 ), 
-						Utility.ToInt32( split[1], 0 ), 
-						Utility.ToInt32( split[2], 0 ),
-						rev );
+					m_ClientVersion = new Version(
+						Utility.ToInt32(split[0], 0),
+						Utility.ToInt32(split[1], 0),
+						Utility.ToInt32(split[2], 0),
+						rev);
 
-					if ( m_ClientVersion.Major == 0 ) // sanity check if the client returns 0.0.0.0
-						m_ClientVersion = new Version( 4, 0, 0, 0 );
+					if (m_ClientVersion.Major == 0) // sanity check if the client returns 0.0.0.0
+						m_ClientVersion = new Version(4, 0, 0, 0);
 				}
 
 				return m_ClientVersion;
 			}
 		}
 
-		public static bool UseNewMobileIncoming
+		internal static bool UseNewMobileIncoming
 		{
 			get
 			{
@@ -109,14 +109,22 @@ namespace Assistant
 			}
 		}
 
-		public static bool UsePostHSChanges {
-			get {
-				if ( ClientVersion.Major > 7 ) {
+		internal static bool UsePostHSChanges
+		{
+			get
+			{
+				if (ClientVersion.Major > 7)
+				{
 					return true;
-				} else if ( ClientVersion.Major == 7 ) {
-					if ( ClientVersion.Minor > 0 ) {
+				}
+				else if (ClientVersion.Major == 7)
+				{
+					if (ClientVersion.Minor > 0)
+					{
 						return true;
-					} else if ( ClientVersion.Build >= 9 ) {
+					}
+					else if (ClientVersion.Build >= 9)
+					{
 						return true;
 					}
 				}
@@ -125,7 +133,7 @@ namespace Assistant
 			}
 		}
 
-		public static bool UsePostSAChanges
+		internal static bool UsePostSAChanges
 		{
 			get
 			{
@@ -138,24 +146,24 @@ namespace Assistant
 			}
 		}
 
-		public static bool UsePostKRPackets 
+		internal static bool UsePostKRPackets
 		{
-			get 
+			get
 			{
-				if ( ClientVersion.Major >= 7 )
+				if (ClientVersion.Major >= 7)
 				{
 					return true;
 				}
-				else if ( ClientVersion.Major >= 6 )
+				else if (ClientVersion.Major >= 6)
 				{
-					if ( ClientVersion.Minor == 0 )
+					if (ClientVersion.Minor == 0)
 					{
-						if ( ClientVersion.Build == 1 )
+						if (ClientVersion.Build == 1)
 						{
-							if ( ClientVersion.Revision >= 7 )
+							if (ClientVersion.Revision >= 7)
 								return true;
 						}
-						else if ( ClientVersion.Build > 1 )
+						else if (ClientVersion.Build > 1)
 						{
 							return true;
 						}
@@ -166,43 +174,43 @@ namespace Assistant
 					}
 				}
 
-				return false; 
+				return false;
 			}
 		}
 
-		public static string ExePath{ get{ return Process.GetCurrentProcess().MainModule.FileName; } }
-		public static MainForm MainWindow{ get{ return m_MainWnd; } }
-		public static bool Running{ get{ return m_Running; } }
-		public static Form ActiveWindow{ get{ return m_ActiveWnd; } set{ m_ActiveWnd = value; } }
-		
-		public static string Version 
-		{ 
+		internal static string ExePath { get { return Process.GetCurrentProcess().MainModule.FileName; } }
+		internal static MainForm MainWindow { get { return MainWnd; } }
+		internal static bool Running { get { return m_Running; } }
+		internal static Form ActiveWindow { get { return m_ActiveWnd; } set { m_ActiveWnd = value; } }
+
+		internal static string Version
+		{
 			get
-			{ 
-				if ( m_Version == null )
+			{
+				if (m_Version == null)
 				{
 					Version v = Assembly.GetCallingAssembly().GetName().Version;
-					m_Version = String.Format( "{0}.{1}.{2}", v.Major, v.Minor, v.Build );//, v.Revision
+					m_Version = String.Format("{0}.{1}.{2}", v.Major, v.Minor, v.Build);//, v.Revision
 				}
 
-				return m_Version; 
+				return m_Version;
 			}
 		}
 
-		public static string ShardList { get; private set; }
+		internal static string ShardList { get; private set; }
 
-		private static MainForm m_MainWnd;
+		internal static MainForm MainWnd;
 		private static Form m_ActiveWnd;
 		//private static Thread m_TimerThread;
 		private static bool m_Running;
 		private static string m_Version;
 
 		[STAThread]
-		public static void Main( string[] Args ) 
+		public static void Main(string[] Args)
 		{
 			m_Running = true;
-            Thread.CurrentThread.Name = "Razor Main Thread";
-            
+			Thread.CurrentThread.Name = "Razor Main Thread";
+
 #if !DEBUG
 			AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler( CurrentDomain_UnhandledException );
 			Directory.SetCurrentDirectory( Config.GetInstallDirectory() );
@@ -210,25 +218,26 @@ namespace Assistant
 
 			CheckUpdaterFiles();
 
-			if ( ClientCommunication.InitializeLibrary( Engine.Version ) == 0 || !File.Exists( Path.Combine( Config.GetInstallDirectory(), "Updater.exe" ) ) )
-				throw new InvalidOperationException( "This Razor installation is corrupted." );
+			if (ClientCommunication.InitializeLibrary(Engine.Version) == 0 || !File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Updater.exe")))
+				throw new InvalidOperationException("This Razor installation is corrupted.");
 
 			try { Engine.ShardList = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ShardList"); }
 			catch { }
 
 			DateTime lastCheck = DateTime.MinValue;
-			try { lastCheck = DateTime.FromFileTime( Convert.ToInt64( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "UpdateCheck" ), 16 ) ); } catch { }
-			if ( lastCheck + TimeSpan.FromHours( 3.0 ) < DateTime.Now )
+			try { lastCheck = DateTime.FromFileTime(Convert.ToInt64(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "UpdateCheck"), 16)); }
+			catch { }
+			if (lastCheck + TimeSpan.FromHours(3.0) < DateTime.Now)
 			{
 				SplashScreen.Start();
 				m_ActiveWnd = SplashScreen.Instance;
 
 				CheckForUpdates();
-				Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "UpdateCheck", String.Format( "{0:X16}", DateTime.Now.ToFileTime() ) );
+				Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "UpdateCheck", String.Format("{0:X16}", DateTime.Now.ToFileTime()));
 			}
 
-			bool patch = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "PatchEncy" ), 1 ) != 0;
-			bool showWelcome = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "ShowWelcome" ), 1 ) != 0;
+			bool patch = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "PatchEncy"), 1) != 0;
+			bool showWelcome = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ShowWelcome"), 1) != 0;
 			ClientLaunch launch = ClientLaunch.TwoD;
 			int attPID = -1;
 			string dataDir;
@@ -236,126 +245,126 @@ namespace Assistant
 			ClientCommunication.ClientEncrypted = false;
 
 			// check if the new ServerEncryption option is in the registry yet
-			dataDir = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "ServerEnc" );
-			if ( dataDir == null )
+			dataDir = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ServerEnc");
+			if (dataDir == null)
 			{
 				// if not, add it (copied from UseOSIEnc)
-				dataDir = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "UseOSIEnc" );
-				if ( dataDir == "1" )
+				dataDir = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "UseOSIEnc");
+				if (dataDir == "1")
 				{
 					ClientCommunication.ServerEncrypted = true;
-					Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "ServerEnc", "1" );
+					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "ServerEnc", "1");
 				}
 				else
 				{
-					Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "ServerEnc", "0" );
+					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "ServerEnc", "0");
 					ClientCommunication.ServerEncrypted = false;
 				}
 
-				Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "PatchEncy", "1" ); // reset the patch encryption option to TRUE
+				Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "PatchEncy", "1"); // reset the patch encryption option to TRUE
 				patch = true;
 
-				Config.DeleteRegValue( Microsoft.Win32.Registry.CurrentUser, "UseOSIEnc" ); // delete the old value
+				Config.DeleteRegValue(Microsoft.Win32.Registry.CurrentUser, "UseOSIEnc"); // delete the old value
 			}
 			else
 			{
-				ClientCommunication.ServerEncrypted = Utility.ToInt32( dataDir, 0 ) != 0;
+				ClientCommunication.ServerEncrypted = Utility.ToInt32(dataDir, 0) != 0;
 			}
 			dataDir = null;
 
 			bool advCmdLine = false;
-			
-			for (int i=0;i<Args.Length;i++)
+
+			for (int i = 0; i < Args.Length; i++)
 			{
 				string arg = Args[i].ToLower();
-				if ( arg == "--nopatch" )
+				if (arg == "--nopatch")
 				{
 					patch = false;
 				}
-				else if ( arg == "--clientenc" )
+				else if (arg == "--clientenc")
 				{
 					ClientCommunication.ClientEncrypted = true;
 					advCmdLine = true;
 					patch = false;
 				}
-				else if ( arg == "--serverenc" )
+				else if (arg == "--serverenc")
 				{
 					ClientCommunication.ServerEncrypted = true;
 					advCmdLine = true;
 				}
-				else if ( arg == "--welcome" )
+				else if (arg == "--welcome")
 				{
 					showWelcome = true;
 				}
-				else if ( arg == "--nowelcome" )
+				else if (arg == "--nowelcome")
 				{
 					showWelcome = false;
 				}
-				else if ( arg == "--pid" && i+1 < Args.Length )
+				else if (arg == "--pid" && i + 1 < Args.Length)
 				{
 					i++;
 					patch = false;
-					attPID = Utility.ToInt32( Args[i], 0 );
+					attPID = Utility.ToInt32(Args[i], 0);
 				}
-				else if ( arg.Substring( 0, 5 ) == "--pid" && arg.Length > 5 ) //support for uog 1.8 (damn you fixit)
+				else if (arg.Substring(0, 5) == "--pid" && arg.Length > 5) //support for uog 1.8 (damn you fixit)
 				{
 					patch = false;
-					attPID = Utility.ToInt32( arg.Substring(5), 0 );
+					attPID = Utility.ToInt32(arg.Substring(5), 0);
 				}
-				else if ( arg == "--uodata" && i+1 < Args.Length )
+				else if (arg == "--uodata" && i + 1 < Args.Length)
 				{
 					i++;
 					dataDir = Args[i];
 				}
-				else if ( arg == "--server" && i+1 < Args.Length )
+				else if (arg == "--server" && i + 1 < Args.Length)
 				{
 					i++;
-					string[] split = Args[i].Split( ',', ':', ';', ' ' );
-					if ( split.Length >= 2 )
+					string[] split = Args[i].Split(',', ':', ';', ' ');
+					if (split.Length >= 2)
 					{
-						Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "LastServer", split[0] );
-						Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "LastPort", split[1] );
+						Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "LastServer", split[0]);
+						Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "LastPort", split[1]);
 
 						showWelcome = false;
 					}
 				}
-				else if ( arg == "--debug" )
+				else if (arg == "--debug")
 				{
 					ScavengerAgent.Debug = true;
 					DragDropManager.Debug = true;
 				}
 			}
 
-			if ( attPID > 0 && !advCmdLine )
+			if (attPID > 0 && !advCmdLine)
 			{
 				ClientCommunication.ServerEncrypted = false;
 				ClientCommunication.ClientEncrypted = false;
 			}
 
-			if ( !Language.Load( "ENU" ) )
+			if (!Language.Load("ENU"))
 			{
 				SplashScreen.End();
-				MessageBox.Show( "Fatal Error: Unable to load required file Language/Razor_lang.enu\nRazor cannot continue.", "No Language Pack", MessageBoxButtons.OK, MessageBoxIcon.Stop );
+				MessageBox.Show("Fatal Error: Unable to load required file Language/Razor_lang.enu\nRazor cannot continue.", "No Language Pack", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 				return;
 			}
 
-			string defLang = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "DefaultLanguage" );
-			if ( defLang != null && !Language.Load( defLang ) )
-				MessageBox.Show( String.Format( "WARNING: Razor was unable to load the file Language/Razor_lang.{0}\nENU will be used instead.", defLang ), "Language Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning );
-			
+			string defLang = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "DefaultLanguage");
+			if (defLang != null && !Language.Load(defLang))
+				MessageBox.Show(String.Format("WARNING: Razor was unable to load the file Language/Razor_lang.{0}\nENU will be used instead.", defLang), "Language Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
 			string clientPath = "";
 
 			// welcome only needed when not loaded by a launcher (ie uogateway)
-			if ( attPID == -1 )
+			if (attPID == -1)
 			{
-				if ( !showWelcome )
+				if (!showWelcome)
 				{
-					int cli = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "DefClient" ), 0 );
-					if ( cli < 0 || cli > 1 )
+					int cli = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "DefClient"), 0);
+					if (cli < 0 || cli > 1)
 					{
 						launch = ClientLaunch.Custom;
-						clientPath = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, String.Format( "Client{0}", cli - 1 ) );
-						if ( clientPath == null || clientPath == "" )
+						clientPath = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, String.Format("Client{0}", cli - 1));
+						if (clientPath == null || clientPath == "")
 							showWelcome = true;
 					}
 					else
@@ -364,18 +373,18 @@ namespace Assistant
 					}
 				}
 
-				if ( showWelcome )
+				if (showWelcome)
 				{
 					SplashScreen.End();
 
 					WelcomeForm welcome = new WelcomeForm();
 					m_ActiveWnd = welcome;
-					if ( welcome.ShowDialog() == DialogResult.Cancel )
+					if (welcome.ShowDialog() == DialogResult.Cancel)
 						return;
 					patch = welcome.PatchEncryption;
 					launch = welcome.Client;
 					dataDir = welcome.DataDirectory;
-					if ( launch == ClientLaunch.Custom )
+					if (launch == ClientLaunch.Custom)
 						clientPath = welcome.ClientPath;
 
 					SplashScreen.Start();
@@ -383,7 +392,8 @@ namespace Assistant
 				}
 			}
 
-			if (dataDir != null && Directory.Exists(dataDir)) {
+			if (dataDir != null && Directory.Exists(dataDir))
+			{
 				Ultima.Files.SetMulPath(dataDir);
 			}
 
@@ -394,55 +404,55 @@ namespace Assistant
 			//m_TimerThread = new Thread( new ThreadStart( Timer.TimerThread.TimerMain ) );
 			//m_TimerThread.Name = "Razor Timers";
 
-			Initialize( typeof( Assistant.Engine ).Assembly ); //Assembly.GetExecutingAssembly()
+			Initialize(typeof(Assistant.Engine).Assembly); //Assembly.GetExecutingAssembly()
 
 			SplashScreen.Message = LocString.LoadingLastProfile;
 			Config.LoadCharList();
-			if ( !Config.LoadLastProfile() )
-				MessageBox.Show( SplashScreen.Instance, "The selected profile could not be loaded, using default instead.", "Profile Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning );
+			if (!Config.LoadLastProfile())
+				MessageBox.Show(SplashScreen.Instance, "The selected profile could not be loaded, using default instead.", "Profile Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-			if ( attPID == -1 )
-            {
-                ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
+			if (attPID == -1)
+			{
+				ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
 
 				ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
 
 				SplashScreen.Message = LocString.LoadingClient;
-				
-				if ( launch == ClientLaunch.TwoD )
-					clientPath = Ultima.Files.GetFilePath("client.exe");
-				else if ( launch == ClientLaunch.ThirdDawn )
-					clientPath = Ultima.Files.GetFilePath( "uotd.exe" );
 
-				if ( !advCmdLine )
+				if (launch == ClientLaunch.TwoD)
+					clientPath = Ultima.Files.GetFilePath("client.exe");
+				else if (launch == ClientLaunch.ThirdDawn)
+					clientPath = Ultima.Files.GetFilePath("uotd.exe");
+
+				if (!advCmdLine)
 					ClientCommunication.ClientEncrypted = patch;
 
-				if ( clientPath != null && File.Exists( clientPath ) )
-					result = ClientCommunication.LaunchClient( clientPath );
+				if (clientPath != null && File.Exists(clientPath))
+					result = ClientCommunication.LaunchClient(clientPath);
 
-				if ( result != ClientCommunication.Loader_Error.SUCCESS )
+				if (result != ClientCommunication.Loader_Error.SUCCESS)
 				{
-					if ( clientPath == null && File.Exists( clientPath ) )
-						MessageBox.Show( SplashScreen.Instance, String.Format( "Unable to find the client specified.\n{0}: \"{1}\"", launch.ToString(), clientPath != null ? clientPath : "-null-" ), "Could Not Start Client", MessageBoxButtons.OK, MessageBoxIcon.Stop );
+					if (clientPath == null && File.Exists(clientPath))
+						MessageBox.Show(SplashScreen.Instance, String.Format("Unable to find the client specified.\n{0}: \"{1}\"", launch.ToString(), clientPath != null ? clientPath : "-null-"), "Could Not Start Client", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 					else
-						MessageBox.Show( SplashScreen.Instance, String.Format( "Unable to launch the client specified. (Error: {2})\n{0}: \"{1}\"", launch.ToString(), clientPath != null ? clientPath : "-null-", result ), "Could Not Start Client", MessageBoxButtons.OK, MessageBoxIcon.Stop );
+						MessageBox.Show(SplashScreen.Instance, String.Format("Unable to launch the client specified. (Error: {2})\n{0}: \"{1}\"", launch.ToString(), clientPath != null ? clientPath : "-null-", result), "Could Not Start Client", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 					SplashScreen.End();
 					return;
 				}
 
-				string addr = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "LastServer" );
-				int port = Utility.ToInt32( Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "LastPort" ), 0 );
+				string addr = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "LastServer");
+				int port = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "LastPort"), 0);
 
 				// if these are null then the registry entry does not exist (old razor version)
-				IPAddress ip = Resolve( addr );
-				if ( ip == IPAddress.None || port == 0 )
+				IPAddress ip = Resolve(addr);
+				if (ip == IPAddress.None || port == 0)
 				{
-					MessageBox.Show( SplashScreen.Instance, Language.GetString( LocString.BadServerAddr ), "Bad Server Address", MessageBoxButtons.OK, MessageBoxIcon.Stop );
+					MessageBox.Show(SplashScreen.Instance, Language.GetString(LocString.BadServerAddr), "Bad Server Address", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 					SplashScreen.End();
 					return;
 				}
 
-				ClientCommunication.SetConnectionInfo( ip, port );
+				ClientCommunication.SetConnectionInfo(ip, port);
 			}
 			else
 			{
@@ -450,43 +460,46 @@ namespace Assistant
 				bool result = false;
 				try
 				{
-					result = ClientCommunication.Attach( attPID );
+					result = ClientCommunication.Attach(attPID);
 				}
-				catch ( Exception e )
+				catch (Exception e)
 				{
 					result = false;
 					error = e.Message;
 				}
 
-				if ( !result )
+				if (!result)
 				{
-					MessageBox.Show( SplashScreen.Instance, String.Format( "{1}\nThe specified PID '{0}' may be invalid.", attPID, error ), "Attach Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+					MessageBox.Show(SplashScreen.Instance, String.Format("{1}\nThe specified PID '{0}' may be invalid.", attPID, error), "Attach Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					SplashScreen.End();
 					return;
 				}
 
-                ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
+				ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
 			}
 
 			Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
-			if ( Utility.Random(4) != 0 )
+			if (Utility.Random(4) != 0)
 				SplashScreen.Message = LocString.WaitingForClient;
 			else
 				SplashScreen.Message = LocString.RememberDonate;
 
-			m_MainWnd = new MainForm();
-			Application.Run( m_MainWnd );
-			
+			MainWnd = new MainForm();
+			Application.Run(MainWnd);
+
 			m_Running = false;
 
-			try { PacketPlayer.Stop(); } catch {}
-			try { AVIRec.Stop(); } catch {}
+			try { PacketPlayer.Stop(); }
+			catch { }
+			try { AVIRec.Stop(); }
+			catch { }
 
 			ClientCommunication.Close();
 			Counter.Save();
 			Macros.MacroManager.Save();
 			Config.Save();
+			RazorEnhanced.Settings.Save();
 		}
 
 		/*public static string GetDirectory( string relPath )
@@ -496,43 +509,43 @@ namespace Assistant
 			return path;
 		}*/
 
-		public static void EnsureDirectory( string dir )
+		internal static void EnsureDirectory(string dir)
 		{
-			if ( !Directory.Exists( dir ) )
-				Directory.CreateDirectory( dir );
+			if (!Directory.Exists(dir))
+				Directory.CreateDirectory(dir);
 		}
 
-		private static void Initialize( Assembly a )
+		private static void Initialize(Assembly a)
 		{
 			Type[] types = a.GetTypes();
 
-			for (int i=0;i<types.Length;i++)
+			for (int i = 0; i < types.Length; i++)
 			{
-				MethodInfo init = types[i].GetMethod( "Initialize", BindingFlags.Static | BindingFlags.Public );
+				MethodInfo init = types[i].GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
 
-				if ( init != null )
-					init.Invoke( null, null );
+				if (init != null)
+					init.Invoke(null, null);
 			}
 		}
 
-		private static IPAddress Resolve( string addr )
+		private static IPAddress Resolve(string addr)
 		{
 			IPAddress ipAddr = IPAddress.None;
 
-			if ( addr == null || addr == string.Empty )
+			if (addr == null || addr == string.Empty)
 				return ipAddr;
 
 			try
 			{
-				ipAddr = IPAddress.Parse( addr );
+				ipAddr = IPAddress.Parse(addr);
 			}
 			catch
 			{
 				try
 				{
-					IPHostEntry iphe = Dns.GetHostEntry( addr );
+					IPHostEntry iphe = Dns.GetHostEntry(addr);
 
-					if ( iphe.AddressList.Length > 0 )
+					if (iphe.AddressList.Length > 0)
 						ipAddr = iphe.AddressList[iphe.AddressList.Length - 1];
 				}
 				catch
@@ -543,19 +556,22 @@ namespace Assistant
 			return ipAddr;
 		}
 
-		public static bool IsElevated {
-			get {
+		internal static bool IsElevated
+		{
+			get
+			{
 				return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 			}
 		}
 
 		private static void CheckUpdaterFiles()
 		{
-			string instdir = Config.GetInstallDirectory();
+			string instdir = Directory.GetCurrentDirectory();
 			string nUpdater = Path.Combine(instdir, "New_Updater.exe");
 			string nRar = Path.Combine(instdir, "New_unrar.dll");
 
-			if (File.Exists(nUpdater) || File.Exists(nRar)) {
+			if (File.Exists(nUpdater) || File.Exists(nRar))
+			{
 				if (IsElevated)
 				{
 					if (File.Exists("New_unrar.dll"))
@@ -590,35 +606,35 @@ namespace Assistant
 
 		private static void CheckForUpdates()
 		{
-            try
-            {
-                SplashScreen.MessageStr = "Checking for Razor Updates...";
-            }
-            catch { }
+			try
+			{
+				SplashScreen.MessageStr = "Checking for Razor Updates...";
+			}
+			catch { }
 
 			int uid = 0;
 			try
 			{
-				string str = Config.GetRegString( Microsoft.Win32.Registry.LocalMachine, "UId" );
-				if ( str == null || str.Length <= 0 )
-					str = Config.GetRegString( Microsoft.Win32.Registry.CurrentUser, "UId" );
+				string str = Config.GetRegString(Microsoft.Win32.Registry.LocalMachine, "UId");
+				if (str == null || str.Length <= 0)
+					str = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "UId");
 
-				if ( str != null && str.Length > 0 )
-					uid = Convert.ToInt32( str, 16 );
+				if (str != null && str.Length > 0)
+					uid = Convert.ToInt32(str, 16);
 			}
 			catch
 			{
 				uid = 0;
 			}
-			
-			if ( uid == 0 )
+
+			if (uid == 0)
 			{
 				try
 				{
-					uid = Utility.Random( int.MaxValue - 1 );
-					if ( !Config.SetRegString( Microsoft.Win32.Registry.LocalMachine, "UId", String.Format( "{0:x}", uid ) ) )
+					uid = Utility.Random(int.MaxValue - 1);
+					if (!Config.SetRegString(Microsoft.Win32.Registry.LocalMachine, "UId", String.Format("{0:x}", uid)))
 					{
-						if ( !Config.SetRegString( Microsoft.Win32.Registry.CurrentUser, "UId", String.Format( "{0:x}", uid ) ) )
+						if (!Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "UId", String.Format("{0:x}", uid)))
 							uid = 0;
 					}
 				}
@@ -627,7 +643,7 @@ namespace Assistant
 					uid = 0;
 				}
 			}
-			
+
 			try
 			{
 				//ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
@@ -638,17 +654,17 @@ namespace Assistant
 				req.Timeout = 8000;
 				req.UserAgent = "Razor Update Check";
 
-				using ( StreamReader reader = new StreamReader( req.GetResponse().GetResponseStream() ) )
+				using (StreamReader reader = new StreamReader(req.GetResponse().GetResponseStream()))
 				{
-					Version newVer = new Version( reader.ReadToEnd().Trim() );
+					Version newVer = new Version(reader.ReadToEnd().Trim());
 					Version v = Assembly.GetCallingAssembly().GetName().Version;
-					if ( v.CompareTo( newVer ) < 0 ) // v < newVer
+					if (v.CompareTo(newVer) < 0) // v < newVer
 					{
-                        ProcessStartInfo processInfo = new ProcessStartInfo();
-                        processInfo.Verb = "runas"; // Administrator Rights
-                        processInfo.FileName = Path.Combine(Config.GetInstallDirectory(), "Updater.exe");
+						ProcessStartInfo processInfo = new ProcessStartInfo();
+						processInfo.Verb = "runas"; // Administrator Rights
+						processInfo.FileName = Path.Combine(Directory.GetCurrentDirectory(), "Updater.exe");
 						processInfo.Arguments = v.ToString();
-                        Process.Start(processInfo);
+						Process.Start(processInfo);
 						Process.GetCurrentProcess().Kill();
 					}
 				}
@@ -657,14 +673,14 @@ namespace Assistant
 			{
 			}
 
-            try
-            {
-                HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://uo.cx/razor/shards.php");
+			try
+			{
+				HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://uo.cx/razor/shards.php");
 				req.Timeout = 8000;
-                req.UserAgent = "Razor Shard List Update";
+				req.UserAgent = "Razor Shard List Update";
 
-                using (StreamReader reader = new StreamReader(req.GetResponse().GetResponseStream()))
-                {
+				using (StreamReader reader = new StreamReader(req.GetResponse().GetResponseStream()))
+				{
 					string json = reader.ReadToEnd();
 
 					if (json != null && json.Length > 10) // Arbitrary, we just don't want to overwrite a valid shard list for empty Json
@@ -673,17 +689,17 @@ namespace Assistant
 						try { Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "ShardList", json); }
 						catch { }
 					}
-                }
-            }
-            catch
-            {
-            }
+				}
+			}
+			catch
+			{
+			}
 
-            try
-            {
-                SplashScreen.Message = LocString.Initializing;
-            }
-            catch { }
+			try
+			{
+				SplashScreen.Message = LocString.Initializing;
+			}
+			catch { }
 		}
 	}
 }

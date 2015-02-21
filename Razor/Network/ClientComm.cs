@@ -149,7 +149,7 @@ namespace Assistant
 
 		private static uint m_NextCmdID = WM_USER + 401;
 
-		public static int OnUOAMessage(MainForm razor, int Msg, int wParam, int lParam)
+		internal static int OnUOAMessage(MainForm razor, int Msg, int wParam, int lParam)
 		{
 			switch ((UOAMessage)Msg)
 			{
@@ -773,7 +773,7 @@ namespace Assistant
 			{
 			}*/
 
-			string dll = Path.Combine(Config.GetInstallDirectory(), "Crypt.dll");
+			string dll = Path.Combine(Directory.GetCurrentDirectory(), "Crypt.dll");
 			uint pid = 0;
 			Loader_Error err = (Loader_Error)Load(client, dll, "OnAttach", null, 0, out pid);
 

@@ -8,6 +8,7 @@ using Ultima;
 
 namespace Assistant.MapUO
 {
+	[Serializable]
     class UOMapRuneButton
     {
         private int m_BookID;

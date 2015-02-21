@@ -64,7 +64,7 @@ namespace Assistant
 		EquipTo,
 		DropA2,
 		ConvRelLoc,
-        DropRelA3,
+		DropRelA3,
 		GumpRespB,//1050
 		CloseGump,
 		MenuRespA1,
@@ -396,7 +396,7 @@ namespace Assistant
 
 		NextTargetHumanoid,
 
-		__End
+		__End = 1800
 	}
 	#endregion
 
@@ -409,14 +409,14 @@ namespace Assistant
 		private static string m_Current;
 		private static string m_CliLocName = "ENU";
 
-		public static bool Loaded { get{ return m_Loaded; } }
-		public static string Current { get{ return m_Current; } }
-		public static string CliLocName { get{ return m_CliLocName; } }
+		public static bool Loaded { get { return m_Loaded; } }
+		public static string Current { get { return m_Current; } }
+		public static string CliLocName { get { return m_CliLocName; } }
 
-		public static string GetControlText( string name )
+		public static string GetControlText(string name)
 		{
-			name = String.Format( "{0}::Text", name );
-			if ( m_Controls.ContainsKey( name ) )
+			name = String.Format("{0}::Text", name);
+			if (m_Controls.ContainsKey(name))
 				return m_Controls[name] as string;
 			else
 				return null;
@@ -425,107 +425,107 @@ namespace Assistant
 		static Language()
 		{
 			m_Controls = new Hashtable(32, 1.0f, StringComparer.OrdinalIgnoreCase);
-			m_Strings = new Hashtable( (int)(LocString.__End - LocString.__Start) + 1, 1.0f );
+			m_Strings = new Hashtable((int)(LocString.__End - LocString.__Start) + 1, 1.0f);
 		}
 
-		public static string GetString( LocString key )
+		public static string GetString(LocString key)
 		{
 			string value = m_Strings[key] as string;
-			if ( value == null )
-				value = String.Format( "LanguageString \"{0}\" not found!", key );//throw new MissingFieldException( String.Format( "Razor requested Language Pack string '{0}', but it does not exist in the current language pack.", key ) );
+			if (value == null)
+				value = String.Format("LanguageString \"{0}\" not found!", key);//throw new MissingFieldException( String.Format( "Razor requested Language Pack string '{0}', but it does not exist in the current language pack.", key ) );
 			return value;
 		}
 
-		public static string GetString( int key )
+		public static string GetString(int key)
 		{
 			string value = null;
 			if (key > (uint)LocString.__Start && key < (uint)LocString.__End)
 				value = m_Strings[(LocString)key] as string;
 			else if (m_CliLoc != null)
 				value = m_CliLoc.GetString(key);
-			
-			if ( value == null )
-				value = String.Format( "LanguageString \"{0}\" not found!", key );
+
+			if (value == null)
+				value = String.Format("LanguageString \"{0}\" not found!", key);
 			return value;
 		}
 
-		public static string Format( int key, params object[] args )
+		public static string Format(int key, params object[] args)
 		{
-			return String.Format( GetString( key ), args );
+			return String.Format(GetString(key), args);
 		}
 
-		public static string Format( LocString key, params object[] args )
+		public static string Format(LocString key, params object[] args)
 		{
-			return String.Format( GetString( key ), args );
+			return String.Format(GetString(key), args);
 		}
 
-		public static string Skill2Str( SkillName sk )
+		public static string Skill2Str(SkillName sk)
 		{
-			return Skill2Str( (int)sk );
+			return Skill2Str((int)sk);
 		}
 
-		public static string Skill2Str( int skill )
+		public static string Skill2Str(int skill)
 		{
 			string value = null;
 			if (m_CliLoc != null)
 				value = m_CliLoc.GetString(1044060 + skill);
-			if ( value == null )
-				value = String.Format( "LanguageString \"{0}\" not found!", 1044060+skill );
+			if (value == null)
+				value = String.Format("LanguageString \"{0}\" not found!", 1044060 + skill);
 			return value;
 		}
 
 		public static string[] GetPackNames()
 		{
-			string path = Config.GetInstallDirectory( "Language" );
-			string[] names = Directory.GetFiles( path, "Razor_lang.*" );
-			for(int i=0;i<names.Length;i++)
-				names[i] = Path.GetExtension( names[i] ).ToUpper().Substring( 1 );
+			string path = Path.Combine(Directory.GetCurrentDirectory(), "Language");
+			string[] names = Directory.GetFiles(path, "Razor_lang.*");
+			for (int i = 0; i < names.Length; i++)
+				names[i] = Path.GetExtension(names[i]).ToUpper().Substring(1);
 			return names;
 		}
-		
-		public static bool Load( string lang )
+
+		public static bool Load(string lang)
 		{
 			lang = lang.ToUpper();
-			if ( m_Current != null && m_Current == lang )
+			if (m_Current != null && m_Current == lang)
 				return true;
 
 			m_CliLocName = "enu";
-			string filename = Path.Combine( Config.GetInstallDirectory( "Language" ), String.Format( "Razor_lang.{0}", lang ) );
-			if ( !File.Exists( filename ) )
+			string filename = Path.Combine(Directory.GetCurrentDirectory(), "Language", String.Format("Razor_lang.{0}", lang));
+			if (!File.Exists(filename))
 				return false;
 			m_Current = lang;
 			ArrayList errors = new ArrayList();
 			Encoding encoding = Encoding.ASCII;
 
-			using ( StreamReader reader = new StreamReader( filename ) )
+			using (StreamReader reader = new StreamReader(filename))
 			{
 				string line;
-				while ( (line=reader.ReadLine()) != null )
+				while ((line = reader.ReadLine()) != null)
 				{
 					line = line.Trim();
 					string lower = line.ToLower();
 
-					if ( line == "" || line[0] == '#' || line[0] == ';' || ( line.Length >= 2 && line[0] == '/' && line[1] == '/' ) )
+					if (line == "" || line[0] == '#' || line[0] == ';' || (line.Length >= 2 && line[0] == '/' && line[1] == '/'))
 						continue;
-					else if ( lower == "[controls]" || lower == "[strings]" )
+					else if (lower == "[controls]" || lower == "[strings]")
 						break;
-					
-					if ( lower.StartsWith( "::encoding" ) )
+
+					if (lower.StartsWith("::encoding"))
 					{
 						try
 						{
-							int idx = lower.IndexOf( '=' )+1;
-							if ( idx > 0 && idx < lower.Length )
-								encoding = Encoding.GetEncoding( line.Substring( idx ).Trim() );
+							int idx = lower.IndexOf('=') + 1;
+							if (idx > 0 && idx < lower.Length)
+								encoding = Encoding.GetEncoding(line.Substring(idx).Trim());
 						}
 						catch
 						{
 							encoding = null;
 						}
 
-						if ( encoding == null )
+						if (encoding == null)
 						{
-							MessageBox.Show( "Error: The encoding specified in the language file was not valid.  Using ASCII.", "Invalid Encoding", MessageBoxButtons.OK, MessageBoxIcon.Error );
+							MessageBox.Show("Error: The encoding specified in the language file was not valid.  Using ASCII.", "Invalid Encoding", MessageBoxButtons.OK, MessageBoxIcon.Error);
 							encoding = Encoding.ASCII;
 						}
 						break;
@@ -533,7 +533,7 @@ namespace Assistant
 				}
 			}
 
-			using ( StreamReader reader = new StreamReader( filename, encoding ) )
+			using (StreamReader reader = new StreamReader(filename, encoding))
 			{
 				//m_Dict.Clear(); // just overwrite the old lang, rather than erasing it (this way if this lang is missing something, it'll appear in the old one
 				int lineNum = 0;
@@ -541,68 +541,68 @@ namespace Assistant
 				bool controls = true;
 				int idx = 0;
 
-				while ( (line=reader.ReadLine()) != null )
+				while ((line = reader.ReadLine()) != null)
 				{
 					try
 					{
 						line = line.Trim();
 						lineNum++;
-						if ( line == "" || line[0] == '#' || line[0] == ';' || ( line.Length >= 2 && line[0] == '/' && line[1] == '/' ) )
+						if (line == "" || line[0] == '#' || line[0] == ';' || (line.Length >= 2 && line[0] == '/' && line[1] == '/'))
 							continue;
 						string lower = line.ToLower();
-						if ( lower == "[controls]" )
+						if (lower == "[controls]")
 						{
 							controls = true;
 							continue;
 						}
-						else if ( lower == "[strings]" )
+						else if (lower == "[strings]")
 						{
 							controls = false;
 							continue;
 						}
-						else if ( lower.StartsWith( "::cliloc" ) )
+						else if (lower.StartsWith("::cliloc"))
 						{
-							idx = lower.IndexOf( '=' )+1;
-							if ( idx > 0 && idx < lower.Length )
-								m_CliLocName = lower.Substring( idx ).Trim().ToUpper();
+							idx = lower.IndexOf('=') + 1;
+							if (idx > 0 && idx < lower.Length)
+								m_CliLocName = lower.Substring(idx).Trim().ToUpper();
 							continue;
 						}
-						else if ( lower.StartsWith( "::encoding" ) )
+						else if (lower.StartsWith("::encoding"))
 						{
-							continue;
-						}
-
-						idx = line.IndexOf( '=' );
-						if ( idx < 0 )
-						{
-							errors.Add( lineNum );
 							continue;
 						}
 
-						string key = line.Substring( 0, idx ).Trim();
-						string value = line.Substring( idx+1 ).Trim().Replace( "\\n", "\n" );
+						idx = line.IndexOf('=');
+						if (idx < 0)
+						{
+							errors.Add(lineNum);
+							continue;
+						}
 
-						if ( controls )
+						string key = line.Substring(0, idx).Trim();
+						string value = line.Substring(idx + 1).Trim().Replace("\\n", "\n");
+
+						if (controls)
 							m_Controls[key] = value;
 						else
-							m_Strings[(LocString)Convert.ToInt32( key )] = value;
+							m_Strings[(LocString)Convert.ToInt32(key)] = value;
 					}
 					catch
 					{
-						errors.Add( lineNum );
+						errors.Add(lineNum);
 					}
 				}//while
 			}//using
 
-			if ( errors.Count > 0 )
+			if (errors.Count > 0)
 			{
 				StringBuilder sb = new StringBuilder();
 
-				sb.AppendFormat( "Razor enountered errors on the following lines while loading the file '{0}'\r\n", filename );
-				for(int i=0;i<errors.Count;i++)
-					sb.AppendFormat( "Line {0}\r\n", errors[i] );
-				
-				new MessageDialog( "Language Pack Load Errors", true, sb.ToString() ).Show();
+				sb.AppendFormat("Razor enountered errors on the following lines while loading the file '{0}'\r\n", filename);
+				for (int i = 0; i < errors.Count; i++)
+					sb.AppendFormat("Line {0}\r\n", errors[i]);
+
+				new MessageDialog("Language Pack Load Errors", true, sb.ToString()).Show();
 			}
 
 			LoadCliLoc();
@@ -613,29 +613,29 @@ namespace Assistant
 
 		public static void LoadCliLoc()
 		{
-			if ( m_CliLocName == null || m_CliLocName.Length <= 0 )
+			if (m_CliLocName == null || m_CliLocName.Length <= 0)
 				m_CliLocName = "enu";
-            
+
 			try
 			{
-				m_CliLoc = new Ultima.StringList( m_CliLocName.ToLower() );
+				m_CliLoc = new Ultima.StringList(m_CliLocName.ToLower());
 			}
-			catch ( Exception e )
+			catch (Exception e)
 			{
 				string fileName = "[CliLoc]";
 				try
 				{
-					fileName = Ultima.Files.GetFilePath( String.Format( "cliloc.{0}", m_CliLocName ) );
+					fileName = Ultima.Files.GetFilePath(String.Format("cliloc.{0}", m_CliLocName));
 				}
-				catch{}
+				catch { }
 
-				new MessageDialog( "Error loading CliLoc", true, "There was an exception while attempting to load '{0}':\n{1}", fileName, e ).ShowDialog( Engine.ActiveWindow );
+				new MessageDialog("Error loading CliLoc", true, "There was an exception while attempting to load '{0}':\n{1}", fileName, e).ShowDialog(Engine.ActiveWindow);
 			}
 
-			if ( m_CliLoc == null || m_CliLoc.Entries == null || m_CliLoc.Entries.Count < 10 )	
+			if (m_CliLoc == null || m_CliLoc.Entries == null || m_CliLoc.Entries.Count < 10)
 			{
 				m_CliLoc = null;
-				if ( m_CliLocName != "enu" )
+				if (m_CliLocName != "enu")
 				{
 					m_CliLocName = "enu";
 					LoadCliLoc();
@@ -643,25 +643,25 @@ namespace Assistant
 				}
 				else
 				{
-					MessageBox.Show( Engine.ActiveWindow, Language.GetString( LocString.NoCliLocMsg ), Language.GetString( LocString.NoCliLoc ), MessageBoxButtons.OK, MessageBoxIcon.Warning );
+					MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoCliLocMsg), Language.GetString(LocString.NoCliLoc), MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				}
 			}
 		}
 
-		public static string GetCliloc( int num )
+		public static string GetCliloc(int num)
 		{
 			if (m_CliLoc == null)
 				return String.Empty;
 
 			StringEntry se = m_CliLoc.GetEntry(num);
 
-			if ( se != null )
+			if (se != null)
 				return se.Format();
 			else
 				return string.Empty;
 		}
 
-		public static string ClilocFormat( int num, string argstr )
+		public static string ClilocFormat(int num, string argstr)
 		{
 			if (m_CliLoc == null)
 				return String.Empty;
@@ -674,7 +674,7 @@ namespace Assistant
 				return string.Empty;
 		}
 
-		public static string ClilocFormat( int num, params object[] args )
+		public static string ClilocFormat(int num, params object[] args)
 		{
 			if (m_CliLoc == null)
 				return String.Empty;
@@ -687,45 +687,45 @@ namespace Assistant
 				return string.Empty;
 		}
 
-		private static void LoadControls( string name, System.Windows.Forms.Control.ControlCollection controls )
+		private static void LoadControls(string name, System.Windows.Forms.Control.ControlCollection controls)
 		{
-			if ( controls == null )
+			if (controls == null)
 				return;
 
-			for(int i=0;i<controls.Count;i++)
+			for (int i = 0; i < controls.Count; i++)
 			{
-				string find = String.Format( "{0}::{1}", name, controls[i].Name );
+				string find = String.Format("{0}::{1}", name, controls[i].Name);
 				string str = m_Controls[find] as string;
-				if ( str != null )
+				if (str != null)
 					controls[i].Text = str;
 
-				if ( controls[i] is ListView )
+				if (controls[i] is ListView)
 				{
-					foreach ( ColumnHeader ch in ((ListView)controls[i]).Columns )
+					foreach (ColumnHeader ch in ((ListView)controls[i]).Columns)
 					{
-						find = String.Format( "{0}::{1}::{2}", name, controls[i].Name, ch.Index );
+						find = String.Format("{0}::{1}::{2}", name, controls[i].Name, ch.Index);
 						str = m_Controls[find] as string;
-						if ( str != null )
+						if (str != null)
 							ch.Text = str;
 					}
 				}
 
-				LoadControls( name, controls[i].Controls );
+				LoadControls(name, controls[i].Controls);
 			}
 		}
 
-		public static void LoadControlNames( System.Windows.Forms.Form form )
+		public static void LoadControlNames(System.Windows.Forms.Form form)
 		{
 #if LOG_CONTROL_TEXT
 			DumpControls( form );
 #endif
 
-			LoadControls( form.Name, form.Controls );
-			string text = m_Controls[String.Format( "{0}::Text", form.Name )] as string;
-			if ( text != null )
+			LoadControls(form.Name, form.Controls);
+			string text = m_Controls[String.Format("{0}::Text", form.Name)] as string;
+			if (text != null)
 				form.Text = text;
 
-			if ( form is MainForm )
+			if (form is MainForm)
 				((MainForm)form).UpdateTitle();
 		}
 
