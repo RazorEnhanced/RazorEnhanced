@@ -632,3 +632,4 @@ InputBox::ok=&Okay
 1526=Launch BOD Agent
 1527=Next Humanoid Target
 1600=Mysticism
+1601=Script Error! Exit Code: {0}

@@ -12,6 +12,7 @@ using System.Diagnostics;
 using Microsoft.CSharp;
 using Assistant;
 using System.Data;
+using System.Threading.Tasks;
 
 
 
@@ -19,7 +20,91 @@ namespace RazorEnhanced
 {
 	internal class Scripts
 	{
-		internal static AppDomain m_Domain = AppDomain.CreateDomain("scripts");
+		private static TimeSpan m_Delay = TimeSpan.FromMilliseconds(100.0);
+
+		private class ScriptManagerTimer : Assistant.Timer
+		{
+			private int m_Count;
+			internal int Count { get { return m_Count; } }
+
+			private int m_Index;
+			internal int Index { get { return m_Index; } }
+
+			private int? m_ExitCode = null;
+			internal int? ExitCod { get { return m_ExitCode; } }
+
+			public ScriptManagerTimer()
+				: base(m_Delay, m_Delay)
+			{
+				m_Count = m_Assemblies.Count;
+				m_Index = 0;
+			}
+
+			protected override void OnTick()
+			{
+				if (m_Index < m_Count)
+				{
+					if (m_ExitCode == null)
+					{
+						Assembly assembly = m_Assemblies[m_Index];
+						m_ExitCode = RunAssemblyTask(assembly);
+						System.Threading.Thread.Sleep(m_Delay.Milliseconds / 2);
+
+						if (m_ExitCode != 0)
+						{
+							Stop();
+							Assistant.Engine.MainWindow.razorCheckBoxAuto.Checked = false;
+							Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, m_ExitCode);
+						}
+						else
+						{
+							m_ExitCode = null;
+							m_Index++;
+						}
+					}
+				}
+				else
+				{
+					if (m_Count <= 0)
+					{
+						Stop();
+					}
+					else
+					{
+						m_Index = 0;
+					}
+				}
+			}
+		}
+
+		private static List<Assembly> m_Assemblies = new List<Assembly>();
+		internal static List<Assembly> Assemblies { get { return m_Assemblies; } }
+
+		private static ScriptManagerTimer m_ScriptManager = new ScriptManagerTimer();
+
+		private static bool m_Auto = false;
+		internal static bool Auto
+		{
+			get { return m_Auto; }
+			set
+			{
+				if (m_Auto != value)
+				{
+					if (m_ScriptManager != null)
+					{
+						m_ScriptManager.Stop();
+					}
+
+					if (value)
+					{
+						m_ScriptManager = new ScriptManagerTimer();
+						m_ScriptManager.Start();
+					}
+
+					m_Auto = value;
+				}
+			}
+		}
 
 		internal static string[] GetReferenceAssemblies()
 		{
@@ -57,7 +142,8 @@ namespace RazorEnhanced
 			CompilerParams.OutputAssembly = Path.Combine(Directory.GetCurrentDirectory(), "Scripts", Path.GetFileNameWithoutExtension(file) + ".dll");
 			CompilerParams.CompilerOptions = "/optimize";
 
-			string[] references = GetReferenceAssemblies();
+			// string[] references = GetReferenceAssemblies();
+			string[] references = new string[] { "System.dll", "Razor.exe" };
 			CompilerParams.ReferencedAssemblies.AddRange(references);
 
 			CSharpCodeProvider provider = new CSharpCodeProvider();
@@ -85,8 +171,7 @@ namespace RazorEnhanced
 
 		internal static void Reset()
 		{
-			AppDomain.Unload(m_Domain);
-			m_Domain = AppDomain.CreateDomain("scripts");
+			m_Assemblies.Clear();
 		}
 
 		internal static string CompileOrLoad(string script)
@@ -112,7 +197,7 @@ namespace RazorEnhanced
 					if (assembly != null)
 					{
 						status = "Loaded";
-						m_Domain.Load(assembly.GetName());
+						m_Assemblies.Add(assembly);
 					}
 				}
 				catch (Exception ex)
@@ -125,7 +210,7 @@ namespace RazorEnhanced
 
 		internal static void InitializeAssemblies()
 		{
-			foreach (Assembly assembly in m_Domain.GetAssemblies())
+			foreach (Assembly assembly in m_Assemblies)
 			{
 				Type[] types = assembly.GetTypes();
 				for (int i = 0; i < types.Length; ++i)
@@ -138,29 +223,30 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static int? RunAssembly(Assembly assembly)
+		private static int RunAssemblyTask(Assembly assembly)
 		{
 			Module module = assembly.GetModules()[0];
-			MethodInfo methInfo = null;
 
 			if (module != null)
 			{
-				foreach (Type mt in module.GetTypes())
+				AssemblyName name = assembly.GetName();
+				Type type = module.GetType(name.Name + "." + name.Name);
+
+				if (type != null)
 				{
-
-					if (mt != null)
-					{
-						methInfo = mt.GetMethod("Run");
-					}
-
+					object instance = Activator.CreateInstance(type);
+					MethodInfo methInfo = type.GetMethod("Run");
 					if (methInfo != null && methInfo.ReturnType == typeof(int))
 					{
-						return (int)methInfo.Invoke(null, null);
+						Task<int> task = new Task<int>(() => (int)methInfo.Invoke(instance, null));
+						task.Start();
+						int result = task.Result;
+						return result;
 					}
 				}
 			}
 
-			return null;
+			return Int32.MinValue;
 		}
 	}
 }

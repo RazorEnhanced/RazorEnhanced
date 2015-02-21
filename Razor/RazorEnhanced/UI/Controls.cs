@@ -550,7 +550,7 @@ namespace RazorEnhanced.UI
 
 		Colortable colorTable = null;
 
-		[DefaultValue(typeof(Colortable), "Office2010Blue")]
+		[DefaultValue(typeof(Colortable), "office2010Blue")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public Colortable ColorTable
 		{
@@ -565,7 +565,7 @@ namespace RazorEnhanced.UI
 			{
 
 				if (value == null)
-					value = Colortable.Office2010Blue;
+					value = Colortable.office2010Blue;
 
 				colorTable = (Colortable)value;
 
@@ -636,7 +636,7 @@ namespace RazorEnhanced.UI
 				}
 				else
 				{
-					this.colorTable = Colortable.Office2010Blue;
+					this.colorTable = Colortable.office2010Blue;
 				}
 			}
 		}
@@ -698,10 +698,10 @@ namespace RazorEnhanced.UI
 	{
 		#region Static Color Tables
 
-		static Office2010Blue office2010blu = new Office2010Blue();
+		static Office2010BlueTheme office2010blu = new Office2010BlueTheme();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public static Colortable Office2010Blue
+		public static Colortable office2010Blue
 		{
 			get { return office2010blu; }
 		}
@@ -917,9 +917,9 @@ namespace RazorEnhanced.UI
 
 	#region Office 2010 Blue
 
-	public class Office2010Blue : Colortable
+	public class Office2010BlueTheme : Colortable
 	{
-		public Office2010Blue()
+		public Office2010BlueTheme()
 		{
 			// Border Color
 
@@ -956,7 +956,7 @@ namespace RazorEnhanced.UI
 
 		public override string ToString()
 		{
-			return "Office2010Blue";
+			return "office2010Blue";
 		}
 	}
 

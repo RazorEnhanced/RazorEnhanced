@@ -5,9 +5,14 @@ namespace Test
 {
 	public class Test
 	{
-		public static void Run()
+		public Test()
 		{
-			System.Windows.Forms.MessageBox.Show("Hits: " + RazorEnhanced.Player.Hits.ToString());
+		}
+
+		public int Run()
+		{
+			Player.SendMessage("Hits: " + Player.Hits.ToString());
+			return 0;
 		}
 	}
 }

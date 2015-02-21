@@ -199,7 +199,7 @@ namespace Assistant
 
 		internal static string ShardList { get; private set; }
 
-		internal static MainForm MainWnd;
+		private static MainForm MainWnd;
 		private static Form m_ActiveWnd;
 		//private static Thread m_TimerThread;
 		private static bool m_Running;

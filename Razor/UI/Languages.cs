@@ -396,6 +396,9 @@ namespace Assistant
 
 		NextTargetHumanoid,
 
+		Mysticism = 1600,
+		EnhancedMacroError = 1601,
+
 		__End = 1800
 	}
 	#endregion

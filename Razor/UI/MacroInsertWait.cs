@@ -83,7 +83,7 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorEnhanced.UI.Office2010Blue office2010Blue = new RazorEnhanced.UI.Office2010Blue();
+            RazorEnhanced.UI.Office2010BlueTheme office2010Blue = new RazorEnhanced.UI.Office2010BlueTheme();
             this.insert = new RazorEnhanced.UI.RazorButton();
             this.radioPause = new RazorEnhanced.UI.RazorRadioButton();
             this.pause = new RazorEnhanced.UI.RazorTextBox();
