@@ -6,7 +6,7 @@ namespace RazorEnhanced
 {
 	public class Player
 	{
-		// Stats
+        // Stats
 		public static int Hits { get { return Assistant.World.Player.Hits; } }
 		public static int HitsMax { get { return Assistant.World.Player.HitsMax; } }
 		public static int Str { get { return Assistant.World.Player.Str; } }
@@ -33,10 +33,10 @@ namespace RazorEnhanced
 		// Self
 		public static bool Female { get { return Assistant.World.Player.Female; } }
 		public static String Name { get { return Assistant.World.Player.Name; } }
-		public static uint Backpack { get { return Assistant.World.Player.Backpack.Serial; } }
-		public static uint BankBox { get { return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bank).Serial; } }
-		public static uint Quiver { get { return Assistant.World.Player.Quiver.Serial; } }
-		public static uint Mount { get { return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Mount).Serial; } }
+		public static Item Backpack { get { return Assistant.World.Player.Backpack; } }
+		public static Item BankBox { get { return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bank); } }
+		public static Item Quiver { get { return Assistant.World.Player.Quiver; } }
+		public static Item Mount { get { return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Mount); } }
 		public static int Gold { get { return Convert.ToInt32(Assistant.World.Player.Gold); } }
 		public static int Luck { get { return Assistant.World.Player.Luck; } }
 		public static int Body { get { return Assistant.World.Player.Body; } }
@@ -51,299 +51,313 @@ namespace RazorEnhanced
 		// Position
 		public static Assistant.Point3D Position { get { return Assistant.World.Player.Position; } }
 		// Layer
-		public static uint GetItemOnLayer(String Layer)
+		public static Item GetItemOnLayer(String Layer)
 		{
 			switch (Layer)
 			{
 				case "RightHand":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand);
 				case "LeftHand":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand);
 				case "Shoes":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes);
 				case "Pants":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants);
 				case "Shirt":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt);
 				case "Head":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head);
 				case "Gloves":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves);
 				case "Ring":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring);
 				case "Neck":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck);
 				case "Hair":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Hair).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Hair);
 				case "Waist":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist);
 				case "InnerTorso":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso);
 				case "Bracelet":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet);
 				case "FacialHair":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.FacialHair).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.FacialHair);
 				case "MiddleTorso":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso);
 				case "Earrings":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings);
 				case "Arms":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms);
 				case "Cloak":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak);
 				case "OuterTorso":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso).Serial;
+                    return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso);
 				case "OuterLegs":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs);
 				case "InnerLegs":
-					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs).Serial;
+					return Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs);
 				default:
-					// TODO: Sysmessage Invalid Layer name
-					return 0;
+                    Player.SendMessage("Invalid layer name: " + Layer);
+                    return null;
 			}
 		}
 		public static void UnEquipItemByLayer(String Layer)
 		{
-			Assistant.Item backpack = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack);
 			switch (Layer)
 			{
 				case "RightHand":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "LeftHand":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Shoes":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Pants":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Shirt":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Head":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Gloves":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Ring":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Neck":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Waist":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "InnerTorso":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Bracelet":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "MiddleTorso":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Earrings":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Arms":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "Cloak":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "OuterTorso":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "OuterLegs":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				case "InnerLegs":
-					if (Convert.ToBoolean(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs)))
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs) != null)
 						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
-					{
-						// TODO: Sysmessage Layer Empty
-					}
+                        Player.SendMessage("No item found on layer: " + Layer);
 					break;
 				default:
-					// TODO: Sysmessage Invalid Layer name
-					break;
-			}
-		}
-		public static void EquipItemOnLayer(uint itemserial, String Layer)
-		{
-			Assistant.Item item = Assistant.World.FindItem(itemserial);
-			if (item == null)
-			{
-				// TODO: Sysmessage Invalid Item
-				return;
-			}
-
-			if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
-			{
-				// TODO: Sysmessage Item too Away
-				return;
-			}
-			Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, item.Layer);
-			switch (Layer)
-			{
-				case "RightHand":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.RightHand);
-					break;
-				case "LeftHand":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.LeftHand);
-					break;
-				case "Shoes":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Shoes);
-					break;
-				case "Pants":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Pants);
-					break;
-				case "Shirt":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Shirt);
-					break;
-				case "Head":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Head);
-					break;
-				case "Gloves":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Gloves);
-					break;
-				case "Ring":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Ring);
-					break;
-				case "Neck":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Neck);
-					break;
-				case "Waist":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Waist);
-					break;
-				case "InnerTorso":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.InnerTorso);
-					break;
-				case "Bracelet":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Bracelet);
-					break;
-				case "MiddleTorso":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.MiddleTorso);
-					break;
-				case "Earrings":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Earrings);
-					break;
-				case "Arms":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Arms);
-					break;
-				case "Cloak":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.Cloak);
-					break;
-				case "OuterTorso":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.OuterTorso);
-					break;
-				case "OuterLegs":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.OuterLegs);
-					break;
-				case "InnerLegs":
-					Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, Assistant.Layer.InnerLegs);
-					break;
-				default:
-					// TODO: Sysmessage Invalid Layer name
+                    Player.SendMessage("Invalid layer name: " + Layer);
 					break;
 			}
 		}
 
+        public static void EquipItem(uint itemserial)
+        {
+            Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (item == null)
+            {
+                Player.SendMessage("Item serial: (" + itemserial + ") not found");
+                return;
+            }
+
+            if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
+            {
+                Player.SendMessage("Item serial: (" + itemserial + ") too away");
+                return;
+            }
+            Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, item.Layer);
+        }
+        public static void EquipItem(Item item)
+        {
+            if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
+            {
+                Player.SendMessage("Item serial: (" + item.Serial + ") too away");
+                return;
+            }
+            Assistant.DragDropManager.DragDrop(item, Assistant.World.Player, item.Layer);
+        }
+
+        public static bool CheckLayer(String Layer)
+        {
+            switch (Layer)
+            {
+                case "RightHand":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand) != null)
+                        return true;
+                    else
+                        return false;
+                case "LeftHand":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand) != null)
+                        return true;
+                    else
+                        return false;
+                case "Shoes":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes) != null)
+                        return true;
+                    else
+                        return false;
+                case "Pants":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants) != null)
+                        return true;
+                    else
+                        return false;
+                case "Shirt":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt) != null)
+                        return true;
+                    else
+                        return false;
+                case "Head":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head) != null)
+                        return true;
+                    else
+                        return false;
+                case "Gloves":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves) != null)
+                        return true;
+                    else
+                        return false;
+                case "Ring":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring) != null)
+                        return true;
+                    else
+                        return false;
+                case "Neck":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck) != null)
+                        return true;
+                    else
+                        return false;
+                case "Waist":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist) != null)
+                        return true;
+                    else
+                        return false;
+                case "InnerTorso":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso) != null)
+                        return true;
+                    else
+                        return false;
+                case "Bracelet":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet) != null)
+                        return true;
+                    else
+                        return false;
+                case "MiddleTorso":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso) != null)
+                        return true;
+                    else
+                        return false;
+                case "Earrings":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings) != null)
+                        return true;
+                    else
+                        return false;
+                case "Arms":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms) != null)
+                        return true;
+                    else
+                        return false;
+                case "Cloak":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak) != null)
+                        return true;
+                    else
+                        return false;
+                case "OuterTorso":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso) != null)
+                        return true;
+                    else
+                        return false;
+                case "OuterLegs":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs) != null)
+                        return true;
+                    else
+                        return false;
+                case "InnerLegs":
+                    if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs) != null)
+                        return true;
+                    else
+                        return false;
+                default:
+                    Player.SendMessage("Invalid layer name: " + Layer);
+                    return false;
+            }
+        }
+        
+        // Sysmessage
 		public static void SendMessage(Assistant.LocString loc)
 		{
 			Assistant.World.Player.SendMessage(loc);
