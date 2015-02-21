@@ -21,7 +21,7 @@ namespace RazorEnhanced
 					Engine.MainWindow.dataGridViewMacroNew.Rows.Clear();
 					foreach (DataRow row in doc.Tables["macro"].Rows)
 					{
-						Engine.MainWindow.dataGridViewMacroNew.Rows.Add((bool)row["checked"], (bool)row["checked"], Assistant.Properties.Resources.yellow, "Idle");
+						Engine.MainWindow.dataGridViewMacroNew.Rows.Add((bool)row["checked"], (string)row["filename"], Assistant.Properties.Resources.yellow, "Idle");
 
 					}
 				}
@@ -50,7 +50,7 @@ namespace RazorEnhanced
 				}
 				doc.Tables.Add(macro);
 
-				doc.WriteXml(Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced.xml"));
+				doc.WriteXml(Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced.xml"), XmlWriteMode.WriteSchema);
 			}
 			catch (Exception ex)
 			{

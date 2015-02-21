@@ -499,7 +499,6 @@ namespace Assistant
 			Counter.Save();
 			Macros.MacroManager.Save();
 			Config.Save();
-			RazorEnhanced.Settings.Save();
 		}
 
 		/*public static string GetDirectory( string relPath )
