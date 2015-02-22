@@ -80,9 +80,17 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="Jint, Version=2.4.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Jint.2.4.0\lib\portable-net40+sl50+win+wpa81+wp80\Jint.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ScintillaNET, Version=2.6.0.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\ScintillaNET.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -274,6 +282,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\Items.cs" />
+    <Compile Include="RazorEnhanced\UI\MacroEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\MacroEditor.Designer.cs">
+      <DependentUpon>MacroEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\AddCounter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -335,6 +349,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\MacroEditor.resx">
+      <DependentUpon>MacroEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AddCounter.resx">
       <DependentUpon>AddCounter.cs</DependentUpon>
