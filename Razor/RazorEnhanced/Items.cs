@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assistant;
 
 namespace RazorEnhanced
 {
@@ -33,8 +34,33 @@ namespace RazorEnhanced
                 Player.SendMessage("Script Error: Move: Destination Item is not a container");
                 return;
             }
-            Assistant.DragDropManager.DragDrop(item, bag);
+            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+            Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, bag.Serial));
         }
+        public static void MoveAmount(Assistant.Item item, int amount, Assistant.Item bag)
+        {
+            if (item == null)
+            {
+                Player.SendMessage("Script Error: Move: Source Item  not found");
+                return;
+            }
+            if (bag == null)
+            {
+                Player.SendMessage("Script Error: Move: Destination Item not found");
+                return;
+            }
+            if (!bag.IsContainer)
+            {
+                Player.SendMessage("Script Error: Move: Destination Item is not a container");
+                return;
+            }
+            if (item.Amount < amount)
+            {
+                amount = item.Amount;
+            }
+            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+            Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, bag.Serial));
+        }        
         public static void DropItemGroundSelf(Assistant.Item item)
         {
             if (item == null)
@@ -42,8 +68,22 @@ namespace RazorEnhanced
                 Player.SendMessage("Script Error: DropItemGroundSelf: Item not found");
                 return;
             }
-            Assistant.DragDropManager.Drag(item, item.Amount);
-            Assistant.DragDropManager.Drop(item, Assistant.Serial.MinusOne, Assistant.World.Player.Position);
-        }        
+            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+            Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Serial.Zero));
+        }
+        public static void DropItemGroundSelfAmount(Assistant.Item item, int amount)
+        {
+            if (item == null)
+            {
+                Player.SendMessage("Script Error: DropItemGroundSelf: Item not found");
+                return;
+            }
+            if (item.Amount < amount)
+            {
+                amount = item.Amount;
+            }
+            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+            Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Serial.Zero));
+        }   
 	}
 }
