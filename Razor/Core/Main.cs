@@ -485,9 +485,6 @@ namespace Assistant
 			else
 				SplashScreen.Message = LocString.RememberDonate;
 
-			RazorEnhanced.UI.MacroEditor ed = new RazorEnhanced.UI.MacroEditor();
-			ed.Show();
-
 			MainWnd = new MainForm();
 			Application.Run(MainWnd);
 

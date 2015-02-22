@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
 {
-	public partial class MacroEditor : Form
+	public partial class EnhancedScriptEditor : Form
 	{
-		public MacroEditor()
+		public EnhancedScriptEditor()
 		{
 			InitializeComponent();
 		}

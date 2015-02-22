@@ -80,13 +80,12 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="Jint, Version=2.4.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Jint.2.4.0\lib\portable-net40+sl50+win+wpa81+wp80\Jint.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="paxscript-net2013">
+      <HintPath>RazorEnhanced\paxscript-net2013.dll</HintPath>
     </Reference>
     <Reference Include="ScintillaNET, Version=2.6.0.0, Culture=neutral, PublicKeyToken=948d6c9751444115, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -282,11 +281,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\Items.cs" />
-    <Compile Include="RazorEnhanced\UI\MacroEditor.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\MacroEditor.Designer.cs">
-      <DependentUpon>MacroEditor.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.Designer.cs">
+      <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\AddCounter.cs">
       <SubType>Form</SubType>
@@ -350,8 +349,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\MacroEditor.resx">
-      <DependentUpon>MacroEditor.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
+      <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\AddCounter.resx">
       <DependentUpon>AddCounter.cs</DependentUpon>
@@ -381,7 +380,16 @@
     <EmbeddedResource Include="UI\WelcomeForm.resx">
       <DependentUpon>WelcomeForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="RazorEnhanced\Resources\bug-add.png" />
+    <None Include="RazorEnhanced\Resources\bug-delete.png" />
+    <None Include="RazorEnhanced\Resources\document-close-2.png" />
+    <None Include="RazorEnhanced\Resources\document-open-7.png" />
+    <None Include="RazorEnhanced\Resources\document-save-5.png" />
     <Content Include="RazorEnhanced\Resources\green.png" />
+    <None Include="RazorEnhanced\Resources\media-playback-start.png" />
+    <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />
+    <None Include="RazorEnhanced\Resources\media-seek-forward-3.png" />
+    <None Include="RazorEnhanced\Resources\media-playback-start-3.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />
