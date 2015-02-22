@@ -10,7 +10,7 @@ namespace RazorEnhanced
             Assistant.Item item = Assistant.World.FindItem(itemserial);
             if (item == null)
             {
-                Player.SendMessage("Item serial: (" + itemserial + ") not found");
+                Player.SendMessage("Script Error: FindBySerial: Item serial: (" + itemserial + ") not found");
                 return null;
             }
             else
@@ -20,17 +20,17 @@ namespace RazorEnhanced
         {
             if (item == null)
             {
-                Player.SendMessage("Source Item  not found");
+                Player.SendMessage("Script Error: Move: Source Item  not found");
                 return;
             }
             if (bag == null)
             {
-                Player.SendMessage("Destination Item not found");
+                Player.SendMessage("Script Error: Move: Destination Item not found");
                 return;
             }
             if (!bag.IsContainer)
             {
-                Player.SendMessage("Destination Item is not a container");
+                Player.SendMessage("Script Error: Move: Destination Item is not a container");
                 return;
             }
             Assistant.DragDropManager.DragDrop(item, bag);
@@ -39,7 +39,7 @@ namespace RazorEnhanced
         {
             if (item == null)
             {
-                Player.SendMessage("Item not found");
+                Player.SendMessage("Script Error: DropItemGroundSelf: Item not found");
                 return;
             }
             Assistant.DragDropManager.Drag(item, item.Amount);
