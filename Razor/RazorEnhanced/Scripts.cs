@@ -13,14 +13,28 @@ using Microsoft.CSharp;
 using Assistant;
 using System.Data;
 using System.Threading.Tasks;
-
-
+using PaxScript.Net;
 
 namespace RazorEnhanced
 {
 	internal class Scripts
 	{
 		private static TimeSpan m_Delay = TimeSpan.FromMilliseconds(100.0);
+
+		internal class EnhancedScript
+		{
+			private string m_File;
+			internal string File { get { return m_File; } }
+
+			private string m_Class;
+			internal string Class { get { return m_Class; } }
+
+			public EnhancedScript(string file, string classname)
+			{
+				m_File = file;
+				m_Class = classname;
+			}
+		}
 
 		private class ScriptManagerTimer : Assistant.Timer
 		{
@@ -36,7 +50,7 @@ namespace RazorEnhanced
 			public ScriptManagerTimer()
 				: base(m_Delay, m_Delay)
 			{
-				m_Count = m_Assemblies.Count;
+				m_Count = m_Scripts.Count;
 				m_Index = 0;
 			}
 
@@ -46,8 +60,8 @@ namespace RazorEnhanced
 				{
 					if (m_ExitCode == null)
 					{
-						Assembly assembly = m_Assemblies[m_Index];
-						m_ExitCode = RunAssemblyTask(assembly);
+						EnhancedScript script = m_Scripts[m_Index];
+						m_ExitCode = InvokeMethod<int>(script, "Run");
 						System.Threading.Thread.Sleep(m_Delay.Milliseconds / 2);
 
 						if (m_ExitCode != 0)
@@ -77,10 +91,29 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static List<Assembly> m_Assemblies = new List<Assembly>();
-		internal static List<Assembly> Assemblies { get { return m_Assemblies; } }
+		private static List<EnhancedScript> m_Scripts = new List<EnhancedScript>();
+		internal static List<EnhancedScript> EnhancedScripts { get { return m_Scripts; } }
 
-		private static ScriptManagerTimer m_ScriptManager = new ScriptManagerTimer();
+		private static ScriptManagerTimer m_ScriptManager;
+		private static PaxScripter m_PaxScripter;
+
+		public static void Initialize()
+		{
+			m_ScriptManager = new ScriptManagerTimer();
+			m_PaxScripter = new PaxScripter();
+			m_PaxScripter.OnChangeState += new ChangeStateHandler(paxScripter_OnChangeState);
+		}
+
+		private static void paxScripter_OnChangeState(PaxScripter sender, ChangeStateEventArgs e)
+		{
+			if (e.OldState == ScripterState.Init)
+			{
+			}
+			else if (sender.HasErrors)
+			{
+				MessageBox.Show(sender.Error_List[0].Message);
+			}
+		}
 
 		private static bool m_Auto = false;
 		internal static bool Auto
@@ -106,147 +139,60 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static string[] GetReferenceAssemblies()
-		{
-			ArrayList refs = new ArrayList(1);
-
-			refs.Add(Engine.ExePath);
-
-			string path = Path.Combine(Directory.GetCurrentDirectory(), "Scripts/References.cfg");
-
-			if (File.Exists(path))
-			{
-				using (StreamReader ip = new StreamReader(path))
-				{
-					string line;
-
-					while ((line = ip.ReadLine()) != null)
-					{
-						if (line.Length > 0 && !line.StartsWith("#"))
-							refs.Add(line);
-					}
-				}
-			}
-
-			return (string[])refs.ToArray(typeof(string));
-		}
-
-		private static Assembly Compile(string file)
-		{
-			CompilerParameters CompilerParams = new CompilerParameters();
-			string outputDirectory = Directory.GetCurrentDirectory();
-
-			CompilerParams.GenerateInMemory = false;
-			CompilerParams.TreatWarningsAsErrors = false;
-			CompilerParams.GenerateExecutable = false;
-			CompilerParams.OutputAssembly = Path.Combine(Directory.GetCurrentDirectory(), "Scripts", Path.GetFileNameWithoutExtension(file) + ".dll");
-			CompilerParams.CompilerOptions = "/optimize";
-
-			// string[] references = GetReferenceAssemblies();
-			string[] references = new string[] { "System.dll", "Razor.exe" };
-			CompilerParams.ReferencedAssemblies.AddRange(references);
-
-			CSharpCodeProvider provider = new CSharpCodeProvider();
-			CompilerResults compile = provider.CompileAssemblyFromFile(CompilerParams, file);
-
-			if (compile.Errors.HasErrors)
-			{
-				string text = "Compile error: ";
-				foreach (CompilerError ce in compile.Errors)
-				{
-					text += "rn" + ce.ToString();
-				}
-				throw new Exception(text);
-			}
-
-			Assembly assembly = compile.CompiledAssembly;
-			return assembly;
-		}
-
-		private static Assembly Load(string file)
-		{
-			Assembly assembly = Assembly.LoadFile(file);
-			return assembly;
-		}
-
 		internal static void Reset()
 		{
-			m_Assemblies.Clear();
-		}
-
-		internal static string CompileOrLoad(string script)
-		{
-			string status = "Idle";
-			Assembly assembly = null;
-
-			if (File.Exists(script))
-			{
-				string extension = Path.GetExtension(script).ToLower();
-				string name = Path.GetFileNameWithoutExtension(script);
-
-				try
-				{
-					if (extension == ".cs")
-					{
-						assembly = Compile(script);
-					}
-					else if (extension == ".dll")
-					{
-						assembly = Load(script);
-					}
-					if (assembly != null)
-					{
-						status = "Loaded";
-						m_Assemblies.Add(assembly);
-					}
-				}
-				catch (Exception ex)
-				{
-					status = "ERROR! " + ex.Message;
-				}
-			}
-			return status;
+			m_Scripts.Clear();
+			m_PaxScripter.Reset();
 		}
 
 		internal static void InitializeAssemblies()
 		{
-			foreach (Assembly assembly in m_Assemblies)
+			foreach (EnhancedScript script in m_Scripts)
 			{
-				Type[] types = assembly.GetTypes();
-				for (int i = 0; i < types.Length; ++i)
+				int exit = InvokeMethod<int>(script, "Initialize");
+				if (exit != 0)
 				{
-					MethodInfo m = types[i].GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
-
-					if (m != null)
-						m.Invoke(null, null);
+					Assistant.Engine.MainWindow.razorCheckBoxAuto.Checked = false;
+					Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+					break;
 				}
 			}
 		}
 
-		private static int RunAssemblyTask(Assembly assembly)
+		internal static string Load(string file)
 		{
-			Module module = assembly.GetModules()[0];
+			string status = "Loaded";
+			string classname = Path.GetFileNameWithoutExtension(file);
+			EnhancedScript script = new EnhancedScript(file, classname);
 
-			if (module != null)
+			try
 			{
-				AssemblyName name = assembly.GetName();
-				Type type = module.GetType(name.Name + "." + name.Name);
-
-				if (type != null)
-				{
-					object instance = Activator.CreateInstance(type);
-					MethodInfo methInfo = type.GetMethod("Run");
-					if (methInfo != null && methInfo.ReturnType == typeof(int))
-					{
-						Task<int> task = new Task<int>(() => (int)methInfo.Invoke(instance, null));
-						task.Start();
-						int result = task.Result;
-						return result;
-					}
-				}
+				m_Scripts.Add(script);
+				m_PaxScripter.AddModule(script.Class);
+				m_PaxScripter.AddCodeFromFile(script.Class, script.File);
+			}
+			catch (Exception ex)
+			{
+				status = "ERROR: " + ex.Message;
 			}
 
-			return Int32.MinValue;
+			return status;
+		}
+
+		private static T InvokeMethod<T>(EnhancedScript script, string method)
+		{
+			T result = default(T);
+			try
+			{
+				Task<T> task = new Task<T>(() => (T)m_PaxScripter.Invoke(RunMode.Run, null, "RazorEnhanced." + script.Class + "." + method));
+				task.Start();
+				result = task.Result;
+			}
+			catch
+			{
+			}
+
+			return result;
 		}
 	}
 }

@@ -61,6 +61,16 @@ namespace Assistant.Properties {
         }
         
         /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
+        /// </summary>
+        internal static System.Drawing.Icon accessories_text_editor_5 {
+            get {
+                object obj = ResourceManager.GetObject("accessories_text_editor_5", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap bug_add {
@@ -123,6 +133,16 @@ namespace Assistant.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap media_playback_pause_3 {
+            get {
+                object obj = ResourceManager.GetObject("media_playback_pause_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap media_playback_start_3 {
             get {
                 object obj = ResourceManager.GetObject("media_playback_start_3", resourceCulture);
@@ -146,6 +166,16 @@ namespace Assistant.Properties {
         internal static System.Drawing.Bitmap media_seek_forward_3 {
             get {
                 object obj = ResourceManager.GetObject("media_seek_forward_3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap media_skip_forward_3 {
+            get {
+                object obj = ResourceManager.GetObject("media_skip_forward_3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

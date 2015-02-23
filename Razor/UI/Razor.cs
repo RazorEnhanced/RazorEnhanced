@@ -6601,7 +6601,7 @@ namespace Assistant
 				if ((bool)row.Cells[0].Value)
 				{
 
-					string status = RazorEnhanced.Scripts.CompileOrLoad((string)row.Cells[1].Value);
+					string status = RazorEnhanced.Scripts.Load((string)row.Cells[1].Value);
 					if (status == "Loaded")
 					{
 						row.Cells[2].Value = Properties.Resources.green;

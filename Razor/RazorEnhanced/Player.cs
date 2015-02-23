@@ -108,191 +108,115 @@ namespace RazorEnhanced
 			{
 				case "RightHand":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); 
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial ));
-                    }
-                    else
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "LeftHand":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Shoes":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Pants":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Shirt":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Head":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Gloves":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Ring":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Neck":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Waist":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "InnerTorso":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Bracelet":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "MiddleTorso":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Earrings":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Arms":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Cloak":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "OuterTorso":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "OuterLegs":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "InnerLegs":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs) != null)
-                    {
-                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs);
-                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
-                    }
+						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
@@ -316,19 +240,16 @@ namespace RazorEnhanced
                 Player.SendMessage("Script Error: EquipItem: Item serial: (" + itemserial + ") too away");
                 return;
             }
-            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
-            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
+            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, Assistant.Layer.Ring));
         }
         public static void EquipItem(Item item)
         {
-            Assistant.Mobile aa = Assistant.World.Player;
             if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
             {
                 Player.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
                 return;
             }
-            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
-            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
+            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, Assistant.Layer.Ring));
         }
 
         public static bool CheckLayer(String Layer)
@@ -866,6 +787,7 @@ namespace RazorEnhanced
             }
         }       
         
+
         // Sysmessage
 		public static void SendMessage(Assistant.LocString loc)
 		{
@@ -876,23 +798,5 @@ namespace RazorEnhanced
 		{
 			Assistant.World.Player.SendMessage(msg);
 		}
-
-        // Game Message
-		public static void ChatSay(int hue, int font, string msg)
-		{
-            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Regular, hue, font, msg));
-		}
-        public static void ChatEmote(int hue, int font, string msg)
-        {
-            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, font, msg));
-        }
-        public static void ChatWhisper(int hue, int font, string msg)
-        {
-            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, font, msg));
-        }
-        public static void ChatYell(int hue, int font, string msg)
-        {
-            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, font, msg));
-        }
 	}
 }

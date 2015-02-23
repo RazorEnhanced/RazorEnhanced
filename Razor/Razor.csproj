@@ -385,11 +385,14 @@
     <None Include="RazorEnhanced\Resources\document-close-2.png" />
     <None Include="RazorEnhanced\Resources\document-open-7.png" />
     <None Include="RazorEnhanced\Resources\document-save-5.png" />
+    <None Include="RazorEnhanced\Resources\accessories-text-editor-5.ico" />
     <Content Include="RazorEnhanced\Resources\green.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start.png" />
     <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />
     <None Include="RazorEnhanced\Resources\media-seek-forward-3.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start-3.png" />
+    <None Include="RazorEnhanced\Resources\media-skip-forward-3.png" />
+    <None Include="RazorEnhanced\Resources\media-playback-pause-3.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />
