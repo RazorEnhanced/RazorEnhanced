@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assistant;
 
 namespace RazorEnhanced
 {
@@ -16,7 +17,7 @@ namespace RazorEnhanced
             else
                 return item;
         }
-        public static void Move(Assistant.Item item, Assistant.Item bag)
+        public static void Move(Assistant.Item item, Assistant.Item bag, int amount)
         {
             if (item == null)
             {
@@ -33,17 +34,43 @@ namespace RazorEnhanced
                 Player.SendMessage("Script Error: Move: Destination Item is not a container");
                 return;
             }
-            Assistant.DragDropManager.DragDrop(item, bag);
+            if (amount == 0)
+            {
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, bag.Serial));
+            }
+            else
+            {
+                if (item.Amount < amount)
+                {
+                    amount = item.Amount;
+                }
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, bag.Serial));
+            }
         }
-        public static void DropItemGroundSelf(Assistant.Item item)
+
+        public static void DropItemGroundSelf(Assistant.Item item, int amount)
         {
             if (item == null)
             {
                 Player.SendMessage("Script Error: DropItemGroundSelf: Item not found");
                 return;
             }
-            Assistant.DragDropManager.Drag(item, item.Amount);
-            Assistant.DragDropManager.Drop(item, Assistant.Serial.MinusOne, Assistant.World.Player.Position);
-        }        
+            if (amount == 0)
+            {
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Serial.Zero));
+            }
+            else
+            {
+                if (item.Amount < amount)
+                {
+                    amount = item.Amount;
+                }
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Serial.Zero));
+            }
+        }
 	}
 }

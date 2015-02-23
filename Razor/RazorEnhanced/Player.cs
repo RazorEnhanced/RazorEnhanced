@@ -108,115 +108,191 @@ namespace RazorEnhanced
 			{
 				case "RightHand":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
-					else
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.RightHand);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); 
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial ));
+                    }
+                    else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "LeftHand":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.LeftHand);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Shoes":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shoes);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Pants":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Pants);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Shirt":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Shirt);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Head":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Head);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Gloves":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Gloves);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Ring":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Ring);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Neck":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Neck);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Waist":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Waist);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "InnerTorso":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerTorso);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Bracelet":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Bracelet);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "MiddleTorso":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.MiddleTorso);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Earrings":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Earrings);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Arms":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Arms);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "Cloak":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Cloak);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "OuterTorso":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterTorso);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "OuterLegs":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.OuterLegs);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
 				case "InnerLegs":
                     if (Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs) != null)
-						Assistant.DragDropManager.DragDrop(Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs), Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Backpack));
+                    {
+                        Assistant.Item item = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.InnerLegs);
+                        Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                        Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, World.Player.Backpack.Serial));
+                    }
 					else
                         Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + Layer);
 					break;
@@ -240,16 +316,19 @@ namespace RazorEnhanced
                 Player.SendMessage("Script Error: EquipItem: Item serial: (" + itemserial + ") too away");
                 return;
             }
-            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, Assistant.Layer.Ring));
+            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
+            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
         }
         public static void EquipItem(Item item)
         {
+            Assistant.Mobile aa = Assistant.World.Player;
             if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
             {
                 Player.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
                 return;
             }
-            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, Assistant.Layer.Ring));
+            Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
+            Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
         }
 
         public static bool CheckLayer(String Layer)
@@ -787,7 +866,6 @@ namespace RazorEnhanced
             }
         }       
         
-
         // Sysmessage
 		public static void SendMessage(Assistant.LocString loc)
 		{
@@ -798,5 +876,460 @@ namespace RazorEnhanced
 		{
 			Assistant.World.Player.SendMessage(msg);
 		}
+
+        // Game Message
+		public static void ChatSay(int hue, int font, string msg)
+		{
+            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Regular, hue, font, msg));
+		}
+        public static void ChatEmote(int hue, int font, string msg)
+        {
+            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, font, msg));
+        }
+        public static void ChatWhisper(int hue, int font, string msg)
+        {
+            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, font, msg));
+        }
+        public static void ChatYell(int hue, int font, string msg)
+        {
+            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, font, msg));
+        }
+
+        // spell
+        public static void CastSpellMagery(string SpellName)
+        {
+            switch (SpellName)
+            {
+                // Primo circolo magery
+                case "Clumsy":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(1));
+                    break;
+                case "CreateFood":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(2));
+                    break;
+                case "Feeblemind":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(3));
+                    break;
+                case "Heal":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(4));
+                    break;
+                case "MagicArrow":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(5));
+                    break;
+                case "NightSight":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(6));
+                    break;
+                case "ReactiveArmor":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(7));
+                    break;
+                case "Weaken":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(8));
+                    break;
+                // Secondo circolo magery
+                case "Agility":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(9));
+                    break;
+                case "Cunning":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(10));
+                    break;
+                case "Cure":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(11));
+                    break;
+                case "Harm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(12));
+                    break;
+                case "MagicTrap":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(13));
+                    break;
+                case "MagicUntrap":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(14));
+                    break;
+                case "Protection":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(15));
+                    break;
+                case "Strength":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(16));
+                    break;
+                // Terzo circolo magery
+                case "Bless":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(17));
+                    break;
+                case "Fireball":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(18));
+                    break;
+                case "MagicLock":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(19));
+                    break;
+                case "Poison":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(20));
+                    break;
+                case "Telekinesis":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(21));
+                    break;
+                case "Teleport":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(22));
+                    break;
+                case "Unlock":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(23));
+                    break;
+                case "WallofStone":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(24));
+                    break;
+                // Quarto circolo magery
+                case "ArchCure":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(25));
+                    break;
+                case "ArchProtection":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(26));
+                    break;
+                case "Curse":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(27));
+                    break;
+                case "FireField":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(28));
+                    break;
+                case "GreaterHeal":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(29));
+                    break;
+                case "Lightning":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(30));
+                    break;
+                case "ManaDrain":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(31));
+                    break;
+                case "Recall":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(32));
+                    break;
+                // Quinto circolo magery
+                case "BladeSpirits":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(33));
+                    break;
+                case "DispelField":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(34));
+                    break;
+                case "Incognito":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(35));
+                    break;
+                case "MagicReflection":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(36));
+                    break;
+                case "MindBlast":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(37));
+                    break;
+                case "Paralyze":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(38));
+                    break;
+                case "PoisonField":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(39));
+                    break;
+                case "SummonCreature":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(40));
+                    break;
+                // Sesto circolo magery
+                case "Dispel":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(41));
+                    break;
+                case "EnergyBolt":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(42));
+                    break;
+                case "Explosion":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(43));
+                    break;
+                case "Invisibility":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(44));
+                    break;
+                case "Mark":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(45));
+                    break;
+                case "MassCurse":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(46));
+                    break;
+                case "ParalyzeField":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(47));
+                    break;
+                case "Reveal":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(48));
+                    break;
+                // Settimo circolo magery
+                case "ChainLightning":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(49));
+                    break;
+                case "EnergyField":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(50));
+                    break;
+                case "Flamestrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(51));
+                    break;
+                case "GateTravel":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(52));
+                    break;
+                case "ManaVampire":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(53));
+                    break;
+                case "MassDispel":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(54));
+                    break;
+                case "MeteorSwarm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(55));
+                    break;
+                case "Polymorph":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(56));
+                    break;
+                // Ottavo circolo magery
+                case "Earthquake":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(57));
+                    break;
+                case "EnergyVortex":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(58));
+                    break;
+                case "Resurrection":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(59));
+                    break;
+                case "SummonAirElemental":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(60));
+                    break;
+                case "SummonDaemon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(61));
+                    break;
+                case "SummonEarthElemental":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(62));
+                    break;
+                case "SummonFireElemental":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(63));
+                    break;
+                case "SummonWaterElemental":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(64));
+                    break;     
+                default:
+                    Player.SendMessage("Script Error: CastSpellMagery: Invalid spell name: " + SpellName);
+                    break;
+            } 
+        }
+        public static void CastSpellNecro(string SpellName)                    
+        {
+            switch (SpellName)
+            {
+                case "CurseWeapon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(101));
+                    break;
+                case "PainSpike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(102));
+                    break;
+                case "CorpseSkin":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(103));
+                    break;
+                case "EvilOmen":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(104));
+                    break;
+                case "BloodOath":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(105));
+                    break;
+                case "WraithForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(106));
+                    break;
+                case "MindRot":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(107));
+                    break;
+                case "SummonFamiliar":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(108));
+                    break;
+                case "HorrificBeast":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(109));
+                    break;
+                case "AnimateDead":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(110));
+                    break;
+                case "PoisonStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(111));
+                    break;
+                case "Wither":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(112));
+                    break;
+                case "Strangle":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(113));
+                    break;
+                case "LichForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(114));
+                    break;
+                case "Exorcism":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(115));
+                    break;
+                case "VengefulSpirit":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(116));
+                    break;
+                case "VampiricEmbrace":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(117));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellChivalry(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "CloseWounds":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(201));
+                    break;
+                case "RemoveCurse":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(202));
+                    break;
+                case "CleanseByFire":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(203));
+                    break;
+                case "ConsecrateWeapon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(204));
+                    break;
+                case "SacredJourney":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(205));
+                    break;
+                case "DivineFury":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(206));
+                    break;
+                case "DispelEvil":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(207));
+                    break;
+                case "EnemyOfOne":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(208));
+                    break;
+                case "HolyLight":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(209));
+                    break;
+                case "NobleSacrifice":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(210));
+                    break;        
+                default:
+                    Player.SendMessage("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellBushido(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "HonorableExecution":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(145));
+                    break;
+                case "Confidence":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(146));
+                    break;
+                case "CounterAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(147));
+                    break;
+                case "LightningStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(148));
+                    break;
+                case "Evasion":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(149));
+                    break;
+                case "MomentumStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(150));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellNinjitsu(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "AnimalForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(245));
+                    break;
+                case "Backstab":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(246));
+                    break;
+                case "SurpriseAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(247));
+                    break;
+                case "MirrorImage":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(248));
+                    break;
+                case "Shadowjump":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(249));
+                    break;
+                case "FocusAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(250));
+                    break;
+                case "KiAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(251));
+                    break;
+                case "DeathStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(252));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellSpellweaving(string SpellName)     // Sicuramente problemi sul send pacchetto in quanto gli id sono uguali ad altre spe
+        {
+            switch (SpellName)
+            {
+                case "ArcaneCircle":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(89));
+                    break;
+                case "Attunement":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(90));
+                    break;
+                case "GiftOfRenewal":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(91));
+                    break;
+                case "NaturesFury":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(92));
+                    break;
+                case "ImmolatingWeapon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(93));
+                    break;
+                case "Thunderstorm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(94));
+                    break;
+                case "ArcaneEmpowerment":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(95));
+                    break;
+                case "EtherealVoyage":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(96));
+                    break;
+                case "ReaperForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(97));
+                    break;
+                case "GiftOfLife":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(98));
+                    break;
+                case "SummonFey":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(99));
+                    break;
+                case "SummonFiend":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(100));
+                    break;
+                case "DryadAllure":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(101));
+                    break;
+                case "EssenceOfWind":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(102));
+                    break;
+                case "Wildfire":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(103));
+                    break;
+                case "WordOfDeath":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(104));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }  
+
+        // attack
+        public static void SetWarMode(bool warflag)
+        {
+            Assistant.ClientCommunication.SendToServer(new SetWarMode(warflag));
+        }
+        public static void Attack(uint serial)
+        {
+            Assistant.ClientCommunication.SendToServer(new AttackReq(serial));
+        }       
 	}
 }
