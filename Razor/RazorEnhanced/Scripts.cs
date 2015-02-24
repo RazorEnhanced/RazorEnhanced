@@ -145,20 +145,6 @@ namespace RazorEnhanced
 			m_PaxScripter.Reset();
 		}
 
-		internal static void InitializeAssemblies()
-		{
-			foreach (EnhancedScript script in m_Scripts)
-			{
-				int exit = InvokeMethod<int>(script, "Initialize");
-				if (exit != 0)
-				{
-					Assistant.Engine.MainWindow.razorCheckBoxAuto.Checked = false;
-					Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
-					break;
-				}
-			}
-		}
-
 		internal static string Load(string file)
 		{
 			string status = "Loaded";

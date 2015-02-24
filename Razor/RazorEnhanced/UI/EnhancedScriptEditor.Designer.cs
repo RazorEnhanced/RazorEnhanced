@@ -60,9 +60,9 @@
             this.toolStripButtonClose,
             this.toolStripSeparator1,
             this.toolStripButtonPlay,
+            this.toolStripTraceInto,
             this.toolStripButtonNextLine,
             this.toolStripButtonStepOver,
-            this.toolStripTraceInto,
             this.toolStripButtonStop,
             this.toolStripSeparator2,
             this.toolStripLabelEvaluate,
@@ -71,7 +71,7 @@
             this.toolStripButtonRemoveBreakpoints});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(864, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(850, 25);
 			this.toolStrip1.TabIndex = 1;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -193,7 +193,7 @@
             this.toolStripStatusLabelScript});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 378);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(864, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(850, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -208,7 +208,7 @@
 			this.scintillScriptEditor.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.scintillScriptEditor.Location = new System.Drawing.Point(0, 25);
 			this.scintillScriptEditor.Name = "scintillScriptEditor";
-			this.scintillScriptEditor.Size = new System.Drawing.Size(864, 353);
+			this.scintillScriptEditor.Size = new System.Drawing.Size(850, 353);
 			this.scintillScriptEditor.Styles.BraceBad.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
 			this.scintillScriptEditor.Styles.BraceLight.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
 			this.scintillScriptEditor.Styles.CallTip.FontName = "Segoe UI\0\0\0\0\0\0\0\0\0\0\0\0";
@@ -226,7 +226,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(864, 400);
+			this.ClientSize = new System.Drawing.Size(850, 400);
 			this.Controls.Add(this.scintillScriptEditor);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
@@ -252,7 +252,6 @@
 		private System.Windows.Forms.ToolStripButton toolStripButtonSave;
 		private System.Windows.Forms.ToolStripButton toolStripButtonClose;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
 		private System.Windows.Forms.ToolStripButton toolStripButtonStop;
 		private System.Windows.Forms.ToolStripButton toolStripButtonAddBreakpoint;
 		private System.Windows.Forms.ToolStripButton toolStripButtonRemoveBreakpoints;
@@ -263,5 +262,6 @@
 		private System.Windows.Forms.ToolStripLabel toolStripLabelEvaluate;
 		private System.Windows.Forms.ToolStripButton toolStripButtonNextLine;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelScript;
+		private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
 	}
 }

@@ -1060,16 +1060,16 @@ namespace Assistant
 				return;
 
 			m_LastStr = str;
-			byte[] copy = System.Text.Encoding.ASCII.GetBytes(str);
-			int clen = copy.Length;
-			if (clen >= 512)
-				clen = 511;
+			byte[] copy = new byte[511];
+			Array.Clear(copy, 0, copy.Length);
+			byte[] ansi = System.Text.Encoding.ASCII.GetBytes(str);
+			Array.Copy(ansi, copy, ansi.Length);
 
 			CommMutex.WaitOne();
-			if (clen > 0)
+			if (ansi.Length > 0)
 			{
-				IntPtr array = Marshal.StringToHGlobalUni(str);
-				memcpy(m_TitleStr, array, new UIntPtr((uint)clen));
+				IntPtr array = Marshal.StringToHGlobalAnsi(str);
+				memcpy(m_TitleStr, array, new UIntPtr((uint)copy.Length));
 				Marshal.FreeHGlobal(array);
 			}
 

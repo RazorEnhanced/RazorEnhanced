@@ -6613,8 +6613,6 @@ namespace Assistant
 					row.Cells[3].Value = status;
 				}
 			}
-
-			RazorEnhanced.Scripts.InitializeAssemblies();
 		}
 
 		private void xButton2_Click(object sender, EventArgs e)

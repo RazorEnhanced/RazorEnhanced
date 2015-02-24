@@ -13,10 +13,5 @@ namespace RazorEnhanced
 			Player.SendMessage("Hits: " + Player.Hits.ToString());
 			return 0;
 		}
-
-		public static int Initialize()
-		{
-			return 0;
-		}
 	}
 }

@@ -9,19 +9,24 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ScintillaNET;
 using PaxScript.Net;
+using System.IO;
 
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScriptEditor : Form
 	{
-		private PaxScripter m_PaxScripterEnhanced;
+		private const string m_Title = "Enhanced Script Editor";
+
+		private static PaxScripter m_PaxScripterEnhanced;
 		private int m_Line = -1;
+		private string m_Classname = "";
 
 		public EnhancedScriptEditor()
 		{
 			InitializeComponent();
-			this.m_PaxScripterEnhanced = new PaxScripter(this.components);
-			this.m_PaxScripterEnhanced.OnChangeState += new ChangeStateHandler(this.paxScripterEnhanced_OnChangeState);
+			this.Text = m_Title;
+			m_PaxScripterEnhanced = new PaxScripter(this.components);
+			m_PaxScripterEnhanced.OnChangeState += new ChangeStateHandler(this.paxScripterEnhanced_OnChangeState);
 		}
 
 		private void scintillScriptEditor_TextChanged(object sender, EventArgs e)
@@ -50,10 +55,21 @@ namespace RazorEnhanced.UI
 
 		}
 
+		private static void InvokeMethod(string classname, string method, RunMode mode)
+		{
+			try
+			{
+				m_PaxScripterEnhanced.Invoke(mode, null, "RazorEnhanced." + classname + "." + method);
+			}
+			catch
+			{
+			}
+		}
+
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.Run(RunMode.Run);
-			scintillScriptEditor.Caret.HighlightCurrentLine = false;
+			InvokeMethod(m_Classname, "Run", RunMode.Run);
+
 			if (m_PaxScripterEnhanced.HasErrors)
 			{
 				m_PaxScripterEnhanced.Reset();
@@ -67,22 +83,34 @@ namespace RazorEnhanced.UI
 
 		private void toolStripButtonNextLine_Click(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.Run(RunMode.NextLine);
+			InvokeMethod(m_Classname, "Run", RunMode.NextLine);
+
+			int line = m_PaxScripterEnhanced.CurrentLineNumber / 2;
 			scintillScriptEditor.Caret.HighlightCurrentLine = true;
+			scintillScriptEditor.Caret.LineNumber = line;
+
 			toolStripStatusLabelScript.Text = "RunMode: Next Line";
 		}
 
 		private void toolStripButtonStepOver_Click(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.Run(RunMode.StepOver);
+			InvokeMethod(m_Classname, "Run", RunMode.StepOver);
+
+			int line = m_PaxScripterEnhanced.CurrentLineNumber / 2;
 			scintillScriptEditor.Caret.HighlightCurrentLine = true;
+			scintillScriptEditor.Caret.LineNumber = line;
+
 			toolStripStatusLabelScript.Text = "RunMode: Step Over";
 		}
 
 		private void toolStripTraceInto_Click(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.Run(RunMode.TraceInto);
+			InvokeMethod(m_Classname, "Run", RunMode.TraceInto);
+
+			int line = m_PaxScripterEnhanced.CurrentLineNumber / 2;
 			scintillScriptEditor.Caret.HighlightCurrentLine = true;
+			scintillScriptEditor.Caret.LineNumber = line;
+
 			toolStripStatusLabelScript.Text = "RunMode: Trace Into";
 		}
 
@@ -91,7 +119,6 @@ namespace RazorEnhanced.UI
 			m_PaxScripterEnhanced.Reset();
 			scintillScriptEditor.Caret.HighlightCurrentLine = false;
 			toolStripStatusLabelScript.Text = "";
-
 		}
 
 		private void toolStripTextBoxEvaluate_TextChanged(object sender, EventArgs e)
@@ -140,6 +167,8 @@ namespace RazorEnhanced.UI
 			if (open.ShowDialog() == DialogResult.OK)
 			{
 				scintillScriptEditor.Text = System.IO.File.ReadAllText(open.FileName);
+				m_Classname = Path.GetFileNameWithoutExtension(open.FileName);
+				this.Text = m_Title + " " + m_Classname + ".cs";
 			}
 		}
 
@@ -151,6 +180,8 @@ namespace RazorEnhanced.UI
 			if (save.ShowDialog() == DialogResult.OK)
 			{
 				System.IO.File.WriteAllText(save.FileName, scintillScriptEditor.Text);
+				m_Classname = Path.GetFileNameWithoutExtension(save.FileName);
+				this.Text = m_Title + " " + m_Classname + ".cs";
 			}
 		}
 
@@ -168,6 +199,8 @@ namespace RazorEnhanced.UI
 			}
 
 			scintillScriptEditor.Text = "";
+			m_Classname = "";
+			this.Text = m_Title;
 		}
 	}
 }
