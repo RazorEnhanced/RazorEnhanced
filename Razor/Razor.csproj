@@ -281,6 +281,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\Items.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedItemInspect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedItemInspect.Designer.cs">
+      <DependentUpon>EnhancedItemInspect.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -349,6 +355,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedItemInspect.resx">
+      <DependentUpon>EnhancedItemInspect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -399,6 +408,7 @@
     <Content Include="RazorEnhanced\Resources\RazorRadioButton.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorRadioButton.On.png" />
     <Content Include="RazorEnhanced\Resources\red.png" />
+    <None Include="RazorEnhanced\Resources\RoundButton.png" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />
