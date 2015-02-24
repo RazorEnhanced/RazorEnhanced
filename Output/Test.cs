@@ -10,7 +10,8 @@ namespace RazorEnhanced
 			
 		public static int Run()
 		{
-			Player.SendMessage("Hits: " + Player.Hits.ToString());
+			Player.Walk("North");
+			Player.Pause(0.5);
 			return 0;
 		}
 	}

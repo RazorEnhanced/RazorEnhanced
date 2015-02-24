@@ -1327,9 +1327,56 @@ namespace RazorEnhanced
         {
             Assistant.ClientCommunication.SendToServer(new SetWarMode(warflag));
         }
+
         public static void Attack(uint serial)
         {
             Assistant.ClientCommunication.SendToServer(new AttackReq(serial));
-        }       
+        }
+
+		public static void Walk(string direction)
+		{
+			Direction dir;
+			switch (direction)
+			{
+				case "North":
+					dir = Direction.North;
+					break;
+				case "South":
+					dir = Direction.South;
+					break;
+				case "East":
+					dir = Direction.East;
+					break;
+				case "West":
+					dir = Direction.West;
+					break;
+				case "Up":
+					dir = Direction.Up;
+					break;
+				case "Down":
+					dir = Direction.Down;
+					break;
+				case "Left":
+					dir = Direction.Left;
+					break;
+				case "Right":
+					dir = Direction.Right;
+					break;
+				default:
+					dir = Direction.Mask;
+					break;
+			}
+
+			if (dir != Direction.Mask)
+			{
+				ClientCommunication.SendToServer(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
+			}
+		}
+
+		public static void Pause(double seconds)
+		{
+			System.Threading.Thread.Sleep((int)(1000 * seconds));
+		}
+    
 	}
 }
