@@ -13,6 +13,8 @@ namespace Assistant
 		Whisper = 0x08,
 		Yell = 0x09,
 		Spell = 0x0A,
+        Guild = 0x0D,
+        Alliance = 0x0E,
 		Encoded = 0xC0,
 
 		Special = 0x20,
@@ -1588,6 +1590,41 @@ namespace Assistant
 			Write( (short) totalLength ); // Buffer length*/
 		}
 	}
+    // Nuovi pacchetti Enhanced
+
+    public sealed class UseVirtue : Packet
+    {
+        public UseVirtue(byte VirtueID)
+            : base(0x12)
+        {
+            EnsureCapacity(6);
+            Write((byte)0xF4);
+            Write((byte)VirtueID);
+        }
+    }
+    public sealed class SendPartyMessage : Packet
+    {
+        public SendPartyMessage(uint serial, string Message)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 2 + 4 + Message.Length + 1);
+            Write( (ushort)0x06 );   // Command  
+            Write((byte)0x03);       // Party command
+            Write((uint)serial);
+            WriteAsciiNull(Message);
+        }
+    }
+    public sealed class PartyCanLoot : Packet
+    {
+        public PartyCanLoot(byte canloot)
+            : base(0xBF)
+        {
+            EnsureCapacity(1 + 2 + 2 + 2 + 2 + 1);
+            Write((ushort)0x06);   // Command  
+            Write((byte)0x06);       // Party command
+            Write((byte)canloot);
+        }
+    }
 }
 
 

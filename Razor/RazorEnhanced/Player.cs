@@ -40,7 +40,6 @@ namespace RazorEnhanced
 		public static int Gold { get { return Convert.ToInt32(Assistant.World.Player.Gold); } }
 		public static int Luck { get { return Assistant.World.Player.Luck; } }
 		public static int Body { get { return Assistant.World.Player.Body; } }
-		public static bool InParty { get { return Assistant.World.Player.InParty; } }
 		public static uint Serial { get { return Assistant.World.Player.Serial; } }
 		// Follower
 		public static int FollowersMax { get { return Assistant.World.Player.FollowersMax; } }
@@ -882,6 +881,14 @@ namespace RazorEnhanced
 		{
             Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Regular, hue, font, msg));
 		}
+        public static void ChatGuild(int hue, int font, string msg)
+        {
+            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Guild, hue, font, msg));
+        }
+        public static void ChatAlliance(int hue, int font, string msg)
+        {
+            Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Alliance, hue, font, msg));
+        }
         public static void ChatEmote(int hue, int font, string msg)
         {
             Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, font, msg));
@@ -1327,56 +1334,125 @@ namespace RazorEnhanced
         {
             Assistant.ClientCommunication.SendToServer(new SetWarMode(warflag));
         }
-
         public static void Attack(uint serial)
         {
             Assistant.ClientCommunication.SendToServer(new AttackReq(serial));
         }
+        // Virtue
+        public static void UseVirtue(string VirueName)
+        {
+            switch (VirueName)
+            {
+                case "Honor":
+                    Assistant.ClientCommunication.SendToServer(new UseVirtue(0x31));
+                    break;
+                case "Sacrifice":
+                    Assistant.ClientCommunication.SendToServer(new UseVirtue(0x32));
+                    break;
+                case "Valor":
+                    Assistant.ClientCommunication.SendToServer(new UseVirtue(0x33));
+                    break;
+                case "Compassion":
+                    Assistant.ClientCommunication.SendToServer(new UseVirtue(0x34));
+                    break;
+                case "Honesty":
+                    Assistant.ClientCommunication.SendToServer(new UseVirtue(0x35));
+                    break;
+                case "Humility":
+                    Assistant.ClientCommunication.SendToServer(new UseVirtue(0x36));
+                    break;
+                case "Justice":
+                    Assistant.ClientCommunication.SendToServer(new UseVirtue(0x37));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: UseVirtue: Invalid virtue name: " + VirueName);
+                    break;
+            }
+        }
+        // party
+        public static bool InParty { get { return Assistant.World.Player.InParty; } }
+        public static void ChatParty(string msg)
+        {
+            if (InParty)
+                Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
+            else
+                Player.SendMessage("Script Error: ChatParty: you are not in a party");
+        }
+        public static void PartyCanLoot(bool CanLoot)
+        {
+            if (InParty)
+                if (CanLoot)
+                    Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x1));
+                else
+                    Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x0));
+            else
+                Player.SendMessage("Script Error: ChatParty: you are not in a party");
+        }
+        //General
+        public static void Pause(double seconds)
+        {
+            System.Threading.Thread.Sleep((int)(1000 * seconds));
+        }
 
-		public static void Walk(string direction)
-		{
-			Direction dir;
-			switch (direction)
-			{
-				case "North":
-					dir = Direction.North;
-					break;
-				case "South":
-					dir = Direction.South;
-					break;
-				case "East":
-					dir = Direction.East;
-					break;
-				case "West":
-					dir = Direction.West;
-					break;
-				case "Up":
-					dir = Direction.Up;
-					break;
-				case "Down":
-					dir = Direction.Down;
-					break;
-				case "Left":
-					dir = Direction.Left;
-					break;
-				case "Right":
-					dir = Direction.Right;
-					break;
-				default:
-					dir = Direction.Mask;
-					break;
-			}
+        public static void Resync()
+        {
+            Assistant.ClientCommunication.SendToServer(new ResyncReq());
+        }
 
-			if (dir != Direction.Mask)
-			{
-				ClientCommunication.SendToServer(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
-			}
-		}
+        // Moving
+        public static void Walk(string direction)
+        {
+            Direction dir;
+            switch (direction)
+            {
+                case "North":
+                    dir = Direction.North;
+                    break;
+                case "South":
+                    dir = Direction.South;
+                    break;
+                case "East":
+                    dir = Direction.East;
+                    break;
+                case "West":
+                    dir = Direction.West;
+                    break;
+                case "Up":
+                    dir = Direction.Up;
+                    break;
+                case "Down":
+                    dir = Direction.Down;
+                    break;
+                case "Left":
+                    dir = Direction.Left;
+                    break;
+                case "Right":
+                    dir = Direction.Right;
+                    break;
+                default:
+                    dir = Direction.Mask;
+                    break;
+            }
 
-		public static void Pause(double seconds)
-		{
-			System.Threading.Thread.Sleep((int)(1000 * seconds));
-		}
-    
+            if (dir != Direction.Mask)
+            {
+                ClientCommunication.SendToServer(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
+            }
+        }
+
+        public static void PathFindTo(Point3D Location)
+        {
+            ClientCommunication.SendToClient(new PathFindTo(Location));
+        }
+
+        public static void PathFindTo(int x, int y, int z)
+        {
+            Point3D Location = new Point3D(Point3D.Zero);
+            Location.X = x;
+            Location.Y = y;
+            Location.Z = z;
+            ClientCommunication.SendToClient(new PathFindTo(Location));
+        }
+       
 	}
 }

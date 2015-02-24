@@ -72,5 +72,39 @@ namespace RazorEnhanced
                 Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Serial.Zero));
             }
         }
+        public static void UseItem(Assistant.Item item)
+        {
+            if (item.Serial.IsItem)
+                Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+            else
+                Player.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+        }
+        public static void UseItem(uint itemserial)
+        {
+            Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (item.Serial.IsItem)
+                Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+            else
+                Player.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+            
+        }
+        public static void UseItemByID(UInt16 ItemID)                   // Da verificare il findbyid dove cerca
+        {
+            Assistant.Item item = World.Player.FindItemByID(ItemID);
+            if (item.Serial.IsItem)
+            {
+                Player.SendMessage("Script Error: UseItemByID: No item whit ID:("+ ItemID.ToString() +") found!");
+                return;
+            }
+            if (item.Serial.IsItem)
+                Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+            else
+                Player.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item"); 
+        }
+
+        
+
+        
+        
 	}
 }
