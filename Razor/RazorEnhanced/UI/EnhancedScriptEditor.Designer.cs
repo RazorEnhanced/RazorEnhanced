@@ -35,9 +35,9 @@
 			this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButtonPlay = new System.Windows.Forms.ToolStripButton();
+			this.toolStripTraceInto = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonNextLine = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonStepOver = new System.Windows.Forms.ToolStripButton();
-			this.toolStripTraceInto = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripLabelEvaluate = new System.Windows.Forms.ToolStripLabel();
@@ -47,6 +47,8 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelScript = new System.Windows.Forms.ToolStripStatusLabel();
 			this.scintillScriptEditor = new ScintillaNET.Scintilla();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.toolStripButtonInspect = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.scintillScriptEditor)).BeginInit();
@@ -68,10 +70,12 @@
             this.toolStripLabelEvaluate,
             this.toolStripTextBoxEvaluate,
             this.toolStripButtonAddBreakpoint,
-            this.toolStripButtonRemoveBreakpoints});
+            this.toolStripButtonRemoveBreakpoints,
+            this.toolStripSeparator3,
+            this.toolStripButtonInspect});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(850, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(933, 25);
 			this.toolStrip1.TabIndex = 1;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -116,6 +120,15 @@
 			this.toolStripButtonPlay.Text = "Play";
 			this.toolStripButtonPlay.Click += new System.EventHandler(this.toolStripButtonPlay_Click);
 			// 
+			// toolStripTraceInto
+			// 
+			this.toolStripTraceInto.Image = global::Assistant.Properties.Resources.media_seek_forward_3;
+			this.toolStripTraceInto.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripTraceInto.Name = "toolStripTraceInto";
+			this.toolStripTraceInto.Size = new System.Drawing.Size(80, 22);
+			this.toolStripTraceInto.Text = "Trace Into";
+			this.toolStripTraceInto.Click += new System.EventHandler(this.toolStripTraceInto_Click);
+			// 
 			// toolStripButtonNextLine
 			// 
 			this.toolStripButtonNextLine.Image = global::Assistant.Properties.Resources.media_playback_pause_3;
@@ -133,15 +146,6 @@
 			this.toolStripButtonStepOver.Size = new System.Drawing.Size(78, 22);
 			this.toolStripButtonStepOver.Text = "Step Over";
 			this.toolStripButtonStepOver.Click += new System.EventHandler(this.toolStripButtonStepOver_Click);
-			// 
-			// toolStripTraceInto
-			// 
-			this.toolStripTraceInto.Image = global::Assistant.Properties.Resources.media_seek_forward_3;
-			this.toolStripTraceInto.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripTraceInto.Name = "toolStripTraceInto";
-			this.toolStripTraceInto.Size = new System.Drawing.Size(80, 22);
-			this.toolStripTraceInto.Text = "Trace Into";
-			this.toolStripTraceInto.Click += new System.EventHandler(this.toolStripTraceInto_Click);
 			// 
 			// toolStripButtonStop
 			// 
@@ -191,9 +195,9 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelScript});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 378);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 420);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(850, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(933, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -208,7 +212,7 @@
 			this.scintillScriptEditor.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.scintillScriptEditor.Location = new System.Drawing.Point(0, 25);
 			this.scintillScriptEditor.Name = "scintillScriptEditor";
-			this.scintillScriptEditor.Size = new System.Drawing.Size(850, 353);
+			this.scintillScriptEditor.Size = new System.Drawing.Size(933, 395);
 			this.scintillScriptEditor.Styles.BraceBad.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
 			this.scintillScriptEditor.Styles.BraceLight.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
 			this.scintillScriptEditor.Styles.CallTip.FontName = "Segoe UI\0\0\0\0\0\0\0\0\0\0\0\0";
@@ -222,11 +226,25 @@
 			this.scintillScriptEditor.TabIndex = 0;
 			this.scintillScriptEditor.TextChanged += new System.EventHandler(this.scintillScriptEditor_TextChanged);
 			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+			// 
+			// toolStripButtonInspect
+			// 
+			this.toolStripButtonInspect.Image = global::Assistant.Properties.Resources.applications_utilities;
+			this.toolStripButtonInspect.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonInspect.Name = "toolStripButtonInspect";
+			this.toolStripButtonInspect.Size = new System.Drawing.Size(65, 22);
+			this.toolStripButtonInspect.Text = "Inspect";
+			this.toolStripButtonInspect.Click += new System.EventHandler(this.toolStripButtonInspect_Click);
+			// 
 			// EnhancedScriptEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(850, 400);
+			this.ClientSize = new System.Drawing.Size(933, 442);
 			this.Controls.Add(this.scintillScriptEditor);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
@@ -263,5 +281,7 @@
 		private System.Windows.Forms.ToolStripButton toolStripButtonNextLine;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelScript;
 		private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripButton toolStripButtonInspect;
 	}
 }

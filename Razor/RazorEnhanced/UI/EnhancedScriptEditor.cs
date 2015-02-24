@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using ScintillaNET;
 using PaxScript.Net;
 using System.IO;
+using Assistant;
 
 namespace RazorEnhanced.UI
 {
@@ -201,6 +202,22 @@ namespace RazorEnhanced.UI
 			scintillScriptEditor.Text = "";
 			m_Classname = "";
 			this.Text = m_Title;
+		}
+
+		private void toolStripButtonInspect_Click(object sender, EventArgs e)
+		{
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(InspectItemTarget_Callback));
+		}
+
+		private void InspectItemTarget_Callback(bool loc, Serial serial, Point3D pt, ushort itemid)
+		{
+			Item itemTarg = RazorEnhanced.Items.FindBySerial(serial);
+
+			if (itemTarg.Serial.IsItem)
+			{
+				EnhancedItemInspector inspector = new EnhancedItemInspector(itemTarg);
+				inspector.Show();
+			}
 		}
 	}
 }

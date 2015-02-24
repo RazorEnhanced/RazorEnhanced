@@ -281,11 +281,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\Items.cs" />
-    <Compile Include="RazorEnhanced\UI\EnhancedItemInspect.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedItemInspector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedItemInspect.Designer.cs">
-      <DependentUpon>EnhancedItemInspect.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedItemInspector.Designer.cs">
+      <DependentUpon>EnhancedItemInspector.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.cs">
       <SubType>Form</SubType>
@@ -355,8 +355,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedItemInspect.resx">
-      <DependentUpon>EnhancedItemInspect.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedItemInspector.resx">
+      <DependentUpon>EnhancedItemInspector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
@@ -395,6 +395,8 @@
     <None Include="RazorEnhanced\Resources\document-open-7.png" />
     <None Include="RazorEnhanced\Resources\document-save-5.png" />
     <None Include="RazorEnhanced\Resources\accessories-text-editor-5.ico" />
+    <None Include="RazorEnhanced\Resources\applications-utilities.png" />
+    <None Include="RazorEnhanced\Resources\applications-utilities.ico" />
     <Content Include="RazorEnhanced\Resources\green.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start.png" />
     <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />
