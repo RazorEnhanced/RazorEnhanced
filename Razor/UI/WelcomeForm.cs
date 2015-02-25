@@ -86,7 +86,7 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorEnhanced.UI.Office2010BlueTheme office2010Blue = new RazorEnhanced.UI.Office2010BlueTheme();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             this.label1 = new System.Windows.Forms.Label();
             this.clientList = new RazorEnhanced.UI.RazorComboBox();
@@ -134,24 +134,24 @@ namespace Assistant
             // 
             // browse
             // 
-            office2010Blue.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010Blue.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010Blue.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010Blue.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010Blue.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010Blue.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010Blue.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010Blue.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010Blue.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010Blue.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010Blue.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010Blue.TextColor = System.Drawing.Color.White;
-            this.browse.ColorTable = office2010Blue;
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.browse.ColorTable = office2010BlueTheme1;
             this.browse.Location = new System.Drawing.Point(329, 18);
             this.browse.Name = "browse";
             this.browse.Size = new System.Drawing.Size(77, 24);
@@ -173,7 +173,7 @@ namespace Assistant
             // 
             // okay
             // 
-            this.okay.ColorTable = office2010Blue;
+            this.okay.ColorTable = office2010BlueTheme1;
             this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.okay.Location = new System.Drawing.Point(8, 287);
             this.okay.Name = "okay";
@@ -185,7 +185,7 @@ namespace Assistant
             // 
             // quit
             // 
-            this.quit.ColorTable = office2010Blue;
+            this.quit.ColorTable = office2010BlueTheme1;
             this.quit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.quit.Location = new System.Drawing.Point(104, 287);
             this.quit.Name = "quit";
@@ -215,11 +215,11 @@ namespace Assistant
             // serverList
             // 
             this.serverList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.serverList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.serverList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.serverList.ItemHeight = 20;
             this.serverList.Location = new System.Drawing.Point(62, 18);
             this.serverList.Name = "serverList";
-            this.serverList.Size = new System.Drawing.Size(236, 25);
+            this.serverList.Size = new System.Drawing.Size(236, 26);
             this.serverList.TabIndex = 11;
             this.serverList.SelectedIndexChanged += new System.EventHandler(this.serverList_SelectedIndexChanged);
             this.serverList.TextChanged += new System.EventHandler(this.serverList_TextChanged);
@@ -271,7 +271,7 @@ namespace Assistant
             // 
             // makeDef
             // 
-            this.makeDef.ColorTable = office2010Blue;
+            this.makeDef.ColorTable = office2010BlueTheme1;
             this.makeDef.Location = new System.Drawing.Point(214, 67);
             this.makeDef.Name = "makeDef";
             this.makeDef.Size = new System.Drawing.Size(192, 23);
@@ -321,7 +321,7 @@ namespace Assistant
             // 
             // dataBrowse
             // 
-            this.dataBrowse.ColorTable = office2010Blue;
+            this.dataBrowse.ColorTable = office2010BlueTheme1;
             this.dataBrowse.Location = new System.Drawing.Point(329, 23);
             this.dataBrowse.Name = "dataBrowse";
             this.dataBrowse.Size = new System.Drawing.Size(77, 25);
@@ -333,11 +333,11 @@ namespace Assistant
             // dataDir
             // 
             this.dataDir.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.dataDir.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dataDir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.dataDir.ItemHeight = 20;
             this.dataDir.Location = new System.Drawing.Point(10, 23);
             this.dataDir.Name = "dataDir";
-            this.dataDir.Size = new System.Drawing.Size(309, 25);
+            this.dataDir.Size = new System.Drawing.Size(309, 26);
             this.dataDir.TabIndex = 22;
             this.dataDir.SelectedIndexChanged += new System.EventHandler(this.dataDir_SelectedIndexChanged);
             this.dataDir.TextChanged += new System.EventHandler(this.dataDir_TextChanged);
@@ -539,7 +539,7 @@ namespace Assistant
 		private void WelcomeForm_Load(object sender, System.EventArgs e)
 		{
 			Language.LoadControlNames(this);
-
+            
 			this.BringToFront();
 
 			langSel.Items.AddRange(Language.GetPackNames());
@@ -651,6 +651,7 @@ namespace Assistant
 			_ShowTimer.Interval = 250;
 			_ShowTimer.Enabled = true;
 			_ShowTimer.Tick += new EventHandler(timer_Tick);
+
 		}
 
 		private System.Windows.Forms.Timer _ShowTimer;
