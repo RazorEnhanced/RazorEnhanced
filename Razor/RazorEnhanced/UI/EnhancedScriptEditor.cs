@@ -12,10 +12,11 @@ using PaxScript.Net;
 using System.IO;
 using Assistant;
 
+
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScriptEditor : Form
-	{
+	{      
 		private const string m_Title = "Enhanced Script Editor";
 
 		private static PaxScripter m_PaxScripterEnhanced;
@@ -211,13 +212,14 @@ namespace RazorEnhanced.UI
 
 		private void InspectItemTarget_Callback(bool loc, Serial serial, Point3D pt, ushort itemid)
 		{
-			Item itemTarg = RazorEnhanced.Items.FindBySerial(serial);
 
-			if (itemTarg.Serial.IsItem)
-			{
-				EnhancedItemInspector inspector = new EnhancedItemInspector(itemTarg);
-				inspector.Show();
-			}
+            Item itemTarg = Assistant.World.FindItem(serial);
+            if (itemTarg != null)
+			    if (itemTarg.Serial.IsItem)
+			    {
+				    EnhancedItemInspector inspector = new EnhancedItemInspector(itemTarg);
+				    inspector.Show();
+			    }
 		}
 	}
 }

@@ -19,17 +19,45 @@ namespace RazorEnhanced.UI
 		{
 			InitializeComponent();
             // general
-            lName.Text = ItemTarg.Name;
-            lSerial.Text = ItemTarg.Serial.ToString();
-            lItemID.Text = ItemTarg.ItemID.ToString();
+            lName.Text = ItemTarg.Name.ToString(); 
+            lSerial.Text = "0x"+ItemTarg.Serial.Value.ToString("X8");
+            lItemID.Text = "0x"+ItemTarg.ItemID.Value.ToString("X4");
             lColor.Text = ItemTarg.Hue.ToString();
             lPosition.Text = ItemTarg.Position.ToString();
             // Details
-            lContainer.Text = ItemTarg.Container.ToString();
-            lRootContainer.Text = ItemTarg.RootContainer.ToString();
+            Assistant.PlayerData tempdata;
+            Assistant.Item tempdata2;
+            if (ItemTarg.Container is Assistant.PlayerData)
+            {
+                tempdata = (Assistant.PlayerData)ItemTarg.Container;
+                lContainer.Text = tempdata.Serial.ToString();
+            }
+            if (ItemTarg.Container is Assistant.Item)
+            {
+                tempdata2 = (Assistant.Item)ItemTarg.Container;
+                lContainer.Text = tempdata2.Serial.ToString();
+            }
+
+            if (ItemTarg.RootContainer is Assistant.PlayerData)
+            {
+                tempdata = (Assistant.PlayerData)ItemTarg.RootContainer;
+                lRootContainer.Text = tempdata.Serial.ToString();
+                if (tempdata.Serial == Assistant.World.Player.Serial)
+                    lOwned.Text = "Yes";    
+            }
+            if (ItemTarg.RootContainer is Assistant.Item)
+            {
+                tempdata2 = (Assistant.Item)ItemTarg.RootContainer;
+                lRootContainer.Text = tempdata2.Serial.ToString();
+                if (tempdata2.Serial == Assistant.World.Player.Backpack.Serial)
+                    lOwned.Text = "Yes";
+            }
+
             lAmount.Text = ItemTarg.Amount.ToString();
             lLayer.Text = ItemTarg.Layer.ToString();
-            lOwned.Text = "Utilita?";
+           
+
+            
             // Attributes
             // TODO
 		}
