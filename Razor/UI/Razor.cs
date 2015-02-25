@@ -17,7 +17,7 @@ using Microsoft.CSharp;
 
 namespace Assistant
 {
-	public class MainForm : System.Windows.Forms.Form
+	internal class MainForm : System.Windows.Forms.Form
 	{
 		#region Class Variables
 		private System.Windows.Forms.NotifyIcon m_NotifyIcon;
@@ -279,9 +279,9 @@ namespace Assistant
 		[DllImport("User32.dll")]
 		private static extern IntPtr EnableMenuItem(IntPtr menu, uint item, uint options);
 
-		public Label WaitDisplay { get { return waitDisp; } }
+		internal Label WaitDisplay { get { return waitDisp; } }
 
-		public MainForm()
+		internal MainForm()
 		{
 			m_ProfileConfirmLoad = true;
 			m_Tip = new ToolTip();
@@ -303,7 +303,7 @@ namespace Assistant
 			m_NotifyIcon.ContextMenu.MenuItems[0].DefaultItem = true;
 		}
 
-		public void SwitchToVidTab()
+		internal void SwitchToVidTab()
 		{
 			tabs.SelectedTab = videoTab;
 		}
@@ -3383,7 +3383,7 @@ namespace Assistant
 		}
 
 		private bool m_Initializing = false;
-		public void InitConfig()
+		internal void InitConfig()
 		{
 			m_Initializing = true;
 
@@ -3639,7 +3639,7 @@ namespace Assistant
 		private class StatsTimer : Timer
 		{
 			MainForm m_Form;
-			public StatsTimer(MainForm form)
+			internal StatsTimer(MainForm form)
 				: base(TimeSpan.FromSeconds(0.5), TimeSpan.FromSeconds(0.5))
 			{
 				m_Form = form;
@@ -3723,7 +3723,7 @@ namespace Assistant
 			}
 		}
 
-		public void UpdateSkill(Skill skill)
+		internal void UpdateSkill(Skill skill)
 		{
 			double Total = 0;
 			for (int i = 0; i < Skill.Count; i++)
@@ -3746,7 +3746,7 @@ namespace Assistant
 			}
 		}
 
-		public void RedrawSkills()
+		internal void RedrawSkills()
 		{
 			skillList.BeginUpdate();
 			skillList.Items.Clear();
@@ -3899,9 +3899,9 @@ namespace Assistant
 
 		private class LVDoubleComparer : IComparer
 		{
-			public static readonly LVDoubleComparer Instance = new LVDoubleComparer();
-			public static int Column { set { Instance.m_Col = value; } }
-			public static bool Asc { set { Instance.m_Asc = value; } }
+			internal static readonly LVDoubleComparer Instance = new LVDoubleComparer();
+			internal static int Column { set { Instance.m_Col = value; } }
+			internal static bool Asc { set { Instance.m_Asc = value; } }
 
 			private int m_Col;
 			private bool m_Asc;
@@ -4028,7 +4028,7 @@ namespace Assistant
 			}
 		}
 
-		public void RedrawCounters()
+		internal void RedrawCounters()
 		{
 			Counter.Redraw(counters);
 		}
@@ -4138,7 +4138,7 @@ namespace Assistant
 			m_ProfileConfirmLoad = true;
 		}
 
-		public void SelectProfile(string name)
+		internal void SelectProfile(string name)
 		{
 			m_ProfileConfirmLoad = false;
 			profiles.SelectedItem = name;
@@ -4196,7 +4196,7 @@ namespace Assistant
 			}
 		}
 
-		public bool CanClose
+		internal bool CanClose
 		{
 			get
 			{
@@ -5047,7 +5047,7 @@ namespace Assistant
 			RedrawMacros();
 		}
 
-		public Macro GetMacroSel()
+		internal Macro GetMacroSel()
 		{
 			if (macroTree.SelectedNode == null || !(macroTree.SelectedNode.Tag is Macro))
 				return null;
@@ -5055,7 +5055,7 @@ namespace Assistant
 				return (Macro)macroTree.SelectedNode.Tag;
 		}
 
-		public void playMacro_Click(object sender, System.EventArgs e)
+		internal void playMacro_Click(object sender, System.EventArgs e)
 		{
 			if (World.Player == null)
 				return;
@@ -5109,7 +5109,7 @@ namespace Assistant
 			}
 		}
 
-		public void OnMacroStart(Macro m)
+		internal void OnMacroStart(Macro m)
 		{
 			actionList.SelectedIndex = -1;
 			macroTree.Enabled = actionList.Enabled = false;
@@ -5121,13 +5121,13 @@ namespace Assistant
 			m.DisplayTo(actionList);
 		}
 
-		public void PlayMacro(Macro m)
+		internal void PlayMacro(Macro m)
 		{
 			playMacro.Text = "Stop";
 			recMacro.Enabled = false;
 		}
 
-		public void OnMacroStop()
+		internal void OnMacroStop()
 		{
 			recMacro.Text = "Record";
 			recMacro.Enabled = true;
@@ -5690,7 +5690,7 @@ namespace Assistant
 			}
 		}
 
-		public void ReloadScreenShotsList()
+		internal void ReloadScreenShotsList()
 		{
 			ScreenCapManager.DisplayTo(screensList);
 			if (screenPrev.Image != null)
@@ -5824,7 +5824,7 @@ namespace Assistant
 			Config.SetProperty("CapTimeStamp", dispTime.Checked);
 		}
 
-		public static void LaunchBrowser(string site)
+		internal static void LaunchBrowser(string site)
 		{
 			try
 			{
@@ -5868,7 +5868,7 @@ namespace Assistant
 			}
 		}
 
-		public void UpdateTitle()
+		internal void UpdateTitle()
 		{
 			string str = Language.GetControlText(this.Name);
 			if (str == null || str == "")
@@ -5883,7 +5883,7 @@ namespace Assistant
 			UpdateSystray();
 		}
 
-		public void UpdateSystray()
+		internal void UpdateSystray()
 		{
 			if (m_NotifyIcon != null && m_NotifyIcon.Visible)
 			{
@@ -5899,7 +5899,7 @@ namespace Assistant
 			ShowMe();
 		}
 
-		public void ShowMe()
+		internal void ShowMe()
 		{
 			// Fuck windows, seriously.
 
@@ -6395,7 +6395,7 @@ namespace Assistant
 
 		private ArrayList m_LockBoxes = new ArrayList();
 
-		public void LockControl(Control locked)
+		internal void LockControl(Control locked)
 		{
 			if (locked != null)
 			{
@@ -6439,7 +6439,7 @@ namespace Assistant
 			}
 		}
 
-		public void UnlockControl(Control unlock)
+		internal void UnlockControl(Control unlock)
 		{
 			if (unlock != null)
 			{
@@ -6462,7 +6462,7 @@ namespace Assistant
 			}
 		}
 
-		public void OnLogout()
+		internal void OnLogout()
 		{
 			OnMacroStop();
 
@@ -6481,7 +6481,7 @@ namespace Assistant
 			m_LockBoxes.Clear();
 		}
 
-		public void UpdateControlLocks()
+		internal void UpdateControlLocks()
 		{
 			for (int i = 0; i < m_LockBoxes.Count; i++)
 			{
@@ -6524,7 +6524,7 @@ namespace Assistant
 			}
 		}
 
-		public Assistant.MapUO.MapWindow MapWindow;
+		internal Assistant.MapUO.MapWindow MapWindow;
 
 		[System.Runtime.InteropServices.DllImport("user32.dll")]
 		private static extern IntPtr SetParent(IntPtr child, IntPtr newParent);

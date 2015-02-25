@@ -5,13 +5,12 @@ using System.Collections;
 using System.Windows.Forms;
 using System.Xml;
 
-
 namespace Assistant
 {
-	public class CounterLVIComparer : IComparer
+	internal class CounterLVIComparer : IComparer
 	{
 		private static CounterLVIComparer m_Instance;
-		public static CounterLVIComparer Instance
+		internal static CounterLVIComparer Instance
 		{
 			get
 			{
@@ -21,7 +20,7 @@ namespace Assistant
 			}
 		}
 
-		public CounterLVIComparer()
+		internal CounterLVIComparer()
 		{
 		}
 
@@ -31,7 +30,7 @@ namespace Assistant
 		}
 	}
 
-	public class Counter : IComparable
+	internal class Counter : IComparable
 	{
 		private string m_Name;
 		private string m_Fmt;
@@ -44,7 +43,7 @@ namespace Assistant
 		private bool m_DispImg;
 		private ListViewItem m_LVI;
 
-		public Counter(string name, string fmt, ushort iid, int hue, bool dispImg)
+		internal Counter(string name, string fmt, ushort iid, int hue, bool dispImg)
 		{
 			m_Name = name;
 			m_Fmt = fmt;
@@ -60,7 +59,7 @@ namespace Assistant
 			m_NeedXMLSave = true;
 		}
 
-		public Counter(XmlElement node)
+		internal Counter(XmlElement node)
 		{
 			m_Name = GetText(node["name"], "");
 			m_Fmt = GetText(node["format"], "");
@@ -74,7 +73,7 @@ namespace Assistant
 			m_DispImg = true;
 		}
 
-		public void Save(XmlTextWriter xml)
+		internal void Save(XmlTextWriter xml)
 		{
 			xml.WriteStartElement("counter");
 
@@ -97,14 +96,14 @@ namespace Assistant
 			xml.WriteEndElement();
 		}
 
-		public string Name { get { return m_Name; } }
-		public string Format { get { return m_Fmt; } }
-		public ushort ItemID { get { return m_ItemID; } }
-		public int Hue { get { return m_Hue; } }
-		public bool Flag { get { return m_Flag; } set { m_Flag = value; } }
-		public ListViewItem ViewItem { get { return m_LVI; } }
+		internal string Name { get { return m_Name; } }
+		internal string Format { get { return m_Fmt; } }
+		internal ushort ItemID { get { return m_ItemID; } }
+		internal int Hue { get { return m_Hue; } }
+		internal bool Flag { get { return m_Flag; } set { m_Flag = value; } }
+		internal ListViewItem ViewItem { get { return m_LVI; } }
 
-		public void Set(ushort iid, int hue, string name, string fmt, bool dispImg)
+		internal void Set(ushort iid, int hue, string name, string fmt, bool dispImg)
 		{
 			m_ItemID = iid;
 			m_Hue = hue;
@@ -116,7 +115,7 @@ namespace Assistant
 			m_NeedXMLSave = true;
 		}
 
-		public string GetTitlebarString(bool dispImg)
+		internal string GetTitlebarString(bool dispImg)
 		{
 			StringBuilder sb = new StringBuilder();
 			if (dispImg)
@@ -140,7 +139,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public int Amount
+		internal int Amount
 		{
 			get { return m_Count; }
 			set
@@ -203,7 +202,7 @@ namespace Assistant
 			}
 		}
 
-		public void SetEnabled(bool value)
+		internal void SetEnabled(bool value)
 		{
 			m_Enabled = value;
 			if (m_Enabled)
@@ -218,7 +217,7 @@ namespace Assistant
 			}
 		}
 
-		public bool Enabled
+		internal bool Enabled
 		{
 			get { return m_Enabled; }
 			set
@@ -231,7 +230,7 @@ namespace Assistant
 			}
 		}
 
-		public bool DisplayImage
+		internal bool DisplayImage
 		{
 			get { return m_DispImg; }
 			set { m_DispImg = value; }
@@ -260,7 +259,7 @@ namespace Assistant
 		private static ArrayList m_List;
 		private static bool m_SupressWarn, m_SupressChecks;
 		private static Hashtable m_Cache;
-		public static ArrayList List { get { return m_List; } }
+		internal static ArrayList List { get { return m_List; } }
 
 		static Counter()
 		{
@@ -269,18 +268,18 @@ namespace Assistant
 			Load();
 		}
 
-		public static bool SupressWarnings
+		internal static bool SupressWarnings
 		{
 			get { return m_SupressWarn; }
 			set { m_SupressWarn = value; }
 		}
 
-		public static bool SupressChecks
+		internal static bool SupressChecks
 		{
 			get { return m_SupressChecks; }
 		}
 
-		private static void Load()
+		internal static void Load()
 		{
 			string file = Path.Combine(Config.GetUserDirectory(), "counters.xml");
 			if (!File.Exists(file))
@@ -306,7 +305,7 @@ namespace Assistant
 			m_NeedXMLSave = false;
 		}
 
-		public static void Save()
+		internal static void Save()
 		{
 			if (!m_NeedXMLSave)
 				return;
@@ -339,7 +338,7 @@ namespace Assistant
 			}
 		}
 
-		public static void SaveProfile(XmlTextWriter xml)
+		internal static void SaveProfile(XmlTextWriter xml)
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
@@ -355,7 +354,7 @@ namespace Assistant
 			}
 		}
 
-		public static void Default()
+		internal static void Default()
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
@@ -370,13 +369,13 @@ namespace Assistant
 			}
 		}
 
-		public static void DisableAll()
+		internal static void DisableAll()
 		{
 			for (int i = 0; i < m_List.Count; i++)
 				((Counter)m_List[i]).Enabled = false;
 		}
 
-		public static void LoadProfile(XmlElement xml)
+		internal static void LoadProfile(XmlElement xml)
 		{
 			Reset();
 			DisableAll();
@@ -445,14 +444,14 @@ namespace Assistant
 			}
 		}
 
-		public static void Register(Counter c)
+		internal static void Register(Counter c)
 		{
 			m_List.Add(c);
 			m_NeedXMLSave = true;
 			Engine.MainWindow.RedrawCounters();
 		}
 
-		public static void Uncount(Item item)
+		internal static void Uncount(Item item)
 		{
 			for (int i = 0; i < item.Contains.Count; i++)
 				Uncount((Item)item.Contains[i]);
@@ -481,7 +480,7 @@ namespace Assistant
 			}
 		}
 
-		public static void Count(Item item)
+		internal static void Count(Item item)
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
@@ -509,7 +508,7 @@ namespace Assistant
 				Count((Item)item.Contains[c]);
 		}
 
-		public static void QuickRecount()
+		internal static void QuickRecount()
 		{
 			Reset();
 
@@ -523,7 +522,7 @@ namespace Assistant
 			SupressWarnings = false;
 		}
 
-		public static void FullRecount()
+		internal static void FullRecount()
 		{
 			Reset();
 
@@ -555,7 +554,7 @@ namespace Assistant
 			}
 		}
 
-		public static void Reset()
+		internal static void Reset()
 		{
 			SupressWarnings = true;
 			m_Cache.Clear();
@@ -565,7 +564,7 @@ namespace Assistant
 			SupressWarnings = false;
 		}
 
-		public static void Redraw(ListView list)
+		internal static void Redraw(ListView list)
 		{
 			m_SupressChecks = true;
 			list.BeginUpdate();

@@ -11,11 +11,11 @@ namespace Assistant.MapUO
 	/// <summary>
 	/// Summary description for MapWindow.
 	/// </summary>
-	public class MapWindow : System.Windows.Forms.Form
+	internal class MapWindow : System.Windows.Forms.Form
 	{
-		public const int WM_NCLBUTTONDOWN = 0xA1;
-		private UOMapControl uoMap;
-		public const int HT_CAPTION = 0x2;
+		internal const int WM_NCLBUTTONDOWN = 0xA1;
+		internal const int HT_CAPTION = 0x2;
+		private UOMapControl uoMapControl1;
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
@@ -27,12 +27,12 @@ namespace Assistant.MapUO
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public MapWindow()
+		internal MapWindow()
 		{
-
 			//
 			// Required for Windows Form Designer support
 			//
+
 			InitializeComponent();
 			this.ContextMenu = new ContextMenu();
 			this.ContextMenu.Popup += new EventHandler(ContextMenu_Popup);
@@ -51,20 +51,20 @@ namespace Assistant.MapUO
 			// TODO: Add any constructor code after InitializeComponent call
 			//
 
-			this.uoMap.FullUpdate();
+			this.uoMapControl1.FullUpdate();
 			ClientCommunication.SetMapWndHandle(this);
 		}
 
-		public class MapMenuItem : MenuItem
+		internal class MapMenuItem : MenuItem
 		{
-			public MapMenuItem(System.String text, System.EventHandler onClick)
+			internal MapMenuItem(System.String text, System.EventHandler onClick)
 				: base(text, onClick)
 			{
 				Tag = null;
 			}
 		}
 
-		void ContextMenu_Popup(object sender, EventArgs e)
+		private void ContextMenu_Popup(object sender, EventArgs e)
 		{
 			ContextMenu cm = this.ContextMenu;
 			cm.MenuItems.Clear();
@@ -80,7 +80,7 @@ namespace Assistant.MapUO
 					{
 						mi = new MapMenuItem(m.Name, new EventHandler(FocusChange));
 						mi.Tag = s;
-						if (this.uoMap.FocusMobile == m)
+						if (this.uoMapControl1.FocusMobile == m)
 							mi.Checked = true;
 						cm.MenuItems.Add(mi);
 
@@ -101,8 +101,8 @@ namespace Assistant.MapUO
 				{
 					Serial s = (Serial)mItem.Tag;
 					Mobile m = World.FindMobile(s);
-					this.uoMap.FocusMobile = m;
-					this.uoMap.FullUpdate();
+					this.uoMapControl1.FocusMobile = m;
+					this.uoMapControl1.FullUpdate();
 				}
 			}
 		}
@@ -113,7 +113,7 @@ namespace Assistant.MapUO
 			HotKey.Add(HKCategory.Misc, LocString.ToggleMap, new HotKeyCallback(ToggleMap));
 		}
 
-		public static void ToggleMap()
+		internal static void ToggleMap()
 		{
 			if (World.Player != null && Engine.MainWindow != null)
 			{
@@ -164,28 +164,24 @@ namespace Assistant.MapUO
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.uoMap = new Assistant.MapUO.UOMapControl();
-			((System.ComponentModel.ISupportInitialize)(this.uoMap)).BeginInit();
 			this.SuspendLayout();
 			// 
-			// uoMap
+			// uoMapControl1
 			// 
-			this.uoMap.Active = true;
-			this.uoMap.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.uoMap.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.uoMap.FocusMobile = null;
-			this.uoMap.Location = new System.Drawing.Point(0, 0);
-			this.uoMap.Name = "uoMap";
-			this.uoMap.Size = new System.Drawing.Size(292, 266);
-			this.uoMap.TabIndex = 0;
-			this.uoMap.TabStop = false;
+			this.uoMapControl1 = new UOMapControl();
+			this.uoMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.uoMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.uoMapControl1.Location = new System.Drawing.Point(0, 0);
+			this.uoMapControl1.Name = "uoMapControl1";
+			this.uoMapControl1.Size = new System.Drawing.Size(292, 266);
+			this.uoMapControl1.TabIndex = 0;
 			// 
 			// MapWindow
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(292, 266);
-			this.Controls.Add(this.uoMap);
+			this.Controls.Add(this.uoMapControl1);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.MaximizeBox = false;
 			this.Name = "MapWindow";
@@ -199,16 +195,15 @@ namespace Assistant.MapUO
 			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapWindow_MouseDown);
 			this.Move += new System.EventHandler(this.MapWindow_Move);
 			this.Resize += new System.EventHandler(this.MapWindow_Resize);
-			((System.ComponentModel.ISupportInitialize)(this.uoMap)).EndInit();
 			this.ResumeLayout(false);
 
 		}
 		#endregion
 
-		public void CheckLocalUpdate(Mobile mob)
+		internal void CheckLocalUpdate(Mobile mob)
 		{
 			if (mob.InParty)
-				this.uoMap.FullUpdate();
+				this.uoMapControl1.FullUpdate();
 		}
 
 		private static Font m_RegFont = new Font("Courier New", 8);
@@ -330,10 +325,10 @@ namespace Assistant.MapUO
 				ClientCommunication.SendToServer(new QueryPartyLocs());
 		}
 
-		public void UpdateMap()
+		internal void UpdateMap()
 		{
 			ClientCommunication.SetMapWndHandle(this);
-			this.uoMap.UpdateMap();
+			this.uoMapControl1.UpdateMap();
 		}
 
 		private void MapWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -347,16 +342,16 @@ namespace Assistant.MapUO
 			}
 		}
 
-		public void PlayerMoved()
+		internal void PlayerMoved()
 		{
-			if (this.Visible && this.uoMap != null)
-				this.uoMap.FullUpdate();
+			if (this.Visible && this.uoMapControl1 != null)
+				this.uoMapControl1.FullUpdate();
 		}
 
 		private void MapWindow_Resize(object sender, System.EventArgs e)
 		{
-			this.uoMap.Height = this.Height;
-			this.uoMap.Width = this.Width;
+			this.uoMapControl1.Height = this.Height;
+			this.uoMapControl1.Width = this.Width;
 
 			if (this.Width < 50)
 				this.Width = 50;
@@ -398,7 +393,7 @@ namespace Assistant.MapUO
 				}
 				}*/
 			}
-			this.uoMap.MapClick(e);
+			this.uoMapControl1.MapClick(e);
 		}
 
 		private void Map_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)

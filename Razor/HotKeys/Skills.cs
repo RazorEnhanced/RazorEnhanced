@@ -4,7 +4,7 @@ using Assistant;
 
 namespace Assistant.HotKeys
 {
-	public class SkillHotKeys
+	internal class SkillHotKeys
 	{
 		private static HotKeyCallbackState m_Callback;
 		private static int[] m_UsableSkills = new int[]
@@ -36,19 +36,19 @@ namespace Assistant.HotKeys
 
 		public static void Initialize()
 		{
-			m_Callback = new HotKeyCallbackState( OnHotKey );
+			m_Callback = new HotKeyCallbackState(OnHotKey);
 			//1044060 = Alchemy in UO cliloc
-			for (int i=0;i<m_UsableSkills.Length;i++)
-				HotKey.Add( HKCategory.Skills, (1044060+m_UsableSkills[i]), m_Callback, m_UsableSkills[i] );
+			for (int i = 0; i < m_UsableSkills.Length; i++)
+				HotKey.Add(HKCategory.Skills, (1044060 + m_UsableSkills[i]), m_Callback, m_UsableSkills[i]);
 		}
 
-		private static void OnHotKey( ref object state )
+		private static void OnHotKey(ref object state)
 		{
 			int sk = (int)state;
-			ClientCommunication.SendToServer( new UseSkill( sk ) );
-			if ( World.Player != null )
+			ClientCommunication.SendToServer(new UseSkill(sk));
+			if (World.Player != null)
 				World.Player.LastSkill = sk;
-			if ( sk == (int)SkillName.Stealth && !World.Player.Visible )
+			if (sk == (int)SkillName.Stealth && !World.Player.Visible)
 				StealthSteps.Hide();
 			//if ( Macros.MacroManager.AcceptActions )
 			//	Macros.MacroManager.Action( new Macros.UseSkillAction( sk ) );

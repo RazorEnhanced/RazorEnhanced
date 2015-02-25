@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assistant
 {
-	public class FindData
+	internal class FindData
 	{
 #if STUFF
 #warning Extra special leet stuff is enabled.  Don't release this build.
@@ -108,14 +108,14 @@ namespace Assistant
 			}
 		}
 #endif
-		public static void Message( uint c, int a )
+		internal static void Message(uint c, int a)
 		{
-			if ( World.Player != null )
+			if (World.Player != null)
 			{
-				if ( c == 0 )
-					World.Player.SendMessage( MsgLevel.Force, "{0} Values found!", a );
+				if (c == 0)
+					World.Player.SendMessage(MsgLevel.Force, "{0} Values found!", a);
 				else
-					World.Player.SendMessage( MsgLevel.Force, "{0} @ {1:X8}", c, a );
+					World.Player.SendMessage(MsgLevel.Force, "{0} @ {1:X8}", c, a);
 			}
 		}
 	}

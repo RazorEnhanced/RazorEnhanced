@@ -2,7 +2,7 @@ using System;
 
 namespace Assistant
 {
-	public class BandageTimer
+	internal class BandageTimer
 	{
 		private static int m_Count;
 		private static Timer m_Timer;
@@ -34,28 +34,28 @@ namespace Assistant
 				1060088,
 				1060167,
 			};
-		
+
 		static BandageTimer()
 		{
 			m_Timer = new InternalTimer();
 		}
 
-		public static void OnLocalizedMessage( int num )
+		internal static void OnLocalizedMessage(int num)
 		{
-			if ( Running )
+			if (Running)
 			{
-				if ( num == 500955 || ( num >= 500962 && num <= 500969 ) || ( num >= 503252 && num <= 503261 ) || num == 1010058 || num == 1010648 || num == 1010650 || num == 1060088 || num == 1060167 )
+				if (num == 500955 || (num >= 500962 && num <= 500969) || (num >= 503252 && num <= 503261) || num == 1010058 || num == 1010648 || num == 1010650 || num == 1060088 || num == 1060167)
 					Stop();
 			}
 		}
 
-		public static void OnAsciiMessage( string msg )
+		internal static void OnAsciiMessage(string msg)
 		{
-			if ( Running )
+			if (Running)
 			{
-				for (int i=0;i<m_ClilocNums.Length;i++)
+				for (int i = 0; i < m_ClilocNums.Length; i++)
 				{
-					if ( Language.GetCliloc( m_ClilocNums[i] ) == msg )
+					if (Language.GetCliloc(m_ClilocNums[i]) == msg)
 					{
 						Stop();
 						break;
@@ -64,7 +64,7 @@ namespace Assistant
 			}
 		}
 
-		public static int Count
+		internal static int Count
 		{
 			get
 			{
@@ -72,7 +72,7 @@ namespace Assistant
 			}
 		}
 
-		public static bool Running
+		internal static bool Running
 		{
 			get
 			{
@@ -80,17 +80,17 @@ namespace Assistant
 			}
 		}
 
-		public static void Start()
+		internal static void Start()
 		{
 			m_Count = 0;
 
-			if ( m_Timer.Running )
+			if (m_Timer.Running)
 				m_Timer.Stop();
 			m_Timer.Start();
 			ClientCommunication.RequestTitlebarUpdate();
 		}
 
-		public static void Stop()
+		internal static void Stop()
 		{
 			m_Timer.Stop();
 			ClientCommunication.RequestTitlebarUpdate();
@@ -98,14 +98,15 @@ namespace Assistant
 
 		private class InternalTimer : Timer
 		{
-			public InternalTimer() : base( TimeSpan.FromSeconds( 1 ), TimeSpan.FromSeconds( 1 ) )
+			public InternalTimer()
+				: base(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
 			{
 			}
 
 			protected override void OnTick()
 			{
 				m_Count++;
-				if ( m_Count > 30 )
+				if (m_Count > 30)
 					Stop();
 				ClientCommunication.RequestTitlebarUpdate();
 			}

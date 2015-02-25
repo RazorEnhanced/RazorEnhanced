@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Assistant
 {
-	public enum MessageType
+	internal enum MessageType
 	{
 		Regular = 0x00,
 		System = 0x01,
@@ -20,18 +20,20 @@ namespace Assistant
 		Special = 0x20,
 	}
 
-	public sealed class QueryPartyLocs : Packet
+	internal sealed class QueryPartyLocs : Packet
 	{
-		public QueryPartyLocs() : base( 0xF0 )
+		internal QueryPartyLocs()
+			: base(0xF0)
 		{
 			EnsureCapacity( 4 );
 			Write( (byte) 0x00 );
 		}
 	}
 
-	public sealed class AcceptParty : Packet
+	internal sealed class AcceptParty : Packet
 	{
-		public AcceptParty( Serial leader ) : base( 0xBF )
+		internal AcceptParty(Serial leader)
+			: base(0xBF)
 		{
 			EnsureCapacity( 1 + 2 + 2 + 1 + 4 );
 
@@ -41,9 +43,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class DeclineParty : Packet
+	internal sealed class DeclineParty : Packet
 	{
-		public DeclineParty( Serial leader ) : base( 0xBF )
+		internal DeclineParty(Serial leader)
+			: base(0xBF)
 		{
 			EnsureCapacity( 1 + 2 + 2 + 1 + 4 );
 
@@ -53,13 +56,15 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ContainerContent : Packet
+	internal sealed class ContainerContent : Packet
 	{
-		public ContainerContent( ArrayList items ) : this( items, Engine.UsePostKRPackets )
+		internal ContainerContent(ArrayList items)
+			: this(items, Engine.UsePostKRPackets)
 		{
 		}
 
-		public ContainerContent( ArrayList items, bool useKR ) : base( 0x3C )
+		internal ContainerContent(ArrayList items, bool useKR)
+			: base(0x3C)
 		{
 			Write( (ushort)items.Count );
 
@@ -84,13 +89,15 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ContainerItem : Packet
+	internal sealed class ContainerItem : Packet
 	{
-		public ContainerItem( Item item ) : this( item, Engine.UsePostKRPackets )
+		internal ContainerItem(Item item)
+			: this(item, Engine.UsePostKRPackets)
 		{
 		}
 
-		public ContainerItem( Item item, bool isKR ) : base( 0x25, 20 )
+		internal ContainerItem(Item item, bool isKR)
+			: base(0x25, 20)
 		{
 			if ( isKR )
 				EnsureCapacity( 21 );
@@ -123,9 +130,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class SingleClick : Packet
+	internal sealed class SingleClick : Packet
 	{
-		public SingleClick( object clicked ) : base( 0x09, 5 )
+		internal SingleClick(object clicked)
+			: base(0x09, 5)
 		{
 			if ( clicked is Mobile )
 				Write( ((Mobile)clicked).Serial );
@@ -138,29 +146,34 @@ namespace Assistant
 		}
 	}
 
-	public sealed class DoubleClick : Packet
+	internal sealed class DoubleClick : Packet
 	{
-		public DoubleClick( Serial clicked ) : base( 0x06, 5 )
+		internal DoubleClick(Serial clicked)
+			: base(0x06, 5)
 		{
 			Write( (uint)clicked.Value );
 		}
 	}
 
-	public sealed class Target : Packet
+	internal sealed class Target : Packet
 	{
-		public Target( uint tid ) : this( tid, false, 0 )
+		internal Target(uint tid)
+			: this(tid, false, 0)
 		{
 		}
 
-		public Target( uint tid , byte flags) : this( tid, false, flags )
+		internal Target(uint tid, byte flags)
+			: this(tid, false, flags)
 		{
 		}
 
-		public Target( uint tid, bool ground ) : this( tid, ground, 0 )
+		internal Target(uint tid, bool ground)
+			: this(tid, ground, 0)
 		{
 		}
 
-		public Target( uint tid, bool ground, byte flags ) : base( 0x6C, 19 )
+		internal Target(uint tid, bool ground, byte flags)
+			: base(0x6C, 19)
 		{
 			Write( ground );
 			Write( tid );
@@ -169,9 +182,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class TargetResponse : Packet
+	internal sealed class TargetResponse : Packet
 	{
-		public TargetResponse( TargetInfo info ) : base( 0x6C, 19 )
+		internal TargetResponse(TargetInfo info)
+			: base(0x6C, 19)
 		{
 			Write( (byte) info.Type );
 			Write( (uint) info.TargID );
@@ -183,7 +197,8 @@ namespace Assistant
 			Write( (ushort) info.Gfx );
 		}
 
-		public TargetResponse( uint id, Mobile m ) : base( 0x6C, 19 )
+		internal TargetResponse(uint id, Mobile m)
+			: base(0x6C, 19)
 		{
 			Write( (byte) 0x00 ); // target object
 			Write( (uint) id );
@@ -195,7 +210,8 @@ namespace Assistant
 			Write( (ushort) m.Body );
 		}
 
-		public TargetResponse( uint id, Item item ) : base( 0x6C, 19 )
+		internal TargetResponse(uint id, Item item)
+			: base(0x6C, 19)
 		{
 			Write( (byte) 0x00 ); // target object
 			Write( (uint) id );
@@ -208,9 +224,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class TargetCancelResponse : Packet
+	internal sealed class TargetCancelResponse : Packet
 	{
-		public TargetCancelResponse( uint id ) : base( 0x6C, 19 )
+		internal TargetCancelResponse(uint id)
+			: base(0x6C, 19)
 		{
 			Write( (byte) 0 );
 			Write( (uint) id );
@@ -223,17 +240,19 @@ namespace Assistant
 		}
 	}
 
-	public sealed class AttackReq : Packet
+	internal sealed class AttackReq : Packet
 	{
-		public AttackReq( Serial serial ) : base( 0x05, 5 )
+		internal AttackReq(Serial serial)
+			: base(0x05, 5)
 		{
 			Write( (uint)serial );
 		}
 	}
-	
-	public sealed class CancelTarget : Packet
+
+	internal sealed class CancelTarget : Packet
 	{
-		public CancelTarget( uint id ) : base( 0x6C, 19 )
+		internal CancelTarget(uint id)
+			: base(0x6C, 19)
 		{
 			Write( (byte)0 );
 			Write( (uint)id );
@@ -241,10 +260,11 @@ namespace Assistant
 			Fill();
 		}
 	}
-	
-	public sealed class SkillsQuery : Packet
+
+	internal sealed class SkillsQuery : Packet
 	{
-		public SkillsQuery( Mobile m ) : base( 0x34, 10 )
+		internal SkillsQuery(Mobile m)
+			: base(0x34, 10)
 		{
 			Write( (uint)0xEDEDEDED ); // que el fuck, osi
 			Write( (byte)0x05 );
@@ -252,9 +272,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class StatusQuery : Packet
+	internal sealed class StatusQuery : Packet
 	{
-		public StatusQuery( Mobile m ) : base( 0x34, 10 )
+		internal StatusQuery(Mobile m)
+			: base(0x34, 10)
 		{
 			Write( (uint)0xEDEDEDED );
 			Write( (byte)0x04 );
@@ -262,9 +283,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class StatLockInfo : Packet
+	internal sealed class StatLockInfo : Packet
 	{
-		public StatLockInfo( PlayerData m ) : base( 0xBF )
+		internal StatLockInfo(PlayerData m)
+			: base(0xBF)
 		{
 			this.EnsureCapacity( 12 );
 
@@ -283,9 +305,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class SkillsList : Packet
+	internal sealed class SkillsList : Packet
 	{
-		public SkillsList() : base( 0x3A )
+		internal SkillsList()
+			: base(0x3A)
 		{
 			EnsureCapacity( 3 + 1 + Skill.Count*9 + 2 );
 
@@ -302,9 +325,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class SkillUpdate : Packet
+	internal sealed class SkillUpdate : Packet
 	{
-		public SkillUpdate( Skill s ) : base( 0x3A )
+		internal SkillUpdate(Skill s)
+			: base(0x3A)
 		{
 			EnsureCapacity( 3 + 1 + 9 );
 
@@ -318,9 +342,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class SetSkillLock : Packet
+	internal sealed class SetSkillLock : Packet
 	{
-		public SetSkillLock( int skill, LockType type ) : base( 0x3A )
+		internal SetSkillLock(int skill, LockType type)
+			: base(0x3A)
 		{
 			EnsureCapacity( 6 );
 			Write( (short)skill );
@@ -328,9 +353,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class AsciiMessage : Packet
+	internal sealed class AsciiMessage : Packet
 	{
-		public AsciiMessage( Serial serial, int graphic, MessageType type, int hue, int font, string name, string text ) : base( 0x1C )
+		internal AsciiMessage(Serial serial, int graphic, MessageType type, int hue, int font, string name, string text)
+			: base(0x1C)
 		{
 			if ( name == null ) name = "";
 			if ( text == null ) text = "";
@@ -350,9 +376,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ClientAsciiMessage : Packet
+	internal sealed class ClientAsciiMessage : Packet
 	{
-		public ClientAsciiMessage( MessageType type, int hue, int font, string str ) : base( 0x03 )
+		internal ClientAsciiMessage(MessageType type, int hue, int font, string str)
+			: base(0x03)
 		{
 			EnsureCapacity( 1 + 2 + 1 + 2 + 2 + str.Length + 1 );
 
@@ -363,9 +390,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class UnicodeMessage : Packet
+	internal sealed class UnicodeMessage : Packet
 	{
-		public UnicodeMessage( Serial serial, int graphic, MessageType type, int hue, int font, string lang, string name, string text ) : base( 0xAE )
+		internal UnicodeMessage(Serial serial, int graphic, MessageType type, int hue, int font, string lang, string name, string text)
+			: base(0xAE)
 		{
 			if ( lang == null || lang == "" ) lang = "ENU";
 			if ( name == null ) name = "";
@@ -387,9 +415,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ClientUniMessage : Packet
+	internal sealed class ClientUniMessage : Packet
 	{
-		public ClientUniMessage( MessageType type, int hue, int font, string lang, ArrayList keys, string text ) : base( 0xAD )
+		internal ClientUniMessage(MessageType type, int hue, int font, string lang, ArrayList keys, string text)
+			: base(0xAD)
 		{
 			if ( lang == null || lang == "" ) lang = "ENU";
 			if ( text == null ) text = "";
@@ -416,9 +445,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class LiftRequest : Packet
+	internal sealed class LiftRequest : Packet
 	{
-		public LiftRequest( Serial ser, int amount ) : base( 0x07, 7 )
+		internal LiftRequest(Serial ser, int amount)
+			: base(0x07, 7)
 		{
 			this.Write( ser.Value );
 			this.Write( (ushort)amount );
@@ -433,9 +463,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class LiftRej : Packet
+	internal sealed class LiftRej : Packet
 	{
-		public LiftRej() : this( 5 ) // reason = Inspecific
+		internal LiftRej()
+			: this(5) // reason = Inspecific
 		{
 		}
 
@@ -445,16 +476,18 @@ namespace Assistant
 		}
 	}
 
-	public sealed class EquipRequest : Packet
+	internal sealed class EquipRequest : Packet
 	{
-		public EquipRequest( Serial item, Mobile to, Layer layer ) : base( 0x13, 10 )
+		internal EquipRequest(Serial item, Mobile to, Layer layer)
+			: base(0x13, 10)
 		{
 			Write( item );
 			Write( (byte)layer );
 			Write( to.Serial );
 		}
 
-		public EquipRequest( Serial item, Serial to, Layer layer ) : base( 0x13, 10 )
+		internal EquipRequest(Serial item, Serial to, Layer layer)
+			: base(0x13, 10)
 		{
 			Write( item );
 			Write( (byte)layer );
@@ -462,9 +495,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class DropRequest : Packet
+	internal sealed class DropRequest : Packet
 	{
-		public DropRequest( Item item, Serial destSer ) : base( 0x08, 14 )
+		internal DropRequest(Item item, Serial destSer)
+			: base(0x08, 14)
 		{
 			if ( Engine.UsePostKRPackets )
 				EnsureCapacity( 15 );
@@ -478,11 +512,13 @@ namespace Assistant
 			Write( destSer );
 		}
 
-		public DropRequest( Item item, Item to ) : this( item, to.Serial )
+		internal DropRequest(Item item, Item to)
+			: this(item, to.Serial)
 		{
 		}
 
-		public DropRequest( Serial item, Point3D pt, Serial dest ) : base( 0x08, 14 )
+		internal DropRequest(Serial item, Point3D pt, Serial dest)
+			: base(0x08, 14)
 		{
 			if ( Engine.UsePostKRPackets )
 				EnsureCapacity( 15 );
@@ -496,26 +532,28 @@ namespace Assistant
 			Write( dest );
 		}
 
-		public DropRequest( Item item, Point3D pt, Serial destSer ) : this( item.Serial, pt, destSer )
+		internal DropRequest(Item item, Point3D pt, Serial destSer)
+			: this(item.Serial, pt, destSer)
 		{
 		}
 	}
 
-	public class SellListItem
+	internal class SellListItem
 	{
-		public Serial Serial;
-		public ushort Amount;
+		internal Serial Serial;
+		internal ushort Amount;
 
-		public SellListItem( Serial s, ushort a )
+		internal SellListItem(Serial s, ushort a)
 		{
 			Serial = s;
 			Amount = a;
 		}
 	}
 
-	public sealed class VendorSellResponse : Packet
+	internal sealed class VendorSellResponse : Packet
 	{
-		public VendorSellResponse( Mobile vendor, ArrayList list ) : base( 0x9F )
+		internal VendorSellResponse(Mobile vendor, ArrayList list)
+			: base(0x9F)
 		{
 			EnsureCapacity( 1 + 2 + 4 + 2 + list.Count*6 );
 
@@ -531,9 +569,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MobileStatusExtended : Packet
+	internal sealed class MobileStatusExtended : Packet
 	{
-		public MobileStatusExtended( PlayerData m ) : base( 0x11 )
+		internal MobileStatusExtended(PlayerData m)
+			: base(0x11)
 		{
 			string name = m.Name;
 			if ( name == null ) name = "";
@@ -571,9 +610,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MobileStatusCompact : Packet
+	internal sealed class MobileStatusCompact : Packet
 	{
-		public MobileStatusCompact( Mobile m ) : base( 0x11 )
+		internal MobileStatusCompact(Mobile m)
+			: base(0x11)
 		{
 			string name = m.Name;
 			if ( name == null ) name = "";
@@ -592,9 +632,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MoveRequest : Packet
+	internal sealed class MoveRequest : Packet
 	{
-		public MoveRequest( byte seq, byte dir ) : base( 0x02, 7 )
+		internal MoveRequest(byte seq, byte dir)
+			: base(0x02, 7)
 		{
 			Write( (byte)dir );
 			Write( (byte)seq );
@@ -607,9 +648,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MoveReject : Packet
+	internal sealed class MoveReject : Packet
 	{
-		public MoveReject( byte seq, Mobile m ) : base( 0x21, 8 )
+		internal MoveReject(byte seq, Mobile m)
+			: base(0x21, 8)
 		{
 			Write( (byte) seq );
 			Write( (short)m.Position.X );
@@ -619,30 +661,32 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MoveAcknowledge : Packet
+	internal sealed class MoveAcknowledge : Packet
 	{
-		public MoveAcknowledge( byte seq, byte noto ) : base( 0x22, 3 )
+		internal MoveAcknowledge(byte seq, byte noto)
+			: base(0x22, 3)
 		{
 			Write( (byte) seq );
 			Write( (byte) noto );
 		}
 	}
 
-	public sealed class GumpTextEntry
+	internal sealed class GumpTextEntry
 	{
-		public GumpTextEntry( ushort id, string s )
+		internal GumpTextEntry(ushort id, string s)
 		{
 			EntryID = id;
 			Text = s;
 		}
 
-		public ushort EntryID;
-		public string Text;
+		internal ushort EntryID;
+		internal string Text;
 	}
 
-	public sealed class GumpResponse : Packet
+	internal sealed class GumpResponse : Packet
 	{
-		public GumpResponse( uint serial, uint tid, int bid, int[] switches, GumpTextEntry[] entries ) : base( 0xB1 )
+		internal GumpResponse(uint serial, uint tid, int bid, int[] switches, GumpTextEntry[] entries)
+			: base(0xB1)
 		{
 			EnsureCapacity( 3 + 4 + 4 + 4 + 4 + switches.Length*4 + 4 + entries.Length*4 );
 
@@ -665,9 +709,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class UseSkill : Packet
+	internal sealed class UseSkill : Packet
 	{
-		public UseSkill( int sk ) : base( 0x12 )
+		internal UseSkill(int sk)
+			: base(0x12)
 		{
 			string cmd = String.Format( "{0} 0", sk );
 			EnsureCapacity( 4 + cmd.Length + 1 );
@@ -675,14 +720,16 @@ namespace Assistant
 			WriteAsciiNull( cmd );
 		}
 
-		public UseSkill( SkillName sk ) : this( (int)sk )
+		internal UseSkill(SkillName sk)
+			: this((int)sk)
 		{
 		}
 	}
 
-	public sealed class ExtCastSpell : Packet
+	internal sealed class ExtCastSpell : Packet
 	{
-		public ExtCastSpell( Serial book, ushort spell ) : base( 0xBF )
+		internal ExtCastSpell(Serial book, ushort spell)
+			: base(0xBF)
 		{
 			EnsureCapacity( 1 + 2 + 2 + 2 + 4 + 2 );
 			Write( (short)0x1C );
@@ -693,9 +740,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class CastSpellFromBook : Packet
+	internal sealed class CastSpellFromBook : Packet
 	{
-		public CastSpellFromBook( Serial book, ushort spell ) : base( 0x12 )
+		internal CastSpellFromBook(Serial book, ushort spell)
+			: base(0x12)
 		{
 			string cmd;
 			if ( book.IsItem )
@@ -708,9 +756,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class CastSpellFromMacro : Packet
+	internal sealed class CastSpellFromMacro : Packet
 	{
-		public CastSpellFromMacro( ushort spell ) : base( 0x12 )
+		internal CastSpellFromMacro(ushort spell)
+			: base(0x12)
 		{
 			string cmd = spell.ToString();
 			EnsureCapacity( 3 + 1 + cmd.Length + 1 );
@@ -719,7 +768,7 @@ namespace Assistant
 		}
 	}
 
-	public sealed class DisarmRequest : Packet
+	internal sealed class DisarmRequest : Packet
 	{
 		public DisarmRequest() : base( 0xBF )
 		{
@@ -728,7 +777,7 @@ namespace Assistant
 		}
 	}
 
-	public sealed class StunRequest : Packet
+	internal sealed class StunRequest : Packet
 	{
 		public StunRequest() : base( 0xBF )
 		{
@@ -737,9 +786,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class CloseGump : Packet
+	internal sealed class CloseGump : Packet
 	{
-		public CloseGump( uint typeID, uint buttonID ) : base( 0xBF )
+		internal CloseGump(uint typeID, uint buttonID)
+			: base(0xBF)
 		{
 			EnsureCapacity( 13 );
 
@@ -748,7 +798,8 @@ namespace Assistant
 			Write( (int) buttonID );
 		}
 
-		public CloseGump( uint typeID ) : base( 0xBF )
+		internal CloseGump(uint typeID)
+			: base(0xBF)
 		{
 			EnsureCapacity( 13 );
 
@@ -758,7 +809,7 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ChangeCombatant : Packet
+	internal sealed class ChangeCombatant : Packet
 	{
 		public ChangeCombatant( Serial ser ) : base( 0xAA, 5 )
 		{
@@ -770,10 +821,11 @@ namespace Assistant
 		}
 	}
 
-	public sealed class UseAbility : Packet
+	internal sealed class UseAbility : Packet
 	{
 		// ints are 'encoded' with a leading bool, if true then the number is 0, if flase then followed by all 4 bytes (lame :-)
-		public UseAbility( AOSAbility a ) : base( 0xD7 )
+		internal UseAbility(AOSAbility a)
+			: base(0xD7)
 		{
 			EnsureCapacity( 1 + 2 + 4 + 2 + 4 );
 
@@ -791,7 +843,7 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ClearAbility : Packet
+	internal sealed class ClearAbility : Packet
 	{
 		public static readonly Packet Instance = new ClearAbility();
 
@@ -803,7 +855,7 @@ namespace Assistant
 		}
 	}
 
-	public sealed class PingPacket : Packet
+	internal sealed class PingPacket : Packet
 	{
 		public PingPacket( byte seq ) : base( 0x73, 2 )
 		{
@@ -811,7 +863,7 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MobileUpdate : Packet
+	internal sealed class MobileUpdate : Packet
 	{
 		public MobileUpdate( Mobile m ) : base( 0x20, 19 )
 		{
@@ -832,9 +884,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MobileIncoming : Packet
+	internal sealed class MobileIncoming : Packet
 	{
-		public MobileIncoming( Mobile m ) : base( 0x78 )
+		internal MobileIncoming(Mobile m)
+			: base(0x78)
 		{
 			int count = m.Contains.Count;
 			int ltHue = Config.GetInt( "LTHilight" );
@@ -876,25 +929,26 @@ namespace Assistant
 		}
 	}
 
-	public class VendorBuyItem
+	internal class VendorBuyItem
 	{
-		public VendorBuyItem( Serial ser, int amount, int price )
+		internal VendorBuyItem(Serial ser, int amount, int price)
 		{
 			Serial = ser;
 			Amount = amount;
 			Price = price;
 		}
 
-		public readonly Serial Serial;
-		public int Amount;
-		public int Price;
+		internal readonly Serial Serial;
+		internal int Amount;
+		internal int Price;
 
-		public int TotalCost { get{ return Amount*Price; } }
+		internal int TotalCost { get { return Amount * Price; } }
 	}
 
-	public sealed class VendorBuyResponse : Packet
+	internal sealed class VendorBuyResponse : Packet
 	{
-		public VendorBuyResponse( Serial vendor, ArrayList list ) : base( 0x3B )
+		internal VendorBuyResponse(Serial vendor, ArrayList list)
+			: base(0x3B)
 		{
 			EnsureCapacity( 1 + 2 + 4 + 1 + list.Count * 7 );
 
@@ -911,9 +965,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MenuResponse : Packet
+	internal sealed class MenuResponse : Packet
 	{
-		public MenuResponse( uint serial, ushort menuid, ushort index, ushort itemid, ushort hue ) : base( 0x7D, 13 )
+		internal MenuResponse(uint serial, ushort menuid, ushort index, ushort itemid, ushort hue)
+			: base(0x7D, 13)
 		{
 			Write( (uint)serial );
 			Write( menuid );
@@ -923,17 +978,20 @@ namespace Assistant
 		}
 	}
 
-	public sealed class HuePicker : Packet
+	internal sealed class HuePicker : Packet
 	{
-		public HuePicker() : this( Serial.MinusOne, 0x0FAB )
+		internal HuePicker()
+			: this(Serial.MinusOne, 0x0FAB)
 		{
 		}
 
-		public HuePicker( ItemID itemid ) : this( Serial.MinusOne, itemid )
+		internal HuePicker(ItemID itemid)
+			: this(Serial.MinusOne, itemid)
 		{
 		}
 
-		public HuePicker( Serial serial, ItemID itemid ) : base( 0x95, 9 )
+		internal HuePicker(Serial serial, ItemID itemid)
+			: base(0x95, 9)
 		{
 			Write( (uint)serial );
 			Write( (ushort)0 );
@@ -941,9 +999,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class WalkRequest : Packet
+	internal sealed class WalkRequest : Packet
 	{
-		public WalkRequest( Direction dir, byte seq ) : base( 0x02, 7 )
+		internal WalkRequest(Direction dir, byte seq)
+			: base(0x02, 7)
 		{
 			Write( (byte)dir );
 			Write( seq );
@@ -951,17 +1010,19 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ResyncReq : Packet
+	internal sealed class ResyncReq : Packet
 	{
-		public ResyncReq() : base( 0x22, 3 )
+		internal ResyncReq()
+			: base(0x22, 3)
 		{
 			Write( (ushort)0 );
 		}
 	}
 
-	public sealed class WorldItem : Packet
+	internal sealed class WorldItem : Packet
 	{
-		public WorldItem( Item item ) : base( 0x1A )
+		internal WorldItem(Item item)
+			: base(0x1A)
 		{
 			this.EnsureCapacity( 20 );
 
@@ -1010,13 +1071,15 @@ namespace Assistant
 		}
 	}
 
-	public sealed class EquipmentItem : Packet 
+	internal sealed class EquipmentItem : Packet 
 	{
-		public EquipmentItem( Item item, Serial owner ) : this( item, item.Hue, owner )
+		internal EquipmentItem(Item item, Serial owner)
+			: this(item, item.Hue, owner)
 		{
 		}
 
-		public EquipmentItem( Item item, ushort hue, Serial owner ) : base( 0x2E, 15 )
+		internal EquipmentItem(Item item, ushort hue, Serial owner)
+			: base(0x2E, 15)
 		{
 			Write( (uint)item.Serial );
 			Write( (ushort)item.ItemID );
@@ -1027,17 +1090,19 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ForceWalk : Packet
+	internal sealed class ForceWalk : Packet
 	{
-		public ForceWalk( Direction d ) : base( 0x97, 2 )
+		internal ForceWalk(Direction d)
+			: base(0x97, 2)
 		{
 			Write( (byte) d );
 		}
 	}
 
-	public sealed class PathFindTo : Packet
+	internal sealed class PathFindTo : Packet
 	{
-		public PathFindTo( Point3D loc ) : base( 0x38, 7*20 )
+		internal PathFindTo(Point3D loc)
+			: base(0x38, 7 * 20)
 		{
 			for(int i=0;i<20;i++)
 			{
@@ -1050,9 +1115,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class LoginConfirm : Packet
+	internal sealed class LoginConfirm : Packet
 	{
-		public LoginConfirm( Mobile m ) : base( 0x1B, 37 )
+		internal LoginConfirm(Mobile m)
+			: base(0x1B, 37)
 		{
 			Write( (int) m.Serial );
 			Write( (int) 0 );
@@ -1071,24 +1137,27 @@ namespace Assistant
 		}
 	}
 
-	public sealed class LoginComplete : Packet
+	internal sealed class LoginComplete : Packet
 	{
-		public LoginComplete() : base( 0x55, 1 )
+		internal LoginComplete()
+			: base(0x55, 1)
 		{
 		}
 	}
 
-	public sealed class DeathStatus : Packet
+	internal sealed class DeathStatus : Packet
 	{
-		public DeathStatus( bool dead ) : base( 0x2C, 2 )
+		internal DeathStatus(bool dead)
+			: base(0x2C, 2)
 		{
 			Write( (byte) (dead ? 0 : 2) );
 		}
 	}
 
-	public sealed class CurrentTime : Packet
+	internal sealed class CurrentTime : Packet
 	{
-		public CurrentTime() : base( 0x5B, 4 )
+		internal CurrentTime()
+			: base(0x5B, 4)
 		{
 			DateTime now = DateTime.Now;
 
@@ -1098,9 +1167,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MapChange : Packet
+	internal sealed class MapChange : Packet
 	{
-		public MapChange( byte map ) : base( 0xBF )
+		internal MapChange(byte map)
+			: base(0xBF)
 		{
 			this.EnsureCapacity( 6 );
 
@@ -1109,27 +1179,30 @@ namespace Assistant
 		}
 	}
 
-	public sealed class SeasonChange : Packet
+	internal sealed class SeasonChange : Packet
 	{
-		public SeasonChange( int season, bool playSound ) : base( 0xBC, 3 )
+		internal SeasonChange(int season, bool playSound)
+			: base(0xBC, 3)
 		{
 			Write( (byte) season );
 			Write( (bool) playSound );
 		}
 	}
 
-	public sealed class SupportedFeatures : Packet
+	internal sealed class SupportedFeatures : Packet
 	{
 		//private static int m_Value = 0x801F;
-		public SupportedFeatures( ushort val ) : base( 0xB9, 3 )
+		internal SupportedFeatures(ushort val)
+			: base(0xB9, 3)
 		{
 			Write( (ushort) val ); // 0x01 = T2A, 0x02 = LBR
 		}
 	}
 
-	public sealed class MapPatches : Packet
+	internal sealed class MapPatches : Packet
 	{
-		public MapPatches( int[] patches ) : base( 0xBF )
+		internal MapPatches(int[] patches)
+			: base(0xBF)
 		{
 			EnsureCapacity( 9 + (4 * patches.Length) );
 
@@ -1153,9 +1226,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class MobileAttributes : Packet
+	internal sealed class MobileAttributes : Packet
 	{
-		public MobileAttributes( PlayerData m ) : base( 0x2D, 17 )
+		internal MobileAttributes(PlayerData m)
+			: base(0x2D, 17)
 		{
 			Write( m.Serial );
 
@@ -1170,9 +1244,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class SetWarMode : Packet
+	internal sealed class SetWarMode : Packet
 	{
-		public SetWarMode( bool mode ) : base( 0x72, 5 )
+		internal SetWarMode(bool mode)
+			: base(0x72, 5)
 		{
 			Write( mode );
 			Write( (byte) 0x00 );
@@ -1182,9 +1257,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class OpenDoorMacro : Packet
+	internal sealed class OpenDoorMacro : Packet
 	{
-		public OpenDoorMacro() : base( 0x12 )
+		internal OpenDoorMacro()
+			: base(0x12)
 		{
 			EnsureCapacity( 5 );
 			Write( (byte)0x58 );
@@ -1192,26 +1268,28 @@ namespace Assistant
 		}
 	}
 
-	public sealed class PersonalLightLevel : Packet
+	internal sealed class PersonalLightLevel : Packet
 	{
-		public PersonalLightLevel( PlayerData m ) : base( 0x4E, 6 )
+		internal PersonalLightLevel(PlayerData m)
+			: base(0x4E, 6)
 		{
 			Write( (int) m.Serial );
 			Write( (sbyte) m.LocalLightLevel );
 		}
 	}
 
-	public sealed class GlobalLightLevel : Packet
+	internal sealed class GlobalLightLevel : Packet
 	{
-		public GlobalLightLevel( int level ) : base( 0x4F, 2 )
+		internal GlobalLightLevel(int level)
+			: base(0x4F, 2)
 		{
 			Write( (sbyte) level );
 		}
 	}
 
-	public sealed class DisplayPaperdoll : Packet
+	internal sealed class DisplayPaperdoll : Packet
 	{
-		public DisplayPaperdoll( Mobile m, string text ) : base( 0x88, 66 )
+		internal DisplayPaperdoll( Mobile m, string text ) : base( 0x88, 66 )
 		{
 			Write( (int) m.Serial );
 			WriteAsciiFixed( text, 60 );
@@ -1219,22 +1297,25 @@ namespace Assistant
 		}
 	}
 
-	public sealed class RemoveObject : Packet
+	internal sealed class RemoveObject : Packet
 	{
-		public RemoveObject( UOEntity ent ) : base( 0x1D, 5 )
+		internal RemoveObject(UOEntity ent)
+			: base(0x1D, 5)
 		{
 			Write( (uint)ent.Serial );
 		}
 
-		public RemoveObject( Serial s ) : base( 0x1D, 5 )
+		internal RemoveObject(Serial s)
+			: base(0x1D, 5)
 		{
 			Write( (uint)s );
 		}
 	}
 
-	public sealed class ContextMenuRequest : Packet
+	internal sealed class ContextMenuRequest : Packet
 	{
-		public ContextMenuRequest( Serial entity ) : base( 0xBF )
+		internal ContextMenuRequest(Serial entity)
+			: base(0xBF)
 		{
 			EnsureCapacity( 1 + 2 + 2 + 4 );
 			Write( (ushort)0x13 );
@@ -1242,9 +1323,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class ContextMenuResponse : Packet
+	internal sealed class ContextMenuResponse : Packet
 	{
-		public ContextMenuResponse( Serial entity, ushort idx ) : base( 0xBF )
+		internal ContextMenuResponse(Serial entity, ushort idx)
+			: base(0xBF)
 		{
 			EnsureCapacity( 1 + 2 + 2 + 4 + 2 );
 
@@ -1254,17 +1336,19 @@ namespace Assistant
 		}
 	}
 
-	public sealed class SetUpdateRange : Packet
+	internal sealed class SetUpdateRange : Packet
 	{
-		public SetUpdateRange( int range ) : base( 0xC8, 2 )
+		internal SetUpdateRange(int range)
+			: base(0xC8, 2)
 		{
 			Write( (byte)range );
 		}
 	}
 
-	public sealed class RazorNegotiateResponse : Packet
+	internal sealed class RazorNegotiateResponse : Packet
 	{
-		public RazorNegotiateResponse() : base( 0xF0 )
+		internal RazorNegotiateResponse()
+			: base(0xF0)
 		{
 			EnsureCapacity( 1+2+1 );
 
@@ -1272,9 +1356,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class DesignStateGeneral : Packet
+	internal sealed class DesignStateGeneral : Packet
 	{
-		public DesignStateGeneral( Item house ) : base( 0xBF )
+		internal DesignStateGeneral(Item house)
+			: base(0xBF)
 		{
 			EnsureCapacity( 13 );
 
@@ -1284,9 +1369,10 @@ namespace Assistant
 		}
 	}
 
-	public sealed class StringQueryResponse : Packet
+	internal sealed class StringQueryResponse : Packet
 	{
-		public StringQueryResponse( int serial, byte type, byte index, bool ok, string resp ) : base( 0xAC )
+		internal StringQueryResponse(int serial, byte type, byte index, bool ok, string resp)
+			: base(0xAC)
 		{
 			if ( resp == null )
 				resp = String.Empty;
@@ -1302,9 +1388,9 @@ namespace Assistant
 		}
 	}
 
-	public class DesignStateDetailed : Packet
+	internal class DesignStateDetailed : Packet
 	{
-		public const int MaxItemsPerStairBuffer = 750;
+		internal const int MaxItemsPerStairBuffer = 750;
 
 		private static byte[][] m_PlaneBuffers;
 		private static bool[] m_PlaneUsed;
@@ -1344,13 +1430,14 @@ namespace Assistant
 			UnderlyingStream.Write( buffer, offset, size );
 		}*/
 
-		public static void Clear( byte[] buffer, int size )
+		internal static void Clear(byte[] buffer, int size)
 		{
 			for ( int i = 0; i < size; ++i )
 				buffer[i] = 0;
 		}
 
-		public DesignStateDetailed( Serial serial, int revision, int xMin, int yMin, int xMax, int yMax, MultiTileEntry[] tiles ) : base( 0xD8 )
+		internal DesignStateDetailed(Serial serial, int revision, int xMin, int yMin, int xMax, int yMax, MultiTileEntry[] tiles)
+			: base(0xD8)
 		{
 			EnsureCapacity( 17 + (tiles.Length * 5) );
 
@@ -1592,19 +1679,20 @@ namespace Assistant
 	}
     // Nuovi pacchetti Enhanced
 
-    public sealed class UseVirtue : Packet
+	internal sealed class InvokeVirtue : Packet
     {
-        public UseVirtue(byte VirtueID)
+		internal InvokeVirtue(byte virtueID)
             : base(0x12)
         {
             EnsureCapacity(6);
             Write((byte)0xF4);
-            Write((byte)VirtueID);
+            WriteAsciiNull(virtueID.ToString());
+			Write((byte)0x00);
         }
     }
-    public sealed class SendPartyMessage : Packet
+	internal sealed class SendPartyMessage : Packet
     {
-        public SendPartyMessage(uint serial, string Message)
+		internal SendPartyMessage(uint serial, string Message)
             : base(0xBF)
         {
             EnsureCapacity(1 + 2 + 2 + 2 + 4 + Message.Length + 1);
@@ -1614,9 +1702,9 @@ namespace Assistant
             WriteAsciiNull(Message);
         }
     }
-    public sealed class PartyCanLoot : Packet
+	internal sealed class PartyCanLoot : Packet
     {
-        public PartyCanLoot(byte canloot)
+		internal PartyCanLoot(byte canloot)
             : base(0xBF)
         {
             EnsureCapacity(1 + 2 + 2 + 2 + 2 + 1);

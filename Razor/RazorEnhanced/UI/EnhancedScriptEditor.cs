@@ -210,10 +210,10 @@ namespace RazorEnhanced.UI
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(InspectItemTarget_Callback));
 		}
 
-		private void InspectItemTarget_Callback(bool loc, Serial serial, Point3D pt, ushort itemid)
+		private void InspectItemTarget_Callback(bool loc, Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 
-            Item itemTarg = Assistant.World.FindItem(serial);
+            Assistant.Item itemTarg = Assistant.World.FindItem(serial);
             if (itemTarg != null)
 			    if (itemTarg.Serial.IsItem)
 			    {

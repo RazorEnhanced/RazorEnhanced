@@ -8,7 +8,7 @@ using System.Xml;
 namespace Assistant
 {
 	[Flags]
-	public enum ModKeys : int
+	internal enum ModKeys : int
 	{
 		None = 0,
 		Alt = 0x0001,
@@ -16,10 +16,10 @@ namespace Assistant
 		Shift = 0x0004,
 	}
 
-	public delegate void HotKeyCallback();
-	public delegate void HotKeyCallbackState(ref object state);
+	internal delegate void HotKeyCallback();
+	internal delegate void HotKeyCallbackState(ref object state);
 
-	public enum HKCategory
+	internal enum HKCategory
 	{
 		None = 0,
 		Items,
@@ -33,7 +33,7 @@ namespace Assistant
 		Misc,
 	}
 
-	public enum HKSubCat
+	internal enum HKSubCat
 	{
 		None = 0,
 
@@ -56,7 +56,7 @@ namespace Assistant
 		MysticismC = SpellOffset + 350,
 	}
 
-	public class KeyData
+	internal class KeyData
 	{
 		private int m_Name;
 		private string m_SName;
@@ -69,12 +69,12 @@ namespace Assistant
 		private object m_State;
 		private DateTime m_LastTriggerTime = DateTime.MinValue;
 
-		public string DispName { get { return m_Name != 0 ? Language.GetString(m_Name) : m_SName; } }
-		public int LocName { get { return m_Name; } }
-		public string StrName { get { return m_SName; } }
+		internal string DispName { get { return m_Name != 0 ? Language.GetString(m_Name) : m_SName; } }
+		internal int LocName { get { return m_Name; } }
+		internal string StrName { get { return m_SName; } }
 		//public HotKeyCallback Callback{ get{ return m_Callback; } }
 
-		public KeyData(int name, HKCategory cat, HKSubCat sub, HotKeyCallback call)
+		internal KeyData(int name, HKCategory cat, HKSubCat sub, HotKeyCallback call)
 		{
 			m_Name = name;
 			m_SName = null;
@@ -83,7 +83,7 @@ namespace Assistant
 			m_Node = HotKey.MakeNode(HotKey.FindParent(cat, sub), ToString(), this);
 		}
 
-		public KeyData(int name, HKCategory cat, HKSubCat sub, HotKeyCallbackState call, object state)
+		internal KeyData(int name, HKCategory cat, HKSubCat sub, HotKeyCallbackState call, object state)
 		{
 			m_Name = name;
 			m_SName = null;
@@ -93,7 +93,7 @@ namespace Assistant
 			m_Node = HotKey.MakeNode(HotKey.FindParent(cat, sub), ToString(), this);
 		}
 
-		public KeyData(string name, HKCategory cat, HKSubCat sub, HotKeyCallback call)
+		internal KeyData(string name, HKCategory cat, HKSubCat sub, HotKeyCallback call)
 		{
 			m_Name = 0;
 			m_SName = name;
@@ -102,7 +102,7 @@ namespace Assistant
 			m_Node = HotKey.MakeNode(HotKey.FindParent(cat, sub), ToString(), this);
 		}
 
-		public KeyData(string name, HKCategory cat, HKSubCat sub, HotKeyCallbackState call, object state)
+		internal KeyData(string name, HKCategory cat, HKSubCat sub, HotKeyCallbackState call, object state)
 		{
 			m_Name = 0;
 			m_SName = name;
@@ -112,7 +112,7 @@ namespace Assistant
 			m_Node = HotKey.MakeNode(HotKey.FindParent(cat, sub), ToString(), this);
 		}
 
-		public void Callback()
+		internal void Callback()
 		{
 			// protect again weird keyboard oddities which "double press" the keys when the user only wanted to do an action once
 			if (m_LastTriggerTime + TimeSpan.FromMilliseconds(20) <= DateTime.Now)
@@ -126,19 +126,19 @@ namespace Assistant
 			}
 		}
 
-		public void Remove()
+		internal void Remove()
 		{
 			m_Node.Remove();
 			m_Node.Text = "removed";
 		}
 
-		public bool SendToUO
+		internal bool SendToUO
 		{
 			get { return m_SendToUO; }
 			set { m_SendToUO = value; }
 		}
 
-		public int Key
+		internal int Key
 		{
 			get
 			{
@@ -154,7 +154,7 @@ namespace Assistant
 			}
 		}
 
-		public ModKeys Mod
+		internal ModKeys Mod
 		{
 			get
 			{
@@ -170,7 +170,7 @@ namespace Assistant
 			}
 		}
 
-		public string KeyString()
+		internal string KeyString()
 		{
 			if (Key != 0)
 			{
@@ -242,7 +242,7 @@ namespace Assistant
 		}
 	}
 
-	public class HotKey
+	internal class HotKey
 	{
 		private static ArrayList m_List;
 		private static TreeNode m_Root;
@@ -250,14 +250,14 @@ namespace Assistant
 		private static System.Windows.Forms.Label m_Status;
 		private static KeyData m_HK_En;
 
-		public static ArrayList List { get { return m_List; } }
-		public static TreeNode RootNode { get { return m_Root; } }
-		public static System.Windows.Forms.Label Status { get { return m_Status; } set { m_Status = value; UpdateStatus(); } }
+		internal static ArrayList List { get { return m_List; } }
+		internal static TreeNode RootNode { get { return m_Root; } }
+		internal static System.Windows.Forms.Label Status { get { return m_Status; } set { m_Status = value; UpdateStatus(); } }
 
 		[DllImport("user32.dll")]
 		private static extern ushort GetAsyncKeyState(int key);
 
-		public static bool KeyDown(Keys k)
+		internal static bool KeyDown(Keys k)
 		{
 			return (GetAsyncKeyState((int)k) & 0xFF00) != 0;//|| ClientCommunication.IsKeyDown( (int)k );
 		}
@@ -274,7 +274,7 @@ namespace Assistant
 				World.Player.SendMessage(MsgLevel.Warning, UpdateStatus());
 		}
 
-		public static string UpdateStatus()
+		internal static string UpdateStatus()
 		{
 			KeyData kd = Get((int)LocString.ToggleHKEnable);
 			string ks = null;
@@ -344,7 +344,7 @@ namespace Assistant
 			MakeNode(misc, "Special Moves", HKSubCat.SpecialMoves);
 		}
 
-		public static void RebuildList(TreeView tree)
+		internal static void RebuildList(TreeView tree)
 		{
 			tree.BeginUpdate();
 			UpdateNode(m_Root);
@@ -375,7 +375,7 @@ namespace Assistant
 			}
 		}
 
-		public static void ClearAll()
+		internal static void ClearAll()
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
@@ -386,7 +386,7 @@ namespace Assistant
 			}
 		}
 
-		public static KeyData Get(int name)
+		internal static KeyData Get(int name)
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
@@ -396,7 +396,7 @@ namespace Assistant
 			return null;
 		}
 
-		public static KeyData Get(string name)
+		internal static KeyData Get(string name)
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
@@ -406,7 +406,7 @@ namespace Assistant
 			return null;
 		}
 
-		public static KeyData Get(int key, ModKeys mod)
+		internal static KeyData Get(int key, ModKeys mod)
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
@@ -417,7 +417,7 @@ namespace Assistant
 			return null;
 		}
 
-		public static TreeNode FindParent(TreeNode root, HKCategory cat, HKSubCat sub)
+		internal static TreeNode FindParent(TreeNode root, HKCategory cat, HKSubCat sub)
 		{
 			TreeNode parent = root;
 			if (cat != HKCategory.None)
@@ -434,12 +434,12 @@ namespace Assistant
 			return parent;
 		}
 
-		public static TreeNode FindParent(HKCategory cat, HKSubCat sub)
+		internal static TreeNode FindParent(HKCategory cat, HKSubCat sub)
 		{
 			return FindParent(m_Root, cat, sub);
 		}
 
-		public static TreeNode MakeNode(TreeNode parent, string text, object tag)
+		internal static TreeNode MakeNode(TreeNode parent, string text, object tag)
 		{
 			TreeNode n = new TreeNode(text);
 			n.Tag = tag;
@@ -447,12 +447,12 @@ namespace Assistant
 			return n;
 		}
 
-		public static TreeNode MakeNode(string text, object tag)
+		internal static TreeNode MakeNode(string text, object tag)
 		{
 			return MakeNode(m_Root, text, tag);
 		}
 
-		public static TreeNode FindNode(TreeNode parent, object tag, bool recurse)
+		internal static TreeNode FindNode(TreeNode parent, object tag, bool recurse)
 		{
 			if (tag == null)
 				return null;
@@ -475,12 +475,12 @@ namespace Assistant
 			return n;
 		}
 
-		public static TreeNode FindNode(TreeNode parent, object tag)
+		internal static TreeNode FindNode(TreeNode parent, object tag)
 		{
 			return FindNode(parent, tag, false);
 		}
 
-		public static bool OnKeyDown(int key)
+		internal static bool OnKeyDown(int key)
 		{
 			if (World.Player == null)
 				return true;
@@ -520,7 +520,7 @@ namespace Assistant
 			return true;
 		}
 
-		public static void OnMouse(int button, int wheel)
+		internal static void OnMouse(int button, int wheel)
 		{
 			if (World.Player == null || !m_Enabled)
 				return;
@@ -555,69 +555,69 @@ namespace Assistant
 				hk.Callback();
 		}
 
-		public static KeyData Add(HKCategory cat, int name, HotKeyCallback callback)
+		internal static KeyData Add(HKCategory cat, int name, HotKeyCallback callback)
 		{
 			return Add(cat, HKSubCat.None, name, callback);
 		}
 
-		public static KeyData Add(HKCategory cat, LocString name, HotKeyCallback callback)
+		internal static KeyData Add(HKCategory cat, LocString name, HotKeyCallback callback)
 		{
 			return Add(cat, HKSubCat.None, (int)name, callback);
 		}
 
-		public static KeyData Add(HKCategory cat, HKSubCat sub, int name, HotKeyCallback callback)
+		internal static KeyData Add(HKCategory cat, HKSubCat sub, int name, HotKeyCallback callback)
 		{
 			KeyData kd = new KeyData(name, cat, sub, callback);
 			m_List.Add(kd);
 			return kd;
 		}
 
-		public static KeyData Add(HKCategory cat, HKSubCat sub, LocString name, HotKeyCallback callback)
+		internal static KeyData Add(HKCategory cat, HKSubCat sub, LocString name, HotKeyCallback callback)
 		{
 			KeyData kd = new KeyData((int)name, cat, sub, callback);
 			m_List.Add(kd);
 			return kd;
 		}
 
-		public static KeyData Add(HKCategory cat, HKSubCat sub, string name, HotKeyCallback callback)
+		internal static KeyData Add(HKCategory cat, HKSubCat sub, string name, HotKeyCallback callback)
 		{
 			KeyData kd = new KeyData(name, cat, sub, callback);
 			m_List.Add(kd);
 			return kd;
 		}
 
-		public static KeyData Add(HKCategory cat, int name, HotKeyCallbackState callback, object state)
+		internal static KeyData Add(HKCategory cat, int name, HotKeyCallbackState callback, object state)
 		{
 			return Add(cat, HKSubCat.None, name, callback, state);
 		}
 
-		public static KeyData Add(HKCategory cat, LocString name, HotKeyCallbackState callback, object state)
+		internal static KeyData Add(HKCategory cat, LocString name, HotKeyCallbackState callback, object state)
 		{
 			return Add(cat, HKSubCat.None, (int)name, callback, state);
 		}
 
-		public static KeyData Add(HKCategory cat, HKSubCat sub, int name, HotKeyCallbackState callback, object state)
+		internal static KeyData Add(HKCategory cat, HKSubCat sub, int name, HotKeyCallbackState callback, object state)
 		{
 			KeyData kd = new KeyData(name, cat, sub, callback, state);
 			m_List.Add(kd);
 			return kd;
 		}
 
-		public static KeyData Add(HKCategory cat, HKSubCat sub, LocString name, HotKeyCallbackState callback, object state)
+		internal static KeyData Add(HKCategory cat, HKSubCat sub, LocString name, HotKeyCallbackState callback, object state)
 		{
 			KeyData kd = new KeyData((int)name, cat, sub, callback, state);
 			m_List.Add(kd);
 			return kd;
 		}
 
-		public static KeyData Add(HKCategory cat, HKSubCat sub, string name, HotKeyCallbackState callback, object state)
+		internal static KeyData Add(HKCategory cat, HKSubCat sub, string name, HotKeyCallbackState callback, object state)
 		{
 			KeyData kd = new KeyData(name, cat, sub, callback, state);
 			m_List.Add(kd);
 			return kd;
 		}
 
-		public static bool Remove(int name)
+		internal static bool Remove(int name)
 		{
 			if (name == 0)
 				return false;
@@ -636,7 +636,7 @@ namespace Assistant
 			return false;
 		}
 
-		public static bool Remove(string name)
+		internal static bool Remove(string name)
 		{
 			if (name == null)
 				return false;
@@ -655,7 +655,7 @@ namespace Assistant
 			return false;
 		}
 
-		public static void Load(XmlElement xml)
+		internal static void Load(XmlElement xml)
 		{
 			if (xml == null)
 				return;
@@ -713,7 +713,7 @@ namespace Assistant
 			}
 		}
 
-		public static void Save(XmlTextWriter xml)
+		internal static void Save(XmlTextWriter xml)
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{

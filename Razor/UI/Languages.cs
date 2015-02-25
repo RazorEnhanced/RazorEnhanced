@@ -452,22 +452,22 @@ namespace Assistant
 			return value;
 		}
 
-		public static string Format(int key, params object[] args)
+		internal static string Format(int key, params object[] args)
 		{
 			return String.Format(GetString(key), args);
 		}
 
-		public static string Format(LocString key, params object[] args)
+		internal static string Format(LocString key, params object[] args)
 		{
 			return String.Format(GetString(key), args);
 		}
 
-		public static string Skill2Str(SkillName sk)
+		internal static string Skill2Str(SkillName sk)
 		{
 			return Skill2Str((int)sk);
 		}
 
-		public static string Skill2Str(int skill)
+		internal static string Skill2Str(int skill)
 		{
 			string value = null;
 			if (m_CliLoc != null)
@@ -477,7 +477,7 @@ namespace Assistant
 			return value;
 		}
 
-		public static string[] GetPackNames()
+		internal static string[] GetPackNames()
 		{
 			string path = Path.Combine(Directory.GetCurrentDirectory(), "Language");
 			string[] names = Directory.GetFiles(path, "Razor_lang.*");

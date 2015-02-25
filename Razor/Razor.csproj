@@ -272,6 +272,10 @@
     <Compile Include="Core\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\EnhancedEntity.cs" />
+    <Compile Include="RazorEnhanced\Geometry.cs" />
+    <Compile Include="RazorEnhanced\Item.cs" />
+    <Compile Include="RazorEnhanced\ItemID.cs" />
     <Compile Include="RazorEnhanced\Scripts.cs" />
     <Compile Include="RazorEnhanced\Settings.cs" />
     <Compile Include="RazorEnhanced\Spells.cs" />
@@ -293,6 +297,7 @@
     <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.Designer.cs">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\Mobile.cs" />
     <Compile Include="UI\AddCounter.cs">
       <SubType>Form</SubType>
     </Compile>

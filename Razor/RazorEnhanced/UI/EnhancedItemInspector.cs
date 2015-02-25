@@ -15,7 +15,7 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Item Inspect";
 
-        public EnhancedItemInspector(Assistant.Item ItemTarg)
+        internal EnhancedItemInspector(Assistant.Item ItemTarg)
 		{
 			InitializeComponent();
             // general

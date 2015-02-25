@@ -5,21 +5,21 @@ using System.Collections;
 
 namespace Assistant
 {
-	public class Utility
+	internal class Utility
 	{	
 		private static Random m_Random = new Random();
 
-		public static int Random( int min, int max )
+		internal static int Random(int min, int max)
 		{
 			return m_Random.Next( max - min + 1 ) + min;
 		}
 
-		public static int Random( int num )
+		internal static int Random(int num)
 		{
 			return m_Random.Next( num );
 		}
 
-		public static bool InRange( IPoint2D from, IPoint2D to, int range )
+		internal static bool InRange(IPoint2D from, IPoint2D to, int range)
 		{
 			return ( to.X >= (from.X - range) )
 				&& ( to.X <= (from.X + range) )
@@ -27,7 +27,7 @@ namespace Assistant
 				&& ( to.Y <= (from.Y + range) );
 		}
 
-		public static int Distance( int fx, int fy, int tx, int ty )
+		internal static int Distance(int fx, int fy, int tx, int ty)
 		{
 			int xDelta = Math.Abs( fx - tx );
 			int yDelta = Math.Abs( fy - ty );
@@ -35,7 +35,7 @@ namespace Assistant
 			return ( xDelta > yDelta ? xDelta : yDelta );
 		}
 
-		public static int Distance( IPoint2D from, IPoint2D to )
+		internal static int Distance(IPoint2D from, IPoint2D to)
 		{
 			int xDelta = Math.Abs( from.X - to.X );
 			int yDelta = Math.Abs( from.Y - to.Y );
@@ -43,7 +43,7 @@ namespace Assistant
 			return ( xDelta > yDelta ? xDelta : yDelta );
 		}
 
-		public static double DistanceSqrt( IPoint2D from, IPoint2D to )
+		internal static double DistanceSqrt(IPoint2D from, IPoint2D to)
 		{
 			float xDelta = Math.Abs( from.X - to.X );
 			float yDelta = Math.Abs( from.Y - to.Y );
@@ -51,7 +51,7 @@ namespace Assistant
 			return Math.Sqrt( xDelta*xDelta + yDelta*yDelta );
 		}
 
-		public static void Offset( Direction d, ref int x, ref int y )
+		internal static void Offset(Direction d, ref int x, ref int y)
 		{
 			switch ( d & Direction.Mask )
 			{
@@ -66,7 +66,7 @@ namespace Assistant
 			}
 		}
 
-		public static void FormatBuffer( TextWriter output, Stream input, int length )
+		internal static void FormatBuffer(TextWriter output, Stream input, int length)
 		{
 			output.WriteLine( "        0  1  2  3  4  5  6  7   8  9  A  B  C  D  E  F" );
 			output.WriteLine( "       -- -- -- -- -- -- -- --  -- -- -- -- -- -- -- --" );
@@ -161,7 +161,7 @@ namespace Assistant
 			}
 		}
 
-		public static unsafe void FormatBuffer( TextWriter output, byte *buff, int length )
+		internal static unsafe void FormatBuffer(TextWriter output, byte* buff, int length)
 		{
 			output.WriteLine( "        0  1  2  3  4  5  6  7   8  9  A  B  C  D  E  F" );
 			output.WriteLine( "       -- -- -- -- -- -- -- --  -- -- -- -- -- -- -- --" );
@@ -257,7 +257,7 @@ namespace Assistant
 		}
 
 		private static char[] pathChars = new char[]{ '\\', '/' };
-		public static string PathDisplayStr( string path, int maxLen )
+		internal static string PathDisplayStr(string path, int maxLen)
 		{
 			if ( path == null || path.Length <= maxLen || path.Length < 5 )
 				return path;
@@ -275,7 +275,7 @@ namespace Assistant
 			return String.Format( "{0}...{1}", path.Substring( 0, first ), path.Substring( last ) );
 		}
 
-		public static string FormatSize( long size )
+		internal static string FormatSize(long size)
 		{
 			if ( size < 1024 ) // 1 K
 				return String.Format( "{0:#,##0} B", size );
@@ -285,7 +285,7 @@ namespace Assistant
 				return String.Format( "{0:#,###.0} MB", size / 1048576.0 );
 		}
 
-		public static string FormatTime( int sec )
+		internal static string FormatTime(int sec)
 		{
 			int m = sec/60;
 			int h = m/60;
@@ -293,7 +293,7 @@ namespace Assistant
 			return String.Format( "{0:#0}:{1:00}:{2:00}", h, m, sec%60 );
 		}
 
-		public static string FormatTimeMS( int ms )
+		internal static string FormatTimeMS(int ms)
 		{
 			int s = ms/1000;
 			int m = s/60;
@@ -309,7 +309,7 @@ namespace Assistant
 				return String.Format( "{0:00}:{1:00}.{2:000}", m, s, ms );
 		}
 
-		public static int ToInt32( string str, int def )
+		internal static int ToInt32(string str, int def)
 		{
 			if ( str == null )
 				return def;

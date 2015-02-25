@@ -527,7 +527,7 @@ namespace Assistant
 			}
 		}
 
-		public static void LoadProfileFor( PlayerData player )
+		internal static void LoadProfileFor(PlayerData player)
 		{
 			if ( m_Chars == null )
 				m_Chars = new Hashtable();
@@ -561,7 +561,7 @@ namespace Assistant
 			Engine.MainWindow.SelectProfile( m_Current == null ? "default" : m_Current.Name );
 		}
 
-		public static void SetProfileFor( PlayerData player )
+		internal static void SetProfileFor(PlayerData player)
 		{
 			if ( m_Current != null )
 				m_Chars[player.Serial] = m_Current.Name;

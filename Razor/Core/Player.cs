@@ -1,19 +1,20 @@
 using System;
 using System.IO;
 using System.Reflection;
-using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Ultima;
 
 namespace Assistant
 {
-	public enum LockType : byte
+	internal enum LockType : byte
 	{
 		Up = 0,
 		Down = 1,
 		Locked = 2,
 	}
 
-	public enum MsgLevel
+	internal enum MsgLevel
 	{
 		Debug = 0,
 		Info = 0,
@@ -22,7 +23,7 @@ namespace Assistant
 		Force = 3,
 	}
 
-	public class Skill
+	internal class Skill
 	{
 		public static int Count = 55;
 
@@ -33,67 +34,67 @@ namespace Assistant
 		private short m_Delta;
 		private int m_Idx;
 
-		public Skill( int idx )
+		internal Skill(int idx)
 		{
 			m_Idx = idx;
 		}
 
-		public int Index { get { return m_Idx; } }
+		internal int Index { get { return m_Idx; } }
 
-		public LockType Lock
+		internal LockType Lock
 		{
-			get{ return m_Lock; }
-			set{ m_Lock = value; }
+			get { return m_Lock; }
+			set { m_Lock = value; }
 		}
 
-		public ushort FixedValue
+		internal ushort FixedValue
 		{
-			get{ return m_Value; }
-			set{ m_Value = value; }
+			get { return m_Value; }
+			set { m_Value = value; }
 		}
 
-		public ushort FixedBase
+		internal ushort FixedBase
 		{
-			get{ return m_Base; }
+			get { return m_Base; }
 			set
-			{ 
+			{
 				m_Delta += (short)(value - m_Base);
-				m_Base = value; 
+				m_Base = value;
 			}
 		}
 
-		public ushort FixedCap
+		internal ushort FixedCap
 		{
-			get{ return m_Cap; }
-			set{ m_Cap = value; }
+			get { return m_Cap; }
+			set { m_Cap = value; }
 		}
 
-		public double Value
+		internal double Value
 		{
-			get{ return m_Value / 10.0; }
-			set{ m_Value = (ushort)(value*10.0); }
+			get { return m_Value / 10.0; }
+			set { m_Value = (ushort)(value * 10.0); }
 		}
 
-		public double Base
+		internal double Base
 		{
-			get{ return m_Base / 10.0; }
-			set{ m_Base = (ushort)(value*10.0); }
+			get { return m_Base / 10.0; }
+			set { m_Base = (ushort)(value * 10.0); }
 		}
 
-		public double Cap
+		internal double Cap
 		{
-			get{ return m_Cap / 10.0; }
-			set{ m_Cap = (ushort)(value*10.0); }
+			get { return m_Cap / 10.0; }
+			set { m_Cap = (ushort)(value * 10.0); }
 		}
 
-		public double Delta 
-		{ 
-			get{ return m_Delta / 10.0; }
-			set{ m_Delta = (short)(value*10); }
+		internal double Delta
+		{
+			get { return m_Delta / 10.0; }
+			set { m_Delta = (short)(value * 10); }
 		}
 	}
 
-	public enum SkillName
+	internal enum SkillName
 	{
 		Alchemy = 0,
 		Anatomy = 1,
@@ -152,9 +153,9 @@ namespace Assistant
 		SpellWeaving = 54,
 	}
 
-	public class PlayerData : Mobile
+	internal class PlayerData : Mobile
 	{
-		public class MoveEntry
+		internal class MoveEntry
 		{
 			//public byte Seq;
 			public Direction Dir;
@@ -166,14 +167,14 @@ namespace Assistant
 			public bool FilterAck;
 		}
 
-		public int VisRange = 18;
-		public int MultiVisRange { get { return VisRange + 5; } }
+		internal int VisRange = 18;
+		internal int MultiVisRange { get { return VisRange + 5; } }
 
 		private int m_MaxWeight = -1;
 
 		private short m_FireResist, m_ColdResist, m_PoisonResist, m_EnergyResist, m_Luck;
 		private ushort m_DamageMin, m_DamageMax;
-		
+
 		private ushort m_Str, m_Dex, m_Int;
 		private LockType m_StrLock, m_DexLock, m_IntLock;
 		private uint m_Gold;
@@ -193,56 +194,57 @@ namespace Assistant
 		private bool m_SkillsSent;
 		//private Item m_Holding;
 		//private ushort m_HoldAmt;
-		private Hashtable m_MoveInfo;
+		private ConcurrentDictionary<byte, MoveEntry> m_MoveInfo;
 		private Timer m_CriminalTime;
 		private DateTime m_CriminalStart = DateTime.MinValue;
 		private byte m_WalkSeq;
 
-		public static int FastWalkKey = 0;
+		internal static int FastWalkKey = 0;
 
-		public override void SaveState( BinaryWriter writer )
+		internal override void SaveState(BinaryWriter writer)
 		{
-			base.SaveState (writer);
+			base.SaveState(writer);
 
-			writer.Write( m_Str );
-			writer.Write( m_Dex );
-			writer.Write( m_Int );
-			writer.Write( m_StamMax );
-			writer.Write( m_Stam );
-			writer.Write( m_ManaMax );
-			writer.Write( m_Mana );
-			writer.Write( (byte)m_StrLock );
-			writer.Write( (byte)m_DexLock );
-			writer.Write( (byte)m_IntLock );
-			writer.Write( m_Gold );
-			writer.Write( m_Weight );
-			
-			writer.Write( (byte)Skill.Count );
-			for(int i=0;i<Skill.Count;i++)
+			writer.Write(m_Str);
+			writer.Write(m_Dex);
+			writer.Write(m_Int);
+			writer.Write(m_StamMax);
+			writer.Write(m_Stam);
+			writer.Write(m_ManaMax);
+			writer.Write(m_Mana);
+			writer.Write((byte)m_StrLock);
+			writer.Write((byte)m_DexLock);
+			writer.Write((byte)m_IntLock);
+			writer.Write(m_Gold);
+			writer.Write(m_Weight);
+
+			writer.Write((byte)Skill.Count);
+			for (int i = 0; i < Skill.Count; i++)
 			{
-				writer.Write( m_Skills[i].FixedBase );
-				writer.Write( m_Skills[i].FixedCap );
-				writer.Write( m_Skills[i].FixedValue );
-				writer.Write( (byte)m_Skills[i].Lock );
+				writer.Write(m_Skills[i].FixedBase);
+				writer.Write(m_Skills[i].FixedCap);
+				writer.Write(m_Skills[i].FixedValue);
+				writer.Write((byte)m_Skills[i].Lock);
 			}
 
-			writer.Write( m_AR );
-			writer.Write( m_StatCap );
-			writer.Write( m_Followers );
-			writer.Write( m_FollowersMax );
-			writer.Write( m_Tithe );
+			writer.Write(m_AR);
+			writer.Write(m_StatCap);
+			writer.Write(m_Followers);
+			writer.Write(m_FollowersMax);
+			writer.Write(m_Tithe);
 
-			writer.Write( m_LocalLight );
-			writer.Write( m_GlobalLight );
-			writer.Write( m_Features );
-			writer.Write( m_Season );
-			
-			writer.Write( (byte) m_MapPatches.Length );
-			for(int i=0;i<m_MapPatches.Length;i++)
-				writer.Write( (int)m_MapPatches[i] );
+			writer.Write(m_LocalLight);
+			writer.Write(m_GlobalLight);
+			writer.Write(m_Features);
+			writer.Write(m_Season);
+
+			writer.Write((byte)m_MapPatches.Length);
+			for (int i = 0; i < m_MapPatches.Length; i++)
+				writer.Write((int)m_MapPatches[i]);
 		}
 
-		public PlayerData( BinaryReader reader, int version ) : base( reader, version )
+		internal PlayerData(BinaryReader reader, int version)
+			: base(reader, version)
 		{
 			int c;
 			m_Str = reader.ReadUInt16();
@@ -258,20 +260,20 @@ namespace Assistant
 			m_Gold = reader.ReadUInt32();
 			m_Weight = reader.ReadUInt16();
 
-			m_MoveInfo = new Hashtable( 256 );
+			m_MoveInfo = new ConcurrentDictionary<byte, MoveEntry>();
 
-			if ( version >= 4 )
+			if (version >= 4)
 			{
 				Skill.Count = c = reader.ReadByte();
 			}
-			else if ( version == 3 )
+			else if (version == 3)
 			{
 				long skillStart = reader.BaseStream.Position;
 				c = 0;
-				reader.BaseStream.Seek( 7*49, SeekOrigin.Current );
-				for(int i=48;i<60;i++)
+				reader.BaseStream.Seek(7 * 49, SeekOrigin.Current);
+				for (int i = 48; i < 60; i++)
 				{
-					ushort Base,Cap,Val;
+					ushort Base, Cap, Val;
 					byte Lock;
 
 					Base = reader.ReadUInt16();
@@ -279,21 +281,21 @@ namespace Assistant
 					Val = reader.ReadUInt16();
 					Lock = reader.ReadByte();
 
-					if ( Base > 2000 || Cap > 2000 || Val > 2000 || Lock > 2 )
+					if (Base > 2000 || Cap > 2000 || Val > 2000 || Lock > 2)
 					{
 						c = i;
 						break;
 					}
 				}
 
-				if ( c == 0 )
-					 c = 52;
-				else if ( c > 54 )
-					 c = 54;
+				if (c == 0)
+					c = 52;
+				else if (c > 54)
+					c = 54;
 
 				Skill.Count = c;
 
-				reader.BaseStream.Seek( skillStart, SeekOrigin.Begin );
+				reader.BaseStream.Seek(skillStart, SeekOrigin.Begin);
 			}
 			else
 			{
@@ -301,7 +303,7 @@ namespace Assistant
 			}
 
 			m_Skills = new Skill[c];
-			for (int i=0;i<c;i++)
+			for (int i = 0; i < c; i++)
 			{
 				m_Skills[i] = new Skill(i);
 				m_Skills[i].FixedBase = reader.ReadUInt16();
@@ -321,59 +323,60 @@ namespace Assistant
 			m_Features = reader.ReadUInt16();
 			m_Season = reader.ReadByte();
 
-			if ( version >= 4 )
+			if (version >= 4)
 				c = reader.ReadByte();
 			else
 				c = 8;
 			m_MapPatches = new int[c];
-			for(int i=0;i<c;i++)
+			for (int i = 0; i < c; i++)
 				m_MapPatches[i] = reader.ReadInt32();
 		}
 
-		public PlayerData( Serial serial ) : base( serial )
+		internal PlayerData(Serial serial)
+			: base(serial)
 		{
-			m_MoveInfo = new Hashtable( 256 );
+			m_MoveInfo = new ConcurrentDictionary<byte, MoveEntry>();
 			m_Skills = new Skill[Skill.Count];
-			for (int i=0;i<m_Skills.Length;i++)
+			for (int i = 0; i < m_Skills.Length; i++)
 				m_Skills[i] = new Skill(i);
 		}
 
-		public ushort Str
+		internal ushort Str
 		{
-			get{ return m_Str; }
-			set{ m_Str = value; }
+			get { return m_Str; }
+			set { m_Str = value; }
 		}
 
-		public ushort Dex
+		internal ushort Dex
 		{
-			get{ return m_Dex; }
-			set{ m_Dex = value; }
+			get { return m_Dex; }
+			set { m_Dex = value; }
 		}
 
-		public ushort Int
+		internal ushort Int
 		{
-			get{ return m_Int; }
-			set{ m_Int = value; }
+			get { return m_Int; }
+			set { m_Int = value; }
 		}
 
-		public uint Gold
+		internal uint Gold
 		{
-			get{ return m_Gold; }
-			set{ m_Gold = value; }
+			get { return m_Gold; }
+			set { m_Gold = value; }
 		}
 
-		public ushort Weight
+		internal ushort Weight
 		{
-			get{ return m_Weight; }
-			set{ m_Weight = value; }
+			get { return m_Weight; }
+			set { m_Weight = value; }
 		}
 
-		public ushort MaxWeight
+		internal ushort MaxWeight
 		{
 			get
 			{
-				if ( m_MaxWeight == -1 )
-					return (ushort)((m_Str * 3.5) + 40); 
+				if (m_MaxWeight == -1)
+					return (ushort)((m_Str * 3.5) + 40);
 				else
 					return (ushort)m_MaxWeight;
 			}
@@ -383,116 +386,116 @@ namespace Assistant
 			}
 		}
 
-		public short FireResistance
+		internal short FireResistance
 		{
-			get{ return m_FireResist; }
-			set{ m_FireResist = value; }
+			get { return m_FireResist; }
+			set { m_FireResist = value; }
 		}
 
-		public short ColdResistance
+		internal short ColdResistance
 		{
-			get{ return m_ColdResist; }
-			set{ m_ColdResist = value; }
+			get { return m_ColdResist; }
+			set { m_ColdResist = value; }
 		}
 
-		public short PoisonResistance
+		internal short PoisonResistance
 		{
-			get{ return m_PoisonResist; }
-			set{ m_PoisonResist = value; }
+			get { return m_PoisonResist; }
+			set { m_PoisonResist = value; }
 		}
 
-		public short EnergyResistance
+		internal short EnergyResistance
 		{
-			get{ return m_EnergyResist; }
-			set{ m_EnergyResist = value; }
+			get { return m_EnergyResist; }
+			set { m_EnergyResist = value; }
 		}
 
-		public short Luck
+		internal short Luck
 		{
-			get{ return m_Luck; }
-			set{ m_Luck = value; }
+			get { return m_Luck; }
+			set { m_Luck = value; }
 		}
 
-		public ushort DamageMin
+		internal ushort DamageMin
 		{
-			get{ return m_DamageMin; }
-			set{ m_DamageMin = value; }
+			get { return m_DamageMin; }
+			set { m_DamageMin = value; }
 		}
 
-		public ushort DamageMax
+		internal ushort DamageMax
 		{
-			get{ return m_DamageMax; }
-			set{ m_DamageMax = value; }
+			get { return m_DamageMax; }
+			set { m_DamageMax = value; }
 		}
 
-		public LockType StrLock
+		internal LockType StrLock
 		{
-			get{ return m_StrLock; }
-			set{ m_StrLock = value; }
+			get { return m_StrLock; }
+			set { m_StrLock = value; }
 		}
 
-		public LockType DexLock
+		internal LockType DexLock
 		{
-			get{ return m_DexLock; }
-			set{ m_DexLock = value; }
+			get { return m_DexLock; }
+			set { m_DexLock = value; }
 		}
 
-		public LockType IntLock
+		internal LockType IntLock
 		{
-			get{ return m_IntLock; }
-			set{ m_IntLock = value; }
+			get { return m_IntLock; }
+			set { m_IntLock = value; }
 		}
 
-		public ushort StatCap
+		internal ushort StatCap
 		{
-			get{ return m_StatCap; }
-			set{ m_StatCap = value; }
+			get { return m_StatCap; }
+			set { m_StatCap = value; }
 		}
 
-		public ushort AR
+		internal ushort AR
 		{
-			get{ return m_AR; }
-			set{ m_AR = value; }
+			get { return m_AR; }
+			set { m_AR = value; }
 		}
 
-		public byte Followers
+		internal byte Followers
 		{
-			get{ return m_Followers; }
-			set{ m_Followers = value; }
+			get { return m_Followers; }
+			set { m_Followers = value; }
 		}
 
-		public byte FollowersMax
+		internal byte FollowersMax
 		{
-			get{ return m_FollowersMax; }
-			set{ m_FollowersMax = value; }
+			get { return m_FollowersMax; }
+			set { m_FollowersMax = value; }
 		}
 
-		public int Tithe
+		internal int Tithe
 		{
-			get{ return m_Tithe; }
-			set{ m_Tithe = value; }
+			get { return m_Tithe; }
+			set { m_Tithe = value; }
 		}
 
-		public Skill[] Skills { get{ return m_Skills; } }
+		internal Skill[] Skills { get { return m_Skills; } }
 
-		public bool SkillsSent
+		internal bool SkillsSent
 		{
-			get{ return m_SkillsSent; }
-			set{ m_SkillsSent = value; }
+			get { return m_SkillsSent; }
+			set { m_SkillsSent = value; }
 		}
 
-		public byte WalkSequence{ get{ return m_WalkSeq; } }
+		internal byte WalkSequence { get { return m_WalkSeq; } }
 
-		public int CriminalTime
+		internal int CriminalTime
 		{
 			get
 			{
-				if ( m_CriminalStart != DateTime.MinValue )
+				if (m_CriminalStart != DateTime.MinValue)
 				{
 					int sec = (int)(DateTime.Now - m_CriminalStart).TotalSeconds;
-					if ( sec > 300 )
+					if (sec > 300)
 					{
-						if ( m_CriminalTime != null )
+						if (m_CriminalTime != null)
 							m_CriminalTime.Stop();
 						m_CriminalStart = DateTime.MinValue;
 						return 0;
@@ -509,7 +512,7 @@ namespace Assistant
 			}
 		}
 
-		public void Resync()
+		internal void Resync()
 		{
 			m_OutstandingMoves = m_WalkSeq = 0;
 			m_MoveInfo.Clear();
@@ -517,23 +520,24 @@ namespace Assistant
 
 		private int m_OutstandingMoves = 0;
 
-		public int OutstandingMoveReqs { get { return m_OutstandingMoves; } }
+		internal int OutstandingMoveReqs { get { return m_OutstandingMoves; } }
 
-		public MoveEntry GetMoveEntry( byte seq )
+		internal MoveEntry GetMoveEntry(byte seq)
 		{
 			return (MoveEntry)m_MoveInfo[seq];
 		}
 
-		private static Timer m_OpenDoorReq = Timer.DelayedCallback( TimeSpan.FromSeconds( 0.005 ), new TimerCallback( OpenDoor ) );
+		private static Timer m_OpenDoorReq = Timer.DelayedCallback(TimeSpan.FromSeconds(0.005), new TimerCallback(OpenDoor));
 		private static void OpenDoor()
 		{
-			if ( World.Player != null )
-				ClientCommunication.SendToServer( new OpenDoorMacro() );
+			if (World.Player != null)
+				ClientCommunication.SendToServer(new OpenDoorMacro());
 		}
 
 		private Serial m_LastDoor = Serial.Zero;
 		private DateTime m_LastDoorTime = DateTime.MinValue;
-		public void MoveReq( Direction dir, byte seq )
+
+		internal void MoveReq(Direction dir, byte seq)
 		{
 			m_OutstandingMoves++;
 			FastWalkKey++;
@@ -544,20 +548,20 @@ namespace Assistant
 			e.IsStep = (dir & Direction.Mask) == (Direction & Direction.Mask);
 			e.Dir = dir;
 
-			ProcessMove( dir ); // shouldnt this be in MoveAck?!?
+			ProcessMove(dir); // shouldnt this be in MoveAck?!?
 
 			e.Position = Position;
 
-			if ( Body != 0x03DB && !IsGhost && ((int)(e.Dir&Direction.Mask))%2 == 0 && Config.GetBool( "AutoOpenDoors" ) && ClientCommunication.AllowBit( FeatureBit.AutoOpenDoors ))
+			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && Config.GetBool("AutoOpenDoors") && ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
 			{
 				int x = Position.X, y = Position.Y;
-				Utility.Offset( e.Dir, ref x, ref y );
+				Utility.Offset(e.Dir, ref x, ref y);
 
 				int z = CalcZ;
 
-				foreach ( Item i in World.Items.Values )
+				foreach (Item i in World.Items.Values)
 				{
-					if ( i.Position.X == x && i.Position.Y == y && i.IsDoor && i.Position.Z - 15 <= z && i.Position.Z + 15 >= z && ( m_LastDoor != i.Serial || m_LastDoorTime+TimeSpan.FromSeconds( 1 ) < DateTime.Now ) )
+					if (i.Position.X == x && i.Position.Y == y && i.IsDoor && i.Position.Z - 15 <= z && i.Position.Z + 15 >= z && (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now))
 					{
 						m_LastDoor = i.Serial;
 						m_LastDoorTime = DateTime.Now;
@@ -579,31 +583,31 @@ namespace Assistant
 
 			e.FilterAck = false;
 
-			m_WalkSeq = (byte)(seq >= 255 ? 1 : seq+1);
+			m_WalkSeq = (byte)(seq >= 255 ? 1 : seq + 1);
 		}
 
-		public void ProcessMove( Direction dir )
+		internal void ProcessMove(Direction dir)
 		{
-			if ( (dir & Direction.Mask) == (this.Direction & Direction.Mask) )
+			if ((dir & Direction.Mask) == (this.Direction & Direction.Mask))
 			{
 				int x = Position.X, y = Position.Y;
 
-				Utility.Offset( dir&Direction.Mask, ref x, ref y );
-				
+				Utility.Offset(dir & Direction.Mask, ref x, ref y);
+
 				int newZ = Position.Z;
-				try { newZ = Assistant.Map.ZTop( Map, x, y, newZ ); } 
+				try { newZ = Assistant.Map.ZTop(Map, x, y, newZ); }
 				catch { }
-				Position = new Point3D( x, y, newZ );
+				Position = new Point3D(x, y, newZ);
 			}
 			Direction = dir;
 		}
 
-		public bool HasWalkEntry( byte seq )
+		internal bool HasWalkEntry(byte seq)
 		{
 			return m_MoveInfo[seq] != null;
 		}
 
-		public void MoveRej( byte seq, Direction dir, Point3D pos )
+		internal void MoveRej(byte seq, Direction dir, Point3D pos)
 		{
 			m_OutstandingMoves--;
 
@@ -612,14 +616,14 @@ namespace Assistant
 			Resync();
 		}
 
-		public bool MoveAck( byte seq )
+		internal bool MoveAck(byte seq)
 		{
 			m_OutstandingMoves--;
 
 			MoveEntry e = (MoveEntry)m_MoveInfo[seq];
-			if ( e != null )
+			if (e != null)
 			{
-				if ( e.IsStep && !IsGhost )
+				if (e.IsStep && !IsGhost)
 					StealthSteps.OnMove();
 
 				return !e.FilterAck;
@@ -631,28 +635,28 @@ namespace Assistant
 		}
 
 		private static bool m_ExternZ = false;
-		public static bool ExternalZ { get { return m_ExternZ; } set { m_ExternZ = value; } }
+		internal static bool ExternalZ { get { return m_ExternZ; } set { m_ExternZ = value; } }
 
 		//private sbyte m_CalcZ = 0;
-		public int CalcZ 
-		{ 
-			get 
-			{ 
-				if ( !m_ExternZ || !ClientCommunication.IsCalibrated() )
-					return Assistant.Map.ZTop( Map, Position.X, Position.Y, Position.Z );
-				else
-					return Position.Z; 
-			} 
-		}
-
-		public override Point3D Position
+		internal int CalcZ
 		{
 			get
 			{
-				if ( m_ExternZ && ClientCommunication.IsCalibrated() )
+				if (!m_ExternZ || !ClientCommunication.IsCalibrated())
+					return Assistant.Map.ZTop(Map, Position.X, Position.Y, Position.Z);
+				else
+					return Position.Z;
+			}
+		}
+
+		internal override Point3D Position
+		{
+			get
+			{
+				if (m_ExternZ && ClientCommunication.IsCalibrated())
 				{
-					Point3D p = new Point3D( base.Position );
-					p.Z = ClientCommunication.GetZ( p.X, p.Y, p.Z );
+					Point3D p = new Point3D(base.Position);
+					p.Z = ClientCommunication.GetZ(p.X, p.Y, p.Z);
 					return p;
 				}
 				else
@@ -664,69 +668,70 @@ namespace Assistant
 			{
 				base.Position = value;
 
-				if ( Engine.MainWindow != null && Engine.MainWindow.MapWindow != null )
+				if (Engine.MainWindow != null && Engine.MainWindow.MapWindow != null)
 					Engine.MainWindow.MapWindow.PlayerMoved();
 			}
 		}
 
-		public override void OnPositionChanging( Point3D newPos )
+		internal override void OnPositionChanging(Point3D newPos)
 		{
-			ArrayList list = new ArrayList( World.Mobiles.Values );
-			for (int i=0;i<list.Count;i++)
+			List<Mobile> mobiles = new List<Mobile>(World.Mobiles.Values);
+
+			for (int i = 0; i < mobiles.Count; i++)
 			{
-				Mobile m = (Mobile)list[i];
-				if ( m != this )
+				Mobile m = mobiles[i];
+				if (m != this)
 				{
-					if ( !Utility.InRange( m.Position, newPos, VisRange ) )
-                        m.Remove();
+					if (!Utility.InRange(m.Position, newPos, VisRange))
+						m.Remove();
 					else
-                        Targeting.CheckLastTargetRange(m);
+						Targeting.CheckLastTargetRange(m);
 				}
 			}
 
-			list = new ArrayList( World.Items.Values );
+			List<Item> items = new List<Item>(World.Items.Values);
 			ScavengerAgent s = ScavengerAgent.Instance;
-			for (int i=0;i<list.Count;i++)
+			for (int i = 0; i < items.Count; i++)
 			{
-				Item item = (Item)list[i];
-				if ( item.Deleted || item.Container != null )
+				Item item = items[i];
+				if (item.Deleted || item.Container != null)
 					continue;
 
-				int dist = Utility.Distance( item.GetWorldPosition(), newPos );
-				if ( item != DragDropManager.Holding && ( dist > MultiVisRange || ( !item.IsMulti && dist > VisRange ) ) )
+				int dist = Utility.Distance(item.GetWorldPosition(), newPos);
+				if (item != DragDropManager.Holding && (dist > MultiVisRange || (!item.IsMulti && dist > VisRange)))
 					item.Remove();
-				else if ( !IsGhost && Visible && dist <= 2 && s.Enabled && item.Movable )
-					s.Scavenge( item );
+				else if (!IsGhost && Visible && dist <= 2 && s.Enabled && item.Movable)
+					s.Scavenge(item);
 			}
 
-			base.OnPositionChanging( newPos );
+			base.OnPositionChanging(newPos);
 		}
 
-		public override void OnMapChange( byte old, byte cur )
+		internal override void OnMapChange(byte old, byte cur)
 		{
-			ArrayList list = new ArrayList( World.Mobiles.Values );
-			for (int i=0;i<list.Count;i++)
+			List<Mobile> list = new List<Mobile>(World.Mobiles.Values);
+			for (int i = 0; i < list.Count; i++)
 			{
 				Mobile m = (Mobile)list[i];
-				if ( m != this && m.Map != cur )
+				if (m != this && m.Map != cur)
 					m.Remove();
 			}
 
 			World.Items.Clear();
 			Counter.Reset();
-			for(int i=0;i<Contains.Count;i++)
+			for (int i = 0; i < Contains.Count; i++)
 			{
 				Item item = (Item)Contains[i];
-				World.AddItem( item );
+				World.AddItem(item);
 				item.Contains.Clear();
-			}	
+			}
 
-			if ( Config.GetBool( "AutoSearch" ) && Backpack != null )
-				PlayerData.DoubleClick( Backpack ) ;
+			if (Config.GetBool("AutoSearch") && Backpack != null)
+				PlayerData.DoubleClick(Backpack);
 
-			ClientCommunication.PostMapChange( cur );
-			
-			if ( Engine.MainWindow != null && Engine.MainWindow.MapWindow != null )
+			ClientCommunication.PostMapChange(cur);
+
+			if (Engine.MainWindow != null && Engine.MainWindow.MapWindow != null)
 				Engine.MainWindow.MapWindow.PlayerMoved();
 		}
 
@@ -743,31 +748,31 @@ namespace Assistant
 			ClientCommunication.PostMapChange( cur );
 		}*/
 
-		protected override void OnNotoChange( byte old, byte cur )
+		protected override void OnNotoChange(byte old, byte cur)
 		{
-			if ( ( old == 3 || old == 4 ) && ( cur != 3 && cur != 4 ) )
+			if ((old == 3 || old == 4) && (cur != 3 && cur != 4))
 			{
 				// grey is turning off
 				// SendMessage( "You are no longer a criminal." );
-				if ( m_CriminalTime != null )
+				if (m_CriminalTime != null)
 					m_CriminalTime.Stop();
 				m_CriminalStart = DateTime.MinValue;
 				ClientCommunication.RequestTitlebarUpdate();
 			}
-			else if ( ( cur == 3 || cur == 4 ) && ( old != 3 && old != 4 && old != 0 ) )
+			else if ((cur == 3 || cur == 4) && (old != 3 && old != 4 && old != 0))
 			{
 				// grey is turning on
 				ResetCriminalTimer();
 			}
 		}
 
-		public void ResetCriminalTimer()
+		internal void ResetCriminalTimer()
 		{
-			if ( m_CriminalStart == DateTime.MinValue || DateTime.Now - m_CriminalStart >= TimeSpan.FromSeconds( 1 ) )
+			if (m_CriminalStart == DateTime.MinValue || DateTime.Now - m_CriminalStart >= TimeSpan.FromSeconds(1))
 			{
 				m_CriminalStart = DateTime.Now;
-				if ( m_CriminalTime == null )
-					m_CriminalTime = new CriminalTimer( this );
+				if (m_CriminalTime == null)
+					m_CriminalTime = new CriminalTimer(this);
 				m_CriminalTime.Start();
 				ClientCommunication.RequestTitlebarUpdate();
 			}
@@ -776,7 +781,8 @@ namespace Assistant
 		private class CriminalTimer : Timer
 		{
 			private PlayerData m_Player;
-			public CriminalTimer( PlayerData player ) : base( TimeSpan.FromSeconds( 1 ), TimeSpan.FromSeconds( 1 ) )
+			public CriminalTimer(PlayerData player)
+				: base(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
 			{
 				m_Player = player;
 			}
@@ -786,25 +792,25 @@ namespace Assistant
 				ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
-		
-		internal void SendMessage( MsgLevel lvl, LocString loc, params object[] args )
+
+		internal void SendMessage(MsgLevel lvl, LocString loc, params object[] args)
 		{
-			SendMessage( lvl, Language.Format( loc, args ) );
+			SendMessage(lvl, Language.Format(loc, args));
 		}
 
-		internal void SendMessage( MsgLevel lvl, LocString loc )
+		internal void SendMessage(MsgLevel lvl, LocString loc)
 		{
-			SendMessage( lvl, Language.GetString( loc ) );
+			SendMessage(lvl, Language.GetString(loc));
 		}
 
-		internal void SendMessage( LocString loc, params object[] args )
+		internal void SendMessage(LocString loc, params object[] args)
 		{
-			SendMessage( MsgLevel.Info, Language.Format( loc, args ) );
+			SendMessage(MsgLevel.Info, Language.Format(loc, args));
 		}
 
-		internal void SendMessage( LocString loc )
+		internal void SendMessage(LocString loc)
 		{
-			SendMessage( MsgLevel.Info, Language.GetString( loc ) );
+			SendMessage(MsgLevel.Info, Language.GetString(loc));
 		}
 
 		/*internal void SendMessage( int hue, LocString loc, params object[] args )
@@ -812,124 +818,124 @@ namespace Assistant
 			SendMessage( hue, Language.Format( loc, args ) );
 		}*/
 
-		internal void SendMessage( MsgLevel lvl, string format, params object[] args )
+		internal void SendMessage(MsgLevel lvl, string format, params object[] args)
 		{
-			SendMessage( lvl, String.Format( format, args ) );
+			SendMessage(lvl, String.Format(format, args));
 		}
 
-		internal void SendMessage( string format, params object[] args )
+		internal void SendMessage(string format, params object[] args)
 		{
-			SendMessage( MsgLevel.Info, String.Format( format, args ) );
+			SendMessage(MsgLevel.Info, String.Format(format, args));
 		}
 
-		internal void SendMessage( string text )
+		internal void SendMessage(string text)
 		{
-			SendMessage( MsgLevel.Info, text );
+			SendMessage(MsgLevel.Info, text);
 		}
 
-		internal void SendMessage( MsgLevel lvl, string text )
+		internal void SendMessage(MsgLevel lvl, string text)
 		{
-			if ( lvl >= (MsgLevel)Config.GetInt( "MessageLevel" ) && text.Length > 0 )
+			if (lvl >= (MsgLevel)Config.GetInt("MessageLevel") && text.Length > 0)
 			{
 				int hue;
-				switch ( lvl )
+				switch (lvl)
 				{
 					case MsgLevel.Error:
 					case MsgLevel.Warning:
-						hue = Config.GetInt( "WarningColor" );
+						hue = Config.GetInt("WarningColor");
 						break;
-					
+
 					default:
-						hue = Config.GetInt( "SysColor" );
+						hue = Config.GetInt("SysColor");
 						break;
 				}
 
-				ClientCommunication.SendToClient( new UnicodeMessage( 0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text ) );
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
 
-				PacketHandlers.SysMessages.Add( text.ToLower() );
+				PacketHandlers.SysMessages.Add(text.ToLower());
 
-				if ( PacketHandlers.SysMessages.Count >= 25 )
-					PacketHandlers.SysMessages.RemoveRange( 0, 10 );
+				if (PacketHandlers.SysMessages.Count >= 25)
+					PacketHandlers.SysMessages.RemoveRange(0, 10);
 			}
 		}
 
-		public uint CurrentGumpS, CurrentGumpI;
-		public bool HasGump;
-		public uint CurrentMenuS;
-		public ushort CurrentMenuI;
-		public bool HasMenu;
+		internal uint CurrentGumpS, CurrentGumpI;
+		internal bool HasGump;
+		internal uint CurrentMenuS;
+		internal ushort CurrentMenuI;
+		internal bool HasMenu;
 
 		private ushort m_SpeechHue;
-		public ushort SpeechHue { get { return m_SpeechHue; } set { m_SpeechHue = value; } }
+		internal ushort SpeechHue { get { return m_SpeechHue; } set { m_SpeechHue = value; } }
 
-		public sbyte LocalLightLevel { get { return m_LocalLight; } set { m_LocalLight = value; } }
-		public byte GlobalLightLevel { get { return m_GlobalLight; } set { m_GlobalLight = value; } }
-		public byte Season { get { return m_Season; } set { m_Season = value; } }
-		public ushort Features { get { return m_Features; } set { m_Features = value; } }
-		public int[] MapPatches { get { return m_MapPatches; } set{ m_MapPatches = value; } }
+		internal sbyte LocalLightLevel { get { return m_LocalLight; } set { m_LocalLight = value; } }
+		internal byte GlobalLightLevel { get { return m_GlobalLight; } set { m_GlobalLight = value; } }
+		internal byte Season { get { return m_Season; } set { m_Season = value; } }
+		internal ushort Features { get { return m_Features; } set { m_Features = value; } }
+		internal int[] MapPatches { get { return m_MapPatches; } set { m_MapPatches = value; } }
 
 		private int m_LastSkill = -1;
-		public int LastSkill { get { return m_LastSkill; } set { m_LastSkill = value; } }
+		internal int LastSkill { get { return m_LastSkill; } set { m_LastSkill = value; } }
 
 		private Serial m_LastObj = Serial.Zero;
-		public Serial LastObject { get { return m_LastObj; } }
+		internal Serial LastObject { get { return m_LastObj; } }
 
 		private int m_LastSpell = -1;
-		public int LastSpell { get { return m_LastSpell; } set { m_LastSpell = value; } }
+		internal int LastSpell { get { return m_LastSpell; } set { m_LastSpell = value; } }
 
 		//private UOEntity m_LastCtxM = null;
 		//public UOEntity LastContextMenu { get { return m_LastCtxM; } set { m_LastCtxM = value; } }
-		
-		public static bool DoubleClick( object clicked )
+
+		internal static bool DoubleClick(object clicked)
 		{
-			return DoubleClick( clicked, true );
+			return DoubleClick(clicked, true);
 		}
 
-		public static bool DoubleClick( object clicked, bool silent )
+		internal static bool DoubleClick(object clicked, bool silent)
 		{
 			Serial s;
-			if ( clicked is Mobile )
+			if (clicked is Mobile)
 				s = ((Mobile)clicked).Serial.Value;
-			else if ( clicked is Item )
+			else if (clicked is Item)
 				s = ((Item)clicked).Serial.Value;
-			else if ( clicked is Serial )
+			else if (clicked is Serial)
 				s = ((Serial)clicked).Value;
 			else
 				s = Serial.Zero;
 
-			if ( s != Serial.Zero )
+			if (s != Serial.Zero)
 			{
 				Item free = null, pack = World.Player.Backpack;
-				if ( s.IsItem && pack != null && Config.GetBool( "PotionEquip" ) && ClientCommunication.AllowBit( FeatureBit.AutoPotionEquip ) )
+				if (s.IsItem && pack != null && Config.GetBool("PotionEquip") && ClientCommunication.AllowBit(FeatureBit.AutoPotionEquip))
 				{
-					Item i = World.FindItem( s );
-					if ( i != null && i.IsPotion && i.ItemID != 3853 ) // dont unequip for exploison potions
+					Item i = World.FindItem(s);
+					if (i != null && i.IsPotion && i.ItemID != 3853) // dont unequip for exploison potions
 					{
 						// dont worry about uneqipping RuneBooks or SpellBooks
-						Item left = World.Player.GetItemOnLayer( Layer.LeftHand );
-						Item right = World.Player.GetItemOnLayer( Layer.RightHand );
+						Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
+						Item right = World.Player.GetItemOnLayer(Layer.RightHand);
 
-						if ( left != null && ( right != null || left.IsTwoHanded ) )
+						if (left != null && (right != null || left.IsTwoHanded))
 							free = left;
-						else if ( right != null && right.IsTwoHanded )
+						else if (right != null && right.IsTwoHanded)
 							free = right;
 
-						if ( free != null )
+						if (free != null)
 						{
-							if ( DragDropManager.HasDragFor( free.Serial ) )
+							if (DragDropManager.HasDragFor(free.Serial))
 								free = null;
 							else
-								DragDropManager.DragDrop( free, pack );
+								DragDropManager.DragDrop(free, pack);
 						}
 					}
 				}
 
-				ActionQueue.DoubleClick( silent, s );
+				ActionQueue.DoubleClick(silent, s);
 
-				if ( free != null )
-					DragDropManager.DragDrop( free, World.Player, free.Layer, true );
+				if (free != null)
+					DragDropManager.DragDrop(free, World.Player, free.Layer, true);
 
-				if ( s.IsItem )
+				if (s.IsItem)
 					World.Player.m_LastObj = s;
 			}
 

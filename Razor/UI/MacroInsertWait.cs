@@ -11,7 +11,7 @@ namespace Assistant
 	/// <summary>
 	/// Summary description for MacroInsertWait.
 	/// </summary>
-	public class MacroInsertWait : System.Windows.Forms.Form
+	internal class MacroInsertWait : System.Windows.Forms.Form
 	{
 		private Macro m_Macro;
 		private int m_Idx;
@@ -34,7 +34,7 @@ namespace Assistant
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public MacroInsertWait(Macro m, int idx)
+		internal MacroInsertWait(Macro m, int idx)
 		{
 			m_Macro = m;
 			m_Idx = idx;
@@ -48,7 +48,7 @@ namespace Assistant
 			//
 		}
 
-		public MacroInsertWait(MacroAction a)
+		internal MacroInsertWait(MacroAction a)
 		{
 			m_Action = a;
 			//

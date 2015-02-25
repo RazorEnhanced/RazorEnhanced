@@ -10,7 +10,7 @@ using System.Drawing.Imaging;
 
 namespace Assistant.MapUO
 {
-	public class UOMapControl : PictureBox
+	internal class UOMapControl : Panel
 	{
 		delegate void UpdateMapCallback();
 
@@ -23,7 +23,7 @@ namespace Assistant.MapUO
 		private Bitmap m_Background;
 		private DateTime LastRefresh;
 
-		public Mobile FocusMobile
+		internal Mobile FocusMobile
 		{
 			get
 			{
@@ -39,9 +39,10 @@ namespace Assistant.MapUO
 			set { m_Focus = value; }
 		}
 
-		public UOMapControl()
+		internal UOMapControl()
 		{
-			Active = false;
+			m_Active = true;
+			this.DoubleBuffered = true;
 			this.prevPoint = new Point(0, 0);
 			this.BorderStyle = BorderStyle.Fixed3D;
 			this.m_MapButtons = new ArrayList();
@@ -83,7 +84,7 @@ namespace Assistant.MapUO
 
 			return def;
 		}
-		public double Distance(PointF center, PointF pos)
+		internal double Distance(PointF center, PointF pos)
 		{
 
 			PointF newp = new PointF(center.X - pos.X, center.Y - pos.Y);
@@ -99,9 +100,9 @@ namespace Assistant.MapUO
 			return AdjustPoint(center, new PointF((float)(x) + center.X, (float)(y) + center.Y));
 		}
 
-		public void FullUpdate()
+		internal void FullUpdate()
 		{
-			if (!Active)
+			if (!Active || this.FocusMobile == null)
 				return;
 
 			if (m_Background != null)
@@ -290,7 +291,7 @@ namespace Assistant.MapUO
 			}
 		}
 
-		public void MapClick(System.Windows.Forms.MouseEventArgs e)
+		internal void MapClick(System.Windows.Forms.MouseEventArgs e)
 		{
 			if (Active)
 			{
@@ -349,7 +350,7 @@ namespace Assistant.MapUO
 			FullUpdate();
 		}
 
-		public void UpdateMap()
+		internal void UpdateMap()
 		{
 			try
 			{
@@ -398,7 +399,7 @@ namespace Assistant.MapUO
 			return aList;
 		}
 
-		public static bool Format(Point p, Ultima.Map map, ref int xLong, ref int yLat, ref int xMins, ref int yMins, ref bool xEast, ref bool ySouth)
+		internal static bool Format(Point p, Ultima.Map map, ref int xLong, ref int yLat, ref int xMins, ref int yMins, ref bool xEast, ref bool ySouth)
 		{
 			if (map == null)
 				return false;
@@ -439,7 +440,7 @@ namespace Assistant.MapUO
 			return true;
 		}
 
-		public static bool ComputeMapDetails(Ultima.Map map, int x, int y, out int xCenter, out int yCenter, out int xWidth, out int yHeight)
+		internal static bool ComputeMapDetails(Ultima.Map map, int x, int y, out int xCenter, out int yCenter, out int xWidth, out int yHeight)
 		{
 			xWidth = 5120; yHeight = 4096;
 
@@ -472,10 +473,17 @@ namespace Assistant.MapUO
 			return true;
 		}
 
-		public bool Active
+		internal bool Active
 		{
 			get { return m_Active; }
-			set { m_Active = value; if (value) { FullUpdate(); } }
+			set
+			{
+				m_Active = value;
+				if (value)
+				{
+					FullUpdate();
+				}
+			}
 		}
 	}
 }

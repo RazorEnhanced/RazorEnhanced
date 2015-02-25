@@ -2,7 +2,7 @@ using System;
 
 namespace Assistant
 {
-	public struct Serial : IComparable
+	internal struct Serial : IComparable
 	{
 		private uint m_Serial;
 
@@ -14,7 +14,7 @@ namespace Assistant
 			m_Serial = serial;
 		}
 
-		public uint Value
+		internal uint Value
 		{
 			get
 			{
@@ -22,7 +22,7 @@ namespace Assistant
 			}
 		}
 
-		public bool IsMobile
+		internal bool IsMobile
 		{
 			get
 			{
@@ -30,7 +30,7 @@ namespace Assistant
 			}
 		}
 
-		public bool IsItem
+		internal bool IsItem
 		{
 			get
 			{
@@ -38,7 +38,7 @@ namespace Assistant
 			}
 		}
 
-		public bool IsValid
+		internal bool IsValid
 		{
 			get
 			{

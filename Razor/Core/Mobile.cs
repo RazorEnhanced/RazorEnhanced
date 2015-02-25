@@ -6,157 +6,159 @@ using System.Text;
 namespace Assistant
 {
 	[Flags]
-	public enum	Direction :	byte
+	internal enum Direction : byte
 	{
-		North =	0x0,
-		Right =	0x1,
+		North = 0x0,
+		Right = 0x1,
 		East = 0x2,
 		Down = 0x3,
-		South =	0x4,
+		South = 0x4,
 		Left = 0x5,
 		West = 0x6,
 		Up = 0x7,
 		Mask = 0x7,
-		Running	= 0x80,
-		ValueMask =	0x87
+		Running = 0x80,
+		ValueMask = 0x87
 	}
 
-	public class Mobile	: UOEntity
+	internal class Mobile : UOEntity
 	{
-		private	ushort m_Body;
-		private	Direction m_Direction;
-		private	string m_Name;
+		private ushort m_Body;
+		private Direction m_Direction;
+		private string m_Name;
 
-		private	byte m_Notoriety;
+		private byte m_Notoriety;
 
-		private	bool m_Visible;
-		private	bool m_Female;
-		private	bool m_Poisoned;
-		private	bool m_Blessed;
-		private	bool m_Warmode;
+		private bool m_Visible;
+		private bool m_Female;
+		private bool m_Poisoned;
+		private bool m_Blessed;
+		private bool m_Warmode;
 
-		private	ushort m_HitsMax, m_Hits;
+		private ushort m_HitsMax, m_Hits;
 		protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
 
-		private	ArrayList m_Items;
+		private ArrayList m_Items;
 
-		private	byte m_Map;
+		private byte m_Map;
 
-		public override	void SaveState(	BinaryWriter writer	)
+		internal override void SaveState(BinaryWriter writer)
 		{
-			base.SaveState (writer);
+			base.SaveState(writer);
 
-			writer.Write( m_Body );
-			writer.Write( (byte)m_Direction	);
-			writer.Write( m_Name ==	null ? "" :	m_Name );
-			writer.Write( m_Notoriety );
-			writer.Write( (byte)GetPacketFlags() );
-			writer.Write( m_HitsMax	);
-			writer.Write( m_Hits );
-			writer.Write( m_Map	);
-			
-			writer.Write( (int)m_Items.Count );
-			for(int	i=0;i<m_Items.Count;i++)
-				writer.Write( (uint)(((Item)m_Items[i]).Serial)	);
+			writer.Write(m_Body);
+			writer.Write((byte)m_Direction);
+			writer.Write(m_Name == null ? "" : m_Name);
+			writer.Write(m_Notoriety);
+			writer.Write((byte)GetPacketFlags());
+			writer.Write(m_HitsMax);
+			writer.Write(m_Hits);
+			writer.Write(m_Map);
+
+			writer.Write((int)m_Items.Count);
+			for (int i = 0; i < m_Items.Count; i++)
+				writer.Write((uint)(((Item)m_Items[i]).Serial));
 			//writer.Write(	(int)0 );
 		}
 
-		public Mobile( BinaryReader	reader,	int	version	) :	base( reader, version )
+		internal Mobile(BinaryReader reader, int version)
+			: base(reader, version)
 		{
 			m_Body = reader.ReadUInt16();
-			m_Direction	= (Direction)reader.ReadByte();
+			m_Direction = (Direction)reader.ReadByte();
 			m_Name = reader.ReadString();
-			m_Notoriety	= reader.ReadByte();
-			ProcessPacketFlags(	reader.ReadByte() );
-			m_HitsMax =	reader.ReadUInt16();
+			m_Notoriety = reader.ReadByte();
+			ProcessPacketFlags(reader.ReadByte());
+			m_HitsMax = reader.ReadUInt16();
 			m_Hits = reader.ReadUInt16();
-			m_Map =	reader.ReadByte();
+			m_Map = reader.ReadByte();
 
-			int	count =	reader.ReadInt32();
-			m_Items	= new ArrayList( count );
-			for(int	i=0;i<count;i++)
-				m_Items.Add( (Serial)reader.ReadUInt32() );
+			int count = reader.ReadInt32();
+			m_Items = new ArrayList(count);
+			for (int i = 0; i < count; i++)
+				m_Items.Add((Serial)reader.ReadUInt32());
 		}
 
-		public override	void AfterLoad()
-		{	
-			for(int	i=0;i<m_Items.Count;i++)
+		internal override void AfterLoad()
+		{
+			for (int i = 0; i < m_Items.Count; i++)
 			{
-				if ( m_Items[i]	is Serial )
+				if (m_Items[i] is Serial)
 				{
-					m_Items[i] = World.FindItem( (Serial)m_Items[i]	);
+					m_Items[i] = World.FindItem((Serial)m_Items[i]);
 
-					if ( m_Items[i]	== null	)
+					if (m_Items[i] == null)
 					{
-						m_Items.RemoveAt( i	);
+						m_Items.RemoveAt(i);
 						i--;
 					}
 				}
 			}
 		}
 
-		public Mobile( Serial serial ) : base( serial )
+		internal Mobile(Serial serial)
+			: base(serial)
 		{
-			m_Items	= new ArrayList();
-			m_Map =	World.Player ==	null ? (byte)0 : World.Player.Map;
-			m_Visible =	true;
+			m_Items = new ArrayList();
+			m_Map = World.Player == null ? (byte)0 : World.Player.Map;
+			m_Visible = true;
 
-			Agent.InvokeMobileCreated( this );
+			Agent.InvokeMobileCreated(this);
 		}
 
-		public string Name
+		internal string Name
 		{
 			get
-			{ 
-				if ( m_Name	== null	)
+			{
+				if (m_Name == null)
 					return "";
 				else
 					return m_Name;
 			}
 			set
-			{ 
-				if ( value != null )
+			{
+				if (value != null)
 				{
-					string trim	= value.Trim();
-					if ( trim.Length > 0 )
+					string trim = value.Trim();
+					if (trim.Length > 0)
 						m_Name = trim;
 				}
 			}
 		}
 
-		public ushort Body
+		internal ushort Body
 		{
-			get{ return	m_Body;	}
-			set{ m_Body	= value; }
+			get { return m_Body; }
+			set { m_Body = value; }
 		}
 
-		public Direction Direction
+		internal Direction Direction
 		{
-			get{ return	m_Direction; }
-			set{ m_Direction = value; }
+			get { return m_Direction; }
+			set { m_Direction = value; }
 		}
 
-		public bool	Visible
+		internal bool Visible
 		{
-			get{ return	m_Visible; }
-			set{ m_Visible = value;	}
+			get { return m_Visible; }
+			set { m_Visible = value; }
 		}
 
-		public bool	Poisoned
+		internal bool Poisoned
 		{
-			get{ return	m_Poisoned;	}
-			set{ m_Poisoned	= value; }
+			get { return m_Poisoned; }
+			set { m_Poisoned = value; }
 		}
 
-		public bool	Blessed
+		internal bool Blessed
 		{
-			get{ return	m_Blessed; }
-			set{ m_Blessed = value;	}
+			get { return m_Blessed; }
+			set { m_Blessed = value; }
 		}
 
-		public bool	IsGhost	
+		internal bool IsGhost
 		{
-			get	
+			get
 			{
 				return m_Body == 402
 					|| m_Body == 403
@@ -166,37 +168,37 @@ namespace Assistant
 			}
 		}
 
-		public bool	Warmode
+		internal bool Warmode
 		{
-			get{ return	m_Warmode; }
-			set{ m_Warmode = value;	}
+			get { return m_Warmode; }
+			set { m_Warmode = value; }
 		}
 
-		public bool	Female
+		internal bool Female
 		{
-			get{ return	m_Female; }
-			set{ m_Female =	value; }
+			get { return m_Female; }
+			set { m_Female = value; }
 		}
 
-		public byte	Notoriety
+		internal byte Notoriety
 		{
-			get{ return	m_Notoriety;  }
+			get { return m_Notoriety; }
 			set
-			{ 
-				if ( value != Notoriety	)
+			{
+				if (value != Notoriety)
 				{
-					OnNotoChange( m_Notoriety, value );
-					m_Notoriety	= value; 
-				}	
+					OnNotoChange(m_Notoriety, value);
+					m_Notoriety = value;
+				}
 			}
 		}
 
-		protected virtual void OnNotoChange( byte old, byte	cur	)
+		protected virtual void OnNotoChange(byte old, byte cur)
 		{
 		}
 
 		// grey, blue, green, 'canbeattacked'
-		private	static uint[] m_NotoHues = new uint[8] 
+		private static uint[] m_NotoHues = new uint[8] 
 		{ 
 			// hue color #30
 			0x000000, // black		unused 0
@@ -209,98 +211,98 @@ namespace Assistant
 			0xe0e000, // yellow		0x0035 7
 		};
 
-		public uint	GetNotorietyColor()
+		internal uint GetNotorietyColor()
 		{
-			if ( m_Notoriety < 0 ||	m_Notoriety	>= m_NotoHues.Length )
+			if (m_Notoriety < 0 || m_Notoriety >= m_NotoHues.Length)
 				return m_NotoHues[0];
 			else
 				return m_NotoHues[m_Notoriety];
 		}
 
-		public byte	GetStatusCode()
+		internal byte GetStatusCode()
 		{
-			if ( m_Poisoned	)
+			if (m_Poisoned)
 				return 1;
 			else
 				return 0;
 		}
 
-		public ushort HitsMax
+		internal ushort HitsMax
 		{
-			get{ return	m_HitsMax; }
-			set{ m_HitsMax = value;	}
+			get { return m_HitsMax; }
+			set { m_HitsMax = value; }
 		}
 
-		public ushort Hits
+		internal ushort Hits
 		{
-			get{ return	m_Hits;	}
-			set{ m_Hits	= value; }
-		}
-		
-		public ushort Stam
-		{
-			get{ return m_Stam; }
-			set{ m_Stam = value; }
+			get { return m_Hits; }
+			set { m_Hits = value; }
 		}
 
-		public ushort StamMax
+		internal ushort Stam
 		{
-			get{ return m_StamMax; }
-			set{ m_StamMax = value; }
+			get { return m_Stam; }
+			set { m_Stam = value; }
 		}
 
-		public ushort Mana
+		internal ushort StamMax
 		{
-			get{ return m_Mana; }
-			set{ m_Mana = value; }
+			get { return m_StamMax; }
+			set { m_StamMax = value; }
 		}
 
-		public ushort ManaMax
+		internal ushort Mana
 		{
-			get{ return m_ManaMax; }
-			set{ m_ManaMax = value; }
+			get { return m_Mana; }
+			set { m_Mana = value; }
+		}
+
+		internal ushort ManaMax
+		{
+			get { return m_ManaMax; }
+			set { m_ManaMax = value; }
 		}
 
 
-		public byte	Map
+		internal byte Map
 		{
-			get{ return	m_Map; }
+			get { return m_Map; }
 			set
-			{ 
-				if ( m_Map != value	)
+			{
+				if (m_Map != value)
 				{
-					OnMapChange( m_Map,	value );
-					m_Map =	value; 
+					OnMapChange(m_Map, value);
+					m_Map = value;
 				}
 			}
 		}
 
-		public virtual void	OnMapChange( byte old, byte	cur	)
+		internal virtual void OnMapChange(byte old, byte cur)
 		{
-		}
-		
-		public void	AddItem( Item item )
-		{
-			m_Items.Add( item );
 		}
 
-		public void	RemoveItem(	Item item )
+		internal void AddItem(Item item)
 		{
-			m_Items.Remove(	item );
+			m_Items.Add(item);
 		}
 
-		public override	void Remove()
+		internal void RemoveItem(Item item)
 		{
-			ArrayList rem =	new	ArrayList(m_Items);
+			m_Items.Remove(item);
+		}
+
+		internal override void Remove()
+		{
+			ArrayList rem = new ArrayList(m_Items);
 			m_Items.Clear();
 
-			for	(int i = 0;	i <	rem.Count; i++)
+			for (int i = 0; i < rem.Count; i++)
 				((Item)rem[i]).Remove();
 
-			if ( !InParty )
+			if (!InParty)
 			{
 				base.Remove();
-				World.RemoveMobile(	this );
+				World.RemoveMobile(this);
 			}
 			else
 			{
@@ -308,145 +310,145 @@ namespace Assistant
 			}
 		}
 
-		public bool	InParty
+		internal bool InParty
 		{
-			get	
+			get
 			{
-				return PacketHandlers.Party.Contains( this.Serial );
+				return PacketHandlers.Party.Contains(this.Serial);
 			}
 		}
 
-		public Item	GetItemOnLayer(	Layer layer	)
+		internal Item GetItemOnLayer(Layer layer)
 		{
-			for(int	i=0;i<m_Items.Count;i++)
+			for (int i = 0; i < m_Items.Count; i++)
 			{
-				Item item =	(Item)m_Items[i];
-				if ( item.Layer	== layer )
+				Item item = (Item)m_Items[i];
+				if (item.Layer == layer)
 					return item;
 			}
 			return null;
 		}
 
-		public Item	Backpack 
+		internal Item Backpack
 		{
 			get
 			{
-				return GetItemOnLayer( Layer.Backpack );
+				return GetItemOnLayer(Layer.Backpack);
 			}
 		}
 
-		public Item Quiver
+		internal Item Quiver
 		{
 			get
 			{
-				Item item = GetItemOnLayer( Layer.Cloak );
+				Item item = GetItemOnLayer(Layer.Cloak);
 
-				if ( item != null && item.IsContainer )
+				if (item != null && item.IsContainer)
 					return item;
 				else
 					return null;
 			}
 		}
 
-		public Item	FindItemByID( ItemID id	)
+		internal Item FindItemByID(ItemID id)
 		{
-			for	(int i=0;i<Contains.Count;i++)
+			for (int i = 0; i < Contains.Count; i++)
 			{
-				Item item =	(Item)Contains[i];
-				if ( item.ItemID ==	id )
+				Item item = (Item)Contains[i];
+				if (item.ItemID == id)
 					return item;
 			}
 			return null;
 		}
 
-		public override	void OnPositionChanging(Point3D	newPos)
+		internal override void OnPositionChanging(Point3D newPos)
 		{
-			if ( this != World.Player && Engine.MainWindow.MapWindow !=	null )
-				Engine.MainWindow.MapWindow.CheckLocalUpdate( this );
+			if (this != World.Player && Engine.MainWindow.MapWindow != null)
+				Engine.MainWindow.MapWindow.CheckLocalUpdate(this);
 
-			base.OnPositionChanging	(newPos);
+			base.OnPositionChanging(newPos);
 		}
-		
-		public int GetPacketFlags()
-		{
-			int	flags =	0x0;
 
-			if ( m_Female )
+		internal int GetPacketFlags()
+		{
+			int flags = 0x0;
+
+			if (m_Female)
 				flags |= 0x02;
 
-			if ( m_Poisoned	)
+			if (m_Poisoned)
 				flags |= 0x04;
 
-			if ( m_Blessed )
+			if (m_Blessed)
 				flags |= 0x08;
 
-			if ( m_Warmode )
+			if (m_Warmode)
 				flags |= 0x40;
 
-			if ( !m_Visible	)
+			if (!m_Visible)
 				flags |= 0x80;
 
 			return flags;
 		}
 
-		public void	ProcessPacketFlags(	byte flags )
+		internal void ProcessPacketFlags(byte flags)
 		{
-			if ( !PacketHandlers.UseNewStatus )
-				m_Poisoned = (flags&0x04) != 0;
-			
-			m_Female  =	(flags&0x02) !=	0;	
-			m_Blessed =	(flags&0x08) !=	0;
-			m_Warmode =	(flags&0x40) !=	0;
-			m_Visible =	(flags&0x80) ==	0;
+			if (!PacketHandlers.UseNewStatus)
+				m_Poisoned = (flags & 0x04) != 0;
+
+			m_Female = (flags & 0x02) != 0;
+			m_Blessed = (flags & 0x08) != 0;
+			m_Warmode = (flags & 0x40) != 0;
+			m_Visible = (flags & 0x80) == 0;
 		}
 
-		public ArrayList Contains{ get{	return m_Items;	} }
+		internal ArrayList Contains { get { return m_Items; } }
 
-		internal void OverheadMessageFrom( int hue, string from, string format, params object[] args )
+		internal void OverheadMessageFrom(int hue, string from, string format, params object[] args)
 		{
-			OverheadMessageFrom( hue, from, String.Format( format, args ) );
+			OverheadMessageFrom(hue, from, String.Format(format, args));
 		}
 
-		internal void OverheadMessageFrom( int hue, string from, string text )
+		internal void OverheadMessageFrom(int hue, string from, string text)
 		{
-			ClientCommunication.SendToClient( new UnicodeMessage( Serial, m_Body, MessageType.Regular, hue,	3, Language.CliLocName,	from, text ) );
+			ClientCommunication.SendToClient(new UnicodeMessage(Serial, m_Body, MessageType.Regular, hue, 3, Language.CliLocName, from, text));
 		}
 
-		internal void OverheadMessage( string text )
+		internal void OverheadMessage(string text)
 		{
-			OverheadMessage( Config.GetInt(	"SysColor" ), text );
+			OverheadMessage(Config.GetInt("SysColor"), text);
 		}
 
-		internal void OverheadMessage( string format, params object[] args )
+		internal void OverheadMessage(string format, params object[] args)
 		{
-			OverheadMessage( Config.GetInt(	"SysColor" ), String.Format( format, args )	);
+			OverheadMessage(Config.GetInt("SysColor"), String.Format(format, args));
 		}
 
-		internal void OverheadMessage( int hue,	string format, params object[] args	)
+		internal void OverheadMessage(int hue, string format, params object[] args)
 		{
-			OverheadMessage( hue, String.Format( format, args )	);
+			OverheadMessage(hue, String.Format(format, args));
 		}
 
-		internal void OverheadMessage( int hue,	string text	)
+		internal void OverheadMessage(int hue, string text)
 		{
-			OverheadMessageFrom( hue, "Razor", text );
+			OverheadMessageFrom(hue, "Razor", text);
 		}
 
-		internal void OverheadMessage( LocString str )
+		internal void OverheadMessage(LocString str)
 		{
-			OverheadMessage( Language.GetString( str ) );
+			OverheadMessage(Language.GetString(str));
 		}
 
-		internal void OverheadMessage( LocString str, params object[] args )
+		internal void OverheadMessage(LocString str, params object[] args)
 		{
-			OverheadMessage( Language.Format( str, args	) );
+			OverheadMessage(Language.Format(str, args));
 		}
 
-		private	Point2D	m_ButtonPoint =	Point2D.Zero;
+		private Point2D m_ButtonPoint = Point2D.Zero;
 		internal Point2D ButtonPoint
 		{
-			get	{ return m_ButtonPoint;	}
-			set	{ m_ButtonPoint	= value; }
+			get { return m_ButtonPoint; }
+			set { m_ButtonPoint = value; }
 		}
 	}
 }

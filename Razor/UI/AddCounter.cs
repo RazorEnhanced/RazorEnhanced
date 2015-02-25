@@ -10,7 +10,7 @@ namespace Assistant
 	/// <summary>
 	/// Summary description for AddCounter.
 	/// </summary>
-	public class AddCounter : System.Windows.Forms.Form
+	internal class AddCounter : System.Windows.Forms.Form
 	{
 
 		private System.Windows.Forms.Label label1;
@@ -31,7 +31,7 @@ namespace Assistant
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public AddCounter()
+		internal AddCounter()
 		{
 			//
 			// Required for Windows Form Designer support
@@ -39,7 +39,7 @@ namespace Assistant
 			InitializeComponent();
 		}
 
-		public AddCounter(Counter c)
+		internal AddCounter(Counter c)
 			: this()
 		{
 			name.Text = c.Name;
@@ -324,9 +324,9 @@ namespace Assistant
 		}
 		#endregion
 
-		public string NameStr, FmtStr;
-		public int ItemID, Hue;
-		public bool DisplayImage;
+		internal string NameStr, FmtStr;
+		internal int ItemID, Hue;
+		internal bool DisplayImage;
 		private void Add_Click(object sender, System.EventArgs e)
 		{
 			if (name.Text.Trim().Length > 0 && format.Text.Trim().Length > 0)

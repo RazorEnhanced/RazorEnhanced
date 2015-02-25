@@ -1,30 +1,30 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Assistant.Macros;
 
 namespace Assistant
 {
-	public class TargetInfo
+	internal class TargetInfo
 	{
-		public byte Type;
-		public uint TargID;
-		public byte Flags;
-		public Serial Serial;
-		public int X, Y;
-		public int Z;
-		public ushort Gfx;
+		internal byte Type;
+		internal uint TargID;
+		internal byte Flags;
+		internal Serial Serial;
+		internal int X, Y;
+		internal int Z;
+		internal ushort Gfx;
 	}
 
-	public class Targeting
+	internal class Targeting
 	{
-		public const uint LocalTargID = 0x7FFFFFFF; // uid for target sent from razor
+		internal const uint LocalTargID = 0x7FFFFFFF; // uid for target sent from razor
 
-		public delegate void TargetResponseCallback( bool location, Serial serial, Point3D p, ushort gfxid );
-		public delegate void CancelTargetCallback();
+		internal delegate void TargetResponseCallback(bool location, Serial serial, Point3D p, ushort gfxid);
+		internal delegate void CancelTargetCallback();
 
 		private static CancelTargetCallback m_OnCancel;
 		private static TargetResponseCallback m_OnTarget;
-		
+
 		private static bool m_Intercept;
 		private static bool m_HasTarget;
 		private static bool m_ClientTarget;
@@ -44,118 +44,118 @@ namespace Assistant
 		private static Serial m_LastCombatant;
 
 		private delegate bool QueueTarget();
-		private static QueueTarget TargetSelfAction = new QueueTarget( DoTargetSelf );
-		private static QueueTarget LastTargetAction = new QueueTarget( DoLastTarget );
+		private static QueueTarget TargetSelfAction = new QueueTarget(DoTargetSelf);
+		private static QueueTarget LastTargetAction = new QueueTarget(DoLastTarget);
 		private static QueueTarget m_QueueTarget;
 
-		
+
 		private static uint m_SpellTargID = 0;
-		public static uint SpellTargetID { get { return m_SpellTargID; } set { m_SpellTargID = value; } }
+		internal static uint SpellTargetID { get { return m_SpellTargID; } set { m_SpellTargID = value; } }
 
-		private static ArrayList m_FilterCancel = new ArrayList();
+		private static List<uint> m_FilterCancel = new List<uint>();
 
-		public static bool HasTarget { get{ return m_HasTarget; } }
+		internal static bool HasTarget { get { return m_HasTarget; } }
 
 		public static void Initialize()
 		{
-			PacketHandler.RegisterClientToServerViewer( 0x6C, new PacketViewerCallback( TargetResponse ) );
-			PacketHandler.RegisterServerToClientViewer( 0x6C, new PacketViewerCallback( NewTarget ) );
-			PacketHandler.RegisterServerToClientViewer( 0xAA, new PacketViewerCallback( CombatantChange ) );
+			PacketHandler.RegisterClientToServerViewer(0x6C, new PacketViewerCallback(TargetResponse));
+			PacketHandler.RegisterServerToClientViewer(0x6C, new PacketViewerCallback(NewTarget));
+			PacketHandler.RegisterServerToClientViewer(0xAA, new PacketViewerCallback(CombatantChange));
 
-			HotKey.Add( HKCategory.Targets, LocString.LastTarget, new HotKeyCallback( LastTarget ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargetSelf, new HotKeyCallback( TargetSelf ) );
-			HotKey.Add( HKCategory.Targets, LocString.ClearTargQueue, new HotKeyCallback( OnClearQueue ) );
-			HotKey.Add( HKCategory.Targets, LocString.SetLT, new HotKeyCallback( TargetSetLastTarget ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandRed, new HotKeyCallback( TargetRandRed ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandNFriend, new HotKeyCallback( TargetRandNonFriendly ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandFriend, new HotKeyCallback( TargetRandFriendly ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandBlue, new HotKeyCallback( TargetRandInnocent ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandGrey, new HotKeyCallback( TargetRandGrey ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandEnemy, new HotKeyCallback( TargetRandEnemy ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandCriminal, new HotKeyCallback( TargetRandCriminal ) );
+			HotKey.Add(HKCategory.Targets, LocString.LastTarget, new HotKeyCallback(LastTarget));
+			HotKey.Add(HKCategory.Targets, LocString.TargetSelf, new HotKeyCallback(TargetSelf));
+			HotKey.Add(HKCategory.Targets, LocString.ClearTargQueue, new HotKeyCallback(OnClearQueue));
+			HotKey.Add(HKCategory.Targets, LocString.SetLT, new HotKeyCallback(TargetSetLastTarget));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandRed, new HotKeyCallback(TargetRandRed));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandNFriend, new HotKeyCallback(TargetRandNonFriendly));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandFriend, new HotKeyCallback(TargetRandFriendly));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandBlue, new HotKeyCallback(TargetRandInnocent));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandGrey, new HotKeyCallback(TargetRandGrey));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandEnemy, new HotKeyCallback(TargetRandEnemy));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandCriminal, new HotKeyCallback(TargetRandCriminal));
 
-			HotKey.Add( HKCategory.Targets, LocString.TargRandEnemyHuman, new HotKeyCallback( TargetRandEnemyHumanoid ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandGreyHuman, new HotKeyCallback( TargetRandGreyHumanoid ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandInnocentHuman, new HotKeyCallback( TargetRandInnocentHumanoid ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargRandCriminalHuman, new HotKeyCallback( TargetRandCriminalHumanoid ) );
+			HotKey.Add(HKCategory.Targets, LocString.TargRandEnemyHuman, new HotKeyCallback(TargetRandEnemyHumanoid));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandGreyHuman, new HotKeyCallback(TargetRandGreyHumanoid));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandInnocentHuman, new HotKeyCallback(TargetRandInnocentHumanoid));
+			HotKey.Add(HKCategory.Targets, LocString.TargRandCriminalHuman, new HotKeyCallback(TargetRandCriminalHumanoid));
 
-			HotKey.Add( HKCategory.Targets, LocString.AttackLastComb, new HotKeyCallback( AttackLastComb ) );
-			HotKey.Add( HKCategory.Targets, LocString.AttackLastTarg, new HotKeyCallback( AttackLastTarg ) );
-			HotKey.Add( HKCategory.Targets, LocString.CancelTarget, new HotKeyCallback( CancelTarget ) );
+			HotKey.Add(HKCategory.Targets, LocString.AttackLastComb, new HotKeyCallback(AttackLastComb));
+			HotKey.Add(HKCategory.Targets, LocString.AttackLastTarg, new HotKeyCallback(AttackLastTarg));
+			HotKey.Add(HKCategory.Targets, LocString.CancelTarget, new HotKeyCallback(CancelTarget));
 
-			HotKey.Add( HKCategory.Targets, LocString.NextTarget, new HotKeyCallback( NextTarget ) );
-			HotKey.Add( HKCategory.Targets, LocString.NextTargetHumanoid, new HotKeyCallback( NextTargetHumanoid ) );
+			HotKey.Add(HKCategory.Targets, LocString.NextTarget, new HotKeyCallback(NextTarget));
+			HotKey.Add(HKCategory.Targets, LocString.NextTargetHumanoid, new HotKeyCallback(NextTargetHumanoid));
 
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseRed, new HotKeyCallback( TargetCloseRed ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseNFriend, new HotKeyCallback( TargetCloseNonFriendly ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseFriend, new HotKeyCallback( TargetCloseFriendly ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseBlue, new HotKeyCallback( TargetCloseInnocent ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseGrey, new HotKeyCallback( TargetCloseGrey ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseEnemy, new HotKeyCallback( TargetCloseEnemy ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseCriminal, new HotKeyCallback( TargetCloseCriminal ) );
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseRed, new HotKeyCallback(TargetCloseRed));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseNFriend, new HotKeyCallback(TargetCloseNonFriendly));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseFriend, new HotKeyCallback(TargetCloseFriendly));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseBlue, new HotKeyCallback(TargetCloseInnocent));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseGrey, new HotKeyCallback(TargetCloseGrey));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemy, new HotKeyCallback(TargetCloseEnemy));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminal, new HotKeyCallback(TargetCloseCriminal));
 
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseEnemyHuman, new HotKeyCallback( TargetCloseEnemyHumanoid ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseGreyHuman, new HotKeyCallback( TargetCloseGreyHumanoid ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseInnocentHuman, new HotKeyCallback( TargetCloseInnocentHumanoid ) );
-			HotKey.Add( HKCategory.Targets, LocString.TargCloseCriminalHuman, new HotKeyCallback( TargetCloseCriminalHumanoid ) );
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemyHuman, new HotKeyCallback(TargetCloseEnemyHumanoid));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseGreyHuman, new HotKeyCallback(TargetCloseGreyHumanoid));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseInnocentHuman, new HotKeyCallback(TargetCloseInnocentHumanoid));
+			HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminalHuman, new HotKeyCallback(TargetCloseCriminalHumanoid));
 
 		}
 
-		private static void CombatantChange( PacketReader p, PacketHandlerEventArgs e )
+		private static void CombatantChange(PacketReader p, PacketHandlerEventArgs e)
 		{
 			Serial ser = p.ReadUInt32();
-			if ( ser.IsMobile && ser != World.Player.Serial && ser != Serial.Zero && ser != Serial.MinusOne )
+			if (ser.IsMobile && ser != World.Player.Serial && ser != Serial.Zero && ser != Serial.MinusOne)
 				m_LastCombatant = ser;
 		}
 
 		private static void AttackLastComb()
 		{
-			if ( m_LastCombatant.IsMobile )
-				ClientCommunication.SendToServer( new AttackReq( m_LastCombatant ) );
+			if (m_LastCombatant.IsMobile)
+				ClientCommunication.SendToServer(new AttackReq(m_LastCombatant));
 		}
 
 		private static void AttackLastTarg()
 		{
-			if ( m_LastTarget != null && m_LastTarget.Serial.IsMobile )
-				ClientCommunication.SendToServer( new AttackReq( m_LastTarget.Serial ) );
+			if (m_LastTarget != null && m_LastTarget.Serial.IsMobile)
+				ClientCommunication.SendToServer(new AttackReq(m_LastTarget.Serial));
 		}
 
 		private static void OnClearQueue()
 		{
 			Targeting.ClearQueue();
-			World.Player.OverheadMessage( LocString.TQCleared );
+			World.Player.OverheadMessage(LocString.TQCleared);
 		}
 
-		internal static void OneTimeTarget( TargetResponseCallback onTarget )
+		internal static void OneTimeTarget(TargetResponseCallback onTarget)
 		{
-			OneTimeTarget( false, onTarget, null );
+			OneTimeTarget(false, onTarget, null);
 		}
 
-		internal static void OneTimeTarget( bool ground, TargetResponseCallback onTarget )
+		internal static void OneTimeTarget(bool ground, TargetResponseCallback onTarget)
 		{
-			OneTimeTarget( ground, onTarget, null );
+			OneTimeTarget(ground, onTarget, null);
 		}
 
-		internal static void OneTimeTarget( TargetResponseCallback onTarget, CancelTargetCallback onCancel )
+		internal static void OneTimeTarget(TargetResponseCallback onTarget, CancelTargetCallback onCancel)
 		{
-			OneTimeTarget( false, onTarget, onCancel );
+			OneTimeTarget(false, onTarget, onCancel);
 		}
 
-		internal static void OneTimeTarget( bool ground, TargetResponseCallback onTarget, CancelTargetCallback onCancel )
+		internal static void OneTimeTarget(bool ground, TargetResponseCallback onTarget, CancelTargetCallback onCancel)
 		{
-			if ( m_Intercept && m_OnCancel != null )
+			if (m_Intercept && m_OnCancel != null)
 			{
 				m_OnCancel();
 				CancelOneTimeTarget();
 			}
 
-			if ( m_HasTarget && m_CurrentID != 0 && m_CurrentID != LocalTargID )
+			if (m_HasTarget && m_CurrentID != 0 && m_CurrentID != LocalTargID)
 			{
 				m_PreviousID = m_CurrentID;
 				m_PreviousGround = m_AllowGround;
 				m_PrevFlags = m_CurFlags;
 
-				m_FilterCancel.Add( m_PreviousID );
+				m_FilterCancel.Add(m_PreviousID);
 			}
 
 			m_Intercept = true;
@@ -164,7 +164,7 @@ namespace Assistant
 			m_OnCancel = onCancel;
 
 			m_ClientTarget = m_HasTarget = true;
-			ClientCommunication.SendToClient( new Target( LocalTargID, ground ) );
+			ClientCommunication.SendToClient(new Target(LocalTargID, ground));
 			ClearQueue();
 		}
 
@@ -172,30 +172,30 @@ namespace Assistant
 		{
 			m_ClientTarget = m_HasTarget = false;
 
-			ClientCommunication.SendToClient( new CancelTarget( LocalTargID ) );
+			ClientCommunication.SendToClient(new CancelTarget(LocalTargID));
 			EndIntercept();
 		}
 
 		private static bool m_LTWasSet;
-		public static void TargetSetLastTarget()
+		internal static void TargetSetLastTarget()
 		{
-			if ( World.Player != null )
+			if (World.Player != null)
 			{
 				m_LTWasSet = false;
-				OneTimeTarget( false, new TargetResponseCallback( OnSetLastTarget ), new CancelTargetCallback( OnSLTCancel ) );
-				World.Player.SendMessage( MsgLevel.Force, LocString.TargSetLT );
+				OneTimeTarget(false, new TargetResponseCallback(OnSetLastTarget), new CancelTargetCallback(OnSLTCancel));
+				World.Player.SendMessage(MsgLevel.Force, LocString.TargSetLT);
 			}
 		}
 
 		private static void OnSLTCancel()
 		{
-			if ( m_LastTarget != null )
+			if (m_LastTarget != null)
 				m_LTWasSet = true;
 		}
 
-		private static void OnSetLastTarget( bool location, Serial serial, Point3D p, ushort gfxid )
+		private static void OnSetLastTarget(bool location, Serial serial, Point3D p, ushort gfxid)
 		{
-			if ( serial == World.Player.Serial )
+			if (serial == World.Player.Serial)
 			{
 				OnSLTCancel();
 				return;
@@ -212,101 +212,101 @@ namespace Assistant
 
 			m_LTWasSet = true;
 
-			World.Player.SendMessage( MsgLevel.Force, LocString.LTSet );
-			if ( serial.IsMobile )
+			World.Player.SendMessage(MsgLevel.Force, LocString.LTSet);
+			if (serial.IsMobile)
 			{
 				LastTargetChanged();
-				ClientCommunication.SendToClient( new ChangeCombatant( serial ) );
+				ClientCommunication.SendToClient(new ChangeCombatant(serial));
 				m_LastCombatant = serial;
 			}
 		}
 
 		private static Serial m_OldLT = Serial.Zero;
 
-		private static void RemoveTextFlags( UOEntity m )
+		private static void RemoveTextFlags(UOEntity m)
 		{
-			if ( m != null )
+			if (m != null)
 			{
 				bool oplchanged = false;
 
-				oplchanged |= m.ObjPropList.Remove( Language.GetString( LocString.LastTarget ) );
-				oplchanged |= m.ObjPropList.Remove( Language.GetString( LocString.HarmfulTarget ) );
-				oplchanged |= m.ObjPropList.Remove( Language.GetString( LocString.BeneficialTarget ) );
+				oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.LastTarget));
+				oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.HarmfulTarget));
+				oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.BeneficialTarget));
 
-				if ( oplchanged )
+				if (oplchanged)
 					m.OPLChanged();
 			}
 		}
 
-		private static void AddTextFlags( UOEntity m )
+		private static void AddTextFlags(UOEntity m)
 		{
-			if ( m != null )
+			if (m != null)
 			{
 				bool oplchanged = false;
 
-				if ( Config.GetBool( "SmartLastTarget" ) )
+				if (Config.GetBool("SmartLastTarget"))
 				{
-					if ( m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial )
+					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 					{
-						oplchanged = true; 
-						m.ObjPropList.Add( Language.GetString( LocString.HarmfulTarget ) );
+						oplchanged = true;
+						m.ObjPropList.Add(Language.GetString(LocString.HarmfulTarget));
 					}
 
-					if ( m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial )
+					if (m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial)
 					{
-						oplchanged = true; 
-						m.ObjPropList.Add( Language.GetString( LocString.BeneficialTarget ) );
+						oplchanged = true;
+						m.ObjPropList.Add(Language.GetString(LocString.BeneficialTarget));
 					}
 				}
 
-				if ( !oplchanged && m_LastTarget != null && m_LastTarget.Serial == m.Serial )
+				if (!oplchanged && m_LastTarget != null && m_LastTarget.Serial == m.Serial)
 				{
-					oplchanged = true; 
-					m.ObjPropList.Add( Language.GetString( LocString.LastTarget ) );
+					oplchanged = true;
+					m.ObjPropList.Add(Language.GetString(LocString.LastTarget));
 				}
 
-				if ( oplchanged )
+				if (oplchanged)
 					m.OPLChanged();
 			}
 		}
 
 		private static void LastTargetChanged()
 		{
-			if ( m_LastTarget != null )
+			if (m_LastTarget != null)
 			{
-				bool lth = Config.GetInt( "LTHilight" ) != 0;
-				
-				if ( m_OldLT.IsItem )
+				bool lth = Config.GetInt("LTHilight") != 0;
+
+				if (m_OldLT.IsItem)
 				{
-					RemoveTextFlags( World.FindItem( m_OldLT ) );
+					RemoveTextFlags(World.FindItem(m_OldLT));
 				}
 				else
 				{
-					Mobile m = World.FindMobile( m_OldLT );
-					if ( m != null )
+					Mobile m = World.FindMobile(m_OldLT);
+					if (m != null)
 					{
-						if ( lth )
-							ClientCommunication.SendToClient( new MobileIncoming( m ) );
+						if (lth)
+							ClientCommunication.SendToClient(new MobileIncoming(m));
 
-						RemoveTextFlags( m );
+						RemoveTextFlags(m);
 					}
 				}
 
-				if ( m_LastTarget.Serial.IsItem )
+				if (m_LastTarget.Serial.IsItem)
 				{
-					AddTextFlags( World.FindItem( m_LastTarget.Serial ) );
+					AddTextFlags(World.FindItem(m_LastTarget.Serial));
 				}
 				else
 				{
-					Mobile m = World.FindMobile( m_LastTarget.Serial );
-					if ( m != null )
+					Mobile m = World.FindMobile(m_LastTarget.Serial);
+					if (m != null)
 					{
-						if ( IsLastTarget( m ) && lth )
-							ClientCommunication.SendToClient( new MobileIncoming( m ) );
-					
-						CheckLastTargetRange( m );
+						if (IsLastTarget(m) && lth)
+							ClientCommunication.SendToClient(new MobileIncoming(m));
 
-						AddTextFlags( m );
+						CheckLastTargetRange(m);
+
+						AddTextFlags(m);
 					}
 				}
 
@@ -314,310 +314,310 @@ namespace Assistant
 			}
 		}
 
-		public static bool LTWasSet{ get{ return m_LTWasSet; } }
+		internal static bool LTWasSet { get { return m_LTWasSet; } }
 
-		public static void TargetRandNonFriendly()
+		internal static void TargetRandNonFriendly()
 		{
-			RandomTarget( 3, 4, 5, 6 );
+			RandomTarget(3, 4, 5, 6);
 		}
 
-		public static void TargetRandFriendly()
+		internal static void TargetRandFriendly()
 		{
-			RandomTarget( 0, 1, 2 );
+			RandomTarget(0, 1, 2);
 		}
 
-		public static void TargetRandEnemy()
+		internal static void TargetRandEnemy()
 		{
-			RandomTarget( 5 );
+			RandomTarget(5);
 		}
 
-		public static void TargetRandEnemyHumanoid()
+		internal static void TargetRandEnemyHumanoid()
 		{
-			RandomHumanoidTarget( 5 );
+			RandomHumanoidTarget(5);
 		}
 
-		public static void TargetRandRed()
+		internal static void TargetRandRed()
 		{
-			RandomTarget( 6 );
+			RandomTarget(6);
 		}
 
-		public static void TargetRandGrey()
+		internal static void TargetRandGrey()
 		{
-			RandomTarget( 3, 4 );
+			RandomTarget(3, 4);
 		}
 
-		public static void TargetRandGreyHumanoid()
+		internal static void TargetRandGreyHumanoid()
 		{
-			RandomHumanoidTarget( 3, 4 );
+			RandomHumanoidTarget(3, 4);
 		}
 
-		public static void TargetRandCriminal()
+		internal static void TargetRandCriminal()
 		{
-			RandomTarget( 4 );
+			RandomTarget(4);
 		}
 
-		public static void TargetRandCriminalHumanoid()
+		internal static void TargetRandCriminalHumanoid()
 		{
-			RandomHumanoidTarget( 4 );
+			RandomHumanoidTarget(4);
 		}
 
-		public static void TargetRandInnocent()
+		internal static void TargetRandInnocent()
 		{
-			RandomTarget( 1 );
+			RandomTarget(1);
 		}
 
-		public static void TargetRandInnocentHumanoid()
+		internal static void TargetRandInnocentHumanoid()
 		{
-			RandomHumanoidTarget( 1 );
+			RandomHumanoidTarget(1);
 		}
 
-		public static void TargetRandAnyone()
+		internal static void TargetRandAnyone()
 		{
 			RandomTarget();
 		}
 
-		public static void RandomTarget( params int[] noto )
+		internal static void RandomTarget(params int[] noto)
 		{
-			if ( !ClientCommunication.AllowBit( FeatureBit.RandomTargets ) )
+			if (!ClientCommunication.AllowBit(FeatureBit.RandomTargets))
 				return;
 
-			ArrayList list = new ArrayList();
-			foreach ( Mobile m in World.MobilesInRange( 12 ) )
+			List<Mobile> list = new List<Mobile>();
+			foreach (Mobile m in World.MobilesInRange(12))
 			{
-				if ( ( !FriendsAgent.IsFriend( m ) || ( noto.Length > 0 && noto[0] == 0 ) ) && 
+				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange( World.Player.Position, m.Position, Config.GetInt( "LTRange" ) ) )
+					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for(int i=0;i<noto.Length;i++)
+					for (int i = 0; i < noto.Length; i++)
 					{
-						if ( noto[i] == m.Notoriety )
+						if (noto[i] == m.Notoriety)
 						{
-							list.Add( m );
+							list.Add(m);
 							break;
 						}
 					}
 
-					if ( noto.Length == 0 )
-						list.Add( m );
+					if (noto.Length == 0)
+						list.Add(m);
 				}
 			}
 
-			if ( list.Count > 0 )
-				SetLastTargetTo( (Mobile)list[Utility.Random( list.Count )] );
+			if (list.Count > 0)
+				SetLastTargetTo((Mobile)list[Utility.Random(list.Count)]);
 			else
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 		}
 
-		public static void RandomHumanoidTarget( params int[] noto )
+		internal static void RandomHumanoidTarget(params int[] noto)
 		{
-			if ( !ClientCommunication.AllowBit( FeatureBit.RandomTargets ) )
+			if (!ClientCommunication.AllowBit(FeatureBit.RandomTargets))
 				return;
 
-			ArrayList list = new ArrayList();
-			foreach ( Mobile m in World.MobilesInRange( 12 ) )
+			List<Mobile> list = new List<Mobile>();
+			foreach (Mobile m in World.MobilesInRange(12))
 			{
-				if ( m.Body != 0x0190 && m.Body != 0x0191 && m.Body != 0x025D && m.Body != 0x025E )
+				if (m.Body != 0x0190 && m.Body != 0x0191 && m.Body != 0x025D && m.Body != 0x025E)
 					continue;
 
-				if ( ( !FriendsAgent.IsFriend( m ) || ( noto.Length > 0 && noto[0] == 0 ) ) && 
+				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange( World.Player.Position, m.Position, Config.GetInt( "LTRange" ) ) )
+					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for(int i=0;i<noto.Length;i++)
+					for (int i = 0; i < noto.Length; i++)
 					{
-						if ( noto[i] == m.Notoriety )
+						if (noto[i] == m.Notoriety)
 						{
-							list.Add( m );
+							list.Add(m);
 							break;
 						}
 					}
 
-					if ( noto.Length == 0 )
-						list.Add( m );
+					if (noto.Length == 0)
+						list.Add(m);
 				}
 			}
 
-			if ( list.Count > 0 )
-				SetLastTargetTo( (Mobile)list[Utility.Random( list.Count )] );
+			if (list.Count > 0)
+				SetLastTargetTo((Mobile)list[Utility.Random(list.Count)]);
 			else
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 		}
 
-		
-		public static void TargetCloseNonFriendly()
+
+		internal static void TargetCloseNonFriendly()
 		{
-			ClosestTarget( 3, 4, 5, 6 );
+			ClosestTarget(3, 4, 5, 6);
 		}
 
-		public static void TargetCloseFriendly()
+		internal static void TargetCloseFriendly()
 		{
-			ClosestTarget( 0, 1, 2 );
+			ClosestTarget(0, 1, 2);
 		}
 
-		public static void TargetCloseEnemy()
+		internal static void TargetCloseEnemy()
 		{
-			ClosestTarget( 5 );
+			ClosestTarget(5);
 		}
 
-		public static void TargetCloseEnemyHumanoid()
+		internal static void TargetCloseEnemyHumanoid()
 		{
-			ClosestHumanoidTarget( 5 );
+			ClosestHumanoidTarget(5);
 		}
 
-		public static void TargetCloseRed()
+		internal static void TargetCloseRed()
 		{
-			ClosestTarget( 6 );
+			ClosestTarget(6);
 		}
 
-		public static void TargetCloseGrey()
+		internal static void TargetCloseGrey()
 		{
-			ClosestTarget( 3, 4 );
+			ClosestTarget(3, 4);
 		}
 
-		public static void TargetCloseGreyHumanoid()
+		internal static void TargetCloseGreyHumanoid()
 		{
-			ClosestHumanoidTarget( 3, 4 );
+			ClosestHumanoidTarget(3, 4);
 		}
 
-		public static void TargetCloseCriminal()
+		internal static void TargetCloseCriminal()
 		{
-			ClosestTarget( 4 );
+			ClosestTarget(4);
 		}
 
-		public static void TargetCloseCriminalHumanoid()
+		internal static void TargetCloseCriminalHumanoid()
 		{
-			ClosestHumanoidTarget( 4 );
+			ClosestHumanoidTarget(4);
 		}
 
-		public static void TargetCloseInnocent()
+		internal static void TargetCloseInnocent()
 		{
-			ClosestTarget( 1 );
+			ClosestTarget(1);
 		}
 
-		public static void TargetCloseInnocentHumanoid()
+		internal static void TargetCloseInnocentHumanoid()
 		{
-			ClosestHumanoidTarget( 1 );
+			ClosestHumanoidTarget(1);
 		}
 
-		public static void TargetClosest()
+		internal static void TargetClosest()
 		{
 			ClosestTarget();
 		}
 
-		public static void ClosestTarget( params int[] noto )
+		internal static void ClosestTarget(params int[] noto)
 		{
-			if ( !ClientCommunication.AllowBit( FeatureBit.ClosestTargets ) )
+			if (!ClientCommunication.AllowBit(FeatureBit.ClosestTargets))
 				return;
 
-			ArrayList list = new ArrayList();
-			foreach ( Mobile m in World.MobilesInRange( 12 ) )
+			List<Mobile> list = new List<Mobile>();
+			foreach (Mobile m in World.MobilesInRange(12))
 			{
-				if ( ( !FriendsAgent.IsFriend( m ) || ( noto.Length > 0 && noto[0] == 0 ) ) && 
+				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange( World.Player.Position, m.Position, Config.GetInt( "LTRange" ) ) )
+					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for(int i=0;i<noto.Length;i++)
+					for (int i = 0; i < noto.Length; i++)
 					{
-						if ( noto[i] == m.Notoriety )
+						if (noto[i] == m.Notoriety)
 						{
-							list.Add( m );
+							list.Add(m);
 							break;
 						}
 					}
 
-					if ( noto.Length == 0 )
-						list.Add( m );
+					if (noto.Length == 0)
+						list.Add(m);
 				}
 			}
 
 			Mobile closest = null;
 			double closestDist = double.MaxValue;
 
-			foreach ( Mobile m in list )
+			foreach (Mobile m in list)
 			{
-				double dist = Utility.DistanceSqrt( m.Position, World.Player.Position );
+				double dist = Utility.DistanceSqrt(m.Position, World.Player.Position);
 
-				if ( dist < closestDist || closest == null )
+				if (dist < closestDist || closest == null)
 				{
 					closestDist = dist;
 					closest = m;
 				}
 			}
 
-			if ( closest != null )
-				SetLastTargetTo( closest );
+			if (closest != null)
+				SetLastTargetTo(closest);
 			else
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 		}
 
-		public static void ClosestHumanoidTarget( params int[] noto )
+		internal static void ClosestHumanoidTarget(params int[] noto)
 		{
-			if ( !ClientCommunication.AllowBit( FeatureBit.ClosestTargets ) )
+			if (!ClientCommunication.AllowBit(FeatureBit.ClosestTargets))
 				return;
 
-			ArrayList list = new ArrayList();
-			foreach ( Mobile m in World.MobilesInRange( 12 ) )
+			List<Mobile> list = new List<Mobile>();
+			foreach (Mobile m in World.MobilesInRange(12))
 			{
-				if ( m.Body != 0x0190 && m.Body != 0x0191 && m.Body != 0x025D && m.Body != 0x025E )
+				if (m.Body != 0x0190 && m.Body != 0x0191 && m.Body != 0x025D && m.Body != 0x025E)
 					continue;
 
-				if ( ( !FriendsAgent.IsFriend( m ) || ( noto.Length > 0 && noto[0] == 0 ) ) && 
+				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange( World.Player.Position, m.Position, Config.GetInt( "LTRange" ) ) )
+					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for(int i=0;i<noto.Length;i++)
+					for (int i = 0; i < noto.Length; i++)
 					{
-						if ( noto[i] == m.Notoriety )
+						if (noto[i] == m.Notoriety)
 						{
-							list.Add( m );
+							list.Add(m);
 							break;
 						}
 					}
 
-					if ( noto.Length == 0 )
-						list.Add( m );
+					if (noto.Length == 0)
+						list.Add(m);
 				}
 			}
 
 			Mobile closest = null;
 			double closestDist = double.MaxValue;
 
-			foreach ( Mobile m in list )
+			foreach (Mobile m in list)
 			{
-				double dist = Utility.DistanceSqrt( m.Position, World.Player.Position );
+				double dist = Utility.DistanceSqrt(m.Position, World.Player.Position);
 
-				if ( dist < closestDist || closest == null )
+				if (dist < closestDist || closest == null)
 				{
 					closestDist = dist;
 					closest = m;
 				}
 			}
 
-			if ( closest != null )
-				SetLastTargetTo( closest );
+			if (closest != null)
+				SetLastTargetTo(closest);
 			else
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 		}
 
-		public static void SetLastTargetTo( Mobile m )
+		internal static void SetLastTargetTo(Mobile m)
 		{
-			SetLastTargetTo( m, 0 );
+			SetLastTargetTo(m, 0);
 		}
 
-		public static void SetLastTargetTo( Mobile m, byte flagType )
+		internal static void SetLastTargetTo(Mobile m, byte flagType)
 		{
 			TargetInfo targ = new TargetInfo();
 			m_LastGroundTarg = m_LastTarget = targ;
 
-			if ( ( m_HasTarget && m_CurFlags == 1 ) || flagType == 1 )
+			if ((m_HasTarget && m_CurFlags == 1) || flagType == 1)
 				m_LastHarmTarg = targ;
-			else if ( ( m_HasTarget && m_CurFlags == 2 ) || flagType == 2 )
+			else if ((m_HasTarget && m_CurFlags == 2) || flagType == 2)
 				m_LastBeneTarg = targ;
-			else if ( flagType == 0 )
+			else if (flagType == 0)
 				m_LastHarmTarg = m_LastBeneTarg = targ;
 
 			targ.Type = 0;
-			if ( m_HasTarget )
+			if (m_HasTarget)
 				targ.Flags = m_CurFlags;
 			else
 				targ.Flags = flagType;
@@ -628,16 +628,16 @@ namespace Assistant
 			targ.Y = m.Position.Y;
 			targ.Z = m.Position.Z;
 
-			ClientCommunication.SendToClient( new ChangeCombatant( m ) );
+			ClientCommunication.SendToClient(new ChangeCombatant(m));
 			m_LastCombatant = m.Serial;
-			World.Player.SendMessage( MsgLevel.Force, LocString.NewTargSet );
-			
-			bool wasSmart = Config.GetBool( "SmartLastTarget" );
-			if ( wasSmart )
-				Config.SetProperty( "SmartLastTarget", false );
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
+
+			bool wasSmart = Config.GetBool("SmartLastTarget");
+			if (wasSmart)
+				Config.SetProperty("SmartLastTarget", false);
 			LastTarget();
-			if ( wasSmart )
-				Config.SetProperty( "SmartLastTarget", true );
+			if (wasSmart)
+				Config.SetProperty("SmartLastTarget", true);
 			LastTargetChanged();
 		}
 
@@ -648,44 +648,44 @@ namespace Assistant
 			m_OnCancel = null;
 		}
 
-		public static void TargetSelf()
+		internal static void TargetSelf()
 		{
-			TargetSelf( false );
+			TargetSelf(false);
 		}
 
-		public static void TargetSelf( bool forceQ )
+		internal static void TargetSelf(bool forceQ)
 		{
-			if ( World.Player == null )
+			if (World.Player == null)
 				return;
 
 			//if ( Macros.MacroManager.AcceptActions )
 			//	MacroManager.Action( new TargetSelfAction() );
 
-			if ( m_HasTarget )
+			if (m_HasTarget)
 			{
-				if ( !DoTargetSelf() )
+				if (!DoTargetSelf())
 					ResendTarget();
 			}
-			else if ( forceQ || Config.GetBool( "QueueTargets" ) )
+			else if (forceQ || Config.GetBool("QueueTargets"))
 			{
-				if ( !forceQ )
-					World.Player.OverheadMessage( LocString.QueuedTS );
+				if (!forceQ)
+					World.Player.OverheadMessage(LocString.QueuedTS);
 				m_QueueTarget = TargetSelfAction;
 			}
 		}
 
-		public static bool DoTargetSelf()
+		internal static bool DoTargetSelf()
 		{
-			if ( World.Player == null )
+			if (World.Player == null)
 				return false;
 
-			if ( CheckHealPoisonTarg( m_CurrentID, World.Player.Serial ) )
+			if (CheckHealPoisonTarg(m_CurrentID, World.Player.Serial))
 				return false;
 
 			CancelClientTarget();
 			m_HasTarget = false;
 
-			if ( m_Intercept )
+			if (m_Intercept)
 			{
 				TargetInfo targ = new TargetInfo();
 				targ.Serial = World.Player.Serial;
@@ -696,73 +696,73 @@ namespace Assistant
 				targ.Z = World.Player.Position.Z;
 				targ.TargID = LocalTargID;
 				targ.Flags = 0;
-			
-				OneTimeResponse( targ );
+
+				OneTimeResponse(targ);
 			}
 			else
 			{
-				ClientCommunication.SendToServer( new TargetResponse( m_CurrentID, World.Player ) );
+				ClientCommunication.SendToServer(new TargetResponse(m_CurrentID, World.Player));
 			}
 
 			return true;
 		}
 
-		public static void LastTarget()
+		internal static void LastTarget()
 		{
-			LastTarget( false );
+			LastTarget(false);
 		}
-		
-		public static void LastTarget( bool forceQ )
+
+		internal static void LastTarget(bool forceQ)
 		{
 			//if ( Macros.MacroManager.AcceptActions )
 			//	MacroManager.Action( new LastTargetAction() );
 
-			if ( m_HasTarget )
+			if (m_HasTarget)
 			{
-				if ( !DoLastTarget() )
+				if (!DoLastTarget())
 					ResendTarget();
 			}
-			else if ( forceQ || Config.GetBool( "QueueTargets" ) )
+			else if (forceQ || Config.GetBool("QueueTargets"))
 			{
-				if ( !forceQ )
-					World.Player.OverheadMessage( LocString.QueuedLT );
+				if (!forceQ)
+					World.Player.OverheadMessage(LocString.QueuedLT);
 				m_QueueTarget = LastTargetAction;
 			}
 		}
 
-		public static bool DoLastTarget()
+		internal static bool DoLastTarget()
 		{
 			TargetInfo targ;
-			if ( Config.GetBool( "SmartLastTarget" ) && ClientCommunication.AllowBit( FeatureBit.SmartLT ) )
+			if (Config.GetBool("SmartLastTarget") && ClientCommunication.AllowBit(FeatureBit.SmartLT))
 			{
-				if ( m_AllowGround && m_LastGroundTarg != null )
+				if (m_AllowGround && m_LastGroundTarg != null)
 					targ = m_LastGroundTarg;
-				else if ( m_CurFlags == 1 )
+				else if (m_CurFlags == 1)
 					targ = m_LastHarmTarg;
-				else if ( m_CurFlags == 2 )
+				else if (m_CurFlags == 2)
 					targ = m_LastBeneTarg;
 				else
 					targ = m_LastTarget;
 
-				if ( targ == null )
+				if (targ == null)
 					targ = m_LastTarget;
 			}
 			else
 			{
-				if ( m_AllowGround && m_LastGroundTarg != null )
+				if (m_AllowGround && m_LastGroundTarg != null)
 					targ = m_LastGroundTarg;
 				else
 					targ = m_LastTarget;
 			}
 
-			if ( targ == null )
+			if (targ == null)
 				return false;
 
 			Point3D pos = Point3D.Zero;
-			if ( targ.Serial.IsMobile )
+			if (targ.Serial.IsMobile)
 			{
-				Mobile m = World.FindMobile( targ.Serial );
-				if ( m != null )
+				Mobile m = World.FindMobile(targ.Serial);
+				if (m != null)
 				{
 					pos = m.Position;
 
@@ -775,13 +775,13 @@ namespace Assistant
 					pos = Point3D.Zero;
 				}
 			}
-			else if ( targ.Serial.IsItem )
+			else if (targ.Serial.IsItem)
 			{
-				Item i = World.FindItem( targ.Serial );
-				if ( i != null )
+				Item i = World.FindItem(targ.Serial);
+				if (i != null)
 				{
 					pos = i.GetWorldPosition();
-						
+
 					targ.X = i.Position.X;
 					targ.Y = i.Position.Y;
 					targ.Z = i.Position.Z;
@@ -794,65 +794,65 @@ namespace Assistant
 			}
 			else
 			{
-				if ( !m_AllowGround && ( targ.Serial == Serial.Zero || targ.Serial >= 0x80000000 ) )
+				if (!m_AllowGround && (targ.Serial == Serial.Zero || targ.Serial >= 0x80000000))
 				{
-					World.Player.SendMessage( MsgLevel.Warning, LocString.LTGround );
+					World.Player.SendMessage(MsgLevel.Warning, LocString.LTGround);
 					return false;
 				}
 				else
 				{
-					pos = new Point3D( targ.X, targ.Y, targ.Z );
+					pos = new Point3D(targ.X, targ.Y, targ.Z);
 				}
 			}
 
-			if ( Config.GetBool( "RangeCheckLT" ) && ClientCommunication.AllowBit( FeatureBit.RangeCheckLT ) && ( pos == Point3D.Zero || !Utility.InRange( World.Player.Position, pos, Config.GetInt( "LTRange" ) ) ) )
+			if (Config.GetBool("RangeCheckLT") && ClientCommunication.AllowBit(FeatureBit.RangeCheckLT) && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, Config.GetInt("LTRange"))))
 			{
-				if ( Config.GetBool( "QueueTargets" ) )
+				if (Config.GetBool("QueueTargets"))
 					m_QueueTarget = LastTargetAction;
-				World.Player.SendMessage( MsgLevel.Warning, LocString.LTOutOfRange );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
 				return false;
 			}
 
-			if ( CheckHealPoisonTarg( m_CurrentID, targ.Serial ) )
+			if (CheckHealPoisonTarg(m_CurrentID, targ.Serial))
 				return false;
-			
+
 			CancelClientTarget();
 			m_HasTarget = false;
 
 			targ.TargID = m_CurrentID;
 
-			if ( m_Intercept )
-				OneTimeResponse( targ );
+			if (m_Intercept)
+				OneTimeResponse(targ);
 			else
-				ClientCommunication.SendToServer( new TargetResponse( targ ) );
+				ClientCommunication.SendToServer(new TargetResponse(targ));
 			return true;
 		}
 
-		public static void ClearQueue()
+		internal static void ClearQueue()
 		{
 			m_QueueTarget = null;
 		}
 
-		private static TimerCallbackState m_OneTimeRespCallback = new TimerCallbackState( OneTimeResponse );
+		private static TimerCallbackState m_OneTimeRespCallback = new TimerCallbackState(OneTimeResponse);
 
-		private static void OneTimeResponse( object state )
+		private static void OneTimeResponse(object state)
 		{
 			TargetInfo info = state as TargetInfo;
 
-			if ( info != null )
+			if (info != null)
 			{
-				if ( ( info.X == 0xFFFF && info.X == 0xFFFF ) && ( info.Serial == 0 || info.Serial >= 0x80000000 ) )
+				if ((info.X == 0xFFFF && info.X == 0xFFFF) && (info.Serial == 0 || info.Serial >= 0x80000000))
 				{
-					if ( m_OnCancel != null )
+					if (m_OnCancel != null)
 						m_OnCancel();
 				}
 				else
-				{	
-					if ( Macros.MacroManager.AcceptActions )
-						MacroManager.Action( new AbsoluteTargetAction( info ) );
+				{
+					if (Macros.MacroManager.AcceptActions)
+						MacroManager.Action(new AbsoluteTargetAction(info));
 
-					if ( m_OnTarget != null )
-						m_OnTarget( info.Type == 1 ? true : false, info.Serial, new Point3D( info.X, info.Y, info.Z ), info.Gfx );
+					if (m_OnTarget != null)
+						m_OnTarget(info.Type == 1 ? true : false, info.Serial, new Point3D(info.X, info.Y, info.Z), info.Gfx);
 				}
 			}
 
@@ -863,42 +863,42 @@ namespace Assistant
 		{
 			OnClearQueue();
 			CancelClientTarget();
-			
-			if ( m_HasTarget )
+
+			if (m_HasTarget)
 			{
-				ClientCommunication.SendToServer( new TargetCancelResponse( m_CurrentID ) );
+				ClientCommunication.SendToServer(new TargetCancelResponse(m_CurrentID));
 				m_HasTarget = false;
 			}
 		}
 
 		private static void CancelClientTarget()
 		{
-			if ( m_ClientTarget )
+			if (m_ClientTarget)
 			{
-				m_FilterCancel.Add( (uint)m_CurrentID );
-				ClientCommunication.SendToClient( new CancelTarget( m_CurrentID ) );
+				m_FilterCancel.Add((uint)m_CurrentID);
+				ClientCommunication.SendToClient(new CancelTarget(m_CurrentID));
 				m_ClientTarget = false;
 			}
 		}
 
-		public static void Target( TargetInfo info )
+		internal static void Target(TargetInfo info)
 		{
-			if ( m_Intercept )
+			if (m_Intercept)
 			{
-				OneTimeResponse( info );
+				OneTimeResponse(info);
 			}
-			else if ( m_HasTarget )
+			else if (m_HasTarget)
 			{
 				info.TargID = m_CurrentID;
 				m_LastGroundTarg = m_LastTarget = info;
-				ClientCommunication.SendToServer( new TargetResponse( info ) );
+				ClientCommunication.SendToServer(new TargetResponse(info));
 			}
 
 			CancelClientTarget();
 			m_HasTarget = false;
 		}
 
-		public static void Target( Point3D pt )
+		internal static void Target(Point3D pt)
 		{
 			TargetInfo info = new TargetInfo();
 			info.Type = 1;
@@ -909,10 +909,10 @@ namespace Assistant
 			info.Z = pt.Z;
 			info.Gfx = 0;
 
-			Target( info );
+			Target(info);
 		}
 
-		public static void Target( Point3D pt, int gfx )
+		internal static void Target(Point3D pt, int gfx)
 		{
 			TargetInfo info = new TargetInfo();
 			info.Type = 1;
@@ -923,20 +923,20 @@ namespace Assistant
 			info.Z = pt.Z;
 			info.Gfx = (ushort)(gfx & 0x3FFF);
 
-			Target( info );
+			Target(info);
 		}
 
-		public static void Target( Serial s )
+		internal static void Target(Serial s)
 		{
 			TargetInfo info = new TargetInfo();
 			info.Type = 0;
 			info.Flags = 0;
 			info.Serial = s;
 
-			if ( s.IsItem )
+			if (s.IsItem)
 			{
-				Item item = World.FindItem( s );
-				if ( item != null )
+				Item item = World.FindItem(s);
+				if (item != null)
 				{
 					info.X = item.Position.X;
 					info.Y = item.Position.Y;
@@ -944,10 +944,10 @@ namespace Assistant
 					info.Gfx = item.ItemID;
 				}
 			}
-			else if ( s.IsMobile )
+			else if (s.IsMobile)
 			{
-				Mobile m = World.FindMobile( s );
-				if ( m != null )
+				Mobile m = World.FindMobile(s);
+				if (m != null)
 				{
 					info.X = m.Position.X;
 					info.Y = m.Position.Y;
@@ -956,12 +956,12 @@ namespace Assistant
 				}
 			}
 
-			Target( info );
+			Target(info);
 		}
 
-		public static void Target( object o )
+		internal static void Target(object o)
 		{
-			if ( o is Item )
+			if (o is Item)
 			{
 				Item item = (Item)o;
 				TargetInfo info = new TargetInfo();
@@ -972,9 +972,9 @@ namespace Assistant
 				info.Y = item.Position.Y;
 				info.Z = item.Position.Z;
 				info.Gfx = item.ItemID;
-				Target( info );
+				Target(info);
 			}
-			else if ( o is Mobile )
+			else if (o is Mobile)
 			{
 				Mobile m = (Mobile)o;
 				TargetInfo info = new TargetInfo();
@@ -985,46 +985,46 @@ namespace Assistant
 				info.Y = m.Position.Y;
 				info.Z = m.Position.Z;
 				info.Gfx = m.Body;
-				Target( info );
+				Target(info);
 			}
-			else if ( o is Serial )
+			else if (o is Serial)
 			{
-				Target( (Serial)o );
+				Target((Serial)o);
 			}
-			else if ( o is TargetInfo )
+			else if (o is TargetInfo)
 			{
-				Target( (TargetInfo)o );
+				Target((TargetInfo)o);
 			}
 		}
 
-		public static void CheckTextFlags( Mobile m )
+		internal static void CheckTextFlags(Mobile m)
 		{
-			if ( Config.GetBool( "SmartLastTarget" ) && ClientCommunication.AllowBit( FeatureBit.SmartLT ) )
+			if (Config.GetBool("SmartLastTarget") && ClientCommunication.AllowBit(FeatureBit.SmartLT))
 			{
 				bool harm = m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial;
 				bool bene = m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial;
-				if ( harm )
-					m.OverheadMessage( 0x90, String.Format( "[{0}]", Language.GetString( LocString.HarmfulTarget ) ) );
-				if ( bene )
-					m.OverheadMessage( 0x3F, String.Format( "[{0}]", Language.GetString( LocString.BeneficialTarget ) ) );
+				if (harm)
+					m.OverheadMessage(0x90, String.Format("[{0}]", Language.GetString(LocString.HarmfulTarget)));
+				if (bene)
+					m.OverheadMessage(0x3F, String.Format("[{0}]", Language.GetString(LocString.BeneficialTarget)));
 			}
 
-			if ( m_LastTarget != null && m_LastTarget.Serial == m.Serial )
-				m.OverheadMessage( 0x3B2, String.Format( "[{0}]", Language.GetString( LocString.LastTarget ) ) );
+			if (m_LastTarget != null && m_LastTarget.Serial == m.Serial)
+				m.OverheadMessage(0x3B2, String.Format("[{0}]", Language.GetString(LocString.LastTarget)));
 		}
 
-		public static bool IsLastTarget( Mobile m )
+		internal static bool IsLastTarget(Mobile m)
 		{
-			if ( m != null )
+			if (m != null)
 			{
-				if ( Config.GetBool( "SmartLastTarget" ) && ClientCommunication.AllowBit( FeatureBit.SmartLT ) )
+				if (Config.GetBool("SmartLastTarget") && ClientCommunication.AllowBit(FeatureBit.SmartLT))
 				{
-					if ( m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial )
+					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 						return true;
 				}
 				else
 				{
-					if ( m_LastTarget != null && m_LastTarget.Serial == m.Serial )
+					if (m_LastTarget != null && m_LastTarget.Serial == m.Serial)
 						return true;
 				}
 			}
@@ -1033,39 +1033,39 @@ namespace Assistant
 		}
 
 		private static int m_NextTargIdx = 0;
-		public static void NextTarget()
+		internal static void NextTarget()
 		{
-			ArrayList list = World.MobilesInRange( 12 );
+			List<Mobile> list = World.MobilesInRange(12);
 			TargetInfo targ = new TargetInfo();
-			Mobile m = null, old = World.FindMobile( m_LastTarget == null ? Serial.Zero : m_LastTarget.Serial );
+			Mobile m = null, old = World.FindMobile(m_LastTarget == null ? Serial.Zero : m_LastTarget.Serial);
 
-			if ( list.Count <= 0 )
+			if (list.Count <= 0)
 			{
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
-			
-			for (int i=0;i<3;i++)
+
+			for (int i = 0; i < 3; i++)
 			{
 				m_NextTargIdx++;
 
-				if ( m_NextTargIdx >= list.Count )
+				if (m_NextTargIdx >= list.Count)
 					m_NextTargIdx = 0;
 
 				m = (Mobile)list[m_NextTargIdx];
 
-				if ( m != null && m != World.Player && m != old )
+				if (m != null && m != World.Player && m != old)
 					break;
 				else
 					m = null;
 			}
 
-			if ( m == null )
+			if (m == null)
 				m = old;
 
-			if ( m == null )
+			if (m == null)
 			{
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
 
@@ -1073,7 +1073,7 @@ namespace Assistant
 
 			m_LastHarmTarg = m_LastBeneTarg = targ;
 
-			if ( m_HasTarget )
+			if (m_HasTarget)
 				targ.Flags = m_CurFlags;
 			else
 				targ.Type = 0;
@@ -1084,9 +1084,9 @@ namespace Assistant
 			targ.Y = m.Position.Y;
 			targ.Z = m.Position.Z;
 
-			ClientCommunication.SendToClient( new ChangeCombatant( m ) );
+			ClientCommunication.SendToClient(new ChangeCombatant(m));
 			m_LastCombatant = m.Serial;
-			World.Player.SendMessage( MsgLevel.Force, LocString.NewTargSet );
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
 			/*if ( m_HasTarget )
 			{
@@ -1096,47 +1096,47 @@ namespace Assistant
 		}
 
 		private static int m_NextTargHumanoidIdx = 0;
-		public static void NextTargetHumanoid()
+		internal static void NextTargetHumanoid()
 		{
-			ArrayList mobiles = World.MobilesInRange( 12 );
-			ArrayList list = new ArrayList();
+			List<Mobile> mobiles = World.MobilesInRange(12);
+			List<Mobile> list = new List<Mobile>();
 
-			foreach( Mobile mob in mobiles )
+			foreach (Mobile mob in mobiles)
 			{
-				if ( mob.Body == 0x0190 || mob.Body == 0x0191 || mob.Body == 0x025D || mob.Body == 0x025E )
+				if (mob.Body == 0x0190 || mob.Body == 0x0191 || mob.Body == 0x025D || mob.Body == 0x025E)
 					list.Add(mob);
 			}
 
-			if ( list.Count <= 0 )
+			if (list.Count <= 0)
 			{
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
 
 			TargetInfo targ = new TargetInfo();
 			Mobile m = null, old = World.FindMobile(m_LastTarget == null ? Serial.Zero : m_LastTarget.Serial);
-			
-			for (int i=0;i<3;i++)
+
+			for (int i = 0; i < 3; i++)
 			{
 				m_NextTargHumanoidIdx++;
 
-				if ( m_NextTargHumanoidIdx >= list.Count )
+				if (m_NextTargHumanoidIdx >= list.Count)
 					m_NextTargHumanoidIdx = 0;
 
 				m = (Mobile)list[m_NextTargHumanoidIdx];
 
-				if ( m != null && m != World.Player && m != old )
+				if (m != null && m != World.Player && m != old)
 					break;
 				else
 					m = null;
 			}
 
-			if ( m == null )
+			if (m == null)
 				m = old;
 
-			if ( m == null )
+			if (m == null)
 			{
-				World.Player.SendMessage( MsgLevel.Warning, LocString.TargNoOne );
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
 
@@ -1144,7 +1144,7 @@ namespace Assistant
 
 			m_LastHarmTarg = m_LastBeneTarg = targ;
 
-			if ( m_HasTarget )
+			if (m_HasTarget)
 				targ.Flags = m_CurFlags;
 			else
 				targ.Type = 0;
@@ -1155,9 +1155,9 @@ namespace Assistant
 			targ.Y = m.Position.Y;
 			targ.Z = m.Position.Z;
 
-			ClientCommunication.SendToClient( new ChangeCombatant( m ) );
+			ClientCommunication.SendToClient(new ChangeCombatant(m));
 			m_LastCombatant = m.Serial;
-			World.Player.SendMessage( MsgLevel.Force, LocString.NewTargSet );
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
 			/*if ( m_HasTarget )
 			{
@@ -1166,44 +1166,44 @@ namespace Assistant
 			}*/
 		}
 
-		public static void CheckLastTargetRange( Mobile m )
+		internal static void CheckLastTargetRange(Mobile m)
 		{
-			if ( World.Player == null )
+			if (World.Player == null)
 				return;
 
-			if ( m_HasTarget && m != null && m_LastTarget != null && m.Serial == m_LastTarget.Serial && m_QueueTarget == LastTargetAction )
+			if (m_HasTarget && m != null && m_LastTarget != null && m.Serial == m_LastTarget.Serial && m_QueueTarget == LastTargetAction)
 			{
-				if ( Config.GetBool( "RangeCheckLT" ) && ClientCommunication.AllowBit( FeatureBit.RangeCheckLT ) )
+				if (Config.GetBool("RangeCheckLT") && ClientCommunication.AllowBit(FeatureBit.RangeCheckLT))
 				{
-					if ( Utility.InRange( World.Player.Position, m.Position, Config.GetInt( "LTRange" ) ) )
+					if (Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 					{
-						if ( m_QueueTarget() )
+						if (m_QueueTarget())
 							ClearQueue();
 					}
 				}
 			}
 		}
-		
-		private static bool CheckHealPoisonTarg( uint targID, Serial ser )
+
+		private static bool CheckHealPoisonTarg(uint targID, Serial ser)
 		{
-			if ( World.Player == null )
+			if (World.Player == null)
 				return false;
 
-			if ( targID == m_SpellTargID && ser.IsMobile && ( World.Player.LastSpell == Spell.ToID( 1, 4 ) || World.Player.LastSpell == Spell.ToID( 4, 5 ) ) && Config.GetBool( "BlockHealPoison" ) && ClientCommunication.AllowBit( FeatureBit.BlockHealPoisoned ) )
+			if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5)) && Config.GetBool("BlockHealPoison") && ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
 			{
-				Mobile m = World.FindMobile( ser );
+				Mobile m = World.FindMobile(ser);
 
-				if ( m != null && m.Poisoned )
+				if (m != null && m.Poisoned)
 				{
-					World.Player.SendMessage( MsgLevel.Warning, LocString.HealPoisonBlocked );
+					World.Player.SendMessage(MsgLevel.Warning, LocString.HealPoisonBlocked);
 					return true;
 				}
 			}
 
 			return false;
 		}
-		
-		private static void TargetResponse( PacketReader p, PacketHandlerEventArgs args )
+
+		private static void TargetResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
 			TargetInfo info = new TargetInfo();
 			info.Type = p.ReadByte();
@@ -1218,17 +1218,17 @@ namespace Assistant
 			m_ClientTarget = false;
 
 			// check for cancel
-			if ( info.X == 0xFFFF && info.X == 0xFFFF && ( info.Serial <= 0 || info.Serial >= 0x80000000 ) )
+			if (info.X == 0xFFFF && info.X == 0xFFFF && (info.Serial <= 0 || info.Serial >= 0x80000000))
 			{
 				m_HasTarget = false;
 
-				if ( m_Intercept )
+				if (m_Intercept)
 				{
 					args.Block = true;
-					Timer.DelayedCallbackState( TimeSpan.Zero, m_OneTimeRespCallback, info ).Start();
+					Timer.DelayedCallbackState(TimeSpan.Zero, m_OneTimeRespCallback, info).Start();
 					EndIntercept();
 
-					if ( m_PreviousID != 0 )
+					if (m_PreviousID != 0)
 					{
 						m_CurrentID = m_PreviousID;
 						m_AllowGround = m_PreviousGround;
@@ -1239,7 +1239,7 @@ namespace Assistant
 						ResendTarget();
 					}
 				}
-				else if ( m_FilterCancel.Contains( (uint)info.TargID ) || info.TargID == LocalTargID )
+				else if (m_FilterCancel.Contains((uint)info.TargID) || info.TargID == LocalTargID)
 				{
 					args.Block = true;
 				}
@@ -1250,16 +1250,16 @@ namespace Assistant
 
 			ClearQueue();
 
-			if ( m_Intercept )
+			if (m_Intercept)
 			{
-				if ( info.TargID == LocalTargID )
+				if (info.TargID == LocalTargID)
 				{
-					Timer.DelayedCallbackState( TimeSpan.Zero, m_OneTimeRespCallback, info ).Start();
+					Timer.DelayedCallbackState(TimeSpan.Zero, m_OneTimeRespCallback, info).Start();
 
 					m_HasTarget = false;
 					args.Block = true;
-					
-					if ( m_PreviousID != 0 )
+
+					if (m_PreviousID != 0)
 					{
 						m_CurrentID = m_PreviousID;
 						m_AllowGround = m_PreviousGround;
@@ -1271,7 +1271,7 @@ namespace Assistant
 					}
 
 					m_FilterCancel.Clear();
-					
+
 					return;
 				}
 				else
@@ -1282,22 +1282,22 @@ namespace Assistant
 
 			m_HasTarget = false;
 
-			if ( CheckHealPoisonTarg( m_CurrentID, info.Serial ) )
+			if (CheckHealPoisonTarg(m_CurrentID, info.Serial))
 			{
 				ResendTarget();
 				args.Block = true;
 			}
-			
-			if ( info.Serial != World.Player.Serial )
+
+			if (info.Serial != World.Player.Serial)
 			{
-				if ( info.Serial.IsValid )
+				if (info.Serial.IsValid)
 				{
 					// only let lasttarget be a non-ground target
 
 					m_LastTarget = info;
-					if ( info.Flags == 1 )
+					if (info.Flags == 1)
 						m_LastHarmTarg = info;
-					else if ( info.Flags == 2 )
+					else if (info.Flags == 2)
 						m_LastBeneTarg = info;
 
 					LastTargetChanged();
@@ -1305,25 +1305,25 @@ namespace Assistant
 
 				m_LastGroundTarg = info; // ground target is the true last target
 
-				if ( Macros.MacroManager.AcceptActions )
-					MacroManager.Action( new AbsoluteTargetAction( info ) );
+				if (Macros.MacroManager.AcceptActions)
+					MacroManager.Action(new AbsoluteTargetAction(info));
 			}
-			else 
+			else
 			{
-				if ( Macros.MacroManager.AcceptActions )
+				if (Macros.MacroManager.AcceptActions)
 				{
-					KeyData hk = HotKey.Get( (int)LocString.TargetSelf );
-					if ( hk != null )
-						MacroManager.Action( new HotKeyAction( hk ) );
+					KeyData hk = HotKey.Get((int)LocString.TargetSelf);
+					if (hk != null)
+						MacroManager.Action(new HotKeyAction(hk));
 					else
-						MacroManager.Action( new AbsoluteTargetAction( info ) );
+						MacroManager.Action(new AbsoluteTargetAction(info));
 				}
 			}
 
 			m_FilterCancel.Clear();
 		}
 
-		private static void NewTarget( PacketReader p, PacketHandlerEventArgs args )
+		private static void NewTarget(PacketReader p, PacketHandlerEventArgs args)
 		{
 			bool prevAllowGround = m_AllowGround;
 			uint prevID = m_CurrentID;
@@ -1336,37 +1336,37 @@ namespace Assistant
 			// the rest of the packet is 0s
 
 			// check for a server cancel command
-			if ( !m_AllowGround && m_CurrentID == 0 && m_CurFlags == 3 )
-			{ 
+			if (!m_AllowGround && m_CurrentID == 0 && m_CurFlags == 3)
+			{
 				m_HasTarget = false;
 				m_ClientTarget = false;
-				if ( m_Intercept )
+				if (m_Intercept)
 				{
 					EndIntercept();
-					World.Player.SendMessage( MsgLevel.Error, LocString.OTTCancel );
+					World.Player.SendMessage(MsgLevel.Error, LocString.OTTCancel);
 				}
 				return;
 			}
 
-			if ( Spell.LastCastTime + TimeSpan.FromSeconds( 3.0 ) > DateTime.Now && Spell.LastCastTime + TimeSpan.FromSeconds( 0.5 ) <= DateTime.Now && m_SpellTargID == 0 )
+			if (Spell.LastCastTime + TimeSpan.FromSeconds(3.0) > DateTime.Now && Spell.LastCastTime + TimeSpan.FromSeconds(0.5) <= DateTime.Now && m_SpellTargID == 0)
 				m_SpellTargID = m_CurrentID;
 
 			m_HasTarget = true;
 			m_ClientTarget = false;
-			
-			if ( m_QueueTarget == null && Macros.MacroManager.AcceptActions && MacroManager.Action( new WaitForTargetAction() ) )
+
+			if (m_QueueTarget == null && Macros.MacroManager.AcceptActions && MacroManager.Action(new WaitForTargetAction()))
 			{
 				args.Block = true;
 			}
-			else if ( m_QueueTarget != null && m_QueueTarget() )
+			else if (m_QueueTarget != null && m_QueueTarget())
 			{
 				ClearQueue();
 				args.Block = true;
 			}
 
-			if ( args.Block )
+			if (args.Block)
 			{
-				if ( prevClientTarget )
+				if (prevClientTarget)
 				{
 					m_AllowGround = prevAllowGround;
 					m_CurrentID = prevID;
@@ -1374,7 +1374,7 @@ namespace Assistant
 
 					m_ClientTarget = true;
 
-					if ( !m_Intercept )
+					if (!m_Intercept)
 						CancelClientTarget();
 				}
 			}
@@ -1382,25 +1382,25 @@ namespace Assistant
 			{
 				m_ClientTarget = true;
 
-				if ( m_Intercept )
+				if (m_Intercept)
 				{
-					if ( m_OnCancel != null )
+					if (m_OnCancel != null)
 						m_OnCancel();
 					EndIntercept();
-					World.Player.SendMessage( MsgLevel.Error, LocString.OTTCancel );
+					World.Player.SendMessage(MsgLevel.Error, LocString.OTTCancel);
 
-					m_FilterCancel.Add( (uint)prevID );
+					m_FilterCancel.Add((uint)prevID);
 				}
 			}
 		}
 
-		public static void ResendTarget()
+		internal static void ResendTarget()
 		{
-			if ( !m_ClientTarget || !m_HasTarget )
+			if (!m_ClientTarget || !m_HasTarget)
 			{
 				CancelClientTarget();
 				m_ClientTarget = m_HasTarget = true;
-				ClientCommunication.SendToClient( new Target( m_CurrentID, m_AllowGround, m_CurFlags ) );
+				ClientCommunication.SendToClient(new Target(m_CurrentID, m_AllowGround, m_CurFlags));
 			}
 		}
 	}

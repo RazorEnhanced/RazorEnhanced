@@ -3,27 +3,27 @@ using Assistant;
 
 namespace Assistant.Filters
 {
-	public class LightFilter : Filter
+	internal class LightFilter : Filter
 	{
 		public static void Initialize()
 		{
-			Filter.Register( new LightFilter() );
+			Filter.Register(new LightFilter());
 		}
 
 		private LightFilter()
 		{
 		}
 
-		public override byte[] PacketIDs{ get{ return new byte[]{ 0x4E, 0x4F }; } }
+		internal override byte[] PacketIDs { get { return new byte[] { 0x4E, 0x4F }; } }
 
-		public override LocString Name{ get{ return LocString.LightFilter; } }
+		internal override LocString Name { get { return LocString.LightFilter; } }
 
-		public override void OnFilter( PacketReader p, PacketHandlerEventArgs args )
+		internal override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
 		{
-			if ( ClientCommunication.AllowBit( FeatureBit.LightFilter ) )
+			if (ClientCommunication.AllowBit(FeatureBit.LightFilter))
 			{
 				args.Block = true;
-				if ( World.Player != null )
+				if (World.Player != null)
 				{
 					World.Player.LocalLightLevel = 0;
 					World.Player.GlobalLightLevel = 0;
@@ -31,17 +31,17 @@ namespace Assistant.Filters
 			}
 		}
 
-		public override void OnEnable()
+		internal override void OnEnable()
 		{
-			base.OnEnable ();
+			base.OnEnable();
 
-			if ( ClientCommunication.AllowBit( FeatureBit.LightFilter ) && World.Player != null )
+			if (ClientCommunication.AllowBit(FeatureBit.LightFilter) && World.Player != null)
 			{
 				World.Player.LocalLightLevel = 0;
 				World.Player.GlobalLightLevel = 0;
 
-				ClientCommunication.SendToClient( new GlobalLightLevel( 0 ) );
-				ClientCommunication.SendToClient( new PersonalLightLevel( World.Player ) );
+				ClientCommunication.SendToClient(new GlobalLightLevel(0));
+				ClientCommunication.SendToClient(new PersonalLightLevel(World.Player));
 			}
 		}
 

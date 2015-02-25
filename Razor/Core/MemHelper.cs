@@ -3,11 +3,11 @@ using System.Runtime.InteropServices;
 
 namespace Assistant
 {
-	public class MemoryHelperThinggie : Timer
+	internal class MemoryHelperThinggie : Timer
 	{
 		private static TimeSpan Frequency = TimeSpan.FromMinutes( 2.5 );
 
-		public static readonly MemoryHelperThinggie Instance = new MemoryHelperThinggie();
+		internal static readonly MemoryHelperThinggie Instance = new MemoryHelperThinggie();
 
 		public static void Initialize()
 		{

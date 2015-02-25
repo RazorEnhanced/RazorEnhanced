@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Assistant
 {
-	public class UOEntity
+	internal class UOEntity
 	{
 		private Serial m_Serial;
 		private Point3D m_Pos;
@@ -13,9 +13,9 @@ namespace Assistant
 		private Hashtable m_ContextMenu = new Hashtable();
 		protected ObjectPropertyList m_ObjPropList = null;
 
-		public ObjectPropertyList ObjPropList { get { return m_ObjPropList; } }
+		internal ObjectPropertyList ObjPropList { get { return m_ObjPropList; } }
 
-		public virtual void SaveState( BinaryWriter writer )
+		internal virtual void SaveState(BinaryWriter writer)
 		{
 			writer.Write( (uint)m_Serial );
 			writer.Write( (int)m_Pos.X );
@@ -24,7 +24,7 @@ namespace Assistant
 			writer.Write( (ushort)m_Hue );
 		}
 
-		public UOEntity( BinaryReader reader, int version )
+		internal UOEntity(BinaryReader reader, int version)
 		{
 			m_Serial = reader.ReadUInt32();
 			m_Pos = new Point3D( reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32() );
@@ -34,11 +34,11 @@ namespace Assistant
 			m_ObjPropList = new ObjectPropertyList( this );
 		}
 
-		public virtual void AfterLoad()
+		internal virtual void AfterLoad()
 		{
 		}
 
-		public UOEntity( Serial ser )
+		internal UOEntity(Serial ser)
 		{
 			m_ObjPropList = new ObjectPropertyList( this );
 
@@ -46,9 +46,9 @@ namespace Assistant
 			m_Deleted = false;
 		}
 
-		public Serial Serial{ get{ return m_Serial; } }
-		
-		public virtual Point3D Position
+		internal Serial Serial { get { return m_Serial; } }
+
+		internal virtual Point3D Position
 		{ 
 			get{ return m_Pos; }
 			set
@@ -61,7 +61,7 @@ namespace Assistant
 			}
 		}
 
-		public bool Deleted
+		internal bool Deleted
 		{
 			get
 			{
@@ -69,23 +69,23 @@ namespace Assistant
 			}
 		}
 
-		public Hashtable ContextMenu
+		internal Hashtable ContextMenu
 		{
 			get { return m_ContextMenu; }
 		}
 
-		public virtual ushort Hue
+		internal virtual ushort Hue
 		{
 			get{ return m_Hue; }
 			set{ m_Hue = value; }
 		}
 
-		public virtual void Remove()
+		internal virtual void Remove()
 		{
 			m_Deleted = true;
 		}
 
-		public virtual void OnPositionChanging( Point3D newPos )
+		internal virtual void OnPositionChanging(Point3D newPos)
 		{
 		}
 
@@ -94,7 +94,7 @@ namespace Assistant
 			return m_Serial.GetHashCode();
 		}
 
-		public int OPLHash
+		internal int OPLHash
 		{ 
 			get
 			{
@@ -110,9 +110,9 @@ namespace Assistant
 			}
 		}
 
-		public bool ModifiedOPL { get { return m_ObjPropList.Customized; } }
-		
-		public void ReadPropertyList( PacketReader p )
+		internal bool ModifiedOPL { get { return m_ObjPropList.Customized; } }
+
+		internal void ReadPropertyList(PacketReader p)
 		{
 			m_ObjPropList.Read( p );
 		}
@@ -122,7 +122,7 @@ namespace Assistant
 			return m_ObjPropList.BuildPacket();
 		}*/
 
-		public void OPLChanged()
+		internal void OPLChanged()
 		{
 			//ClientCommunication.SendToClient( m_ObjPropList.BuildPacket() );
 			ClientCommunication.SendToClient( new OPLInfo( Serial, OPLHash ) );

@@ -1,92 +1,101 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace Assistant
 {
-	public class World
+	internal class World
 	{
-		private static Hashtable m_Items;
-		private static Hashtable m_Mobiles;
+		private static ConcurrentDictionary<Serial, Item> m_Items;
+		private static ConcurrentDictionary<Serial, Mobile> m_Mobiles;
 		private static PlayerData m_Player;
 		private static string m_ShardName, m_PlayerName, m_AccountName;
-		private static Hashtable m_Servers;
+		private static ConcurrentDictionary<ushort, string> m_Servers;
 
 		static World()
 		{
-			m_Servers = new Hashtable();
-			m_Items = Hashtable.Synchronized( new Hashtable() );
-			m_Mobiles = Hashtable.Synchronized( new Hashtable() );
+			m_Servers = new ConcurrentDictionary<ushort, string>();
+			m_Items = new ConcurrentDictionary<Serial, Item>();
+			m_Mobiles = new ConcurrentDictionary<Serial, Mobile>(); ;
 			m_ShardName = "[None]";
 		}
 
-		internal static Hashtable Servers { get{ return m_Servers; } }
-		internal static Hashtable Items { get{ return m_Items; } }
-		internal static Hashtable Mobiles { get{ return m_Mobiles; } }
+		internal static ConcurrentDictionary<ushort, string> Servers { get { return m_Servers; } }
+		internal static ConcurrentDictionary<Serial, Item> Items { get { return m_Items; } }
+		internal static ConcurrentDictionary<Serial, Mobile> Mobiles { get { return m_Mobiles; } }
 
-		internal static Item FindItem( Serial serial )
+		internal static Item FindItem(Serial serial)
 		{
-			return m_Items[serial] as Item;
+			Item item = null;
+			m_Items.TryGetValue(serial, out item);
+			return item;
 		}
 
-		internal static Mobile FindMobile( Serial serial )
+		internal static Mobile FindMobile(Serial serial)
 		{
-			return m_Mobiles[serial] as Mobile;
+			Mobile mobile = null;
+			m_Mobiles.TryGetValue(serial, out mobile);
+			return mobile;
 		}
 
-		internal static ArrayList MobilesInRange( int range )
+		internal static List<Mobile> MobilesInRange(int range)
 		{
-			ArrayList list = new ArrayList();
+			List<Mobile> list = new List<Mobile>();
 
-			if ( World.Player == null )
+			if (World.Player == null)
 				return list;
 
-			foreach ( Mobile m in World.Mobiles.Values )
+			foreach (Mobile m in World.Mobiles.Values)
 			{
-				if ( Utility.InRange( World.Player.Position, m.Position, World.Player.VisRange ) )
-					list.Add( m );
+				if (Utility.InRange(World.Player.Position, m.Position, World.Player.VisRange))
+					list.Add(m);
 			}
 
 			return list;
 		}
 
-		internal static ArrayList MobilesInRange()
+		internal static List<Mobile> MobilesInRange()
 		{
-			if ( Player == null )
-				return MobilesInRange( 18 );
+			if (Player == null)
+				return MobilesInRange(18);
 			else
-				return MobilesInRange( Player.VisRange );
+				return MobilesInRange(Player.VisRange);
 		}
 
-		internal static void AddItem( Item item )
+		internal static void AddItem(Item item)
 		{
-			m_Items[item.Serial] = item;
+			if (!m_Items.ContainsKey(item.Serial))
+				m_Items[item.Serial] = item;
 		}
 
-		internal static void AddMobile( Mobile mob )
+		internal static void AddMobile(Mobile mob)
 		{
-			m_Mobiles[mob.Serial] = mob;
+			if (!m_Mobiles.ContainsKey(mob.Serial))
+				m_Mobiles[mob.Serial] = mob;
 		}
 
-		internal static void RemoveMobile( Mobile mob )
+		internal static void RemoveMobile(Mobile mob)
 		{
-			m_Mobiles.Remove( mob.Serial );
+			Mobile removed;
+			m_Mobiles.TryRemove(mob.Serial, out removed);
 		}
 
-		internal static void RemoveItem( Item item )
+		internal static void RemoveItem(Item item)
 		{
-			m_Items.Remove( item.Serial );
+			Item removed;
+			m_Items.TryRemove(item.Serial, out removed);
 		}
 
 		internal static PlayerData Player
 		{
-			get{ return m_Player; }
-			set{ m_Player = value; }
+			get { return m_Player; }
+			set { m_Player = value; }
 		}
 
 		internal static string ShardName
 		{
-			get{ return m_ShardName; }
-			set{ m_ShardName = value; }
+			get { return m_ShardName; }
+			set { m_ShardName = value; }
 		}
 
 		internal static string OrigPlayerName

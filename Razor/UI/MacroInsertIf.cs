@@ -11,7 +11,7 @@ namespace Assistant
 	/// <summary>
 	/// Summary description for MacroInsertIf.
 	/// </summary>
-	public class MacroInsertIf : System.Windows.Forms.Form
+	internal class MacroInsertIf : System.Windows.Forms.Form
 	{
 		private Macro m_Macro;
 		private int m_Idx;
@@ -28,7 +28,7 @@ namespace Assistant
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		public MacroInsertIf(Macro m, int idx)
+		internal MacroInsertIf(Macro m, int idx)
 		{
 			m_Macro = m;
 			m_Idx = idx;
@@ -41,7 +41,7 @@ namespace Assistant
 				varList.Items.Add(c.Name);
 		}
 
-		public MacroInsertIf(MacroAction a)
+		internal MacroInsertIf(MacroAction a)
 		{
 			m_Action = a;
 			//

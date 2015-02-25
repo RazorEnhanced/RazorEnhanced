@@ -6,9 +6,9 @@ using System.Windows.Forms;
 
 namespace Assistant
 {
-	public class Spell
+	internal class Spell
 	{
-		public enum SpellFlag
+		internal enum SpellFlag
 		{
 			None = '?',
 			Beneficial = 'B',
@@ -16,15 +16,15 @@ namespace Assistant
 			Neutral = 'N',
 		}
 
-		readonly public SpellFlag Flag;
-		readonly public int Circle;
-		readonly public int Number;
-		readonly public string WordsOfPower;
-		readonly public string[] Reagents;
+		readonly internal SpellFlag Flag;
+		readonly internal int Circle;
+		readonly internal int Number;
+		readonly internal string WordsOfPower;
+		readonly internal string[] Reagents;
 
 		private static Timer m_UnflagTimer;
 
-		public Spell(char flag, int n, int c, string power, string[] reags)
+		internal Spell(char flag, int n, int c, string power, string[] reags)
 		{
 			Flag = (SpellFlag)flag;
 			Number = n;
@@ -33,7 +33,7 @@ namespace Assistant
 			Reagents = reags;
 		}
 
-		public int Name
+		internal int Name
 		{
 			get
 			{
@@ -64,12 +64,12 @@ namespace Assistant
 			return String.Format("{0} (#{1})", Language.GetString(this.Name), GetID());
 		}
 
-		public int GetID()
+		internal int GetID()
 		{
 			return ToID(Circle, Number);
 		}
 
-		public int GetHue(int def)
+		internal int GetHue(int def)
 		{
 			if (Config.GetBool("ForceSpellHue"))
 			{
@@ -91,18 +91,18 @@ namespace Assistant
 			}
 		}
 
-		public HKSubCat GetSubCat()
+		internal HKSubCat GetSubCat()
 		{
 			return GetID() < 678 ? HKSubCat.SpellOffset + Circle : HKSubCat.MysticismC;
 		}
 
-		public void OnCast(PacketReader p)
+		internal void OnCast(PacketReader p)
 		{
 			Cast();
 			ClientCommunication.SendToServer(p);
 		}
 
-		public void OnCast(Packet p)
+		internal void OnCast(Packet p)
 		{
 			Cast();
 			ClientCommunication.SendToServer(p);
@@ -176,7 +176,7 @@ namespace Assistant
 			}
 		}
 
-		public static DateTime LastCastTime = DateTime.MinValue;
+		internal static DateTime LastCastTime = DateTime.MinValue;
 
 		private class UnflagTimer : Timer
 		{
@@ -247,7 +247,7 @@ namespace Assistant
 			HotKey.Add(HKCategory.Spells, LocString.MiniHealOrCureSelf, new HotKeyCallback(MiniHealOrCureSelf));
 		}
 
-		public static void HealOrCureSelf()
+		internal static void HealOrCureSelf()
 		{
 			Spell s = null;
 
@@ -289,7 +289,7 @@ namespace Assistant
 			}
 		}
 
-		public static void MiniHealOrCureSelf()
+		internal static void MiniHealOrCureSelf()
 		{
 			Spell s = null;
 
@@ -331,7 +331,7 @@ namespace Assistant
 			}
 		}
 
-		public static int ToID(int circle, int num)
+		internal static int ToID(int circle, int num)
 		{
 			if (circle < 10)
 				return ((circle - 1) * 8) + num;
@@ -339,17 +339,17 @@ namespace Assistant
 				return (circle * 10) + num;
 		}
 
-		public static Spell Get(string power)
+		internal static Spell Get(string power)
 		{
 			return m_SpellsByPower[power] as Spell;
 		}
 
-		public static Spell Get(int num)
+		internal static Spell Get(int num)
 		{
 			return m_SpellsByID[num] as Spell;
 		}
 
-		public static Spell Get(int circle, int num)
+		internal static Spell Get(int circle, int num)
 		{
 			return Get(Spell.ToID(circle, num));
 		}

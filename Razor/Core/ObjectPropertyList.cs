@@ -4,18 +4,19 @@ using System.Collections;
 
 namespace Assistant
 {
-	public class ObjectPropertyList
+	internal class ObjectPropertyList
 	{
 		private class OPLEntry
 		{
-			public int Number = 0;
-			public string Args = null;
+			internal int Number = 0;
+			internal string Args = null;
 
-			public OPLEntry( int num ) : this( num, null )
+			internal OPLEntry(int num)
+				: this(num, null)
 			{
 			}
 
-			public OPLEntry( int num, string args )
+			internal OPLEntry(int num, string args)
 			{
 				Number = num;
 				Args = args;
@@ -32,24 +33,24 @@ namespace Assistant
 
 		private UOEntity m_Owner = null;
 
-		public int Hash 
+		internal int Hash 
 		{ 
 			get { return m_Hash ^ m_CustomHash; }
 			set { m_Hash = value; }
 		}
 
-		public int ServerHash { get { return m_Hash; } }
+		internal int ServerHash { get { return m_Hash; } }
 
-		public bool Customized { get { return m_CustomHash != 0; } }
+		internal bool Customized { get { return m_CustomHash != 0; } }
 
-		public ObjectPropertyList( UOEntity owner )
+		internal ObjectPropertyList(UOEntity owner)
 		{
 			m_Owner = owner;
 
 			m_StringNums.AddRange( m_DefaultStringNums );
 		}
 
-		public void Read( PacketReader p )
+		internal void Read(PacketReader p)
 		{
 			m_Content.Clear();
 
@@ -100,7 +101,7 @@ namespace Assistant
 			}
 		}
 
-		public void Add( int number )
+		internal void Add(int number)
 		{
 			if ( number == 0 )
 				return;
@@ -112,13 +113,13 @@ namespace Assistant
 
 		private static byte[] m_Buffer = new byte[0];
 
-		public void AddHash( int val )
+		internal void AddHash(int val)
 		{
 			m_CustomHash ^= (val & 0x3FFFFFF);
 			m_CustomHash ^= (val >> 26) & 0x3F;
 		}
 
-		public void Add( int number, string arguments )
+		internal void Add(int number, string arguments)
 		{
 			if ( number == 0 )
 				return;
@@ -126,23 +127,23 @@ namespace Assistant
 			AddHash( number );
 			m_CustomContent.Add( new OPLEntry( number, arguments ) );
 		}
-		
-		public void Add( int number, string format, object arg0 )
+
+		internal void Add(int number, string format, object arg0)
 		{
 			Add( number, String.Format( format, arg0 ) );
 		}
 
-		public void Add( int number, string format, object arg0, object arg1 )
+		internal void Add(int number, string format, object arg0, object arg1)
 		{
 			Add( number, String.Format( format, arg0, arg1 ) );
 		}
 
-		public void Add( int number, string format, object arg0, object arg1, object arg2 )
+		internal void Add(int number, string format, object arg0, object arg1, object arg2)
 		{
 			Add( number, String.Format( format, arg0, arg1, arg2 ) );
 		}
 
-		public void Add( int number, string format, params object[] args )
+		internal void Add(int number, string format, params object[] args)
 		{
 			Add( number, String.Format( format, args ) );
 		}
@@ -176,32 +177,32 @@ namespace Assistant
 
 		private const string RazorHTMLFormat = " <CENTER><BASEFONT COLOR=#FF0000>{0}</BASEFONT></CENTER> ";
 
-		public void Add( string text )
+		internal void Add(string text)
 		{
 			Add( GetStringNumber(), String.Format( RazorHTMLFormat, text ) );
 		}
 
-		public void Add( string format, string arg0 )
+		internal void Add(string format, string arg0)
 		{
 			Add( GetStringNumber(), String.Format( format, arg0 ) );
 		}
 
-		public void Add( string format, string arg0, string arg1 )
+		internal void Add(string format, string arg0, string arg1)
 		{
 			Add( GetStringNumber(), String.Format( format, arg0, arg1 ) );
 		}
 
-		public void Add( string format, string arg0, string arg1, string arg2 )
+		internal void Add(string format, string arg0, string arg1, string arg2)
 		{
 			Add( GetStringNumber(), String.Format( format, arg0, arg1, arg2 ) );
 		}
 
-		public void Add( string format, params object[] args )
+		internal void Add(string format, params object[] args)
 		{
 			Add( GetStringNumber(), String.Format( format, args ) );
 		}
 
-		public bool Remove( int number )
+		internal bool Remove(int number)
 		{
 			for ( int i = 0; i < m_Content.Count; i++ )
 			{
@@ -258,7 +259,7 @@ namespace Assistant
 			return false;
 		}
 
-		public bool Remove( string str )
+		internal bool Remove(string str)
 		{
 			string htmlStr = String.Format( RazorHTMLFormat, str );
 
@@ -309,7 +310,7 @@ namespace Assistant
 			return false;
 		}
 
-		public Packet BuildPacket()
+		internal Packet BuildPacket()
 		{
 			Packet p = new Packet( 0xD6 );
 
@@ -388,7 +389,7 @@ namespace Assistant
 		}
 	}
 
-	public class OPLInfo : Packet
+	internal class OPLInfo : Packet
 	{
 		public OPLInfo( Serial ser, int hash ) : base( 0xDC, 9 )
 		{

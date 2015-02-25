@@ -6,18 +6,22 @@ namespace RazorEnhanced
 {
 	public class Items
 	{
-        public static Assistant.Item FindBySerial(uint itemserial)
+        public static Item FindBySerial(int serial)
         {
-            Assistant.Item item = Assistant.World.FindItem(itemserial);
-            if (item == null)
-            {
-                Player.SendMessage("Script Error: FindBySerial: Item serial: (" + itemserial + ") not found");
-                return null;
-            }
-            else
-                return item;
+
+            Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+			if (assistantItem == null)
+			{
+				Player.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+				return null;
+			}
+			else
+			{
+				RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+				return enhancedItem;
+			}
         }
-        public static void Move(Assistant.Item item, Assistant.Item bag, int amount)
+        public static void Move(Item item, Item bag, int amount)
         {
             if (item == null)
             {
@@ -37,7 +41,7 @@ namespace RazorEnhanced
             if (amount == 0)
             {
                 Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, bag.Serial));
+				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
             }
             else
             {
@@ -46,11 +50,11 @@ namespace RazorEnhanced
                     amount = item.Amount;
                 }
                 Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
-                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Point3D.MinusOne, bag.Serial));
+				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
             }
         }
 
-        public static void DropItemGroundSelf(Assistant.Item item, int amount)
+        public static void DropItemGroundSelf(Item item, int amount)
         {
             if (item == null)
             {
@@ -72,7 +76,7 @@ namespace RazorEnhanced
                 Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Serial.Zero));
             }
         }
-        public static void UseItem(Assistant.Item item)
+        public static void UseItem(Item item)
         {
             if (item.Serial.IsItem)
                 Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));

@@ -11,32 +11,32 @@ using Microsoft.Win32;
 
 namespace Assistant
 {
-	public class FeatureBit
+	internal class FeatureBit
 	{
-		public static readonly uint WeatherFilter = 0;
-		public static readonly uint LightFilter = 1;
-		public static readonly uint SmartLT = 2;
-		public static readonly uint RangeCheckLT = 3;
-		public static readonly uint AutoOpenDoors = 4;
-		public static readonly uint UnequipBeforeCast = 5;
-		public static readonly uint AutoPotionEquip = 6;
-		public static readonly uint BlockHealPoisoned = 7;
-		public static readonly uint LoopingMacros = 8; // includes fors and macros running macros
-		public static readonly uint UseOnceAgent = 9;
-		public static readonly uint RestockAgent = 10;
-		public static readonly uint SellAgent = 11;
-		public static readonly uint BuyAgent = 12;
-		public static readonly uint PotionHotkeys = 13;
-		public static readonly uint RandomTargets = 14;
-		public static readonly uint ClosestTargets = 15;
-		public static readonly uint OverheadHealth = 16;
+		internal static readonly uint WeatherFilter = 0;
+		internal static readonly uint LightFilter = 1;
+		internal static readonly uint SmartLT = 2;
+		internal static readonly uint RangeCheckLT = 3;
+		internal static readonly uint AutoOpenDoors = 4;
+		internal static readonly uint UnequipBeforeCast = 5;
+		internal static readonly uint AutoPotionEquip = 6;
+		internal static readonly uint BlockHealPoisoned = 7;
+		internal static readonly uint LoopingMacros = 8; // includes fors and macros running macros
+		internal static readonly uint UseOnceAgent = 9;
+		internal static readonly uint RestockAgent = 10;
+		internal static readonly uint SellAgent = 11;
+		internal static readonly uint BuyAgent = 12;
+		internal static readonly uint PotionHotkeys = 13;
+		internal static readonly uint RandomTargets = 14;
+		internal static readonly uint ClosestTargets = 15;
+		internal static readonly uint OverheadHealth = 16;
 
-		public static readonly uint MaxBit = 16;
+		internal static readonly uint MaxBit = 16;
 	}
 
-	public unsafe sealed class ClientCommunication
+	internal unsafe sealed class ClientCommunication
 	{
-		public enum UONetMessage
+		internal enum UONetMessage
 		{
 			Send = 1,
 			Recv = 2,
@@ -62,8 +62,8 @@ namespace Assistant
 			// ZIPPY REV 80			SetFwdHWnd = 24,
 		}
 
-		public const int WM_USER = 0x400;
-		public enum UOAMessage
+		internal const int WM_USER = 0x400;
+		internal enum UOAMessage
 		{
 			First = REGISTER,
 
@@ -327,39 +327,39 @@ namespace Assistant
 			}
 		}
 
-		public static void PostCounterUpdate(int counter, int count)
+		internal static void PostCounterUpdate(int counter, int count)
 		{
 			PostToWndReg((uint)UOAMessage.RES_COUNT_DONE, (IntPtr)counter, (IntPtr)count);
 		}
 
-		public static void PostSpellCast(int spell)
+		internal static void PostSpellCast(int spell)
 		{
 			PostToWndReg((uint)UOAMessage.CAST_SPELL, (IntPtr)spell, IntPtr.Zero);
 		}
 
-		public static void PostLogin(int serial)
+		internal static void PostLogin(int serial)
 		{
 			PostToWndReg((uint)UOAMessage.LOGIN, (IntPtr)serial, IntPtr.Zero);
 		}
 
-		public static void PostMacroStop()
+		internal static void PostMacroStop()
 		{
 			PostToWndReg((uint)UOAMessage.MACRO_DONE, IntPtr.Zero, IntPtr.Zero);
 		}
 
-		public static void PostMapChange(int map)
+		internal static void PostMapChange(int map)
 		{
 			PostToWndReg((uint)UOAMessage.MAP_INFO, (IntPtr)map, IntPtr.Zero);
 		}
 
-		public static void PostSkillUpdate(int skill, int val)
+		internal static void PostSkillUpdate(int skill, int val)
 		{
 			PostToWndReg((uint)UOAMessage.SKILL_LEVEL, (IntPtr)skill, (IntPtr)val);
 			if (skill == (int)SkillName.Magery)
 				PostToWndReg((uint)UOAMessage.MAGERY_LEVEL, (IntPtr)((int)(val / 10)), (IntPtr)(val % 10));
 		}
 
-		public static void PostRemoveMulti(Item item)
+		internal static void PostRemoveMulti(Item item)
 		{
 			if (item == null)
 				return;
@@ -377,7 +377,7 @@ namespace Assistant
 			}
 		}
 
-		public static void PostAddMulti(ItemID iid, Point3D Position)
+		internal static void PostAddMulti(ItemID iid, Point3D Position)
 		{
 			IntPtr pos = (IntPtr)((int)((Position.X & 0xFFFF) | ((Position.Y & 0xFFFF) << 16)));
 
@@ -392,19 +392,19 @@ namespace Assistant
 			}
 		}
 
-		public static void PostHitsUpdate()
+		internal static void PostHitsUpdate()
 		{
 			if (World.Player != null)
 				PostToWndReg((uint)UOAMessage.STR_STATUS, (IntPtr)World.Player.HitsMax, (IntPtr)World.Player.Hits);
 		}
 
-		public static void PostManaUpdate()
+		internal static void PostManaUpdate()
 		{
 			if (World.Player != null)
 				PostToWndReg((uint)UOAMessage.INT_STATUS, (IntPtr)World.Player.ManaMax, (IntPtr)World.Player.Mana);
 		}
 
-		public static void PostStamUpdate()
+		internal static void PostStamUpdate()
 		{
 			if (World.Player != null)
 				PostToWndReg((uint)UOAMessage.DEX_STATUS, (IntPtr)World.Player.StamMax, (IntPtr)World.Player.Stam);
@@ -430,7 +430,7 @@ namespace Assistant
 			}
 		}
 
-		public const int WM_UONETEVENT = WM_USER + 1;
+		internal const int WM_UONETEVENT = WM_USER + 1;
 		private const int WM_CUSTOMTITLE = WM_USER + 2;
 		// uoa = user+3
 		// ZIPPY REV 80		private const int WM_SETFWDWND = WM_USER+4;
@@ -523,7 +523,7 @@ namespace Assistant
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern IntPtr GetUOVersion();
 
-		public enum Loader_Error
+		internal enum Loader_Error
 		{
 			SUCCESS = 0,
 			NO_OPEN_EXE,
@@ -574,7 +574,7 @@ namespace Assistant
 		private static IntPtr m_TranslateDo = IntPtr.Zero;
 		private static bool m_TranslateEnabled = false;
 
-		public static bool TranslateEnabled
+		internal static bool TranslateEnabled
 		{
 			get { return m_TranslateDLL != IntPtr.Zero && m_TranslateDo != IntPtr.Zero && m_TranslateEnabled; }
 			set
@@ -659,7 +659,7 @@ namespace Assistant
 			TranslateDo(m_TranslateDo, inText, outText, ref outLen);
 		}
 
-		public static string GetWindowsUserName()
+		internal static string GetWindowsUserName()
 		{
 			int len = 1024;
 			StringBuilder sb = new StringBuilder(len);
@@ -702,7 +702,7 @@ namespace Assistant
 		public static IPAddress LastConnection { get { return m_LastConnection; } }
 		public static Process ClientProcess { get { return ClientProc; } }
 
-		public static bool ClientRunning
+		internal static bool ClientRunning
 		{
 			get
 			{
@@ -724,22 +724,22 @@ namespace Assistant
 			m_WndReg = new ArrayList();
 		}
 
-		public static void SetMapWndHandle(Form mapWnd)
+		internal static void SetMapWndHandle(Form mapWnd)
 		{
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
 		}
 
-		public static void RequestStatbarPatch(bool preAOS)
+		internal static void RequestStatbarPatch(bool preAOS)
 		{
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
 		}
 
-		public static void SetCustomNotoHue(int hue)
+		internal static void SetCustomNotoHue(int hue)
 		{
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
 		}
 
-		public static void SetSmartCPU(bool enabled)
+		internal static void SetSmartCPU(bool enabled)
 		{
 			if (enabled)
 				try { ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
@@ -748,12 +748,12 @@ namespace Assistant
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
 		}
 
-		public static void SetGameSize(int x, int y)
+		internal static void SetGameSize(int x, int y)
 		{
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
 		}
 
-		public static Loader_Error LaunchClient(string client)
+		internal static Loader_Error LaunchClient(string client)
 		{
 			/*string dir = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory( Path.GetDirectoryName( client ) );
@@ -884,19 +884,19 @@ namespace Assistant
 			m_ServerPort = (ushort)port;
 		}
 
-		public static void SetNegotiate(bool negotiate)
+		internal static void SetNegotiate(bool negotiate)
 		{
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
 		}
 
-		public static bool Attach(int pid)
+		internal static bool Attach(int pid)
 		{
 			ClientProc = null;
 			ClientProc = Process.GetProcessById(pid);
 			return ClientProc != null;
 		}
 
-		public static void Close()
+		internal static void Close()
 		{
 			Shutdown(true);
 			if (ClientProc != null && !ClientProc.HasExited)
@@ -916,7 +916,7 @@ namespace Assistant
 				return val.ToString();
 		}
 
-		public static void RequestTitlebarUpdate()
+		internal static void RequestTitlebarUpdate()
 		{
 			// throttle updates, since things like counters might request 1000000 million updates/sec
 			if (m_TBTimer == null)
@@ -928,7 +928,7 @@ namespace Assistant
 
 		private class TitleBarThrottle : Timer
 		{
-			public TitleBarThrottle()
+			internal TitleBarThrottle()
 				: base(TimeSpan.FromSeconds(0.25))
 			{
 			}
@@ -1078,7 +1078,7 @@ namespace Assistant
 			PostMessage(FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
 		}
 
-		public static int GetZ(int x, int y, int z)
+		internal static int GetZ(int x, int y, int z)
 		{
 			if (IsCalibrated())
 			{
@@ -1111,11 +1111,11 @@ namespace Assistant
 			PlayerData.ExternalZ = true;
 		}
 
-		public static Timer m_CalTimer = null;
+		internal static Timer m_CalTimer = null;
 		private static TimerCallback m_CalibrateNow = new TimerCallback(CalibrateNow);
 		private static Point2D m_CalPos = Point2D.Zero;
 
-		public static void BeginCalibratePosition()
+		internal static void BeginCalibratePosition()
 		{
 			if (World.Player == null || IsCalibrated())
 				return;
@@ -1138,7 +1138,7 @@ namespace Assistant
 			MessageBox.Show(Engine.ActiveWindow, sb.ToString(), "Init Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
 
-		public static void OnLogout()
+		internal static void OnLogout()
 		{
 			OnLogout(true);
 		}
@@ -1643,7 +1643,7 @@ namespace Assistant
 			m_QueueSend = false;
 		}
 
-		public static void ProcessPlaybackData(BinaryReader reader)
+		internal static void ProcessPlaybackData(BinaryReader reader)
 		{
 			byte[] buff = reader.ReadBytes(3);
 			reader.BaseStream.Seek(-3, SeekOrigin.Current);

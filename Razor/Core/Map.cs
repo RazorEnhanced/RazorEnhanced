@@ -4,7 +4,7 @@ using Ultima;
 
 namespace Assistant
 {
-	public class MultiTileEntry
+	internal class MultiTileEntry
 	{
 		public ushort m_ItemID;
 		public short m_OffsetX;
@@ -12,9 +12,9 @@ namespace Assistant
 		public short m_OffsetZ;
 	}
 
-	public class Map
+	internal class Map
 	{
-		public static Ultima.Map GetMap(int mapNum)
+		internal static Ultima.Map GetMap(int mapNum)
 		{
 			switch (mapNum)
 			{
@@ -28,7 +28,7 @@ namespace Assistant
 			}
 		}
 
-		public static int Parse(string name)
+		internal static int Parse(string name)
 		{
 			if (name == null || name == "")
 				return 0;
@@ -51,7 +51,7 @@ namespace Assistant
 				return 0;
 		}
 
-		public static HuedTile GetTileNear(int mapNum, int x, int y, int z)
+		internal static HuedTile GetTileNear(int mapNum, int x, int y, int z)
 		{
 			try
 			{
@@ -109,7 +109,7 @@ namespace Assistant
 			}
 		}
 
-		public static sbyte ZTop(int mapNum, int xCheck, int yCheck, int oldZ)
+		internal static sbyte ZTop(int mapNum, int xCheck, int yCheck, int oldZ)
 		{
 			try
 			{
