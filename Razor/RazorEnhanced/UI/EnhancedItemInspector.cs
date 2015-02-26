@@ -58,7 +58,7 @@ namespace RazorEnhanced.UI
 
 			// Attributes
 		
-			for (int i = 0; i < ItemTargOPL.Content.Count; i++) // Skip sul nome :)
+			for (int i = 1; i < ItemTargOPL.Content.Count; i++) // Skip sul nome :)
 			{
 				Assistant.ObjectPropertyList.OPLEntry ent = (Assistant.ObjectPropertyList.OPLEntry)ItemTargOPL.Content[i];
 				int number = ent.Number;
@@ -104,7 +104,7 @@ namespace RazorEnhanced.UI
             {
                 Merged = CutPart1 + Assistant.Language.GetCliloc(Convert.ToInt32(Number)) + CutPart2;
             }
-            catch (FormatException e)
+            catch 
             {
             }
 
@@ -175,5 +175,10 @@ namespace RazorEnhanced.UI
 		{
 			Clipboard.SetText(lOwned.Text);
 		}
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
 	}
 }

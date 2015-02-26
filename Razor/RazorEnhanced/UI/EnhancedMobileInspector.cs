@@ -19,6 +19,7 @@ namespace RazorEnhanced.UI
 		{
 			InitializeComponent();
 			// general
+            Assistant.ObjectPropertyList MobileTargOPL = MobileTarg.ObjPropList;
 			lName.Text = MobileTarg.Name.ToString();
 			lSerial.Text = "0x" + MobileTarg.Serial.Value.ToString("X8");
 			lMobileID.Text = "0x" + MobileTarg.Body.ToString("X4");
@@ -58,8 +59,62 @@ namespace RazorEnhanced.UI
 				lFlagBlessed.Text = "Yes";
 			else
 				lFlagBlessed.Text = "No";
-		}
 
+
+            for (int i = 0; i < MobileTargOPL.Content.Count; i++) 
+            {
+                Assistant.ObjectPropertyList.OPLEntry ent = (Assistant.ObjectPropertyList.OPLEntry)MobileTargOPL.Content[i];
+                int number = ent.Number;
+                string args = ent.Args;
+                string content;
+                if (args == null)
+                    content = Assistant.Language.GetCliloc(number);
+                else
+                    content = Assistant.Language.ClilocFormat(ent.Number, ent.Args);
+                if (i == 0)
+                {
+                    if (content.IndexOf("#") != -1)
+                        lName.Text = SubClilocSearch(content);
+                    else
+                        lName.Text = content;
+                }
+                else
+                {
+                    if (content.IndexOf("#") != -1)
+                        listBox1.Items.Add(SubClilocSearch(content));
+                    else
+                        listBox1.Items.Add(content);
+                }
+            }
+
+
+		}
+        private string SubClilocSearch(string Text)
+        {
+            int CutPoint = Text.IndexOf("#");
+            string Number = "";
+            string Merged = "";
+            string CutPart1 = "";
+            string CutPart2 = "";
+            for (int i = 0; i <= Text.Length - 1; i++)
+            {
+                if (i < CutPoint)
+                    CutPart1 = CutPart1 + Text[i];
+                else if (i >= CutPoint + 8)
+                    CutPart2 = CutPart2 + Text[i];
+                else if (i > CutPoint && i < CutPoint + 8)
+                    Number = Number + Text[i];
+            }
+            try
+            {
+                Merged = CutPart1 + Assistant.Language.GetCliloc(Convert.ToInt32(Number)) + CutPart2;
+            }
+            catch
+            {
+            }
+
+            return Merged;
+        }
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			this.Close();

@@ -55,20 +55,23 @@
             this.label10 = new System.Windows.Forms.Label();
             this.bContainerCopy = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.razorButton1 = new RazorEnhanced.UI.RazorButton();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.lFlagGhost = new System.Windows.Forms.Label();
-            this.lFlagPoisoned = new System.Windows.Forms.Label();
-            this.lFlagWar = new System.Windows.Forms.Label();
-            this.lFlagHidden = new System.Windows.Forms.Label();
             this.lFlagBlessed = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
+            this.lFlagHidden = new System.Windows.Forms.Label();
+            this.lFlagWar = new System.Windows.Forms.Label();
+            this.lFlagPoisoned = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.razorButton1 = new RazorEnhanced.UI.RazorButton();
+            this.lFlagGhost = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // bNameCopy
@@ -428,6 +431,87 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Flags";
             // 
+            // lFlagBlessed
+            // 
+            this.lFlagBlessed.AutoSize = true;
+            this.lFlagBlessed.Location = new System.Drawing.Point(87, 153);
+            this.lFlagBlessed.Name = "lFlagBlessed";
+            this.lFlagBlessed.Size = new System.Drawing.Size(16, 17);
+            this.lFlagBlessed.TabIndex = 27;
+            this.lFlagBlessed.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 153);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(62, 17);
+            this.label16.TabIndex = 26;
+            this.label16.Text = "Blessed:";
+            // 
+            // lFlagHidden
+            // 
+            this.lFlagHidden.AutoSize = true;
+            this.lFlagHidden.Location = new System.Drawing.Point(87, 123);
+            this.lFlagHidden.Name = "lFlagHidden";
+            this.lFlagHidden.Size = new System.Drawing.Size(16, 17);
+            this.lFlagHidden.TabIndex = 25;
+            this.lFlagHidden.Text = "0";
+            // 
+            // lFlagWar
+            // 
+            this.lFlagWar.AutoSize = true;
+            this.lFlagWar.Location = new System.Drawing.Point(87, 93);
+            this.lFlagWar.Name = "lFlagWar";
+            this.lFlagWar.Size = new System.Drawing.Size(16, 17);
+            this.lFlagWar.TabIndex = 24;
+            this.lFlagWar.Text = "0";
+            // 
+            // lFlagPoisoned
+            // 
+            this.lFlagPoisoned.AutoSize = true;
+            this.lFlagPoisoned.Location = new System.Drawing.Point(87, 63);
+            this.lFlagPoisoned.Name = "lFlagPoisoned";
+            this.lFlagPoisoned.Size = new System.Drawing.Size(16, 17);
+            this.lFlagPoisoned.TabIndex = 23;
+            this.lFlagPoisoned.Text = "0";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(6, 123);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(57, 17);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "Hidden:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 93);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(77, 17);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "War Mode:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(6, 63);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(71, 17);
+            this.label12.TabIndex = 19;
+            this.label12.Text = "Poisoned:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 35);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(50, 17);
+            this.label11.TabIndex = 18;
+            this.label11.Text = "Ghost:";
+            // 
             // razorButton1
             // 
             office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -448,7 +532,7 @@
             office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             office2010BlueTheme1.TextColor = System.Drawing.Color.White;
             this.razorButton1.ColorTable = office2010BlueTheme1;
-            this.razorButton1.Location = new System.Drawing.Point(197, 392);
+            this.razorButton1.Location = new System.Drawing.Point(366, 388);
             this.razorButton1.Name = "razorButton1";
             this.razorButton1.Size = new System.Drawing.Size(75, 23);
             this.razorButton1.TabIndex = 10;
@@ -456,42 +540,6 @@
             this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.razorButton1.UseVisualStyleBackColor = true;
             this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(6, 35);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(50, 17);
-            this.label11.TabIndex = 18;
-            this.label11.Text = "Ghost:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(6, 63);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(71, 17);
-            this.label12.TabIndex = 19;
-            this.label12.Text = "Poisoned:";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 93);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(77, 17);
-            this.label13.TabIndex = 20;
-            this.label13.Text = "War Mode:";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 123);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 17);
-            this.label14.TabIndex = 21;
-            this.label14.Text = "Hidden:";
             // 
             // lFlagGhost
             // 
@@ -502,54 +550,29 @@
             this.lFlagGhost.TabIndex = 22;
             this.lFlagGhost.Text = "0";
             // 
-            // lFlagPoisoned
+            // groupBox4
             // 
-            this.lFlagPoisoned.AutoSize = true;
-            this.lFlagPoisoned.Location = new System.Drawing.Point(87, 63);
-            this.lFlagPoisoned.Name = "lFlagPoisoned";
-            this.lFlagPoisoned.Size = new System.Drawing.Size(16, 17);
-            this.lFlagPoisoned.TabIndex = 23;
-            this.lFlagPoisoned.Text = "0";
+            this.groupBox4.Controls.Add(this.listBox1);
+            this.groupBox4.Location = new System.Drawing.Point(481, 13);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(316, 373);
+            this.groupBox4.TabIndex = 23;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Attributes";
             // 
-            // lFlagWar
+            // listBox1
             // 
-            this.lFlagWar.AutoSize = true;
-            this.lFlagWar.Location = new System.Drawing.Point(87, 93);
-            this.lFlagWar.Name = "lFlagWar";
-            this.lFlagWar.Size = new System.Drawing.Size(16, 17);
-            this.lFlagWar.TabIndex = 24;
-            this.lFlagWar.Text = "0";
-            // 
-            // lFlagHidden
-            // 
-            this.lFlagHidden.AutoSize = true;
-            this.lFlagHidden.Location = new System.Drawing.Point(87, 123);
-            this.lFlagHidden.Name = "lFlagHidden";
-            this.lFlagHidden.Size = new System.Drawing.Size(16, 17);
-            this.lFlagHidden.TabIndex = 25;
-            this.lFlagHidden.Text = "0";
-            // 
-            // lFlagBlessed
-            // 
-            this.lFlagBlessed.AutoSize = true;
-            this.lFlagBlessed.Location = new System.Drawing.Point(87, 153);
-            this.lFlagBlessed.Name = "lFlagBlessed";
-            this.lFlagBlessed.Size = new System.Drawing.Size(16, 17);
-            this.lFlagBlessed.TabIndex = 27;
-            this.lFlagBlessed.Text = "0";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(6, 153);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(62, 17);
-            this.label16.TabIndex = 26;
-            this.label16.Text = "Blessed:";
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(12, 19);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(289, 340);
+            this.listBox1.TabIndex = 0;
             // 
             // EnhancedMobileInspector
             // 
-            this.ClientSize = new System.Drawing.Size(484, 423);
+            this.ClientSize = new System.Drawing.Size(809, 423);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.lFlagGhost);
             this.Controls.Add(this.razorButton1);
             this.Controls.Add(this.groupBox3);
@@ -566,6 +589,7 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -617,6 +641,8 @@
         private System.Windows.Forms.Label lFlagGhost;
         private System.Windows.Forms.Label lFlagBlessed;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ListBox listBox1;
 
 
     }
