@@ -16,7 +16,7 @@ using Assistant;
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScriptEditor : Form
-	{      
+	{
 		private const string m_Title = "Enhanced Script Editor";
 
 		private static PaxScripter m_PaxScripterEnhanced;
@@ -213,13 +213,24 @@ namespace RazorEnhanced.UI
 		private void InspectItemTarget_Callback(bool loc, Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 
-            Assistant.Item itemTarg = Assistant.World.FindItem(serial);
-            if (itemTarg != null)
-			    if (itemTarg.Serial.IsItem)
-			    {
-				    EnhancedItemInspector inspector = new EnhancedItemInspector(itemTarg);
-				    inspector.Show();
-			    }
+			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
+			if (assistantItem != null && assistantItem.Serial.IsItem)
+			{
+				EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem);
+				inspector.TopMost = true;
+				inspector.Show();
+			}
+
+			else
+			{
+				Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
+				if (assistantMobile != null && assistantMobile.Serial.IsMobile)
+				{
+					EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile);
+					inspector.TopMost = true;
+					inspector.Show();
+				}
+			}
 		}
 	}
 }
