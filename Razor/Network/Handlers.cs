@@ -108,7 +108,7 @@ namespace Assistant
 
 		private static void EncodedPacket(PacketReader p, PacketHandlerEventArgs args)
 		{
-			/*ushort id = p.ReadUInt16();
+			ushort id = p.ReadUInt16();
 
 			switch ( id )
 			{
@@ -144,12 +144,12 @@ namespace Assistant
 					}
 					break;
 				}
-			}*/
+			}
 		}
 
 		private static void ServOPLHash(Packet p, PacketHandlerEventArgs args)
 		{
-			/*Serial s = p.ReadUInt32();
+			Serial s = p.ReadUInt32();
 			int hash = p.ReadInt32();
 
 			if ( s.IsItem )
@@ -171,7 +171,7 @@ namespace Assistant
 					p.Seek( -4, SeekOrigin.Current );
 					p.Write( (uint)m.OPLHash );
 				}
-			}*/
+			}
 		}
 
 		private static void ClientSingleClick(PacketReader p, PacketHandlerEventArgs args)

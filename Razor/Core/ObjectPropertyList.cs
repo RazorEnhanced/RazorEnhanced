@@ -6,7 +6,7 @@ namespace Assistant
 {
 	internal class ObjectPropertyList
 	{
-		private class OPLEntry
+		internal class OPLEntry
 		{
 			internal int Number = 0;
 			internal string Args = null;
@@ -27,6 +27,7 @@ namespace Assistant
 
 		private int m_Hash = 0;
 		private ArrayList m_Content = new ArrayList();
+		internal ArrayList Content { get { return m_Content; } }
 		
 		private int m_CustomHash = 0;
 		private ArrayList m_CustomContent = new ArrayList();
