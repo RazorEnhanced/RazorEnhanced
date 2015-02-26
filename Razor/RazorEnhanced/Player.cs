@@ -935,222 +935,280 @@ namespace RazorEnhanced
 					break;
 			}
 		}
-		public static void CastSpellNecro(string SpellName)
-		{
-			switch (SpellName)
-			{
-				case "CurseWeapon":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(101));
-					break;
-				case "PainSpike":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(102));
-					break;
-				case "CorpseSkin":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(103));
-					break;
-				case "EvilOmen":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(104));
-					break;
-				case "BloodOath":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(105));
-					break;
-				case "WraithForm":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(106));
-					break;
-				case "MindRot":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(107));
-					break;
-				case "SummonFamiliar":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(108));
-					break;
-				case "HorrificBeast":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(109));
-					break;
-				case "AnimateDead":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(110));
-					break;
-				case "PoisonStrike":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(111));
-					break;
-				case "Wither":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(112));
-					break;
-				case "Strangle":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(113));
-					break;
-				case "LichForm":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(114));
-					break;
-				case "Exorcism":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(115));
-					break;
-				case "VengefulSpirit":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(116));
-					break;
-				case "VampiricEmbrace":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(117));
-					break;
-				default:
-					Player.SendMessage("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
-					break;
-			}
-		}
-		public static void CastSpellChivalry(string SpellName)
-		{
-			switch (SpellName)
-			{
-				case "CloseWounds":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(201));
-					break;
-				case "RemoveCurse":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(202));
-					break;
-				case "CleanseByFire":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(203));
-					break;
-				case "ConsecrateWeapon":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(204));
-					break;
-				case "SacredJourney":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(205));
-					break;
-				case "DivineFury":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(206));
-					break;
-				case "DispelEvil":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(207));
-					break;
-				case "EnemyOfOne":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(208));
-					break;
-				case "HolyLight":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(209));
-					break;
-				case "NobleSacrifice":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(210));
-					break;
-				default:
-					Player.SendMessage("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
-					break;
-			}
-		}
-		public static void CastSpellBushido(string SpellName)
-		{
-			switch (SpellName)
-			{
-				case "HonorableExecution":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(145));
-					break;
-				case "Confidence":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(146));
-					break;
-				case "CounterAttack":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(147));
-					break;
-				case "LightningStrike":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(148));
-					break;
-				case "Evasion":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(149));
-					break;
-				case "MomentumStrike":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(150));
-					break;
-				default:
-					Player.SendMessage("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
-					break;
-			}
-		}
-		public static void CastSpellNinjitsu(string SpellName)
-		{
-			switch (SpellName)
-			{
-				case "AnimalForm":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(245));
-					break;
-				case "Backstab":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(246));
-					break;
-				case "SurpriseAttack":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(247));
-					break;
-				case "MirrorImage":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(248));
-					break;
-				case "Shadowjump":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(249));
-					break;
-				case "FocusAttack":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(250));
-					break;
-				case "KiAttack":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(251));
-					break;
-				case "DeathStrike":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(252));
-					break;
-				default:
-					Player.SendMessage("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
-					break;
-			}
-		}
-		public static void CastSpellSpellweaving(string SpellName)     // Sicuramente problemi sul send pacchetto in quanto gli id sono uguali ad altre spe
-		{
-			switch (SpellName)
-			{
-				case "ArcaneCircle":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(89));
-					break;
-				case "Attunement":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(90));
-					break;
-				case "GiftOfRenewal":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(91));
-					break;
-				case "NaturesFury":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(92));
-					break;
-				case "ImmolatingWeapon":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(93));
-					break;
-				case "Thunderstorm":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(94));
-					break;
-				case "ArcaneEmpowerment":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(95));
-					break;
-				case "EtherealVoyage":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(96));
-					break;
-				case "ReaperForm":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(97));
-					break;
-				case "GiftOfLife":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(98));
-					break;
-				case "SummonFey":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(99));
-					break;
-				case "SummonFiend":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(100));
-					break;
-				case "DryadAllure":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(101));
-					break;
-				case "EssenceOfWind":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(102));
-					break;
-				case "Wildfire":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(103));
-					break;
-				case "WordOfDeath":
-					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(104));
-					break;
-				default:
-					Player.SendMessage("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
-					break;
-			}
-		}
+
+        public static void CastSpellNecro(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "AnimateDead":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(101));
+                    break;
+                case "BloodOath":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(102));
+                    break;
+                case "CorpseSkin":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(103));
+                    break;
+                case "CurseWeapon ":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(104));
+                    break;
+                case "EvilOmen":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(105));
+                    break;
+                case "HorrificBeast":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(106));
+                    break;
+                case "LichForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(107));
+                    break;
+                case "MindRot":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(108));
+                    break;
+                case "PainSpike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(109));
+                    break;
+                case "PoisonStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(110));
+                    break;
+                case "Strangle":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(111));
+                    break;
+                case "SummonFamiliar":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(112));
+                    break;
+                case "VampiricEmbrace":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(113));
+                    break;
+                case "VengefulSpirit":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(114));
+                    break;
+                case "Wither":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(115));
+                    break;
+                case "WraithForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(116));
+                    break;
+                case "Exorcism":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(117));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellChivalry(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "CleanseByFire":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(201));
+                    break;
+                case "CloseWounds":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(202));
+                    break;
+                case "ConsecrateWeapon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(203));
+                    break;
+                case "DispelEvil":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(204));
+                    break;
+                case "DivineFury":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(205));
+                    break;
+                case "EnemyOfOne":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(206));
+                    break;
+                case "HolyLight":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(207));
+                    break;
+                case "NobleSacrifice":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(208));
+                    break;
+                case "RemoveCurse":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(209));
+                    break;
+                case "SacredJourney":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(210));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellBushido(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "HonorableExecution":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(401));
+                    break;
+                case "Confidence":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(402));
+                    break;
+                case "Evasion":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(403));
+                    break;
+                case "CounterAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(404));
+                    break;
+                case "LightningStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(405));
+                    break;
+                case "MomentumStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(406));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellNinjitsu(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "FocusAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(501));
+                    break;
+                case "DeathStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(502));
+                    break;
+                case "AnimalForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(503));
+                    break;
+                case "KiAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(504));
+                    break;
+                case "SurpriseAttack":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(505));
+                    break;
+                case "Backstab":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(506));
+                    break;
+                case "Shadowjump":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(507));
+                    break;
+                case "MirrorImage":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(508));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellSpellweaving(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "ArcaneCircle":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(601));
+                    break;
+                case "GiftOfRenewal":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(602));
+                    break;
+                case "ImmolatingWeapon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(603));
+                    break;
+                case "AttuneWeapon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(604));
+                    break;
+                case "Thunderstorm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(605));
+                    break;
+                case "NaturesFury":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(606));
+                    break;
+                case "SummonFey":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(607));
+                    break;
+                case "Summoniend":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(608));
+                    break;
+                case "ReaperForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(609));
+                    break;
+                case "Wildfire":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(610));
+                    break;
+                case "EssenceOfWind":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(611));
+                    break;
+                case "DryadAllure":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(612));
+                    break;
+                case "EtherealVoyage":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(613));
+                    break;
+                case "WordOfDeath":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(614));
+                    break;
+                case "GiftOfLife":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(615));
+                    break;
+                case "ArcaneEmpowerment":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(616));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }
+        public static void CastSpellMysticism(string SpellName)
+        {
+            switch (SpellName)
+            {
+                case "AnimatedWeapon":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(678));
+                    break;
+                case "HealingStone":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(679));
+                    break;
+                case "Purge":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(680));
+                    break;
+                case "Enchant":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(681));
+                    break;
+                case "Sleep":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(682));
+                    break;
+                case "EagleStrike":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(683));
+                    break;
+                case "AnimatedWeapon2":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(684));
+                    break;
+                case "StoneForm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(685));
+                    break;
+                case "SpellTrigger":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(686));
+                    break;
+                case "MassSleep":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(687));
+                    break;
+                case "CleansingWinds":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(688));
+                    break;
+                case "Bombard":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(689));
+                    break;
+                case "SpellPlague":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(690));
+                    break;
+                case "HailStorm":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(691));
+                    break;
+                case "NetherCyclone":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(692));
+                    break;
+                case "RisingColossus":
+                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(693));
+                    break;
+                default:
+                    Player.SendMessage("Script Error: CastSpellMysticism: Invalid spell name: " + SpellName);
+                    break;
+            }
+        }  
 
 		// attack
 		public static void SetWarMode(bool warflag)
