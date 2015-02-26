@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Assistant
@@ -114,7 +114,7 @@ namespace Assistant
 		private static bool m_ClientLiftReq = false;
 		private static DateTime m_Lifted = DateTime.MinValue;
 
-		private static Hashtable m_DropReqs = new Hashtable();
+		private static Dictionary<Serial, Queue<DropReq>> m_DropReqs = new Dictionary<Serial, Queue<DropReq>>();
 
 		private static LiftReq[] m_LiftReqs = new LiftReq[256];
 		private static byte m_Front, m_Back;
@@ -255,9 +255,9 @@ namespace Assistant
 				{
 					Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
 
-					Queue q = m_DropReqs[i.Serial] as Queue;
+					Queue<DropReq> q = m_DropReqs[i.Serial];
 					if (q == null)
-						m_DropReqs[i.Serial] = q = new Queue();
+						m_DropReqs[i.Serial] = q = new Queue<DropReq>();
 					q.Enqueue(new DropReq(to == null ? Serial.Zero : to.Serial, layer));
 					return true;
 				}
@@ -297,9 +297,9 @@ namespace Assistant
 				{
 					Log("Queuing Drop {0} (to {1} (@{2}))", i, dest, pt);
 
-					Queue q = m_DropReqs[i.Serial] as Queue;
+					Queue<DropReq> q = m_DropReqs[i.Serial];
 					if (q == null)
-						m_DropReqs[i.Serial] = q = new Queue();
+						m_DropReqs[i.Serial] = q = new Queue<DropReq>();
 					q.Enqueue(new DropReq(dest, pt));
 					return true;
 				}
@@ -400,7 +400,7 @@ namespace Assistant
 		private static DropReq DequeueDropFor(Serial s)
 		{
 			DropReq dr = null;
-			Queue q = (Queue)m_DropReqs[s];
+			Queue<DropReq> q = m_DropReqs[s];
 			if (q != null)
 			{
 				if (q.Count > 0)
@@ -417,7 +417,7 @@ namespace Assistant
 
 			if (m_Pending.IsValid)
 			{
-				object o = m_DropReqs[m_Pending];
+				Queue<DropReq> o = m_DropReqs[m_Pending];
 				m_DropReqs.Clear();
 
 				m_DropReqs.Add(m_Pending, o);
@@ -521,7 +521,7 @@ namespace Assistant
 	internal class ActionQueue
 	{
 		private static Serial m_Last = Serial.Zero;
-		private static Queue m_Queue = new Queue();
+		private static Queue<Serial> m_Queue = new Queue<Serial>();
 		private static ProcTimer m_Timer = new ProcTimer();
 		private static int m_Total = 0;
 
@@ -614,7 +614,7 @@ namespace Assistant
 
 			protected override void OnTick()
 			{
-				ArrayList requeue = null;
+				List<Serial> requeue = null;
 
 				m_LastTick = DateTime.Now;
 
@@ -624,7 +624,7 @@ namespace Assistant
 
 					while (m_Queue.Count > 0)
 					{
-						Serial s = (Serial)m_Queue.Peek();
+						Serial s = m_Queue.Peek();
 						if (s == Serial.Zero) // dragdrop action
 						{
 							DragDropManager.ProcStatus status = DragDropManager.ProcessNext(m_Queue.Count - 1);

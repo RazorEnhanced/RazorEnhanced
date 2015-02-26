@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace RazorEnhanced
@@ -16,7 +16,6 @@ namespace RazorEnhanced
 		}
 
 		public string Name { get { return m_AssistantMobile.Name; } }
-
 
 		public ushort Body { get { return m_AssistantMobile.Body; } }
 
@@ -36,7 +35,6 @@ namespace RazorEnhanced
 
 		public bool IsGhost { get { return m_AssistantMobile.IsGhost; } }
 
-
 		public bool Warmode { get { return m_AssistantMobile.Warmode; } }
 
 		public bool Female { get { return m_AssistantMobile.Female; } }
@@ -45,9 +43,7 @@ namespace RazorEnhanced
 
 		public int HitsMax { get { return m_AssistantMobile.HitsMax; } }
 
-
 		public int Hits { get { return m_AssistantMobile.Hits; } }
-
 
 		public int StamMax { get { return m_AssistantMobile.StamMax; } }
 
@@ -56,7 +52,6 @@ namespace RazorEnhanced
 		public int ManaMax { get { return m_AssistantMobile.ManaMax; } }
 
 		public int Mana { get { return m_AssistantMobile.Mana; } }
-
 
 		public byte Map { get { return m_AssistantMobile.Map; } }
 
@@ -201,7 +196,33 @@ namespace RazorEnhanced
 			}
 		}
 
-		public ArrayList Contains { get { return m_AssistantMobile.Contains; } }
+		public List<Item> Contains
+		{
+			get
+			{
+				List<Item> items = new List<Item>();
+				foreach (Assistant.Item assistantItem in m_AssistantMobile.Contains)
+				{
+					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+					items.Add(enhancedItem);
+				}
+				return items;
+			}
+		}
+
+		public List<Property> Properties
+		{
+			get
+			{
+				List<Property> properties = new List<Property>();
+				foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantMobile.ObjPropList.Content)
+				{
+					Property property = new Property(entry);
+					properties.Add(property);
+				}
+				return properties;
+			}
+		}
 	}
 }
 

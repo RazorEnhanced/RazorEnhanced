@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Assistant
 {
@@ -23,14 +23,14 @@ namespace Assistant
 			}
 		}
 
-		private ArrayList m_StringNums = new ArrayList();
+		private List<int> m_StringNums = new List<int>();
 
 		private int m_Hash = 0;
-		private ArrayList m_Content = new ArrayList();
-		internal ArrayList Content { get { return m_Content; } }
+		private List<OPLEntry> m_Content = new List<OPLEntry>();
+		internal List<OPLEntry> Content { get { return m_Content; } }
 		
 		private int m_CustomHash = 0;
-		private ArrayList m_CustomContent = new ArrayList();
+		private List<OPLEntry> m_CustomContent = new List<OPLEntry>();
 
 		private UOEntity m_Owner = null;
 
@@ -233,7 +233,7 @@ namespace Assistant
 
 			for ( int i = 0; i < m_CustomContent.Count; i++ )
 			{
-				OPLEntry ent = (OPLEntry)m_CustomContent[i];
+				OPLEntry ent = m_CustomContent[i];
 				if ( ent == null )
 					continue;
 
@@ -288,7 +288,7 @@ namespace Assistant
 
 			for ( int i = 0; i < m_CustomContent.Count; i++ )
 			{
-				OPLEntry ent = (OPLEntry)m_CustomContent[i];
+				OPLEntry ent = m_CustomContent[i];
 				if ( ent == null )
 					continue;
 

@@ -304,6 +304,7 @@
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\Mobile.cs" />
+    <Compile Include="RazorEnhanced\Property.cs" />
     <Compile Include="UI\AddCounter.cs">
       <SubType>Form</SubType>
     </Compile>
