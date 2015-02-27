@@ -1,15 +1,15 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 using Assistant.Macros;
 
 namespace Assistant
 {
 	internal class PacketHandlers
 	{
-		private static ArrayList m_IgnoreGumps = new ArrayList();
-		internal static ArrayList IgnoreGumps { get { return m_IgnoreGumps; } }
+		private static List<Item> m_IgnoreGumps = new List<Item>();
+		internal static List<Item> IgnoreGumps { get { return m_IgnoreGumps; } }
 
 		public static void Initialize()
 		{
@@ -110,40 +110,40 @@ namespace Assistant
 		{
 			ushort id = p.ReadUInt16();
 
-			switch ( id )
+			switch (id)
 			{
 				case 1: // object property list
-				{
-					Serial s = p.ReadUInt32();
+					{
+						Serial s = p.ReadUInt32();
 
-					if ( s.IsItem )
-					{
-						Item item = World.FindItem( s );
-						if ( item == null )
-							World.AddItem( item=new Item( s ) );
-						
-						item.ReadPropertyList( p );
-						if ( item.ModifiedOPL )
+						if (s.IsItem)
 						{
-							args.Block = true;
-							ClientCommunication.SendToClient( item.ObjPropList.BuildPacket() );
+							Item item = World.FindItem(s);
+							if (item == null)
+								World.AddItem(item = new Item(s));
+
+							item.ReadPropertyList(p);
+							if (item.ModifiedOPL)
+							{
+								args.Block = true;
+								ClientCommunication.SendToClient(item.ObjPropList.BuildPacket());
+							}
 						}
-					}
-					else if ( s.IsMobile )
-					{
-						Mobile m = World.FindMobile( s );
-						if ( m == null )
-							World.AddMobile( m=new Mobile( s ) );
-						
-						m.ReadPropertyList( p );
-						if ( m.ModifiedOPL )
+						else if (s.IsMobile)
 						{
-							args.Block = true;
-							ClientCommunication.SendToClient( m.ObjPropList.BuildPacket() );
+							Mobile m = World.FindMobile(s);
+							if (m == null)
+								World.AddMobile(m = new Mobile(s));
+
+							m.ReadPropertyList(p);
+							if (m.ModifiedOPL)
+							{
+								args.Block = true;
+								ClientCommunication.SendToClient(m.ObjPropList.BuildPacket());
+							}
 						}
+						break;
 					}
-					break;
-				}
 			}
 		}
 
@@ -152,24 +152,24 @@ namespace Assistant
 			Serial s = p.ReadUInt32();
 			int hash = p.ReadInt32();
 
-			if ( s.IsItem )
+			if (s.IsItem)
 			{
-				Item item = World.FindItem( s );
-				if ( item != null && item.OPLHash != hash )
+				Item item = World.FindItem(s);
+				if (item != null && item.OPLHash != hash)
 				{
 					item.OPLHash = hash;
-					p.Seek( -4, SeekOrigin.Current );
-					p.Write( (uint)item.OPLHash );
+					p.Seek(-4, SeekOrigin.Current);
+					p.Write((uint)item.OPLHash);
 				}
 			}
-			else if ( s.IsMobile )
+			else if (s.IsMobile)
 			{
-				Mobile m = World.FindMobile( s );
-				if ( m != null && m.OPLHash != hash )
+				Mobile m = World.FindMobile(s);
+				if (m != null && m.OPLHash != hash)
 				{
 					m.OPLHash = hash;
-					p.Seek( -4, SeekOrigin.Current );
-					p.Write( (uint)m.OPLHash );
+					p.Seek(-4, SeekOrigin.Current);
+					p.Write((uint)m.OPLHash);
 				}
 			}
 		}
@@ -711,7 +711,7 @@ namespace Assistant
 			bool isPostKR = false, decided = false; ;
 			int count = p.ReadUInt16();
 
-			ArrayList list = new ArrayList();
+			List<Item> list = new List<Item>();
 
 			for (int i = 0; i < count; i++)
 			{
@@ -1777,7 +1777,7 @@ namespace Assistant
 			Item.UpdateContainers();
 		}
 
-		internal static ArrayList SysMessages = new ArrayList(21);
+		internal static List<string> SysMessages = new List<string>(21);
 
 		internal static void HandleSpeech(Packet p, PacketHandlerEventArgs args, Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
@@ -2207,8 +2207,8 @@ namespace Assistant
 			}
 		}
 
-		private static ArrayList m_Party = new ArrayList();
-		internal static ArrayList Party { get { return m_Party; } }
+		private static List<Serial> m_Party = new List<Serial>();
+		internal static List<Serial> Party { get { return m_Party; } }
 		private static Timer m_PartyDeclineTimer = null;
 		internal static Serial PartyLeader = Serial.Zero;
 

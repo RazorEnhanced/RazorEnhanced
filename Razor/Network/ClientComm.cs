@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Diagnostics;
 using System.IO;
@@ -412,13 +412,13 @@ namespace Assistant
 
 		private static void PostToWndReg(uint Msg, IntPtr wParam, IntPtr lParam)
 		{
-			ArrayList rem = null;
+			List<WndRegEnt> rem = null;
 			for (int i = 0; i < m_WndReg.Count; i++)
 			{
-				if (PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, Msg, wParam, lParam) == 0)
+				if (PostMessage((IntPtr)(m_WndReg[i]).Handle, Msg, wParam, lParam) == 0)
 				{
 					if (rem == null)
-						rem = new ArrayList(1);
+						rem = new List<WndRegEnt>(1);
 					rem.Add(m_WndReg[i]);
 				}
 			}
@@ -669,8 +669,8 @@ namespace Assistant
 				return "";
 		}
 
-		private static Queue m_SendQueue;
-		private static Queue m_RecvQueue;
+		private static Queue<Packet> m_SendQueue;
+		private static Queue<Packet> m_RecvQueue;
 
 		private static bool m_QueueRecv;
 		private static bool m_QueueSend;
@@ -694,7 +694,7 @@ namespace Assistant
 		private static Timer m_TBTimer;
 		private static IPAddress m_LastConnection;
 
-		private static ArrayList m_WndReg;
+		private static List<WndRegEnt> m_WndReg;
 
 		public static int NotificationCount { get { return m_WndReg.Count; } }
 
@@ -719,9 +719,9 @@ namespace Assistant
 
 		static ClientCommunication()
 		{
-			m_SendQueue = new Queue();
-			m_RecvQueue = new Queue();
-			m_WndReg = new ArrayList();
+			m_SendQueue = new Queue<Packet>();
+			m_RecvQueue = new Queue<Packet>();
+			m_WndReg = new List<WndRegEnt>();
 		}
 
 		internal static void SetMapWndHandle(Form mapWnd)
@@ -1478,7 +1478,7 @@ namespace Assistant
 			return new Packet(data, pr.Length, pr.DynamicLength);
 		}
 
-		private static void HandleComm(Buffer* inBuff, Buffer* outBuff, Queue queue, PacketPath path)
+		private static void HandleComm(Buffer* inBuff, Buffer* outBuff, Queue<Packet> queue, PacketPath path)
 		{
 			CommMutex.WaitOne();
 			while (inBuff->Length > 0)

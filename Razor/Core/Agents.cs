@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,8 +8,8 @@ namespace Assistant
 {
 	internal abstract class Agent
 	{
-		private static ArrayList m_List = new ArrayList();
-		internal static ArrayList List { get { return m_List; } }
+		private static List<Agent> m_List = new List<Agent>();
+		internal static List<Agent> List { get { return m_List; } }
 
 		internal delegate void ItemCreatedEventHandler(Item item);
 		internal delegate void MobileCreatedEventHandler(Mobile m);
@@ -135,11 +134,11 @@ namespace Assistant
 		}
 
 		private ListBox m_SubList;
-		private ArrayList m_Items;
+		private List<object> m_Items;
 
 		internal UseOnceAgent()
 		{
-			m_Items = new ArrayList();
+			m_Items = new List<object>();
 			PacketHandler.RegisterClientToServerViewer(0x09, new PacketViewerCallback(OnSingleClick));
 			HotKey.Add(HKCategory.Agents, LocString.UseOnceAgent, new HotKeyCallback(OnHotKey));
 			HotKey.Add(HKCategory.Agents, LocString.AddUseOnce, new HotKeyCallback(OnAdd));
@@ -439,13 +438,13 @@ namespace Assistant
 		private Button m_EnableBTN;
 		private Button m_HotBTN;
 		private Button m_AmountButton;
-		private ArrayList m_Items;
+		private List<object> m_Items;
 		private Serial m_HotBag;
 		private bool m_Enabled;
 
 		internal SellAgent()
 		{
-			m_Items = new ArrayList();
+			m_Items = new List<object>();
 			PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(OnVendorSell));
 			PacketHandler.RegisterClientToServerViewer(0x09, new PacketViewerCallback(OnSingleClick));
 
@@ -506,7 +505,7 @@ namespace Assistant
 
 			int maxSell = Config.GetInt("SellAgentMax");
 			int sold = 0;
-			ArrayList list = new ArrayList(count);
+			List<SellListItem> list = new List<SellListItem>(count);
 			for (int i = 0; i < count && (sold < maxSell || maxSell <= 0); i++)
 			{
 				uint ser = pvSrc.ReadUInt32();
@@ -724,13 +723,13 @@ namespace Assistant
 		private ListBox m_SubList;
 		private Button m_BagBTN;
 		private Button m_ArrBTN;
-		private ArrayList m_Items;
+		private List<ushort> m_ItemIDs;
 		private uint m_Cont;
 		private int m_Num;
 
 		internal OrganizerAgent(int num)
 		{
-			m_Items = new ArrayList();
+			m_ItemIDs = new List<ushort>();
 			m_Num = num;
 			HotKey.Add(HKCategory.Agents, HKSubCat.None, String.Format("{0}-{1}", Language.GetString(LocString.OrganizerAgent), m_Num), new HotKeyCallback(Organize));
 			HotKey.Add(HKCategory.Agents, HKSubCat.None, String.Format("{0}-{1}: {2}", Language.GetString(LocString.OrganizerAgent), m_Num, Language.GetString(LocString.SetHB)), new HotKeyCallback(SetHotBag));
@@ -783,8 +782,8 @@ namespace Assistant
 
 			m_SubList.BeginUpdate();
 			m_SubList.Items.Clear();
-			for (int i = 0; i < m_Items.Count; i++)
-				m_SubList.Items.Add((ItemID)((ushort)m_Items[i]));
+			for (int i = 0; i < m_ItemIDs.Count; i++)
+				m_SubList.Items.Add((ItemID)((ushort)m_ItemIDs[i]));
 			m_SubList.EndUpdate();
 		}
 
@@ -809,9 +808,9 @@ namespace Assistant
 					Organize();
 					break;
 				case 4:
-					if (m_SubList.SelectedIndex >= 0 && m_SubList.SelectedIndex < m_Items.Count)
+					if (m_SubList.SelectedIndex >= 0 && m_SubList.SelectedIndex < m_ItemIDs.Count)
 					{
-						m_Items.RemoveAt(m_SubList.SelectedIndex);
+						m_ItemIDs.RemoveAt(m_SubList.SelectedIndex);
 						m_SubList.Items.RemoveAt(m_SubList.SelectedIndex);
 					}
 					break;
@@ -825,7 +824,7 @@ namespace Assistant
 						}
 
 						m_SubList.Items.Clear();
-						m_Items.Clear();
+						m_ItemIDs.Clear();
 						m_Cont = 0;
 						m_BagBTN.Text = Language.GetString(LocString.SetHB);
 						break;
@@ -886,7 +885,7 @@ namespace Assistant
 				if (item.Serial != m_Cont && !item.IsChildOf(dest))
 				{
 					count += OrganizeChildren(item, dest);
-					if (m_Items.Contains(item.ItemID.Value))
+					if (m_ItemIDs.Contains(item.ItemID.Value))
 					{
 						if (dest is Item)
 							DragDropManager.DragDrop(item, (Item)dest);
@@ -906,14 +905,14 @@ namespace Assistant
 				Engine.MainWindow.ShowMe();
 			if (!location && serial.IsItem && World.Player != null)
 			{
-				if (m_Items != null && m_Items.Contains(gfx))
+				if (m_ItemIDs != null && m_ItemIDs.Contains(gfx))
 				{
 					World.Player.SendMessage(MsgLevel.Force, LocString.ItemExists);
 				}
 				else
 				{
-					if (m_Items != null)
-						m_Items.Add(gfx);
+					if (m_ItemIDs != null)
+						m_ItemIDs.Add(gfx);
 
 					if (m_SubList != null)
 						m_SubList.Items.Add((ItemID)gfx);
@@ -953,7 +952,7 @@ namespace Assistant
 
 		internal override void Clear()
 		{
-			m_Items.Clear();
+			m_ItemIDs.Clear();
 			m_Cont = 0;
 			if (m_BagBTN != null)
 				m_BagBTN.Text = Language.GetString(LocString.SetHB);
@@ -962,10 +961,10 @@ namespace Assistant
 		internal override void Save(XmlTextWriter xml)
 		{
 			xml.WriteAttributeString("hotbag", m_Cont.ToString());
-			for (int i = 0; i < m_Items.Count; i++)
+			for (int i = 0; i < m_ItemIDs.Count; i++)
 			{
 				xml.WriteStartElement("item");
-				xml.WriteAttributeString("id", m_Items[i].ToString());
+				xml.WriteAttributeString("id", m_ItemIDs[i].ToString());
 				xml.WriteEndElement();
 			}
 		}
@@ -988,7 +987,7 @@ namespace Assistant
 				try
 				{
 					string gfx = el.GetAttribute("id");
-					m_Items.Add(Convert.ToUInt16(gfx));
+					m_ItemIDs.Add(Convert.ToUInt16(gfx));
 				}
 				catch
 				{
@@ -1022,11 +1021,11 @@ namespace Assistant
 		}
 
 		private ListBox m_SubList;
-		private ArrayList m_Items;
+		private List<object> m_Items;
 
 		internal SearchExemptionAgent()
 		{
-			m_Items = new ArrayList();
+			m_Items = new List<object>();
 		}
 
 		internal override void Clear()
@@ -1216,14 +1215,14 @@ namespace Assistant
 		private Serial m_Bag;
 		private ListBox m_SubList;
 		private Button m_EnButton;
-		private ArrayList m_Items;
+		private List<ushort> m_ItemIDs;
 
-		private ArrayList m_Cache;
+		private List<Serial> m_Cache;
 		private Item m_BagRef;
 
 		internal ScavengerAgent()
 		{
-			m_Items = new ArrayList();
+			m_ItemIDs = new List<ushort>();
 
 			HotKey.Add(HKCategory.Agents, LocString.ClearScavCache, new HotKeyCallback(ClearCache));
 			PacketHandler.RegisterClientToServerViewer(0x09, new PacketViewerCallback(OnSingleClick));
@@ -1252,7 +1251,7 @@ namespace Assistant
 
 		internal override void Clear()
 		{
-			m_Items.Clear();
+			m_ItemIDs.Clear();
 			m_BagRef = null;
 		}
 
@@ -1278,8 +1277,8 @@ namespace Assistant
 			subList.BeginUpdate();
 			subList.Items.Clear();
 
-			for (int i = 0; i < m_Items.Count; i++)
-				subList.Items.Add(m_Items[i]);
+			for (int i = 0; i < m_ItemIDs.Count; i++)
+				subList.Items.Add(m_ItemIDs[i]);
 			subList.EndUpdate();
 		}
 
@@ -1298,9 +1297,9 @@ namespace Assistant
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OnTarget));
 					break;
 				case 2:
-					if (m_SubList.SelectedIndex >= 0 && m_SubList.SelectedIndex < m_Items.Count)
+					if (m_SubList.SelectedIndex >= 0 && m_SubList.SelectedIndex < m_ItemIDs.Count)
 					{
-						m_Items.RemoveAt(m_SubList.SelectedIndex);
+						m_ItemIDs.RemoveAt(m_SubList.SelectedIndex);
 						m_SubList.Items.RemoveAt(m_SubList.SelectedIndex);
 					}
 					break;
@@ -1310,7 +1309,7 @@ namespace Assistant
 					break;
 				case 4:
 					m_SubList.Items.Clear();
-					m_Items.Clear();
+					m_ItemIDs.Clear();
 					break;
 				case 5:
 					ClearCache();
@@ -1342,7 +1341,7 @@ namespace Assistant
 			if (item == null)
 				return;
 
-			m_Items.Add(item.ItemID);
+			m_ItemIDs.Add(item.ItemID);
 			m_SubList.Items.Add(item.ItemID);
 
 			DebugLog("Added item {0}", item);
@@ -1386,14 +1385,14 @@ namespace Assistant
 		internal void Scavenge(Item item)
 		{
 			DebugLog("Checking WorldItem {0} ...", item);
-			if (!m_Enabled || !m_Items.Contains(item.ItemID) || World.Player.Backpack == null || World.Player.IsGhost || World.Player.Weight >= World.Player.MaxWeight)
+			if (!m_Enabled || !m_ItemIDs.Contains(item.ItemID) || World.Player.Backpack == null || World.Player.IsGhost || World.Player.Weight >= World.Player.MaxWeight)
 			{
 				DebugLog("... skipped.");
 				return;
 			}
 
 			if (m_Cache == null)
-				m_Cache = new ArrayList(200);
+				m_Cache = new List<Serial>(200);
 			else if (m_Cache.Count >= 190)
 				m_Cache.RemoveRange(0, 50);
 
@@ -1439,10 +1438,10 @@ namespace Assistant
 				xml.WriteEndElement();
 			}
 
-			for (int i = 0; i < m_Items.Count; i++)
+			for (int i = 0; i < m_ItemIDs.Count; i++)
 			{
 				xml.WriteStartElement("item");
-				xml.WriteAttributeString("id", ((ItemID)m_Items[i]).Value.ToString());
+				xml.WriteAttributeString("id", ((ItemID)m_ItemIDs[i]).Value.ToString());
 				xml.WriteEndElement();
 			}
 		}
@@ -1472,7 +1471,7 @@ namespace Assistant
 				try
 				{
 					string iid = el.GetAttribute("id");
-					m_Items.Add((ItemID)Convert.ToUInt16(iid));
+					m_ItemIDs.Add((ItemID)Convert.ToUInt16(iid));
 				}
 				catch
 				{
@@ -1535,14 +1534,14 @@ namespace Assistant
 
 		private ListBox m_SubList;
 		private Button m_EnableBTN;
-		private ArrayList m_Items;
+		private List<BuyEntry> m_Items;
 		private bool m_Enabled;
 		private int m_Num;
 
 		internal BuyAgent(int num)
 		{
 			m_Num = num;
-			m_Items = new ArrayList();
+			m_Items = new List<BuyEntry>();
 		}
 
 		private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
@@ -1565,8 +1564,8 @@ namespace Assistant
 
 			int total = 0;
 			int cost = 0;
-			ArrayList buyList = new ArrayList();
-			Hashtable found = new Hashtable();
+			List<VendorBuyItem> buyList = new List<VendorBuyItem>();
+			Dictionary<int, int> found = new Dictionary<int, int>();
 			bool lowGoldWarn = false;
 			for (int i = 0; i < pack.Contains.Count; i++)
 			{
@@ -1846,7 +1845,7 @@ namespace Assistant
 		}
 
 		private ListBox m_SubList;
-		private ArrayList m_Items;
+		private List<RestockItem> m_Items;
 		private Button m_HotBTN;
 		private Serial m_HotBag;
 		private int m_Num;
@@ -1855,7 +1854,7 @@ namespace Assistant
 		{
 			m_Num = num;
 
-			m_Items = new ArrayList();
+			m_Items = new List<RestockItem>();
 
 			HotKey.Add(HKCategory.Agents, HKSubCat.None, String.Format("{0}-{1}", Language.GetString(LocString.RestockAgent), m_Num), new HotKeyCallback(OnHotKey));
 			HotKey.Add(HKCategory.Agents, HKSubCat.None, String.Format("{0}-{1}", Language.GetString(LocString.SetRestockHB), m_Num), new HotKeyCallback(SetHB));
@@ -2226,15 +2225,15 @@ namespace Assistant
 		}
 
 		private ListBox m_SubList;
-		private ArrayList m_Chars;
-		private Hashtable m_Names;
+		private List<Serial> m_Chars;
+		private Dictionary<Serial, string> m_Names;
 		private bool m_Enabled;
 		private Button m_EnableBTN;
 
 		internal FriendsAgent()
 		{
-			m_Chars = new ArrayList();
-			m_Names = new Hashtable();
+			m_Chars = new List<Serial>();
+			m_Names = new Dictionary<Serial, string>();
 
 			HotKey.Add(HKCategory.Targets, LocString.AddFriend, new HotKeyCallback(AddToFriendsList));
 			HotKey.Add(HKCategory.Targets, LocString.RemoveFriend, new HotKeyCallback(RemoveFromFriendsList));
