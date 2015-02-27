@@ -484,22 +484,23 @@ namespace Assistant
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
-				Counter c = (Counter)m_List[i];
+				Counter c = m_List[i];
 				if (c.Enabled)
 				{
 					if (c.ItemID == item.ItemID && (c.Hue == item.Hue || c.Hue == 0xFFFF || c.Hue == -1))
 					{
 						ushort old = 0;
-						object o = m_Cache[item];
-						if (o != null)
+						if (m_Cache.ContainsKey(item))
 						{
+							ushort o = m_Cache[item];
 							old = (ushort)o;
 							if (old == item.Amount)
 								break; // dont change result cause we dont need an update
+
+							c.Amount += (item.Amount - old);
+							m_Cache[item] = item.Amount;
+							break;
 						}
-						c.Amount += (item.Amount - old);
-						m_Cache[item] = item.Amount;
-						break;
 					}
 				}
 			}
