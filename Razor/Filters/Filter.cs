@@ -8,7 +8,7 @@ namespace Assistant.Filters
 	internal abstract class Filter
 	{
 		private static List<Filter> m_Filters = new List<Filter>();
-		public static List<Filter> List { get { return m_Filters; } }
+		internal static List<Filter> List { get { return m_Filters; } }
 
 		internal static void Register(Filter filter)
 		{
@@ -31,7 +31,7 @@ namespace Assistant.Filters
 
 					for (int i = 0; i < m_Filters.Count; i++)
 					{
-						Filter f = (Filter)m_Filters[i];
+						Filter f = m_Filters[i];
 						if (f.Name == name)
 						{
 							if (Convert.ToBoolean(enable))
@@ -49,14 +49,14 @@ namespace Assistant.Filters
 		internal static void DisableAll()
 		{
 			for (int i = 0; i < m_Filters.Count; i++)
-				((Filter)m_Filters[i]).OnDisable();
+				m_Filters[i].OnDisable();
 		}
 
 		internal static void Save(XmlTextWriter xml)
 		{
 			for (int i = 0; i < m_Filters.Count; i++)
 			{
-				Filter f = (Filter)m_Filters[i];
+				Filter f = m_Filters[i];
 				if (f.Enabled)
 				{
 					xml.WriteStartElement("filter");
@@ -74,7 +74,7 @@ namespace Assistant.Filters
 
 			for (int i = 0; i < m_Filters.Count; i++)
 			{
-				Filter f = (Filter)m_Filters[i];
+				Filter f = m_Filters[i];
 				list.Items.Add(f);
 				list.SetItemChecked(i, f.Enabled);
 			}

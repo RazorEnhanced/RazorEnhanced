@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Assistant
@@ -455,12 +454,12 @@ namespace Assistant
 			this.Write((ushort)amount);
 		}
 
-		public LiftRequest(Item i, int amount)
+		internal LiftRequest(Item i, int amount)
 			: this(i.Serial, amount)
 		{
 		}
 
-		public LiftRequest(Item i)
+		internal LiftRequest(Item i)
 			: this(i.Serial, i.Amount)
 		{
 		}
@@ -473,7 +472,7 @@ namespace Assistant
 		{
 		}
 
-		public LiftRej(byte reason)
+		internal LiftRej(byte reason)
 			: base(0x27, 2)
 		{
 			Write(reason);
@@ -774,7 +773,7 @@ namespace Assistant
 
 	internal sealed class DisarmRequest : Packet
 	{
-		public DisarmRequest()
+		internal DisarmRequest()
 			: base(0xBF)
 		{
 			EnsureCapacity(3);
@@ -784,7 +783,7 @@ namespace Assistant
 
 	internal sealed class StunRequest : Packet
 	{
-		public StunRequest()
+		internal StunRequest()
 			: base(0xBF)
 		{
 			EnsureCapacity(3);
@@ -817,13 +816,13 @@ namespace Assistant
 
 	internal sealed class ChangeCombatant : Packet
 	{
-		public ChangeCombatant(Serial ser)
+		internal ChangeCombatant(Serial ser)
 			: base(0xAA, 5)
 		{
 			Write((uint)ser);
 		}
 
-		public ChangeCombatant(Mobile m)
+		internal ChangeCombatant(Mobile m)
 			: this(m.Serial)
 		{
 		}
@@ -853,9 +852,9 @@ namespace Assistant
 
 	internal sealed class ClearAbility : Packet
 	{
-		public static readonly Packet Instance = new ClearAbility();
+		internal static readonly Packet Instance = new ClearAbility();
 
-		public ClearAbility()
+		internal ClearAbility()
 			: base(0xBF)
 		{
 			EnsureCapacity(5);
@@ -866,7 +865,7 @@ namespace Assistant
 
 	internal sealed class PingPacket : Packet
 	{
-		public PingPacket(byte seq)
+		internal PingPacket(byte seq)
 			: base(0x73, 2)
 		{
 			Write(seq);
@@ -875,7 +874,7 @@ namespace Assistant
 
 	internal sealed class MobileUpdate : Packet
 	{
-		public MobileUpdate(Mobile m)
+		internal MobileUpdate(Mobile m)
 			: base(0x20, 19)
 		{
 			Write((int)m.Serial);
@@ -1414,7 +1413,7 @@ namespace Assistant
 
 		/*private static byte[] m_PrimBuffer = new byte[4];
 
-		public override void Write( int value )
+		internal override void Write( int value )
 		{
 			m_PrimBuffer[0] = (byte)(value >> 24);
 			m_PrimBuffer[1] = (byte)(value >> 16);
@@ -1424,7 +1423,7 @@ namespace Assistant
 			UnderlyingStream.Write( m_PrimBuffer, 0, 4 );
 		}
 
-		public override void Write( short value )
+		internal override void Write( short value )
 		{
 			m_PrimBuffer[0] = (byte)(value >> 8);
 			m_PrimBuffer[1] = (byte) value;
@@ -1432,12 +1431,12 @@ namespace Assistant
 			UnderlyingStream.Write( m_PrimBuffer, 0, 2 );
 		}
 
-		public override void Write( byte value )
+		internal override void Write( byte value )
 		{
 			UnderlyingStream.WriteByte( value );
 		}
 
-		public void Write( byte[] buffer, int offset, int size )
+		internal void Write( byte[] buffer, int offset, int size )
 		{
 			UnderlyingStream.Write( buffer, offset, size );
 		}*/

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Assistant
 {
-	public enum PacketPath
+	internal enum PacketPath
 	{
 		ClientToServer,
 		RazorToServer,
@@ -15,10 +15,10 @@ namespace Assistant
 		PacketVideo,
 	}
 
-	public class Packet
+	internal class Packet
 	{
 		private static bool m_Logging = false;
-		public static bool Logging
+		internal static bool Logging
 		{
 			get
 			{
@@ -35,7 +35,7 @@ namespace Assistant
 			}
 		}
 
-		public static string PacketsLogFile
+		internal static string PacketsLogFile
 		{
 			get
 			{
@@ -62,18 +62,18 @@ namespace Assistant
 		private bool m_DynSize;
 		private byte m_PacketID;
 
-		public Packet()
+		internal Packet()
 		{
 			m_Stream = new MemoryStream();
 		}
 
-		public Packet(byte packetID)
+		internal Packet(byte packetID)
 		{
 			m_PacketID = packetID;
 			m_DynSize = true;
 		}
 
-		public Packet(byte packetID, int capacity)
+		internal Packet(byte packetID, int capacity)
 		{
 			m_Stream = new MemoryStream(capacity);
 
@@ -83,7 +83,7 @@ namespace Assistant
 			m_Stream.WriteByte(packetID);
 		}
 
-		public Packet(byte[] data, int len, bool dynLen)
+		internal Packet(byte[] data, int len, bool dynLen)
 		{
 			m_Stream = new MemoryStream(len);
 			m_PacketID = data[0];
@@ -95,7 +95,7 @@ namespace Assistant
 			MoveToData();
 		}
 
-		public void EnsureCapacity(int capacity)
+		internal void EnsureCapacity(int capacity)
 		{
 			m_Stream = new MemoryStream(capacity);
 			Write((byte)m_PacketID);
@@ -103,7 +103,7 @@ namespace Assistant
 				Write((short)0);
 		}
 
-		public byte[] Compile()
+		internal byte[] Compile()
 		{
 			if (m_DynSize)
 			{
@@ -114,12 +114,12 @@ namespace Assistant
 			return ToArray();
 		}
 
-		public void MoveToData()
+		internal void MoveToData()
 		{
 			m_Stream.Position = m_DynSize ? 3 : 1;
 		}
 
-		public void Copy(Packet p)
+		internal void Copy(Packet p)
 		{
 			m_Stream = new MemoryStream((int)p.Length);
 			byte[] data = p.ToArray();
@@ -131,7 +131,7 @@ namespace Assistant
 			MoveToData();
 		}
 
-		/*public override int GetHashCode()
+		/*internal override int GetHashCode()
 		{
 			long oldPos = m_Stream.Position;
 
@@ -149,12 +149,12 @@ namespace Assistant
 			return code;
 		}*/
 
-		public static void Log(string line, params object[] args)
+		internal static void Log(string line, params object[] args)
 		{
 			Log(String.Format(line, args));
 		}
 
-		public static void Log(string line)
+		internal static void Log(string line)
 		{
 			if (!m_Logging)
 				return;
@@ -173,12 +173,12 @@ namespace Assistant
 			}
 		}
 
-		public static unsafe void Log(PacketPath path, byte* buff, int len)
+		internal static unsafe void Log(PacketPath path, byte* buff, int len)
 		{
 			Log(path, buff, len, false);
 		}
 
-		public static unsafe void Log(PacketPath path, byte* buff, int len, bool blocked)
+		internal static unsafe void Log(PacketPath path, byte* buff, int len, bool blocked)
 		{
 			if (!m_Logging)
 				return;
@@ -227,12 +227,12 @@ namespace Assistant
 			}
 		}
 
-		public long Seek(int offset, SeekOrigin origin)
+		internal long Seek(int offset, SeekOrigin origin)
 		{
 			return m_Stream.Seek(offset, origin);
 		}
 
-		public int ReadInt32()
+		internal int ReadInt32()
 		{
 			if (m_Stream.Position + 4 > m_Stream.Length)
 				return 0;
@@ -243,21 +243,21 @@ namespace Assistant
 				| ReadByte();
 		}
 
-		public short ReadInt16()
+		internal short ReadInt16()
 		{
 			if (m_Stream.Position + 2 > m_Stream.Length)
 				return 0;
 			return (short)((ReadByte() << 8) | ReadByte());
 		}
 
-		public byte ReadByte()
+		internal byte ReadByte()
 		{
 			if (m_Stream.Position + 1 > m_Stream.Length)
 				return 0;
 			return (byte)m_Stream.ReadByte();
 		}
 
-		public uint ReadUInt32()
+		internal uint ReadUInt32()
 		{
 			if (m_Stream.Position + 4 > m_Stream.Length)
 				return 0;
@@ -267,28 +267,28 @@ namespace Assistant
 				| ReadByte());
 		}
 
-		public ushort ReadUInt16()
+		internal ushort ReadUInt16()
 		{
 			if (m_Stream.Position + 2 > m_Stream.Length)
 				return 0;
 			return (ushort)((ReadByte() << 8) | ReadByte());
 		}
 
-		public sbyte ReadSByte()
+		internal sbyte ReadSByte()
 		{
 			if (m_Stream.Position + 1 > m_Stream.Length)
 				return 0;
 			return (sbyte)m_Stream.ReadByte();
 		}
 
-		public bool ReadBoolean()
+		internal bool ReadBoolean()
 		{
 			if (m_Stream.Position + 1 > m_Stream.Length)
 				return false;
 			return (m_Stream.ReadByte() != 0);
 		}
 
-		public string ReadUnicodeStringLE()
+		internal string ReadUnicodeStringLE()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -300,7 +300,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUnicodeStringLESafe()
+		internal string ReadUnicodeStringLESafe()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -315,7 +315,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUnicodeStringSafe()
+		internal string ReadUnicodeStringSafe()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -330,7 +330,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUnicodeString()
+		internal string ReadUnicodeString()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -342,12 +342,12 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public bool IsSafeChar(int c)
+		internal bool IsSafeChar(int c)
 		{
 			return (c >= 0x20 && c < 0xFFFE);
 		}
 
-		public string ReadUTF8StringSafe(int fixedLength)
+		internal string ReadUTF8StringSafe(int fixedLength)
 		{
 			if (m_Stream.Position >= m_Stream.Length)
 				return String.Empty;
@@ -398,7 +398,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUTF8StringSafe()
+		internal string ReadUTF8StringSafe()
 		{
 			if (m_Stream.Position >= m_Stream.Length)
 				return String.Empty;
@@ -441,7 +441,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUTF8String()
+		internal string ReadUTF8String()
 		{
 			if (m_Stream.Position >= m_Stream.Length)
 				return String.Empty;
@@ -466,12 +466,12 @@ namespace Assistant
 			return Encoding.UTF8.GetString(buffer);
 		}
 
-		public string ReadString()
+		internal string ReadString()
 		{
 			return ReadStringSafe();
 		}
 
-		public string ReadStringSafe()
+		internal string ReadStringSafe()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -483,12 +483,12 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUnicodeStringSafe(int fixedLength)
+		internal string ReadUnicodeStringSafe(int fixedLength)
 		{
 			return ReadUnicodeString(fixedLength);
 		}
 
-		public string ReadUnicodeString(int fixedLength)
+		internal string ReadUnicodeString(int fixedLength)
 		{
 			long bound = m_Stream.Position + (fixedLength << 1);
 			long end = bound;
@@ -509,12 +509,12 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadStringSafe(int fixedLength)
+		internal string ReadStringSafe(int fixedLength)
 		{
 			return ReadString(fixedLength);
 		}
 
-		public string ReadString(int fixedLength)
+		internal string ReadString(int fixedLength)
 		{
 			long bound = m_Stream.Position + fixedLength;
 
@@ -540,22 +540,22 @@ namespace Assistant
 		/////////////////////////////////////////////
 		///Packet Writer/////////////////////////////
 		/////////////////////////////////////////////
-		public void Write(bool value)
+		internal void Write(bool value)
 		{
 			m_Stream.WriteByte((byte)(value ? 1 : 0));
 		}
 
-		public void Write(byte value)
+		internal void Write(byte value)
 		{
 			m_Stream.WriteByte(value);
 		}
 
-		public void Write(sbyte value)
+		internal void Write(sbyte value)
 		{
 			m_Stream.WriteByte((byte)value);
 		}
 
-		public void Write(short value)
+		internal void Write(short value)
 		{
 			m_Buffer[0] = (byte)(value >> 8);
 			m_Buffer[1] = (byte)value;
@@ -563,7 +563,7 @@ namespace Assistant
 			m_Stream.Write(m_Buffer, 0, 2);
 		}
 
-		public void Write(ushort value)
+		internal void Write(ushort value)
 		{
 			m_Buffer[0] = (byte)(value >> 8);
 			m_Buffer[1] = (byte)value;
@@ -571,7 +571,7 @@ namespace Assistant
 			m_Stream.Write(m_Buffer, 0, 2);
 		}
 
-		public void Write(int value)
+		internal void Write(int value)
 		{
 			m_Buffer[0] = (byte)(value >> 24);
 			m_Buffer[1] = (byte)(value >> 16);
@@ -581,7 +581,7 @@ namespace Assistant
 			m_Stream.Write(m_Buffer, 0, 4);
 		}
 
-		public void Write(uint value)
+		internal void Write(uint value)
 		{
 			m_Buffer[0] = (byte)(value >> 24);
 			m_Buffer[1] = (byte)(value >> 16);
@@ -591,12 +591,12 @@ namespace Assistant
 			m_Stream.Write(m_Buffer, 0, 4);
 		}
 
-		public void Write(byte[] buffer, int offset, int size)
+		internal void Write(byte[] buffer, int offset, int size)
 		{
 			m_Stream.Write(buffer, offset, size);
 		}
 
-		public void WriteAsciiFixed(string value, int size)
+		internal void WriteAsciiFixed(string value, int size)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -617,7 +617,7 @@ namespace Assistant
 			}
 		}
 
-		public void WriteAsciiNull(string value)
+		internal void WriteAsciiNull(string value)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -628,7 +628,7 @@ namespace Assistant
 			m_Stream.WriteByte(0);
 		}
 
-		public void WriteLittleUniNull(string value)
+		internal void WriteLittleUniNull(string value)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -642,7 +642,7 @@ namespace Assistant
 			m_Stream.Write(m_Buffer, 0, 2);
 		}
 
-		public void WriteLittleUniFixed(string value, int size)
+		internal void WriteLittleUniFixed(string value, int size)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -665,7 +665,7 @@ namespace Assistant
 			}
 		}
 
-		public void WriteBigUniNull(string value)
+		internal void WriteBigUniNull(string value)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -679,7 +679,7 @@ namespace Assistant
 			m_Stream.Write(m_Buffer, 0, 2);
 		}
 
-		public void WriteBigUniFixed(string value, int size)
+		internal void WriteBigUniFixed(string value, int size)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -702,7 +702,7 @@ namespace Assistant
 			}
 		}
 
-		public void WriteUTF8Fixed(string value, int size)
+		internal void WriteUTF8Fixed(string value, int size)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -725,7 +725,7 @@ namespace Assistant
 			}
 		}
 
-		public void WriteUTF8Null(string value)
+		internal void WriteUTF8Null(string value)
 		{
 			if (value == null)
 				value = String.Empty;
@@ -738,18 +738,18 @@ namespace Assistant
 			m_Stream.Write(m_Buffer, 0, 2);
 		}
 
-		public void Fill()
+		internal void Fill()
 		{
 			byte[] buffer = new byte[m_Stream.Capacity - Position];
 			m_Stream.Write(buffer, 0, buffer.Length);
 		}
 
-		public void Fill(int length)
+		internal void Fill(int length)
 		{
 			m_Stream.Write(new byte[length], 0, length);
 		}
 
-		public int PacketID
+		internal int PacketID
 		{
 			get
 			{
@@ -757,7 +757,7 @@ namespace Assistant
 			}
 		}
 
-		public long Length
+		internal long Length
 		{
 			get
 			{
@@ -765,7 +765,7 @@ namespace Assistant
 			}
 		}
 
-		public long Position
+		internal long Position
 		{
 			get
 			{
@@ -777,7 +777,7 @@ namespace Assistant
 			}
 		}
 
-		public MemoryStream UnderlyingStream
+		internal MemoryStream UnderlyingStream
 		{
 			get
 			{
@@ -785,25 +785,25 @@ namespace Assistant
 			}
 		}
 
-		public long Seek(long offset, SeekOrigin origin)
+		internal long Seek(long offset, SeekOrigin origin)
 		{
 			return m_Stream.Seek(offset, origin);
 		}
 
-		public byte[] ToArray()
+		internal byte[] ToArray()
 		{
 			return m_Stream.ToArray();
 		}
 	}
 
-	public unsafe sealed class PacketReader
+	internal unsafe sealed class PacketReader
 	{
 		private byte* m_Data;
 		private int m_Pos;
 		private int m_Length;
 		private bool m_Dyn;
 
-		public PacketReader(byte* buff, int len, bool dyn)
+		internal PacketReader(byte* buff, int len, bool dyn)
 		{
 			m_Data = buff;
 			m_Length = len;
@@ -811,7 +811,7 @@ namespace Assistant
 			m_Dyn = dyn;
 		}
 
-		public PacketReader(byte[] buff, bool dyn)
+		internal PacketReader(byte[] buff, bool dyn)
 		{
 			fixed (byte* p = buff)
 				m_Data = p;
@@ -820,12 +820,12 @@ namespace Assistant
 			m_Dyn = dyn;
 		}
 
-		public void MoveToData()
+		internal void MoveToData()
 		{
 			m_Pos = m_Dyn ? 3 : 1;
 		}
 
-		public int Seek(int offset, SeekOrigin origin)
+		internal int Seek(int offset, SeekOrigin origin)
 		{
 			switch (origin)
 			{
@@ -846,11 +846,11 @@ namespace Assistant
 			return m_Pos;
 		}
 
-		// ZIPPY REV 80		public byte *Data { get { return m_Data; } }
-		public int Length { get { return m_Length; } }
-		public bool DynamicLength { get { return m_Dyn; } }
+		// ZIPPY REV 80		internal byte *Data { get { return m_Data; } }
+		internal int Length { get { return m_Length; } }
+		internal bool DynamicLength { get { return m_Dyn; } }
 
-		public byte[] CopyBytes(int offset, int count)
+		internal byte[] CopyBytes(int offset, int count)
 		{
 			byte[] read = new byte[count];
 			for (m_Pos = offset; m_Pos < offset + count && m_Pos < m_Length; m_Pos++)
@@ -858,7 +858,7 @@ namespace Assistant
 			return read;
 		}
 
-		public PacketReader GetCompressedReader()
+		internal PacketReader GetCompressedReader()
 		{
 			int fullLen = ReadInt32();
 			int destLen = 0;
@@ -896,14 +896,14 @@ namespace Assistant
 			return new PacketReader(buff, false);
 		}
 
-		public byte ReadByte()
+		internal byte ReadByte()
 		{
 			if (m_Pos + 1 > m_Length || m_Data == null)
 				return 0;
 			return m_Data[m_Pos++];
 		}
 
-		public int ReadInt32()
+		internal int ReadInt32()
 		{
 			return (ReadByte() << 24)
 				| (ReadByte() << 16)
@@ -911,12 +911,12 @@ namespace Assistant
 				| ReadByte();
 		}
 
-		public short ReadInt16()
+		internal short ReadInt16()
 		{
 			return (short)((ReadByte() << 8) | ReadByte());
 		}
 
-		public uint ReadUInt32()
+		internal uint ReadUInt32()
 		{
 			return (uint)(
 				  (ReadByte() << 24)
@@ -925,7 +925,7 @@ namespace Assistant
 				| ReadByte());
 		}
 
-		public ulong ReadRawUInt64()
+		internal ulong ReadRawUInt64()
 		{
 			return (ulong)
 				(((ulong)ReadByte() << 0)
@@ -938,34 +938,34 @@ namespace Assistant
 				| ((ulong)ReadByte() << 56));
 		}
 
-		public ushort ReadUInt16()
+		internal ushort ReadUInt16()
 		{
 			return (ushort)((ReadByte() << 8) | ReadByte());
 		}
 
-		public sbyte ReadSByte()
+		internal sbyte ReadSByte()
 		{
 			if (m_Pos + 1 > m_Length)
 				return 0;
 			return (sbyte)m_Data[m_Pos++];
 		}
 
-		public bool ReadBoolean()
+		internal bool ReadBoolean()
 		{
 			return (ReadByte() != 0);
 		}
 
-		public string ReadUnicodeStringLE()
+		internal string ReadUnicodeStringLE()
 		{
 			return ReadUnicodeString();
 		}
 
-		public string ReadUnicodeStringLESafe()
+		internal string ReadUnicodeStringLESafe()
 		{
 			return ReadUnicodeStringSafe();
 		}
 
-		public string ReadUnicodeStringSafe()
+		internal string ReadUnicodeStringSafe()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -980,7 +980,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUnicodeString()
+		internal string ReadUnicodeString()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -992,12 +992,12 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public bool IsSafeChar(int c)
+		internal bool IsSafeChar(int c)
 		{
 			return (c >= 0x20 && c < 0xFFFE);
 		}
 
-		public string ReadUTF8StringSafe(int fixedLength)
+		internal string ReadUTF8StringSafe(int fixedLength)
 		{
 			if (m_Pos >= m_Length)
 				return String.Empty;
@@ -1048,7 +1048,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUTF8StringSafe()
+		internal string ReadUTF8StringSafe()
 		{
 			if (m_Pos >= m_Length)
 				return String.Empty;
@@ -1091,7 +1091,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUTF8String()
+		internal string ReadUTF8String()
 		{
 			if (m_Pos >= m_Length)
 				return String.Empty;
@@ -1116,12 +1116,12 @@ namespace Assistant
 			return Encoding.UTF8.GetString(buffer);
 		}
 
-		public string ReadString()
+		internal string ReadString()
 		{
 			return ReadStringSafe();
 		}
 
-		public string ReadStringSafe()
+		internal string ReadStringSafe()
 		{
 			StringBuilder sb = new StringBuilder();
 
@@ -1133,12 +1133,12 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUnicodeStringSafe(int fixedLength)
+		internal string ReadUnicodeStringSafe(int fixedLength)
 		{
 			return ReadUnicodeString(fixedLength);
 		}
 
-		public string ReadUnicodeString(int fixedLength)
+		internal string ReadUnicodeString(int fixedLength)
 		{
 			int bound = m_Pos + (fixedLength << 1);
 			int end = bound;
@@ -1159,7 +1159,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadUnicodeStringBE(int fixedLength)
+		internal string ReadUnicodeStringBE(int fixedLength)
 		{
 			int bound = m_Pos + (fixedLength << 1);
 			int end = bound;
@@ -1182,12 +1182,12 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public string ReadStringSafe(int fixedLength)
+		internal string ReadStringSafe(int fixedLength)
 		{
 			return ReadString(fixedLength);
 		}
 
-		public string ReadString(int fixedLength)
+		internal string ReadString(int fixedLength)
 		{
 			int bound = m_Pos + fixedLength;
 			int end = bound;
@@ -1207,9 +1207,9 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		public byte PacketID { get { return *m_Data; } }
-		public int Position { get { return m_Pos; } set { m_Pos = value; } }
+		internal byte PacketID { get { return *m_Data; } }
+		internal int Position { get { return m_Pos; } set { m_Pos = value; } }
 
-		public bool AtEnd { get { return m_Pos >= m_Length; } }
+		internal bool AtEnd { get { return m_Pos >= m_Length; } }
 	}
 }

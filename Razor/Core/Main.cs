@@ -216,9 +216,12 @@ namespace Assistant
 			Directory.SetCurrentDirectory( Config.GetInstallDirectory() );
 #endif
 
-			CheckUpdaterFiles();
+			// CheckUpdaterFiles();
+			//
+			// if (ClientCommunication.InitializeLibrary(Engine.Version) == 0 || !File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Updater.exe")))
+			//	throw new InvalidOperationException("This Razor installation is corrupted.");
 
-			if (ClientCommunication.InitializeLibrary(Engine.Version) == 0 || !File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Updater.exe")))
+			if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
 				throw new InvalidOperationException("This Razor installation is corrupted.");
 
 			try { Engine.ShardList = Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ShardList"); }
@@ -232,8 +235,8 @@ namespace Assistant
 				SplashScreen.Start();
 				m_ActiveWnd = SplashScreen.Instance;
 
-				CheckForUpdates();
-				Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "UpdateCheck", String.Format("{0:X16}", DateTime.Now.ToFileTime()));
+				// CheckForUpdates();
+				// Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "UpdateCheck", String.Format("{0:X16}", DateTime.Now.ToFileTime()));
 			}
 
 			bool patch = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "PatchEncy"), 1) != 0;
@@ -645,9 +648,8 @@ namespace Assistant
 
 			try
 			{
-				//ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
-
-				//WebRequest req = WebRequest.Create( String.Format( "https://zenvera.com/razor/version.php?id={0}", uid ) );
+				// ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
+				// WebRequest req = WebRequest.Create(String.Format("https://zenvera.com/razor/version.php?id={0}", uid));
 
 				HttpWebRequest req = (HttpWebRequest)WebRequest.Create("http://razor.uo.cx/version.txt");
 				req.Timeout = 8000;

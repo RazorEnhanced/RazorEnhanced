@@ -190,12 +190,14 @@ namespace Assistant
 
 		internal static void Register(string cmd, CommandCallback callback)
 		{
-			m_List[cmd] = callback;
+			m_List.Add(cmd, callback);
 		}
 
 		internal static CommandCallback FindCommand(string cmd)
 		{
-			return m_List[cmd] as CommandCallback;
+			CommandCallback callback;
+			m_List.TryGetValue(cmd, out callback);
+			return callback;
 		}
 
 		internal static void RemoveCommand(string cmd)

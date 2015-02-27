@@ -3,30 +3,30 @@ using System.Collections.Generic;
 
 namespace Assistant
 {
-	public delegate void PacketViewerCallback(PacketReader p, PacketHandlerEventArgs args);
-	public delegate void PacketFilterCallback(Packet p, PacketHandlerEventArgs args);
+	internal delegate void PacketViewerCallback(PacketReader p, PacketHandlerEventArgs args);
+	internal delegate void PacketFilterCallback(Packet p, PacketHandlerEventArgs args);
 
-	public class PacketHandlerEventArgs
+	internal class PacketHandlerEventArgs
 	{
 		private bool m_Block;
-		public bool Block
+		internal bool Block
 		{
 			get { return m_Block; }
 			set { m_Block = value; }
 		}
 
-		public PacketHandlerEventArgs()
+		internal PacketHandlerEventArgs()
 		{
 			Reinit();
 		}
 
-		public void Reinit()
+		internal void Reinit()
 		{
 			m_Block = false;
 		}
 	}
 
-	public class PacketHandler
+	internal class PacketHandler
 	{
 		private static Dictionary<int, List<PacketViewerCallback>> m_ClientViewers;
 		private static Dictionary<int, List<PacketViewerCallback>> m_ServerViewers;
@@ -45,77 +45,95 @@ namespace Assistant
 
 		internal static void RegisterClientToServerViewer(int packetID, PacketViewerCallback callback)
 		{
-			List<PacketViewerCallback> list = m_ClientViewers[packetID];
-			if (list == null)
-				m_ClientViewers[packetID] = list = new List<PacketViewerCallback>();
-			list.Add(callback);
+			if (!m_ClientViewers.ContainsKey(packetID))
+				m_ClientViewers.Add(packetID, new List<PacketViewerCallback>());
+
+			if (!m_ClientViewers[packetID].Contains(callback))
+			{
+				List<PacketViewerCallback> list = m_ClientViewers[packetID];
+				list.Add(callback);
+				m_ClientViewers[packetID] = list;
+			}
 		}
 
 		internal static void RegisterServerToClientViewer(int packetID, PacketViewerCallback callback)
 		{
-			List<PacketViewerCallback> list = m_ServerViewers[packetID];
-			if (list == null)
-				m_ServerViewers[packetID] = list = new List<PacketViewerCallback>();
-			list.Add(callback);
+			if (!m_ServerViewers.ContainsKey(packetID))
+				m_ServerViewers.Add(packetID, new List<PacketViewerCallback>());
+
+			if (!m_ServerViewers[packetID].Contains(callback))
+			{
+				List<PacketViewerCallback> list = m_ServerViewers[packetID];
+				list.Add(callback);
+				m_ServerViewers[packetID] = list;
+			}
 		}
 
 		internal static void RemoveClientToServerViewer(int packetID, PacketViewerCallback callback)
 		{
-			List<PacketViewerCallback> list = m_ClientViewers[packetID];
-			if (list != null)
-				list.Remove(callback);
+			if (m_ClientViewers.ContainsKey(packetID))
+				m_ClientViewers[packetID].Remove(callback);
 		}
 
 		internal static void RemoveServerToClientViewer(int packetID, PacketViewerCallback callback)
 		{
-			List<PacketViewerCallback> list = m_ServerViewers[packetID];
-			if (list != null)
-				list.Remove(callback);
+			if (m_ServerViewers.ContainsKey(packetID))
+				m_ServerViewers[packetID].Remove(callback);
 		}
 
 		internal static void RegisterClientToServerFilter(int packetID, PacketFilterCallback callback)
 		{
-			List<PacketFilterCallback> list = m_ClientFilters[packetID];
-			if (list == null)
-				m_ClientFilters[packetID] = list = new List<PacketFilterCallback>();
-			list.Add(callback);
+			if (!m_ClientFilters.ContainsKey(packetID))
+				m_ClientFilters.Add(packetID, new List<PacketFilterCallback>());
+
+			if (!m_ClientFilters[packetID].Contains(callback))
+			{
+				List<PacketFilterCallback> list = m_ClientFilters[packetID];
+				list.Add(callback);
+				m_ClientFilters[packetID] = list;
+			}
 		}
 
 		internal static void RegisterServerToClientFilter(int packetID, PacketFilterCallback callback)
 		{
-			List<PacketFilterCallback> list = (m_ServerFilters[packetID]);
-			if (list == null)
-				m_ServerFilters[packetID] = list = new List<PacketFilterCallback>();
-			list.Add(callback);
+			if (!m_ServerFilters.ContainsKey(packetID))
+				m_ServerFilters.Add(packetID, new List<PacketFilterCallback>());
+
+			if (!m_ServerFilters[packetID].Contains(callback))
+			{
+				List<PacketFilterCallback> list = m_ServerFilters[packetID];
+				list.Add(callback);
+				m_ServerFilters[packetID] = list;
+			}
 		}
 
 		internal static void RemoveClientToServerFilter(int packetID, PacketFilterCallback callback)
 		{
-			List<PacketFilterCallback> list = m_ClientFilters[packetID];
-			if (list != null)
-				list.Remove(callback);
+			if (m_ClientFilters.ContainsKey(packetID))
+				m_ClientFilters[packetID].Remove(callback);
 		}
 
 		internal static void RemoveServerToClientFilter(int packetID, PacketFilterCallback callback)
 		{
-			List<PacketFilterCallback> list = m_ServerFilters[packetID];
-			if (list != null)
-				list.Remove(callback);
+			if (m_ServerFilters.ContainsKey(packetID))
+				m_ServerFilters[packetID].Remove(callback);
 		}
 
-		public static bool OnServerPacket(int id, PacketReader pr, Packet p)
+		internal static bool OnServerPacket(int id, PacketReader pr, Packet p)
 		{
 			bool result = false;
 			if (pr != null)
 			{
-				List<PacketViewerCallback> list = m_ServerViewers[id];
+				List<PacketViewerCallback> list;
+				m_ServerViewers.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
 					result = ProcessViewers(list, pr);
 			}
 
 			if (p != null)
 			{
-				List<PacketFilterCallback> list = m_ServerFilters[id];
+				List<PacketFilterCallback> list;
+				m_ServerFilters.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
 					result |= ProcessFilters(list, p);
 			}
@@ -123,19 +141,21 @@ namespace Assistant
 			return result;
 		}
 
-		public static bool OnClientPacket(int id, PacketReader pr, Packet p)
+		internal static bool OnClientPacket(int id, PacketReader pr, Packet p)
 		{
 			bool result = false;
 			if (pr != null)
 			{
-				List<PacketViewerCallback> list = m_ClientViewers[id];
+				List<PacketViewerCallback> list;
+				m_ClientViewers.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
 					result = ProcessViewers(list, pr);
 			}
 
 			if (p != null)
 			{
-				List<PacketFilterCallback> list = m_ClientFilters[id];
+				List<PacketFilterCallback> list;
+				m_ClientFilters.TryGetValue(id, out list);
 				if (list != null && list.Count > 0)
 					result |= ProcessFilters(list, p);
 			}
@@ -143,27 +163,31 @@ namespace Assistant
 			return result;
 		}
 
-		public static bool HasClientViewer(int packetID)
+		internal static bool HasClientViewer(int packetID)
 		{
-			List<PacketViewerCallback> list = m_ClientViewers[packetID];
+			List<PacketViewerCallback> list;
+			m_ClientViewers.TryGetValue(packetID, out list);
 			return list != null && list.Count > 0;
 		}
 
-		public static bool HasServerViewer(int packetID)
+		internal static bool HasServerViewer(int packetID)
 		{
-			List<PacketViewerCallback> list = m_ServerViewers[packetID];
+			List<PacketViewerCallback> list;
+			m_ServerViewers.TryGetValue(packetID, out list);
 			return list != null && list.Count > 0;
 		}
 
-		public static bool HasClientFilter(int packetID)
+		internal static bool HasClientFilter(int packetID)
 		{
-			List<PacketFilterCallback> list = m_ClientFilters[packetID];
+			List<PacketFilterCallback> list;
+			m_ClientFilters.TryGetValue(packetID, out list);
 			return (list != null && list.Count > 0) || PacketPlayer.Recording || PacketPlayer.Playing;
 		}
 
-		public static bool HasServerFilter(int packetID)
+		internal static bool HasServerFilter(int packetID)
 		{
-			List<PacketFilterCallback> list = m_ServerFilters[packetID];
+			List<PacketFilterCallback> list;
+			m_ServerFilters.TryGetValue(packetID, out list);
 			return (list != null && list.Count > 0) || PacketPlayer.Recording;
 		}
 
@@ -180,7 +204,7 @@ namespace Assistant
 
 					try
 					{
-						((PacketViewerCallback)list[i])(p, m_Args);
+						list[i](p, m_Args);
 					}
 					catch (Exception e)
 					{
@@ -205,7 +229,7 @@ namespace Assistant
 
 					try
 					{
-						((PacketFilterCallback)list[i])(p, m_Args);
+						list[i](p, m_Args);
 					}
 					catch (Exception e)
 					{
