@@ -1335,5 +1335,110 @@ namespace RazorEnhanced
 			ClientCommunication.SendToClient(new PathFindTo(Location));
 		}
 
+        //Props
+        public static int GetPropByCliloc(uint serial, int code)
+        {
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+            if (assistantMobile == null)
+            {
+                Player.SendMessage("Script Error: GetPropByCliloc: Item serial: (" + serial + ") not found");
+                return 0;
+            }
+            else
+            {
+                RazorEnhanced.Mobile mobile = new RazorEnhanced.Mobile(assistantMobile);
+                if (mobile.Serial.IsItem)
+                {
+                    return GetPropExec(mobile, code, "GetPropByCliloc");
+                }
+                else
+                {
+                    Player.SendMessage("Script Error: GetPropByCliloc: (" + mobile.Serial.ToString() + ") is not a item");
+                    return 0;
+                }
+            }
+        }
+
+        public static int GetPropByString(RazorEnhanced.Mobile mobile, string props)
+        {
+            if (mobile.Serial.IsItem)
+            {
+                switch (props)
+                {
+                    case "Damage Increase":
+                        {
+                            if (GetPropExec(mobile, 1060401, "GetPropByString") != 0)
+                                return GetPropExec(mobile, 1060401, "GetPropByString");
+                            return GetPropExec(mobile, 1060402, "GetPropByString");
+                        }
+                    case "Defense Chance Increase":
+                        return GetPropExec(mobile, 1060408, "GetPropByString");
+                    case "Faster Cast Recovery":
+                        return GetPropExec(mobile, 1060412, "GetPropByString");
+                    case "Enhance Potion":
+                        return GetPropExec(mobile, 1060411, "GetPropByString");
+                    case "Faster Casting":
+                        return GetPropExec(mobile, 1060413, "GetPropByString");
+                    case "Hit Chance Increase":
+                        return GetPropExec(mobile, 1060415, "GetPropByString");
+                    case "Lower Mana Cost":
+                        return GetPropExec(mobile, 1060433, "GetPropByString");
+                    case "Lower Reagent Cost":
+                        return GetPropExec(mobile, 1060434, "GetPropByString");
+                    case "Mana Regeneration":
+                        return GetPropExec(mobile, 1060440, "GetPropByString");
+                    case "Spell Damage Increase":
+                        return GetPropExec(mobile, 1060483, "GetPropByString");
+                    case "Stamina Increase":
+                        return GetPropExec(mobile, 1060484, "GetPropByString");
+                    case "Stamina Regeneration":
+                        return GetPropExec(mobile, 1060443, "GetPropByString");
+                    case "Swing Speed Increase":
+                        return GetPropExec(mobile, 1060486, "GetPropByString");
+                    case "Hit Point Increase":
+                        return GetPropExec(mobile, 1060431, "GetPropByString");
+                    case "Hit Point Regeneration":
+                        return GetPropExec(mobile, 1060444, "GetPropByString");
+
+                    default:
+                        Player.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+                        return 0;
+                }
+
+            }
+            else
+            {
+                Player.SendMessage("Script Error: GetPropByString: (" + mobile.Serial.ToString() + ") is not a item");
+                return 0;
+            }
+        }
+
+        private static int GetPropExec(RazorEnhanced.Mobile mobile, int code, String Fcall)
+        {
+            List<Property> properties = mobile.Properties;
+            foreach (Property property in properties)
+            {
+                int number = property.Number;
+                string args = property.Args;
+                if (number == code)
+                {
+                    if (args == null)  // Esiste prop ma senza valore
+                        return 1;
+                    else
+                    {
+                        try
+                        {
+                            return Convert.ToInt32(args);  // Ritorna valore
+                        }
+                        catch
+                        {
+                            Player.SendMessage("Script Error: " + Fcall + ": Error to get value of Cliloc:" + code);
+                            return 0;  // errore di conversione
+                        }
+                    }
+                }
+            }
+            return 0;       // Prop inesistente sul item
+        }
 	}
 }
