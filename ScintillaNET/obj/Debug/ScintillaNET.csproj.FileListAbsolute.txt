@@ -1,13 +1,2 @@
 E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\bin\Debug\ScintillaNET.dll
 E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\bin\Debug\ScintillaNET.pdb
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\Output\ScintillaNET.dll
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\Output\ScintillaNET.pdb
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.csprojResolveAssemblyReference.cache
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.FindReplaceDialog.resources
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.IncrementalSearcher.resources
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.GoToDialog.resources
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.Properties.Resources.resources
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.SnippetChooser.resources
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.csproj.GenerateResource.Cache
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.dll
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\ScintillaNET\obj\Debug\ScintillaNET.pdb

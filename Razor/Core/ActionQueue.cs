@@ -400,9 +400,10 @@ namespace Assistant
 		private static DropReq DequeueDropFor(Serial s)
 		{
 			DropReq dr = null;
-			Queue<DropReq> q = m_DropReqs[s];
-			if (q != null)
+
+			if (m_DropReqs.ContainsKey(s))
 			{
+				Queue<DropReq> q = m_DropReqs[s];
 				if (q.Count > 0)
 					dr = q.Dequeue() as DropReq;
 				if (q.Count <= 0)

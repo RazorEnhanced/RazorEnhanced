@@ -454,25 +454,25 @@ namespace Assistant
 
 		internal static void Uncount(Item item)
 		{
-			for (int i = 0; i < item.Contains.Count; i++)
-				Uncount(item.Contains[i]);
+			foreach (Item cont in item.Contains)
+				Uncount(cont);
 
-			for (int i = 0; i < m_List.Count; i++)
+			foreach (Counter c in m_List)
 			{
-				Counter c = m_List[i];
 				if (c.Enabled)
 				{
 					if (c.ItemID == item.ItemID && (c.Hue == item.Hue || c.Hue == -1 || c.Hue == 0xFFFF))
 					{
-						// if (m_Cache[item] != null)
-						// {
-						ushort rem = m_Cache[item];
-						if (rem >= c.Amount)
-							c.Amount = 0;
-						else
-							c.Amount -= rem;
-						// m_Cache[item] = null;
-						// }
+						if (m_Cache.ContainsKey(item))
+						{
+							ushort rem = m_Cache[item];
+							if (rem >= c.Amount)
+								c.Amount = 0;
+							else
+								c.Amount -= rem;
+
+							m_Cache.Remove(item);
+						}
 
 						break;
 					}
@@ -484,29 +484,28 @@ namespace Assistant
 		{
 			for (int i = 0; i < m_List.Count; i++)
 			{
-				Counter c = m_List[i];
-				if (c.Enabled)
+				foreach (Counter c in m_List)
 				{
 					if (c.ItemID == item.ItemID && (c.Hue == item.Hue || c.Hue == 0xFFFF || c.Hue == -1))
 					{
-						ushort old = 0;
 						if (m_Cache.ContainsKey(item))
 						{
-							ushort o = m_Cache[item];
-							old = (ushort)o;
-							if (old == item.Amount)
-								break; // dont change result cause we dont need an update
-
-							c.Amount += (item.Amount - old);
-							m_Cache[item] = item.Amount;
-							break;
+							ushort old = m_Cache[item];
+							if (old != item.Amount)// dont change result cause we dont need an update
+								c.Amount += (item.Amount - old);
 						}
+						else
+						{
+							c.Amount = item.Amount;
+							m_Cache.Add(item, item.Amount);
+						}
+						break;
 					}
 				}
 			}
 
-			for (int c = 0; c < item.Contains.Count; c++)
-				Count((Item)item.Contains[c]);
+			foreach (Item cont in item.Contains)
+				Count(cont);
 		}
 
 		internal static void QuickRecount()
