@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Windows.Forms;
@@ -8,7 +8,7 @@ namespace Assistant.Macros
 {
 	internal class MacroManager
 	{
-		private static ArrayList m_List;
+		private static List<Macro> m_List;
 		private static Macro m_Current, m_PrevPlay;
 		private static MacroTimer m_Timer;
 
@@ -25,7 +25,7 @@ namespace Assistant.Macros
 
 		static MacroManager()
 		{
-			m_List = new ArrayList();
+			m_List = new List<Macro>();
 			m_Timer = new MacroTimer();
 		}
 
@@ -36,7 +36,7 @@ namespace Assistant.Macros
 				((Macro)m_List[i]).Save();
 		}
 
-		internal static ArrayList List { get { return m_List; } }
+		internal static List<Macro> List { get { return m_List; } }
 		internal static bool Recording { get { return m_Current != null && m_Current.Recording; } }
 		internal static bool Playing { get { return m_Current != null && m_Current.Playing && m_Timer != null && m_Timer.Running; } }
 		internal static Macro Current { get { return m_Current; } }

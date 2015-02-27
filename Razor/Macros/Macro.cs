@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
@@ -11,25 +11,25 @@ namespace Assistant.Macros
 	internal class Macro
 	{
 		private string m_Path;
-		private ArrayList m_Actions;
+		private List<MacroAction> m_Actions;
 		private bool m_Recording, m_Playing;
 		private MacroWaitAction m_Wait;
 		private int m_CurrentAction;
 		private bool m_Loop;
 		private bool m_Loaded;
 		private ListBox m_ListBox;
-		private Stack m_IfStatus;
+		private Stack<bool> m_IfStatus;
 
 		internal Macro(string path)
 		{
-			m_Actions = new ArrayList();
+			m_Actions = new List<MacroAction>();
 			m_Path = path;
 			m_Loaded = false;
-			m_IfStatus = new Stack();
+			m_IfStatus = new Stack<bool>();
 		}
 
 		internal string Filename { get { return m_Path; } set { m_Path = value; } }
-		internal ArrayList Actions { get { return m_Actions; } }
+		internal List<MacroAction> Actions { get { return m_Actions; } }
 		internal bool Recording { get { return m_Recording; } }
 		internal bool Playing { get { return m_Playing; } }
 		internal bool Waiting { get { return m_Wait != null; } }
@@ -52,7 +52,7 @@ namespace Assistant.Macros
 
 			m_ListBox.BeginUpdate();
 			if (m_Actions.Count > 0)
-				m_ListBox.Items.AddRange((object[])m_Actions.ToArray(typeof(object)));
+				m_ListBox.Items.AddRange((object[])m_Actions.ToArray());
 			if (m_Playing && m_CurrentAction >= 0 && m_CurrentAction < m_Actions.Count)
 				m_ListBox.SelectedIndex = m_CurrentAction;
 			else

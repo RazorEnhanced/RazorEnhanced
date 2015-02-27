@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -7,8 +7,8 @@ namespace Assistant.Filters
 {
 	internal abstract class Filter
 	{
-		private static ArrayList m_Filters = new ArrayList();
-		public static ArrayList List { get { return m_Filters; } }
+		private static List<Filter> m_Filters = new List<Filter>();
+		public static List<Filter> List { get { return m_Filters; } }
 
 		internal static void Register(Filter filter)
 		{

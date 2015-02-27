@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Text;
@@ -244,13 +244,13 @@ namespace Assistant
 
 	internal class HotKey
 	{
-		private static ArrayList m_List;
+		private static List<KeyData> m_List;
 		private static TreeNode m_Root;
 		private static bool m_Enabled;
 		private static System.Windows.Forms.Label m_Status;
 		private static KeyData m_HK_En;
 
-		internal static ArrayList List { get { return m_List; } }
+		internal static List<KeyData> List { get { return m_List; } }
 		internal static TreeNode RootNode { get { return m_Root; } }
 		internal static System.Windows.Forms.Label Status { get { return m_Status; } set { m_Status = value; UpdateStatus(); } }
 
@@ -304,7 +304,7 @@ namespace Assistant
 
 		static HotKey()
 		{
-			m_List = new ArrayList();
+			m_List = new List<KeyData>();
 			m_Enabled = true;
 
 			m_Root = new TreeNode("Hot Keys");
