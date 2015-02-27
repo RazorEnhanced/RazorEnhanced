@@ -18,6 +18,7 @@ namespace RazorEnhanced.UI
 		internal EnhancedMobileInspector(Assistant.Mobile MobileTarg)
 		{
 			InitializeComponent();
+            MaximizeBox = false;
 			// general
             Assistant.ObjectPropertyList MobileTargOPL = MobileTarg.ObjPropList;
 			lName.Text = MobileTarg.Name.ToString();

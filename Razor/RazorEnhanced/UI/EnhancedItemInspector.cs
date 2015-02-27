@@ -18,6 +18,7 @@ namespace RazorEnhanced.UI
 		internal EnhancedItemInspector(Assistant.Item ItemTarg)
 		{
 			InitializeComponent();
+            MaximizeBox = false;
             Assistant.ObjectPropertyList ItemTargOPL = ItemTarg.ObjPropList;
 			// general
 			lSerial.Text = "0x" + ItemTarg.Serial.Value.ToString("X8");
