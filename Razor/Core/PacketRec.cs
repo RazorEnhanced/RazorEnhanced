@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Text;
@@ -19,7 +19,7 @@ namespace Assistant
 		private static GZBlockIn m_GZIn;
 		private static GZBlockOut m_GZOut;
 		private static DateTime m_LastTime, m_StartTime;
-		private static Hashtable m_HouseDataWritten = new Hashtable();
+		private static Dictionary<Serial, bool> m_HouseDataWritten = new Dictionary<Serial, bool>();
 
 		private static TimerCallback m_SendNext = new TimerCallback(SendNextPacket);
 		private static TimerCallback m_BeginPlay = new TimerCallback(BeginPlayback);

@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Assistant
 {
@@ -35,11 +35,11 @@ namespace Assistant
 				if (m_Table.Count <= 0)
 					return;
 
-				ArrayList list = new ArrayList(m_Table);
-				foreach (DictionaryEntry de in list)
+				List<KeyValuePair<string, MsgInfo>> list = new List<KeyValuePair<string, MsgInfo>>(m_Table);
+				foreach (KeyValuePair<string, MsgInfo> pair in list)
 				{
-					string txt = de.Key.ToString();
-					MsgInfo msg = (MsgInfo)de.Value;
+					string txt = pair.Key.ToString();
+					MsgInfo msg = (MsgInfo)pair.Value;
 
 					if (msg.NextSend <= DateTime.Now)
 					{
@@ -54,7 +54,7 @@ namespace Assistant
 						}
 						else
 						{
-							m_Table.Remove(de.Key);
+							m_Table.Remove(pair.Key);
 						}
 					}
 				}
@@ -62,7 +62,7 @@ namespace Assistant
 		}
 
 		private static Timer m_Timer = new MessageTimer();
-		private static Hashtable m_Table = new Hashtable();
+		private static Dictionary<string, MsgInfo> m_Table = new Dictionary<string, MsgInfo>();
 
 		static MessageQueue()
 		{

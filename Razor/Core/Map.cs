@@ -1,15 +1,15 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using Ultima;
 
 namespace Assistant
 {
 	internal class MultiTileEntry
 	{
-		public ushort m_ItemID;
-		public short m_OffsetX;
-		public short m_OffsetY;
-		public short m_OffsetZ;
+		internal ushort m_ItemID;
+		internal short m_OffsetX;
+		internal short m_OffsetY;
+		internal short m_OffsetZ;
 	}
 
 	internal class Map

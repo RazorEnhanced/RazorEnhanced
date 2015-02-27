@@ -1,6 +1,6 @@
 using System;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 using Assistant.Macros;
 
 namespace Assistant
@@ -169,10 +169,10 @@ namespace Assistant
 
 	internal class Command
 	{
-		private static Hashtable m_List;
+		private static Dictionary<string, CommandCallback> m_List;
 		static Command()
 		{
-			m_List = new Hashtable(16, 1.0f, StringComparer.OrdinalIgnoreCase);
+			m_List = new Dictionary<string, CommandCallback>();
 			PacketHandler.RegisterClientToServerFilter(0xAD, new PacketFilterCallback(OnSpeech));
 		}
 
@@ -203,7 +203,7 @@ namespace Assistant
 			m_List.Remove(cmd);
 		}
 
-		internal static Hashtable List { get { return m_List; } }
+		internal static Dictionary<string, CommandCallback> List { get { return m_List; } }
 
 		internal static void OnSpeech(Packet pvSrc, PacketHandlerEventArgs args)
 		{
@@ -212,7 +212,7 @@ namespace Assistant
 			ushort font = pvSrc.ReadUInt16();
 			string lang = pvSrc.ReadString(4);
 			string text = "";
-			ArrayList keys = null;
+			List<ushort> keys = null;
 			long txtOffset = 0;
 
 			World.Player.SpeechHue = hue;
@@ -221,7 +221,7 @@ namespace Assistant
 			{
 				int value = pvSrc.ReadInt16();
 				int count = (value & 0xFFF0) >> 4;
-				keys = new ArrayList();
+				keys = new List<ushort>();
 				keys.Add((ushort)value);
 
 				for (int i = 0; i < count; ++i)

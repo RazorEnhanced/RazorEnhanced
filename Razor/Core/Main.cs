@@ -1,7 +1,7 @@
 using System;
 using System.Reflection;
 using System.Threading;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;

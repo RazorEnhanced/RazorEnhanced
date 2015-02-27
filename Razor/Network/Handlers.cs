@@ -252,7 +252,7 @@ namespace Assistant
 
 						if (ent != null && ent.ContextMenu != null && ent.ContextMenu.ContainsKey(idx))
 						{
-							ushort menu = (ushort)ent.ContextMenu[idx];
+							ushort menu = ent.ContextMenu[idx];
 
 							if (menu != 0 && MacroManager.AcceptActions)
 								MacroManager.Action(new ContextMenuAction(ent, idx, menu));

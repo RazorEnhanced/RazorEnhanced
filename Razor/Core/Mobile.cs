@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Assistant
@@ -38,7 +38,8 @@ namespace Assistant
 		private ushort m_HitsMax, m_Hits;
 		protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
 
-		private ArrayList m_Items;
+		private List<Item> m_Items;
+		private List<Serial> m_Serials;
 
 		private byte m_Map;
 
@@ -74,32 +75,31 @@ namespace Assistant
 			m_Map = reader.ReadByte();
 
 			int count = reader.ReadInt32();
-			m_Items = new ArrayList(count);
+			m_Serials = new List<Serial>();
 			for (int i = 0; i < count; i++)
-				m_Items.Add((Serial)reader.ReadUInt32());
+				m_Serials.Add((Serial)reader.ReadUInt32());
+
+
 		}
 
 		internal override void AfterLoad()
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+			m_Items = new List<Item>();
+			for (int i = 0; i < m_Serials.Count; i++)
 			{
-				if (m_Items[i] is Serial)
-				{
-					m_Items[i] = World.FindItem((Serial)m_Items[i]);
+					Item item = World.FindItem(m_Serials[i]);
 
-					if (m_Items[i] == null)
+					if (m_Items[i] != null)
 					{
-						m_Items.RemoveAt(i);
-						i--;
-					}
-				}
+						m_Items.Add(item);
+					}		
 			}
 		}
 
 		internal Mobile(Serial serial)
 			: base(serial)
 		{
-			m_Items = new ArrayList();
+			m_Items = new List<Item>();
 			m_Map = World.Player == null ? (byte)0 : World.Player.Map;
 			m_Visible = true;
 
@@ -293,7 +293,7 @@ namespace Assistant
 
 		internal override void Remove()
 		{
-			ArrayList rem = new ArrayList(m_Items);
+			List<Item> rem = new List<Item>(m_Items);
 			m_Items.Clear();
 
 			for (int i = 0; i < rem.Count; i++)
@@ -402,7 +402,7 @@ namespace Assistant
 			m_Visible = (flags & 0x80) == 0;
 		}
 
-		internal ArrayList Contains { get { return m_Items; } }
+		internal List<Item> Contains { get { return m_Items; } }
 
 		internal void OverheadMessageFrom(int hue, string from, string format, params object[] args)
 		{

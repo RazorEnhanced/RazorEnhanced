@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using Assistant;
 
 namespace RazorEnhanced
@@ -27,7 +27,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public Hashtable ContextMenu
+		public Dictionary<ushort, ushort> ContextMenu
 		{
 			get { return m_UOEntity.ContextMenu; }
 		}

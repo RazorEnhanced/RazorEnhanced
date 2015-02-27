@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Assistant
 {
@@ -60,7 +60,8 @@ namespace Assistant
 		private object m_Parent;
 		private int m_Price;
 		private string m_BuyDesc;
-		private ArrayList m_Items;
+		private List<Item> m_Items;
+		private List<Serial> m_Serials;
 
 		private bool m_IsNew;
 		private bool m_AutoStack;
@@ -122,9 +123,9 @@ namespace Assistant
 				m_Parent = null;
 
 			int count = reader.ReadInt32();
-			m_Items = new ArrayList(count);
+			m_Serials = new List<Serial>();
 			for (int i = 0; i < count; i++)
-				m_Items.Add((Serial)reader.ReadUInt32());
+				m_Serials.Add((Serial)reader.ReadUInt32());
 
 			if (version > 2)
 			{
@@ -144,19 +145,17 @@ namespace Assistant
 
 		internal override void AfterLoad()
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+			m_Items= new List<Item>();
+			for (int i = 0; i < m_Serials.Count; i++)
 			{
-				if (m_Items[i] is Serial)
-				{
-					m_Items[i] = World.FindItem((Serial)m_Items[i]);
+					Item item = World.FindItem((Serial)m_Serials[i]);
 
-					if (m_Items[i] == null)
+					if (item != null)
 					{
-						m_Items.RemoveAt(i);
-						i--;
+						m_Items.Add(item);
 					}
 				}
-			}
+			
 
 			UpdateContainer();
 		}
@@ -164,7 +163,7 @@ namespace Assistant
 		internal Item(Serial serial)
 			: base(serial)
 		{
-			m_Items = new ArrayList();
+			m_Items = new List<Item>();
 
 			m_Visible = true;
 			m_Movable = true;
@@ -377,7 +376,7 @@ namespace Assistant
 			return true;
 		}
 
-		private static ArrayList m_NeedContUpdate = new ArrayList();
+		private static List<Item> m_NeedContUpdate = new List<Item>();
 		internal static void UpdateContainers()
 		{
 			int i = 0;
@@ -390,7 +389,7 @@ namespace Assistant
 			}
 		}
 
-		private static ArrayList m_AutoStackCache = new ArrayList();
+		private static List<Serial> m_AutoStackCache = new List<Serial>();
 		internal void AutoStackResource()
 		{
 			if (!IsResource || !Config.GetBool("AutoStack") || m_AutoStackCache.Contains(Serial))
@@ -537,10 +536,10 @@ namespace Assistant
 			if (IsMulti)
 				ClientCommunication.PostRemoveMulti(this);
 
-			ArrayList rem = new ArrayList(m_Items);
+			List<Item> rem = new List<Item>(m_Items);
 			m_Items.Clear();
 			for (int i = 0; i < rem.Count; i++)
-				((Item)rem[i]).Remove();
+				(rem[i]).Remove();
 
 			Counter.Uncount(this);
 
@@ -563,7 +562,7 @@ namespace Assistant
 			base.OnPositionChanging(newPos);
 		}
 
-		internal ArrayList Contains { get { return m_Items; } }
+		internal List<Item> Contains { get { return m_Items; } }
 
 		// possibly 4 bit x/y - 16x16?
 		internal byte GridNum

@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 using System.Windows.Forms;
 
@@ -7,13 +7,13 @@ namespace Assistant
 {
 	internal class DressList
 	{
-		private static ArrayList m_List = new ArrayList();
+		private static List<DressList> m_List = new List<DressList>();
 
 		internal static void Redraw(ListBox box)
 		{
 			box.Items.Clear();
 
-			box.Items.AddRange((object[])m_List.ToArray(typeof(object)));
+			box.Items.AddRange((object[])m_List.ToArray());
 		}
 
 		internal static void ClearAll()
@@ -144,14 +144,14 @@ namespace Assistant
 			HotKey.Remove(String.Format("Toggle: {0}", list.Name));
 		}
 
-		private ArrayList m_Items;
+		private List<object> m_Items;
 		private Serial m_UndressBag;
 		private string m_Name;
 
 		internal DressList(string name)
 		{
 			m_Name = name;
-			m_Items = new ArrayList();
+			m_Items = new List<object>();
 			m_UndressBag = Serial.Zero;
 		}
 
@@ -166,7 +166,7 @@ namespace Assistant
 		}
 
 		internal string Name { get { return m_Name; } }
-		internal ArrayList Items { get { return m_Items; } }
+		internal List<object> Items { get { return m_Items; } }
 
 		internal void SetUndressBag(Serial serial)
 		{
@@ -276,7 +276,7 @@ namespace Assistant
 				return;
 
 			int skipped = 0, gone = 0, done = 0;
-			ArrayList list = new ArrayList();
+			List<Item> list = new List<Item>();
 			bool remConflicts = Config.GetBool("UndressConflicts");
 
 			if (World.Player.Backpack == null)

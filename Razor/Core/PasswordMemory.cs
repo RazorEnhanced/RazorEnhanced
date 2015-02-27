@@ -1,7 +1,7 @@
 using System;
 using System.Xml;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Assistant
@@ -17,7 +17,7 @@ namespace Assistant
 			public IPAddress Address;
 		}
 
-		private static ArrayList m_List = new ArrayList();
+		private static List<Entry> m_List = new List<Entry>();
 
 		internal static string Encrypt(string source)
 		{
@@ -148,7 +148,7 @@ namespace Assistant
 			user = user.ToLower();
 			for (int i = 0; i < m_List.Count; i++)
 			{
-				Entry e = (Entry)m_List[i];
+				Entry e = m_List[i];
 				if (e.User == user && e.Address.Equals(addr))
 				{
 					e.Pass = Encrypt(pass);
@@ -164,7 +164,7 @@ namespace Assistant
 			user = user.ToLower();
 			for (int i = 0; i < m_List.Count; i++)
 			{
-				Entry e = (Entry)m_List[i];
+				Entry e = m_List[i];
 				if (e.User == user && e.Address.Equals(addr))
 					return Decrypt(e.Pass);
 			}

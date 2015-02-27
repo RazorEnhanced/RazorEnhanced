@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
@@ -1500,7 +1501,7 @@ namespace Assistant
 			}
 		}
 
-		private class ItemXYComparer : IComparer
+		private class ItemXYComparer : IComparer<Item>
 		{
 			internal static readonly ItemXYComparer Instance = new ItemXYComparer();
 
@@ -1508,13 +1509,8 @@ namespace Assistant
 			{
 			}
 
-			public int Compare(object x, object y)
+			public int Compare(Item x, Item y)
 			{
-				if (!(x is Item))
-					return 1;
-				else if (!(y is Item))
-					return -1;
-
 				int xsum = ((Item)x).Position.X + ((Item)x).Position.Y * 200;
 				int ysum = ((Item)y).Position.X + ((Item)y).Position.Y * 200;
 
@@ -1522,7 +1518,7 @@ namespace Assistant
 			}
 		}
 
-		private static ArrayList m_Instances = new ArrayList();
+		private static List<BuyAgent> m_Instances = new List<BuyAgent>();
 
 		internal static void Initialize()
 		{
@@ -2112,7 +2108,7 @@ namespace Assistant
 			World.Player.SendMessage(MsgLevel.Force, LocString.RestockDone, num, num != 1 ? "s" : "");
 		}
 
-		private int Recurse(Item pack, ArrayList items, RestockItem ri, ref int count)
+		private int Recurse(Item pack, List<Item> items, RestockItem ri, ref int count)
 		{
 			int num = 0;
 			for (int i = 0; count < ri.Amount && i < items.Count; i++)

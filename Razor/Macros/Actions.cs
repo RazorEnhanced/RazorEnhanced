@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
@@ -1087,7 +1088,7 @@ namespace Assistant.Macros
 		private ushort m_Font;
 		private ushort m_Hue;
 		private string m_Lang;
-		private ArrayList m_Keywords;
+		private List<ushort> m_Keywords;
 		private string m_Speech;
 
 		internal SpeechAction(string[] args)
@@ -1100,7 +1101,7 @@ namespace Assistant.Macros
 			int count = Convert.ToInt32(args[5]);
 			if (count > 0)
 			{
-				m_Keywords = new ArrayList(count);
+				m_Keywords = new List<ushort>(count);
 				m_Keywords.Add(Convert.ToUInt16(args[6]));
 
 				for (int i = 1; i < count; i++)
@@ -1110,7 +1111,7 @@ namespace Assistant.Macros
 			m_Speech = args[6 + count];
 		}
 
-		internal SpeechAction(MessageType type, ushort hue, ushort font, string lang, ArrayList kw, string speech)
+		internal SpeechAction(MessageType type, ushort hue, ushort font, string lang, List<ushort> kw, string speech)
 		{
 			m_Type = type;
 			m_Hue = hue;

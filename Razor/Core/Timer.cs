@@ -1,13 +1,13 @@
 using System;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace Assistant
 {
 	internal class MinHeap
 	{
-		private ArrayList m_List;
+		private List<IComparable> m_List;
 		private int m_Size;
 
 		internal MinHeap()
@@ -17,12 +17,12 @@ namespace Assistant
 
 		internal MinHeap(int capacity)
 		{
-			m_List = new ArrayList(capacity + 1);
+			m_List = new List<IComparable>(capacity + 1);
 			m_Size = 0;
 			m_List.Add(null); // 0th index is never used, always null
 		}
 
-		internal MinHeap(ICollection c)
+		internal MinHeap(ICollection<IComparable> c)
 			: this(c.Count)
 		{
 			foreach (IComparable o in c)
@@ -92,7 +92,7 @@ namespace Assistant
 			if (capacity < 2)
 				capacity = 2;
 			m_Size = 0;
-			m_List = new ArrayList(capacity);
+			m_List = new List<IComparable>(capacity);
 			m_List.Add(null);
 		}
 
@@ -110,11 +110,11 @@ namespace Assistant
 			m_List[hole] = o;
 		}
 
-		internal void AddMultiple(ICollection col)
+		internal void AddMultiple(ICollection<IComparable> col)
 		{
 			if (col != null && col.Count > 0)
 			{
-				foreach (object o in col)
+				foreach (IComparable o in col)
 				{
 					int hole = ++m_Size;
 
@@ -133,9 +133,9 @@ namespace Assistant
 
 		internal bool IsEmpty { get { return Count <= 0; } }
 
-		internal ArrayList GetRawList()
+		internal List<IComparable> GetRawList()
 		{
-			ArrayList copy = new ArrayList(m_Size);
+			List<IComparable> copy = new List<IComparable>(m_Size);
 			for (int i = 1; i <= m_Size; i++)
 				copy.Add(m_List[i]);
 			return copy;
@@ -277,7 +277,7 @@ namespace Assistant
 		internal static void Slice()
 		{
 			int breakCount = 100;
-			ArrayList readd = new ArrayList();
+			List<IComparable> readd = new List<IComparable>();
 
 			while (!m_Heap.IsEmpty && ((Timer)m_Heap.Peek()).TimeUntilTick < TimeSpan.Zero)
 			{

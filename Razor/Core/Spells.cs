@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace Assistant
@@ -193,15 +193,14 @@ namespace Assistant
 			}
 		}
 
-		private static Hashtable m_SpellsByPower;
-		private static Hashtable m_SpellsByID;
+		private static Dictionary<string, Spell> m_SpellsByPower;
+		private static Dictionary<int, Spell> m_SpellsByID;
 		private static HotKeyCallbackState HotKeyCallback;
 		static Spell()
 		{
-			ArrayList list = new ArrayList();
 			string filename = Path.Combine(Directory.GetCurrentDirectory(), "spells.def");
-			m_SpellsByPower = new Hashtable(64 + 10 + 16);
-			m_SpellsByID = new Hashtable(64 + 10 + 16);
+			m_SpellsByPower = new Dictionary<string, Spell>(64 + 10 + 16);
+			m_SpellsByID = new Dictionary<int, Spell>(64 + 10 + 16);
 
 			if (!File.Exists(filename))
 			{
@@ -341,12 +340,12 @@ namespace Assistant
 
 		internal static Spell Get(string power)
 		{
-			return m_SpellsByPower[power] as Spell;
+			return m_SpellsByPower[power];
 		}
 
 		internal static Spell Get(int num)
 		{
-			return m_SpellsByID[num] as Spell;
+			return m_SpellsByID[num];
 		}
 
 		internal static Spell Get(int circle, int num)

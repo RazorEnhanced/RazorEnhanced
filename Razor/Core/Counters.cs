@@ -1,9 +1,10 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Xml;
+using System.Collections;
 
 namespace Assistant
 {
@@ -256,15 +257,15 @@ namespace Assistant
 		}
 
 		private static bool m_NeedXMLSave = false;
-		private static ArrayList m_List;
+		private static List<Counter> m_List;
 		private static bool m_SupressWarn, m_SupressChecks;
-		private static Hashtable m_Cache;
-		internal static ArrayList List { get { return m_List; } }
+		private static Dictionary<Item, ushort> m_Cache;
+		internal static List<Counter> List { get { return m_List; } }
 
 		static Counter()
 		{
-			m_List = new ArrayList();
-			m_Cache = new Hashtable();
+			m_List = new List<Counter>();
+			m_Cache = new Dictionary<Item, ushort>();
 			Load();
 		}
 
@@ -454,25 +455,24 @@ namespace Assistant
 		internal static void Uncount(Item item)
 		{
 			for (int i = 0; i < item.Contains.Count; i++)
-				Uncount((Item)item.Contains[i]);
+				Uncount(item.Contains[i]);
 
 			for (int i = 0; i < m_List.Count; i++)
 			{
-				Counter c = (Counter)m_List[i];
+				Counter c = m_List[i];
 				if (c.Enabled)
 				{
 					if (c.ItemID == item.ItemID && (c.Hue == item.Hue || c.Hue == -1 || c.Hue == 0xFFFF))
 					{
-						if (m_Cache[item] != null)
-						{
-							ushort rem = (ushort)m_Cache[item];
-							if (rem >= c.Amount)
-								c.Amount = 0;
-							else
-								c.Amount -= rem;
-
-							m_Cache[item] = null;
-						}
+						// if (m_Cache[item] != null)
+						// {
+						ushort rem = m_Cache[item];
+						if (rem >= c.Amount)
+							c.Amount = 0;
+						else
+							c.Amount -= rem;
+						// m_Cache[item] = null;
+						// }
 
 						break;
 					}
