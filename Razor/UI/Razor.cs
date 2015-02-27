@@ -221,10 +221,6 @@ namespace Assistant
 		private RazorCheckBox warnCount;
 		private RazorCheckBox blockHealPoison;
 		private RazorCheckBox negotiate;
-		private System.Windows.Forms.LinkLabel wikiLink;
-		private System.Windows.Forms.LinkLabel homeLink;
-		private System.Windows.Forms.LinkLabel issuesLink;
-		private System.Windows.Forms.TextBox features;
 		private System.Windows.Forms.PictureBox lockBox;
 		private RazorButton btnMap;
 		private System.Windows.Forms.Label rpvTime;
@@ -236,9 +232,6 @@ namespace Assistant
 		private RazorComboBox clientPrio;
 		private System.Windows.Forms.Label label9;
 		private RazorCheckBox chkPartyOverhead;
-		private Label btcLabel;
-		private TextBox textBox1;
-		private TextBox statusBox;
 		private RazorButton exportProfile;
 		private RazorButton importProfile;
 		private RazorButton macroImport;
@@ -271,6 +264,8 @@ namespace Assistant
 		internal RazorCheckBox razorCheckBoxAuto;
 		private RazorButton razorButtonEdit;
 		internal EnhancedScriptEditor enhancedScriptEditor;
+		private Label labelFeatures;
+		private Label labelStatus;
 
 		private bool m_CanClose = true;
 
@@ -331,9 +326,8 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			RazorEnhanced.UI.Colortable colortable1 = new RazorEnhanced.UI.Colortable();
 			this.playMacro = new RazorEnhanced.UI.RazorButton();
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.tabs = new System.Windows.Forms.TabControl();
@@ -543,14 +537,10 @@ namespace Assistant
 			this.screenPrev = new System.Windows.Forms.PictureBox();
 			this.dispTime = new RazorEnhanced.UI.RazorCheckBox();
 			this.statusTab = new System.Windows.Forms.TabPage();
-			this.statusBox = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
-			this.btcLabel = new System.Windows.Forms.Label();
-			this.features = new System.Windows.Forms.TextBox();
-			this.issuesLink = new System.Windows.Forms.LinkLabel();
-			this.homeLink = new System.Windows.Forms.LinkLabel();
-			this.wikiLink = new System.Windows.Forms.LinkLabel();
+			this.labelStatus = new System.Windows.Forms.Label();
+			this.labelFeatures = new System.Windows.Forms.Label();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.razorButtonEdit = new RazorEnhanced.UI.RazorButton();
 			this.razorCheckBoxAuto = new RazorEnhanced.UI.RazorCheckBox();
 			this.razorButtonUp = new RazorEnhanced.UI.RazorButton();
 			this.razorButtonDown = new RazorEnhanced.UI.RazorButton();
@@ -577,7 +567,6 @@ namespace Assistant
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.timerTimer = new System.Windows.Forms.Timer(this.components);
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.razorButtonEdit = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -616,24 +605,24 @@ namespace Assistant
 			// 
 			// playMacro
 			// 
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.playMacro.ColorTable = office2010BlueTheme1;
+			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.TextColor = System.Drawing.Color.White;
+			this.playMacro.ColorTable = office2010BlueTheme;
 			this.playMacro.Location = new System.Drawing.Point(311, 18);
 			this.playMacro.Name = "playMacro";
 			this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -717,7 +706,7 @@ namespace Assistant
 			// 
 			// btnMap
 			// 
-			this.btnMap.ColorTable = office2010BlueTheme1;
+			this.btnMap.ColorTable = office2010BlueTheme;
 			this.btnMap.Location = new System.Drawing.Point(2, 250);
 			this.btnMap.Name = "btnMap";
 			this.btnMap.Size = new System.Drawing.Size(163, 23);
@@ -809,7 +798,7 @@ namespace Assistant
 			// 
 			// importProfile
 			// 
-			this.importProfile.ColorTable = office2010BlueTheme1;
+			this.importProfile.ColorTable = office2010BlueTheme;
 			this.importProfile.Location = new System.Drawing.Point(297, 14);
 			this.importProfile.Name = "importProfile";
 			this.importProfile.Size = new System.Drawing.Size(50, 20);
@@ -820,7 +809,7 @@ namespace Assistant
 			// 
 			// exportProfile
 			// 
-			this.exportProfile.ColorTable = office2010BlueTheme1;
+			this.exportProfile.ColorTable = office2010BlueTheme;
 			this.exportProfile.Location = new System.Drawing.Point(243, 14);
 			this.exportProfile.Name = "exportProfile";
 			this.exportProfile.Size = new System.Drawing.Size(50, 20);
@@ -831,7 +820,7 @@ namespace Assistant
 			// 
 			// delProfile
 			// 
-			this.delProfile.ColorTable = office2010BlueTheme1;
+			this.delProfile.ColorTable = office2010BlueTheme;
 			this.delProfile.Location = new System.Drawing.Point(188, 14);
 			this.delProfile.Name = "delProfile";
 			this.delProfile.Size = new System.Drawing.Size(50, 20);
@@ -842,7 +831,7 @@ namespace Assistant
 			// 
 			// newProfile
 			// 
-			this.newProfile.ColorTable = office2010BlueTheme1;
+			this.newProfile.ColorTable = office2010BlueTheme;
 			this.newProfile.Location = new System.Drawing.Point(134, 14);
 			this.newProfile.Name = "newProfile";
 			this.newProfile.Size = new System.Drawing.Size(50, 20);
@@ -992,7 +981,7 @@ namespace Assistant
 			// 
 			// setLTHilight
 			// 
-			this.setLTHilight.ColorTable = office2010BlueTheme1;
+			this.setLTHilight.ColorTable = office2010BlueTheme;
 			this.setLTHilight.Location = new System.Drawing.Point(142, 108);
 			this.setLTHilight.Name = "setLTHilight";
 			this.setLTHilight.Size = new System.Drawing.Size(32, 20);
@@ -1051,7 +1040,7 @@ namespace Assistant
 			// 
 			// setHarmHue
 			// 
-			this.setHarmHue.ColorTable = office2010BlueTheme1;
+			this.setHarmHue.ColorTable = office2010BlueTheme;
 			this.setHarmHue.Enabled = false;
 			this.setHarmHue.Location = new System.Drawing.Point(79, 177);
 			this.setHarmHue.Name = "setHarmHue";
@@ -1063,7 +1052,7 @@ namespace Assistant
 			// 
 			// setNeuHue
 			// 
-			this.setNeuHue.ColorTable = office2010BlueTheme1;
+			this.setNeuHue.ColorTable = office2010BlueTheme;
 			this.setNeuHue.Enabled = false;
 			this.setNeuHue.Location = new System.Drawing.Point(137, 177);
 			this.setNeuHue.Name = "setNeuHue";
@@ -1139,7 +1128,7 @@ namespace Assistant
 			// 
 			// setBeneHue
 			// 
-			this.setBeneHue.ColorTable = office2010BlueTheme1;
+			this.setBeneHue.ColorTable = office2010BlueTheme;
 			this.setBeneHue.Enabled = false;
 			this.setBeneHue.Location = new System.Drawing.Point(24, 177);
 			this.setBeneHue.Name = "setBeneHue";
@@ -1151,7 +1140,7 @@ namespace Assistant
 			// 
 			// setSpeechHue
 			// 
-			this.setSpeechHue.ColorTable = office2010BlueTheme1;
+			this.setSpeechHue.ColorTable = office2010BlueTheme;
 			this.setSpeechHue.Location = new System.Drawing.Point(142, 84);
 			this.setSpeechHue.Name = "setSpeechHue";
 			this.setSpeechHue.Size = new System.Drawing.Size(32, 20);
@@ -1162,7 +1151,7 @@ namespace Assistant
 			// 
 			// setWarnHue
 			// 
-			this.setWarnHue.ColorTable = office2010BlueTheme1;
+			this.setWarnHue.ColorTable = office2010BlueTheme;
 			this.setWarnHue.Location = new System.Drawing.Point(142, 60);
 			this.setWarnHue.Name = "setWarnHue";
 			this.setWarnHue.Size = new System.Drawing.Size(32, 20);
@@ -1173,7 +1162,7 @@ namespace Assistant
 			// 
 			// setMsgHue
 			// 
-			this.setMsgHue.ColorTable = office2010BlueTheme1;
+			this.setMsgHue.ColorTable = office2010BlueTheme;
 			this.setMsgHue.Location = new System.Drawing.Point(142, 36);
 			this.setMsgHue.Name = "setMsgHue";
 			this.setMsgHue.Size = new System.Drawing.Size(32, 19);
@@ -1184,7 +1173,7 @@ namespace Assistant
 			// 
 			// setExHue
 			// 
-			this.setExHue.ColorTable = office2010BlueTheme1;
+			this.setExHue.ColorTable = office2010BlueTheme;
 			this.setExHue.Location = new System.Drawing.Point(142, 11);
 			this.setExHue.Name = "setExHue";
 			this.setExHue.Size = new System.Drawing.Size(32, 20);
@@ -1737,7 +1726,7 @@ namespace Assistant
 			// 
 			// delCounter
 			// 
-			this.delCounter.ColorTable = office2010BlueTheme1;
+			this.delCounter.ColorTable = office2010BlueTheme;
 			this.delCounter.Location = new System.Drawing.Point(64, 133);
 			this.delCounter.Name = "delCounter";
 			this.delCounter.Size = new System.Drawing.Size(60, 20);
@@ -1748,7 +1737,7 @@ namespace Assistant
 			// 
 			// addCounter
 			// 
-			this.addCounter.ColorTable = office2010BlueTheme1;
+			this.addCounter.ColorTable = office2010BlueTheme;
 			this.addCounter.Location = new System.Drawing.Point(8, 133);
 			this.addCounter.Name = "addCounter";
 			this.addCounter.Size = new System.Drawing.Size(52, 20);
@@ -1759,7 +1748,7 @@ namespace Assistant
 			// 
 			// recount
 			// 
-			this.recount.ColorTable = office2010BlueTheme1;
+			this.recount.ColorTable = office2010BlueTheme;
 			this.recount.Location = new System.Drawing.Point(128, 133);
 			this.recount.Name = "recount";
 			this.recount.Size = new System.Drawing.Size(60, 20);
@@ -1798,7 +1787,7 @@ namespace Assistant
 			// 
 			// clearDress
 			// 
-			this.clearDress.ColorTable = office2010BlueTheme1;
+			this.clearDress.ColorTable = office2010BlueTheme;
 			this.clearDress.Location = new System.Drawing.Point(160, 112);
 			this.clearDress.Name = "clearDress";
 			this.clearDress.Size = new System.Drawing.Size(137, 20);
@@ -1809,7 +1798,7 @@ namespace Assistant
 			// 
 			// dressDelSel
 			// 
-			this.dressDelSel.ColorTable = office2010BlueTheme1;
+			this.dressDelSel.ColorTable = office2010BlueTheme;
 			this.dressDelSel.Location = new System.Drawing.Point(160, 88);
 			this.dressDelSel.Name = "dressDelSel";
 			this.dressDelSel.Size = new System.Drawing.Size(137, 19);
@@ -1820,7 +1809,7 @@ namespace Assistant
 			// 
 			// undressBag
 			// 
-			this.undressBag.ColorTable = office2010BlueTheme1;
+			this.undressBag.ColorTable = office2010BlueTheme;
 			this.undressBag.Location = new System.Drawing.Point(160, 155);
 			this.undressBag.Name = "undressBag";
 			this.undressBag.Size = new System.Drawing.Size(137, 34);
@@ -1831,7 +1820,7 @@ namespace Assistant
 			// 
 			// undressList
 			// 
-			this.undressList.ColorTable = office2010BlueTheme1;
+			this.undressList.ColorTable = office2010BlueTheme;
 			this.undressList.Location = new System.Drawing.Point(242, 14);
 			this.undressList.Name = "undressList";
 			this.undressList.Size = new System.Drawing.Size(55, 20);
@@ -1842,7 +1831,7 @@ namespace Assistant
 			// 
 			// dressUseCur
 			// 
-			this.dressUseCur.ColorTable = office2010BlueTheme1;
+			this.dressUseCur.ColorTable = office2010BlueTheme;
 			this.dressUseCur.Location = new System.Drawing.Point(160, 64);
 			this.dressUseCur.Name = "dressUseCur";
 			this.dressUseCur.Size = new System.Drawing.Size(137, 20);
@@ -1853,7 +1842,7 @@ namespace Assistant
 			// 
 			// targItem
 			// 
-			this.targItem.ColorTable = office2010BlueTheme1;
+			this.targItem.ColorTable = office2010BlueTheme;
 			this.targItem.Location = new System.Drawing.Point(160, 40);
 			this.targItem.Name = "targItem";
 			this.targItem.Size = new System.Drawing.Size(137, 20);
@@ -1874,7 +1863,7 @@ namespace Assistant
 			// 
 			// dressNow
 			// 
-			this.dressNow.ColorTable = office2010BlueTheme1;
+			this.dressNow.ColorTable = office2010BlueTheme;
 			this.dressNow.Location = new System.Drawing.Point(160, 14);
 			this.dressNow.Name = "dressNow";
 			this.dressNow.Size = new System.Drawing.Size(54, 20);
@@ -1898,7 +1887,7 @@ namespace Assistant
 			// 
 			// removeDress
 			// 
-			this.removeDress.ColorTable = office2010BlueTheme1;
+			this.removeDress.ColorTable = office2010BlueTheme;
 			this.removeDress.Location = new System.Drawing.Point(72, 206);
 			this.removeDress.Name = "removeDress";
 			this.removeDress.Size = new System.Drawing.Size(60, 20);
@@ -1909,7 +1898,7 @@ namespace Assistant
 			// 
 			// addDress
 			// 
-			this.addDress.ColorTable = office2010BlueTheme1;
+			this.addDress.ColorTable = office2010BlueTheme;
 			this.addDress.Location = new System.Drawing.Point(8, 206);
 			this.addDress.Name = "addDress";
 			this.addDress.Size = new System.Drawing.Size(60, 20);
@@ -1964,7 +1953,7 @@ namespace Assistant
 			// 
 			// skillCopyAll
 			// 
-			this.skillCopyAll.ColorTable = office2010BlueTheme1;
+			this.skillCopyAll.ColorTable = office2010BlueTheme;
 			this.skillCopyAll.Location = new System.Drawing.Point(402, 100);
 			this.skillCopyAll.Name = "skillCopyAll";
 			this.skillCopyAll.Size = new System.Drawing.Size(115, 20);
@@ -1975,7 +1964,7 @@ namespace Assistant
 			// 
 			// skillCopySel
 			// 
-			this.skillCopySel.ColorTable = office2010BlueTheme1;
+			this.skillCopySel.ColorTable = office2010BlueTheme;
 			this.skillCopySel.Location = new System.Drawing.Point(402, 75);
 			this.skillCopySel.Name = "skillCopySel";
 			this.skillCopySel.Size = new System.Drawing.Size(115, 21);
@@ -2016,7 +2005,7 @@ namespace Assistant
 			// 
 			// setlocks
 			// 
-			this.setlocks.ColorTable = office2010BlueTheme1;
+			this.setlocks.ColorTable = office2010BlueTheme;
 			this.setlocks.Location = new System.Drawing.Point(402, 42);
 			this.setlocks.Name = "setlocks";
 			this.setlocks.Size = new System.Drawing.Size(76, 20);
@@ -2027,7 +2016,7 @@ namespace Assistant
 			// 
 			// resetDelta
 			// 
-			this.resetDelta.ColorTable = office2010BlueTheme1;
+			this.resetDelta.ColorTable = office2010BlueTheme;
 			this.resetDelta.Location = new System.Drawing.Point(402, 13);
 			this.resetDelta.Name = "resetDelta";
 			this.resetDelta.Size = new System.Drawing.Size(115, 20);
@@ -2103,7 +2092,7 @@ namespace Assistant
 			// 
 			// agentB6
 			// 
-			this.agentB6.ColorTable = office2010BlueTheme1;
+			this.agentB6.ColorTable = office2010BlueTheme;
 			this.agentB6.Location = new System.Drawing.Point(7, 175);
 			this.agentB6.Name = "agentB6";
 			this.agentB6.Size = new System.Drawing.Size(127, 20);
@@ -2113,7 +2102,7 @@ namespace Assistant
 			// 
 			// agentB5
 			// 
-			this.agentB5.ColorTable = office2010BlueTheme1;
+			this.agentB5.ColorTable = office2010BlueTheme;
 			this.agentB5.Location = new System.Drawing.Point(7, 150);
 			this.agentB5.Name = "agentB5";
 			this.agentB5.Size = new System.Drawing.Size(127, 20);
@@ -2151,7 +2140,7 @@ namespace Assistant
 			// 
 			// agentB4
 			// 
-			this.agentB4.ColorTable = office2010BlueTheme1;
+			this.agentB4.ColorTable = office2010BlueTheme;
 			this.agentB4.Location = new System.Drawing.Point(7, 125);
 			this.agentB4.Name = "agentB4";
 			this.agentB4.Size = new System.Drawing.Size(127, 20);
@@ -2161,7 +2150,7 @@ namespace Assistant
 			// 
 			// agentB1
 			// 
-			this.agentB1.ColorTable = office2010BlueTheme1;
+			this.agentB1.ColorTable = office2010BlueTheme;
 			this.agentB1.Location = new System.Drawing.Point(7, 49);
 			this.agentB1.Name = "agentB1";
 			this.agentB1.Size = new System.Drawing.Size(127, 19);
@@ -2171,7 +2160,7 @@ namespace Assistant
 			// 
 			// agentB2
 			// 
-			this.agentB2.ColorTable = office2010BlueTheme1;
+			this.agentB2.ColorTable = office2010BlueTheme;
 			this.agentB2.Location = new System.Drawing.Point(7, 74);
 			this.agentB2.Name = "agentB2";
 			this.agentB2.Size = new System.Drawing.Size(127, 20);
@@ -2181,7 +2170,7 @@ namespace Assistant
 			// 
 			// agentB3
 			// 
-			this.agentB3.ColorTable = office2010BlueTheme1;
+			this.agentB3.ColorTable = office2010BlueTheme;
 			this.agentB3.Location = new System.Drawing.Point(7, 100);
 			this.agentB3.Name = "agentB3";
 			this.agentB3.Size = new System.Drawing.Size(127, 20);
@@ -2253,7 +2242,7 @@ namespace Assistant
 			// 
 			// unsetHK
 			// 
-			this.unsetHK.ColorTable = office2010BlueTheme1;
+			this.unsetHK.ColorTable = office2010BlueTheme;
 			this.unsetHK.Location = new System.Drawing.Point(8, 96);
 			this.unsetHK.Name = "unsetHK";
 			this.unsetHK.Size = new System.Drawing.Size(52, 20);
@@ -2264,7 +2253,7 @@ namespace Assistant
 			// 
 			// setHK
 			// 
-			this.setHK.ColorTable = office2010BlueTheme1;
+			this.setHK.ColorTable = office2010BlueTheme;
 			this.setHK.Location = new System.Drawing.Point(104, 96);
 			this.setHK.Name = "setHK";
 			this.setHK.Size = new System.Drawing.Size(48, 20);
@@ -2310,7 +2299,7 @@ namespace Assistant
 			// 
 			// dohotkey
 			// 
-			this.dohotkey.ColorTable = office2010BlueTheme1;
+			this.dohotkey.ColorTable = office2010BlueTheme;
 			this.dohotkey.Location = new System.Drawing.Point(366, 145);
 			this.dohotkey.Name = "dohotkey";
 			this.dohotkey.Size = new System.Drawing.Size(160, 20);
@@ -2329,7 +2318,7 @@ namespace Assistant
 			this.macrosTab.Name = "macrosTab";
 			this.macrosTab.Size = new System.Drawing.Size(653, 335);
 			this.macrosTab.TabIndex = 7;
-			this.macrosTab.Text = "Old Macros";
+			this.macrosTab.Text = "Macros";
 			// 
 			// macroTree
 			// 
@@ -2362,7 +2351,7 @@ namespace Assistant
 			// 
 			// macroImport
 			// 
-			this.macroImport.ColorTable = office2010BlueTheme1;
+			this.macroImport.ColorTable = office2010BlueTheme;
 			this.macroImport.Location = new System.Drawing.Point(311, 106);
 			this.macroImport.Name = "macroImport";
 			this.macroImport.Size = new System.Drawing.Size(60, 20);
@@ -2373,7 +2362,7 @@ namespace Assistant
 			// 
 			// exportMacro
 			// 
-			this.exportMacro.ColorTable = office2010BlueTheme1;
+			this.exportMacro.ColorTable = office2010BlueTheme;
 			this.exportMacro.Location = new System.Drawing.Point(311, 81);
 			this.exportMacro.Name = "exportMacro";
 			this.exportMacro.Size = new System.Drawing.Size(60, 20);
@@ -2401,7 +2390,7 @@ namespace Assistant
 			// 
 			// recMacro
 			// 
-			this.recMacro.ColorTable = office2010BlueTheme1;
+			this.recMacro.ColorTable = office2010BlueTheme;
 			this.recMacro.Location = new System.Drawing.Point(311, 55);
 			this.recMacro.Name = "recMacro";
 			this.recMacro.Size = new System.Drawing.Size(60, 20);
@@ -2424,7 +2413,7 @@ namespace Assistant
 			// 
 			// delMacro
 			// 
-			this.delMacro.ColorTable = office2010BlueTheme1;
+			this.delMacro.ColorTable = office2010BlueTheme;
 			this.delMacro.Location = new System.Drawing.Point(82, 248);
 			this.delMacro.Name = "delMacro";
 			this.delMacro.Size = new System.Drawing.Size(60, 20);
@@ -2435,7 +2424,7 @@ namespace Assistant
 			// 
 			// newMacro
 			// 
-			this.newMacro.ColorTable = office2010BlueTheme1;
+			this.newMacro.ColorTable = office2010BlueTheme;
 			this.newMacro.Location = new System.Drawing.Point(7, 248);
 			this.newMacro.Name = "newMacro";
 			this.newMacro.Size = new System.Drawing.Size(60, 20);
@@ -2472,7 +2461,7 @@ namespace Assistant
 			// 
 			// recFolder
 			// 
-			this.recFolder.ColorTable = office2010BlueTheme1;
+			this.recFolder.ColorTable = office2010BlueTheme;
 			this.recFolder.Location = new System.Drawing.Point(237, 29);
 			this.recFolder.Name = "recFolder";
 			this.recFolder.Size = new System.Drawing.Size(23, 19);
@@ -2501,7 +2490,7 @@ namespace Assistant
 			// 
 			// vidRec
 			// 
-			this.vidRec.ColorTable = office2010BlueTheme1;
+			this.vidRec.ColorTable = office2010BlueTheme;
 			this.vidRec.Location = new System.Drawing.Point(36, 18);
 			this.vidRec.Name = "vidRec";
 			this.vidRec.Size = new System.Drawing.Size(181, 20);
@@ -2547,7 +2536,7 @@ namespace Assistant
 			// 
 			// recAVI
 			// 
-			this.recAVI.ColorTable = office2010BlueTheme1;
+			this.recAVI.ColorTable = office2010BlueTheme;
 			this.recAVI.Location = new System.Drawing.Point(10, 68);
 			this.recAVI.Name = "recAVI";
 			this.recAVI.Size = new System.Drawing.Size(182, 20);
@@ -2661,7 +2650,7 @@ namespace Assistant
 			// 
 			// vidClose
 			// 
-			this.vidClose.ColorTable = office2010BlueTheme1;
+			this.vidClose.ColorTable = office2010BlueTheme;
 			this.vidClose.Enabled = false;
 			this.vidClose.Location = new System.Drawing.Point(134, 18);
 			this.vidClose.Name = "vidClose";
@@ -2685,7 +2674,7 @@ namespace Assistant
 			// 
 			// vidPlayStop
 			// 
-			this.vidPlayStop.ColorTable = office2010BlueTheme1;
+			this.vidPlayStop.ColorTable = office2010BlueTheme;
 			this.vidPlayStop.Enabled = false;
 			this.vidPlayStop.Location = new System.Drawing.Point(68, 42);
 			this.vidPlayStop.Name = "vidPlayStop";
@@ -2697,7 +2686,7 @@ namespace Assistant
 			// 
 			// vidPlay
 			// 
-			this.vidPlay.ColorTable = office2010BlueTheme1;
+			this.vidPlay.ColorTable = office2010BlueTheme;
 			this.vidPlay.Enabled = false;
 			this.vidPlay.Location = new System.Drawing.Point(10, 42);
 			this.vidPlay.Name = "vidPlay";
@@ -2716,7 +2705,7 @@ namespace Assistant
 			// 
 			// vidOpen
 			// 
-			this.vidOpen.ColorTable = office2010BlueTheme1;
+			this.vidOpen.ColorTable = office2010BlueTheme;
 			this.vidOpen.Location = new System.Drawing.Point(10, 18);
 			this.vidOpen.Name = "vidOpen";
 			this.vidOpen.Size = new System.Drawing.Size(104, 20);
@@ -2774,7 +2763,7 @@ namespace Assistant
 			// 
 			// capNow
 			// 
-			this.capNow.ColorTable = office2010BlueTheme1;
+			this.capNow.ColorTable = office2010BlueTheme;
 			this.capNow.Location = new System.Drawing.Point(246, 13);
 			this.capNow.Name = "capNow";
 			this.capNow.Size = new System.Drawing.Size(285, 20);
@@ -2824,7 +2813,7 @@ namespace Assistant
 			// 
 			// setScnPath
 			// 
-			this.setScnPath.ColorTable = office2010BlueTheme1;
+			this.setScnPath.ColorTable = office2010BlueTheme;
 			this.setScnPath.Location = new System.Drawing.Point(208, 16);
 			this.setScnPath.Name = "setScnPath";
 			this.setScnPath.Size = new System.Drawing.Size(22, 17);
@@ -2866,99 +2855,30 @@ namespace Assistant
 			// 
 			// statusTab
 			// 
-			this.statusTab.Controls.Add(this.statusBox);
-			this.statusTab.Controls.Add(this.textBox1);
-			this.statusTab.Controls.Add(this.btcLabel);
-			this.statusTab.Controls.Add(this.features);
-			this.statusTab.Controls.Add(this.issuesLink);
-			this.statusTab.Controls.Add(this.homeLink);
-			this.statusTab.Controls.Add(this.wikiLink);
+			this.statusTab.Controls.Add(this.labelStatus);
+			this.statusTab.Controls.Add(this.labelFeatures);
 			this.statusTab.Location = new System.Drawing.Point(4, 40);
 			this.statusTab.Name = "statusTab";
 			this.statusTab.Size = new System.Drawing.Size(653, 335);
 			this.statusTab.TabIndex = 9;
-			this.statusTab.Text = "Help && Status";
+			this.statusTab.Text = "Help & Status";
 			// 
-			// statusBox
+			// labelStatus
 			// 
-			this.statusBox.BackColor = System.Drawing.SystemColors.Control;
-			this.statusBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.statusBox.HideSelection = false;
-			this.statusBox.Location = new System.Drawing.Point(4, 8);
-			this.statusBox.Multiline = true;
-			this.statusBox.Name = "statusBox";
-			this.statusBox.ReadOnly = true;
-			this.statusBox.Size = new System.Drawing.Size(185, 178);
-			this.statusBox.TabIndex = 12;
+			this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.labelStatus.Location = new System.Drawing.Point(449, 9);
+			this.labelStatus.Name = "labelStatus";
+			this.labelStatus.Size = new System.Drawing.Size(196, 290);
+			this.labelStatus.TabIndex = 1;
 			// 
-			// textBox1
+			// labelFeatures
 			// 
-			this.textBox1.Location = new System.Drawing.Point(195, 26);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.ReadOnly = true;
-			this.textBox1.Size = new System.Drawing.Size(217, 20);
-			this.textBox1.TabIndex = 11;
-			this.textBox1.Text = "1GdrG1uXDTjXgZe7seMic5FgFDKLLJVEuj";
-			this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			// 
-			// btcLabel
-			// 
-			this.btcLabel.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btcLabel.Location = new System.Drawing.Point(224, 8);
-			this.btcLabel.Name = "btcLabel";
-			this.btcLabel.Size = new System.Drawing.Size(164, 15);
-			this.btcLabel.TabIndex = 10;
-			this.btcLabel.Text = "Donate BTC to Razor";
-			this.btcLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btcLabel.Click += new System.EventHandler(this.btcLabel_Click);
-			// 
-			// features
-			// 
-			this.features.Cursor = System.Windows.Forms.Cursors.No;
-			this.features.Location = new System.Drawing.Point(195, 104);
-			this.features.Multiline = true;
-			this.features.Name = "features";
-			this.features.ReadOnly = true;
-			this.features.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.features.Size = new System.Drawing.Size(217, 82);
-			this.features.TabIndex = 9;
-			this.features.Visible = false;
-			// 
-			// issuesLink
-			// 
-			this.issuesLink.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-			this.issuesLink.Location = new System.Drawing.Point(224, 81);
-			this.issuesLink.Name = "issuesLink";
-			this.issuesLink.Size = new System.Drawing.Size(164, 16);
-			this.issuesLink.TabIndex = 8;
-			this.issuesLink.TabStop = true;
-			this.issuesLink.Text = "Issue Tracker";
-			this.issuesLink.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.issuesLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.issuesLink_LinkClicked);
-			// 
-			// homeLink
-			// 
-			this.homeLink.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-			this.homeLink.Location = new System.Drawing.Point(224, 49);
-			this.homeLink.Name = "homeLink";
-			this.homeLink.Size = new System.Drawing.Size(164, 16);
-			this.homeLink.TabIndex = 7;
-			this.homeLink.TabStop = true;
-			this.homeLink.Text = "Razor Homepage";
-			this.homeLink.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.homeLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.homeLink_LinkClicked);
-			// 
-			// wikiLink
-			// 
-			this.wikiLink.LinkBehavior = System.Windows.Forms.LinkBehavior.AlwaysUnderline;
-			this.wikiLink.Location = new System.Drawing.Point(224, 65);
-			this.wikiLink.Name = "wikiLink";
-			this.wikiLink.Size = new System.Drawing.Size(164, 16);
-			this.wikiLink.TabIndex = 6;
-			this.wikiLink.TabStop = true;
-			this.wikiLink.Text = "Razor Wiki";
-			this.wikiLink.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.wikiLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.wikiLink_LinkClicked);
+			this.labelFeatures.AutoSize = true;
+			this.labelFeatures.Location = new System.Drawing.Point(8, 317);
+			this.labelFeatures.Name = "labelFeatures";
+			this.labelFeatures.Size = new System.Drawing.Size(67, 13);
+			this.labelFeatures.TabIndex = 0;
+			this.labelFeatures.Text = "FEATURES:";
 			// 
 			// tabPage1
 			// 
@@ -2977,6 +2897,18 @@ namespace Assistant
 			this.tabPage1.TabIndex = 12;
 			this.tabPage1.Text = "Enhanced Scripting";
 			// 
+			// razorButtonEdit
+			// 
+			this.razorButtonEdit.ColorTable = office2010BlueTheme;
+			this.razorButtonEdit.Location = new System.Drawing.Point(435, 284);
+			this.razorButtonEdit.Name = "razorButtonEdit";
+			this.razorButtonEdit.Size = new System.Drawing.Size(52, 20);
+			this.razorButtonEdit.TabIndex = 20;
+			this.razorButtonEdit.Text = "Edit";
+			this.razorButtonEdit.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.razorButtonEdit.UseVisualStyleBackColor = true;
+			this.razorButtonEdit.Click += new System.EventHandler(this.razorButtonEdit_Click);
+			// 
 			// razorCheckBoxAuto
 			// 
 			this.razorCheckBoxAuto.AutoSize = true;
@@ -2990,7 +2922,7 @@ namespace Assistant
 			// 
 			// razorButtonUp
 			// 
-			this.razorButtonUp.ColorTable = office2010BlueTheme1;
+			this.razorButtonUp.ColorTable = office2010BlueTheme;
 			this.razorButtonUp.Location = new System.Drawing.Point(354, 284);
 			this.razorButtonUp.Name = "razorButtonUp";
 			this.razorButtonUp.Size = new System.Drawing.Size(75, 20);
@@ -3002,7 +2934,7 @@ namespace Assistant
 			// 
 			// razorButtonDown
 			// 
-			this.razorButtonDown.ColorTable = office2010BlueTheme1;
+			this.razorButtonDown.ColorTable = office2010BlueTheme;
 			this.razorButtonDown.Location = new System.Drawing.Point(267, 284);
 			this.razorButtonDown.Name = "razorButtonDown";
 			this.razorButtonDown.Size = new System.Drawing.Size(81, 19);
@@ -3051,7 +2983,7 @@ namespace Assistant
 			// 
 			// xButton3
 			// 
-			this.xButton3.ColorTable = office2010BlueTheme1;
+			this.xButton3.ColorTable = office2010BlueTheme;
 			this.xButton3.Location = new System.Drawing.Point(154, 284);
 			this.xButton3.Name = "xButton3";
 			this.xButton3.Size = new System.Drawing.Size(107, 20);
@@ -3062,7 +2994,7 @@ namespace Assistant
 			// 
 			// xButton2
 			// 
-			this.xButton2.ColorTable = office2010BlueTheme1;
+			this.xButton2.ColorTable = office2010BlueTheme;
 			this.xButton2.Location = new System.Drawing.Point(63, 284);
 			this.xButton2.Name = "xButton2";
 			this.xButton2.Size = new System.Drawing.Size(85, 20);
@@ -3100,7 +3032,7 @@ namespace Assistant
 			// 
 			// autolootImport
 			// 
-			this.autolootImport.ColorTable = office2010BlueTheme1;
+			this.autolootImport.ColorTable = office2010BlueTheme;
 			this.autolootImport.Location = new System.Drawing.Point(114, 18);
 			this.autolootImport.Name = "autolootImport";
 			this.autolootImport.Size = new System.Drawing.Size(104, 20);
@@ -3110,7 +3042,7 @@ namespace Assistant
 			// 
 			// autolootExport
 			// 
-			this.autolootExport.ColorTable = office2010BlueTheme1;
+			this.autolootExport.ColorTable = office2010BlueTheme;
 			this.autolootExport.Location = new System.Drawing.Point(5, 18);
 			this.autolootExport.Name = "autolootExport";
 			this.autolootExport.Size = new System.Drawing.Size(104, 20);
@@ -3132,7 +3064,7 @@ namespace Assistant
 			// 
 			// autolootSaveButton
 			// 
-			this.autolootSaveButton.ColorTable = office2010BlueTheme1;
+			this.autolootSaveButton.ColorTable = office2010BlueTheme;
 			this.autolootSaveButton.Location = new System.Drawing.Point(222, 18);
 			this.autolootSaveButton.Name = "autolootSaveButton";
 			this.autolootSaveButton.Size = new System.Drawing.Size(104, 20);
@@ -3142,7 +3074,7 @@ namespace Assistant
 			// 
 			// autolootRemoveItemButton
 			// 
-			this.autolootRemoveItemButton.ColorTable = office2010BlueTheme1;
+			this.autolootRemoveItemButton.ColorTable = office2010BlueTheme;
 			this.autolootRemoveItemButton.Location = new System.Drawing.Point(114, 18);
 			this.autolootRemoveItemButton.Name = "autolootRemoveItemButton";
 			this.autolootRemoveItemButton.Size = new System.Drawing.Size(104, 20);
@@ -3152,7 +3084,7 @@ namespace Assistant
 			// 
 			// autolootAddItemButton
 			// 
-			this.autolootAddItemButton.ColorTable = office2010BlueTheme1;
+			this.autolootAddItemButton.ColorTable = office2010BlueTheme;
 			this.autolootAddItemButton.Location = new System.Drawing.Point(5, 18);
 			this.autolootAddItemButton.Name = "autolootAddItemButton";
 			this.autolootAddItemButton.Size = new System.Drawing.Size(104, 20);
@@ -3170,7 +3102,7 @@ namespace Assistant
 			// 
 			// autolootContainerButton
 			// 
-			this.autolootContainerButton.ColorTable = office2010BlueTheme1;
+			this.autolootContainerButton.ColorTable = office2010BlueTheme;
 			this.autolootContainerButton.Location = new System.Drawing.Point(394, 13);
 			this.autolootContainerButton.Name = "autolootContainerButton";
 			this.autolootContainerButton.Size = new System.Drawing.Size(132, 20);
@@ -3223,35 +3155,6 @@ namespace Assistant
 			// 
 			this.openFileDialog1.FileName = "openFileDialog1";
 			// 
-			// razorButtonEdit
-			// 
-			colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable1.TextColor = System.Drawing.Color.White;
-			this.razorButtonEdit.ColorTable = colortable1;
-			this.razorButtonEdit.Location = new System.Drawing.Point(435, 284);
-			this.razorButtonEdit.Name = "razorButtonEdit";
-			this.razorButtonEdit.Size = new System.Drawing.Size(52, 20);
-			this.razorButtonEdit.TabIndex = 20;
-			this.razorButtonEdit.Text = "Edit";
-			this.razorButtonEdit.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButtonEdit.UseVisualStyleBackColor = true;
-			this.razorButtonEdit.Click += new System.EventHandler(this.razorButtonEdit_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -3261,7 +3164,7 @@ namespace Assistant
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "Razor v{0}";
+			this.Text = "Enhanced Razor {0}";
 			this.Activated += new System.EventHandler(this.MainForm_Activated);
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Deactivate += new System.EventHandler(this.MainForm_Deactivate);
@@ -3668,22 +3571,23 @@ namespace Assistant
 			if (ClientCommunication.ConnectionStart != DateTime.MinValue)
 				time = (int)((DateTime.Now - ClientCommunication.ConnectionStart).TotalSeconds);
 
-			if (String.IsNullOrEmpty(statusBox.SelectedText))
-			{
-				statusBox.Lines = Language.Format(LocString.RazorStatus1,
-					m_Ver,
-					Utility.FormatSize(System.GC.GetTotalMemory(false)),
-					Utility.FormatSize(m_OutPrev), Utility.FormatSize((long)((m_OutPrev - ps))),
-					Utility.FormatSize(m_InPrev), Utility.FormatSize((long)((m_InPrev - pr))),
-					Utility.FormatTime(time),
-					(World.Player != null ? (uint)World.Player.Serial : 0),
-					(World.Player != null && World.Player.Backpack != null ? (uint)World.Player.Backpack.Serial : 0),
-					World.Items.Count,
-					World.Mobiles.Count).Split('\n');
 
-				if (World.Player != null)
-					statusBox.AppendText(String.Format("\r\nCoordinates: {0} {1} {2}", World.Player.Position.X, World.Player.Position.Y, World.Player.Position.Z));
-			}
+			string status = Language.Format(LocString.RazorStatus1,
+				m_Ver,
+				Utility.FormatSize(System.GC.GetTotalMemory(false)),
+				Utility.FormatSize(m_OutPrev), Utility.FormatSize((long)((m_OutPrev - ps))),
+				Utility.FormatSize(m_InPrev), Utility.FormatSize((long)((m_InPrev - pr))),
+				Utility.FormatTime(time),
+				(World.Player != null ? (uint)World.Player.Serial : 0),
+				(World.Player != null && World.Player.Backpack != null ? (uint)World.Player.Backpack.Serial : 0),
+				World.Items.Count,
+				World.Mobiles.Count);
+
+			if (World.Player != null)
+				status += String.Format("\r\nCoordinates: {0} {1} {2}", World.Player.Position.X, World.Player.Position.Y, World.Player.Position.Z);
+
+			labelStatus.Text = status;
+
 
 			if (PacketHandlers.PlayCharTime < DateTime.Now && PacketHandlers.PlayCharTime + TimeSpan.FromSeconds(30) > DateTime.Now)
 			{
@@ -3713,12 +3617,12 @@ namespace Assistant
 
 					text.Append("\r\n");
 
-					features.Visible = true;
-					features.Text = text.ToString();
+					labelFeatures.Visible = true;
+					labelFeatures.Text = text.ToString();
 				}
 				else
 				{
-					features.Visible = false;
+					labelFeatures.Visible = false;
 				}
 			}
 		}
@@ -5836,11 +5740,6 @@ namespace Assistant
 			}
 		}
 
-		private void donate_Click(object sender, System.EventArgs e)
-		{
-			LaunchBrowser("https://www.paypal.com/xclick/business=zippy%40runuo.com&item_name=Razor&no_shipping=1&no_note=1&tax=0&currency_code=USD");
-		}
-
 		private void undressConflicts_CheckedChanged(object sender, System.EventArgs e)
 		{
 			Config.SetProperty("UndressConflicts", undressConflicts.Checked);
@@ -5872,7 +5771,7 @@ namespace Assistant
 		{
 			string str = Language.GetControlText(this.Name);
 			if (str == null || str == "")
-				str = "Razor v{0}";
+				str = "Enhanced Razor {0}";
 
 			str = String.Format(str, Engine.Version);
 			if (World.Player != null)
@@ -6368,26 +6267,6 @@ namespace Assistant
 			}
 		}
 
-		private void wikiLink_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-		{
-			LaunchBrowser("https://github.com/msturgill/razor/wiki");
-		}
-
-		private void homeLink_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-		{
-			LaunchBrowser("https://github.com/msturgill/razor/wiki");
-		}
-
-		private void issuesLink_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
-		{
-			LaunchBrowser("https://github.com/msturgill/razor/issues");
-		}
-
-		private void mleLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-		{
-			LaunchBrowser("http://www.mlewallpapers.com/");
-		}
-
 		private void lockBox_Click(object sender, System.EventArgs e)
 		{
 			MessageBox.Show(this, Language.GetString(LocString.FeatureDisabledText), Language.GetString(LocString.FeatureDisabled), MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -6466,7 +6345,7 @@ namespace Assistant
 		{
 			OnMacroStop();
 
-			features.Visible = false;
+			labelFeatures.Visible = false;
 
 			for (int i = 0; i < m_LockBoxes.Count; i++)
 			{
