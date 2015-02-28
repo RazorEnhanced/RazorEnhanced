@@ -5,19 +5,32 @@ using Assistant;
 
 namespace RazorEnhanced
 {
+	internal struct Serial
+	{
+		private Assistant.Serial m_AssistantSerial;
+
+		internal Serial(Assistant.Serial serial)
+		{
+			m_AssistantSerial = serial;
+		}
+
+		public int Value { get { return (int)m_AssistantSerial.Value; } }
+	}
+
 	public class EnhancedEntity
-	{	
-		private  UOEntity m_UOEntity;
+	{
+		private UOEntity m_UOEntity;
+		private Serial m_Serial;
 
 		internal EnhancedEntity(UOEntity entity)
 		{
+			m_Serial = new Serial(entity.Serial);
 			m_UOEntity = entity;
 		}
 
-		internal Serial Serial { get { return m_UOEntity.Serial; } }
+		public int Serial { get { return m_Serial.Value; } }
 
 		public virtual Point3D Position { get { return new RazorEnhanced.Point3D(m_UOEntity.Position); } }
-
 
 		public bool Deleted
 		{
@@ -34,8 +47,8 @@ namespace RazorEnhanced
 
 		public virtual ushort Hue
 		{
-			get{ return m_UOEntity.Hue; }
-			set{ m_UOEntity.Hue = value; }
+			get { return m_UOEntity.Hue; }
+			set { m_UOEntity.Hue = value; }
 		}
 	}
 }

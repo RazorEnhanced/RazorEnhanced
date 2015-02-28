@@ -145,17 +145,17 @@ namespace Assistant
 
 		internal override void AfterLoad()
 		{
-			m_Items= new List<Item>();
-			for (int i = 0; i < m_Serials.Count; i++)
-			{
-					Item item = World.FindItem((Serial)m_Serials[i]);
+			m_Items = new List<Item>();
 
-					if (item != null)
-					{
-						m_Items.Add(item);
-					}
+			foreach (Serial serial in m_Serials)
+			{
+				Item item = World.FindItem(serial);
+
+				if (item != null)
+				{
+					m_Items.Add(item);
 				}
-			
+			}
 
 			UpdateContainer();
 		}
@@ -270,9 +270,8 @@ namespace Assistant
 		internal int GetCount(ushort iid)
 		{
 			int count = 0;
-			for (int i = 0; i < m_Items.Count; i++)
+			foreach (Item item in m_Items)
 			{
-				Item item = (Item)m_Items[i];
 				if (item.ItemID == iid)
 					count += item.Amount;
 				// fucking osi blank scrolls
@@ -462,9 +461,9 @@ namespace Assistant
 
 		private void AddItem(Item item)
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+			foreach (Item i in m_Items)
 			{
-				if (m_Items[i] == item)
+				if (i == item)
 					return;
 			}
 			m_Items.Add(item);
@@ -538,8 +537,9 @@ namespace Assistant
 
 			List<Item> rem = new List<Item>(m_Items);
 			m_Items.Clear();
-			for (int i = 0; i < rem.Count; i++)
-				(rem[i]).Remove();
+
+			foreach (Item r in rem)
+				r.Remove();
 
 			Counter.Uncount(this);
 

@@ -87,7 +87,7 @@ namespace Assistant
 
 		private class RecordTimer : Timer
 		{
-			public RecordTimer(double fps)
+			internal RecordTimer(double fps)
 				: base(TimeSpan.FromSeconds(1.0 / fps), TimeSpan.FromSeconds(1.0 / fps))
 			{
 			}
@@ -297,61 +297,61 @@ namespace Assistant
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
 		private struct AVISTREAMINFO
 		{
-			public uint fccType;
-			public uint fccHandler;
-			public uint dwFlags; // Contains AVITF_* flags
-			public uint dwCaps;
-			public ushort wPriority;
-			public ushort wLanguage;
-			public uint dwScale;
-			public uint dwRate;  // dwRate / dwScale == samples/second
-			public uint dwStart;
-			public uint dwLength;
-			public uint dwInitialFrames;
-			public uint dwSuggestedBufferSize;
-			public int dwQuality;
-			public uint dwSampleSize;
-			public int rcFrameLEFT;
-			public int rcFrameTOP;
-			public int rcFrameRIGHT;
-			public int rcFrameBOTTOM;
-			public uint dwEditCount;
-			public uint dwFormatChangeCount;
+			internal uint fccType;
+			internal uint fccHandler;
+			internal uint dwFlags; // Contains AVITF_* flags
+			internal uint dwCaps;
+			internal ushort wPriority;
+			internal ushort wLanguage;
+			internal uint dwScale;
+			internal uint dwRate;  // dwRate / dwScale == samples/second
+			internal uint dwStart;
+			internal uint dwLength;
+			internal uint dwInitialFrames;
+			internal uint dwSuggestedBufferSize;
+			internal int dwQuality;
+			internal uint dwSampleSize;
+			internal int rcFrameLEFT;
+			internal int rcFrameTOP;
+			internal int rcFrameRIGHT;
+			internal int rcFrameBOTTOM;
+			internal uint dwEditCount;
+			internal uint dwFormatChangeCount;
 			[MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-			public byte[] szName;
+			internal byte[] szName;
 		}
 
 		// vfw.h
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
 		private struct AVICOMPRESSOPTIONS
 		{
-			public uint fccType;
-			public uint fccHandler;
-			public uint dwKeyFrameEvery;  // only used with AVICOMRPESSF_KEYFRAMES
-			public uint dwQuality;
-			public uint dwBytesPerSecond; // only used with AVICOMPRESSF_DATARATE
-			public uint dwFlags;
-			public IntPtr lpFormat;
-			public uint cbFormat;
-			public IntPtr lpParms;
-			public uint cbParms;
-			public uint dwInterleaveEvery;
+			internal uint fccType;
+			internal uint fccHandler;
+			internal uint dwKeyFrameEvery;  // only used with AVICOMRPESSF_KEYFRAMES
+			internal uint dwQuality;
+			internal uint dwBytesPerSecond; // only used with AVICOMPRESSF_DATARATE
+			internal uint dwFlags;
+			internal IntPtr lpFormat;
+			internal uint cbFormat;
+			internal IntPtr lpParms;
+			internal uint cbParms;
+			internal uint dwInterleaveEvery;
 		}
 
 		[StructLayout(LayoutKind.Sequential, Pack = 1)]
 		private struct BITMAPINFOHEADER
 		{
-			public uint biSize;
-			public int biWidth;
-			public int biHeight;
-			public short biPlanes;
-			public short biBitCount;
-			public uint biCompression;
-			public uint biSizeImage;
-			public int biXPelsPerMeter;
-			public int biYPelsPerMeter;
-			public uint biClrUsed;
-			public uint biClrImportant;
+			internal uint biSize;
+			internal int biWidth;
+			internal int biHeight;
+			internal short biPlanes;
+			internal short biBitCount;
+			internal uint biCompression;
+			internal uint biSizeImage;
+			internal int biXPelsPerMeter;
+			internal int biYPelsPerMeter;
+			internal uint biClrUsed;
+			internal uint biClrImportant;
 		}
 	}
 }

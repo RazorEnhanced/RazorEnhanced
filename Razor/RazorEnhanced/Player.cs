@@ -204,7 +204,7 @@ namespace RazorEnhanced
 
 		public static void EquipItem(int serial)
 		{
-			Assistant.Item item = Assistant.World.FindItem((Assistant.Serial)((ushort)serial));
+			Assistant.Item item = Assistant.World.FindItem((Assistant.Serial)serial);
 			if (item == null)
 			{
 				Player.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") not found");
@@ -1347,22 +1347,12 @@ namespace RazorEnhanced
             else
             {
                 RazorEnhanced.Mobile mobile = new RazorEnhanced.Mobile(assistantMobile);
-                if (mobile.Serial.IsItem)
-                {
-                    return GetPropExec(mobile, code, "GetPropByCliloc");
-                }
-                else
-                {
-                    Player.SendMessage("Script Error: GetPropByCliloc: (" + mobile.Serial.ToString() + ") is not a item");
-                    return 0;
-                }
+                return GetPropExec(mobile, code, "GetPropByCliloc");
             }
         }
 
         public static int GetPropByString(RazorEnhanced.Mobile mobile, string props)
         {
-            if (mobile.Serial.IsItem)
-            {
                 switch (props)
                 {
                     case "Damage Increase":
@@ -1403,13 +1393,7 @@ namespace RazorEnhanced
                     default:
                         Player.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
                         return 0;
-                }
-
-            }
-            else
-            {
-                Player.SendMessage("Script Error: GetPropByString: (" + mobile.Serial.ToString() + ") is not a item");
-                return 0;
+                
             }
         }
 

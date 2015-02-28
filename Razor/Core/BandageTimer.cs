@@ -53,9 +53,9 @@ namespace Assistant
 		{
 			if (Running)
 			{
-				for (int i = 0; i < m_ClilocNums.Length; i++)
+				foreach (int cliloc in m_ClilocNums)
 				{
-					if (Language.GetCliloc(m_ClilocNums[i]) == msg)
+					if (Language.GetCliloc(cliloc) == msg)
 					{
 						Stop();
 						break;
@@ -98,7 +98,7 @@ namespace Assistant
 
 		private class InternalTimer : Timer
 		{
-			public InternalTimer()
+			internal InternalTimer()
 				: base(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
 			{
 			}

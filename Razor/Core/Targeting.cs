@@ -388,9 +388,9 @@ namespace Assistant
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for (int i = 0; i < noto.Length; i++)
+					foreach (int n in noto)
 					{
-						if (noto[i] == m.Notoriety)
+						if (n == m.Notoriety)
 						{
 							list.Add(m);
 							break;
@@ -403,7 +403,7 @@ namespace Assistant
 			}
 
 			if (list.Count > 0)
-				SetLastTargetTo((Mobile)list[Utility.Random(list.Count)]);
+				SetLastTargetTo(list[Utility.Random(list.Count)]);
 			else
 				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 		}
@@ -423,9 +423,9 @@ namespace Assistant
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for (int i = 0; i < noto.Length; i++)
+					foreach (int n in noto)
 					{
-						if (noto[i] == m.Notoriety)
+						if (n == m.Notoriety)
 						{
 							list.Add(m);
 							break;
@@ -516,9 +516,9 @@ namespace Assistant
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for (int i = 0; i < noto.Length; i++)
+					foreach (int n in noto)
 					{
-						if (noto[i] == m.Notoriety)
+						if (n == m.Notoriety)
 						{
 							list.Add(m);
 							break;
@@ -565,9 +565,9 @@ namespace Assistant
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
-					for (int i = 0; i < noto.Length; i++)
+					foreach (int n in noto)
 					{
-						if (noto[i] == m.Notoriety)
+						if (n == m.Notoriety)
 						{
 							list.Add(m);
 							break;

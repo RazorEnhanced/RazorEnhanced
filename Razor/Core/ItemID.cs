@@ -11,13 +11,8 @@ namespace Assistant
 			m_ID = id;
 		}
 
-		internal ushort Value
-		{
-			get
-			{
-				return m_ID;
-			}
-		}
+		internal ushort Value { get { return m_ID; } }
+
 		public static implicit operator ushort(ItemID a)
 		{
 			return a.m_ID;

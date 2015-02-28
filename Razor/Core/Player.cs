@@ -25,7 +25,7 @@ namespace Assistant
 
 	internal class Skill
 	{
-		public static int Count = 55;
+		internal static int Count = 55;
 
 		private LockType m_Lock;
 		private ushort m_Value;
@@ -158,13 +158,13 @@ namespace Assistant
 		internal class MoveEntry
 		{
 			//public byte Seq;
-			public Direction Dir;
+			internal Direction Dir;
 			//public int x;
 			//public int y;
-			public Point3D Position;
-			public bool IsStep;
+			internal Point3D Position;
+			internal bool IsStep;
 
-			public bool FilterAck;
+			internal bool FilterAck;
 		}
 
 		internal int VisRange = 18;
@@ -781,7 +781,7 @@ namespace Assistant
 		private class CriminalTimer : Timer
 		{
 			private PlayerData m_Player;
-			public CriminalTimer(PlayerData player)
+			internal CriminalTimer(PlayerData player)
 				: base(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
 			{
 				m_Player = player;

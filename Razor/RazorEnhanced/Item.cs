@@ -133,5 +133,128 @@ namespace RazorEnhanced
 			}
 		}
 
+		public int Weight
+		{
+			get
+			{
+				List<Property> properties = Properties;
+				foreach (Property property in properties)
+				{
+					int number = property.Number;
+					string args = property.Args;
+					if (number == 1072788)
+					{
+						return 1;       // Peso 1 se cliloc è 1072788 
+					}
+					if (number == 1072789)
+						try
+						{
+							return Convert.ToInt32(args);  // Ritorna valore peso
+						}
+						catch
+						{
+							return 1;  // errore di conversione torna peso  1
+						}
+				}
+				return 0;  // item senza peso
+			}
+		}
+
+		public int Durability
+		{
+			get
+			{
+				List<Property> properties = Properties;
+				foreach (Property property in properties)
+				{
+					int number = property.Number;
+					if (number == 1060639)
+					{
+						string Text = property.Args;
+						int step = 0;
+						string Durability = "";
+
+						for (int i = 0; i <= Text.Length - 1; i++)
+						{
+							if (step == 0)
+								if (Char.IsNumber(Text[i]))
+								{
+									Durability = Durability + Text[i];
+									step = 1;
+									i++;
+								}
+							if (step == 1)
+								if (Char.IsNumber(Text[i]))
+								{
+									Durability = Durability + Text[i];
+								}
+								else
+									step = 2;
+						}
+
+						try
+						{
+							return Convert.ToInt32(Durability);  // Ritorna valore Dur
+						}
+						catch
+						{
+							return 0;  // errore di conversione torna 0 
+						}
+					}
+
+				}
+				return 0; // item senza Dur
+			}
+		}
+
+		public int MaxDurability
+		{
+			get
+			{
+				List<Property> properties = Properties;
+				foreach (Property property in properties)
+				{
+					int number = property.Number;
+					if (number == 1060639)
+					{
+						string Text = property.Args;
+						string TempMaxDurability = "";
+						int step = 0;
+						string MaxDurability = "";
+						for (int y = Text.Length - 1; y != 0; y--)
+						{
+							if (step == 0)
+								if (Char.IsNumber(Text[y]))
+								{
+									TempMaxDurability = TempMaxDurability + Text[y];
+									step = 1;
+									y--;
+								}
+							if (step == 1)
+								if (Char.IsNumber(Text[y]))
+								{
+									TempMaxDurability = TempMaxDurability + Text[y];
+								}
+								else
+									step = 2;
+						}
+						for (int i = TempMaxDurability.Length - 1; i > -1; i--)
+						{
+							MaxDurability += TempMaxDurability[i];
+						}
+						try
+						{
+							return Convert.ToInt32(MaxDurability);  // Ritorna valore maxdur
+						}
+						catch
+						{
+							return 0;  // errore di conversione torna 0 
+						}
+					}
+
+				}
+				return 0; // item senza maxdur
+			}
+		}
 	}
 }

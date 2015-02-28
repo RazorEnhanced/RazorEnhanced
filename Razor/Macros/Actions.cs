@@ -240,7 +240,7 @@ namespace Assistant.Macros
 	internal class DoubleClickTypeAction : MacroAction
 	{
 		private ushort m_Gfx;
-		public bool m_Item;
+		internal bool m_Item;
 
 		internal DoubleClickTypeAction(string[] args)
 		{

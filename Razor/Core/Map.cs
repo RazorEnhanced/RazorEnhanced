@@ -60,10 +60,10 @@ namespace Assistant
 				HuedTile[] tiles = map.Tiles.GetStaticTiles(x, y);
 				if (tiles != null && tiles.Length > 0)
 				{
-					for (int i = 0; i < tiles.Length; i++)
+					foreach (HuedTile tile in tiles)
 					{
-						if (tiles[i].Z >= z - 5 && tiles[i].Z <= z + 5)
-							return tiles[i];
+						if (tile.Z >= z - 5 && tile.Z <= z + 5)
+							return tile;
 					}
 				}
 			}
@@ -125,9 +125,9 @@ namespace Assistant
 
 				bool isSet = false;
 				HuedTile[] staticTiles = map.Tiles.GetStaticTiles(xCheck, yCheck);
-				for (int i = 0; i < staticTiles.Length; ++i)
+
+				foreach (HuedTile tile in staticTiles)
 				{
-					HuedTile tile = staticTiles[i];
 					ItemData id = TileData.ItemTable[tile.ID & 0x3FFF];
 
 					int calcTop = (tile.Z + id.CalcHeight);

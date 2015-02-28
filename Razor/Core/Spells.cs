@@ -140,17 +140,16 @@ namespace Assistant
 				}
 			}
 
-			for (int i = 0; i < Counter.List.Count; i++)
-				((Counter)Counter.List[i]).Flag = false;
+			foreach (Counter c in Counter.List)
+				c.Flag = false;
 
 			if (Config.GetBool("HighlightReagents"))
 			{
-				for (int r = 0; r < Reagents.Length; r++)
+				foreach (string reagent in Reagents)
 				{
-					for (int i = 0; i < Counter.List.Count; i++)
+					foreach (Counter c in Counter.List)
 					{
-						Counter c = (Counter)Counter.List[i];
-						if (c.Enabled && c.Format.ToLower() == Reagents[r])
+						if (c.Enabled && c.Format.ToLower() == reagent)
 						{
 							c.Flag = true;
 							break;
@@ -180,15 +179,16 @@ namespace Assistant
 
 		private class UnflagTimer : Timer
 		{
-			public UnflagTimer()
+			internal UnflagTimer()
 				: base(TimeSpan.FromSeconds(30.0))
 			{
 			}
 
 			protected override void OnTick()
 			{
-				for (int i = 0; i < Counter.List.Count; i++)
-					((Counter)Counter.List[i]).Flag = false;
+				foreach (Counter c in Counter.List)
+					c.Flag = false;
+
 				ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
@@ -196,6 +196,7 @@ namespace Assistant
 		private static Dictionary<string, Spell> m_SpellsByPower;
 		private static Dictionary<int, Spell> m_SpellsByID;
 		private static HotKeyCallbackState HotKeyCallback;
+
 		static Spell()
 		{
 			string filename = Path.Combine(Directory.GetCurrentDirectory(), "spells.def");
@@ -313,12 +314,12 @@ namespace Assistant
 			}
 		}
 
-		public static void Initialize()
+		internal static void Initialize()
 		{
 			// no code, this is here to make sure out static ctor is init'd by the core
 		}
 
-		public static void OnHotKey(ref object state)
+		internal static void OnHotKey(ref object state)
 		{
 			ushort id = (ushort)state;
 			Spell s = Spell.Get(id);

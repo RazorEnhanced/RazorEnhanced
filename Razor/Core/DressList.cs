@@ -13,22 +13,21 @@ namespace Assistant
 		{
 			box.Items.Clear();
 
-			box.Items.AddRange((object[])m_List.ToArray());
+			box.Items.AddRange(m_List.ToArray());
 		}
 
 		internal static void ClearAll()
 		{
 			while (m_List.Count > 0)
-				Remove((DressList)m_List[0]);
+				Remove(m_List[0]);
 		}
 
 		internal static DressList Find(string name)
 		{
-			for (int i = 0; i < m_List.Count; i++)
+			foreach (DressList dress in m_List)
 			{
-				DressList list = (DressList)m_List[i];
-				if (list.Name == name)
-					return list;
+				if (dress.Name == name)
+					return dress;
 			}
 
 			return null;
@@ -37,14 +36,14 @@ namespace Assistant
 		internal static Item FindUndressBag(Item item)
 		{
 			Item undressBag = World.Player.Backpack;
-			for (int i = 0; i < m_List.Count; i++)
+
+			foreach (DressList dress in m_List)
 			{
-				DressList list = (DressList)m_List[i];
-				if (list != null && (list.Items.Contains(item.Serial) || list.Items.Contains(item.ItemID)))
+				if (dress != null && (dress.Items.Contains(item.Serial) || dress.Items.Contains(item.ItemID)))
 				{
-					if (list.m_UndressBag.IsValid)
+					if (dress.m_UndressBag.IsValid)
 					{
-						Item bag = World.FindItem(list.m_UndressBag);
+						Item bag = World.FindItem(dress.m_UndressBag);
 						if (bag != null && (bag.RootContainer == World.Player || (bag.RootContainer == null && Utility.InRange(bag.GetWorldPosition(), World.Player.Position, 2))))
 							undressBag = bag;
 					}

@@ -35,8 +35,8 @@ namespace Assistant
 
 		internal static void ClearAll()
 		{
-			for (int i = 0; i < m_List.Count; i++)
-				((Agent)m_List[i]).Clear();
+			foreach (Agent agent in m_List)
+				agent.Clear();
 		}
 
 		internal static void SaveProfile(XmlTextWriter xml)
@@ -56,14 +56,13 @@ namespace Assistant
 			if (xml == null)
 				return;
 
-			for (int i = 0; i < m_List.Count; i++)
+			foreach (Agent agent in m_List)
 			{
 				try
 				{
-					Agent a = (Agent)m_List[i];
-					XmlElement el = xml[a.Name];
+					XmlElement el = xml[agent.Name];
 					if (el != null)
-						a.Load(el);
+						agent.Load(el);
 				}
 				catch
 				{
@@ -78,11 +77,12 @@ namespace Assistant
 			list.Items.Clear();
 			list.SelectedIndex = -1;
 
-			for (int i = 0; i < buttons.Length; i++)
-				buttons[i].Visible = false;
+			foreach (Button button in buttons)
+				button.Visible = false;
 
-			for (int i = 0; i < m_List.Count; i++)
-				list.Items.Add(m_List[i]);
+			foreach (Agent agent in m_List)
+				list.Items.Add(agent);
+
 			list.EndUpdate();
 
 			gb.Visible = false;
@@ -90,11 +90,11 @@ namespace Assistant
 
 		internal static void Select(int idx, ComboBox agents, ListBox subList, GroupBox grp, params Button[] buttons)
 		{
-			for (int i = 0; i < buttons.Length; i++)
+			foreach (Button button in buttons)
 			{
-				buttons[i].Visible = false;
-				buttons[i].Text = "";
-				Engine.MainWindow.UnlockControl(buttons[i]);
+				button.Visible = false;
+				button.Text = "";
+				Engine.MainWindow.UnlockControl(button);
 			}
 			grp.Visible = false;
 			subList.Visible = false;
@@ -102,7 +102,7 @@ namespace Assistant
 
 			Agent a = null;
 			if (idx >= 0 && idx < m_List.Count)
-				a = m_List[idx] as Agent;
+				a = m_List[idx];
 
 			if (a != null)
 			{
@@ -337,17 +337,12 @@ namespace Assistant
 				Item i = World.FindItem(serial);
 				if (i != null && i.Contains.Count > 0)
 				{
-					for (int ci = 0; ci < i.Contains.Count; ci++)
+					foreach (Item toAdd in i.Contains)
 					{
-						Item toAdd = i.Contains[ci] as Item;
-
-						if (toAdd != null)
-						{
-							toAdd.ObjPropList.Add(Language.GetString(LocString.UseOnce));
-							toAdd.OPLChanged();
-							m_Items.Add(toAdd);
-							m_SubList.Items.Add(toAdd);
-						}
+						toAdd.ObjPropList.Add(Language.GetString(LocString.UseOnce));
+						toAdd.OPLChanged();
+						m_Items.Add(toAdd);
+						m_SubList.Items.Add(toAdd);
 					}
 
 					World.Player.SendMessage(MsgLevel.Force, LocString.ItemsAdded, i.Contains.Count);
@@ -879,9 +874,8 @@ namespace Assistant
 		private int OrganizeChildren(Item container, object dest)
 		{
 			int count = 0;
-			for (int i = 0; i < container.Contains.Count; i++)
+			foreach (Item item in container.Contains)
 			{
-				Item item = (Item)container.Contains[i];
 				if (item.Serial != m_Cont && !item.IsChildOf(dest))
 				{
 					count += OrganizeChildren(item, dest);
@@ -903,6 +897,7 @@ namespace Assistant
 		{
 			if (Engine.MainWindow != null)
 				Engine.MainWindow.ShowMe();
+
 			if (!location && serial.IsItem && World.Player != null)
 			{
 				if (m_ItemIDs != null && m_ItemIDs.Contains(gfx))
@@ -926,6 +921,7 @@ namespace Assistant
 		{
 			if (Engine.MainWindow != null)
 				Engine.MainWindow.ShowMe();
+
 			if (!location && serial > 0 && serial <= 0x7FFFFF00)
 			{
 				Item bag = World.FindItem(m_Cont);
@@ -1168,13 +1164,13 @@ namespace Assistant
 
 		internal override void Save(XmlTextWriter xml)
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+			foreach (object item in m_Items)
 			{
 				xml.WriteStartElement("item");
-				if (m_Items[i] is Serial)
-					xml.WriteAttributeString("serial", ((Serial)m_Items[i]).Value.ToString());
+				if (item is Serial)
+					xml.WriteAttributeString("serial", ((Serial)item).Value.ToString());
 				else
-					xml.WriteAttributeString("id", ((ItemID)m_Items[i]).Value.ToString());
+					xml.WriteAttributeString("id", ((ItemID)item).Value.ToString());
 				xml.WriteEndElement();
 			}
 		}
@@ -2110,10 +2106,8 @@ namespace Assistant
 		private int Recurse(Item pack, List<Item> items, RestockItem ri, ref int count)
 		{
 			int num = 0;
-			for (int i = 0; count < ri.Amount && i < items.Count; i++)
+			foreach (Item item in items)
 			{
-				Item item = (Item)items[i];
-
 				if (item.ItemID == ri.ItemID)
 				{
 					int amt = ri.Amount - count;
@@ -2159,10 +2153,9 @@ namespace Assistant
 		internal override void Save(XmlTextWriter xml)
 		{
 			xml.WriteAttributeString("hotbag", m_HotBag.Value.ToString());
-			for (int i = 0; i < m_Items.Count; i++)
+			foreach (RestockItem ri in m_Items)
 			{
 				xml.WriteStartElement("item");
-				RestockItem ri = (RestockItem)m_Items[i];
 				xml.WriteAttributeString("id", ri.ItemID.Value.ToString());
 				xml.WriteAttributeString("amount", ri.Amount.ToString());
 				xml.WriteEndElement();
@@ -2196,9 +2189,9 @@ namespace Assistant
 
 		private class RestockItem
 		{
-			public ItemID ItemID;
-			public int Amount;
-			public RestockItem(ItemID id, int amount)
+			internal ItemID ItemID;
+			internal int Amount;
+			internal RestockItem(ItemID id, int amount)
 			{
 				ItemID = id;
 				Amount = amount;
@@ -2214,6 +2207,7 @@ namespace Assistant
 	internal class FriendsAgent : Agent
 	{
 		private static FriendsAgent m_Instance = new FriendsAgent();
+
 		internal static void Initialize()
 		{
 			Agent.Add(m_Instance);
@@ -2408,8 +2402,10 @@ namespace Assistant
 
 				m_SubList.BeginUpdate();
 				m_SubList.Items.Clear();
-				for (int i = 0; i < m_Chars.Count; i++)
-					Add2List((Serial)m_Chars[i]);
+
+				foreach (Serial ch in m_Chars)
+					Add2List(ch);
+
 				m_SubList.EndUpdate();
 
 				Mobile m = World.FindMobile(serial);
@@ -2424,14 +2420,14 @@ namespace Assistant
 		internal override void Save(XmlTextWriter xml)
 		{
 			xml.WriteAttributeString("enabled", m_Enabled.ToString());
-			for (int i = 0; i < m_Chars.Count; i++)
+			foreach (Serial ch in m_Chars)
 			{
 				xml.WriteStartElement("friend");
-				xml.WriteAttributeString("serial", m_Chars[i].ToString());
+				xml.WriteAttributeString("serial", ch.ToString());
 				try
 				{
-					if (m_Names.ContainsKey((Serial)m_Chars[i]))
-						xml.WriteAttributeString("name", m_Names[(Serial)m_Chars[i]].ToString());
+					if (m_Names.ContainsKey(ch))
+						xml.WriteAttributeString("name", m_Names[ch].ToString());
 				}
 				catch
 				{

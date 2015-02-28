@@ -12,15 +12,15 @@ namespace Assistant
 				Serial = ser; Body = body; Type = type; Hue = hue; Font = font; Lang = lang; Name = name;
 			}
 
-			public TimeSpan Delay;
-			public DateTime NextSend;
-			public int Count;
+			internal TimeSpan Delay;
+			internal DateTime NextSend;
+			internal int Count;
 
 			//ser, body, type, hue, font, lang, name
-			public Serial Serial;
-			public ushort Body, Hue, Font;
-			public MessageType Type;
-			public string Lang, Name;
+			internal Serial Serial;
+			internal ushort Body, Hue, Font;
+			internal MessageType Type;
+			internal string Lang, Name;
 		}
 
 		private class MessageTimer : Timer

@@ -259,7 +259,7 @@ namespace Assistant.MapUO
 
 		private class ReqPartyLocTimer : Timer
 		{
-			public ReqPartyLocTimer()
+			internal ReqPartyLocTimer()
 				: base(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0))
 			{
 			}

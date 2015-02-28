@@ -85,14 +85,15 @@ namespace Assistant
 		internal override void AfterLoad()
 		{
 			m_Items = new List<Item>();
-			for (int i = 0; i < m_Serials.Count; i++)
-			{
-					Item item = World.FindItem(m_Serials[i]);
 
-					if (m_Items[i] != null)
-					{
-						m_Items.Add(item);
-					}		
+			foreach (Serial serial in m_Serials)
+			{
+				Item item = World.FindItem(serial);
+
+				if (item != null)
+				{
+					m_Items.Add(item);
+				}
 			}
 		}
 
@@ -296,8 +297,8 @@ namespace Assistant
 			List<Item> rem = new List<Item>(m_Items);
 			m_Items.Clear();
 
-			for (int i = 0; i < rem.Count; i++)
-				((Item)rem[i]).Remove();
+			foreach (Item r in rem)
+				r.Remove();
 
 			if (!InParty)
 			{
@@ -320,9 +321,8 @@ namespace Assistant
 
 		internal Item GetItemOnLayer(Layer layer)
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+			foreach (Item item in m_Items)
 			{
-				Item item = (Item)m_Items[i];
 				if (item.Layer == layer)
 					return item;
 			}
@@ -352,9 +352,8 @@ namespace Assistant
 
 		internal Item FindItemByID(ItemID id)
 		{
-			for (int i = 0; i < Contains.Count; i++)
+			foreach (Item item in this.Contains)
 			{
-				Item item = (Item)Contains[i];
 				if (item.ItemID == id)
 					return item;
 			}

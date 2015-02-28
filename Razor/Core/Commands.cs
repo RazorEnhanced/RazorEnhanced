@@ -53,12 +53,11 @@ namespace Assistant
 		private static void AddUseOnce(string[] param)
 		{
 			string use = Language.GetString(LocString.UseOnce);
-			for (int i = 0; i < Agent.List.Count; i++)
+			foreach (Agent agent in Agent.List)
 			{
-				Agent a = (Agent)Agent.List[i];
-				if (a.Name == use)
+				if (agent.Name == use)
 				{
-					a.OnButtonPress(1);
+					agent.OnButtonPress(1);
 					break;
 				}
 			}

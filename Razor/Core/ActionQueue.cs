@@ -42,7 +42,7 @@ namespace Assistant
 		{
 			private static int NextID = 1;
 
-			public LiftReq(Serial s, int a, bool cli, bool last)
+			internal LiftReq(Serial s, int a, bool cli, bool last)
 			{
 				Serial = s;
 				Amount = a;
@@ -51,11 +51,11 @@ namespace Assistant
 				Id = NextID++;
 			}
 
-			public Serial Serial;
-			public int Amount;
-			public int Id;
-			public bool FromClient;
-			public bool DoLast;
+			internal Serial Serial;
+			internal int Amount;
+			internal int Id;
+			internal bool FromClient;
+			internal bool DoLast;
 
 			public override string ToString()
 			{
@@ -66,19 +66,19 @@ namespace Assistant
 
 		private class DropReq
 		{
-			public DropReq(Serial s, Point3D pt)
+			internal DropReq(Serial s, Point3D pt)
 			{
 				Serial = s; Point = pt;
 			}
 
-			public DropReq(Serial s, Layer layer)
+			internal DropReq(Serial s, Layer layer)
 			{
 				Serial = s; Layer = layer;
 			}
 
-			public Serial Serial;
-			public Point3D Point;
-			public Layer Layer;
+			internal Serial Serial;
+			internal Point3D Point;
+			internal Layer Layer;
 		}
 
 		public static void Initialize()
@@ -405,7 +405,7 @@ namespace Assistant
 			{
 				Queue<DropReq> q = m_DropReqs[s];
 				if (q.Count > 0)
-					dr = q.Dequeue() as DropReq;
+					dr = q.Dequeue();
 				if (q.Count <= 0)
 					m_DropReqs.Remove(s);
 			}
@@ -594,7 +594,7 @@ namespace Assistant
 			private DateTime m_StartTime;
 			private DateTime m_LastTick;
 
-			public DateTime LastTick { get { return m_LastTick; } }
+			internal DateTime LastTick { get { return m_LastTick; } }
 
 			internal ProcTimer()
 				: base(TimeSpan.Zero, TimeSpan.Zero)

@@ -10,11 +10,11 @@ namespace Assistant
 	{
 		private class Entry
 		{
-			public Entry() { }
-			public Entry(string u, string p, IPAddress a) { User = u; Pass = p; Address = a; }
-			public string User;
-			public string Pass;
-			public IPAddress Address;
+			internal Entry() { }
+			internal Entry(string u, string p, IPAddress a) { User = u; Pass = p; Address = a; }
+			internal string User;
+			internal string Pass;
+			internal IPAddress Address;
 		}
 
 		private static List<Entry> m_List = new List<Entry>();

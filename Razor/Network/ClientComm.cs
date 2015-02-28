@@ -107,7 +107,7 @@ namespace Assistant
 
 		private class WndCmd
 		{
-			public WndCmd(uint msg, IntPtr handle, string cmd)
+			internal WndCmd(uint msg, IntPtr handle, string cmd)
 			{
 				Msg = msg;
 				hWnd = handle;
@@ -137,10 +137,10 @@ namespace Assistant
 			private int m_Handle;
 			private int m_Type; // 1 = get multi notifcations
 
-			public int Handle { get { return m_Handle; } }
-			public int Type { get { return m_Type; } }
+			internal int Handle { get { return m_Handle; } }
+			internal int Type { get { return m_Type; } }
 
-			public WndRegEnt(int hWnd, int type)
+			internal WndRegEnt(int hWnd, int type)
 			{
 				m_Handle = hWnd;
 				m_Type = type;
@@ -457,11 +457,11 @@ namespace Assistant
 		private struct Buffer
 		{
 			[FieldOffset(0)]
-			public int Length;
+			internal int Length;
 			[FieldOffset(4)]
-			public int Start;
+			internal int Start;
 			[FieldOffset(8)]
-			public byte Buff0;
+			internal byte Buff0;
 		}
 
 		[DllImport("Crypt.dll")]
@@ -696,11 +696,11 @@ namespace Assistant
 
 		private static List<WndRegEnt> m_WndReg;
 
-		public static int NotificationCount { get { return m_WndReg.Count; } }
+		internal static int NotificationCount { get { return m_WndReg.Count; } }
 
-		public static DateTime ConnectionStart { get { return m_ConnStart; } }
-		public static IPAddress LastConnection { get { return m_LastConnection; } }
-		public static Process ClientProcess { get { return ClientProc; } }
+		internal static DateTime ConnectionStart { get { return m_ConnStart; } }
+		internal static IPAddress LastConnection { get { return m_LastConnection; } }
+		internal static Process ClientProcess { get { return ClientProc; } }
 
 		internal static bool ClientRunning
 		{
@@ -904,7 +904,7 @@ namespace Assistant
 			ClientProc = null;
 		}
 
-		public static string EncodeColorStat(int val, int max)
+		internal static string EncodeColorStat(int val, int max)
 		{
 			double perc = ((double)val) / ((double)max);
 

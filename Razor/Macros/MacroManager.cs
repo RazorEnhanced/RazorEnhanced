@@ -284,12 +284,12 @@ namespace Assistant.Macros
 		{
 			private Macro m_Macro;
 
-			public MacroTimer()
+			internal MacroTimer()
 				: base(TimeSpan.FromMilliseconds(50), TimeSpan.FromMilliseconds(50))
 			{
 			}
 
-			public Macro Macro { get { return m_Macro; } set { m_Macro = value; } }
+			internal Macro Macro { get { return m_Macro; } set { m_Macro = value; } }
 
 			protected override void OnTick()
 			{

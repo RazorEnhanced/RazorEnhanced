@@ -41,7 +41,7 @@ namespace Assistant
 		private static TimeSpan m_CurLength = TimeSpan.Zero;
 
 		private static string m_RPVInfo;
-		public static string CurrentOpenedInfo { get { return m_RPVInfo; } }
+		internal static string CurrentOpenedInfo { get { return m_RPVInfo; } }
 
 		internal static void SetControls(Label play, Button bRec, Button bPlay, Button stop, Button close, TrackBar pos, Label time)
 		{
@@ -288,7 +288,7 @@ namespace Assistant
 										{
 											i.HouseRevision = p.ReadInt32();
 
-											if (m_HouseDataWritten[i.Serial] == null)
+											if (m_HouseDataWritten[i.Serial] == false)
 											{
 												if (i.HousePacket == null)
 													i.MakeHousePacket();
@@ -995,7 +995,7 @@ namespace Assistant
 		private class ScrollTimer : Timer
 		{
 			private DateTime m_LastPing;
-			public ScrollTimer()
+			internal ScrollTimer()
 				: base(TimeSpan.Zero, TimeSpan.FromSeconds(1))
 			{
 			}

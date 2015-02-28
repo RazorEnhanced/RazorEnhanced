@@ -6,10 +6,10 @@ namespace Assistant
 	{
 		private uint m_Serial;
 
-		public static readonly Serial MinusOne = new Serial( 0xFFFFFFFF );
-		public static readonly Serial Zero = new Serial( 0 );
+		internal static readonly Serial MinusOne = new Serial(0xFFFFFFFF);
+		internal static readonly Serial Zero = new Serial(0);
 
-		private Serial( uint serial )
+		internal Serial( uint serial )
 		{
 			m_Serial = serial;
 		}
@@ -126,6 +126,11 @@ namespace Assistant
 		public static implicit operator Serial( uint a )
 		{
 			return new Serial( a );
+		}
+
+		public static implicit operator Serial(int a)
+		{
+			return new Serial((uint)a);
 		}
 	}
 }

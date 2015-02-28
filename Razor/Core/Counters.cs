@@ -392,10 +392,8 @@ namespace Assistant
 					string en = el.GetAttribute("enabled");
 					string img = el.GetAttribute("image");
 
-					for (int i = 0; i < m_List.Count; i++)
+					foreach (Counter c in m_List)
 					{
-						Counter c = (Counter)m_List[i];
-
 						if (c.Name == name)
 						{
 							c.Enabled = Convert.ToBoolean(en);
@@ -559,8 +557,9 @@ namespace Assistant
 			SupressWarnings = true;
 			m_Cache.Clear();
 
-			for (int i = 0; i < m_List.Count; i++)
-				((Counter)m_List[i]).Amount = 0;
+			foreach (Counter c in m_List)
+				c.Amount = 0;
+
 			SupressWarnings = false;
 		}
 
@@ -569,8 +568,10 @@ namespace Assistant
 			m_SupressChecks = true;
 			list.BeginUpdate();
 			list.Items.Clear();
-			for (int i = 0; i < m_List.Count; i++)
-				list.Items.Add(((Counter)m_List[i]).ViewItem);
+
+			foreach (Counter c in m_List)
+				list.Items.Add(c.ViewItem);
+
 			list.EndUpdate();
 			m_SupressChecks = false;
 		}

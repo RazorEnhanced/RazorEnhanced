@@ -39,13 +39,13 @@ namespace Assistant
 
 		private void PercolateDown(int hole)
 		{
-			IComparable tmp = (IComparable)m_List[hole];
+			IComparable tmp = m_List[hole];
 			int child;
 
 			for (; hole * 2 <= m_Size; hole = child)
 			{
 				child = hole * 2;
-				if (child != m_Size && ((IComparable)m_List[child + 1]).CompareTo(m_List[child]) < 0)
+				if (child != m_Size && (m_List[child + 1]).CompareTo(m_List[child]) < 0)
 					child++;
 
 				if (tmp.CompareTo(m_List[child]) >= 0)
@@ -311,7 +311,7 @@ namespace Assistant
 		{
 			private TimerCallback m_Call;
 
-			public OneTimeTimer(TimeSpan d, TimerCallback call)
+			internal OneTimeTimer(TimeSpan d, TimerCallback call)
 				: base(d)
 			{
 				m_Call = call;
@@ -333,7 +333,7 @@ namespace Assistant
 			private TimerCallbackState m_Call;
 			private object m_State;
 
-			public OneTimeTimerState(TimeSpan d, TimerCallbackState call, object state)
+			internal OneTimeTimerState(TimeSpan d, TimerCallbackState call, object state)
 				: base(d)
 			{
 				m_Call = call;
