@@ -255,9 +255,10 @@ namespace Assistant
 				{
 					Log("Queuing Equip {0} to {1} (@{2})", i, to.Serial, layer);
 
+					if (!m_DropReqs.ContainsKey(i.Serial))
+						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
+
 					Queue<DropReq> q = m_DropReqs[i.Serial];
-					if (q == null)
-						m_DropReqs[i.Serial] = q = new Queue<DropReq>();
 					q.Enqueue(new DropReq(to == null ? Serial.Zero : to.Serial, layer));
 					return true;
 				}
@@ -297,9 +298,10 @@ namespace Assistant
 				{
 					Log("Queuing Drop {0} (to {1} (@{2}))", i, dest, pt);
 
+					if (!m_DropReqs.ContainsKey(i.Serial))
+						m_DropReqs.Add(i.Serial, new Queue<DropReq>());
+
 					Queue<DropReq> q = m_DropReqs[i.Serial];
-					if (q == null)
-						m_DropReqs[i.Serial] = q = new Queue<DropReq>();
 					q.Enqueue(new DropReq(dest, pt));
 					return true;
 				}

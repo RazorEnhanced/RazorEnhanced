@@ -59,15 +59,7 @@ namespace RazorEnhanced.UI
 			// Attributes
 			foreach (Assistant.ObjectPropertyList.OPLEntry ent in itemTarg.ObjPropList.Content)
 			{
-				int number = ent.Number;
-				string args = Assistant.Language.ParseSubCliloc(ent.Args);
-
-				string content;
-				if (args == null)
-					content = Assistant.Language.GetCliloc(number);
-				else
-					content = Assistant.Language.ClilocFormat(ent.Number, args);
-
+				string content = ent.ToString();
 				listBoxAttributes.Items.Add(content);
 			}
 		}

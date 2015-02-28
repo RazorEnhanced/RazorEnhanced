@@ -21,6 +21,20 @@ namespace Assistant
 				Number = num;
 				Args = args;
 			}
+
+			public override string ToString()
+			{
+				int number = this.Number;
+				string args = Assistant.Language.ParseSubCliloc(this.Args);
+
+				string content;
+				if (args == null)
+					content = Assistant.Language.GetCliloc(number);
+				else
+					content = Assistant.Language.ClilocFormat(this.Number, args);
+
+				return content;
+			}
 		}
 
 		private List<int> m_StringNums = new List<int>();
