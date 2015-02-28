@@ -176,7 +176,7 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorRadioButton_Off, 0, 2, 16, 17);
+                pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorCheckBox_Off, 0, 2, 16, 17);
 			}
 		}
 	}
