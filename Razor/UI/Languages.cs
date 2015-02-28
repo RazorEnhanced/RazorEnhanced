@@ -6,6 +6,8 @@ using System.IO;
 using System.Collections;
 using System.Windows.Forms;
 using Ultima;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Assistant
 {
@@ -403,11 +405,13 @@ namespace Assistant
 	}
 	#endregion
 
-	public class Language
+	internal class Language
 	{
 		private static Hashtable m_Controls;
 		private static Hashtable m_Strings;
+
 		private static Ultima.StringList m_CliLoc = null;
+
 		private static bool m_Loaded = false;
 		private static string m_Current;
 		private static string m_CliLocName = "ENU";
@@ -649,6 +653,41 @@ namespace Assistant
 					MessageBox.Show(Engine.ActiveWindow, Language.GetString(LocString.NoCliLocMsg), Language.GetString(LocString.NoCliLoc), MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				}
 			}
+		}
+
+		internal static string ParseSubCliloc(string arg)
+		{
+			if (arg == null)
+				return null;
+
+			string result = "";
+
+			List<string> elements = arg.Split('\t').ToList<string>();
+			foreach (string element in elements)
+			{
+				if (element.Length > 1 && element[0] == '#')
+				{
+					int value = Int32.MinValue;
+					Int32.TryParse(element.Substring(1, element.Length - 1), out value);
+					if (value != Int32.MinValue)
+					{
+						Ultima.StringEntry se = m_CliLoc.GetEntry(value);
+						if (se != null && se.Text != null)
+							result += se.Text + '\t';
+						else
+							result += element + '\t';
+					}
+					else
+						result += element + '\t';
+				}
+				else
+					result += element + '\t';
+			}
+
+			if (result[result.Length - 1] == '\t')
+				return result.Substring(0, result.Length - 1);
+			else
+				return result;
 		}
 
 		public static string GetCliloc(int num)

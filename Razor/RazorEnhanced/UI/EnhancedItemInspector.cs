@@ -15,103 +15,63 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Item Inspect";
 
-		internal EnhancedItemInspector(Assistant.Item ItemTarg)
+		internal EnhancedItemInspector(Assistant.Item itemTarg)
 		{
 			InitializeComponent();
-            MaximizeBox = false;
-            Assistant.ObjectPropertyList ItemTargOPL = ItemTarg.ObjPropList;
+			MaximizeBox = false;
 			// general
-			lSerial.Text = "0x" + ItemTarg.Serial.Value.ToString("X8");
-			lItemID.Text = "0x" + ItemTarg.ItemID.Value.ToString("X4");
-			lColor.Text = ItemTarg.Hue.ToString();
-			lPosition.Text = ItemTarg.Position.ToString();
+			lSerial.Text = "0x" + itemTarg.Serial.Value.ToString("X8");
+			lItemID.Text = "0x" + itemTarg.ItemID.Value.ToString("X4");
+			lColor.Text = itemTarg.Hue.ToString();
+			lPosition.Text = itemTarg.Position.ToString();
 			// Details
 			Assistant.PlayerData tempdata;
 			Assistant.Item tempdata2;
-			if (ItemTarg.Container is Assistant.PlayerData)
+			if (itemTarg.Container is Assistant.PlayerData)
 			{
-				tempdata = (Assistant.PlayerData)ItemTarg.Container;
+				tempdata = (Assistant.PlayerData)itemTarg.Container;
 				lContainer.Text = tempdata.Serial.ToString();
 			}
-			if (ItemTarg.Container is Assistant.Item)
+			if (itemTarg.Container is Assistant.Item)
 			{
-				tempdata2 = (Assistant.Item)ItemTarg.Container;
+				tempdata2 = (Assistant.Item)itemTarg.Container;
 				lContainer.Text = tempdata2.Serial.ToString();
 			}
 
-			if (ItemTarg.RootContainer is Assistant.PlayerData)
+			if (itemTarg.RootContainer is Assistant.PlayerData)
 			{
-				tempdata = (Assistant.PlayerData)ItemTarg.RootContainer;
+				tempdata = (Assistant.PlayerData)itemTarg.RootContainer;
 				lRootContainer.Text = tempdata.Serial.ToString();
 				if (tempdata.Serial == Assistant.World.Player.Serial)
 					lOwned.Text = "Yes";
 			}
-			if (ItemTarg.RootContainer is Assistant.Item)
+			if (itemTarg.RootContainer is Assistant.Item)
 			{
-				tempdata2 = (Assistant.Item)ItemTarg.RootContainer;
+				tempdata2 = (Assistant.Item)itemTarg.RootContainer;
 				lRootContainer.Text = tempdata2.Serial.ToString();
 				if (tempdata2.Serial == Assistant.World.Player.Backpack.Serial)
 					lOwned.Text = "Yes";
 			}
 
-			lAmount.Text = ItemTarg.Amount.ToString();
-			lLayer.Text = ItemTarg.Layer.ToString();
+			lAmount.Text = itemTarg.Amount.ToString();
+			lLayer.Text = itemTarg.Layer.ToString();
 
 			// Attributes
-		
-			for (int i = 1; i < ItemTargOPL.Content.Count; i++) // Skip sul nome :)
+			foreach (Assistant.ObjectPropertyList.OPLEntry ent in itemTarg.ObjPropList.Content)
 			{
-				Assistant.ObjectPropertyList.OPLEntry ent = (Assistant.ObjectPropertyList.OPLEntry)ItemTargOPL.Content[i];
 				int number = ent.Number;
-				string args = ent.Args;
+				string args = Assistant.Language.ParseSubCliloc(ent.Args);
+
 				string content;
 				if (args == null)
 					content = Assistant.Language.GetCliloc(number);
 				else
-					content = Assistant.Language.ClilocFormat(ent.Number, ent.Args);
-                if (i == 0)
-                {
-                    if (content.IndexOf("#") != -1)
-                        lName.Text =SubClilocSearch(content);
-                    else
-                        lName.Text = content;
-                }
-                else
-                {
-                    if (content.IndexOf("#") != -1)
-                        listBox1.Items.Add(SubClilocSearch(content));
-                    else
-                        listBox1.Items.Add(content);
-                }
+					content = Assistant.Language.ClilocFormat(ent.Number, args);
+
+				listBoxAttributes.Items.Add(content);
 			}
 		}
-        private string SubClilocSearch(string Text)
-        {
-            int CutPoint = Text.IndexOf("#");
-            string Number = "";
-            string Merged = "";
-            string CutPart1 = "";
-            string CutPart2 = "";
-            for (int i = 0; i <= Text.Length - 1; i++)
-            {
-                if (i < CutPoint)
-                    CutPart1 = CutPart1 + Text[i];
-                else if (i >= CutPoint + 8)
-                    CutPart2 = CutPart2 + Text[i];
-                else if (i > CutPoint && i < CutPoint + 8)
-                    Number = Number + Text[i];
-            }
-            try
-            {
-                Merged = CutPart1 + Assistant.Language.GetCliloc(Convert.ToInt32(Number)) + CutPart2;
-            }
-            catch 
-            {
-            }
 
-            return Merged;
-            
-        }
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			this.Close();
@@ -177,9 +137,9 @@ namespace RazorEnhanced.UI
 			Clipboard.SetText(lOwned.Text);
 		}
 
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
+		private void groupBox3_Enter(object sender, EventArgs e)
+		{
 
-        }
+		}
 	}
 }

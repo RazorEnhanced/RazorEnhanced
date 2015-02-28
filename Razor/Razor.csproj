@@ -7,7 +7,7 @@
     <ProjectGuid>{B24E4FB1-4936-4544-9E88-F3FF9B04FDBA}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ApplicationIcon>UI\App.ico</ApplicationIcon>
+    <ApplicationIcon>razor-enhanced.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
     <AssemblyName>Razor</AssemblyName>
@@ -412,6 +412,7 @@
     <None Include="RazorEnhanced\Resources\accessories-text-editor-5.ico" />
     <None Include="RazorEnhanced\Resources\applications-utilities.png" />
     <None Include="RazorEnhanced\Resources\applications-utilities.ico" />
+    <Content Include="razor-enhanced.ico" />
     <Content Include="RazorEnhanced\Resources\green.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start.png" />
     <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />
@@ -419,6 +420,8 @@
     <None Include="RazorEnhanced\Resources\media-playback-start-3.png" />
     <None Include="RazorEnhanced\Resources\media-skip-forward-3.png" />
     <None Include="RazorEnhanced\Resources\media-playback-pause-3.png" />
+    <None Include="RazorEnhanced\Resources\razor-enhanced.ico" />
+    <None Include="RazorEnhanced\Resources\razor-enhanced.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />
@@ -426,6 +429,7 @@
     <Content Include="RazorEnhanced\Resources\RazorRadioButton.On.png" />
     <Content Include="RazorEnhanced\Resources\red.png" />
     <None Include="RazorEnhanced\Resources\RoundButton.png" />
+    <None Include="RazorEnhanced\Resources\uod_logo.png" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />

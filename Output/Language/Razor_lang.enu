@@ -3,7 +3,7 @@
 ::CliLoc=ENU
 
 [controls]
-WelcomeForm::Text=Welcome to Razor!
+WelcomeForm::Text=Welcome to Razor Enhanced!
 WelcomeForm::groupBox3=UO Data Directory
 WelcomeForm::dataBrowse=Browse...
 WelcomeForm::label5=Language:
@@ -20,7 +20,7 @@ WelcomeForm::showAtStart=Show this when Razor starts
 WelcomeForm::quit=&Quit
 WelcomeForm::okay=&Okay
 
-MainForm::Text=Razor v{0}
+MainForm::Text=Enhanced Razor {0}
 MainForm::generalTab=General
 MainForm::btnMap=Open UO Positioning System
 MainForm::systray=System Tray

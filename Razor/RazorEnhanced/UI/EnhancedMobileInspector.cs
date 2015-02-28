@@ -15,107 +15,66 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Mobile Inspect";
 
-		internal EnhancedMobileInspector(Assistant.Mobile MobileTarg)
+		internal EnhancedMobileInspector(Assistant.Mobile mobileTarg)
 		{
 			InitializeComponent();
-            MaximizeBox = false;
+			MaximizeBox = false;
 			// general
-            Assistant.ObjectPropertyList MobileTargOPL = MobileTarg.ObjPropList;
-			lName.Text = MobileTarg.Name.ToString();
-			lSerial.Text = "0x" + MobileTarg.Serial.Value.ToString("X8");
-			lMobileID.Text = "0x" + MobileTarg.Body.ToString("X4");
-			lColor.Text = MobileTarg.Hue.ToString();
-			lPosition.Text = MobileTarg.Position.ToString();
+			lName.Text = mobileTarg.Name.ToString();
+			lSerial.Text = "0x" + mobileTarg.Serial.Value.ToString("X8");
+			lMobileID.Text = "0x" + mobileTarg.Body.ToString("X4");
+			lColor.Text = mobileTarg.Hue.ToString();
+			lPosition.Text = mobileTarg.Position.ToString();
 			// Details
-			if (MobileTarg.Female)
+			if (mobileTarg.Female)
 				lSex.Text = "Female";
 			else
 				lSex.Text = "Male";
-			lHits.Text = MobileTarg.Hits.ToString();
-			lMaxHits.Text = MobileTarg.Hits.ToString();
-			lNotoriety.Text = MobileTarg.Notoriety.ToString();
-			lDirection.Text = MobileTarg.Direction.ToString();
+			lHits.Text = mobileTarg.Hits.ToString();
+			lMaxHits.Text = mobileTarg.Hits.ToString();
+			lNotoriety.Text = mobileTarg.Notoriety.ToString();
+			lDirection.Text = mobileTarg.Direction.ToString();
 
-			if (MobileTarg.Poisoned)
+			if (mobileTarg.Poisoned)
 				lFlagPoisoned.Text = "Yes";
 			else
 				lFlagPoisoned.Text = "No";
 
-			if (MobileTarg.Warmode)
+			if (mobileTarg.Warmode)
 				lFlagWar.Text = "Yes";
 			else
 				lFlagWar.Text = "No";
 
-			if (MobileTarg.Visible)
+			if (mobileTarg.Visible)
 				lFlagWar.Text = "No";
 			else
 				lFlagWar.Text = "Yes";
 
-			if (MobileTarg.IsGhost)
+			if (mobileTarg.IsGhost)
 				lFlagGhost.Text = "Yes";
 			else
 				lFlagGhost.Text = "No";
 
-			if (MobileTarg.Blessed)
+			if (mobileTarg.Blessed)
 				lFlagBlessed.Text = "Yes";
 			else
 				lFlagBlessed.Text = "No";
 
+			foreach (Assistant.ObjectPropertyList.OPLEntry ent in mobileTarg.ObjPropList.Content)
+			{
+				int number = ent.Number;
+				string args = Assistant.Language.ParseSubCliloc(ent.Args);
 
-            for (int i = 0; i < MobileTargOPL.Content.Count; i++) 
-            {
-                Assistant.ObjectPropertyList.OPLEntry ent = (Assistant.ObjectPropertyList.OPLEntry)MobileTargOPL.Content[i];
-                int number = ent.Number;
-                string args = ent.Args;
-                string content;
-                if (args == null)
-                    content = Assistant.Language.GetCliloc(number);
-                else
-                    content = Assistant.Language.ClilocFormat(ent.Number, ent.Args);
-                if (i == 0)
-                {
-                    if (content.IndexOf("#") != -1)
-                        lName.Text = SubClilocSearch(content);
-                    else
-                        lName.Text = content;
-                }
-                else
-                {
-                    if (content.IndexOf("#") != -1)
-                        listBox1.Items.Add(SubClilocSearch(content));
-                    else
-                        listBox1.Items.Add(content);
-                }
-            }
+				string content;
+				if (args == null)
+					content = Assistant.Language.GetCliloc(number);
+				else
+					content = Assistant.Language.ClilocFormat(ent.Number, args);
 
-
+				listBoxAttributes.Items.Add(content);
+			}
 		}
-        private string SubClilocSearch(string Text)
-        {
-            int CutPoint = Text.IndexOf("#");
-            string Number = "";
-            string Merged = "";
-            string CutPart1 = "";
-            string CutPart2 = "";
-            for (int i = 0; i <= Text.Length - 1; i++)
-            {
-                if (i < CutPoint)
-                    CutPart1 = CutPart1 + Text[i];
-                else if (i >= CutPoint + 8)
-                    CutPart2 = CutPart2 + Text[i];
-                else if (i > CutPoint && i < CutPoint + 8)
-                    Number = Number + Text[i];
-            }
-            try
-            {
-                Merged = CutPart1 + Assistant.Language.GetCliloc(Convert.ToInt32(Number)) + CutPart2;
-            }
-            catch
-            {
-            }
 
-            return Merged;
-        }
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			this.Close();

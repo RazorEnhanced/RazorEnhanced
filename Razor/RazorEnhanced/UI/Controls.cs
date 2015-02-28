@@ -96,8 +96,8 @@ namespace RazorEnhanced.UI
 			this.SetStyle(ControlStyles.UserPaint, true);
 		}
 
-        
-        protected override void OnDrawItem(DrawItemEventArgs e)
+
+		protected override void OnDrawItem(DrawItemEventArgs e)
 		{
 			e.DrawBackground();
 			var index = e.Index;
@@ -110,7 +110,7 @@ namespace RazorEnhanced.UI
 			e.DrawFocusRectangle();
 		}
 
-        protected override void OnPaint(PaintEventArgs pevent)
+		protected override void OnPaint(PaintEventArgs pevent)
 		{
 			base.OnPaint(pevent);
 
@@ -120,10 +120,10 @@ namespace RazorEnhanced.UI
 			Colore2Pen.Width = 1;
 
 			//Freccia selezione
-            if (this.DropDownStyle == ComboBoxStyle.DropDown)
-			    pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorComboBox_Arrow, Width - 15, 2, 15, 22);
-            else
-                pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorComboBox_Arrow, Width - 15, 2, 15, 21);
+			if (this.DropDownStyle == ComboBoxStyle.DropDown)
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorComboBox_Arrow, Width - 15, 2, 15, 22);
+			else
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorComboBox_Arrow, Width - 15, 2, 15, 21);
 			//angoli
 			pevent.Graphics.DrawLine(Colore1Pen, 0, 2, 2, 0);
 			pevent.Graphics.DrawLine(Colore2Pen, 1, 2, 2, 1);
@@ -151,8 +151,8 @@ namespace RazorEnhanced.UI
 			pevent.Graphics.DrawLine(Colore1Pen, 3, Height - 1, Width - 3, Height - 1);
 			pevent.Graphics.DrawLine(Colore2Pen, 3, Height - 2, Width - 3, Height - 2);
 
-            pevent.Graphics.DrawString(Text, this.Font, new SolidBrush(this.ForeColor), 3, 3, StringFormat.GenericDefault);
-            base.OnPaint(pevent);
+			pevent.Graphics.DrawString(Text, this.Font, new SolidBrush(this.ForeColor), 3, 3, StringFormat.GenericDefault);
+			base.OnPaint(pevent);
 		}
 	}
 
@@ -206,11 +206,6 @@ namespace RazorEnhanced.UI
 					  true);
 
 			this.colorTable = new Colortable();
-
-			this.MouseLeave += new EventHandler(_MouseLeave);
-			this.MouseDown += new MouseEventHandler(_MouseDown);
-			this.MouseUp += new MouseEventHandler(_MouseUp);
-			this.MouseMove += new MouseEventHandler(_MouseMove);
 		}
 
 		#endregion
@@ -262,25 +257,25 @@ namespace RazorEnhanced.UI
 
 		#region Mouse Events
 
-		private void _MouseDown(object sender, MouseEventArgs mevent)
+		protected override void OnMouseDown(MouseEventArgs mevent)
 		{
 			MState = MouseState.Down;
 			Invalidate();
 		}
 
-		private void _MouseUp(object sender, MouseEventArgs mevent)
+		protected override void OnMouseUp(MouseEventArgs mevent)
 		{
 			MState = MouseState.Up;
 			Invalidate();
 		}
 
-		private void _MouseMove(object sender, MouseEventArgs mevent)
+		protected override void OnMouseMove(MouseEventArgs mevent)
 		{
 			MState = MouseState.Move;
 			Invalidate();
 		}
 
-		private void _MouseLeave(object sender, EventArgs e)
+		protected override void OnMouseLeave(EventArgs e)
 		{
 			MState = MouseState.Leave;
 			Invalidate();
