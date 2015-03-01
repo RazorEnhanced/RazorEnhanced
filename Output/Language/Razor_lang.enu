@@ -22,7 +22,7 @@ WelcomeForm::okay=&Okay
 
 MainForm::Text=Enhanced Razor {0}
 MainForm::generalTab=General
-MainForm::btnMap=Open UO Positioning System
+MainForm::btnMap=Map UO
 MainForm::systray=System Tray
 MainForm::taskbar=Taskbar
 MainForm::smartCPU=Use smart CPU usage reduction
