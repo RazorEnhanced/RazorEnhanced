@@ -231,7 +231,7 @@ namespace RazorEnhanced
             Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
             if (assistantMobile == null)
             {
-                Player.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+                Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
                 return null;
             }
             else

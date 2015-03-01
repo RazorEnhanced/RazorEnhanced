@@ -198,7 +198,7 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 			}
 			else
-				Player.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + layer);
+                Misc.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + layer);
 		}
 
 
@@ -207,13 +207,13 @@ namespace RazorEnhanced
 			Assistant.Item item = Assistant.World.FindItem((Assistant.Serial)serial);
 			if (item == null)
 			{
-				Player.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") not found");
+                Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") not found");
 				return;
 			}
 
 			if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
 			{
-				Player.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") too away");
+                Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") too away");
 				return;
 			}
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
@@ -231,7 +231,7 @@ namespace RazorEnhanced
 			Assistant.Mobile player = Assistant.World.Player;
 			if (item.Container == null && GetDistance(item.GetWorldPosition(), Position) > 3)
 			{
-				Player.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
+                Misc.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
 			}
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
@@ -251,7 +251,7 @@ namespace RazorEnhanced
 					return true;
 				else
 				{
-					Player.SendMessage("Script Error: CheckLayer: Invalid layer name: " + layer);
+                    Misc.SendMessage("Script Error: CheckLayer: Invalid layer name: " + layer);
 					return false;
 				}
 			}
@@ -371,7 +371,7 @@ namespace RazorEnhanced
 				case "SpellWeaving":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Value;
 				default:
-					Player.SendMessage("Script Error: GetSkillValue: Invalid skill name: " + skillname);
+                    Misc.SendMessage("Script Error: GetSkillValue: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -488,7 +488,7 @@ namespace RazorEnhanced
 				case "SpellWeaving":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Cap;
 				default:
-					Player.SendMessage("Script Error: GetSkillCap: Invalid skill name: " + skillname);
+                    Misc.SendMessage("Script Error: GetSkillCap: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -605,7 +605,7 @@ namespace RazorEnhanced
 				case "SpellWeaving":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Lock);
 				default:
-					Player.SendMessage("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
+                    Misc.SendMessage("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -683,20 +683,9 @@ namespace RazorEnhanced
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Anatomy)));
 					break;
 				default:
-					Player.SendMessage("Script Error: UseSkill: Invalid skill name: " + skillname);
+                    Misc.SendMessage("Script Error: UseSkill: Invalid skill name: " + skillname);
 					break;
 			}
-		}
-
-		// Sysmessage
-		public static void SendMessage(int num)
-		{
-			Assistant.World.Player.SendMessage((Assistant.LocString)num);
-		}
-
-		public static void SendMessage(string msg)
-		{
-			Assistant.World.Player.SendMessage(msg);
 		}
 
 		// Game Message
@@ -931,7 +920,7 @@ namespace RazorEnhanced
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(64));
 					break;
 				default:
-					Player.SendMessage("Script Error: CastSpellMagery: Invalid spell name: " + SpellName);
+                    Misc.SendMessage("Script Error: CastSpellMagery: Invalid spell name: " + SpellName);
 					break;
 			}
 		}
@@ -992,7 +981,7 @@ namespace RazorEnhanced
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(117));
                     break;
                 default:
-                    Player.SendMessage("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
+                    Misc.SendMessage("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
                     break;
             }
         }
@@ -1031,7 +1020,7 @@ namespace RazorEnhanced
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(210));
                     break;
                 default:
-                    Player.SendMessage("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
+                    Misc.SendMessage("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
                     break;
             }
         }
@@ -1058,7 +1047,7 @@ namespace RazorEnhanced
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(406));
                     break;
                 default:
-                    Player.SendMessage("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
+                    Misc.SendMessage("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
                     break;
             }
         }
@@ -1091,7 +1080,7 @@ namespace RazorEnhanced
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(508));
                     break;
                 default:
-                    Player.SendMessage("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
+                    Misc.SendMessage("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
                     break;
             }
         }
@@ -1148,7 +1137,7 @@ namespace RazorEnhanced
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(616));
                     break;
                 default:
-                    Player.SendMessage("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
+                    Misc.SendMessage("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
                     break;
             }
         }
@@ -1174,38 +1163,35 @@ namespace RazorEnhanced
                 case "EagleStrike":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(683));
                     break;
-                case "AnimatedWeapon2":
+                case "StoneForm":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(684));
                     break;
-                case "StoneForm":
+                case "SpellTrigger":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(685));
                     break;
-                case "SpellTrigger":
+                case "MassSleep":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(686));
                     break;
-                case "MassSleep":
+                case "CleansingWinds":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(687));
                     break;
-                case "CleansingWinds":
+                case "Bombard":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(688));
                     break;
-                case "Bombard":
+                case "SpellPlague":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(689));
                     break;
-                case "SpellPlague":
+                case "HailStorm":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(690));
                     break;
-                case "HailStorm":
+                case "NetherCyclone":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(691));
                     break;
-                case "NetherCyclone":
+                case "RisingColossus":
                     Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(692));
                     break;
-                case "RisingColossus":
-                    Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(693));
-                    break;
                 default:
-                    Player.SendMessage("Script Error: CastSpellMysticism: Invalid spell name: " + SpellName);
+                    Misc.SendMessage("Script Error: CastSpellMysticism: Invalid spell name: " + SpellName);
                     break;
             }
         }  
@@ -1246,7 +1232,7 @@ namespace RazorEnhanced
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(7));
 					break;
 				default:
-					Player.SendMessage("Script Error - InvokeVirtue: Invalid virtue name: " + virtue);
+                    Misc.SendMessage("Script Error - InvokeVirtue: Invalid virtue name: " + virtue);
 					break;
 			}
 		}
@@ -1257,7 +1243,7 @@ namespace RazorEnhanced
 			if (InParty)
 				Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
 			else
-				Player.SendMessage("Script Error: ChatParty: you are not in a party");
+                Misc.SendMessage("Script Error: ChatParty: you are not in a party");
 		}
         public static void PartyInvite()
         {
@@ -1280,17 +1266,7 @@ namespace RazorEnhanced
 				else
 					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x0));
 			else
-				Player.SendMessage("Script Error: ChatParty: you are not in a party");
-		}
-		//General
-		public static void Pause(double seconds)
-		{
-			System.Threading.Thread.Sleep((int)(1000 * seconds));
-		}
-
-		public static void Resync()
-		{
-			Assistant.ClientCommunication.SendToServer(new ResyncReq());
+                Misc.SendMessage("Script Error: ChatParty: you are not in a party");
 		}
 
 		// Moving
@@ -1355,7 +1331,7 @@ namespace RazorEnhanced
             Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
             if (assistantMobile == null)
             {
-                Player.SendMessage("Script Error: GetPropByCliloc: Mobile serial: (" + serial + ") not found");
+                Misc.SendMessage("Script Error: GetPropByCliloc: Mobile serial: (" + serial + ") not found");
                 return 0;
             }
             else
@@ -1370,7 +1346,7 @@ namespace RazorEnhanced
 
             if (assistantMobile == null)
             {
-                Player.SendMessage("Script Error: GetPropByCliloc: mobile not found");
+                Misc.SendMessage("Script Error: GetPropByCliloc: mobile not found");
                 return 0;
             }
             else
@@ -1384,7 +1360,7 @@ namespace RazorEnhanced
             Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
             if (assistantMobile == null)
             {
-                Player.SendMessage("Script Error: GetPropByString: mobile serial: (" + serial + ") not found");
+                Misc.SendMessage("Script Error: GetPropByString: mobile serial: (" + serial + ") not found");
                 return 0;
             }
 
@@ -1428,7 +1404,7 @@ namespace RazorEnhanced
                     return GetPropExec(mobile, 1060444, "GetPropByString");
 
                 default:
-                    Player.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+                    Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
                     return 0;
 
             }
@@ -1474,7 +1450,7 @@ namespace RazorEnhanced
                         return GetPropExec(mobile, 1060444, "GetPropByString");
 
                     default:
-                        Player.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+                        Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
                         return 0;
                 
             }
@@ -1499,7 +1475,7 @@ namespace RazorEnhanced
                         }
                         catch
                         {
-                            Player.SendMessage("Script Error: " + Fcall + ": Error to get value of Cliloc:" + code);
+                            Misc.SendMessage("Script Error: " + Fcall + ": Error to get value of Cliloc:" + code);
                             return 0;  // errore di conversione
                         }
                     }

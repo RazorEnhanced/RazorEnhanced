@@ -12,7 +12,7 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
-				Player.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+                Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
 				return null;
 			}
 			else
@@ -25,17 +25,17 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-				Player.SendMessage("Script Error: Move: Source Item  not found");
+                Misc.SendMessage("Script Error: Move: Source Item  not found");
 				return;
 			}
 			if (bag == null)
 			{
-				Player.SendMessage("Script Error: Move: Destination Item not found");
+                Misc.SendMessage("Script Error: Move: Destination Item not found");
 				return;
 			}
 			if (!bag.IsContainer)
 			{
-				Player.SendMessage("Script Error: Move: Destination Item is not a container");
+                Misc.SendMessage("Script Error: Move: Destination Item is not a container");
 				return;
 			}
 			if (amount == 0)
@@ -58,7 +58,7 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-				Player.SendMessage("Script Error: DropItemGroundSelf: Item not found");
+                Misc.SendMessage("Script Error: DropItemGroundSelf: Item not found");
 				return;
 			}
 			if (amount == 0)
@@ -86,7 +86,7 @@ namespace RazorEnhanced
 			if (item.Serial.IsItem)
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 			else
-				Player.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+                Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
 
 		}
 		public static void UseItemByID(UInt16 ItemID)                   // Da verificare il findbyid dove cerca
@@ -94,13 +94,13 @@ namespace RazorEnhanced
 			Assistant.Item item = World.Player.FindItemByID(ItemID);
 			if (item.Serial.IsItem)
 			{
-				Player.SendMessage("Script Error: UseItemByID: No item whit ID:(" + ItemID.ToString() + ") found!");
+                Misc.SendMessage("Script Error: UseItemByID: No item whit ID:(" + ItemID.ToString() + ") found!");
 				return;
 			}
 			if (item.Serial.IsItem)
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 			else
-				Player.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+                Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
 		}
 
 		// Props
@@ -294,7 +294,7 @@ namespace RazorEnhanced
 				case "Fireball Charges":
 					return GetPropExec(item, 1060487, "GetPropByString");
 				default:
-					Player.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+                    Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
 					return 0;
 			}
 		}
@@ -304,7 +304,7 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
-				Player.SendMessage("Script Error: GetPropByCliloc: Item serial: (" + serial + ") not found");
+                Misc.SendMessage("Script Error: GetPropByCliloc: Item serial: (" + serial + ") not found");
 				return 0;
 			}
 			else
@@ -320,7 +320,7 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
-				Player.SendMessage("Script Error: GetPropByString: Item serial: (" + serial + ") not found");
+                Misc.SendMessage("Script Error: GetPropByString: Item serial: (" + serial + ") not found");
 				return 0;
 			}
 			else
@@ -509,7 +509,7 @@ namespace RazorEnhanced
 					case "Fireball Charges":
 						return GetPropExec(item, 1060487, "GetPropByString");
 					default:
-						Player.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+                        Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
 						return 0;
 				}
 			}
@@ -534,7 +534,7 @@ namespace RazorEnhanced
 						}
 						catch
 						{
-							Player.SendMessage("Script Error: " + Fcall + ": Error to get value of Cliloc:" + code);
+                            Misc.SendMessage("Script Error: " + Fcall + ": Error to get value of Cliloc:" + code);
 							return 0;  // errore di conversione
 						}
 					}
