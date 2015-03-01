@@ -1,29 +1,11 @@
 using System;
-using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
 	public class Item : EnhancedEntity
 	{
-		public class Filter
-		{
-			public int ID = -1;
-			public string Name = "";
-			public int Hue = -1;
-			public int Amount = -1;
-			public double Range = -1;
-			public bool Movable = true;
-			public string Layer = "";
-			public bool Recurse = false;
-
-			public Filter()
-			{
-			}
-		}
-
 		private Assistant.Item m_AssistantItem;
 
 		internal Item(Assistant.Item item)
@@ -45,90 +27,6 @@ namespace RazorEnhanced
 		public string Name { get { return m_AssistantItem.Name; } }
 
 		public string Layer { get { return m_AssistantItem.Layer.ToString(); } }
-
-		public Item FindItemByID(int id)
-		{
-			Filter filter = new Filter();
-			filter.ID = id;
-			List<Item> items = FilterItems(filter);
-			if (items.Count == 1)
-				return items[0];
-			else
-				return null;
-		}
-
-		public List<Item> FilterItems(Filter filter)
-		{
-			List<RazorEnhanced.Item> result = new List<RazorEnhanced.Item>();
-			if (filter.ID != -1)
-			{
-				Assistant.Item assistantItem = m_AssistantItem.FindItemByID((ushort)filter.ID, filter.Recurse);
-				if (assistantItem != null)
-				{
-					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
-					result.Add(enhancedItem);
-				}
-			}
-			else
-			{
-				List<Assistant.Item> assistantItems = Assistant.World.Items.Values.ToList();
-
-				if (filter.Name != "")
-				{
-					Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
-					List<Assistant.Item> list = new List<Assistant.Item>();
-					foreach (Assistant.Item i in assistantItems)
-					{
-						if (rgx.IsMatch(i.Name))
-						{
-							list.Add(i);
-						}
-					}
-					assistantItems = list;
-				}
-
-				if (filter.Hue != -1)
-				{
-					assistantItems = assistantItems.Where((i) => i.Hue == filter.Hue).ToList();
-				}
-
-				if (filter.Amount != -1)
-				{
-					assistantItems = assistantItems.Where((i) => i.Amount == filter.Amount).ToList();
-				}
-
-				if (filter.Amount != -1)
-				{
-					assistantItems = assistantItems.Where((i) => i.Amount == filter.Amount).ToList();
-				}
-
-				if (filter.Range != -1)
-				{
-					assistantItems = assistantItems.Where((i) =>
-						Assistant.Utility.Distance
-						(
-						Assistant.World.Player.Position.X,
-						Assistant.World.Player.Position.Y,
-						i.Position.X,
-						i.Position.Y
-						) <= filter.Range
-					).ToList();
-				}
-
-				assistantItems = assistantItems.Where((i) => i.Movable == filter.Movable).ToList();
-
-				if (filter.Layer != "")
-				{
-					Assistant.Layer layer = RazorEnhanced.Player.GetAssistantLayer(filter.Layer);
-					if (layer != Assistant.Layer.Invalid)
-					{
-						assistantItems = assistantItems.Where((i) => i.Layer == layer).ToList();
-					}
-				}
-			}
-
-			return result;
-		}
 
 		public object Container { get { return m_AssistantItem.Container; } }
 

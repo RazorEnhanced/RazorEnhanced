@@ -1,18 +1,117 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Assistant;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
 	public class Items
 	{
+		public class Filter
+		{
+			public int ID = -1;
+			public string Name = "";
+			public int Hue = -1;
+			public int Amount = -1;
+			public double Range = -1;
+			public bool Movable = true;
+			public string Layer = "";
+			public bool OnGround = false;
+			public bool IsCorpse = false;
+			public bool IsContainer = false;
+
+			public Filter()
+			{
+			}
+		}
+
+		public static List<Item> ApplyFilter(Filter filter)
+		{
+			List<Assistant.Item> assistantItems = Assistant.World.Items.Values.ToList();
+			List<RazorEnhanced.Item> result = new List<RazorEnhanced.Item>();
+
+			if (filter.ID != -1)
+			{
+				assistantItems = assistantItems.Where((i) => i.Hue == filter.Hue).ToList();
+			}
+			else
+			{
+
+
+				if (filter.Name != "")
+				{
+					Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
+					List<Assistant.Item> list = new List<Assistant.Item>();
+					foreach (Assistant.Item i in assistantItems)
+					{
+						if (rgx.IsMatch(i.Name))
+						{
+							list.Add(i);
+						}
+					}
+					assistantItems = list;
+				}
+
+				if (filter.Hue != -1)
+				{
+					assistantItems = assistantItems.Where((i) => i.Hue == filter.Hue).ToList();
+				}
+
+				if (filter.Amount != -1)
+				{
+					assistantItems = assistantItems.Where((i) => i.Amount == filter.Amount).ToList();
+				}
+
+				if (filter.Amount != -1)
+				{
+					assistantItems = assistantItems.Where((i) => i.Amount == filter.Amount).ToList();
+				}
+
+				if (filter.Range != -1)
+				{
+					assistantItems = assistantItems.Where((i) =>
+						Assistant.Utility.Distance
+						(
+						Assistant.World.Player.Position.X,
+						Assistant.World.Player.Position.Y,
+						i.Position.X,
+						i.Position.Y
+						) <= filter.Range
+					).ToList();
+				}
+
+				assistantItems = assistantItems.Where((i) => i.Movable == filter.Movable).ToList();
+
+				if (filter.Layer != "")
+				{
+					Assistant.Layer layer = RazorEnhanced.Player.GetAssistantLayer(filter.Layer);
+					if (layer != Assistant.Layer.Invalid)
+					{
+						assistantItems = assistantItems.Where((i) => i.Layer == layer).ToList();
+					}
+				}
+
+				assistantItems = assistantItems.Where((i) => i.OnGround == filter.OnGround).ToList();
+				assistantItems = assistantItems.Where((i) => i.IsContainer == filter.IsContainer).ToList();
+				assistantItems = assistantItems.Where((i) => i.IsCorpse == filter.IsCorpse).ToList();
+			}
+
+			foreach (Assistant.Item assistantItem in assistantItems)
+			{
+				RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+				result.Add(enhancedItem);
+			}
+			return result;
+		}
+
 		public static Item FindBySerial(int serial)
 		{
 
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
-                Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+				Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
 				return null;
 			}
 			else
@@ -25,17 +124,17 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-                Misc.SendMessage("Script Error: Move: Source Item  not found");
+				Misc.SendMessage("Script Error: Move: Source Item  not found");
 				return;
 			}
 			if (bag == null)
 			{
-                Misc.SendMessage("Script Error: Move: Destination Item not found");
+				Misc.SendMessage("Script Error: Move: Destination Item not found");
 				return;
 			}
 			if (!bag.IsContainer)
 			{
-                Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+				Misc.SendMessage("Script Error: Move: Destination Item is not a container");
 				return;
 			}
 			if (amount == 0)
@@ -58,7 +157,7 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-                Misc.SendMessage("Script Error: DropItemGroundSelf: Item not found");
+				Misc.SendMessage("Script Error: DropItemGroundSelf: Item not found");
 				return;
 			}
 			if (amount == 0)
@@ -86,7 +185,7 @@ namespace RazorEnhanced
 			if (item.Serial.IsItem)
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 			else
-                Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+				Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
 
 		}
 		public static void UseItemByID(UInt16 ItemID)                   // Da verificare il findbyid dove cerca
@@ -94,13 +193,13 @@ namespace RazorEnhanced
 			Assistant.Item item = World.Player.FindItemByID(ItemID);
 			if (item.Serial.IsItem)
 			{
-                Misc.SendMessage("Script Error: UseItemByID: No item whit ID:(" + ItemID.ToString() + ") found!");
+				Misc.SendMessage("Script Error: UseItemByID: No item whit ID:(" + ItemID.ToString() + ") found!");
 				return;
 			}
 			if (item.Serial.IsItem)
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 			else
-                Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+				Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
 		}
 
 		// Props
@@ -294,7 +393,7 @@ namespace RazorEnhanced
 				case "Fireball Charges":
 					return GetPropExec(item, 1060487, "GetPropByString");
 				default:
-                    Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+					Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
 					return 0;
 			}
 		}
@@ -304,7 +403,7 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
-                Misc.SendMessage("Script Error: GetPropByCliloc: Item serial: (" + serial + ") not found");
+				Misc.SendMessage("Script Error: GetPropByCliloc: Item serial: (" + serial + ") not found");
 				return 0;
 			}
 			else
@@ -320,7 +419,7 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
-                Misc.SendMessage("Script Error: GetPropByString: Item serial: (" + serial + ") not found");
+				Misc.SendMessage("Script Error: GetPropByString: Item serial: (" + serial + ") not found");
 				return 0;
 			}
 			else
@@ -509,7 +608,7 @@ namespace RazorEnhanced
 					case "Fireball Charges":
 						return GetPropExec(item, 1060487, "GetPropByString");
 					default:
-                        Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+						Misc.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
 						return 0;
 				}
 			}
@@ -534,7 +633,7 @@ namespace RazorEnhanced
 						}
 						catch
 						{
-                            Misc.SendMessage("Script Error: " + Fcall + ": Error to get value of Cliloc:" + code);
+							Misc.SendMessage("Script Error: " + Fcall + ": Error to get value of Cliloc:" + code);
 							return 0;  // errore di conversione
 						}
 					}
