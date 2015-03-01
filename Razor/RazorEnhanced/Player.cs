@@ -1335,19 +1335,89 @@ namespace RazorEnhanced
 			ClientCommunication.SendToClient(new PathFindTo(Location));
 		}
 
+
         //Props
         public static int GetPropByCliloc(uint serial, int code)
         {
             Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
             if (assistantMobile == null)
             {
-                Player.SendMessage("Script Error: GetPropByCliloc: Item serial: (" + serial + ") not found");
+                Player.SendMessage("Script Error: GetPropByCliloc: Mobile serial: (" + serial + ") not found");
                 return 0;
             }
             else
             {
                 RazorEnhanced.Mobile mobile = new RazorEnhanced.Mobile(assistantMobile);
                 return GetPropExec(mobile, code, "GetPropByCliloc");
+            }
+        }
+
+        public static int GetPropByCliloc(RazorEnhanced.Mobile assistantMobile, int code)
+        {
+
+            if (assistantMobile == null)
+            {
+                Player.SendMessage("Script Error: GetPropByCliloc: mobile not found");
+                return 0;
+            }
+            else
+            {
+                return GetPropExec(assistantMobile, code, "GetPropByCliloc");
+            }
+        }
+
+        public static int GetPropByString(uint serial, string props)
+        {
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+            if (assistantMobile == null)
+            {
+                Player.SendMessage("Script Error: GetPropByString: mobile serial: (" + serial + ") not found");
+                return 0;
+            }
+
+            RazorEnhanced.Mobile mobile = new RazorEnhanced.Mobile(assistantMobile);
+
+            switch (props)
+            {
+                case "Damage Increase":
+                    {
+                        if (GetPropExec(mobile, 1060401, "GetPropByString") != 0)
+                            return GetPropExec(mobile, 1060401, "GetPropByString");
+                        return GetPropExec(mobile, 1060402, "GetPropByString");
+                    }
+                case "Defense Chance Increase":
+                    return GetPropExec(mobile, 1060408, "GetPropByString");
+                case "Faster Cast Recovery":
+                    return GetPropExec(mobile, 1060412, "GetPropByString");
+                case "Enhance Potion":
+                    return GetPropExec(mobile, 1060411, "GetPropByString");
+                case "Faster Casting":
+                    return GetPropExec(mobile, 1060413, "GetPropByString");
+                case "Hit Chance Increase":
+                    return GetPropExec(mobile, 1060415, "GetPropByString");
+                case "Lower Mana Cost":
+                    return GetPropExec(mobile, 1060433, "GetPropByString");
+                case "Lower Reagent Cost":
+                    return GetPropExec(mobile, 1060434, "GetPropByString");
+                case "Mana Regeneration":
+                    return GetPropExec(mobile, 1060440, "GetPropByString");
+                case "Spell Damage Increase":
+                    return GetPropExec(mobile, 1060483, "GetPropByString");
+                case "Stamina Increase":
+                    return GetPropExec(mobile, 1060484, "GetPropByString");
+                case "Stamina Regeneration":
+                    return GetPropExec(mobile, 1060443, "GetPropByString");
+                case "Swing Speed Increase":
+                    return GetPropExec(mobile, 1060486, "GetPropByString");
+                case "Hit Point Increase":
+                    return GetPropExec(mobile, 1060431, "GetPropByString");
+                case "Hit Point Regeneration":
+                    return GetPropExec(mobile, 1060444, "GetPropByString");
+
+                default:
+                    Player.SendMessage("Script Error: GetPropByString: Invalid or not supported props string");
+                    return 0;
+
             }
         }
 

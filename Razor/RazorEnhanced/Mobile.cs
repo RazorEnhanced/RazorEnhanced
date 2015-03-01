@@ -223,6 +223,23 @@ namespace RazorEnhanced
 				return properties;
 			}
 		}
+
+      //find 
+        public static Mobile FindBySerial(int serial)
+        {
+
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+            if (assistantMobile == null)
+            {
+                Player.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+                return null;
+            }
+            else
+            {
+                RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
+                return enhancedMobile;
+            }
+        }
 	}
 }
 
