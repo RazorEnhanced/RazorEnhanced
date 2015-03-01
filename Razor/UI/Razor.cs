@@ -2881,7 +2881,7 @@ namespace Assistant
 			// 
 			this.panelLogo.BackgroundImage = global::Assistant.Properties.Resources.razor_enhanced_png;
 			this.panelLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.panelLogo.Location = new System.Drawing.Point(224, 202);
+			this.panelLogo.Location = new System.Drawing.Point(281, 156);
 			this.panelLogo.Name = "panelLogo";
 			this.panelLogo.Size = new System.Drawing.Size(48, 49);
 			this.panelLogo.TabIndex = 7;
@@ -2889,9 +2889,9 @@ namespace Assistant
 			// razorButtonWiki
 			// 
 			this.razorButtonWiki.ColorTable = office2010BlueTheme1;
-			this.razorButtonWiki.Location = new System.Drawing.Point(278, 211);
+			this.razorButtonWiki.Location = new System.Drawing.Point(233, 211);
 			this.razorButtonWiki.Name = "razorButtonWiki";
-			this.razorButtonWiki.Size = new System.Drawing.Size(122, 28);
+			this.razorButtonWiki.Size = new System.Drawing.Size(145, 28);
 			this.razorButtonWiki.TabIndex = 6;
 			this.razorButtonWiki.Text = "Razor Enhanced wiki";
 			this.razorButtonWiki.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -2903,7 +2903,7 @@ namespace Assistant
 			this.razorButtonCreateUODAccount.ColorTable = office2010BlueTheme1;
 			this.razorButtonCreateUODAccount.Location = new System.Drawing.Point(233, 60);
 			this.razorButtonCreateUODAccount.Name = "razorButtonCreateUODAccount";
-			this.razorButtonCreateUODAccount.Size = new System.Drawing.Size(167, 28);
+			this.razorButtonCreateUODAccount.Size = new System.Drawing.Size(145, 28);
 			this.razorButtonCreateUODAccount.TabIndex = 5;
 			this.razorButtonCreateUODAccount.Text = "create your UOD account";
 			this.razorButtonCreateUODAccount.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -2926,7 +2926,7 @@ namespace Assistant
 			this.razorButtonVisitUOD.ColorTable = office2010BlueTheme1;
 			this.razorButtonVisitUOD.Location = new System.Drawing.Point(233, 26);
 			this.razorButtonVisitUOD.Name = "razorButtonVisitUOD";
-			this.razorButtonVisitUOD.Size = new System.Drawing.Size(168, 28);
+			this.razorButtonVisitUOD.Size = new System.Drawing.Size(145, 28);
 			this.razorButtonVisitUOD.TabIndex = 3;
 			this.razorButtonVisitUOD.Text = "visit www.uodreams.com";
 			this.razorButtonVisitUOD.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -2944,9 +2944,9 @@ namespace Assistant
 			// labelStatus
 			// 
 			this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.labelStatus.Location = new System.Drawing.Point(406, 9);
+			this.labelStatus.Location = new System.Drawing.Point(384, 9);
 			this.labelStatus.Name = "labelStatus";
-			this.labelStatus.Size = new System.Drawing.Size(126, 275);
+			this.labelStatus.Size = new System.Drawing.Size(148, 275);
 			this.labelStatus.TabIndex = 1;
 			// 
 			// labelFeatures
@@ -3634,13 +3634,13 @@ namespace Assistant
 				Utility.FormatSize(m_OutPrev), Utility.FormatSize((long)((m_OutPrev - ps))),
 				Utility.FormatSize(m_InPrev), Utility.FormatSize((long)((m_InPrev - pr))),
 				Utility.FormatTime(time),
-				(World.Player != null ? (uint)World.Player.Serial : 0),
-				(World.Player != null && World.Player.Backpack != null ? (uint)World.Player.Backpack.Serial : 0),
+				World.Player != null ? (uint)World.Player.Serial : 0,
+				World.Player != null && World.Player.Backpack != null ? (uint)World.Player.Backpack.Serial : 0,
 				World.Items.Count,
 				World.Mobiles.Count);
 
 			if (World.Player != null)
-				status += String.Format("\r\nCoordinates: {0} {1} {2}", World.Player.Position.X, World.Player.Position.Y, World.Player.Position.Z);
+				status += String.Format("\r\nCoordinates\r\nX: {0}\r\nY: {1}\r\nZ: {2}", World.Player.Position.X, World.Player.Position.Y, World.Player.Position.Z);
 
 			labelStatus.Text = status;
 
@@ -5301,6 +5301,9 @@ namespace Assistant
 				if (node != null)
 					node.Remove();
 			}
+
+			if (macroTree.Nodes.Count == 0)
+				macroActGroup.Visible = false;
 		}
 
 		private void actionList_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
