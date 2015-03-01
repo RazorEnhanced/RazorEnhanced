@@ -57,8 +57,11 @@ namespace RazorEnhanced.UI
 			lLayer.Text = itemTarg.Layer.ToString();
 
 			// Attributes
-			foreach (Assistant.ObjectPropertyList.OPLEntry ent in itemTarg.ObjPropList.Content)
+			for (int i =0; i<itemTarg.ObjPropList.Content.Count;i++)
 			{
+				Assistant.ObjectPropertyList.OPLEntry ent = itemTarg.ObjPropList.Content[i];
+				if (i == 0)
+					lName.Text = ent.ToString();
 				string content = ent.ToString();
 				listBoxAttributes.Items.Add(content);
 			}

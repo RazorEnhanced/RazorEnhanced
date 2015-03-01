@@ -60,8 +60,11 @@ namespace RazorEnhanced.UI
 			else
 				lFlagBlessed.Text = "No";
 
-			foreach (Assistant.ObjectPropertyList.OPLEntry ent in mobileTarg.ObjPropList.Content)
+			for (int i = 0; i < mobileTarg.ObjPropList.Content.Count; i++)
 			{
+				Assistant.ObjectPropertyList.OPLEntry ent = mobileTarg.ObjPropList.Content[i];
+				if (i == 0)
+					lName.Text = ent.ToString();
 				string content = ent.ToString();
 				listBoxAttributes.Items.Add(content);
 			}
