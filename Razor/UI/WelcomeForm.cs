@@ -1,33 +1,32 @@
 using System;
 using System.Drawing;
-using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.ComponentModel;
 using System.Windows.Forms;
 using System.Net;
 using Microsoft.Win32;
-using Newtonsoft.Json;
 using RazorEnhanced.UI;
 
 namespace Assistant
 {
-	public enum ClientLaunch
+	internal enum ClientLaunch
 	{
 		TwoD,
 		ThirdDawn,
 		Custom,
 	}
 
-	public class WelcomeForm : System.Windows.Forms.Form
+	internal class WelcomeForm : System.Windows.Forms.Form
 	{
 
 		private System.Windows.Forms.Label label1;
-        private RazorComboBox clientList;
-        private RazorCheckBox patchEncy;
-        private RazorButton okay;
-        private RazorButton quit;
+		private RazorComboBox clientList;
+		private RazorCheckBox patchEncy;
+		private RazorButton okay;
+		private RazorButton quit;
 		private System.Windows.Forms.Label label3;
-        private RazorComboBox serverList;
+		private RazorComboBox serverList;
 		private System.Windows.Forms.Label label4;
 		private RazorTextBox port;
 		private System.Windows.Forms.GroupBox groupBox1;
@@ -38,28 +37,28 @@ namespace Assistant
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-        private RazorButton browse;
-        private RazorButton makeDef;
+		private RazorButton browse;
+		private RazorButton makeDef;
 
-        private RazorCheckBox showAtStart;
+		private RazorCheckBox showAtStart;
 		private System.Windows.Forms.Label label5;
-        private RazorComboBox langSel;
-        private RazorCheckBox useEnc;
-        private RazorButton dataBrowse;
-        private RazorComboBox dataDir;
+		private RazorComboBox langSel;
+		private RazorCheckBox useEnc;
+		private RazorButton dataBrowse;
+		private RazorComboBox dataDir;
 		private System.Windows.Forms.GroupBox groupBox3;
 
-		public string ClientPath { get { return m_ClientPath; } }
-		public ClientLaunch Client { get { return m_Launch; } }
-		public bool PatchEncryption { get { return m_PatchEncy; } }
-		public string DataDirectory { get { if (m_DataDir == "" || m_DataDir == "(Auto Detect)") m_DataDir = null; return m_DataDir; } }
+		internal string ClientPath { get { return m_ClientPath; } }
+		internal ClientLaunch Client { get { return m_Launch; } }
+		internal bool PatchEncryption { get { return m_PatchEncy; } }
+		internal string DataDirectory { get { if (m_DataDir == "" || m_DataDir == "(Auto Detect)") m_DataDir = null; return m_DataDir; } }
 
 		private bool m_PatchEncy = false;
 		private string m_ClientPath = "";
 		private ClientLaunch m_Launch = ClientLaunch.Custom;
 		private string m_DataDir = "";
 
-		public WelcomeForm()
+		internal WelcomeForm()
 		{
 			InitializeComponent();
 		}
@@ -387,14 +386,14 @@ namespace Assistant
 
 		private class ServerEntry
 		{
-			public ServerEntry(string addr, int p)
+			internal ServerEntry(string addr, int p)
 			{
 				Address = addr;
 				Port = p;
 			}
 
-			public string Address;
-			public int Port;
+			internal string Address;
+			internal int Port;
 
 			public override string ToString()
 			{
@@ -404,8 +403,8 @@ namespace Assistant
 
 		private class LoginCFG_SE : ServerEntry
 		{
-			public string RealAddress;
-			public LoginCFG_SE()
+			internal string RealAddress;
+			internal LoginCFG_SE()
 				: base("Use Last", 0)
 			{
 				RealAddress = Config.GetRegString(Registry.CurrentUser, "LastServer");
@@ -466,22 +465,22 @@ namespace Assistant
 
 		private class ShardEntry
 		{
-			public string name { get; set; }
-			public string type { get; set; }
-			public string host { get; set; }
-			public int port { get; set; }
+			internal string name { get; set; }
+			internal string type { get; set; }
+			internal string host { get; set; }
+			internal int port { get; set; }
 		}
 
 		private class Custom_SE : ServerEntry
 		{
-			public string RealAddress;
-			public Custom_SE(string name, string addr)
+			internal string RealAddress;
+			internal Custom_SE(string name, string addr)
 				: base(name, 0)
 			{
 				RealAddress = addr;
 			}
 
-			public Custom_SE(string name, string addr, int port)
+			internal Custom_SE(string name, string addr, int port)
 				: base(name, port)
 			{
 				RealAddress = addr;
@@ -492,21 +491,21 @@ namespace Assistant
 		{
 			private string m_Path;
 			private string m_Show;
-			public PathElipsis(string path)
+			internal PathElipsis(string path)
 			{
 				m_Path = path;
 				m_Show = GetPathElipsis(path, 23);
 			}
 
-			public string GetPath() { return m_Path; }
-			public void SetPath(string value) { m_Path = value; m_Show = GetPathElipsis(m_Path, 23); }
+			internal string GetPath() { return m_Path; }
+			internal void SetPath(string value) { m_Path = value; m_Show = GetPathElipsis(m_Path, 23); }
 			public override string ToString()
 			{
 				return m_Show;
 			}
 
 			private static char[] pathChars = new char[] { Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar, Path.PathSeparator, Path.VolumeSeparatorChar };
-			public static string GetPathElipsis(string path, int PathMaxLength)
+			internal static string GetPathElipsis(string path, int PathMaxLength)
 			{
 				if (path.Length <= PathMaxLength)
 					return path;
@@ -539,7 +538,7 @@ namespace Assistant
 		private void WelcomeForm_Load(object sender, System.EventArgs e)
 		{
 			Language.LoadControlNames(this);
-            
+
 			this.BringToFront();
 
 			langSel.Items.AddRange(Language.GetPackNames());
@@ -595,8 +594,8 @@ namespace Assistant
 			Custom_SE cse;
 
 			ShardEntry[] entries = null;
-			try { entries = JsonConvert.DeserializeObject<ShardEntry[]>(Engine.ShardList); }
-			catch { }
+			//try { entries = JsonConvert.DeserializeObject<ShardEntry[]>(Engine.ShardList); }
+			//catch { }
 
 			serverList.BeginUpdate();
 
@@ -780,7 +779,7 @@ namespace Assistant
 				if (!(serverList.SelectedItem is Custom_SE))
 				{
 					serverList.Items.Remove(se);
-					serverList.Items.Insert(1, se);
+					serverList.Items.Insert(0, se);
 				}
 
 				//if ( se.Address != "" )

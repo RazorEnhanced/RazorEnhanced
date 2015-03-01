@@ -689,9 +689,9 @@ namespace RazorEnhanced
 		}
 
 		// Sysmessage
-		public static void SendMessage(Assistant.LocString loc)
+		public static void SendMessage(int num)
 		{
-			Assistant.World.Player.SendMessage(loc);
+			Assistant.World.Player.SendMessage((Assistant.LocString)num);
 		}
 
 		public static void SendMessage(string msg)

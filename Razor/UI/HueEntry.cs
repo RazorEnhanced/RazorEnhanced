@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using RazorEnhanced.UI;
@@ -10,31 +10,31 @@ namespace Assistant
 	/// <summary>
 	/// Summary description for HueEntry.
 	/// </summary>
-	public class HueEntry : System.Windows.Forms.Form
+	internal class HueEntry : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Label label1;
-        private RazorTextBox hueNum;
-        private RazorButton inGame;
+		private RazorTextBox hueNum;
+		private RazorButton inGame;
 		private System.Windows.Forms.Label preview;
-        private RazorButton okay;
-        private RazorButton cancel;
+		private RazorButton okay;
+		private RazorButton cancel;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 		private int m_Hue;
 
-		public delegate void HueEntryCallback(int hue);
-		public static HueEntryCallback Callback = null;
+		internal delegate void HueEntryCallback(int hue);
+		internal static HueEntryCallback Callback = null;
 
-		public int Hue { get { return m_Hue; } }
+		internal int Hue { get { return m_Hue; } }
 
-		public HueEntry()
+		internal HueEntry()
 			: this(0)
 		{
 		}
 
-		public HueEntry(int hue)
+		internal HueEntry(int hue)
 		{
 			m_Hue = hue;
 			//
@@ -73,11 +73,11 @@ namespace Assistant
 			Colortable colortable2 = new Colortable();
 			Colortable colortable3 = new Colortable();
 			this.label1 = new System.Windows.Forms.Label();
-            this.hueNum = new RazorTextBox();
-            this.inGame = new RazorButton();
+			this.hueNum = new RazorTextBox();
+			this.inGame = new RazorButton();
 			this.preview = new System.Windows.Forms.Label();
-            this.okay = new RazorButton();
-            this.cancel = new RazorButton();
+			this.okay = new RazorButton();
+			this.cancel = new RazorButton();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -226,7 +226,7 @@ namespace Assistant
 			SetPreview(Utility.ToInt32(hueNum.Text, 0) & 0x3FFF);
 		}
 
-		public const int TextHueIDX = 30;
+		internal const int TextHueIDX = 30;
 		private void SetPreview(int hue)
 		{
 			if (hue > 0 && hue < 3000)

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
@@ -267,7 +266,7 @@ namespace Assistant.Macros
 			if (m_Item)
 			{
 				Item item = World.Player.Backpack != null ? World.Player.Backpack.FindItemByID(m_Gfx) : null;
-				ArrayList list = new ArrayList();
+				List<Item> list = new List<Item>();
 				if (item == null)
 				{
 					foreach (Item i in World.Items.Values)
@@ -297,7 +296,7 @@ namespace Assistant.Macros
 			}
 			else
 			{
-				ArrayList list = new ArrayList();
+				List<Mobile> list = new List<Mobile>();
 				foreach (Mobile m in World.MobilesInRange())
 				{
 					if (m.Body == m_Gfx)
@@ -711,14 +710,15 @@ namespace Assistant.Macros
 
 		internal override string Serialize()
 		{
-			ArrayList list = new ArrayList(3 + m_Switches.Length + m_TextEntries.Length);
+			List<object> list = new List<object>(3 + m_Switches.Length + m_TextEntries.Length);
 			list.Add(m_ButtonID);
 			list.Add(m_Switches.Length);
-			list.AddRange(m_Switches);
+			foreach (int s in m_Switches)
+				list.Add(s);
 			list.Add(m_TextEntries.Length);
 			for (int i = 0; i < m_TextEntries.Length; i++)
 				list.Add(String.Format("{0}&{1}", m_TextEntries[i].EntryID, m_TextEntries[i].Text));
-			return DoSerialize((object[])list.ToArray(typeof(object)));
+			return DoSerialize(list.ToArray());
 		}
 
 		public override string ToString()
@@ -886,7 +886,7 @@ namespace Assistant.Macros
 
 		internal override bool Perform()
 		{
-			ArrayList list = new ArrayList();
+			List<UOEntity> list = new List<UOEntity>();
 			if (m_Mobile)
 			{
 				foreach (Mobile find in World.MobilesInRange())
@@ -1137,13 +1137,13 @@ namespace Assistant.Macros
 
 				if (call != null)
 				{
-					ArrayList list = new ArrayList();
-					for (int i = 1; i < split.Length; i++)
+					List<string> list = new List<string>();
+					foreach (string s in split)
 					{
-						if (split[i] != null && split[i].Length > 0)
-							list.Add(split[i]);
+						if (s != null && s.Length > 0)
+							list.Add(s);
 					}
-					call((string[])list.ToArray(typeof(string)));
+					call(list.ToArray());
 					return true;
 				}
 			}
@@ -1163,7 +1163,7 @@ namespace Assistant.Macros
 
 		internal override string Serialize()
 		{
-			ArrayList list = new ArrayList(6);
+			List<object> list = new List<object>(6);
 			list.Add((int)m_Type);
 			list.Add(m_Hue);
 			list.Add(m_Font);
@@ -1180,7 +1180,7 @@ namespace Assistant.Macros
 			}
 			list.Add(m_Speech);
 
-			return DoSerialize((object[])list.ToArray(typeof(object)));
+			return DoSerialize(list.ToArray());
 		}
 
 		public override string ToString()

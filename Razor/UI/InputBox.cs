@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using RazorEnhanced.UI;
@@ -10,35 +10,35 @@ namespace Assistant
 	/// <summary>
 	/// Summary description for NewProfile.
 	/// </summary>
-	public class InputBox : System.Windows.Forms.Form
+	internal class InputBox : System.Windows.Forms.Form
 	{
 		private static InputBox m_Instance;
-		public static bool Show(string prompt)
+		internal static bool Show(string prompt)
 		{
 			return Show(null, prompt, Language.GetString(LocString.InputReq), "");
 		}
 
-		public static bool Show(string prompt, string title)
+		internal static bool Show(string prompt, string title)
 		{
 			return Show(null, prompt, title, "");
 		}
 
-		public static bool Show(string prompt, string title, string def)
+		internal static bool Show(string prompt, string title, string def)
 		{
 			return Show(null, prompt, title, def);
 		}
 
-		public static bool Show(Form parent, string prompt)
+		internal static bool Show(Form parent, string prompt)
 		{
 			return Show(parent, prompt, Language.GetString(LocString.InputReq), "");
 		}
 
-		public static bool Show(Form parent, string prompt, string title)
+		internal static bool Show(Form parent, string prompt, string title)
 		{
 			return Show(parent, prompt, title, "");
 		}
 
-		public static bool Show(Form parent, string prompt, string title, string def)
+		internal static bool Show(Form parent, string prompt, string title, string def)
 		{
 			if (m_Instance == null)
 				m_Instance = new InputBox();
@@ -53,12 +53,12 @@ namespace Assistant
 				return m_Instance.ShowDialog(parent) == DialogResult.OK;
 		}
 
-		public static string GetString()
+		internal static string GetString()
 		{
 			return m_Instance != null ? m_Instance.m_String : null;
 		}
 
-		public static int GetInt(int def)
+		internal static int GetInt(int def)
 		{
 			try
 			{
@@ -82,16 +82,16 @@ namespace Assistant
 			}
 		}
 
-		public static int GetInt()
+		internal static int GetInt()
 		{
 			return GetInt(0);
 		}
 
 		private string m_String;
-        private RazorButton ok;
-        private RazorButton cancel;
+		private RazorButton ok;
+		private RazorButton cancel;
 		private System.Windows.Forms.Label Prompt;
-        private RazorTextBox EntryBox;
+		private RazorTextBox EntryBox;
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -132,9 +132,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.Prompt = new System.Windows.Forms.Label();
-            this.EntryBox = new RazorTextBox();
-            this.ok = new RazorButton();
-            this.cancel = new RazorButton();
+			this.EntryBox = new RazorTextBox();
+			this.ok = new RazorButton();
+			this.cancel = new RazorButton();
 			this.SuspendLayout();
 			// 
 			// Prompt

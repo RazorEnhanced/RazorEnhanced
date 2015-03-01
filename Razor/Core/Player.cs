@@ -524,7 +524,7 @@ namespace Assistant
 
 		internal MoveEntry GetMoveEntry(byte seq)
 		{
-			return (MoveEntry)m_MoveInfo[seq];
+			return m_MoveInfo[seq];
 		}
 
 		private static Timer m_OpenDoorReq = Timer.DelayedCallback(TimeSpan.FromSeconds(0.005), new TimerCallback(OpenDoor));
@@ -543,7 +543,11 @@ namespace Assistant
 			FastWalkKey++;
 
 			MoveEntry e = new MoveEntry();
-			m_MoveInfo[seq] = e;
+
+			if (!m_MoveInfo.ContainsKey(seq))
+				m_MoveInfo.TryAdd(seq, e);
+			else
+				m_MoveInfo[seq] = e;
 
 			e.IsStep = (dir & Direction.Mask) == (Direction & Direction.Mask);
 			e.Dir = dir;
@@ -620,7 +624,8 @@ namespace Assistant
 		{
 			m_OutstandingMoves--;
 
-			MoveEntry e = (MoveEntry)m_MoveInfo[seq];
+			MoveEntry e;
+			m_MoveInfo.TryGetValue(seq, out e);
 			if (e != null)
 			{
 				if (e.IsStep && !IsGhost)
@@ -677,9 +682,8 @@ namespace Assistant
 		{
 			List<Mobile> mobiles = new List<Mobile>(World.Mobiles.Values);
 
-			for (int i = 0; i < mobiles.Count; i++)
+			foreach (Mobile m in mobiles)
 			{
-				Mobile m = mobiles[i];
 				if (m != this)
 				{
 					if (!Utility.InRange(m.Position, newPos, VisRange))
@@ -691,9 +695,8 @@ namespace Assistant
 
 			List<Item> items = new List<Item>(World.Items.Values);
 			ScavengerAgent s = ScavengerAgent.Instance;
-			for (int i = 0; i < items.Count; i++)
+			foreach (Item item in items)
 			{
-				Item item = items[i];
 				if (item.Deleted || item.Container != null)
 					continue;
 

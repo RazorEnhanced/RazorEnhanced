@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.IO;
 using System.Text;
-using System.Collections;
+using System.Collections.Generic;
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Reflection;
@@ -143,6 +143,7 @@ namespace RazorEnhanced
 		{
 			m_Scripts.Clear();
 			m_PaxScripter.Reset();
+
 		}
 
 		internal static string Load(string file)

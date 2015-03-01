@@ -3,7 +3,7 @@
 using System;
 using System.Text;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using Ultima;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ namespace Assistant
 {
 	#region Localization enum
 	//1044060 = Alchemy in UO cliloc
-	public enum LocString : int
+	internal enum LocString : int
 	{
 		Null = 0,
 
@@ -407,8 +407,8 @@ namespace Assistant
 
 	internal class Language
 	{
-		private static Hashtable m_Controls;
-		private static Hashtable m_Strings;
+		private static Dictionary<string, string> m_Controls;
+		private static Dictionary<LocString, string> m_Strings;
 
 		private static Ultima.StringList m_CliLoc = null;
 
@@ -416,11 +416,11 @@ namespace Assistant
 		private static string m_Current;
 		private static string m_CliLocName = "ENU";
 
-		public static bool Loaded { get { return m_Loaded; } }
-		public static string Current { get { return m_Current; } }
-		public static string CliLocName { get { return m_CliLocName; } }
+		internal static bool Loaded { get { return m_Loaded; } }
+		internal static string Current { get { return m_Current; } }
+		internal static string CliLocName { get { return m_CliLocName; } }
 
-		public static string GetControlText(string name)
+		internal static string GetControlText(string name)
 		{
 			name = String.Format("{0}::Text", name);
 			if (m_Controls.ContainsKey(name))
@@ -431,23 +431,25 @@ namespace Assistant
 
 		static Language()
 		{
-			m_Controls = new Hashtable(32, 1.0f, StringComparer.OrdinalIgnoreCase);
-			m_Strings = new Hashtable((int)(LocString.__End - LocString.__Start) + 1, 1.0f);
+			m_Controls = new Dictionary<string, string>();
+			m_Strings = new Dictionary<LocString, string>();
 		}
 
-		public static string GetString(LocString key)
+		internal static string GetString(LocString key)
 		{
-			string value = m_Strings[key] as string;
+			string value;
+			m_Strings.TryGetValue(key, out value);
 			if (value == null)
 				value = String.Format("LanguageString \"{0}\" not found!", key);//throw new MissingFieldException( String.Format( "Razor requested Language Pack string '{0}', but it does not exist in the current language pack.", key ) );
 			return value;
 		}
 
-		public static string GetString(int key)
+		internal static string GetString(int key)
 		{
 			string value = null;
+
 			if (key > (uint)LocString.__Start && key < (uint)LocString.__End)
-				value = m_Strings[(LocString)key] as string;
+				m_Strings.TryGetValue((LocString)key, out value);
 			else if (m_CliLoc != null)
 				value = m_CliLoc.GetString(key);
 
@@ -490,7 +492,7 @@ namespace Assistant
 			return names;
 		}
 
-		public static bool Load(string lang)
+		internal static bool Load(string lang)
 		{
 			lang = lang.ToUpper();
 			if (m_Current != null && m_Current == lang)
@@ -501,7 +503,7 @@ namespace Assistant
 			if (!File.Exists(filename))
 				return false;
 			m_Current = lang;
-			ArrayList errors = new ArrayList();
+			List<int> errors = new List<int>();
 			Encoding encoding = Encoding.ASCII;
 
 			using (StreamReader reader = new StreamReader(filename))
@@ -590,9 +592,18 @@ namespace Assistant
 						string value = line.Substring(idx + 1).Trim().Replace("\\n", "\n");
 
 						if (controls)
+						{
+							if (!m_Controls.ContainsKey(key))
+								m_Controls.Add(key, "");
 							m_Controls[key] = value;
+						}
 						else
-							m_Strings[(LocString)Convert.ToInt32(key)] = value;
+						{
+							LocString loc = (LocString)Convert.ToInt32(key);
+							if (!m_Strings.ContainsKey(loc))
+								m_Strings.Add(loc, "");
+							m_Strings[loc] = value;
+						}
 					}
 					catch
 					{
@@ -618,7 +629,7 @@ namespace Assistant
 			return true;
 		}
 
-		public static void LoadCliLoc()
+		internal static void LoadCliLoc()
 		{
 			if (m_CliLocName == null || m_CliLocName.Length <= 0)
 				m_CliLocName = "enu";
@@ -690,7 +701,7 @@ namespace Assistant
 				return result;
 		}
 
-		public static string GetCliloc(int num)
+		internal static string GetCliloc(int num)
 		{
 			if (m_CliLoc == null)
 				return String.Empty;
@@ -703,7 +714,7 @@ namespace Assistant
 				return string.Empty;
 		}
 
-		public static string ClilocFormat(int num, string argstr)
+		internal static string ClilocFormat(int num, string argstr)
 		{
 			if (m_CliLoc == null)
 				return String.Empty;
@@ -716,7 +727,7 @@ namespace Assistant
 				return string.Empty;
 		}
 
-		public static string ClilocFormat(int num, params object[] args)
+		internal static string ClilocFormat(int num, params object[] args)
 		{
 			if (m_CliLoc == null)
 				return String.Empty;
@@ -734,36 +745,38 @@ namespace Assistant
 			if (controls == null)
 				return;
 
-			for (int i = 0; i < controls.Count; i++)
+			foreach (System.Windows.Forms.Control control in controls)
 			{
-				string find = String.Format("{0}::{1}", name, controls[i].Name);
-				string str = m_Controls[find] as string;
+				string find = String.Format("{0}::{1}", name, control.Name);
+				string str;
+				m_Controls.TryGetValue(find, out str);
 				if (str != null)
-					controls[i].Text = str;
+					control.Text = str;
 
-				if (controls[i] is ListView)
+				if (control is ListView)
 				{
-					foreach (ColumnHeader ch in ((ListView)controls[i]).Columns)
+					foreach (ColumnHeader ch in ((ListView)control).Columns)
 					{
-						find = String.Format("{0}::{1}::{2}", name, controls[i].Name, ch.Index);
-						str = m_Controls[find] as string;
+						find = String.Format("{0}::{1}::{2}", name, control.Name, ch.Index);
+						m_Controls.TryGetValue(find, out str);
 						if (str != null)
 							ch.Text = str;
 					}
 				}
 
-				LoadControls(name, controls[i].Controls);
+				LoadControls(name, control.Controls);
 			}
 		}
 
-		public static void LoadControlNames(System.Windows.Forms.Form form)
+		internal static void LoadControlNames(System.Windows.Forms.Form form)
 		{
 #if LOG_CONTROL_TEXT
 			DumpControls( form );
 #endif
 
 			LoadControls(form.Name, form.Controls);
-			string text = m_Controls[String.Format("{0}::Text", form.Name)] as string;
+			string text;
+			m_Controls.TryGetValue(String.Format("{0}::Text", form.Name), out text);
 			if (text != null)
 				form.Text = text;
 

@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.IO;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace Assistant.MapUO
 {
@@ -35,17 +35,17 @@ namespace Assistant.MapUO
 			{
 				return new Region[0];
 			}
-			ArrayList list1 = new ArrayList();
+			List<Region> list = new List<Region>();
 			try
 			{
 				using (StreamReader reader1 = new StreamReader(path))
 				{
-					string text1;
-					while ((text1 = reader1.ReadLine()) != null)
+					string text;
+					while ((text = reader1.ReadLine()) != null)
 					{
-						if ((text1.Length != 0) && !text1.StartsWith("#"))
+						if ((text.Length != 0) && !text.StartsWith("#"))
 						{
-							list1.Add(new Region(text1));
+							list.Add(new Region(text));
 						}
 					}
 				}
@@ -53,7 +53,7 @@ namespace Assistant.MapUO
 			catch
 			{
 			}
-			return (Region[])list1.ToArray(typeof(Region));
+			return list.ToArray();
 		}
 
 		internal int X

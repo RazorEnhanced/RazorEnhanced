@@ -1,79 +1,79 @@
 using System;
 using System.Threading;
 using System.Drawing;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Assistant
 {
-	public class SplashScreen : System.Windows.Forms.Form
+	internal class SplashScreen : System.Windows.Forms.Form
 	{
 		private static SplashScreen m_Screen;
-		public static SplashScreen Instance{ get{ return m_Screen; } }
-		public static void Start()
+		internal static SplashScreen Instance { get { return m_Screen; } }
+		internal static void Start()
 		{
-			if ( m_Screen == null )
+			if (m_Screen == null)
 			{
-				Thread t = new Thread( new ThreadStart( ThreadMain ) );
+				Thread t = new Thread(new ThreadStart(ThreadMain));
 				t.Name = "Razor Splash Screen";
 				t.Start();
-				while ( m_Screen == null )
-					Thread.Sleep( 1 );
+				while (m_Screen == null)
+					Thread.Sleep(1);
 
 				m_Screen.CreateControl();
 			}
 		}
 
-        private delegate void CloseDelegate();
-		public static void End()
+		private delegate void CloseDelegate();
+		internal static void End()
 		{
-            if (m_Screen != null)
-            {
-                if (m_Screen.InvokeRequired)
-                    m_Screen.Invoke(new CloseDelegate(m_Screen.Close));
-                else
-                    m_Screen.Close();
-            }
+			if (m_Screen != null)
+			{
+				if (m_Screen.InvokeRequired)
+					m_Screen.Invoke(new CloseDelegate(m_Screen.Close));
+				else
+					m_Screen.Close();
+			}
 		}
 
-        private delegate void SetMsgDelegate(SplashScreen screen, string arg);
-        private static void SetMessage(SplashScreen screen, string msg)
-        {
-            //screen.message.Text = msg;
-        }
+		private delegate void SetMsgDelegate(SplashScreen screen, string arg);
+		private static void SetMessage(SplashScreen screen, string msg)
+		{
+			//screen.message.Text = msg;
+		}
 
-        public static string MessageStr 
-        { 
-            set 
-            {
-                try
-                {
-                    if (m_Screen != null)
-                    {
-                        if (m_Screen.InvokeRequired)
-                            m_Screen.Invoke(new SetMsgDelegate(SetMessage), m_Screen, value);
-                        else
-                            SetMessage(m_Screen, value);
-                    }
-                }
-                catch
-                {
-                }
-            }
-        }
+		internal static string MessageStr
+		{
+			set
+			{
+				try
+				{
+					if (m_Screen != null)
+					{
+						if (m_Screen.InvokeRequired)
+							m_Screen.Invoke(new SetMsgDelegate(SetMessage), m_Screen, value);
+						else
+							SetMessage(m_Screen, value);
+					}
+				}
+				catch
+				{
+				}
+			}
+		}
 
-        public static LocString Message { set { MessageStr = Language.GetString(value); } }
-		
+		internal static LocString Message { set { MessageStr = Language.GetString(value); } }
+
 		private static void ThreadMain()
 		{
 			try
 			{
-                using (m_Screen = new SplashScreen())
-                {
-                    Application.Run(m_Screen);
-                }
-                m_Screen = null;
+				using (m_Screen = new SplashScreen())
+				{
+					Application.Run(m_Screen);
+				}
+				m_Screen = null;
 			}
 			catch
 			{
@@ -81,7 +81,7 @@ namespace Assistant
 		}
 		private System.ComponentModel.Container components = null;
 
-		public SplashScreen()
+		internal SplashScreen()
 		{
 			try
 			{
@@ -95,16 +95,16 @@ namespace Assistant
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		protected override void Dispose( bool disposing )
+		protected override void Dispose(bool disposing)
 		{
-			if( disposing )
+			if (disposing)
 			{
-				if(components != null)
+				if (components != null)
 				{
 					components.Dispose();
 				}
 			}
-			base.Dispose( disposing );
+			base.Dispose(disposing);
 		}
 
 		#region Windows Form Designer generated code
@@ -149,7 +149,7 @@ namespace Assistant
 
 		private void donate_Click(object sender, System.EventArgs e)
 		{
-			MainForm.LaunchBrowser( "https://www.paypal.com/xclick/business=zippy%40runuo.com&item_name=Razor&no_shipping=1&no_note=1&tax=0&currency_code=USD" );
+			MainForm.LaunchBrowser("https://www.paypal.com/xclick/business=zippy%40runuo.com&item_name=Razor&no_shipping=1&no_note=1&tax=0&currency_code=USD");
 		}
 	}
 }

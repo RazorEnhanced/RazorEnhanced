@@ -10,9 +10,9 @@ namespace RazorEnhanced
 			
 		public static int Run()
 		{
-			Player.InvokeVirtue("Honor");
-			//Player.Walk("North");
-			//Player.Pause(0.5);
+			//Player.InvokeVirtue("Honor");
+			Player.Walk("North");
+			Player.Pause(0.5);
 			return 0;
 		}
 	}

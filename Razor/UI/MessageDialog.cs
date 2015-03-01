@@ -1,6 +1,6 @@
 using System;
 using System.Drawing;
-using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
 using RazorEnhanced.UI;
@@ -10,7 +10,7 @@ namespace Assistant
 	/// <summary>
 	/// Summary description for MessageDialog.
 	/// </summary>
-	public class MessageDialog : System.Windows.Forms.Form
+	internal class MessageDialog : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Button okay;
 		/// <summary>
@@ -22,17 +22,17 @@ namespace Assistant
 		private System.Windows.Forms.TextBox message;
 		private bool m_CanIgnore;
 
-		public MessageDialog(string title, string message)
+		internal MessageDialog(string title, string message)
 			: this(title, false, message)
 		{
 		}
 
-		public MessageDialog(string title, bool ignorable, string message, params object[] msgArgs)
+		internal MessageDialog(string title, bool ignorable, string message, params object[] msgArgs)
 			: this(title, ignorable, String.Format(message, msgArgs))
 		{
 		}
 
-		public MessageDialog(string title, bool ignorable, string message)
+		internal MessageDialog(string title, bool ignorable, string message)
 		{
 			m_Title = title;
 			m_Message = message;

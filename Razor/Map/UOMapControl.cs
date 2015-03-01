@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections;
+using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 
@@ -16,7 +16,7 @@ namespace Assistant.MapUO
 
 		private bool m_Active;
 		private Region[] m_Regions;
-		private ArrayList m_MapButtons;
+		private List<UOMapRuneButton> m_MapButtons;
 		private Point prevPoint;
 		private Mobile m_Focus;
 		private const double RotateAngle = Math.PI / 4 + Math.PI;
@@ -45,7 +45,7 @@ namespace Assistant.MapUO
 			this.DoubleBuffered = true;
 			this.prevPoint = new Point(0, 0);
 			this.BorderStyle = BorderStyle.Fixed3D;
-			this.m_MapButtons = new ArrayList();
+			this.m_MapButtons = new List<UOMapRuneButton>();
 			m_Regions = Assistant.MapUO.Region.Load("guardlines.def");
 			m_MapButtons = UOMapRuneButton.Load("test.xml");
 		}
@@ -141,8 +141,8 @@ namespace Assistant.MapUO
 
 			gfx.ScaleTransform(1.0f, 1.0f, MatrixOrder.Append);
 
-			ArrayList regions = new ArrayList();
-			ArrayList mButtons = new ArrayList();
+			List<Region> regions = new List<Region>();
+			List<UOMapRuneButton> mButtons = new List<UOMapRuneButton>();
 			if (this.Width > this.Height)
 			{
 				regions = RegionList(focus.X, focus.Y, this.Width);
@@ -326,7 +326,6 @@ namespace Assistant.MapUO
 
 		private UOMapRuneButton ButtonCheck(Rectangle rec)
 		{
-			ArrayList buttons = new ArrayList();
 			foreach (UOMapRuneButton mbutton in this.m_MapButtons)
 			{
 				Rectangle rec2 = new Rectangle(mbutton.X, mbutton.Y, 10, 10);
@@ -366,11 +365,11 @@ namespace Assistant.MapUO
 			}
 			catch { }
 		}
-		private ArrayList RegionList(int x, int y, int maxDist)
+		private List<Region> RegionList(int x, int y, int maxDist)
 		{
 
 			int count = m_Regions.Length;
-			ArrayList aList = new ArrayList();
+			List<Region> aList = new List<Region>();
 			for (int i = 0; i < count; i++)
 			{
 				Assistant.MapUO.Region rg1 = this.m_Regions[i];
@@ -382,12 +381,12 @@ namespace Assistant.MapUO
 			return aList;
 		}
 
-		private ArrayList ButtonList(int x, int y, int maxDist)
+		private List<UOMapRuneButton> ButtonList(int x, int y, int maxDist)
 		{
 			if (this.m_MapButtons == null)
 				return null;
 			int count = this.m_MapButtons.Count;
-			ArrayList aList = new ArrayList();
+			List<UOMapRuneButton> aList = new List<UOMapRuneButton>();
 			for (int i = 0; i < count; i++)
 			{
 				UOMapRuneButton btn = (UOMapRuneButton)this.m_MapButtons[i];
