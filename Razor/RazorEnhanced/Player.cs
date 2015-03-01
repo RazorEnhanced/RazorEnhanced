@@ -1259,6 +1259,19 @@ namespace RazorEnhanced
 			else
 				Player.SendMessage("Script Error: ChatParty: you are not in a party");
 		}
+        public static void PartyInvite()
+        {
+            Assistant.ClientCommunication.SendToServer(new PartyInvite());
+        }
+        public static void LeaveParty()
+        {
+            Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(World.Player.Serial));
+        }
+        public static void KickMember(int serial)
+        {
+            uint userial = Convert.ToUInt16(serial);
+            Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(userial));
+        }
 		public static void PartyCanLoot(bool CanLoot)
 		{
 			if (InParty)

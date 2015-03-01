@@ -1706,10 +1706,9 @@ namespace Assistant
 		internal SendPartyMessage(uint serial, string Message)
 			: base(0xBF)
 		{
-			EnsureCapacity(1 + 2 + 2 + 2 + 4 + Message.Length + 1);
+			EnsureCapacity(2 + 2 + 2 + Message.Length + 1);
 			Write((ushort)0x06);   // Command  
-			Write((byte)0x03);       // Party command
-			Write((uint)serial);
+			Write((byte)0x04);       // Party command
 			WriteAsciiNull(Message);
 		}
 	}
@@ -1724,6 +1723,27 @@ namespace Assistant
 			Write((byte)canloot);
 		}
 	}
+    internal sealed class PartyInvite : Packet
+    {
+        internal PartyInvite()
+            : base(0xBF)
+        {
+            EnsureCapacity(6);
+            Write((ushort)0x06);   // Command  
+            Write((byte)0x01);       // Party command open target for new member
+        }
+    }
+    internal sealed class PartyRemoveMember : Packet
+    {
+        internal PartyRemoveMember(uint serial)
+            : base(0xBF)
+        {
+            EnsureCapacity(2 + 2 + 2 + 4);
+            Write((ushort)0x06);   // Command  
+            Write((byte)0x02);       // remove member
+            Write((uint)serial);
+        }
+    }
 }
 
 
