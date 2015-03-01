@@ -294,6 +294,12 @@
     <Compile Include="RazorEnhanced\UI\EnhancedMobileInspector.Designer.cs">
       <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootManualAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootManualAdd.Designer.cs">
+      <DependentUpon>EnhancedAutoLootManualAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -369,6 +375,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedMobileInspector.resx">
       <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootManualAdd.resx">
+      <DependentUpon>EnhancedAutoLootManualAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
