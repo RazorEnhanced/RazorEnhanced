@@ -272,6 +272,7 @@
     <Compile Include="RazorEnhanced\Geometry.cs" />
     <Compile Include="RazorEnhanced\Item.cs" />
     <Compile Include="RazorEnhanced\ItemID.cs" />
+    <Compile Include="RazorEnhanced\Misc.cs" />
     <Compile Include="RazorEnhanced\Scripts.cs" />
     <Compile Include="RazorEnhanced\Settings.cs" />
     <Compile Include="RazorEnhanced\Spells.cs" />

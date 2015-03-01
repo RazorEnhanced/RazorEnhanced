@@ -108,7 +108,7 @@ namespace RazorEnhanced
 		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
 		// Layer
 
-		private static Assistant.Layer GetAssistantLayer(string layer)
+		internal static Assistant.Layer GetAssistantLayer(string layer)
 		{
 			Assistant.Layer result = Layer.Invalid;
 
