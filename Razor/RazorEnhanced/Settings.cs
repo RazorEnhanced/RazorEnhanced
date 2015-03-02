@@ -58,13 +58,49 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Flag", typeof(Bitmap));
 				scripting.Columns.Add("Status", typeof(string));
 				m_Dataset.Tables.Add(scripting);
+
+				DataTable autoloot = new DataTable("AUTOLOOT");
+				autoloot.Columns.Add("Item", typeof(AutoLoot.AutoLootItem));
+				m_Dataset.Tables.Add(autoloot);
+
+				m_Dataset.AcceptChanges();
 			}
+		}
+
+		internal static List<AutoLoot.AutoLootItem> LoadAutoLootItemList()
+		{
+			List<AutoLoot.AutoLootItem> result = new List<AutoLoot.AutoLootItem>();
+			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT"].Rows)
+			{
+				AutoLoot.AutoLootItem item = row["Item"] as AutoLoot.AutoLootItem;
+				if (item != null)
+				{
+					result.Add(item);
+				}
+			}
+
+			return result;
+		}
+
+		internal static void SaveAutoLootItemList(List<AutoLoot.AutoLootItem> list)
+		{
+			m_Dataset.Tables["AUTOLOOT"].Rows.Clear();
+			foreach (AutoLoot.AutoLootItem item in list)
+			{
+				DataRow row = m_Dataset.Tables["AUTOLOOT"].NewRow();
+				row["Item"] = item;
+				m_Dataset.Tables["AUTOLOOT"].Rows.Add(row);
+			}
+
+			Save();
 		}
 
 		internal static void Save()
 		{
 			try
 			{
+				m_Dataset.AcceptChanges();
+
 				string filename = Path.Combine(Directory.GetCurrentDirectory(), m_Save);
 
 				m_Dataset.RemotingFormat = SerializationFormat.Binary;

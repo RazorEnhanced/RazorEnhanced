@@ -19,8 +19,8 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Autoloot Manual Add Item";
         private ListView AutolootlistView;
-        private List<RazorEnhanced.Items.AutoLootItem> AutoLootItemList;
-        public EnhancedAutolootManualAdd(ListView PAutolootlistView, List<RazorEnhanced.Items.AutoLootItem> PAutoLootItemList)
+        private List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList;
+        public EnhancedAutolootManualAdd(ListView PAutolootlistView, List<RazorEnhanced.AutoLoot.AutoLootItem> PAutoLootItemList)
 		{
 			InitializeComponent();
             MaximizeBox = false;
@@ -38,7 +38,7 @@ namespace RazorEnhanced.UI
         {
             tName.Text = "New Item";
             tColor.Text = "0x0000";
-            tGraphycs.Text = "0x0000";
+            tGraphics.Text = "0x0000";
         }
 
 
@@ -52,7 +52,7 @@ namespace RazorEnhanced.UI
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphycs = 0 ;
+            int Graphics = 0 ;
             int Color =0 ;
             if (tName.Text == null)
             {
@@ -66,12 +66,12 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Graphycs = Convert.ToInt32(tGraphycs.Text, 16); 
+                Graphics = Convert.ToInt32(tGraphics.Text, 16); 
             }
             catch
             {
-                MessageBox.Show("Item Graphycs is not valid.",
-                "Item Graphycs Error",
+                MessageBox.Show("Item Graphics is not valid.",
+                "Item Graphics Error",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation,
                 MessageBoxDefaultButton.Button1);
@@ -94,8 +94,8 @@ namespace RazorEnhanced.UI
 
             if (!fail)
             {
-                RazorEnhanced.AutoLoot.AddItemToList(tName.Text, Graphycs, Color, AutolootlistView, AutoLootItemList);
-                // RazorEnhanced.Settings.SavedAutoLootList(AutoLootItemList);
+                RazorEnhanced.AutoLoot.AddItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList);
+                RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
                 this.Close();
             }
 

@@ -35,7 +35,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tColor = new RazorEnhanced.UI.RazorTextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tGraphycs = new RazorEnhanced.UI.RazorTextBox();
+            this.tGraphics = new RazorEnhanced.UI.RazorTextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tName = new RazorEnhanced.UI.RazorTextBox();
             this.bAddItem = new RazorEnhanced.UI.RazorButton();
@@ -59,7 +59,7 @@
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.tColor);
             this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.tGraphycs);
+            this.groupBox1.Controls.Add(this.tGraphics);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.tName);
             this.groupBox1.Controls.Add(this.label1);
@@ -90,16 +90,16 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Color:";
             // 
-            // tGraphycs
+            // tGraphics
             // 
-            this.tGraphycs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tGraphycs.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tGraphycs.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.tGraphycs.Location = new System.Drawing.Point(78, 56);
-            this.tGraphycs.Name = "tGraphycs";
-            this.tGraphycs.Padding = new System.Windows.Forms.Padding(1);
-            this.tGraphycs.Size = new System.Drawing.Size(77, 22);
-            this.tGraphycs.TabIndex = 3;
+            this.tGraphics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.tGraphics.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.tGraphics.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.tGraphics.Location = new System.Drawing.Point(78, 56);
+            this.tGraphics.Name = "tGraphics";
+            this.tGraphics.Padding = new System.Windows.Forms.Padding(1);
+            this.tGraphics.Size = new System.Drawing.Size(77, 22);
+            this.tGraphics.TabIndex = 3;
             // 
             // label2
             // 
@@ -108,7 +108,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(73, 17);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Graphycs:";
+            this.label2.Text = "Graphics:";
             // 
             // tName
             // 
@@ -197,7 +197,7 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private RazorTextBox tColor;
         private System.Windows.Forms.Label label3;
-        private RazorTextBox tGraphycs;
+        private RazorTextBox tGraphics;
         private System.Windows.Forms.Label label2;
         private RazorTextBox tName;
         private RazorButton bAddItem;

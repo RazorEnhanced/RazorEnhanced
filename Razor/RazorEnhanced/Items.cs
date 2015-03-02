@@ -8,46 +8,6 @@ namespace RazorEnhanced
 {
 	public class Items
 	{
-		public class AutoLootItem
-		{
-			public class Property
-			{
-				private string m_Name;
-				public string Name { get { return m_Name; } }
-
-				private int m_Minimum;
-				public int Minimum { get { return m_Minimum; } }
-
-				public Property(string name, int minimum)
-				{
-					m_Name = name;
-					m_Minimum = minimum;
-				}
-			}
-
-			private string m_Name;
-			public string Name { get { return m_Name; } }
-
-			private int m_Graphics;
-			public int Graphics { get { return m_Graphics; } }
-
-            private int m_Color;
-            public int Color { get { return m_Color; } }
-
-			private List<Property> m_Properties;
-			public List<Property> Properties { get { return m_Properties; } }
-
-			public AutoLootItem(string name, int graphics, int color, List<Property> properties)
-			{
-				m_Name = name;
-				m_Graphics = graphics;
-                m_Color = color;
-				m_Properties = properties;
-			}
-
-
-		}
-
 		public class Filter
 		{
 			public int ID = -1;
