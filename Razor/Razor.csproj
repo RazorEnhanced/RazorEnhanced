@@ -268,6 +268,7 @@
     <Compile Include="Core\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\AutoLoot.cs" />
     <Compile Include="RazorEnhanced\EnhancedEntity.cs" />
     <Compile Include="RazorEnhanced\Geometry.cs" />
     <Compile Include="RazorEnhanced\Item.cs" />

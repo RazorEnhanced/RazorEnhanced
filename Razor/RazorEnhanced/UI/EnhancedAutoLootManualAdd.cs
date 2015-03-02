@@ -18,14 +18,15 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedAutolootManualAdd : Form
 	{
 		private const string m_Title = "Enhanced Autoloot Manual Add Item";
-
-        public EnhancedAutolootManualAdd()
+        private ListView AutolootlistView;
+        private List<RazorEnhanced.Items.AutoLootItem> AutoLootItemList;
+        public EnhancedAutolootManualAdd(ListView PAutolootlistView, List<RazorEnhanced.Items.AutoLootItem> PAutoLootItemList)
 		{
 			InitializeComponent();
             MaximizeBox = false;
 			this.Text = m_Title;
-
-
+            AutolootlistView = PAutolootlistView;
+            AutoLootItemList = PAutoLootItemList;
 		}
 
         private void label1_Click(object sender, EventArgs e)
@@ -51,9 +52,9 @@ namespace RazorEnhanced.UI
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphycs;
-            int Color;
-            if (tName != null)
+            int Graphycs = 0 ;
+            int Color =0 ;
+            if (tName.Text == null)
             {
                 MessageBox.Show("Item name is not valid.",
                 "Item name Error",
@@ -65,7 +66,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Graphycs = Convert.ToInt32(tGraphycs); 
+                Graphycs = Convert.ToInt32(tGraphycs.Text, 16); 
             }
             catch
             {
@@ -79,7 +80,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Color = Convert.ToInt32(tColor);
+                Color = Convert.ToInt32(tColor.Text,16);
             }
             catch
             {
@@ -93,7 +94,8 @@ namespace RazorEnhanced.UI
 
             if (!fail)
             {
-                // TODO add to list
+                RazorEnhanced.AutoLoot.AddItemToList(tName.Text, Graphycs, Color, AutolootlistView, AutoLootItemList);
+                // RazorEnhanced.Settings.SavedAutoLootList(AutoLootItemList);
                 this.Close();
             }
 

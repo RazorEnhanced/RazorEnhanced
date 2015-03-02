@@ -31,15 +31,21 @@ namespace RazorEnhanced
 			private int m_Graphics;
 			public int Graphics { get { return m_Graphics; } }
 
+            private int m_Color;
+            public int Color { get { return m_Color; } }
+
 			private List<Property> m_Properties;
 			public List<Property> Properties { get { return m_Properties; } }
 
-			public AutoLootItem(string name, int graphics, List<Property> properties)
+			public AutoLootItem(string name, int graphics, int color, List<Property> properties)
 			{
 				m_Name = name;
 				m_Graphics = graphics;
+                m_Color = color;
 				m_Properties = properties;
 			}
+
+
 		}
 
 		public class Filter
