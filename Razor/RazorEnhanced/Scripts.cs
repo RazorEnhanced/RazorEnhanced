@@ -164,9 +164,7 @@ namespace RazorEnhanced
 			T result = default(T);
 			try
 			{
-				Task<T> task = new Task<T>(() => (T)m_PaxScripter.Invoke(RunMode.Run, null, "RazorEnhanced." + script.Class + "." + method));
-				task.Start();
-				result = task.Result;
+				result = (T)m_PaxScripter.Invoke(RunMode.Run, null, "RazorEnhanced." + script.Class + "." + method);
 			}
 			catch
 			{

@@ -51,9 +51,9 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshList(ListView AutolootlistView, List<AutoLootItem> AutoLootItemList)
+		internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
 		{
-			AutolootlistView.Items.Clear();
+			Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
 			foreach (AutoLootItem item in AutoLootItemList)
 			{
 				ListViewItem listitem = new ListViewItem();
@@ -63,7 +63,7 @@ namespace RazorEnhanced
                     listitem.SubItems.Add("All");
                 else
 				    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-				AutolootlistView.Items.Add(listitem);
+				Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
 			}
 		}
 
@@ -71,7 +71,7 @@ namespace RazorEnhanced
 		{
 			List<AutoLootItem.Property> PropsList = new List<AutoLootItem.Property>();
 			AutoLootItemList.Add(new AutoLootItem(Name, Graphics, Color, PropsList));
-			RazorEnhanced.AutoLoot.RefreshList(AutolootlistView, AutoLootItemList);
+			RazorEnhanced.AutoLoot.RefreshList(AutoLootItemList);
             RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
 		}
 
@@ -80,7 +80,7 @@ namespace RazorEnhanced
             List<AutoLootItem.Property> PropsList = AutoLootItemList[IndexToInsert].Properties;             // salva vecchie prop
             AutoLootItemList.RemoveAt(IndexToInsert);                                                       // rimuove
             AutoLootItemList.Insert(IndexToInsert, new AutoLootItem(Name, Graphics, Color, PropsList));     // inserisce al posto di prima
-            RazorEnhanced.AutoLoot.RefreshList(AutolootlistView, AutoLootItemList);
+            RazorEnhanced.AutoLoot.RefreshList(AutoLootItemList);
             RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
         }
 
