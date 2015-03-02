@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Xml;
 using System.IO;
 using System.Text;
-using System.Collections.Generic;
-using System.CodeDom;
-using System.CodeDom.Compiler;
 using System.Reflection;
-using System.Diagnostics;
-using Microsoft.CSharp;
 using Assistant;
-using System.Data;
 using System.Threading.Tasks;
 using PaxScript.Net;
 
@@ -47,7 +40,7 @@ namespace RazorEnhanced
 			private int? m_ExitCode = null;
 			internal int? ExitCod { get { return m_ExitCode; } }
 
-			public ScriptManagerTimer()
+			internal ScriptManagerTimer()
 				: base(m_Delay, m_Delay)
 			{
 				m_Count = m_Scripts.Count;

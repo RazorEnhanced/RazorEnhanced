@@ -7,11 +7,32 @@ namespace RazorEnhanced
 {
 	public class Misc
 	{
-        //General
-        public static void Pause(double seconds)
-        {
-            System.Threading.Thread.Sleep((int)(1000 * seconds));
-        }
+		//General
+		public class Pause
+		{
+			private DateTime m_Previous;
+			private TimeSpan m_Delay;
+
+			public Pause(double seconds)
+			{
+				m_Previous = DateTime.Now;
+				m_Delay  = TimeSpan.FromSeconds(seconds);
+			}
+
+			public bool IsWaiting
+			{
+				get
+				{
+					if (DateTime.Now >= m_Previous + m_Delay)
+					{
+						m_Previous = DateTime.Now;
+						return true;
+					}
+					else
+						return false;
+				}
+			}
+		}
 
         public static void Resync()
         {
