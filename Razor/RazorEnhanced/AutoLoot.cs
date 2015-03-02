@@ -19,10 +19,14 @@ namespace RazorEnhanced
 				private int m_Minimum;
 				public int Minimum { get { return m_Minimum; } }
 
-				public Property(string name, int minimum)
+                private int m_Maximum;
+                public int Maximum { get { return m_Maximum; } }
+
+                public Property(string name, int minimum, int maximum)
 				{
 					m_Name = name;
 					m_Minimum = minimum;
+                    m_Maximum = maximum;
 				}
 			}
 
@@ -68,13 +72,40 @@ namespace RazorEnhanced
 			List<AutoLootItem.Property> PropsList = new List<AutoLootItem.Property>();
 			AutoLootItemList.Add(new AutoLootItem(Name, Graphics, Color, PropsList));
 			RazorEnhanced.AutoLoot.RefreshList(AutolootlistView, AutoLootItemList);
+            RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
 		}
 
-        internal static void InsertItemToList(string Name, int Graphics, int Color, ListView AutolootlistView, List<AutoLootItem> AutoLootItemList, int IndexToInsert)
+        internal static void ModifyItemToList(string Name, int Graphics, int Color, ListView AutolootlistView, List<AutoLootItem> AutoLootItemList, int IndexToInsert)
         {
-            List<AutoLootItem.Property> PropsList = new List<AutoLootItem.Property>();
-            AutoLootItemList.Insert(IndexToInsert, new AutoLootItem(Name, Graphics, Color, PropsList));
+            List<AutoLootItem.Property> PropsList = AutoLootItemList[IndexToInsert].Properties;             // salva vecchie prop
+            AutoLootItemList.RemoveAt(IndexToInsert);                                                       // rimuove
+            AutoLootItemList.Insert(IndexToInsert, new AutoLootItem(Name, Graphics, Color, PropsList));     // inserisce al posto di prima
             RazorEnhanced.AutoLoot.RefreshList(AutolootlistView, AutoLootItemList);
+            RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
         }
+
+        internal static void RefreshPropListView(ListView AutolootlistViewProp, List<AutoLootItem> AutoLootItemList, int IndexToInsert)
+        {
+            AutolootlistViewProp.Items.Clear();
+            List<AutoLootItem.Property> PropsList = AutoLootItemList[IndexToInsert].Properties;             // legge props correnti
+            foreach (AutoLootItem.Property props in PropsList)
+            {
+                ListViewItem listitem = new ListViewItem();
+                listitem.SubItems.Add(props.Name);
+                listitem.SubItems.Add(props.Minimum.ToString());
+                listitem.SubItems.Add(props.Maximum.ToString());
+                AutolootlistViewProp.Items.Add(listitem);
+            }
+        }
+
+        internal static void InsertPropToItem(string Name, int Graphics, int Color, ListView AutolootlistViewProp, List<AutoLootItem> AutoLootItemList, int IndexToInsert, string PropName, int PropMin, int PropMax)
+        {
+            AutolootlistViewProp.Items.Clear();
+            List<AutoLootItem.Property> PropsToAdd = new List<AutoLootItem.Property>();
+            AutoLootItemList[IndexToInsert].Properties.Add(new AutoLootItem.Property(PropName, PropMin, PropMax));
+            RazorEnhanced.AutoLoot.RefreshPropListView(AutolootlistViewProp, AutoLootItemList, IndexToInsert);
+            RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
+        }
+
 	}
-}
+}       

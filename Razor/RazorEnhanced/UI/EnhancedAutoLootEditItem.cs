@@ -40,7 +40,10 @@ namespace RazorEnhanced.UI
         {
             tName.Text=AutoLootItemList[IndexEdit].Name;
             tGraphics.Text = "0x" + AutoLootItemList[IndexEdit].Graphics.ToString("X4");
-            tColor.Text = "0x" + AutoLootItemList[IndexEdit].Color.ToString("X4");
+            if (AutoLootItemList[IndexEdit].Color == -1)
+                tColor.Text = "-1";
+            else
+                tColor.Text = "0x" + AutoLootItemList[IndexEdit].Color.ToString("X4");
         }
 
 
@@ -101,11 +104,9 @@ namespace RazorEnhanced.UI
             }
             if (!fail)
             {
-                AutoLootItemList.RemoveAt(IndexEdit);
-                RazorEnhanced.AutoLoot.InsertItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList, IndexEdit);
+                RazorEnhanced.AutoLoot.ModifyItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList, IndexEdit);
                 RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
                 this.Close();
-
             }
 
         }

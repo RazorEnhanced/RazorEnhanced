@@ -275,6 +275,7 @@ namespace Assistant
 		private RazorButton autolootAddItemBTarget;
 		private List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList;
 		private ColumnHeader columnHeader4;
+        private ColumnHeader ColumnHeader3;
 
 		private bool m_CanClose = true;
 
@@ -339,9 +340,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ColumnHeader ColumnHeader3;
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.tabs = new System.Windows.Forms.TabControl();
@@ -588,7 +589,6 @@ namespace Assistant
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -628,7 +628,7 @@ namespace Assistant
             // 
             // ColumnHeader3
             // 
-            ColumnHeader3.Text = "Color";
+            this.ColumnHeader3.Text = "Color";
             // 
             // playMacro
             // 
@@ -3171,6 +3171,7 @@ namespace Assistant
             this.autolootItemPropsB.TabIndex = 49;
             this.autolootItemPropsB.Text = "Edit Props";
             this.autolootItemPropsB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootItemPropsB.Click += new System.EventHandler(this.autolootItemPropsB_Click);
             // 
             // autolootItemEditB
             // 
@@ -3242,7 +3243,7 @@ namespace Assistant
             this.columnHeader4,
             this.columnHeader1,
             this.columnHeader2,
-            ColumnHeader3});
+            this.ColumnHeader3});
             this.AutolootlistView.GridLines = true;
             this.AutolootlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.AutolootlistView.LabelWrap = false;
@@ -6857,6 +6858,22 @@ namespace Assistant
             EnhancedAutolootEditItem EditItem = new EnhancedAutolootEditItem(AutolootlistView, AutoLootItemList, CheckedIndex);
             EditItem.TopMost = true;
             EditItem.Show();
+        }
+
+        private void autolootItemPropsB_Click(object sender, EventArgs e)
+        {
+            int CheckedIndex = 0;
+            for (int i = 0; i < AutolootlistView.Items.Count; i++)
+            {
+                if (AutolootlistView.Items[i].Checked)
+                {
+                    CheckedIndex = i;
+                    break;
+                }
+            }
+            EnhancedAutolootEditItemProps EditProp = new EnhancedAutolootEditItemProps(AutolootlistView, AutoLootItemList, CheckedIndex);
+            EditProp.TopMost = true;
+            EditProp.Show();
         }
 	}
 }
