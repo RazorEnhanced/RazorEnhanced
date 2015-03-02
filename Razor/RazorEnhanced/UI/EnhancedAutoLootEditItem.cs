@@ -15,18 +15,20 @@ using Assistant;
 
 namespace RazorEnhanced.UI
 {
-	public partial class EnhancedAutolootManualAdd : Form
+	public partial class EnhancedAutolootEditItem : Form
 	{
-		private const string m_Title = "Enhanced Autoloot Manual Add Item";
+		private const string m_Title = "Enhanced Autoloot Edit Item";
         private ListView AutolootlistView;
         private List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList;
-        public EnhancedAutolootManualAdd(ListView PAutolootlistView, List<RazorEnhanced.AutoLoot.AutoLootItem> PAutoLootItemList)
+        private int IndexEdit;
+        public EnhancedAutolootEditItem(ListView PAutolootlistView, List<RazorEnhanced.AutoLoot.AutoLootItem> PAutoLootItemList, int PIndexEdit)
 		{
 			InitializeComponent();
             MaximizeBox = false;
 			this.Text = m_Title;
             AutolootlistView = PAutolootlistView;
             AutoLootItemList = PAutoLootItemList;
+            IndexEdit = PIndexEdit;
 		}
 
         private void label1_Click(object sender, EventArgs e)
@@ -36,9 +38,9 @@ namespace RazorEnhanced.UI
 
         private void EnhancedAutolootManualAdd_Load(object sender, EventArgs e)
         {
-            tName.Text = "New Item";
-            tColor.Text = "0x0000";
-            tGraphics.Text = "0x0000";
+            tName.Text=AutoLootItemList[IndexEdit].Name;
+            tGraphics.Text = "0x" + AutoLootItemList[IndexEdit].Graphics.ToString("X4");
+            tColor.Text = "0x" + AutoLootItemList[IndexEdit].Color.ToString("X4");
         }
 
 
@@ -97,12 +99,13 @@ namespace RazorEnhanced.UI
                     fail = true;
                 }
             }
-
             if (!fail)
             {
-                RazorEnhanced.AutoLoot.AddItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList);
+                AutoLootItemList.RemoveAt(IndexEdit);
+                RazorEnhanced.AutoLoot.InsertItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList, IndexEdit);
                 RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
                 this.Close();
+
             }
 
         }

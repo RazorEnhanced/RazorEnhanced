@@ -283,6 +283,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\Items.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItem.Designer.cs">
+      <DependentUpon>EnhancedAutoLootEditItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedItemInspector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -370,6 +376,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootEditItem.resx">
+      <DependentUpon>EnhancedAutoLootEditItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedItemInspector.resx">
       <DependentUpon>EnhancedItemInspector.cs</DependentUpon>

@@ -55,7 +55,10 @@ namespace RazorEnhanced
 				ListViewItem listitem = new ListViewItem();
 				listitem.SubItems.Add(item.Name);
 				listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-				listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+                if (item.Color == -1)
+                    listitem.SubItems.Add("All");
+                else
+				    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
 				AutolootlistView.Items.Add(listitem);
 			}
 		}
@@ -66,5 +69,12 @@ namespace RazorEnhanced
 			AutoLootItemList.Add(new AutoLootItem(Name, Graphics, Color, PropsList));
 			RazorEnhanced.AutoLoot.RefreshList(AutolootlistView, AutoLootItemList);
 		}
+
+        internal static void InsertItemToList(string Name, int Graphics, int Color, ListView AutolootlistView, List<AutoLootItem> AutoLootItemList, int IndexToInsert)
+        {
+            List<AutoLootItem.Property> PropsList = new List<AutoLootItem.Property>();
+            AutoLootItemList.Insert(IndexToInsert, new AutoLootItem(Name, Graphics, Color, PropsList));
+            RazorEnhanced.AutoLoot.RefreshList(AutolootlistView, AutoLootItemList);
+        }
 	}
 }
