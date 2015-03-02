@@ -22,7 +22,7 @@ namespace RazorEnhanced.UI
 			// general
 			lSerial.Text = "0x" + itemTarg.Serial.Value.ToString("X8");
 			lItemID.Text = "0x" + itemTarg.ItemID.Value.ToString("X4");
-			lColor.Text = itemTarg.Hue.ToString();
+            lColor.Text = "0x" + itemTarg.Hue.ToString("X4");
 			lPosition.Text = itemTarg.Position.ToString();
 			// Details
 			Assistant.PlayerData tempdata;
@@ -60,8 +60,11 @@ namespace RazorEnhanced.UI
 			for (int i =0; i<itemTarg.ObjPropList.Content.Count;i++)
 			{
 				Assistant.ObjectPropertyList.OPLEntry ent = itemTarg.ObjPropList.Content[i];
-				if (i == 0)
-					lName.Text = ent.ToString();
+                if (i == 0)
+                    if (ent.ToString() == null)
+                        lName.Text = itemTarg.Name.ToString();
+                    else
+                        lName.Text = ent.ToString();
 				string content = ent.ToString();
 				listBoxAttributes.Items.Add(content);
 			}
