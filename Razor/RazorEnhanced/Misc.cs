@@ -26,10 +26,10 @@ namespace RazorEnhanced
 					if (DateTime.Now >= m_Previous + m_Delay)
 					{
 						m_Previous = DateTime.Now;
-						return true;
+						return false;
 					}
 					else
-						return false;
+						return true;
 				}
 			}
 		}
