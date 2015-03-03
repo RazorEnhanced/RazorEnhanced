@@ -1,2 +1,0 @@
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\bin\Debug\ScintillaNET.dll
-E:\marco\uo-uod\Client_e_documentazione_Client\documentazione_per_client\razorfork\bin\Debug\ScintillaNET.pdb
