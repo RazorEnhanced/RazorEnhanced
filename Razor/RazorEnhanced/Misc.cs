@@ -8,30 +8,9 @@ namespace RazorEnhanced
 	public class Misc
 	{
 		//General
-		public class Pause
+		public static void Pause(double seconds)
 		{
-			private DateTime m_Previous;
-			private TimeSpan m_Delay;
-
-			public Pause(double seconds)
-			{
-				m_Previous = DateTime.Now;
-				m_Delay  = TimeSpan.FromSeconds(seconds);
-			}
-
-			public bool IsWaiting
-			{
-				get
-				{
-					if (DateTime.Now >= m_Previous + m_Delay)
-					{
-						m_Previous = DateTime.Now;
-						return false;
-					}
-					else
-						return true;
-				}
-			}
+			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
 		}
 
         public static void Resync()

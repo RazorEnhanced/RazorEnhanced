@@ -7,12 +7,52 @@ using System.Reflection;
 using Assistant;
 using System.Threading.Tasks;
 using PaxScript.Net;
+using System.Threading;
 
 namespace RazorEnhanced
 {
 	internal class Scripts
 	{
-		private static TimeSpan m_Delay = TimeSpan.FromMilliseconds(100.0);
+		private static TimeSpan m_Delay = TimeSpan.FromMilliseconds(25.0);
+
+		internal class ScriptWorker
+		{
+			private EnhancedScript m_Script;
+			internal EnhancedScript Script { get { return m_Script; } }
+
+			internal ScriptWorker(EnhancedScript script)
+			{
+				m_Script = script;
+			}
+
+			// This method will be called when the thread is started.
+			internal void AsyncRun()
+			{
+				int exit = 0;
+
+				while (!_shouldStop)
+				{
+					Thread.Sleep(m_Delay);
+					exit = InvokeMethod<int>(m_Script, "Run");
+					if (exit != 0)
+						_shouldStop = true;
+				}
+
+				if (exit != 0)
+				{
+					Assistant.Engine.MainWindow.razorCheckBoxAuto.Checked = false;
+					Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+				}
+			}
+			internal void RequestStop()
+			{
+				_shouldStop = true;
+			}
+
+			// Volatile is used as hint to the compiler that this data
+			// member will be accessed by multiple threads.
+			private volatile bool _shouldStop;
+		}
 
 		internal class EnhancedScript
 		{
@@ -22,77 +62,23 @@ namespace RazorEnhanced
 			private string m_Class;
 			internal string Class { get { return m_Class; } }
 
-			public EnhancedScript(string file, string classname)
+			internal EnhancedScript(string file, string classname)
 			{
 				m_File = file;
 				m_Class = classname;
 			}
 		}
 
-		private class ScriptManagerTimer : Assistant.Timer
-		{
-			private int m_Count;
-			internal int Count { get { return m_Count; } }
+		private static List<ScriptWorker> m_Workers = new List<ScriptWorker>();
+		internal static List<ScriptWorker> Workers { get { return m_Workers; } }
 
-			private int m_Index;
-			internal int Index { get { return m_Index; } }
+		private static List<Thread> m_Threads = new List<Thread>();
+		internal static List<Thread> Threads { get { return m_Threads; } }
 
-			private int? m_ExitCode = null;
-			internal int? ExitCod { get { return m_ExitCode; } }
-
-			internal ScriptManagerTimer()
-				: base(m_Delay, m_Delay)
-			{
-				m_Count = m_Scripts.Count;
-				m_Index = 0;
-			}
-
-			protected override void OnTick()
-			{
-				if (m_Index < m_Count)
-				{
-					if (m_ExitCode == null)
-					{
-						EnhancedScript script = m_Scripts[m_Index];
-						m_ExitCode = InvokeMethod<int>(script, "Run");
-						System.Threading.Thread.Sleep(m_Delay.Milliseconds / 2);
-
-						if (m_ExitCode != 0)
-						{
-							Stop();
-							Assistant.Engine.MainWindow.razorCheckBoxAuto.Checked = false;
-							Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, m_ExitCode);
-						}
-						else
-						{
-							m_ExitCode = null;
-							m_Index++;
-						}
-					}
-				}
-				else
-				{
-					if (m_Count <= 0)
-					{
-						Stop();
-					}
-					else
-					{
-						m_Index = 0;
-					}
-				}
-			}
-		}
-
-		private static List<EnhancedScript> m_Scripts = new List<EnhancedScript>();
-		internal static List<EnhancedScript> EnhancedScripts { get { return m_Scripts; } }
-
-		private static ScriptManagerTimer m_ScriptManager;
 		private static PaxScripter m_PaxScripter;
 
 		public static void Initialize()
 		{
-			m_ScriptManager = new ScriptManagerTimer();
 			m_PaxScripter = new PaxScripter();
 			m_PaxScripter.OnChangeState += new ChangeStateHandler(paxScripter_OnChangeState);
 		}
@@ -114,29 +100,51 @@ namespace RazorEnhanced
 			get { return m_Auto; }
 			set
 			{
-				if (m_Auto != value)
+				if (m_Threads.Count != m_Workers.Count)
 				{
-					if (m_ScriptManager != null)
-					{
-						m_ScriptManager.Stop();
-					}
-
-					if (value)
-					{
-						m_ScriptManager = new ScriptManagerTimer();
-						m_ScriptManager.Start();
-					}
-
-					m_Auto = value;
+					MessageBox.Show("Thread count different from Worker count", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
 				}
+
+				if (value)
+				{
+					for (int i = 0; i < m_Threads.Count; i++)
+					{
+						Thread thread = m_Threads[i];
+						ScriptWorker worker = m_Workers[i];
+
+						// Start the worker thread.
+						thread.Start();
+						// Loop until worker thread activates.
+						while (!thread.IsAlive) ;
+
+						Misc.SendMessage("Script " + worker.Script.Class + " started.");
+					}
+				}
+				else
+				{
+					for (int i = 0; i < m_Threads.Count; i++)
+					{
+						Thread thread = m_Threads[i];
+						ScriptWorker worker = m_Workers[i];
+
+						// Request that the worker thread stop itself:
+						worker.RequestStop();
+
+						Misc.SendMessage("Script " + worker.Script.Class + " stopped.");
+					}
+				}
+
+				m_Auto = value;
 			}
 		}
 
 		internal static void Reset()
 		{
-			m_Scripts.Clear();
+			Auto = false;
+			m_Workers.Clear();
+			m_Threads.Clear();
 			m_PaxScripter.Reset();
-
 		}
 
 		internal static string Load(string file)
@@ -144,10 +152,13 @@ namespace RazorEnhanced
 			string status = "Loaded";
 			string classname = Path.GetFileNameWithoutExtension(file);
 			EnhancedScript script = new EnhancedScript(file, classname);
+			ScriptWorker worker = new ScriptWorker(script);
+			Thread thread = new Thread(worker.AsyncRun);
 
 			try
 			{
-				m_Scripts.Add(script);
+				m_Workers.Add(worker);
+				m_Threads.Add(thread);
 				m_PaxScripter.AddModule(script.Class);
 				m_PaxScripter.AddCodeFromFile(script.Class, script.File);
 			}
