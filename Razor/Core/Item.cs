@@ -71,6 +71,22 @@ namespace Assistant
 
 		private byte m_GridNum;
 
+		private bool m_Updated = true;
+		internal bool Updated
+		{
+			get { return m_Updated; }
+			set
+			{
+				if (this.IsContainer)
+				{
+					m_Updated = value;
+
+					if (value)
+						RazorEnhanced.Scripts.OnContainerUpdated(this);
+				}
+			}
+		}
+
 		internal override void SaveState(BinaryWriter writer)
 		{
 			base.SaveState(writer);
@@ -360,7 +376,7 @@ namespace Assistant
 
 						for (int c = 0; c < Contains.Count; c++)
 						{
-							Item icheck = (Item)Contains[c];
+							Item icheck = Contains[c];
 							if (icheck.IsContainer && !SearchExemptionAgent.IsExempt(icheck) && (!icheck.IsPouch || !Config.GetBool("NoSearchPouches")))
 							{
 								PacketHandlers.IgnoreGumps.Add(icheck);
@@ -381,7 +397,7 @@ namespace Assistant
 			int i = 0;
 			while (i < m_NeedContUpdate.Count)
 			{
-				if (((Item)m_NeedContUpdate[i]).UpdateContainer())
+				if ((m_NeedContUpdate[i]).UpdateContainer())
 					m_NeedContUpdate.RemoveAt(i);
 				else
 					i++;

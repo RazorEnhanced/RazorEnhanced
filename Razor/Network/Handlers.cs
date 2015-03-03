@@ -188,6 +188,14 @@ namespace Assistant
 		private static void ClientDoubleClick(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial ser = p.ReadUInt32();
+
+			if (ser.IsItem)
+			{
+				Item item = World.FindItem(ser);
+				if (item != null)
+					item.Updated = false;
+			}
+
 			if (Config.GetBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
 			{ // mount layer = 0x19
 				World.Player.SendMessage(LocString.DismountBlocked);
@@ -644,6 +652,14 @@ namespace Assistant
 			if (Engine.UsePostKRPackets)
 				gridPos = p.ReadByte();
 			Serial cser = p.ReadUInt32();
+
+			if (cser.IsItem)
+			{
+				Item container = World.FindItem(cser);
+				if (container != null)
+					container.Updated = true;
+			}
+
 			ushort hue = p.ReadUInt16();
 
 			Item i = World.FindItem(serial);
@@ -778,6 +794,8 @@ namespace Assistant
 		{
 			int count = p.ReadUInt16();
 
+			List<Item> updated = new List<Item>();
+
 			for (int i = 0; i < count; i++)
 			{
 				Serial serial = p.ReadUInt32();
@@ -806,6 +824,14 @@ namespace Assistant
 				if (Engine.UsePostKRPackets)
 					item.GridNum = p.ReadByte();
 				Serial cont = p.ReadUInt32();
+
+				if (cont.IsItem)
+				{
+					Item container = World.FindItem(cont);
+					if (container != null && !updated.Contains(container))
+						updated.Add(container);
+				}
+
 				item.Hue = p.ReadUInt16();
 				if (SearchExemptionAgent.Contains(item))
 				{
@@ -817,6 +843,10 @@ namespace Assistant
 				if (!SearchExemptionAgent.IsExempt(item) && (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver)))
 					Counter.Count(item);
 			}
+
+			foreach (Item container in updated)
+				container.Updated = true;
+
 			Item.UpdateContainers();
 		}
 
@@ -843,7 +873,15 @@ namespace Assistant
 			ushort iid = p.ReadUInt16();
 			i.ItemID = (ushort)(iid + p.ReadSByte()); // signed, itemID offset
 			i.Layer = (Layer)p.ReadByte();
+
 			Serial ser = p.ReadUInt32();// cont must be set after hue (for counters)
+			if (ser.IsItem)
+			{
+				Item container = World.FindItem(ser);
+				if (container != null)
+					container.Updated = true;
+			}
+
 			i.Hue = p.ReadUInt16();
 
 			i.Container = ser;

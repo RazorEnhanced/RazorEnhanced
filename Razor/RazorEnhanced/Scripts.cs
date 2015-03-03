@@ -183,5 +183,9 @@ namespace RazorEnhanced
 
 			return result;
 		}
+
+		internal static void OnContainerUpdated(Assistant.Item container)
+		{
+		}
 	}
 }
