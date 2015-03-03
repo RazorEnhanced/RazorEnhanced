@@ -18,15 +18,21 @@ namespace RazorEnhanced
             Assistant.ClientCommunication.SendToServer(new ResyncReq());
         }
 
+		public static double DistanceSqrt(Point3D a, Point3D b)
+		{
+			double distance = Math.Sqrt(((a.X - b.X) ^ 2) + (a.Y - b.Y) ^ 2);
+			return distance;
+		}
+
         // Sysmessage
         public static void SendMessage(int num)
         {
-            Assistant.World.Player.SendMessage((Assistant.LocString)num);
+			Assistant.World.Player.SendMessage(MsgLevel.Info, (Assistant.LocString)num);
         }
 
         public static void SendMessage(string msg)
         {
-            Assistant.World.Player.SendMessage(msg);
+			Assistant.World.Player.SendMessage(MsgLevel.Info, msg);
         }
 
 	}

@@ -40,15 +40,9 @@ namespace RazorEnhanced
 			}
 		}
 
-		public Dictionary<ushort, ushort> ContextMenu
-		{
-			get { return m_UOEntity.ContextMenu; }
-		}
-
-		public virtual ushort Hue
+		public virtual int Hue
 		{
 			get { return m_UOEntity.Hue; }
-			set { m_UOEntity.Hue = value; }
 		}
 	}
 }

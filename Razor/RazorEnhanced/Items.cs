@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using Assistant;
 using System.Text.RegularExpressions;
@@ -10,13 +11,15 @@ namespace RazorEnhanced
 	{
 		public class Filter
 		{
-			public int ID = -1;
+			public bool Enabled = false;
+			public ArrayList Serials = new ArrayList();
+			public ArrayList Graphics = new ArrayList();
 			public string Name = "";
-			public int Hue = -1;
-			public int Amount = -1;
-			public double Range = -1;
+			public ArrayList Hues = new ArrayList();
+			public double RangeMin = -1;
+			public double RangeMax = -1;
 			public bool Movable = true;
-			public string Layer = "";
+			public ArrayList Layers = new ArrayList();
 			public bool OnGround = false;
 			public bool IsCorpse = false;
 			public bool IsContainer = false;
@@ -26,75 +29,82 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static List<Item> ApplyFilter(Filter filter)
+		public static ArrayList ApplyFilter(Filter filter)
 		{
+			ArrayList result = new ArrayList();
+
 			List<Assistant.Item> assistantItems = Assistant.World.Items.Values.ToList();
-			List<RazorEnhanced.Item> result = new List<RazorEnhanced.Item>();
 
-			if (filter.ID != -1)
+			if (filter.Enabled)
 			{
-				assistantItems = assistantItems.Where((i) => i.Hue == filter.Hue).ToList();
-			}
-			else
-			{
-
-
-				if (filter.Name != "")
+				if (filter.Serials.Count > 0)
 				{
-					Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
-					List<Assistant.Item> list = new List<Assistant.Item>();
-					foreach (Assistant.Item i in assistantItems)
+					assistantItems = assistantItems.Where((i) => filter.Serials.Contains((int)i.Serial.Value)).ToList();
+				}
+				else
+				{
+					if (filter.Name != "")
 					{
-						if (rgx.IsMatch(i.Name))
+						Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
+						List<Assistant.Item> list = new List<Assistant.Item>();
+						foreach (Assistant.Item i in assistantItems)
 						{
-							list.Add(i);
+							if (rgx.IsMatch(i.Name))
+							{
+								list.Add(i);
+							}
 						}
+						assistantItems = list;
 					}
-					assistantItems = list;
-				}
 
-				if (filter.Hue != -1)
-				{
-					assistantItems = assistantItems.Where((i) => i.Hue == filter.Hue).ToList();
-				}
-
-				if (filter.Amount != -1)
-				{
-					assistantItems = assistantItems.Where((i) => i.Amount == filter.Amount).ToList();
-				}
-
-				if (filter.Amount != -1)
-				{
-					assistantItems = assistantItems.Where((i) => i.Amount == filter.Amount).ToList();
-				}
-
-				if (filter.Range != -1)
-				{
-					assistantItems = assistantItems.Where((i) =>
-						Assistant.Utility.Distance
-						(
-						Assistant.World.Player.Position.X,
-						Assistant.World.Player.Position.Y,
-						i.Position.X,
-						i.Position.Y
-						) <= filter.Range
-					).ToList();
-				}
-
-				assistantItems = assistantItems.Where((i) => i.Movable == filter.Movable).ToList();
-
-				if (filter.Layer != "")
-				{
-					Assistant.Layer layer = RazorEnhanced.Player.GetAssistantLayer(filter.Layer);
-					if (layer != Assistant.Layer.Invalid)
+					if (filter.Graphics.Count > 0)
 					{
-						assistantItems = assistantItems.Where((i) => i.Layer == layer).ToList();
+						assistantItems = assistantItems.Where((i) => filter.Graphics.Contains(i.ItemID.Value)).ToList();
 					}
-				}
 
-				assistantItems = assistantItems.Where((i) => i.OnGround == filter.OnGround).ToList();
-				assistantItems = assistantItems.Where((i) => i.IsContainer == filter.IsContainer).ToList();
-				assistantItems = assistantItems.Where((i) => i.IsCorpse == filter.IsCorpse).ToList();
+					if (filter.Hues.Count > 0)
+					{
+						assistantItems = assistantItems.Where((i) => filter.Hues.Contains(i.Hue)).ToList();
+					}
+
+					if (filter.RangeMin != -1)
+					{
+						assistantItems = assistantItems.Where((i) =>
+							Utility.DistanceSqrt
+							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) >= filter.RangeMin
+						).ToList();
+					}
+
+					if (filter.RangeMax != -1)
+					{
+						assistantItems = assistantItems.Where((i) =>
+							Utility.DistanceSqrt
+							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) <= filter.RangeMax
+						).ToList();
+					}
+
+					assistantItems = assistantItems.Where((i) => i.Movable == filter.Movable).ToList();
+
+					if (filter.Layers.Count > 0)
+					{
+						List<Assistant.Layer> list = new List<Assistant.Layer>();
+
+						foreach (string text in filter.Layers)
+						{
+							Assistant.Layer layer = RazorEnhanced.Player.GetAssistantLayer(text);
+							if (layer != Assistant.Layer.Invalid)
+							{
+								list.Add(layer);
+							}
+						}
+
+						assistantItems = assistantItems.Where((i) => list.Contains(i.Layer)).ToList();
+					}
+
+					assistantItems = assistantItems.Where((i) => i.OnGround == filter.OnGround).ToList();
+					assistantItems = assistantItems.Where((i) => i.IsContainer == filter.IsContainer).ToList();
+					assistantItems = assistantItems.Where((i) => i.IsCorpse == filter.IsCorpse).ToList();
+				}
 			}
 
 			foreach (Assistant.Item assistantItem in assistantItems)
@@ -102,6 +112,114 @@ namespace RazorEnhanced
 				RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
 				result.Add(enhancedItem);
 			}
+
+			return result;
+		}
+
+		public static Item Select(ArrayList items, string selector)
+		{
+			Item result = null;
+
+			if (items.Count > 0)
+			{
+				switch (selector)
+				{
+					case "Random":
+						result = (Item)items[Utility.Random(items.Count)];
+						break;
+					case "Nearest":
+						Item nearest = (Item)items[0];
+						double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
+						for (int i = 0; i < items.Count; i++)
+						{
+							Item item = (Item)items[i];
+							double dist = Misc.DistanceSqrt(Player.Position, item.Position);
+							if (dist < minDist)
+							{
+								nearest = item;
+								minDist = dist;
+							}
+						}
+						result = nearest;
+						break;
+					case "Farthest":
+						Item farthest = (Item)items[0];
+						double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
+						for (int i = 0; i < items.Count; i++)
+						{
+							Item item = (Item)items[i];
+							double dist = Misc.DistanceSqrt(Player.Position, item.Position);
+							if (dist > maxDist)
+							{
+								farthest = item;
+								maxDist = dist;
+							}
+						}
+						result = farthest;
+						break;
+					case "Less":
+						Item least = (Item)items[0];
+						int minAmount = least.Amount;
+						for (int i = 0; i < items.Count; i++)
+						{
+							Item item = (Item)items[i];
+							int amount = item.Amount;
+							if (amount < minAmount)
+							{
+								least = item;
+								minAmount = amount;
+							}
+						}
+						result = least;
+						break;
+					case "Most":
+						Item most = (Item)items[0];
+						int maxAmount = most.Amount;
+						for (int i = 0; i < items.Count; i++)
+						{
+							Item item = (Item)items[i];
+							int amount = item.Amount;
+							if (amount > maxAmount)
+							{
+								most = item;
+								maxAmount = amount;
+							}
+						}
+						result = most;
+						break;
+					case "Weakest":
+						Item weakest = (Item)items[0];
+						int minDur = weakest.Durability;
+						for (int i = 0; i < items.Count; i++)
+						{
+							Item item = (Item)items[i];
+							int dur = item.Durability;
+							if (dur < minDur)
+							{
+								weakest = item;
+								minDur = dur;
+							}
+						}
+						result = weakest;
+						break;
+					case "Strongest":
+						Item strongest = (Item)items[0];
+						int maxDur = strongest.Amount;
+						for (int i = 0; i < items.Count; i++)
+						{
+							Item item = (Item)items[i];
+							int dur = item.Durability;
+							if (dur > maxDur)
+							{
+								strongest = item;
+								maxDur = dur;
+							}
+						}
+						result = strongest;
+						break;
+				}
+			}
+
 			return result;
 		}
 
@@ -616,7 +734,7 @@ namespace RazorEnhanced
 
 		private static int GetPropExec(RazorEnhanced.Item item, int code, String Fcall)
 		{
-			List<Property> properties = item.Properties;
+			ArrayList properties = item.Properties;
 			foreach (Property property in properties)
 			{
 				int number = property.Number;

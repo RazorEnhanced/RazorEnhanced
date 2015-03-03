@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace RazorEnhanced
@@ -45,11 +46,11 @@ namespace RazorEnhanced
 			return x > y ? x : y;
 		}
 
-		public List<Item> Contains
+		public ArrayList Contains
 		{
 			get
 			{
-				List<Item> items = new List<Item>();
+				ArrayList items = new ArrayList();
 				foreach (Assistant.Item assistantItem in m_AssistantItem.Contains)
 				{
 					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
@@ -101,11 +102,11 @@ namespace RazorEnhanced
 
 		internal Assistant.Layer AssistantLayer { get { return m_AssistantItem.Layer; } }
 
-		public List<Property> Properties
+		public ArrayList Properties
 		{
 			get
 			{
-				List<Property> properties = new List<Property>();
+				ArrayList properties = new ArrayList();
 				foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantItem.ObjPropList.Content)
 				{
 					Property property = new Property(entry);
@@ -119,7 +120,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				List<Property> properties = Properties;
+				ArrayList properties = Properties;
 				foreach (Property property in properties)
 				{
 					int number = property.Number;
@@ -146,7 +147,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				List<Property> properties = Properties;
+				ArrayList properties = Properties;
 				foreach (Property property in properties)
 				{
 					int number = property.Number;
@@ -193,7 +194,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				List<Property> properties = Properties;
+				ArrayList properties = Properties;
 				foreach (Property property in properties)
 				{
 					int number = property.Number;

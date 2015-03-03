@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -17,21 +18,17 @@ namespace RazorEnhanced
 
 		public string Name { get { return m_AssistantMobile.Name; } }
 
-		public ushort Body { get { return m_AssistantMobile.Body; } }
+		public int Body { get { return m_AssistantMobile.Body; } }
 
-		public string Direction
-		{
-			get { return m_AssistantMobile.Direction.ToString(); }
-		}
+		public string Direction { get { return m_AssistantMobile.Direction.ToString(); } }
 
 		public bool Visible { get { return m_AssistantMobile.Visible; } }
 
-		public bool Poisoned
-		{
-			get { return m_AssistantMobile.Poisoned; }
-		}
+		public bool Poisoned { get { return m_AssistantMobile.Poisoned; } }
 
 		public bool Blessed { get { return m_AssistantMobile.Blessed; } }
+
+		public bool IsHuman { get { return m_AssistantMobile.IsHuman; } }
 
 		public bool IsGhost { get { return m_AssistantMobile.IsGhost; } }
 
@@ -39,7 +36,7 @@ namespace RazorEnhanced
 
 		public bool Female { get { return m_AssistantMobile.Female; } }
 
-		public byte Notoriety { get { return m_AssistantMobile.Notoriety; } }
+		public int Notoriety { get { return m_AssistantMobile.Notoriety; } }
 
 		public int HitsMax { get { return m_AssistantMobile.HitsMax; } }
 
@@ -53,7 +50,7 @@ namespace RazorEnhanced
 
 		public int Mana { get { return m_AssistantMobile.Mana; } }
 
-		public byte Map { get { return m_AssistantMobile.Map; } }
+		public int Map { get { return m_AssistantMobile.Map; } }
 
 		public bool InParty { get { return Assistant.PacketHandlers.Party.Contains(m_AssistantMobile.Serial); } }
 
@@ -196,11 +193,11 @@ namespace RazorEnhanced
 			}
 		}
 
-		public List<Item> Contains
+		public ArrayList Contains
 		{
 			get
 			{
-				List<Item> items = new List<Item>();
+				ArrayList items = new ArrayList();
 				foreach (Assistant.Item assistantItem in m_AssistantMobile.Contains)
 				{
 					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
@@ -210,11 +207,11 @@ namespace RazorEnhanced
 			}
 		}
 
-		public List<Property> Properties
+		public ArrayList Properties
 		{
 			get
 			{
-				List<Property> properties = new List<Property>();
+				ArrayList properties = new ArrayList();
 				foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantMobile.ObjPropList.Content)
 				{
 					Property property = new Property(entry);
@@ -224,22 +221,22 @@ namespace RazorEnhanced
 			}
 		}
 
-      //find 
-        public static Mobile FindBySerial(int serial)
-        {
+		//find 
+		public static Mobile FindBySerial(int serial)
+		{
 
-            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
-            if (assistantMobile == null)
-            {
-                Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
-                return null;
-            }
-            else
-            {
-                RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
-                return enhancedMobile;
-            }
-        }
+			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+			if (assistantMobile == null)
+			{
+				Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+				return null;
+			}
+			else
+			{
+				RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
+				return enhancedMobile;
+			}
+		}
 	}
 }
 

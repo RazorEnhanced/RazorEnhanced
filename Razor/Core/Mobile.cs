@@ -23,6 +23,8 @@ namespace Assistant
 
 	internal class Mobile : UOEntity
 	{
+		private static List<ushort> m_HumanBodies = new List<ushort>() { 183, 184, 185, 186, 400, 401, 402, 403, 605, 606, 607, 608, 666, 667, 694, 744, 745, 747, 748, 750, 751 };
+
 		private ushort m_Body;
 		private Direction m_Direction;
 		private string m_Name;
@@ -157,6 +159,17 @@ namespace Assistant
 			set { m_Blessed = value; }
 		}
 
+		internal bool IsHuman
+		{
+			get
+			{
+				if (m_HumanBodies.Contains(this.Body))
+					return true;
+				else
+					return false;
+			}
+		}
+
 		internal bool IsGhost
 		{
 			get
@@ -165,6 +178,8 @@ namespace Assistant
 					|| m_Body == 403
 					|| m_Body == 607
 					|| m_Body == 608
+					|| m_Body == 694
+					|| m_Body == 695
 					|| m_Body == 970;
 			}
 		}
