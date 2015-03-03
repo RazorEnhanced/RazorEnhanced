@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -39,6 +40,7 @@ namespace RazorEnhanced
 			private int m_Color;
 			public int Color { get { return m_Color; } }
 
+
 			private List<Property> m_Properties;
 			public List<Property> Properties { get { return m_Properties; } }
 
@@ -49,7 +51,23 @@ namespace RazorEnhanced
 				m_Color = color;
 				m_Properties = properties;
 			}
+
 		}
+
+
+        internal static int AutolootBagSerial
+        {
+            get
+            {
+                return Convert.ToInt16(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
+            }
+        }
+
+        internal static void AddLog(string addlog)
+        {
+            Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog);
+            Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1;
+        }
 
 		internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
 		{
@@ -63,7 +81,7 @@ namespace RazorEnhanced
                     listitem.SubItems.Add("All");
                 else
 				    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-				Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
+			//	Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
 			}
 		}
 
@@ -105,6 +123,31 @@ namespace RazorEnhanced
             AutoLootItemList[IndexToInsert].Properties.Add(new AutoLootItem.Property(PropName, PropMin, PropMax));
             RazorEnhanced.AutoLoot.RefreshPropListView(AutolootlistViewProp, AutoLootItemList, IndexToInsert);
             RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
+        }
+
+        public static void Engine()
+        {
+            Item LootBag;
+            List<RazorEnhanced.Item> IgnoreItem = new List<RazorEnhanced.Item>();
+            List<RazorEnhanced.Item> ItemCorpi = new List<RazorEnhanced.Item>();
+            
+            // Genero filtro per corpi
+            RazorEnhanced.Items.Filter FiltroCorpi = new RazorEnhanced.Items.Filter();
+            FiltroCorpi.Range = 2;
+            FiltroCorpi.Movable = false;
+            //FiltroCorpi.IsCorpse = true;
+            FiltroCorpi.OnGround = true;
+
+           // LootBag = RazorEnhanced.Items.FindBySerial(RazorEnhanced.AutoLoot.AutolootBagSerial);
+            //RazorEnhanced.AutoLoot.AddLog("- LootBag :" + LootBag.ToString());
+            RazorEnhanced.AutoLoot.AddLog("- Cerco corpi....");
+            ItemCorpi = RazorEnhanced.Items.ApplyFilter(FiltroCorpi);
+            foreach (RazorEnhanced.Item Corpo in ItemCorpi)
+            {
+                RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + Corpo.Serial.ToString());
+                Thread.Sleep(2000);
+                RazorEnhanced.AutoLoot.AddLog("- Passo al corpo successvivo");
+            }
         }
 
 	}
