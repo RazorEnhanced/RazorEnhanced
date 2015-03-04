@@ -3268,6 +3268,7 @@ namespace Assistant
             this.autolootItemPropsB.TabIndex = 49;
             this.autolootItemPropsB.Text = "Edit Props";
             this.autolootItemPropsB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootItemPropsB.Click += new System.EventHandler(this.autolootItemPropsB_Click);
             // 
             // autolootItemEditB
             // 
@@ -3278,6 +3279,7 @@ namespace Assistant
             this.autolootItemEditB.TabIndex = 48;
             this.autolootItemEditB.Text = "Edit";
             this.autolootItemEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootItemEditB.Click += new System.EventHandler(this.autolootItemEditB_Click);
             // 
             // autolootAddItemBTarget
             // 
@@ -3288,6 +3290,7 @@ namespace Assistant
             this.autolootAddItemBTarget.TabIndex = 47;
             this.autolootAddItemBTarget.Text = "Add Target";
             this.autolootAddItemBTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootAddItemBTarget.Click += new System.EventHandler(this.autolootAddItemBTarget_Click);
             // 
             // autolootRemoveItemB
             // 
@@ -3298,6 +3301,7 @@ namespace Assistant
             this.autolootRemoveItemB.TabIndex = 46;
             this.autolootRemoveItemB.Text = "Remove";
             this.autolootRemoveItemB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootRemoveItemB.Click += new System.EventHandler(this.autolootRemoveItemB_Click);
             // 
             // autolootAddItemBManual
             // 
@@ -3308,6 +3312,7 @@ namespace Assistant
             this.autolootAddItemBManual.TabIndex = 45;
             this.autolootAddItemBManual.Text = "Add Manual";
             this.autolootAddItemBManual.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootAddItemBManual.Click += new System.EventHandler(this.autolootAddItemBManual_Click);
             // 
             // autolootContainerButton
             // 
@@ -3318,7 +3323,7 @@ namespace Assistant
             this.autolootContainerButton.TabIndex = 49;
             this.autolootContainerButton.Text = "Set Container";
             this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click_1);
+            this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click);
             // 
             // autolootEnable
             // 
@@ -7064,5 +7069,7 @@ namespace Assistant
             RazorEnhanced.Misc.SendMessage("Autoloot bag set: " + serial.ToString());
             
         }
+
+      
 	}
 }
