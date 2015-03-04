@@ -6997,7 +6997,9 @@ namespace Assistant
 
         private void bautolootlistAdd_Click(object sender, EventArgs e)
         {
-       
+            EnhancedAutolootAddItemList AddItemList = new EnhancedAutolootAddItemList(autolootListSelect);
+            AddItemList.TopMost = true;
+            AddItemList.Show();
         }
 
         private void autolootEnable_CheckedChanged(object sender, EventArgs e)
