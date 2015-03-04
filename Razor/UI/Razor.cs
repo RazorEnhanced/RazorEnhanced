@@ -262,9 +262,8 @@ namespace Assistant
         private GroupBox groupBox13;
         private ListBox autolootLogBox;
         private Label autolootContainerLabel;
-        private GroupBox groupBox12;
-        private RazorButton autolootImport;
-        private RazorButton autolootExport;
+        private RazorButton bautolootlistImport;
+        private RazorButton bautolootlistExport;
         private GroupBox groupBox11;
         private RazorButton autolootItemPropsB;
         private RazorButton autolootItemEditB;
@@ -279,6 +278,12 @@ namespace Assistant
         private ColumnHeader columnHeader2;
         private ColumnHeader ColumnHeader3;
         private TabPage escavenger;
+        private Label label21;
+        private RazorTextBox autolootLabelDelay;
+        private RazorButton bautolootlistRemove;
+        private RazorButton bautolootlistAdd;
+        private RazorComboBox autolootListSelect;
+        private Label label20;
 
 		private bool m_CanClose = true;
 
@@ -291,9 +296,11 @@ namespace Assistant
 		internal EnhancedScriptEditor ScriptEditor { get { return enhancedScriptEditor; } }
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
+        internal int AutoLootDelayLabel { get { return Convert.ToInt32(autolootLabelDelay.Text); } }
 		internal List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList { get { return autoLootItemList; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal ListView AutoLootListView { get { return autolootlistView; } }
+       
 
 		private DataTable scriptTable;
 
@@ -574,18 +581,20 @@ namespace Assistant
             this.dataGridViewScripting = new System.Windows.Forms.DataGridView();
             this.xButton3 = new RazorEnhanced.UI.RazorButton();
             this.xButton2 = new RazorEnhanced.UI.RazorButton();
-            this.timerTimer = new System.Windows.Forms.Timer(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.EnhancedAgent = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.eautoloot = new System.Windows.Forms.TabPage();
-            this.escavenger = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.autolootLabelDelay = new RazorEnhanced.UI.RazorTextBox();
+            this.bautolootlistRemove = new RazorEnhanced.UI.RazorButton();
+            this.bautolootlistAdd = new RazorEnhanced.UI.RazorButton();
+            this.bautolootlistImport = new RazorEnhanced.UI.RazorButton();
+            this.autolootListSelect = new RazorEnhanced.UI.RazorComboBox();
+            this.bautolootlistExport = new RazorEnhanced.UI.RazorButton();
+            this.label20 = new System.Windows.Forms.Label();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.autolootLogBox = new System.Windows.Forms.ListBox();
             this.autolootContainerLabel = new System.Windows.Forms.Label();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.autolootImport = new RazorEnhanced.UI.RazorButton();
-            this.autolootExport = new RazorEnhanced.UI.RazorButton();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
             this.autolootItemEditB = new RazorEnhanced.UI.RazorButton();
@@ -599,6 +608,9 @@ namespace Assistant
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.escavenger = new System.Windows.Forms.TabPage();
+            this.timerTimer = new System.Windows.Forms.Timer(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -634,7 +646,6 @@ namespace Assistant
             this.tabControl1.SuspendLayout();
             this.eautoloot.SuspendLayout();
             this.groupBox13.SuspendLayout();
-            this.groupBox12.SuspendLayout();
             this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -2350,7 +2361,7 @@ namespace Assistant
             this.macrosTab.Controls.Add(this.newMacro);
             this.macrosTab.Location = new System.Drawing.Point(4, 40);
             this.macrosTab.Name = "macrosTab";
-            this.macrosTab.Size = new System.Drawing.Size(599, 303);
+            this.macrosTab.Size = new System.Drawing.Size(666, 366);
             this.macrosTab.TabIndex = 7;
             this.macrosTab.Text = "Macros";
             // 
@@ -2477,7 +2488,7 @@ namespace Assistant
             this.videoTab.Controls.Add(this.groupBox9);
             this.videoTab.Location = new System.Drawing.Point(4, 40);
             this.videoTab.Name = "videoTab";
-            this.videoTab.Size = new System.Drawing.Size(599, 303);
+            this.videoTab.Size = new System.Drawing.Size(666, 366);
             this.videoTab.TabIndex = 11;
             this.videoTab.Text = "Video Capture";
             // 
@@ -2763,7 +2774,7 @@ namespace Assistant
             this.screenshotTab.Controls.Add(this.dispTime);
             this.screenshotTab.Location = new System.Drawing.Point(4, 40);
             this.screenshotTab.Name = "screenshotTab";
-            this.screenshotTab.Size = new System.Drawing.Size(599, 303);
+            this.screenshotTab.Size = new System.Drawing.Size(666, 366);
             this.screenshotTab.TabIndex = 8;
             this.screenshotTab.Text = "Screen Shots";
             // 
@@ -2899,7 +2910,7 @@ namespace Assistant
             this.statusTab.Controls.Add(this.labelFeatures);
             this.statusTab.Location = new System.Drawing.Point(4, 40);
             this.statusTab.Name = "statusTab";
-            this.statusTab.Size = new System.Drawing.Size(599, 303);
+            this.statusTab.Size = new System.Drawing.Size(666, 366);
             this.statusTab.TabIndex = 9;
             this.statusTab.Text = "Help & Status";
             // 
@@ -2996,7 +3007,7 @@ namespace Assistant
             this.tabPage1.Location = new System.Drawing.Point(4, 40);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(599, 303);
+            this.tabPage1.Size = new System.Drawing.Size(666, 366);
             this.tabPage1.TabIndex = 12;
             this.tabPage1.Text = "Enhanced Scripting";
             // 
@@ -3081,16 +3092,6 @@ namespace Assistant
             this.xButton2.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.xButton2.Click += new System.EventHandler(this.xButton2_Click);
             // 
-            // timerTimer
-            // 
-            this.timerTimer.Enabled = true;
-            this.timerTimer.Interval = 5;
-            this.timerTimer.Tick += new System.EventHandler(this.timerTimer_Tick);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // EnhancedAgent
             // 
             this.EnhancedAgent.Controls.Add(this.tabControl1);
@@ -3114,9 +3115,16 @@ namespace Assistant
             // 
             // eautoloot
             // 
+            this.eautoloot.Controls.Add(this.label21);
+            this.eautoloot.Controls.Add(this.autolootLabelDelay);
+            this.eautoloot.Controls.Add(this.bautolootlistRemove);
+            this.eautoloot.Controls.Add(this.bautolootlistAdd);
+            this.eautoloot.Controls.Add(this.bautolootlistImport);
+            this.eautoloot.Controls.Add(this.autolootListSelect);
+            this.eautoloot.Controls.Add(this.bautolootlistExport);
+            this.eautoloot.Controls.Add(this.label20);
             this.eautoloot.Controls.Add(this.groupBox13);
             this.eautoloot.Controls.Add(this.autolootContainerLabel);
-            this.eautoloot.Controls.Add(this.groupBox12);
             this.eautoloot.Controls.Add(this.groupBox11);
             this.eautoloot.Controls.Add(this.autolootContainerButton);
             this.eautoloot.Controls.Add(this.autolootEnable);
@@ -3128,16 +3136,88 @@ namespace Assistant
             this.eautoloot.TabIndex = 0;
             this.eautoloot.Text = "Autoloot";
             this.eautoloot.UseVisualStyleBackColor = true;
+            this.eautoloot.Click += new System.EventHandler(this.eautoloot_Click);
             // 
-            // escavenger
+            // label21
             // 
-            this.escavenger.Location = new System.Drawing.Point(4, 22);
-            this.escavenger.Name = "escavenger";
-            this.escavenger.Padding = new System.Windows.Forms.Padding(3);
-            this.escavenger.Size = new System.Drawing.Size(659, 341);
-            this.escavenger.TabIndex = 1;
-            this.escavenger.Text = "Scavenger";
-            this.escavenger.UseVisualStyleBackColor = true;
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(442, 61);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(81, 13);
+            this.label21.TabIndex = 59;
+            this.label21.Text = "Loot Item Delay";
+            // 
+            // autolootLabelDelay
+            // 
+            this.autolootLabelDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.autolootLabelDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.autolootLabelDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.autolootLabelDelay.Location = new System.Drawing.Point(391, 58);
+            this.autolootLabelDelay.Name = "autolootLabelDelay";
+            this.autolootLabelDelay.Padding = new System.Windows.Forms.Padding(1);
+            this.autolootLabelDelay.Size = new System.Drawing.Size(45, 20);
+            this.autolootLabelDelay.TabIndex = 58;
+            this.autolootLabelDelay.Load += new System.EventHandler(this.razorTextBox1_Load);
+            // 
+            // bautolootlistRemove
+            // 
+            this.bautolootlistRemove.ColorTable = office2010BlueTheme1;
+            this.bautolootlistRemove.Location = new System.Drawing.Point(363, 14);
+            this.bautolootlistRemove.Name = "bautolootlistRemove";
+            this.bautolootlistRemove.Size = new System.Drawing.Size(90, 20);
+            this.bautolootlistRemove.TabIndex = 57;
+            this.bautolootlistRemove.Text = "Remove";
+            this.bautolootlistRemove.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // bautolootlistAdd
+            // 
+            this.bautolootlistAdd.ColorTable = office2010BlueTheme1;
+            this.bautolootlistAdd.Location = new System.Drawing.Point(267, 14);
+            this.bautolootlistAdd.Name = "bautolootlistAdd";
+            this.bautolootlistAdd.Size = new System.Drawing.Size(90, 20);
+            this.bautolootlistAdd.TabIndex = 56;
+            this.bautolootlistAdd.Text = "Add";
+            this.bautolootlistAdd.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.bautolootlistAdd.Click += new System.EventHandler(this.bautolootlistAdd_Click);
+            // 
+            // bautolootlistImport
+            // 
+            this.bautolootlistImport.ColorTable = office2010BlueTheme1;
+            this.bautolootlistImport.Location = new System.Drawing.Point(459, 14);
+            this.bautolootlistImport.Name = "bautolootlistImport";
+            this.bautolootlistImport.Size = new System.Drawing.Size(90, 20);
+            this.bautolootlistImport.TabIndex = 49;
+            this.bautolootlistImport.Text = "Import";
+            this.bautolootlistImport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.bautolootlistImport.Click += new System.EventHandler(this.autolootImport_Click);
+            // 
+            // autolootListSelect
+            // 
+            this.autolootListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.autolootListSelect.FormattingEnabled = true;
+            this.autolootListSelect.Location = new System.Drawing.Point(78, 12);
+            this.autolootListSelect.Name = "autolootListSelect";
+            this.autolootListSelect.Size = new System.Drawing.Size(183, 24);
+            this.autolootListSelect.TabIndex = 55;
+            // 
+            // bautolootlistExport
+            // 
+            this.bautolootlistExport.ColorTable = office2010BlueTheme1;
+            this.bautolootlistExport.Location = new System.Drawing.Point(555, 14);
+            this.bautolootlistExport.Name = "bautolootlistExport";
+            this.bautolootlistExport.Size = new System.Drawing.Size(90, 20);
+            this.bautolootlistExport.TabIndex = 48;
+            this.bautolootlistExport.Text = "Export";
+            this.bautolootlistExport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(6, 18);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(68, 13);
+            this.label20.TabIndex = 54;
+            this.label20.Text = "Autoloot List:";
             // 
             // groupBox13
             // 
@@ -3165,37 +3245,6 @@ namespace Assistant
             this.autolootContainerLabel.TabIndex = 50;
             this.autolootContainerLabel.Text = "0x00000000";
             // 
-            // groupBox12
-            // 
-            this.groupBox12.Controls.Add(this.autolootImport);
-            this.groupBox12.Controls.Add(this.autolootExport);
-            this.groupBox12.Location = new System.Drawing.Point(551, 113);
-            this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(100, 70);
-            this.groupBox12.TabIndex = 52;
-            this.groupBox12.TabStop = false;
-            this.groupBox12.Text = "Autoloot List";
-            // 
-            // autolootImport
-            // 
-            this.autolootImport.ColorTable = office2010BlueTheme1;
-            this.autolootImport.Location = new System.Drawing.Point(5, 43);
-            this.autolootImport.Name = "autolootImport";
-            this.autolootImport.Size = new System.Drawing.Size(90, 20);
-            this.autolootImport.TabIndex = 49;
-            this.autolootImport.Text = "Import";
-            this.autolootImport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // autolootExport
-            // 
-            this.autolootExport.ColorTable = office2010BlueTheme1;
-            this.autolootExport.Location = new System.Drawing.Point(5, 18);
-            this.autolootExport.Name = "autolootExport";
-            this.autolootExport.Size = new System.Drawing.Size(90, 20);
-            this.autolootExport.TabIndex = 48;
-            this.autolootExport.Text = "Export";
-            this.autolootExport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
             // groupBox11
             // 
             this.groupBox11.Controls.Add(this.autolootItemPropsB);
@@ -3203,7 +3252,7 @@ namespace Assistant
             this.groupBox11.Controls.Add(this.autolootAddItemBTarget);
             this.groupBox11.Controls.Add(this.autolootRemoveItemB);
             this.groupBox11.Controls.Add(this.autolootAddItemBManual);
-            this.groupBox11.Location = new System.Drawing.Point(551, 188);
+            this.groupBox11.Location = new System.Drawing.Point(553, 104);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(100, 147);
             this.groupBox11.TabIndex = 51;
@@ -3265,18 +3314,20 @@ namespace Assistant
             this.autolootContainerButton.ColorTable = office2010BlueTheme1;
             this.autolootContainerButton.Location = new System.Drawing.Point(556, 60);
             this.autolootContainerButton.Name = "autolootContainerButton";
-            this.autolootContainerButton.Size = new System.Drawing.Size(90, 20);
+            this.autolootContainerButton.Size = new System.Drawing.Size(92, 20);
             this.autolootContainerButton.TabIndex = 49;
             this.autolootContainerButton.Text = "Set Container";
             this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click_1);
             // 
             // autolootEnable
             // 
-            this.autolootEnable.Location = new System.Drawing.Point(267, 58);
+            this.autolootEnable.Location = new System.Drawing.Point(268, 58);
             this.autolootEnable.Name = "autolootEnable";
-            this.autolootEnable.Size = new System.Drawing.Size(200, 20);
+            this.autolootEnable.Size = new System.Drawing.Size(103, 20);
             this.autolootEnable.TabIndex = 48;
             this.autolootEnable.Text = "Enable autoloot";
+            this.autolootEnable.CheckedChanged += new System.EventHandler(this.autolootEnable_CheckedChanged);
             // 
             // autolootlistView
             // 
@@ -3314,6 +3365,26 @@ namespace Assistant
             // ColumnHeader3
             // 
             this.ColumnHeader3.Text = "Color";
+            // 
+            // escavenger
+            // 
+            this.escavenger.Location = new System.Drawing.Point(4, 22);
+            this.escavenger.Name = "escavenger";
+            this.escavenger.Padding = new System.Windows.Forms.Padding(3);
+            this.escavenger.Size = new System.Drawing.Size(659, 341);
+            this.escavenger.TabIndex = 1;
+            this.escavenger.Text = "Scavenger";
+            this.escavenger.UseVisualStyleBackColor = true;
+            // 
+            // timerTimer
+            // 
+            this.timerTimer.Enabled = true;
+            this.timerTimer.Interval = 5;
+            this.timerTimer.Tick += new System.EventHandler(this.timerTimer_Tick);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // MainForm
             // 
@@ -3372,8 +3443,8 @@ namespace Assistant
             this.EnhancedAgent.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.eautoloot.ResumeLayout(false);
+            this.eautoloot.PerformLayout();
             this.groupBox13.ResumeLayout(false);
-            this.groupBox12.ResumeLayout(false);
             this.groupBox11.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -6913,5 +6984,85 @@ namespace Assistant
 			EditProp.TopMost = true;
 			EditProp.Show();
 		}
+
+        private void autolootImport_Click(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void bautolootlistAdd_Click(object sender, EventArgs e)
+        {
+       
+        }
+
+        private void autolootEnable_CheckedChanged(object sender, EventArgs e)
+        {
+            if (autolootEnable.Checked)
+            {
+                int delay;
+                bool StartCheck = true;
+                autolootListSelect.Enabled = false;
+                bautolootlistAdd.Enabled = false;
+                bautolootlistExport.Enabled = false;
+                bautolootlistImport.Enabled = false;
+                bautolootlistRemove.Enabled = false;
+                autolootLabelDelay.Enabled = false;
+                try
+                {
+                    delay = Convert.ToInt32(autolootLabelDelay.Text);
+                }
+                catch
+                {
+                    StartCheck =false;
+                    MessageBox.Show("Loot item delay not valid!",
+                    "Loot item delay not valid!",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation,
+                    MessageBoxDefaultButton.Button1);
+                }
+
+                if (StartCheck)
+                {
+                    // TODO avviare thread autoloot
+                    RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
+                }
+            }
+            else
+            {
+                RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Stop...");
+                autolootListSelect.Enabled = true;
+                bautolootlistAdd.Enabled = true;
+                bautolootlistExport.Enabled = true;
+                bautolootlistImport.Enabled = true;
+                bautolootlistRemove.Enabled = true;
+                autolootLabelDelay.Enabled = true;
+
+                //TODO Stop thread autoloot
+            }
+           
+        }
+
+        private void eautoloot_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void razorTextBox1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void autolootContainerButton_Click_1(object sender, EventArgs e)
+        {
+        	Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(AutolootTargetBag_Callback));
+		}
+
+        private void AutolootTargetBag_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            autolootContainerLabel.Text = serial.ToString();
+            RazorEnhanced.AutoLoot.AddLog("Autoloot bag set: " + serial.ToString());
+            RazorEnhanced.Misc.SendMessage("Autoloot bag set: " + serial.ToString());
+            
+        }
 	}
 }
