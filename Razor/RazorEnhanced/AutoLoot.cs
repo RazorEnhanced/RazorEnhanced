@@ -144,6 +144,7 @@ namespace RazorEnhanced
             ArrayList ItemCorpi = new ArrayList();
             ArrayList IgnoreListCorpi = new ArrayList();
             bool Skip = false;
+            bool EngineStop = false;
 
             // Genero filtro per corpi
             RazorEnhanced.Items.Filter FiltroCorpi = new RazorEnhanced.Items.Filter();
@@ -152,46 +153,60 @@ namespace RazorEnhanced
             FiltroCorpi.IsCorpse = true;
             FiltroCorpi.OnGround = true;
             FiltroCorpi.Enabled = true;
-         
-            RazorEnhanced.AutoLoot.AddLog("- Cerco corpi....");
-            ItemCorpi = RazorEnhanced.Items.ApplyFilter(FiltroCorpi);
-            RazorEnhanced.AutoLoot.AddLog("aaaa" + ItemCorpi.Count.ToString());
-            foreach (RazorEnhanced.Item Corpo in ItemCorpi)
-            {
-                foreach (RazorEnhanced.Item CorpiIgnorati in IgnoreListCorpi)
-                {
-                    if (CorpiIgnorati.Serial == Corpo.Serial) // Corpo ingorato
-                    {
-                        Skip = true;
-                    }
-                }
-                if (!Skip)
-                {
-                    RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + Corpo.Serial.ToString("X8"));
-                    RazorEnhanced.Items.UseItem(Corpo);
-                    RazorEnhanced.AutoLoot.AddLog("- Apro corpo e attendo item response");
-                    RazorEnhanced.Item.WaitForContents(Corpo, 5000);
-                    RazorEnhanced.AutoLoot.AddLog("- Item Nel corpo: " + Corpo.Contains.ToString());
-                    foreach (RazorEnhanced.Item OggettiContenuti in Corpo.Contains)
-                    {
-                        foreach (AutoLootItem ItemDaLista in Assistant.Engine.MainWindow.AutoLootItemList)
-                        {
-                            if (OggettiContenuti.ItemID == ItemDaLista.Graphics)
-                            {
-                                // TODO aggiungere check se il pg si è spostato fuori range
-                                RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
-                                RazorEnhanced.Items.Move(OggettiContenuti, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
-                            }
 
+            while (!EngineStop)
+            {
+                //RazorEnhanced.AutoLoot.AddLog("- Cerco corpi....");
+                ItemCorpi = RazorEnhanced.Items.ApplyFilter(FiltroCorpi);
+                foreach (RazorEnhanced.Item Corpo in ItemCorpi)
+                {
+                    foreach (RazorEnhanced.Item CorpiIgnorati in IgnoreListCorpi)
+                    {
+                        if (CorpiIgnorati.Serial == Corpo.Serial) // Corpo ingorato
+                        {
+                            Skip = true;
+                            //RazorEnhanced.AutoLoot.AddLog("- Corpo Ignorato skipp:" + Corpo.Serial.ToString());
                         }
                     }
-                    // Ignoro corpo
-                    IgnoreListCorpi.Add(Corpo);
-                    Thread.Sleep(1000);
+                    if (!Skip)
+                    {
+                        RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + Corpo.Serial.ToString("X8"));
+                        RazorEnhanced.Items.UseItem(Corpo);
+                        //RazorEnhanced.AutoLoot.AddLog("- Apro corpo e attendo item response");
+                        RazorEnhanced.Item.WaitForContents(Corpo, 5000);
+                        RazorEnhanced.AutoLoot.AddLog("- Item Nel corpo: " + Corpo.Contains.Count.ToString());
+                        foreach (RazorEnhanced.Item OggettiContenuti in Corpo.Contains)
+                        {
+                            foreach (AutoLootItem ItemDaLista in Assistant.Engine.MainWindow.AutoLootItemList)
+                            {
+                                if (OggettiContenuti.ItemID == ItemDaLista.Graphics)
+                                {
+                                    if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(Corpo.Position.X, Corpo.Position.Y)) <= 3)
+                                    {
+                                        RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+                                        RazorEnhanced.Items.Move(OggettiContenuti, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                                        Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
+                                    }
+                                }
+
+                            }
+                        }
+                        // Ignoro corpo
+                        IgnoreListCorpi.Add(Corpo);
+                       // RazorEnhanced.AutoLoot.AddLog("- Corpo Ignorato: " + Corpo.Serial.ToString());
+                       // RazorEnhanced.AutoLoot.AddLog("- Lista ignore:" + IgnoreListCorpi.Count);
+                       // Thread.Sleep(1000); // Da levare dopo test
+                    }
+                    Skip = false;
+                    RazorEnhanced.AutoLoot.AddLog("- Passo al corpo successvivo");
                 }
-                Skip = false;
-                RazorEnhanced.AutoLoot.AddLog("- Passo al corpo successvivo");
+                //  Thread.Sleep(1000); // Da levare dopo test delay fra corpi
+                while (World.Player.Weight -20 > World.Player.ManaMax)
+                {
+                    Thread.Sleep(10000);
+                    RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
+                    RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space");
+                }
             }
         }
 	}
