@@ -59,8 +59,6 @@ namespace RazorEnhanced
         {
             get
             {
-                AddLog(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text);
-                AddLog(World.Player.Backpack.Serial.ToString());
                 int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
                 
                 if (SerialBag == 0)
@@ -183,9 +181,40 @@ namespace RazorEnhanced
                                 {
                                     if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(Corpo.Position.X, Corpo.Position.Y)) <= 3)
                                     {
-                                        RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
-                                        RazorEnhanced.Items.Move(OggettiContenuti, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                        Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
+                                        if (ItemDaLista.Properties.Count > 0)               // Item con props
+                                        {
+                                            RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+                                            bool PropsOK = false;
+                                            foreach (AutoLootItem.Property PropsDaLista in ItemDaLista.Properties)      // Scansione e verifica props
+                                            {
+                                                int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(OggettiContenuti, PropsDaLista.Name);                                               
+                                                if (PropsSuItemDaLootare >= PropsDaLista.Minimum && PropsSuItemDaLootare <= PropsDaLista.Maximum)
+                                                {
+                                                    PropsOK = true;
+                                                }
+                                                else
+                                                {
+                                                    PropsOK = false;
+                                                    break;                      // alla prima fallita esce non ha senso controllare le altre
+                                                }        
+                                            }
+                                            if (PropsOK) // Tutte le props match OK
+                                            {
+                                                RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
+                                                RazorEnhanced.Items.Move(OggettiContenuti, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                                                Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
+                                            }
+                                            else
+                                            {
+                                                RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
+                                            }
+                                        }
+                                        else        // Item Senza props     
+                                        {
+                                            RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+                                            RazorEnhanced.Items.Move(OggettiContenuti, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                                            Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
+                                        }
                                     }
                                 }
 
@@ -198,7 +227,7 @@ namespace RazorEnhanced
                        // Thread.Sleep(1000); // Da levare dopo test
                     }
                     Skip = false;
-                    RazorEnhanced.AutoLoot.AddLog("- Passo al corpo successvivo");
+                   // RazorEnhanced.AutoLoot.AddLog("- Passo al corpo successvivo");
                 }
                 //  Thread.Sleep(1000); // Da levare dopo test delay fra corpi
                 while (World.Player.Weight -20 > World.Player.ManaMax)
