@@ -1701,6 +1701,7 @@ namespace Assistant
 			Write((byte)0x00);
 		}
 	}
+
 	internal sealed class SendPartyMessage : Packet
 	{
 		internal SendPartyMessage(uint serial, string Message)
@@ -1712,6 +1713,7 @@ namespace Assistant
 			WriteAsciiNull(Message);
 		}
 	}
+
 	internal sealed class PartyCanLoot : Packet
 	{
 		internal PartyCanLoot(byte canloot)
@@ -1723,6 +1725,7 @@ namespace Assistant
 			Write((byte)canloot);
 		}
 	}
+
     internal sealed class PartyInvite : Packet
     {
         internal PartyInvite()
@@ -1733,6 +1736,7 @@ namespace Assistant
             Write((byte)0x01);       // Party command open target for new member
         }
     }
+
     internal sealed class PartyRemoveMember : Packet
     {
         internal PartyRemoveMember(uint serial)

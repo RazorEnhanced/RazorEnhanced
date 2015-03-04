@@ -113,6 +113,20 @@ namespace RazorEnhanced
 		// Position
 		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
 
+		// Buff
+		public static ArrayList Buffs
+		{
+			get
+			{
+				ArrayList buffs = new ArrayList();
+				foreach (ushort icon in Assistant.World.Player.Buffs)
+				{
+					buffs.Add(icon.ToString());
+				}
+				return buffs;
+			}
+		}
+
 		// Layer
 		internal static Assistant.Layer GetAssistantLayer(string layer)
 		{

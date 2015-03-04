@@ -201,6 +201,9 @@ namespace Assistant
 
 		internal static int FastWalkKey = 0;
 
+		internal List<BuffIcon> m_Buffs = new List<BuffIcon>();
+		internal List<BuffIcon> Buffs { get { return m_Buffs; } }
+ 
 		internal override void SaveState(BinaryWriter writer)
 		{
 			base.SaveState(writer);

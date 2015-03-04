@@ -273,6 +273,7 @@
     <Compile Include="RazorEnhanced\Geometry.cs" />
     <Compile Include="RazorEnhanced\Item.cs" />
     <Compile Include="RazorEnhanced\ItemID.cs" />
+    <Compile Include="Core\Buffs.cs" />
     <Compile Include="RazorEnhanced\Mobiles.cs" />
     <Compile Include="RazorEnhanced\Misc.cs" />
     <Compile Include="RazorEnhanced\Scripts.cs" />

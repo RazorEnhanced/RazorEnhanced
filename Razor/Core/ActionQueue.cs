@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Assistant
 {
-	internal delegate void DropDoneCallback(Serial iser, Serial dser, Point3D newPos);
+	//internal delegate void DropDoneCallback(Serial iser, Serial dser, Point3D newPos);
 
 	internal class DragDropManager
 	{

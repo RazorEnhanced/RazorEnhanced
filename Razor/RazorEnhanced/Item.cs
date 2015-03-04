@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -14,6 +15,8 @@ namespace RazorEnhanced
 		{
 			m_AssistantItem = item;
 		}
+
+		public bool Updated { get { return m_AssistantItem.Updated; } }
 
 		public int ItemID { get { return m_AssistantItem.ItemID.Value; } }
 
@@ -238,6 +241,17 @@ namespace RazorEnhanced
 				}
 				return 0; // item senza maxdur
 			}
+		}
+
+		public static void WaitForContents(Item bag, int delay) // Delay in MS
+		{
+			int subdelay = delay;
+			if (bag.IsCorpse || bag.IsContainer)
+				while (!bag.Updated || subdelay < 0)
+				{
+					Thread.Sleep(2);
+					subdelay -= 2;
+				}
 		}
 	}
 }
