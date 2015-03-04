@@ -169,7 +169,7 @@ namespace RazorEnhanced
                     if (!Skip)
                     {
                         RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + Corpo.Serial.ToString("X8"));
-                        RazorEnhanced.Items.UseItem(Corpo);
+                        //RazorEnhanced.Items.UseItem(Corpo);
                         //RazorEnhanced.AutoLoot.AddLog("- Apro corpo e attendo item response");
                         RazorEnhanced.Item.WaitForContents(Corpo, 5000);
                         RazorEnhanced.AutoLoot.AddLog("- Item Nel corpo: " + Corpo.Contains.Count.ToString());
