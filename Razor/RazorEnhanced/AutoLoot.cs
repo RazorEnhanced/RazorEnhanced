@@ -1,7 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
+using Assistant;
 using System.Windows.Forms;
+using System.Threading;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
@@ -50,6 +55,27 @@ namespace RazorEnhanced
 				m_Properties = properties;
 			}
 		}
+        internal static RazorEnhanced.Item AutolootBag
+        {
+            get
+            {
+                return RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+            }
+        }
+
+        internal static int ItemDragDelay
+        {
+            get
+            {
+                return 1000;
+            }
+        }
+
+        internal static void AddLog(string addlog)
+        {
+            Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
+            Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
+        }
 
 		internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
 		{
@@ -106,6 +132,44 @@ namespace RazorEnhanced
             RazorEnhanced.AutoLoot.RefreshPropListView(AutolootlistViewProp, AutoLootItemList, IndexToInsert);
             RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
         }
+        public static void Engine()
+        {
+            ArrayList ItemCorpi = new ArrayList();
 
+            // Genero filtro per corpi
+            RazorEnhanced.Items.Filter FiltroCorpi = new RazorEnhanced.Items.Filter();
+            FiltroCorpi.RangeMax = 3;
+            FiltroCorpi.Movable = false;
+            FiltroCorpi.IsCorpse = true;
+            FiltroCorpi.OnGround = true;
+            FiltroCorpi.Enabled = true;
+         
+            RazorEnhanced.AutoLoot.AddLog("- Cerco corpi....");
+            ItemCorpi = RazorEnhanced.Items.ApplyFilter(FiltroCorpi);
+            RazorEnhanced.AutoLoot.AddLog("aaaa" + ItemCorpi.Count.ToString());
+            foreach (RazorEnhanced.Item Corpo in ItemCorpi)
+            {
+                RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + Corpo.Serial.ToString("X8"));
+                RazorEnhanced.Items.UseItem(Corpo);
+                RazorEnhanced.AutoLoot.AddLog("- Apro corpo e attendo item response");
+                RazorEnhanced.Item.WaitForContents(Corpo, 5000);
+                RazorEnhanced.AutoLoot.AddLog("- Item Nel corpo: " + Corpo.Contains.ToString());
+                foreach (RazorEnhanced.Item OggettiContenuti in Corpo.Contains)
+                {
+                        foreach(AutoLootItem ItemDaLista in Assistant.Engine.MainWindow.AutoLootItemList)
+                        {
+                            if (OggettiContenuti.ItemID == ItemDaLista.Graphics)
+                            {
+                                RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+                                RazorEnhanced.Items.Move(OggettiContenuti, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                                Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
+                            }
+
+                        }
+                }
+                Thread.Sleep(1000);
+                RazorEnhanced.AutoLoot.AddLog("- Passo al corpo successvivo");
+            }
+        }
 	}
 }       
