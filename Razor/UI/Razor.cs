@@ -300,7 +300,8 @@ namespace Assistant
 		internal List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList { get { return autoLootItemList; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal ListView AutoLootListView { get { return autolootlistView; } }
-       
+
+        internal ComboBox AutolootListSelect { get { return autolootListSelect; } }
 
 		private DataTable scriptTable;
 
@@ -354,6 +355,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -651,24 +653,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -3161,18 +3163,19 @@ namespace Assistant
             // 
             // bautolootlistRemove
             // 
-            this.bautolootlistRemove.ColorTable = office2010BlueTheme1;
-            this.bautolootlistRemove.Location = new System.Drawing.Point(363, 14);
+            this.bautolootlistRemove.ColorTable = office2010BlueTheme2;
+            this.bautolootlistRemove.Location = new System.Drawing.Point(366, 14);
             this.bautolootlistRemove.Name = "bautolootlistRemove";
             this.bautolootlistRemove.Size = new System.Drawing.Size(90, 20);
             this.bautolootlistRemove.TabIndex = 57;
             this.bautolootlistRemove.Text = "Remove";
             this.bautolootlistRemove.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.bautolootlistRemove.Click += new System.EventHandler(this.bautolootlistRemove_Click);
             // 
             // bautolootlistAdd
             // 
             this.bautolootlistAdd.ColorTable = office2010BlueTheme1;
-            this.bautolootlistAdd.Location = new System.Drawing.Point(267, 14);
+            this.bautolootlistAdd.Location = new System.Drawing.Point(270, 14);
             this.bautolootlistAdd.Name = "bautolootlistAdd";
             this.bautolootlistAdd.Size = new System.Drawing.Size(90, 20);
             this.bautolootlistAdd.TabIndex = 56;
@@ -3183,7 +3186,7 @@ namespace Assistant
             // bautolootlistImport
             // 
             this.bautolootlistImport.ColorTable = office2010BlueTheme1;
-            this.bautolootlistImport.Location = new System.Drawing.Point(459, 14);
+            this.bautolootlistImport.Location = new System.Drawing.Point(462, 14);
             this.bautolootlistImport.Name = "bautolootlistImport";
             this.bautolootlistImport.Size = new System.Drawing.Size(90, 20);
             this.bautolootlistImport.TabIndex = 49;
@@ -3199,11 +3202,12 @@ namespace Assistant
             this.autolootListSelect.Name = "autolootListSelect";
             this.autolootListSelect.Size = new System.Drawing.Size(183, 24);
             this.autolootListSelect.TabIndex = 55;
+            this.autolootListSelect.SelectedIndexChanged += new System.EventHandler(this.autolootListSelect_SelectedIndexChanged);
             // 
             // bautolootlistExport
             // 
             this.bautolootlistExport.ColorTable = office2010BlueTheme1;
-            this.bautolootlistExport.Location = new System.Drawing.Point(555, 14);
+            this.bautolootlistExport.Location = new System.Drawing.Point(558, 14);
             this.bautolootlistExport.Name = "bautolootlistExport";
             this.bautolootlistExport.Size = new System.Drawing.Size(90, 20);
             this.bautolootlistExport.TabIndex = 48;
@@ -3317,9 +3321,9 @@ namespace Assistant
             // autolootContainerButton
             // 
             this.autolootContainerButton.ColorTable = office2010BlueTheme1;
-            this.autolootContainerButton.Location = new System.Drawing.Point(556, 60);
+            this.autolootContainerButton.Location = new System.Drawing.Point(558, 60);
             this.autolootContainerButton.Name = "autolootContainerButton";
-            this.autolootContainerButton.Size = new System.Drawing.Size(92, 20);
+            this.autolootContainerButton.Size = new System.Drawing.Size(90, 20);
             this.autolootContainerButton.TabIndex = 49;
             this.autolootContainerButton.Text = "Set Container";
             this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -3527,7 +3531,16 @@ namespace Assistant
 			dataGridViewScripting.Rows.Clear();
 			dataGridViewScripting.DataSource = scriptTable;
 
+            
 			//autoloot
+
+            // Liste loot
+            AutolootListSelect.Items.Add("Default");    // Lista base non cancellabile 
+            // TODO: Load tutti gli altri nomi lite
+            // TODO: Load delay 
+            // TODO: Load dell'ultima lista usata
+
+            // TODO: Caricamento lista item in base all'ultima lista 
 			autoLootItemList = RazorEnhanced.Settings.LoadAutoLootItemList();
 			//Popola listbox
 			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
@@ -6997,7 +7010,7 @@ namespace Assistant
 
         private void bautolootlistAdd_Click(object sender, EventArgs e)
         {
-            EnhancedAutolootAddItemList AddItemList = new EnhancedAutolootAddItemList(autolootListSelect);
+            EnhancedAutolootAddItemList AddItemList = new EnhancedAutolootAddItemList();
             AddItemList.TopMost = true;
             AddItemList.Show();
         }
@@ -7070,6 +7083,24 @@ namespace Assistant
             RazorEnhanced.AutoLoot.AddLog("Autoloot bag set: " + serial.ToString());
             RazorEnhanced.Misc.SendMessage("Autoloot bag set: " + serial.ToString());
             
+        }
+
+        private void autolootListSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // TODO: Salvo lista item corrente e reload Nuova lista item in base alla selezione
+            RazorEnhanced.AutoLoot.AddLog("Autoloot list changed to: " + AutolootListSelect.SelectedItem.ToString());
+        }
+
+        private void bautolootlistRemove_Click(object sender, EventArgs e)
+        {
+            if (AutolootListSelect.Text != "Default")
+            {
+                RazorEnhanced.AutoLoot.AddLog("Autoloot list " + AutolootListSelect.SelectedItem.ToString() +" removed!");
+                AutolootListSelect.Items.Remove(AutolootListSelect.SelectedItem);
+                AutolootListSelect.SelectedIndex = AutolootListSelect.FindStringExact("Default");
+            }
+            else
+                RazorEnhanced.AutoLoot.AddLog("Can't remove Default list!");
         }
 
       

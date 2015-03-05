@@ -16,15 +16,13 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedAutolootAddItemList : Form
 	{
         private const string m_Title = "Enhanced Autoloot Add Item List";
-        private RazorComboBox Autolootlist;
 
-        public EnhancedAutolootAddItemList(RazorComboBox PAutolootlist)
+
+        public EnhancedAutolootAddItemList()
 		{
 			InitializeComponent();
             MaximizeBox = false;
-			this.Text = m_Title;
-            Autolootlist = PAutolootlist;
-            
+			this.Text = m_Title;           
 		}
 
         private void EnhancedAutolootAddItemList_Load(object sender, EventArgs e)
@@ -40,16 +38,25 @@ namespace RazorEnhanced.UI
         private void autolootaddItemList_Click(object sender, EventArgs e)
         {
             bool fail = false;
+            string NuovaLootList = "";
+
             if (autolootListToAdd.Text == "")
                 fail = true;
 
             if (!Regex.IsMatch(autolootListToAdd.Text, "^[a-zA-Z0-9_]+$"))
                 fail = true;
 
+            NuovaLootList = autolootListToAdd.Text.ToLower();
+            for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
+            {
+                if (NuovaLootList == Assistant.Engine.MainWindow.AutolootListSelect.GetItemText(Assistant.Engine.MainWindow.AutolootListSelect.Items[i]))
+                    fail = true;
+            }
+
             if (fail)
             {
-                MessageBox.Show("List name can be only letter and number",
-                "List name can be only letter and number",
+                MessageBox.Show("Invalid list name!",
+                "Invalid list name!",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation,
                 MessageBoxDefaultButton.Button1);
@@ -57,7 +64,11 @@ namespace RazorEnhanced.UI
             }
             else
             {
-                // TODO add list
+                Assistant.Engine.MainWindow.AutolootListSelect.Items.Add(NuovaLootList);
+                Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(NuovaLootList);
+
+                // TODO procedure di save
+                this.Close();
             }
         }
 	}
