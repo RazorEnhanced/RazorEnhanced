@@ -13,25 +13,33 @@ namespace Assistant
 {
 	internal class FeatureBit
 	{
-		internal static readonly uint WeatherFilter = 0;
-		internal static readonly uint LightFilter = 1;
-		internal static readonly uint SmartLT = 2;
-		internal static readonly uint RangeCheckLT = 3;
-		internal static readonly uint AutoOpenDoors = 4;
-		internal static readonly uint UnequipBeforeCast = 5;
-		internal static readonly uint AutoPotionEquip = 6;
-		internal static readonly uint BlockHealPoisoned = 7;
-		internal static readonly uint LoopingMacros = 8; // includes fors and macros running macros
-		internal static readonly uint UseOnceAgent = 9;
-		internal static readonly uint RestockAgent = 10;
-		internal static readonly uint SellAgent = 11;
-		internal static readonly uint BuyAgent = 12;
-		internal static readonly uint PotionHotkeys = 13;
-		internal static readonly uint RandomTargets = 14;
-		internal static readonly uint ClosestTargets = 15;
-		internal static readonly uint OverheadHealth = 16;
+		internal static readonly uint WeatherFilter = 1 << 0; // Weather Filter
+		internal static readonly uint LightFilter = 1 << 1;// Light Filter
+		internal static readonly uint SmartLT = 1 << 2; // Smart Last Target
+		internal static readonly uint RangeCheckLT = 1 << 3;// Range Check Last Target
+		internal static readonly uint AutoOpenDoors = 1 << 4; // Automatically Open Doors
+		internal static readonly uint UnequipBeforeCast = 1 << 5; // Unequip Weapon on spell cast
+		internal static readonly uint AutoPotionEquip = 1 << 6; // Un/re-equip weapon on potion use
+		internal static readonly uint BlockHealPoisoned = 1 << 7; // Block heal If poisoned/Macro If Poisoned condition/Heal or Cure self
+		internal static readonly uint LoopingMacros = 1 << 8; // Disallow looping or recursive macros
+		internal static readonly uint UseOnceAgent = 1 << 9;// The use once agent
+		internal static readonly uint RestockAgent = 1 << 10;// The restock agent
+		internal static readonly uint SellAgent = 1 << 11;// The sell agent
+		internal static readonly uint BuyAgent = 1 << 12;// The buy agent
+		internal static readonly uint PotionHotkeys = 1 << 13;// All potion hotkeys
+		internal static readonly uint RandomTargets = 1 << 14;// All random target hotkeys (not target next, last target, target self)
+		internal static readonly uint ClosestTargets = 1 << 15; // All closest target hotkeys
+		internal static readonly uint OverheadHealth = 1 << 16;// Health and Mana/Stam messages shown over player's heads
+		internal static readonly uint AutolootAgent = 1 << 17; // The autoloot agent
+		internal static readonly uint BoneCutterAgent = 1 << 18; // The bone cutter agent
+		internal static readonly uint AdvancedMacros = 1 << 19; // Advanced macro engine
+		internal static readonly uint AutoRemount = 1 << 20; // Auto remount after dismount
+		internal static readonly uint AutoBandage = 1 << 21; // Auto bandage friends, self, last and mount option
+		internal static readonly uint EnemyTargetShare = 1 << 22; // Enemy target share on guild, party or alliance chat
+		internal static readonly uint FilterSeason = 1 << 23; // Season Filter
+		internal static readonly uint SpellTargetShare = 1 << 24; // Spell target share on guild, party or alliance chat
 
-		internal static readonly uint MaxBit = 16;
+		internal static readonly uint MaxBit = 24;
 	}
 
 	internal unsafe sealed class ClientCommunication
@@ -519,7 +527,7 @@ namespace Assistant
 		[DllImport("Crypt.dll")]
 		private static unsafe extern void SetServer(uint ip, ushort port);
 		[DllImport("Crypt.dll")]
-		internal static unsafe extern int HandleNegotiate(ulong word);
+		internal static unsafe extern bool HandleNegotiate(ulong word);
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern IntPtr GetUOVersion();
 

@@ -96,7 +96,7 @@ namespace RazorEnhanced
 				if (AutoLoot.Auto)
 				{
 					AutoLoot.Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel, m_CorpseFilter);
-					Thread.Sleep(100);
+					Thread.Sleep(25);
 				}
 			}
 		}

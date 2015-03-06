@@ -567,7 +567,16 @@ InputBox::ok=&Okay
 1414=Buy Agent
 1415=Potion Hotkeys
 1416=Random Targets
-1417=Overhead Health/Stats Display
+1417=Closest target
+1418=Overhead Health/Stats Display
+1419=AutoLoot Agent
+1420=BoneCutter Agent
+1421=Enhanced Scripting Engine
+1422=Auto remount after dismount
+1423=Auto bandage
+1424=Enemy target share
+1425=Season Filter
+1426=Spell target share 
 // up to 1465: reserved
 1466=Feature Disallowed by Server
 1467=This feature is not allowed by the current game server.\nYou may choose to ignore the server's allowed features on the "Options" tab.\n\nTo see a list of disallowed features, check the "Help & Status" tab.

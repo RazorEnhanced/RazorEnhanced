@@ -67,14 +67,7 @@ namespace RazorEnhanced.UI
                 Assistant.Engine.MainWindow.AutolootListSelect.Items.Add(NuovaLootList);
                 Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(NuovaLootList);
 
-                List<string> LootSettingItemList = new List<string>();
-
-                for(int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
-                {
-                    if (Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString()!= "Default")
-                        LootSettingItemList.Add(Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString());
-                }
-                RazorEnhanced.Settings.SaveAutoLootIGeneral(Assistant.Engine.MainWindow.AutoLootDelayLabel.ToString() , LootSettingItemList, NuovaLootList);
+                // TODO procedure di save
                 this.Close();
             }
         }

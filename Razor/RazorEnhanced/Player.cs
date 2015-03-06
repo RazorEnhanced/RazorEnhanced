@@ -113,6 +113,344 @@ namespace RazorEnhanced
 		// Position
 		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
 
+		internal static string GetBuffDescription(BuffIcon icon)
+		{
+			string description = "";
+
+			switch (icon)
+			{
+				case BuffIcon.ActiveMeditation:
+					description = "Meditation";
+					break;
+				case BuffIcon.Agility:
+					description = "Agility";
+					break;
+				case BuffIcon.AnimalForm:
+					description = "Animal Form";
+					break;
+				case BuffIcon.ArcaneEmpowerment:
+					description = "Arcane Enpowerment";
+					break;
+				case BuffIcon.ArcaneEmpowermentNew:
+					description = "Arcane Enpowerment (new)";
+					break;
+				case BuffIcon.ArchProtection:
+					description = "Arch Protection";
+					break;
+				case BuffIcon.ArmorPierce:
+					description = "Armor Pierce";
+					break;
+				case BuffIcon.AttuneWeapon:
+					description = "Attunement";
+					break;
+				case BuffIcon.AuraOfNausea:
+					description = "Aura of Nausea";
+					break;
+				case BuffIcon.Bleed:
+					description = "Bleed";
+					break;
+				case BuffIcon.Bless:
+					description = "Bless";
+					break;
+				case BuffIcon.Block:
+					description = "Block";
+					break;
+				case BuffIcon.BloodOathCaster:
+					description = "Bloath Oath (caster)";
+					break;
+				case BuffIcon.BloodOathCurse:
+					description = "Bload Oath (curse)";
+					break;
+				case BuffIcon.BloodwormAnemia:
+					description = "BloodWorm Anemia";
+					break;
+				case BuffIcon.CityTradeDeal:
+					description = "City Trade Deal";
+					break;
+				case BuffIcon.Clumsy:
+					description = "Clumsy";
+					break;
+				case BuffIcon.Confidence:
+					description = "Confidence";
+					break;
+				case BuffIcon.CorpseSkin:
+					description = "Corpse Skin";
+					break;
+				case BuffIcon.CounterAttack:
+					description = "Counter Attack";
+					break;
+				case BuffIcon.CriminalStatus:
+					description = "Criminal";
+					break;
+				case BuffIcon.Cunning:
+					description = "Cunning";
+					break;
+				case BuffIcon.Curse:
+					description = "Curse";
+					break;
+				case BuffIcon.CurseWeapon:
+					description = "Curse Weapon";
+					break;
+				case BuffIcon.DeathStrike:
+					description = "Death Strike";
+					break;
+				case BuffIcon.DefenseMastery:
+					description = "Defense Mastery";
+					break;
+				case BuffIcon.Despair:
+					description = "Despair";
+					break;
+				case BuffIcon.DespairTarget:
+					description = "Despair (target)";
+					break;
+				case BuffIcon.DisarmNew:
+					description = "Disarm (new)";
+					break;
+				case BuffIcon.Disguised:
+					description = "Disguised";
+					break;
+				case BuffIcon.DismountPrevention:
+					description = "Dismount Prevention";
+					break;
+				case BuffIcon.DivineFury:
+					description = "Divine Fury";
+					break;
+				case BuffIcon.DragonSlasherFear:
+					description = "Dragon Slasher Fear";
+					break;
+				case BuffIcon.Enchant:
+					description = "Enchant";
+					break;
+				case BuffIcon.EnemyOfOne:
+					description = "Enemy Of One";
+					break;
+				case BuffIcon.EnemyOfOneNew:
+					description = "Enemy Of One (new)";
+					break;
+				case BuffIcon.EssenceOfWind:
+					description = "Essence Of Wind";
+					break;
+				case BuffIcon.EtherealVoyage:
+					description = "Ethereal Voyage";
+					break;
+				case BuffIcon.Evasion:
+					description = "Evasion";
+					break;
+				case BuffIcon.EvilOmen:
+					description = "Evil Omen";
+					break;
+				case BuffIcon.FactionLoss:
+					description = "Faction Loss";
+					break;
+				case BuffIcon.FanDancerFanFire:
+					description = "Fan Dancer Fan Fire";
+					break;
+				case BuffIcon.FeebleMind:
+					description = "Feeble Mind";
+					break;
+				case BuffIcon.Feint:
+					description = "Feint";
+					break;
+				case BuffIcon.ForceArrow:
+					description = "Force Arrow";
+					break;
+				case BuffIcon.GargoyleBerserk:
+					description = "Berserk";
+					break;
+				case BuffIcon.GargoyleFly:
+					description = "Fly";
+					break;
+				case BuffIcon.GazeDespair:
+					description = "Gaze Despair";
+					break;
+				case BuffIcon.GiftOfLife:
+					description = "Gift Of Life";
+					break;
+				case BuffIcon.GiftOfRenewal:
+					description = "Gift Of Renewal";
+					break;
+				case BuffIcon.HealingSkill:
+					description = "Healing";
+					break;
+				case BuffIcon.HeatOfBattleStatus:
+					description = "Heat Of Battle";
+					break;
+				case BuffIcon.HidingAndOrStealth:
+					description = "Hiding";
+					break;
+				case BuffIcon.HiryuPhysicalResistance:
+					description = "Hiryu Physical Malus";
+					break;
+				case BuffIcon.HitDualwield:
+					description = "Hit Dual Wield";
+					break;
+				case BuffIcon.HitLowerAttack:
+					description = "Hit Lower Attack";
+					break;
+				case BuffIcon.HitLowerDefense:
+					description = "Hit Lower Defense";
+					break;
+				case BuffIcon.HonorableExecution:
+					description = "Honorable Execution";
+					break;
+				case BuffIcon.Honored:
+					description = "Honored";
+					break;
+				case BuffIcon.HorrificBeast:
+					description = "Horrific Beast";
+					break;
+				case BuffIcon.HowlOfCacophony:
+					description = "Hawl Of Cacophony";
+					break;
+				case BuffIcon.ImmolatingWeapon:
+					description = "Immolating Weapon";
+					break;
+				case BuffIcon.Incognito:
+					description = "Incognito";
+					break;
+				case BuffIcon.Inspire:
+					description = "Inspire";
+					break;
+				case BuffIcon.Invigorate:
+					description = "Invigorate";
+					break;
+				case BuffIcon.Invisibility:
+					description = "Invisibility";
+					break;
+				case BuffIcon.LichForm:
+					description = "Lich Form";
+					break;
+				case BuffIcon.LightningStrike:
+					description = "Lighting Strike";
+					break;
+				case BuffIcon.MagicFish:
+					description = "Magic Fish";
+					break;
+				case BuffIcon.MagicReflection:
+					description = "Magic Reflection";
+					break;
+				case BuffIcon.ManaPhase:
+					description = "Mana Phase";
+					break;
+				case BuffIcon.MassCurse:
+					description = "Mass Curse";
+					break;
+				case BuffIcon.MedusaStone:
+					description = "Medusa Stone";
+					break;
+				case BuffIcon.Mindrot:
+					description = "Mind Rot";
+					break;
+				case BuffIcon.MomentumStrike:
+					description = "Momentum Strike";
+					break;
+				case BuffIcon.MortalStrike:
+					description = "Mortal Strike";
+					break;
+				case BuffIcon.NightSight:
+					description = "Night Sight";
+					break;
+				case BuffIcon.NoRearm:
+					description = "NoRearm";
+					break;
+				case BuffIcon.OrangePetals:
+					description = "Orange Petals";
+					break;
+				case BuffIcon.PainSpike:
+					description = "Pain Spike";
+					break;
+				case BuffIcon.Paralyze:
+					description = "Paralyze";
+					break;
+				case BuffIcon.Perfection:
+					description = "Perfection";
+					break;
+				case BuffIcon.Perseverance:
+					description = "Perseverance";
+					break;
+				case BuffIcon.Poison:
+					description = "Poison";
+					break;
+				case BuffIcon.PoisonResistanceImmunity:
+					description = "Poison Resistance";
+					break;
+				case BuffIcon.Polymorph:
+					description = "Polymorph";
+					break;
+				case BuffIcon.Protection:
+					description = "Protection";
+					break;
+				case BuffIcon.PsychicAttack:
+					description = "Psychic Attack";
+					break;
+				case BuffIcon.Rage:
+					description = "Rage";
+					break;
+				case BuffIcon.RageFocusing:
+					description = "Rage Focusing";
+					break;
+				case BuffIcon.RageFocusingTarget:
+					description = "Rage Focusing (target)";
+					break;
+				case BuffIcon.ReactiveArmor:
+					description = "Reactive Armor";
+					break;
+				case BuffIcon.ReaperForm:
+					description = "Reaper Form";
+					break;
+				case BuffIcon.Resilience:
+					description = "Resilience";
+					break;
+				case BuffIcon.RoseOfTrinsic:
+					description = "Rose Of Trinsic";
+					break;
+				case BuffIcon.RotwormBloodDisease:
+					description = "Rotworm Blood Disease";
+					break;
+				case BuffIcon.RuneBeetleCorruption:
+					description = "Rune Beetle Corruption";
+					break;
+				case BuffIcon.SkillUseDelay:
+					description = "Skill Use Delay";
+					break;
+				case BuffIcon.Sleep:
+					description = "Sleep";
+					break;
+				case BuffIcon.SpellFocusing:
+					description = "Spell Focusing";
+					break;
+				case BuffIcon.SpellFocusingTarget:
+					description = "Spell Focusing (target)";
+					break;
+				case BuffIcon.SpellPlague:
+					description = "Spell Plague";
+					break;
+				case BuffIcon.SplinteringEffect:
+					description = "Splintering Effect";
+					break;
+				case BuffIcon.StoneForm:
+					description = "Stone Form";
+					break;
+				case BuffIcon.Strangle:
+					description = "Strangle";
+					break;
+				case BuffIcon.Strength:
+					description = "Strength";
+					break;
+				case BuffIcon.Surge:
+					description = "Surge";
+					break;
+				case BuffIcon.SwingSpeed:
+					description = "Swing Speed";
+					break;
+				case BuffIcon.TalonStrike:
+					description = "Talon Strike";
+					break;
+			}
+
+			return description;
+		}
+
 		// Buff
 		public static ArrayList Buffs
 		{

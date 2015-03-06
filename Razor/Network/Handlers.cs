@@ -2236,7 +2236,7 @@ namespace Assistant
 					{
 						ulong features = p.ReadRawUInt64();
 
-						if (ClientCommunication.HandleNegotiate(features) != 0)
+						if (ClientCommunication.HandleNegotiate(features))
 						{
 							ClientCommunication.SendToServer(new RazorNegotiateResponse());
 							Engine.MainWindow.UpdateControlLocks();
