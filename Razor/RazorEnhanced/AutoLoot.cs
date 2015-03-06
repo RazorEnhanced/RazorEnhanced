@@ -64,7 +64,7 @@ namespace RazorEnhanced
 				if (SerialBag == 0)
 					SerialBag = World.Player.Backpack.Serial;
 
-				return RazorEnhanced.Items.FindBySerial(SerialBag);
+				return RazorEnhanced.Item.FindBySerial(SerialBag);
 			}
 		}
 
@@ -151,32 +151,25 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static ArrayList ignoreListCorpi = new ArrayList();
+		internal static ArrayList ignoreCorpiList = new ArrayList();
 
-		internal static int Engine()
+		internal static int Engine(List<AutoLootItem> autoLootList, int milliseconds, Item.Filter filter)
 		{
-			// Genero filtro per corpi
-			RazorEnhanced.Items.Filter filtroCorpi = new RazorEnhanced.Items.Filter();
-			filtroCorpi.RangeMax = 3;
-			filtroCorpi.Movable = false;
-			filtroCorpi.IsCorpse = true;
-			filtroCorpi.OnGround = true;
-			filtroCorpi.Enabled = true;
-
 			bool skip = false;
 
 			//RazorEnhanced.AutoLoot.AddLog("- Cerco corpi....");
-			ArrayList corpi = RazorEnhanced.Items.ApplyFilter(filtroCorpi);
+			ArrayList corpi = RazorEnhanced.Item.ApplyFilter(filter);
+
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
-				if (World.Player.Weight - 20 > World.Player.ManaMax)
+				if (World.Player.Weight - 20 > World.Player.MaxWeight)
 				{
 					RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
 					RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space");
 					return -1;
 				}
 
-				foreach (RazorEnhanced.Item corpoIgnorato in ignoreListCorpi)
+				foreach (RazorEnhanced.Item corpoIgnorato in ignoreCorpiList)
 				{
 					if (corpoIgnorato.Serial == corpo.Serial) // Corpo ingorato
 					{
@@ -195,21 +188,21 @@ namespace RazorEnhanced
 
 					foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 					{
-						foreach (AutoLootItem ItemDaLista in Assistant.Engine.MainWindow.AutoLootItemList)
+						foreach (AutoLootItem autoLoootItem in autoLootList)
 						{
-							if (oggettoContenuto.ItemID == ItemDaLista.Graphics)
+							if (oggettoContenuto.ItemID == autoLoootItem.Graphics)
 							{
 								if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
 								{
-									if (ItemDaLista.Properties.Count > 0) // Item con props
+									if (autoLoootItem.Properties.Count > 0) // Item con props
 									{
 										RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
 
 										bool propsOK = false;
-										foreach (AutoLootItem.Property PropsDaLista in ItemDaLista.Properties) // Scansione e verifica props
+										foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
 										{
-											int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, PropsDaLista.Name);
-											if (PropsSuItemDaLootare >= PropsDaLista.Minimum && PropsSuItemDaLootare <= PropsDaLista.Maximum)
+											int PropsSuItemDaLootare = RazorEnhanced.Item.GetPropByString(oggettoContenuto, props.Name);
+											if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
 											{
 												propsOK = true;
 											}
@@ -223,8 +216,8 @@ namespace RazorEnhanced
 										if (propsOK) // Tutte le props match OK
 										{
 											RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
-											RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-											Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
+											RazorEnhanced.Item.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
+											Thread.Sleep(milliseconds);
 										}
 										else
 										{
@@ -234,8 +227,8 @@ namespace RazorEnhanced
 									else // Item Senza props     
 									{
 										RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
-										RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-										Thread.Sleep(RazorEnhanced.AutoLoot.ItemDragDelay);
+										RazorEnhanced.Item.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
+										Thread.Sleep(milliseconds);
 									}
 								}
 							}
@@ -243,7 +236,7 @@ namespace RazorEnhanced
 					}
 
 					// Ignoro corpo
-					ignoreListCorpi.Add(corpo);
+					ignoreCorpiList.Add(corpo);
 					// RazorEnhanced.AutoLoot.AddLog("- Corpo Ignorato: " + Corpo.Serial.ToString());
 					// RazorEnhanced.AutoLoot.AddLog("- Lista ignore:" + IgnoreListCorpi.Count);
 					// Thread.Sleep(1000); // Da levare dopo test
@@ -256,11 +249,11 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		public int Run()
+		public int Run(List<AutoLootItem> autoLootList, int milliseconds, Item.Filter filter)
 		{
 			int result = Int32.MinValue;
 			if (!m_Auto)
-				AutoLoot.Engine();
+				AutoLoot.Engine(autoLootList, milliseconds, filter);
 			return result;
 		}
 	}

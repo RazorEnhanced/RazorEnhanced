@@ -19,9 +19,7 @@ namespace RazorEnhanced
 			internal int Execute(RunMode action)
 			{
 				int exit = Int32.MinValue;
-
-				RunMethod("Run", action);
-
+				exit = InvokeMethod<int>("Run", action);
 				return exit;
 			}
 
@@ -38,19 +36,6 @@ namespace RazorEnhanced
 				}
 
 				return result;
-			}
-
-			private void RunMethod(string method, RunMode action)
-			{
-				try
-				{
-					m_PaxScripter.Run(action, null, "RazorEnhanced." + m_Class + "." + method);
-					m_LineNUmber = m_PaxScripter.CurrentLineNumber;
-				}
-				catch
-				{
-				}
-
 			}
 
 			private int m_LineNUmber;
@@ -73,6 +58,53 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal class ScriptTimer : Assistant.Timer
+		{
+			RazorEnhanced.Item.Filter m_CorpseFilter;
+
+			internal ScriptTimer()
+				: base(m_TimerDelay, m_TimerDelay)
+			{
+				// Genero filtro per corpi
+				m_CorpseFilter = new RazorEnhanced.Item.Filter();
+				m_CorpseFilter.RangeMax = 3;
+				m_CorpseFilter.Movable = false;
+				m_CorpseFilter.IsCorpse = true;
+				m_CorpseFilter.OnGround = true;
+				m_CorpseFilter.Enabled = true;
+			}
+
+			protected override void OnTick()
+			{
+				if (Scripts.Auto)
+				{
+					foreach (EnhancedScript script in m_EnhancedScripts)
+					{
+						int exit = script.Execute(RunMode.Run);
+
+						if (exit != 0)
+						{
+							Scripts.Auto = false;
+							Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
+							Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+						}
+						else
+							Thread.Sleep(script.Delay);
+					}
+				}
+
+				if (AutoLoot.Auto)
+				{
+					AutoLoot.Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel, m_CorpseFilter);
+					Thread.Sleep(100);
+				}
+			}
+		}
+
+		internal static TimeSpan m_TimerDelay = TimeSpan.FromMilliseconds(100);
+
+		internal static ScriptTimer m_Timer = new ScriptTimer();
+
 		private static List<EnhancedScript> m_EnhancedScripts = new List<EnhancedScript>();
 		internal static List<EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
 
@@ -83,63 +115,25 @@ namespace RazorEnhanced
 		{
 			m_PaxScripter = new PaxScripter();
 			m_PaxScripter.OnChangeState += new ChangeStateHandler(paxScripter_OnChangeState);
+			m_Timer.Start();
 		}
 
-		private static bool m_AutoMode = false;
-		internal static bool AutoMode
+		private static bool m_Auto = false;
+		internal static bool Auto
 		{
-			get { return m_AutoMode; }
+			get { return m_Auto; }
 			set
 			{
-				if (m_AutoMode == value)
+				if (m_Auto == value)
 					return;
 
-				m_AutoMode = value;
-				if (m_AutoMode)
-					m_Timer.Start();
-				else
-					m_Timer.Stop();
+				m_Auto = value;
 			}
 		}
-
-		internal static TimeSpan m_TimerDelay = TimeSpan.FromMilliseconds(100);
-
-		internal class ScriptTimer : Assistant.Timer
-		{
-			internal ScriptTimer()
-				: base(m_TimerDelay, m_TimerDelay)
-			{
-			}
-
-			protected override void OnTick()
-			{
-				foreach (EnhancedScript script in m_EnhancedScripts)
-				{
-					int exit = script.Execute(RunMode.Run);
-
-					if (exit != 0)
-					{
-						Scripts.AutoMode = false;
-						Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
-						Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
-					}
-					else
-						Thread.Sleep(script.Delay);
-				}
-
-				if (AutoLoot.Auto)
-				{
-					AutoLoot.Engine();
-					Thread.Sleep(100);
-				}
-			}
-		}
-
-		internal static ScriptTimer m_Timer = new ScriptTimer();
 
 		internal static void Reset()
 		{
-			AutoMode = false;
+			Auto = false;
 			m_EnhancedScripts.Clear();
 			m_PaxScripter.Reset();
 		}
