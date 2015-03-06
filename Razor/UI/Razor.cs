@@ -2968,7 +2968,7 @@ namespace Assistant
 			this.labelUOD.Size = new System.Drawing.Size(213, 64);
 			this.labelUOD.TabIndex = 4;
 			this.labelUOD.Text = "To support the development of the Razor Enhanced project,  you can visit UODreams" +
-    " shard and stay with us! You are welcome!";
+	" shard and stay with us! You are welcome!";
 			this.labelUOD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// razorButtonVisitUOD
@@ -3552,38 +3552,38 @@ namespace Assistant
 			dataGridViewScripting.Rows.Clear();
 			dataGridViewScripting.DataSource = scriptTable;
 
-            //autoloot
+			//autoloot
 
-            // Liste loot
-            AutolootListSelect.Items.Add("Default");    // Lista base non cancellabile 
-            // Carico parametri base
-            string LootSettingDelay = "";
-            string LootSettingLastList = "";
-            List<string> LootSettingItemList = new List<string>();
+			// Liste loot
+			AutolootListSelect.Items.Add("Default");    // Lista base non cancellabile 
+			// Carico parametri base
+			string LootSettingDelay = "";
+			string LootSettingLastList = "";
+			List<string> LootSettingItemList = new List<string>();
 
-            //load delay
-            RazorEnhanced.Settings.LoadAutoLootGeneral(out LootSettingDelay, out LootSettingItemList, out LootSettingLastList);
-            if (LootSettingDelay != "")
-                autoLootLabelDelay.Text = LootSettingDelay;
-            else
-                autoLootLabelDelay.Text = "100";
+			//load delay
+			RazorEnhanced.Settings.LoadAutoLootGeneral(out LootSettingDelay, out LootSettingItemList, out LootSettingLastList);
+			if (LootSettingDelay != "")
+				autoLootLabelDelay.Text = LootSettingDelay;
+			else
+				autoLootLabelDelay.Text = "100";
 
-            // load Lista item
-            for (int i = 0; i < LootSettingItemList.Count; i++)
-            {
-                if (LootSettingItemList[i] != "Default")
-                    AutolootListSelect.Items.Add(LootSettingItemList[i]);
-            }
+			// load Lista item
+			for (int i = 0; i < LootSettingItemList.Count; i++)
+			{
+				if (LootSettingItemList[i] != "Default")
+					AutolootListSelect.Items.Add(LootSettingItemList[i]);
+			}
 
-            // Setta ultima lista usata e carica 
+			// Setta ultima lista usata e carica 
 
-            if (LootSettingLastList != "")
-            {
-                AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf(LootSettingLastList);
+			if (LootSettingLastList != "")
+			{
+				AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf(LootSettingLastList);
 
-            }
-            else
-                AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf("Default");
+			}
+			else
+				AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf("Default");
 
 		}
 
@@ -3873,7 +3873,7 @@ namespace Assistant
 					bool allAllowed = true;
 					StringBuilder text = new StringBuilder();
 
-					text.Append(Language.GetString(LocString.NegotiateTitle)+ " ");
+					text.Append(Language.GetString(LocString.NegotiateTitle) + " ");
 
 					for (uint i = 0; i < FeatureBit.MaxBit; i++)
 					{
@@ -6994,18 +6994,18 @@ namespace Assistant
 
 		private void autolootRemoveItemB_Click(object sender, EventArgs e)
 		{
-            int y = 0;
-            for (int i = 0; i < autolootlistView.Items.Count; i++)
-            {
-                if (autolootlistView.Items[i].Checked)
-                {
-                    autoLootItemList.RemoveAt(y);
-                    y--;
-                }
-                y++;
-            }
-            RazorEnhanced.Settings.SaveAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
+			int y = 0;
+			for (int i = 0; i < autolootlistView.Items.Count; i++)
+			{
+				if (autolootlistView.Items[i].Checked)
+				{
+					autoLootItemList.RemoveAt(y);
+					y--;
+				}
+				y++;
+			}
+			RazorEnhanced.Settings.SaveAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
 		}
 
 		private void autolootItemEditB_Click(object sender, EventArgs e)
@@ -7078,18 +7078,18 @@ namespace Assistant
 					MessageBoxDefaultButton.Button1);
 				}
 
-                if (StartCheck)
-                {
-                    // Stop autoloot
-                    RazorEnhanced.AutoLoot.Auto = true;
-                    RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
-                }
-                else 
-                {
-                    // Stop autoloot
-                    RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
-                    autolootEnable.Checked = false;
-                }
+				if (StartCheck)
+				{
+					// Stop autoloot
+					RazorEnhanced.AutoLoot.Auto = true;
+					RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
+				}
+				else
+				{
+					// Stop autoloot
+					RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
+					autolootEnable.Checked = false;
+				}
 			}
 			else
 			{
@@ -7132,8 +7132,8 @@ namespace Assistant
 
 		private void autolootListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            RazorEnhanced.Settings.LoadAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), out autoLootItemList);
-            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
+			RazorEnhanced.Settings.LoadAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), out autoLootItemList);
+			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
 			RazorEnhanced.AutoLoot.AddLog("Autoloot list changed to: " + AutolootListSelect.SelectedItem.ToString());
 		}
 

@@ -140,7 +140,7 @@ namespace RazorEnhanced
 			row["Label"] = label;
 			row["List"] = list;
 			row["Selection"] = selection;
-			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(row);
+			m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Add(row);
 			Save();
 		}
 
