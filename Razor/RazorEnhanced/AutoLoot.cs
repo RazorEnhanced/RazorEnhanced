@@ -153,7 +153,7 @@ namespace RazorEnhanced
 
 		internal static ArrayList ignoreListCorpi = new ArrayList();
 
-		public static int Engine()
+		internal static int Engine()
 		{
 			// Genero filtro per corpi
 			RazorEnhanced.Items.Filter filtroCorpi = new RazorEnhanced.Items.Filter();
@@ -254,6 +254,14 @@ namespace RazorEnhanced
 
 			//  Thread.Sleep(1000); // Da levare dopo test delay fra corpi
 			return 0;
+		}
+
+		public int Run()
+		{
+			int result = Int32.MinValue;
+			if (!m_Auto)
+				AutoLoot.Engine();
+			return result;
 		}
 	}
 }
