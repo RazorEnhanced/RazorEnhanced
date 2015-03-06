@@ -101,7 +101,7 @@ namespace RazorEnhanced.UI
             if (!fail)
             {
                 RazorEnhanced.AutoLoot.AddItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList);
-                RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
+                //RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
                 this.Close();
             }
 

@@ -80,9 +80,6 @@ namespace Assistant
 				if (this.IsContainer)
 				{
 					m_Updated = value;
-
-					if (value)
-						RazorEnhanced.Scripts.OnContainerUpdated(this);
 				}
 			}
 		}

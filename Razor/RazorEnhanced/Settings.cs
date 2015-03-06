@@ -59,39 +59,88 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Status", typeof(string));
 				m_Dataset.Tables.Add(scripting);
 
-				DataTable autoloot = new DataTable("AUTOLOOT");
-				autoloot.Columns.Add("Item", typeof(AutoLoot.AutoLootItem));
-				m_Dataset.Tables.Add(autoloot);
+				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
+				autoloot_lists.Columns.Add("Name", typeof(string));
+				autoloot_lists.Columns.Add("List", typeof(List<AutoLoot.AutoLootItem>));
+				m_Dataset.Tables.Add(autoloot_lists);
+
+				DataTable autoloot_general = new DataTable("AUTOLOOT_GENERAL");
+				autoloot_general.Columns.Add("Label", typeof(string));
+				autoloot_general.Columns.Add("List", typeof(List<string>));
+				autoloot_general.Columns.Add("Selection", typeof(string));
+				m_Dataset.Tables.Add(autoloot_general);
 
 				m_Dataset.AcceptChanges();
 			}
 		}
 
-		internal static List<AutoLoot.AutoLootItem> LoadAutoLootItemList()
+		internal static bool LoadAutoLootItemList(string name, out List<AutoLoot.AutoLootItem> list)
 		{
+			bool exit = false;
 			List<AutoLoot.AutoLootItem> result = new List<AutoLoot.AutoLootItem>();
-			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT"].Rows)
+
+			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 			{
-				AutoLoot.AutoLootItem item = row["Item"] as AutoLoot.AutoLootItem;
-				if (item != null)
+				if ((string)row["Name"] == name)
 				{
-					result.Add(item);
+					result = row["List"] as List<AutoLoot.AutoLootItem>;
+					exit = true;
 				}
 			}
 
-			return result;
+			list = result;
+			return exit;
 		}
 
-		internal static void SaveAutoLootItemList(List<AutoLoot.AutoLootItem> list)
+		internal static void SaveAutoLootItemList(string name, List<AutoLoot.AutoLootItem> list)
 		{
-			m_Dataset.Tables["AUTOLOOT"].Rows.Clear();
-			foreach (AutoLoot.AutoLootItem item in list)
+			DataRow row = m_Dataset.Tables["AUTOLOOT_LISTS"].NewRow();
+			row["Name"] = name;
+			row["List"] = list;
+			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(row);
+			Save();
+		}
+
+		internal static void ClearAutoLootItemList()
+		{
+			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Clear();
+			Save();
+		}
+
+		internal static bool LoadAutoLootGeneral(out string label, out List<string> list, out string selection)
+		{
+			bool exit = false;
+
+			string labelOut = "";
+			List<string> listOut = new List<string>();
+			string selectionOut = "";
+
+			if (m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Count == 1)
 			{
-				DataRow row = m_Dataset.Tables["AUTOLOOT"].NewRow();
-				row["Item"] = item;
-				m_Dataset.Tables["AUTOLOOT"].Rows.Add(row);
+				DataRow row = m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows[0];
+				{
+					labelOut = (string)row["Label"];
+					listOut = row["List"] as List<string>;
+					selectionOut = (string)row["Selection"];
+					exit = true;
+				}
 			}
 
+			label = labelOut;
+			list = listOut;
+			selection = selectionOut;
+
+			return exit;
+		}
+
+		internal static void SaveAutoLootIGeneral(string label, List<string> list, string selection)
+		{
+			m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Clear();
+			DataRow row = m_Dataset.Tables["AUTOLOOT_GENERAL"].NewRow();
+			row["Label"] = label;
+			row["List"] = list;
+			row["Selection"] = selection;
+			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(row);
 			Save();
 		}
 

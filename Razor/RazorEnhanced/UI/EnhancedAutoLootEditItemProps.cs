@@ -50,7 +50,7 @@ namespace RazorEnhanced.UI
                 y++;
             }
             RazorEnhanced.AutoLoot.RefreshPropListView(listViewProps, AutoLootItemList, IndexSelected);
-            RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
+            //RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
         }
 
         private void EnhancedAutolootEditItemProps_Load(object sender, EventArgs e)

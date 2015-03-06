@@ -11,15 +11,16 @@ using ScintillaNET;
 using PaxScript.Net;
 using System.IO;
 using Assistant;
-
+using RazorEnhanced;
 
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScriptEditor : Form
 	{
+		private PaxScripter m_PaxScripter;
+
 		private const string m_Title = "Enhanced Script Editor";
 
-		private static PaxScripter m_PaxScripterEnhanced;
 		private int m_Line = -1;
 		private string m_Classname = "";
 
@@ -27,99 +28,56 @@ namespace RazorEnhanced.UI
 		{
 			InitializeComponent();
 			this.Text = m_Title;
-			m_PaxScripterEnhanced = new PaxScripter(this.components);
-			m_PaxScripterEnhanced.OnChangeState += new ChangeStateHandler(this.paxScripterEnhanced_OnChangeState);
+			m_PaxScripter = new PaxScripter(this.components);
 		}
 
 		private void scintillScriptEditor_TextChanged(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.Reset();
-			m_PaxScripterEnhanced.AddModule("1");
-			m_PaxScripterEnhanced.AddCode("1", scintillScriptEditor.Text);
-		}
-
-		private void paxScripterEnhanced_OnChangeState(PaxScripter sender, ChangeStateEventArgs e)
-		{
-			if (e.NewState == ScripterState.Error)
-			{
-				string msg = "SCRIPT ERRORS:" + Environment.NewLine;
-				foreach (ScriptError err in m_PaxScripterEnhanced.Error_List)
-				{
-					msg += "Line: " + err.LineNumber.ToString() + " - Error: " + err.Message + Environment.NewLine;
-				}
-				MessageBox.Show(msg);
-			}
-			else if (e.OldState == ScripterState.Init)
-			{
-				m_PaxScripterEnhanced.AddModule("1");
-				m_PaxScripterEnhanced.AddCode("1", scintillScriptEditor.Text);
-			}
-
-		}
-
-		private static void InvokeMethod(string classname, string method, RunMode mode)
-		{
-			try
-			{
-				m_PaxScripterEnhanced.Invoke(mode, null, "RazorEnhanced." + classname + "." + method);
-			}
-			catch
-			{
-			}
+			m_PaxScripter.Reset();
+			m_PaxScripter.AddModule(m_Classname);
+			m_PaxScripter.AddCode(m_Classname, scintillaScriptEditor.Text);
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
 		{
-			InvokeMethod(m_Classname, "Run", RunMode.Run);
-
-			if (m_PaxScripterEnhanced.HasErrors)
-			{
-				m_PaxScripterEnhanced.Reset();
-				toolStripStatusLabelScript.Text = "";
-			}
-			else
-			{
-				toolStripStatusLabelScript.Text = "RunMode: Run";
-			}
+			m_PaxScripter.Invoke(RunMode.Run, null, "RazorEnhanced." + m_Classname + ".Run");
+			toolStripStatusLabelScript.Text = "RunMode: Run";
 		}
 
 		private void toolStripButtonNextLine_Click(object sender, EventArgs e)
 		{
-			InvokeMethod(m_Classname, "Run", RunMode.NextLine);
-
-			int line = m_PaxScripterEnhanced.CurrentLineNumber / 2;
-			scintillScriptEditor.Caret.HighlightCurrentLine = true;
-			scintillScriptEditor.Caret.LineNumber = line;
-
+			m_PaxScripter.Invoke(RunMode.NextLine, null, "RazorEnhanced." + m_Classname + ".Run");
+			int line = m_PaxScripter.CurrentLineNumber / 2;
+			scintillaScriptEditor.Caret.HighlightCurrentLine = true;
+			scintillaScriptEditor.Caret.LineNumber = line;
 			toolStripStatusLabelScript.Text = "RunMode: Next Line";
 		}
 
 		private void toolStripButtonStepOver_Click(object sender, EventArgs e)
 		{
-			InvokeMethod(m_Classname, "Run", RunMode.StepOver);
-
-			int line = m_PaxScripterEnhanced.CurrentLineNumber / 2;
-			scintillScriptEditor.Caret.HighlightCurrentLine = true;
-			scintillScriptEditor.Caret.LineNumber = line;
+			m_PaxScripter.Invoke(RunMode.StepOver, null, "RazorEnhanced." + m_Classname + ".Run");
+			int line = m_PaxScripter.CurrentLineNumber / 2;
+			scintillaScriptEditor.Caret.HighlightCurrentLine = true;
+			scintillaScriptEditor.Caret.LineNumber = line;
 
 			toolStripStatusLabelScript.Text = "RunMode: Step Over";
 		}
 
 		private void toolStripTraceInto_Click(object sender, EventArgs e)
 		{
-			InvokeMethod(m_Classname, "Run", RunMode.TraceInto);
-
-			int line = m_PaxScripterEnhanced.CurrentLineNumber / 2;
-			scintillScriptEditor.Caret.HighlightCurrentLine = true;
-			scintillScriptEditor.Caret.LineNumber = line;
+			m_PaxScripter.Invoke(RunMode.TraceInto, null, "RazorEnhanced." + m_Classname + ".Run");
+			int line = m_PaxScripter.CurrentLineNumber / 2;
+			scintillaScriptEditor.Caret.HighlightCurrentLine = true;
+			scintillaScriptEditor.Caret.LineNumber = line;
 
 			toolStripStatusLabelScript.Text = "RunMode: Trace Into";
 		}
 
 		private void toolStripButtonStop_Click(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.Reset();
-			scintillScriptEditor.Caret.HighlightCurrentLine = false;
+			m_PaxScripter.Reset();
+			scintillaScriptEditor.Caret.HighlightCurrentLine = false;
+
 			toolStripStatusLabelScript.Text = "";
 		}
 
@@ -130,7 +88,7 @@ namespace RazorEnhanced.UI
 				string msg = "EXPRESSION: " + toolStripTextBoxEvaluate.Text + " - EVALUATE: ";
 				try
 				{
-					toolStripStatusLabelScript.Text = msg + m_PaxScripterEnhanced.Eval(toolStripTextBoxEvaluate.Text).ToString();
+					toolStripStatusLabelScript.Text = msg + m_PaxScripter.Eval(toolStripTextBoxEvaluate.Text).ToString();
 				}
 				catch (Exception ex)
 				{
@@ -141,23 +99,23 @@ namespace RazorEnhanced.UI
 
 		private void toolStripButtonAddBreakpoint_Click(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.RemoveAllBreakpoints();
+			m_PaxScripter.RemoveAllBreakpoints();
 
-			int line = scintillScriptEditor.Caret.LineNumber;
+			int line = scintillaScriptEditor.Caret.LineNumber;
 
-			Marker lineHighlighter = scintillScriptEditor.Markers[1];
+			Marker lineHighlighter = scintillaScriptEditor.Markers[1];
 			lineHighlighter.BackColor = System.Drawing.Color.Red;
 			lineHighlighter.Symbol = MarkerSymbol.Background;
-			scintillScriptEditor.Lines[line].AddMarker(lineHighlighter);
+			scintillaScriptEditor.Lines[line].AddMarker(lineHighlighter);
 			m_Line = line;
 
-			m_PaxScripterEnhanced.AddBreakpoint("1", line);
+			m_PaxScripter.AddBreakpoint(m_Classname, line);
 		}
 
 		private void toolStripButtonRemoveBreakpoints_Click(object sender, EventArgs e)
 		{
-			m_PaxScripterEnhanced.RemoveAllBreakpoints();
-			scintillScriptEditor.Lines[m_Line].DeleteAllMarkers();
+			m_PaxScripter.RemoveAllBreakpoints();
+			scintillaScriptEditor.Lines[m_Line].DeleteAllMarkers();
 			m_Line = -1;
 		}
 
@@ -168,9 +126,9 @@ namespace RazorEnhanced.UI
 
 			if (open.ShowDialog() == DialogResult.OK)
 			{
-				scintillScriptEditor.Text = System.IO.File.ReadAllText(open.FileName);
 				m_Classname = Path.GetFileNameWithoutExtension(open.FileName);
-				this.Text = m_Title + " " + m_Classname + ".cs";
+				this.Text = m_Title + " - " + m_Classname + ".cs";
+				scintillaScriptEditor.Text = System.IO.File.ReadAllText(open.FileName);
 			}
 		}
 
@@ -181,9 +139,9 @@ namespace RazorEnhanced.UI
 
 			if (save.ShowDialog() == DialogResult.OK)
 			{
-				System.IO.File.WriteAllText(save.FileName, scintillScriptEditor.Text);
 				m_Classname = Path.GetFileNameWithoutExtension(save.FileName);
-				this.Text = m_Title + " " + m_Classname + ".cs";
+				this.Text = m_Title + " - " + m_Classname + ".cs";
+				System.IO.File.WriteAllText(save.FileName, scintillaScriptEditor.Text);
 			}
 		}
 
@@ -196,11 +154,11 @@ namespace RazorEnhanced.UI
 
 				if (save.ShowDialog() == DialogResult.OK)
 				{
-					System.IO.File.WriteAllText(save.FileName, scintillScriptEditor.Text);
+					System.IO.File.WriteAllText(save.FileName, scintillaScriptEditor.Text);
 				}
 			}
 
-			scintillScriptEditor.Text = "";
+			scintillaScriptEditor.Text = "";
 			m_Classname = "";
 			this.Text = m_Title;
 		}
@@ -231,6 +189,11 @@ namespace RazorEnhanced.UI
 					inspector.Show();
 				}
 			}
+		}
+
+		private void EnhancedScriptEditor_Load(object sender, EventArgs e)
+		{
+			scintillaScriptEditor.Margins[0].Width = 20;
 		}
 	}
 }

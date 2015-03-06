@@ -14,92 +14,70 @@ namespace RazorEnhanced
 {
 	internal class Scripts
 	{
-		internal class ScriptWorker
+		internal class EnhancedScript
 		{
-			private ConcurrentQueue<RunMode> m_Actions = new ConcurrentQueue<RunMode>();
-			internal ConcurrentQueue<RunMode> Actions { get { return m_Actions; } }
-
-			private EnhancedScript m_Script;
-			internal EnhancedScript Script { get { return m_Script; } }
-
-			private TimeSpan m_Delay;
-			internal TimeSpan Delay { get { return m_Delay; } }
-
-			private bool m_AutoMode;
-			internal bool AutoMode { get { return m_AutoMode; } }
-
-			internal ScriptWorker(EnhancedScript script, TimeSpan delay, bool autoMode)
-			{
-				m_Script = script;
-				m_Delay = delay;
-				m_AutoMode = autoMode;
-			}
-
-			// This method will be called when the thread is started.
-			internal void AsyncRun()
+			internal int Execute(RunMode action)
 			{
 				int exit = Int32.MinValue;
 
-				while (!_shouldStop)
-				{
-					Thread.Sleep(m_Delay);
+				RunMethod("Run", action);
 
-					RunMode action;
-					if (m_Actions.Count > 0 && m_Actions.TryDequeue(out action))
-					{
-						exit = InvokeMethod<int>(m_Script, "Run", action);
-
-						if (this.AutoMode)
-						{
-							if (exit != 0)
-								_shouldStop = true;
-						}
-						else
-						{
-							if (exit != Int32.MinValue)
-								_shouldStop = true;
-						}
-					}
-				}
-
-				if (exit != 0)
-				{
-					Assistant.Engine.MainWindow.razorCheckBoxAuto.Checked = false;
-					Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
-				}
+				return exit;
 			}
-			internal void RequestStop()
+
+			private T InvokeMethod<T>(string method, RunMode action)
 			{
-				_shouldStop = true;
+				T result = default(T);
+				try
+				{
+					result = (T)m_PaxScripter.Invoke(action, null, "RazorEnhanced." + m_Class + "." + method);
+					m_LineNUmber = m_PaxScripter.CurrentLineNumber;
+				}
+				catch
+				{
+				}
+
+				return result;
 			}
 
-			// Volatile is used as hint to the compiler that this data
-			// member will be accessed by multiple threads.
-			private volatile bool _shouldStop;
-		}
+			private void RunMethod(string method, RunMode action)
+			{
+				try
+				{
+					m_PaxScripter.Run(action, null, "RazorEnhanced." + m_Class + "." + method);
+					m_LineNUmber = m_PaxScripter.CurrentLineNumber;
+				}
+				catch
+				{
+				}
 
-		internal class EnhancedScript
-		{
-			private string m_File;
-			internal string File { get { return m_File; } }
+			}
+
+			private int m_LineNUmber;
+			internal int LineNumber { get { return m_LineNUmber; } }
+
+			private string m_Text;
+			internal string Text { get { return m_Text; } }
 
 			private string m_Class;
 			internal string Class { get { return m_Class; } }
 
-			internal EnhancedScript(string file, string classname)
+			private TimeSpan m_Delay;
+			internal TimeSpan Delay { get { return m_Delay; } }
+
+			internal EnhancedScript(string text, string classname, TimeSpan delay, bool auto)
 			{
-				m_File = file;
+				m_Text = text;
+				m_Delay = delay;
 				m_Class = classname;
 			}
 		}
 
-		private static List<ScriptWorker> m_Workers = new List<ScriptWorker>();
-		internal static List<ScriptWorker> Workers { get { return m_Workers; } }
-
-		private static List<Task> m_Tasks = new List<Task>();
-		internal static List<Task> Tasks { get { return m_Tasks; } }
+		private static List<EnhancedScript> m_EnhancedScripts = new List<EnhancedScript>();
+		internal static List<EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
 
 		private static PaxScripter m_PaxScripter;
+		internal static PaxScripter Engine { get { return m_PaxScripter; } }
 
 		public static void Initialize()
 		{
@@ -107,93 +85,88 @@ namespace RazorEnhanced
 			m_PaxScripter.OnChangeState += new ChangeStateHandler(paxScripter_OnChangeState);
 		}
 
-		private static void paxScripter_OnChangeState(PaxScripter sender, ChangeStateEventArgs e)
+		private static bool m_AutoMode = false;
+		internal static bool AutoMode
 		{
-			if (e.OldState == ScripterState.Init)
-			{
-			}
-			else if (sender.HasErrors)
-			{
-				MessageBox.Show(sender.Error_List[0].Message);
-			}
-		}
-
-		private static bool m_Auto = false;
-		internal static bool Auto
-		{
-			get { return m_Auto; }
+			get { return m_AutoMode; }
 			set
 			{
-				if (m_Tasks.Count != m_Workers.Count)
-				{
-					MessageBox.Show("Thread count different from Worker count", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				if (m_AutoMode == value)
 					return;
-				}
 
-				if (value)
-				{
-					for (int i = 0; i < m_Tasks.Count; i++)
-					{
-						Task task = m_Tasks[i];
-						ScriptWorker worker = m_Workers[i];
-
-						// Start the worker task.
-						task.Start();
-						// Loop until worker thread activates.
-						while (task.Status == TaskStatus.Running)
-						{
-							Thread.Sleep(1);
-						}
-
-						Misc.SendMessage("Script " + worker.Script.Class + " started.");
-					}
-				}
+				m_AutoMode = value;
+				if (m_AutoMode)
+					m_Timer.Start();
 				else
-				{
-					for (int i = 0; i < m_Tasks.Count; i++)
-					{
-						Task task = m_Tasks[i];
-						ScriptWorker worker = m_Workers[i];
-
-						// Request that the worker task stop itself:
-						worker.RequestStop();
-
-						Misc.SendMessage("Script " + worker.Script.Class + " stopped.");
-					}
-				}
-
-				m_Auto = value;
+					m_Timer.Stop();
 			}
 		}
+
+		internal static TimeSpan m_TimerDelay = TimeSpan.FromMilliseconds(100);
+
+		internal class ScriptTimer : Assistant.Timer
+		{
+			internal ScriptTimer()
+				: base(m_TimerDelay, m_TimerDelay)
+			{
+			}
+
+			protected override void OnTick()
+			{
+				foreach (EnhancedScript script in m_EnhancedScripts)
+				{
+					int exit = script.Execute(RunMode.Run);
+
+					if (exit != 0)
+					{
+						Scripts.AutoMode = false;
+						Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
+						Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+					}
+					else
+						Thread.Sleep(script.Delay);
+				}
+
+				if (AutoLoot.Auto)
+				{
+					AutoLoot.Engine();
+					Thread.Sleep(100);
+				}
+			}
+		}
+
+		internal static ScriptTimer m_Timer = new ScriptTimer();
 
 		internal static void Reset()
 		{
-			Auto = false;
-			m_Workers.Clear();
-			m_Tasks.Clear();
+			AutoMode = false;
+			m_EnhancedScripts.Clear();
 			m_PaxScripter.Reset();
 		}
 
-		private static TimeSpan m_AutoDelay = TimeSpan.FromMilliseconds(25);
+		internal static EnhancedScript Search(string classname)
+		{
+			foreach (EnhancedScript script in m_EnhancedScripts)
+			{
+				if (script.Class == classname)
+					return script;
+			}
+			return null;
+		}
 
-		internal static string Load(string file)
+		internal static string LoadFromFile(string filename, TimeSpan delay)
 		{
 			string status = "Loaded";
-			string classname = Path.GetFileNameWithoutExtension(file);
+			string classname = Path.GetFileNameWithoutExtension(filename);
+			string text = File.ReadAllText(filename);
 
-			EnhancedScript script = new EnhancedScript(file, classname);
-
-			ScriptWorker worker = new ScriptWorker(script, m_AutoDelay, true);
-			worker.Actions.Enqueue(RunMode.Run);
-
-			Task task = new Task(worker.AsyncRun);
+			EnhancedScript script = new EnhancedScript(text, classname, delay, false);
 
 			try
 			{
-				m_Workers.Add(worker);
-				m_Tasks.Add(task);
+				m_EnhancedScripts.Add(script);
 				m_PaxScripter.AddModule(script.Class);
-				m_PaxScripter.AddCodeFromFile(script.Class, script.File);
+				m_PaxScripter.AddCode(script.Class, script.Text);
 			}
 			catch (Exception ex)
 			{
@@ -203,22 +176,37 @@ namespace RazorEnhanced
 			return status;
 		}
 
-		private static T InvokeMethod<T>(EnhancedScript script, string method, RunMode action)
+		internal static string LoadFromText(string text, string classname, TimeSpan delay)
 		{
-			T result = default(T);
+			string status = "Loaded";
+
+			EnhancedScript script = new EnhancedScript(text, classname, delay, false);
+
 			try
 			{
-				result = (T)m_PaxScripter.Invoke(action, null, "RazorEnhanced." + script.Class + "." + method);
+				m_EnhancedScripts.Add(script);
+				m_PaxScripter.AddModule(script.Class);
+				m_PaxScripter.AddCode(script.Class, script.Text);
 			}
-			catch
+			catch (Exception ex)
 			{
+				status = "ERROR: " + ex.Message;
 			}
 
-			return result;
+			return status;
 		}
 
-		internal static void OnContainerUpdated(Assistant.Item container)
+		private static void paxScripter_OnChangeState(PaxScripter sender, ChangeStateEventArgs e)
 		{
+			if (e.NewState == ScripterState.Error)
+			{
+				string msg = "SCRIPT ERRORS:" + Environment.NewLine;
+				foreach (ScriptError err in m_PaxScripter.Error_List)
+				{
+					msg += "Line: " + err.LineNumber.ToString() + " - Error: " + err.Message + Environment.NewLine;
+				}
+				MessageBox.Show(msg);
+			}
 		}
 	}
 }
