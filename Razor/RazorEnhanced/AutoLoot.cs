@@ -55,88 +55,88 @@ namespace RazorEnhanced
 				m_Properties = properties;
 			}
 		}
-		internal static RazorEnhanced.Item AutolootBag
-		{
-			get
-			{
-				int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
+        internal static RazorEnhanced.Item AutolootBag
+        {
+            get
+            {
+                int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
 
-				if (SerialBag == 0)
-					SerialBag = World.Player.Backpack.Serial;
+                if (SerialBag == 0)
+                    SerialBag = World.Player.Backpack.Serial;
 
-				return RazorEnhanced.Item.FindBySerial(SerialBag);
-			}
-		}
+                return RazorEnhanced.Item.FindBySerial(SerialBag);
+            }
+        }
 
-		internal static int ItemDragDelay
-		{
-			get
-			{
-				return Assistant.Engine.MainWindow.AutoLootDelayLabel;
-			}
-		}
+        internal static int ItemDragDelay
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.AutoLootDelayLabel;
+            }
+        }
 
-		internal static void AddLog(string addlog)
-		{
-			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
-			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
-		}
+        internal static void AddLog(string addlog)
+        {
+            Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
+            Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
+        }
 
-		internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
-		{
-			Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
-			foreach (AutoLootItem item in AutoLootItemList)
-			{
-				ListViewItem listitem = new ListViewItem();
-				listitem.SubItems.Add(item.Name);
-				listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-				if (item.Color == -1)
-					listitem.SubItems.Add("All");
-				else
-					listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-				Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
-			}
-		}
+        internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
+        {
+            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+            foreach (AutoLootItem item in AutoLootItemList)
+            {
+                ListViewItem listitem = new ListViewItem();
+                listitem.SubItems.Add(item.Name);
+                listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+                if (item.Color == -1)
+                    listitem.SubItems.Add("All");
+                else
+                    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+                Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
+            }
+        }
 
-		internal static void AddItemToList(string name, int graphics, int color, ListView AutolootlistView, List<AutoLootItem> autoLootItemList)
-		{
-			List<AutoLootItem.Property> propsList = new List<AutoLootItem.Property>();
-			autoLootItemList.Add(new AutoLootItem(name, graphics, color, propsList));
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-			//RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
-		}
+        internal static void AddItemToList(string name, int graphics, int color, ListView AutolootlistView, List<AutoLootItem> autoLootItemList)
+        {
+            List<AutoLootItem.Property> propsList = new List<AutoLootItem.Property>();
+            autoLootItemList.Add(new AutoLootItem(name, graphics, color, propsList));
+            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
+        }
 
-		internal static void ModifyItemToList(string name, int graphics, int color, ListView autolootlistView, List<AutoLootItem> autoLootItemList, int indexToInsert)
-		{
-			List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // salva vecchie prop
-			autoLootItemList.RemoveAt(indexToInsert);                                                       // rimuove
-			autoLootItemList.Insert(indexToInsert, new AutoLootItem(name, graphics, color, PropsList));     // inserisce al posto di prima
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-			//RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
-		}
+        internal static void ModifyItemToList(string name, int graphics, int color, ListView autolootlistView, List<AutoLootItem> autoLootItemList, int indexToInsert)
+        {
+            List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // salva vecchie prop
+            autoLootItemList.RemoveAt(indexToInsert);                                                       // rimuove
+            autoLootItemList.Insert(indexToInsert, new AutoLootItem(name, graphics, color, PropsList));     // inserisce al posto di prima
+            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
+        }
 
-		internal static void RefreshPropListView(ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert)
-		{
-			autolootlistViewProp.Items.Clear();
-			List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // legge props correnti
-			foreach (AutoLootItem.Property props in PropsList)
-			{
-				ListViewItem listitem = new ListViewItem();
-				listitem.SubItems.Add(props.Name);
-				listitem.SubItems.Add(props.Minimum.ToString());
-				listitem.SubItems.Add(props.Maximum.ToString());
-				autolootlistViewProp.Items.Add(listitem);
-			}
-		}
+        internal static void RefreshPropListView(ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert)
+        {
+            autolootlistViewProp.Items.Clear();
+            List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // legge props correnti
+            foreach (AutoLootItem.Property props in PropsList)
+            {
+                ListViewItem listitem = new ListViewItem();
+                listitem.SubItems.Add(props.Name);
+                listitem.SubItems.Add(props.Minimum.ToString());
+                listitem.SubItems.Add(props.Maximum.ToString());
+                autolootlistViewProp.Items.Add(listitem);
+            }
+            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+        }
 
-		internal static void InsertPropToItem(string name, int graphics, int Color, ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert, string propName, int propMin, int propMax)
-		{
-			autolootlistViewProp.Items.Clear();
-			List<AutoLootItem.Property> PropsToAdd = new List<AutoLootItem.Property>();
-			autoLootItemList[indexToInsert].Properties.Add(new AutoLootItem.Property(propName, propMin, propMax));
-			RazorEnhanced.AutoLoot.RefreshPropListView(autolootlistViewProp, autoLootItemList, indexToInsert);
-			//RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
-		}
+        internal static void InsertPropToItem(string name, int graphics, int Color, ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert, string propName, int propMin, int propMax)
+        {
+            autolootlistViewProp.Items.Clear();
+            List<AutoLootItem.Property> PropsToAdd = new List<AutoLootItem.Property>();
+            autoLootItemList[indexToInsert].Properties.Add(new AutoLootItem.Property(propName, propMin, propMax));
+            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+        }
 
 		private static bool m_Auto;
 		internal static bool Auto

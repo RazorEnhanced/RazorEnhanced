@@ -3552,19 +3552,39 @@ namespace Assistant
 			dataGridViewScripting.Rows.Clear();
 			dataGridViewScripting.DataSource = scriptTable;
 
-			//autoloot
-			autoLootLabelDelay.Text = "100";
+            //autoloot
 
-			// Liste loot
-			AutolootListSelect.Items.Add("Default");    // Lista base non cancellabile 
-			// TODO: Load tutti gli altri nomi lite
-			// TODO: Load delay 
-			// TODO: Load dell'ultima lista usata
+            // Liste loot
+            AutolootListSelect.Items.Add("Default");    // Lista base non cancellabile 
+            // Carico parametri base
+            string LootSettingDelay = "";
+            string LootSettingLastList = "";
+            List<string> LootSettingItemList = new List<string>();
 
-			// TODO: Caricamento lista item in base all'ultima lista 
-			// autoLootItemList = RazorEnhanced.Settings.LoadAutoLootItemList();
-			//Popola listbox
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
+            //load delay
+            RazorEnhanced.Settings.LoadAutoLootGeneral(out LootSettingDelay, out LootSettingItemList, out LootSettingLastList);
+            if (LootSettingDelay != "")
+                autoLootLabelDelay.Text = LootSettingDelay;
+            else
+                autoLootLabelDelay.Text = "100";
+
+            // load Lista item
+            for (int i = 0; i < LootSettingItemList.Count; i++)
+            {
+                if (LootSettingItemList[i] != "Default")
+                    AutolootListSelect.Items.Add(LootSettingItemList[i]);
+            }
+
+            // Setta ultima lista usata e carica 
+
+            if (LootSettingLastList != "")
+            {
+                AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf(LootSettingLastList);
+
+            }
+            else
+                AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf("Default");
+
 		}
 
 		private bool m_Initializing = false;
@@ -6974,18 +6994,18 @@ namespace Assistant
 
 		private void autolootRemoveItemB_Click(object sender, EventArgs e)
 		{
-			int y = 0;
-			for (int i = 0; i < autolootlistView.Items.Count; i++)
-			{
-				if (autolootlistView.Items[i].Checked)
-				{
-					autoLootItemList.RemoveAt(y);
-					y--;
-				}
-				y++;
-			}
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-			//RazorEnhanced.Settings.SaveAutoLootItemList(autoLootItemList);
+            int y = 0;
+            for (int i = 0; i < autolootlistView.Items.Count; i++)
+            {
+                if (autolootlistView.Items[i].Checked)
+                {
+                    autoLootItemList.RemoveAt(y);
+                    y--;
+                }
+                y++;
+            }
+            RazorEnhanced.Settings.SaveAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
 		}
 
 		private void autolootItemEditB_Click(object sender, EventArgs e)
@@ -7058,12 +7078,18 @@ namespace Assistant
 					MessageBoxDefaultButton.Button1);
 				}
 
-				if (StartCheck)
-				{
-					// Stop autoloot
-					RazorEnhanced.AutoLoot.Auto = true;
-					RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
-				}
+                if (StartCheck)
+                {
+                    // Stop autoloot
+                    RazorEnhanced.AutoLoot.Auto = true;
+                    RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
+                }
+                else 
+                {
+                    // Stop autoloot
+                    RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
+                    autolootEnable.Checked = false;
+                }
 			}
 			else
 			{
@@ -7106,7 +7132,8 @@ namespace Assistant
 
 		private void autolootListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			// TODO: Salvo lista item corrente e reload Nuova lista item in base alla selezione
+            RazorEnhanced.Settings.LoadAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), out autoLootItemList);
+            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
 			RazorEnhanced.AutoLoot.AddLog("Autoloot list changed to: " + AutolootListSelect.SelectedItem.ToString());
 		}
 

@@ -201,7 +201,11 @@ namespace RazorEnhanced.UI
             }
 
             if (!fail)
+            {
                 RazorEnhanced.AutoLoot.InsertPropToItem(lName.Text, Convert.ToInt32(lGraphics.Text, 16), Convert.ToInt32(lColor.Text, 16), listViewProps, AutoLootItemList, IndexSelected, comboboxProp.Text, Min, Max);
+                RazorEnhanced.AutoLoot.RefreshPropListView(listViewProps, AutoLootItemList, IndexSelected);
+                RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), AutoLootItemList);
+            }
         }
 	}
 }

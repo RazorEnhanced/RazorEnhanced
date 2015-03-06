@@ -105,7 +105,7 @@ namespace RazorEnhanced.UI
             if (!fail)
             {
                 RazorEnhanced.AutoLoot.ModifyItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList, IndexEdit);
-                //RazorEnhanced.Settings.SaveAutoLootItemList(AutoLootItemList);
+                RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), AutoLootItemList);
                 this.Close();
             }
 
