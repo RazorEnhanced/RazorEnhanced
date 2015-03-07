@@ -15,8 +15,8 @@ namespace RazorEnhanced
 			//Misc.Pause(0.5);
 			//Player.Walk("North");
 			
-			Items.Filter filter = new Items.Filter();
-			ArrayList items = Items.ApplyFilter(filter);
+			Item.Filter filter = new Item.Filter();
+			ArrayList items = Item.ApplyFilter(filter);
 			Misc.SendMessage(items.Count.ToString());
 			
 			return 0;

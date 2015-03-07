@@ -16,11 +16,26 @@ namespace RazorEnhanced
 	{
 		internal class EnhancedScript
 		{
-			internal int Execute(RunMode action)
+			internal void Run()
+			{
+				if (m_Task == null || (m_Task != null && m_Task.Status == TaskStatus.RanToCompletion))
+				{
+					m_Task = new Task(AsyncRun);
+					m_Task.Start();
+				}
+			}
+
+			internal void AsyncRun()
 			{
 				int exit = Int32.MinValue;
-				exit = InvokeMethod<int>("Run", action);
-				return exit;
+				exit = InvokeMethod<int>("Run", RunMode.Run);
+
+				if (exit != 0)
+				{
+					Scripts.Auto = false;
+					Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
+					Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+				}
 			}
 
 			private T InvokeMethod<T>(string method, RunMode action)
@@ -50,6 +65,8 @@ namespace RazorEnhanced
 			private TimeSpan m_Delay;
 			internal TimeSpan Delay { get { return m_Delay; } }
 
+			private Task m_Task;
+
 			internal EnhancedScript(string text, string classname, TimeSpan delay, bool auto)
 			{
 				m_Text = text;
@@ -60,18 +77,12 @@ namespace RazorEnhanced
 
 		internal class ScriptTimer : Assistant.Timer
 		{
-			RazorEnhanced.Item.Filter m_CorpseFilter;
+			private Task<int> m_AutoLootTask;
+			private Item.Filter m_CorpseFilter;
 
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
 			{
-				// Genero filtro per corpi
-				m_CorpseFilter = new RazorEnhanced.Item.Filter();
-				m_CorpseFilter.RangeMax = 3;
-				m_CorpseFilter.Movable = false;
-				m_CorpseFilter.IsCorpse = true;
-				m_CorpseFilter.OnGround = true;
-				m_CorpseFilter.Enabled = true;
 			}
 
 			protected override void OnTick()
@@ -80,23 +91,16 @@ namespace RazorEnhanced
 				{
 					foreach (EnhancedScript script in m_EnhancedScripts)
 					{
-						int exit = script.Execute(RunMode.Run);
-
-						if (exit != 0)
-						{
-							Scripts.Auto = false;
-							Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
-							Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
-						}
-						else
-							Thread.Sleep(script.Delay);
+						script.Run();
 					}
 				}
-
 				if (AutoLoot.Auto)
 				{
-					AutoLoot.Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel, m_CorpseFilter);
-					Thread.Sleep(25);
+					if (m_AutoLootTask == null || (m_AutoLootTask != null && m_AutoLootTask.Status == TaskStatus.RanToCompletion))
+					{
+						m_AutoLootTask = new Task<int>(AutoLoot.Run);
+						m_AutoLootTask.Start();
+					}
 				}
 			}
 		}

@@ -254,11 +254,25 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		public int Run(List<AutoLootItem> autoLootList, int milliseconds, Item.Filter filter)
+		public static int Run(List<AutoLootItem> autoLootList, int milliseconds, Item.Filter filter)
 		{
 			int result = Int32.MinValue;
 			result=	AutoLoot.Engine(autoLootList, milliseconds, filter);
 			return result;
+		}
+
+		public static int Run()
+		{
+			// Genero filtro per corpi
+				Item.Filter corpseFilter = new Item.Filter();
+				corpseFilter.RangeMax = 3;
+				corpseFilter.Movable = false;
+				corpseFilter.IsCorpse = true;
+				corpseFilter.OnGround = true;
+				corpseFilter.Enabled = true;
+
+				int exit =Run(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel, corpseFilter);
+				return exit;
 		}
 	}
 }
