@@ -1041,34 +1041,34 @@ namespace RazorEnhanced
 		}
 
 		// Game Message
-		public static void ChatSay(int hue, int font, string msg)
+		public static void ChatSay(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Regular, hue, font, msg));
+			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Regular, hue, 1, msg));
 		}
 
-		public static void ChatGuild(int hue, int font, string msg)
+		public static void ChatGuild(string msg)
 		{
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Guild, hue, font, msg));
+			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
 		}
 
-		public static void ChatAlliance(int hue, int font, string msg)
+		public static void ChatAlliance(string msg)
 		{
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Alliance, hue, font, msg));
+			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
-		public static void ChatEmote(int hue, int font, string msg)
+		public static void ChatEmote(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, font, msg));
+			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
 		}
 
-		public static void ChatWhisper(int hue, int font, string msg)
+		public static void ChatWhisper(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, font, msg));
+			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
 		}
 
-		public static void ChatYell(int hue, int font, string msg)
+		public static void ChatYell(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, font, msg));
+			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
 		}
 
 		// attack
