@@ -1363,5 +1363,12 @@ namespace RazorEnhanced
 			}
 			return 0;       // Prop inesistente sul item
 		}
+        // Message
+
+        public static void HeadMessage(int hue, string message)
+        {
+
+            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
+        }
 	}
 }
