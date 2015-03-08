@@ -440,6 +440,19 @@ namespace RazorEnhanced
 
 			return result;
 		}
+
+        // Message
+		public static void Message(Mobile mobile, int hue, string message)
+		{
+            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+        }
+
+        public static void Message(int serial, int hue, string message)
+        {
+            Mobile mobile = FindBySerial(serial);
+            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+        }
+
 	}
 }
 
