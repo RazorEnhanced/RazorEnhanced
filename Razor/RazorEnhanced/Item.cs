@@ -248,7 +248,9 @@ namespace RazorEnhanced
 
 		public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
-			RazorEnhanced.Item.UseItem(bag);
+            if (!bag.Updated)
+                RazorEnhanced.Item.UseItem(bag);
+            
 			int subdelay = delay;
 			if (bag.IsCorpse || bag.IsContainer)
 				while (!bag.Updated || subdelay < 0)
