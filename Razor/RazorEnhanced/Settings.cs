@@ -71,17 +71,20 @@ namespace RazorEnhanced
 				autoloot_general.Columns.Add("Selection", typeof(string));
 				m_Dataset.Tables.Add(autoloot_general);
 
+                
                 //Scavenger
                 DataTable scavenger_lists = new DataTable("SCAVENGER_LISTS");
-                autoloot_lists.Columns.Add("Name", typeof(string));
-                autoloot_lists.Columns.Add("List", typeof(List<Scavenger.ScavengerItem>));
+                scavenger_lists.Columns.Add("Name", typeof(string));
+                scavenger_lists.Columns.Add("List", typeof(List<Scavenger.ScavengerItem>));
                 m_Dataset.Tables.Add(scavenger_lists);
 
                 DataTable scavenger_general = new DataTable("SCAVENGER_GENERAL");
-                autoloot_general.Columns.Add("Label", typeof(string));
-                autoloot_general.Columns.Add("List", typeof(List<string>));
-                autoloot_general.Columns.Add("Selection", typeof(string));
+                scavenger_general.Columns.Add("Label", typeof(string));
+                scavenger_general.Columns.Add("List", typeof(List<string>));
+                scavenger_general.Columns.Add("Selection", typeof(string));
                 m_Dataset.Tables.Add(scavenger_general);
+                
+
 				m_Dataset.AcceptChanges();
 			}
 		}
