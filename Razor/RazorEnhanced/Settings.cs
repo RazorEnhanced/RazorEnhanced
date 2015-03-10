@@ -59,6 +59,7 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Status", typeof(string));
 				m_Dataset.Tables.Add(scripting);
 
+                // Autoloot
 				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
 				autoloot_lists.Columns.Add("Name", typeof(string));
 				autoloot_lists.Columns.Add("List", typeof(List<AutoLoot.AutoLootItem>));
@@ -70,10 +71,22 @@ namespace RazorEnhanced
 				autoloot_general.Columns.Add("Selection", typeof(string));
 				m_Dataset.Tables.Add(autoloot_general);
 
+                //Scavenger
+                DataTable scavenger_lists = new DataTable("SCAVENGER_LISTS");
+                autoloot_lists.Columns.Add("Name", typeof(string));
+                autoloot_lists.Columns.Add("List", typeof(List<Scavenger.ScavengerItem>));
+                m_Dataset.Tables.Add(scavenger_lists);
+
+                DataTable scavenger_general = new DataTable("SCAVENGER_GENERAL");
+                autoloot_general.Columns.Add("Label", typeof(string));
+                autoloot_general.Columns.Add("List", typeof(List<string>));
+                autoloot_general.Columns.Add("Selection", typeof(string));
+                m_Dataset.Tables.Add(scavenger_general);
 				m_Dataset.AcceptChanges();
 			}
 		}
 
+        // Autoloot
 		internal static bool LoadAutoLootItemList(string name, out List<AutoLoot.AutoLootItem> list)
 		{
 			bool exit = false;
@@ -143,6 +156,72 @@ namespace RazorEnhanced
 			m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Add(row);
 			Save();
 		}
+
+        //Scavenger
+        internal static bool LoadScavengerItemList(string name, out List<Scavenger.ScavengerItem> list)
+        {
+            bool exit = false;
+            List<Scavenger.ScavengerItem> result = new List<Scavenger.ScavengerItem>();
+
+            foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+            {
+                if ((string)row["Name"] == name)
+                {
+                    result = row["List"] as List<Scavenger.ScavengerItem>;
+                    exit = true;
+                }
+            }
+
+            list = result;
+            return exit;
+        }
+
+        internal static void SaveScavengerItemList(string name, List<Scavenger.ScavengerItem> list)
+        {
+            DataRow row = m_Dataset.Tables["SCAVENGER_LISTS"].NewRow();
+            row["Name"] = name;
+            row["List"] = list;
+            m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Add(row);
+            Save();
+        }
+
+        internal static bool LoadScavengerGeneral(out string label, out List<string> list, out string selection)
+        {
+            bool exit = false;
+
+            string labelOut = "";
+            List<string> listOut = new List<string>();
+            string selectionOut = "";
+
+            if (m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Count == 1)
+            {
+                DataRow row = m_Dataset.Tables["SCAVENGER_GENERAL"].Rows[0];
+                {
+                    labelOut = (string)row["Label"];
+                    listOut = row["List"] as List<string>;
+                    selectionOut = (string)row["Selection"];
+                    exit = true;
+                }
+            }
+
+            label = labelOut;
+            list = listOut;
+            selection = selectionOut;
+
+            return exit;
+        }
+
+        internal static void SaveScavengerGeneral(string label, List<string> list, string selection)
+        {
+            m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Clear();
+            DataRow row = m_Dataset.Tables["SCAVENGER_GENERAL"].NewRow();
+            row["Label"] = label;
+            row["List"] = list;
+            row["Selection"] = selection;
+            m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Add(row);
+            Save();
+        }
+
 
 		internal static void Save()
 		{

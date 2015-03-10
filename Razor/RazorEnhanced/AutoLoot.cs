@@ -160,9 +160,6 @@ namespace RazorEnhanced
 
 		internal static int Engine(List<AutoLootItem> autoLootList, int milliseconds, Item.Filter filter)
 		{
-			bool skip = false;
-
-			//RazorEnhanced.AutoLoot.AddLog("- Cerco corpi....");
 			ArrayList corpi = RazorEnhanced.Item.ApplyFilter(filter);
 
 			foreach (RazorEnhanced.Item corpo in corpi)
@@ -174,25 +171,68 @@ namespace RazorEnhanced
 					return -1;
 				}
 
-				foreach (RazorEnhanced.Item corpoIgnorato in m_IgnoreCorpiList)
-				{
-					if (corpoIgnorato.Serial == corpo.Serial) // Corpo ingorato
-					{
-						skip = true;
-						//RazorEnhanced.AutoLoot.AddLog("- Corpo Ignorato skipp:" + Corpo.Serial.ToString());
-					}
-				}
-
-				if (!skip)
-				{
 					RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + corpo.Serial.ToString("X8"));
-					//RazorEnhanced.Items.UseItem(Corpo);
-					//RazorEnhanced.AutoLoot.AddLog("- Apro corpo e attendo item response");
 					RazorEnhanced.Item.WaitForContents(corpo, 5000);
 					RazorEnhanced.AutoLoot.AddLog("- Item Nel corpo: " + corpo.Contains.Count.ToString());
 
 					foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 					{
+                        if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Movable == true)
+                        {
+                            RazorEnhanced.AutoLoot.AddLog("- Detected Shard Loot: " + oggettoContenuto.Serial.ToString());
+                            RazorEnhanced.Item.WaitForContents(oggettoContenuto, 5000);
+                            foreach (RazorEnhanced.Item oggettoContenutoShard in oggettoContenuto.Contains)
+                            {
+                                // Blocco Shard
+                                foreach (AutoLootItem autoLoootItem in autoLootList)
+                                {
+                                    if (oggettoContenutoShard.ItemID == autoLoootItem.Graphics)
+                                    {
+                                        if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
+                                        {
+                                            if (autoLoootItem.Properties.Count > 0) // Item con props
+                                            {
+                                                RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+
+                                                bool propsOK = false;
+                                                foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
+                                                {
+                                                    int PropsSuItemDaLootare = RazorEnhanced.Item.GetPropByString(oggettoContenutoShard, props.Name);
+                                                    if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+                                                    {
+                                                        propsOK = true;
+                                                    }
+                                                    else
+                                                    {
+                                                        propsOK = false;
+                                                        break;                      // alla prima fallita esce non ha senso controllare le altre
+                                                    }
+                                                }
+
+                                                if (propsOK) // Tutte le props match OK
+                                                {
+                                                    RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
+                                                    RazorEnhanced.Item.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                                                    Thread.Sleep(milliseconds);
+                                                }
+                                                else
+                                                {
+                                                    RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
+                                                }
+                                            }
+                                            else // Item Senza props     
+                                            {
+                                                RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+                                                RazorEnhanced.Item.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                                                Thread.Sleep(milliseconds);
+                                            }
+                                        }
+                                    }
+                                }
+                                //fine Blocco shaded
+                            }
+                        }
+                           
 						foreach (AutoLootItem autoLoootItem in autoLootList)
 						{
 							if (oggettoContenuto.ItemID == autoLoootItem.Graphics)
@@ -239,18 +279,8 @@ namespace RazorEnhanced
 							}
 						}
 					}
-
-					// Ignoro corpo
-					m_IgnoreCorpiList.Add(corpo);
-					// RazorEnhanced.AutoLoot.AddLog("- Corpo Ignorato: " + Corpo.Serial.ToString());
-					// RazorEnhanced.AutoLoot.AddLog("- Lista ignore:" + IgnoreListCorpi.Count);
-					// Thread.Sleep(1000); // Da levare dopo test
-				}
-				skip = false;
-				// RazorEnhanced.AutoLoot.AddLog("- Passo al corpo successvivo");
 			}
 
-			//  Thread.Sleep(1000); // Da levare dopo test delay fra corpi
 			return 0;
 		}
 
@@ -263,7 +293,7 @@ namespace RazorEnhanced
 
 		public static int Run()
 		{
-			// Genero filtro per corpi
+			    // Genero filtro per corpi
 				Item.Filter corpseFilter = new Item.Filter();
 				corpseFilter.RangeMax = 3;
 				corpseFilter.Movable = false;
