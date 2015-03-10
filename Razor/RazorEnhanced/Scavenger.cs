@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
-    class Scavenger
+    public class Scavenger
     {
         [Serializable]
         public class ScavengerItem

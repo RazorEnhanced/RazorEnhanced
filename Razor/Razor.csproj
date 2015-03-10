@@ -284,6 +284,30 @@
     <Compile Include="RazorEnhanced\UI\Controls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerManualAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerManualAdd.Designer.cs">
+      <DependentUpon>EnhancedScavengerManualAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.Designer.cs">
+      <DependentUpon>EnhancedScavengerEditItemProps.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItem.Designer.cs">
+      <DependentUpon>EnhancedScavengerEditItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.Designer.cs">
+      <DependentUpon>EnhancedScavengerAddItemList.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddItemList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -389,6 +413,18 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerManualAdd.resx">
+      <DependentUpon>EnhancedScavengerManualAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.resx">
+      <DependentUpon>EnhancedScavengerEditItemProps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerEditItem.resx">
+      <DependentUpon>EnhancedScavengerEditItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.resx">
+      <DependentUpon>EnhancedScavengerAddItemList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootAddItemList.resx">
       <DependentUpon>EnhancedAutoLootAddItemList.cs</DependentUpon>
