@@ -5,9 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace RazorEnhanced.UI
 {
@@ -75,10 +73,6 @@ namespace RazorEnhanced.UI
 			this.Close();
 		}
 
-		private void lName_Click(object sender, EventArgs e)
-		{
-
-		}
 
 		private void EnhancedItemInspect_Load(object sender, EventArgs e)
 		{
@@ -135,9 +129,5 @@ namespace RazorEnhanced.UI
 			Clipboard.SetText(lOwned.Text);
 		}
 
-		private void groupBox3_Enter(object sender, EventArgs e)
-		{
-
-		}
 	}
 }

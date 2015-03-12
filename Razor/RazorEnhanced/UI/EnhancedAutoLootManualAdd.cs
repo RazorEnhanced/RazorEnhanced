@@ -5,10 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ScintillaNET;
-using System.IO;
 using Assistant;
 
 
@@ -28,10 +25,6 @@ namespace RazorEnhanced.UI
             AutoLootItemList = PAutoLootItemList;
 		}
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void EnhancedAutolootManualAdd_Load(object sender, EventArgs e)
         {
