@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ScintillaNET;
-using PaxScript.Net;
 using System.IO;
 using Assistant;
 using RazorEnhanced;
@@ -17,8 +16,6 @@ namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScriptEditor : Form
 	{
-		private PaxScripter m_PaxScripter;
-
 		private const string m_Title = "Enhanced Script Editor";
 
 		private int m_Line = -1;
@@ -28,54 +25,40 @@ namespace RazorEnhanced.UI
 		{
 			InitializeComponent();
 			this.Text = m_Title;
-			m_PaxScripter = new PaxScripter(this.components);
+
 		}
 
 		private void scintillScriptEditor_TextChanged(object sender, EventArgs e)
 		{
-			m_PaxScripter.Reset();
-			m_PaxScripter.AddModule(m_Classname);
-			m_PaxScripter.AddCode(m_Classname, scintillaScriptEditor.Text);
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
 		{
-			m_PaxScripter.Invoke(RunMode.Run, null, "RazorEnhanced." + m_Classname + ".Run");
 			toolStripStatusLabelScript.Text = "RunMode: Run";
 		}
 
 		private void toolStripButtonNextLine_Click(object sender, EventArgs e)
 		{
-			m_PaxScripter.Invoke(RunMode.NextLine, null, "RazorEnhanced." + m_Classname + ".Run");
-			int line = m_PaxScripter.CurrentLineNumber / 2;
 			scintillaScriptEditor.Caret.HighlightCurrentLine = true;
-			scintillaScriptEditor.Caret.LineNumber = line;
 			toolStripStatusLabelScript.Text = "RunMode: Next Line";
 		}
 
 		private void toolStripButtonStepOver_Click(object sender, EventArgs e)
 		{
-			m_PaxScripter.Invoke(RunMode.StepOver, null, "RazorEnhanced." + m_Classname + ".Run");
-			int line = m_PaxScripter.CurrentLineNumber / 2;
 			scintillaScriptEditor.Caret.HighlightCurrentLine = true;
-			scintillaScriptEditor.Caret.LineNumber = line;
 
 			toolStripStatusLabelScript.Text = "RunMode: Step Over";
 		}
 
 		private void toolStripTraceInto_Click(object sender, EventArgs e)
 		{
-			m_PaxScripter.Invoke(RunMode.TraceInto, null, "RazorEnhanced." + m_Classname + ".Run");
-			int line = m_PaxScripter.CurrentLineNumber / 2;
-			scintillaScriptEditor.Caret.HighlightCurrentLine = true;
-			scintillaScriptEditor.Caret.LineNumber = line;
 
+			scintillaScriptEditor.Caret.HighlightCurrentLine = true;
 			toolStripStatusLabelScript.Text = "RunMode: Trace Into";
 		}
 
 		private void toolStripButtonStop_Click(object sender, EventArgs e)
 		{
-			m_PaxScripter.Reset();
 			scintillaScriptEditor.Caret.HighlightCurrentLine = false;
 
 			toolStripStatusLabelScript.Text = "";
@@ -88,7 +71,6 @@ namespace RazorEnhanced.UI
 				string msg = "EXPRESSION: " + toolStripTextBoxEvaluate.Text + " - EVALUATE: ";
 				try
 				{
-					toolStripStatusLabelScript.Text = msg + m_PaxScripter.Eval(toolStripTextBoxEvaluate.Text).ToString();
 				}
 				catch (Exception ex)
 				{
@@ -99,8 +81,6 @@ namespace RazorEnhanced.UI
 
 		private void toolStripButtonAddBreakpoint_Click(object sender, EventArgs e)
 		{
-			m_PaxScripter.RemoveAllBreakpoints();
-
 			int line = scintillaScriptEditor.Caret.LineNumber;
 
 			Marker lineHighlighter = scintillaScriptEditor.Markers[1];
@@ -108,13 +88,10 @@ namespace RazorEnhanced.UI
 			lineHighlighter.Symbol = MarkerSymbol.Background;
 			scintillaScriptEditor.Lines[line].AddMarker(lineHighlighter);
 			m_Line = line;
-
-			m_PaxScripter.AddBreakpoint(m_Classname, line);
 		}
 
 		private void toolStripButtonRemoveBreakpoints_Click(object sender, EventArgs e)
 		{
-			m_PaxScripter.RemoveAllBreakpoints();
 			scintillaScriptEditor.Lines[m_Line].DeleteAllMarkers();
 			m_Line = -1;
 		}

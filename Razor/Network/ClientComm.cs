@@ -1049,7 +1049,7 @@ namespace Assistant
 				bool dispImg = Config.GetBool("TitlebarImages");
 				for (int i = 0; i < Counter.List.Count; i++)
 				{
-					Counter c = (Counter)Counter.List[i];
+					Counter c = Counter.List[i];
 					if (c.Enabled)
 						sb.Replace(String.Format("{{{0}}}", c.Format), c.GetTitlebarString(dispImg && c.DisplayImage));
 				}

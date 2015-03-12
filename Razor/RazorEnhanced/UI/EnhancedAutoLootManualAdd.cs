@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ScintillaNET;
-using PaxScript.Net;
 using System.IO;
 using Assistant;
 

@@ -506,7 +506,7 @@ namespace Assistant
 
 		/*public static string GetDirectory( string relPath )
 		{
-            string path = Path.Combine(ExeDirectory, relPath);
+			string path = Path.Combine(ExeDirectory, relPath);
 			EnsureDirectory( path );
 			return path;
 		}*/

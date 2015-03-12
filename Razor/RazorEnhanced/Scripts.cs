@@ -6,9 +6,11 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Assistant;
-using PaxScript.Net;
 
+using IronPython.Hosting;
+using Microsoft.Scripting.Hosting;
+
+using Assistant;
 
 namespace RazorEnhanced
 {
@@ -16,19 +18,26 @@ namespace RazorEnhanced
 	{
 		internal class EnhancedScript
 		{
-			internal void Run()
+			internal void Start()
 			{
-				if (m_Task == null || (m_Task != null && m_Task.Status == TaskStatus.RanToCompletion))
+				if (m_Thread == null || (m_Thread != null && m_Thread.ThreadState != ThreadState.Running && m_Thread.ThreadState != ThreadState.Unstarted && m_Thread.ThreadState != ThreadState.WaitSleepJoin))
 				{
-					m_Task = new Task(AsyncRun);
-					m_Task.Start();
+					ThreadState s;
+					if (m_Thread != null)
+						s = m_Thread.ThreadState;
+
+					m_Thread = new Thread(AsyncRun);
+					m_Thread.Start();
+					while (!m_Thread.IsAlive)
+					{
+					}
 				}
 			}
 
-			internal void AsyncRun()
+			private void AsyncRun()
 			{
 				int exit = Int32.MinValue;
-				exit = InvokeMethod<int>("Run", RunMode.Run);
+				exit = InvokeMethod<int>("Run");
 
 				if (exit != 0)
 				{
@@ -38,13 +47,26 @@ namespace RazorEnhanced
 				}
 			}
 
-			private T InvokeMethod<T>(string method, RunMode action)
+			internal void Stop()
+			{
+				if (m_Thread != null)
+				{
+					m_Thread.Abort();
+				}
+			}
+
+			private T InvokeMethod<T>(string method)
 			{
 				T result = default(T);
 				try
 				{
-					result = (T)m_PaxScripter.Invoke(action, null, "RazorEnhanced." + m_Class + "." + method);
-					m_LineNUmber = m_PaxScripter.CurrentLineNumber;
+					m_Engine = Python.CreateEngine();
+					ScriptSource source = m_Engine.CreateScriptSourceFromString(m_Text, Microsoft.Scripting.SourceCodeKind.Statements);
+					ScriptScope scope = m_Engine.CreateScope();
+					SetVariables(scope);
+					source.Execute(scope);
+					Func<T> Run = scope.GetVariable<Func<T>>("Run");
+					result = Run();
 				}
 				catch
 				{
@@ -53,8 +75,12 @@ namespace RazorEnhanced
 				return result;
 			}
 
-			private int m_LineNUmber;
-			internal int LineNumber { get { return m_LineNUmber; } }
+			private void SetVariables(ScriptScope scope)
+			{
+				scope.SetVariable("SendMessage", new Action<string>(Misc.SendMessage));
+				scope.SetVariable("Pause", new Action<double>(Misc.Pause));
+
+			}
 
 			private string m_Text;
 			internal string Text { get { return m_Text; } }
@@ -65,7 +91,8 @@ namespace RazorEnhanced
 			private TimeSpan m_Delay;
 			internal TimeSpan Delay { get { return m_Delay; } }
 
-			private Task m_Task;
+			private Thread m_Thread;
+			private ScriptEngine m_Engine;
 
 			internal EnhancedScript(string text, string classname, TimeSpan delay, bool auto)
 			{
@@ -91,9 +118,10 @@ namespace RazorEnhanced
 				{
 					foreach (EnhancedScript script in m_EnhancedScripts)
 					{
-						script.Run();
+						script.Start();
 					}
 				}
+
 				if (AutoLoot.Auto)
 				{
 					if (m_AutoLootTask == null || (m_AutoLootTask != null && m_AutoLootTask.Status == TaskStatus.RanToCompletion))
@@ -112,13 +140,8 @@ namespace RazorEnhanced
 		private static List<EnhancedScript> m_EnhancedScripts = new List<EnhancedScript>();
 		internal static List<EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
 
-		private static PaxScripter m_PaxScripter;
-		internal static PaxScripter Engine { get { return m_PaxScripter; } }
-
 		public static void Initialize()
 		{
-			m_PaxScripter = new PaxScripter();
-			m_PaxScripter.OnChangeState += new ChangeStateHandler(paxScripter_OnChangeState);
 			m_Timer.Start();
 		}
 
@@ -132,14 +155,20 @@ namespace RazorEnhanced
 					return;
 
 				m_Auto = value;
+
+				if (!m_Auto)
+				{
+					foreach (EnhancedScript script in m_EnhancedScripts)
+					{
+						script.Stop();
+					}
+				}
 			}
 		}
 
 		internal static void Reset()
 		{
-			Auto = false;
 			m_EnhancedScripts.Clear();
-			m_PaxScripter.Reset();
 		}
 
 		internal static EnhancedScript Search(string classname)
@@ -163,8 +192,6 @@ namespace RazorEnhanced
 			try
 			{
 				m_EnhancedScripts.Add(script);
-				m_PaxScripter.AddModule(script.Class);
-				m_PaxScripter.AddCode(script.Class, script.Text);
 			}
 			catch (Exception ex)
 			{
@@ -183,8 +210,6 @@ namespace RazorEnhanced
 			try
 			{
 				m_EnhancedScripts.Add(script);
-				m_PaxScripter.AddModule(script.Class);
-				m_PaxScripter.AddCode(script.Class, script.Text);
 			}
 			catch (Exception ex)
 			{
@@ -192,19 +217,6 @@ namespace RazorEnhanced
 			}
 
 			return status;
-		}
-
-		private static void paxScripter_OnChangeState(PaxScripter sender, ChangeStateEventArgs e)
-		{
-			if (e.NewState == ScripterState.Error)
-			{
-				string msg = "SCRIPT ERRORS:" + Environment.NewLine;
-				foreach (ScriptError err in m_PaxScripter.Error_List)
-				{
-					msg += "Line: " + err.LineNumber.ToString() + " - Error: " + err.Message + Environment.NewLine;
-				}
-				MessageBox.Show(msg);
-			}
 		}
 	}
 }
