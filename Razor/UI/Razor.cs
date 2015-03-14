@@ -320,6 +320,8 @@ namespace Assistant
 		internal Label WaitDisplay { get { return waitDisp; } }
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
+
+        internal CheckBox AutolootCheckBox { get { return autolootEnable; } }
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
 		internal int AutoLootDelayLabel
 		{
