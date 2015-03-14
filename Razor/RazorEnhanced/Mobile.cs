@@ -183,7 +183,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public Item FindItemByID(ItemID id)
+	/*	public Item FindItemByID(ItemID id)
 		{
 			Assistant.Item assitantItem = m_AssistantMobile.FindItemByID((ushort)id.Value);
 			if (assitantItem == null)
@@ -194,7 +194,7 @@ namespace RazorEnhanced
 				return enhancedItem;
 			}
 		}
-
+        */
 		public List<Item> Contains
 		{
 			get

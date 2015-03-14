@@ -35,6 +35,7 @@ namespace RazorEnhanced
 		// Self
 		public static bool Female { get { return Assistant.World.Player.Female; } }
 		public static String Name { get { return Assistant.World.Player.Name; } }
+        public static byte Notoriety { get { return Assistant.World.Player.Notoriety; } }
 
 		public Item Backpack
 		{
@@ -607,6 +608,26 @@ namespace RazorEnhanced
 				}
 			}
 		}
+
+        public Item GetItemOnLayer(String layer)
+        {
+            Assistant.Layer assistantLayer = GetAssistantLayer(layer);
+
+            Assistant.Item assistantItem = null;
+            if (assistantLayer != Assistant.Layer.Invalid)
+            {
+                assistantItem = Assistant.World.Player.GetItemOnLayer(assistantLayer);
+                if (assistantItem == null)
+                    return null;
+                else
+                {
+                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+                    return enhancedItem;
+                }
+            }
+            else
+                return null;
+        }
 
 		// Skill
 		public static double GetSkillValue(string skillname)
