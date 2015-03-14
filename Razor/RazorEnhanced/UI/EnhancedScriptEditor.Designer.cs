@@ -35,23 +35,28 @@
 			this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButtonPlay = new System.Windows.Forms.ToolStripButton();
-			this.toolStripTraceInto = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButtonDebug = new System.Windows.Forms.ToolStripButton();
+			this.toolStripNextCall = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonNextLine = new System.Windows.Forms.ToolStripButton();
-			this.toolStripButtonStepOver = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButtonNextReturn = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonStop = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripLabelEvaluate = new System.Windows.Forms.ToolStripLabel();
-			this.toolStripTextBoxEvaluate = new System.Windows.Forms.ToolStripTextBox();
 			this.toolStripButtonAddBreakpoint = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonRemoveBreakpoints = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
 			this.toolStripButtonInspect = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelScript = new System.Windows.Forms.ToolStripStatusLabel();
-			this.scintillaScriptEditor = new ScintillaNET.Scintilla();
+			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+			this.scintillaEditor = new ScintillaNET.Scintilla();
+			this.textBoxDebug = new System.Windows.Forms.TextBox();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.scintillaScriptEditor)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+			this.splitContainer1.Panel1.SuspendLayout();
+			this.splitContainer1.Panel2.SuspendLayout();
+			this.splitContainer1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.scintillaEditor)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// toolStrip1
@@ -62,20 +67,19 @@
             this.toolStripButtonClose,
             this.toolStripSeparator1,
             this.toolStripButtonPlay,
-            this.toolStripTraceInto,
+            this.toolStripButtonDebug,
+            this.toolStripNextCall,
             this.toolStripButtonNextLine,
-            this.toolStripButtonStepOver,
+            this.toolStripButtonNextReturn,
             this.toolStripButtonStop,
             this.toolStripSeparator2,
-            this.toolStripLabelEvaluate,
-            this.toolStripTextBoxEvaluate,
             this.toolStripButtonAddBreakpoint,
             this.toolStripButtonRemoveBreakpoints,
             this.toolStripSeparator3,
             this.toolStripButtonInspect});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(933, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(978, 25);
 			this.toolStrip1.TabIndex = 1;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -120,14 +124,23 @@
 			this.toolStripButtonPlay.Text = "Play";
 			this.toolStripButtonPlay.Click += new System.EventHandler(this.toolStripButtonPlay_Click);
 			// 
-			// toolStripTraceInto
+			// toolStripButtonDebug
 			// 
-			this.toolStripTraceInto.Image = global::Assistant.Properties.Resources.media_seek_forward_3;
-			this.toolStripTraceInto.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripTraceInto.Name = "toolStripTraceInto";
-			this.toolStripTraceInto.Size = new System.Drawing.Size(80, 22);
-			this.toolStripTraceInto.Text = "Trace Into";
-			this.toolStripTraceInto.Click += new System.EventHandler(this.toolStripTraceInto_Click);
+			this.toolStripButtonDebug.Image = global::Assistant.Properties.Resources.bug;
+			this.toolStripButtonDebug.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonDebug.Name = "toolStripButtonDebug";
+			this.toolStripButtonDebug.Size = new System.Drawing.Size(62, 22);
+			this.toolStripButtonDebug.Text = "Debug";
+			this.toolStripButtonDebug.Click += new System.EventHandler(this.toolStripButtonDebug_Click);
+			// 
+			// toolStripNextCall
+			// 
+			this.toolStripNextCall.Image = global::Assistant.Properties.Resources.media_seek_forward_3;
+			this.toolStripNextCall.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripNextCall.Name = "toolStripNextCall";
+			this.toolStripNextCall.Size = new System.Drawing.Size(74, 22);
+			this.toolStripNextCall.Text = "Next Call";
+			this.toolStripNextCall.Click += new System.EventHandler(this.toolStripNextCall_Click);
 			// 
 			// toolStripButtonNextLine
 			// 
@@ -138,14 +151,14 @@
 			this.toolStripButtonNextLine.Text = "Next Line";
 			this.toolStripButtonNextLine.Click += new System.EventHandler(this.toolStripButtonNextLine_Click);
 			// 
-			// toolStripButtonStepOver
+			// toolStripButtonNextReturn
 			// 
-			this.toolStripButtonStepOver.Image = global::Assistant.Properties.Resources.media_skip_forward_3;
-			this.toolStripButtonStepOver.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButtonStepOver.Name = "toolStripButtonStepOver";
-			this.toolStripButtonStepOver.Size = new System.Drawing.Size(78, 22);
-			this.toolStripButtonStepOver.Text = "Step Over";
-			this.toolStripButtonStepOver.Click += new System.EventHandler(this.toolStripButtonStepOver_Click);
+			this.toolStripButtonNextReturn.Image = global::Assistant.Properties.Resources.media_skip_forward_3;
+			this.toolStripButtonNextReturn.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButtonNextReturn.Name = "toolStripButtonNextReturn";
+			this.toolStripButtonNextReturn.Size = new System.Drawing.Size(89, 22);
+			this.toolStripButtonNextReturn.Text = "Next Return";
+			this.toolStripButtonNextReturn.Click += new System.EventHandler(this.toolStripButtonNextReturn_Click);
 			// 
 			// toolStripButtonStop
 			// 
@@ -160,18 +173,6 @@
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
-			// toolStripLabelEvaluate
-			// 
-			this.toolStripLabelEvaluate.Name = "toolStripLabelEvaluate";
-			this.toolStripLabelEvaluate.Size = new System.Drawing.Size(57, 22);
-			this.toolStripLabelEvaluate.Text = "Evaluate: ";
-			// 
-			// toolStripTextBoxEvaluate
-			// 
-			this.toolStripTextBoxEvaluate.Name = "toolStripTextBoxEvaluate";
-			this.toolStripTextBoxEvaluate.Size = new System.Drawing.Size(100, 25);
-			this.toolStripTextBoxEvaluate.TextChanged += new System.EventHandler(this.toolStripTextBoxEvaluate_TextChanged);
 			// 
 			// toolStripButtonAddBreakpoint
 			// 
@@ -209,9 +210,9 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelScript});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 420);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 443);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(933, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(978, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -220,44 +221,77 @@
 			this.toolStripStatusLabelScript.Name = "toolStripStatusLabelScript";
 			this.toolStripStatusLabelScript.Size = new System.Drawing.Size(0, 17);
 			// 
-			// scintillScriptEditor
+			// splitContainer1
 			// 
-			this.scintillaScriptEditor.ConfigurationManager.Language = "cs";
-			this.scintillaScriptEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.scintillaScriptEditor.IsBraceMatching = true;
-			this.scintillaScriptEditor.Location = new System.Drawing.Point(0, 25);
-			this.scintillaScriptEditor.Name = "scintillScriptEditor";
-			this.scintillaScriptEditor.Size = new System.Drawing.Size(933, 395);
-			this.scintillaScriptEditor.Styles.BraceBad.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.BraceLight.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.CallTip.FontName = "Segoe UI\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.ControlChar.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.Default.BackColor = System.Drawing.SystemColors.Window;
-			this.scintillaScriptEditor.Styles.Default.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.IndentGuide.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.LastPredefined.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.LineNumber.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.Styles.Max.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaScriptEditor.TabIndex = 0;
-			this.scintillaScriptEditor.TextChanged += new System.EventHandler(this.scintillScriptEditor_TextChanged);
+			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+			this.splitContainer1.Name = "splitContainer1";
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.scintillaEditor);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.textBoxDebug);
+			this.splitContainer1.Size = new System.Drawing.Size(978, 418);
+			this.splitContainer1.SplitterDistance = 728;
+			this.splitContainer1.TabIndex = 3;
+			// 
+			// scintillaEditor
+			// 
+			this.scintillaEditor.ConfigurationManager.Language = "python";
+			this.scintillaEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.scintillaEditor.Location = new System.Drawing.Point(0, 0);
+			this.scintillaEditor.Name = "scintillaEditor";
+			this.scintillaEditor.Size = new System.Drawing.Size(728, 418);
+			this.scintillaEditor.Styles.BraceBad.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.BraceLight.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.CallTip.FontName = "Segoe UI\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.ControlChar.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.Default.BackColor = System.Drawing.SystemColors.Window;
+			this.scintillaEditor.Styles.Default.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.IndentGuide.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.LastPredefined.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.LineNumber.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.Max.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.TabIndex = 0;
+			this.scintillaEditor.TextChanged += new System.EventHandler(this.scintillaEditor_TextChanged);
+			// 
+			// textBoxDebug
+			// 
+			this.textBoxDebug.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxDebug.Location = new System.Drawing.Point(0, 0);
+			this.textBoxDebug.Multiline = true;
+			this.textBoxDebug.Name = "textBoxDebug";
+			this.textBoxDebug.ReadOnly = true;
+			this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxDebug.Size = new System.Drawing.Size(246, 418);
+			this.textBoxDebug.TabIndex = 0;
 			// 
 			// EnhancedScriptEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(933, 442);
-			this.Controls.Add(this.scintillaScriptEditor);
+			this.ClientSize = new System.Drawing.Size(978, 465);
+			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "EnhancedScriptEditor";
 			this.Text = "Enhanced Script Editor";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnhancedScriptEditor_FormClosing);
 			this.Load += new System.EventHandler(this.EnhancedScriptEditor_Load);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);
 			this.statusStrip1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.scintillaScriptEditor)).EndInit();
+			this.splitContainer1.Panel1.ResumeLayout(false);
+			this.splitContainer1.Panel2.ResumeLayout(false);
+			this.splitContainer1.Panel2.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+			this.splitContainer1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.scintillaEditor)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -265,7 +299,6 @@
 
 		#endregion
 
-		private ScintillaNET.Scintilla scintillaScriptEditor;
 		private System.Windows.Forms.ToolStrip toolStrip1;
 		private System.Windows.Forms.StatusStrip statusStrip1;
 		private System.Windows.Forms.ToolStripButton toolStripButtonOpen;
@@ -275,15 +308,17 @@
 		private System.Windows.Forms.ToolStripButton toolStripButtonStop;
 		private System.Windows.Forms.ToolStripButton toolStripButtonAddBreakpoint;
 		private System.Windows.Forms.ToolStripButton toolStripButtonRemoveBreakpoints;
-		private System.Windows.Forms.ToolStripButton toolStripTraceInto;
+		private System.Windows.Forms.ToolStripButton toolStripNextCall;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-		private System.Windows.Forms.ToolStripButton toolStripButtonStepOver;
-		private System.Windows.Forms.ToolStripTextBox toolStripTextBoxEvaluate;
-		private System.Windows.Forms.ToolStripLabel toolStripLabelEvaluate;
+		private System.Windows.Forms.ToolStripButton toolStripButtonNextReturn;
 		private System.Windows.Forms.ToolStripButton toolStripButtonNextLine;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabelScript;
 		private System.Windows.Forms.ToolStripButton toolStripButtonPlay;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton toolStripButtonInspect;
+		private System.Windows.Forms.SplitContainer splitContainer1;
+		private ScintillaNET.Scintilla scintillaEditor;
+		private System.Windows.Forms.TextBox textBoxDebug;
+		private System.Windows.Forms.ToolStripButton toolStripButtonDebug;
 	}
 }

@@ -246,7 +246,6 @@ namespace Assistant
 		private RazorButton razorButtonDown;
 		internal RazorCheckBox razorCheckBoxAuto;
 		private RazorButton razorButtonEdit;
-		private EnhancedScriptEditor enhancedScriptEditor;
 		private Label labelFeatures;
 		private Label labelStatus;
 		private Panel panelUODlogo;
@@ -319,7 +318,6 @@ namespace Assistant
 		private static extern IntPtr EnableMenuItem(IntPtr menu, uint item, uint options);
 
 		internal Label WaitDisplay { get { return waitDisp; } }
-		internal EnhancedScriptEditor ScriptEditor { get { return enhancedScriptEditor; } }
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
@@ -7260,8 +7258,7 @@ namespace Assistant
 
 		private void razorButtonEdit_Click(object sender, EventArgs e)
 		{
-			enhancedScriptEditor = new EnhancedScriptEditor();
-			enhancedScriptEditor.Show();
+			EnhancedScriptEditor.Init();
 		}
 
 		private void razorButtonVisitUOD_Click(object sender, EventArgs e)

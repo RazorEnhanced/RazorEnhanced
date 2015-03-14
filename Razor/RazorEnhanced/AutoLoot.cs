@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using Assistant;
 using System.Windows.Forms;
@@ -55,88 +54,88 @@ namespace RazorEnhanced
 				m_Properties = properties;
 			}
 		}
-        internal static RazorEnhanced.Item AutolootBag
-        {
-            get
-            {
-                int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
+		internal static RazorEnhanced.Item AutolootBag
+		{
+			get
+			{
+				int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
 
-                if (SerialBag == 0)
-                    SerialBag = World.Player.Backpack.Serial;
+				if (SerialBag == 0)
+					SerialBag = World.Player.Backpack.Serial;
 
-                return RazorEnhanced.Item.FindBySerial(SerialBag);
-            }
-        }
+				return RazorEnhanced.Items.FindBySerial(SerialBag);
+			}
+		}
 
-        internal static int ItemDragDelay
-        {
-            get
-            {
-                return Assistant.Engine.MainWindow.AutoLootDelayLabel;
-            }
-        }
+		internal static int ItemDragDelay
+		{
+			get
+			{
+				return Assistant.Engine.MainWindow.AutoLootDelayLabel;
+			}
+		}
 
-        internal static void AddLog(string addlog)
-        {
-            Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
-            Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
-        }
+		internal static void AddLog(string addlog)
+		{
+			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
+			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
+		}
 
-        internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
-        {
-            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
-            foreach (AutoLootItem item in AutoLootItemList)
-            {
-                ListViewItem listitem = new ListViewItem();
-                listitem.SubItems.Add(item.Name);
-                listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-                if (item.Color == -1)
-                    listitem.SubItems.Add("All");
-                else
-                    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-                Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
-            }
-        }
+		internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
+		{
+			Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+			foreach (AutoLootItem item in AutoLootItemList)
+			{
+				ListViewItem listitem = new ListViewItem();
+				listitem.SubItems.Add(item.Name);
+				listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+				if (item.Color == -1)
+					listitem.SubItems.Add("All");
+				else
+					listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+				Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
+			}
+		}
 
-        internal static void AddItemToList(string name, int graphics, int color, ListView AutolootlistView, List<AutoLootItem> autoLootItemList)
-        {
-            List<AutoLootItem.Property> propsList = new List<AutoLootItem.Property>();
-            autoLootItemList.Add(new AutoLootItem(name, graphics, color, propsList));
-            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-        }
+		internal static void AddItemToList(string name, int graphics, int color, ListView AutolootlistView, List<AutoLootItem> autoLootItemList)
+		{
+			List<AutoLootItem.Property> propsList = new List<AutoLootItem.Property>();
+			autoLootItemList.Add(new AutoLootItem(name, graphics, color, propsList));
+			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
+		}
 
-        internal static void ModifyItemToList(string name, int graphics, int color, ListView autolootlistView, List<AutoLootItem> autoLootItemList, int indexToInsert)
-        {
-            List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // salva vecchie prop
-            autoLootItemList.RemoveAt(indexToInsert);                                                       // rimuove
-            autoLootItemList.Insert(indexToInsert, new AutoLootItem(name, graphics, color, PropsList));     // inserisce al posto di prima
-            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-            RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-        }
+		internal static void ModifyItemToList(string name, int graphics, int color, ListView autolootlistView, List<AutoLootItem> autoLootItemList, int indexToInsert)
+		{
+			List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // salva vecchie prop
+			autoLootItemList.RemoveAt(indexToInsert);                                                       // rimuove
+			autoLootItemList.Insert(indexToInsert, new AutoLootItem(name, graphics, color, PropsList));     // inserisce al posto di prima
+			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
+		}
 
-        internal static void RefreshPropListView(ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert)
-        {
-            autolootlistViewProp.Items.Clear();
-            List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // legge props correnti
-            foreach (AutoLootItem.Property props in PropsList)
-            {
-                ListViewItem listitem = new ListViewItem();
-                listitem.SubItems.Add(props.Name);
-                listitem.SubItems.Add(props.Minimum.ToString());
-                listitem.SubItems.Add(props.Maximum.ToString());
-                autolootlistViewProp.Items.Add(listitem);
-            }
-            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-        }
+		internal static void RefreshPropListView(ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert)
+		{
+			autolootlistViewProp.Items.Clear();
+			List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // legge props correnti
+			foreach (AutoLootItem.Property props in PropsList)
+			{
+				ListViewItem listitem = new ListViewItem();
+				listitem.SubItems.Add(props.Name);
+				listitem.SubItems.Add(props.Minimum.ToString());
+				listitem.SubItems.Add(props.Maximum.ToString());
+				autolootlistViewProp.Items.Add(listitem);
+			}
+			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+		}
 
-        internal static void InsertPropToItem(string name, int graphics, int Color, ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert, string propName, int propMin, int propMax)
-        {
-            autolootlistViewProp.Items.Clear();
-            List<AutoLootItem.Property> PropsToAdd = new List<AutoLootItem.Property>();
-            autoLootItemList[indexToInsert].Properties.Add(new AutoLootItem.Property(propName, propMin, propMax));
-            RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-        }
+		internal static void InsertPropToItem(string name, int graphics, int Color, ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert, string propName, int propMin, int propMax)
+		{
+			autolootlistViewProp.Items.Clear();
+			List<AutoLootItem.Property> PropsToAdd = new List<AutoLootItem.Property>();
+			autoLootItemList[indexToInsert].Properties.Add(new AutoLootItem.Property(propName, propMin, propMax));
+			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+		}
 
 		private static bool m_Auto;
 		internal static bool Auto
@@ -151,16 +150,16 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static ArrayList m_IgnoreCorpiList = new ArrayList();
+		internal static List<Item> m_IgnoreCorpiList = new List<Item>();
 
 		public static void ResetIgnore()
 		{
 			m_IgnoreCorpiList.Clear();
 		}
 
-		internal static int Engine(List<AutoLootItem> autoLootList, int milliseconds, Item.Filter filter)
+		internal static int Engine(List<AutoLootItem> autoLootList, int milliseconds, Items.Filter filter)
 		{
-			ArrayList corpi = RazorEnhanced.Item.ApplyFilter(filter);
+			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
@@ -171,138 +170,144 @@ namespace RazorEnhanced
 					return -1;
 				}
 
-					RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + corpo.Serial.ToString("X8"));
-					RazorEnhanced.Item.WaitForContents(corpo, 5000);
-					RazorEnhanced.AutoLoot.AddLog("- Item Nel corpo: " + corpo.Contains.Count.ToString());
+				RazorEnhanced.AutoLoot.AddLog("- Loot dal corpo:" + corpo.Serial.ToString("X8"));
+				RazorEnhanced.Items.WaitForContents(corpo, 5000);
+				RazorEnhanced.AutoLoot.AddLog("- Item Nel corpo: " + corpo.Contains.Count.ToString());
 
-					foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
+				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
+				{
+					if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Movable == true)
 					{
-                        if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Movable == true)
-                        {
-                            RazorEnhanced.AutoLoot.AddLog("- Detected Shard Loot: " + oggettoContenuto.Serial.ToString());
-                            RazorEnhanced.Item.WaitForContents(oggettoContenuto, 5000);
-                            foreach (RazorEnhanced.Item oggettoContenutoShard in oggettoContenuto.Contains)
-                            {
-                                // Blocco Shard
-                                foreach (AutoLootItem autoLoootItem in autoLootList)
-                                {
-                                    if (oggettoContenutoShard.ItemID == autoLoootItem.Graphics)
-                                    {
-                                        if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
-                                        {
-                                            if (autoLoootItem.Properties.Count > 0) // Item con props
-                                            {
-                                                RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
-
-                                                bool propsOK = false;
-                                                foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
-                                                {
-                                                    int PropsSuItemDaLootare = RazorEnhanced.Item.GetPropByString(oggettoContenutoShard, props.Name);
-                                                    if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
-                                                    {
-                                                        propsOK = true;
-                                                    }
-                                                    else
-                                                    {
-                                                        propsOK = false;
-                                                        break;                      // alla prima fallita esce non ha senso controllare le altre
-                                                    }
-                                                }
-
-                                                if (propsOK) // Tutte le props match OK
-                                                {
-                                                    RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
-                                                    RazorEnhanced.Item.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                                    Thread.Sleep(milliseconds);
-                                                }
-                                                else
-                                                {
-                                                    RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
-                                                }
-                                            }
-                                            else // Item Senza props     
-                                            {
-                                                RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
-                                                RazorEnhanced.Item.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                                Thread.Sleep(milliseconds);
-                                            }
-                                        }
-                                    }
-                                }
-                                //fine Blocco shaded
-                            }
-                        }
-                           
-						foreach (AutoLootItem autoLoootItem in autoLootList)
+						RazorEnhanced.AutoLoot.AddLog("- Detected Shard Loot: " + oggettoContenuto.Serial.ToString());
+						RazorEnhanced.Items.WaitForContents(oggettoContenuto, 5000);
+						foreach (RazorEnhanced.Item oggettoContenutoShard in oggettoContenuto.Contains)
 						{
-							if (oggettoContenuto.ItemID == autoLoootItem.Graphics)
+							// Blocco Shard
+							foreach (AutoLootItem autoLoootItem in autoLootList)
 							{
-								if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
+								if (oggettoContenutoShard.ItemID == autoLoootItem.Graphics)
 								{
-									if (autoLoootItem.Properties.Count > 0) // Item con props
+									if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
 									{
-										RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
-
-										bool propsOK = false;
-										foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
+										if (autoLoootItem.Properties.Count > 0) // Item con props
 										{
-											int PropsSuItemDaLootare = RazorEnhanced.Item.GetPropByString(oggettoContenuto, props.Name);
-											if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+											RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+
+											bool propsOK = false;
+											foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
 											{
-												propsOK = true;
+												int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenutoShard, props.Name);
+												if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+												{
+													propsOK = true;
+												}
+												else
+												{
+													propsOK = false;
+													break;                      // alla prima fallita esce non ha senso controllare le altre
+												}
+											}
+
+											if (propsOK) // Tutte le props match OK
+											{
+												RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
+												RazorEnhanced.Items.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
+												Thread.Sleep(milliseconds);
 											}
 											else
 											{
-												propsOK = false;
-												break;                      // alla prima fallita esce non ha senso controllare le altre
+												RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
 											}
 										}
-
-										if (propsOK) // Tutte le props match OK
+										else // Item Senza props     
 										{
-											RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
-											RazorEnhanced.Item.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
+											RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+											RazorEnhanced.Items.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
 											Thread.Sleep(milliseconds);
+										}
+									}
+								}
+							}
+							//fine Blocco shaded
+						}
+					}
+
+					foreach (AutoLootItem autoLoootItem in autoLootList)
+					{
+						if (oggettoContenuto.ItemID == autoLoootItem.Graphics)
+						{
+							if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
+							{
+								if (autoLoootItem.Properties.Count > 0) // Item con props
+								{
+									RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+
+									bool propsOK = false;
+									foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
+									{
+										int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
+										if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+										{
+											propsOK = true;
 										}
 										else
 										{
-											RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
+											propsOK = false;
+											break;                      // alla prima fallita esce non ha senso controllare le altre
 										}
 									}
-									else // Item Senza props     
+
+									if (propsOK) // Tutte le props match OK
 									{
-										RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
-										RazorEnhanced.Item.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
+										RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
+										RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
 										Thread.Sleep(milliseconds);
 									}
+									else
+									{
+										RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
+									}
+								}
+								else // Item Senza props     
+								{
+									RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+									RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
+									Thread.Sleep(milliseconds);
 								}
 							}
 						}
 					}
+				}
 			}
 
 			return 0;
 		}
 
-		public static int Run(List<AutoLootItem> autoLootList, int milliseconds, Item.Filter filter)
+		public static int Run(List<AutoLootItem> autoLootList, int milliseconds, Items.Filter filter)
 		{
 			int result = Int32.MinValue;
-			result=	AutoLoot.Engine(autoLootList, milliseconds, filter);
+			result = AutoLoot.Engine(autoLootList, milliseconds, filter);
 			return result;
 		}
 
-		public static int Run()
+		public static void Run()
 		{
-			    // Genero filtro per corpi
-				Item.Filter corpseFilter = new Item.Filter();
-				corpseFilter.RangeMax = 3;
-				corpseFilter.Movable = false;
-				corpseFilter.IsCorpse = true;
-				corpseFilter.OnGround = true;
-				corpseFilter.Enabled = true;
+			// Genero filtro per corpi
+			Items.Filter corpseFilter = new Items.Filter();
+			corpseFilter.RangeMax = 3;
+			corpseFilter.Movable = false;
+			corpseFilter.IsCorpse = true;
+			corpseFilter.OnGround = true;
+			corpseFilter.Enabled = true;
 
-				int exit =Run(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel, corpseFilter);
-				return exit;
+			int exit = Run(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel, corpseFilter);
+
+			if (exit != 0)
+			{
+				AutoLoot.Auto = false;
+				Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
+				Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+			}
 		}
 	}
 }

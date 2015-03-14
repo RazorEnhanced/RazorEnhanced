@@ -493,6 +493,9 @@ namespace Assistant
 
 			m_Running = false;
 
+			RazorEnhanced.UI.EnhancedScriptEditor.End();
+			RazorEnhanced.Scripts.Auto = false;
+
 			try { PacketPlayer.Stop(); }
 			catch { }
 			try { AVIRec.Stop(); }

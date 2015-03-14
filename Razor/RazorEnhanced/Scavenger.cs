@@ -58,12 +58,12 @@ namespace RazorEnhanced
         {
             get
             {
-                int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
+                int serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
 
-                if (SerialBag == 0)
-                    SerialBag = World.Player.Backpack.Serial;
+                if (serialBag == 0)
+                    serialBag = World.Player.Backpack.Serial;
 
-                return RazorEnhanced.Item.FindBySerial(SerialBag);
+                return RazorEnhanced.Items.FindBySerial(serialBag);
             }
         }
 
@@ -97,44 +97,44 @@ namespace RazorEnhanced
             }
         }
 
-        internal static void AddItemToList(string name, int graphics, int color, ListView ScavengerListView, List<ScavengerItem> ScavengerItemList)
+        internal static void AddItemToList(string name, int graphics, int color, ListView scavengerListView, List<ScavengerItem> scavengerItemList)
         {
             List<ScavengerItem.Property> propsList = new List<ScavengerItem.Property>();
-            ScavengerItemList.Add(new ScavengerItem(name, graphics, color, propsList));
-            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), ScavengerItemList);
-            RazorEnhanced.Scavenger.RefreshList(ScavengerItemList);
+            scavengerItemList.Add(new ScavengerItem(name, graphics, color, propsList));
+            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), scavengerItemList);
+            RazorEnhanced.Scavenger.RefreshList(scavengerItemList);
         }
 
-        internal static void ModifyItemToList(string name, int graphics, int color, ListView ScavengerListView, List<ScavengerItem> ScavengerItemList, int indexToInsert)
+        internal static void ModifyItemToList(string name, int graphics, int color, ListView scavengerListView, List<ScavengerItem> scavengerItemList, int indexToInsert)
         {
-            List<ScavengerItem.Property> PropsList = ScavengerItemList[indexToInsert].Properties;             // salva vecchie prop
-            ScavengerItemList.RemoveAt(indexToInsert);                                                       // rimuove
-            ScavengerItemList.Insert(indexToInsert, new ScavengerItem(name, graphics, color, PropsList));     // inserisce al posto di prima
-            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), ScavengerItemList);
-            RazorEnhanced.Scavenger.RefreshList(ScavengerItemList);
+            List<ScavengerItem.Property> PropsList = scavengerItemList[indexToInsert].Properties;             // salva vecchie prop
+            scavengerItemList.RemoveAt(indexToInsert);                                                       // rimuove
+            scavengerItemList.Insert(indexToInsert, new ScavengerItem(name, graphics, color, PropsList));     // inserisce al posto di prima
+            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), scavengerItemList);
+            RazorEnhanced.Scavenger.RefreshList(scavengerItemList);
         }
 
-        internal static void RefreshPropListView(ListView ScavengerListViewProp, List<ScavengerItem> ScavengerItemList, int indexToInsert)
+        internal static void RefreshPropListView(ListView scavengerListViewProp, List<ScavengerItem> scavengerItemList, int indexToInsert)
         {
-            ScavengerListViewProp.Items.Clear();
-            List<ScavengerItem.Property> PropsList = ScavengerItemList[indexToInsert].Properties;             // legge props correnti
+            scavengerListViewProp.Items.Clear();
+            List<ScavengerItem.Property> PropsList = scavengerItemList[indexToInsert].Properties;             // legge props correnti
             foreach (ScavengerItem.Property props in PropsList)
             {
                 ListViewItem listitem = new ListViewItem();
                 listitem.SubItems.Add(props.Name);
                 listitem.SubItems.Add(props.Minimum.ToString());
                 listitem.SubItems.Add(props.Maximum.ToString());
-                ScavengerListViewProp.Items.Add(listitem);
+                scavengerListViewProp.Items.Add(listitem);
             }
-            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), ScavengerItemList);
+            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), scavengerItemList);
         }
 
-        internal static void InsertPropToItem(string name, int graphics, int Color, ListView ScavengerListViewProp, List<ScavengerItem> ScavengerItemList, int indexToInsert, string propName, int propMin, int propMax)
+        internal static void InsertPropToItem(string name, int graphics, int Color, ListView scavengerListViewProp, List<ScavengerItem> scavengerItemList, int indexToInsert, string propName, int propMin, int propMax)
         {
-            ScavengerListViewProp.Items.Clear();
+            scavengerListViewProp.Items.Clear();
             List<ScavengerItem.Property> PropsToAdd = new List<ScavengerItem.Property>();
-            ScavengerItemList[indexToInsert].Properties.Add(new ScavengerItem.Property(propName, propMin, propMax));
-            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), ScavengerItemList);
+            scavengerItemList[indexToInsert].Properties.Add(new ScavengerItem.Property(propName, propMin, propMax));
+            RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), scavengerItemList);
         }
     }
 }

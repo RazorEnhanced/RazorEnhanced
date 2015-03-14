@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -196,11 +195,11 @@ namespace RazorEnhanced
 			}
 		}
 
-		public ArrayList Contains
+		public List<Item> Contains
 		{
 			get
 			{
-				ArrayList items = new ArrayList();
+				List<Item> items = new List<Item>();
 				foreach (Assistant.Item assistantItem in m_AssistantMobile.Contains)
 				{
 					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
@@ -210,11 +209,11 @@ namespace RazorEnhanced
 			}
 		}
 
-		public ArrayList Properties
+		public List<Property> Properties
 		{
 			get
 			{
-				ArrayList properties = new ArrayList();
+				List<Property> properties = new List<Property>();
 				foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantMobile.ObjPropList.Content)
 				{
 					Property property = new Property(entry);
@@ -223,8 +222,10 @@ namespace RazorEnhanced
 				return properties;
 			}
 		}
+	}
 
-		//find 
+	public class Mobiles
+	{
 		public static Mobile FindBySerial(int serial)
 		{
 
@@ -244,10 +245,10 @@ namespace RazorEnhanced
 		public class Filter
 		{
 			public bool Enabled = false;
-			public ArrayList Serials = new ArrayList();
-			public ArrayList Bodies = new ArrayList();
+			public List<int> Serials = new List<int>();
+			public List<int> Bodies = new List<int>();
 			public string Name = "";
-			public ArrayList Hues = new ArrayList();
+			public List<int> Hues = new List<int>();
 			public double RangeMin = -1;
 			public double RangeMax = -1;
 			public bool Poisoned = false;
@@ -256,17 +257,16 @@ namespace RazorEnhanced
 			public bool IsGhost = false;
 			public bool Female = false;
 			public bool Warmode = false;
-			public ArrayList Notorieties = new ArrayList();
+			public List<byte> Notorieties = new List<byte>();
 
 			public Filter()
 			{
 			}
 		}
 
-		public static ArrayList ApplyFilter(Filter filter)
+		public static List<Mobile> ApplyFilter(Filter filter)
 		{
-
-			ArrayList result = new ArrayList();
+			List<Mobile> result = new List<Mobile>();
 
 			List<Assistant.Mobile> assistantMobiles = Assistant.World.Mobiles.Values.ToList();
 
@@ -340,7 +340,7 @@ namespace RazorEnhanced
 			return result;
 		}
 
-		public static Mobile Select(ArrayList mobiles, string selector)
+		public static Mobile Select(List<Mobile> mobiles, string selector)
 		{
 			Mobile result = null;
 
@@ -441,17 +441,17 @@ namespace RazorEnhanced
 			return result;
 		}
 
-        // Message
+		// Message
 		public static void Message(Mobile mobile, int hue, string message)
 		{
-            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-        }
+			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+		}
 
-        public static void Message(int serial, int hue, string message)
-        {
-            Mobile mobile = FindBySerial(serial);
-            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-        }
+		public static void Message(int serial, int hue, string message)
+		{
+			Mobile mobile = FindBySerial(serial);
+			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+		}
 
 	}
 }

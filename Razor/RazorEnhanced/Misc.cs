@@ -13,10 +13,10 @@ namespace RazorEnhanced
 			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
 		}
 
-        public static void Resync()
-        {
-            Assistant.ClientCommunication.SendToServer(new ResyncReq());
-        }
+		public static void Resync()
+		{
+			Assistant.ClientCommunication.SendToServer(new ResyncReq());
+		}
 
 		public static double DistanceSqrt(Point3D a, Point3D b)
 		{
@@ -24,16 +24,18 @@ namespace RazorEnhanced
 			return distance;
 		}
 
-        // Sysmessage
-        public static void SendMessage(int num)
-        {
-			Assistant.World.Player.SendMessage(MsgLevel.Info, (Assistant.LocString)num);
-        }
+		// Sysmessage
+		public static void SendMessage(int num)
+		{
+			if (Assistant.World.Player != null)
+				Assistant.World.Player.SendMessage(MsgLevel.Info, (Assistant.LocString)num);
+		}
 
-        public static void SendMessage(string msg)
-        {
-			Assistant.World.Player.SendMessage(MsgLevel.Info, msg);
-        }
+		public static void SendMessage(string msg)
+		{
+			if (Assistant.World.Player != null)
+				Assistant.World.Player.SendMessage(MsgLevel.Info, msg);
+		}
 
 	}
 }

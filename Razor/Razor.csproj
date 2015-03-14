@@ -505,6 +505,7 @@
     <None Include="RazorEnhanced\Resources\applications-utilities.png" />
     <None Include="RazorEnhanced\Resources\applications-utilities.ico" />
     <Content Include="razor-enhanced.ico" />
+    <None Include="RazorEnhanced\Resources\bug.png" />
     <Content Include="RazorEnhanced\Resources\green.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start.png" />
     <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />

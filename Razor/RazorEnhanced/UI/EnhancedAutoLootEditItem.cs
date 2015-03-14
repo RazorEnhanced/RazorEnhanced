@@ -5,8 +5,11 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
+using ScintillaNET;
+using System.IO;
+using Assistant;
 
 
 namespace RazorEnhanced.UI
@@ -26,6 +29,11 @@ namespace RazorEnhanced.UI
             AutoLootItemList = PAutoLootItemList;
             IndexEdit = PIndexEdit;
 		}
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void EnhancedAutolootManualAdd_Load(object sender, EventArgs e)
         {

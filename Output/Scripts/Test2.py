@@ -1,5 +1,3 @@
-def Run():
-    while True:
-        Pause(1.0)
-        SendMessage("prova2!")
-    return 0;
+while True:
+    Misc.Pause(1.0)
+    Misc.SendMessage("prova2!")

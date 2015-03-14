@@ -41,6 +41,7 @@ namespace RazorEnhanced
 
 					foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
 					{
+						row["Checked"] = false;
 						row["Flag"] = Assistant.Properties.Resources.yellow;
 						row["Status"] = "Idle";
 					}

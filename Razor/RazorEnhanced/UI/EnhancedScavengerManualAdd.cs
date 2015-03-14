@@ -5,7 +5,10 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using ScintillaNET;
+using System.IO;
 using Assistant;
 
 
@@ -24,6 +27,11 @@ namespace RazorEnhanced.UI
             ScavengerListView = PScavengerListView;
             ScavengerItemList = PScavengerItemList;
 		}
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void EnhancedScavengerManualAdd_Load(object sender, EventArgs e)
         {

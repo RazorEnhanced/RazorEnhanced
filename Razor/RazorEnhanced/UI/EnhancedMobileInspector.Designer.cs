@@ -117,6 +117,7 @@
 			this.lName.Size = new System.Drawing.Size(23, 13);
 			this.lName.TabIndex = 17;
 			this.lName.Text = "null";
+			this.lName.Click += new System.EventHandler(this.lName_Click);
 			// 
 			// lSerial
 			// 

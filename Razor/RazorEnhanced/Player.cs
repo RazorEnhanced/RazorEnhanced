@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Assistant;
 
@@ -452,11 +451,11 @@ namespace RazorEnhanced
 		}
 
 		// Buff
-		public static ArrayList Buffs
+		public static List<string> Buffs
 		{
 			get
 			{
-				ArrayList buffs = new ArrayList();
+				List<string> buffs = new List<string>();
 				foreach (ushort icon in Assistant.World.Player.Buffs)
 				{
 					buffs.Add(icon.ToString());
@@ -1338,7 +1337,7 @@ namespace RazorEnhanced
 
 		private static int GetPropExec(RazorEnhanced.Mobile mobile, int code, String Fcall)
 		{
-			ArrayList properties = mobile.Properties;
+			List<Property> properties = mobile.Properties;
 			foreach (Property property in properties)
 			{
 				int number = property.Number;
@@ -1363,12 +1362,12 @@ namespace RazorEnhanced
 			}
 			return 0;       // Prop inesistente sul item
 		}
-        // Message
+		// Message
 
-        public static void HeadMessage(int hue, string message)
-        {
+		public static void HeadMessage(int hue, string message)
+		{
 
-            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
-        }
+			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
+		}
 	}
 }

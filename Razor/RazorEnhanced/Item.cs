@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Linq;
@@ -52,11 +51,11 @@ namespace RazorEnhanced
 			return x > y ? x : y;
 		}
 
-		public ArrayList Contains
+		public List<Item> Contains
 		{
 			get
 			{
-				ArrayList items = new ArrayList();
+				List<Item> items = new List<Item>();
 				foreach (Assistant.Item assistantItem in m_AssistantItem.Contains)
 				{
 					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
@@ -108,11 +107,11 @@ namespace RazorEnhanced
 
 		internal Assistant.Layer AssistantLayer { get { return m_AssistantItem.Layer; } }
 
-		public ArrayList Properties
+		public List<Property> Properties
 		{
 			get
 			{
-				ArrayList properties = new ArrayList();
+				List<Property> properties = new List<Property>();
 				foreach (Assistant.ObjectPropertyList.OPLEntry entry in m_AssistantItem.ObjPropList.Content)
 				{
 					Property property = new Property(entry);
@@ -126,7 +125,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				ArrayList properties = Properties;
+				List<Property> properties = Properties;
 				foreach (Property property in properties)
 				{
 					int number = property.Number;
@@ -153,7 +152,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				ArrayList properties = Properties;
+				List<Property> properties = Properties;
 				foreach (Property property in properties)
 				{
 					int number = property.Number;
@@ -200,7 +199,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				ArrayList properties = Properties;
+				List<Property> properties = Properties;
 				foreach (Property property in properties)
 				{
 					int number = property.Number;
@@ -246,11 +245,15 @@ namespace RazorEnhanced
 			}
 		}
 
+	}
+
+	public class Items
+	{
 		public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
-            if (!bag.Updated)
-                RazorEnhanced.Item.UseItem(bag);
-            
+			if (!bag.Updated)
+				RazorEnhanced.Items.UseItem(bag);
+
 			int subdelay = delay;
 			if (bag.IsCorpse || bag.IsContainer)
 				while (!bag.Updated || subdelay < 0)
@@ -263,14 +266,14 @@ namespace RazorEnhanced
 		public class Filter
 		{
 			public bool Enabled = false;
-			public ArrayList Serials = new ArrayList();
-			public ArrayList Graphics = new ArrayList();
+			public List<int> Serials = new List<int>();
+			public List<int> Graphics = new List<int>();
 			public string Name = "";
-			public ArrayList Hues = new ArrayList();
+			public List<int> Hues = new List<int>();
 			public double RangeMin = -1;
 			public double RangeMax = -1;
 			public bool Movable = true;
-			public ArrayList Layers = new ArrayList();
+			public List<string> Layers = new List<string>();
 			public bool OnGround = false;
 			public bool IsCorpse = false;
 			public bool IsContainer = false;
@@ -280,9 +283,9 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static ArrayList ApplyFilter(Filter filter)
+		public static List<Item> ApplyFilter(Filter filter)
 		{
-			ArrayList result = new ArrayList();
+			List<Item> result = new List<Item>();
 
 			List<Assistant.Item> assistantItems = Assistant.World.Items.Values.ToList();
 
@@ -367,7 +370,7 @@ namespace RazorEnhanced
 			return result;
 		}
 
-		public static Item Select(ArrayList items, string selector)
+		public static Item Select(List<Item> items, string selector)
 		{
 			Item result = null;
 
@@ -1021,7 +1024,7 @@ namespace RazorEnhanced
 
 		private static int GetPropExec(RazorEnhanced.Item item, int code, String Fcall)
 		{
-			ArrayList properties = item.Properties;
+			List<Property> properties = item.Properties;
 			foreach (Property property in properties)
 			{
 				int number = property.Number;
@@ -1047,17 +1050,17 @@ namespace RazorEnhanced
 			return 0;       // Prop inesistente sul item
 		}
 
-        // Message
+		// Message
 
-        public static void Message(Item item, int hue, string message)
-        {
-            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
-        }
+		public static void Message(Item item, int hue, string message)
+		{
+			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+		}
 
-        public static void Message(int serial, int hue, string message)
-        {
-            Item item = FindBySerial(serial);
-            Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
-        }
+		public static void Message(int serial, int hue, string message)
+		{
+			Item item = FindBySerial(serial);
+			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
+		}
 	}
 }

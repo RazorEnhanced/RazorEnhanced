@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 
 using IronPython.Hosting;
 using Microsoft.Scripting.Hosting;
+using IronPython.Runtime.Exceptions;
 
 using Assistant;
+using IronPython.Runtime;
 
 namespace RazorEnhanced
 {
@@ -20,13 +20,13 @@ namespace RazorEnhanced
 		{
 			internal void Start()
 			{
-				if (m_Thread == null || (m_Thread != null && m_Thread.ThreadState != ThreadState.Running && m_Thread.ThreadState != ThreadState.Unstarted && m_Thread.ThreadState != ThreadState.WaitSleepJoin))
+				if (m_Thread == null ||
+					(m_Thread != null && m_Thread.ThreadState != ThreadState.Running &&
+					m_Thread.ThreadState != ThreadState.Unstarted &&
+					m_Thread.ThreadState != ThreadState.WaitSleepJoin)
+				)
 				{
-					ThreadState s;
-					if (m_Thread != null)
-						s = m_Thread.ThreadState;
-
-					m_Thread = new Thread(AsyncRun);
+					m_Thread = new Thread(AsyncStart);
 					m_Thread.Start();
 					while (!m_Thread.IsAlive)
 					{
@@ -34,78 +34,73 @@ namespace RazorEnhanced
 				}
 			}
 
-			private void AsyncRun()
+			private void AsyncStart()
 			{
-				int exit = Int32.MinValue;
-				exit = InvokeMethod<int>("Run");
-
-				if (exit != 0)
+				if (m_Source != null && m_Source != null)
 				{
-					Scripts.Auto = false;
-					Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
-					Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+					try
+					{
+						m_Source.Execute(m_Scope);
+					}
+					catch (Exception ex)
+					{
+						Scripts.Auto = false;
+						Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
+					}
 				}
 			}
 
 			internal void Stop()
 			{
-				if (m_Thread != null)
+				if (m_Thread != null && m_Thread.ThreadState != ThreadState.Stopped)
 				{
 					m_Thread.Abort();
 				}
 			}
 
-			private T InvokeMethod<T>(string method)
+			internal string Create(TracebackDelegate traceFunc)
 			{
-				T result = default(T);
+				string result = "Created";
 				try
 				{
 					m_Engine = Python.CreateEngine();
-					ScriptSource source = m_Engine.CreateScriptSourceFromString(m_Text, Microsoft.Scripting.SourceCodeKind.Statements);
-					ScriptScope scope = m_Engine.CreateScope();
-					SetVariables(scope);
-					source.Execute(scope);
-					Func<T> Run = scope.GetVariable<Func<T>>("Run");
-					result = Run();
-				}
-				catch
-				{
-				}
+					m_Source = m_Engine.CreateScriptSourceFromString(m_Text);
+					m_Scope = GetRazorScope(m_Engine);
 
+					if (traceFunc != null)
+						m_Engine.SetTrace(traceFunc);
+				}
+				catch (Exception ex)
+				{
+					result = ex.Message;
+				}
 				return result;
 			}
-
-			private void SetVariables(ScriptScope scope)
-			{
-				scope.SetVariable("SendMessage", new Action<string>(Misc.SendMessage));
-				scope.SetVariable("Pause", new Action<double>(Misc.Pause));
-
-			}
+			private string m_Filename;
+			internal string Filename { get { return m_Filename; } }
 
 			private string m_Text;
 			internal string Text { get { return m_Text; } }
-
-			private string m_Class;
-			internal string Class { get { return m_Class; } }
 
 			private TimeSpan m_Delay;
 			internal TimeSpan Delay { get { return m_Delay; } }
 
 			private Thread m_Thread;
 			private ScriptEngine m_Engine;
+			private ScriptScope m_Scope;
+			private ScriptSource m_Source;
 
-			internal EnhancedScript(string text, string classname, TimeSpan delay, bool auto)
+			internal EnhancedScript(string filename, string text, TimeSpan delay)
 			{
+				m_Filename = filename;
 				m_Text = text;
 				m_Delay = delay;
-				m_Class = classname;
 			}
 		}
 
 		internal class ScriptTimer : Assistant.Timer
 		{
-			private Task<int> m_AutoLootTask;
-			private Item.Filter m_CorpseFilter;
+			private Thread m_AutoLootThread;
 
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
@@ -124,10 +119,14 @@ namespace RazorEnhanced
 
 				if (AutoLoot.Auto)
 				{
-					if (m_AutoLootTask == null || (m_AutoLootTask != null && m_AutoLootTask.Status == TaskStatus.RanToCompletion))
+					if (m_AutoLootThread == null ||
+						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
+						m_AutoLootThread.ThreadState != ThreadState.Unstarted &&
+						m_AutoLootThread.ThreadState != ThreadState.WaitSleepJoin)
+					)
 					{
-						m_AutoLootTask = new Task<int>(AutoLoot.Run);
-						m_AutoLootTask.Start();
+						m_AutoLootThread = new Thread(AutoLoot.Run);
+						m_AutoLootThread.Start();
 					}
 				}
 			}
@@ -166,16 +165,31 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static ScriptScope GetRazorScope(ScriptEngine engine)
+		{
+			Dictionary<string, object> globals = new Dictionary<string, object>();
+
+			ScriptScope scope = engine.CreateScope(globals);
+			scope.SetVariable("Misc", new RazorEnhanced.Misc());
+			scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
+			scope.SetVariable("Items", new RazorEnhanced.Items());
+			scope.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
+			scope.SetVariable("Player", new RazorEnhanced.Player());
+			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
+
+			return scope;
+		}
+
 		internal static void Reset()
 		{
 			m_EnhancedScripts.Clear();
 		}
 
-		internal static EnhancedScript Search(string classname)
+		internal static EnhancedScript Search(string filename)
 		{
 			foreach (EnhancedScript script in m_EnhancedScripts)
 			{
-				if (script.Class == classname)
+				if (script.Filename == filename)
 					return script;
 			}
 			return null;
@@ -187,33 +201,16 @@ namespace RazorEnhanced
 			string classname = Path.GetFileNameWithoutExtension(filename);
 			string text = File.ReadAllText(filename);
 
-			EnhancedScript script = new EnhancedScript(text, classname, delay, false);
+			EnhancedScript script = new EnhancedScript(filename, text, delay);
+			string result = script.Create(null);
 
-			try
+			if (result == "Created")
 			{
 				m_EnhancedScripts.Add(script);
 			}
-			catch (Exception ex)
+			else
 			{
-				status = "ERROR: " + ex.Message;
-			}
-
-			return status;
-		}
-
-		internal static string LoadFromText(string text, string classname, TimeSpan delay)
-		{
-			string status = "Loaded";
-
-			EnhancedScript script = new EnhancedScript(text, classname, delay, false);
-
-			try
-			{
-				m_EnhancedScripts.Add(script);
-			}
-			catch (Exception ex)
-			{
-				status = "ERROR: " + ex.Message;
+				status = "ERROR: " + result;
 			}
 
 			return status;
