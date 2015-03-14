@@ -322,6 +322,7 @@ namespace Assistant
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
 
         internal CheckBox AutolootCheckBox { get { return autolootEnable; } }
+        internal CheckBox ScavengerCheckBox { get { return scavengerEnableCheckB; } }
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
 		internal int AutoLootDelayLabel
 		{
@@ -3689,7 +3690,6 @@ namespace Assistant
 			this.scavengerImportB.TabIndex = 59;
 			this.scavengerImportB.Text = "Import";
 			this.scavengerImportB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerImportB.Click += new System.EventHandler(this.razorButton3_Click);
 			// 
 			// scavengertListSelect
 			// 
@@ -7425,11 +7425,13 @@ namespace Assistant
 					// Stop autoloot
 					RazorEnhanced.AutoLoot.Auto = true;
 					RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
+                    RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
 				}
 				else
 				{
 					// Stop autoloot
 					RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
+                    RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine fail to Start...");
 					autolootEnable.Checked = false;
 				}
 			}
@@ -7444,6 +7446,7 @@ namespace Assistant
 
 				// Stop autoloot
 				RazorEnhanced.AutoLoot.Auto = false;
+                RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Stop...");
 				RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Stop...");
 			}
 
@@ -7514,19 +7517,16 @@ namespace Assistant
 			RazorEnhanced.AutoLoot.ResetIgnore();
 		}
 
-		private void razorButton3_Click(object sender, EventArgs e)
-		{
 
-		}
 
 		private void scavengerRemoveB_Click(object sender, EventArgs e)
 		{
 			int y = 0;
-			for (int i = 0; i < autolootlistView.Items.Count; i++)
+			for (int i = 0; i < ScavengerListView.Items.Count; i++)
 			{
-				if (autolootlistView.Items[i].Checked)
+                if (ScavengerListView.Items[i].Checked)
 				{
-					autoLootItemList.RemoveAt(y);
+                    scavengerItemList.RemoveAt(y);
 					y--;
 				}
 				y++;
@@ -7546,9 +7546,9 @@ namespace Assistant
 					break;
 				}
 			}
-			//   EnhancedScavengerEditItemProps EditProp = new EnhancedScavengerEditItemProps(scavengerListView, scavengerItemList, CheckedIndex);
-			//   EditProp.TopMost = true;
-			//   EditProp.Show();
+			   EnhancedScavengerEditItemProps EditProp = new EnhancedScavengerEditItemProps(scavengerListView, scavengerItemList, CheckedIndex);
+			   EditProp.TopMost = true;
+			   EditProp.Show();
 		}
 
 		private void scavengerEditB_Click(object sender, EventArgs e)
@@ -7562,9 +7562,9 @@ namespace Assistant
 					break;
 				}
 			}
-			//  EnhancedScavengerEditItem EditItem = new EnhancedScavengerEditItem(scavengerListView, scavengerItemList, CheckedIndex);
-			//  EditItem.TopMost = true;
-			//  EditItem.Show();
+		      EnhancedScavengerEditItem EditItem = new EnhancedScavengerEditItem(scavengerListView, scavengerItemList, CheckedIndex);
+			  EditItem.TopMost = true;
+			  EditItem.Show();
 		}
 
 		private void scavengerAddTargetB_Click(object sender, EventArgs e)
@@ -7579,7 +7579,7 @@ namespace Assistant
 			if (ScavengerItem != null && ScavengerItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Scavenger item added: " + ScavengerItem.ToString());
-				//    RazorEnhanced.Scavenger.AddItemToList(ScavengerItem.Name, ScavengerItem.ItemID, ScavengerItem.Hue, scavengerListView, scavengerItemList);
+				RazorEnhanced.Scavenger.AddItemToList(ScavengerItem.Name, ScavengerItem.ItemID, ScavengerItem.Hue, scavengerListView, scavengerItemList);
 			}
 			else
 			{
@@ -7589,9 +7589,9 @@ namespace Assistant
 
 		private void scavengerAddManualB_Click(object sender, EventArgs e)
 		{
-			//  EnhancedScavengerManualAdd ManualAddItem = new EnhancedScavengerManualAdd(scavengerListView, scavengerItemList);
-			//  ManualAddItem.TopMost = true;
-			//  ManualAddItem.Show();
+			  EnhancedScavengerManualAdd ManualAddItem = new EnhancedScavengerManualAdd(scavengerListView, scavengerItemList);
+			  ManualAddItem.TopMost = true;
+			  ManualAddItem.Show();
 		}
 
 		private void scavengerSetContainerB_Click(object sender, EventArgs e)
@@ -7616,9 +7616,9 @@ namespace Assistant
 
 		private void scavengerAddListB_Click(object sender, EventArgs e)
 		{
-			//   EnhancedScavengerAddItemList AddItemList = new EnhancedScavengerAddItemList();
-			//   AddItemList.TopMost = true;
-			//   AddItemList.Show();
+			   EnhancedScavengerAddItemList AddItemList = new EnhancedScavengerAddItemList();
+			   AddItemList.TopMost = true;
+			   AddItemList.Show();
 		}
 
 		private void scavengerReoveListB_Click(object sender, EventArgs e)
@@ -7668,11 +7668,15 @@ namespace Assistant
 
 				if (StartCheck)
 				{
+                    //RazorEnhanced.Scavenger.Auto = true;
 					RazorEnhanced.AutoLoot.AddLog("Scavenger Engine Start...");
+                    RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
 				}
 				else
 				{
+                   // RazorEnhanced.Scavenger.Auto = false;
 					RazorEnhanced.AutoLoot.AddLog("Fail to start Scavenger Engine...");
+                    RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
 					autolootEnable.Checked = false;
 				}
 			}
@@ -7685,8 +7689,10 @@ namespace Assistant
 				scavengerImportB.Enabled = true;
 				scavengerDragDelay.Enabled = true;
 
-				// Stop autoloot
+
+                //RazorEnhanced.Scavenger.Auto = false;
 				RazorEnhanced.Scavenger.AddLog("Scavenger Engine Stop...");
+                RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
 			}
 
 		}
