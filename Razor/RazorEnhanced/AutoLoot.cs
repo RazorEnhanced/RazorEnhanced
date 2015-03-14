@@ -81,6 +81,7 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
 		}
 
+
 		internal static void RefreshList(List<AutoLootItem> AutoLootItemList)
 		{
 			Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
@@ -89,13 +90,15 @@ namespace RazorEnhanced
 				ListViewItem listitem = new ListViewItem();
 				listitem.SubItems.Add(item.Name);
 				listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+
 				if (item.Color == -1)
 					listitem.SubItems.Add("All");
 				else
 					listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+
 				Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
 			}
-		}
+        }
 
 		internal static void AddItemToList(string name, int graphics, int color, ListView AutolootlistView, List<AutoLootItem> autoLootItemList)
 		{
@@ -338,7 +341,7 @@ namespace RazorEnhanced
             if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
                 Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
             else
-                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true;
+                Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
         }
 
         public static void Stop()
@@ -346,8 +349,36 @@ namespace RazorEnhanced
             if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == false)
                 Misc.SendMessage("Script Error: Autoloot.Stop: Autoloot already sleeping");
             else
-                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+                Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
         }
 
+        public static bool Status()
+        {
+            return Assistant.Engine.MainWindow.AutolootCheckBox.Checked;
+        }
+        public static void ChangeList(string nomelista)
+        {
+            bool ListaOK = false;
+            for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
+            {
+                if (nomelista == Assistant.Engine.MainWindow.AutolootListSelect.GetItemText(Assistant.Engine.MainWindow.AutolootListSelect.Items[i]))
+                    ListaOK = true;
+            }
+            if (!ListaOK)
+                Misc.SendMessage("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
+            else
+            {
+                if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+                {
+                    Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
+                    Assistant.Engine.MainWindow.AutolootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                    Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.AutolootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                }
+            }
+        }
 	}
 }
