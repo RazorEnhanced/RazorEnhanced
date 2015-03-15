@@ -153,7 +153,7 @@ namespace RazorEnhanced
             {
                 if (World.Player.Weight - 20 > World.Player.MaxWeight)      // Controllo peso
                 {
-                    RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
+                    RazorEnhanced.Scavenger.AddLog("- Max weight reached, Wait untill free some space");
                     RazorEnhanced.Misc.SendMessage("SCAVENGER: Max weight reached, Wait untill free some space");
                     return -1;
                 }
@@ -216,7 +216,7 @@ namespace RazorEnhanced
                 }
                 else // Item Senza props     
                 {
-                    RazorEnhanced.AutoLoot.AddLog("- Item Match found... Grabbing");
+                    RazorEnhanced.Scavenger.AddLog("- Item Match found... Grabbing");
                     RazorEnhanced.Items.Move(ItemGround, RazorEnhanced.Scavenger.ScavengerBag, 0); 
                     Thread.Sleep(mseconds);
                 }
@@ -236,6 +236,69 @@ namespace RazorEnhanced
             itemFilter.Enabled = true;
 
             exit = Engine(Assistant.Engine.MainWindow.ScavengerItemList, Assistant.Engine.MainWindow.ScavengerDragDelay, itemFilter);
+        }
+
+        // Funzioni da script
+        public static int RunOnce(List<ScavengerItem> scavengerList, int mseconds, Items.Filter filter)
+        {
+            int exit = Int32.MinValue;
+
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+            {
+                Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
+            }
+            else
+            {
+                exit = Engine(scavengerList, mseconds, filter);
+            }
+
+            return exit;
+        }
+
+        public static void Start()
+        {
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+                Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
+            else
+                Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = true));
+        }
+
+        public static void Stop()
+        {
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == false)
+                Misc.SendMessage("Script Error: Scavenger.Stop: Scavenger already sleeping");
+            else
+                Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false));
+        }
+
+        public static bool Status()
+        {
+            return Assistant.Engine.MainWindow.ScavengerCheckBox.Checked;
+        }
+
+        public static void ChangeList(string nomelista)
+        {
+            bool ListaOK = false;
+            for (int i = 0; i < Assistant.Engine.MainWindow.ScavengerListSelect.Items.Count; i++)
+            {
+                if (nomelista == Assistant.Engine.MainWindow.ScavengerListSelect.GetItemText(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i]))
+                    ListaOK = true;
+            }
+            if (!ListaOK)
+                Misc.SendMessage("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
+            else
+            {
+                if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+                {
+                    Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false));
+                    Assistant.Engine.MainWindow.ScavengerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                    Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = true));
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.ScavengerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                }
+            }
         }
     }
 }
