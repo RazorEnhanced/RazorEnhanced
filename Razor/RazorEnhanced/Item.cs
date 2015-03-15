@@ -1062,5 +1062,43 @@ namespace RazorEnhanced
 			Item item = FindBySerial(serial);
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
+
+        // Count
+        public static int ContainerCount(int serial, int itemid, int color)
+        {
+            Item container = FindBySerial(serial);
+            if (container != null)
+                return ContainerCount(container, itemid, color);
+            else
+            {
+                Misc.SendMessage("Script Error: ContainerCount: Invalid container");
+                return 0;
+            }
+        }
+
+        public static int ContainerCount(Item container, int itemid, int color)
+        {
+            int count = 0;
+            if (container.IsContainer && container != null)
+            {
+                foreach (RazorEnhanced.Item itemcontenuti in container.Contains)
+                {
+                    if (color == -1)
+                    {
+                        if (itemcontenuti.ItemID == itemid)
+                            count = count + itemcontenuti.Amount;
+                    }
+                    else
+                    {
+                        if (itemcontenuti.ItemID == itemid && itemcontenuti.Hue == color)
+                            count = count + itemcontenuti.Amount;
+                    }
+                }
+            }
+            else
+                Misc.SendMessage("Script Error: ContainerCount: Invalid container");
+            
+            return count;
+        }
 	}
 }
