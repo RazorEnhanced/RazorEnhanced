@@ -83,7 +83,7 @@ namespace RazorEnhanced
 
         internal static void RefreshList(List<ScavengerItem> ScavengerItemList)
         {
-            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+            Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
             foreach (ScavengerItem item in ScavengerItemList)
             {
                 ListViewItem listitem = new ListViewItem();
@@ -135,6 +135,53 @@ namespace RazorEnhanced
             List<ScavengerItem.Property> PropsToAdd = new List<ScavengerItem.Property>();
             scavengerItemList[indexToInsert].Properties.Add(new ScavengerItem.Property(propName, propMin, propMax));
             RazorEnhanced.Settings.SaveScavengerItemList(Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), scavengerItemList);
+        }
+
+        private static bool m_Auto;
+        internal static bool Auto
+        {
+            get { return m_Auto; }
+            set
+            {
+                if (m_Auto == value)
+                    return;
+
+                m_Auto = value;
+            }
+        }
+
+        internal static int Engine(List<ScavengerItem> ScavengerLootList, int milliseconds, Items.Filter filter)
+        {
+            List<Item> GroundItem = RazorEnhanced.Items.ApplyFilter(filter);
+          
+
+            return 0;
+        }
+
+        public static int Run(List<ScavengerItem> ScavengerLootList, int milliseconds, Items.Filter filter)
+        {
+            int result = Int32.MinValue;
+            result = Scavenger.Engine(ScavengerLootList, milliseconds, filter);
+            return result;
+        }
+
+        public static void Run()
+        {
+            // Genero filtro per corpi
+            Items.Filter ItemGroundFilter = new Items.Filter();
+            ItemGroundFilter.RangeMax = 2;
+            ItemGroundFilter.Movable = true;
+            ItemGroundFilter.OnGround = true;
+            ItemGroundFilter.Enabled = true;
+
+            int exit = Run(Assistant.Engine.MainWindow.ScavengerItemList, Assistant.Engine.MainWindow.ScavengerDragDelay, ItemGroundFilter);
+
+            if (exit != 0)
+            {
+                AutoLoot.Auto = false;
+                Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
+                Assistant.World.Player.SendMessage(LocString.EnhancedMacroError, exit);
+            }
         }
     }
 }

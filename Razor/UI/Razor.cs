@@ -7668,14 +7668,14 @@ namespace Assistant
 
 				if (StartCheck)
 				{
-                    //RazorEnhanced.Scavenger.Auto = true;
-					RazorEnhanced.AutoLoot.AddLog("Scavenger Engine Start...");
+                    RazorEnhanced.Scavenger.Auto = true;
+                    RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
                     RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
 				}
 				else
 				{
-                   // RazorEnhanced.Scavenger.Auto = false;
-					RazorEnhanced.AutoLoot.AddLog("Fail to start Scavenger Engine...");
+                    RazorEnhanced.Scavenger.Auto = false;
+                    RazorEnhanced.Scavenger.AddLog("Fail to start Scavenger Engine...");
                     RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
 					autolootEnable.Checked = false;
 				}
