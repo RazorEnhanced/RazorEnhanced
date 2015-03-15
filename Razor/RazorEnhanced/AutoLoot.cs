@@ -149,12 +149,7 @@ namespace RazorEnhanced
 
 		internal static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
 
-		public static void ResetIgnore()
-		{
-			m_IgnoreCorpiQueue.Clear();
-		}
-
-		public static int Engine(List<AutoLootItem> autoLootList, double seconds, Items.Filter filter)
+		internal static int Engine(List<AutoLootItem> autoLootList, double seconds, Items.Filter filter)
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 			bool giaAperto = false;
@@ -305,7 +300,7 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		public static void Engine()
+		internal static void Engine()
 		{
 			int exit = Int32.MinValue;
 
@@ -321,6 +316,27 @@ namespace RazorEnhanced
 		}
 
 		// Funzioni di controllo da script
+		public static void ResetIgnore()
+		{
+			m_IgnoreCorpiQueue.Clear();
+		}
+
+		public static int RunOnce(List<AutoLootItem> autoLootList, double seconds, Items.Filter filter)
+		{
+			int exit = Int32.MinValue;
+
+			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+			{
+				Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
+			}
+			else
+			{
+				exit = Engine(autoLootList, seconds, filter);
+			}
+
+			return exit;
+		}
+
 		public static void Start()
 		{
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
