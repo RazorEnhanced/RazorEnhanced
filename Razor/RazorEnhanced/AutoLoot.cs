@@ -312,7 +312,7 @@ namespace RazorEnhanced
 			corpseFilter.OnGround = true;
 			corpseFilter.Enabled = true;
 
-			exit = Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel, corpseFilter);
+			exit = Engine(Assistant.Engine.MainWindow.AutoLootItemList, (Assistant.Engine.MainWindow.AutoLootDelayLabel / 1000), corpseFilter);
 		}
 
 		// Funzioni di controllo da script
