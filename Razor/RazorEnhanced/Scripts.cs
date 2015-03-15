@@ -138,7 +138,7 @@ namespace RazorEnhanced
                         m_ScavengerThread.ThreadState != ThreadState.WaitSleepJoin)
                     )
                     {
-                        m_ScavengerThread = new Thread(Scavenger.Run);
+                        m_ScavengerThread = new Thread(Scavenger.Engine);
                         m_ScavengerThread.Start();
                     }
                 }
