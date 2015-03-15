@@ -191,114 +191,109 @@ namespace RazorEnhanced
 							foreach (RazorEnhanced.Item oggettoContenutoShard in oggettoContenuto.Contains)
 							{
 
-								foreach (AutoLootItem autoLoootItem in autoLootList)
+								foreach (AutoLootItem autoLootItem in autoLootList)
 								{
-									if (oggettoContenutoShard.ItemID == autoLoootItem.Graphics)
-									{
-										if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 2)
-										{
-											if (autoLoootItem.Properties.Count > 0) // Item con props
-											{
-												RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
-
-												bool propsOK = false;
-												foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
-												{
-													int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenutoShard, props.Name);
-													if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
-													{
-														propsOK = true;
-													}
-													else
-													{
-														propsOK = false;
-														break;                      // alla prima fallita esce non ha senso controllare le altre
-													}
-												}
-
-												if (propsOK) // Tutte le props match OK
-												{
-													RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
-													RazorEnhanced.Items.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                                    Thread.Sleep(mseconds);
-												}
-												else
-												{
-													RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
-												}
-											}
-											else // Item Senza props     
-											{
-												RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
-												RazorEnhanced.Items.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                                Thread.Sleep(mseconds);
-											}
-										}
-									}
+                                    if (autoLootItem.Color == -1)
+                                    {
+                                        if (oggettoContenutoShard.ItemID == autoLootItem.Graphics)
+                                        {
+                                            GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (oggettoContenutoShard.ItemID == autoLootItem.Graphics && oggettoContenutoShard.Hue == autoLootItem.Color)
+                                        {
+                                            GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+                                        }
+                                    }
 								}
 							}
 						}
 					}
 					//fine Blocco shared
 
-					foreach (AutoLootItem autoLoootItem in autoLootList)
+					foreach (AutoLootItem autoLootItem in autoLootList)
 					{
-						if (oggettoContenuto.ItemID == autoLoootItem.Graphics)
-						{
-							bool grabItem = true;
-							if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
-								if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-									grabItem = false;
+                        if (autoLootItem.Color == -1)          // Colore ALL
+                        {
+                            if (oggettoContenuto.ItemID == autoLootItem.Graphics)
+                            {
+                                bool grabItem = true;
+                                if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
+                                    if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
+                                        grabItem = false;
 
-							if (grabItem)
-							{
-								if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
-								{
-									if (autoLoootItem.Properties.Count > 0) // Item con props
-									{
-										RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+                                if (grabItem)
+                                {
+                                    GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (oggettoContenuto.ItemID == autoLootItem.Graphics && oggettoContenuto.Hue == autoLootItem.Color)
+                            {
+                                bool grabItem = true;
+                                if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
+                                    if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
+                                        grabItem = false;
 
-										bool propsOK = false;
-										foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
-										{
-											int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
-											if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
-											{
-												propsOK = true;
-											}
-											else
-											{
-												propsOK = false;
-												break; // alla prima fallita esce non ha senso controllare le altre
-											}
-										}
-
-										if (propsOK) // Tutte le props match OK
-										{
-											RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
-											RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                            Thread.Sleep(mseconds);
-										}
-										else
-										{
-											RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
-										}
-									}
-									else // Item Senza props     
-									{
-										RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
-										RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                                        Thread.Sleep(mseconds);
-									}
-								}
-							}
-						}
+                                if (grabItem)
+                                {
+                                    GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+                                }
+                            }
+                        }
 					}
 				}
 			}
 
 			return 0;
 		}
+
+        internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, Item corpo, int mseconds)
+        {
+            if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
+            {
+                if (autoLoootItem.Properties.Count > 0) // Item con props
+                {
+                    RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+
+                    bool propsOK = false;
+                    foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
+                    {
+                        int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
+                        if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+                        {
+                            propsOK = true;
+                        }
+                        else
+                        {
+                            propsOK = false;
+                            break; // alla prima fallita esce non ha senso controllare le altre
+                        }
+                    }
+
+                    if (propsOK) // Tutte le props match OK
+                    {
+                        RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
+                        RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                        Thread.Sleep(mseconds);
+                    }
+                    else
+                    {
+                        RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
+                    }
+                }
+                else // Item Senza props     
+                {
+                    RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+                    RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
+                    Thread.Sleep(mseconds);
+                }
+            }
+        }
 
 		internal static void Engine()
 		{
