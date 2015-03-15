@@ -84,7 +84,18 @@ namespace RazorEnhanced
                 scavenger_general.Columns.Add("List", typeof(List<string>));
                 scavenger_general.Columns.Add("Selection", typeof(string));
                 m_Dataset.Tables.Add(scavenger_general);
-                
+
+                //Organizer
+                DataTable organizer_lists = new DataTable("ORGANIZER_LISTS");
+                organizer_lists.Columns.Add("Name", typeof(string));
+                organizer_lists.Columns.Add("List", typeof(List<Organizer.OrganizerItem>));
+                m_Dataset.Tables.Add(organizer_lists);
+
+                DataTable organizer_general = new DataTable("ORGANIZER_GENERAL");
+                organizer_general.Columns.Add("Label", typeof(string));
+                organizer_general.Columns.Add("List", typeof(List<string>));
+                organizer_general.Columns.Add("Selection", typeof(string));
+                m_Dataset.Tables.Add(organizer_general);
 
 				m_Dataset.AcceptChanges();
 			}
@@ -223,6 +234,71 @@ namespace RazorEnhanced
             row["List"] = list;
             row["Selection"] = selection;
             m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Add(row);
+            Save();
+        }
+
+        //Organizer
+        internal static bool LoadOrganizerItemList(string name, out List<Organizer.OrganizerItem> list)
+        {
+            bool exit = false;
+            List<Organizer.OrganizerItem> result = new List<Organizer.OrganizerItem>();
+
+            foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+            {
+                if ((string)row["Name"] == name)
+                {
+                    result = row["List"] as List<Organizer.OrganizerItem>;
+                    exit = true;
+                }
+            }
+
+            list = result;
+            return exit;
+        }
+
+        internal static void SaveOrganizerItemList(string name, List<Organizer.OrganizerItem> list)
+        {
+            DataRow row = m_Dataset.Tables["ORGANIZER_LISTS"].NewRow();
+            row["Name"] = name;
+            row["List"] = list;
+            m_Dataset.Tables["ORGANIZER_LISTS"].Rows.Add(row);
+            Save();
+        }
+
+        internal static bool LoadOrganizerGeneral(out string label, out List<string> list, out string selection)
+        {
+            bool exit = false;
+
+            string labelOut = "";
+            List<string> listOut = new List<string>();
+            string selectionOut = "";
+
+            if (m_Dataset.Tables["ORGANIZER_GENERAL"].Rows.Count == 1)
+            {
+                DataRow row = m_Dataset.Tables["ORGANIZER_GENERAL"].Rows[0];
+                {
+                    labelOut = (string)row["Label"];
+                    listOut = row["List"] as List<string>;
+                    selectionOut = (string)row["Selection"];
+                    exit = true;
+                }
+            }
+
+            label = labelOut;
+            list = listOut;
+            selection = selectionOut;
+
+            return exit;
+        }
+
+        internal static void SaveOrganizerGeneral(string label, List<string> list, string selection)
+        {
+            m_Dataset.Tables["ORGANIZER_GENERAL"].Rows.Clear();
+            DataRow row = m_Dataset.Tables["ORGANIZER_GENERAL"].NewRow();
+            row["Label"] = label;
+            row["List"] = list;
+            row["Selection"] = selection;
+            m_Dataset.Tables["ORGANIZER_GENERAL"].Rows.Add(row);
             Save();
         }
 
