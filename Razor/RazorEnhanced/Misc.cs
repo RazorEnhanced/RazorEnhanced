@@ -8,9 +8,9 @@ namespace RazorEnhanced
 	public class Misc
 	{
 		//General
-		public static void Pause(double seconds)
+		public static void Pause(int mseconds)
 		{
-			System.Threading.Thread.Sleep(TimeSpan.FromSeconds(seconds));
+            System.Threading.Thread.Sleep(mseconds);
 		}
 
 		public static void Resync()

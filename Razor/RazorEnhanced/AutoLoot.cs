@@ -149,7 +149,7 @@ namespace RazorEnhanced
 
 		internal static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
 
-		internal static int Engine(List<AutoLootItem> autoLootList, double seconds, Items.Filter filter)
+		internal static int Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 			bool giaAperto = false;
@@ -220,7 +220,7 @@ namespace RazorEnhanced
 												{
 													RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
 													RazorEnhanced.Items.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
-													Thread.Sleep(TimeSpan.FromSeconds(seconds));
+                                                    Thread.Sleep(mseconds);
 												}
 												else
 												{
@@ -231,7 +231,7 @@ namespace RazorEnhanced
 											{
 												RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
 												RazorEnhanced.Items.Move(oggettoContenutoShard, RazorEnhanced.AutoLoot.AutolootBag, 0);
-												Thread.Sleep(TimeSpan.FromSeconds(seconds));
+                                                Thread.Sleep(mseconds);
 											}
 										}
 									}
@@ -277,7 +277,7 @@ namespace RazorEnhanced
 										{
 											RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
 											RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-											Thread.Sleep(TimeSpan.FromSeconds(seconds));
+                                            Thread.Sleep(mseconds);
 										}
 										else
 										{
@@ -288,7 +288,7 @@ namespace RazorEnhanced
 									{
 										RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
 										RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-										Thread.Sleep(TimeSpan.FromSeconds(seconds));
+                                        Thread.Sleep(mseconds);
 									}
 								}
 							}
@@ -312,7 +312,7 @@ namespace RazorEnhanced
 			corpseFilter.OnGround = true;
 			corpseFilter.Enabled = true;
 
-			exit = Engine(Assistant.Engine.MainWindow.AutoLootItemList, (Assistant.Engine.MainWindow.AutoLootDelayLabel / 1000), corpseFilter);
+			exit = Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel , corpseFilter);
 		}
 
 		// Funzioni di controllo da script
@@ -321,7 +321,7 @@ namespace RazorEnhanced
 			m_IgnoreCorpiQueue.Clear();
 		}
 
-		public static int RunOnce(List<AutoLootItem> autoLootList, double seconds, Items.Filter filter)
+		public static int RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
 			int exit = Int32.MinValue;
 
@@ -331,7 +331,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				exit = Engine(autoLootList, seconds, filter);
+                exit = Engine(autoLootList, mseconds, filter);
 			}
 
 			return exit;
