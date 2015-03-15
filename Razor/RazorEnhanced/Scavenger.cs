@@ -147,11 +147,82 @@ namespace RazorEnhanced
 
         internal static int Engine(List<ScavengerItem> ScavengerItemList, int mseconds, Items.Filter filter)
         {
-            List<Item> ItemOnGround = RazorEnhanced.Items.ApplyFilter(filter);
-    
+            List<Item> ItemsOnGround = RazorEnhanced.Items.ApplyFilter(filter);
+
+            foreach (RazorEnhanced.Item ItemGround in ItemsOnGround)
+            {
+                if (World.Player.Weight - 20 > World.Player.MaxWeight)      // Controllo peso
+                {
+                    RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
+                    RazorEnhanced.Misc.SendMessage("SCAVENGER: Max weight reached, Wait untill free some space");
+                    return -1;
+                }
+                foreach (ScavengerItem ScavengerItem in ScavengerItemList)
+                {
+                    if (ScavengerItem.Color == -1)          // Colore ALL
+                    {
+                        if (ItemGround.ItemID == ScavengerItem.Graphics)
+                        {
+                            GrabItem(ScavengerItem, ItemGround, mseconds);
+                        }
+                    }
+                    else
+                    {
+                        if (ItemGround.ItemID == ScavengerItem.Graphics && ItemGround.Hue == ScavengerItem.Color)
+                        {
+                            GrabItem(ScavengerItem, ItemGround, mseconds);
+                        }
+                    }
+                }
+                
+            }
 
             return 0;
         }
+
+        internal static void GrabItem(ScavengerItem ScavengerItem, Item ItemGround, int mseconds)
+        {
+            if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(ItemGround.Position.X, ItemGround.Position.Y)) <= 3)
+            {
+                if (ScavengerItem.Properties.Count > 0) // Item con props
+                {
+                    RazorEnhanced.Scavenger.AddLog("- Item Match found scan props");
+
+                    bool propsOK = false;
+                    foreach (ScavengerItem.Property props in ScavengerItem.Properties) // Scansione e verifica props
+                    {
+                        int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(ItemGround, props.Name);
+                        if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+                        {
+                            propsOK = true;
+                        }
+                        else
+                        {
+                            propsOK = false;
+                            break; // alla prima fallita esce non ha senso controllare le altre
+                        }
+                    }
+
+                    if (propsOK) // Tutte le props match OK
+                    {
+                        RazorEnhanced.Scavenger.AddLog("- Props Match ok... Grabbing");
+                        RazorEnhanced.Items.Move(ItemGround, RazorEnhanced.Scavenger.ScavengerBag, 0);
+                        Thread.Sleep(mseconds);
+                    }
+                    else
+                    {
+                        RazorEnhanced.Scavenger.AddLog("- Props Match fail!");
+                    }
+                }
+                else // Item Senza props     
+                {
+                    RazorEnhanced.AutoLoot.AddLog("- Item Match found... Grabbing");
+                    RazorEnhanced.Items.Move(ItemGround, RazorEnhanced.Scavenger.ScavengerBag, 0); 
+                    Thread.Sleep(mseconds);
+                }
+            }
+        }
+
 
         internal static void Engine()
         {

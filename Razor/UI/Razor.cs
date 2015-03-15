@@ -7690,7 +7690,7 @@ namespace Assistant
 				scavengerDragDelay.Enabled = true;
 
 
-                //RazorEnhanced.Scavenger.Auto = false;
+                RazorEnhanced.Scavenger.Auto = false;
 				RazorEnhanced.Scavenger.AddLog("Scavenger Engine Stop...");
                 RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
 			}
