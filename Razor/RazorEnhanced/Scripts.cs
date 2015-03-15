@@ -125,7 +125,7 @@ namespace RazorEnhanced
 						m_AutoLootThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 					{
-						m_AutoLootThread = new Thread(AutoLoot.Run);
+						m_AutoLootThread = new Thread(AutoLoot.Engine);
 						m_AutoLootThread.Start();
 					}
 				}
@@ -189,6 +189,7 @@ namespace RazorEnhanced
 			scope.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
 			scope.SetVariable("Player", new RazorEnhanced.Player());
 			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
+			scope.SetVariable("Spells", new RazorEnhanced.Spells());
 
 			return scope;
 		}
