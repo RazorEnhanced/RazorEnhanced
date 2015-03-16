@@ -306,6 +306,24 @@
     <Compile Include="RazorEnhanced\UI\Controls.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.Designer.cs">
+      <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddItemList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddItemList.Designer.cs">
+      <DependentUpon>EnhancedOrganizerAddItemList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerManualAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerManualAdd.Designer.cs">
+      <DependentUpon>EnhancedOrganizerManualAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScavengerManualAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -435,6 +453,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.resx">
+      <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerAddItemList.resx">
+      <DependentUpon>EnhancedOrganizerAddItemList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerManualAdd.resx">
+      <DependentUpon>EnhancedOrganizerManualAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerManualAdd.resx">
       <DependentUpon>EnhancedScavengerManualAdd.cs</DependentUpon>

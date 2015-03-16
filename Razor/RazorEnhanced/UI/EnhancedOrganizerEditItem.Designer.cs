@@ -1,6 +1,6 @@
 ﻿namespace RazorEnhanced.UI
 {
-    partial class EnhancedScavengerManualAdd
+    partial class EnhancedOrganizerEditItem
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedScavengerManualAdd));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedOrganizerEditItem));
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -41,13 +41,16 @@
             this.tName = new RazorEnhanced.UI.RazorTextBox();
             this.bAddItem = new RazorEnhanced.UI.RazorButton();
             this.bClose = new RazorEnhanced.UI.RazorButton();
+            this.tAmount = new RazorEnhanced.UI.RazorTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(4, 22);
+            this.label1.Location = new System.Drawing.Point(4, 23);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
@@ -57,6 +60,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.tAmount);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.tColor);
             this.groupBox1.Controls.Add(this.label3);
@@ -65,17 +71,17 @@
             this.groupBox1.Controls.Add(this.tName);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Location = new System.Drawing.Point(9, 10);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(221, 106);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(221, 129);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Item";
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(121, 72);
+            this.label4.Location = new System.Drawing.Point(120, 74);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 14);
@@ -88,7 +94,7 @@
             this.tColor.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.tColor.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tColor.Location = new System.Drawing.Point(58, 72);
-            this.tColor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tColor.Margin = new System.Windows.Forms.Padding(2);
             this.tColor.Name = "tColor";
             this.tColor.Padding = new System.Windows.Forms.Padding(1);
             this.tColor.Size = new System.Drawing.Size(58, 20);
@@ -97,7 +103,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 72);
+            this.label3.Location = new System.Drawing.Point(4, 75);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(34, 13);
@@ -110,7 +116,7 @@
             this.tGraphics.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.tGraphics.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tGraphics.Location = new System.Drawing.Point(58, 46);
-            this.tGraphics.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tGraphics.Margin = new System.Windows.Forms.Padding(2);
             this.tGraphics.Name = "tGraphics";
             this.tGraphics.Padding = new System.Windows.Forms.Padding(1);
             this.tGraphics.Size = new System.Drawing.Size(58, 20);
@@ -119,7 +125,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 46);
+            this.label2.Location = new System.Drawing.Point(4, 49);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(52, 13);
@@ -132,7 +138,7 @@
             this.tName.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.tName.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tName.Location = new System.Drawing.Point(58, 21);
-            this.tName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tName.Margin = new System.Windows.Forms.Padding(2);
             this.tName.Name = "tName";
             this.tName.Padding = new System.Windows.Forms.Padding(1);
             this.tName.Size = new System.Drawing.Size(131, 20);
@@ -158,12 +164,12 @@
             office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             office2010BlueTheme1.TextColor = System.Drawing.Color.White;
             this.bAddItem.ColorTable = office2010BlueTheme1;
-            this.bAddItem.Location = new System.Drawing.Point(241, 32);
-            this.bAddItem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bAddItem.Location = new System.Drawing.Point(241, 44);
+            this.bAddItem.Margin = new System.Windows.Forms.Padding(2);
             this.bAddItem.Name = "bAddItem";
             this.bAddItem.Size = new System.Drawing.Size(57, 19);
             this.bAddItem.TabIndex = 2;
-            this.bAddItem.Text = "Add";
+            this.bAddItem.Text = "Save";
             this.bAddItem.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.bAddItem.UseVisualStyleBackColor = true;
             this.bAddItem.Click += new System.EventHandler(this.bAddItem_Click);
@@ -171,8 +177,8 @@
             // bClose
             // 
             this.bClose.ColorTable = office2010BlueTheme1;
-            this.bClose.Location = new System.Drawing.Point(241, 76);
-            this.bClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.bClose.Location = new System.Drawing.Point(241, 88);
+            this.bClose.Margin = new System.Windows.Forms.Padding(2);
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(57, 19);
             this.bClose.TabIndex = 3;
@@ -181,19 +187,50 @@
             this.bClose.UseVisualStyleBackColor = true;
             this.bClose.Click += new System.EventHandler(this.bClose_Click);
             // 
-            // EnhancedScavengerManualAdd
+            // tAmount
+            // 
+            this.tAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.tAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.tAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.tAmount.Location = new System.Drawing.Point(58, 96);
+            this.tAmount.Margin = new System.Windows.Forms.Padding(2);
+            this.tAmount.Name = "tAmount";
+            this.tAmount.Padding = new System.Windows.Forms.Padding(1);
+            this.tAmount.Size = new System.Drawing.Size(58, 20);
+            this.tAmount.TabIndex = 8;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 99);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(46, 13);
+            this.label5.TabIndex = 7;
+            this.label5.Text = "Amount:";
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(121, 99);
+            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(96, 14);
+            this.label6.TabIndex = 9;
+            this.label6.Text = "Set -1 for no limit";
+            // 
+            // EnhancedOrganizerEditItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 128);
+            this.ClientSize = new System.Drawing.Size(314, 145);
             this.Controls.Add(this.bClose);
             this.Controls.Add(this.bAddItem);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "EnhancedScavengerManualAdd";
-            this.Text = "Enhanced Scavenger Manual AddItem";
-            this.Load += new System.EventHandler(this.EnhancedScavengerManualAdd_Load);
+            this.Name = "EnhancedOrganizerEditItem";
+            this.Text = "Enhanced Organizer Edit Item";
+            this.Load += new System.EventHandler(this.EnhancedOrganizerManualAdd_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -213,6 +250,9 @@
         private RazorButton bAddItem;
         private RazorButton bClose;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private RazorTextBox tAmount;
+        private System.Windows.Forms.Label label5;
 
     }
 }
