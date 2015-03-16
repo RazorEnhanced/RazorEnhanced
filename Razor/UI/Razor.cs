@@ -3901,6 +3901,7 @@ namespace Assistant
             this.organizerSetDestinationB.TabIndex = 69;
             this.organizerSetDestinationB.Text = "Destination Cont";
             this.organizerSetDestinationB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestinationB_Click);
             // 
             // organizerSourceLabel
             // 
@@ -3932,6 +3933,7 @@ namespace Assistant
             this.organizerEditB.TabIndex = 48;
             this.organizerEditB.Text = "Edit";
             this.organizerEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerEditB.Click += new System.EventHandler(this.organizerEditB_Click);
             // 
             // organizerAddTargetB
             // 
@@ -3942,6 +3944,7 @@ namespace Assistant
             this.organizerAddTargetB.TabIndex = 47;
             this.organizerAddTargetB.Text = "Add Target";
             this.organizerAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTargetB_Click);
             // 
             // organizerRemoveB
             // 
@@ -3952,6 +3955,7 @@ namespace Assistant
             this.organizerRemoveB.TabIndex = 46;
             this.organizerRemoveB.Text = "Remove";
             this.organizerRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerRemoveB.Click += new System.EventHandler(this.organizerRemoveB_Click);
             // 
             // organizerAddManualB
             // 
@@ -3962,6 +3966,7 @@ namespace Assistant
             this.organizerAddManualB.TabIndex = 45;
             this.organizerAddManualB.Text = "Add Manual";
             this.organizerAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerAddManualB.Click += new System.EventHandler(this.organizerAddManualB_Click);
             // 
             // organizerSetSourceB
             // 
@@ -3972,6 +3977,7 @@ namespace Assistant
             this.organizerSetSourceB.TabIndex = 66;
             this.organizerSetSourceB.Text = "Source Cont";
             this.organizerSetSourceB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSourceB_Click);
             // 
             // organizerListView
             // 
@@ -4021,27 +4027,29 @@ namespace Assistant
             // organizerRemoveListB
             // 
             this.organizerRemoveListB.ColorTable = office2010BlueTheme1;
-            this.organizerRemoveListB.Location = new System.Drawing.Point(366, 14);
+            this.organizerRemoveListB.Location = new System.Drawing.Point(369, 14);
             this.organizerRemoveListB.Name = "organizerRemoveListB";
             this.organizerRemoveListB.Size = new System.Drawing.Size(90, 20);
             this.organizerRemoveListB.TabIndex = 63;
             this.organizerRemoveListB.Text = "Remove";
             this.organizerRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerRemoveListB.Click += new System.EventHandler(this.organizerRemoveListB_Click);
             // 
             // organizerAddListB
             // 
             this.organizerAddListB.ColorTable = office2010BlueTheme1;
-            this.organizerAddListB.Location = new System.Drawing.Point(270, 14);
+            this.organizerAddListB.Location = new System.Drawing.Point(273, 14);
             this.organizerAddListB.Name = "organizerAddListB";
             this.organizerAddListB.Size = new System.Drawing.Size(90, 20);
             this.organizerAddListB.TabIndex = 62;
             this.organizerAddListB.Text = "Add";
             this.organizerAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerAddListB.Click += new System.EventHandler(this.organizerAddListB_Click);
             // 
             // organizerImportListB
             // 
             this.organizerImportListB.ColorTable = office2010BlueTheme1;
-            this.organizerImportListB.Location = new System.Drawing.Point(462, 14);
+            this.organizerImportListB.Location = new System.Drawing.Point(465, 14);
             this.organizerImportListB.Name = "organizerImportListB";
             this.organizerImportListB.Size = new System.Drawing.Size(90, 20);
             this.organizerImportListB.TabIndex = 59;
@@ -4052,15 +4060,16 @@ namespace Assistant
             // 
             this.organizerListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.organizerListSelect.FormattingEnabled = true;
-            this.organizerListSelect.Location = new System.Drawing.Point(78, 12);
+            this.organizerListSelect.Location = new System.Drawing.Point(83, 12);
             this.organizerListSelect.Name = "organizerListSelect";
             this.organizerListSelect.Size = new System.Drawing.Size(183, 24);
             this.organizerListSelect.TabIndex = 61;
+            this.organizerListSelect.SelectedIndexChanged += new System.EventHandler(this.organizerListSelect_SelectedIndexChanged);
             // 
             // organizerExportListB
             // 
             this.organizerExportListB.ColorTable = office2010BlueTheme1;
-            this.organizerExportListB.Location = new System.Drawing.Point(558, 14);
+            this.organizerExportListB.Location = new System.Drawing.Point(561, 14);
             this.organizerExportListB.Name = "organizerExportListB";
             this.organizerExportListB.Size = new System.Drawing.Size(90, 20);
             this.organizerExportListB.TabIndex = 58;
@@ -4301,6 +4310,37 @@ namespace Assistant
 				ScavengerListSelect.SelectedIndex = ScavengerListSelect.Items.IndexOf("Default");
             // ultima bag
             scavengerContainerLabel.Text = ScavengerSettingBag;
+
+            // ORGANIZER
+            // Liste 
+            organizerListSelect.Items.Add("Default");    // Lista base non cancellabile 
+            // Carico parametri base
+            string OrganizerSettingDelay = "";
+            string OrganizerSettingLastList = "";
+            List<string> OrganizerSettingItemList = new List<string>();
+
+            //load delay
+            RazorEnhanced.Settings.LoadOrganizerGeneral(out OrganizerSettingDelay, out OrganizerSettingItemList, out OrganizerSettingLastList);
+            if (OrganizerSettingDelay != "")
+                organizerDragDelay.Text = OrganizerSettingDelay;
+            else
+                organizerDragDelay.Text = "100";
+
+            // load Lista item
+            for (int i = 0; i < OrganizerSettingItemList.Count; i++)
+            {
+                if (OrganizerSettingItemList[i] != "Default")
+                    organizerListSelect.Items.Add(OrganizerSettingItemList[i]);
+            }
+
+            // Setta ultima lista usata e carica 
+            if (OrganizerSettingLastList != "")
+            {
+                organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf(OrganizerSettingLastList);
+
+            }
+            else
+                organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
 		}
 
 		private bool m_Initializing = false;
@@ -7676,12 +7716,14 @@ namespace Assistant
 			if (AutoLootBag != null && AutoLootBag.Serial.IsItem && AutoLootBag.IsContainer && AutoLootBag.RootContainer == Assistant.World.Player)
 			{
 				RazorEnhanced.Misc.SendMessage("Autoloot bag configured to: " + AutoLootBag.ToString());
+                RazorEnhanced.AutoLoot.AddLog("Autoloot bag configured to: " + AutoLootBag.ToString());
 				autolootContainerLabel.Text = "0x" + AutoLootBag.Serial.Value.ToString("X8");
 
 			}
 			else
 			{
 				RazorEnhanced.Misc.SendMessage("Invalid Autoloot Bag, set backpack");
+                RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Bag, set backpack");
 				autolootContainerLabel.Text = "0x" + World.Player.Backpack.Serial.Value.ToString("X8");
 			}
 
@@ -7986,12 +8028,14 @@ namespace Assistant
 			if (ScavengerBag != null && ScavengerBag.Serial.IsItem && ScavengerBag.IsContainer && ScavengerBag.RootContainer == Assistant.World.Player)
 			{
 				RazorEnhanced.Misc.SendMessage("Scavenger bag configured to: " + ScavengerBag.ToString());
+                RazorEnhanced.Scavenger.AddLog("Scavenger bag configured to: " + ScavengerBag.ToString());
 				scavengerContainerLabel.Text = "0x" + ScavengerBag.Serial.Value.ToString("X8");
 
 			}
 			else
 			{
 				RazorEnhanced.Misc.SendMessage("Invalid Scavenger Bag, set backpack");
+                RazorEnhanced.Scavenger.AddLog("Invalid Scavenger Bag, set backpack");
 				scavengerContainerLabel.Text = "0x" + World.Player.Backpack.Serial.Value.ToString("X8");
 			}
 
@@ -8087,6 +8131,145 @@ namespace Assistant
 			}
 
 		}
+
+        private void organizerAddListB_Click(object sender, EventArgs e)
+        {
+            EnhancedOrganizerAddItemList AddItemList = new EnhancedOrganizerAddItemList();
+            AddItemList.TopMost = true;
+            AddItemList.Show();
+        }
+
+        private void organizerRemoveListB_Click(object sender, EventArgs e)
+        {
+            if (organizerListSelect.Text != "Default")
+            {
+                RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.SelectedItem.ToString() + " removed!");
+                organizerListSelect.Items.Remove(organizerListSelect.SelectedItem);
+                organizerListSelect.SelectedIndex = organizerListSelect.FindStringExact("Default");
+            }
+            else
+                RazorEnhanced.Organizer.AddLog("Can't remove Default list!");
+        }
+
+        private void organizerAddManualB_Click(object sender, EventArgs e)
+        {
+            EnhancedOrganizerManualAdd ManualAddItem = new EnhancedOrganizerManualAdd(OrganizerListView, OrganizerItemList);
+            ManualAddItem.TopMost = true;
+            ManualAddItem.Show();
+        }
+
+        private void organizerEditB_Click(object sender, EventArgs e)
+        {
+            int CheckedIndex = 0;
+            for (int i = 0; i < OrganizerListView.Items.Count; i++)
+            {
+                if (OrganizerListView.Items[i].Checked)
+                {
+                    CheckedIndex = i;
+                    break;
+                }
+            }
+            EnhancedOrganizerEditItem EditItem = new EnhancedOrganizerEditItem(OrganizerListView, OrganizerItemList, CheckedIndex);
+            EditItem.TopMost = true;
+            EditItem.Show();
+        }
+
+        private void organizerRemoveB_Click(object sender, EventArgs e)
+        {
+            int y = 0;
+            for (int i = 0; i < OrganizerListView.Items.Count; i++)
+            {
+                if (OrganizerListView.Items[i].Checked)
+                {
+                    OrganizerItemList.RemoveAt(y);
+                    y--;
+                }
+                y++;
+            }
+            RazorEnhanced.Settings.SaveOrganizerItemList(organizerListSelect.SelectedItem.ToString(), OrganizerItemList, organizerSourceLabel.Text, organizerDestinationLabel.Text);
+            RazorEnhanced.Organizer.RefreshList(OrganizerItemList);
+        }
+
+        private void organizerSetSourceB_Click(object sender, EventArgs e)
+        {
+
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
+        }
+        private void OrganizerSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+
+            Assistant.Item SourceBag = Assistant.World.FindItem(serial);
+            if (SourceBag != null && SourceBag.Serial.IsItem && SourceBag.IsContainer)
+            {
+                RazorEnhanced.Misc.SendMessage("Source bag configured to: " + SourceBag.ToString());
+                RazorEnhanced.Organizer.AddLog("Source bag configured to: " + SourceBag.ToString());
+                OrganizerSourceLabel.Text = "0x" + SourceBag.Serial.Value.ToString("X8");
+
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid Source Bag");
+                RazorEnhanced.Organizer.AddLog("Invalid Source Bag");
+                OrganizerSourceLabel.Text = "0x00000000";
+            }
+            RazorEnhanced.Settings.SaveOrganizerItemList(OrganzierListSelect.SelectedItem.ToString(), OrganizerItemList, OrganizerSourceLabel.Text, OrganizerDestinationLabel.Text);
+        }
+
+        private void organizerSetDestinationB_Click(object sender, EventArgs e)
+        {
+
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
+        }
+        private void OrganizerDestinationContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+
+            Assistant.Item DestinationBag = Assistant.World.FindItem(serial);
+            if (DestinationBag != null && DestinationBag.Serial.IsItem && DestinationBag.IsContainer)
+            {
+                RazorEnhanced.Misc.SendMessage("Destination bag configured to: " + DestinationBag.ToString());
+                RazorEnhanced.Organizer.AddLog("Destination bag configured to: " + DestinationBag.ToString());
+                OrganizerDestinationLabel.Text = "0x" + DestinationBag.Serial.Value.ToString("X8");
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Destination Source Bag");
+                RazorEnhanced.Organizer.AddLog("Destination Source Bag");
+                OrganizerDestinationLabel.Text = "0x00000000";
+            }
+            RazorEnhanced.Settings.SaveOrganizerItemList(OrganzierListSelect.SelectedItem.ToString(), OrganizerItemList, OrganizerSourceLabel.Text, OrganizerDestinationLabel.Text);
+        }
+
+        private void organizerListSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string SourceBag = "";
+            string DestinationBag = "";
+            RazorEnhanced.Settings.LoadOrganizerItemList(organizerListSelect.SelectedItem.ToString(), out organizerItemList, out SourceBag, out DestinationBag);
+            organizerSourceLabel.Text = SourceBag;
+            organizerDestinationLabel.Text = DestinationBag;
+            RazorEnhanced.Organizer.RefreshList(organizerItemList);
+            RazorEnhanced.Organizer.AddLog("Organizer list changed to: " + organizerListSelect.SelectedItem.ToString());
+        }
+
+        private void organizerAddTargetB_Click(object sender, EventArgs e)
+        {
+
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
+        }
+
+        private void OrganizerItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+
+            Assistant.Item OrganizerItem = Assistant.World.FindItem(serial);
+            if (OrganizerItem != null && OrganizerItem.Serial.IsItem)
+            {
+                RazorEnhanced.Misc.SendMessage("Organizer item added: " + OrganizerItem.ToString());
+                RazorEnhanced.Organizer.AddItemToList(OrganizerItem.Name, OrganizerItem.ItemID, OrganizerItem.Hue, -1 ,OrganizerListView, organizerItemList);
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid target");
+            }
+        }
 
 	}
 }

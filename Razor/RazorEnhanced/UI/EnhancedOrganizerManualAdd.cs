@@ -76,12 +76,12 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Amount = Convert.ToInt32(tAmount.Text, 16);
+                Amount = Convert.ToInt32(tAmount.Text);
             }
             catch
             {
-                MessageBox.Show("Item Graphics is not valid.",
-                "Item Graphics Error",
+                MessageBox.Show("Item Amount is not valid.",
+                "Item Amount Error",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Exclamation,
                 MessageBoxDefaultButton.Button1);
