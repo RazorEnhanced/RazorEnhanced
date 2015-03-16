@@ -4246,8 +4246,9 @@ namespace Assistant
 			string LootSettingDelay = "";
 			string LootSettingLastList = "";
 			List<string> LootSettingItemList = new List<string>();
+            string LootSettingBag = "";
 			//load delay
-			RazorEnhanced.Settings.LoadAutoLootGeneral(out LootSettingDelay, out LootSettingItemList, out LootSettingLastList);
+			RazorEnhanced.Settings.LoadAutoLootGeneral(out LootSettingDelay, out LootSettingItemList, out LootSettingLastList, out LootSettingBag);
 			if (LootSettingDelay != "")
 				autoLootLabelDelay.Text = LootSettingDelay;
 			else
@@ -4266,7 +4267,8 @@ namespace Assistant
 			}
 			else
 				AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf("Default");
-
+            // Ultima bag
+            autolootContainerLabel.Text = LootSettingBag;
 
 			// SCAVENGER
 			// Liste 
@@ -7680,6 +7682,14 @@ namespace Assistant
 				RazorEnhanced.Misc.SendMessage("Invalid Autoloot Bag, set backpack");
 				autolootContainerLabel.Text = "0x" + World.Player.Backpack.Serial.Value.ToString("X8");
 			}
+
+            List<string> LootSettingItemList = new List<string>();
+            for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
+            {
+                if (Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString() != "Default")
+                    LootSettingItemList.Add(Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString());
+            }
+            RazorEnhanced.Settings.SaveAutoLootIGeneral(AutoLootDelayLabel.ToString(), LootSettingItemList, AutolootListSelect.SelectedItem.ToString(), AutoLootContainerLabel.Text);
 		}
 
 		private void autolootAddItemBTarget_Click(object sender, EventArgs e)

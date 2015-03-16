@@ -70,6 +70,7 @@ namespace RazorEnhanced
 				autoloot_general.Columns.Add("Label", typeof(string));
 				autoloot_general.Columns.Add("List", typeof(List<string>));
 				autoloot_general.Columns.Add("Selection", typeof(string));
+                autoloot_general.Columns.Add("Bag", typeof(string));
 				m_Dataset.Tables.Add(autoloot_general);
 
                 
@@ -135,13 +136,14 @@ namespace RazorEnhanced
 			Save();
 		}
 
-		internal static bool LoadAutoLootGeneral(out string label, out List<string> list, out string selection)
+        internal static bool LoadAutoLootGeneral(out string label, out List<string> list, out string selection, out string bag)
 		{
 			bool exit = false;
 
 			string labelOut = "";
 			List<string> listOut = new List<string>();
 			string selectionOut = "";
+            string bagOut = "0x0000000";
 
 			if (m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Count == 1)
 			{
@@ -150,6 +152,7 @@ namespace RazorEnhanced
 					labelOut = (string)row["Label"];
 					listOut = row["List"] as List<string>;
 					selectionOut = (string)row["Selection"];
+                    bagOut = (string)row["Bag"];
 					exit = true;
 				}
 			}
@@ -157,17 +160,19 @@ namespace RazorEnhanced
 			label = labelOut;
 			list = listOut;
 			selection = selectionOut;
+            bag = bagOut;
 
 			return exit;
 		}
 
-		internal static void SaveAutoLootIGeneral(string label, List<string> list, string selection)
+		internal static void SaveAutoLootIGeneral(string label, List<string> list, string selection, string bag)
 		{
 			m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Clear();
 			DataRow row = m_Dataset.Tables["AUTOLOOT_GENERAL"].NewRow();
 			row["Label"] = label;
 			row["List"] = list;
 			row["Selection"] = selection;
+            row["Bag"] = bag;
 			m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Add(row);
 			Save();
 		}

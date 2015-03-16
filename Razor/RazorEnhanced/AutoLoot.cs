@@ -60,10 +60,19 @@ namespace RazorEnhanced
 			{
 				int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
 
-				if (SerialBag == 0)
-					SerialBag = World.Player.Backpack.Serial;
-
-				return RazorEnhanced.Items.FindBySerial(SerialBag);
+                if (SerialBag == 0)
+                {
+                    SerialBag = World.Player.Backpack.Serial;
+                    return RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+                }
+                else
+                {
+                    Item bag = RazorEnhanced.Items.FindBySerial(SerialBag);
+                    if (bag.RootContainer != World.Player)
+                        return RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+                    else
+                        return bag;
+                }
 			}
 		}
 

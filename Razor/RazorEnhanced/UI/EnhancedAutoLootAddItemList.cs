@@ -74,7 +74,7 @@ namespace RazorEnhanced.UI
                     if (Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString()!= "Default")
                         LootSettingItemList.Add(Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString());
                 }
-                RazorEnhanced.Settings.SaveAutoLootIGeneral(Assistant.Engine.MainWindow.AutoLootDelayLabel.ToString() , LootSettingItemList, NuovaLootList);
+                RazorEnhanced.Settings.SaveAutoLootIGeneral(Assistant.Engine.MainWindow.AutoLootDelayLabel.ToString() , LootSettingItemList, NuovaLootList, Assistant.Engine.MainWindow.AutoLootContainerLabel.Text);
                 this.Close();
             }
         }
