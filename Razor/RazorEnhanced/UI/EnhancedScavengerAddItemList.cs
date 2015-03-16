@@ -74,7 +74,7 @@ namespace RazorEnhanced.UI
                     if (Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString() != "Default")
                         ScavengerSettingItemList.Add(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString());
                 }
-                RazorEnhanced.Settings.SaveScavengerGeneral(Assistant.Engine.MainWindow.ScavengerDragDelay.ToString(), ScavengerSettingItemList, NuovaScavengerList);
+                RazorEnhanced.Settings.SaveScavengerGeneral(Assistant.Engine.MainWindow.ScavengerDragDelay.ToString(), ScavengerSettingItemList, NuovaScavengerList, Assistant.Engine.MainWindow.ScavengerContainerLabel.Text);
                 this.Close();
             }
         }

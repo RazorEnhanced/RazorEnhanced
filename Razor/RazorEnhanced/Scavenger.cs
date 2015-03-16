@@ -61,12 +61,20 @@ namespace RazorEnhanced
                 int serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
 
                 if (serialBag == 0)
+                {
                     serialBag = World.Player.Backpack.Serial;
-
-                return RazorEnhanced.Items.FindBySerial(serialBag);
+                    return RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+                }
+                else
+                {
+                    Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
+                    if (bag.RootContainer != World.Player)
+                        return RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+                    else
+                        return bag;
+                }
             }
-        }
-
+        }  
         internal static int ItemDragDelay
         {
             get

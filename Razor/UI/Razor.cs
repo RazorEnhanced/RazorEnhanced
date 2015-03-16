@@ -4276,10 +4276,11 @@ namespace Assistant
 			// Carico parametri base
 			string ScavengerSettingDelay = "";
 			string ScavengerSettingLastList = "";
+            string ScavengerSettingBag = "";
 			List<string> ScavengerSettingItemList = new List<string>();
 
 			//load delay
-			RazorEnhanced.Settings.LoadScavengerGeneral(out ScavengerSettingDelay, out ScavengerSettingItemList, out ScavengerSettingLastList);
+            RazorEnhanced.Settings.LoadScavengerGeneral(out ScavengerSettingDelay, out ScavengerSettingItemList, out ScavengerSettingLastList, out ScavengerSettingBag);
 			if (ScavengerSettingDelay != "")
 				scavengerDragDelay.Text = LootSettingDelay;
 			else
@@ -4298,7 +4299,8 @@ namespace Assistant
 			}
 			else
 				ScavengerListSelect.SelectedIndex = ScavengerListSelect.Items.IndexOf("Default");
-
+            // ultima bag
+            scavengerContainerLabel.Text = ScavengerSettingBag;
 		}
 
 		private bool m_Initializing = false;
@@ -7992,6 +7994,15 @@ namespace Assistant
 				RazorEnhanced.Misc.SendMessage("Invalid Scavenger Bag, set backpack");
 				scavengerContainerLabel.Text = "0x" + World.Player.Backpack.Serial.Value.ToString("X8");
 			}
+
+            List<string> ScavengerSettingItemList = new List<string>();
+
+            for (int i = 0; i < Assistant.Engine.MainWindow.ScavengerListSelect.Items.Count; i++)
+            {
+                if (Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString() != "Default")
+                    ScavengerSettingItemList.Add(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString());
+            }
+            RazorEnhanced.Settings.SaveScavengerGeneral(ScavengerDragDelay.ToString(), ScavengerSettingItemList, ScavengerListSelect.SelectedItem.ToString(), ScavengerContainerLabel.Text);
 		}
 
 		private void scavengerAddListB_Click(object sender, EventArgs e)

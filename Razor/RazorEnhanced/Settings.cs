@@ -84,6 +84,7 @@ namespace RazorEnhanced
                 scavenger_general.Columns.Add("Label", typeof(string));
                 scavenger_general.Columns.Add("List", typeof(List<string>));
                 scavenger_general.Columns.Add("Selection", typeof(string));
+                scavenger_general.Columns.Add("Bag", typeof(string));
                 m_Dataset.Tables.Add(scavenger_general);
 
                 //Organizer
@@ -205,13 +206,14 @@ namespace RazorEnhanced
             Save();
         }
 
-        internal static bool LoadScavengerGeneral(out string label, out List<string> list, out string selection)
+        internal static bool LoadScavengerGeneral(out string label, out List<string> list, out string selection, out string bag)
         {
             bool exit = false;
 
             string labelOut = "";
             List<string> listOut = new List<string>();
             string selectionOut = "";
+            string BagOut = "0x0000000";
 
             if (m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Count == 1)
             {
@@ -220,6 +222,7 @@ namespace RazorEnhanced
                     labelOut = (string)row["Label"];
                     listOut = row["List"] as List<string>;
                     selectionOut = (string)row["Selection"];
+                    BagOut = (string)row["Bag"];
                     exit = true;
                 }
             }
@@ -227,17 +230,19 @@ namespace RazorEnhanced
             label = labelOut;
             list = listOut;
             selection = selectionOut;
+            bag = BagOut;
 
             return exit;
         }
 
-        internal static void SaveScavengerGeneral(string label, List<string> list, string selection)
+        internal static void SaveScavengerGeneral(string label, List<string> list, string selection, string bag)
         {
             m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Clear();
             DataRow row = m_Dataset.Tables["SCAVENGER_GENERAL"].NewRow();
             row["Label"] = label;
             row["List"] = list;
             row["Selection"] = selection;
+            row["Bag"] = bag;
             m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Add(row);
             Save();
         }
