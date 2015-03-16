@@ -90,6 +90,8 @@ namespace RazorEnhanced
                 //Organizer
                 DataTable organizer_lists = new DataTable("ORGANIZER_LISTS");
                 organizer_lists.Columns.Add("Name", typeof(string));
+                organizer_lists.Columns.Add("SourceBag", typeof(string));
+                organizer_lists.Columns.Add("DestinationBag", typeof(string));
                 organizer_lists.Columns.Add("List", typeof(List<Organizer.OrganizerItem>));
                 m_Dataset.Tables.Add(organizer_lists);
 
@@ -248,29 +250,36 @@ namespace RazorEnhanced
         }
 
         //Organizer
-        internal static bool LoadOrganizerItemList(string name, out List<Organizer.OrganizerItem> list)
+        internal static bool LoadOrganizerItemList(string name, out List<Organizer.OrganizerItem> list, out string SourceBag, out string DestinationBag)
         {
             bool exit = false;
+            string SourceBagOut = "0x0000000";
+            string DestinationBagOut = "0x0000000";
             List<Organizer.OrganizerItem> result = new List<Organizer.OrganizerItem>();
 
             foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
             {
                 if ((string)row["Name"] == name)
                 {
+                    SourceBagOut = (string)row["SourceBag"];
+                    DestinationBagOut = (string)row["DestinationBag"];
                     result = row["List"] as List<Organizer.OrganizerItem>;
                     exit = true;
                 }
             }
-
+            SourceBag = SourceBagOut;
+            DestinationBag = DestinationBagOut;
             list = result;
             return exit;
         }
 
-        internal static void SaveOrganizerItemList(string name, List<Organizer.OrganizerItem> list)
+        internal static void SaveOrganizerItemList(string name, List<Organizer.OrganizerItem> list, string SourceBag, string DestinationBag)
         {
             DataRow row = m_Dataset.Tables["ORGANIZER_LISTS"].NewRow();
             row["Name"] = name;
             row["List"] = list;
+            row["SourceBag"] = SourceBag;
+            row["DestinationBag"] = DestinationBag;
             m_Dataset.Tables["ORGANIZER_LISTS"].Rows.Add(row);
             Save();
         }
