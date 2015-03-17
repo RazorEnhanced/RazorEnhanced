@@ -340,6 +340,44 @@ namespace Assistant
         private Label label24;
         private TabPage VendorBuy;
         private TabPage VendorSell;
+        private GroupBox groupBox17;
+        private RazorButton buyEditB;
+        private RazorButton buyAddTargetB;
+        private RazorButton buyRemoveB;
+        private RazorButton buyAddManualB;
+        private GroupBox groupBox18;
+        private ListBox buyLogBox;
+        private RazorCheckBox buyEnableCheckB;
+        private ListView buyListView;
+        private ColumnHeader columnHeader14;
+        private ColumnHeader columnHeader15;
+        private ColumnHeader columnHeader16;
+        private ColumnHeader columnHeader17;
+        private RazorButton buyRemoveListB;
+        private RazorButton buyAddListB;
+        private RazorButton buyImportListB;
+        private RazorComboBox buyListSelect;
+        private RazorButton buyExportListB;
+        private Label label25;
+        private GroupBox groupBox19;
+        private RazorButton sellEditB;
+        private RazorButton sellAddTargerB;
+        private RazorButton sellRemoveB;
+        private RazorButton sellAddManualB;
+        private GroupBox groupBox20;
+        private ListBox sellLogBox;
+        private RazorCheckBox sellEnableCheckB;
+        private ListView sellListView;
+        private ColumnHeader columnHeader18;
+        private ColumnHeader columnHeader19;
+        private ColumnHeader columnHeader20;
+        private ColumnHeader columnHeader21;
+        private RazorButton sellRemoveListB;
+        private RazorButton sellAddListB;
+        private RazorButton sellImportListB;
+        private RazorComboBox sellListSelect;
+        private RazorButton sellExportListB;
+        private Label label26;
 
 		private bool m_CanClose = true;
 
@@ -759,9 +797,47 @@ namespace Assistant
             this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
             this.label24 = new System.Windows.Forms.Label();
             this.VendorBuy = new System.Windows.Forms.TabPage();
+            this.VendorSell = new System.Windows.Forms.TabPage();
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.VendorSell = new System.Windows.Forms.TabPage();
+            this.buyRemoveListB = new RazorEnhanced.UI.RazorButton();
+            this.buyAddListB = new RazorEnhanced.UI.RazorButton();
+            this.buyImportListB = new RazorEnhanced.UI.RazorButton();
+            this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
+            this.buyExportListB = new RazorEnhanced.UI.RazorButton();
+            this.label25 = new System.Windows.Forms.Label();
+            this.buyListView = new System.Windows.Forms.ListView();
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.buyEditB = new RazorEnhanced.UI.RazorButton();
+            this.buyAddTargetB = new RazorEnhanced.UI.RazorButton();
+            this.buyRemoveB = new RazorEnhanced.UI.RazorButton();
+            this.buyAddManualB = new RazorEnhanced.UI.RazorButton();
+            this.groupBox18 = new System.Windows.Forms.GroupBox();
+            this.buyLogBox = new System.Windows.Forms.ListBox();
+            this.buyEnableCheckB = new RazorEnhanced.UI.RazorCheckBox();
+            this.groupBox19 = new System.Windows.Forms.GroupBox();
+            this.sellEditB = new RazorEnhanced.UI.RazorButton();
+            this.sellAddTargerB = new RazorEnhanced.UI.RazorButton();
+            this.sellRemoveB = new RazorEnhanced.UI.RazorButton();
+            this.sellAddManualB = new RazorEnhanced.UI.RazorButton();
+            this.groupBox20 = new System.Windows.Forms.GroupBox();
+            this.sellLogBox = new System.Windows.Forms.ListBox();
+            this.sellEnableCheckB = new RazorEnhanced.UI.RazorCheckBox();
+            this.sellListView = new System.Windows.Forms.ListView();
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.sellRemoveListB = new RazorEnhanced.UI.RazorButton();
+            this.sellAddListB = new RazorEnhanced.UI.RazorButton();
+            this.sellImportListB = new RazorEnhanced.UI.RazorButton();
+            this.sellListSelect = new RazorEnhanced.UI.RazorComboBox();
+            this.sellExportListB = new RazorEnhanced.UI.RazorButton();
+            this.label26 = new System.Windows.Forms.Label();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -804,6 +880,12 @@ namespace Assistant
             this.Organizer.SuspendLayout();
             this.groupBox16.SuspendLayout();
             this.groupBox15.SuspendLayout();
+            this.VendorBuy.SuspendLayout();
+            this.VendorSell.SuspendLayout();
+            this.groupBox17.SuspendLayout();
+            this.groupBox18.SuspendLayout();
+            this.groupBox19.SuspendLayout();
+            this.groupBox20.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
@@ -3499,7 +3581,7 @@ namespace Assistant
             // 
             this.autolootEnable.Location = new System.Drawing.Point(274, 58);
             this.autolootEnable.Name = "autolootEnable";
-            this.autolootEnable.Size = new System.Drawing.Size(103, 20);
+            this.autolootEnable.Size = new System.Drawing.Size(103, 22);
             this.autolootEnable.TabIndex = 48;
             this.autolootEnable.Text = "Enable autoloot";
             this.autolootEnable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -3696,7 +3778,7 @@ namespace Assistant
             // 
             this.scavengerEnableCheckB.Location = new System.Drawing.Point(274, 58);
             this.scavengerEnableCheckB.Name = "scavengerEnableCheckB";
-            this.scavengerEnableCheckB.Size = new System.Drawing.Size(116, 20);
+            this.scavengerEnableCheckB.Size = new System.Drawing.Size(116, 22);
             this.scavengerEnableCheckB.TabIndex = 65;
             this.scavengerEnableCheckB.Text = "Enable scavenger";
             this.scavengerEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4090,6 +4172,16 @@ namespace Assistant
             // 
             // VendorBuy
             // 
+            this.VendorBuy.Controls.Add(this.groupBox17);
+            this.VendorBuy.Controls.Add(this.groupBox18);
+            this.VendorBuy.Controls.Add(this.buyEnableCheckB);
+            this.VendorBuy.Controls.Add(this.buyListView);
+            this.VendorBuy.Controls.Add(this.buyRemoveListB);
+            this.VendorBuy.Controls.Add(this.buyAddListB);
+            this.VendorBuy.Controls.Add(this.buyImportListB);
+            this.VendorBuy.Controls.Add(this.buyListSelect);
+            this.VendorBuy.Controls.Add(this.buyExportListB);
+            this.VendorBuy.Controls.Add(this.label25);
             this.VendorBuy.Location = new System.Drawing.Point(4, 22);
             this.VendorBuy.Name = "VendorBuy";
             this.VendorBuy.Padding = new System.Windows.Forms.Padding(3);
@@ -4097,6 +4189,26 @@ namespace Assistant
             this.VendorBuy.TabIndex = 3;
             this.VendorBuy.Text = "Vendor Buy";
             this.VendorBuy.UseVisualStyleBackColor = true;
+            // 
+            // VendorSell
+            // 
+            this.VendorSell.Controls.Add(this.groupBox19);
+            this.VendorSell.Controls.Add(this.groupBox20);
+            this.VendorSell.Controls.Add(this.sellEnableCheckB);
+            this.VendorSell.Controls.Add(this.sellListView);
+            this.VendorSell.Controls.Add(this.sellRemoveListB);
+            this.VendorSell.Controls.Add(this.sellAddListB);
+            this.VendorSell.Controls.Add(this.sellImportListB);
+            this.VendorSell.Controls.Add(this.sellListSelect);
+            this.VendorSell.Controls.Add(this.sellExportListB);
+            this.VendorSell.Controls.Add(this.label26);
+            this.VendorSell.Location = new System.Drawing.Point(4, 22);
+            this.VendorSell.Name = "VendorSell";
+            this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
+            this.VendorSell.Size = new System.Drawing.Size(659, 341);
+            this.VendorSell.TabIndex = 4;
+            this.VendorSell.Text = "Vendor Sell";
+            this.VendorSell.UseVisualStyleBackColor = true;
             // 
             // timerTimer
             // 
@@ -4108,15 +4220,355 @@ namespace Assistant
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // VendorSell
+            // buyRemoveListB
             // 
-            this.VendorSell.Location = new System.Drawing.Point(4, 22);
-            this.VendorSell.Name = "VendorSell";
-            this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
-            this.VendorSell.Size = new System.Drawing.Size(659, 341);
-            this.VendorSell.TabIndex = 4;
-            this.VendorSell.Text = "Vendor Sell";
-            this.VendorSell.UseVisualStyleBackColor = true;
+            this.buyRemoveListB.ColorTable = office2010BlueTheme1;
+            this.buyRemoveListB.Location = new System.Drawing.Point(369, 14);
+            this.buyRemoveListB.Name = "buyRemoveListB";
+            this.buyRemoveListB.Size = new System.Drawing.Size(90, 20);
+            this.buyRemoveListB.TabIndex = 69;
+            this.buyRemoveListB.Text = "Remove";
+            this.buyRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // buyAddListB
+            // 
+            this.buyAddListB.ColorTable = office2010BlueTheme1;
+            this.buyAddListB.Location = new System.Drawing.Point(273, 14);
+            this.buyAddListB.Name = "buyAddListB";
+            this.buyAddListB.Size = new System.Drawing.Size(90, 20);
+            this.buyAddListB.TabIndex = 68;
+            this.buyAddListB.Text = "Add";
+            this.buyAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // buyImportListB
+            // 
+            this.buyImportListB.ColorTable = office2010BlueTheme1;
+            this.buyImportListB.Location = new System.Drawing.Point(465, 14);
+            this.buyImportListB.Name = "buyImportListB";
+            this.buyImportListB.Size = new System.Drawing.Size(90, 20);
+            this.buyImportListB.TabIndex = 65;
+            this.buyImportListB.Text = "Import";
+            this.buyImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // buyListSelect
+            // 
+            this.buyListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.buyListSelect.FormattingEnabled = true;
+            this.buyListSelect.Location = new System.Drawing.Point(73, 12);
+            this.buyListSelect.Name = "buyListSelect";
+            this.buyListSelect.Size = new System.Drawing.Size(183, 24);
+            this.buyListSelect.TabIndex = 67;
+            // 
+            // buyExportListB
+            // 
+            this.buyExportListB.ColorTable = office2010BlueTheme1;
+            this.buyExportListB.Location = new System.Drawing.Point(561, 14);
+            this.buyExportListB.Name = "buyExportListB";
+            this.buyExportListB.Size = new System.Drawing.Size(90, 20);
+            this.buyExportListB.TabIndex = 64;
+            this.buyExportListB.Text = "Export";
+            this.buyExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(3, 18);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(65, 13);
+            this.label25.TabIndex = 66;
+            this.label25.Text = "Vendor Buy:";
+            // 
+            // buyListView
+            // 
+            this.buyListView.CheckBoxes = true;
+            this.buyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader16,
+            this.columnHeader17});
+            this.buyListView.GridLines = true;
+            this.buyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.buyListView.LabelWrap = false;
+            this.buyListView.Location = new System.Drawing.Point(6, 51);
+            this.buyListView.MultiSelect = false;
+            this.buyListView.Name = "buyListView";
+            this.buyListView.Size = new System.Drawing.Size(255, 284);
+            this.buyListView.TabIndex = 70;
+            this.buyListView.UseCompatibleStateImageBehavior = false;
+            this.buyListView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader14
+            // 
+            this.columnHeader14.Text = "X";
+            this.columnHeader14.Width = 22;
+            // 
+            // columnHeader15
+            // 
+            this.columnHeader15.Text = "Item Name";
+            this.columnHeader15.Width = 105;
+            // 
+            // columnHeader16
+            // 
+            this.columnHeader16.Text = "Graphics";
+            // 
+            // columnHeader17
+            // 
+            this.columnHeader17.Text = "Amount";
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.buyEditB);
+            this.groupBox17.Controls.Add(this.buyAddTargetB);
+            this.groupBox17.Controls.Add(this.buyRemoveB);
+            this.groupBox17.Controls.Add(this.buyAddManualB);
+            this.groupBox17.Location = new System.Drawing.Point(551, 84);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(100, 125);
+            this.groupBox17.TabIndex = 74;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Item List";
+            // 
+            // buyEditB
+            // 
+            this.buyEditB.ColorTable = office2010BlueTheme1;
+            this.buyEditB.Location = new System.Drawing.Point(5, 68);
+            this.buyEditB.Name = "buyEditB";
+            this.buyEditB.Size = new System.Drawing.Size(90, 20);
+            this.buyEditB.TabIndex = 48;
+            this.buyEditB.Text = "Edit";
+            this.buyEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // buyAddTargetB
+            // 
+            this.buyAddTargetB.ColorTable = office2010BlueTheme1;
+            this.buyAddTargetB.Location = new System.Drawing.Point(5, 43);
+            this.buyAddTargetB.Name = "buyAddTargetB";
+            this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
+            this.buyAddTargetB.TabIndex = 47;
+            this.buyAddTargetB.Text = "Add Target";
+            this.buyAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // buyRemoveB
+            // 
+            this.buyRemoveB.ColorTable = office2010BlueTheme1;
+            this.buyRemoveB.Location = new System.Drawing.Point(5, 94);
+            this.buyRemoveB.Name = "buyRemoveB";
+            this.buyRemoveB.Size = new System.Drawing.Size(90, 20);
+            this.buyRemoveB.TabIndex = 46;
+            this.buyRemoveB.Text = "Remove";
+            this.buyRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // buyAddManualB
+            // 
+            this.buyAddManualB.ColorTable = office2010BlueTheme1;
+            this.buyAddManualB.Location = new System.Drawing.Point(5, 18);
+            this.buyAddManualB.Name = "buyAddManualB";
+            this.buyAddManualB.Size = new System.Drawing.Size(90, 20);
+            this.buyAddManualB.TabIndex = 45;
+            this.buyAddManualB.Text = "Add Manual";
+            this.buyAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // groupBox18
+            // 
+            this.groupBox18.Controls.Add(this.buyLogBox);
+            this.groupBox18.Location = new System.Drawing.Point(267, 84);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Size = new System.Drawing.Size(278, 251);
+            this.groupBox18.TabIndex = 73;
+            this.groupBox18.TabStop = false;
+            this.groupBox18.Text = "Buy Log";
+            // 
+            // buyLogBox
+            // 
+            this.buyLogBox.FormattingEnabled = true;
+            this.buyLogBox.Location = new System.Drawing.Point(7, 18);
+            this.buyLogBox.Name = "buyLogBox";
+            this.buyLogBox.Size = new System.Drawing.Size(265, 225);
+            this.buyLogBox.TabIndex = 0;
+            // 
+            // buyEnableCheckB
+            // 
+            this.buyEnableCheckB.Location = new System.Drawing.Point(274, 58);
+            this.buyEnableCheckB.Name = "buyEnableCheckB";
+            this.buyEnableCheckB.Size = new System.Drawing.Size(105, 22);
+            this.buyEnableCheckB.TabIndex = 72;
+            this.buyEnableCheckB.Text = "Enable Buy List";
+            this.buyEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // groupBox19
+            // 
+            this.groupBox19.Controls.Add(this.sellEditB);
+            this.groupBox19.Controls.Add(this.sellAddTargerB);
+            this.groupBox19.Controls.Add(this.sellRemoveB);
+            this.groupBox19.Controls.Add(this.sellAddManualB);
+            this.groupBox19.Location = new System.Drawing.Point(551, 84);
+            this.groupBox19.Name = "groupBox19";
+            this.groupBox19.Size = new System.Drawing.Size(100, 125);
+            this.groupBox19.TabIndex = 84;
+            this.groupBox19.TabStop = false;
+            this.groupBox19.Text = "Item List";
+            // 
+            // sellEditB
+            // 
+            this.sellEditB.ColorTable = office2010BlueTheme1;
+            this.sellEditB.Location = new System.Drawing.Point(5, 68);
+            this.sellEditB.Name = "sellEditB";
+            this.sellEditB.Size = new System.Drawing.Size(90, 20);
+            this.sellEditB.TabIndex = 48;
+            this.sellEditB.Text = "Edit";
+            this.sellEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // sellAddTargerB
+            // 
+            this.sellAddTargerB.ColorTable = office2010BlueTheme1;
+            this.sellAddTargerB.Location = new System.Drawing.Point(5, 43);
+            this.sellAddTargerB.Name = "sellAddTargerB";
+            this.sellAddTargerB.Size = new System.Drawing.Size(90, 20);
+            this.sellAddTargerB.TabIndex = 47;
+            this.sellAddTargerB.Text = "Add Target";
+            this.sellAddTargerB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // sellRemoveB
+            // 
+            this.sellRemoveB.ColorTable = office2010BlueTheme1;
+            this.sellRemoveB.Location = new System.Drawing.Point(5, 94);
+            this.sellRemoveB.Name = "sellRemoveB";
+            this.sellRemoveB.Size = new System.Drawing.Size(90, 20);
+            this.sellRemoveB.TabIndex = 46;
+            this.sellRemoveB.Text = "Remove";
+            this.sellRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // sellAddManualB
+            // 
+            this.sellAddManualB.ColorTable = office2010BlueTheme1;
+            this.sellAddManualB.Location = new System.Drawing.Point(5, 18);
+            this.sellAddManualB.Name = "sellAddManualB";
+            this.sellAddManualB.Size = new System.Drawing.Size(90, 20);
+            this.sellAddManualB.TabIndex = 45;
+            this.sellAddManualB.Text = "Add Manual";
+            this.sellAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // groupBox20
+            // 
+            this.groupBox20.Controls.Add(this.sellLogBox);
+            this.groupBox20.Location = new System.Drawing.Point(267, 84);
+            this.groupBox20.Name = "groupBox20";
+            this.groupBox20.Size = new System.Drawing.Size(278, 251);
+            this.groupBox20.TabIndex = 83;
+            this.groupBox20.TabStop = false;
+            this.groupBox20.Text = "Sell Log";
+            // 
+            // sellLogBox
+            // 
+            this.sellLogBox.FormattingEnabled = true;
+            this.sellLogBox.Location = new System.Drawing.Point(7, 18);
+            this.sellLogBox.Name = "sellLogBox";
+            this.sellLogBox.Size = new System.Drawing.Size(265, 225);
+            this.sellLogBox.TabIndex = 0;
+            // 
+            // sellEnableCheckB
+            // 
+            this.sellEnableCheckB.Location = new System.Drawing.Point(274, 58);
+            this.sellEnableCheckB.Name = "sellEnableCheckB";
+            this.sellEnableCheckB.Size = new System.Drawing.Size(105, 22);
+            this.sellEnableCheckB.TabIndex = 82;
+            this.sellEnableCheckB.Text = "Enable Sell List";
+            this.sellEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // sellListView
+            // 
+            this.sellListView.CheckBoxes = true;
+            this.sellListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21});
+            this.sellListView.GridLines = true;
+            this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.sellListView.LabelWrap = false;
+            this.sellListView.Location = new System.Drawing.Point(6, 51);
+            this.sellListView.MultiSelect = false;
+            this.sellListView.Name = "sellListView";
+            this.sellListView.Size = new System.Drawing.Size(255, 284);
+            this.sellListView.TabIndex = 81;
+            this.sellListView.UseCompatibleStateImageBehavior = false;
+            this.sellListView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader18
+            // 
+            this.columnHeader18.Text = "X";
+            this.columnHeader18.Width = 22;
+            // 
+            // columnHeader19
+            // 
+            this.columnHeader19.Text = "Item Name";
+            this.columnHeader19.Width = 105;
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "Graphics";
+            // 
+            // columnHeader21
+            // 
+            this.columnHeader21.Text = "Amount";
+            // 
+            // sellRemoveListB
+            // 
+            this.sellRemoveListB.ColorTable = office2010BlueTheme1;
+            this.sellRemoveListB.Location = new System.Drawing.Point(369, 14);
+            this.sellRemoveListB.Name = "sellRemoveListB";
+            this.sellRemoveListB.Size = new System.Drawing.Size(90, 20);
+            this.sellRemoveListB.TabIndex = 80;
+            this.sellRemoveListB.Text = "Remove";
+            this.sellRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // sellAddListB
+            // 
+            this.sellAddListB.ColorTable = office2010BlueTheme1;
+            this.sellAddListB.Location = new System.Drawing.Point(273, 14);
+            this.sellAddListB.Name = "sellAddListB";
+            this.sellAddListB.Size = new System.Drawing.Size(90, 20);
+            this.sellAddListB.TabIndex = 79;
+            this.sellAddListB.Text = "Add";
+            this.sellAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // sellImportListB
+            // 
+            this.sellImportListB.ColorTable = office2010BlueTheme1;
+            this.sellImportListB.Location = new System.Drawing.Point(465, 14);
+            this.sellImportListB.Name = "sellImportListB";
+            this.sellImportListB.Size = new System.Drawing.Size(90, 20);
+            this.sellImportListB.TabIndex = 76;
+            this.sellImportListB.Text = "Import";
+            this.sellImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // sellListSelect
+            // 
+            this.sellListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.sellListSelect.FormattingEnabled = true;
+            this.sellListSelect.Location = new System.Drawing.Point(73, 12);
+            this.sellListSelect.Name = "sellListSelect";
+            this.sellListSelect.Size = new System.Drawing.Size(183, 24);
+            this.sellListSelect.TabIndex = 78;
+            // 
+            // sellExportListB
+            // 
+            this.sellExportListB.ColorTable = office2010BlueTheme1;
+            this.sellExportListB.Location = new System.Drawing.Point(561, 14);
+            this.sellExportListB.Name = "sellExportListB";
+            this.sellExportListB.Size = new System.Drawing.Size(90, 20);
+            this.sellExportListB.TabIndex = 75;
+            this.sellExportListB.Text = "Export";
+            this.sellExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(3, 18);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(64, 13);
+            this.label26.TabIndex = 77;
+            this.label26.Text = "Vendor Sell:";
             // 
             // MainForm
             // 
@@ -4185,6 +4637,14 @@ namespace Assistant
             this.Organizer.PerformLayout();
             this.groupBox16.ResumeLayout(false);
             this.groupBox15.ResumeLayout(false);
+            this.VendorBuy.ResumeLayout(false);
+            this.VendorBuy.PerformLayout();
+            this.VendorSell.ResumeLayout(false);
+            this.VendorSell.PerformLayout();
+            this.groupBox17.ResumeLayout(false);
+            this.groupBox18.ResumeLayout(false);
+            this.groupBox19.ResumeLayout(false);
+            this.groupBox20.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
