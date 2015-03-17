@@ -338,7 +338,8 @@ namespace Assistant
         private RazorComboBox organizerListSelect;
         private RazorButton organizerExportListB;
         private Label label24;
-        private TabPage Vendor;
+        private TabPage VendorBuy;
+        private TabPage VendorSell;
 
 		private bool m_CanClose = true;
 
@@ -757,9 +758,10 @@ namespace Assistant
             this.organizerListSelect = new RazorEnhanced.UI.RazorComboBox();
             this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
             this.label24 = new System.Windows.Forms.Label();
-            this.Vendor = new System.Windows.Forms.TabPage();
+            this.VendorBuy = new System.Windows.Forms.TabPage();
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.VendorSell = new System.Windows.Forms.TabPage();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -3261,7 +3263,8 @@ namespace Assistant
             this.tabControl1.Controls.Add(this.eautoloot);
             this.tabControl1.Controls.Add(this.escavenger);
             this.tabControl1.Controls.Add(this.Organizer);
-            this.tabControl1.Controls.Add(this.Vendor);
+            this.tabControl1.Controls.Add(this.VendorBuy);
+            this.tabControl1.Controls.Add(this.VendorSell);
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -3292,7 +3295,6 @@ namespace Assistant
             this.eautoloot.TabIndex = 0;
             this.eautoloot.Text = "Autoloot";
             this.eautoloot.UseVisualStyleBackColor = true;
-            this.eautoloot.Click += new System.EventHandler(this.eautoloot_Click);
             // 
             // razorButtonResetIgnore
             // 
@@ -3324,7 +3326,6 @@ namespace Assistant
             this.autoLootLabelDelay.Padding = new System.Windows.Forms.Padding(1);
             this.autoLootLabelDelay.Size = new System.Drawing.Size(45, 20);
             this.autoLootLabelDelay.TabIndex = 58;
-            this.autoLootLabelDelay.Load += new System.EventHandler(this.razorTextBox1_Load);
             // 
             // bautolootlistRemove
             // 
@@ -3835,6 +3836,7 @@ namespace Assistant
             this.organizerStopB.TabIndex = 75;
             this.organizerStopB.Text = "Stop";
             this.organizerStopB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerStopB.Click += new System.EventHandler(this.organizerStopB_Click);
             // 
             // organizerExecuteB
             // 
@@ -3845,6 +3847,7 @@ namespace Assistant
             this.organizerExecuteB.TabIndex = 74;
             this.organizerExecuteB.Text = "Execute";
             this.organizerExecuteB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizerExecuteB.Click += new System.EventHandler(this.organizerExecuteB_Click);
             // 
             // groupBox16
             // 
@@ -4085,15 +4088,15 @@ namespace Assistant
             this.label24.TabIndex = 60;
             this.label24.Text = "Organizer List:";
             // 
-            // Vendor
+            // VendorBuy
             // 
-            this.Vendor.Location = new System.Drawing.Point(4, 22);
-            this.Vendor.Name = "Vendor";
-            this.Vendor.Padding = new System.Windows.Forms.Padding(3);
-            this.Vendor.Size = new System.Drawing.Size(659, 341);
-            this.Vendor.TabIndex = 3;
-            this.Vendor.Text = "Buy / Sell";
-            this.Vendor.UseVisualStyleBackColor = true;
+            this.VendorBuy.Location = new System.Drawing.Point(4, 22);
+            this.VendorBuy.Name = "VendorBuy";
+            this.VendorBuy.Padding = new System.Windows.Forms.Padding(3);
+            this.VendorBuy.Size = new System.Drawing.Size(659, 341);
+            this.VendorBuy.TabIndex = 3;
+            this.VendorBuy.Text = "Vendor Buy";
+            this.VendorBuy.UseVisualStyleBackColor = true;
             // 
             // timerTimer
             // 
@@ -4104,6 +4107,16 @@ namespace Assistant
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // VendorSell
+            // 
+            this.VendorSell.Location = new System.Drawing.Point(4, 22);
+            this.VendorSell.Name = "VendorSell";
+            this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
+            this.VendorSell.Size = new System.Drawing.Size(659, 341);
+            this.VendorSell.TabIndex = 4;
+            this.VendorSell.Text = "Vendor Sell";
+            this.VendorSell.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
@@ -7837,11 +7850,7 @@ namespace Assistant
 				catch
 				{
 					StartCheck = false;
-					MessageBox.Show("Loot item delay not valid!",
-					"Loot item delay not valid!",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation,
-					MessageBoxDefaultButton.Button1);
+                    RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
 				}
 
 				if (StartCheck)
@@ -7876,15 +7885,6 @@ namespace Assistant
 
 		}
 
-		private void eautoloot_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void razorTextBox1_Load(object sender, EventArgs e)
-		{
-
-		}
 
 		private void autolootContainerButton_Click_1(object sender, EventArgs e)
 		{
@@ -8094,11 +8094,7 @@ namespace Assistant
 				catch
 				{
 					StartCheck = false;
-					MessageBox.Show("Drag item delay not valid!",
-					"Drag item delay not valid!",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Exclamation,
-					MessageBoxDefaultButton.Button1);
+                    RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
 				}
 
 				if (StartCheck)
@@ -8269,6 +8265,121 @@ namespace Assistant
             {
                 RazorEnhanced.Misc.SendMessage("Invalid target");
             }
+        }
+
+        private void organizerExecuteB_Click(object sender, EventArgs e)
+        {
+                int delay = 100;
+                RazorEnhanced.Item SourceBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+                int SourceBagSerial;
+                RazorEnhanced.Item DestinationBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+                int DestinationBagSerial;
+                bool StartCheck = true;
+
+                try
+                {
+                    delay = Convert.ToInt32(scavengerDragDelay.Text);
+                }
+                catch
+                {
+                    StartCheck = false;
+                    RazorEnhanced.Organizer.AddLog("ERROR: Drag item delay is invalid");
+                }
+
+                SourceBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerSourceLabel.Text, 16);
+                if (SourceBagSerial != 0)
+                {
+                    SourceBag = RazorEnhanced.Items.FindBySerial(SourceBagSerial);
+                    if (SourceBag != null)
+                        if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(SourceBag.Position.X, SourceBag.Position.Y)) <= 3)
+                        {
+                            StartCheck = true;
+                            RazorEnhanced.Organizer.AddLog("ERROR: Source Bag OK: " + SourceBag.Serial.ToString());
+                        }
+                        else
+                        {
+                            StartCheck = false;
+                            RazorEnhanced.Organizer.AddLog("ERROR: Source Bag too away");
+                        }
+                    else
+                    {
+                        StartCheck = false;
+                        RazorEnhanced.Organizer.AddLog("ERROR: Source Bag is invalid");
+                    }
+                }
+                else
+                {
+                    StartCheck = false;
+                    RazorEnhanced.Organizer.AddLog("ERROR: Source Bag is invalid");
+                }
+
+                DestinationBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerDestinationLabel.Text, 16);
+                if (DestinationBagSerial != 0)
+                {
+                    DestinationBag = RazorEnhanced.Items.FindBySerial(DestinationBagSerial);
+                    if (DestinationBag != null)
+                        if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(DestinationBag.Position.X, DestinationBag.Position.Y)) <= 3)
+                        {
+                            StartCheck = true;
+                            RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag OK: " + SourceBag.Serial.ToString());
+                        }
+                        else
+                        {
+                            StartCheck = false;
+                            RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag too away");
+                        }
+                    else
+                    {
+                        StartCheck = false;
+                        RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag is invalid");
+                    }
+                }
+                else
+                {
+                    StartCheck = false;
+                    RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag is invalid");
+                }
+                if (StartCheck)
+                {
+                    // Avviare funzione come thread
+                    //RazorEnhanced.Organizer.Engine(organizerItemList, delay, SourceBag, DestinationBag);
+
+                    RazorEnhanced.Organizer.AddLog("Organizer Engine Start...");
+                    RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
+                    organizerListSelect.Enabled = false;
+                    organizerAddListB.Enabled = false;
+                    organizerRemoveListB.Enabled = false;
+                    organizerExportListB.Enabled = false;
+                    organizerImportListB.Enabled = false;
+                    organizerDragDelay.Enabled = false;
+                }
+                else
+                {
+                    RazorEnhanced.Organizer.AddLog("Fail to start Organizer Engine...");
+                    organizerListSelect.Enabled = true;
+                    organizerAddListB.Enabled = true;
+                    organizerRemoveListB.Enabled = true;
+                    organizerExportListB.Enabled = true;
+                    organizerImportListB.Enabled = true;
+                    organizerDragDelay.Enabled = true;
+                }
+
+
+				
+        }
+
+        private void organizerStopB_Click(object sender, EventArgs e)
+        {
+            // Forzare il KILL del thread avviato sopra in precendenza
+
+            RazorEnhanced.Organizer.AddLog("Organizer Engine force stop...");
+            RazorEnhanced.Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
+            organizerListSelect.Enabled = true;
+            organizerAddListB.Enabled = true;
+            organizerRemoveListB.Enabled = true;
+            organizerExportListB.Enabled = true;
+            organizerImportListB.Enabled = true;
+            organizerDragDelay.Enabled = true;
         }
 
 	}
