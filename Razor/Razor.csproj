@@ -290,6 +290,37 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\AutoLoot.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddItemList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddItemList.Designer.cs">
+      <DependentUpon>EnhancedBuyAgentAddItemList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.Designer.cs">
+      <DependentUpon>EnhancedBuyAgentEditItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.Designer.cs">
+      <DependentUpon>EnhancedBuyAgentManualAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.Designer.cs">
+      <DependentUpon>EnhancedSellAgentManualAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.Designer.cs">
+      <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\Vendor.cs" />
     <Compile Include="RazorEnhanced\Organizer.cs" />
     <Compile Include="RazorEnhanced\Scavenger.cs" />
     <Compile Include="RazorEnhanced\EnhancedEntity.cs" />
@@ -305,6 +336,12 @@
     <Compile Include="RazorEnhanced\Player.cs" />
     <Compile Include="RazorEnhanced\UI\Controls.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddItemList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddItemList.Designer.cs">
+      <DependentUpon>EnhancedSellAgentAddItemList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.cs">
       <SubType>Form</SubType>
@@ -453,6 +490,24 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentAddItemList.resx">
+      <DependentUpon>EnhancedBuyAgentAddItemList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.resx">
+      <DependentUpon>EnhancedBuyAgentEditItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.resx">
+      <DependentUpon>EnhancedBuyAgentManualAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.resx">
+      <DependentUpon>EnhancedSellAgentManualAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.resx">
+      <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentAddItemList.resx">
+      <DependentUpon>EnhancedSellAgentAddItemList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.resx">
       <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>

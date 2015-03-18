@@ -257,6 +257,8 @@ namespace Assistant
 		private List<RazorEnhanced.AutoLoot.AutoLootItem> autoLootItemList = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
 		private List<RazorEnhanced.Scavenger.ScavengerItem> scavengerItemList = new List<RazorEnhanced.Scavenger.ScavengerItem>();
         private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
+        private List<RazorEnhanced.SellAgent.SellItem> sellItemList = new List<RazorEnhanced.SellAgent.SellItem>();
+        private List<RazorEnhanced.BuyAgent.BuyItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyItem>();
 		private TabPage EnhancedAgent;
 		private TabControl tabControl1;
 		private TabPage eautoloot;
@@ -426,16 +428,23 @@ namespace Assistant
 		internal List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList { get { return autoLootItemList; } }
 		internal List<RazorEnhanced.Scavenger.ScavengerItem> ScavengerItemList { get { return scavengerItemList; } }
         internal List<RazorEnhanced.Organizer.OrganizerItem> OrganizerItemList { get { return organizerItemList; } }
+        internal List<RazorEnhanced.SellAgent.SellItem> SellItemList { get { return sellItemList; } }
+        internal List<RazorEnhanced.BuyAgent.BuyItem> BuyItemList { get { return buyItemList; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal ListBox ScavengerLogBox { get { return scavengerLogBox; } }
         internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
+        internal ListBox SellLogBox { get { return sellLogBox; } }
+        internal ListBox BuyLogBox { get { return buyLogBox; } }
 		internal ListView AutoLootListView { get { return autolootlistView; } }
 		internal ListView ScavengerListView { get { return scavengerListView; } }
+        internal ListView SellListView { get { return sellListView; } }
+        internal ListView BuyListView { get { return buyListView; } }
         internal ListView OrganizerListView { get { return organizerListView; } }
 		internal ComboBox AutolootListSelect { get { return autolootListSelect; } }
 		internal ComboBox ScavengerListSelect { get { return scavengertListSelect; } }
         internal ComboBox OrganzierListSelect { get { return organizerListSelect; } }
-
+        internal ComboBox SellListSelect { get { return sellListSelect; } }
+        internal ComboBox BuyListSelect { get { return buyListSelect; } }
 		private DataTable scriptTable;
 
 		internal MainForm()
@@ -797,20 +806,6 @@ namespace Assistant
             this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
             this.label24 = new System.Windows.Forms.Label();
             this.VendorBuy = new System.Windows.Forms.TabPage();
-            this.VendorSell = new System.Windows.Forms.TabPage();
-            this.timerTimer = new System.Windows.Forms.Timer(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.buyRemoveListB = new RazorEnhanced.UI.RazorButton();
-            this.buyAddListB = new RazorEnhanced.UI.RazorButton();
-            this.buyImportListB = new RazorEnhanced.UI.RazorButton();
-            this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.buyExportListB = new RazorEnhanced.UI.RazorButton();
-            this.label25 = new System.Windows.Forms.Label();
-            this.buyListView = new System.Windows.Forms.ListView();
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox17 = new System.Windows.Forms.GroupBox();
             this.buyEditB = new RazorEnhanced.UI.RazorButton();
             this.buyAddTargetB = new RazorEnhanced.UI.RazorButton();
@@ -819,6 +814,18 @@ namespace Assistant
             this.groupBox18 = new System.Windows.Forms.GroupBox();
             this.buyLogBox = new System.Windows.Forms.ListBox();
             this.buyEnableCheckB = new RazorEnhanced.UI.RazorCheckBox();
+            this.buyListView = new System.Windows.Forms.ListView();
+            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.buyRemoveListB = new RazorEnhanced.UI.RazorButton();
+            this.buyAddListB = new RazorEnhanced.UI.RazorButton();
+            this.buyImportListB = new RazorEnhanced.UI.RazorButton();
+            this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
+            this.buyExportListB = new RazorEnhanced.UI.RazorButton();
+            this.label25 = new System.Windows.Forms.Label();
+            this.VendorSell = new System.Windows.Forms.TabPage();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
             this.sellEditB = new RazorEnhanced.UI.RazorButton();
             this.sellAddTargerB = new RazorEnhanced.UI.RazorButton();
@@ -838,6 +845,8 @@ namespace Assistant
             this.sellListSelect = new RazorEnhanced.UI.RazorComboBox();
             this.sellExportListB = new RazorEnhanced.UI.RazorButton();
             this.label26 = new System.Windows.Forms.Label();
+            this.timerTimer = new System.Windows.Forms.Timer(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -881,9 +890,9 @@ namespace Assistant
             this.groupBox16.SuspendLayout();
             this.groupBox15.SuspendLayout();
             this.VendorBuy.SuspendLayout();
-            this.VendorSell.SuspendLayout();
             this.groupBox17.SuspendLayout();
             this.groupBox18.SuspendLayout();
+            this.VendorSell.SuspendLayout();
             this.groupBox19.SuspendLayout();
             this.groupBox20.SuspendLayout();
             this.SuspendLayout();
@@ -4190,93 +4199,89 @@ namespace Assistant
             this.VendorBuy.Text = "Vendor Buy";
             this.VendorBuy.UseVisualStyleBackColor = true;
             // 
-            // VendorSell
+            // groupBox17
             // 
-            this.VendorSell.Controls.Add(this.groupBox19);
-            this.VendorSell.Controls.Add(this.groupBox20);
-            this.VendorSell.Controls.Add(this.sellEnableCheckB);
-            this.VendorSell.Controls.Add(this.sellListView);
-            this.VendorSell.Controls.Add(this.sellRemoveListB);
-            this.VendorSell.Controls.Add(this.sellAddListB);
-            this.VendorSell.Controls.Add(this.sellImportListB);
-            this.VendorSell.Controls.Add(this.sellListSelect);
-            this.VendorSell.Controls.Add(this.sellExportListB);
-            this.VendorSell.Controls.Add(this.label26);
-            this.VendorSell.Location = new System.Drawing.Point(4, 22);
-            this.VendorSell.Name = "VendorSell";
-            this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
-            this.VendorSell.Size = new System.Drawing.Size(659, 341);
-            this.VendorSell.TabIndex = 4;
-            this.VendorSell.Text = "Vendor Sell";
-            this.VendorSell.UseVisualStyleBackColor = true;
+            this.groupBox17.Controls.Add(this.buyEditB);
+            this.groupBox17.Controls.Add(this.buyAddTargetB);
+            this.groupBox17.Controls.Add(this.buyRemoveB);
+            this.groupBox17.Controls.Add(this.buyAddManualB);
+            this.groupBox17.Location = new System.Drawing.Point(551, 84);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(100, 125);
+            this.groupBox17.TabIndex = 74;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Item List";
             // 
-            // timerTimer
+            // buyEditB
             // 
-            this.timerTimer.Enabled = true;
-            this.timerTimer.Interval = 5;
-            this.timerTimer.Tick += new System.EventHandler(this.timerTimer_Tick);
+            this.buyEditB.ColorTable = office2010BlueTheme1;
+            this.buyEditB.Location = new System.Drawing.Point(5, 68);
+            this.buyEditB.Name = "buyEditB";
+            this.buyEditB.Size = new System.Drawing.Size(90, 20);
+            this.buyEditB.TabIndex = 48;
+            this.buyEditB.Text = "Edit";
+            this.buyEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyEditB.Click += new System.EventHandler(this.buyEditB_Click);
             // 
-            // openFileDialog1
+            // buyAddTargetB
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.buyAddTargetB.ColorTable = office2010BlueTheme1;
+            this.buyAddTargetB.Location = new System.Drawing.Point(5, 43);
+            this.buyAddTargetB.Name = "buyAddTargetB";
+            this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
+            this.buyAddTargetB.TabIndex = 47;
+            this.buyAddTargetB.Text = "Add Target";
+            this.buyAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyAddTargetB.Click += new System.EventHandler(this.buyAddTargetB_Click);
             // 
-            // buyRemoveListB
+            // buyRemoveB
             // 
-            this.buyRemoveListB.ColorTable = office2010BlueTheme1;
-            this.buyRemoveListB.Location = new System.Drawing.Point(369, 14);
-            this.buyRemoveListB.Name = "buyRemoveListB";
-            this.buyRemoveListB.Size = new System.Drawing.Size(90, 20);
-            this.buyRemoveListB.TabIndex = 69;
-            this.buyRemoveListB.Text = "Remove";
-            this.buyRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyRemoveB.ColorTable = office2010BlueTheme1;
+            this.buyRemoveB.Location = new System.Drawing.Point(5, 94);
+            this.buyRemoveB.Name = "buyRemoveB";
+            this.buyRemoveB.Size = new System.Drawing.Size(90, 20);
+            this.buyRemoveB.TabIndex = 46;
+            this.buyRemoveB.Text = "Remove";
+            this.buyRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyRemoveB.Click += new System.EventHandler(this.buyRemoveB_Click);
             // 
-            // buyAddListB
+            // buyAddManualB
             // 
-            this.buyAddListB.ColorTable = office2010BlueTheme1;
-            this.buyAddListB.Location = new System.Drawing.Point(273, 14);
-            this.buyAddListB.Name = "buyAddListB";
-            this.buyAddListB.Size = new System.Drawing.Size(90, 20);
-            this.buyAddListB.TabIndex = 68;
-            this.buyAddListB.Text = "Add";
-            this.buyAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyAddManualB.ColorTable = office2010BlueTheme1;
+            this.buyAddManualB.Location = new System.Drawing.Point(5, 18);
+            this.buyAddManualB.Name = "buyAddManualB";
+            this.buyAddManualB.Size = new System.Drawing.Size(90, 20);
+            this.buyAddManualB.TabIndex = 45;
+            this.buyAddManualB.Text = "Add Manual";
+            this.buyAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyAddManualB.Click += new System.EventHandler(this.buyAddManualB_Click);
             // 
-            // buyImportListB
+            // groupBox18
             // 
-            this.buyImportListB.ColorTable = office2010BlueTheme1;
-            this.buyImportListB.Location = new System.Drawing.Point(465, 14);
-            this.buyImportListB.Name = "buyImportListB";
-            this.buyImportListB.Size = new System.Drawing.Size(90, 20);
-            this.buyImportListB.TabIndex = 65;
-            this.buyImportListB.Text = "Import";
-            this.buyImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.groupBox18.Controls.Add(this.buyLogBox);
+            this.groupBox18.Location = new System.Drawing.Point(267, 84);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Size = new System.Drawing.Size(278, 251);
+            this.groupBox18.TabIndex = 73;
+            this.groupBox18.TabStop = false;
+            this.groupBox18.Text = "Buy Log";
             // 
-            // buyListSelect
+            // buyLogBox
             // 
-            this.buyListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.buyListSelect.FormattingEnabled = true;
-            this.buyListSelect.Location = new System.Drawing.Point(73, 12);
-            this.buyListSelect.Name = "buyListSelect";
-            this.buyListSelect.Size = new System.Drawing.Size(183, 24);
-            this.buyListSelect.TabIndex = 67;
+            this.buyLogBox.FormattingEnabled = true;
+            this.buyLogBox.Location = new System.Drawing.Point(7, 18);
+            this.buyLogBox.Name = "buyLogBox";
+            this.buyLogBox.Size = new System.Drawing.Size(265, 225);
+            this.buyLogBox.TabIndex = 0;
             // 
-            // buyExportListB
+            // buyEnableCheckB
             // 
-            this.buyExportListB.ColorTable = office2010BlueTheme1;
-            this.buyExportListB.Location = new System.Drawing.Point(561, 14);
-            this.buyExportListB.Name = "buyExportListB";
-            this.buyExportListB.Size = new System.Drawing.Size(90, 20);
-            this.buyExportListB.TabIndex = 64;
-            this.buyExportListB.Text = "Export";
-            this.buyExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(3, 18);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(65, 13);
-            this.label25.TabIndex = 66;
-            this.label25.Text = "Vendor Buy:";
+            this.buyEnableCheckB.Location = new System.Drawing.Point(274, 58);
+            this.buyEnableCheckB.Name = "buyEnableCheckB";
+            this.buyEnableCheckB.Size = new System.Drawing.Size(105, 22);
+            this.buyEnableCheckB.TabIndex = 72;
+            this.buyEnableCheckB.Text = "Enable Buy List";
+            this.buyEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // buyListView
             // 
@@ -4315,85 +4320,86 @@ namespace Assistant
             // 
             this.columnHeader17.Text = "Amount";
             // 
-            // groupBox17
+            // buyRemoveListB
             // 
-            this.groupBox17.Controls.Add(this.buyEditB);
-            this.groupBox17.Controls.Add(this.buyAddTargetB);
-            this.groupBox17.Controls.Add(this.buyRemoveB);
-            this.groupBox17.Controls.Add(this.buyAddManualB);
-            this.groupBox17.Location = new System.Drawing.Point(551, 84);
-            this.groupBox17.Name = "groupBox17";
-            this.groupBox17.Size = new System.Drawing.Size(100, 125);
-            this.groupBox17.TabIndex = 74;
-            this.groupBox17.TabStop = false;
-            this.groupBox17.Text = "Item List";
+            this.buyRemoveListB.ColorTable = office2010BlueTheme1;
+            this.buyRemoveListB.Location = new System.Drawing.Point(369, 14);
+            this.buyRemoveListB.Name = "buyRemoveListB";
+            this.buyRemoveListB.Size = new System.Drawing.Size(90, 20);
+            this.buyRemoveListB.TabIndex = 69;
+            this.buyRemoveListB.Text = "Remove";
+            this.buyRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyRemoveListB.Click += new System.EventHandler(this.buyRemoveListB_Click);
             // 
-            // buyEditB
+            // buyAddListB
             // 
-            this.buyEditB.ColorTable = office2010BlueTheme1;
-            this.buyEditB.Location = new System.Drawing.Point(5, 68);
-            this.buyEditB.Name = "buyEditB";
-            this.buyEditB.Size = new System.Drawing.Size(90, 20);
-            this.buyEditB.TabIndex = 48;
-            this.buyEditB.Text = "Edit";
-            this.buyEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyAddListB.ColorTable = office2010BlueTheme1;
+            this.buyAddListB.Location = new System.Drawing.Point(273, 14);
+            this.buyAddListB.Name = "buyAddListB";
+            this.buyAddListB.Size = new System.Drawing.Size(90, 20);
+            this.buyAddListB.TabIndex = 68;
+            this.buyAddListB.Text = "Add";
+            this.buyAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyAddListB.Click += new System.EventHandler(this.buyAddListB_Click);
             // 
-            // buyAddTargetB
+            // buyImportListB
             // 
-            this.buyAddTargetB.ColorTable = office2010BlueTheme1;
-            this.buyAddTargetB.Location = new System.Drawing.Point(5, 43);
-            this.buyAddTargetB.Name = "buyAddTargetB";
-            this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
-            this.buyAddTargetB.TabIndex = 47;
-            this.buyAddTargetB.Text = "Add Target";
-            this.buyAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyImportListB.ColorTable = office2010BlueTheme1;
+            this.buyImportListB.Location = new System.Drawing.Point(465, 14);
+            this.buyImportListB.Name = "buyImportListB";
+            this.buyImportListB.Size = new System.Drawing.Size(90, 20);
+            this.buyImportListB.TabIndex = 65;
+            this.buyImportListB.Text = "Import";
+            this.buyImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
-            // buyRemoveB
+            // buyListSelect
             // 
-            this.buyRemoveB.ColorTable = office2010BlueTheme1;
-            this.buyRemoveB.Location = new System.Drawing.Point(5, 94);
-            this.buyRemoveB.Name = "buyRemoveB";
-            this.buyRemoveB.Size = new System.Drawing.Size(90, 20);
-            this.buyRemoveB.TabIndex = 46;
-            this.buyRemoveB.Text = "Remove";
-            this.buyRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.buyListSelect.FormattingEnabled = true;
+            this.buyListSelect.Location = new System.Drawing.Point(73, 12);
+            this.buyListSelect.Name = "buyListSelect";
+            this.buyListSelect.Size = new System.Drawing.Size(183, 24);
+            this.buyListSelect.TabIndex = 67;
+            this.buyListSelect.SelectedIndexChanged += new System.EventHandler(this.buyListSelect_SelectedIndexChanged);
             // 
-            // buyAddManualB
+            // buyExportListB
             // 
-            this.buyAddManualB.ColorTable = office2010BlueTheme1;
-            this.buyAddManualB.Location = new System.Drawing.Point(5, 18);
-            this.buyAddManualB.Name = "buyAddManualB";
-            this.buyAddManualB.Size = new System.Drawing.Size(90, 20);
-            this.buyAddManualB.TabIndex = 45;
-            this.buyAddManualB.Text = "Add Manual";
-            this.buyAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.buyExportListB.ColorTable = office2010BlueTheme1;
+            this.buyExportListB.Location = new System.Drawing.Point(561, 14);
+            this.buyExportListB.Name = "buyExportListB";
+            this.buyExportListB.Size = new System.Drawing.Size(90, 20);
+            this.buyExportListB.TabIndex = 64;
+            this.buyExportListB.Text = "Export";
+            this.buyExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
-            // groupBox18
+            // label25
             // 
-            this.groupBox18.Controls.Add(this.buyLogBox);
-            this.groupBox18.Location = new System.Drawing.Point(267, 84);
-            this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(278, 251);
-            this.groupBox18.TabIndex = 73;
-            this.groupBox18.TabStop = false;
-            this.groupBox18.Text = "Buy Log";
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(3, 18);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(65, 13);
+            this.label25.TabIndex = 66;
+            this.label25.Text = "Vendor Buy:";
             // 
-            // buyLogBox
+            // VendorSell
             // 
-            this.buyLogBox.FormattingEnabled = true;
-            this.buyLogBox.Location = new System.Drawing.Point(7, 18);
-            this.buyLogBox.Name = "buyLogBox";
-            this.buyLogBox.Size = new System.Drawing.Size(265, 225);
-            this.buyLogBox.TabIndex = 0;
-            // 
-            // buyEnableCheckB
-            // 
-            this.buyEnableCheckB.Location = new System.Drawing.Point(274, 58);
-            this.buyEnableCheckB.Name = "buyEnableCheckB";
-            this.buyEnableCheckB.Size = new System.Drawing.Size(105, 22);
-            this.buyEnableCheckB.TabIndex = 72;
-            this.buyEnableCheckB.Text = "Enable Buy List";
-            this.buyEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.VendorSell.Controls.Add(this.groupBox19);
+            this.VendorSell.Controls.Add(this.groupBox20);
+            this.VendorSell.Controls.Add(this.sellEnableCheckB);
+            this.VendorSell.Controls.Add(this.sellListView);
+            this.VendorSell.Controls.Add(this.sellRemoveListB);
+            this.VendorSell.Controls.Add(this.sellAddListB);
+            this.VendorSell.Controls.Add(this.sellImportListB);
+            this.VendorSell.Controls.Add(this.sellListSelect);
+            this.VendorSell.Controls.Add(this.sellExportListB);
+            this.VendorSell.Controls.Add(this.label26);
+            this.VendorSell.Location = new System.Drawing.Point(4, 22);
+            this.VendorSell.Name = "VendorSell";
+            this.VendorSell.Padding = new System.Windows.Forms.Padding(3);
+            this.VendorSell.Size = new System.Drawing.Size(659, 341);
+            this.VendorSell.TabIndex = 4;
+            this.VendorSell.Text = "Vendor Sell";
+            this.VendorSell.UseVisualStyleBackColor = true;
             // 
             // groupBox19
             // 
@@ -4417,6 +4423,7 @@ namespace Assistant
             this.sellEditB.TabIndex = 48;
             this.sellEditB.Text = "Edit";
             this.sellEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.sellEditB.Click += new System.EventHandler(this.sellEditB_Click);
             // 
             // sellAddTargerB
             // 
@@ -4427,6 +4434,7 @@ namespace Assistant
             this.sellAddTargerB.TabIndex = 47;
             this.sellAddTargerB.Text = "Add Target";
             this.sellAddTargerB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.sellAddTargerB.Click += new System.EventHandler(this.sellAddTargerB_Click);
             // 
             // sellRemoveB
             // 
@@ -4437,6 +4445,7 @@ namespace Assistant
             this.sellRemoveB.TabIndex = 46;
             this.sellRemoveB.Text = "Remove";
             this.sellRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.sellRemoveB.Click += new System.EventHandler(this.sellRemoveB_Click);
             // 
             // sellAddManualB
             // 
@@ -4447,6 +4456,7 @@ namespace Assistant
             this.sellAddManualB.TabIndex = 45;
             this.sellAddManualB.Text = "Add Manual";
             this.sellAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.sellAddManualB.Click += new System.EventHandler(this.sellAddManualB_Click);
             // 
             // groupBox20
             // 
@@ -4474,6 +4484,7 @@ namespace Assistant
             this.sellEnableCheckB.TabIndex = 82;
             this.sellEnableCheckB.Text = "Enable Sell List";
             this.sellEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.sellEnableCheckB.CheckedChanged += new System.EventHandler(this.sellEnableCheckB_CheckedChanged);
             // 
             // sellListView
             // 
@@ -4521,6 +4532,7 @@ namespace Assistant
             this.sellRemoveListB.TabIndex = 80;
             this.sellRemoveListB.Text = "Remove";
             this.sellRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.sellRemoveListB.Click += new System.EventHandler(this.sellRemoveListB_Click);
             // 
             // sellAddListB
             // 
@@ -4531,6 +4543,7 @@ namespace Assistant
             this.sellAddListB.TabIndex = 79;
             this.sellAddListB.Text = "Add";
             this.sellAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.sellAddListB.Click += new System.EventHandler(this.sellAddListB_Click);
             // 
             // sellImportListB
             // 
@@ -4550,6 +4563,7 @@ namespace Assistant
             this.sellListSelect.Name = "sellListSelect";
             this.sellListSelect.Size = new System.Drawing.Size(183, 24);
             this.sellListSelect.TabIndex = 78;
+            this.sellListSelect.SelectedIndexChanged += new System.EventHandler(this.sellListSelect_SelectedIndexChanged);
             // 
             // sellExportListB
             // 
@@ -4569,6 +4583,16 @@ namespace Assistant
             this.label26.Size = new System.Drawing.Size(64, 13);
             this.label26.TabIndex = 77;
             this.label26.Text = "Vendor Sell:";
+            // 
+            // timerTimer
+            // 
+            this.timerTimer.Enabled = true;
+            this.timerTimer.Interval = 5;
+            this.timerTimer.Tick += new System.EventHandler(this.timerTimer_Tick);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // MainForm
             // 
@@ -4639,10 +4663,10 @@ namespace Assistant
             this.groupBox15.ResumeLayout(false);
             this.VendorBuy.ResumeLayout(false);
             this.VendorBuy.PerformLayout();
-            this.VendorSell.ResumeLayout(false);
-            this.VendorSell.PerformLayout();
             this.groupBox17.ResumeLayout(false);
             this.groupBox18.ResumeLayout(false);
+            this.VendorSell.ResumeLayout(false);
+            this.VendorSell.PerformLayout();
             this.groupBox19.ResumeLayout(false);
             this.groupBox20.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -4814,6 +4838,52 @@ namespace Assistant
             }
             else
                 organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
+
+            //Sell Agent
+            //Liste
+            sellListSelect.Items.Add("Default");    // Lista base non cancellabile 
+            // Carico parametri base
+            string SellSettingLastList = "";
+            List<string> SellSettingItemList = new List<string>();
+            RazorEnhanced.Settings.LoadSellGeneral(out SellSettingItemList, out SellSettingLastList);
+            // load Lista item
+            for (int i = 0; i < SellSettingItemList.Count; i++)
+            {
+                if (SellSettingItemList[i] != "Default")
+                    sellListSelect.Items.Add(SellSettingItemList[i]);
+            }
+
+            // Setta ultima lista usata e carica 
+            if (SellSettingLastList != "")
+            {
+                sellListSelect.SelectedIndex = sellListSelect.Items.IndexOf(SellSettingLastList);
+
+            }
+            else
+                sellListSelect.SelectedIndex = sellListSelect.Items.IndexOf("Default");
+
+            //buy Agent
+            //Liste
+            buyListSelect.Items.Add("Default");    // Lista base non cancellabile 
+            // Carico parametri base
+            string BuySettingLastList = "";
+            List<string> BuySettingItemList = new List<string>();
+            RazorEnhanced.Settings.LoadBuyGeneral(out BuySettingItemList, out BuySettingLastList);
+            // load Lista item
+            for (int i = 0; i < BuySettingItemList.Count; i++)
+            {
+                if (BuySettingItemList[i] != "Default")
+                    buyListSelect.Items.Add(BuySettingItemList[i]);
+            }
+
+            // Setta ultima lista usata e carica 
+            if (BuySettingLastList != "")
+            {
+                buyListSelect.SelectedIndex = buyListSelect.Items.IndexOf(BuySettingLastList);
+
+            }
+            else
+                buyListSelect.SelectedIndex = buyListSelect.Items.IndexOf("Default");
 		}
 
 		private bool m_Initializing = false;
@@ -8781,7 +8851,7 @@ namespace Assistant
                         if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(DestinationBag.Position.X, DestinationBag.Position.Y)) <= 3)
                         {
                             StartCheck = true;
-                            RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag OK: " + SourceBag.Serial.ToString());
+                            RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag OK: " + DestinationBag.Serial.ToString());
                         }
                         else
                         {
@@ -8840,6 +8910,198 @@ namespace Assistant
             organizerExportListB.Enabled = true;
             organizerImportListB.Enabled = true;
             organizerDragDelay.Enabled = true;
+        }
+
+        private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.LoadSellItemList(SellListSelect.SelectedItem.ToString(), out sellItemList);
+            RazorEnhanced.SellAgent.RefreshList(sellItemList);
+            RazorEnhanced.SellAgent.AddLog("Sell list changed to: " + SellListSelect.SelectedItem.ToString());
+        }
+
+        private void sellAddListB_Click(object sender, EventArgs e)
+        {
+            EnhancedSellAgentAddItemList AddItemList = new EnhancedSellAgentAddItemList();
+            AddItemList.TopMost = true;
+            AddItemList.Show();
+        }
+
+        private void sellRemoveListB_Click(object sender, EventArgs e)
+        {
+            if (sellListSelect.Text != "Default")
+            {
+                RazorEnhanced.SellAgent.AddLog("Sell list " + sellListSelect.SelectedItem.ToString() + " removed!");
+                sellListSelect.Items.Remove(sellListSelect.SelectedItem);
+                sellListSelect.SelectedIndex = sellListSelect.FindStringExact("Default");
+            }
+            else
+                RazorEnhanced.SellAgent.AddLog("Can't remove Default list!");
+        }
+
+        private void sellAddManualB_Click(object sender, EventArgs e)
+        {
+            EnhancedSellAgentManualAdd ManualAddItem = new EnhancedSellAgentManualAdd(sellListView, sellItemList);
+            ManualAddItem.TopMost = true;
+            ManualAddItem.Show();
+        }
+
+        private void sellAddTargerB_Click(object sender, EventArgs e)
+        {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
+        }
+
+        private void SellAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item SellItem = Assistant.World.FindItem(serial);
+            if (SellItem != null && SellItem.Serial.IsItem)
+            {
+                RazorEnhanced.Misc.SendMessage("Sell item added: " + SellItem.ToString());
+                RazorEnhanced.SellAgent.AddItemToList(SellItem.Name, SellItem.ItemID, 999, sellListView, sellItemList);
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid target");
+            }
+        }
+
+        private void sellEditB_Click(object sender, EventArgs e)
+        {
+            int CheckedIndex = 0;
+            for (int i = 0; i < SellListView.Items.Count; i++)
+            {
+                if (SellListView.Items[i].Checked)
+                {
+                    CheckedIndex = i;
+                    break;
+                }
+            }
+            EnhancedSellAgentEditItem EditItem = new EnhancedSellAgentEditItem(SellListView, SellItemList, CheckedIndex);
+            EditItem.TopMost = true;
+            EditItem.Show();
+        }
+
+        private void sellRemoveB_Click(object sender, EventArgs e)
+        {
+            int y = 0;
+            for (int i = 0; i < SellListView.Items.Count; i++)
+            {
+                if (SellListView.Items[i].Checked)
+                {
+                    SellItemList.RemoveAt(y);
+                    y--;
+                }
+                y++;
+            }
+            RazorEnhanced.Settings.SaveSellItemList(sellListSelect.SelectedItem.ToString(), SellItemList);
+            RazorEnhanced.SellAgent.RefreshList(SellItemList);
+        }
+
+        private void sellEnableCheckB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (autolootEnable.Checked)
+                {
+                    sellListSelect.Enabled = false;
+                    sellAddListB.Enabled = false;
+                    sellRemoveListB.Enabled = false;
+                    sellImportListB.Enabled = false;
+                    sellExportListB.Enabled = false;
+                    RazorEnhanced.SellAgent.AddLog("Apply item list "+ sellListSelect.SelectedItem.ToString() +" filter ok!");
+                    RazorEnhanced.Misc.SendMessage("Apply item list "+ sellListSelect.SelectedItem.ToString() +" filter ok!");
+                }
+            else
+                {
+                    sellListSelect.Enabled = true;
+                    sellAddListB.Enabled = true;
+                    sellRemoveListB.Enabled = true;
+                    sellImportListB.Enabled = true;
+                    sellExportListB.Enabled = true;
+                    RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                    RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                }
+        }
+
+        private void buyListSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.LoadBuyItemList(BuyListSelect.SelectedItem.ToString(), out buyItemList);
+            RazorEnhanced.BuyAgent.RefreshList(buyItemList);
+            RazorEnhanced.BuyAgent.AddLog("Sell list changed to: " + BuyListSelect.SelectedItem.ToString());
+        }
+
+        private void buyAddListB_Click(object sender, EventArgs e)
+        {
+            EnhancedBuyAgentAddItemList AddItemList = new EnhancedBuyAgentAddItemList();
+            AddItemList.TopMost = true;
+            AddItemList.Show();
+        }
+
+        private void buyRemoveListB_Click(object sender, EventArgs e)
+        {
+            if (buyListSelect.Text != "Default")
+            {
+                RazorEnhanced.BuyAgent.AddLog("Sell list " + buyListSelect.SelectedItem.ToString() + " removed!");
+                buyListSelect.Items.Remove(buyListSelect.SelectedItem);
+                buyListSelect.SelectedIndex = buyListSelect.FindStringExact("Default");
+            }
+            else
+                RazorEnhanced.BuyAgent.AddLog("Can't remove Default list!");
+        }
+
+        private void buyAddManualB_Click(object sender, EventArgs e)
+        {
+            EnhancedBuyAgentManualAdd ManualAddItem = new EnhancedBuyAgentManualAdd(buyListView, buyItemList);
+            ManualAddItem.TopMost = true;
+            ManualAddItem.Show();
+        }
+
+        private void buyAddTargetB_Click(object sender, EventArgs e)
+        {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentItemTarget_Callback));
+        }
+
+        private void BuyAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item BuyItem = Assistant.World.FindItem(serial);
+            if (BuyItem != null && BuyItem.Serial.IsItem)
+            {
+                RazorEnhanced.Misc.SendMessage("Buy item added: " + BuyItem.ToString());
+                RazorEnhanced.BuyAgent.AddItemToList(BuyItem.Name, BuyItem.ItemID, 999, buyListView, buyItemList);
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid target");
+            }
+        }
+
+        private void buyEditB_Click(object sender, EventArgs e)
+        {
+            int CheckedIndex = 0;
+            for (int i = 0; i < BuyListView.Items.Count; i++)
+            {
+                if (BuyListView.Items[i].Checked)
+                {
+                    CheckedIndex = i;
+                    break;
+                }
+            }
+            EnhancedBuyAgentEditItem EditItem = new EnhancedBuyAgentEditItem(BuyListView, BuyItemList, CheckedIndex);
+            EditItem.TopMost = true;
+            EditItem.Show();
+        }
+
+        private void buyRemoveB_Click(object sender, EventArgs e)
+        {
+            int y = 0;
+            for (int i = 0; i < BuyListView.Items.Count; i++)
+            {
+                if (BuyListView.Items[i].Checked)
+                {
+                    BuyItemList.RemoveAt(y);
+                    y--;
+                }
+                y++;
+            }
+            RazorEnhanced.Settings.SaveBuyItemList(buyListSelect.SelectedItem.ToString(), BuyItemList);
+            RazorEnhanced.BuyAgent.RefreshList(BuyItemList);
         }
 
 	}

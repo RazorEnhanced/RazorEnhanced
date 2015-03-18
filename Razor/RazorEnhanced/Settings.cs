@@ -101,6 +101,28 @@ namespace RazorEnhanced
                 organizer_general.Columns.Add("Selection", typeof(string));
                 m_Dataset.Tables.Add(organizer_general);
 
+                //Sell
+                DataTable sell_general = new DataTable("SELL_GENERAL");
+                sell_general.Columns.Add("List", typeof(List<string>));
+                sell_general.Columns.Add("Selection", typeof(string));
+                m_Dataset.Tables.Add(sell_general);
+
+                DataTable sell_lists = new DataTable("SELL_LISTS");
+                sell_lists.Columns.Add("Name", typeof(string));
+                sell_lists.Columns.Add("List", typeof(List<SellAgent.SellItem>));
+                m_Dataset.Tables.Add(sell_lists);
+
+                //Buy
+                DataTable buy_general = new DataTable("BUY_GENERAL");
+                buy_general.Columns.Add("List", typeof(List<string>));
+                buy_general.Columns.Add("Selection", typeof(string));
+                m_Dataset.Tables.Add(buy_general);
+
+                DataTable buy_lists = new DataTable("BUY_LISTS");
+                buy_lists.Columns.Add("Name", typeof(string));
+                buy_lists.Columns.Add("List", typeof(List<RazorEnhanced.BuyAgent.BuyItem>));
+                m_Dataset.Tables.Add(buy_lists);
+
 				m_Dataset.AcceptChanges();
 			}
 		}
@@ -321,6 +343,123 @@ namespace RazorEnhanced
             Save();
         }
 
+        // sell agent
+        internal static void SaveSellGeneral(List<string> list, string selection)
+        {
+            m_Dataset.Tables["SELL_GENERAL"].Rows.Clear();
+            DataRow row = m_Dataset.Tables["SELL_GENERAL"].NewRow();
+            row["List"] = list;
+            row["Selection"] = selection;
+            m_Dataset.Tables["SELL_GENERAL"].Rows.Add(row);
+            Save();
+        }
+
+        internal static void SaveSellItemList(string name, List<SellAgent.SellItem> list)
+        {
+            DataRow row = m_Dataset.Tables["SELL_LISTS"].NewRow();
+            row["Name"] = name;
+            row["List"] = list;
+            m_Dataset.Tables["SELL_LISTS"].Rows.Add(row);
+            Save();
+        }
+
+        internal static bool LoadSellGeneral(out List<string> list, out string selection)
+        {
+            bool exit = false;
+
+            List<string> listOut = new List<string>();
+            string selectionOut = "";
+
+            if (m_Dataset.Tables["SELL_GENERAL"].Rows.Count == 1)
+            {
+                DataRow row = m_Dataset.Tables["SELL_GENERAL"].Rows[0];
+                {
+                    listOut = row["List"] as List<string>;
+                    selectionOut = (string)row["Selection"];
+                    exit = true;
+                }
+            }
+            list = listOut;
+            selection = selectionOut;
+
+            return exit;
+        }
+
+        internal static bool LoadSellItemList(string name, out List<SellAgent.SellItem> list)
+        {
+            bool exit = false;
+            List<SellAgent.SellItem> result = new List<SellAgent.SellItem>();
+
+            foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+            {
+                if ((string)row["Name"] == name)
+                {
+                    result = row["List"] as List<SellAgent.SellItem>;
+                    exit = true;
+                }
+            }
+            list = result;
+            return exit;
+        }
+
+        // Buy Agent
+        internal static void SaveBuyGeneral(List<string> list, string selection)
+        {
+            m_Dataset.Tables["BUY_GENERAL"].Rows.Clear();
+            DataRow row = m_Dataset.Tables["BUY_GENERAL"].NewRow();
+            row["List"] = list;
+            row["Selection"] = selection;
+            m_Dataset.Tables["BUY_GENERAL"].Rows.Add(row);
+            Save();
+        }
+
+        internal static void SaveBuyItemList(string name, List<RazorEnhanced.BuyAgent.BuyItem> list)
+        {
+            DataRow row = m_Dataset.Tables["BUY_LISTS"].NewRow();
+            row["Name"] = name;
+            row["List"] = list;
+            m_Dataset.Tables["BUY_LISTS"].Rows.Add(row);
+            Save();
+        }
+
+        internal static bool LoadBuyGeneral(out List<string> list, out string selection)
+        {
+            bool exit = false;
+
+            List<string> listOut = new List<string>();
+            string selectionOut = "";
+
+            if (m_Dataset.Tables["BUY_GENERAL"].Rows.Count == 1)
+            {
+                DataRow row = m_Dataset.Tables["BUY_GENERAL"].Rows[0];
+                {
+                    listOut = row["List"] as List<string>;
+                    selectionOut = (string)row["Selection"];
+                    exit = true;
+                }
+            }
+            list = listOut;
+            selection = selectionOut;
+
+            return exit;
+        }
+
+        internal static bool LoadBuyItemList(string name, out List<RazorEnhanced.BuyAgent.BuyItem> list)
+        {
+            bool exit = false;
+            List<RazorEnhanced.BuyAgent.BuyItem> result = new List<RazorEnhanced.BuyAgent.BuyItem>();
+
+            foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+            {
+                if ((string)row["Name"] == name)
+                {
+                    result = row["List"] as List<RazorEnhanced.BuyAgent.BuyItem>;
+                    exit = true;
+                }
+            }
+            list = result;
+            return exit;
+        }
 
 		internal static void Save()
 		{
