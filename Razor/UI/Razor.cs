@@ -4282,6 +4282,7 @@ namespace Assistant
             this.buyEnableCheckB.TabIndex = 72;
             this.buyEnableCheckB.Text = "Enable Buy List";
             this.buyEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.buyEnableCheckB.CheckedChanged += new System.EventHandler(this.buyEnableCheckB_CheckedChanged);
             // 
             // buyListView
             // 
@@ -9007,6 +9008,7 @@ namespace Assistant
                     sellExportListB.Enabled = false;
                     RazorEnhanced.SellAgent.AddLog("Apply item list "+ sellListSelect.SelectedItem.ToString() +" filter ok!");
                     RazorEnhanced.Misc.SendMessage("Apply item list "+ sellListSelect.SelectedItem.ToString() +" filter ok!");
+                    RazorEnhanced.SellAgent.EnableSellFilter(SellItemList);
                 }
             else
                 {
@@ -9017,6 +9019,7 @@ namespace Assistant
                     sellExportListB.Enabled = true;
                     RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
                     RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                    RazorEnhanced.SellAgent.DisableSellFilter();
                 }
         }
 
@@ -9102,6 +9105,32 @@ namespace Assistant
             }
             RazorEnhanced.Settings.SaveBuyItemList(buyListSelect.SelectedItem.ToString(), BuyItemList);
             RazorEnhanced.BuyAgent.RefreshList(BuyItemList);
+        }
+
+        private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
+        {
+            if (autolootEnable.Checked)
+            {
+                buyListSelect.Enabled = false;
+                buyAddListB.Enabled = false;
+                buyRemoveListB.Enabled = false;
+                buyImportListB.Enabled = false;
+                buyExportListB.Enabled = false;
+                RazorEnhanced.BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                RazorEnhanced.BuyAgent.EnableBuyFilter(BuyItemList);
+            }
+            else
+            {
+                buyListSelect.Enabled = true;
+                buyAddListB.Enabled = true;
+                buyRemoveListB.Enabled = true;
+                buyImportListB.Enabled = true;
+                buyExportListB.Enabled = true;
+                RazorEnhanced.BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                RazorEnhanced.BuyAgent.DisableBuyFilter();
+            }
         }
 
 	}

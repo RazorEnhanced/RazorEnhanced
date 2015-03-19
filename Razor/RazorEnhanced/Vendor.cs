@@ -62,6 +62,14 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Add(addlog)));
             Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.SelectedIndex = Assistant.Engine.MainWindow.SellLogBox.Items.Count - 1));
         }
+        internal static void EnableSellFilter(List<SellItem> BuyItemList)
+        {
+
+        }
+        internal static void DisableSellFilter()
+        {
+
+        }
     }
 
     public class BuyAgent
@@ -116,6 +124,15 @@ namespace RazorEnhanced
         {
             Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
             Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.SelectedIndex = Assistant.Engine.MainWindow.BuyLogBox.Items.Count - 1));
+        }
+
+        internal static void EnableBuyFilter(List<BuyItem> BuyItemList)
+        {
+            
+        }
+        internal static void DisableBuyFilter()
+        {
+
         }
     }
 }
