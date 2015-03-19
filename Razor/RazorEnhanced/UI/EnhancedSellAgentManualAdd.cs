@@ -34,6 +34,7 @@ namespace RazorEnhanced.UI
             tName.Text = "New Item";
             tAmount.Text = "999";
             tGraphics.Text = "0x0000";
+            tHue.Text = "-1";
         }
 
 
@@ -47,8 +48,9 @@ namespace RazorEnhanced.UI
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphics = 0 ;
-            int Amount =0 ;
+            int Graphics = 0;
+            int Amount = 0;
+            int Hue = -1;
             if (tName.Text == null)
             {
                 MessageBox.Show("Item name is not valid.",
@@ -87,11 +89,31 @@ namespace RazorEnhanced.UI
                 MessageBoxDefaultButton.Button1);
                 fail = true;
             }
-            
+
+            if (tHue.Text == "-1")
+                Hue = -1;
+            else
+            {
+                try
+                {
+
+                    Hue = Convert.ToInt32(tHue.Text, 16);
+                }
+                catch
+                {
+                    MessageBox.Show("Item Color is not valid.",
+                    "Item Color Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation,
+                    MessageBoxDefaultButton.Button1);
+                    fail = true;
+                }
+            }
+
 
             if (!fail)
             {
-                RazorEnhanced.SellAgent.AddItemToList(tName.Text, Graphics, Amount, SelllistView, SellItemList);
+                RazorEnhanced.SellAgent.AddItemToList(tName.Text, Graphics, Amount, Hue, SelllistView, SellItemList);
                 this.Close();
             }
 

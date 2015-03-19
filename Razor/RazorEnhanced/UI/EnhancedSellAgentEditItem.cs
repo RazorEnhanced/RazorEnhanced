@@ -36,6 +36,7 @@ namespace RazorEnhanced.UI
             tName.Text = SellItemList[IndexEdit].Name;
             tGraphics.Text = "0x" + SellItemList[IndexEdit].Graphics.ToString("X4");
             tAmount.Text = SellItemList[IndexEdit].Amount.ToString();
+            tHue.Text = SellItemList[IndexEdit].Color.ToString();
         }
 
 
@@ -49,8 +50,9 @@ namespace RazorEnhanced.UI
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphics = 0 ;
-            int Amount =0 ;
+            int Graphics = 0;
+            int Amount = 0;
+            int Hue = 0;
             if (tName.Text == null)
             {
                 MessageBox.Show("Item name is not valid.",
@@ -89,11 +91,31 @@ namespace RazorEnhanced.UI
                 MessageBoxDefaultButton.Button1);
                 fail = true;
             }
-            
+
+            if (tHue.Text == "-1")
+                Hue = -1;
+            else
+            {
+                try
+                {
+
+                    Hue = Convert.ToInt32(tHue.Text, 16);
+                }
+                catch
+                {
+                    MessageBox.Show("Item Color is not valid.",
+                    "Item Color Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation,
+                    MessageBoxDefaultButton.Button1);
+                    fail = true;
+                }
+            }
+
             if (!fail)
             {
-                RazorEnhanced.SellAgent.ModifyItemToList(tName.Text, Graphics, Amount, SelllistView, SellItemList, IndexEdit);
-                RazorEnhanced.Settings.SaveSellItemList(Assistant.Engine.MainWindow.SellListSelect.SelectedItem.ToString(), SellItemList);
+                RazorEnhanced.SellAgent.ModifyItemToList(tName.Text, Graphics, Amount, Hue, SelllistView, SellItemList, IndexEdit);
+                RazorEnhanced.Settings.SaveSellItemList(Assistant.Engine.MainWindow.SellListSelect.SelectedItem.ToString(), SellItemList, Assistant.Engine.MainWindow.SellBagLabel.Text);
                 this.Close();
             }
 

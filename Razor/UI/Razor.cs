@@ -380,6 +380,10 @@ namespace Assistant
         private RazorComboBox sellListSelect;
         private RazorButton sellExportListB;
         private Label label26;
+        private RazorButton razorButton1;
+        private Label sellBagLabel;
+        private RazorButton sellSetBagB;
+        private ColumnHeader columnHeader22;
 
 		private bool m_CanClose = true;
 
@@ -394,9 +398,11 @@ namespace Assistant
         internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
         internal Label OrganizerSourceLabel { get { return organizerSourceLabel; } }
         internal Label OrganizerDestinationLabel { get { return organizerDestinationLabel; } }
+        internal Label SellBagLabel { get { return sellBagLabel; } }
 
         internal CheckBox AutolootCheckBox { get { return autolootEnable; } }
         internal CheckBox ScavengerCheckBox { get { return scavengerEnableCheckB; } }
+        internal CheckBox SellCheckBox { get { return sellEnableCheckB; } }
 		
 		internal int AutoLootDelayLabel
 		{
@@ -826,6 +832,9 @@ namespace Assistant
             this.buyExportListB = new RazorEnhanced.UI.RazorButton();
             this.label25 = new System.Windows.Forms.Label();
             this.VendorSell = new System.Windows.Forms.TabPage();
+            this.razorButton1 = new RazorEnhanced.UI.RazorButton();
+            this.sellBagLabel = new System.Windows.Forms.Label();
+            this.sellSetBagB = new RazorEnhanced.UI.RazorButton();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
             this.sellEditB = new RazorEnhanced.UI.RazorButton();
             this.sellAddTargerB = new RazorEnhanced.UI.RazorButton();
@@ -847,6 +856,7 @@ namespace Assistant
             this.label26 = new System.Windows.Forms.Label();
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -4384,6 +4394,9 @@ namespace Assistant
             // 
             // VendorSell
             // 
+            this.VendorSell.Controls.Add(this.razorButton1);
+            this.VendorSell.Controls.Add(this.sellBagLabel);
+            this.VendorSell.Controls.Add(this.sellSetBagB);
             this.VendorSell.Controls.Add(this.groupBox19);
             this.VendorSell.Controls.Add(this.groupBox20);
             this.VendorSell.Controls.Add(this.sellEnableCheckB);
@@ -4402,13 +4415,43 @@ namespace Assistant
             this.VendorSell.Text = "Vendor Sell";
             this.VendorSell.UseVisualStyleBackColor = true;
             // 
+            // razorButton1
+            // 
+            this.razorButton1.ColorTable = office2010BlueTheme1;
+            this.razorButton1.Location = new System.Drawing.Point(558, 105);
+            this.razorButton1.Name = "razorButton1";
+            this.razorButton1.Size = new System.Drawing.Size(88, 20);
+            this.razorButton1.TabIndex = 87;
+            this.razorButton1.Text = "Clear Hot Bag";
+            this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
+            // 
+            // sellBagLabel
+            // 
+            this.sellBagLabel.Location = new System.Drawing.Point(564, 87);
+            this.sellBagLabel.Name = "sellBagLabel";
+            this.sellBagLabel.Size = new System.Drawing.Size(82, 19);
+            this.sellBagLabel.TabIndex = 86;
+            this.sellBagLabel.Text = "0x00000000";
+            // 
+            // sellSetBagB
+            // 
+            this.sellSetBagB.ColorTable = office2010BlueTheme1;
+            this.sellSetBagB.Location = new System.Drawing.Point(558, 60);
+            this.sellSetBagB.Name = "sellSetBagB";
+            this.sellSetBagB.Size = new System.Drawing.Size(88, 20);
+            this.sellSetBagB.TabIndex = 85;
+            this.sellSetBagB.Text = "Set Hot Bag";
+            this.sellSetBagB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.sellSetBagB.Click += new System.EventHandler(this.sellSetBagB_Click);
+            // 
             // groupBox19
             // 
             this.groupBox19.Controls.Add(this.sellEditB);
             this.groupBox19.Controls.Add(this.sellAddTargerB);
             this.groupBox19.Controls.Add(this.sellRemoveB);
             this.groupBox19.Controls.Add(this.sellAddManualB);
-            this.groupBox19.Location = new System.Drawing.Point(551, 84);
+            this.groupBox19.Location = new System.Drawing.Point(551, 135);
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(100, 125);
             this.groupBox19.TabIndex = 84;
@@ -4494,7 +4537,8 @@ namespace Assistant
             this.columnHeader18,
             this.columnHeader19,
             this.columnHeader20,
-            this.columnHeader21});
+            this.columnHeader21,
+            this.columnHeader22});
             this.sellListView.GridLines = true;
             this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.sellListView.LabelWrap = false;
@@ -4514,15 +4558,17 @@ namespace Assistant
             // columnHeader19
             // 
             this.columnHeader19.Text = "Item Name";
-            this.columnHeader19.Width = 105;
+            this.columnHeader19.Width = 78;
             // 
             // columnHeader20
             // 
             this.columnHeader20.Text = "Graphics";
+            this.columnHeader20.Width = 54;
             // 
             // columnHeader21
             // 
             this.columnHeader21.Text = "Amount";
+            this.columnHeader21.Width = 50;
             // 
             // sellRemoveListB
             // 
@@ -4594,6 +4640,11 @@ namespace Assistant
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "Color";
+            this.columnHeader22.Width = 50;
             // 
             // MainForm
             // 
@@ -8915,7 +8966,9 @@ namespace Assistant
 
         private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RazorEnhanced.Settings.LoadSellItemList(SellListSelect.SelectedItem.ToString(), out sellItemList);
+            string HotBag = "0x0000000";
+            RazorEnhanced.Settings.LoadSellItemList(SellListSelect.SelectedItem.ToString(), out sellItemList, out HotBag);
+            sellBagLabel.Text = HotBag;
             RazorEnhanced.SellAgent.RefreshList(sellItemList);
             RazorEnhanced.SellAgent.AddLog("Sell list changed to: " + SellListSelect.SelectedItem.ToString());
         }
@@ -8957,7 +9010,7 @@ namespace Assistant
             if (SellItem != null && SellItem.Serial.IsItem)
             {
                 RazorEnhanced.Misc.SendMessage("Sell item added: " + SellItem.ToString());
-                RazorEnhanced.SellAgent.AddItemToList(SellItem.Name, SellItem.ItemID, 999, sellListView, sellItemList);
+                RazorEnhanced.SellAgent.AddItemToList(SellItem.Name, SellItem.ItemID, 999, -1, sellListView, sellItemList);
             }
             else
             {
@@ -8993,7 +9046,7 @@ namespace Assistant
                 }
                 y++;
             }
-            RazorEnhanced.Settings.SaveSellItemList(sellListSelect.SelectedItem.ToString(), SellItemList);
+            RazorEnhanced.Settings.SaveSellItemList(sellListSelect.SelectedItem.ToString(), SellItemList, sellBagLabel.Text);
             RazorEnhanced.SellAgent.RefreshList(SellItemList);
         }
 
@@ -9001,14 +9054,33 @@ namespace Assistant
         {
             if (sellEnableCheckB.Checked)
                 {
-                    sellListSelect.Enabled = false;
-                    sellAddListB.Enabled = false;
-                    sellRemoveListB.Enabled = false;
-                    sellImportListB.Enabled = false;
-                    sellExportListB.Enabled = false;
-                    RazorEnhanced.SellAgent.AddLog("Apply item list "+ sellListSelect.SelectedItem.ToString() +" filter ok!");
-                    RazorEnhanced.Misc.SendMessage("Apply item list "+ sellListSelect.SelectedItem.ToString() +" filter ok!");
-                    RazorEnhanced.SellAgent.EnableSellFilter(SellItemList);
+                    Assistant.Item HotBag = null;
+                    int SerialHotBag = Convert.ToInt32(sellBagLabel.Text, 16);
+                    HotBag = Assistant.World.FindItem(SerialHotBag);
+                    if (HotBag != null)
+                        if (HotBag.RootContainer != World.Player || !HotBag.IsContainer)
+                        {
+                            RazorEnhanced.SellAgent.AddLog("Invalid or not accessible HotBag!");
+                            RazorEnhanced.Misc.SendMessage("Invalid or not accessible HotBag!");
+                            sellEnableCheckB.Checked = false;
+                        }
+                        else
+                        {
+                            sellListSelect.Enabled = false;
+                            sellAddListB.Enabled = false;
+                            sellRemoveListB.Enabled = false;
+                            sellImportListB.Enabled = false;
+                            sellExportListB.Enabled = false;
+                            RazorEnhanced.SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                            RazorEnhanced.Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                            RazorEnhanced.SellAgent.EnableSellFilter();
+                        }
+                    else
+                    {
+                        RazorEnhanced.SellAgent.AddLog("Invalid or not accessible HotBag!");
+                        RazorEnhanced.Misc.SendMessage("Invalid or not accessible HotBag!");
+                        sellEnableCheckB.Checked = false;
+                    }
                 }
             else
                 {
@@ -9019,7 +9091,6 @@ namespace Assistant
                     sellExportListB.Enabled = true;
                     RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
                     RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-                    RazorEnhanced.SellAgent.DisableSellFilter();
                 }
         }
 
@@ -9131,6 +9202,34 @@ namespace Assistant
                 RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
                 RazorEnhanced.BuyAgent.DisableBuyFilter();
             }
+        }
+
+        private void razorButton1_Click(object sender, EventArgs e)
+        {
+            sellBagLabel.Text = "0x00000000";
+        }
+
+        private void sellSetBagB_Click(object sender, EventArgs e)
+        {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellHotbagTarget_Callback));
+        }
+        private void sellHotbagTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item HotBag = Assistant.World.FindItem(serial);
+            if (HotBag != null && HotBag.Serial.IsItem && HotBag.IsContainer && HotBag.RootContainer == Assistant.World.Player)
+            {
+                RazorEnhanced.Misc.SendMessage("Sell Agent HotBag configured to: " + HotBag.Serial.Value.ToString("X8"));
+                RazorEnhanced.SellAgent.AddLog("Sell Agent HotBag configured to: " + HotBag.Serial.Value.ToString("X8"));
+                sellBagLabel.Text = "0x" + HotBag.Serial.Value.ToString("X8");
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid Sell Agent HotBag");
+                RazorEnhanced.SellAgent.AddLog("Invalid Sell Agent HotBag");
+                sellBagLabel.Text = "0x0000000";
+            }
+            RazorEnhanced.Settings.SaveSellItemList(SellListSelect.SelectedItem.ToString(), SellItemList, sellBagLabel.Text);
+
         }
 
 	}

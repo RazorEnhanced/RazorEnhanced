@@ -213,7 +213,7 @@ namespace RazorEnhanced
 
                     if (propsOK) // Tutte le props match OK
                     {
-                        RazorEnhanced.Scavenger.AddLog("- Props Match ok... Grabbing");
+                        RazorEnhanced.Scavenger.AddLog("- Item Match found (0x" + ItemGround.Serial.ToString("X8") + ") ... Grabbing");
                         RazorEnhanced.Items.Move(ItemGround, RazorEnhanced.Scavenger.ScavengerBag, 0);
                         Thread.Sleep(mseconds);
                     }
@@ -224,7 +224,7 @@ namespace RazorEnhanced
                 }
                 else // Item Senza props     
                 {
-                    RazorEnhanced.Scavenger.AddLog("- Item Match found... Grabbing");
+                    RazorEnhanced.Scavenger.AddLog("- Item Match found (0x" + ItemGround.Serial.ToString("X8") + ") ... Grabbing");
                     RazorEnhanced.Items.Move(ItemGround, RazorEnhanced.Scavenger.ScavengerBag, 0); 
                     Thread.Sleep(mseconds);
                 }

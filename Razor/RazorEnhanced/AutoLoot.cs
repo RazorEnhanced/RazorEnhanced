@@ -180,7 +180,7 @@ namespace RazorEnhanced
 				}
 				if (!giaAperto)
 				{
-					RazorEnhanced.AutoLoot.AddLog("- Force Open: " + corpo.Serial.ToString());
+					RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
 					Items.UseItem(corpo);
 					m_IgnoreCorpiQueue.Enqueue(corpo);
 					if (m_IgnoreCorpiQueue.Count > 50)
@@ -286,7 +286,7 @@ namespace RazorEnhanced
 
                     if (propsOK) // Tutte le props match OK
                     {
-                        RazorEnhanced.AutoLoot.AddLog("- Props Match ok... Looting");
+                        RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
                         RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
                         Thread.Sleep(mseconds);
                     }
@@ -297,7 +297,7 @@ namespace RazorEnhanced
                 }
                 else // Item Senza props     
                 {
-                    RazorEnhanced.AutoLoot.AddLog("- Item Match found... Looting");
+                    RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
                     RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
                     Thread.Sleep(mseconds);
                 }

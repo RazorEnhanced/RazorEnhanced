@@ -109,6 +109,7 @@ namespace RazorEnhanced
 
                 DataTable sell_lists = new DataTable("SELL_LISTS");
                 sell_lists.Columns.Add("Name", typeof(string));
+                sell_lists.Columns.Add("HotBag", typeof(string));
                 sell_lists.Columns.Add("List", typeof(List<SellAgent.SellItem>));
                 m_Dataset.Tables.Add(sell_lists);
 
@@ -354,10 +355,11 @@ namespace RazorEnhanced
             Save();
         }
 
-        internal static void SaveSellItemList(string name, List<SellAgent.SellItem> list)
+        internal static void SaveSellItemList(string name, List<SellAgent.SellItem> list, string hotbag)
         {
             DataRow row = m_Dataset.Tables["SELL_LISTS"].NewRow();
             row["Name"] = name;
+            row["HotBag"] = hotbag;
             row["List"] = list;
             m_Dataset.Tables["SELL_LISTS"].Rows.Add(row);
             Save();
@@ -385,20 +387,23 @@ namespace RazorEnhanced
             return exit;
         }
 
-        internal static bool LoadSellItemList(string name, out List<SellAgent.SellItem> list)
+        internal static bool LoadSellItemList(string name, out List<SellAgent.SellItem> list, out string HotBag)
         {
             bool exit = false;
+            string HotBagOut = "0x0000000";
             List<SellAgent.SellItem> result = new List<SellAgent.SellItem>();
 
             foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
             {
                 if ((string)row["Name"] == name)
                 {
+                    HotBagOut = (string)row["HotBag"];
                     result = row["List"] as List<SellAgent.SellItem>;
                     exit = true;
                 }
             }
             list = result;
+            HotBag = HotBagOut;
             return exit;
         }
 

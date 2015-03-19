@@ -100,7 +100,7 @@ namespace RazorEnhanced
                       // Controllo amount e caso -1
                         if (oggettoDaLista.Amount == -1) // Sposta senza contare
                         {
-                            RazorEnhanced.Organizer.AddLog("- Item (" + oggettoContenuto.ItemID+ ") Found Move amount: " + oggettoContenuto.Amount);
+                            RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4")+ ") Found Move amount: " + oggettoContenuto.Amount);
                             RazorEnhanced.Items.Move(oggettoContenuto, DestinationBag, 0);
                             Thread.Sleep(mseconds);
                         }
@@ -111,16 +111,16 @@ namespace RazorEnhanced
                             {
                                 if ((AmountContenuto - oggettoDaLista.Amount) <= oggettoContenuto.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti 
                                 {
-                                    RazorEnhanced.Organizer.AddLog("- Item (" + oggettoContenuto.ItemID + ") Found Move amount: " + oggettoContenuto.Amount);
+                                    RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Found Move amount: " + oggettoContenuto.Amount);
                                     RazorEnhanced.Items.Move(oggettoContenuto, DestinationBag, 0);
-                                    RazorEnhanced.Organizer.AddLog("- Item (" + oggettoContenuto.ItemID + ") Destination bag amount: " + (AmountContenuto + oggettoContenuto.Amount));
+                                    RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Destination bag amount: " + (AmountContenuto + oggettoContenuto.Amount));
                                     Thread.Sleep(mseconds);
                                 }
                                 else  // Caso che lo stack sia superiore (sposta solo un blocco)
                                 {
-                                    RazorEnhanced.Organizer.AddLog("- Item (" + oggettoContenuto.ItemID + ") Found Move amount: " + (oggettoContenuto.Amount - AmountContenuto));
+                                    RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Found Move amount: " + (oggettoContenuto.Amount - AmountContenuto));
                                     RazorEnhanced.Items.Move(oggettoContenuto, DestinationBag, (oggettoContenuto.Amount - AmountContenuto));
-                                    RazorEnhanced.Organizer.AddLog("- Item (" + oggettoContenuto.ItemID + ") Destination bag amount: " + (AmountContenuto + (oggettoContenuto.Amount - AmountContenuto)));
+                                    RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Destination bag amount: " + (AmountContenuto + (oggettoContenuto.Amount - AmountContenuto)));
                                     Thread.Sleep(mseconds);
                                 }
                             }
