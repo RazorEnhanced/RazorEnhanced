@@ -8999,7 +8999,7 @@ namespace Assistant
 
         private void sellEnableCheckB_CheckedChanged(object sender, EventArgs e)
         {
-            if (autolootEnable.Checked)
+            if (sellEnableCheckB.Checked)
                 {
                     sellListSelect.Enabled = false;
                     sellAddListB.Enabled = false;
@@ -9109,7 +9109,7 @@ namespace Assistant
 
         private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
         {
-            if (autolootEnable.Checked)
+            if (buyEnableCheckB.Checked)
             {
                 buyListSelect.Enabled = false;
                 buyAddListB.Enabled = false;
