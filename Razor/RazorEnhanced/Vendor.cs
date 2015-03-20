@@ -130,7 +130,6 @@ namespace RazorEnhanced
 
         private static void OnVendorSell(PacketReader pvSrc, PacketHandlerEventArgs args)
         {
-            // Check Prepartenza
             if (!Assistant.Engine.MainWindow.SellCheckBox.Checked)          // Filtro disabilitato
                 return;
 
@@ -167,7 +166,7 @@ namespace RazorEnhanced
 
                 foreach (SellItem SellItemList in Assistant.Engine.MainWindow.SellItemList) // Scansione item presenti in lista agent item 
                 {
-                    if (gfx == SellItemList.Graphics && (item != null && item != HotBag && item.IsChildOf(HotBag)) && ColorCheck(SellItemList.Color, hue))                   // match sulla grafica fra lista agent e lista vendor e hotbag              
+                    if (gfx == SellItemList.Graphics && (item != null && item != HotBag && item.IsChildOf(HotBag)) && RazorEnhanced.SellAgent.ColorCheck(SellItemList.Color, hue))                   // match sulla grafica fra lista agent e lista vendor e hotbag              
                     {
                         int AmountLefta = 60000;
                         int Index = 0;
@@ -175,7 +174,7 @@ namespace RazorEnhanced
 
                         for (int y = 0; y < templist.Count; y++)            // Controllo che non ho gia venduto item simili
                         {
-                            if (templist[y].Graphics == gfx && ColorCheck(templist[y].Color, hue))
+                            if (templist[y].Graphics == gfx && RazorEnhanced.SellAgent.ColorCheck(templist[y].Color, hue))
                             {
                                 GiaVenduto = true;
                                 AmountLefta = templist[y].AmountLeft;
@@ -238,12 +237,11 @@ namespace RazorEnhanced
             if (list.Count > 0)
             {
                 ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
-                World.Player.SendMessage(MsgLevel.Force, LocString.SellTotals, sold, total);
+                AddLog("Sell " + sold.ToString() + "items for " + total.ToString() + " gold coin");
+                World.Player.SendMessage("Enhanced Sell Agent: Sell " + sold.ToString() + " items for " + total.ToString() + " gold coin");
                 args.Block = true;
             }
         }
-
-
     }
 
     public class BuyAgent
@@ -260,11 +258,15 @@ namespace RazorEnhanced
             private int m_amount;
             public int Amount { get { return m_amount; } }
 
-            public BuyItem(string name, int graphics, int amount)
+            private int m_color;
+            public int Color { get { return m_color; } }
+
+            public BuyItem(string name, int graphics, int amount, int color)
             {
                 m_Name = name;
                 m_Graphics = graphics;
                 m_amount = amount;
+                m_color = color;
             }
         }
         internal static void RefreshList(List<BuyItem> BuyItemList)
@@ -276,21 +278,25 @@ namespace RazorEnhanced
                 listitem.SubItems.Add(item.Name);
                 listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
                 listitem.SubItems.Add(item.Amount.ToString());
+                if (item.Color == -1)
+                    listitem.SubItems.Add("All");
+                else
+                    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
                 Assistant.Engine.MainWindow.BuyListView.Items.Add(listitem);
             }
         }
 
-        internal static void ModifyItemToList(string name, int graphics, int amount, ListView buylListView, List<BuyItem> buyItemList, int indexToInsert)
+        internal static void ModifyItemToList(string name, int graphics, int amount, int color, ListView buylListView, List<BuyItem> buyItemList, int indexToInsert)
         {
             buyItemList.RemoveAt(indexToInsert);                                                       // rimuove
-            buyItemList.Insert(indexToInsert, new BuyItem(name, graphics, amount));     // inserisce al posto di prima
+            buyItemList.Insert(indexToInsert, new BuyItem(name, graphics, amount, color));     // inserisce al posto di prima
             RazorEnhanced.Settings.SaveBuyItemList(Assistant.Engine.MainWindow.BuyListSelect.SelectedItem.ToString(), buyItemList);
             RazorEnhanced.BuyAgent.RefreshList(buyItemList);
         }
 
-        internal static void AddItemToList(string name, int graphics, int amount, ListView buyListView, List<BuyItem> buyItemList)
+        internal static void AddItemToList(string name, int graphics, int amount, int color, ListView buyListView, List<BuyItem> buyItemList)
         {
-            buyItemList.Add(new BuyItem(name, graphics, amount));
+            buyItemList.Add(new BuyItem(name, graphics, amount, color));
             RazorEnhanced.Settings.SaveBuyItemList(Assistant.Engine.MainWindow.BuyListSelect.SelectedItem.ToString(), buyItemList);
             RazorEnhanced.BuyAgent.RefreshList(buyItemList);
         }
@@ -300,13 +306,78 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.SelectedIndex = Assistant.Engine.MainWindow.BuyLogBox.Items.Count - 1));
         }
 
-        internal static void EnableBuyFilter(List<BuyItem> BuyItemList)
+        internal static void EnableBuyFilter()
         {
-            
+            PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(DisplayBuy));
         }
-        internal static void DisableBuyFilter()
-        {
 
+        private static bool ColorCheck(int ColorDaLista, ushort ColorDaVendor)
+        {
+            if (ColorDaLista == -1)         // Wildcard colore
+                return true;
+            else
+                if (ColorDaLista == ColorDaVendor)      // Match OK
+                    return true;
+                else            // Match fallito
+                    return false;
         }
+
+        private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
+        {
+            if (!Assistant.Engine.MainWindow.BuyCheckBox.Checked)          // Filtro disabilitato
+                return;
+
+            Assistant.Serial serial = p.ReadUInt32();
+            ushort gump = p.ReadUInt16();
+
+            Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
+            if (vendor == null)
+                return;
+
+            Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
+            if (pack == null || pack.Contains == null || pack.Contains.Count <= 0)
+                return;
+
+            int total = 0;
+            int cost = 0;
+            List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>();                // Lista definita altrove (non rimuovere se si fa pulizia in giro)
+
+            for (int i = 0; i < pack.Contains.Count; i++)                       // Scan item lista oggetti in vendita
+            {
+                Assistant.Item item = (Assistant.Item)pack.Contains[i];
+                if (item == null)
+                    continue;
+
+                foreach (BuyItem BuyItemList in Assistant.Engine.MainWindow.BuyItemList) // Scansione item presenti in lista agent item 
+                {
+                    if (BuyItemList.Graphics == item.ItemID && RazorEnhanced.BuyAgent.ColorCheck(BuyItemList.Color, item.Hue))                  // Verifica match fra lista e oggetti presenti del vendor
+                    { 
+                        if (item.Amount >= BuyItemList.Amount)          // Caso che il vendor abbia piu' item di quelli richiesti
+                        {
+                            AddLog("Item match: 0x" + BuyItemList.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + BuyItemList.Amount);
+                            buyList.Add(new VendorBuyItem(item.Serial, BuyItemList.Amount, item.Price));
+                            total += BuyItemList.Amount;
+                            cost += item.Price * BuyItemList.Amount;
+                        }
+                        else                // Caso che il vendor ne abbia di meno (Li compro tutti)
+                        {
+                            AddLog("Item match: 0x" + BuyItemList.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + item.Amount);
+                            buyList.Add(new VendorBuyItem(item.Serial, item.Amount, item.Price));
+                            total += item.Amount;
+                            cost += item.Price * item.Amount;
+                        }
+
+                    }
+                }
+             }
+            if (buyList.Count > 0)
+            {
+                args.Block = true;
+                ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
+                AddLog("Buy " + total.ToString() + "items for " + cost.ToString() + " gold coin");
+                World.Player.SendMessage("Enhanced Buy Agent: Buy " + total.ToString() + " items for " + cost.ToString() + " gold coin");
+            }
+        }
+
     }
 }

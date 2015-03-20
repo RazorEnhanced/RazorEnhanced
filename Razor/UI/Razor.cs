@@ -384,6 +384,7 @@ namespace Assistant
         private Label sellBagLabel;
         private RazorButton sellSetBagB;
         private ColumnHeader columnHeader22;
+        private ColumnHeader columnHeader23;
 
 		private bool m_CanClose = true;
 
@@ -403,6 +404,7 @@ namespace Assistant
         internal CheckBox AutolootCheckBox { get { return autolootEnable; } }
         internal CheckBox ScavengerCheckBox { get { return scavengerEnableCheckB; } }
         internal CheckBox SellCheckBox { get { return sellEnableCheckB; } }
+        internal CheckBox BuyCheckBox { get { return buyEnableCheckB; } }
 		
 		internal int AutoLootDelayLabel
 		{
@@ -848,6 +850,7 @@ namespace Assistant
             this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.sellRemoveListB = new RazorEnhanced.UI.RazorButton();
             this.sellAddListB = new RazorEnhanced.UI.RazorButton();
             this.sellImportListB = new RazorEnhanced.UI.RazorButton();
@@ -856,7 +859,7 @@ namespace Assistant
             this.label26 = new System.Windows.Forms.Label();
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -4301,7 +4304,8 @@ namespace Assistant
             this.columnHeader14,
             this.columnHeader15,
             this.columnHeader16,
-            this.columnHeader17});
+            this.columnHeader17,
+            this.columnHeader23});
             this.buyListView.GridLines = true;
             this.buyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.buyListView.LabelWrap = false;
@@ -4316,20 +4320,22 @@ namespace Assistant
             // columnHeader14
             // 
             this.columnHeader14.Text = "X";
-            this.columnHeader14.Width = 22;
+            this.columnHeader14.Width = 21;
             // 
             // columnHeader15
             // 
             this.columnHeader15.Text = "Item Name";
-            this.columnHeader15.Width = 105;
+            this.columnHeader15.Width = 75;
             // 
             // columnHeader16
             // 
             this.columnHeader16.Text = "Graphics";
+            this.columnHeader16.Width = 54;
             // 
             // columnHeader17
             // 
             this.columnHeader17.Text = "Amount";
+            this.columnHeader17.Width = 49;
             // 
             // buyRemoveListB
             // 
@@ -4570,6 +4576,11 @@ namespace Assistant
             this.columnHeader21.Text = "Amount";
             this.columnHeader21.Width = 50;
             // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "Color";
+            this.columnHeader22.Width = 50;
+            // 
             // sellRemoveListB
             // 
             this.sellRemoveListB.ColorTable = office2010BlueTheme1;
@@ -4641,10 +4652,10 @@ namespace Assistant
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // columnHeader22
+            // columnHeader23
             // 
-            this.columnHeader22.Text = "Color";
-            this.columnHeader22.Width = 50;
+            this.columnHeader23.Text = "Color";
+            this.columnHeader23.Width = 50;
             // 
             // MainForm
             // 
@@ -9138,7 +9149,7 @@ namespace Assistant
             if (BuyItem != null && BuyItem.Serial.IsItem)
             {
                 RazorEnhanced.Misc.SendMessage("Buy item added: " + BuyItem.ToString());
-                RazorEnhanced.BuyAgent.AddItemToList(BuyItem.Name, BuyItem.ItemID, 999, buyListView, buyItemList);
+                RazorEnhanced.BuyAgent.AddItemToList(BuyItem.Name, BuyItem.ItemID, 999, -1, buyListView, buyItemList);
             }
             else
             {
@@ -9189,7 +9200,7 @@ namespace Assistant
                 buyExportListB.Enabled = false;
                 RazorEnhanced.BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
                 RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-                RazorEnhanced.BuyAgent.EnableBuyFilter(BuyItemList);
+                RazorEnhanced.BuyAgent.EnableBuyFilter();
             }
             else
             {
@@ -9200,7 +9211,6 @@ namespace Assistant
                 buyExportListB.Enabled = true;
                 RazorEnhanced.BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
                 RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-                RazorEnhanced.BuyAgent.DisableBuyFilter();
             }
         }
 

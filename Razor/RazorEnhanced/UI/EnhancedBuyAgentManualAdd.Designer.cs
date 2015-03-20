@@ -40,6 +40,9 @@
             this.tName = new RazorEnhanced.UI.RazorTextBox();
             this.bAddItem = new RazorEnhanced.UI.RazorButton();
             this.bClose = new RazorEnhanced.UI.RazorButton();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tHue = new RazorEnhanced.UI.RazorTextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,6 +58,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.tHue);
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.tAmount);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.tGraphics);
@@ -65,7 +71,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(221, 106);
+            this.groupBox1.Size = new System.Drawing.Size(221, 123);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Item";
@@ -146,7 +152,7 @@
             office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             office2010BlueTheme1.TextColor = System.Drawing.Color.White;
             this.bAddItem.ColorTable = office2010BlueTheme1;
-            this.bAddItem.Location = new System.Drawing.Point(241, 32);
+            this.bAddItem.Location = new System.Drawing.Point(241, 38);
             this.bAddItem.Margin = new System.Windows.Forms.Padding(2);
             this.bAddItem.Name = "bAddItem";
             this.bAddItem.Size = new System.Drawing.Size(57, 19);
@@ -159,7 +165,7 @@
             // bClose
             // 
             this.bClose.ColorTable = office2010BlueTheme1;
-            this.bClose.Location = new System.Drawing.Point(241, 76);
+            this.bClose.Location = new System.Drawing.Point(241, 82);
             this.bClose.Margin = new System.Windows.Forms.Padding(2);
             this.bClose.Name = "bClose";
             this.bClose.Size = new System.Drawing.Size(57, 19);
@@ -169,11 +175,42 @@
             this.bClose.UseVisualStyleBackColor = true;
             this.bClose.Click += new System.EventHandler(this.bClose_Click);
             // 
+            // label4
+            // 
+            this.label4.Location = new System.Drawing.Point(120, 100);
+            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(96, 14);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Set -1 for all color";
+            // 
+            // tHue
+            // 
+            this.tHue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.tHue.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.tHue.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.tHue.Location = new System.Drawing.Point(58, 96);
+            this.tHue.Margin = new System.Windows.Forms.Padding(2);
+            this.tHue.Name = "tHue";
+            this.tHue.Padding = new System.Windows.Forms.Padding(1);
+            this.tHue.Size = new System.Drawing.Size(58, 20);
+            this.tHue.TabIndex = 14;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(4, 100);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 13;
+            this.label5.Text = "Color:";
+            // 
             // EnhancedBuyAgentManualAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(314, 128);
+            this.ClientSize = new System.Drawing.Size(314, 140);
             this.Controls.Add(this.bClose);
             this.Controls.Add(this.bAddItem);
             this.Controls.Add(this.groupBox1);
@@ -200,6 +237,9 @@
         private RazorTextBox tName;
         private RazorButton bAddItem;
         private RazorButton bClose;
+        private System.Windows.Forms.Label label4;
+        private RazorTextBox tHue;
+        private System.Windows.Forms.Label label5;
 
     }
 }
