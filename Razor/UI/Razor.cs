@@ -259,6 +259,7 @@ namespace Assistant
         private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
         private List<RazorEnhanced.SellAgent.SellItem> sellItemList = new List<RazorEnhanced.SellAgent.SellItem>();
         private List<RazorEnhanced.BuyAgent.BuyItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyItem>();
+        private List<RazorEnhanced.Dress.DressItem> dressItemList = new List<RazorEnhanced.Dress.DressItem>();
 		private TabPage EnhancedAgent;
 		private TabControl tabControl1;
 		private TabPage eautoloot;
@@ -385,6 +386,32 @@ namespace Assistant
         private RazorButton sellSetBagB;
         private ColumnHeader columnHeader22;
         private ColumnHeader columnHeader23;
+        private TabPage Dress;
+        private RazorCheckBox dressConflictCheckB;
+        private Label dressBagLabel;
+        private RazorButton dressSetBagB;
+        private RazorButton razorButton10;
+        private RazorButton razorButton11;
+        private GroupBox groupBox22;
+        private RazorButton dressClearSlotB;
+        private RazorButton dressAddManualB;
+        private RazorButton dressClearAllB;
+        private RazorButton dressReadB;
+        private Label label29;
+        private RazorTextBox dressDragDelay;
+        private GroupBox groupBox21;
+        private ListBox dressLogBox;
+        private ListView dressListView;
+        private ColumnHeader columnHeader24;
+        private ColumnHeader columnHeader25;
+        private ColumnHeader columnHeader26;
+        private ColumnHeader columnHeader27;
+        private RazorButton dressRemoveListB;
+        private RazorButton dressAddListB;
+        private RazorButton dressImportListB;
+        private RazorComboBox dressListSelect;
+        private RazorButton dressExportListB;
+        private Label label28;
 
 		private bool m_CanClose = true;
 
@@ -405,6 +432,7 @@ namespace Assistant
         internal CheckBox ScavengerCheckBox { get { return scavengerEnableCheckB; } }
         internal CheckBox SellCheckBox { get { return sellEnableCheckB; } }
         internal CheckBox BuyCheckBox { get { return buyEnableCheckB; } }
+        internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
 		
 		internal int AutoLootDelayLabel
 		{
@@ -433,26 +461,40 @@ namespace Assistant
                 return delay;
             }
         }
+
+        internal int DressDragDelay
+        {
+            get
+            {
+                int delay = 100;
+                Int32.TryParse(dressDragDelay.Text, out delay);
+                return delay;
+            }
+        }
 		internal List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList { get { return autoLootItemList; } }
 		internal List<RazorEnhanced.Scavenger.ScavengerItem> ScavengerItemList { get { return scavengerItemList; } }
         internal List<RazorEnhanced.Organizer.OrganizerItem> OrganizerItemList { get { return organizerItemList; } }
         internal List<RazorEnhanced.SellAgent.SellItem> SellItemList { get { return sellItemList; } }
         internal List<RazorEnhanced.BuyAgent.BuyItem> BuyItemList { get { return buyItemList; } }
+        internal List<RazorEnhanced.Dress.DressItem> DressItemList { get { return dressItemList; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal ListBox ScavengerLogBox { get { return scavengerLogBox; } }
         internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
         internal ListBox SellLogBox { get { return sellLogBox; } }
         internal ListBox BuyLogBox { get { return buyLogBox; } }
+        internal ListBox DressLogBox { get { return dressLogBox; } }
 		internal ListView AutoLootListView { get { return autolootlistView; } }
 		internal ListView ScavengerListView { get { return scavengerListView; } }
         internal ListView SellListView { get { return sellListView; } }
         internal ListView BuyListView { get { return buyListView; } }
+        internal ListView DressListView { get { return dressListView; } }
         internal ListView OrganizerListView { get { return organizerListView; } }
 		internal ComboBox AutolootListSelect { get { return autolootListSelect; } }
 		internal ComboBox ScavengerListSelect { get { return scavengertListSelect; } }
         internal ComboBox OrganzierListSelect { get { return organizerListSelect; } }
         internal ComboBox SellListSelect { get { return sellListSelect; } }
         internal ComboBox BuyListSelect { get { return buyListSelect; } }
+        internal ComboBox DressListSelect { get { return dressListSelect; } }
 		private DataTable scriptTable;
 
 		internal MainForm()
@@ -827,6 +869,7 @@ namespace Assistant
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buyRemoveListB = new RazorEnhanced.UI.RazorButton();
             this.buyAddListB = new RazorEnhanced.UI.RazorButton();
             this.buyImportListB = new RazorEnhanced.UI.RazorButton();
@@ -857,9 +900,34 @@ namespace Assistant
             this.sellListSelect = new RazorEnhanced.UI.RazorComboBox();
             this.sellExportListB = new RazorEnhanced.UI.RazorButton();
             this.label26 = new System.Windows.Forms.Label();
+            this.Dress = new System.Windows.Forms.TabPage();
+            this.dressConflictCheckB = new RazorEnhanced.UI.RazorCheckBox();
+            this.dressBagLabel = new System.Windows.Forms.Label();
+            this.dressSetBagB = new RazorEnhanced.UI.RazorButton();
+            this.razorButton10 = new RazorEnhanced.UI.RazorButton();
+            this.razorButton11 = new RazorEnhanced.UI.RazorButton();
+            this.groupBox22 = new System.Windows.Forms.GroupBox();
+            this.dressClearSlotB = new RazorEnhanced.UI.RazorButton();
+            this.dressAddManualB = new RazorEnhanced.UI.RazorButton();
+            this.dressClearAllB = new RazorEnhanced.UI.RazorButton();
+            this.dressReadB = new RazorEnhanced.UI.RazorButton();
+            this.label29 = new System.Windows.Forms.Label();
+            this.dressDragDelay = new RazorEnhanced.UI.RazorTextBox();
+            this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.dressLogBox = new System.Windows.Forms.ListBox();
+            this.dressListView = new System.Windows.Forms.ListView();
+            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.dressRemoveListB = new RazorEnhanced.UI.RazorButton();
+            this.dressAddListB = new RazorEnhanced.UI.RazorButton();
+            this.dressImportListB = new RazorEnhanced.UI.RazorButton();
+            this.dressListSelect = new RazorEnhanced.UI.RazorComboBox();
+            this.dressExportListB = new RazorEnhanced.UI.RazorButton();
+            this.label28 = new System.Windows.Forms.Label();
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -908,6 +976,9 @@ namespace Assistant
             this.VendorSell.SuspendLayout();
             this.groupBox19.SuspendLayout();
             this.groupBox20.SuspendLayout();
+            this.Dress.SuspendLayout();
+            this.groupBox22.SuspendLayout();
+            this.groupBox21.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
@@ -3369,6 +3440,7 @@ namespace Assistant
             this.tabControl1.Controls.Add(this.Organizer);
             this.tabControl1.Controls.Add(this.VendorBuy);
             this.tabControl1.Controls.Add(this.VendorSell);
+            this.tabControl1.Controls.Add(this.Dress);
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -4337,6 +4409,11 @@ namespace Assistant
             this.columnHeader17.Text = "Amount";
             this.columnHeader17.Width = 49;
             // 
+            // columnHeader23
+            // 
+            this.columnHeader23.Text = "Color";
+            this.columnHeader23.Width = 50;
+            // 
             // buyRemoveListB
             // 
             this.buyRemoveListB.ColorTable = office2010BlueTheme1;
@@ -4642,6 +4719,267 @@ namespace Assistant
             this.label26.TabIndex = 77;
             this.label26.Text = "Vendor Sell:";
             // 
+            // Dress
+            // 
+            this.Dress.Controls.Add(this.dressConflictCheckB);
+            this.Dress.Controls.Add(this.dressBagLabel);
+            this.Dress.Controls.Add(this.dressSetBagB);
+            this.Dress.Controls.Add(this.razorButton10);
+            this.Dress.Controls.Add(this.razorButton11);
+            this.Dress.Controls.Add(this.groupBox22);
+            this.Dress.Controls.Add(this.label29);
+            this.Dress.Controls.Add(this.dressDragDelay);
+            this.Dress.Controls.Add(this.groupBox21);
+            this.Dress.Controls.Add(this.dressListView);
+            this.Dress.Controls.Add(this.dressRemoveListB);
+            this.Dress.Controls.Add(this.dressAddListB);
+            this.Dress.Controls.Add(this.dressImportListB);
+            this.Dress.Controls.Add(this.dressListSelect);
+            this.Dress.Controls.Add(this.dressExportListB);
+            this.Dress.Controls.Add(this.label28);
+            this.Dress.Location = new System.Drawing.Point(4, 22);
+            this.Dress.Name = "Dress";
+            this.Dress.Padding = new System.Windows.Forms.Padding(3);
+            this.Dress.Size = new System.Drawing.Size(659, 341);
+            this.Dress.TabIndex = 5;
+            this.Dress.Text = "Dress / Arm";
+            this.Dress.UseVisualStyleBackColor = true;
+            // 
+            // dressConflictCheckB
+            // 
+            this.dressConflictCheckB.Location = new System.Drawing.Point(274, 84);
+            this.dressConflictCheckB.Name = "dressConflictCheckB";
+            this.dressConflictCheckB.Size = new System.Drawing.Size(241, 19);
+            this.dressConflictCheckB.TabIndex = 90;
+            this.dressConflictCheckB.Text = "Remove Conflict Item";
+            // 
+            // dressBagLabel
+            // 
+            this.dressBagLabel.Location = new System.Drawing.Point(566, 154);
+            this.dressBagLabel.Name = "dressBagLabel";
+            this.dressBagLabel.Size = new System.Drawing.Size(82, 19);
+            this.dressBagLabel.TabIndex = 89;
+            this.dressBagLabel.Text = "0x00000000";
+            // 
+            // dressSetBagB
+            // 
+            this.dressSetBagB.ColorTable = office2010BlueTheme1;
+            this.dressSetBagB.Location = new System.Drawing.Point(558, 127);
+            this.dressSetBagB.Name = "dressSetBagB";
+            this.dressSetBagB.Size = new System.Drawing.Size(88, 20);
+            this.dressSetBagB.TabIndex = 88;
+            this.dressSetBagB.Text = "Undress Bag";
+            this.dressSetBagB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // razorButton10
+            // 
+            this.razorButton10.ColorTable = office2010BlueTheme1;
+            this.razorButton10.Location = new System.Drawing.Point(340, 58);
+            this.razorButton10.Name = "razorButton10";
+            this.razorButton10.Size = new System.Drawing.Size(61, 20);
+            this.razorButton10.TabIndex = 87;
+            this.razorButton10.Text = "Undres";
+            this.razorButton10.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // razorButton11
+            // 
+            this.razorButton11.ColorTable = office2010BlueTheme1;
+            this.razorButton11.Location = new System.Drawing.Point(274, 58);
+            this.razorButton11.Name = "razorButton11";
+            this.razorButton11.Size = new System.Drawing.Size(61, 20);
+            this.razorButton11.TabIndex = 86;
+            this.razorButton11.Text = "Dress";
+            this.razorButton11.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // groupBox22
+            // 
+            this.groupBox22.Controls.Add(this.dressClearSlotB);
+            this.groupBox22.Controls.Add(this.dressAddManualB);
+            this.groupBox22.Controls.Add(this.dressClearAllB);
+            this.groupBox22.Controls.Add(this.dressReadB);
+            this.groupBox22.Location = new System.Drawing.Point(551, 186);
+            this.groupBox22.Name = "groupBox22";
+            this.groupBox22.Size = new System.Drawing.Size(100, 125);
+            this.groupBox22.TabIndex = 85;
+            this.groupBox22.TabStop = false;
+            this.groupBox22.Text = "Item List";
+            // 
+            // dressClearSlotB
+            // 
+            this.dressClearSlotB.ColorTable = office2010BlueTheme1;
+            this.dressClearSlotB.Location = new System.Drawing.Point(5, 68);
+            this.dressClearSlotB.Name = "dressClearSlotB";
+            this.dressClearSlotB.Size = new System.Drawing.Size(90, 20);
+            this.dressClearSlotB.TabIndex = 48;
+            this.dressClearSlotB.Text = "Clear Slot";
+            this.dressClearSlotB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // dressAddManualB
+            // 
+            this.dressAddManualB.ColorTable = office2010BlueTheme1;
+            this.dressAddManualB.Location = new System.Drawing.Point(5, 43);
+            this.dressAddManualB.Name = "dressAddManualB";
+            this.dressAddManualB.Size = new System.Drawing.Size(90, 20);
+            this.dressAddManualB.TabIndex = 47;
+            this.dressAddManualB.Text = "Manual Add";
+            this.dressAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressAddManualB.Click += new System.EventHandler(this.dressAddManualB_Click);
+            // 
+            // dressClearAllB
+            // 
+            this.dressClearAllB.ColorTable = office2010BlueTheme1;
+            this.dressClearAllB.Location = new System.Drawing.Point(5, 94);
+            this.dressClearAllB.Name = "dressClearAllB";
+            this.dressClearAllB.Size = new System.Drawing.Size(90, 20);
+            this.dressClearAllB.TabIndex = 46;
+            this.dressClearAllB.Text = "Clear All";
+            this.dressClearAllB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // dressReadB
+            // 
+            this.dressReadB.ColorTable = office2010BlueTheme1;
+            this.dressReadB.Location = new System.Drawing.Point(5, 18);
+            this.dressReadB.Name = "dressReadB";
+            this.dressReadB.Size = new System.Drawing.Size(90, 20);
+            this.dressReadB.TabIndex = 45;
+            this.dressReadB.Text = "Read Current";
+            this.dressReadB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.Location = new System.Drawing.Point(457, 61);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(105, 13);
+            this.label29.TabIndex = 76;
+            this.label29.Text = "Drag Item Delay (ms)";
+            // 
+            // dressDragDelay
+            // 
+            this.dressDragDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.dressDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.dressDragDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.dressDragDelay.Location = new System.Drawing.Point(411, 58);
+            this.dressDragDelay.Name = "dressDragDelay";
+            this.dressDragDelay.Padding = new System.Windows.Forms.Padding(1);
+            this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
+            this.dressDragDelay.TabIndex = 75;
+            // 
+            // groupBox21
+            // 
+            this.groupBox21.Controls.Add(this.dressLogBox);
+            this.groupBox21.Location = new System.Drawing.Point(267, 109);
+            this.groupBox21.Name = "groupBox21";
+            this.groupBox21.Size = new System.Drawing.Size(278, 226);
+            this.groupBox21.TabIndex = 74;
+            this.groupBox21.TabStop = false;
+            this.groupBox21.Text = "Organizer Log";
+            // 
+            // dressLogBox
+            // 
+            this.dressLogBox.FormattingEnabled = true;
+            this.dressLogBox.Location = new System.Drawing.Point(7, 18);
+            this.dressLogBox.Name = "dressLogBox";
+            this.dressLogBox.Size = new System.Drawing.Size(265, 199);
+            this.dressLogBox.TabIndex = 0;
+            // 
+            // dressListView
+            // 
+            this.dressListView.CheckBoxes = true;
+            this.dressListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader24,
+            this.columnHeader25,
+            this.columnHeader26,
+            this.columnHeader27});
+            this.dressListView.GridLines = true;
+            this.dressListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.dressListView.LabelWrap = false;
+            this.dressListView.Location = new System.Drawing.Point(6, 51);
+            this.dressListView.MultiSelect = false;
+            this.dressListView.Name = "dressListView";
+            this.dressListView.Size = new System.Drawing.Size(255, 284);
+            this.dressListView.TabIndex = 64;
+            this.dressListView.UseCompatibleStateImageBehavior = false;
+            this.dressListView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader24
+            // 
+            this.columnHeader24.Text = "X";
+            this.columnHeader24.Width = 22;
+            // 
+            // columnHeader25
+            // 
+            this.columnHeader25.Text = "Layer";
+            this.columnHeader25.Width = 90;
+            // 
+            // columnHeader26
+            // 
+            this.columnHeader26.Text = "Graphics";
+            // 
+            // columnHeader27
+            // 
+            this.columnHeader27.Text = "Serial";
+            this.columnHeader27.Width = 75;
+            // 
+            // dressRemoveListB
+            // 
+            this.dressRemoveListB.ColorTable = office2010BlueTheme1;
+            this.dressRemoveListB.Location = new System.Drawing.Point(366, 14);
+            this.dressRemoveListB.Name = "dressRemoveListB";
+            this.dressRemoveListB.Size = new System.Drawing.Size(90, 20);
+            this.dressRemoveListB.TabIndex = 63;
+            this.dressRemoveListB.Text = "Remove";
+            this.dressRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // dressAddListB
+            // 
+            this.dressAddListB.ColorTable = office2010BlueTheme1;
+            this.dressAddListB.Location = new System.Drawing.Point(270, 14);
+            this.dressAddListB.Name = "dressAddListB";
+            this.dressAddListB.Size = new System.Drawing.Size(90, 20);
+            this.dressAddListB.TabIndex = 62;
+            this.dressAddListB.Text = "Add";
+            this.dressAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // dressImportListB
+            // 
+            this.dressImportListB.ColorTable = office2010BlueTheme1;
+            this.dressImportListB.Location = new System.Drawing.Point(462, 14);
+            this.dressImportListB.Name = "dressImportListB";
+            this.dressImportListB.Size = new System.Drawing.Size(90, 20);
+            this.dressImportListB.TabIndex = 59;
+            this.dressImportListB.Text = "Import";
+            this.dressImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // dressListSelect
+            // 
+            this.dressListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.dressListSelect.FormattingEnabled = true;
+            this.dressListSelect.Location = new System.Drawing.Point(78, 12);
+            this.dressListSelect.Name = "dressListSelect";
+            this.dressListSelect.Size = new System.Drawing.Size(183, 24);
+            this.dressListSelect.TabIndex = 61;
+            this.dressListSelect.SelectedIndexChanged += new System.EventHandler(this.dressListSelect_SelectedIndexChanged);
+            // 
+            // dressExportListB
+            // 
+            this.dressExportListB.ColorTable = office2010BlueTheme1;
+            this.dressExportListB.Location = new System.Drawing.Point(558, 14);
+            this.dressExportListB.Name = "dressExportListB";
+            this.dressExportListB.Size = new System.Drawing.Size(90, 20);
+            this.dressExportListB.TabIndex = 58;
+            this.dressExportListB.Text = "Export";
+            this.dressExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(6, 18);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(56, 13);
+            this.label28.TabIndex = 60;
+            this.label28.Text = "Dress List:";
+            // 
             // timerTimer
             // 
             this.timerTimer.Enabled = true;
@@ -4651,11 +4989,6 @@ namespace Assistant
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
-            // 
-            // columnHeader23
-            // 
-            this.columnHeader23.Text = "Color";
-            this.columnHeader23.Width = 50;
             // 
             // MainForm
             // 
@@ -4732,6 +5065,10 @@ namespace Assistant
             this.VendorSell.PerformLayout();
             this.groupBox19.ResumeLayout(false);
             this.groupBox20.ResumeLayout(false);
+            this.Dress.ResumeLayout(false);
+            this.Dress.PerformLayout();
+            this.groupBox22.ResumeLayout(false);
+            this.groupBox21.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -4947,6 +5284,17 @@ namespace Assistant
             }
             else
                 buyListSelect.SelectedIndex = buyListSelect.Items.IndexOf("Default");
+
+            // Dress
+            //Liste
+            RazorEnhanced.Dress.AddLog("aaaa");
+            dressListSelect.Items.Add("Default");    // Lista base non cancellabile 
+            
+            string DressSettingLastList = "";
+            List<string> DressSettingItemList = new List<string>();
+            string DressSettingDelay = "";
+          
+
 		}
 
 		private bool m_Initializing = false;
@@ -8428,7 +8776,7 @@ namespace Assistant
 		{
 			if (autolootEnable.Checked)
 			{
-				int delay;
+				int delay = -1;
 				bool StartCheck = true;
 				autolootListSelect.Enabled = false;
 				bautolootlistAdd.Enabled = false;
@@ -8445,6 +8793,12 @@ namespace Assistant
 					StartCheck = false;
                     RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
 				}
+
+                if (delay < 0)
+                {
+                    StartCheck = false;
+                    RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
+                }
 
 				if (StartCheck)
 				{
@@ -8672,7 +9026,7 @@ namespace Assistant
 		{
 			if (scavengerEnableCheckB.Checked)
 			{
-				int delay;
+				int delay = -1;
 				bool StartCheck = true;
 				ScavengerListSelect.Enabled = false;
 				scavengerAddListB.Enabled = false;
@@ -8689,6 +9043,11 @@ namespace Assistant
 					StartCheck = false;
                     RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
 				}
+                if (delay < 0)
+                {
+					StartCheck = false;
+                    RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
+				}
 
 				if (StartCheck)
 				{
@@ -8701,7 +9060,7 @@ namespace Assistant
                     RazorEnhanced.Scavenger.Auto = false;
                     RazorEnhanced.Scavenger.AddLog("Fail to start Scavenger Engine...");
                     RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
-					autolootEnable.Checked = false;
+                    scavengerEnableCheckB.Checked = false;
 				}
 			}
 			else
@@ -9241,6 +9600,24 @@ namespace Assistant
             RazorEnhanced.Settings.SaveSellItemList(SellListSelect.SelectedItem.ToString(), SellItemList, sellBagLabel.Text);
 
         }
+
+        private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string UndressBag = "";
+            bool Conflict = false;
+            RazorEnhanced.Settings.LoadDressItemList(dressListSelect.SelectedItem.ToString(), out dressItemList, out UndressBag, out Conflict);
+            dressBagLabel.Text = UndressBag;
+            dressConflictCheckB.Checked = Conflict;
+            //RazorEnhanced.Dress.RefreshList(dressItemList);
+            RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.SelectedItem.ToString());
+        }
+
+        private void dressAddManualB_Click(object sender, EventArgs e)
+        {
+   
+        }
+
+       
 
 	}
 }
