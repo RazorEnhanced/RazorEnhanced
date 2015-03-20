@@ -4914,7 +4914,7 @@ namespace Assistant
             // 
             // columnHeader26
             // 
-            this.columnHeader26.Text = "Graphics";
+            this.columnHeader26.Text = "Name";
             // 
             // columnHeader27
             // 
@@ -9603,13 +9603,8 @@ namespace Assistant
 
         private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string UndressBag = "";
-            bool Conflict = false;
-            RazorEnhanced.Settings.LoadDressItemList(dressListSelect.SelectedItem.ToString(), out dressItemList, out UndressBag, out Conflict);
-            dressBagLabel.Text = UndressBag;
-            dressConflictCheckB.Checked = Conflict;
-            //RazorEnhanced.Dress.RefreshList(dressItemList);
-            RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.SelectedItem.ToString());
+
+            
         }
 
         private void dressAddManualB_Click(object sender, EventArgs e)

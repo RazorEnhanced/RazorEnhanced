@@ -124,20 +124,6 @@ namespace RazorEnhanced
                 buy_lists.Columns.Add("List", typeof(List<RazorEnhanced.BuyAgent.BuyItem>));
                 m_Dataset.Tables.Add(buy_lists);
 
-                //Dress
-                DataTable dress_general = new DataTable("DRESS_GENERAL");
-                dress_general.Columns.Add("Label", typeof(string));
-                dress_general.Columns.Add("List", typeof(List<string>));
-                dress_general.Columns.Add("Selection", typeof(string));
-                m_Dataset.Tables.Add(dress_general);
-
-                DataTable dress_lists = new DataTable("DRESS_LISTS");
-                dress_lists.Columns.Add("Name", typeof(string));
-                dress_lists.Columns.Add("UndressBag", typeof(string));
-                dress_lists.Columns.Add("List", typeof(List<RazorEnhanced.Dress.DressItem>));
-                dress_lists.Columns.Add("Conflict", typeof(bool));
-                m_Dataset.Tables.Add(dress_lists);
-
 				m_Dataset.AcceptChanges();
 			}
 		}
@@ -480,30 +466,7 @@ namespace RazorEnhanced
             return exit;
         }
 
-        
-        internal static bool LoadDressItemList(string name, out List<RazorEnhanced.Dress.DressItem> list, out string undressbag, out bool conflict)
-        {
-            bool exit = false;
-            List<RazorEnhanced.Dress.DressItem> result = new List<RazorEnhanced.Dress.DressItem>();
-            string undressbagOut = "";
-            bool conflictOut = false;
-
-            foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
-            {
-                if ((string)row["Name"] == name)
-                {
-                    undressbagOut = (string)row["UndressBag"];
-                    conflictOut = (bool)row["Conflict"];
-                    result = row["List"] as List<RazorEnhanced.Dress.DressItem>;
-                    exit = true;
-                }
-            }
-            list = result;
-            undressbag = undressbagOut;
-            conflict = conflictOut;
-            return exit;
-        }
-
+       
 
 
 		internal static void Save()
