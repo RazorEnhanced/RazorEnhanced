@@ -82,16 +82,16 @@ namespace RazorEnhanced
 			RazorEnhanced.Organizer.RefreshList(organizerItemList);
 		}
 
-		internal static int Engine(List<OrganizerItem> organizerItemList, int mseconds, Item SourceBag, Item destinationBag)
+		internal static int Engine(List<OrganizerItem> organizerItemList, int mseconds, Item sourceBag, Item destinationBag)
 		{
 			// Apre le bag per item contenuti
-			Items.UseItem(SourceBag);
-			Items.WaitForContents(SourceBag, 1500);
+            Items.UseItem(sourceBag);
+			Items.WaitForContents(sourceBag, 1500);
 			Items.UseItem(destinationBag);
 			Items.WaitForContents(destinationBag, 1500);
 
 			// Inizia scansione 
-			foreach (RazorEnhanced.Item oggettoContenuto in SourceBag.Contains)
+			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
 			{
 				foreach (OrganizerItem oggettoDaLista in organizerItemList)
 				{
@@ -100,35 +100,39 @@ namespace RazorEnhanced
 						// Controllo amount e caso -1
 						if (oggettoDaLista.Amount == -1) // Sposta senza contare
 						{
-							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Found Move amount: " + oggettoContenuto.Amount);
+                            RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
+                            RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move: All ");
 							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
 							Thread.Sleep(mseconds);
 						}
 						else   // Caso con limite quantita'
 						{
-							int AmountContenuto = Items.ContainerCount(destinationBag, oggettoDaLista.Graphics, oggettoDaLista.Color);      // Calcolo oggetti gia' presenti nel container di destinazione
-							if (AmountContenuto < oggettoDaLista.Amount)          // Controlla la differenza se mancano item al totale amount procede
+                            if (oggettoContenuto.Amount <= oggettoDaLista.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti 
 							{
-								if ((AmountContenuto - oggettoDaLista.Amount) <= oggettoContenuto.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti 
-								{
-									RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Found Move amount: " + oggettoContenuto.Amount);
-									RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
-									RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Destination bag amount: " + (AmountContenuto + oggettoContenuto.Amount));
-									Thread.Sleep(mseconds);
-								}
-								else  // Caso che lo stack sia superiore (sposta solo un blocco)
-								{
-									RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Found Move amount: " + (oggettoContenuto.Amount - AmountContenuto));
-									RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, (oggettoContenuto.Amount - AmountContenuto));
-									RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Destination bag amount: " + (AmountContenuto + (oggettoContenuto.Amount - AmountContenuto)));
-									Thread.Sleep(mseconds);
-								}
+                                RazorEnhanced.Organizer.AddLog("n");
+
+                                RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
+                                RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
+								RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
+								Thread.Sleep(mseconds);
 							}
+							else  // Caso che lo stack sia superiore (sposta solo un blocco)
+							{
+                                RazorEnhanced.Organizer.AddLog("s");
+
+                                RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
+                                RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
+                                RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, oggettoDaLista.Amount);
+								Thread.Sleep(mseconds);
+							}
+							
 						}
 
 					}
 				}
 			}
+            RazorEnhanced.Organizer.AddLog("Finish!");
+            //Assistant.Engine.MainWindow.OrganizerFinishWork();
 			return 0;
 		}
 

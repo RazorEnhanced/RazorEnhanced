@@ -43,6 +43,7 @@ namespace RazorEnhanced.UI
                 tColor.Text = "-1";
             else
                 tColor.Text = "0x" + OrganizerItemList[IndexEdit].Color.ToString("X4");
+            tAmount.Text = OrganizerItemList[IndexEdit].Amount.ToString();
         }
 
 
