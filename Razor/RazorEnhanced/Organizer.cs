@@ -82,12 +82,12 @@ namespace RazorEnhanced
 			RazorEnhanced.Organizer.RefreshList(organizerItemList);
 		}
 
-        private static bool ColorCheck(int ColorDaLista, int ColorDaVendor)
+        private static bool ColorCheck(int ColorDaLista, int ColorDaItem)
         {
             if (ColorDaLista == -1)         // Wildcard colore
                 return true;
             else
-                if (ColorDaLista == ColorDaVendor)      // Match OK
+                if (ColorDaLista == ColorDaItem)      // Match OK
                     return true;
                 else            // Match fallito
                     return false;
