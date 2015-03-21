@@ -5208,6 +5208,11 @@ namespace Assistant
 					autolootContainerLabel.Text = "0x" + autolootBag.Serial.Value.ToString("X8");
 				}
 			}
+            else
+            {
+                autoLootLabelDelay.Text = "100";
+                AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf("Default");
+            }
 
 			// ------------ SCAVENGER -------------------
 			// Liste 
@@ -5249,6 +5254,11 @@ namespace Assistant
 					scavengerContainerLabel.Text = "0x" + scavengerBag.Serial.Value.ToString("X8");
 				}
 			}
+            else
+            {
+                scavengerDragDelay.Text = "100";
+                ScavengerListSelect.SelectedIndex = ScavengerListSelect.Items.IndexOf("Default");
+            }
 
 			// ---------------- ORGANIZER ----------------
 			// Liste 
@@ -5282,6 +5292,11 @@ namespace Assistant
 					organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
 				}
 			}
+            else
+            {
+                organizerDragDelay.Text = "100";
+                organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
+            }
 			organizerStopB.Enabled = false;
 
 			// ----------- SELL AGENT -----------------
