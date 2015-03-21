@@ -34,7 +34,7 @@ namespace RazorEnhanced.UI
         private void selladdItemList_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            string NuovaLootList = "";
+            string nuovaLootList = "";
 
             if (sellagentListToAdd.Text == "")
                 fail = true;
@@ -42,10 +42,10 @@ namespace RazorEnhanced.UI
             if (!Regex.IsMatch(sellagentListToAdd.Text, "^[a-zA-Z0-9_]+$"))
                 fail = true;
 
-            NuovaLootList = sellagentListToAdd.Text.ToLower();
+            nuovaLootList = sellagentListToAdd.Text.ToLower();
             for (int i = 0; i < Assistant.Engine.MainWindow.SellListSelect.Items.Count; i++)
             {
-                if (NuovaLootList == Assistant.Engine.MainWindow.SellListSelect.GetItemText(Assistant.Engine.MainWindow.SellListSelect.Items[i]))
+                if (nuovaLootList == Assistant.Engine.MainWindow.SellListSelect.GetItemText(Assistant.Engine.MainWindow.SellListSelect.Items[i]))
                     fail = true;
             }
 
@@ -60,19 +60,24 @@ namespace RazorEnhanced.UI
             }
             else
             {
-                Assistant.Engine.MainWindow.SellListSelect.Items.Add(NuovaLootList);
-                Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(NuovaLootList);
+                Assistant.Engine.MainWindow.SellListSelect.Items.Add(nuovaLootList);
+                Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(nuovaLootList);
 
-                List<string> SellSettingItemList = new List<string>();
+                List<string> sellSettingItemList = new List<string>();
 
                 for (int i = 0; i < Assistant.Engine.MainWindow.SellListSelect.Items.Count; i++)
                 {
                     if (Assistant.Engine.MainWindow.SellListSelect.Items[i].ToString() != "Default")
-                        SellSettingItemList.Add(Assistant.Engine.MainWindow.SellListSelect.Items[i].ToString());
+                        sellSettingItemList.Add(Assistant.Engine.MainWindow.SellListSelect.Items[i].ToString());
                 }
-                RazorEnhanced.Settings.SaveSellGeneral(SellSettingItemList, NuovaLootList);
+                RazorEnhanced.Settings.SaveSellGeneral(sellSettingItemList, nuovaLootList);
                 this.Close();
             }
         }
+
+		private void EnhancedSellAgentAddItemList_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

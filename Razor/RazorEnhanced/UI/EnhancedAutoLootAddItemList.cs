@@ -38,7 +38,7 @@ namespace RazorEnhanced.UI
 		private void autolootaddItemList_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string NuovaLootList = "";
+			string nuovaLootList = "";
 
 			if (autolootListToAdd.Text == "")
 				fail = true;
@@ -46,10 +46,10 @@ namespace RazorEnhanced.UI
 			if (!Regex.IsMatch(autolootListToAdd.Text, "^[a-zA-Z0-9_]+$"))
 				fail = true;
 
-			NuovaLootList = autolootListToAdd.Text.ToLower();
+			nuovaLootList = autolootListToAdd.Text.ToLower();
 			for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
 			{
-				if (NuovaLootList == Assistant.Engine.MainWindow.AutolootListSelect.GetItemText(Assistant.Engine.MainWindow.AutolootListSelect.Items[i]))
+				if (nuovaLootList == Assistant.Engine.MainWindow.AutolootListSelect.GetItemText(Assistant.Engine.MainWindow.AutolootListSelect.Items[i]))
 					fail = true;
 			}
 
@@ -64,17 +64,17 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-				Assistant.Engine.MainWindow.AutolootListSelect.Items.Add(NuovaLootList);
-				Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(NuovaLootList);
+				Assistant.Engine.MainWindow.AutolootListSelect.Items.Add(nuovaLootList);
+				Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(nuovaLootList);
 
-				List<string> LootSettingItemList = new List<string>();
+				List<string> lootSettingItemList = new List<string>();
 
 				for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
 				{
 					if (Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString() != "Default")
-						LootSettingItemList.Add(Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString());
+						lootSettingItemList.Add(Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString());
 				}
-				RazorEnhanced.Settings.SaveAutoLootGeneral(Assistant.Engine.MainWindow.AutoLootDelay, LootSettingItemList, NuovaLootList, Assistant.Engine.MainWindow.AutoLootBag);
+				RazorEnhanced.Settings.SaveAutoLootGeneral(Assistant.Engine.MainWindow.AutoLootDelay, lootSettingItemList, nuovaLootList, Assistant.Engine.MainWindow.AutoLootBag);
 				this.Close();
 			}
 		}

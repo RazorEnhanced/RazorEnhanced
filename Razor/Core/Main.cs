@@ -514,7 +514,7 @@ namespace Assistant
 				if (Assistant.Engine.MainWindow.OrganizerListSelect.Items[i].ToString() != "Default")
 					OrganizerSettingItemList.Add(Assistant.Engine.MainWindow.OrganizerListSelect.Items[i].ToString());
 			}
-			RazorEnhanced.Settings.SaveOrganizerGeneral(Assistant.Engine.MainWindow.OrganizerDragDelay, OrganizerSettingItemList, Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString())
+			RazorEnhanced.Settings.SaveOrganizerGeneral(Assistant.Engine.MainWindow.OrganizerDragDelay, OrganizerSettingItemList, Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString());
 
 			// --------------- Scavenger ---------------
 			List<string> ScavengerSettingItemList = new List<string>();

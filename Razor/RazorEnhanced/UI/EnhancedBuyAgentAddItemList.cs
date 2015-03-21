@@ -34,7 +34,7 @@ namespace RazorEnhanced.UI
         private void buyaddItemList_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            string NuovaLootList = "";
+            string nuovaLootList = "";
 
             if (buyagentListToAdd.Text == "")
                 fail = true;
@@ -42,10 +42,10 @@ namespace RazorEnhanced.UI
             if (!Regex.IsMatch(buyagentListToAdd.Text, "^[a-zA-Z0-9_]+$"))
                 fail = true;
 
-            NuovaLootList = buyagentListToAdd.Text.ToLower();
+            nuovaLootList = buyagentListToAdd.Text.ToLower();
             for (int i = 0; i < Assistant.Engine.MainWindow.BuyListSelect.Items.Count; i++)
             {
-                if (NuovaLootList == Assistant.Engine.MainWindow.BuyListSelect.GetItemText(Assistant.Engine.MainWindow.BuyListSelect.Items[i]))
+                if (nuovaLootList == Assistant.Engine.MainWindow.BuyListSelect.GetItemText(Assistant.Engine.MainWindow.BuyListSelect.Items[i]))
                     fail = true;
             }
 
@@ -60,8 +60,8 @@ namespace RazorEnhanced.UI
             }
             else
             {
-                Assistant.Engine.MainWindow.BuyListSelect.Items.Add(NuovaLootList);
-                Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(NuovaLootList);
+                Assistant.Engine.MainWindow.BuyListSelect.Items.Add(nuovaLootList);
+                Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(nuovaLootList);
 
                 List<string> BuySettingItemList = new List<string>();
 
@@ -70,7 +70,7 @@ namespace RazorEnhanced.UI
                     if (Assistant.Engine.MainWindow.BuyListSelect.Items[i].ToString() != "Default")
                         BuySettingItemList.Add(Assistant.Engine.MainWindow.BuyListSelect.Items[i].ToString());
                 }
-                RazorEnhanced.Settings.SaveBuyGeneral(BuySettingItemList, NuovaLootList);
+                RazorEnhanced.Settings.SaveBuyGeneral(BuySettingItemList, nuovaLootList);
                 this.Close();
             }
         }

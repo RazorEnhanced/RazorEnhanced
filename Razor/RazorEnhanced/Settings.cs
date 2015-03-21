@@ -150,6 +150,7 @@ namespace RazorEnhanced
 
 		internal static void SaveAutoLootItemList(string name, List<AutoLoot.AutoLootItem> list)
 		{
+			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Clear();
 			DataRow row = m_Dataset.Tables["AUTOLOOT_LISTS"].NewRow();
 			row["Name"] = name;
 			row["List"] = list;
@@ -225,6 +226,7 @@ namespace RazorEnhanced
 
 		internal static void SaveScavengerItemList(string name, List<Scavenger.ScavengerItem> list)
 		{
+			m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Clear();
 			DataRow row = m_Dataset.Tables["SCAVENGER_LISTS"].NewRow();
 			row["Name"] = name;
 			row["List"] = list;
@@ -359,6 +361,7 @@ namespace RazorEnhanced
 
 		internal static void SaveSellItemList(string name, List<SellAgent.SellItem> list, string hotbag)
 		{
+			m_Dataset.Tables["SELL_LISTS"].Rows.Clear();
 			DataRow row = m_Dataset.Tables["SELL_LISTS"].NewRow();
 			row["Name"] = name;
 			row["HotBag"] = hotbag;
@@ -422,6 +425,7 @@ namespace RazorEnhanced
 
 		internal static void SaveBuyItemList(string name, List<RazorEnhanced.BuyAgent.BuyItem> list)
 		{
+			m_Dataset.Tables["BUY_LISTS"].Rows.Clear();
 			DataRow row = m_Dataset.Tables["BUY_LISTS"].NewRow();
 			row["Name"] = name;
 			row["List"] = list;
