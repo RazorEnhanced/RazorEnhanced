@@ -102,6 +102,7 @@ namespace RazorEnhanced
 		{
 			private Thread m_AutoLootThread;
             private Thread m_ScavengerThread;
+
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
 			{
@@ -117,6 +118,8 @@ namespace RazorEnhanced
 					}
 				}
 
+				Thread.Sleep(50);
+
 				if (AutoLoot.Auto)
 				{
 					if (m_AutoLootThread == null ||
@@ -129,6 +132,8 @@ namespace RazorEnhanced
 						m_AutoLootThread.Start();
 					}
 				}
+
+				Thread.Sleep(50);
 
                 if (Scavenger.Auto)
                 {

@@ -38,7 +38,7 @@ namespace RazorEnhanced.UI
         private void organizeraddItemList_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            string NuovaOranizerList = "";
+            string nuovaOrganizerList = "";
 
             if (organizerListToAdd.Text == "")
                 fail = true;
@@ -46,10 +46,10 @@ namespace RazorEnhanced.UI
             if (!Regex.IsMatch(organizerListToAdd.Text, "^[a-zA-Z0-9_]+$"))
                 fail = true;
 
-            NuovaOranizerList = organizerListToAdd.Text.ToLower();
-            for (int i = 0; i < Assistant.Engine.MainWindow.OrganzierListSelect.Items.Count; i++)
+            nuovaOrganizerList = organizerListToAdd.Text.ToLower();
+            for (int i = 0; i < Assistant.Engine.MainWindow.OrganizerListSelect.Items.Count; i++)
             {
-                if (NuovaOranizerList == Assistant.Engine.MainWindow.OrganzierListSelect.GetItemText(Assistant.Engine.MainWindow.OrganzierListSelect.Items[i]))
+                if (nuovaOrganizerList == Assistant.Engine.MainWindow.OrganizerListSelect.GetItemText(Assistant.Engine.MainWindow.OrganizerListSelect.Items[i]))
                     fail = true;
             }
 
@@ -64,17 +64,17 @@ namespace RazorEnhanced.UI
             }
             else
             {
-                Assistant.Engine.MainWindow.OrganzierListSelect.Items.Add(NuovaOranizerList);
-                Assistant.Engine.MainWindow.OrganzierListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganzierListSelect.Items.IndexOf(NuovaOranizerList);
+                Assistant.Engine.MainWindow.OrganizerListSelect.Items.Add(nuovaOrganizerList);
+                Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(nuovaOrganizerList);
 
                 List<string> OrganizerSettingItemList = new List<string>();
 
-                for (int i = 0; i < Assistant.Engine.MainWindow.OrganzierListSelect.Items.Count; i++)
+                for (int i = 0; i < Assistant.Engine.MainWindow.OrganizerListSelect.Items.Count; i++)
                 {
-                    if (Assistant.Engine.MainWindow.OrganzierListSelect.Items[i].ToString() != "Default")
-                        OrganizerSettingItemList.Add(Assistant.Engine.MainWindow.OrganzierListSelect.Items[i].ToString());
+                    if (Assistant.Engine.MainWindow.OrganizerListSelect.Items[i].ToString() != "Default")
+                        OrganizerSettingItemList.Add(Assistant.Engine.MainWindow.OrganizerListSelect.Items[i].ToString());
                 }
-                RazorEnhanced.Settings.SaveOrganizerGeneral(Assistant.Engine.MainWindow.OrganizerDragDelay.ToString(), OrganizerSettingItemList, NuovaOranizerList);
+                RazorEnhanced.Settings.SaveOrganizerGeneral(Assistant.Engine.MainWindow.OrganizerDragDelay, OrganizerSettingItemList, nuovaOrganizerList);
                 this.Close();
             }
         }

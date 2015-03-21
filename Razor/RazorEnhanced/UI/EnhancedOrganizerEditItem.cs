@@ -119,8 +119,8 @@ namespace RazorEnhanced.UI
             if (!fail)
             {
                 RazorEnhanced.Organizer.ModifyItemToList(tName.Text, Graphics, Color, Amount, OrganizerlistView, OrganizerItemList, IndexEdit);
-                RazorEnhanced.Settings.SaveOrganizerItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), OrganizerItemList, Assistant.Engine.MainWindow.OrganizerSourceLabel.Text, Assistant.Engine.MainWindow.OrganizerDestinationLabel.Text);
-                this.Close();
+				RazorEnhanced.Settings.SaveOrganizerItemList(Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString(), Assistant.Engine.MainWindow.OrganizerItemList, Assistant.Engine.MainWindow.OrganizerSourceBag.Value, Assistant.Engine.MainWindow.OrganizerDestinationBag.Value);
+				this.Close();
             }
 
         }

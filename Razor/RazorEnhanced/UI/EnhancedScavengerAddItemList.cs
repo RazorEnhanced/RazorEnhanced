@@ -38,7 +38,7 @@ namespace RazorEnhanced.UI
         private void scavegeraddItemList_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            string NuovaScavengerList = "";
+            string nuovaScavengerList = "";
 
             if (scavengerListToAdd.Text == "")
                 fail = true;
@@ -46,10 +46,10 @@ namespace RazorEnhanced.UI
             if (!Regex.IsMatch(scavengerListToAdd.Text, "^[a-zA-Z0-9_]+$"))
                 fail = true;
 
-            NuovaScavengerList = scavengerListToAdd.Text.ToLower();
+            nuovaScavengerList = scavengerListToAdd.Text.ToLower();
             for (int i = 0; i < Assistant.Engine.MainWindow.ScavengerListSelect.Items.Count; i++)
             {
-                if (NuovaScavengerList == Assistant.Engine.MainWindow.ScavengerListSelect.GetItemText(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i]))
+                if (nuovaScavengerList == Assistant.Engine.MainWindow.ScavengerListSelect.GetItemText(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i]))
                     fail = true;
             }
 
@@ -64,8 +64,8 @@ namespace RazorEnhanced.UI
             }
             else
             {
-                Assistant.Engine.MainWindow.ScavengerListSelect.Items.Add(NuovaScavengerList);
-                Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(NuovaScavengerList);
+                Assistant.Engine.MainWindow.ScavengerListSelect.Items.Add(nuovaScavengerList);
+                Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(nuovaScavengerList);
 
                 List<string> ScavengerSettingItemList = new List<string>();
 
@@ -74,7 +74,7 @@ namespace RazorEnhanced.UI
                     if (Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString() != "Default")
                         ScavengerSettingItemList.Add(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString());
                 }
-                RazorEnhanced.Settings.SaveScavengerGeneral(Assistant.Engine.MainWindow.ScavengerDragDelay.ToString(), ScavengerSettingItemList, NuovaScavengerList, Assistant.Engine.MainWindow.ScavengerContainerLabel.Text);
+                RazorEnhanced.Settings.SaveScavengerGeneral(Assistant.Engine.MainWindow.ScavengerDragDelay, ScavengerSettingItemList, nuovaScavengerList, Assistant.Engine.MainWindow.ScavengerBag);
                 this.Close();
             }
         }

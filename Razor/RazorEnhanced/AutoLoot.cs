@@ -80,7 +80,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.AutoLootDelayLabel;
+				return Assistant.Engine.MainWindow.AutoLootDelay;
 			}
 		}
 
@@ -316,7 +316,7 @@ namespace RazorEnhanced
 			corpseFilter.OnGround = true;
 			corpseFilter.Enabled = true;
 
-			exit = Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelayLabel , corpseFilter);
+			exit = Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelay , corpseFilter);
 		}
 
 		// Funzioni di controllo da script
