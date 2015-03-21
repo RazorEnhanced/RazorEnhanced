@@ -82,6 +82,16 @@ namespace RazorEnhanced
 			RazorEnhanced.Organizer.RefreshList(organizerItemList);
 		}
 
+        private static bool ColorCheck(int ColorDaLista, int ColorDaVendor)
+        {
+            if (ColorDaLista == -1)         // Wildcard colore
+                return true;
+            else
+                if (ColorDaLista == ColorDaVendor)      // Match OK
+                    return true;
+                else            // Match fallito
+                    return false;
+        }
 		internal static int Engine(List<OrganizerItem> organizerItemList, int mseconds, Item sourceBag, Item destinationBag)
 		{
 			// Apre le bag per item contenuti
@@ -95,7 +105,7 @@ namespace RazorEnhanced
 			{
 				foreach (OrganizerItem oggettoDaLista in organizerItemList)
 				{
-					if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && oggettoContenuto.Hue == oggettoDaLista.Color)     // Verifico il match fra colore e grafica
+                    if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))     // Verifico il match fra colore e grafica
 					{
 						// Controllo amount e caso -1
 						if (oggettoDaLista.Amount == -1) // Sposta senza contare
@@ -132,6 +142,7 @@ namespace RazorEnhanced
 				}
 			}
             RazorEnhanced.Organizer.AddLog("Finish!");
+            RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!");
             Assistant.Engine.MainWindow.OrganizerFinishWork();
 			return 0;
 		}
