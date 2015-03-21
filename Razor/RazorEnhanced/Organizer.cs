@@ -132,7 +132,7 @@ namespace RazorEnhanced
 				}
 			}
             RazorEnhanced.Organizer.AddLog("Finish!");
-            //Assistant.Engine.MainWindow.OrganizerFinishWork();
+            Assistant.Engine.MainWindow.OrganizerFinishWork();
 			return 0;
 		}
 

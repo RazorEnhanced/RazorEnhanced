@@ -456,7 +456,7 @@ namespace Assistant
 		internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
 		internal ListView OrganizerListView { get { return organizerListView; } }
 		internal ComboBox OrganizerListSelect { get { return organizerListSelect; } }
-        
+
 		// Sell Agent
 		internal Label SellBagLabel { get { return sellBagLabel; } }
 		internal CheckBox SellCheckBox { get { return sellEnableCheckB; } }
@@ -5282,7 +5282,7 @@ namespace Assistant
 					organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
 				}
 			}
-            organizerStopB.Enabled = false;
+			organizerStopB.Enabled = false;
 
 			// ----------- SELL AGENT -----------------
 			// Liste
@@ -9251,8 +9251,8 @@ namespace Assistant
 			uint source = 0;
 			uint destination = 0;
 			RazorEnhanced.Settings.LoadOrganizerItemList(organizerListSelect.SelectedItem.ToString(), out organizerItemList, out source, out destination);
-            OrganizerSourceLabel.Text = "0x" + source.ToString("X8");
-            organizerDestinationLabel.Text = "0x" + destination.ToString("X8");
+			OrganizerSourceLabel.Text = "0x" + source.ToString("X8");
+			organizerDestinationLabel.Text = "0x" + destination.ToString("X8");
 			RazorEnhanced.Organizer.RefreshList(organizerItemList);
 			RazorEnhanced.Organizer.AddLog("Organizer list changed to: " + organizerListSelect.SelectedItem.ToString());
 		}
@@ -9301,32 +9301,32 @@ namespace Assistant
 			if (SourceBagSerial != 0)
 			{
 				SourceBag = RazorEnhanced.Items.FindBySerial(SourceBagSerial);
-                if (SourceBag != null)
-                {
-                    if (SourceBag.RootContainer != World.Player)
-                    {
-                        if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(SourceBag.Position.X, SourceBag.Position.Y)) <= 3)
-                        {
-                            RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + SourceBag.Serial.ToString("X8"));
-                            m_OrganizerSourceBag = (Assistant.Serial)SourceBag.Serial;
-                        } 
-                        else
-                        {
-                            StartCheck = false;
-                            RazorEnhanced.Organizer.AddLog("ERROR: Source Bag too away");
-                        }
-                    }
-                    else
-                    {
-                        RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + SourceBag.Serial.ToString("X8"));
-                        m_OrganizerSourceBag = (Assistant.Serial)SourceBag.Serial;
-                    }
-                }
-                else
-                {
-                    StartCheck = false;
-                    RazorEnhanced.Organizer.AddLog("ERROR: Source Bag is invalid");
-                }
+				if (SourceBag != null)
+				{
+					if (SourceBag.RootContainer != World.Player)
+					{
+						if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(SourceBag.Position.X, SourceBag.Position.Y)) <= 3)
+						{
+							RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + SourceBag.Serial.ToString("X8"));
+							m_OrganizerSourceBag = (Assistant.Serial)SourceBag.Serial;
+						}
+						else
+						{
+							StartCheck = false;
+							RazorEnhanced.Organizer.AddLog("ERROR: Source Bag too away");
+						}
+					}
+					else
+					{
+						RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + SourceBag.Serial.ToString("X8"));
+						m_OrganizerSourceBag = (Assistant.Serial)SourceBag.Serial;
+					}
+				}
+				else
+				{
+					StartCheck = false;
+					RazorEnhanced.Organizer.AddLog("ERROR: Source Bag is invalid");
+				}
 			}
 			else
 			{
@@ -9337,33 +9337,33 @@ namespace Assistant
 			DestinationBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerDestinationLabel.Text, 16);
 			if (DestinationBagSerial != 0)
 			{
-                DestinationBag = RazorEnhanced.Items.FindBySerial(DestinationBagSerial);
-                if (DestinationBag != null)
-                {
-                    if (DestinationBag.RootContainer != World.Player)
-                    {
-                        if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(DestinationBag.Position.X, DestinationBag.Position.Y)) <= 3)
-                        {
-                            RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + DestinationBag.Serial.ToString("X8"));
-                            m_OrganizerDestinationBag = (Assistant.Serial)DestinationBag.Serial;
-                        }
-                        else
-                        {
-                            StartCheck = false;
-                            RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag too away");
-                        }
-                    }
-                    else
-                    {
-                        RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + DestinationBag.Serial.ToString("X8"));
-                        m_OrganizerDestinationBag = (Assistant.Serial)DestinationBag.Serial;
-                    }
-                }
-                else
-                {
-                    StartCheck = false;
-                    RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag is invalid");
-                }
+				DestinationBag = RazorEnhanced.Items.FindBySerial(DestinationBagSerial);
+				if (DestinationBag != null)
+				{
+					if (DestinationBag.RootContainer != World.Player)
+					{
+						if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(DestinationBag.Position.X, DestinationBag.Position.Y)) <= 3)
+						{
+							RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + DestinationBag.Serial.ToString("X8"));
+							m_OrganizerDestinationBag = (Assistant.Serial)DestinationBag.Serial;
+						}
+						else
+						{
+							StartCheck = false;
+							RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag too away");
+						}
+					}
+					else
+					{
+						RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + DestinationBag.Serial.ToString("X8"));
+						m_OrganizerDestinationBag = (Assistant.Serial)DestinationBag.Serial;
+					}
+				}
+				else
+				{
+					StartCheck = false;
+					RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag is invalid");
+				}
 			}
 			else
 			{
@@ -9376,8 +9376,8 @@ namespace Assistant
 
 				RazorEnhanced.Organizer.AddLog("Organizer Engine Start...");
 				RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
-                organizerStopB.Enabled = true;
-                organizerExecuteB.Enabled = false;
+				organizerStopB.Enabled = true;
+				organizerExecuteB.Enabled = false;
 				organizerListSelect.Enabled = false;
 				organizerAddListB.Enabled = false;
 				organizerRemoveListB.Enabled = false;
@@ -9388,8 +9388,8 @@ namespace Assistant
 			else
 			{
 				RazorEnhanced.Organizer.AddLog("Fail to start Organizer Engine...");
-                organizerStopB.Enabled = false;
-                organizerExecuteB.Enabled = true;
+				organizerStopB.Enabled = false;
+				organizerExecuteB.Enabled = true;
 				organizerListSelect.Enabled = true;
 				organizerAddListB.Enabled = true;
 				organizerRemoveListB.Enabled = true;
@@ -9405,7 +9405,7 @@ namespace Assistant
 
 			RazorEnhanced.Organizer.AddLog("Organizer Engine force stop...");
 			RazorEnhanced.Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
-            organizerExecuteB.Enabled = true;
+			organizerExecuteB.Enabled = true;
 			organizerListSelect.Enabled = true;
 			organizerAddListB.Enabled = true;
 			organizerRemoveListB.Enabled = true;
@@ -9701,17 +9701,32 @@ namespace Assistant
 		{
 
 		}
-        internal void OrganizerFinishWork()
-        {
-            organizerExecuteB.Enabled = true;
-            organizerListSelect.Enabled = true;
-            organizerAddListB.Enabled = true;
-            organizerRemoveListB.Enabled = true;
-            organizerExportListB.Enabled = true;
-            organizerImportListB.Enabled = true;
-            organizerDragDelay.Enabled = true;
-        }
 
+		delegate void OrganizerFinishWorkCallback();
 
+		internal void OrganizerFinishWork()
+		{
+			if (organizerExecuteB.InvokeRequired ||
+				organizerListSelect.InvokeRequired ||
+				organizerAddListB.InvokeRequired ||
+				organizerRemoveListB.InvokeRequired ||
+				organizerExportListB.InvokeRequired ||
+				organizerImportListB.InvokeRequired ||
+				organizerDragDelay.InvokeRequired)
+			{
+				OrganizerFinishWorkCallback d = new OrganizerFinishWorkCallback(OrganizerFinishWork);
+				this.Invoke(d, null);
+			}
+			else
+			{
+				organizerExecuteB.Enabled = true;
+				organizerListSelect.Enabled = true;
+				organizerAddListB.Enabled = true;
+				organizerRemoveListB.Enabled = true;
+				organizerExportListB.Enabled = true;
+				organizerImportListB.Enabled = true;
+				organizerDragDelay.Enabled = true;
+			}
+		}
 	}
 }
