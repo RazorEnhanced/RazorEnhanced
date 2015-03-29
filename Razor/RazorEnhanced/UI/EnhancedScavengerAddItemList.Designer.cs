@@ -38,10 +38,7 @@
             // 
             // scavengerListToAdd
             // 
-            this.scavengerListToAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.scavengerListToAdd.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.scavengerListToAdd.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.scavengerListToAdd.Location = new System.Drawing.Point(12, 12);
+			this.scavengerListToAdd.Location = new System.Drawing.Point(12, 12);
             this.scavengerListToAdd.Name = "scavengerListToAdd";
             this.scavengerListToAdd.Padding = new System.Windows.Forms.Padding(1);
             this.scavengerListToAdd.Size = new System.Drawing.Size(286, 20);

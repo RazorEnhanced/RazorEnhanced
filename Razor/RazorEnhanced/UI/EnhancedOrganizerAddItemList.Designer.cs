@@ -38,9 +38,6 @@
             // 
             // organizerListToAdd
             // 
-            this.organizerListToAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.organizerListToAdd.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.organizerListToAdd.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.organizerListToAdd.Location = new System.Drawing.Point(12, 12);
             this.organizerListToAdd.Name = "organizerListToAdd";
             this.organizerListToAdd.Padding = new System.Windows.Forms.Padding(1);

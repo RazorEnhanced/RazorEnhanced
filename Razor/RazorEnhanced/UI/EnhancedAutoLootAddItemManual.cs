@@ -14,18 +14,17 @@ using Assistant;
 
 namespace RazorEnhanced.UI
 {
-	public partial class EnhancedAutolootManualAdd : Form
+	public partial class EnhancedAutoLootAddItemManual : Form
 	{
 		private const string m_Title = "Enhanced Autoloot Manual Add Item";
         private ListView AutolootlistView;
         private List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList;
-        public EnhancedAutolootManualAdd(ListView PAutolootlistView, List<RazorEnhanced.AutoLoot.AutoLootItem> PAutoLootItemList)
+        
+		public EnhancedAutoLootAddItemManual()
 		{
 			InitializeComponent();
             MaximizeBox = false;
-			this.Text = m_Title;
-            AutolootlistView = PAutolootlistView;
-            AutoLootItemList = PAutoLootItemList;
+			this.Text = m_Title;;
 		}
 
         private void label1_Click(object sender, EventArgs e)
@@ -40,19 +39,17 @@ namespace RazorEnhanced.UI
             tGraphics.Text = "0x0000";
         }
 
-
-
         private void bClose_Click(object sender, EventArgs e)
         {
+			RazorEnhanced.AutoLoot.RefreshItems();
             this.Close();
         }
-
 
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphics = 0 ;
-            int Color =0 ;
+            int graphics = 0 ;
+            int color =0 ;
             if (tName.Text == null)
             {
                 MessageBox.Show("Item name is not valid.",
@@ -65,7 +62,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Graphics = Convert.ToInt32(tGraphics.Text, 16); 
+                graphics = Convert.ToInt32(tGraphics.Text, 16); 
             }
             catch
             {
@@ -78,13 +75,13 @@ namespace RazorEnhanced.UI
             }
 
             if (tColor.Text == "-1")
-                Color = -1;
+                color = -1;
             else
             {
                 try
                 {
 
-                    Color = Convert.ToInt32(tColor.Text, 16);
+                    color = Convert.ToInt32(tColor.Text, 16);
                 }
                 catch
                 {
@@ -99,8 +96,7 @@ namespace RazorEnhanced.UI
 
             if (!fail)
             {
-                RazorEnhanced.AutoLoot.AddItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList);
-               
+                RazorEnhanced.AutoLoot.AddItemToList(tName.Text, graphics, color);     
                 this.Close();
             }
 

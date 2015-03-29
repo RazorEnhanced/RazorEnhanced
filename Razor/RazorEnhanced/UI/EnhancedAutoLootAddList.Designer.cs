@@ -1,6 +1,6 @@
 ﻿namespace RazorEnhanced.UI
 {
-    partial class EnhancedAutolootAddItemList
+    partial class EnhancedAutoLootAddList
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedAutolootAddItemList));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedAutoLootAddList));
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.autolootListToAdd = new RazorEnhanced.UI.RazorTextBox();
             this.autolootcloseItemList = new RazorEnhanced.UI.RazorButton();
@@ -38,9 +38,6 @@
             // 
             // autolootListToAdd
             // 
-            this.autolootListToAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.autolootListToAdd.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.autolootListToAdd.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.autolootListToAdd.Location = new System.Drawing.Point(12, 12);
             this.autolootListToAdd.Name = "autolootListToAdd";
             this.autolootListToAdd.Padding = new System.Windows.Forms.Padding(1);

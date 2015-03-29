@@ -496,55 +496,7 @@ namespace Assistant
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 			RazorEnhanced.Scripts.Auto = false;
 
-			// --------------- Autoloot ---------------
-			List<string> LootSettingItemList = new List<string>();
-
-			for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
-			{
-				if (Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString() != "Default")
-					LootSettingItemList.Add(Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString());
-			}
-			RazorEnhanced.Settings.SaveAutoLootGeneral(Assistant.Engine.MainWindow.AutoLootDelay, LootSettingItemList, Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), Assistant.Engine.MainWindow.AutoLootBag);
 			
-			// --------------- Organizer ---------------
-			List<string> OrganizerSettingItemList = new List<string>();
-
-			for (int i = 0; i < Assistant.Engine.MainWindow.OrganizerListSelect.Items.Count; i++)
-			{
-				if (Assistant.Engine.MainWindow.OrganizerListSelect.Items[i].ToString() != "Default")
-					OrganizerSettingItemList.Add(Assistant.Engine.MainWindow.OrganizerListSelect.Items[i].ToString());
-			}
-			RazorEnhanced.Settings.SaveOrganizerGeneral(Assistant.Engine.MainWindow.OrganizerDragDelay, OrganizerSettingItemList, Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString());
-
-			// --------------- Scavenger ---------------
-			List<string> ScavengerSettingItemList = new List<string>();
-
-			for (int i = 0; i < Assistant.Engine.MainWindow.ScavengerListSelect.Items.Count; i++)
-			{
-				if (Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString() != "Default")
-					ScavengerSettingItemList.Add(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i].ToString());
-			}
-			RazorEnhanced.Settings.SaveScavengerGeneral(Assistant.Engine.MainWindow.ScavengerDragDelay, ScavengerSettingItemList, Assistant.Engine.MainWindow.ScavengerListSelect.SelectedItem.ToString(), Assistant.Engine.MainWindow.ScavengerBag);
-
-			// --------------- Sell ---------------
-			List<string> SellSettingItemList = new List<string>();
-
-			for (int i = 0; i < Assistant.Engine.MainWindow.SellListSelect.Items.Count; i++)
-			{
-				if (Assistant.Engine.MainWindow.SellListSelect.Items[i].ToString() != "Default")
-					SellSettingItemList.Add(Assistant.Engine.MainWindow.SellListSelect.Items[i].ToString());
-			}
-			RazorEnhanced.Settings.SaveSellGeneral(SellSettingItemList, Assistant.Engine.MainWindow.SellListSelect.SelectedItem.ToString());
-			
-			// --------------- Buy ---------------
-			List<string> BuySettingItemList = new List<string>();
-
-			for (int i = 0; i < Assistant.Engine.MainWindow.BuyListSelect.Items.Count; i++)
-			{
-				if (Assistant.Engine.MainWindow.BuyListSelect.Items[i].ToString() != "Default")
-					BuySettingItemList.Add(Assistant.Engine.MainWindow.BuyListSelect.Items[i].ToString());
-			}
-			RazorEnhanced.Settings.SaveBuyGeneral(BuySettingItemList, Assistant.Engine.MainWindow.BuyListSelect.SelectedItem.ToString());
 
 
 			try { PacketPlayer.Stop(); }
@@ -557,13 +509,6 @@ namespace Assistant
 			Macros.MacroManager.Save();
 			Config.Save();
 		}
-
-		/*public static string GetDirectory( string relPath )
-		{
-			string path = Path.Combine(ExeDirectory, relPath);
-			EnsureDirectory( path );
-			return path;
-		}*/
 
 		internal static void EnsureDirectory(string dir)
 		{

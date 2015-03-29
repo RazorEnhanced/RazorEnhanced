@@ -120,7 +120,7 @@ namespace RazorEnhanced
 
 				Thread.Sleep(50);
 
-				if (AutoLoot.Auto)
+				if (AutoLoot.AutoMode)
 				{
 					if (m_AutoLootThread == null ||
 						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&

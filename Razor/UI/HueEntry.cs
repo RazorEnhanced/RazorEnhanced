@@ -90,9 +90,6 @@ namespace Assistant
 			// 
 			// hueNum
 			// 
-			this.hueNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.hueNum.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.hueNum.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.hueNum.Location = new System.Drawing.Point(91, 5);
 			this.hueNum.Name = "hueNum";
 			this.hueNum.Padding = new System.Windows.Forms.Padding(1);

@@ -103,9 +103,6 @@ namespace Assistant
 			// 
 			// name
 			// 
-			this.name.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.name.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.name.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.name.Location = new System.Drawing.Point(58, 9);
 			this.name.Name = "name";
 			this.name.Padding = new System.Windows.Forms.Padding(1);
@@ -122,9 +119,6 @@ namespace Assistant
 			// 
 			// format
 			// 
-			this.format.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.format.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.format.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.format.Location = new System.Drawing.Point(235, 9);
 			this.format.Name = "format";
 			this.format.Padding = new System.Windows.Forms.Padding(1);
@@ -141,9 +135,6 @@ namespace Assistant
 			// 
 			// itemid
 			// 
-			this.itemid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.itemid.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.itemid.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.itemid.Location = new System.Drawing.Point(58, 37);
 			this.itemid.Name = "itemid";
 			this.itemid.Padding = new System.Windows.Forms.Padding(1);
@@ -160,9 +151,6 @@ namespace Assistant
 			// 
 			// hue
 			// 
-			this.hue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.hue.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.hue.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.hue.Location = new System.Drawing.Point(235, 37);
 			this.hue.Name = "hue";
 			this.hue.Padding = new System.Windows.Forms.Padding(1);

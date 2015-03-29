@@ -78,9 +78,6 @@
             // 
             // tAmount
             // 
-            this.tAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tAmount.Location = new System.Drawing.Point(58, 72);
             this.tAmount.Margin = new System.Windows.Forms.Padding(2);
             this.tAmount.Name = "tAmount";
@@ -100,9 +97,6 @@
             // 
             // tGraphics
             // 
-            this.tGraphics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tGraphics.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tGraphics.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tGraphics.Location = new System.Drawing.Point(58, 46);
             this.tGraphics.Margin = new System.Windows.Forms.Padding(2);
             this.tGraphics.Name = "tGraphics";
@@ -122,9 +116,6 @@
             // 
             // tName
             // 
-            this.tName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tName.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tName.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tName.Location = new System.Drawing.Point(58, 21);
             this.tName.Margin = new System.Windows.Forms.Padding(2);
             this.tName.Name = "tName";
@@ -186,10 +177,7 @@
             // 
             // tHue
             // 
-            this.tHue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tHue.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tHue.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.tHue.Location = new System.Drawing.Point(58, 96);
+			this.tHue.Location = new System.Drawing.Point(58, 96);
             this.tHue.Margin = new System.Windows.Forms.Padding(2);
             this.tHue.Name = "tHue";
             this.tHue.Padding = new System.Windows.Forms.Padding(1);

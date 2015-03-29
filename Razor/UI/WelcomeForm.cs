@@ -233,10 +233,7 @@ namespace Assistant
 			// 
 			// port
 			// 
-			this.port.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.port.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.port.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.port.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.port.Location = new System.Drawing.Point(297, 17);
 			this.port.Name = "port";
 			this.port.Padding = new System.Windows.Forms.Padding(1);

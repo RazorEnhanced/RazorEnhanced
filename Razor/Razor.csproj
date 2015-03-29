@@ -114,6 +114,7 @@
     <Reference Include="System.Data">
       <Name>System.Data</Name>
     </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
@@ -386,11 +387,11 @@
     <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.Designer.cs">
       <DependentUpon>EnhancedScavengerAddItemList.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddItemList.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddItemList.Designer.cs">
-      <DependentUpon>EnhancedAutoLootAddItemList.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddList.Designer.cs">
+      <DependentUpon>EnhancedAutoLootAddList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItemProps.cs">
       <SubType>Form</SubType>
@@ -416,11 +417,11 @@
     <Compile Include="RazorEnhanced\UI\EnhancedMobileInspector.Designer.cs">
       <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootManualAdd.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddItemManual.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootManualAdd.Designer.cs">
-      <DependentUpon>EnhancedAutoLootManualAdd.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddItemManual.Designer.cs">
+      <DependentUpon>EnhancedAutoLootAddItemManual.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.cs">
       <SubType>Form</SubType>
@@ -531,8 +532,8 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.resx">
       <DependentUpon>EnhancedScavengerAddItemList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootAddItemList.resx">
-      <DependentUpon>EnhancedAutoLootAddItemList.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootAddList.resx">
+      <DependentUpon>EnhancedAutoLootAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootEditItemProps.resx">
       <DependentUpon>EnhancedAutoLootEditItemProps.cs</DependentUpon>
@@ -546,8 +547,8 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedMobileInspector.resx">
       <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootManualAdd.resx">
-      <DependentUpon>EnhancedAutoLootManualAdd.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootAddItemManual.resx">
+      <DependentUpon>EnhancedAutoLootAddItemManual.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>

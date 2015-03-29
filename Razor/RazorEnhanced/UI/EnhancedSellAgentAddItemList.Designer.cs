@@ -38,9 +38,6 @@
 			// 
 			// sellagentListToAdd
 			// 
-			this.sellagentListToAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.sellagentListToAdd.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.sellagentListToAdd.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.sellagentListToAdd.Location = new System.Drawing.Point(12, 12);
 			this.sellagentListToAdd.Name = "sellagentListToAdd";
 			this.sellagentListToAdd.Padding = new System.Windows.Forms.Padding(1);

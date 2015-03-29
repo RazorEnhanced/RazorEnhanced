@@ -38,9 +38,6 @@
             // 
             // buyagentListToAdd
             // 
-            this.buyagentListToAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.buyagentListToAdd.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.buyagentListToAdd.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.buyagentListToAdd.Location = new System.Drawing.Point(12, 12);
             this.buyagentListToAdd.Name = "buyagentListToAdd";
             this.buyagentListToAdd.Padding = new System.Windows.Forms.Padding(1);

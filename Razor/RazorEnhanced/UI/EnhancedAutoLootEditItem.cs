@@ -7,9 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ScintillaNET;
-using System.IO;
 using Assistant;
+using RazorEnhanced;
 
 
 namespace RazorEnhanced.UI
@@ -17,97 +16,97 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedAutolootEditItem : Form
 	{
 		private const string m_Title = "Enhanced Autoloot Edit Item";
-        private ListView AutolootlistView;
-        private List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList;
-        private int IndexEdit;
-        public EnhancedAutolootEditItem(ListView PAutolootlistView, List<RazorEnhanced.AutoLoot.AutoLootItem> PAutoLootItemList, int PIndexEdit)
+
+		private string m_List;
+		private AutoLoot.AutoLootItem m_Item;
+		private int m_Index;
+		public EnhancedAutolootEditItem(string list, int index, AutoLoot.AutoLootItem item)
 		{
 			InitializeComponent();
-            MaximizeBox = false;
+			MaximizeBox = false;
 			this.Text = m_Title;
-            AutolootlistView = PAutolootlistView;
-            AutoLootItemList = PAutoLootItemList;
-            IndexEdit = PIndexEdit;
+			m_List = list;
+			m_Index = index;
+			m_Item = item;
 		}
 
-        private void label1_Click(object sender, EventArgs e)
-        {
+		private void label1_Click(object sender, EventArgs e)
+		{
 
-        }
+		}
 
-        private void EnhancedAutolootManualAdd_Load(object sender, EventArgs e)
-        {
-            tName.Text=AutoLootItemList[IndexEdit].Name;
-            tGraphics.Text = "0x" + AutoLootItemList[IndexEdit].Graphics.ToString("X4");
-            if (AutoLootItemList[IndexEdit].Color == -1)
-                tColor.Text = "-1";
-            else
-                tColor.Text = "0x" + AutoLootItemList[IndexEdit].Color.ToString("X4");
-        }
-
-
-
-        private void bClose_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+		private void EnhancedAutolootManualAdd_Load(object sender, EventArgs e)
+		{
+			tName.Text = m_Item.Name;
+			tGraphics.Text = "0x" + m_Item.Graphics.ToString("X4");
+			if (m_Item.Color == -1)
+				tColor.Text = "-1";
+			else
+				tColor.Text = "0x" + m_Item.Color.ToString("X4");
+		}
 
 
-        private void bAddItem_Click(object sender, EventArgs e)
-        {
-            bool fail = false;
-            int Graphics = 0 ;
-            int Color =0 ;
-            if (tName.Text == null)
-            {
-                MessageBox.Show("Item name is not valid.",
-                "Item name Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
-                fail = true;
-            }
 
-            try
-            {
-                Graphics = Convert.ToInt32(tGraphics.Text, 16); 
-            }
-            catch
-            {
-                MessageBox.Show("Item Graphics is not valid.",
-                "Item Graphics Error",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
-                fail = true;
-            }
+		private void bClose_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
 
-            if (tColor.Text == "-1")
-                Color = -1;
-            else
-            {
-                try
-                {
 
-                    Color = Convert.ToInt32(tColor.Text, 16);
-                }
-                catch
-                {
-                    MessageBox.Show("Item Color is not valid.",
-                    "Item Color Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Exclamation,
-                    MessageBoxDefaultButton.Button1);
-                    fail = true;
-                }
-            }
-            if (!fail)
-            {
-                RazorEnhanced.AutoLoot.ModifyItemToList(tName.Text, Graphics, Color, AutolootlistView, AutoLootItemList, IndexEdit);
-                RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), AutoLootItemList);
-                this.Close();
-            }
+		private void bAddItem_Click(object sender, EventArgs e)
+		{
+			bool fail = false;
+			int graphics = 0;
+			int color = 0;
+			if (tName.Text == null)
+			{
+				MessageBox.Show("Item name is not valid.",
+				"Item name Error",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Exclamation,
+				MessageBoxDefaultButton.Button1);
+				fail = true;
+			}
 
-        }
+			try
+			{
+				graphics = Convert.ToInt32(tGraphics.Text, 16);
+			}
+			catch
+			{
+				MessageBox.Show("Item Graphics is not valid.",
+				"Item Graphics Error",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Exclamation,
+				MessageBoxDefaultButton.Button1);
+				fail = true;
+			}
+
+			if (tColor.Text == "-1")
+				color = -1;
+			else
+			{
+				try
+				{
+
+					color = Convert.ToInt32(tColor.Text, 16);
+				}
+				catch
+				{
+					MessageBox.Show("Item Color is not valid.",
+					"Item Color Error",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation,
+					MessageBoxDefaultButton.Button1);
+					fail = true;
+				}
+			}
+			if (!fail)
+			{
+				RazorEnhanced.AutoLoot.ModifyItemInList(tName.Text, graphics, color, m_Item.Selected, m_Item, m_Index);
+				RazorEnhanced.AutoLoot.RefreshItems();
+				this.Close();
+			}
+		}
 	}
 }

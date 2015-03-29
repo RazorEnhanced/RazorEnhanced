@@ -1,6 +1,6 @@
 ﻿namespace RazorEnhanced.UI
 {
-    partial class EnhancedAutolootManualAdd
+    partial class EnhancedAutoLootAddItemManual
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedAutolootManualAdd));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedAutoLootAddItemManual));
             this.label1 = new System.Windows.Forms.Label();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -72,9 +72,6 @@
             // 
             // tColor
             // 
-            this.tColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tColor.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tColor.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tColor.Location = new System.Drawing.Point(78, 88);
             this.tColor.Name = "tColor";
             this.tColor.Padding = new System.Windows.Forms.Padding(1);
@@ -92,9 +89,6 @@
             // 
             // tGraphics
             // 
-            this.tGraphics.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tGraphics.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tGraphics.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tGraphics.Location = new System.Drawing.Point(78, 56);
             this.tGraphics.Name = "tGraphics";
             this.tGraphics.Padding = new System.Windows.Forms.Padding(1);
@@ -112,9 +106,6 @@
             // 
             // tName
             // 
-            this.tName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tName.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tName.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tName.Location = new System.Drawing.Point(78, 26);
             this.tName.Name = "tName";
             this.tName.Padding = new System.Windows.Forms.Padding(1);

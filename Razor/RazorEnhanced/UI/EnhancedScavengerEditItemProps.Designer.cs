@@ -352,10 +352,7 @@
             // 
             // tMax
             // 
-            this.tMax.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tMax.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tMax.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.tMax.Location = new System.Drawing.Point(139, 67);
+			this.tMax.Location = new System.Drawing.Point(139, 67);
             this.tMax.Name = "tMax";
             this.tMax.Padding = new System.Windows.Forms.Padding(1);
             this.tMax.Size = new System.Drawing.Size(43, 20);
@@ -363,9 +360,6 @@
             // 
             // tMin
             // 
-            this.tMin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tMin.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.tMin.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.tMin.Location = new System.Drawing.Point(45, 67);
             this.tMin.Name = "tMin";
             this.tMin.Padding = new System.Windows.Forms.Padding(1);

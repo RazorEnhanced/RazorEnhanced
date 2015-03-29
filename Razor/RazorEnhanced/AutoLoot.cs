@@ -9,6 +9,29 @@ using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
+	internal class AutoLootList
+	{
+		private string m_Description;
+		internal string Description { get { return m_Description; } }
+
+		private int m_Delay;
+		internal int Delay { get { return m_Delay; } }
+
+		private int m_Bag;
+		internal int Bag { get { return m_Bag; } }
+
+		private bool m_Selected;
+		internal bool Selected { get { return m_Selected; } }
+
+		public AutoLootList(string description, int delay, int bag, bool selected)
+		{
+			m_Description = description;
+			m_Delay = delay;
+			m_Bag = bag;
+			m_Selected = selected;
+		}
+	}
+
 	public class AutoLoot
 	{
 		[Serializable]
@@ -43,44 +66,88 @@ namespace RazorEnhanced
 			private int m_Color;
 			public int Color { get { return m_Color; } }
 
+			private bool m_Selected;
+			internal bool Selected { get { return m_Selected; } }
+
 			private List<Property> m_Properties;
 			public List<Property> Properties { get { return m_Properties; } }
 
-			public AutoLootItem(string name, int graphics, int color, List<Property> properties)
+			public AutoLootItem(string name, int graphics, int color, bool selected, List<Property> properties)
 			{
 				m_Name = name;
 				m_Graphics = graphics;
 				m_Color = color;
+				m_Selected = selected;
 				m_Properties = properties;
 			}
 		}
-		internal static RazorEnhanced.Item AutolootBag
+
+		private static bool m_AutoMode;
+		internal static bool AutoMode
+		{
+			get { return m_AutoMode; }
+			set { m_AutoMode = value; }
+		}
+
+		internal static string AutoLootListName
 		{
 			get
 			{
-				int SerialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
+				return (string)Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.AutoLootListSelect.Text));
+			}
 
-                if (SerialBag == 0)
-                {
-                    SerialBag = World.Player.Backpack.Serial;
-                    return RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
-                }
-                else
-                {
-                    Item bag = RazorEnhanced.Items.FindBySerial(SerialBag);
-                    if (bag.RootContainer != World.Player)
-                        return RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
-                    else
-                        return bag;
-                }
+			set
+			{
+				Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.Text = value));
 			}
 		}
 
-		internal static int ItemDragDelay
+		internal static int AutoLootDelay
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.AutoLootDelay;
+				int delay = 100;
+				Assistant.Engine.MainWindow.AutolootLabelDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.AutolootLabelDelay.Text, out delay)));
+				return delay;
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.AutolootLabelDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootLabelDelay.Text = value.ToString()));
+			}
+		}
+
+		internal static int AutoLootBag
+		{
+			get
+			{
+				int serialBag = 0;
+
+				try
+				{
+					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
+
+					if (serialBag == 0)
+					{
+						serialBag = (int)World.Player.Backpack.Serial.Value;
+					}
+					else
+					{
+						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
+						if (bag.RootContainer != World.Player)
+							serialBag = (int)World.Player.Backpack.Serial.Value;
+					}
+				}
+				catch (Exception ex)
+				{
+				}
+
+				return serialBag;
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.AutoLootContainerLabel.Text = "0x" + value.ToString("X8");
 			}
 		}
 
@@ -90,73 +157,142 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
 		}
 
-
-		internal static void RefreshList(List<AutoLootItem> autoLootItemList)
+		internal static void RefreshLists()
 		{
-			Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
-			foreach (AutoLootItem item in autoLootItemList)
+			List<AutoLootList> lists;
+			RazorEnhanced.Settings.AutoLootListsRead(out lists);
+
+			AutoLootList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			if (selectedList == null || selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
+				return;
+
+			Assistant.Engine.MainWindow.AutoLootListSelect.Items.Clear();
+			foreach (AutoLootList l in lists)
 			{
-				ListViewItem listitem = new ListViewItem();
-				listitem.SubItems.Add(item.Name);
-				listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+				Assistant.Engine.MainWindow.AutoLootListSelect.Items.Add(l.Description);
 
-				if (item.Color == -1)
-					listitem.SubItems.Add("All");
-				else
-					listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-
-				Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
+				if (l.Selected)
+				{
+					Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutoLootListSelect.Items.IndexOf(l.Description);
+					AutoLootDelay = l.Delay;
+					AutoLootBag = l.Bag;
+				}
 			}
 		}
 
-		internal static void AddItemToList(string name, int graphics, int color, ListView AutolootlistView, List<AutoLootItem> autoLootItemList)
+		internal static void RefreshItems()
+		{
+			List<AutoLootList> lists;
+			RazorEnhanced.Settings.AutoLootListsRead(out lists);
+
+			foreach (AutoLootList l in lists)
+			{
+				if (l.Selected)
+				{
+					List<AutoLoot.AutoLootItem> items;
+					RazorEnhanced.Settings.AutoLootItemsRead(l.Description, out items);
+
+					Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+					foreach (AutoLootItem item in items)
+					{
+						ListViewItem listitem = new ListViewItem();
+
+						listitem.Checked = item.Selected;
+
+						listitem.SubItems.Add(item.Name);
+						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+
+						if (item.Color == -1)
+							listitem.SubItems.Add("All");
+						else
+							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+
+						Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
+					}
+				}
+			}
+		}
+
+		internal static void UpdateSelectedItems()
+		{
+			List<AutoLootItem> items;
+			RazorEnhanced.Settings.AutoLootItemsRead(AutoLootListName, out items);
+
+			if (items.Count != Assistant.Engine.MainWindow.AutoLootListView.Items.Count)
+			{
+				return;
+			}
+
+			for (int i = 0; i < Assistant.Engine.MainWindow.AutoLootListView.Items.Count; i++)
+			{
+				ListViewItem lvi = Assistant.Engine.MainWindow.AutoLootListView.Items[i];
+				AutoLootItem old = items[i];
+
+				if (lvi != null && old != null)
+				{
+					AutoLootItem item = new AutoLoot.AutoLootItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
+					RazorEnhanced.Settings.AutoLootItemReplace(RazorEnhanced.AutoLoot.AutoLootListName, i, item);
+				}
+			}
+		}
+
+		internal static void AddList(string newList)
+		{
+			RazorEnhanced.Settings.AutoLootListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (uint)0);
+
+			RazorEnhanced.AutoLoot.RefreshLists();
+		}
+
+		internal static void RemoveList(string list)
+		{
+			if (RazorEnhanced.Settings.AutoLootListExists(list))
+			{
+				RazorEnhanced.Settings.AutolootListDelete(list);
+			}
+
+			RazorEnhanced.AutoLoot.RefreshLists();
+		}
+
+		internal static void AddItemToList(string name, int graphics, int color)
 		{
 			List<AutoLootItem.Property> propsList = new List<AutoLootItem.Property>();
-			autoLootItemList.Add(new AutoLootItem(name, graphics, color, propsList));
-			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-		}
+			AutoLootItem item = new AutoLootItem(name, graphics, color, false, propsList);
 
-		internal static void ModifyItemToList(string name, int graphics, int color, ListView autolootlistView, List<AutoLootItem> autoLootItemList, int indexToInsert)
-		{
-			List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // salva vecchie prop
-			autoLootItemList.RemoveAt(indexToInsert);                                                       // rimuove
-			autoLootItemList.Insert(indexToInsert, new AutoLootItem(name, graphics, color, PropsList));     // inserisce al posto di prima
-			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-		}
+			string selection = Assistant.Engine.MainWindow.AutoLootListSelect.Text;
 
-		internal static void RefreshPropListView(ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert)
-		{
-			autolootlistViewProp.Items.Clear();
-			List<AutoLootItem.Property> PropsList = autoLootItemList[indexToInsert].Properties;             // legge props correnti
-			foreach (AutoLootItem.Property props in PropsList)
+			if (RazorEnhanced.Settings.AutoLootListExists(selection))
 			{
-				ListViewItem listitem = new ListViewItem();
-				listitem.SubItems.Add(props.Name);
-				listitem.SubItems.Add(props.Minimum.ToString());
-				listitem.SubItems.Add(props.Maximum.ToString());
-				autolootlistViewProp.Items.Add(listitem);
+				if (!RazorEnhanced.Settings.AutoLootItemExists(selection, item))
+					RazorEnhanced.Settings.AutoLootItemInsert(selection, item);
 			}
-			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+
+			RazorEnhanced.AutoLoot.RefreshItems();
 		}
 
-		internal static void InsertPropToItem(string name, int graphics, int Color, ListView autolootlistViewProp, List<AutoLootItem> autoLootItemList, int indexToInsert, string propName, int propMin, int propMax)
+		internal static void ModifyItemInList(string name, int graphics, int color, bool selected, AutoLootItem old, int index)
 		{
-			autolootlistViewProp.Items.Clear();
-			List<AutoLootItem.Property> PropsToAdd = new List<AutoLootItem.Property>();
-			autoLootItemList[indexToInsert].Properties.Add(new AutoLootItem.Property(propName, propMin, propMax));
-			RazorEnhanced.Settings.SaveAutoLootItemList(Assistant.Engine.MainWindow.AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
+			List<AutoLootItem.Property> propsList = old.Properties;
+			AutoLootItem item = new AutoLootItem(name, graphics, color, selected, propsList);
+
+			string selection = Assistant.Engine.MainWindow.AutoLootListSelect.Text;
+
+			if (RazorEnhanced.Settings.AutoLootListExists(selection))
+			{
+				if (RazorEnhanced.Settings.AutoLootItemExists(selection, item))
+					RazorEnhanced.Settings.AutoLootItemReplace(selection, index, item);
+			}
+
+			RazorEnhanced.AutoLoot.RefreshItems();
 		}
 
-		private static bool m_Auto;
-		internal static bool Auto
+		internal static void AddPropToItem(string list, int index, AutoLoot.AutoLootItem item, string propName, int propMin, int propMax)
 		{
-			get { return m_Auto; }
-			set { m_Auto = value; }
+			AutoLootItem.Property prop = new AutoLootItem.Property(propName, propMin, propMax);
+			item.Properties.Add(prop);
+			RazorEnhanced.Settings.AutoLootItemReplace(list, index, item);
 		}
 
-		internal static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
+		private static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
 
 		internal static int Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
@@ -202,20 +338,23 @@ namespace RazorEnhanced
 
 								foreach (AutoLootItem autoLootItem in autoLootList)
 								{
-                                    if (autoLootItem.Color == -1)
-                                    {
-                                        if (oggettoContenutoShard.ItemID == autoLootItem.Graphics)
-                                        {
-                                            GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (oggettoContenutoShard.ItemID == autoLootItem.Graphics && oggettoContenutoShard.Hue == autoLootItem.Color)
-                                        {
-                                            GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
-                                        }
-                                    }
+									if (!autoLootItem.Selected)
+										continue;
+
+									if (autoLootItem.Color == -1)
+									{
+										if (oggettoContenutoShard.ItemID == autoLootItem.Graphics)
+										{
+											GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+										}
+									}
+									else
+									{
+										if (oggettoContenutoShard.ItemID == autoLootItem.Graphics && oggettoContenutoShard.Hue == autoLootItem.Color)
+										{
+											GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+										}
+									}
 								}
 							}
 						}
@@ -224,36 +363,39 @@ namespace RazorEnhanced
 
 					foreach (AutoLootItem autoLootItem in autoLootList)
 					{
-                        if (autoLootItem.Color == -1)          // Colore ALL
-                        {
-                            if (oggettoContenuto.ItemID == autoLootItem.Graphics)
-                            {
-                                bool grabItem = true;
-                                if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
-                                    if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-                                        grabItem = false;
+						if (!autoLootItem.Selected)
+							continue;
 
-                                if (grabItem)
-                                {
-                                    GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (oggettoContenuto.ItemID == autoLootItem.Graphics && oggettoContenuto.Hue == autoLootItem.Color)
-                            {
-                                bool grabItem = true;
-                                if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
-                                    if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-                                        grabItem = false;
+						if (autoLootItem.Color == -1)          // Colore ALL
+						{
+							if (oggettoContenuto.ItemID == autoLootItem.Graphics)
+							{
+								bool grabItem = true;
+								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
+									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
+										grabItem = false;
 
-                                if (grabItem)
-                                {
-                                    GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
-                                }
-                            }
-                        }
+								if (grabItem)
+								{
+									GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+								}
+							}
+						}
+						else
+						{
+							if (oggettoContenuto.ItemID == autoLootItem.Graphics && oggettoContenuto.Hue == autoLootItem.Color)
+							{
+								bool grabItem = true;
+								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
+									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
+										grabItem = false;
+
+								if (grabItem)
+								{
+									GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+								}
+							}
+						}
 					}
 				}
 			}
@@ -261,48 +403,56 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-        internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, Item corpo, int mseconds)
-        {
-            if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
-            {
-                if (autoLoootItem.Properties.Count > 0) // Item con props
-                {
-                    RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, Item corpo, int mseconds)
+		{
+			if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
+			{
+				if (autoLoootItem.Properties.Count > 0) // Item con props
+				{
+					RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
 
-                    bool propsOK = false;
-                    foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
-                    {
-                        int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
-                        if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
-                        {
-                            propsOK = true;
-                        }
-                        else
-                        {
-                            propsOK = false;
-                            break; // alla prima fallita esce non ha senso controllare le altre
-                        }
-                    }
+					bool propsOK = false;
+					foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
+					{
+						int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
+						if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+						{
+							propsOK = true;
+						}
+						else
+						{
+							propsOK = false;
+							break; // alla prima fallita esce non ha senso controllare le altre
+						}
+					}
 
-                    if (propsOK) // Tutte le props match OK
-                    {
-                        RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
-                        RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                        Thread.Sleep(mseconds);
-                    }
-                    else
-                    {
-                        RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
-                    }
-                }
-                else // Item Senza props     
-                {
-                    RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
-                    RazorEnhanced.Items.Move(oggettoContenuto, RazorEnhanced.AutoLoot.AutolootBag, 0);
-                    Thread.Sleep(mseconds);
-                }
-            }
-        }
+					if (propsOK) // Tutte le props match OK
+					{
+						RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
+						RazorEnhanced.Item bag = RazorEnhanced.Items.FindBySerial(AutoLootBag);
+						if (bag != null)
+						{
+							RazorEnhanced.Items.Move(oggettoContenuto, bag, 0);
+							Thread.Sleep(mseconds);
+						}
+					}
+					else
+					{
+						RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
+					}
+				}
+				else // Item Senza props     
+				{
+					RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
+					RazorEnhanced.Item bag = RazorEnhanced.Items.FindBySerial(AutoLootBag);
+					if (bag != null)
+					{
+						RazorEnhanced.Items.Move(oggettoContenuto, bag, 0);
+						Thread.Sleep(mseconds);
+					}
+				}
+			}
+		}
 
 		internal static void Engine()
 		{
@@ -316,7 +466,10 @@ namespace RazorEnhanced
 			corpseFilter.OnGround = true;
 			corpseFilter.Enabled = true;
 
-			exit = Engine(Assistant.Engine.MainWindow.AutoLootItemList, Assistant.Engine.MainWindow.AutoLootDelay , corpseFilter);
+			List<AutoLoot.AutoLootItem> items;
+			string list = AutoLoot.AutoLootListName;
+			RazorEnhanced.Settings.AutoLootItemsRead(list, out items);
+			exit = Engine(items, AutoLootDelay, corpseFilter);
 		}
 
 		// Funzioni di controllo da script
@@ -335,7 +488,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
-                exit = Engine(autoLootList, mseconds, filter);
+				exit = Engine(autoLootList, mseconds, filter);
 			}
 
 			return exit;
@@ -365,9 +518,9 @@ namespace RazorEnhanced
 		public static void ChangeList(string nomelista)
 		{
 			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
+			for (int i = 0; i < Assistant.Engine.MainWindow.AutoLootListSelect.Items.Count; i++)
 			{
-				if (nomelista == Assistant.Engine.MainWindow.AutolootListSelect.GetItemText(Assistant.Engine.MainWindow.AutolootListSelect.Items[i]))
+				if (nomelista == Assistant.Engine.MainWindow.AutoLootListSelect.GetItemText(Assistant.Engine.MainWindow.AutoLootListSelect.Items[i]))
 					ListaOK = true;
 			}
 			if (!ListaOK)
@@ -377,12 +530,12 @@ namespace RazorEnhanced
 				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
 				{
 					Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
-					Assistant.Engine.MainWindow.AutolootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutoLootListSelect.Items.IndexOf(nomelista)));  // cambio lista
 					Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.AutolootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutolootListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutoLootListSelect.Items.IndexOf(nomelista)));  // cambio lista
 				}
 			}
 		}

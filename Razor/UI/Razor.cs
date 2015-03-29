@@ -10,10 +10,10 @@ using System.Text;
 using System.Runtime.InteropServices;
 using Assistant.Filters;
 using Assistant.Macros;
+using RazorEnhanced;
 using RazorEnhanced.UI;
-using System.CodeDom.Compiler;
-using System.Reflection;
-using Microsoft.CSharp;
+
+
 
 
 namespace Assistant
@@ -254,7 +254,6 @@ namespace Assistant
 		private RazorButton razorButtonCreateUODAccount;
 		private RazorButton razorButtonWiki;
 		private Panel panelLogo;
-		private List<RazorEnhanced.AutoLoot.AutoLootItem> autoLootItemList = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
 		private List<RazorEnhanced.Scavenger.ScavengerItem> scavengerItemList = new List<RazorEnhanced.Scavenger.ScavengerItem>();
 		private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
 		private List<RazorEnhanced.SellAgent.SellItem> sellItemList = new List<RazorEnhanced.SellAgent.SellItem>();
@@ -266,8 +265,8 @@ namespace Assistant
 		private GroupBox groupBox13;
 		private ListBox autolootLogBox;
 		private Label autolootContainerLabel;
-		private RazorButton bautolootlistImport;
-		private RazorButton bautolootlistExport;
+		private RazorButton autoLootButtonListImport;
+		private RazorButton autoLootButtonListExport;
 		private GroupBox groupBox11;
 		private RazorButton autolootItemPropsB;
 		private RazorButton autolootItemEditB;
@@ -275,7 +274,7 @@ namespace Assistant
 		private RazorButton autolootRemoveItemB;
 		private RazorButton autolootAddItemBManual;
 		private RazorButton autolootContainerButton;
-		private RazorCheckBox autolootEnable;
+		private RazorCheckBox autoLootCheckBox;
 		private ListView autolootlistView;
 		private ColumnHeader columnHeader4;
 		private ColumnHeader columnHeader1;
@@ -283,9 +282,9 @@ namespace Assistant
 		private ColumnHeader ColumnHeader3;
 		private TabPage escavenger;
 		private Label label21;
-		private RazorTextBox autoLootLabelDelay;
-		private RazorButton bautolootlistRemove;
-		private RazorButton bautolootlistAdd;
+		private RazorTextBox autoLootTextBoxDelay;
+		private RazorButton autoLootButtonRemoveList;
+		private RazorButton autolootButtonAddList;
 		private RazorComboBox autolootListSelect;
 		private Label label20;
 		private RazorButton razorButtonResetIgnore;
@@ -426,14 +425,12 @@ namespace Assistant
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
 
 		// AutoLoot
-		internal CheckBox AutolootCheckBox { get { return autolootEnable; } }
+		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
+		internal RazorTextBox AutolootLabelDelay { get { return autoLootTextBoxDelay; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
-		private Serial m_AutoLootBag;
-		internal Serial AutoLootBag { get { return m_AutoLootBag; } }
-		internal List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList { get { return autoLootItemList; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal ListView AutoLootListView { get { return autolootlistView; } }
-		internal ComboBox AutolootListSelect { get { return autolootListSelect; } }
+		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
 
 		// Scavenger
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
@@ -478,15 +475,8 @@ namespace Assistant
 		internal ListBox DressLogBox { get { return dressLogBox; } }
 		internal ListView DressListView { get { return dressListView; } }
 
-		internal int AutoLootDelay
-		{
-			get
-			{
-				int delay = 100;
-				Int32.TryParse(autoLootLabelDelay.Text, out delay);
-				return delay;
-			}
-		}
+
+
 		internal int ScavengerDragDelay
 		{
 			get
@@ -801,12 +791,12 @@ namespace Assistant
 			this.eautoloot = new System.Windows.Forms.TabPage();
 			this.razorButtonResetIgnore = new RazorEnhanced.UI.RazorButton();
 			this.label21 = new System.Windows.Forms.Label();
-			this.autoLootLabelDelay = new RazorEnhanced.UI.RazorTextBox();
-			this.bautolootlistRemove = new RazorEnhanced.UI.RazorButton();
-			this.bautolootlistAdd = new RazorEnhanced.UI.RazorButton();
-			this.bautolootlistImport = new RazorEnhanced.UI.RazorButton();
+			this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorTextBox();
+			this.autoLootButtonRemoveList = new RazorEnhanced.UI.RazorButton();
+			this.autolootButtonAddList = new RazorEnhanced.UI.RazorButton();
+			this.autoLootButtonListImport = new RazorEnhanced.UI.RazorButton();
 			this.autolootListSelect = new RazorEnhanced.UI.RazorComboBox();
-			this.bautolootlistExport = new RazorEnhanced.UI.RazorButton();
+			this.autoLootButtonListExport = new RazorEnhanced.UI.RazorButton();
 			this.label20 = new System.Windows.Forms.Label();
 			this.groupBox13 = new System.Windows.Forms.GroupBox();
 			this.autolootLogBox = new System.Windows.Forms.ListBox();
@@ -818,7 +808,7 @@ namespace Assistant
 			this.autolootRemoveItemB = new RazorEnhanced.UI.RazorButton();
 			this.autolootAddItemBManual = new RazorEnhanced.UI.RazorButton();
 			this.autolootContainerButton = new RazorEnhanced.UI.RazorButton();
-			this.autolootEnable = new RazorEnhanced.UI.RazorCheckBox();
+			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.autolootlistView = new System.Windows.Forms.ListView();
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1409,12 +1399,15 @@ namespace Assistant
 			// 
 			// corpseRange
 			// 
-			this.corpseRange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.corpseRange.BackColor = System.Drawing.Color.White;
+			this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.corpseRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.corpseRange.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.corpseRange.Location = new System.Drawing.Point(355, 100);
 			this.corpseRange.Name = "corpseRange";
-			this.corpseRange.Padding = new System.Windows.Forms.Padding(1);
 			this.corpseRange.Size = new System.Drawing.Size(24, 20);
 			this.corpseRange.TabIndex = 23;
 			this.corpseRange.TextChanged += new System.EventHandler(this.corpseRange_TextChanged);
@@ -1628,12 +1621,15 @@ namespace Assistant
 			// 
 			// txtSpellFormat
 			// 
-			this.txtSpellFormat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSpellFormat.BackColor = System.Drawing.Color.White;
+			this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.txtSpellFormat.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.txtSpellFormat.Location = new System.Drawing.Point(81, 211);
 			this.txtSpellFormat.Name = "txtSpellFormat";
-			this.txtSpellFormat.Padding = new System.Windows.Forms.Padding(1);
 			this.txtSpellFormat.Size = new System.Drawing.Size(106, 20);
 			this.txtSpellFormat.TabIndex = 5;
 			this.txtSpellFormat.TextChanged += new System.EventHandler(this.txtSpellFormat_TextChanged);
@@ -1711,36 +1707,45 @@ namespace Assistant
 			// 
 			// forceSizeX
 			// 
-			this.forceSizeX.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeX.BackColor = System.Drawing.Color.White;
+			this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.forceSizeX.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.forceSizeX.Location = new System.Drawing.Point(375, 186);
 			this.forceSizeX.Name = "forceSizeX";
-			this.forceSizeX.Padding = new System.Windows.Forms.Padding(1);
 			this.forceSizeX.Size = new System.Drawing.Size(30, 20);
 			this.forceSizeX.TabIndex = 63;
 			this.forceSizeX.TextChanged += new System.EventHandler(this.forceSizeX_TextChanged);
 			// 
 			// forceSizeY
 			// 
-			this.forceSizeY.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeY.BackColor = System.Drawing.Color.White;
+			this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.forceSizeY.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.forceSizeY.Location = new System.Drawing.Point(417, 186);
 			this.forceSizeY.Name = "forceSizeY";
-			this.forceSizeY.Padding = new System.Windows.Forms.Padding(1);
 			this.forceSizeY.Size = new System.Drawing.Size(30, 20);
 			this.forceSizeY.TabIndex = 64;
 			this.forceSizeY.TextChanged += new System.EventHandler(this.forceSizeY_TextChanged);
 			// 
 			// healthFmt
 			// 
-			this.healthFmt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.healthFmt.BackColor = System.Drawing.Color.White;
+			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.healthFmt.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.healthFmt.Location = new System.Drawing.Point(159, 159);
 			this.healthFmt.Name = "healthFmt";
-			this.healthFmt.Padding = new System.Windows.Forms.Padding(1);
 			this.healthFmt.Size = new System.Drawing.Size(46, 20);
 			this.healthFmt.TabIndex = 71;
 			this.healthFmt.TextChanged += new System.EventHandler(this.healthFmt_TextChanged);
@@ -1813,12 +1818,15 @@ namespace Assistant
 			// 
 			// ltRange
 			// 
-			this.ltRange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.ltRange.BackColor = System.Drawing.Color.White;
+			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.ltRange.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.ltRange.Location = new System.Drawing.Point(159, 99);
 			this.ltRange.Name = "ltRange";
-			this.ltRange.Padding = new System.Windows.Forms.Padding(1);
 			this.ltRange.Size = new System.Drawing.Size(32, 20);
 			this.ltRange.TabIndex = 41;
 			this.ltRange.TextChanged += new System.EventHandler(this.ltRange_TextChanged);
@@ -1834,12 +1842,15 @@ namespace Assistant
 			// 
 			// txtObjDelay
 			// 
-			this.txtObjDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtObjDelay.BackColor = System.Drawing.Color.White;
+			this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.txtObjDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.txtObjDelay.Location = new System.Drawing.Point(159, 55);
 			this.txtObjDelay.Name = "txtObjDelay";
-			this.txtObjDelay.Padding = new System.Windows.Forms.Padding(1);
 			this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
 			this.txtObjDelay.TabIndex = 37;
 			this.txtObjDelay.TextChanged += new System.EventHandler(this.txtObjDelay_TextChanged);
@@ -1998,12 +2009,15 @@ namespace Assistant
 			// 
 			// warnNum
 			// 
-			this.warnNum.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.warnNum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.warnNum.BackColor = System.Drawing.Color.White;
+			this.warnNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.warnNum.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.warnNum.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.warnNum.Location = new System.Drawing.Point(414, 237);
 			this.warnNum.Name = "warnNum";
-			this.warnNum.Padding = new System.Windows.Forms.Padding(1);
 			this.warnNum.Size = new System.Drawing.Size(20, 20);
 			this.warnNum.TabIndex = 46;
 			this.warnNum.TextChanged += new System.EventHandler(this.warnNum_TextChanged);
@@ -2848,12 +2862,15 @@ namespace Assistant
 			// 
 			// txtRecFolder
 			// 
-			this.txtRecFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.txtRecFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtRecFolder.BackColor = System.Drawing.Color.White;
+			this.txtRecFolder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtRecFolder.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.txtRecFolder.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.txtRecFolder.Location = new System.Drawing.Point(7, 29);
 			this.txtRecFolder.Name = "txtRecFolder";
-			this.txtRecFolder.Padding = new System.Windows.Forms.Padding(1);
 			this.txtRecFolder.Size = new System.Drawing.Size(225, 20);
 			this.txtRecFolder.TabIndex = 16;
 			this.txtRecFolder.TextChanged += new System.EventHandler(this.txtRecFolder_TextChanged);
@@ -2962,12 +2979,15 @@ namespace Assistant
 			// 
 			// aviFPS
 			// 
-			this.aviFPS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.aviFPS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.aviFPS.BackColor = System.Drawing.Color.White;
+			this.aviFPS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.aviFPS.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.aviFPS.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.aviFPS.Location = new System.Drawing.Point(36, 17);
 			this.aviFPS.Name = "aviFPS";
-			this.aviFPS.Padding = new System.Windows.Forms.Padding(1);
 			this.aviFPS.Size = new System.Drawing.Size(26, 20);
 			this.aviFPS.TabIndex = 1;
 			this.aviFPS.TextChanged += new System.EventHandler(this.aviFPS_TextChanged);
@@ -3173,12 +3193,15 @@ namespace Assistant
 			// 
 			// screenPath
 			// 
-			this.screenPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.screenPath.BackColor = System.Drawing.Color.White;
+			this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.screenPath.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.screenPath.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.screenPath.Location = new System.Drawing.Point(7, 14);
 			this.screenPath.Name = "screenPath";
-			this.screenPath.Padding = new System.Windows.Forms.Padding(1);
 			this.screenPath.Size = new System.Drawing.Size(196, 20);
 			this.screenPath.TabIndex = 7;
 			this.screenPath.TextChanged += new System.EventHandler(this.screenPath_TextChanged);
@@ -3473,18 +3496,18 @@ namespace Assistant
 			// 
 			this.eautoloot.Controls.Add(this.razorButtonResetIgnore);
 			this.eautoloot.Controls.Add(this.label21);
-			this.eautoloot.Controls.Add(this.autoLootLabelDelay);
-			this.eautoloot.Controls.Add(this.bautolootlistRemove);
-			this.eautoloot.Controls.Add(this.bautolootlistAdd);
-			this.eautoloot.Controls.Add(this.bautolootlistImport);
+			this.eautoloot.Controls.Add(this.autoLootTextBoxDelay);
+			this.eautoloot.Controls.Add(this.autoLootButtonRemoveList);
+			this.eautoloot.Controls.Add(this.autolootButtonAddList);
+			this.eautoloot.Controls.Add(this.autoLootButtonListImport);
 			this.eautoloot.Controls.Add(this.autolootListSelect);
-			this.eautoloot.Controls.Add(this.bautolootlistExport);
+			this.eautoloot.Controls.Add(this.autoLootButtonListExport);
 			this.eautoloot.Controls.Add(this.label20);
 			this.eautoloot.Controls.Add(this.groupBox13);
 			this.eautoloot.Controls.Add(this.autolootContainerLabel);
 			this.eautoloot.Controls.Add(this.groupBox11);
 			this.eautoloot.Controls.Add(this.autolootContainerButton);
-			this.eautoloot.Controls.Add(this.autolootEnable);
+			this.eautoloot.Controls.Add(this.autoLootCheckBox);
 			this.eautoloot.Controls.Add(this.autolootlistView);
 			this.eautoloot.Location = new System.Drawing.Point(4, 22);
 			this.eautoloot.Name = "eautoloot";
@@ -3514,49 +3537,53 @@ namespace Assistant
 			this.label21.TabIndex = 59;
 			this.label21.Text = "Loot Item Delay (ms)";
 			// 
-			// autoLootLabelDelay
+			// autoLootTextBoxDelay
 			// 
-			this.autoLootLabelDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.autoLootLabelDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.autoLootLabelDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.autoLootLabelDelay.Location = new System.Drawing.Point(383, 58);
-			this.autoLootLabelDelay.Name = "autoLootLabelDelay";
-			this.autoLootLabelDelay.Padding = new System.Windows.Forms.Padding(1);
-			this.autoLootLabelDelay.Size = new System.Drawing.Size(45, 20);
-			this.autoLootLabelDelay.TabIndex = 58;
+			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
+			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.autoLootTextBoxDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.autoLootTextBoxDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			this.autoLootTextBoxDelay.Location = new System.Drawing.Point(383, 58);
+			this.autoLootTextBoxDelay.Name = "autoLootTextBoxDelay";
+			this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
+			this.autoLootTextBoxDelay.TabIndex = 58;
+			this.autoLootTextBoxDelay.TextChanged += new System.EventHandler(this.autoLootTextBoxDelay_TextChanged);
 			// 
-			// bautolootlistRemove
+			// autoLootButtonRemoveList
 			// 
-			this.bautolootlistRemove.ColorTable = office2010BlueTheme1;
-			this.bautolootlistRemove.Location = new System.Drawing.Point(366, 14);
-			this.bautolootlistRemove.Name = "bautolootlistRemove";
-			this.bautolootlistRemove.Size = new System.Drawing.Size(90, 20);
-			this.bautolootlistRemove.TabIndex = 57;
-			this.bautolootlistRemove.Text = "Remove";
-			this.bautolootlistRemove.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.bautolootlistRemove.Click += new System.EventHandler(this.bautolootlistRemove_Click);
+			this.autoLootButtonRemoveList.ColorTable = office2010BlueTheme1;
+			this.autoLootButtonRemoveList.Location = new System.Drawing.Point(366, 14);
+			this.autoLootButtonRemoveList.Name = "autoLootButtonRemoveList";
+			this.autoLootButtonRemoveList.Size = new System.Drawing.Size(90, 20);
+			this.autoLootButtonRemoveList.TabIndex = 57;
+			this.autoLootButtonRemoveList.Text = "Remove";
+			this.autoLootButtonRemoveList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.autoLootButtonRemoveList.Click += new System.EventHandler(this.autoLootButtonRemoveList_Click);
 			// 
-			// bautolootlistAdd
+			// autolootButtonAddList
 			// 
-			this.bautolootlistAdd.ColorTable = office2010BlueTheme1;
-			this.bautolootlistAdd.Location = new System.Drawing.Point(270, 14);
-			this.bautolootlistAdd.Name = "bautolootlistAdd";
-			this.bautolootlistAdd.Size = new System.Drawing.Size(90, 20);
-			this.bautolootlistAdd.TabIndex = 56;
-			this.bautolootlistAdd.Text = "Add";
-			this.bautolootlistAdd.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.bautolootlistAdd.Click += new System.EventHandler(this.bautolootlistAdd_Click);
+			this.autolootButtonAddList.ColorTable = office2010BlueTheme1;
+			this.autolootButtonAddList.Location = new System.Drawing.Point(270, 14);
+			this.autolootButtonAddList.Name = "autolootButtonAddList";
+			this.autolootButtonAddList.Size = new System.Drawing.Size(90, 20);
+			this.autolootButtonAddList.TabIndex = 56;
+			this.autolootButtonAddList.Text = "Add";
+			this.autolootButtonAddList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.autolootButtonAddList.Click += new System.EventHandler(this.autoLootButtonAddList_Click);
 			// 
-			// bautolootlistImport
+			// autoLootButtonListImport
 			// 
-			this.bautolootlistImport.ColorTable = office2010BlueTheme1;
-			this.bautolootlistImport.Location = new System.Drawing.Point(462, 14);
-			this.bautolootlistImport.Name = "bautolootlistImport";
-			this.bautolootlistImport.Size = new System.Drawing.Size(90, 20);
-			this.bautolootlistImport.TabIndex = 49;
-			this.bautolootlistImport.Text = "Import";
-			this.bautolootlistImport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.bautolootlistImport.Click += new System.EventHandler(this.autolootImport_Click);
+			this.autoLootButtonListImport.ColorTable = office2010BlueTheme1;
+			this.autoLootButtonListImport.Location = new System.Drawing.Point(462, 14);
+			this.autoLootButtonListImport.Name = "autoLootButtonListImport";
+			this.autoLootButtonListImport.Size = new System.Drawing.Size(90, 20);
+			this.autoLootButtonListImport.TabIndex = 49;
+			this.autoLootButtonListImport.Text = "Import";
+			this.autoLootButtonListImport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.autoLootButtonListImport.Click += new System.EventHandler(this.autoLootImport_Click);
 			// 
 			// autolootListSelect
 			// 
@@ -3566,17 +3593,17 @@ namespace Assistant
 			this.autolootListSelect.Name = "autolootListSelect";
 			this.autolootListSelect.Size = new System.Drawing.Size(183, 24);
 			this.autolootListSelect.TabIndex = 55;
-			this.autolootListSelect.SelectedIndexChanged += new System.EventHandler(this.autolootListSelect_SelectedIndexChanged);
+			this.autolootListSelect.SelectedIndexChanged += new System.EventHandler(this.autoLootListSelect_SelectedIndexChanged);
 			// 
-			// bautolootlistExport
+			// autoLootButtonListExport
 			// 
-			this.bautolootlistExport.ColorTable = office2010BlueTheme1;
-			this.bautolootlistExport.Location = new System.Drawing.Point(558, 14);
-			this.bautolootlistExport.Name = "bautolootlistExport";
-			this.bautolootlistExport.Size = new System.Drawing.Size(90, 20);
-			this.bautolootlistExport.TabIndex = 48;
-			this.bautolootlistExport.Text = "Export";
-			this.bautolootlistExport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.autoLootButtonListExport.ColorTable = office2010BlueTheme1;
+			this.autoLootButtonListExport.Location = new System.Drawing.Point(558, 14);
+			this.autoLootButtonListExport.Name = "autoLootButtonListExport";
+			this.autoLootButtonListExport.Size = new System.Drawing.Size(90, 20);
+			this.autoLootButtonListExport.TabIndex = 48;
+			this.autoLootButtonListExport.Text = "Export";
+			this.autoLootButtonListExport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			// 
 			// label20
 			// 
@@ -3607,7 +3634,7 @@ namespace Assistant
 			// 
 			// autolootContainerLabel
 			// 
-			this.autolootContainerLabel.Location = new System.Drawing.Point(564, 82);
+			this.autolootContainerLabel.Location = new System.Drawing.Point(569, 84);
 			this.autolootContainerLabel.Name = "autolootContainerLabel";
 			this.autolootContainerLabel.Size = new System.Drawing.Size(82, 19);
 			this.autolootContainerLabel.TabIndex = 50;
@@ -3636,7 +3663,7 @@ namespace Assistant
 			this.autolootItemPropsB.TabIndex = 49;
 			this.autolootItemPropsB.Text = "Edit Props";
 			this.autolootItemPropsB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootItemPropsB.Click += new System.EventHandler(this.autolootItemPropsB_Click);
+			this.autolootItemPropsB.Click += new System.EventHandler(this.autoLootItemProps_Click);
 			// 
 			// autolootItemEditB
 			// 
@@ -3647,7 +3674,7 @@ namespace Assistant
 			this.autolootItemEditB.TabIndex = 48;
 			this.autolootItemEditB.Text = "Edit";
 			this.autolootItemEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootItemEditB.Click += new System.EventHandler(this.autolootItemEditB_Click);
+			this.autolootItemEditB.Click += new System.EventHandler(this.autoLootItemEdit_Click);
 			// 
 			// autolootAddItemBTarget
 			// 
@@ -3658,7 +3685,7 @@ namespace Assistant
 			this.autolootAddItemBTarget.TabIndex = 47;
 			this.autolootAddItemBTarget.Text = "Add Target";
 			this.autolootAddItemBTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootAddItemBTarget.Click += new System.EventHandler(this.autolootAddItemBTarget_Click);
+			this.autolootAddItemBTarget.Click += new System.EventHandler(this.autoLootAddItemTarget_Click);
 			// 
 			// autolootRemoveItemB
 			// 
@@ -3669,7 +3696,7 @@ namespace Assistant
 			this.autolootRemoveItemB.TabIndex = 46;
 			this.autolootRemoveItemB.Text = "Remove";
 			this.autolootRemoveItemB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootRemoveItemB.Click += new System.EventHandler(this.autolootRemoveItemB_Click);
+			this.autolootRemoveItemB.Click += new System.EventHandler(this.autoLootRemoveItem_Click);
 			// 
 			// autolootAddItemBManual
 			// 
@@ -3680,28 +3707,28 @@ namespace Assistant
 			this.autolootAddItemBManual.TabIndex = 45;
 			this.autolootAddItemBManual.Text = "Add Manual";
 			this.autolootAddItemBManual.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootAddItemBManual.Click += new System.EventHandler(this.autolootAddItemBManual_Click);
+			this.autolootAddItemBManual.Click += new System.EventHandler(this.autoLootAddItemManual_Click);
 			// 
 			// autolootContainerButton
 			// 
 			this.autolootContainerButton.ColorTable = office2010BlueTheme1;
-			this.autolootContainerButton.Location = new System.Drawing.Point(558, 60);
+			this.autolootContainerButton.Location = new System.Drawing.Point(550, 60);
 			this.autolootContainerButton.Name = "autolootContainerButton";
-			this.autolootContainerButton.Size = new System.Drawing.Size(90, 20);
+			this.autolootContainerButton.Size = new System.Drawing.Size(103, 20);
 			this.autolootContainerButton.TabIndex = 49;
-			this.autolootContainerButton.Text = "Set Container";
+			this.autolootContainerButton.Text = "Target Container";
 			this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click);
 			// 
-			// autolootEnable
+			// autoLootCheckBox
 			// 
-			this.autolootEnable.Location = new System.Drawing.Point(274, 58);
-			this.autolootEnable.Name = "autolootEnable";
-			this.autolootEnable.Size = new System.Drawing.Size(103, 22);
-			this.autolootEnable.TabIndex = 48;
-			this.autolootEnable.Text = "Enable autoloot";
-			this.autolootEnable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.autolootEnable.CheckedChanged += new System.EventHandler(this.autolootEnable_CheckedChanged);
+			this.autoLootCheckBox.Location = new System.Drawing.Point(274, 58);
+			this.autoLootCheckBox.Name = "autoLootCheckBox";
+			this.autoLootCheckBox.Size = new System.Drawing.Size(103, 22);
+			this.autoLootCheckBox.TabIndex = 48;
+			this.autoLootCheckBox.Text = "Enable autoloot";
+			this.autoLootCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.autoLootCheckBox.CheckedChanged += new System.EventHandler(this.autoLootEnable_CheckedChanged);
 			// 
 			// autolootlistView
 			// 
@@ -3711,8 +3738,10 @@ namespace Assistant
             this.columnHeader1,
             this.columnHeader2,
             this.ColumnHeader3});
+			this.autolootlistView.FullRowSelect = true;
 			this.autolootlistView.GridLines = true;
 			this.autolootlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.autolootlistView.HideSelection = false;
 			this.autolootlistView.LabelWrap = false;
 			this.autolootlistView.Location = new System.Drawing.Point(6, 51);
 			this.autolootlistView.MultiSelect = false;
@@ -3721,6 +3750,7 @@ namespace Assistant
 			this.autolootlistView.TabIndex = 47;
 			this.autolootlistView.UseCompatibleStateImageBehavior = false;
 			this.autolootlistView.View = System.Windows.Forms.View.Details;
+			this.autolootlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.autolootlistView_ItemChecked);
 			// 
 			// columnHeader4
 			// 
@@ -3862,12 +3892,15 @@ namespace Assistant
 			// 
 			// scavengerDragDelay
 			// 
-			this.scavengerDragDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
+			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.scavengerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.scavengerDragDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.scavengerDragDelay.Location = new System.Drawing.Point(396, 58);
 			this.scavengerDragDelay.Name = "scavengerDragDelay";
-			this.scavengerDragDelay.Padding = new System.Windows.Forms.Padding(1);
 			this.scavengerDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.scavengerDragDelay.TabIndex = 68;
 			// 
@@ -4076,12 +4109,15 @@ namespace Assistant
 			// 
 			// organizerDragDelay
 			// 
-			this.organizerDragDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.organizerDragDelay.BackColor = System.Drawing.Color.White;
+			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.organizerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.organizerDragDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.organizerDragDelay.Location = new System.Drawing.Point(400, 58);
 			this.organizerDragDelay.Name = "organizerDragDelay";
-			this.organizerDragDelay.Padding = new System.Windows.Forms.Padding(1);
 			this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.organizerDragDelay.TabIndex = 71;
 			// 
@@ -4878,12 +4914,15 @@ namespace Assistant
 			// 
 			// dressDragDelay
 			// 
-			this.dressDragDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dressDragDelay.BackColor = System.Drawing.Color.White;
+			this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.dressDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.dressDragDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.dressDragDelay.Location = new System.Drawing.Point(411, 58);
 			this.dressDragDelay.Name = "dressDragDelay";
-			this.dressDragDelay.Padding = new System.Windows.Forms.Padding(1);
 			this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.dressDragDelay.TabIndex = 75;
 			// 
@@ -5019,6 +5058,7 @@ namespace Assistant
 			this.Controls.Add(this.tabs);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -5038,8 +5078,11 @@ namespace Assistant
 			((System.ComponentModel.ISupportInitialize)(this.opacity)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.moreOptTab.ResumeLayout(false);
+			this.moreOptTab.PerformLayout();
 			this.moreMoreOptTab.ResumeLayout(false);
+			this.moreMoreOptTab.PerformLayout();
 			this.displayTab.ResumeLayout(false);
+			this.displayTab.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
@@ -5056,11 +5099,14 @@ namespace Assistant
 			this.macrosTab.ResumeLayout(false);
 			this.macroActGroup.ResumeLayout(false);
 			this.videoTab.ResumeLayout(false);
+			this.videoTab.PerformLayout();
 			this.groupBox7.ResumeLayout(false);
 			this.groupBox10.ResumeLayout(false);
+			this.groupBox10.PerformLayout();
 			this.groupBox9.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.playPos)).EndInit();
 			this.screenshotTab.ResumeLayout(false);
+			this.screenshotTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
 			this.statusTab.ResumeLayout(false);
 			this.scriptingTab.ResumeLayout(false);
@@ -5163,56 +5209,20 @@ namespace Assistant
 
 			SplashScreen.End();
 
+			LoadSettings();
+		}
+
+		private void LoadSettings()
+		{
+			// Scripting
 			scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
 			dataGridViewScripting.Rows.Clear();
 			dataGridViewScripting.DataSource = scriptTable;
 
 			// ---------------- AUTOLOOT -----------------
-			// Liste loot
-			AutolootListSelect.Items.Add("Default");    // Lista base non cancellabile 
-
-			// Carico parametri base
-			int lootSettingDelay;
-			string lootSettingLastList = "";
-			List<string> lootSettingItemList = new List<string>();
-			uint lootSettingBag;
-
-
-			if (RazorEnhanced.Settings.LoadAutoLootGeneral(out lootSettingDelay, out lootSettingItemList, out lootSettingLastList, out lootSettingBag))
-			{
-				//load delay
-				autoLootLabelDelay.Text = lootSettingDelay.ToString();
-
-				// load Lista item
-				for (int i = 0; i < lootSettingItemList.Count; i++)
-				{
-					if (lootSettingItemList[i] != "Default")
-						AutolootListSelect.Items.Add(lootSettingItemList[i]);
-				}
-
-				// Setta ultima lista usata e carica 
-				if (lootSettingLastList != "")
-				{
-					AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf(lootSettingLastList);
-
-				}
-				else
-				{
-					AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf("Default");
-				}
-
-				// Ultima bag
-				Assistant.Item autolootBag = Assistant.World.FindItem(lootSettingBag);
-				if (autolootBag != null && autolootBag.Serial.IsItem && autolootBag.IsContainer)
-				{
-					autolootContainerLabel.Text = "0x" + autolootBag.Serial.Value.ToString("X8");
-				}
-			}
-            else
-            {
-                autoLootLabelDelay.Text = "100";
-                AutolootListSelect.SelectedIndex = AutolootListSelect.Items.IndexOf("Default");
-            }
+			autoLootTextBoxDelay.Text = "100";
+			autoLootCheckBox.Checked = false;
+			RazorEnhanced.AutoLoot.RefreshLists();
 
 			// ------------ SCAVENGER -------------------
 			// Liste 
@@ -5227,7 +5237,7 @@ namespace Assistant
 			if (RazorEnhanced.Settings.LoadScavengerGeneral(out scavengerSettingDelay, out scavengerSettingItemList, out scavengerSettingLastList, out scavengerSettingBag))
 			{
 				//load delay
-				scavengerDragDelay.Text = lootSettingDelay.ToString();
+				scavengerDragDelay.Text = scavengerSettingDelay.ToString();
 
 				// load Lista item
 				for (int i = 0; i < scavengerSettingItemList.Count; i++)
@@ -5248,17 +5258,13 @@ namespace Assistant
 				}
 
 				// ultima bag
-				Assistant.Item scavengerBag = Assistant.World.FindItem(scavengerSettingBag);
-				if (scavengerBag != null && scavengerBag.Serial.IsItem && scavengerBag.IsContainer)
-				{
-					scavengerContainerLabel.Text = "0x" + scavengerBag.Serial.Value.ToString("X8");
-				}
+				scavengerContainerLabel.Text = "0x" + scavengerSettingBag.ToString("X8");
 			}
-            else
-            {
-                scavengerDragDelay.Text = "100";
-                ScavengerListSelect.SelectedIndex = ScavengerListSelect.Items.IndexOf("Default");
-            }
+			else
+			{
+				scavengerDragDelay.Text = "100";
+				ScavengerListSelect.SelectedIndex = ScavengerListSelect.Items.IndexOf("Default");
+			}
 
 			// ---------------- ORGANIZER ----------------
 			// Liste 
@@ -5268,7 +5274,6 @@ namespace Assistant
 			int organizerSettingDelay;
 			string organizerSettingLastList = "";
 			List<string> organizerSettingItemList = new List<string>();
-
 
 			if (RazorEnhanced.Settings.LoadOrganizerGeneral(out organizerSettingDelay, out organizerSettingItemList, out organizerSettingLastList))
 			{
@@ -5292,11 +5297,11 @@ namespace Assistant
 					organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
 				}
 			}
-            else
-            {
-                organizerDragDelay.Text = "100";
-                organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
-            }
+			else
+			{
+				organizerDragDelay.Text = "100";
+				organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
+			}
 			organizerStopB.Enabled = false;
 
 			// ----------- SELL AGENT -----------------
@@ -8715,20 +8720,22 @@ namespace Assistant
 
 		}
 
-		private void autolootAddItemBManual_Click(object sender, EventArgs e)
+
+		// ------------ AUTOLOOT ----------------
+		private void autoLootAddItemManual_Click(object sender, EventArgs e)
 		{
-			EnhancedAutolootManualAdd ManualAddItem = new EnhancedAutolootManualAdd(autolootlistView, autoLootItemList);
+			EnhancedAutoLootAddItemManual ManualAddItem = new EnhancedAutoLootAddItemManual();
 			ManualAddItem.TopMost = true;
 			ManualAddItem.Show();
 		}
 
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(AutolootItemContainerTarget_Callback));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
 		}
-		private void AutolootItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-		{
 
+		private void autoLootSetContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
 			Assistant.Item autoLootBag = Assistant.World.FindItem(serial);
 
 			if (autoLootBag == null)
@@ -8738,41 +8745,33 @@ namespace Assistant
 			{
 				RazorEnhanced.Misc.SendMessage("Autoloot bag configured to: " + autoLootBag.ToString());
 				RazorEnhanced.AutoLoot.AddLog("Autoloot bag configured to: " + autoLootBag.ToString());
-				autolootContainerLabel.Text = "0x" + autoLootBag.Serial.Value.ToString("X8");
+				AutoLoot.AutoLootBag = (int)autoLootBag.Serial.Value;
 
 			}
 			else
 			{
-				m_AutoLootBag = serial;
 				RazorEnhanced.Misc.SendMessage("Invalid Autoloot Bag, set backpack");
 				RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Bag, set backpack");
-				autolootContainerLabel.Text = "0x" + World.Player.Backpack.Serial.Value.ToString("X8");
+				AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			List<string> LootSettingItemList = new List<string>();
-			for (int i = 0; i < Assistant.Engine.MainWindow.AutolootListSelect.Items.Count; i++)
-			{
-				if (Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString() != "Default")
-					LootSettingItemList.Add(Assistant.Engine.MainWindow.AutolootListSelect.Items[i].ToString());
-			}
-
-			RazorEnhanced.Settings.SaveAutoLootGeneral(AutoLootDelay, LootSettingItemList, AutolootListSelect.SelectedItem.ToString(), serial.Value);
+			RazorEnhanced.Settings.AutolootListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true);
+			RazorEnhanced.AutoLoot.RefreshLists();
 		}
 
-		private void autolootAddItemBTarget_Click(object sender, EventArgs e)
+		private void autoLootAddItemTarget_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(AutolootItemTarget_Callback));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootItemTarget_Callback));
 		}
 
-		private void AutolootItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		private void autoLootItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 
-			Assistant.Item AutoLootItem = Assistant.World.FindItem(serial);
-			if (AutoLootItem != null && AutoLootItem.Serial.IsItem)
+			Assistant.Item autoLootItem = Assistant.World.FindItem(serial);
+			if (autoLootItem != null && autoLootItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Autoloot item added: " + AutoLootItem.ToString());
-				RazorEnhanced.AutoLoot.AddItemToList(AutoLootItem.Name, AutoLootItem.ItemID, AutoLootItem.Hue, autolootlistView, autoLootItemList);
-				//RazorEnhanced.Settings.SaveAutoLootItemList(autoLootItemList);
+				RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
+				RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue);
 
 			}
 			else
@@ -8781,81 +8780,97 @@ namespace Assistant
 			}
 		}
 
-		private void autolootRemoveItemB_Click(object sender, EventArgs e)
+		private void autoLootRemoveItem_Click(object sender, EventArgs e)
 		{
-			int y = 0;
-			for (int i = 0; i < autolootlistView.Items.Count; i++)
+			if (autolootlistView.SelectedItems.Count == 1)
 			{
-				if (autolootlistView.Items[i].Checked)
-				{
-					autoLootItemList.RemoveAt(y);
-					y--;
-				}
-				y++;
-			}
-			RazorEnhanced.Settings.SaveAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), autoLootItemList);
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-		}
+				int index = autolootlistView.SelectedItems[0].Index;
+				string selection = autolootListSelect.Text;
 
-		private void autolootItemEditB_Click(object sender, EventArgs e)
-		{
-			int CheckedIndex = 0;
-			for (int i = 0; i < autolootlistView.Items.Count; i++)
-			{
-				if (autolootlistView.Items[i].Checked)
+				if (RazorEnhanced.Settings.AutoLootListExists(selection))
 				{
-					CheckedIndex = i;
-					break;
+					List<AutoLoot.AutoLootItem> items;
+					RazorEnhanced.Settings.AutoLootItemsRead(selection, out items);
+					if (index <= items.Count - 1)
+					{
+						RazorEnhanced.Settings.AutoLootItemDelete(selection, items[index]);
+						RazorEnhanced.AutoLoot.RefreshItems();
+					}
 				}
 			}
-			EnhancedAutolootEditItem EditItem = new EnhancedAutolootEditItem(autolootlistView, autoLootItemList, CheckedIndex);
-			EditItem.TopMost = true;
-			EditItem.Show();
 		}
 
-		private void autolootItemPropsB_Click(object sender, EventArgs e)
+		private void autoLootItemEdit_Click(object sender, EventArgs e)
 		{
-			int CheckedIndex = 0;
-			for (int i = 0; i < autolootlistView.Items.Count; i++)
+			if (autolootlistView.SelectedItems.Count == 1)
 			{
-				if (autolootlistView.Items[i].Checked)
+				int index = autolootlistView.SelectedItems[0].Index;
+				string selection = autolootListSelect.Text;
+
+				if (RazorEnhanced.Settings.AutoLootListExists(selection))
 				{
-					CheckedIndex = i;
-					break;
+					List<AutoLoot.AutoLootItem> items;
+					RazorEnhanced.Settings.AutoLootItemsRead(selection, out items);
+					if (index <= items.Count - 1)
+					{
+						AutoLoot.AutoLootItem item = items[index];
+						EnhancedAutolootEditItem editItem = new EnhancedAutolootEditItem(selection, index, item);
+						editItem.TopMost = true;
+						editItem.Show();
+					}
 				}
 			}
-			EnhancedAutolootEditItemProps EditProp = new EnhancedAutolootEditItemProps(autolootlistView, autoLootItemList, CheckedIndex);
-			EditProp.TopMost = true;
-			EditProp.Show();
 		}
 
-		private void autolootImport_Click(object sender, EventArgs e)
+		private void autoLootItemProps_Click(object sender, EventArgs e)
+		{
+			if (autolootlistView.SelectedItems.Count == 1)
+			{
+				int index = autolootlistView.SelectedItems[0].Index;
+				string selection = autolootListSelect.Text;
+
+				if (RazorEnhanced.Settings.AutoLootListExists(selection))
+				{
+					List<AutoLoot.AutoLootItem> items;
+					RazorEnhanced.Settings.AutoLootItemsRead(selection, out items);
+					if (index <= items.Count - 1)
+					{
+						AutoLoot.AutoLootItem item = items[index];
+						EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(selection, index, item);
+						editProp.TopMost = true;
+						editProp.Show();
+					}
+				}
+			}
+		}
+
+		private void autoLootImport_Click(object sender, EventArgs e)
 		{
 
 		}
 
-		private void bautolootlistAdd_Click(object sender, EventArgs e)
+		private void autoLootButtonAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAutolootAddItemList AddItemList = new EnhancedAutolootAddItemList();
+			EnhancedAutoLootAddList AddItemList = new EnhancedAutoLootAddList();
 			AddItemList.TopMost = true;
 			AddItemList.Show();
 		}
 
-		private void autolootEnable_CheckedChanged(object sender, EventArgs e)
+		private void autoLootEnable_CheckedChanged(object sender, EventArgs e)
 		{
-			if (autolootEnable.Checked)
+			if (autoLootCheckBox.Checked)
 			{
 				int delay = -1;
 				bool StartCheck = true;
 				autolootListSelect.Enabled = false;
-				bautolootlistAdd.Enabled = false;
-				bautolootlistExport.Enabled = false;
-				bautolootlistImport.Enabled = false;
-				bautolootlistRemove.Enabled = false;
-				autoLootLabelDelay.Enabled = false;
+				autolootButtonAddList.Enabled = false;
+				autoLootButtonListExport.Enabled = false;
+				autoLootButtonListImport.Enabled = false;
+				autoLootButtonRemoveList.Enabled = false;
+				autoLootTextBoxDelay.Enabled = false;
 				try
 				{
-					delay = Convert.ToInt32(autoLootLabelDelay.Text);
+					delay = Convert.ToInt32(autoLootTextBoxDelay.Text);
 				}
 				catch
 				{
@@ -8872,7 +8887,7 @@ namespace Assistant
 				if (StartCheck)
 				{
 					// Stop autoloot
-					RazorEnhanced.AutoLoot.Auto = true;
+					RazorEnhanced.AutoLoot.AutoMode = true;
 					RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
 					RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
 				}
@@ -8881,57 +8896,51 @@ namespace Assistant
 					// Stop autoloot
 					RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
 					RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine fail to Start...");
-					autolootEnable.Checked = false;
+					autoLootCheckBox.Checked = false;
 				}
 			}
 			else
 			{
 				autolootListSelect.Enabled = true;
-				bautolootlistAdd.Enabled = true;
-				bautolootlistExport.Enabled = true;
-				bautolootlistImport.Enabled = true;
-				bautolootlistRemove.Enabled = true;
-				autoLootLabelDelay.Enabled = true;
+				autolootButtonAddList.Enabled = true;
+				autoLootButtonListExport.Enabled = true;
+				autoLootButtonListImport.Enabled = true;
+				autoLootButtonRemoveList.Enabled = true;
+				autoLootTextBoxDelay.Enabled = true;
 
 				// Stop autoloot
-				RazorEnhanced.AutoLoot.Auto = false;
+				RazorEnhanced.AutoLoot.AutoMode = false;
 				RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Stop...");
 				RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Stop...");
 			}
-
 		}
 
-
-		private void autolootContainerButton_Click_1(object sender, EventArgs e)
+		private void autoLootListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(AutolootTargetBag_Callback));
+			RazorEnhanced.Settings.AutolootListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true);
+			RazorEnhanced.AutoLoot.RefreshItems();
+
+			if (autolootListSelect.Text != "")
+				RazorEnhanced.AutoLoot.AddLog("Autoloot list changed to: " + autolootListSelect.Text);
 		}
 
-		private void AutolootTargetBag_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		private void autoLootTextBoxDelay_TextChanged(object sender, EventArgs e)
 		{
-			autolootContainerLabel.Text = serial.ToString();
-			RazorEnhanced.AutoLoot.AddLog("Autoloot bag set: " + serial.ToString());
-			RazorEnhanced.Misc.SendMessage("Autoloot bag set: " + serial.ToString());
-
+			RazorEnhanced.Settings.AutolootListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true);
+			RazorEnhanced.AutoLoot.RefreshLists();
 		}
 
-		private void autolootListSelect_SelectedIndexChanged(object sender, EventArgs e)
+		private void autoLootButtonRemoveList_Click(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.LoadAutoLootItemList(AutolootListSelect.SelectedItem.ToString(), out autoLootItemList);
-			RazorEnhanced.AutoLoot.RefreshList(autoLootItemList);
-			RazorEnhanced.AutoLoot.AddLog("Autoloot list changed to: " + AutolootListSelect.SelectedItem.ToString());
+			if (autolootListSelect.Text != null)
+				RazorEnhanced.AutoLoot.AddLog("Autoloot list " + autolootListSelect.Text + " removed!");
+
+			RazorEnhanced.AutoLoot.RemoveList(autolootListSelect.Text);
 		}
 
-		private void bautolootlistRemove_Click(object sender, EventArgs e)
+		private void autolootlistView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			if (AutolootListSelect.Text != "Default")
-			{
-				RazorEnhanced.AutoLoot.AddLog("Autoloot list " + AutolootListSelect.SelectedItem.ToString() + " removed!");
-				AutolootListSelect.Items.Remove(AutolootListSelect.SelectedItem);
-				AutolootListSelect.SelectedIndex = AutolootListSelect.FindStringExact("Default");
-			}
-			else
-				RazorEnhanced.AutoLoot.AddLog("Can't remove Default list!");
+			RazorEnhanced.AutoLoot.UpdateSelectedItems();
 		}
 
 		delegate void SetBoolCallback(bool check);
@@ -8956,6 +8965,11 @@ namespace Assistant
 		{
 			RazorEnhanced.AutoLoot.ResetIgnore();
 		}
+		// ------------ AUTOLOOT END ----------------
+
+
+
+
 
 		private void scavengerRemoveB_Click(object sender, EventArgs e)
 		{
@@ -8969,7 +8983,7 @@ namespace Assistant
 				}
 				y++;
 			}
-			RazorEnhanced.Settings.SaveScavengerItemList(ScavengerListSelect.SelectedItem.ToString(), scavengerItemList);
+			RazorEnhanced.Settings.SaveScavengerItemList(ScavengerListSelect.Text, scavengerItemList);
 			RazorEnhanced.Scavenger.RefreshList(scavengerItemList);
 		}
 

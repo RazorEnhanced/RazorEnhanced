@@ -137,10 +137,7 @@ namespace Assistant
             // 
             // pause
             // 
-            this.pause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.pause.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.pause.Enabled = false;
-            this.pause.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.pause.Location = new System.Drawing.Point(101, 5);
             this.pause.Name = "pause";
             this.pause.Padding = new System.Windows.Forms.Padding(1);
@@ -182,10 +179,7 @@ namespace Assistant
             // 
             // statAmount
             // 
-            this.statAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.statAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.statAmount.Enabled = false;
-            this.statAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.statAmount.Location = new System.Drawing.Point(221, 98);
             this.statAmount.Name = "statAmount";
             this.statAmount.Padding = new System.Windows.Forms.Padding(1);

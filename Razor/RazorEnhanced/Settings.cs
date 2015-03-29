@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -61,21 +62,20 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Status", typeof(string));
 				m_Dataset.Tables.Add(scripting);
 
-				// Autoloot
+				// -------- AUTOLOOT ------------
 				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
-				autoloot_lists.Columns.Add("Name", typeof(string));
-				autoloot_lists.Columns.Add("List", typeof(List<AutoLoot.AutoLootItem>));
+				autoloot_lists.Columns.Add("Description", typeof(string));
+				autoloot_lists.Columns.Add("Delay", typeof(int));
+				autoloot_lists.Columns.Add("Bag", typeof(int));
+				autoloot_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(autoloot_lists);
 
-				DataTable autoloot_general = new DataTable("AUTOLOOT_GENERAL");
-				autoloot_general.Columns.Add("Delay", typeof(int));
-				autoloot_general.Columns.Add("List", typeof(List<string>));
-				autoloot_general.Columns.Add("Selection", typeof(string));
-				autoloot_general.Columns.Add("Bag", typeof(uint));
-				m_Dataset.Tables.Add(autoloot_general);
+				DataTable autoloot_items = new DataTable("AUTOLOOT_ITEMS");
+				autoloot_items.Columns.Add("List", typeof(string));
+				autoloot_items.Columns.Add("Item", typeof(AutoLoot.AutoLootItem));
+				m_Dataset.Tables.Add(autoloot_items);
 
-
-				//Scavenger
+				// ----------- SCAVENGER ----------
 				DataTable scavenger_lists = new DataTable("SCAVENGER_LISTS");
 				scavenger_lists.Columns.Add("Name", typeof(string));
 				scavenger_lists.Columns.Add("List", typeof(List<Scavenger.ScavengerItem>));
@@ -129,83 +129,192 @@ namespace RazorEnhanced
 			}
 		}
 
-		// Autoloot
-		internal static bool LoadAutoLootItemList(string name, out List<AutoLoot.AutoLootItem> list)
+		// ------------- AUTOLOOT -----------------
+		internal static bool AutoLootListExists(string description)
 		{
-			bool exit = false;
-			List<AutoLoot.AutoLootItem> result = new List<AutoLoot.AutoLootItem>();
+			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+			{
+				if (((string)row["Description"]).ToLower() == description.ToLower())
+					return true;
+			}
+
+			return false;
+		}
+
+		internal static void AutoLootListInsert(string description, int delay, uint bag)
+		{
+			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+			{
+				row["Selected"] = false;
+			}
+
+			DataRow newRow = m_Dataset.Tables["AUTOLOOT_LISTS"].NewRow();
+			newRow["Description"] = description;
+			newRow["Delay"] = delay;
+			newRow["Bag"] = bag;
+			newRow["Selected"] = true;
+			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
+
+			Save();
+		}
+
+		internal static void AutolootListUpdate(string description, int delay, int bag, bool selected)
+		{
+
+			bool found = false;
+			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+			{
+				if ((string)row["Description"] == description)
+				{
+					found = true;
+					break;
+				}
+			}
+
+			if (found)
+			{
+				if (selected)
+				{
+					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+					{
+						row["Selected"] = false;
+					}
+				}
+
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+				{
+					if ((string)row["Description"] == description)
+					{
+						row["Delay"] = delay;
+						row["Bag"] = bag;
+						row["Selected"] = selected;
+						break;
+					}
+				}
+
+				Save();
+			}
+		}
+
+		internal static void AutolootListDelete(string description)
+		{
+			for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
+			{
+				DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
+				if ((string)row["List"] == description)
+				{
+					row.Delete();
+				}
+			}
+
+			for (int i = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Count - 1; i >= 0; i--)
+			{
+				DataRow row = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows[i];
+				if ((string)row["Description"] == description)
+				{
+					row.Delete();
+					break;
+				}
+				row["Selected"] = false;
+			}
+
+			Save();
+		}
+
+		internal static void AutoLootListsRead(out List<AutoLootList> lists)
+		{
+			List<AutoLootList> listsOut = new List<AutoLootList>();
 
 			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 			{
-				if ((string)row["Name"] == name)
-				{
-					result = row["List"] as List<AutoLoot.AutoLootItem>;
-					exit = true;
-				}
+
+				string description = (string)row["Description"];
+				int delay = (int)row["Delay"];
+				int bag = (int)row["Bag"];
+				bool selected = (bool)row["Selected"];
+
+				AutoLootList list = new AutoLootList(description, delay, bag, selected);
+				listsOut.Add(list);
 			}
 
-			list = result;
-			return exit;
+			lists = listsOut;
 		}
 
-		internal static void SaveAutoLootItemList(string name, List<AutoLoot.AutoLootItem> list)
+		internal static bool AutoLootItemExists(string list, AutoLoot.AutoLootItem item)
 		{
-			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["AUTOLOOT_LISTS"].NewRow();
-			row["Name"] = name;
-			row["List"] = list;
-			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(row);
-			Save();
-		}
-
-		internal static void ClearAutoLootItemList()
-		{
-			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Clear();
-			Save();
-		}
-
-		internal static bool LoadAutoLootGeneral(out int delay, out List<string> list, out string selection, out uint bag)
-		{
-			bool exit = false;
-
-			int delayOut = 0;
-			List<string> listOut = new List<string>();
-			string selectionOut = "";
-			uint bagOut = 0;
-
-			if (m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Count == 1)
+			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
 			{
-				DataRow row = m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows[0];
-				{
-					delayOut = (int)row["Delay"];
-					listOut = row["List"] as List<string>;
-					selectionOut = (string)row["Selection"];
-					bagOut = (uint)row["Bag"];
-					exit = true;
-				}
+				if ((string)row["List"] == list && (AutoLoot.AutoLootItem)row["Item"] == item)
+					return true;
 			}
 
-			delay = delayOut;
-			list = listOut;
-			selection = selectionOut;
-			bag = bagOut;
-
-			return exit;
+			return false;
 		}
 
-		internal static void SaveAutoLootGeneral(int delay, List<string> list, string selection, uint bag)
+		internal static void AutoLootItemInsert(string list, AutoLoot.AutoLootItem item)
 		{
-			m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["AUTOLOOT_GENERAL"].NewRow();
-			row["Delay"] = delay;
+			DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].NewRow();
 			row["List"] = list;
-			row["Selection"] = selection;
-			row["Bag"] = bag;
-			m_Dataset.Tables["AUTOLOOT_GENERAL"].Rows.Add(row);
+			row["Item"] = item;
+			m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Add(row);
+
 			Save();
 		}
 
-		//Scavenger
+		internal static void AutoLootItemReplace(string list, int index, AutoLoot.AutoLootItem item)
+		{
+			int count = -1;
+			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
+			{
+				if ((string)row["List"] == list)
+				{
+					count++;
+					if (count == index)
+					{
+						row["Item"] = item;
+					}
+				}
+			}
+
+			Save();
+		}
+
+		internal static void AutoLootItemDelete(string list, AutoLoot.AutoLootItem item)
+		{
+			for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
+			{
+				DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
+				if ((string)row["List"] == list && (AutoLoot.AutoLootItem)row["Item"] == item)
+				{
+					row.Delete();
+					break;
+				}
+			}
+
+			Save();
+		}
+
+		internal static void AutoLootItemsRead(string list, out List<AutoLoot.AutoLootItem> items)
+		{
+			List<AutoLoot.AutoLootItem> itemsOut = new List<AutoLoot.AutoLootItem>();
+
+			if (AutoLootListExists(list))
+			{
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list)
+					{
+						itemsOut.Add((AutoLoot.AutoLootItem)row["Item"]);
+					}
+				}
+			}
+
+			items = itemsOut;
+		}
+		// ------------- AUTOLOOT END-----------------
+
+
+		// -------------- SCAVENGER ----------------
 		internal static bool LoadScavengerItemList(string name, out List<Scavenger.ScavengerItem> list)
 		{
 			bool exit = false;

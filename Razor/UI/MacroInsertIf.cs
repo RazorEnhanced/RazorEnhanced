@@ -114,9 +114,6 @@ namespace Assistant
             // 
             // txtAmount
             // 
-            this.txtAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.txtAmount.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.txtAmount.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.txtAmount.Location = new System.Drawing.Point(181, 10);
             this.txtAmount.Name = "txtAmount";
             this.txtAmount.Padding = new System.Windows.Forms.Padding(1);
