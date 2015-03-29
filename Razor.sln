@@ -1,5 +1,5 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2013 for Windows Desktop
+# Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Razor", "Razor\Razor.csproj", "{B24E4FB1-4936-4544-9E88-F3FF9B04FDBA}"
@@ -68,7 +68,6 @@ Global
 		{B32A4D9E-3AF1-4C75-989D-D62C4E8F08B1}.Release|x86.ActiveCfg = Release|Win32
 		{8AB99CD3-9582-4E68-BDEC-23F189A222B2}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{8AB99CD3-9582-4E68-BDEC-23F189A222B2}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{8AB99CD3-9582-4E68-BDEC-23F189A222B2}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{8AB99CD3-9582-4E68-BDEC-23F189A222B2}.Debug|Win32.ActiveCfg = Debug|x86
 		{8AB99CD3-9582-4E68-BDEC-23F189A222B2}.Debug|Win32.Build.0 = Debug|x86
 		{8AB99CD3-9582-4E68-BDEC-23F189A222B2}.Debug|x86.ActiveCfg = Debug|x86
