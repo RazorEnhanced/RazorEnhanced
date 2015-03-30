@@ -9,29 +9,6 @@ using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
-	internal class AutoLootList
-	{
-		private string m_Description;
-		internal string Description { get { return m_Description; } }
-
-		private int m_Delay;
-		internal int Delay { get { return m_Delay; } }
-
-		private int m_Bag;
-		internal int Bag { get { return m_Bag; } }
-
-		private bool m_Selected;
-		internal bool Selected { get { return m_Selected; } }
-
-		public AutoLootList(string description, int delay, int bag, bool selected)
-		{
-			m_Description = description;
-			m_Delay = delay;
-			m_Bag = bag;
-			m_Selected = selected;
-		}
-	}
-
 	public class AutoLoot
 	{
 		[Serializable]
@@ -79,6 +56,29 @@ namespace RazorEnhanced
 				m_Color = color;
 				m_Selected = selected;
 				m_Properties = properties;
+			}
+		}
+
+		internal class AutoLootList
+		{
+			private string m_Description;
+			internal string Description { get { return m_Description; } }
+
+			private int m_Delay;
+			internal int Delay { get { return m_Delay; } }
+
+			private int m_Bag;
+			internal int Bag { get { return m_Bag; } }
+
+			private bool m_Selected;
+			internal bool Selected { get { return m_Selected; } }
+
+			public AutoLootList(string description, int delay, int bag, bool selected)
+			{
+				m_Description = description;
+				m_Delay = delay;
+				m_Bag = bag;
+				m_Selected = selected;
 			}
 		}
 
@@ -160,10 +160,10 @@ namespace RazorEnhanced
 		internal static void RefreshLists()
 		{
 			List<AutoLootList> lists;
-			RazorEnhanced.Settings.AutoLootListsRead(out lists);
+			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
 
 			AutoLootList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
-			if (selectedList == null || selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
+			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
 				return;
 
 			Assistant.Engine.MainWindow.AutoLootListSelect.Items.Clear();
@@ -183,16 +183,16 @@ namespace RazorEnhanced
 		internal static void RefreshItems()
 		{
 			List<AutoLootList> lists;
-			RazorEnhanced.Settings.AutoLootListsRead(out lists);
+			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
 
+			Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
 			foreach (AutoLootList l in lists)
 			{
 				if (l.Selected)
 				{
 					List<AutoLoot.AutoLootItem> items;
-					RazorEnhanced.Settings.AutoLootItemsRead(l.Description, out items);
+					RazorEnhanced.Settings.AutoLoot.ItemsRead(l.Description, out items);
 
-					Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
 					foreach (AutoLootItem item in items)
 					{
 						ListViewItem listitem = new ListViewItem();
@@ -216,7 +216,7 @@ namespace RazorEnhanced
 		internal static void UpdateSelectedItems()
 		{
 			List<AutoLootItem> items;
-			RazorEnhanced.Settings.AutoLootItemsRead(AutoLootListName, out items);
+			RazorEnhanced.Settings.AutoLoot.ItemsRead(AutoLootListName, out items);
 
 			if (items.Count != Assistant.Engine.MainWindow.AutoLootListView.Items.Count)
 			{
@@ -231,26 +231,28 @@ namespace RazorEnhanced
 				if (lvi != null && old != null)
 				{
 					AutoLootItem item = new AutoLoot.AutoLootItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
-					RazorEnhanced.Settings.AutoLootItemReplace(RazorEnhanced.AutoLoot.AutoLootListName, i, item);
+					RazorEnhanced.Settings.AutoLoot.ItemReplace(RazorEnhanced.AutoLoot.AutoLootListName, i, item);
 				}
 			}
 		}
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.AutoLootListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (uint)0);
+			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (uint)0);
 
 			RazorEnhanced.AutoLoot.RefreshLists();
+			RazorEnhanced.AutoLoot.RefreshItems();
 		}
 
 		internal static void RemoveList(string list)
 		{
-			if (RazorEnhanced.Settings.AutoLootListExists(list))
+			if (RazorEnhanced.Settings.AutoLoot.ListExists(list))
 			{
-				RazorEnhanced.Settings.AutolootListDelete(list);
+				RazorEnhanced.Settings.AutoLoot.ListDelete(list);
 			}
 
 			RazorEnhanced.AutoLoot.RefreshLists();
+			RazorEnhanced.AutoLoot.RefreshItems();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int color)
@@ -260,10 +262,10 @@ namespace RazorEnhanced
 
 			string selection = Assistant.Engine.MainWindow.AutoLootListSelect.Text;
 
-			if (RazorEnhanced.Settings.AutoLootListExists(selection))
+			if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
 			{
-				if (!RazorEnhanced.Settings.AutoLootItemExists(selection, item))
-					RazorEnhanced.Settings.AutoLootItemInsert(selection, item);
+				if (!RazorEnhanced.Settings.AutoLoot.ItemExists(selection, item))
+					RazorEnhanced.Settings.AutoLoot.ItemInsert(selection, item);
 			}
 
 			RazorEnhanced.AutoLoot.RefreshItems();
@@ -276,10 +278,10 @@ namespace RazorEnhanced
 
 			string selection = Assistant.Engine.MainWindow.AutoLootListSelect.Text;
 
-			if (RazorEnhanced.Settings.AutoLootListExists(selection))
+			if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
 			{
-				if (RazorEnhanced.Settings.AutoLootItemExists(selection, item))
-					RazorEnhanced.Settings.AutoLootItemReplace(selection, index, item);
+				if (RazorEnhanced.Settings.AutoLoot.ItemExists(selection, item))
+					RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index, item);
 			}
 
 			RazorEnhanced.AutoLoot.RefreshItems();
@@ -289,7 +291,7 @@ namespace RazorEnhanced
 		{
 			AutoLootItem.Property prop = new AutoLootItem.Property(propName, propMin, propMax);
 			item.Properties.Add(prop);
-			RazorEnhanced.Settings.AutoLootItemReplace(list, index, item);
+			RazorEnhanced.Settings.AutoLoot.ItemReplace(list, index, item);
 		}
 
 		private static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
@@ -468,7 +470,7 @@ namespace RazorEnhanced
 
 			List<AutoLoot.AutoLootItem> items;
 			string list = AutoLoot.AutoLootListName;
-			RazorEnhanced.Settings.AutoLootItemsRead(list, out items);
+			RazorEnhanced.Settings.AutoLoot.ItemsRead(list, out items);
 			exit = Engine(items, AutoLootDelay, corpseFilter);
 		}
 

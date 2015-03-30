@@ -13,12 +13,12 @@ using System.IO;
 
 namespace RazorEnhanced.UI
 {
-	public partial class EnhancedAutoLootAddList : Form
+	public partial class EnhancedScavengerAddList : Form
 	{
-		private const string m_Title = "Enhanced Autoloot Add List";
+		private const string m_Title = "Enhanced Scavenger Add Item List";
 
 
-		public EnhancedAutoLootAddList()
+		public EnhancedScavengerAddList()
 		{
 			InitializeComponent();
 			MaximizeBox = false;
@@ -29,24 +29,24 @@ namespace RazorEnhanced.UI
 		{
 		}
 
-		private void autolootcloseItemList_Click(object sender, EventArgs e)
+		private void scavegercloseItemList_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
 
-		private void autolootaddItemList_Click(object sender, EventArgs e)
+		private void scavegeraddItemList_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
 			string newList = "";
 
-			if (autolootListToAdd.Text == "")
+			if (scavengerListToAdd.Text == "")
 				fail = true;
 
-			if (!Regex.IsMatch(autolootListToAdd.Text, "^[a-zA-Z0-9_]+$"))
+			if (!Regex.IsMatch(scavengerListToAdd.Text, "^[a-zA-Z0-9_]+$"))
 				fail = true;
 
-			newList = autolootListToAdd.Text.ToLower();
-			if (RazorEnhanced.Settings.AutoLoot.ListExists(newList))
+			newList = scavengerListToAdd.Text.ToLower();
+			if (RazorEnhanced.Settings.Scavenger.ListExists(newList))
 				fail = true;
 
 			if (fail)
@@ -60,7 +60,7 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-				AutoLoot.AddList(newList);
+				Scavenger.AddList(newList);
 				this.Close();
 			}
 		}

@@ -62,7 +62,7 @@ namespace RazorEnhanced.UI
 				listViewProps.Items.Add(listitem);
 			}
 
-			RazorEnhanced.Settings.AutoLootItemReplace(m_List, m_Index, m_Item);
+			RazorEnhanced.Settings.AutoLoot.ItemReplace(m_List, m_Index, m_Item);
 		}
 
 		private void EnhancedAutolootEditItemProps_Load(object sender, EventArgs e)

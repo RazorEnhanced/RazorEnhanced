@@ -339,11 +339,11 @@
     <Compile Include="RazorEnhanced\UI\Controls.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddItemList.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddIList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddItemList.Designer.cs">
-      <DependentUpon>EnhancedSellAgentAddItemList.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddIList.Designer.cs">
+      <DependentUpon>EnhancedSellAgentAddIList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.cs">
       <SubType>Form</SubType>
@@ -381,11 +381,11 @@
     <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItem.Designer.cs">
       <DependentUpon>EnhancedScavengerEditItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.Designer.cs">
-      <DependentUpon>EnhancedScavengerAddItemList.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddList.Designer.cs">
+      <DependentUpon>EnhancedScavengerAddList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddList.cs">
       <SubType>Form</SubType>
@@ -508,8 +508,8 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.resx">
       <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentAddItemList.resx">
-      <DependentUpon>EnhancedSellAgentAddItemList.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentAddIList.resx">
+      <DependentUpon>EnhancedSellAgentAddIList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.resx">
       <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
@@ -529,8 +529,8 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerEditItem.resx">
       <DependentUpon>EnhancedScavengerEditItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerAddItemList.resx">
-      <DependentUpon>EnhancedScavengerAddItemList.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerAddList.resx">
+      <DependentUpon>EnhancedScavengerAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootAddList.resx">
       <DependentUpon>EnhancedAutoLootAddList.cs</DependentUpon>

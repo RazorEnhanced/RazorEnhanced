@@ -17,13 +17,12 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedAutoLootAddItemManual : Form
 	{
 		private const string m_Title = "Enhanced Autoloot Manual Add Item";
-        private ListView AutolootlistView;
-        private List<RazorEnhanced.AutoLoot.AutoLootItem> AutoLootItemList;
         
 		public EnhancedAutoLootAddItemManual()
 		{
 			InitializeComponent();
             MaximizeBox = false;
+
 			this.Text = m_Title;;
 		}
 

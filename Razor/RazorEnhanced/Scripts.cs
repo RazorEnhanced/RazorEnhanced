@@ -101,7 +101,7 @@ namespace RazorEnhanced
 		internal class ScriptTimer : Assistant.Timer
 		{
 			private Thread m_AutoLootThread;
-            private Thread m_ScavengerThread;
+			private Thread m_ScavengerThread;
 
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
@@ -135,18 +135,18 @@ namespace RazorEnhanced
 
 				Thread.Sleep(50);
 
-                if (Scavenger.Auto)
-                {
-                    if (m_ScavengerThread == null ||
-                        (m_ScavengerThread != null && m_ScavengerThread.ThreadState != ThreadState.Running &&
-                        m_ScavengerThread.ThreadState != ThreadState.Unstarted &&
-                        m_ScavengerThread.ThreadState != ThreadState.WaitSleepJoin)
-                    )
-                    {
-                        m_ScavengerThread = new Thread(Scavenger.Engine);
-                        m_ScavengerThread.Start();
-                    }
-                }
+				if (Scavenger.AutoMode)
+				{
+					if (m_ScavengerThread == null ||
+						(m_ScavengerThread != null && m_ScavengerThread.ThreadState != ThreadState.Running &&
+						m_ScavengerThread.ThreadState != ThreadState.Unstarted &&
+						m_ScavengerThread.ThreadState != ThreadState.WaitSleepJoin)
+					)
+					{
+						m_ScavengerThread = new Thread(Scavenger.Engine);
+						m_ScavengerThread.Start();
+					}
+				}
 			}
 		}
 

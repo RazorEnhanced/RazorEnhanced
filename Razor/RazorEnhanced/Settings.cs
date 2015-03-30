@@ -62,6 +62,8 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Status", typeof(string));
 				m_Dataset.Tables.Add(scripting);
 
+
+
 				// -------- AUTOLOOT ------------
 				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
 				autoloot_lists.Columns.Add("Description", typeof(string));
@@ -72,21 +74,25 @@ namespace RazorEnhanced
 
 				DataTable autoloot_items = new DataTable("AUTOLOOT_ITEMS");
 				autoloot_items.Columns.Add("List", typeof(string));
-				autoloot_items.Columns.Add("Item", typeof(AutoLoot.AutoLootItem));
+				autoloot_items.Columns.Add("Item", typeof(RazorEnhanced.AutoLoot.AutoLootItem));
 				m_Dataset.Tables.Add(autoloot_items);
+
+
 
 				// ----------- SCAVENGER ----------
 				DataTable scavenger_lists = new DataTable("SCAVENGER_LISTS");
-				scavenger_lists.Columns.Add("Name", typeof(string));
-				scavenger_lists.Columns.Add("List", typeof(List<Scavenger.ScavengerItem>));
+				scavenger_lists.Columns.Add("Description", typeof(string));
+				scavenger_lists.Columns.Add("Delay", typeof(int));
+				scavenger_lists.Columns.Add("Bag", typeof(int));
+				scavenger_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(scavenger_lists);
 
-				DataTable scavenger_general = new DataTable("SCAVENGER_GENERAL");
-				scavenger_general.Columns.Add("Delay", typeof(int));
-				scavenger_general.Columns.Add("List", typeof(List<string>));
-				scavenger_general.Columns.Add("Selection", typeof(string));
-				scavenger_general.Columns.Add("Bag", typeof(uint));
-				m_Dataset.Tables.Add(scavenger_general);
+				DataTable scavenger_items = new DataTable("SCAVENGER_ITEMS");
+				scavenger_items.Columns.Add("List", typeof(string));
+				scavenger_items.Columns.Add("Item", typeof(RazorEnhanced.Scavenger.ScavengerItem));
+				m_Dataset.Tables.Add(scavenger_items);
+
+
 
 				//Organizer
 				DataTable organizer_lists = new DataTable("ORGANIZER_LISTS");
@@ -130,259 +136,385 @@ namespace RazorEnhanced
 		}
 
 		// ------------- AUTOLOOT -----------------
-		internal static bool AutoLootListExists(string description)
+		internal class AutoLoot
 		{
-			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+			internal static bool ListExists(string description)
 			{
-				if (((string)row["Description"]).ToLower() == description.ToLower())
-					return true;
-			}
-
-			return false;
-		}
-
-		internal static void AutoLootListInsert(string description, int delay, uint bag)
-		{
-			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
-			{
-				row["Selected"] = false;
-			}
-
-			DataRow newRow = m_Dataset.Tables["AUTOLOOT_LISTS"].NewRow();
-			newRow["Description"] = description;
-			newRow["Delay"] = delay;
-			newRow["Bag"] = bag;
-			newRow["Selected"] = true;
-			m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
-
-			Save();
-		}
-
-		internal static void AutolootListUpdate(string description, int delay, int bag, bool selected)
-		{
-
-			bool found = false;
-			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
-			{
-				if ((string)row["Description"] == description)
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
-					found = true;
-					break;
-				}
-			}
-
-			if (found)
-			{
-				if (selected)
-				{
-					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
-					{
-						row["Selected"] = false;
-					}
+					if (((string)row["Description"]).ToLower() == description.ToLower())
+						return true;
 				}
 
+				return false;
+			}
+
+			internal static void ListInsert(string description, int delay, uint bag)
+			{
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+				{
+					row["Selected"] = false;
+				}
+
+				DataRow newRow = m_Dataset.Tables["AUTOLOOT_LISTS"].NewRow();
+				newRow["Description"] = description;
+				newRow["Delay"] = delay;
+				newRow["Bag"] = bag;
+				newRow["Selected"] = true;
+				m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
+
+				Save();
+			}
+
+			internal static void ListUpdate(string description, int delay, int bag, bool selected)
+			{
+
+				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == description)
 					{
-						row["Delay"] = delay;
-						row["Bag"] = bag;
-						row["Selected"] = selected;
+						found = true;
+						break;
+					}
+				}
+
+				if (found)
+				{
+					if (selected)
+					{
+						foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+						{
+							row["Selected"] = false;
+						}
+					}
+
+					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+					{
+						if ((string)row["Description"] == description)
+						{
+							row["Delay"] = delay;
+							row["Bag"] = bag;
+							row["Selected"] = selected;
+							break;
+						}
+					}
+
+					Save();
+				}
+			}
+
+			internal static void ListDelete(string description)
+			{
+				for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
+					if ((string)row["List"] == description)
+					{
+						row.Delete();
+					}
+				}
+
+				for (int i = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows[i];
+					if ((string)row["Description"] == description)
+					{
+						row.Delete();
+						break;
+					}
+					row["Selected"] = false;
+				}
+
+				Save();
+			}
+
+			internal static void ListsRead(out List<RazorEnhanced.AutoLoot.AutoLootList> lists)
+			{
+				List<RazorEnhanced.AutoLoot.AutoLootList> listsOut = new List<RazorEnhanced.AutoLoot.AutoLootList>();
+
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+				{
+
+					string description = (string)row["Description"];
+					int delay = (int)row["Delay"];
+					int bag = (int)row["Bag"];
+					bool selected = (bool)row["Selected"];
+
+					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected);
+					listsOut.Add(list);
+				}
+
+				lists = listsOut;
+			}
+
+			internal static bool ItemExists(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
+			{
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list && (RazorEnhanced.AutoLoot.AutoLootItem)row["Item"] == item)
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ItemInsert(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
+			{
+				DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].NewRow();
+				row["List"] = list;
+				row["Item"] = item;
+				m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Add(row);
+
+				Save();
+			}
+
+			internal static void ItemReplace(string list, int index, RazorEnhanced.AutoLoot.AutoLootItem item)
+			{
+				int count = -1;
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list)
+					{
+						count++;
+						if (count == index)
+						{
+							row["Item"] = item;
+						}
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemDelete(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
+			{
+				for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
+					if ((string)row["List"] == list && (RazorEnhanced.AutoLoot.AutoLootItem)row["Item"] == item)
+					{
+						row.Delete();
 						break;
 					}
 				}
 
 				Save();
 			}
-		}
 
-		internal static void AutolootListDelete(string description)
-		{
-			for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
+			internal static void ItemsRead(string list, out List<RazorEnhanced.AutoLoot.AutoLootItem> items)
 			{
-				DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
-				if ((string)row["List"] == description)
+				List<RazorEnhanced.AutoLoot.AutoLootItem> itemsOut = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
+
+				if (ListExists(list))
 				{
-					row.Delete();
-				}
-			}
-
-			for (int i = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Count - 1; i >= 0; i--)
-			{
-				DataRow row = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows[i];
-				if ((string)row["Description"] == description)
-				{
-					row.Delete();
-					break;
-				}
-				row["Selected"] = false;
-			}
-
-			Save();
-		}
-
-		internal static void AutoLootListsRead(out List<AutoLootList> lists)
-		{
-			List<AutoLootList> listsOut = new List<AutoLootList>();
-
-			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
-			{
-
-				string description = (string)row["Description"];
-				int delay = (int)row["Delay"];
-				int bag = (int)row["Bag"];
-				bool selected = (bool)row["Selected"];
-
-				AutoLootList list = new AutoLootList(description, delay, bag, selected);
-				listsOut.Add(list);
-			}
-
-			lists = listsOut;
-		}
-
-		internal static bool AutoLootItemExists(string list, AutoLoot.AutoLootItem item)
-		{
-			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
-			{
-				if ((string)row["List"] == list && (AutoLoot.AutoLootItem)row["Item"] == item)
-					return true;
-			}
-
-			return false;
-		}
-
-		internal static void AutoLootItemInsert(string list, AutoLoot.AutoLootItem item)
-		{
-			DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].NewRow();
-			row["List"] = list;
-			row["Item"] = item;
-			m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Add(row);
-
-			Save();
-		}
-
-		internal static void AutoLootItemReplace(string list, int index, AutoLoot.AutoLootItem item)
-		{
-			int count = -1;
-			foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
-			{
-				if ((string)row["List"] == list)
-				{
-					count++;
-					if (count == index)
+					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
 					{
-						row["Item"] = item;
+						if ((string)row["List"] == list)
+						{
+							itemsOut.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
+						}
 					}
 				}
+
+				items = itemsOut;
 			}
-
-			Save();
-		}
-
-		internal static void AutoLootItemDelete(string list, AutoLoot.AutoLootItem item)
-		{
-			for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
-			{
-				DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
-				if ((string)row["List"] == list && (AutoLoot.AutoLootItem)row["Item"] == item)
-				{
-					row.Delete();
-					break;
-				}
-			}
-
-			Save();
-		}
-
-		internal static void AutoLootItemsRead(string list, out List<AutoLoot.AutoLootItem> items)
-		{
-			List<AutoLoot.AutoLootItem> itemsOut = new List<AutoLoot.AutoLootItem>();
-
-			if (AutoLootListExists(list))
-			{
-				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list)
-					{
-						itemsOut.Add((AutoLoot.AutoLootItem)row["Item"]);
-					}
-				}
-			}
-
-			items = itemsOut;
 		}
 		// ------------- AUTOLOOT END-----------------
 
 
-		// -------------- SCAVENGER ----------------
-		internal static bool LoadScavengerItemList(string name, out List<Scavenger.ScavengerItem> list)
-		{
-			bool exit = false;
-			List<Scavenger.ScavengerItem> result = new List<Scavenger.ScavengerItem>();
 
-			foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+
+		// ------------- SCAVENGER -----------------
+		internal class Scavenger
+		{
+			internal static bool ListExists(string description)
 			{
-				if ((string)row["Name"] == name)
+				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
-					result = row["List"] as List<Scavenger.ScavengerItem>;
-					exit = true;
+					if (((string)row["Description"]).ToLower() == description.ToLower())
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ListInsert(string description, int delay, uint bag)
+			{
+				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+				{
+					row["Selected"] = false;
+				}
+
+				DataRow newRow = m_Dataset.Tables["SCAVENGER_LISTS"].NewRow();
+				newRow["Description"] = description;
+				newRow["Delay"] = delay;
+				newRow["Bag"] = bag;
+				newRow["Selected"] = true;
+				m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Add(newRow);
+
+				Save();
+			}
+
+			internal static void ListUpdate(string description, int delay, int bag, bool selected)
+			{
+				bool found = false;
+				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+				{
+					if ((string)row["Description"] == description)
+					{
+						found = true;
+						break;
+					}
+				}
+
+				if (found)
+				{
+					if (selected)
+					{
+						foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+						{
+							row["Selected"] = false;
+						}
+					}
+
+					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+					{
+						if ((string)row["Description"] == description)
+						{
+							row["Delay"] = delay;
+							row["Bag"] = bag;
+							row["Selected"] = selected;
+							break;
+						}
+					}
+
+					Save();
 				}
 			}
 
-			list = result;
-			return exit;
-		}
-
-		internal static void SaveScavengerItemList(string name, List<Scavenger.ScavengerItem> list)
-		{
-			m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["SCAVENGER_LISTS"].NewRow();
-			row["Name"] = name;
-			row["List"] = list;
-			m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Add(row);
-			Save();
-		}
-
-		internal static bool LoadScavengerGeneral(out int delay, out List<string> list, out string selection, out uint bag)
-		{
-			bool exit = false;
-
-			int delayOut = 0;
-			List<string> listOut = new List<string>();
-			string selectionOut = "";
-			uint BagOut = 0;
-
-			if (m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Count == 1)
+			internal static void ListDelete(string description)
 			{
-				DataRow row = m_Dataset.Tables["SCAVENGER_GENERAL"].Rows[0];
+				for (int i = m_Dataset.Tables["SCAVENGER_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
-					delayOut = (int)row["Delay"];
-					listOut = row["List"] as List<string>;
-					selectionOut = (string)row["Selection"];
-					BagOut = (uint)row["Bag"];
-					exit = true;
+					DataRow row = m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[i];
+					if ((string)row["List"] == description)
+					{
+						row.Delete();
+					}
 				}
+
+				for (int i = m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["SCAVENGER_LISTS"].Rows[i];
+					if ((string)row["Description"] == description)
+					{
+						row.Delete();
+						break;
+					}
+					row["Selected"] = false;
+				}
+
+				Save();
 			}
 
-			delay = delayOut;
-			list = listOut;
-			selection = selectionOut;
-			bag = BagOut;
+			internal static void ListsRead(out List<RazorEnhanced.Scavenger.ScavengerList> lists)
+			{
+				List<RazorEnhanced.Scavenger.ScavengerList> listsOut = new List<RazorEnhanced.Scavenger.ScavengerList>();
 
-			return exit;
-		}
+				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+				{
 
-		internal static void SaveScavengerGeneral(int delay, List<string> list, string selection, uint bag)
-		{
-			m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["SCAVENGER_GENERAL"].NewRow();
-			row["Delay"] = delay;
-			row["List"] = list;
-			row["Selection"] = selection;
-			row["Bag"] = bag;
-			m_Dataset.Tables["SCAVENGER_GENERAL"].Rows.Add(row);
-			Save();
+					string description = (string)row["Description"];
+					int delay = (int)row["Delay"];
+					int bag = (int)row["Bag"];
+					bool selected = (bool)row["Selected"];
+
+					RazorEnhanced.Scavenger.ScavengerList list = new RazorEnhanced.Scavenger.ScavengerList(description, delay, bag, selected);
+					listsOut.Add(list);
+				}
+
+				lists = listsOut;
+			}
+
+			internal static bool ItemExists(string list, RazorEnhanced.Scavenger.ScavengerItem item)
+			{
+				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list && (RazorEnhanced.Scavenger.ScavengerItem)row["Item"] == item)
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ItemInsert(string list, RazorEnhanced.Scavenger.ScavengerItem item)
+			{
+				DataRow row = m_Dataset.Tables["SCAVENGER_ITEMS"].NewRow();
+				row["List"] = list;
+				row["Item"] = item;
+				m_Dataset.Tables["SCAVENGER_ITEMS"].Rows.Add(row);
+
+				Save();
+			}
+
+			internal static void ItemReplace(string list, int index, RazorEnhanced.Scavenger.ScavengerItem item)
+			{
+				int count = -1;
+				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list)
+					{
+						count++;
+						if (count == index)
+						{
+							row["Item"] = item;
+						}
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemDelete(string list, RazorEnhanced.Scavenger.ScavengerItem item)
+			{
+				for (int i = m_Dataset.Tables["SCAVENGER_ITEMS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[i];
+					if ((string)row["List"] == list && (RazorEnhanced.Scavenger.ScavengerItem)row["Item"] == item)
+					{
+						row.Delete();
+						break;
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemsRead(string list, out List<RazorEnhanced.Scavenger.ScavengerItem> items)
+			{
+				List<RazorEnhanced.Scavenger.ScavengerItem> itemsOut = new List<RazorEnhanced.Scavenger.ScavengerItem>();
+
+				if (ListExists(list))
+				{
+					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
+					{
+						if ((string)row["List"] == list)
+						{
+							itemsOut.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
+						}
+					}
+				}
+
+				items = itemsOut;
+			}
 		}
+		// ------------- SCAVENGER END-----------------
+
+
+
+
+
 
 		//Organizer
 		internal static bool LoadOrganizerItemList(string name, out List<Organizer.OrganizerItem> list, out uint source, out uint destination)

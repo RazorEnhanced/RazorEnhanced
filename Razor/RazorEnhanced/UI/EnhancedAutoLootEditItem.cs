@@ -20,11 +20,14 @@ namespace RazorEnhanced.UI
 		private string m_List;
 		private AutoLoot.AutoLootItem m_Item;
 		private int m_Index;
+
 		public EnhancedAutolootEditItem(string list, int index, AutoLoot.AutoLootItem item)
 		{
 			InitializeComponent();
 			MaximizeBox = false;
+
 			this.Text = m_Title;
+
 			m_List = list;
 			m_Index = index;
 			m_Item = item;
@@ -32,7 +35,6 @@ namespace RazorEnhanced.UI
 
 		private void label1_Click(object sender, EventArgs e)
 		{
-
 		}
 
 		private void EnhancedAutolootManualAdd_Load(object sender, EventArgs e)
