@@ -446,6 +446,8 @@ namespace Assistant
 		internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
 		internal ListView OrganizerListView { get { return organizerListView; } }
 		internal RazorComboBox OrganizerListSelect { get { return organizerListSelect; } }
+        internal Button OrganizerExecute { get { return organizerExecuteButton; } }
+        internal Button OrganizerStop { get { return organizerStopButton; } }
 
 		// Sell Agent
 		internal Label SellBagLabel { get { return sellBagLabel; } }

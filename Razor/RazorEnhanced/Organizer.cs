@@ -406,6 +406,54 @@ namespace RazorEnhanced
 				m_OrganizerThread.Abort();
 			}
 		}
+        // Funzioni da script
 
+        public static void FStart()
+        {
+            if (Assistant.Engine.MainWindow.OrganizerExecute.Enabled == true)
+                Assistant.Engine.MainWindow.OrganizerExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerExecute.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Organizer.FStart: Organizer already running");
+        }
+
+        public static void FStop()
+        {
+            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+                Assistant.Engine.MainWindow.OrganizerStop.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerStop.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Organizer.FStart: Organizer not running");
+        }
+
+        public static bool Status()
+        {
+            if (m_OrganizerThread != null && m_OrganizerThread.ThreadState != ThreadState.Stopped)
+                return true;
+            else
+                return false;
+        }
+        public static void ChangeList(string nomelista)
+        {
+            bool ListaOK = false;
+            for (int i = 0; i < Assistant.Engine.MainWindow.OrganizerListSelect.Items.Count; i++)
+            {
+                if (nomelista == Assistant.Engine.MainWindow.OrganizerListSelect.GetItemText(Assistant.Engine.MainWindow.OrganizerListSelect.Items[i]))
+                    ListaOK = true;
+            }
+            if (!ListaOK)
+                Misc.SendMessage("Script Error: Organizer.ChangeList: Scavenger list: " + nomelista + " not exist");
+            else
+            {
+                if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart
+                {
+                    Assistant.Engine.MainWindow.OrganizerStop.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerStop.PerformClick()));
+                    Assistant.Engine.MainWindow.OrganizerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                    Assistant.Engine.MainWindow.OrganizerExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerExecute.PerformClick()));
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.OrganizerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                }
+            }
+        }
 	}
 }
