@@ -138,6 +138,18 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(buy_items);
 
 
+                // ----------- LAUNCHER ----------
+                DataTable launcer = new DataTable("LAUNCHER");
+                launcer.Columns.Add("ShardName", typeof(string));   // Key
+                launcer.Columns.Add("UoClient", typeof(string));
+                launcer.Columns.Add("UoFolder", typeof(string));
+                launcer.Columns.Add("ShardHost", typeof(string));
+                launcer.Columns.Add("ShardPort", typeof(string));
+                launcer.Columns.Add("PatchEnc", typeof(bool));
+                launcer.Columns.Add("OSIEnc", typeof(bool));
+                launcer.Columns.Add("Selected", typeof(bool));
+                m_Dataset.Tables.Add(launcer);
+
 
 				m_Dataset.AcceptChanges();
 			}
@@ -1085,6 +1097,112 @@ namespace RazorEnhanced
 		}
 		// ------------- BUY AGENT END-----------------
 
+        // ------------- LAUNCHER -----------------
+        internal static bool LauncherShardExists(string shardname)
+        {
+            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
+            {
+                if (((string)row["ShardName"]).ToLower() == shardname.ToLower())
+                    return true;
+            }
+
+            return false;
+        }
+
+        internal static void LauncherShardInsert(string shardname, string uoclient, string uofolder, string shardhost, string shardport, bool parchenc, bool osienc)
+        {
+            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
+            {
+                row["Selected"] = false;
+            }
+
+            LauncherShardDelete(shardname); // Rimuovo e sostituisco
+
+            DataRow newRow = m_Dataset.Tables["LAUNCHER"].NewRow();
+            newRow["ShardName"] = shardname;
+            newRow["UoClient"] = uoclient;
+            newRow["UoFolder"] = uofolder;
+            newRow["ShardHost"] = shardhost;
+            newRow["ShardPort"] = shardport;
+            newRow["PatchEnc"] = parchenc;
+            newRow["OSIEnc"] = osienc;
+            newRow["Selected"] = true;
+            m_Dataset.Tables["LAUNCHER"].Rows.Add(newRow);
+
+            Save();
+        }
+
+
+        internal static void LauncherShardDelete(string shardname)
+        {
+            for (int i = m_Dataset.Tables["LAUNCHER"].Rows.Count - 1; i >= 0; i--)
+            {
+                DataRow row = m_Dataset.Tables["LAUNCHER"].Rows[i];
+                if ((string)row["ShardName"] == shardname)
+                {
+                    row.Delete();
+                }
+            }
+            Save();
+        }
+
+        internal static bool LauncherShardList(out List<string> lists)
+        {
+            List<string> listOut = new List<string>();
+            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
+            {
+                listOut.Add((string)row["ShardName"]);
+            }
+
+            lists = listOut;
+            return true;
+        }
+
+        internal static string LauncherShardSelected()
+        {
+            string selectedOut = "";
+            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
+            {
+                if ((bool)row["Selected"] == true)
+                {
+                    selectedOut = (string)row["ShardName"];
+                }
+            }
+            return selectedOut;
+        }
+
+        internal static bool LauncherShardData(string shardname, out string uoclient, out string uofolder, out string shardhost, out string shardport, out bool patchenc, out bool osienc)
+        {
+            string uoclientOut = "";
+            string uofolderOut = "";
+            string shardhostOut = "";
+            string shardportOut = "";
+            bool patchencOut = false;
+            bool osiencOut = false;
+
+            for (int i = m_Dataset.Tables["LAUNCHER"].Rows.Count - 1; i >= 0; i--)
+            {
+                DataRow row = m_Dataset.Tables["LAUNCHER"].Rows[i];
+                if ((string)row["ShardName"] == shardname)
+                {
+                    uoclientOut = (string)row["UoClient"];
+                    uofolderOut = (string)row["UoFolder"];
+                    shardhostOut = (string)row["ShardHost"];
+                    shardportOut = (string)row["ShardPort"];
+                    patchencOut = (bool)row["PatchEnc"];
+                    osiencOut = (bool)row["OSIEnc"];
+                }
+            }
+            uoclient = uoclientOut;
+            uofolder = uofolderOut;
+            shardhost = shardhostOut;
+            shardport = shardportOut;
+            patchenc = patchencOut;
+            osienc = osiencOut;
+            return true;
+        }
+
+        // ------------- LAUNCHER END-----------------
 		internal static void Save()
 		{
 			try
