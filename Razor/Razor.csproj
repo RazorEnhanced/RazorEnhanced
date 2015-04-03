@@ -292,11 +292,11 @@
     </Compile>
     <Compile Include="RazorEnhanced\AutoLoot.cs" />
     <Compile Include="RazorEnhanced\Dress.cs" />
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddItemList.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddItemList.Designer.cs">
-      <DependentUpon>EnhancedBuyAgentAddItemList.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.Designer.cs">
+      <DependentUpon>EnhancedBuyAgentAddIList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.cs">
       <SubType>Form</SubType>
@@ -351,11 +351,11 @@
     <Compile Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.Designer.cs">
       <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddItemList.cs">
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddItemList.Designer.cs">
-      <DependentUpon>EnhancedOrganizerAddItemList.cs</DependentUpon>
+    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddList.Designer.cs">
+      <DependentUpon>EnhancedOrganizerAddList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedOrganizerManualAdd.cs">
       <SubType>Form</SubType>
@@ -493,8 +493,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentAddItemList.resx">
-      <DependentUpon>EnhancedBuyAgentAddItemList.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.resx">
+      <DependentUpon>EnhancedBuyAgentAddIList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.resx">
       <DependentUpon>EnhancedBuyAgentEditItem.cs</DependentUpon>
@@ -514,8 +514,8 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.resx">
       <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerAddItemList.resx">
-      <DependentUpon>EnhancedOrganizerAddItemList.cs</DependentUpon>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerAddList.resx">
+      <DependentUpon>EnhancedOrganizerAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerManualAdd.resx">
       <DependentUpon>EnhancedOrganizerManualAdd.cs</DependentUpon>

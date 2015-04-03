@@ -32,7 +32,7 @@
 			System.Windows.Forms.ColumnHeader columnHeader8;
 			System.Windows.Forms.ColumnHeader columnHeader12;
 			System.Windows.Forms.ColumnHeader columnHeader16;
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedAutolootEditItemProps));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));

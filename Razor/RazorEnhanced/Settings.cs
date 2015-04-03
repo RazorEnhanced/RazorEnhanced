@@ -94,42 +94,50 @@ namespace RazorEnhanced
 
 
 
-				//Organizer
+				// ----------- ORGANIZER ----------
 				DataTable organizer_lists = new DataTable("ORGANIZER_LISTS");
-				organizer_lists.Columns.Add("Name", typeof(string));
-				organizer_lists.Columns.Add("Source", typeof(uint));
-				organizer_lists.Columns.Add("Destination", typeof(uint));
-				organizer_lists.Columns.Add("List", typeof(List<Organizer.OrganizerItem>));
+				organizer_lists.Columns.Add("Description", typeof(string));
+				organizer_lists.Columns.Add("Delay", typeof(int));
+				organizer_lists.Columns.Add("Source", typeof(int));
+				organizer_lists.Columns.Add("Destination", typeof(int));
+				organizer_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(organizer_lists);
 
-				DataTable organizer_general = new DataTable("ORGANIZER_GENERAL");
-				organizer_general.Columns.Add("Delay", typeof(int));
-				organizer_general.Columns.Add("List", typeof(List<string>));
-				organizer_general.Columns.Add("Selection", typeof(string));
-				m_Dataset.Tables.Add(organizer_general);
+				DataTable organizer_items = new DataTable("ORGANIZER_ITEMS");
+				organizer_items.Columns.Add("List", typeof(string));
+				organizer_items.Columns.Add("Item", typeof(RazorEnhanced.Organizer.OrganizerItem));
+				m_Dataset.Tables.Add(organizer_items);
 
-				//Sell
-				DataTable sell_general = new DataTable("SELL_GENERAL");
-				sell_general.Columns.Add("List", typeof(List<string>));
-				sell_general.Columns.Add("Selection", typeof(string));
-				m_Dataset.Tables.Add(sell_general);
 
+
+				// ----------- SELL AGENT ----------
 				DataTable sell_lists = new DataTable("SELL_LISTS");
-				sell_lists.Columns.Add("Name", typeof(string));
-				sell_lists.Columns.Add("HotBag", typeof(uint));
-				sell_lists.Columns.Add("List", typeof(List<SellAgent.SellItem>));
+				sell_lists.Columns.Add("Description", typeof(string));
+				sell_lists.Columns.Add("Bag", typeof(int));
+				sell_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(sell_lists);
 
-				//Buy
-				DataTable buy_general = new DataTable("BUY_GENERAL");
-				buy_general.Columns.Add("List", typeof(List<string>));
-				buy_general.Columns.Add("Selection", typeof(string));
-				m_Dataset.Tables.Add(buy_general);
+				DataTable sell_items = new DataTable("SELL_ITEMS");
+				sell_items.Columns.Add("List", typeof(string));
+				sell_items.Columns.Add("Item", typeof(RazorEnhanced.SellAgent.SellAgentItem));
+				m_Dataset.Tables.Add(sell_items);
 
+
+
+
+				// ----------- BUY AGENT ----------
 				DataTable buy_lists = new DataTable("BUY_LISTS");
-				buy_lists.Columns.Add("Name", typeof(string));
-				buy_lists.Columns.Add("List", typeof(List<RazorEnhanced.BuyAgent.BuyItem>));
+				buy_lists.Columns.Add("Description", typeof(string));
+				buy_lists.Columns.Add("Bag", typeof(int));
+				buy_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(buy_lists);
+
+				DataTable buy_items = new DataTable("BUY_ITEMS");
+				buy_items.Columns.Add("List", typeof(string));
+				buy_items.Columns.Add("Item", typeof(RazorEnhanced.BuyAgent.BuyAgentItem));
+				m_Dataset.Tables.Add(buy_items);
+
+
 
 				m_Dataset.AcceptChanges();
 			}
@@ -149,7 +157,7 @@ namespace RazorEnhanced
 				return false;
 			}
 
-			internal static void ListInsert(string description, int delay, uint bag)
+			internal static void ListInsert(string description, int delay, int bag)
 			{
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
@@ -339,7 +347,7 @@ namespace RazorEnhanced
 				return false;
 			}
 
-			internal static void ListInsert(string description, int delay, uint bag)
+			internal static void ListInsert(string description, int delay, int bag)
 			{
 				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
@@ -514,204 +522,568 @@ namespace RazorEnhanced
 
 
 
+		// ------------- ORGANIZER -----------------
 
-
-		//Organizer
-		internal static bool LoadOrganizerItemList(string name, out List<Organizer.OrganizerItem> list, out uint source, out uint destination)
+		internal class Organizer
 		{
-			bool exit = false;
-			uint sourceOut = 0;
-			uint destinationOut = 0;
-			List<Organizer.OrganizerItem> result = new List<Organizer.OrganizerItem>();
-
-			foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+			internal static bool ListExists(string description)
 			{
-				if ((string)row["Name"] == name)
+				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
 				{
-					sourceOut = (uint)row["Source"];
-					destinationOut = (uint)row["Destination"];
-					result = row["List"] as List<Organizer.OrganizerItem>;
-					exit = true;
+					if (((string)row["Description"]).ToLower() == description.ToLower())
+						return true;
 				}
-			}
-			source = sourceOut;
-			destination = destinationOut;
-			list = result;
-			return exit;
-		}
 
-		internal static void SaveOrganizerItemList(string name, List<Organizer.OrganizerItem> list, uint source, uint destination)
-		{
-			m_Dataset.Tables["ORGANIZER_LISTS"].Clear();
-			DataRow row = m_Dataset.Tables["ORGANIZER_LISTS"].NewRow();
-			row["Name"] = name;
-			row["List"] = list;
-			row["Source"] = source;
-			row["Destination"] = destination;
-			m_Dataset.Tables["ORGANIZER_LISTS"].Rows.Add(row);
-			Save();
-		}
-
-		internal static bool LoadOrganizerGeneral(out int delay, out List<string> list, out string selection)
-		{
-			bool exit = false;
-
-			int delayOut = 0;
-			List<string> listOut = new List<string>();
-			string selectionOut = "";
-
-			if (m_Dataset.Tables["ORGANIZER_GENERAL"].Rows.Count == 1)
-			{
-				DataRow row = m_Dataset.Tables["ORGANIZER_GENERAL"].Rows[0];
-				{
-					delayOut = (int)row["Delay"];
-					listOut = row["List"] as List<string>;
-					selectionOut = (string)row["Selection"];
-					exit = true;
-				}
+				return false;
 			}
 
-			delay = delayOut;
-			list = listOut;
-			selection = selectionOut;
-
-			return exit;
-		}
-
-		internal static void SaveOrganizerGeneral(int delay, List<string> list, string selection)
-		{
-			m_Dataset.Tables["ORGANIZER_GENERAL"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["ORGANIZER_GENERAL"].NewRow();
-			row["Delay"] = delay;
-			row["List"] = list;
-			row["Selection"] = selection;
-			m_Dataset.Tables["ORGANIZER_GENERAL"].Rows.Add(row);
-			Save();
-		}
-
-		// sell agent
-		internal static void SaveSellGeneral(List<string> list, string selection)
-		{
-			m_Dataset.Tables["SELL_GENERAL"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["SELL_GENERAL"].NewRow();
-			row["List"] = list;
-			row["Selection"] = selection;
-			m_Dataset.Tables["SELL_GENERAL"].Rows.Add(row);
-			Save();
-		}
-
-		internal static void SaveSellItemList(string name, List<SellAgent.SellItem> list, string hotbag)
-		{
-			m_Dataset.Tables["SELL_LISTS"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["SELL_LISTS"].NewRow();
-			row["Name"] = name;
-			row["HotBag"] = hotbag;
-			row["List"] = list;
-			m_Dataset.Tables["SELL_LISTS"].Rows.Add(row);
-			Save();
-		}
-
-		internal static bool LoadSellGeneral(out List<string> list, out string selection)
-		{
-			bool exit = false;
-
-			List<string> listOut = new List<string>();
-			string selectionOut = "";
-
-			if (m_Dataset.Tables["SELL_GENERAL"].Rows.Count == 1)
+			internal static void ListInsert(string description, int delay, int source, int destination)
 			{
-				DataRow row = m_Dataset.Tables["SELL_GENERAL"].Rows[0];
+				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
 				{
-					listOut = row["List"] as List<string>;
-					selectionOut = (string)row["Selection"];
-					exit = true;
+					row["Selected"] = false;
+				}
+
+				DataRow newRow = m_Dataset.Tables["ORGANIZER_LISTS"].NewRow();
+				newRow["Description"] = description;
+				newRow["Delay"] = delay;
+				newRow["Source"] = source;
+				newRow["Destination"] = destination;
+				newRow["Selected"] = true;
+				m_Dataset.Tables["ORGANIZER_LISTS"].Rows.Add(newRow);
+
+				Save();
+			}
+
+			internal static void ListUpdate(string description, int delay, int source, int destination, bool selected)
+			{
+
+				bool found = false;
+				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+				{
+					if ((string)row["Description"] == description)
+					{
+						found = true;
+						break;
+					}
+				}
+
+				if (found)
+				{
+					if (selected)
+					{
+						foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+						{
+							row["Selected"] = false;
+						}
+					}
+
+					foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+					{
+						if ((string)row["Description"] == description)
+						{
+							row["Delay"] = delay;
+							row["Source"] = source;
+							row["Destination"] = destination;
+							row["Selected"] = selected;
+							break;
+						}
+					}
+
+					Save();
 				}
 			}
-			list = listOut;
-			selection = selectionOut;
 
-			return exit;
-		}
-
-		internal static bool LoadSellItemList(string name, out List<SellAgent.SellItem> list, out uint hotBag)
-		{
-			bool exit = false;
-			uint hotBagOut = 0;
-			List<SellAgent.SellItem> result = new List<SellAgent.SellItem>();
-
-			foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+			internal static void ListDelete(string description)
 			{
-				if ((string)row["Name"] == name)
+				for (int i = m_Dataset.Tables["ORGANIZER_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
-					hotBagOut = (uint)row["HotBag"];
-					result = row["List"] as List<SellAgent.SellItem>;
-					exit = true;
+					DataRow row = m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[i];
+					if ((string)row["List"] == description)
+					{
+						row.Delete();
+					}
+				}
+
+				for (int i = m_Dataset.Tables["ORGANIZER_LISTS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["ORGANIZER_LISTS"].Rows[i];
+					if ((string)row["Description"] == description)
+					{
+						row.Delete();
+						break;
+					}
+					row["Selected"] = false;
+				}
+
+				Save();
+			}
+
+			internal static void ListsRead(out List<RazorEnhanced.Organizer.OrganizerList> lists)
+			{
+				List<RazorEnhanced.Organizer.OrganizerList> listsOut = new List<RazorEnhanced.Organizer.OrganizerList>();
+
+				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+				{
+
+					string description = (string)row["Description"];
+					int delay = (int)row["Delay"];
+					int source = (int)row["Source"];
+					int destination = (int)row["Destination"];
+					bool selected = (bool)row["Selected"];
+
+					RazorEnhanced.Organizer.OrganizerList list = new RazorEnhanced.Organizer.OrganizerList(description, delay, source, destination, selected);
+					listsOut.Add(list);
+				}
+
+				lists = listsOut;
+			}
+
+			internal static bool ItemExists(string list, RazorEnhanced.Organizer.OrganizerItem item)
+			{
+				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list && (RazorEnhanced.Organizer.OrganizerItem)row["Item"] == item)
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ItemInsert(string list, RazorEnhanced.Organizer.OrganizerItem item)
+			{
+				DataRow row = m_Dataset.Tables["ORGANIZER_ITEMS"].NewRow();
+				row["List"] = list;
+				row["Item"] = item;
+				m_Dataset.Tables["ORGANIZER_ITEMS"].Rows.Add(row);
+
+				Save();
+			}
+
+			internal static void ItemReplace(string list, int index, RazorEnhanced.Organizer.OrganizerItem item)
+			{
+				int count = -1;
+				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list)
+					{
+						count++;
+						if (count == index)
+						{
+							row["Item"] = item;
+						}
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemDelete(string list, RazorEnhanced.Organizer.OrganizerItem item)
+			{
+				for (int i = m_Dataset.Tables["ORGANIZER_ITEMS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[i];
+					if ((string)row["List"] == list && (RazorEnhanced.Organizer.OrganizerItem)row["Item"] == item)
+					{
+						row.Delete();
+						break;
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemsRead(string list, out List<RazorEnhanced.Organizer.OrganizerItem> items)
+			{
+				List<RazorEnhanced.Organizer.OrganizerItem> itemsOut = new List<RazorEnhanced.Organizer.OrganizerItem>();
+
+				if (ListExists(list))
+				{
+					foreach (DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows)
+					{
+						if ((string)row["List"] == list)
+						{
+							itemsOut.Add((RazorEnhanced.Organizer.OrganizerItem)row["Item"]);
+						}
+					}
+				}
+
+				items = itemsOut;
+			}
+		}
+		// ------------- ORGANIZER END-----------------
+
+
+
+		// ------------- SELL AGENT ----------------
+
+		internal class SellAgent
+		{
+			internal static bool ListExists(string description)
+			{
+				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+				{
+					if (((string)row["Description"]).ToLower() == description.ToLower())
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ListInsert(string description, int bag)
+			{
+				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+				{
+					row["Selected"] = false;
+				}
+
+				DataRow newRow = m_Dataset.Tables["SELL_LISTS"].NewRow();
+				newRow["Description"] = description;
+				newRow["Bag"] = bag;
+				newRow["Selected"] = true;
+				m_Dataset.Tables["SELL_LISTS"].Rows.Add(newRow);
+
+				Save();
+			}
+
+			internal static void ListUpdate(string description, int bag, bool selected)
+			{
+
+				bool found = false;
+				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+				{
+					if ((string)row["Description"] == description)
+					{
+						found = true;
+						break;
+					}
+				}
+
+				if (found)
+				{
+					if (selected)
+					{
+						foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+						{
+							row["Selected"] = false;
+						}
+					}
+
+					foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+					{
+						if ((string)row["Description"] == description)
+						{
+							row["Bag"] = bag;
+							row["Selected"] = selected;
+							break;
+						}
+					}
+
+					Save();
 				}
 			}
-			list = result;
-			hotBag = hotBagOut;
-			return exit;
-		}
 
-		// Buy Agent
-		internal static void SaveBuyGeneral(List<string> list, string selection)
-		{
-			m_Dataset.Tables["BUY_GENERAL"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["BUY_GENERAL"].NewRow();
-			row["List"] = list;
-			row["Selection"] = selection;
-			m_Dataset.Tables["BUY_GENERAL"].Rows.Add(row);
-			Save();
-		}
-
-		internal static void SaveBuyItemList(string name, List<RazorEnhanced.BuyAgent.BuyItem> list)
-		{
-			m_Dataset.Tables["BUY_LISTS"].Rows.Clear();
-			DataRow row = m_Dataset.Tables["BUY_LISTS"].NewRow();
-			row["Name"] = name;
-			row["List"] = list;
-			m_Dataset.Tables["BUY_LISTS"].Rows.Add(row);
-			Save();
-		}
-
-		internal static bool LoadBuyGeneral(out List<string> list, out string selection)
-		{
-			bool exit = false;
-
-			List<string> listOut = new List<string>();
-			string selectionOut = "";
-
-			if (m_Dataset.Tables["BUY_GENERAL"].Rows.Count == 1)
+			internal static void ListDelete(string description)
 			{
-				DataRow row = m_Dataset.Tables["BUY_GENERAL"].Rows[0];
+				for (int i = m_Dataset.Tables["SELL_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
-					listOut = row["List"] as List<string>;
-					selectionOut = (string)row["Selection"];
-					exit = true;
+					DataRow row = m_Dataset.Tables["SELL_ITEMS"].Rows[i];
+					if ((string)row["List"] == description)
+					{
+						row.Delete();
+					}
+				}
+
+				for (int i = m_Dataset.Tables["SELL_LISTS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["SELLL_LISTS"].Rows[i];
+					if ((string)row["Description"] == description)
+					{
+						row.Delete();
+						break;
+					}
+					row["Selected"] = false;
+				}
+
+				Save();
+			}
+
+			internal static void ListsRead(out List<RazorEnhanced.SellAgent.SellAgentList> lists)
+			{
+				List<RazorEnhanced.SellAgent.SellAgentList> listsOut = new List<RazorEnhanced.SellAgent.SellAgentList>();
+
+				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+				{
+					string description = (string)row["Description"];
+					int bag = (int)row["Bag"];
+					bool selected = (bool)row["Selected"];
+
+					RazorEnhanced.SellAgent.SellAgentList list = new RazorEnhanced.SellAgent.SellAgentList(description, bag, selected);
+					listsOut.Add(list);
+				}
+
+				lists = listsOut;
+			}
+
+			internal static bool ItemExists(string list, RazorEnhanced.SellAgent.SellAgentItem item)
+			{
+				foreach (DataRow row in m_Dataset.Tables["SELL_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list && (RazorEnhanced.SellAgent.SellAgentItem)row["Item"] == item)
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ItemInsert(string list, RazorEnhanced.SellAgent.SellAgentItem item)
+			{
+				DataRow row = m_Dataset.Tables["SELL_ITEMS"].NewRow();
+				row["List"] = list;
+				row["Item"] = item;
+				m_Dataset.Tables["SELL_ITEMS"].Rows.Add(row);
+
+				Save();
+			}
+
+			internal static void ItemReplace(string list, int index, RazorEnhanced.SellAgent.SellAgentItem item)
+			{
+				int count = -1;
+				foreach (DataRow row in m_Dataset.Tables["SELL_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list)
+					{
+						count++;
+						if (count == index)
+						{
+							row["Item"] = item;
+						}
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemDelete(string list, RazorEnhanced.SellAgent.SellAgentItem item)
+			{
+				for (int i = m_Dataset.Tables["SELL_ITEMS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["SELL_ITEMS"].Rows[i];
+					if ((string)row["List"] == list && (RazorEnhanced.SellAgent.SellAgentItem)row["Item"] == item)
+					{
+						row.Delete();
+						break;
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemsRead(string list, out List<RazorEnhanced.SellAgent.SellAgentItem> items)
+			{
+				List<RazorEnhanced.SellAgent.SellAgentItem> itemsOut = new List<RazorEnhanced.SellAgent.SellAgentItem>();
+
+				if (ListExists(list))
+				{
+					foreach (DataRow row in m_Dataset.Tables["SELL_ITEMS"].Rows)
+					{
+						if ((string)row["List"] == list)
+						{
+							itemsOut.Add((RazorEnhanced.SellAgent.SellAgentItem)row["Item"]);
+						}
+					}
+				}
+
+				items = itemsOut;
+			}
+		}
+		// ------------- SELL AGENT END-----------------
+
+
+
+		// ------------- BUY AGENT ----------------
+
+		internal class BuyAgent
+		{
+			internal static bool ListExists(string description)
+			{
+				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+				{
+					if (((string)row["Description"]).ToLower() == description.ToLower())
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ListInsert(string description, int bag)
+			{
+				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+				{
+					row["Selected"] = false;
+				}
+
+				DataRow newRow = m_Dataset.Tables["BUY_LISTS"].NewRow();
+				newRow["Description"] = description;
+				newRow["Bag"] = bag;
+				newRow["Selected"] = true;
+				m_Dataset.Tables["BUY_LISTS"].Rows.Add(newRow);
+
+				Save();
+			}
+
+			internal static void ListUpdate(string description, int bag, bool selected)
+			{
+
+				bool found = false;
+				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+				{
+					if ((string)row["Description"] == description)
+					{
+						found = true;
+						break;
+					}
+				}
+
+				if (found)
+				{
+					if (selected)
+					{
+						foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+						{
+							row["Selected"] = false;
+						}
+					}
+
+					foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+					{
+						if ((string)row["Description"] == description)
+						{
+							row["Bag"] = bag;
+							row["Selected"] = selected;
+							break;
+						}
+					}
+
+					Save();
 				}
 			}
-			list = listOut;
-			selection = selectionOut;
 
-			return exit;
-		}
-
-		internal static bool LoadBuyItemList(string name, out List<RazorEnhanced.BuyAgent.BuyItem> list)
-		{
-			bool exit = false;
-			List<RazorEnhanced.BuyAgent.BuyItem> result = new List<RazorEnhanced.BuyAgent.BuyItem>();
-
-			foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+			internal static void ListDelete(string description)
 			{
-				if ((string)row["Name"] == name)
+				for (int i = m_Dataset.Tables["BUY_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
-					result = row["List"] as List<RazorEnhanced.BuyAgent.BuyItem>;
-					exit = true;
+					DataRow row = m_Dataset.Tables["BUY_ITEMS"].Rows[i];
+					if ((string)row["List"] == description)
+					{
+						row.Delete();
+					}
 				}
+
+				for (int i = m_Dataset.Tables["BUY_LISTS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["BUY_LISTS"].Rows[i];
+					if ((string)row["Description"] == description)
+					{
+						row.Delete();
+						break;
+					}
+					row["Selected"] = false;
+				}
+
+				Save();
 			}
-			list = result;
-			return exit;
+
+			internal static void ListsRead(out List<RazorEnhanced.BuyAgent.BuyAgentList> lists)
+			{
+				List<RazorEnhanced.BuyAgent.BuyAgentList> listsOut = new List<RazorEnhanced.BuyAgent.BuyAgentList>();
+
+				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
+				{
+					string description = (string)row["Description"];
+					int bag = (int)row["Bag"];
+					bool selected = (bool)row["Selected"];
+
+					RazorEnhanced.BuyAgent.BuyAgentList list = new RazorEnhanced.BuyAgent.BuyAgentList(description, bag, selected);
+					listsOut.Add(list);
+				}
+
+				lists = listsOut;
+			}
+
+			internal static bool ItemExists(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
+			{
+				foreach (DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list && (RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"] == item)
+						return true;
+				}
+
+				return false;
+			}
+
+			internal static void ItemInsert(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
+			{
+				DataRow row = m_Dataset.Tables["BUY_ITEMS"].NewRow();
+				row["List"] = list;
+				row["Item"] = item;
+				m_Dataset.Tables["BUY_ITEMS"].Rows.Add(row);
+
+				Save();
+			}
+
+			internal static void ItemReplace(string list, int index, RazorEnhanced.BuyAgent.BuyAgentItem item)
+			{
+				int count = -1;
+				foreach (DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows)
+				{
+					if ((string)row["List"] == list)
+					{
+						count++;
+						if (count == index)
+						{
+							row["Item"] = item;
+						}
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemDelete(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
+			{
+				for (int i = m_Dataset.Tables["BUY_ITEMS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["BUY_ITEMS"].Rows[i];
+					if ((string)row["List"] == list && (RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"] == item)
+					{
+						row.Delete();
+						break;
+					}
+				}
+
+				Save();
+			}
+
+			internal static void ItemsRead(string list, out List<RazorEnhanced.BuyAgent.BuyAgentItem> items)
+			{
+				List<RazorEnhanced.BuyAgent.BuyAgentItem> itemsOut = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
+
+				if (ListExists(list))
+				{
+					foreach (DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows)
+					{
+						if ((string)row["List"] == list)
+						{
+							itemsOut.Add((RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"]);
+						}
+					}
+				}
+
+				items = itemsOut;
+			}
 		}
+		// ------------- BUY AGENT END-----------------
 
 		internal static void Save()
 		{

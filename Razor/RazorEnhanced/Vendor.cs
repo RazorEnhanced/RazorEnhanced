@@ -9,375 +9,678 @@ using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
-    public class SellAgent
-    {
-        [Serializable]
-        public class SellItem
-        {
-            private string m_Name;
-            public string Name { get { return m_Name; } }
+	public class SellAgent
+	{
+		[Serializable]
+		public class SellAgentItem
+		{
+			private string m_Name;
+			public string Name { get { return m_Name; } }
 
-            private int m_Graphics;
-            public int Graphics { get { return m_Graphics; } }
+			private int m_Graphics;
+			public int Graphics { get { return m_Graphics; } }
 
-            private int m_amount;
-            public int Amount { get { return m_amount; } }
+			private int m_amount;
+			public int Amount { get { return m_amount; } }
 
-            private int m_color;
-            public int Color { get { return m_color; } }
+			private int m_color;
+			public int Color { get { return m_color; } }
 
-            public SellItem(string name, int graphics, int amount, int color)
-            {
-                m_Name = name;
-                m_Graphics = graphics;
-                m_amount = amount;
-                m_color = color;
-            }
-        }
+			private bool m_Selected;
+			internal bool Selected { get { return m_Selected; } }
 
-        public class SellTempItem
-        {
-            private int m_Graphics;
-            public int Graphics { get { return m_Graphics; } }
+			public SellAgentItem(string name, int graphics, int amount, int color, bool selected)
+			{
+				m_Name = name;
+				m_Graphics = graphics;
+				m_amount = amount;
+				m_color = color;
+				m_Selected = selected;
+			}
+		}
 
-            private int m_amountleft;
-            public int AmountLeft { get { return m_amountleft; } }
+		internal class SellAgentList
+		{
+			private string m_Description;
+			internal string Description { get { return m_Description; } }
 
-            private int m_color;
-            public int Color { get { return m_color; } }
+			private int m_Bag;
+			internal int Bag { get { return m_Bag; } }
 
-            public SellTempItem(int graphics, int amountleft, int color)
-            {
-                m_Graphics = graphics;
-                m_amountleft = amountleft;
-                m_color = color;
-            }
-        }
+			private bool m_Selected;
+			internal bool Selected { get { return m_Selected; } }
 
-        internal static void RefreshList(List<SellItem> SellItemList)
-        {
-            Assistant.Engine.MainWindow.SellListView.Items.Clear();
-            foreach (SellItem item in SellItemList)
-            {
-                ListViewItem listitem = new ListViewItem();
-                listitem.SubItems.Add(item.Name);
-                listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-                listitem.SubItems.Add(item.Amount.ToString());
-                if (item.Color == -1)
-                    listitem.SubItems.Add("All");
-                else
-                    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-                Assistant.Engine.MainWindow.SellListView.Items.Add(listitem);
-            }
-        }
+			public SellAgentList(string description, int bag, bool selected)
+			{
+				m_Description = description;
+				m_Bag = bag;
+				m_Selected = selected;
+			}
+		}
 
-        internal static void ModifyItemToList(string name, int graphics, int amount, int color, ListView sellListView, List<SellItem> sellItemList, int indexToInsert)
-        {
-            sellItemList.RemoveAt(indexToInsert);                                                       // rimuove
-            sellItemList.Insert(indexToInsert, new SellItem(name, graphics, amount, color));     // inserisce al posto di prima
-            RazorEnhanced.Settings.SaveSellItemList(Assistant.Engine.MainWindow.SellListSelect.SelectedItem.ToString(), sellItemList, Assistant.Engine.MainWindow.SellBagLabel.Text);
-            RazorEnhanced.SellAgent.RefreshList(sellItemList);
-        }
+		internal static string SellListName
+		{
+			get
+			{
+				return (string)Assistant.Engine.MainWindow.SellListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.SellListSelect.Text));
+			}
 
-        internal static void AddItemToList(string name, int graphics, int amount, int color, ListView sellListView, List<SellItem> sellItemList)
-        {
-            sellItemList.Add(new SellItem(name, graphics, amount, color));
-            RazorEnhanced.Settings.SaveSellItemList(Assistant.Engine.MainWindow.SellListSelect.SelectedItem.ToString(), sellItemList, Assistant.Engine.MainWindow.SellBagLabel.Text);
-            RazorEnhanced.SellAgent.RefreshList(sellItemList);
-        }
-        internal static void AddLog(string addlog)
-        {
-            Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Add(addlog)));
-            Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.SelectedIndex = Assistant.Engine.MainWindow.SellLogBox.Items.Count - 1));
-        }
-        internal static void EnableSellFilter()
-        {
-            PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(OnVendorSell));
-        }
+			set
+			{
+				Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.Text = value));
+			}
+		}
 
-        internal static Assistant.Item HotBag
-        {
-            get
-            {
-                Assistant.Item HotBag = null;
-                int SerialHotBag = Convert.ToInt32(Assistant.Engine.MainWindow.SellBagLabel.Text, 16);
+		internal static int SellBag
+		{
+			get
+			{
+				int serialBag = 0;
 
-                if (SerialHotBag == 0)
-                {
-                    return null;
-                }
-                else
-                {
-                    HotBag = Assistant.World.FindItem(SerialHotBag);
-                    if (HotBag.RootContainer != World.Player || !HotBag.IsContainer)
-                        return null;
-                    else
-                        return HotBag;
-                }
-            }
-        }
+				try
+				{
+					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.SellBagLabel.Text, 16);
 
-        private static bool ColorCheck(int ColorDaLista, ushort ColorDaVendor)
-        {
-            if (ColorDaLista == -1)         // Wildcard colore
-                return true;
-            else
-                if (ColorDaLista == ColorDaVendor)      // Match OK
-                    return true;
-                else            // Match fallito
-                    return false;
-        }
+					if (serialBag == 0)
+					{
+						serialBag = (int)World.Player.Backpack.Serial.Value;
+					}
+					else
+					{
+						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
+						if (bag.RootContainer != World.Player)
+							serialBag = (int)World.Player.Backpack.Serial.Value;
+					}
+				}
+				catch (Exception ex)
+				{
+				}
 
-        private static void OnVendorSell(PacketReader pvSrc, PacketHandlerEventArgs args)
-        {
-            if (!Assistant.Engine.MainWindow.SellCheckBox.Checked)          // Filtro disabilitato
-                return;
+				return serialBag;
+			}
 
-            if (SellAgent.HotBag == null)         // Verifica HotBag
-            {
-                AddLog("Invalid or not accessible HotBag");
-                return;
-            }
+			set
+			{
+				Assistant.Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8");
+			}
+		}
 
-            int total = 0;
-            uint serial = pvSrc.ReadUInt32();
-            Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
-            if (vendor == null)
-                Assistant.World.AddMobile(vendor = new Assistant.Mobile(serial));
-            int count = pvSrc.ReadUInt16();
-            int sold = 0;
+		internal static void AddLog(string addlog)
+		{
+			Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Add(addlog)));
+			Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.SelectedIndex = Assistant.Engine.MainWindow.SellLogBox.Items.Count - 1));
+		}
 
-           
-            List<Assistant.SellListItem> list = new List<Assistant.SellListItem>(count);                // Lista item checkati per vendita (non so dove sia dichiarata)
-            List<RazorEnhanced.SellAgent.SellTempItem> templist = new List<RazorEnhanced.SellAgent.SellTempItem>();         // Lista temporanea per controlli amount
+		internal static void RefreshLists()
+		{
+			List<SellAgentList> lists;
+			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
-            AddLog("HotBag: 0x" + HotBag.Serial.Value.ToString("X8"));
+			SellAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.SellListSelect.Text)
+				return;
 
-            for (int i = 0; i < count; i++)         // Scansione item in lista menu vendor
-            {
-                uint ser = pvSrc.ReadUInt32();
-                ushort gfx = pvSrc.ReadUInt16();
-                ushort hue = pvSrc.ReadUInt16();
-                ushort amount = pvSrc.ReadUInt16();
-                ushort price = pvSrc.ReadUInt16();
-                pvSrc.ReadString(pvSrc.ReadUInt16()); //name
+			Assistant.Engine.MainWindow.SellListSelect.Items.Clear();
+			foreach (SellAgentList l in lists)
+			{
+				Assistant.Engine.MainWindow.SellListSelect.Items.Add(l.Description);
 
-                Assistant.Item item = Assistant.World.FindItem(ser);
+				if (l.Selected)
+				{
+					Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(l.Description);
+					SellBag = l.Bag;
+				}
+			}
+		}
 
-                foreach (SellItem SellItemList in Assistant.Engine.MainWindow.SellItemList) // Scansione item presenti in lista agent item 
-                {
-                    if (gfx == SellItemList.Graphics && (item != null && item != HotBag && item.IsChildOf(HotBag)) && RazorEnhanced.SellAgent.ColorCheck(SellItemList.Color, hue))                   // match sulla grafica fra lista agent e lista vendor e hotbag              
-                    {
-                        int AmountLefta = 60000;
-                        int Index = 0;
-                        bool GiaVenduto = false;
+		internal static void RefreshItems()
+		{
+			List<SellAgentList> lists;
+			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
-                        for (int y = 0; y < templist.Count; y++)            // Controllo che non ho gia venduto item simili
-                        {
-                            if (templist[y].Graphics == gfx && RazorEnhanced.SellAgent.ColorCheck(templist[y].Color, hue))
-                            {
-                                GiaVenduto = true;
-                                AmountLefta = templist[y].AmountLeft;
-                                Index = y;
-                            }
-                        }
+			Assistant.Engine.MainWindow.SellListView.Items.Clear();
+			foreach (SellAgentList l in lists)
+			{
+				if (l.Selected)
+				{
+					List<SellAgent.SellAgentItem> items;
+					RazorEnhanced.Settings.SellAgent.ItemsRead(l.Description, out items);
 
-                        if (AmountLefta == 60000)                      // Valore limite e inizzializzazione
-                            AmountLefta = SellItemList.Amount;
+					foreach (SellAgentItem item in items)
+					{
+						ListViewItem listitem = new ListViewItem();
 
-                        if (AmountLefta > 0) // Controlla se mancano da vendere
-                        {
-                            if (GiaVenduto)  // Gia venduto oggetto stessa grafica
-                            {
-                                AddLog("Item match: 0x" + SellItemList.Graphics.ToString("X4") + " - Amount: " + SellItemList.Amount + " - Left: " + AmountLefta);
-                                if (amount < AmountLefta)        // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
-                                {
-                                    int Amountleft = AmountLefta - amount;
-                                    list.Add(new SellListItem(ser, amount));            // Lista processo vendita
-                                    templist.RemoveAt(Index);
-                                    templist.Insert(Index, new SellTempItem(gfx, Amountleft, SellItemList.Color));
-                                    total += amount * price;
-                                    sold += amount;
-                                }
-                                else               // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante 
-                                {
-                                    list.Add(new SellListItem(ser, Convert.ToUInt16(AmountLefta)));  // Lista processo vendita
-                                    templist.RemoveAt(Index);
-                                    templist.Insert(Index, new SellTempItem(gfx, 0, SellItemList.Color));
-                                    total += AmountLefta * price;
-                                    sold += AmountLefta;
-                                }
-                            }
-                            else     // Mai venduto oggetto stessa grafica
-                            {
-                                AddLog("Item match: 0x" + SellItemList.Graphics.ToString("X4") + " - Amount: " + SellItemList.Amount + " - Left: " + SellItemList.Amount);
-                                if (amount < SellItemList.Amount)        // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
-                                {
-                                    list.Add(new SellListItem(ser, amount));  // Lista processo vendita
-                                    templist.Add(new SellTempItem(gfx, (SellItemList.Amount - amount), SellItemList.Color));
-                                    total += amount * price;
-                                    sold += amount;
-                                }
-                                else               // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante 
-                                {
-                                    list.Add(new SellListItem(ser, Convert.ToUInt16(SellItemList.Amount)));  // Lista processo vendita
-                                    templist.Add(new SellTempItem(gfx, 0, SellItemList.Color));
-                                    total += SellItemList.Amount * price;
-                                    sold += SellItemList.Amount;
-                                }
-                            }
-                        }
+						listitem.Checked = item.Selected;
 
-                    }
-                }
-                        
-                                            
-            }
+						listitem.SubItems.Add(item.Name);
+						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
 
-            if (list.Count > 0)
-            {
-                ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
-                AddLog("Sell " + sold.ToString() + "items for " + total.ToString() + " gold coin");
-                World.Player.SendMessage("Enhanced Sell Agent: Sell " + sold.ToString() + " items for " + total.ToString() + " gold coin");
-                args.Block = true;
-            }
-        }
-    }
+						if (item.Color == -1)
+							listitem.SubItems.Add("All");
+						else
+							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
 
-    public class BuyAgent
-    {
-        [Serializable]
-        public class BuyItem
-        {
-            private string m_Name;
-            public string Name { get { return m_Name; } }
+						Assistant.Engine.MainWindow.SellListView.Items.Add(listitem);
+					}
+				}
+			}
+		}
 
-            private int m_Graphics;
-            public int Graphics { get { return m_Graphics; } }
+		internal static void UpdateSelectedItems()
+		{
+			List<SellAgentItem> items;
+			RazorEnhanced.Settings.SellAgent.ItemsRead(SellListName, out items);
 
-            private int m_amount;
-            public int Amount { get { return m_amount; } }
+			if (items.Count != Assistant.Engine.MainWindow.SellListView.Items.Count)
+			{
+				return;
+			}
 
-            private int m_color;
-            public int Color { get { return m_color; } }
+			for (int i = 0; i < Assistant.Engine.MainWindow.SellListView.Items.Count; i++)
+			{
+				ListViewItem lvi = Assistant.Engine.MainWindow.SellListView.Items[i];
+				SellAgentItem old = items[i];
 
-            public BuyItem(string name, int graphics, int amount, int color)
-            {
-                m_Name = name;
-                m_Graphics = graphics;
-                m_amount = amount;
-                m_color = color;
-            }
-        }
-        internal static void RefreshList(List<BuyItem> BuyItemList)
-        {
-            Assistant.Engine.MainWindow.BuyListView.Items.Clear();
-            foreach (BuyItem item in BuyItemList)
-            {
-                ListViewItem listitem = new ListViewItem();
-                listitem.SubItems.Add(item.Name);
-                listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-                listitem.SubItems.Add(item.Amount.ToString());
-                if (item.Color == -1)
-                    listitem.SubItems.Add("All");
-                else
-                    listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-                Assistant.Engine.MainWindow.BuyListView.Items.Add(listitem);
-            }
-        }
+				if (lvi != null && old != null)
+				{
+					SellAgentItem item = new SellAgent.SellAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
+					RazorEnhanced.Settings.SellAgent.ItemReplace(RazorEnhanced.SellAgent.SellListName, i, item);
+				}
+			}
+		}
 
-        internal static void ModifyItemToList(string name, int graphics, int amount, int color, ListView buylListView, List<BuyItem> buyItemList, int indexToInsert)
-        {
-            buyItemList.RemoveAt(indexToInsert);                                                       // rimuove
-            buyItemList.Insert(indexToInsert, new BuyItem(name, graphics, amount, color));     // inserisce al posto di prima
-            RazorEnhanced.Settings.SaveBuyItemList(Assistant.Engine.MainWindow.BuyListSelect.SelectedItem.ToString(), buyItemList);
-            RazorEnhanced.BuyAgent.RefreshList(buyItemList);
-        }
+		internal static void AddList(string newList)
+		{
+			RazorEnhanced.Settings.SellAgent.ListInsert(newList, 0);
 
-        internal static void AddItemToList(string name, int graphics, int amount, int color, ListView buyListView, List<BuyItem> buyItemList)
-        {
-            buyItemList.Add(new BuyItem(name, graphics, amount, color));
-            RazorEnhanced.Settings.SaveBuyItemList(Assistant.Engine.MainWindow.BuyListSelect.SelectedItem.ToString(), buyItemList);
-            RazorEnhanced.BuyAgent.RefreshList(buyItemList);
-        }
-        internal static void AddLog(string addlog)
-        {
-            Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
-            Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.SelectedIndex = Assistant.Engine.MainWindow.BuyLogBox.Items.Count - 1));
-        }
+			RazorEnhanced.SellAgent.RefreshLists();
+			RazorEnhanced.SellAgent.RefreshItems();
+		}
 
-        internal static void EnableBuyFilter()
-        {
-            PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(DisplayBuy));
-        }
+		internal static void RemoveList(string list)
+		{
+			if (RazorEnhanced.Settings.SellAgent.ListExists(list))
+			{
+				RazorEnhanced.Settings.SellAgent.ListDelete(list);
+			}
 
-        private static bool ColorCheck(int ColorDaLista, ushort ColorDaVendor)
-        {
-            if (ColorDaLista == -1)         // Wildcard colore
-                return true;
-            else
-                if (ColorDaLista == ColorDaVendor)      // Match OK
-                    return true;
-                else            // Match fallito
-                    return false;
-        }
+			RazorEnhanced.SellAgent.RefreshLists();
+			RazorEnhanced.SellAgent.RefreshItems();
+		}
 
-        private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
-        {
-            if (!Assistant.Engine.MainWindow.BuyCheckBox.Checked)          // Filtro disabilitato
-                return;
+		internal static void AddItemToList(string name, int graphics, int amount, int color)
+		{
+			SellAgentItem item = new SellAgentItem(name, graphics, amount, color, false);
 
-            Assistant.Serial serial = p.ReadUInt32();
-            ushort gump = p.ReadUInt16();
+			string selection = Assistant.Engine.MainWindow.SellListSelect.Text;
 
-            Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
-            if (vendor == null)
-                return;
+			if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
+			{
+				if (!RazorEnhanced.Settings.SellAgent.ItemExists(selection, item))
+					RazorEnhanced.Settings.SellAgent.ItemInsert(selection, item);
+			}
 
-            Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
-            if (pack == null || pack.Contains == null || pack.Contains.Count <= 0)
-                return;
+			RazorEnhanced.SellAgent.RefreshItems();
+		}
 
-            int total = 0;
-            int cost = 0;
-            List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>();                // Lista definita altrove (non rimuovere se si fa pulizia in giro)
+		internal static void ModifyItemInList(string name, int graphics, int amount, int color, bool selected, SellAgentItem old, int index)
+		{
+			SellAgentItem item = new SellAgentItem(name, graphics, color, amount, selected);
 
-            for (int i = 0; i < pack.Contains.Count; i++)                       // Scan item lista oggetti in vendita
-            {
-                Assistant.Item item = (Assistant.Item)pack.Contains[i];
-                if (item == null)
-                    continue;
+			string selection = Assistant.Engine.MainWindow.SellListSelect.Text;
 
-                foreach (BuyItem BuyItemList in Assistant.Engine.MainWindow.BuyItemList) // Scansione item presenti in lista agent item 
-                {
-                    if (BuyItemList.Graphics == item.ItemID && RazorEnhanced.BuyAgent.ColorCheck(BuyItemList.Color, item.Hue))                  // Verifica match fra lista e oggetti presenti del vendor
-                    { 
-                        if (item.Amount >= BuyItemList.Amount)          // Caso che il vendor abbia piu' item di quelli richiesti
-                        {
-                            AddLog("Item match: 0x" + BuyItemList.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + BuyItemList.Amount);
-                            buyList.Add(new VendorBuyItem(item.Serial, BuyItemList.Amount, item.Price));
-                            total += BuyItemList.Amount;
-                            cost += item.Price * BuyItemList.Amount;
-                        }
-                        else                // Caso che il vendor ne abbia di meno (Li compro tutti)
-                        {
-                            AddLog("Item match: 0x" + BuyItemList.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + item.Amount);
-                            buyList.Add(new VendorBuyItem(item.Serial, item.Amount, item.Price));
-                            total += item.Amount;
-                            cost += item.Price * item.Amount;
-                        }
+			if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
+			{
+				if (RazorEnhanced.Settings.SellAgent.ItemExists(selection, old))
+					RazorEnhanced.Settings.SellAgent.ItemReplace(selection, index, item);
+			}
 
-                    }
-                }
-             }
-            if (buyList.Count > 0)
-            {
-                args.Block = true;
-                ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
-                AddLog("Buy " + total.ToString() + "items for " + cost.ToString() + " gold coin");
-                World.Player.SendMessage("Enhanced Buy Agent: Buy " + total.ToString() + " items for " + cost.ToString() + " gold coin");
-            }
-        }
+			RazorEnhanced.SellAgent.RefreshItems();
+		}
 
-    }
+		internal static void EnableSellFilter()
+		{
+			PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(OnVendorSell));
+		}
+
+		private static bool ColorCheck(int colorDaLista, ushort colorDaVendor)
+		{
+			if (colorDaLista == -1)         // Wildcard colore
+				return true;
+			else
+				if (colorDaLista == colorDaVendor)      // Match OK
+					return true;
+				else            // Match fallito
+					return false;
+		}
+
+		private static void OnVendorSell(PacketReader pvSrc, PacketHandlerEventArgs args)
+		{
+			if (!Assistant.Engine.MainWindow.SellCheckBox.Checked) // Filtro disabilitato
+				return;
+
+			Assistant.Item bag = new Assistant.Item(SellBag);
+			if (bag == null) // Verifica HotBag
+			{
+				AddLog("Invalid or not accessible Container");
+				return;
+			}
+
+			int total = 0;
+			uint serial = pvSrc.ReadUInt32();
+
+			Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
+			if (vendor == null)
+				Assistant.World.AddMobile(vendor = new Assistant.Mobile(serial));
+
+			int count = pvSrc.ReadUInt16();
+			int sold = 0;
+
+			List<Assistant.SellListItem> list = new List<Assistant.SellListItem>(count); // Lista item checkati per vendita (non so dove sia dichiarata)
+			List<RazorEnhanced.SellAgent.SellAgentItem> templist = new List<RazorEnhanced.SellAgent.SellAgentItem>(); // Lista temporanea per controlli amount
+
+			AddLog("Container: 0x" + SellBag.ToString("X8"));
+
+			for (int i = 0; i < count; i++) // Scansione item in lista menu vendor
+			{
+				uint ser = pvSrc.ReadUInt32();
+				ushort gfx = pvSrc.ReadUInt16();
+				ushort hue = pvSrc.ReadUInt16();
+				ushort amount = pvSrc.ReadUInt16();
+				ushort price = pvSrc.ReadUInt16();
+				pvSrc.ReadString(pvSrc.ReadUInt16()); //name
+
+				Assistant.Item item = Assistant.World.FindItem(ser);
+
+				List<SellAgent.SellAgentItem> items;
+				RazorEnhanced.Settings.SellAgent.ItemsRead(SellListName, out items);
+
+				foreach (SellAgentItem sellItem in items) // Scansione item presenti in lista agent item 
+				{
+					if (!sellItem.Selected)
+						continue;
+
+					if (gfx == sellItem.Graphics && (item != null && item != bag && item.IsChildOf(bag)) && RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue)) // match sulla grafica fra lista agent e lista vendor e hotbag              
+					{
+						int amountLeft = 60000;
+						int index = 0;
+						bool alreadySold = false;
+
+						for (int y = 0; y < templist.Count; y++) // Controllo che non ho gia venduto item simili
+						{
+							if (templist[y].Graphics == gfx && RazorEnhanced.SellAgent.ColorCheck(templist[y].Color, hue))
+							{
+								alreadySold = true;
+								amountLeft = templist[y].Amount;
+								index = y;
+							}
+						}
+
+						if (amountLeft == 60000) // Valore limite e inizzializzazione
+							amountLeft = sellItem.Amount;
+
+						if (amountLeft > 0) // Controlla se mancano da vendere
+						{
+							if (alreadySold) // Gia venduto oggetto stessa grafica
+							{
+								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount + " - Left: " + amountLeft);
+								if (amount < amountLeft)        // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
+								{
+									int amountTemp = amountLeft - amount;
+									list.Add(new SellListItem(ser, amount));            // Lista processo vendita
+									templist.RemoveAt(index);
+									templist.Insert(index, new SellAgentItem(sellItem.Name, gfx, amountTemp, sellItem.Color, sellItem.Selected));
+									total += amount * price;
+									sold += amount;
+								}
+								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante 
+								{
+									list.Add(new SellListItem(ser, Convert.ToUInt16(amountLeft)));  // Lista processo vendita
+									templist.RemoveAt(index);
+									templist.Insert(index, new SellAgentItem(sellItem.Name, gfx, 0, sellItem.Color, sellItem.Selected));
+									total += amountLeft * price;
+									sold += amountLeft;
+								}
+							}
+							else // Mai venduto oggetto stessa grafica
+							{
+								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount + " - Left: " + sellItem.Amount);
+								if (amount < sellItem.Amount) // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
+								{
+									list.Add(new SellListItem(ser, amount));  // Lista processo vendita
+									templist.Add(new SellAgentItem(sellItem.Name, gfx, (sellItem.Amount - amount), sellItem.Color, sellItem.Selected));
+									total += amount * price;
+									sold += amount;
+								}
+								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante 
+								{
+									list.Add(new SellListItem(ser, Convert.ToUInt16(sellItem.Amount)));  // Lista processo vendita
+									templist.Add(new SellAgentItem(sellItem.Name, gfx, 0, sellItem.Color, sellItem.Selected));
+									total += sellItem.Amount * price;
+									sold += sellItem.Amount;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (list.Count > 0)
+			{
+				ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
+				AddLog("Sold " + sold.ToString() + "items for " + total.ToString() + " gold coins");
+				World.Player.SendMessage("Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
+				args.Block = true;
+			}
+		}
+	}
+
+	public class BuyAgent
+	{
+		[Serializable]
+		public class BuyAgentItem
+		{
+			private string m_Name;
+			public string Name { get { return m_Name; } }
+
+			private int m_Graphics;
+			public int Graphics { get { return m_Graphics; } }
+
+			private int m_Amount;
+			public int Amount { get { return m_Amount; } }
+
+			private int m_Color;
+			public int Color { get { return m_Color; } }
+
+			private bool m_Selected;
+			internal bool Selected { get { return m_Selected; } }
+
+			public BuyAgentItem(string name, int graphics, int amount, int color, bool selected)
+			{
+				m_Name = name;
+				m_Graphics = graphics;
+				m_Amount = amount;
+				m_Color = color;
+				m_Selected = selected;
+			}
+		}
+
+		internal class BuyAgentList
+		{
+			private string m_Description;
+			internal string Description { get { return m_Description; } }
+
+			private int m_Bag;
+			internal int Bag { get { return m_Bag; } }
+
+			private bool m_Selected;
+			internal bool Selected { get { return m_Selected; } }
+
+			public BuyAgentList(string description, int bag, bool selected)
+			{
+				m_Description = description;
+				m_Bag = bag;
+				m_Selected = selected;
+			}
+		}
+
+		internal static string BuyListName
+		{
+			get
+			{
+				return (string)Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.BuyListSelect.Text));
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.Text = value));
+			}
+		}
+
+		internal static int BuyBag
+		{
+			get
+			{
+				int serialBag = 0;
+
+				try
+				{
+					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.BuyBagLabel.Text, 16);
+
+					if (serialBag == 0)
+					{
+						serialBag = (int)World.Player.Backpack.Serial.Value;
+					}
+					else
+					{
+						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
+						if (bag.RootContainer != World.Player)
+							serialBag = (int)World.Player.Backpack.Serial.Value;
+					}
+				}
+				catch (Exception ex)
+				{
+				}
+
+				return serialBag;
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.BuyBagLabel.Text = "0x" + value.ToString("X8");
+			}
+		}
+
+		internal static void AddLog(string addlog)
+		{
+			Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
+			Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.SelectedIndex = Assistant.Engine.MainWindow.BuyLogBox.Items.Count - 1));
+		}
+
+		internal static void RefreshLists()
+		{
+			List<BuyAgentList> lists;
+			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
+
+			BuyAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.BuyListSelect.Text)
+				return;
+
+			Assistant.Engine.MainWindow.BuyListSelect.Items.Clear();
+			foreach (BuyAgentList l in lists)
+			{
+				Assistant.Engine.MainWindow.BuyListSelect.Items.Add(l.Description);
+
+				if (l.Selected)
+				{
+					Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(l.Description);
+					BuyBag = l.Bag;
+				}
+			}
+		}
+
+		internal static void RefreshItems()
+		{
+			List<BuyAgentList> lists;
+			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
+
+			Assistant.Engine.MainWindow.BuyListView.Items.Clear();
+			foreach (BuyAgentList l in lists)
+			{
+				if (l.Selected)
+				{
+					List<BuyAgent.BuyAgentItem> items;
+					RazorEnhanced.Settings.BuyAgent.ItemsRead(l.Description, out items);
+
+					foreach (BuyAgentItem item in items)
+					{
+						ListViewItem listitem = new ListViewItem();
+
+						listitem.Checked = item.Selected;
+
+						listitem.SubItems.Add(item.Name);
+						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+
+						if (item.Color == -1)
+							listitem.SubItems.Add("All");
+						else
+							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+
+						Assistant.Engine.MainWindow.BuyListView.Items.Add(listitem);
+					}
+				}
+			}
+		}
+
+		internal static void UpdateSelectedItems()
+		{
+			List<BuyAgentItem> items;
+			RazorEnhanced.Settings.BuyAgent.ItemsRead(BuyListName, out items);
+
+			if (items.Count != Assistant.Engine.MainWindow.BuyListView.Items.Count)
+			{
+				return;
+			}
+
+			for (int i = 0; i < Assistant.Engine.MainWindow.BuyListView.Items.Count; i++)
+			{
+				ListViewItem lvi = Assistant.Engine.MainWindow.BuyListView.Items[i];
+				BuyAgentItem old = items[i];
+
+				if (lvi != null && old != null)
+				{
+					BuyAgentItem item = new BuyAgent.BuyAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
+					RazorEnhanced.Settings.BuyAgent.ItemReplace(RazorEnhanced.BuyAgent.BuyListName, i, item);
+				}
+			}
+		}
+
+		internal static void AddList(string newList)
+		{
+			RazorEnhanced.Settings.BuyAgent.ListInsert(newList, 0);
+
+			RazorEnhanced.BuyAgent.RefreshLists();
+			RazorEnhanced.BuyAgent.RefreshItems();
+		}
+
+		internal static void RemoveList(string list)
+		{
+			if (RazorEnhanced.Settings.BuyAgent.ListExists(list))
+			{
+				RazorEnhanced.Settings.BuyAgent.ListDelete(list);
+			}
+
+			RazorEnhanced.BuyAgent.RefreshLists();
+			RazorEnhanced.BuyAgent.RefreshItems();
+		}
+
+		internal static void AddItemToList(string name, int graphics, int amount, int color)
+		{
+			BuyAgentItem item = new BuyAgentItem(name, graphics, amount, color, false);
+
+			string selection = Assistant.Engine.MainWindow.BuyListSelect.Text;
+
+			if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
+			{
+				if (!RazorEnhanced.Settings.BuyAgent.ItemExists(selection, item))
+					RazorEnhanced.Settings.BuyAgent.ItemInsert(selection, item);
+			}
+
+			RazorEnhanced.BuyAgent.RefreshItems();
+		}
+
+		internal static void ModifyItemInList(string name, int graphics, int amount, int color, bool selected, BuyAgentItem old, int index)
+		{
+			BuyAgentItem item = new BuyAgentItem(name, graphics, color, amount, selected);
+
+			string selection = Assistant.Engine.MainWindow.BuyListSelect.Text;
+
+			if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
+			{
+				if (RazorEnhanced.Settings.BuyAgent.ItemExists(selection, old))
+					RazorEnhanced.Settings.BuyAgent.ItemReplace(selection, index, item);
+			}
+
+			RazorEnhanced.BuyAgent.RefreshItems();
+		}
+
+		internal static void EnableBuyFilter()
+		{
+			PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(DisplayBuy));
+		}
+
+		private static bool ColorCheck(int colorDaLista, ushort colorDaVendor)
+		{
+			if (colorDaLista == -1) // Wildcard colore
+				return true;
+			else
+				if (colorDaLista == colorDaVendor) // Match OK
+					return true;
+				else  // Match fallito
+					return false;
+		}
+
+		private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
+		{
+			if (!Assistant.Engine.MainWindow.BuyCheckBox.Checked) // Filtro disabilitato
+				return;
+
+			Assistant.Serial serial = p.ReadUInt32();
+			ushort gump = p.ReadUInt16();
+
+			Assistant.Mobile vendor = Assistant.World.FindMobile(serial);
+			if (vendor == null)
+				return;
+
+			Assistant.Item pack = vendor.GetItemOnLayer(Layer.ShopBuy);
+			if (pack == null || pack.Contains == null || pack.Contains.Count <= 0)
+				return;
+
+			int total = 0;
+			int cost = 0;
+			List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>(); // Lista definita altrove (non rimuovere se si fa pulizia in giro)
+
+			for (int i = 0; i < pack.Contains.Count; i++) // Scan item lista oggetti in vendita
+			{
+				Assistant.Item item = (Assistant.Item)pack.Contains[i];
+				if (item == null)
+					continue;
+
+				List<BuyAgent.BuyAgentItem> items;
+				RazorEnhanced.Settings.BuyAgent.ItemsRead(BuyListName, out items);
+
+				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item 
+				{
+					if (!buyItem.Selected)
+						continue;
+
+					if (buyItem.Graphics == item.ItemID && RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, item.Hue)) // Verifica match fra lista e oggetti presenti del vendor
+					{
+						if (item.Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
+						{
+							AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + buyItem.Amount);
+							buyList.Add(new VendorBuyItem(item.Serial, buyItem.Amount, item.Price));
+							total += buyItem.Amount;
+							cost += item.Price * buyItem.Amount;
+						}
+						else // Caso che il vendor ne abbia di meno (Li compro tutti)
+						{
+							AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + item.Amount);
+							buyList.Add(new VendorBuyItem(item.Serial, item.Amount, item.Price));
+							total += item.Amount;
+							cost += item.Price * item.Amount;
+						}
+					}
+				}
+			}
+
+			if (buyList.Count > 0)
+			{
+				args.Block = true;
+				ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
+				AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
+				World.Player.SendMessage("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
+			}
+		}
+	}
 }

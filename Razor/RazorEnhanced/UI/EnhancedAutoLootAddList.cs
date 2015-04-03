@@ -17,7 +17,6 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Autoloot Add List";
 
-
 		public EnhancedAutoLootAddList()
 		{
 			InitializeComponent();

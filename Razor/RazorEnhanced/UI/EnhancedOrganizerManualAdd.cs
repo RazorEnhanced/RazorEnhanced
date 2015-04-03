@@ -17,15 +17,13 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedOrganizerManualAdd : Form
 	{
 		private const string m_Title = "Enhanced Organizer Manual Add Item";
-        private ListView OrganizerListView;
-        private List<RazorEnhanced.Organizer.OrganizerItem> OrganizerItemList;
-        public EnhancedOrganizerManualAdd(ListView POrganizerListView, List<RazorEnhanced.Organizer.OrganizerItem> POrganizerItemList)
+
+		public EnhancedOrganizerManualAdd()
 		{
 			InitializeComponent();
             MaximizeBox = false;
+
 			this.Text = m_Title;
-            OrganizerListView = POrganizerListView;
-            OrganizerItemList = POrganizerItemList;
 		}
 
         private void EnhancedOrganizerManualAdd_Load(object sender, EventArgs e)
@@ -40,6 +38,7 @@ namespace RazorEnhanced.UI
 
         private void bClose_Click(object sender, EventArgs e)
         {
+			RazorEnhanced.Organizer.RefreshItems();
             this.Close();
         }
 
@@ -47,9 +46,9 @@ namespace RazorEnhanced.UI
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphics = 0;
-            int Color = 0;
-            int Amount = 0;
+            int graphics = 0;
+            int color = 0;
+            int amount = 0;
             if (tName.Text == null)
             {
                 MessageBox.Show("Item name is not valid.",
@@ -62,7 +61,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Graphics = Convert.ToInt32(tGraphics.Text, 16); 
+                graphics = Convert.ToInt32(tGraphics.Text, 16); 
             }
             catch
             {
@@ -76,7 +75,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Amount = Convert.ToInt32(tAmount.Text);
+                amount = Convert.ToInt32(tAmount.Text);
             }
             catch
             {
@@ -88,13 +87,13 @@ namespace RazorEnhanced.UI
                 fail = true;
             }
             if (tColor.Text == "-1")
-                Color = -1;
+                color = -1;
             else
             {
                 try
                 {
 
-                    Color = Convert.ToInt32(tColor.Text, 16);
+                    color = Convert.ToInt32(tColor.Text, 16);
                 }
                 catch
                 {
@@ -109,9 +108,8 @@ namespace RazorEnhanced.UI
 
             if (!fail)
             {
-                RazorEnhanced.Organizer.AddItemToList(tName.Text, Graphics, Color, Amount, OrganizerListView, OrganizerItemList);
-               
-                this.Close();
+				RazorEnhanced.Organizer.AddItemToList(tName.Text, graphics, amount, color);
+				this.Close();
             }
 
         }

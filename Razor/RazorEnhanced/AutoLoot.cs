@@ -238,7 +238,7 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (uint)0);
+			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0);
 
 			RazorEnhanced.AutoLoot.RefreshLists();
 			RazorEnhanced.AutoLoot.RefreshItems();
@@ -280,7 +280,7 @@ namespace RazorEnhanced
 
 			if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
 			{
-				if (RazorEnhanced.Settings.AutoLoot.ItemExists(selection, item))
+				if (RazorEnhanced.Settings.AutoLoot.ItemExists(selection, old))
 					RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index, item);
 			}
 

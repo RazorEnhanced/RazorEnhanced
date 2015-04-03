@@ -1,33 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ScintillaNET;
 using System.IO;
 using Assistant;
-
 
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedOrganizerEditItem : Form
 	{
         private const string m_Title = "Enhanced Organizer Edit Item";
-        private ListView OrganizerlistView;
-        private List<RazorEnhanced.Organizer.OrganizerItem> OrganizerItemList;
-        private int IndexEdit;
-        public EnhancedOrganizerEditItem(ListView POrganizerlistView, List<RazorEnhanced.Organizer.OrganizerItem> POrganizerItemList, int PIndexEdit)
+
+		private string m_List;
+		private Organizer.OrganizerItem m_Item;
+		private int m_Index;
+
+
+		public EnhancedOrganizerEditItem(string list, int index, Organizer.OrganizerItem item)
 		{
 			InitializeComponent();
-            MaximizeBox = false;
+			MaximizeBox = false;
+
 			this.Text = m_Title;
-            OrganizerlistView = POrganizerlistView;
-            OrganizerItemList = POrganizerItemList;
-            IndexEdit = PIndexEdit;
+
+			m_List = list;
+			m_Index = index;
+			m_Item = item;
 		}
 
         private void label1_Click(object sender, EventArgs e)
@@ -37,16 +38,14 @@ namespace RazorEnhanced.UI
 
         private void EnhancedOrganizerManualAdd_Load(object sender, EventArgs e)
         {
-            tName.Text = OrganizerItemList[IndexEdit].Name;
-            tGraphics.Text = "0x" + OrganizerItemList[IndexEdit].Graphics.ToString("X4");
-            if (OrganizerItemList[IndexEdit].Color == -1)
+            tName.Text = m_Item.Name;
+            tGraphics.Text = "0x" + m_Item.Graphics.ToString("X4");
+            if (m_Item.Color == -1)
                 tColor.Text = "-1";
             else
-                tColor.Text = "0x" + OrganizerItemList[IndexEdit].Color.ToString("X4");
-            tAmount.Text = OrganizerItemList[IndexEdit].Amount.ToString();
+                tColor.Text = "0x" + m_Item.Color.ToString("X4");
+            tAmount.Text = m_Item.Amount.ToString();
         }
-
-
 
         private void bClose_Click(object sender, EventArgs e)
         {
@@ -57,9 +56,9 @@ namespace RazorEnhanced.UI
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphics = 0;
-            int Color = 0;
-            int Amount = 0;
+            int graphics = 0;
+            int color = 0;
+            int amount = 0;
             if (tName.Text == null)
             {
                 MessageBox.Show("Item name is not valid.",
@@ -72,7 +71,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Graphics = Convert.ToInt32(tGraphics.Text, 16); 
+                graphics = Convert.ToInt32(tGraphics.Text, 16); 
             }
             catch
             {
@@ -86,7 +85,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Amount = Convert.ToInt32(tAmount.Text);
+                amount = Convert.ToInt32(tAmount.Text);
             }
             catch
             {
@@ -99,13 +98,13 @@ namespace RazorEnhanced.UI
             }
 
             if (tColor.Text == "-1")
-                Color = -1;
+                color = -1;
             else
             {
                 try
                 {
 
-                    Color = Convert.ToInt32(tColor.Text, 16);
+                    color = Convert.ToInt32(tColor.Text, 16);
                 }
                 catch
                 {
@@ -119,8 +118,8 @@ namespace RazorEnhanced.UI
             }
             if (!fail)
             {
-                RazorEnhanced.Organizer.ModifyItemToList(tName.Text, Graphics, Color, Amount, OrganizerlistView, OrganizerItemList, IndexEdit);
-				RazorEnhanced.Settings.SaveOrganizerItemList(Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString(), Assistant.Engine.MainWindow.OrganizerItemList, Assistant.Engine.MainWindow.OrganizerSourceBag.Value, Assistant.Engine.MainWindow.OrganizerDestinationBag.Value);
+				RazorEnhanced.Organizer.ModifyItemInList(tName.Text, graphics, color, amount, m_Item.Selected, m_Item, m_Index);
+				RazorEnhanced.Organizer.RefreshItems();
 				this.Close();
             }
 

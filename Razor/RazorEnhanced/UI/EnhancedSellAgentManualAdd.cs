@@ -17,15 +17,13 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedSellAgentManualAdd : Form
 	{
 		private const string m_Title = "Enhanced Sell Manual Add Item";
-        private ListView SelllistView;
-        private List<RazorEnhanced.SellAgent.SellItem> SellItemList;
-        public EnhancedSellAgentManualAdd(ListView PSelllistView, List<RazorEnhanced.SellAgent.SellItem> PSellItemList)
+
+        public EnhancedSellAgentManualAdd()
 		{
 			InitializeComponent();
+
             MaximizeBox = false;
 			this.Text = m_Title;
-            SelllistView = PSelllistView;
-            SellItemList = PSellItemList;
 		}
 
 
@@ -37,20 +35,17 @@ namespace RazorEnhanced.UI
             tHue.Text = "-1";
         }
 
-
-
-        private void bClose_Click(object sender, EventArgs e)
+		private void bClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-
         private void bAddItem_Click(object sender, EventArgs e)
         {
             bool fail = false;
-            int Graphics = 0;
-            int Amount = 0;
-            int Hue = -1;
+            int graphics = 0;
+            int amount = 0;
+            int hue = -1;
             if (tName.Text == null)
             {
                 MessageBox.Show("Item name is not valid.",
@@ -63,7 +58,7 @@ namespace RazorEnhanced.UI
 
             try
             {
-                Graphics = Convert.ToInt32(tGraphics.Text, 16); 
+                graphics = Convert.ToInt32(tGraphics.Text, 16); 
             }
             catch
             {
@@ -78,7 +73,7 @@ namespace RazorEnhanced.UI
             try
             {
 
-                Amount = Convert.ToInt32(tAmount.Text);
+                amount = Convert.ToInt32(tAmount.Text);
             }
             catch
             {
@@ -91,13 +86,13 @@ namespace RazorEnhanced.UI
             }
 
             if (tHue.Text == "-1")
-                Hue = -1;
+                hue = -1;
             else
             {
                 try
                 {
 
-                    Hue = Convert.ToInt32(tHue.Text, 16);
+                    hue = Convert.ToInt32(tHue.Text, 16);
                 }
                 catch
                 {
@@ -113,8 +108,8 @@ namespace RazorEnhanced.UI
 
             if (!fail)
             {
-                RazorEnhanced.SellAgent.AddItemToList(tName.Text, Graphics, Amount, Hue, SelllistView, SellItemList);
-                this.Close();
+				RazorEnhanced.SellAgent.AddItemToList(tName.Text, graphics, amount, hue);
+				this.Close();
             }
 
         }

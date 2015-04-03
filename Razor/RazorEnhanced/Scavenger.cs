@@ -238,7 +238,7 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.Scavenger.ListInsert(newList, RazorEnhanced.Scavenger.ScavengerDelay, (uint)0);
+			RazorEnhanced.Settings.Scavenger.ListInsert(newList, RazorEnhanced.Scavenger.ScavengerDelay, 0);
 
 			RazorEnhanced.Scavenger.RefreshLists();
 			RazorEnhanced.Scavenger.RefreshItems();
@@ -280,7 +280,7 @@ namespace RazorEnhanced
 
 			if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
 			{
-				if (RazorEnhanced.Settings.Scavenger.ItemExists(selection, item))
+				if (RazorEnhanced.Settings.Scavenger.ItemExists(selection, old))
 					RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index, item);
 			}
 

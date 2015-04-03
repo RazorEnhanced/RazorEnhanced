@@ -13,9 +13,6 @@ using Assistant.Macros;
 using RazorEnhanced;
 using RazorEnhanced.UI;
 
-
-
-
 namespace Assistant
 {
 	internal class MainForm : System.Windows.Forms.Form
@@ -255,8 +252,8 @@ namespace Assistant
 		private RazorButton razorButtonWiki;
 		private Panel panelLogo;
 		private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
-		private List<RazorEnhanced.SellAgent.SellItem> sellItemList = new List<RazorEnhanced.SellAgent.SellItem>();
-		private List<RazorEnhanced.BuyAgent.BuyItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyItem>();
+		private List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
+		private List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
 		private List<RazorEnhanced.Dress.DressItem> dressItemList = new List<RazorEnhanced.Dress.DressItem>();
 		private TabPage EnhancedAgent;
 		private TabControl tabControl1;
@@ -312,8 +309,8 @@ namespace Assistant
 		private RazorButton scavengerButtonRemoveItem;
 		private RazorButton scavengerButtonAddManual;
 		private TabPage Organizer;
-		private RazorButton organizerStopB;
-		private RazorButton organizerExecuteB;
+		private RazorButton organizerStopButton;
+		private RazorButton organizerExecuteButton;
 		private GroupBox groupBox16;
 		private ListBox organizerLogBox;
 		private Label label27;
@@ -348,40 +345,40 @@ namespace Assistant
 		private RazorButton buyAddManualB;
 		private GroupBox groupBox18;
 		private ListBox buyLogBox;
-		private RazorCheckBox buyEnableCheckB;
+		private RazorCheckBox buyEnableCheckBox;
 		private ListView buyListView;
 		private ColumnHeader columnHeader14;
 		private ColumnHeader columnHeader15;
 		private ColumnHeader columnHeader16;
 		private ColumnHeader columnHeader17;
-		private RazorButton buyRemoveListB;
-		private RazorButton buyAddListB;
-		private RazorButton buyImportListB;
+		private RazorButton buyRemoveListButton;
+		private RazorButton buyAddListButton;
+		private RazorButton buyImportListButton;
 		private RazorComboBox buyListSelect;
-		private RazorButton buyExportListB;
+		private RazorButton buyExportListButton;
 		private Label label25;
 		private GroupBox groupBox19;
-		private RazorButton sellEditB;
-		private RazorButton sellAddTargerB;
-		private RazorButton sellRemoveB;
-		private RazorButton sellAddManualB;
+		private RazorButton sellEditButton;
+		private RazorButton sellAddTargerButton;
+		private RazorButton sellRemoveButton;
+		private RazorButton sellAddManualButton;
 		private GroupBox groupBox20;
 		private ListBox sellLogBox;
-		private RazorCheckBox sellEnableCheckB;
+		private RazorCheckBox sellEnableCheckBox;
 		private ListView sellListView;
 		private ColumnHeader columnHeader18;
 		private ColumnHeader columnHeader19;
 		private ColumnHeader columnHeader20;
 		private ColumnHeader columnHeader21;
-		private RazorButton sellRemoveListB;
-		private RazorButton sellAddListB;
-		private RazorButton sellImportListB;
+		private RazorButton sellRemoveListButton;
+		private RazorButton sellAddListButton;
+		private RazorButton sellImportListButton;
 		private RazorComboBox sellListSelect;
-		private RazorButton sellExportListB;
+		private RazorButton sellExportListButton;
 		private Label label26;
 		private RazorButton razorButton1;
 		private Label sellBagLabel;
-		private RazorButton sellSetBagB;
+		private RazorButton sellSetBagButton;
 		private ColumnHeader columnHeader22;
 		private ColumnHeader columnHeader23;
 		private TabPage Dress;
@@ -410,6 +407,9 @@ namespace Assistant
 		private RazorComboBox dressListSelect;
 		private RazorButton dressExportListB;
 		private Label label28;
+		private RazorButton buyResetBagButton;
+		private Label buyBagLabel;
+		private RazorButton buyTargetBagButton;
 
 		private bool m_CanClose = true;
 
@@ -440,49 +440,32 @@ namespace Assistant
 		internal RazorComboBox ScavengerListSelect { get { return scavengerListSelect; } }
 
 		// Organizer
+		internal RazorTextBox OrganizerDragDelay { get { return organizerDragDelay; } }
 		internal Label OrganizerSourceLabel { get { return organizerSourceLabel; } }
-		private Serial m_OrganizerSourceBag;
-		internal Serial OrganizerSourceBag { get { return m_OrganizerSourceBag; } }
-		private Serial m_OrganizerDestinationBag;
-		internal Serial OrganizerDestinationBag { get { return m_OrganizerDestinationBag; } }
 		internal Label OrganizerDestinationLabel { get { return organizerDestinationLabel; } }
-		internal List<RazorEnhanced.Organizer.OrganizerItem> OrganizerItemList { get { return organizerItemList; } }
 		internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
 		internal ListView OrganizerListView { get { return organizerListView; } }
-		internal ComboBox OrganizerListSelect { get { return organizerListSelect; } }
+		internal RazorComboBox OrganizerListSelect { get { return organizerListSelect; } }
 
 		// Sell Agent
 		internal Label SellBagLabel { get { return sellBagLabel; } }
-		internal CheckBox SellCheckBox { get { return sellEnableCheckB; } }
-		internal List<RazorEnhanced.SellAgent.SellItem> SellItemList { get { return sellItemList; } }
+		internal RazorCheckBox SellCheckBox { get { return sellEnableCheckBox; } }
 		internal ListBox SellLogBox { get { return sellLogBox; } }
 		internal ListView SellListView { get { return sellListView; } }
-		internal ComboBox SellListSelect { get { return sellListSelect; } }
+		internal RazorComboBox SellListSelect { get { return sellListSelect; } }
 
 		// Buy Agent
-		internal CheckBox BuyCheckBox { get { return buyEnableCheckB; } }
-		internal List<RazorEnhanced.BuyAgent.BuyItem> BuyItemList { get { return buyItemList; } }
+		internal Label BuyBagLabel { get { return buyBagLabel; } }
+		internal RazorCheckBox BuyCheckBox { get { return buyEnableCheckBox; } }
 		internal ListBox BuyLogBox { get { return buyLogBox; } }
 		internal ListView BuyListView { get { return buyListView; } }
-		internal ComboBox BuyListSelect { get { return buyListSelect; } }
+		internal RazorComboBox BuyListSelect { get { return buyListSelect; } }
 
 		// Dress Agent
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
 		internal List<RazorEnhanced.Dress.DressItem> DressItemList { get { return dressItemList; } }
 		internal ListBox DressLogBox { get { return dressLogBox; } }
 		internal ListView DressListView { get { return dressListView; } }
-
-
-
-		internal int OrganizerDragDelay
-		{
-			get
-			{
-				int delay = 100;
-				Int32.TryParse(organizerDragDelay.Text, out delay);
-				return delay;
-			}
-		}
 
 		internal int DressDragDelay
 		{
@@ -547,7 +530,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.playMacro = new RazorEnhanced.UI.RazorButton();
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
@@ -828,8 +811,8 @@ namespace Assistant
 			this.scavengerButtonExport = new RazorEnhanced.UI.RazorButton();
 			this.label22 = new System.Windows.Forms.Label();
 			this.Organizer = new System.Windows.Forms.TabPage();
-			this.organizerStopB = new RazorEnhanced.UI.RazorButton();
-			this.organizerExecuteB = new RazorEnhanced.UI.RazorButton();
+			this.organizerStopButton = new RazorEnhanced.UI.RazorButton();
+			this.organizerExecuteButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox16 = new System.Windows.Forms.GroupBox();
 			this.organizerLogBox = new System.Windows.Forms.ListBox();
 			this.label27 = new System.Windows.Forms.Label();
@@ -856,6 +839,9 @@ namespace Assistant
 			this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
 			this.label24 = new System.Windows.Forms.Label();
 			this.VendorBuy = new System.Windows.Forms.TabPage();
+			this.buyResetBagButton = new RazorEnhanced.UI.RazorButton();
+			this.buyBagLabel = new System.Windows.Forms.Label();
+			this.buyTargetBagButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox17 = new System.Windows.Forms.GroupBox();
 			this.buyEditB = new RazorEnhanced.UI.RazorButton();
 			this.buyAddTargetB = new RazorEnhanced.UI.RazorButton();
@@ -863,42 +849,42 @@ namespace Assistant
 			this.buyAddManualB = new RazorEnhanced.UI.RazorButton();
 			this.groupBox18 = new System.Windows.Forms.GroupBox();
 			this.buyLogBox = new System.Windows.Forms.ListBox();
-			this.buyEnableCheckB = new RazorEnhanced.UI.RazorCheckBox();
+			this.buyEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.buyListView = new System.Windows.Forms.ListView();
 			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.buyRemoveListB = new RazorEnhanced.UI.RazorButton();
-			this.buyAddListB = new RazorEnhanced.UI.RazorButton();
-			this.buyImportListB = new RazorEnhanced.UI.RazorButton();
+			this.buyRemoveListButton = new RazorEnhanced.UI.RazorButton();
+			this.buyAddListButton = new RazorEnhanced.UI.RazorButton();
+			this.buyImportListButton = new RazorEnhanced.UI.RazorButton();
 			this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
-			this.buyExportListB = new RazorEnhanced.UI.RazorButton();
+			this.buyExportListButton = new RazorEnhanced.UI.RazorButton();
 			this.label25 = new System.Windows.Forms.Label();
 			this.VendorSell = new System.Windows.Forms.TabPage();
 			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
 			this.sellBagLabel = new System.Windows.Forms.Label();
-			this.sellSetBagB = new RazorEnhanced.UI.RazorButton();
+			this.sellSetBagButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox19 = new System.Windows.Forms.GroupBox();
-			this.sellEditB = new RazorEnhanced.UI.RazorButton();
-			this.sellAddTargerB = new RazorEnhanced.UI.RazorButton();
-			this.sellRemoveB = new RazorEnhanced.UI.RazorButton();
-			this.sellAddManualB = new RazorEnhanced.UI.RazorButton();
+			this.sellEditButton = new RazorEnhanced.UI.RazorButton();
+			this.sellAddTargerButton = new RazorEnhanced.UI.RazorButton();
+			this.sellRemoveButton = new RazorEnhanced.UI.RazorButton();
+			this.sellAddManualButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox20 = new System.Windows.Forms.GroupBox();
 			this.sellLogBox = new System.Windows.Forms.ListBox();
-			this.sellEnableCheckB = new RazorEnhanced.UI.RazorCheckBox();
+			this.sellEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.sellListView = new System.Windows.Forms.ListView();
 			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.sellRemoveListB = new RazorEnhanced.UI.RazorButton();
-			this.sellAddListB = new RazorEnhanced.UI.RazorButton();
-			this.sellImportListB = new RazorEnhanced.UI.RazorButton();
+			this.sellRemoveListButton = new RazorEnhanced.UI.RazorButton();
+			this.sellAddListButton = new RazorEnhanced.UI.RazorButton();
+			this.sellImportListButton = new RazorEnhanced.UI.RazorButton();
 			this.sellListSelect = new RazorEnhanced.UI.RazorComboBox();
-			this.sellExportListB = new RazorEnhanced.UI.RazorButton();
+			this.sellExportListButton = new RazorEnhanced.UI.RazorButton();
 			this.label26 = new System.Windows.Forms.Label();
 			this.Dress = new System.Windows.Forms.TabPage();
 			this.dressConflictCheckB = new RazorEnhanced.UI.RazorCheckBox();
@@ -1387,9 +1373,9 @@ namespace Assistant
 			// 
 			// corpseRange
 			// 
-			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.corpseRange.BackColor = System.Drawing.Color.White;
 			this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.corpseRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1609,9 +1595,9 @@ namespace Assistant
 			// 
 			// txtSpellFormat
 			// 
-			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSpellFormat.BackColor = System.Drawing.Color.White;
 			this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1695,9 +1681,9 @@ namespace Assistant
 			// 
 			// forceSizeX
 			// 
-			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeX.BackColor = System.Drawing.Color.White;
 			this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1710,9 +1696,9 @@ namespace Assistant
 			// 
 			// forceSizeY
 			// 
-			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeY.BackColor = System.Drawing.Color.White;
 			this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1725,9 +1711,9 @@ namespace Assistant
 			// 
 			// healthFmt
 			// 
-			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.healthFmt.BackColor = System.Drawing.Color.White;
 			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1806,9 +1792,9 @@ namespace Assistant
 			// 
 			// ltRange
 			// 
-			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.ltRange.BackColor = System.Drawing.Color.White;
 			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1830,9 +1816,9 @@ namespace Assistant
 			// 
 			// txtObjDelay
 			// 
-			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtObjDelay.BackColor = System.Drawing.Color.White;
 			this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1997,9 +1983,9 @@ namespace Assistant
 			// 
 			// warnNum
 			// 
-			this.warnNum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.warnNum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.warnNum.BackColor = System.Drawing.Color.White;
 			this.warnNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.warnNum.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2850,9 +2836,9 @@ namespace Assistant
 			// 
 			// txtRecFolder
 			// 
-			this.txtRecFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtRecFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtRecFolder.BackColor = System.Drawing.Color.White;
 			this.txtRecFolder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtRecFolder.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2967,9 +2953,9 @@ namespace Assistant
 			// 
 			// aviFPS
 			// 
-			this.aviFPS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.aviFPS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.aviFPS.BackColor = System.Drawing.Color.White;
 			this.aviFPS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.aviFPS.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3181,9 +3167,9 @@ namespace Assistant
 			// 
 			// screenPath
 			// 
-			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.screenPath.BackColor = System.Drawing.Color.White;
 			this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.screenPath.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3320,7 +3306,7 @@ namespace Assistant
 			this.labelUOD.Size = new System.Drawing.Size(213, 64);
 			this.labelUOD.TabIndex = 4;
 			this.labelUOD.Text = "To support the development of the Razor Enhanced project,  you can visit UODreams" +
-	" shard and stay with us! You are welcome!";
+    " shard and stay with us! You are welcome!";
 			this.labelUOD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// razorButtonVisitUOD
@@ -3463,7 +3449,7 @@ namespace Assistant
 			this.EnhancedAgent.Padding = new System.Windows.Forms.Padding(3);
 			this.EnhancedAgent.Size = new System.Drawing.Size(666, 366);
 			this.EnhancedAgent.TabIndex = 14;
-			this.EnhancedAgent.Text = "Enhanced Agent";
+			this.EnhancedAgent.Text = "Enhanced Agents";
 			this.EnhancedAgent.UseVisualStyleBackColor = true;
 			// 
 			// tabControl1
@@ -3527,9 +3513,9 @@ namespace Assistant
 			// 
 			// autoLootTextBoxDelay
 			// 
-			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
 			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.autoLootTextBoxDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3700,7 +3686,7 @@ namespace Assistant
 			// autolootContainerButton
 			// 
 			this.autolootContainerButton.ColorTable = office2010BlueTheme;
-			this.autolootContainerButton.Location = new System.Drawing.Point(550, 60);
+			this.autolootContainerButton.Location = new System.Drawing.Point(545, 58);
 			this.autolootContainerButton.Name = "autolootContainerButton";
 			this.autolootContainerButton.Size = new System.Drawing.Size(103, 20);
 			this.autolootContainerButton.TabIndex = 49;
@@ -3880,9 +3866,9 @@ namespace Assistant
 			// 
 			// scavengerDragDelay
 			// 
-			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
 			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.scavengerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3904,17 +3890,17 @@ namespace Assistant
 			// scavengerButtonSetContainer
 			// 
 			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme;
-			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(558, 57);
+			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(552, 56);
 			this.scavengerButtonSetContainer.Name = "scavengerButtonSetContainer";
 			this.scavengerButtonSetContainer.Size = new System.Drawing.Size(96, 20);
 			this.scavengerButtonSetContainer.TabIndex = 66;
 			this.scavengerButtonSetContainer.Text = "Target Container";
 			this.scavengerButtonSetContainer.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerButtonSetContainer.Click += new System.EventHandler(this.scavengerSetContainerB_Click);
+			this.scavengerButtonSetContainer.Click += new System.EventHandler(this.scavengerSetContainer_Click);
 			// 
 			// scavengerCheckBox
 			// 
-			this.scavengerCheckBox.Location = new System.Drawing.Point(274, 58);
+			this.scavengerCheckBox.Location = new System.Drawing.Point(275, 56);
 			this.scavengerCheckBox.Name = "scavengerCheckBox";
 			this.scavengerCheckBox.Size = new System.Drawing.Size(116, 22);
 			this.scavengerCheckBox.TabIndex = 65;
@@ -4025,8 +4011,8 @@ namespace Assistant
 			// 
 			// Organizer
 			// 
-			this.Organizer.Controls.Add(this.organizerStopB);
-			this.Organizer.Controls.Add(this.organizerExecuteB);
+			this.Organizer.Controls.Add(this.organizerStopButton);
+			this.Organizer.Controls.Add(this.organizerExecuteButton);
 			this.Organizer.Controls.Add(this.groupBox16);
 			this.Organizer.Controls.Add(this.label27);
 			this.Organizer.Controls.Add(this.organizerDragDelay);
@@ -4050,27 +4036,27 @@ namespace Assistant
 			this.Organizer.Text = "Organizer";
 			this.Organizer.UseVisualStyleBackColor = true;
 			// 
-			// organizerStopB
+			// organizerStopButton
 			// 
-			this.organizerStopB.ColorTable = office2010BlueTheme;
-			this.organizerStopB.Location = new System.Drawing.Point(334, 58);
-			this.organizerStopB.Name = "organizerStopB";
-			this.organizerStopB.Size = new System.Drawing.Size(61, 20);
-			this.organizerStopB.TabIndex = 75;
-			this.organizerStopB.Text = "Stop";
-			this.organizerStopB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerStopB.Click += new System.EventHandler(this.organizerStopB_Click);
+			this.organizerStopButton.ColorTable = office2010BlueTheme;
+			this.organizerStopButton.Location = new System.Drawing.Point(334, 58);
+			this.organizerStopButton.Name = "organizerStopButton";
+			this.organizerStopButton.Size = new System.Drawing.Size(61, 20);
+			this.organizerStopButton.TabIndex = 75;
+			this.organizerStopButton.Text = "Stop";
+			this.organizerStopButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.organizerStopButton.Click += new System.EventHandler(this.organizerStop_Click);
 			// 
-			// organizerExecuteB
+			// organizerExecuteButton
 			// 
-			this.organizerExecuteB.ColorTable = office2010BlueTheme;
-			this.organizerExecuteB.Location = new System.Drawing.Point(268, 58);
-			this.organizerExecuteB.Name = "organizerExecuteB";
-			this.organizerExecuteB.Size = new System.Drawing.Size(61, 20);
-			this.organizerExecuteB.TabIndex = 74;
-			this.organizerExecuteB.Text = "Execute";
-			this.organizerExecuteB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerExecuteB.Click += new System.EventHandler(this.organizerExecuteB_Click);
+			this.organizerExecuteButton.ColorTable = office2010BlueTheme;
+			this.organizerExecuteButton.Location = new System.Drawing.Point(268, 58);
+			this.organizerExecuteButton.Name = "organizerExecuteButton";
+			this.organizerExecuteButton.Size = new System.Drawing.Size(61, 20);
+			this.organizerExecuteButton.TabIndex = 74;
+			this.organizerExecuteButton.Text = "Execute";
+			this.organizerExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.organizerExecuteButton.Click += new System.EventHandler(this.organizerExecute_Click);
 			// 
 			// groupBox16
 			// 
@@ -4101,9 +4087,9 @@ namespace Assistant
 			// 
 			// organizerDragDelay
 			// 
-			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.organizerDragDelay.BackColor = System.Drawing.Color.White;
 			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.organizerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4112,6 +4098,7 @@ namespace Assistant
 			this.organizerDragDelay.Name = "organizerDragDelay";
 			this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.organizerDragDelay.TabIndex = 71;
+			this.organizerDragDelay.TextChanged += new System.EventHandler(this.organizerDragDelay_TextChanged);
 			// 
 			// organizerDestinationLabel
 			// 
@@ -4130,7 +4117,7 @@ namespace Assistant
 			this.organizerSetDestinationB.TabIndex = 69;
 			this.organizerSetDestinationB.Text = "Destination Cont";
 			this.organizerSetDestinationB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestinationB_Click);
+			this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestination_Click);
 			// 
 			// organizerSourceLabel
 			// 
@@ -4162,7 +4149,7 @@ namespace Assistant
 			this.organizerEditB.TabIndex = 48;
 			this.organizerEditB.Text = "Edit";
 			this.organizerEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerEditB.Click += new System.EventHandler(this.organizerEditB_Click);
+			this.organizerEditB.Click += new System.EventHandler(this.organizerEdit_Click);
 			// 
 			// organizerAddTargetB
 			// 
@@ -4173,7 +4160,7 @@ namespace Assistant
 			this.organizerAddTargetB.TabIndex = 47;
 			this.organizerAddTargetB.Text = "Add Target";
 			this.organizerAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTargetB_Click);
+			this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTarget_Click);
 			// 
 			// organizerRemoveB
 			// 
@@ -4184,7 +4171,7 @@ namespace Assistant
 			this.organizerRemoveB.TabIndex = 46;
 			this.organizerRemoveB.Text = "Remove";
 			this.organizerRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerRemoveB.Click += new System.EventHandler(this.organizerRemoveB_Click);
+			this.organizerRemoveB.Click += new System.EventHandler(this.organizerRemoveItem_Click);
 			// 
 			// organizerAddManualB
 			// 
@@ -4195,7 +4182,7 @@ namespace Assistant
 			this.organizerAddManualB.TabIndex = 45;
 			this.organizerAddManualB.Text = "Add Manual";
 			this.organizerAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerAddManualB.Click += new System.EventHandler(this.organizerAddManualB_Click);
+			this.organizerAddManualB.Click += new System.EventHandler(this.organizerAddManual_Click);
 			// 
 			// organizerSetSourceB
 			// 
@@ -4206,7 +4193,7 @@ namespace Assistant
 			this.organizerSetSourceB.TabIndex = 66;
 			this.organizerSetSourceB.Text = "Source Cont";
 			this.organizerSetSourceB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSourceB_Click);
+			this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSource_Click);
 			// 
 			// organizerListView
 			// 
@@ -4227,6 +4214,7 @@ namespace Assistant
 			this.organizerListView.TabIndex = 65;
 			this.organizerListView.UseCompatibleStateImageBehavior = false;
 			this.organizerListView.View = System.Windows.Forms.View.Details;
+			this.organizerListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.organizerListView_ItemChecked);
 			// 
 			// columnHeader9
 			// 
@@ -4262,7 +4250,7 @@ namespace Assistant
 			this.organizerRemoveListB.TabIndex = 63;
 			this.organizerRemoveListB.Text = "Remove";
 			this.organizerRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerRemoveListB.Click += new System.EventHandler(this.organizerRemoveListB_Click);
+			this.organizerRemoveListB.Click += new System.EventHandler(this.organizerRemoveList_Click);
 			// 
 			// organizerAddListB
 			// 
@@ -4273,7 +4261,7 @@ namespace Assistant
 			this.organizerAddListB.TabIndex = 62;
 			this.organizerAddListB.Text = "Add";
 			this.organizerAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerAddListB.Click += new System.EventHandler(this.organizerAddListB_Click);
+			this.organizerAddListB.Click += new System.EventHandler(this.organizerAddList_Click);
 			// 
 			// organizerImportListB
 			// 
@@ -4316,15 +4304,18 @@ namespace Assistant
 			// 
 			// VendorBuy
 			// 
+			this.VendorBuy.Controls.Add(this.buyResetBagButton);
+			this.VendorBuy.Controls.Add(this.buyBagLabel);
+			this.VendorBuy.Controls.Add(this.buyTargetBagButton);
 			this.VendorBuy.Controls.Add(this.groupBox17);
 			this.VendorBuy.Controls.Add(this.groupBox18);
-			this.VendorBuy.Controls.Add(this.buyEnableCheckB);
+			this.VendorBuy.Controls.Add(this.buyEnableCheckBox);
 			this.VendorBuy.Controls.Add(this.buyListView);
-			this.VendorBuy.Controls.Add(this.buyRemoveListB);
-			this.VendorBuy.Controls.Add(this.buyAddListB);
-			this.VendorBuy.Controls.Add(this.buyImportListB);
+			this.VendorBuy.Controls.Add(this.buyRemoveListButton);
+			this.VendorBuy.Controls.Add(this.buyAddListButton);
+			this.VendorBuy.Controls.Add(this.buyImportListButton);
 			this.VendorBuy.Controls.Add(this.buyListSelect);
-			this.VendorBuy.Controls.Add(this.buyExportListB);
+			this.VendorBuy.Controls.Add(this.buyExportListButton);
 			this.VendorBuy.Controls.Add(this.label25);
 			this.VendorBuy.Location = new System.Drawing.Point(4, 22);
 			this.VendorBuy.Name = "VendorBuy";
@@ -4334,13 +4325,43 @@ namespace Assistant
 			this.VendorBuy.Text = "Vendor Buy";
 			this.VendorBuy.UseVisualStyleBackColor = true;
 			// 
+			// buyResetBagButton
+			// 
+			this.buyResetBagButton.ColorTable = office2010BlueTheme;
+			this.buyResetBagButton.Location = new System.Drawing.Point(553, 102);
+			this.buyResetBagButton.Name = "buyResetBagButton";
+			this.buyResetBagButton.Size = new System.Drawing.Size(95, 20);
+			this.buyResetBagButton.TabIndex = 90;
+			this.buyResetBagButton.Text = "Clear Container";
+			this.buyResetBagButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buyResetBagButton.Click += new System.EventHandler(this.buyResetBagButton_Click);
+			// 
+			// buyBagLabel
+			// 
+			this.buyBagLabel.Location = new System.Drawing.Point(558, 80);
+			this.buyBagLabel.Name = "buyBagLabel";
+			this.buyBagLabel.Size = new System.Drawing.Size(82, 19);
+			this.buyBagLabel.TabIndex = 89;
+			this.buyBagLabel.Text = "0x00000000";
+			// 
+			// buyTargetBagButton
+			// 
+			this.buyTargetBagButton.ColorTable = office2010BlueTheme;
+			this.buyTargetBagButton.Location = new System.Drawing.Point(551, 58);
+			this.buyTargetBagButton.Name = "buyTargetBagButton";
+			this.buyTargetBagButton.Size = new System.Drawing.Size(100, 20);
+			this.buyTargetBagButton.TabIndex = 88;
+			this.buyTargetBagButton.Text = "Target Container";
+			this.buyTargetBagButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buyTargetBagButton.Click += new System.EventHandler(this.buyTargetBagButton_Click);
+			// 
 			// groupBox17
 			// 
 			this.groupBox17.Controls.Add(this.buyEditB);
 			this.groupBox17.Controls.Add(this.buyAddTargetB);
 			this.groupBox17.Controls.Add(this.buyRemoveB);
 			this.groupBox17.Controls.Add(this.buyAddManualB);
-			this.groupBox17.Location = new System.Drawing.Point(551, 84);
+			this.groupBox17.Location = new System.Drawing.Point(553, 128);
 			this.groupBox17.Name = "groupBox17";
 			this.groupBox17.Size = new System.Drawing.Size(100, 125);
 			this.groupBox17.TabIndex = 74;
@@ -4356,7 +4377,7 @@ namespace Assistant
 			this.buyEditB.TabIndex = 48;
 			this.buyEditB.Text = "Edit";
 			this.buyEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyEditB.Click += new System.EventHandler(this.buyEditB_Click);
+			this.buyEditB.Click += new System.EventHandler(this.buyEdit_Click);
 			// 
 			// buyAddTargetB
 			// 
@@ -4367,7 +4388,7 @@ namespace Assistant
 			this.buyAddTargetB.TabIndex = 47;
 			this.buyAddTargetB.Text = "Add Target";
 			this.buyAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyAddTargetB.Click += new System.EventHandler(this.buyAddTargetB_Click);
+			this.buyAddTargetB.Click += new System.EventHandler(this.buyAddTarget_Click);
 			// 
 			// buyRemoveB
 			// 
@@ -4378,7 +4399,7 @@ namespace Assistant
 			this.buyRemoveB.TabIndex = 46;
 			this.buyRemoveB.Text = "Remove";
 			this.buyRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyRemoveB.Click += new System.EventHandler(this.buyRemoveB_Click);
+			this.buyRemoveB.Click += new System.EventHandler(this.buyRemove_Click);
 			// 
 			// buyAddManualB
 			// 
@@ -4389,7 +4410,7 @@ namespace Assistant
 			this.buyAddManualB.TabIndex = 45;
 			this.buyAddManualB.Text = "Add Manual";
 			this.buyAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyAddManualB.Click += new System.EventHandler(this.buyAddManualB_Click);
+			this.buyAddManualB.Click += new System.EventHandler(this.buyAddManual_Click);
 			// 
 			// groupBox18
 			// 
@@ -4409,15 +4430,15 @@ namespace Assistant
 			this.buyLogBox.Size = new System.Drawing.Size(265, 225);
 			this.buyLogBox.TabIndex = 0;
 			// 
-			// buyEnableCheckB
+			// buyEnableCheckBox
 			// 
-			this.buyEnableCheckB.Location = new System.Drawing.Point(274, 58);
-			this.buyEnableCheckB.Name = "buyEnableCheckB";
-			this.buyEnableCheckB.Size = new System.Drawing.Size(105, 22);
-			this.buyEnableCheckB.TabIndex = 72;
-			this.buyEnableCheckB.Text = "Enable Buy List";
-			this.buyEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.buyEnableCheckB.CheckedChanged += new System.EventHandler(this.buyEnableCheckB_CheckedChanged);
+			this.buyEnableCheckBox.Location = new System.Drawing.Point(274, 58);
+			this.buyEnableCheckBox.Name = "buyEnableCheckBox";
+			this.buyEnableCheckBox.Size = new System.Drawing.Size(105, 22);
+			this.buyEnableCheckBox.TabIndex = 72;
+			this.buyEnableCheckBox.Text = "Enable Buy List";
+			this.buyEnableCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.buyEnableCheckBox.CheckedChanged += new System.EventHandler(this.buyEnableCheckB_CheckedChanged);
 			// 
 			// buyListView
 			// 
@@ -4428,8 +4449,10 @@ namespace Assistant
             this.columnHeader16,
             this.columnHeader17,
             this.columnHeader23});
+			this.buyListView.FullRowSelect = true;
 			this.buyListView.GridLines = true;
 			this.buyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.buyListView.HideSelection = false;
 			this.buyListView.LabelWrap = false;
 			this.buyListView.Location = new System.Drawing.Point(6, 51);
 			this.buyListView.MultiSelect = false;
@@ -4464,37 +4487,37 @@ namespace Assistant
 			this.columnHeader23.Text = "Color";
 			this.columnHeader23.Width = 50;
 			// 
-			// buyRemoveListB
+			// buyRemoveListButton
 			// 
-			this.buyRemoveListB.ColorTable = office2010BlueTheme;
-			this.buyRemoveListB.Location = new System.Drawing.Point(369, 14);
-			this.buyRemoveListB.Name = "buyRemoveListB";
-			this.buyRemoveListB.Size = new System.Drawing.Size(90, 20);
-			this.buyRemoveListB.TabIndex = 69;
-			this.buyRemoveListB.Text = "Remove";
-			this.buyRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyRemoveListB.Click += new System.EventHandler(this.buyRemoveListB_Click);
+			this.buyRemoveListButton.ColorTable = office2010BlueTheme;
+			this.buyRemoveListButton.Location = new System.Drawing.Point(369, 14);
+			this.buyRemoveListButton.Name = "buyRemoveListButton";
+			this.buyRemoveListButton.Size = new System.Drawing.Size(90, 20);
+			this.buyRemoveListButton.TabIndex = 69;
+			this.buyRemoveListButton.Text = "Remove";
+			this.buyRemoveListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buyRemoveListButton.Click += new System.EventHandler(this.buyRemoveList_Click);
 			// 
-			// buyAddListB
+			// buyAddListButton
 			// 
-			this.buyAddListB.ColorTable = office2010BlueTheme;
-			this.buyAddListB.Location = new System.Drawing.Point(273, 14);
-			this.buyAddListB.Name = "buyAddListB";
-			this.buyAddListB.Size = new System.Drawing.Size(90, 20);
-			this.buyAddListB.TabIndex = 68;
-			this.buyAddListB.Text = "Add";
-			this.buyAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyAddListB.Click += new System.EventHandler(this.buyAddListB_Click);
+			this.buyAddListButton.ColorTable = office2010BlueTheme;
+			this.buyAddListButton.Location = new System.Drawing.Point(273, 14);
+			this.buyAddListButton.Name = "buyAddListButton";
+			this.buyAddListButton.Size = new System.Drawing.Size(90, 20);
+			this.buyAddListButton.TabIndex = 68;
+			this.buyAddListButton.Text = "Add";
+			this.buyAddListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buyAddListButton.Click += new System.EventHandler(this.buyAddList_Click);
 			// 
-			// buyImportListB
+			// buyImportListButton
 			// 
-			this.buyImportListB.ColorTable = office2010BlueTheme;
-			this.buyImportListB.Location = new System.Drawing.Point(465, 14);
-			this.buyImportListB.Name = "buyImportListB";
-			this.buyImportListB.Size = new System.Drawing.Size(90, 20);
-			this.buyImportListB.TabIndex = 65;
-			this.buyImportListB.Text = "Import";
-			this.buyImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buyImportListButton.ColorTable = office2010BlueTheme;
+			this.buyImportListButton.Location = new System.Drawing.Point(465, 14);
+			this.buyImportListButton.Name = "buyImportListButton";
+			this.buyImportListButton.Size = new System.Drawing.Size(90, 20);
+			this.buyImportListButton.TabIndex = 65;
+			this.buyImportListButton.Text = "Import";
+			this.buyImportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			// 
 			// buyListSelect
 			// 
@@ -4506,15 +4529,15 @@ namespace Assistant
 			this.buyListSelect.TabIndex = 67;
 			this.buyListSelect.SelectedIndexChanged += new System.EventHandler(this.buyListSelect_SelectedIndexChanged);
 			// 
-			// buyExportListB
+			// buyExportListButton
 			// 
-			this.buyExportListB.ColorTable = office2010BlueTheme;
-			this.buyExportListB.Location = new System.Drawing.Point(561, 14);
-			this.buyExportListB.Name = "buyExportListB";
-			this.buyExportListB.Size = new System.Drawing.Size(90, 20);
-			this.buyExportListB.TabIndex = 64;
-			this.buyExportListB.Text = "Export";
-			this.buyExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buyExportListButton.ColorTable = office2010BlueTheme;
+			this.buyExportListButton.Location = new System.Drawing.Point(561, 14);
+			this.buyExportListButton.Name = "buyExportListButton";
+			this.buyExportListButton.Size = new System.Drawing.Size(90, 20);
+			this.buyExportListButton.TabIndex = 64;
+			this.buyExportListButton.Text = "Export";
+			this.buyExportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			// 
 			// label25
 			// 
@@ -4529,16 +4552,16 @@ namespace Assistant
 			// 
 			this.VendorSell.Controls.Add(this.razorButton1);
 			this.VendorSell.Controls.Add(this.sellBagLabel);
-			this.VendorSell.Controls.Add(this.sellSetBagB);
+			this.VendorSell.Controls.Add(this.sellSetBagButton);
 			this.VendorSell.Controls.Add(this.groupBox19);
 			this.VendorSell.Controls.Add(this.groupBox20);
-			this.VendorSell.Controls.Add(this.sellEnableCheckB);
+			this.VendorSell.Controls.Add(this.sellEnableCheckBox);
 			this.VendorSell.Controls.Add(this.sellListView);
-			this.VendorSell.Controls.Add(this.sellRemoveListB);
-			this.VendorSell.Controls.Add(this.sellAddListB);
-			this.VendorSell.Controls.Add(this.sellImportListB);
+			this.VendorSell.Controls.Add(this.sellRemoveListButton);
+			this.VendorSell.Controls.Add(this.sellAddListButton);
+			this.VendorSell.Controls.Add(this.sellImportListButton);
 			this.VendorSell.Controls.Add(this.sellListSelect);
-			this.VendorSell.Controls.Add(this.sellExportListB);
+			this.VendorSell.Controls.Add(this.sellExportListButton);
 			this.VendorSell.Controls.Add(this.label26);
 			this.VendorSell.Location = new System.Drawing.Point(4, 22);
 			this.VendorSell.Name = "VendorSell";
@@ -4551,89 +4574,89 @@ namespace Assistant
 			// razorButton1
 			// 
 			this.razorButton1.ColorTable = office2010BlueTheme;
-			this.razorButton1.Location = new System.Drawing.Point(558, 105);
+			this.razorButton1.Location = new System.Drawing.Point(553, 102);
 			this.razorButton1.Name = "razorButton1";
-			this.razorButton1.Size = new System.Drawing.Size(88, 20);
+			this.razorButton1.Size = new System.Drawing.Size(95, 20);
 			this.razorButton1.TabIndex = 87;
-			this.razorButton1.Text = "Clear Hot Bag";
+			this.razorButton1.Text = "Clear Container";
 			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
+			this.razorButton1.Click += new System.EventHandler(this.resetSellBag_Click);
 			// 
 			// sellBagLabel
 			// 
-			this.sellBagLabel.Location = new System.Drawing.Point(564, 87);
+			this.sellBagLabel.Location = new System.Drawing.Point(558, 80);
 			this.sellBagLabel.Name = "sellBagLabel";
 			this.sellBagLabel.Size = new System.Drawing.Size(82, 19);
 			this.sellBagLabel.TabIndex = 86;
 			this.sellBagLabel.Text = "0x00000000";
 			// 
-			// sellSetBagB
+			// sellSetBagButton
 			// 
-			this.sellSetBagB.ColorTable = office2010BlueTheme;
-			this.sellSetBagB.Location = new System.Drawing.Point(558, 60);
-			this.sellSetBagB.Name = "sellSetBagB";
-			this.sellSetBagB.Size = new System.Drawing.Size(88, 20);
-			this.sellSetBagB.TabIndex = 85;
-			this.sellSetBagB.Text = "Set Hot Bag";
-			this.sellSetBagB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellSetBagB.Click += new System.EventHandler(this.sellSetBagB_Click);
+			this.sellSetBagButton.ColorTable = office2010BlueTheme;
+			this.sellSetBagButton.Location = new System.Drawing.Point(551, 58);
+			this.sellSetBagButton.Name = "sellSetBagButton";
+			this.sellSetBagButton.Size = new System.Drawing.Size(100, 20);
+			this.sellSetBagButton.TabIndex = 85;
+			this.sellSetBagButton.Text = "Target Container";
+			this.sellSetBagButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellSetBagButton.Click += new System.EventHandler(this.sellSetBag_Click);
 			// 
 			// groupBox19
 			// 
-			this.groupBox19.Controls.Add(this.sellEditB);
-			this.groupBox19.Controls.Add(this.sellAddTargerB);
-			this.groupBox19.Controls.Add(this.sellRemoveB);
-			this.groupBox19.Controls.Add(this.sellAddManualB);
-			this.groupBox19.Location = new System.Drawing.Point(551, 135);
+			this.groupBox19.Controls.Add(this.sellEditButton);
+			this.groupBox19.Controls.Add(this.sellAddTargerButton);
+			this.groupBox19.Controls.Add(this.sellRemoveButton);
+			this.groupBox19.Controls.Add(this.sellAddManualButton);
+			this.groupBox19.Location = new System.Drawing.Point(553, 128);
 			this.groupBox19.Name = "groupBox19";
 			this.groupBox19.Size = new System.Drawing.Size(100, 125);
 			this.groupBox19.TabIndex = 84;
 			this.groupBox19.TabStop = false;
 			this.groupBox19.Text = "Item List";
 			// 
-			// sellEditB
+			// sellEditButton
 			// 
-			this.sellEditB.ColorTable = office2010BlueTheme;
-			this.sellEditB.Location = new System.Drawing.Point(5, 68);
-			this.sellEditB.Name = "sellEditB";
-			this.sellEditB.Size = new System.Drawing.Size(90, 20);
-			this.sellEditB.TabIndex = 48;
-			this.sellEditB.Text = "Edit";
-			this.sellEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellEditB.Click += new System.EventHandler(this.sellEditB_Click);
+			this.sellEditButton.ColorTable = office2010BlueTheme;
+			this.sellEditButton.Location = new System.Drawing.Point(5, 68);
+			this.sellEditButton.Name = "sellEditButton";
+			this.sellEditButton.Size = new System.Drawing.Size(90, 20);
+			this.sellEditButton.TabIndex = 48;
+			this.sellEditButton.Text = "Edit";
+			this.sellEditButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellEditButton.Click += new System.EventHandler(this.sellEdit_Click);
 			// 
-			// sellAddTargerB
+			// sellAddTargerButton
 			// 
-			this.sellAddTargerB.ColorTable = office2010BlueTheme;
-			this.sellAddTargerB.Location = new System.Drawing.Point(5, 43);
-			this.sellAddTargerB.Name = "sellAddTargerB";
-			this.sellAddTargerB.Size = new System.Drawing.Size(90, 20);
-			this.sellAddTargerB.TabIndex = 47;
-			this.sellAddTargerB.Text = "Add Target";
-			this.sellAddTargerB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellAddTargerB.Click += new System.EventHandler(this.sellAddTargerB_Click);
+			this.sellAddTargerButton.ColorTable = office2010BlueTheme;
+			this.sellAddTargerButton.Location = new System.Drawing.Point(5, 43);
+			this.sellAddTargerButton.Name = "sellAddTargerButton";
+			this.sellAddTargerButton.Size = new System.Drawing.Size(90, 20);
+			this.sellAddTargerButton.TabIndex = 47;
+			this.sellAddTargerButton.Text = "Add Target";
+			this.sellAddTargerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellAddTargerButton.Click += new System.EventHandler(this.sellAddTarget_Click);
 			// 
-			// sellRemoveB
+			// sellRemoveButton
 			// 
-			this.sellRemoveB.ColorTable = office2010BlueTheme;
-			this.sellRemoveB.Location = new System.Drawing.Point(5, 94);
-			this.sellRemoveB.Name = "sellRemoveB";
-			this.sellRemoveB.Size = new System.Drawing.Size(90, 20);
-			this.sellRemoveB.TabIndex = 46;
-			this.sellRemoveB.Text = "Remove";
-			this.sellRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellRemoveB.Click += new System.EventHandler(this.sellRemoveB_Click);
+			this.sellRemoveButton.ColorTable = office2010BlueTheme;
+			this.sellRemoveButton.Location = new System.Drawing.Point(5, 94);
+			this.sellRemoveButton.Name = "sellRemoveButton";
+			this.sellRemoveButton.Size = new System.Drawing.Size(90, 20);
+			this.sellRemoveButton.TabIndex = 46;
+			this.sellRemoveButton.Text = "Remove";
+			this.sellRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellRemoveButton.Click += new System.EventHandler(this.sellRemove_Click);
 			// 
-			// sellAddManualB
+			// sellAddManualButton
 			// 
-			this.sellAddManualB.ColorTable = office2010BlueTheme;
-			this.sellAddManualB.Location = new System.Drawing.Point(5, 18);
-			this.sellAddManualB.Name = "sellAddManualB";
-			this.sellAddManualB.Size = new System.Drawing.Size(90, 20);
-			this.sellAddManualB.TabIndex = 45;
-			this.sellAddManualB.Text = "Add Manual";
-			this.sellAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellAddManualB.Click += new System.EventHandler(this.sellAddManualB_Click);
+			this.sellAddManualButton.ColorTable = office2010BlueTheme;
+			this.sellAddManualButton.Location = new System.Drawing.Point(5, 18);
+			this.sellAddManualButton.Name = "sellAddManualButton";
+			this.sellAddManualButton.Size = new System.Drawing.Size(90, 20);
+			this.sellAddManualButton.TabIndex = 45;
+			this.sellAddManualButton.Text = "Add Manual";
+			this.sellAddManualButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellAddManualButton.Click += new System.EventHandler(this.sellAddManual_Click);
 			// 
 			// groupBox20
 			// 
@@ -4653,15 +4676,15 @@ namespace Assistant
 			this.sellLogBox.Size = new System.Drawing.Size(265, 225);
 			this.sellLogBox.TabIndex = 0;
 			// 
-			// sellEnableCheckB
+			// sellEnableCheckBox
 			// 
-			this.sellEnableCheckB.Location = new System.Drawing.Point(274, 58);
-			this.sellEnableCheckB.Name = "sellEnableCheckB";
-			this.sellEnableCheckB.Size = new System.Drawing.Size(105, 22);
-			this.sellEnableCheckB.TabIndex = 82;
-			this.sellEnableCheckB.Text = "Enable Sell List";
-			this.sellEnableCheckB.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.sellEnableCheckB.CheckedChanged += new System.EventHandler(this.sellEnableCheckB_CheckedChanged);
+			this.sellEnableCheckBox.Location = new System.Drawing.Point(274, 58);
+			this.sellEnableCheckBox.Name = "sellEnableCheckBox";
+			this.sellEnableCheckBox.Size = new System.Drawing.Size(105, 22);
+			this.sellEnableCheckBox.TabIndex = 82;
+			this.sellEnableCheckBox.Text = "Enable Sell List";
+			this.sellEnableCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.sellEnableCheckBox.CheckedChanged += new System.EventHandler(this.sellEnableCheck_CheckedChanged);
 			// 
 			// sellListView
 			// 
@@ -4672,8 +4695,10 @@ namespace Assistant
             this.columnHeader20,
             this.columnHeader21,
             this.columnHeader22});
+			this.sellListView.FullRowSelect = true;
 			this.sellListView.GridLines = true;
 			this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.sellListView.HideSelection = false;
 			this.sellListView.LabelWrap = false;
 			this.sellListView.Location = new System.Drawing.Point(6, 51);
 			this.sellListView.MultiSelect = false;
@@ -4708,37 +4733,37 @@ namespace Assistant
 			this.columnHeader22.Text = "Color";
 			this.columnHeader22.Width = 50;
 			// 
-			// sellRemoveListB
+			// sellRemoveListButton
 			// 
-			this.sellRemoveListB.ColorTable = office2010BlueTheme;
-			this.sellRemoveListB.Location = new System.Drawing.Point(369, 14);
-			this.sellRemoveListB.Name = "sellRemoveListB";
-			this.sellRemoveListB.Size = new System.Drawing.Size(90, 20);
-			this.sellRemoveListB.TabIndex = 80;
-			this.sellRemoveListB.Text = "Remove";
-			this.sellRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellRemoveListB.Click += new System.EventHandler(this.sellRemoveListB_Click);
+			this.sellRemoveListButton.ColorTable = office2010BlueTheme;
+			this.sellRemoveListButton.Location = new System.Drawing.Point(369, 14);
+			this.sellRemoveListButton.Name = "sellRemoveListButton";
+			this.sellRemoveListButton.Size = new System.Drawing.Size(90, 20);
+			this.sellRemoveListButton.TabIndex = 80;
+			this.sellRemoveListButton.Text = "Remove";
+			this.sellRemoveListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellRemoveListButton.Click += new System.EventHandler(this.sellRemoveList_Click);
 			// 
-			// sellAddListB
+			// sellAddListButton
 			// 
-			this.sellAddListB.ColorTable = office2010BlueTheme;
-			this.sellAddListB.Location = new System.Drawing.Point(273, 14);
-			this.sellAddListB.Name = "sellAddListB";
-			this.sellAddListB.Size = new System.Drawing.Size(90, 20);
-			this.sellAddListB.TabIndex = 79;
-			this.sellAddListB.Text = "Add";
-			this.sellAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellAddListB.Click += new System.EventHandler(this.sellAddListB_Click);
+			this.sellAddListButton.ColorTable = office2010BlueTheme;
+			this.sellAddListButton.Location = new System.Drawing.Point(273, 14);
+			this.sellAddListButton.Name = "sellAddListButton";
+			this.sellAddListButton.Size = new System.Drawing.Size(90, 20);
+			this.sellAddListButton.TabIndex = 79;
+			this.sellAddListButton.Text = "Add";
+			this.sellAddListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellAddListButton.Click += new System.EventHandler(this.sellAddList_Click);
 			// 
-			// sellImportListB
+			// sellImportListButton
 			// 
-			this.sellImportListB.ColorTable = office2010BlueTheme;
-			this.sellImportListB.Location = new System.Drawing.Point(465, 14);
-			this.sellImportListB.Name = "sellImportListB";
-			this.sellImportListB.Size = new System.Drawing.Size(90, 20);
-			this.sellImportListB.TabIndex = 76;
-			this.sellImportListB.Text = "Import";
-			this.sellImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellImportListButton.ColorTable = office2010BlueTheme;
+			this.sellImportListButton.Location = new System.Drawing.Point(465, 14);
+			this.sellImportListButton.Name = "sellImportListButton";
+			this.sellImportListButton.Size = new System.Drawing.Size(90, 20);
+			this.sellImportListButton.TabIndex = 76;
+			this.sellImportListButton.Text = "Import";
+			this.sellImportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			// 
 			// sellListSelect
 			// 
@@ -4750,15 +4775,15 @@ namespace Assistant
 			this.sellListSelect.TabIndex = 78;
 			this.sellListSelect.SelectedIndexChanged += new System.EventHandler(this.sellListSelect_SelectedIndexChanged);
 			// 
-			// sellExportListB
+			// sellExportListButton
 			// 
-			this.sellExportListB.ColorTable = office2010BlueTheme;
-			this.sellExportListB.Location = new System.Drawing.Point(561, 14);
-			this.sellExportListB.Name = "sellExportListB";
-			this.sellExportListB.Size = new System.Drawing.Size(90, 20);
-			this.sellExportListB.TabIndex = 75;
-			this.sellExportListB.Text = "Export";
-			this.sellExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellExportListButton.ColorTable = office2010BlueTheme;
+			this.sellExportListButton.Location = new System.Drawing.Point(561, 14);
+			this.sellExportListButton.Name = "sellExportListButton";
+			this.sellExportListButton.Size = new System.Drawing.Size(90, 20);
+			this.sellExportListButton.TabIndex = 75;
+			this.sellExportListButton.Text = "Export";
+			this.sellExportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			// 
 			// label26
 			// 
@@ -4906,9 +4931,9 @@ namespace Assistant
 			// 
 			// dressDragDelay
 			// 
-			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dressDragDelay.BackColor = System.Drawing.Color.White;
 			this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.dressDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5224,93 +5249,19 @@ namespace Assistant
 
 
 			// ---------------- ORGANIZER ----------------
-			// Liste 
-			organizerListSelect.Items.Add("Default");    // Lista base non cancellabile 
+			organizerDragDelay.Text = "100";
+			RazorEnhanced.Organizer.RefreshLists();
 
-			// Carico parametri base
-			int organizerSettingDelay;
-			string organizerSettingLastList = "";
-			List<string> organizerSettingItemList = new List<string>();
-
-			if (RazorEnhanced.Settings.LoadOrganizerGeneral(out organizerSettingDelay, out organizerSettingItemList, out organizerSettingLastList))
-			{
-				// load delay
-				organizerDragDelay.Text = organizerSettingDelay.ToString();
-
-				// load Lista item
-				for (int i = 0; i < organizerSettingItemList.Count; i++)
-				{
-					if (organizerSettingItemList[i] != "Default")
-						organizerListSelect.Items.Add(organizerSettingItemList[i]);
-				}
-
-				// Setta ultima lista usata e carica 
-				if (organizerSettingLastList != "")
-				{
-					organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf(organizerSettingLastList);
-				}
-				else
-				{
-					organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
-				}
-			}
-			else
-			{
-				organizerDragDelay.Text = "100";
-				organizerListSelect.SelectedIndex = organizerListSelect.Items.IndexOf("Default");
-			}
-			organizerStopB.Enabled = false;
 
 			// ----------- SELL AGENT -----------------
-			// Liste
-			sellListSelect.Items.Add("Default");    // Lista base non cancellabile 
+			RazorEnhanced.SellAgent.RefreshLists();
 
-			// Carico parametri base
-			string SellSettingLastList = "";
-			List<string> SellSettingItemList = new List<string>();
-			RazorEnhanced.Settings.LoadSellGeneral(out SellSettingItemList, out SellSettingLastList);
 
-			// load Lista item
-			for (int i = 0; i < SellSettingItemList.Count; i++)
-			{
-				if (SellSettingItemList[i] != "Default")
-					sellListSelect.Items.Add(SellSettingItemList[i]);
-			}
-
-			// Setta ultima lista usata e carica 
-			if (SellSettingLastList != "")
-			{
-				sellListSelect.SelectedIndex = sellListSelect.Items.IndexOf(SellSettingLastList);
-
-			}
-			else
-				sellListSelect.SelectedIndex = sellListSelect.Items.IndexOf("Default");
 
 			// ------------------- BUY AGENT ----------------------
-			// Liste
-			buyListSelect.Items.Add("Default");    // Lista base non cancellabile 
+			RazorEnhanced.BuyAgent.RefreshLists();
 
-			// Carico parametri base
-			string buySettingLastList = "";
-			List<string> buySettingItemList = new List<string>();
-			RazorEnhanced.Settings.LoadBuyGeneral(out buySettingItemList, out buySettingLastList);
 
-			// load Lista item
-			for (int i = 0; i < buySettingItemList.Count; i++)
-			{
-				if (buySettingItemList[i] != "Default")
-					buyListSelect.Items.Add(buySettingItemList[i]);
-			}
-
-			// Setta ultima lista usata e carica 
-			if (buySettingLastList != "")
-			{
-				buyListSelect.SelectedIndex = buyListSelect.Items.IndexOf(buySettingLastList);
-			}
-			else
-			{
-				buyListSelect.SelectedIndex = buyListSelect.Items.IndexOf("Default");
-			}
 
 			// ------------------ DRESS AGENT -------------------------
 			//Liste
@@ -9018,10 +8969,11 @@ namespace Assistant
 			manualAddItem.Show();
 		}
 
-		private void scavengerSetContainerB_Click(object sender, EventArgs e)
+		private void scavengerSetContainer_Click(object sender, EventArgs e)
 		{
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemContainerTarget_Callback));
 		}
+
 		private void ScavengerItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item scavengerBag = Assistant.World.FindItem(serial);
@@ -9038,8 +8990,8 @@ namespace Assistant
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Autoloot Bag, set backpack");
-				RazorEnhanced.Scavenger.AddLog("Invalid Autoloot Bag, set backpack");
+				RazorEnhanced.Misc.SendMessage("Invalid Scavenger Bag, set backpack");
+				RazorEnhanced.Scavenger.AddLog("Invalid Scavenger Bag, set backpack");
 				Scavenger.ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
@@ -9142,141 +9094,153 @@ namespace Assistant
 
 
 
+		// ------------ ORGANIZER ----------------
 
-		private void organizerAddListB_Click(object sender, EventArgs e)
+		private void organizerAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedOrganizerAddItemList AddItemList = new EnhancedOrganizerAddItemList();
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			EnhancedOrganizerAddList addItemList = new EnhancedOrganizerAddList();
+			addItemList.TopMost = true;
+			addItemList.Show();
 		}
 
-		private void organizerRemoveListB_Click(object sender, EventArgs e)
+		private void organizerRemoveList_Click(object sender, EventArgs e)
 		{
-			if (organizerListSelect.Text != "Default")
+			if (organizerListSelect.Text != null)
+				RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
+
+			RazorEnhanced.Organizer.RemoveList(organizerListSelect.Text);
+		}
+
+		private void organizerAddManual_Click(object sender, EventArgs e)
+		{
+			EnhancedOrganizerManualAdd manualAddItem = new EnhancedOrganizerManualAdd();
+			manualAddItem.TopMost = true;
+			manualAddItem.Show();
+		}
+
+		private void organizerEdit_Click(object sender, EventArgs e)
+		{
+			if (organizerListView.SelectedItems.Count == 1)
 			{
-				RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.SelectedItem.ToString() + " removed!");
-				organizerListSelect.Items.Remove(organizerListSelect.SelectedItem);
-				organizerListSelect.SelectedIndex = organizerListSelect.FindStringExact("Default");
-			}
-			else
-				RazorEnhanced.Organizer.AddLog("Can't remove Default list!");
-		}
+				int index = organizerListView.SelectedItems[0].Index;
+				string selection = organizerListSelect.Text;
 
-		private void organizerAddManualB_Click(object sender, EventArgs e)
-		{
-			EnhancedOrganizerManualAdd ManualAddItem = new EnhancedOrganizerManualAdd(OrganizerListView, OrganizerItemList);
-			ManualAddItem.TopMost = true;
-			ManualAddItem.Show();
-		}
-
-		private void organizerEditB_Click(object sender, EventArgs e)
-		{
-			int CheckedIndex = 0;
-			for (int i = 0; i < OrganizerListView.Items.Count; i++)
-			{
-				if (OrganizerListView.Items[i].Checked)
+				if (RazorEnhanced.Settings.Organizer.ListExists(selection))
 				{
-					CheckedIndex = i;
-					break;
+					List<Organizer.OrganizerItem> items;
+					RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
+					if (index <= items.Count - 1)
+					{
+						Organizer.OrganizerItem item = items[index];
+						EnhancedOrganizerEditItem editItem = new EnhancedOrganizerEditItem(selection, index, item);
+						editItem.TopMost = true;
+						editItem.Show();
+					}
 				}
 			}
-			EnhancedOrganizerEditItem EditItem = new EnhancedOrganizerEditItem(OrganizerListView, OrganizerItemList, CheckedIndex);
-			EditItem.TopMost = true;
-			EditItem.Show();
 		}
 
-		private void organizerRemoveB_Click(object sender, EventArgs e)
+		private void organizerRemoveItem_Click(object sender, EventArgs e)
 		{
-			int y = 0;
-			for (int i = 0; i < OrganizerListView.Items.Count; i++)
+			if (organizerListView.SelectedItems.Count == 1)
 			{
-				if (OrganizerListView.Items[i].Checked)
+				int index = organizerListView.SelectedItems[0].Index;
+				string selection = organizerListSelect.Text;
+
+				if (RazorEnhanced.Settings.Organizer.ListExists(selection))
 				{
-					OrganizerItemList.RemoveAt(y);
-					y--;
+					List<Organizer.OrganizerItem> items;
+					RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
+					if (index <= items.Count - 1)
+					{
+						RazorEnhanced.Settings.Organizer.ItemDelete(selection, items[index]);
+						RazorEnhanced.Organizer.RefreshItems();
+					}
 				}
-				y++;
 			}
-			RazorEnhanced.Settings.SaveOrganizerItemList(Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString(), organizerItemList, Assistant.Engine.MainWindow.OrganizerSourceBag.Value, Assistant.Engine.MainWindow.OrganizerDestinationBag.Value);
-			RazorEnhanced.Organizer.RefreshList(OrganizerItemList);
 		}
 
-		private void organizerSetSourceB_Click(object sender, EventArgs e)
+		private void organizerSetSource_Click(object sender, EventArgs e)
 		{
-
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
 		}
+
 		private void OrganizerSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
+			Assistant.Item organizerBag = Assistant.World.FindItem(serial);
 
-			Assistant.Item SourceBag = Assistant.World.FindItem(serial);
-			if (SourceBag != null && SourceBag.Serial.IsItem && SourceBag.IsContainer)
+			if (organizerBag == null)
+				return;
+
+			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer && organizerBag.RootContainer == Assistant.World.Player)
 			{
-				m_OrganizerSourceBag = serial;
-				RazorEnhanced.Misc.SendMessage("Source bag configured to: " + SourceBag.ToString());
-				RazorEnhanced.Organizer.AddLog("Source bag configured to: " + SourceBag.ToString());
-				OrganizerSourceLabel.Text = "0x" + SourceBag.Serial.Value.ToString("X8");
+				RazorEnhanced.Misc.SendMessage("Source bag configured to: " + organizerBag.ToString());
+				RazorEnhanced.Organizer.AddLog("Source bag configured to: " + organizerBag.ToString());
+				RazorEnhanced.Organizer.OrganizerSource = (int)organizerBag.Serial.Value;
 
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Source Bag");
-				RazorEnhanced.Organizer.AddLog("Invalid Source Bag");
-				OrganizerSourceLabel.Text = "0x00000000";
+				RazorEnhanced.Misc.SendMessage("Invalid Source Bag, set backpack");
+				RazorEnhanced.Organizer.AddLog("Invalid Source Bag, set backpack");
+				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 			}
-			RazorEnhanced.Settings.SaveOrganizerItemList(Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString(), organizerItemList, Assistant.Engine.MainWindow.OrganizerSourceBag.Value, Assistant.Engine.MainWindow.OrganizerDestinationBag.Value);
+
+			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, serial, RazorEnhanced.Organizer.OrganizerDestination, true);
+			RazorEnhanced.Organizer.RefreshLists();
 		}
 
-		private void organizerSetDestinationB_Click(object sender, EventArgs e)
+		private void organizerSetDestination_Click(object sender, EventArgs e)
 		{
-
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
 		}
+
 		private void OrganizerDestinationContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
+			Assistant.Item organizerBag = Assistant.World.FindItem(serial);
 
-			Assistant.Item DestinationBag = Assistant.World.FindItem(serial);
-			if (DestinationBag != null && DestinationBag.Serial.IsItem && DestinationBag.IsContainer)
+			if (organizerBag == null)
+				return;
+
+			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer && organizerBag.RootContainer == Assistant.World.Player)
 			{
-				m_OrganizerDestinationBag = serial;
-				RazorEnhanced.Misc.SendMessage("Destination bag configured to: " + DestinationBag.ToString());
-				RazorEnhanced.Organizer.AddLog("Destination bag configured to: " + DestinationBag.ToString());
-				OrganizerDestinationLabel.Text = "0x" + DestinationBag.Serial.Value.ToString("X8");
+				RazorEnhanced.Misc.SendMessage("Destination bag configured to: " + organizerBag.ToString());
+				RazorEnhanced.Organizer.AddLog("Destination bag configured to: " + organizerBag.ToString());
+				RazorEnhanced.Organizer.OrganizerDestination = (int)organizerBag.Serial.Value;
+
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Destination Source Bag");
-				RazorEnhanced.Organizer.AddLog("Destination Source Bag");
-				OrganizerDestinationLabel.Text = "0x00000000";
+				RazorEnhanced.Misc.SendMessage("Invalid Destination Bag, set backpack");
+				RazorEnhanced.Organizer.AddLog("Invalid Destination Bag, set backpack");
+				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 			}
-			RazorEnhanced.Settings.SaveOrganizerItemList(Assistant.Engine.MainWindow.OrganizerListSelect.SelectedItem.ToString(), organizerItemList, Assistant.Engine.MainWindow.OrganizerSourceBag.Value, Assistant.Engine.MainWindow.OrganizerDestinationBag.Value);
+
+			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, serial, true);
+			RazorEnhanced.Organizer.RefreshLists();
 		}
 
 		private void organizerListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			uint source = 0;
-			uint destination = 0;
-			RazorEnhanced.Settings.LoadOrganizerItemList(organizerListSelect.SelectedItem.ToString(), out organizerItemList, out source, out destination);
-			OrganizerSourceLabel.Text = "0x" + source.ToString("X8");
-			organizerDestinationLabel.Text = "0x" + destination.ToString("X8");
-			RazorEnhanced.Organizer.RefreshList(organizerItemList);
-			RazorEnhanced.Organizer.AddLog("Organizer list changed to: " + organizerListSelect.SelectedItem.ToString());
+			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
+			RazorEnhanced.Organizer.RefreshItems();
+
+			if (organizerListSelect.Text != "")
+				RazorEnhanced.Organizer.AddLog("Organizer list changed to: " + organizerListSelect.Text);
 		}
 
-		private void organizerAddTargetB_Click(object sender, EventArgs e)
+		private void organizerAddTarget_Click(object sender, EventArgs e)
 		{
-
 			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
 		}
 
 		private void OrganizerItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-
-			Assistant.Item OrganizerItem = Assistant.World.FindItem(serial);
-			if (OrganizerItem != null && OrganizerItem.Serial.IsItem)
+			Assistant.Item organizerItem = Assistant.World.FindItem(serial);
+			if (organizerItem != null && organizerItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Organizer item added: " + OrganizerItem.ToString());
-				RazorEnhanced.Organizer.AddItemToList(OrganizerItem.Name, OrganizerItem.ItemID, OrganizerItem.Hue, -1, OrganizerListView, organizerItemList);
+				RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
+				RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Amount, organizerItem.Hue);
 			}
 			else
 			{
@@ -9284,18 +9248,32 @@ namespace Assistant
 			}
 		}
 
-		private void organizerExecuteB_Click(object sender, EventArgs e)
+		private void organizerDragDelay_TextChanged(object sender, EventArgs e)
+		{
+			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
+			RazorEnhanced.Organizer.RefreshLists();
+		}
+
+		private void organizerListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			RazorEnhanced.Organizer.UpdateSelectedItems();
+		}
+
+		private void organizerExecute_Click(object sender, EventArgs e)
 		{
 			int delay = 100;
-			RazorEnhanced.Item SourceBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
-			int SourceBagSerial;
-			RazorEnhanced.Item DestinationBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
-			int DestinationBagSerial;
+
+			RazorEnhanced.Item sourceBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+			int sourceBagSerial;
+
+			RazorEnhanced.Item destinationBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+			int destinationBagSerial;
+
 			bool StartCheck = true;
 
 			try
 			{
-				delay = Convert.ToInt32(scavengerDragDelay.Text);
+				delay = Convert.ToInt32(organizerDragDelay.Text);
 			}
 			catch
 			{
@@ -9303,18 +9281,17 @@ namespace Assistant
 				RazorEnhanced.Organizer.AddLog("ERROR: Drag item delay is invalid");
 			}
 
-			SourceBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerSourceLabel.Text, 16);
-			if (SourceBagSerial != 0)
+			sourceBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerSourceLabel.Text, 16);
+			if (sourceBagSerial != 0)
 			{
-				SourceBag = RazorEnhanced.Items.FindBySerial(SourceBagSerial);
-				if (SourceBag != null)
+				sourceBag = RazorEnhanced.Items.FindBySerial(sourceBagSerial);
+				if (sourceBag != null)
 				{
-					if (SourceBag.RootContainer != World.Player)
+					if (sourceBag.RootContainer != World.Player)
 					{
-						if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(SourceBag.Position.X, SourceBag.Position.Y)) <= 3)
+						if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(sourceBag.Position.X, sourceBag.Position.Y)) <= 3)
 						{
-							RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + SourceBag.Serial.ToString("X8"));
-							m_OrganizerSourceBag = (Assistant.Serial)SourceBag.Serial;
+							RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + sourceBag.Serial.ToString("X8"));
 						}
 						else
 						{
@@ -9324,8 +9301,7 @@ namespace Assistant
 					}
 					else
 					{
-						RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + SourceBag.Serial.ToString("X8"));
-						m_OrganizerSourceBag = (Assistant.Serial)SourceBag.Serial;
+						RazorEnhanced.Organizer.AddLog("Source Bag OK: 0x" + sourceBag.Serial.ToString("X8"));
 					}
 				}
 				else
@@ -9340,18 +9316,17 @@ namespace Assistant
 				RazorEnhanced.Organizer.AddLog("ERROR: Source Bag is invalid");
 			}
 
-			DestinationBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerDestinationLabel.Text, 16);
-			if (DestinationBagSerial != 0)
+			destinationBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerDestinationLabel.Text, 16);
+			if (destinationBagSerial != 0)
 			{
-				DestinationBag = RazorEnhanced.Items.FindBySerial(DestinationBagSerial);
-				if (DestinationBag != null)
+				destinationBag = RazorEnhanced.Items.FindBySerial(destinationBagSerial);
+				if (destinationBag != null)
 				{
-					if (DestinationBag.RootContainer != World.Player)
+					if (destinationBag.RootContainer != World.Player)
 					{
-						if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(DestinationBag.Position.X, DestinationBag.Position.Y)) <= 3)
+						if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(destinationBag.Position.X, destinationBag.Position.Y)) <= 3)
 						{
-							RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + DestinationBag.Serial.ToString("X8"));
-							m_OrganizerDestinationBag = (Assistant.Serial)DestinationBag.Serial;
+							RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + destinationBag.Serial.ToString("X8"));
 						}
 						else
 						{
@@ -9361,8 +9336,7 @@ namespace Assistant
 					}
 					else
 					{
-						RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + DestinationBag.Serial.ToString("X8"));
-						m_OrganizerDestinationBag = (Assistant.Serial)DestinationBag.Serial;
+						RazorEnhanced.Organizer.AddLog("Destination Bag OK: 0x" + destinationBag.Serial.ToString("X8"));
 					}
 				}
 				else
@@ -9376,14 +9350,15 @@ namespace Assistant
 				StartCheck = false;
 				RazorEnhanced.Organizer.AddLog("ERROR: Destination Bag is invalid");
 			}
+
 			if (StartCheck)
 			{
 				RazorEnhanced.Organizer.Start();
 
 				RazorEnhanced.Organizer.AddLog("Organizer Engine Start...");
 				RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
-				organizerStopB.Enabled = true;
-				organizerExecuteB.Enabled = false;
+				organizerStopButton.Enabled = true;
+				organizerExecuteButton.Enabled = false;
 				organizerListSelect.Enabled = false;
 				organizerAddListB.Enabled = false;
 				organizerRemoveListB.Enabled = false;
@@ -9394,8 +9369,8 @@ namespace Assistant
 			else
 			{
 				RazorEnhanced.Organizer.AddLog("Fail to start Organizer Engine...");
-				organizerStopB.Enabled = false;
-				organizerExecuteB.Enabled = true;
+				organizerStopButton.Enabled = false;
+				organizerExecuteButton.Enabled = true;
 				organizerListSelect.Enabled = true;
 				organizerAddListB.Enabled = true;
 				organizerRemoveListB.Enabled = true;
@@ -9405,13 +9380,13 @@ namespace Assistant
 			}
 		}
 
-		private void organizerStopB_Click(object sender, EventArgs e)
+		private void organizerStop_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.Organizer.ForceStop();
 
 			RazorEnhanced.Organizer.AddLog("Organizer Engine force stop...");
 			RazorEnhanced.Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
-			organizerExecuteB.Enabled = true;
+			organizerExecuteButton.Enabled = true;
 			organizerListSelect.Enabled = true;
 			organizerAddListB.Enabled = true;
 			organizerRemoveListB.Enabled = true;
@@ -9420,299 +9395,11 @@ namespace Assistant
 			organizerDragDelay.Enabled = true;
 		}
 
-		private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			uint hotBag = 0;
-			RazorEnhanced.Settings.LoadSellItemList(SellListSelect.SelectedItem.ToString(), out sellItemList, out hotBag);
-
-			Assistant.Item sellBag = Assistant.World.FindItem(hotBag);
-			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsContainer)
-			{
-				sellBagLabel.Text = "0x" + sellBag.Serial.Value.ToString("X8"); ;
-			}
-			else
-			{
-				sellBagLabel.Text = "0x00000000";
-			}
-
-			RazorEnhanced.SellAgent.RefreshList(sellItemList);
-			RazorEnhanced.SellAgent.AddLog("Sell list changed to: " + SellListSelect.SelectedItem.ToString());
-		}
-
-		private void sellAddListB_Click(object sender, EventArgs e)
-		{
-			EnhancedSellAgentAddItemList AddItemList = new EnhancedSellAgentAddItemList();
-			AddItemList.TopMost = true;
-			AddItemList.Show();
-		}
-
-		private void sellRemoveListB_Click(object sender, EventArgs e)
-		{
-			if (sellListSelect.Text != "Default")
-			{
-				RazorEnhanced.SellAgent.AddLog("Sell list " + sellListSelect.SelectedItem.ToString() + " removed!");
-				sellListSelect.Items.Remove(sellListSelect.SelectedItem);
-				sellListSelect.SelectedIndex = sellListSelect.FindStringExact("Default");
-			}
-			else
-				RazorEnhanced.SellAgent.AddLog("Can't remove Default list!");
-		}
-
-		private void sellAddManualB_Click(object sender, EventArgs e)
-		{
-			EnhancedSellAgentManualAdd ManualAddItem = new EnhancedSellAgentManualAdd(sellListView, sellItemList);
-			ManualAddItem.TopMost = true;
-			ManualAddItem.Show();
-		}
-
-		private void sellAddTargerB_Click(object sender, EventArgs e)
-		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
-		}
-
-		private void SellAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-		{
-			Assistant.Item SellItem = Assistant.World.FindItem(serial);
-			if (SellItem != null && SellItem.Serial.IsItem)
-			{
-				RazorEnhanced.Misc.SendMessage("Sell item added: " + SellItem.ToString());
-				RazorEnhanced.SellAgent.AddItemToList(SellItem.Name, SellItem.ItemID, 999, -1, sellListView, sellItemList);
-			}
-			else
-			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
-			}
-		}
-
-		private void sellEditB_Click(object sender, EventArgs e)
-		{
-			int CheckedIndex = 0;
-			for (int i = 0; i < SellListView.Items.Count; i++)
-			{
-				if (SellListView.Items[i].Checked)
-				{
-					CheckedIndex = i;
-					break;
-				}
-			}
-			EnhancedSellAgentEditItem EditItem = new EnhancedSellAgentEditItem(SellListView, SellItemList, CheckedIndex);
-			EditItem.TopMost = true;
-			EditItem.Show();
-		}
-
-		private void sellRemoveB_Click(object sender, EventArgs e)
-		{
-			int y = 0;
-			for (int i = 0; i < SellListView.Items.Count; i++)
-			{
-				if (SellListView.Items[i].Checked)
-				{
-					SellItemList.RemoveAt(y);
-					y--;
-				}
-				y++;
-			}
-			RazorEnhanced.Settings.SaveSellItemList(sellListSelect.SelectedItem.ToString(), SellItemList, sellBagLabel.Text);
-			RazorEnhanced.SellAgent.RefreshList(SellItemList);
-		}
-
-		private void sellEnableCheckB_CheckedChanged(object sender, EventArgs e)
-		{
-			if (sellEnableCheckB.Checked)
-			{
-				Assistant.Item HotBag = null;
-				int SerialHotBag = Convert.ToInt32(sellBagLabel.Text, 16);
-				HotBag = Assistant.World.FindItem(SerialHotBag);
-				if (HotBag != null)
-					if (HotBag.RootContainer != World.Player || !HotBag.IsContainer)
-					{
-						RazorEnhanced.SellAgent.AddLog("Invalid or not accessible HotBag!");
-						RazorEnhanced.Misc.SendMessage("Invalid or not accessible HotBag!");
-						sellEnableCheckB.Checked = false;
-					}
-					else
-					{
-						sellListSelect.Enabled = false;
-						sellAddListB.Enabled = false;
-						sellRemoveListB.Enabled = false;
-						sellImportListB.Enabled = false;
-						sellExportListB.Enabled = false;
-						RazorEnhanced.SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-						RazorEnhanced.Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-						RazorEnhanced.SellAgent.EnableSellFilter();
-					}
-				else
-				{
-					RazorEnhanced.SellAgent.AddLog("Invalid or not accessible HotBag!");
-					RazorEnhanced.Misc.SendMessage("Invalid or not accessible HotBag!");
-					sellEnableCheckB.Checked = false;
-				}
-			}
-			else
-			{
-				sellListSelect.Enabled = true;
-				sellAddListB.Enabled = true;
-				sellRemoveListB.Enabled = true;
-				sellImportListB.Enabled = true;
-				sellExportListB.Enabled = true;
-				RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-				RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-			}
-		}
-
-		private void buyListSelect_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			RazorEnhanced.Settings.LoadBuyItemList(BuyListSelect.SelectedItem.ToString(), out buyItemList);
-			RazorEnhanced.BuyAgent.RefreshList(buyItemList);
-			RazorEnhanced.BuyAgent.AddLog("Sell list changed to: " + BuyListSelect.SelectedItem.ToString());
-		}
-
-		private void buyAddListB_Click(object sender, EventArgs e)
-		{
-			EnhancedBuyAgentAddItemList AddItemList = new EnhancedBuyAgentAddItemList();
-			AddItemList.TopMost = true;
-			AddItemList.Show();
-		}
-
-		private void buyRemoveListB_Click(object sender, EventArgs e)
-		{
-			if (buyListSelect.Text != "Default")
-			{
-				RazorEnhanced.BuyAgent.AddLog("Sell list " + buyListSelect.SelectedItem.ToString() + " removed!");
-				buyListSelect.Items.Remove(buyListSelect.SelectedItem);
-				buyListSelect.SelectedIndex = buyListSelect.FindStringExact("Default");
-			}
-			else
-				RazorEnhanced.BuyAgent.AddLog("Can't remove Default list!");
-		}
-
-		private void buyAddManualB_Click(object sender, EventArgs e)
-		{
-			EnhancedBuyAgentManualAdd ManualAddItem = new EnhancedBuyAgentManualAdd(buyListView, buyItemList);
-			ManualAddItem.TopMost = true;
-			ManualAddItem.Show();
-		}
-
-		private void buyAddTargetB_Click(object sender, EventArgs e)
-		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentItemTarget_Callback));
-		}
-
-		private void BuyAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-		{
-			Assistant.Item BuyItem = Assistant.World.FindItem(serial);
-			if (BuyItem != null && BuyItem.Serial.IsItem)
-			{
-				RazorEnhanced.Misc.SendMessage("Buy item added: " + BuyItem.ToString());
-				RazorEnhanced.BuyAgent.AddItemToList(BuyItem.Name, BuyItem.ItemID, 999, -1, buyListView, buyItemList);
-			}
-			else
-			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
-			}
-		}
-
-		private void buyEditB_Click(object sender, EventArgs e)
-		{
-			int CheckedIndex = 0;
-			for (int i = 0; i < BuyListView.Items.Count; i++)
-			{
-				if (BuyListView.Items[i].Checked)
-				{
-					CheckedIndex = i;
-					break;
-				}
-			}
-			EnhancedBuyAgentEditItem EditItem = new EnhancedBuyAgentEditItem(BuyListView, BuyItemList, CheckedIndex);
-			EditItem.TopMost = true;
-			EditItem.Show();
-		}
-
-		private void buyRemoveB_Click(object sender, EventArgs e)
-		{
-			int y = 0;
-			for (int i = 0; i < BuyListView.Items.Count; i++)
-			{
-				if (BuyListView.Items[i].Checked)
-				{
-					BuyItemList.RemoveAt(y);
-					y--;
-				}
-				y++;
-			}
-			RazorEnhanced.Settings.SaveBuyItemList(buyListSelect.SelectedItem.ToString(), BuyItemList);
-			RazorEnhanced.BuyAgent.RefreshList(BuyItemList);
-		}
-
-		private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
-		{
-			if (buyEnableCheckB.Checked)
-			{
-				buyListSelect.Enabled = false;
-				buyAddListB.Enabled = false;
-				buyRemoveListB.Enabled = false;
-				buyImportListB.Enabled = false;
-				buyExportListB.Enabled = false;
-				RazorEnhanced.BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-				RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-				RazorEnhanced.BuyAgent.EnableBuyFilter();
-			}
-			else
-			{
-				buyListSelect.Enabled = true;
-				buyAddListB.Enabled = true;
-				buyRemoveListB.Enabled = true;
-				buyImportListB.Enabled = true;
-				buyExportListB.Enabled = true;
-				RazorEnhanced.BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-				RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-			}
-		}
-
-		private void razorButton1_Click(object sender, EventArgs e)
-		{
-			sellBagLabel.Text = "0x00000000";
-		}
-
-		private void sellSetBagB_Click(object sender, EventArgs e)
-		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellHotbagTarget_Callback));
-		}
-		private void sellHotbagTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-		{
-			Assistant.Item HotBag = Assistant.World.FindItem(serial);
-			if (HotBag != null && HotBag.Serial.IsItem && HotBag.IsContainer && HotBag.RootContainer == Assistant.World.Player)
-			{
-				RazorEnhanced.Misc.SendMessage("Sell Agent HotBag configured to: " + HotBag.Serial.Value.ToString("X8"));
-				RazorEnhanced.SellAgent.AddLog("Sell Agent HotBag configured to: " + HotBag.Serial.Value.ToString("X8"));
-				sellBagLabel.Text = "0x" + HotBag.Serial.Value.ToString("X8");
-			}
-			else
-			{
-				RazorEnhanced.Misc.SendMessage("Invalid Sell Agent HotBag");
-				RazorEnhanced.SellAgent.AddLog("Invalid Sell Agent HotBag");
-				sellBagLabel.Text = "0x0000000";
-			}
-			RazorEnhanced.Settings.SaveSellItemList(SellListSelect.SelectedItem.ToString(), SellItemList, sellBagLabel.Text);
-
-		}
-
-		private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
-
-		}
-
-		private void dressAddManualB_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		delegate void OrganizerFinishWorkCallback();
 
 		internal void OrganizerFinishWork()
 		{
-			if (organizerExecuteB.InvokeRequired ||
+			if (organizerExecuteButton.InvokeRequired ||
 				organizerListSelect.InvokeRequired ||
 				organizerAddListB.InvokeRequired ||
 				organizerRemoveListB.InvokeRequired ||
@@ -9725,7 +9412,7 @@ namespace Assistant
 			}
 			else
 			{
-				organizerExecuteB.Enabled = true;
+				organizerExecuteButton.Enabled = true;
 				organizerListSelect.Enabled = true;
 				organizerAddListB.Enabled = true;
 				organizerRemoveListB.Enabled = true;
@@ -9733,6 +9420,326 @@ namespace Assistant
 				organizerImportListB.Enabled = true;
 				organizerDragDelay.Enabled = true;
 			}
+		}
+
+		// ------------------ ORGANIZER END--------------------------
+
+
+
+
+
+		// ------------------ SELL AGENT --------------------------
+		private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
+			RazorEnhanced.SellAgent.RefreshItems();
+
+			if (sellListSelect.Text != "")
+				RazorEnhanced.SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
+		}
+
+		private void sellAddList_Click(object sender, EventArgs e)
+		{
+			EnhancedSellAgentAddList addItemList = new EnhancedSellAgentAddList();
+			addItemList.TopMost = true;
+			addItemList.Show();
+		}
+
+		private void sellRemoveList_Click(object sender, EventArgs e)
+		{
+			if (sellListSelect.Text != null)
+				RazorEnhanced.SellAgent.AddLog("Sell Agent list " + sellListSelect.Text + " removed!");
+
+			RazorEnhanced.SellAgent.RemoveList(sellListSelect.Text);
+		}
+
+		private void sellAddManual_Click(object sender, EventArgs e)
+		{
+			EnhancedSellAgentManualAdd ManualAddItem = new EnhancedSellAgentManualAdd();
+			ManualAddItem.TopMost = true;
+			ManualAddItem.Show();
+		}
+
+		private void sellAddTarget_Click(object sender, EventArgs e)
+		{
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
+		}
+
+		private void SellAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item sellItem = Assistant.World.FindItem(serial);
+			if (sellItem != null && sellItem.Serial.IsItem)
+			{
+				RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString());
+				RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, sellItem.Hue, sellItem.Amount);
+			}
+			else
+			{
+				RazorEnhanced.Misc.SendMessage("Invalid target");
+			}
+		}
+
+		private void sellEdit_Click(object sender, EventArgs e)
+		{
+			if (sellListView.SelectedItems.Count == 1)
+			{
+				int index = sellListView.SelectedItems[0].Index;
+				string selection = sellListSelect.Text;
+
+				if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
+				{
+					List<RazorEnhanced.SellAgent.SellAgentItem> items;
+					RazorEnhanced.Settings.SellAgent.ItemsRead(selection, out items);
+					if (index <= items.Count - 1)
+					{
+						RazorEnhanced.SellAgent.SellAgentItem item = items[index];
+						EnhancedSellAgentEditItem editItem = new EnhancedSellAgentEditItem(selection, index, item);
+						editItem.TopMost = true;
+						editItem.Show();
+					}
+				}
+			}
+		}
+
+		private void sellRemove_Click(object sender, EventArgs e)
+		{
+			if (sellListSelect.Text != null)
+				RazorEnhanced.SellAgent.AddLog("Sell Agent list " + sellListSelect.Text + " removed!");
+
+			RazorEnhanced.SellAgent.RemoveList(sellListSelect.Text);
+		}
+
+		private void sellEnableCheck_CheckedChanged(object sender, EventArgs e)
+		{
+			if (sellEnableCheckBox.Checked)
+			{
+				Assistant.Item bag = null;
+				int serialHotBag = Convert.ToInt32(sellBagLabel.Text, 16);
+				bag = Assistant.World.FindItem(serialHotBag);
+
+				if (bag != null)
+					if (bag.RootContainer != World.Player || !bag.IsContainer)
+					{
+						RazorEnhanced.SellAgent.AddLog("Invalid or not accessible Bag!");
+						RazorEnhanced.Misc.SendMessage("Invalid or not accessible Bag!");
+						sellEnableCheckBox.Checked = false;
+					}
+					else
+					{
+						sellListSelect.Enabled = false;
+						sellAddListButton.Enabled = false;
+						sellRemoveListButton.Enabled = false;
+						sellImportListButton.Enabled = false;
+						sellExportListButton.Enabled = false;
+						RazorEnhanced.SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+						RazorEnhanced.Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+						RazorEnhanced.SellAgent.EnableSellFilter();
+					}
+				else
+				{
+					RazorEnhanced.SellAgent.AddLog("Invalid or not accessible Bag!");
+					RazorEnhanced.Misc.SendMessage("Invalid or not accessible Bag!");
+					sellEnableCheckBox.Checked = false;
+				}
+			}
+			else
+			{
+				sellListSelect.Enabled = true;
+				sellAddListButton.Enabled = true;
+				sellRemoveListButton.Enabled = true;
+				sellImportListButton.Enabled = true;
+				sellExportListButton.Enabled = true;
+				RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+				RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+			}
+		}
+
+		private void resetSellBag_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.SellAgent.SellBag = 0;
+		}
+
+		private void sellSetBag_Click(object sender, EventArgs e)
+		{
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellBagTarget_Callback));
+		}
+
+		private void sellBagTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item sellBag = Assistant.World.FindItem(serial);
+
+			if (sellBag == null)
+				return;
+
+			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsContainer && sellBag.RootContainer == Assistant.World.Player)
+			{
+				RazorEnhanced.Misc.SendMessage("Bag configured to: " + sellBag.ToString());
+				RazorEnhanced.SellAgent.AddLog("Bag configured to: " + sellBag.ToString());
+				RazorEnhanced.SellAgent.SellBag = (int)sellBag.Serial.Value;
+
+			}
+			else
+			{
+				RazorEnhanced.Misc.SendMessage("Invalid bag, set backpack");
+				RazorEnhanced.SellAgent.AddLog("Invalid bag, set backpack");
+				RazorEnhanced.SellAgent.SellBag = (int)World.Player.Backpack.Serial.Value;
+			}
+
+			RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true);
+			RazorEnhanced.SellAgent.RefreshLists();
+		}
+		// ------------------ SELL AGENT END--------------------------
+
+
+
+		// ------------------ BUY AGENT --------------------------
+		private void buyListSelect_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			RazorEnhanced.Settings.BuyAgent.ListUpdate(buyListSelect.Text, RazorEnhanced.BuyAgent.BuyBag, true);
+			RazorEnhanced.BuyAgent.RefreshItems();
+
+			if (buyListSelect.Text != "")
+				RazorEnhanced.BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
+		}
+
+		private void buyAddList_Click(object sender, EventArgs e)
+		{
+			EnhancedBuyAgentAddList AddItemList = new EnhancedBuyAgentAddList();
+			AddItemList.TopMost = true;
+			AddItemList.Show();
+		}
+
+		private void buyRemoveList_Click(object sender, EventArgs e)
+		{
+			if (buyListSelect.Text != null)
+				RazorEnhanced.BuyAgent.AddLog("Buy Agent list " + buyListSelect.Text + " removed!");
+
+			RazorEnhanced.BuyAgent.RemoveList(buyListSelect.Text);
+		}
+
+		private void buyAddManual_Click(object sender, EventArgs e)
+		{
+			EnhancedBuyAgentManualAdd manualAddItem = new EnhancedBuyAgentManualAdd();
+			manualAddItem.TopMost = true;
+			manualAddItem.Show();
+		}
+
+		private void buyAddTarget_Click(object sender, EventArgs e)
+		{
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentItemTarget_Callback));
+		}
+
+		private void BuyAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item buyItem = Assistant.World.FindItem(serial);
+			if (buyItem != null && buyItem.Serial.IsItem)
+			{
+				RazorEnhanced.Misc.SendMessage("Buy Agent item added: " + buyItem.ToString());
+				RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, buyItem.Hue, buyItem.Amount);
+			}
+			else
+			{
+				RazorEnhanced.Misc.SendMessage("Invalid target");
+			}
+		}
+
+		private void buyEdit_Click(object sender, EventArgs e)
+		{
+			if (buyListView.SelectedItems.Count == 1)
+			{
+				int index = buyListView.SelectedItems[0].Index;
+				string selection = buyListSelect.Text;
+
+				if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
+				{
+					List<RazorEnhanced.BuyAgent.BuyAgentItem> items;
+					RazorEnhanced.Settings.BuyAgent.ItemsRead(selection, out items);
+					if (index <= items.Count - 1)
+					{
+						RazorEnhanced.BuyAgent.BuyAgentItem item = items[index];
+						EnhancedBuyAgentEditItem editItem = new EnhancedBuyAgentEditItem(selection, index, item);
+						editItem.TopMost = true;
+						editItem.Show();
+					}
+				}
+			}
+		}
+
+		private void buyRemove_Click(object sender, EventArgs e)
+		{
+			if (buyListSelect.Text != null)
+				RazorEnhanced.BuyAgent.AddLog("Buy Agent list " + buyListSelect.Text + " removed!");
+
+			RazorEnhanced.BuyAgent.RemoveList(buyListSelect.Text);
+		}
+
+		private void buyTargetBagButton_Click(object sender, EventArgs e)
+		{
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentContainerTarget_Callback));
+		}
+
+		private void BuyAgentContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item buyBag = Assistant.World.FindItem(serial);
+
+			if (buyBag == null)
+				return;
+
+			if (buyBag != null && buyBag.Serial.IsItem && buyBag.IsContainer && buyBag.RootContainer == Assistant.World.Player)
+			{
+				RazorEnhanced.Misc.SendMessage("Bag configured to: " + buyBag.ToString());
+				RazorEnhanced.BuyAgent.AddLog("Bag configured to: " + buyBag.ToString());
+				RazorEnhanced.BuyAgent.BuyBag = (int)buyBag.Serial.Value;
+
+			}
+			else
+			{
+				RazorEnhanced.Misc.SendMessage("Invalid bag, set backpack");
+				RazorEnhanced.BuyAgent.AddLog("Invalid bag, set backpack");
+				RazorEnhanced.BuyAgent.BuyBag = (int)World.Player.Backpack.Serial.Value;
+			}
+
+			RazorEnhanced.Settings.BuyAgent.ListUpdate(buyListSelect.Text, serial, true);
+			RazorEnhanced.BuyAgent.RefreshLists();
+		}
+
+		private void buyResetBagButton_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.BuyAgent.BuyBag = 0;
+		}
+
+		private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
+		{
+			if (buyEnableCheckBox.Checked)
+			{
+				buyListSelect.Enabled = false;
+				buyAddListButton.Enabled = false;
+				buyRemoveListButton.Enabled = false;
+				buyImportListButton.Enabled = false;
+				buyExportListButton.Enabled = false;
+				RazorEnhanced.BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+				RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+				RazorEnhanced.BuyAgent.EnableBuyFilter();
+			}
+			else
+			{
+				buyListSelect.Enabled = true;
+				buyAddListButton.Enabled = true;
+				buyRemoveListButton.Enabled = true;
+				buyImportListButton.Enabled = true;
+				buyExportListButton.Enabled = true;
+				RazorEnhanced.BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+				RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+			}
+		}
+		// --------------- BUY AGENT END ---------
+
+		private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
+		{
+		}
+
+		private void dressAddManualB_Click(object sender, EventArgs e)
+		{
 		}
 	}
 }

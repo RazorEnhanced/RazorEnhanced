@@ -1,6 +1,6 @@
 ﻿namespace RazorEnhanced.UI
 {
-    partial class EnhancedBuyAgentAddItemList
+    partial class EnhancedOrganizerAddList
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,23 +28,23 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedBuyAgentAddItemList));
+            RazorEnhanced.UI.office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.office2010BlueTheme();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedOrganizerAddList));
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.buyagentListToAdd = new RazorEnhanced.UI.RazorTextBox();
-            this.sellagentcloseItemList = new RazorEnhanced.UI.RazorButton();
-            this.sellagentaddItemList = new RazorEnhanced.UI.RazorButton();
+            this.organizerListToAdd = new RazorEnhanced.UI.RazorTextBox();
+            this.organizercloseItemList = new RazorEnhanced.UI.RazorButton();
+            this.organizeraddItemList = new RazorEnhanced.UI.RazorButton();
             this.SuspendLayout();
             // 
-            // buyagentListToAdd
+            // organizerListToAdd
             // 
-            this.buyagentListToAdd.Location = new System.Drawing.Point(12, 12);
-            this.buyagentListToAdd.Name = "buyagentListToAdd";
-            this.buyagentListToAdd.Padding = new System.Windows.Forms.Padding(1);
-            this.buyagentListToAdd.Size = new System.Drawing.Size(286, 20);
-            this.buyagentListToAdd.TabIndex = 0;
+            this.organizerListToAdd.Location = new System.Drawing.Point(12, 12);
+            this.organizerListToAdd.Name = "organizerListToAdd";
+            this.organizerListToAdd.Padding = new System.Windows.Forms.Padding(1);
+            this.organizerListToAdd.Size = new System.Drawing.Size(286, 20);
+            this.organizerListToAdd.TabIndex = 0;
             // 
-            // sellagentcloseItemList
+            // organizercloseItemList
             // 
             office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
@@ -63,41 +63,41 @@
             office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             office2010BlueTheme.TextColor = System.Drawing.Color.White;
-            this.sellagentcloseItemList.ColorTable = office2010BlueTheme;
-            this.sellagentcloseItemList.Location = new System.Drawing.Point(39, 41);
-            this.sellagentcloseItemList.Name = "sellagentcloseItemList";
-            this.sellagentcloseItemList.Size = new System.Drawing.Size(75, 23);
-            this.sellagentcloseItemList.TabIndex = 2;
-            this.sellagentcloseItemList.Text = "Close";
-            this.sellagentcloseItemList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.sellagentcloseItemList.UseVisualStyleBackColor = true;
-            this.sellagentcloseItemList.Click += new System.EventHandler(this.buycloseItemList_Click);
+            this.organizercloseItemList.ColorTable = office2010BlueTheme;
+            this.organizercloseItemList.Location = new System.Drawing.Point(39, 41);
+            this.organizercloseItemList.Name = "organizercloseItemList";
+            this.organizercloseItemList.Size = new System.Drawing.Size(75, 23);
+            this.organizercloseItemList.TabIndex = 2;
+            this.organizercloseItemList.Text = "Close";
+            this.organizercloseItemList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizercloseItemList.UseVisualStyleBackColor = true;
+            this.organizercloseItemList.Click += new System.EventHandler(this.organizercloseItemList_Click);
             // 
-            // sellagentaddItemList
+            // organizeraddItemList
             // 
-            this.sellagentaddItemList.ColorTable = office2010BlueTheme;
-            this.sellagentaddItemList.Location = new System.Drawing.Point(196, 41);
-            this.sellagentaddItemList.Name = "sellagentaddItemList";
-            this.sellagentaddItemList.Size = new System.Drawing.Size(75, 23);
-            this.sellagentaddItemList.TabIndex = 3;
-            this.sellagentaddItemList.Text = "Add";
-            this.sellagentaddItemList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.sellagentaddItemList.UseVisualStyleBackColor = true;
-            this.sellagentaddItemList.Click += new System.EventHandler(this.buyaddItemList_Click);
+            this.organizeraddItemList.ColorTable = office2010BlueTheme;
+            this.organizeraddItemList.Location = new System.Drawing.Point(196, 41);
+            this.organizeraddItemList.Name = "organizeraddItemList";
+            this.organizeraddItemList.Size = new System.Drawing.Size(75, 23);
+            this.organizeraddItemList.TabIndex = 3;
+            this.organizeraddItemList.Text = "Add";
+            this.organizeraddItemList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.organizeraddItemList.UseVisualStyleBackColor = true;
+            this.organizeraddItemList.Click += new System.EventHandler(this.organizeraddItemList_Click);
             // 
-            // EnhancedBuyAgentAddItemList
+            // EnhancedOrganizerAddItemList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(310, 74);
-            this.Controls.Add(this.sellagentaddItemList);
-            this.Controls.Add(this.sellagentcloseItemList);
-            this.Controls.Add(this.buyagentListToAdd);
+            this.Controls.Add(this.organizeraddItemList);
+            this.Controls.Add(this.organizercloseItemList);
+            this.Controls.Add(this.organizerListToAdd);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "EnhancedBuyAgentAddItemList";
-            this.Text = "Enhanced Buy Add Item List";
-            this.Load += new System.EventHandler(this.EnhancedSellAgentAddItemList_Load);
+            this.Name = "EnhancedOrganizerAddItemList";
+            this.Text = "Enhanced Organizer Add Item List";
+            this.Load += new System.EventHandler(this.EnhancedAutolootAddItemList_Load);
             this.ResumeLayout(false);
 
 		}
@@ -105,9 +105,9 @@
 		#endregion
 
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private RazorTextBox buyagentListToAdd;
-        private RazorButton sellagentcloseItemList;
-        private RazorButton sellagentaddItemList;
+        private RazorTextBox organizerListToAdd;
+        private RazorButton organizercloseItemList;
+        private RazorButton organizeraddItemList;
 
     }
 }

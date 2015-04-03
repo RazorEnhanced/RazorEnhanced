@@ -13,38 +13,39 @@ using System.IO;
 
 namespace RazorEnhanced.UI
 {
-	public partial class EnhancedSellAgentAddList : Form
+	public partial class EnhancedOrganizerAddList : Form
 	{
-        private const string m_Title = "Enhanced Sell Add Item List";
-
-
-		public EnhancedSellAgentAddList()
+        private const string m_Title = "Enhanced Organizer Add Item List";
+        
+        public EnhancedOrganizerAddList()
 		{
 			InitializeComponent();
-
             MaximizeBox = false;
 			this.Text = m_Title;           
 		}
 
+        private void EnhancedAutolootAddItemList_Load(object sender, EventArgs e)
+        {
+        }
 
-        private void sellcloseItemList_Click(object sender, EventArgs e)
+        private void organizercloseItemList_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void selladdItemList_Click(object sender, EventArgs e)
+        private void organizeraddItemList_Click(object sender, EventArgs e)
         {
             bool fail = false;
             string newList = "";
 
-            if (sellagentListToAdd.Text == "")
+            if (organizerListToAdd.Text == "")
                 fail = true;
 
-            if (!Regex.IsMatch(sellagentListToAdd.Text, "^[a-zA-Z0-9_]+$"))
+            if (!Regex.IsMatch(organizerListToAdd.Text, "^[a-zA-Z0-9_]+$"))
                 fail = true;
 
-			newList = sellagentListToAdd.Text.ToLower();
-			if (RazorEnhanced.Settings.SellAgent.ListExists(newList))
+			newList = organizerListToAdd.Text.ToLower();
+			if (RazorEnhanced.Settings.Organizer.ListExists(newList))
 				fail = true;
 
             if (fail)
@@ -58,14 +59,9 @@ namespace RazorEnhanced.UI
             }
             else
             {
-				SellAgent.AddList(newList);
+				Organizer.AddList(newList);
 				this.Close();
             }
         }
-
-		private void EnhancedSellAgentAddItemList_Load(object sender, EventArgs e)
-		{
-
-		}
 	}
 }

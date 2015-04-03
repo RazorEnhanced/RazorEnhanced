@@ -672,7 +672,7 @@ namespace RazorEnhanced.UI
 	{
 		#region Static Color Tables
 
-		static Office2010BlueTheme office2010blu = new Office2010BlueTheme();
+		static office2010BlueTheme office2010blu = new office2010BlueTheme();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable office2010Blue
@@ -891,9 +891,9 @@ namespace RazorEnhanced.UI
 
 	#region Office 2010 Blue
 
-	public class Office2010BlueTheme : Colortable
+	public class office2010BlueTheme : Colortable
 	{
-		public Office2010BlueTheme()
+		public office2010BlueTheme()
 		{
 			// Border Color
 

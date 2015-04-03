@@ -47,13 +47,10 @@ namespace RazorEnhanced.UI
 				tColor.Text = "0x" + m_Item.Color.ToString("X4");
 		}
 
-
-
 		private void bClose_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
-
 
 		private void bAddItem_Click(object sender, EventArgs e)
 		{

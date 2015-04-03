@@ -75,7 +75,7 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorEnhanced.UI.Office2010BlueTheme office2010Blue = new RazorEnhanced.UI.Office2010BlueTheme();
+            RazorEnhanced.UI.office2010BlueTheme office2010Blue = new RazorEnhanced.UI.office2010BlueTheme();
             this.insert = new RazorEnhanced.UI.RazorButton();
             this.txtAmount = new RazorEnhanced.UI.RazorTextBox();
             this.varList = new RazorEnhanced.UI.RazorComboBox();
