@@ -1020,10 +1020,9 @@ namespace RazorEnhanced
 				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
 				{
 					string description = (string)row["Description"];
-					int bag = (int)row["Bag"];
 					bool selected = (bool)row["Selected"];
 
-					RazorEnhanced.BuyAgent.BuyAgentList list = new RazorEnhanced.BuyAgent.BuyAgentList(description, bag, selected);
+					RazorEnhanced.BuyAgent.BuyAgentList list = new RazorEnhanced.BuyAgent.BuyAgentList(description, selected);
 					listsOut.Add(list);
 				}
 

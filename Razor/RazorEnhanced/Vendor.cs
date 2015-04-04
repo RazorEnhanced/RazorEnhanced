@@ -458,16 +458,12 @@ namespace RazorEnhanced
 			private string m_Description;
 			internal string Description { get { return m_Description; } }
 
-			private int m_Bag;
-			internal int Bag { get { return m_Bag; } }
-
 			private bool m_Selected;
 			internal bool Selected { get { return m_Selected; } }
 
-			public BuyAgentList(string description, int bag, bool selected)
+			public BuyAgentList(string description, bool selected)
 			{
 				m_Description = description;
-				m_Bag = bag;
 				m_Selected = selected;
 			}
 		}
