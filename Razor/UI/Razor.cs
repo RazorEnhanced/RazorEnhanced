@@ -9564,14 +9564,24 @@ namespace Assistant
 
 		private void buyAddManual_Click(object sender, EventArgs e)
 		{
-			EnhancedBuyAgentManualAdd manualAddItem = new EnhancedBuyAgentManualAdd();
-			manualAddItem.TopMost = true;
-			manualAddItem.Show();
+            if (buyListSelect.Text != "")
+            {
+                EnhancedBuyAgentManualAdd manualAddItem = new EnhancedBuyAgentManualAdd();
+                manualAddItem.TopMost = true;
+                manualAddItem.Show();
+            }
+            else
+                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void buyAddTarget_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentItemTarget_Callback));
+            if (buyListSelect.Text != "")
+            {
+			    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentItemTarget_Callback));
+            }
+            else
+                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void BuyAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -9590,7 +9600,7 @@ namespace Assistant
 
 		private void buyEdit_Click(object sender, EventArgs e)
 		{
-			if (buyListView.SelectedItems.Count == 1)
+            if (buyListView.SelectedItems.Count == 1 && buyListSelect.Text != "")
 			{
 				int index = buyListView.SelectedItems[0].Index;
 				string selection = buyListSelect.Text;
@@ -9608,11 +9618,13 @@ namespace Assistant
 					}
 				}
 			}
+            else
+                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void buyRemoveItem_Click(object sender, EventArgs e)
 		{
-			if (buyListView.SelectedItems.Count == 1)
+            if (buyListView.SelectedItems.Count == 1 && buyListSelect.Text != "")
 			{
 				int index = buyListView.SelectedItems[0].Index;
 				string selection = buyListSelect.Text;
@@ -9628,31 +9640,41 @@ namespace Assistant
 					}
 				}
 			}
+            else
+                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
-		{
-			if (buyEnableCheckBox.Checked)
-			{
-				buyListSelect.Enabled = false;
-				buyAddListButton.Enabled = false;
-				buyRemoveListButton.Enabled = false;
-				buyImportListButton.Enabled = false;
-				buyExportListButton.Enabled = false;
-				RazorEnhanced.BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-				RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-				RazorEnhanced.BuyAgent.EnableBuyFilter();
-			}
-			else
-			{
-				buyListSelect.Enabled = true;
-				buyAddListButton.Enabled = true;
-				buyRemoveListButton.Enabled = true;
-				buyImportListButton.Enabled = true;
-				buyExportListButton.Enabled = true;
-				RazorEnhanced.BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-				RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-			}
+        {
+            if (buyListSelect.Text != "")
+            {
+                if (buyEnableCheckBox.Checked)
+                {
+                    buyListSelect.Enabled = false;
+                    buyAddListButton.Enabled = false;
+                    buyRemoveListButton.Enabled = false;
+                    buyImportListButton.Enabled = false;
+                    buyExportListButton.Enabled = false;
+                    RazorEnhanced.BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                    RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                    RazorEnhanced.BuyAgent.EnableBuyFilter();
+                }
+                else
+                {
+                    buyListSelect.Enabled = true;
+                    buyAddListButton.Enabled = true;
+                    buyRemoveListButton.Enabled = true;
+                    buyImportListButton.Enabled = true;
+                    buyExportListButton.Enabled = true;
+                    RazorEnhanced.BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                    RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+                }
+            }
+            else
+            {
+                buyEnableCheckBox.Checked = false;
+                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
+            }
 		}
 
         private void buyagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
