@@ -9396,8 +9396,8 @@ namespace Assistant
 			Assistant.Item sellItem = Assistant.World.FindItem(serial);
 			if (sellItem != null && sellItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString());
-				RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, sellItem.Hue, sellItem.Amount);
+				RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString());                
+				RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue);
 			}
 			else
 			{
@@ -9573,7 +9573,7 @@ namespace Assistant
 			if (buyItem != null && buyItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Buy Agent item added: " + buyItem.ToString());
-				RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, buyItem.Hue, buyItem.Amount);
+				RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue);
 			}
 			else
 			{
