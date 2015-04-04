@@ -310,6 +310,18 @@
     <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.Designer.cs">
       <DependentUpon>EnhancedBuyAgentManualAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedLauncher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedLauncher.Designer.cs">
+      <DependentUpon>EnhancedLauncher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedLauncherAddShard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedLauncherAddShard.designer.cs">
+      <DependentUpon>EnhancedLauncherAddShard.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -501,6 +513,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.resx">
       <DependentUpon>EnhancedBuyAgentManualAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedLauncher.resx">
+      <DependentUpon>EnhancedLauncher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedLauncherAddShard.resx">
+      <DependentUpon>EnhancedLauncherAddShard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.resx">
       <DependentUpon>EnhancedSellAgentManualAdd.cs</DependentUpon>
