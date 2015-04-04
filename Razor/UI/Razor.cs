@@ -9271,7 +9271,7 @@ namespace Assistant
 			if (organizerItem != null && organizerItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
-				RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, -1, organizerItem.Hue);
+				RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, -1, -1);
 			}
 			else
 			{
