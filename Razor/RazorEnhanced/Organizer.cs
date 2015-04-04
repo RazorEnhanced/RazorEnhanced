@@ -225,6 +225,8 @@ namespace RazorEnhanced
 						else
 							listitem.SubItems.Add(item.Color.ToString());
 
+						listitem.SubItems.Add(item.Amount.ToString());
+
 						Assistant.Engine.MainWindow.OrganizerListView.Items.Add(listitem);
 					}
 				}
@@ -305,12 +307,12 @@ namespace RazorEnhanced
 
         private static bool ColorCheck(int colorDaLista, int colorDaItem)
         {
-            if (colorDaLista == -1)         // Wildcard colore
+            if (colorDaLista == -1) // Wildcard colore
                 return true;
             else
-                if (colorDaLista == colorDaItem)      // Match OK
+                if (colorDaLista == colorDaItem) // Match OK
                     return true;
-                else            // Match fallito
+                else // Match fallito
                     return false;
         }
 

@@ -478,9 +478,6 @@
     <Compile Include="UI\SplashScreen.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\WelcomeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Core\UOEntity.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -597,9 +594,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\SplashScreen.resx">
       <DependentUpon>SplashScreen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\WelcomeForm.resx">
-      <DependentUpon>WelcomeForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="RazorEnhanced\Resources\bug-add.png" />
     <None Include="RazorEnhanced\Resources\bug-delete.png" />
