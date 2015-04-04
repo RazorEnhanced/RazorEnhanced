@@ -767,6 +767,42 @@ namespace RazorEnhanced
 				Save();
 			}
 
+            internal static void ListUpdateNoBag(string description, bool selected)
+            {
+
+                bool found = false;
+                foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == description)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    if (selected)
+                    {
+                        foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+                        {
+                            row["Selected"] = false;
+                        }
+                    }
+
+                    foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+                    {
+                        if ((string)row["Description"] == description)
+                        {
+                            row["Selected"] = selected;
+                            break;
+                        }
+                    }
+
+                    Save();
+                }
+            }
+
 			internal static void ListUpdate(string description, int bag, bool selected)
 			{
 
@@ -856,6 +892,19 @@ namespace RazorEnhanced
 
 				return false;
 			}
+            internal static int BagRead(string listname)
+            {
+                foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        return (int)row["Bag"];
+                        break;
+                    }
+                }
+
+                return 0;
+            }
 
 			internal static void ItemInsert(string list, RazorEnhanced.SellAgent.SellAgentItem item)
 			{

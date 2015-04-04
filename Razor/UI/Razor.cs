@@ -9359,9 +9359,10 @@ namespace Assistant
 		// ------------------ SELL AGENT --------------------------
 		private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
+			//RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
+            RazorEnhanced.Settings.SellAgent.ListUpdateNoBag(sellListSelect.Text, true);
 			RazorEnhanced.SellAgent.RefreshItems();
-
+            RazorEnhanced.SellAgent.RefreshSellBag(sellListSelect.Text);
 			if (sellListSelect.Text != "")
 				RazorEnhanced.SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
 		}
@@ -9383,14 +9384,22 @@ namespace Assistant
 
 		private void sellAddManual_Click(object sender, EventArgs e)
 		{
-			EnhancedSellAgentManualAdd ManualAddItem = new EnhancedSellAgentManualAdd();
-			ManualAddItem.TopMost = true;
-			ManualAddItem.Show();
+            if (sellListSelect.Text != "")
+            {
+                EnhancedSellAgentManualAdd ManualAddItem = new EnhancedSellAgentManualAdd();
+                ManualAddItem.TopMost = true;
+                ManualAddItem.Show();
+            }
+            else
+                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellAddTarget_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
+            if (sellListSelect.Text != "")
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
+            else
+                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void SellAgentItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -9409,44 +9418,50 @@ namespace Assistant
 
 		private void sellEdit_Click(object sender, EventArgs e)
 		{
-			if (sellListView.SelectedItems.Count == 1)
-			{
-				int index = sellListView.SelectedItems[0].Index;
-				string selection = sellListSelect.Text;
+            if (sellListSelect.Text != "")
+			    if (sellListView.SelectedItems.Count == 1)
+			    {
+				    int index = sellListView.SelectedItems[0].Index;
+				    string selection = sellListSelect.Text;
 
-				if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
-				{
-					List<RazorEnhanced.SellAgent.SellAgentItem> items;
-					RazorEnhanced.Settings.SellAgent.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						RazorEnhanced.SellAgent.SellAgentItem item = items[index];
-						EnhancedSellAgentEditItem editItem = new EnhancedSellAgentEditItem(selection, index, item);
-						editItem.TopMost = true;
-						editItem.Show();
-					}
-				}
-			}
+				    if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
+				    {
+					    List<RazorEnhanced.SellAgent.SellAgentItem> items;
+					    RazorEnhanced.Settings.SellAgent.ItemsRead(selection, out items);
+					    if (index <= items.Count - 1)
+					    {
+						    RazorEnhanced.SellAgent.SellAgentItem item = items[index];
+						    EnhancedSellAgentEditItem editItem = new EnhancedSellAgentEditItem(selection, index, item);
+						    editItem.TopMost = true;
+						    editItem.Show();
+					    }
+				    }
+			    }
+            else
+                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellRemove_Click(object sender, EventArgs e)
 		{
-			if (sellListView.SelectedItems.Count == 1)
-			{
-				int index = sellListView.SelectedItems[0].Index;
-				string selection = sellListSelect.Text;
+            if (sellListSelect.Text != "")
+			    if (sellListView.SelectedItems.Count == 1)
+			    {
+				    int index = sellListView.SelectedItems[0].Index;
+				    string selection = sellListSelect.Text;
 
-				if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
-				{
-					List<RazorEnhanced.SellAgent.SellAgentItem> items;
-					RazorEnhanced.Settings.SellAgent.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						RazorEnhanced.Settings.SellAgent.ItemDelete(selection, items[index]);
-						RazorEnhanced.SellAgent.RefreshItems();
-					}
-				}
-			}
+				    if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
+				    {
+					    List<RazorEnhanced.SellAgent.SellAgentItem> items;
+					    RazorEnhanced.Settings.SellAgent.ItemsRead(selection, out items);
+					    if (index <= items.Count - 1)
+					    {
+						    RazorEnhanced.Settings.SellAgent.ItemDelete(selection, items[index]);
+						    RazorEnhanced.SellAgent.RefreshItems();
+					    }
+				    }
+			    }
+            else
+              RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellEnableCheck_CheckedChanged(object sender, EventArgs e)
@@ -9496,12 +9511,21 @@ namespace Assistant
 
 		private void resetSellBag_Click(object sender, EventArgs e)
 		{
-			RazorEnhanced.SellAgent.SellBag = 0;
+            if (sellListSelect.Text != "")
+            {
+                RazorEnhanced.SellAgent.SellBag = 0;
+                RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, 0, true);
+            }
+            else
+                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellSetBag_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellBagTarget_Callback));
+            if (sellListSelect.Text != "")
+			    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellBagTarget_Callback));
+            else
+                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellBagTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -9514,7 +9538,7 @@ namespace Assistant
 			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsContainer && sellBag.RootContainer == Assistant.World.Player)
 			{
 				RazorEnhanced.Misc.SendMessage("Container set to: " + sellBag.ToString());
-				RazorEnhanced.SellAgent.AddLog("Container set to: " + sellBag.ToString());
+                RazorEnhanced.SellAgent.AddLog("Container set to: " + sellBag.ToString());
 				RazorEnhanced.SellAgent.SellBag = (int)sellBag.Serial.Value;
 
 			}
@@ -9543,8 +9567,10 @@ namespace Assistant
 			RazorEnhanced.Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
 			RazorEnhanced.BuyAgent.RefreshItems();
 
-			if (buyListSelect.Text != "")
+			if (sellListSelect.Text != "")
 				RazorEnhanced.BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
+            else
+                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void buyAddList_Click(object sender, EventArgs e)
@@ -9600,46 +9626,48 @@ namespace Assistant
 
 		private void buyEdit_Click(object sender, EventArgs e)
 		{
-            if (buyListView.SelectedItems.Count == 1 && buyListSelect.Text != "")
-			{
-				int index = buyListView.SelectedItems[0].Index;
-				string selection = buyListSelect.Text;
+            if (buyListSelect.Text != "")
+                if (buyListView.SelectedItems.Count == 1)
+			    {
+				    int index = buyListView.SelectedItems[0].Index;
+				    string selection = buyListSelect.Text;
 
-				if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
-				{
-					List<RazorEnhanced.BuyAgent.BuyAgentItem> items;
-					RazorEnhanced.Settings.BuyAgent.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						RazorEnhanced.BuyAgent.BuyAgentItem item = items[index];
-						EnhancedBuyAgentEditItem editItem = new EnhancedBuyAgentEditItem(selection, index, item);
-						editItem.TopMost = true;
-						editItem.Show();
-					}
-				}
-			}
+				    if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
+				    {
+					    List<RazorEnhanced.BuyAgent.BuyAgentItem> items;
+					    RazorEnhanced.Settings.BuyAgent.ItemsRead(selection, out items);
+					    if (index <= items.Count - 1)
+					    {
+						    RazorEnhanced.BuyAgent.BuyAgentItem item = items[index];
+						    EnhancedBuyAgentEditItem editItem = new EnhancedBuyAgentEditItem(selection, index, item);
+						    editItem.TopMost = true;
+						    editItem.Show();
+					    }
+				    }
+			    }
             else
                 RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void buyRemoveItem_Click(object sender, EventArgs e)
 		{
-            if (buyListView.SelectedItems.Count == 1 && buyListSelect.Text != "")
-			{
-				int index = buyListView.SelectedItems[0].Index;
-				string selection = buyListSelect.Text;
+            if (buyListSelect.Text != "")
+                if (buyListView.SelectedItems.Count == 1 && buyListSelect.Text != "")
+			    {
+				    int index = buyListView.SelectedItems[0].Index;
+				    string selection = buyListSelect.Text;
 
-				if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
-				{
-					List<RazorEnhanced.BuyAgent.BuyAgentItem> items;
-					RazorEnhanced.Settings.BuyAgent.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						RazorEnhanced.Settings.BuyAgent.ItemDelete(selection, items[index]);
-						RazorEnhanced.BuyAgent.RefreshItems();
-					}
-				}
-			}
+				    if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
+				    {
+					    List<RazorEnhanced.BuyAgent.BuyAgentItem> items;
+					    RazorEnhanced.Settings.BuyAgent.ItemsRead(selection, out items);
+					    if (index <= items.Count - 1)
+					    {
+						    RazorEnhanced.Settings.BuyAgent.ItemDelete(selection, items[index]);
+						    RazorEnhanced.BuyAgent.RefreshItems();
+					    }
+				    }
+			    }
             else
                 RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}

@@ -245,6 +245,10 @@ namespace RazorEnhanced
 		{
 			PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(OnVendorSell));
 		}
+        internal static void RefreshSellBag(string listname)
+        {
+            Assistant.Engine.MainWindow.SellBagLabel.Text = "0x"+RazorEnhanced.Settings.SellAgent.BagRead(listname).ToString("X8");
+        }
 
 		private static bool ColorCheck(int colorDaLista, ushort colorDaVendor)
 		{
@@ -371,7 +375,7 @@ namespace RazorEnhanced
 			if (list.Count > 0)
 			{
 				ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
-				AddLog("Sold " + sold.ToString() + "items for " + total.ToString() + " gold coins");
+				AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
 				World.Player.SendMessage("Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
 				args.Block = true;
 			}
