@@ -21,6 +21,7 @@ namespace RazorEnhanced.UI
 		{
 			InitializeComponent();
             MaximizeBox = false;
+
 			this.Text = m_Title;           
 		}
 

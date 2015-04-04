@@ -557,9 +557,6 @@ namespace Assistant
 					args.Block = true;
 
 				args.Block |= !World.Player.MoveAck(seq);
-
-				if (oldNoto != World.Player.Notoriety && Config.GetBool("ShowNotoHue"))
-					ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
 
@@ -1067,7 +1064,6 @@ namespace Assistant
 			//ClientCommunication.SendToServer( new SkillsQuery( m ) );
 			//ClientCommunication.SendToServer( new StatusQuery( m ) );
 
-			ClientCommunication.RequestTitlebarUpdate();
 			ClientCommunication.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
 			/*
@@ -1120,9 +1116,6 @@ namespace Assistant
 				if (m == World.Player)
 				{
 					ClientCommunication.BeginCalibratePosition();
-
-					if (wasPoisoned != m.Poisoned || (oldNoto != m.Notoriety && Config.GetBool("ShowNotoHue")))
-						ClientCommunication.RequestTitlebarUpdate();
 				}
 			}
 		}
@@ -1142,7 +1135,6 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-					ClientCommunication.RequestTitlebarUpdate();
 					ClientCommunication.PostHitsUpdate();
 				}
 
@@ -1180,7 +1172,6 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-					ClientCommunication.RequestTitlebarUpdate();
 					ClientCommunication.PostStamUpdate();
 				}
 
@@ -1219,7 +1210,6 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-					ClientCommunication.RequestTitlebarUpdate();
 					ClientCommunication.PostManaUpdate();
 				}
 
@@ -1263,7 +1253,6 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-				ClientCommunication.RequestTitlebarUpdate();
 				ClientCommunication.PostHitsUpdate();
 				ClientCommunication.PostStamUpdate();
 				ClientCommunication.PostManaUpdate();
@@ -1299,9 +1288,6 @@ namespace Assistant
 			{
 				bool wasPoisoned = m.Poisoned;
 				m.Poisoned = (flag != 0);
-
-				if (m == World.Player && wasPoisoned != m.Poisoned)
-					ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
 
@@ -1381,8 +1367,6 @@ namespace Assistant
 					}
 				}
 
-				ClientCommunication.RequestTitlebarUpdate();
-
 				ClientCommunication.PostHitsUpdate();
 				ClientCommunication.PostStamUpdate();
 				ClientCommunication.PostManaUpdate();
@@ -1430,9 +1414,6 @@ namespace Assistant
 				{
 					StealthSteps.Unhide();
 				}
-
-				if (wasPoisoned != m.Poisoned)
-					ClientCommunication.RequestTitlebarUpdate();
 			}
 
 			ushort x = p.ReadUInt16();
@@ -1503,9 +1484,6 @@ namespace Assistant
 				{
 					StealthSteps.Unhide();
 				}
-
-				if (wasPoisoned != m.Poisoned || (oldNoto != m.Notoriety && Config.GetBool("ShowNotoHue")))
-					ClientCommunication.RequestTitlebarUpdate();
 			}
 
 			while (true)

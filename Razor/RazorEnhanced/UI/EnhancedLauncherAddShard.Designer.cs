@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            RazorEnhanced.UI.office2010BlueTheme RazorButton = new RazorEnhanced.UI.office2010BlueTheme();
+            RazorEnhanced.UI.Office2010BlueTheme RazorButton = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedLauncherAddShard));
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.shardAdd = new RazorEnhanced.UI.RazorTextBox();

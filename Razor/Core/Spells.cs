@@ -164,7 +164,6 @@ namespace Assistant
 				m_UnflagTimer.Start();
 			}
 
-			ClientCommunication.RequestTitlebarUpdate();
 			ClientCommunication.PostSpellCast(this.Number);
 
 			if (World.Player != null)
@@ -188,8 +187,6 @@ namespace Assistant
 			{
 				foreach (Counter c in Counter.List)
 					c.Flag = false;
-
-				ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
 

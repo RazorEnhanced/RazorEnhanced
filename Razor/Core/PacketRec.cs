@@ -800,8 +800,6 @@ namespace Assistant
 
 			m_Elapsed = TimeSpan.Zero;
 			UpdateTimeText();
-
-			ClientCommunication.RequestTitlebarUpdate();
 		}
 
 		private static void LoadWorldState()
@@ -900,7 +898,6 @@ namespace Assistant
 			ClientCommunication.SendToClient(new MoveReject(World.Player.WalkSequence, World.Player));
 			ClientCommunication.SendToServer(new ResyncReq());
 			World.Player.Resync();
-			ClientCommunication.RequestTitlebarUpdate();
 
 			if (ClientCommunication.AllowBit(FeatureBit.LightFilter) && World.Player != null)
 			{
@@ -989,7 +986,6 @@ namespace Assistant
 		internal static void UpdateTimeText()
 		{
 			lblTime.Text = ElapsedString;
-			ClientCommunication.RequestTitlebarUpdate();
 		}
 
 		private class ScrollTimer : Timer

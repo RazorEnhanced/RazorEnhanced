@@ -697,9 +697,7 @@ namespace Assistant
 		// ZIPPY REV 80		public static IntPtr FwdWnd { get { return m_FwdWnd; } }
 
 		private static bool m_Ready = false;
-		private static string m_LastStr = "";
 		private static DateTime m_ConnStart;
-		private static Timer m_TBTimer;
 		private static IPAddress m_LastConnection;
 
 		private static List<WndRegEnt> m_WndReg;
@@ -763,24 +761,6 @@ namespace Assistant
 
 		internal static Loader_Error LaunchClient(string client)
 		{
-			/*string dir = Directory.GetCurrentDirectory();
-			Directory.SetCurrentDirectory( Path.GetDirectoryName( client ) );
-			Directory.SetCurrentDirectory( dir );
-
-			try
-			{
-				ProcessStartInfo psi = new ProcessStartInfo( client );
-				psi.WorkingDirectory = Path.GetDirectoryName( client );
-
-				ClientProc = Process.Start( psi );
-
-				if ( ClientProc != null && !Config.GetBool( "SmartCPU" ) )
-					ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse( typeof(ProcessPriorityClass), Config.GetString( "ClientPrio" ), true );
-			}
-			catch
-			{
-			}*/
-
 			string dll = Path.Combine(Directory.GetCurrentDirectory(), "Crypt.dll");
 			uint pid = 0;
 			Loader_Error err = (Loader_Error)Load(client, dll, "OnAttach", null, 0, out pid);
@@ -854,7 +834,6 @@ namespace Assistant
 			SetServer(m_ServerIP, m_ServerPort);
 
 			CommMutex = new Mutex();
-			CommMutex.Handle = GetCommMutex();
 			// ZIPPY REV 80			FwdMutex = new Mutex( false, String.Format( "UONetFwd_{0:X}", ClientProc.Id ) );
 			// ZIPPY REV 80			m_FwdWnd = IntPtr.Zero;
 
@@ -910,180 +889,6 @@ namespace Assistant
 			if (ClientProc != null && !ClientProc.HasExited)
 				ClientProc.CloseMainWindow();
 			ClientProc = null;
-		}
-
-		internal static string EncodeColorStat(int val, int max)
-		{
-			double perc = ((double)val) / ((double)max);
-
-			if (perc <= 0.25)
-				return String.Format("~#FF0000{0}~#~", val);
-			else if (perc <= 0.75)
-				return String.Format("~#FFFF00{0}~#~", val);
-			else
-				return val.ToString();
-		}
-
-		internal static void RequestTitlebarUpdate()
-		{
-			// throttle updates, since things like counters might request 1000000 million updates/sec
-			if (m_TBTimer == null)
-				m_TBTimer = new TitleBarThrottle();
-
-			if (!m_TBTimer.Running)
-				m_TBTimer.Start();
-		}
-
-		private class TitleBarThrottle : Timer
-		{
-			internal TitleBarThrottle()
-				: base(TimeSpan.FromSeconds(0.25))
-			{
-			}
-
-			protected override void OnTick()
-			{
-				UpdateTitleBar();
-			}
-		}
-
-
-		//private static int m_TitleCapacity = 0;
-		private static StringBuilder m_TBBuilder = new StringBuilder();
-		private static string m_LastPlayerName = "";
-		private static void UpdateTitleBar()
-		{
-			if (!m_Ready)
-				return;
-
-			if (World.Player != null && Config.GetBool("TitleBarDisplay"))
-			{
-				if (PacketPlayer.Playing)
-				{
-					SetTitleStr(String.Format("UO - Razor \"Video\" Playback in Progress... ({0})", PacketPlayer.ElapsedString));
-					return;
-				}
-
-				// reuse the same sb each time for less damn allocations
-				m_TBBuilder.Remove(0, m_TBBuilder.Length);
-				m_TBBuilder.Insert(0, Config.GetString("TitleBarText"));
-				StringBuilder sb = m_TBBuilder;
-				//StringBuilder sb = new StringBuilder( Config.GetString( "TitleBarText" ) ); // m_TitleCapacity 
-
-				PlayerData p = World.Player;
-
-				if (p.Name != m_LastPlayerName)
-				{
-					m_LastPlayerName = p.Name;
-
-					Engine.MainWindow.UpdateTitle();
-				}
-
-				if (Config.GetBool("ShowNotoHue"))
-					sb.Replace(@"{char}", String.Format("~#{0:X6}{1}~#~", p.GetNotorietyColor() & 0x00FFFFFF, p.Name));
-				else
-					sb.Replace(@"{char}", p.Name);
-				sb.Replace(@"{shard}", World.ShardName);
-
-				if (p.CriminalTime != 0)
-					sb.Replace(@"{crimtime}", String.Format("~^C0C0C0{0}~#~", p.CriminalTime));
-				else
-					sb.Replace(@"{crimtime}", "-");
-
-				sb.Replace(@"{str}", p.Str.ToString());
-				sb.Replace(@"{hpmax}", p.HitsMax.ToString());
-				if (p.Poisoned)
-					sb.Replace(@"{hp}", String.Format("~#FF8000{0}~#~", p.Hits));
-				else
-					sb.Replace(@"{hp}", EncodeColorStat(p.Hits, p.HitsMax));
-				sb.Replace(@"{dex}", World.Player.Dex.ToString());
-				sb.Replace(@"{stammax}", World.Player.StamMax.ToString());
-				sb.Replace(@"{stam}", EncodeColorStat(p.Stam, p.StamMax));
-				sb.Replace(@"{int}", World.Player.Int.ToString());
-				sb.Replace(@"{manamax}", World.Player.ManaMax.ToString());
-				sb.Replace(@"{mana}", EncodeColorStat(p.Mana, p.ManaMax));
-
-				sb.Replace(@"{ar}", p.AR.ToString());
-				sb.Replace(@"{tithe}", p.Tithe.ToString());
-
-				sb.Replace(@"{physresist}", p.AR.ToString());
-				sb.Replace(@"{fireresist}", p.FireResistance.ToString());
-				sb.Replace(@"{coldresist}", p.ColdResistance.ToString());
-				sb.Replace(@"{poisonresist}", p.PoisonResistance.ToString());
-				sb.Replace(@"{energyresist}", p.EnergyResistance.ToString());
-
-				sb.Replace(@"{luck}", p.Luck.ToString());
-
-				sb.Replace(@"{damage}", String.Format("{0}-{1}", p.DamageMin, p.DamageMax));
-
-				if (World.Player.Weight >= World.Player.MaxWeight)
-					sb.Replace(@"{weight}", String.Format("~#FF0000{0}~#~", World.Player.Weight));
-				else
-					sb.Replace(@"{weight}", World.Player.Weight.ToString());
-				sb.Replace(@"{maxweight}", World.Player.MaxWeight.ToString());
-
-				sb.Replace(@"{followers}", World.Player.Followers.ToString());
-				sb.Replace(@"{followersmax}", World.Player.FollowersMax.ToString());
-
-				sb.Replace(@"{gold}", World.Player.Gold.ToString());
-				if (BandageTimer.Running)
-					sb.Replace(@"{bandage}", String.Format("~#FF8000{0}~#~", BandageTimer.Count));
-				else
-					sb.Replace(@"{bandage}", "-");
-
-				if (StealthSteps.Counting)
-					sb.Replace(@"{stealthsteps}", StealthSteps.Count.ToString());
-				else
-					sb.Replace(@"{stealthsteps}", "-");
-
-				string statStr = String.Format("{0}{1:X2}{2:X2}{3:X2}",
-					(int)(p.GetStatusCode()),
-					(int)(World.Player.HitsMax == 0 ? 0 : (double)World.Player.Hits / World.Player.HitsMax * 99),
-					(int)(World.Player.ManaMax == 0 ? 0 : (double)World.Player.Mana / World.Player.ManaMax * 99),
-					(int)(World.Player.StamMax == 0 ? 0 : (double)World.Player.Stam / World.Player.StamMax * 99));
-
-				sb.Replace(@"{statbar}", String.Format("~SR{0}", statStr));
-				sb.Replace(@"{mediumstatbar}", String.Format("~SL{0}", statStr));
-				sb.Replace(@"{largestatbar}", String.Format("~SX{0}", statStr));
-
-				bool dispImg = Config.GetBool("TitlebarImages");
-				for (int i = 0; i < Counter.List.Count; i++)
-				{
-					Counter c = Counter.List[i];
-					if (c.Enabled)
-						sb.Replace(String.Format("{{{0}}}", c.Format), c.GetTitlebarString(dispImg && c.DisplayImage));
-				}
-
-				SetTitleStr(sb.ToString());
-			}
-			else
-			{
-				SetTitleStr("");
-			}
-		}
-
-		private static void SetTitleStr(string str)
-		{
-			if (m_LastStr == str)
-				return;
-
-			m_LastStr = str;
-			byte[] copy = new byte[511];
-			Array.Clear(copy, 0, copy.Length);
-			byte[] ansi = System.Text.Encoding.ASCII.GetBytes(str);
-			Array.Copy(ansi, copy, ansi.Length);
-
-			CommMutex.WaitOne();
-			if (ansi.Length > 0)
-			{
-				IntPtr array = Marshal.StringToHGlobalAnsi(str);
-				memcpy(m_TitleStr, array, new UIntPtr((uint)copy.Length));
-				Marshal.FreeHGlobal(array);
-			}
-
-			CommMutex.ReleaseMutex();
-
-			PostMessage(FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
 		}
 
 		internal static int GetZ(int x, int y, int z)
@@ -1157,7 +962,7 @@ namespace Assistant
 			{
 				PacketHandlers.Party.Clear();
 
-				SetTitleStr("");
+
 				Engine.MainWindow.UpdateTitle();
 				for (int i = 0; i < m_WndReg.Count; i++)
 					PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);

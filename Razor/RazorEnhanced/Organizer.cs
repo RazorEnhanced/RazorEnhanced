@@ -198,7 +198,7 @@ namespace RazorEnhanced
 			List<OrganizerList> lists;
 			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
 
-			Assistant.Engine.MainWindow.OrganizerListSelect.Items.Clear();
+			Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
 			foreach (OrganizerList l in lists)
 			{
 				if (l.Selected)

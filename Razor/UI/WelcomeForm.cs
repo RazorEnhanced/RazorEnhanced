@@ -85,7 +85,7 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-			RazorEnhanced.UI.office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
 			this.label1 = new System.Windows.Forms.Label();
 			this.clientList = new RazorEnhanced.UI.RazorComboBox();

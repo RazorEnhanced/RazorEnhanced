@@ -128,7 +128,6 @@ namespace RazorEnhanced
 				// ----------- BUY AGENT ----------
 				DataTable buy_lists = new DataTable("BUY_LISTS");
 				buy_lists.Columns.Add("Description", typeof(string));
-				buy_lists.Columns.Add("Bag", typeof(int));
 				buy_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(buy_lists);
 
@@ -138,17 +137,27 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(buy_items);
 
 
-                // ----------- LAUNCHER ----------
-                DataTable launcer = new DataTable("LAUNCHER");
-                launcer.Columns.Add("ShardName", typeof(string));   // Key
-                launcer.Columns.Add("UoClient", typeof(string));
-                launcer.Columns.Add("UoFolder", typeof(string));
-                launcer.Columns.Add("ShardHost", typeof(string));
-                launcer.Columns.Add("ShardPort", typeof(string));
-                launcer.Columns.Add("PatchEnc", typeof(bool));
-                launcer.Columns.Add("OSIEnc", typeof(bool));
-                launcer.Columns.Add("Selected", typeof(bool));
-                m_Dataset.Tables.Add(launcer);
+
+				// ----------- SHARDS ----------
+				DataTable shards = new DataTable("SHARDS");
+				shards.Columns.Add("Description", typeof(string)); // Key
+				shards.Columns.Add("ClientPath", typeof(string));
+				shards.Columns.Add("ClientFolder", typeof(string));
+				shards.Columns.Add("Host", typeof(string));
+				shards.Columns.Add("Port", typeof(int));
+				shards.Columns.Add("PatchEnc", typeof(bool));
+				shards.Columns.Add("OSIEnc", typeof(bool));
+				shards.Columns.Add("Selected", typeof(bool));
+
+				DataRow uod = shards.NewRow();
+				uod.ItemArray = new object[] { "UODreams", "", "", "login.uodreams.com", 2593, true, false, true };
+				shards.Rows.Add(uod);
+
+
+
+				m_Dataset.Tables.Add(shards);
+
+
 
 
 				m_Dataset.AcceptChanges();
@@ -808,7 +817,7 @@ namespace RazorEnhanced
 
 				for (int i = m_Dataset.Tables["SELL_LISTS"].Rows.Count - 1; i >= 0; i--)
 				{
-					DataRow row = m_Dataset.Tables["SELLL_LISTS"].Rows[i];
+					DataRow row = m_Dataset.Tables["SELL_LISTS"].Rows[i];
 					if ((string)row["Description"] == description)
 					{
 						row.Delete();
@@ -928,7 +937,7 @@ namespace RazorEnhanced
 				return false;
 			}
 
-			internal static void ListInsert(string description, int bag)
+			internal static void ListInsert(string description)
 			{
 				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
 				{
@@ -937,14 +946,13 @@ namespace RazorEnhanced
 
 				DataRow newRow = m_Dataset.Tables["BUY_LISTS"].NewRow();
 				newRow["Description"] = description;
-				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
 				m_Dataset.Tables["BUY_LISTS"].Rows.Add(newRow);
 
 				Save();
 			}
 
-			internal static void ListUpdate(string description, int bag, bool selected)
+			internal static void ListUpdate(string description, bool selected)
 			{
 
 				bool found = false;
@@ -971,7 +979,6 @@ namespace RazorEnhanced
 					{
 						if ((string)row["Description"] == description)
 						{
-							row["Bag"] = bag;
 							row["Selected"] = selected;
 							break;
 						}
@@ -1097,112 +1104,123 @@ namespace RazorEnhanced
 		}
 		// ------------- BUY AGENT END-----------------
 
-        // ------------- LAUNCHER -----------------
-        internal static bool LauncherShardExists(string shardname)
-        {
-            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
-            {
-                if (((string)row["ShardName"]).ToLower() == shardname.ToLower())
-                    return true;
-            }
-
-            return false;
-        }
-
-        internal static void LauncherShardInsert(string shardname, string uoclient, string uofolder, string shardhost, string shardport, bool parchenc, bool osienc)
-        {
-            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
-            {
-                row["Selected"] = false;
-            }
-
-            LauncherShardDelete(shardname); // Rimuovo e sostituisco
-
-            DataRow newRow = m_Dataset.Tables["LAUNCHER"].NewRow();
-            newRow["ShardName"] = shardname;
-            newRow["UoClient"] = uoclient;
-            newRow["UoFolder"] = uofolder;
-            newRow["ShardHost"] = shardhost;
-            newRow["ShardPort"] = shardport;
-            newRow["PatchEnc"] = parchenc;
-            newRow["OSIEnc"] = osienc;
-            newRow["Selected"] = true;
-            m_Dataset.Tables["LAUNCHER"].Rows.Add(newRow);
-
-            Save();
-        }
 
 
-        internal static void LauncherShardDelete(string shardname)
-        {
-            for (int i = m_Dataset.Tables["LAUNCHER"].Rows.Count - 1; i >= 0; i--)
-            {
-                DataRow row = m_Dataset.Tables["LAUNCHER"].Rows[i];
-                if ((string)row["ShardName"] == shardname)
-                {
-                    row.Delete();
-                }
-            }
-            Save();
-        }
+		// ------------- SHARDS -----------------
+		internal class Shards
+		{
+			internal static bool Exists(string description)
+			{
+				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+				{
+					if (((string)row["Description"]).ToLower() == description.ToLower())
+						return true;
+				}
 
-        internal static bool LauncherShardList(out List<string> lists)
-        {
-            List<string> listOut = new List<string>();
-            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
-            {
-                listOut.Add((string)row["ShardName"]);
-            }
+				return false;
+			}
 
-            lists = listOut;
-            return true;
-        }
+			internal static void Insert(string description, string clientpath, string clientfolder, string host, string port, bool parchenc, bool osienc)
+			{
+				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+				{
+					row["Selected"] = false;
+				}
 
-        internal static string LauncherShardSelected()
-        {
-            string selectedOut = "";
-            foreach (DataRow row in m_Dataset.Tables["LAUNCHER"].Rows)
-            {
-                if ((bool)row["Selected"] == true)
-                {
-                    selectedOut = (string)row["ShardName"];
-                }
-            }
-            return selectedOut;
-        }
+				DataRow newRow = m_Dataset.Tables["SHARDS"].NewRow();
+				newRow["Description"] = description;
+				newRow["ClientPath"] = clientpath;
+				newRow["ClientFolder"] = clientfolder;
+				newRow["Host"] = host;
+				newRow["Port"] = port;
+				newRow["PatchEnc"] = parchenc;
+				newRow["OSIEnc"] = osienc;
+				newRow["Selected"] = true;
+				m_Dataset.Tables["SHARDS"].Rows.Add(newRow);
 
-        internal static bool LauncherShardData(string shardname, out string uoclient, out string uofolder, out string shardhost, out string shardport, out bool patchenc, out bool osienc)
-        {
-            string uoclientOut = "";
-            string uofolderOut = "";
-            string shardhostOut = "";
-            string shardportOut = "";
-            bool patchencOut = false;
-            bool osiencOut = false;
+				Save();
+			}
 
-            for (int i = m_Dataset.Tables["LAUNCHER"].Rows.Count - 1; i >= 0; i--)
-            {
-                DataRow row = m_Dataset.Tables["LAUNCHER"].Rows[i];
-                if ((string)row["ShardName"] == shardname)
-                {
-                    uoclientOut = (string)row["UoClient"];
-                    uofolderOut = (string)row["UoFolder"];
-                    shardhostOut = (string)row["ShardHost"];
-                    shardportOut = (string)row["ShardPort"];
-                    patchencOut = (bool)row["PatchEnc"];
-                    osiencOut = (bool)row["OSIEnc"];
-                }
-            }
-            uoclient = uoclientOut;
-            uofolder = uofolderOut;
-            shardhost = shardhostOut;
-            shardport = shardportOut;
-            patchenc = patchencOut;
-            osienc = osiencOut;
-            return true;
-        }
+			internal static void Update(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc, bool selected)
+			{
+				bool found = false;
+				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+				{
+					if ((string)row["Description"] == description)
+					{
+						found = true;
+						break;
+					}
+				}
 
-        // ------------- LAUNCHER END-----------------
+				if (found)
+				{
+					if (selected)
+					{
+						foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+						{
+							row["Selected"] = false;
+						}
+					}
+
+					foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+					{
+						if ((string)row["Description"] == description)
+						{
+							row["Description"] = description;
+							row["ClientPath"] = clientpath;
+							row["ClientFolder"] = clientfolder;
+							row["Host"] = host;
+							row["Port"] = port;
+							row["PatchEnc"] = parchenc;
+							row["OSIEnc"] = osienc;
+							row["Selected"] = selected;
+							break;
+						}
+					}
+
+					Save();
+				}
+			}
+
+			internal static void Delete(string shardname)
+			{
+				for (int i = m_Dataset.Tables["SHARDS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["SHARDS"].Rows[i];
+					if ((string)row["Description"] == shardname)
+					{
+						row.Delete();
+					}
+				}
+				Save();
+			}
+
+			internal static void Read(out List<RazorEnhanced.Shard> shards)
+			{
+				List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
+
+				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+				{
+					string description = (string)row["Description"];
+					string clientpath = (string)row["ClientPath"];
+					string clientfolder = (string)row["ClientFolder"];
+					string host = (string)row["Host"];
+					int port = (int)row["Port"];
+					bool patchenc = (bool)row["PatchEnc"];
+					bool osienc = (bool)row["OSIEnc"];
+					bool selected = (bool)row["Selected"];
+
+					RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, host, port, patchenc, osienc, selected);
+					shardsOut.Add(shard);
+				}
+
+				shards = shardsOut;
+			}
+		}
+		// ------------- LAUNCHER END-----------------
+
+
 		internal static void Save()
 		{
 			try

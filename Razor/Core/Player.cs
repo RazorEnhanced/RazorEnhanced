@@ -763,7 +763,6 @@ namespace Assistant
 				if (m_CriminalTime != null)
 					m_CriminalTime.Stop();
 				m_CriminalStart = DateTime.MinValue;
-				ClientCommunication.RequestTitlebarUpdate();
 			}
 			else if ((cur == 3 || cur == 4) && (old != 3 && old != 4 && old != 0))
 			{
@@ -780,7 +779,6 @@ namespace Assistant
 				if (m_CriminalTime == null)
 					m_CriminalTime = new CriminalTimer(this);
 				m_CriminalTime.Start();
-				ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
 
@@ -795,7 +793,6 @@ namespace Assistant
 
 			protected override void OnTick()
 			{
-				ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
 

@@ -156,6 +156,8 @@ namespace RazorEnhanced
 						listitem.SubItems.Add(item.Name);
 						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
 
+						listitem.SubItems.Add(item.Amount.ToString());
+
 						if (item.Color == -1)
 							listitem.SubItems.Add("All");
 						else
@@ -226,7 +228,7 @@ namespace RazorEnhanced
 
 		internal static void ModifyItemInList(string name, int graphics, int amount, int color, bool selected, SellAgentItem old, int index)
 		{
-			SellAgentItem item = new SellAgentItem(name, graphics, color, amount, selected);
+			SellAgentItem item = new SellAgentItem(name, graphics, amount, color, selected);
 
 			string selection = Assistant.Engine.MainWindow.SellListSelect.Text;
 
@@ -374,51 +376,51 @@ namespace RazorEnhanced
 				args.Block = true;
 			}
 		}
-        // Funzioni da script
-        public static void Enable()
-        {
-            if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-                Misc.SendMessage("Script Error: Sell.Enable: Filter alredy enabled");
-            else
-                Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
-        }
+		// Funzioni da script
+		public static void Enable()
+		{
+			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+				Misc.SendMessage("Script Error: Sell.Enable: Filter alredy enabled");
+			else
+				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
+		}
 
-        public static void Disable()
-        {
-            if (Assistant.Engine.MainWindow.SellCheckBox.Checked == false)
-                Misc.SendMessage("Script Error: Sell.Disable: Filter alredy disabled");
-            else
-                Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
-        }
+		public static void Disable()
+		{
+			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == false)
+				Misc.SendMessage("Script Error: Sell.Disable: Filter alredy disabled");
+			else
+				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
+		}
 
-        public static bool Status()
-        {
-            return Assistant.Engine.MainWindow.SellCheckBox.Checked;
-        }
-        public static void ChangeList(string nomelista)
-        {
-            bool ListaOK = false;
-            for (int i = 0; i < Assistant.Engine.MainWindow.SellListSelect.Items.Count; i++)
-            {
-                if (nomelista == Assistant.Engine.MainWindow.SellListSelect.GetItemText(Assistant.Engine.MainWindow.SellListSelect.Items[i]))
-                    ListaOK = true;
-            }
-            if (!ListaOK)
-                Misc.SendMessage("Script Error: Sell.ChangeList: Scavenger list: " + nomelista + " not exist");
-            else
-            {
-                if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
-                {
-                    Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
-                    Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
-                    Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
-                }
-                else
-                {
-                    Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
-                }
-            }
-        }
+		public static bool Status()
+		{
+			return Assistant.Engine.MainWindow.SellCheckBox.Checked;
+		}
+		public static void ChangeList(string nomelista)
+		{
+			bool ListaOK = false;
+			for (int i = 0; i < Assistant.Engine.MainWindow.SellListSelect.Items.Count; i++)
+			{
+				if (nomelista == Assistant.Engine.MainWindow.SellListSelect.GetItemText(Assistant.Engine.MainWindow.SellListSelect.Items[i]))
+					ListaOK = true;
+			}
+			if (!ListaOK)
+				Misc.SendMessage("Script Error: Sell.ChangeList: Scavenger list: " + nomelista + " not exist");
+			else
+			{
+				if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+				{
+					Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
+					Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
+				}
+				else
+				{
+					Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
+				}
+			}
+		}
 	}
 
 	public class BuyAgent
@@ -483,40 +485,6 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static int BuyBag
-		{
-			get
-			{
-				int serialBag = 0;
-
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.BuyBagLabel.Text, 16);
-
-					if (serialBag == 0)
-					{
-						serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-					else
-					{
-						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-						if (bag.RootContainer != World.Player)
-							serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-				}
-				catch (Exception ex)
-				{
-				}
-
-				return serialBag;
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.BuyBagLabel.Text = "0x" + value.ToString("X8");
-			}
-		}
-
 		internal static void AddLog(string addlog)
 		{
 			Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
@@ -540,7 +508,6 @@ namespace RazorEnhanced
 				if (l.Selected)
 				{
 					Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(l.Description);
-					BuyBag = l.Bag;
 				}
 			}
 		}
@@ -566,6 +533,8 @@ namespace RazorEnhanced
 
 						listitem.SubItems.Add(item.Name);
 						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+
+						listitem.SubItems.Add(item.Amount.ToString());
 
 						if (item.Color == -1)
 							listitem.SubItems.Add("All");
@@ -603,7 +572,7 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.BuyAgent.ListInsert(newList, 0);
+			RazorEnhanced.Settings.BuyAgent.ListInsert(newList);
 
 			RazorEnhanced.BuyAgent.RefreshLists();
 			RazorEnhanced.BuyAgent.RefreshItems();
@@ -637,7 +606,7 @@ namespace RazorEnhanced
 
 		internal static void ModifyItemInList(string name, int graphics, int amount, int color, bool selected, BuyAgentItem old, int index)
 		{
-			BuyAgentItem item = new BuyAgentItem(name, graphics, color, amount, selected);
+			BuyAgentItem item = new BuyAgentItem(name, graphics, amount, color, selected);
 
 			string selection = Assistant.Engine.MainWindow.BuyListSelect.Text;
 
@@ -728,51 +697,51 @@ namespace RazorEnhanced
 				World.Player.SendMessage("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 			}
 		}
-        // Funzioni da script
-        public static void Enable()
-        {
-            if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
-                Misc.SendMessage("Script Error: Buy.Enable: Filter alredy enabled");
-            else
-                Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
-        }
+		// Funzioni da script
+		public static void Enable()
+		{
+			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
+				Misc.SendMessage("Script Error: Buy.Enable: Filter alredy enabled");
+			else
+				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
+		}
 
-        public static void Disable()
-        {
-            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == false)
-                Misc.SendMessage("Script Error: Buy.Disable: Filter alredy disabled");
-            else
-                Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
-        }
+		public static void Disable()
+		{
+			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == false)
+				Misc.SendMessage("Script Error: Buy.Disable: Filter alredy disabled");
+			else
+				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
+		}
 
-        public static bool Status()
-        {
-            return Assistant.Engine.MainWindow.BuyCheckBox.Checked;
-        }
-        public static void ChangeList(string nomelista)
-        {
-            bool ListaOK = false;
-            for (int i = 0; i < Assistant.Engine.MainWindow.BuyListSelect.Items.Count; i++)
-            {
-                if (nomelista == Assistant.Engine.MainWindow.BuyListSelect.GetItemText(Assistant.Engine.MainWindow.BuyListSelect.Items[i]))
-                    ListaOK = true;
-            }
-            if (!ListaOK)
-                Misc.SendMessage("Script Error: Buy.ChangeList: Scavenger list: " + nomelista + " not exist");
-            else
-            {
-                if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
-                {
-                    Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
-                    Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
-                    Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
-                }
-                else
-                {
-                    Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
-                }
-            }
-        }
+		public static bool Status()
+		{
+			return Assistant.Engine.MainWindow.BuyCheckBox.Checked;
+		}
+		public static void ChangeList(string nomelista)
+		{
+			bool ListaOK = false;
+			for (int i = 0; i < Assistant.Engine.MainWindow.BuyListSelect.Items.Count; i++)
+			{
+				if (nomelista == Assistant.Engine.MainWindow.BuyListSelect.GetItemText(Assistant.Engine.MainWindow.BuyListSelect.Items[i]))
+					ListaOK = true;
+			}
+			if (!ListaOK)
+				Misc.SendMessage("Script Error: Buy.ChangeList: Scavenger list: " + nomelista + " not exist");
+			else
+			{
+				if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+				{
+					Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
+					Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
+				}
+				else
+				{
+					Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
+				}
+			}
+		}
 	}
 
 }

@@ -87,13 +87,11 @@ namespace Assistant
 			if (m_Timer.Running)
 				m_Timer.Stop();
 			m_Timer.Start();
-			ClientCommunication.RequestTitlebarUpdate();
 		}
 
 		internal static void Stop()
 		{
 			m_Timer.Stop();
-			ClientCommunication.RequestTitlebarUpdate();
 		}
 
 		private class InternalTimer : Timer
@@ -108,7 +106,6 @@ namespace Assistant
 				m_Count++;
 				if (m_Count > 30)
 					Stop();
-				ClientCommunication.RequestTitlebarUpdate();
 			}
 		}
 	}

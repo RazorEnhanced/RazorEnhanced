@@ -42,7 +42,7 @@ namespace RazorEnhanced.UI
 				fail = true;
 
 			newList = shardAdd.Text.ToLower();
-            if (RazorEnhanced.Settings.LauncherShardExists(newList))
+            if (RazorEnhanced.Settings.Shards.Exists(newList))
 				fail = true;
 
 			if (fail)
@@ -56,10 +56,7 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-                RazorEnhanced.Settings.LauncherShardInsert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);
-                // TODO
-                // refresh combobox
-                //RazorEnhanced.UI.EnhancedLauncher.RefreshCombo();
+                RazorEnhanced.Settings.Shards.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);
                 this.Close();
 			}
 		}
