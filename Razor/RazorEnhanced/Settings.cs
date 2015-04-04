@@ -552,7 +552,7 @@ namespace RazorEnhanced
 			}
             internal static int BagRead(string listname)
             {
-                foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+                foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
                 {
                     if ((string)row["Description"] == listname)
                     {
