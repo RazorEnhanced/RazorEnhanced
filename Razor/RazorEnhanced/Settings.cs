@@ -348,7 +348,20 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
-		}
+            internal static int BagRead(string listname)
+            {
+                foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        return (int)row["Bag"];
+                    }
+                }
+
+                return 0;
+            }
+        }
+
 		// ------------- AUTOLOOT END-----------------
 
 
@@ -537,6 +550,18 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
+            internal static int BagRead(string listname)
+            {
+                foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        return (int)row["Bag"];
+                    }
+                }
+
+                return 0;
+            }
 		}
 		// ------------- SCAVENGER END-----------------
 
@@ -767,42 +792,6 @@ namespace RazorEnhanced
 				Save();
 			}
 
-            internal static void ListUpdateNoBag(string description, bool selected)
-            {
-
-                bool found = false;
-                foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
-                {
-                    if ((string)row["Description"] == description)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (found)
-                {
-                    if (selected)
-                    {
-                        foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
-                        {
-                            row["Selected"] = false;
-                        }
-                    }
-
-                    foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
-                    {
-                        if ((string)row["Description"] == description)
-                        {
-                            row["Selected"] = selected;
-                            break;
-                        }
-                    }
-
-                    Save();
-                }
-            }
-
 			internal static void ListUpdate(string description, int bag, bool selected)
 			{
 
@@ -899,7 +888,6 @@ namespace RazorEnhanced
                     if ((string)row["Description"] == listname)
                     {
                         return (int)row["Bag"];
-                        break;
                     }
                 }
 

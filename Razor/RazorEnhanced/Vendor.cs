@@ -245,10 +245,6 @@ namespace RazorEnhanced
 		{
 			PacketHandler.RegisterServerToClientViewer(0x9E, new PacketViewerCallback(OnVendorSell));
 		}
-        internal static void RefreshSellBag(string listname)
-        {
-            Assistant.Engine.MainWindow.SellBagLabel.Text = "0x"+RazorEnhanced.Settings.SellAgent.BagRead(listname).ToString("X8");
-        }
 
 		private static bool ColorCheck(int colorDaLista, ushort colorDaVendor)
 		{
