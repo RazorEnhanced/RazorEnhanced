@@ -8560,14 +8560,22 @@ namespace Assistant
 		// ------------ AUTOLOOT ----------------
 		private void autoLootAddItemManual_Click(object sender, EventArgs e)
 		{
-			EnhancedAutoLootAddItemManual ManualAddItem = new EnhancedAutoLootAddItemManual();
-			ManualAddItem.TopMost = true;
-			ManualAddItem.Show();
+            if (autolootListSelect.Text != "")
+            {
+                EnhancedAutoLootAddItemManual ManualAddItem = new EnhancedAutoLootAddItemManual();
+                ManualAddItem.TopMost = true;
+                ManualAddItem.Show();
+            }
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
 
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
+            if (autolootListSelect.Text != "")
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
 
 		private void autoLootSetContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -8597,7 +8605,10 @@ namespace Assistant
 
 		private void autoLootAddItemTarget_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootItemTarget_Callback));
+            if (autolootListSelect.Text != "")
+			    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootItemTarget_Callback));
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
 
 		private void autoLootItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -8617,66 +8628,81 @@ namespace Assistant
 
 		private void autoLootRemoveItem_Click(object sender, EventArgs e)
 		{
-			if (autolootlistView.SelectedItems.Count == 1)
-			{
-				int index = autolootlistView.SelectedItems[0].Index;
-				string selection = autolootListSelect.Text;
+            if (autolootListSelect.Text != "")
+            {
+                if (autolootlistView.SelectedItems.Count == 1)
+                {
+                    int index = autolootlistView.SelectedItems[0].Index;
+                    string selection = autolootListSelect.Text;
 
-				if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-				{
-					List<AutoLoot.AutoLootItem> items;
-					RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						RazorEnhanced.Settings.AutoLoot.ItemDelete(selection, items[index]);
-						RazorEnhanced.AutoLoot.RefreshItems();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
+                    {
+                        List<AutoLoot.AutoLootItem> items;
+                        RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            RazorEnhanced.Settings.AutoLoot.ItemDelete(selection, items[index]);
+                            RazorEnhanced.AutoLoot.RefreshItems();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
 
 		private void autoLootItemEdit_Click(object sender, EventArgs e)
 		{
-			if (autolootlistView.SelectedItems.Count == 1)
-			{
-				int index = autolootlistView.SelectedItems[0].Index;
-				string selection = autolootListSelect.Text;
+            if (autolootListSelect.Text != "")
+            {
+                if (autolootlistView.SelectedItems.Count == 1)
+                {
+                    int index = autolootlistView.SelectedItems[0].Index;
+                    string selection = autolootListSelect.Text;
 
-				if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-				{
-					List<AutoLoot.AutoLootItem> items;
-					RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						AutoLoot.AutoLootItem item = items[index];
-						EnhancedAutolootEditItem editItem = new EnhancedAutolootEditItem(selection, index, item);
-						editItem.TopMost = true;
-						editItem.Show();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
+                    {
+                        List<AutoLoot.AutoLootItem> items;
+                        RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            AutoLoot.AutoLootItem item = items[index];
+                            EnhancedAutolootEditItem editItem = new EnhancedAutolootEditItem(selection, index, item);
+                            editItem.TopMost = true;
+                            editItem.Show();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
 
 		private void autoLootItemProps_Click(object sender, EventArgs e)
 		{
-			if (autolootlistView.SelectedItems.Count == 1)
-			{
-				int index = autolootlistView.SelectedItems[0].Index;
-				string selection = autolootListSelect.Text;
+            if (autolootListSelect.Text != "")
+            {
+                if (autolootlistView.SelectedItems.Count == 1)
+                {
+                    int index = autolootlistView.SelectedItems[0].Index;
+                    string selection = autolootListSelect.Text;
 
-				if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-				{
-					List<AutoLoot.AutoLootItem> items;
-					RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						AutoLoot.AutoLootItem item = items[index];
-						EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(selection, index, item);
-						editProp.TopMost = true;
-						editProp.Show();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
+                    {
+                        List<AutoLoot.AutoLootItem> items;
+                        RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            AutoLoot.AutoLootItem item = items[index];
+                            EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(selection, index, item);
+                            editProp.TopMost = true;
+                            editProp.Show();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
 
 		private void autoLootImport_Click(object sender, EventArgs e)
@@ -8686,61 +8712,69 @@ namespace Assistant
 
 		private void autoLootEnable_CheckedChanged(object sender, EventArgs e)
 		{
-			if (autoLootCheckBox.Checked)
-			{
-				int delay = -1;
-				bool StartCheck = true;
-				autolootListSelect.Enabled = false;
-				autolootButtonAddList.Enabled = false;
-				autoLootButtonListExport.Enabled = false;
-				autoLootButtonListImport.Enabled = false;
-				autoLootButtonRemoveList.Enabled = false;
-				autoLootTextBoxDelay.Enabled = false;
-				try
-				{
-					delay = Convert.ToInt32(autoLootTextBoxDelay.Text);
-				}
-				catch
-				{
-					StartCheck = false;
-					RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
-				}
+            if (autolootListSelect.Text != "")
+            {
+                if (autoLootCheckBox.Checked)
+                {
+                    int delay = -1;
+                    bool StartCheck = true;
+                    autolootListSelect.Enabled = false;
+                    autolootButtonAddList.Enabled = false;
+                    autoLootButtonListExport.Enabled = false;
+                    autoLootButtonListImport.Enabled = false;
+                    autoLootButtonRemoveList.Enabled = false;
+                    autoLootTextBoxDelay.Enabled = false;
+                    try
+                    {
+                        delay = Convert.ToInt32(autoLootTextBoxDelay.Text);
+                    }
+                    catch
+                    {
+                        StartCheck = false;
+                        RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
+                    }
 
-				if (delay < 0)
-				{
-					StartCheck = false;
-					RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
-				}
+                    if (delay < 0)
+                    {
+                        StartCheck = false;
+                        RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
+                    }
 
-				if (StartCheck)
-				{
-					// Stop autoloot
-					RazorEnhanced.AutoLoot.AutoMode = true;
-					RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
-					RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
-				}
-				else
-				{
-					// Stop autoloot
-					RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
-					RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine fail to Start...");
-					autoLootCheckBox.Checked = false;
-				}
-			}
-			else
-			{
-				autolootListSelect.Enabled = true;
-				autolootButtonAddList.Enabled = true;
-				autoLootButtonListExport.Enabled = true;
-				autoLootButtonListImport.Enabled = true;
-				autoLootButtonRemoveList.Enabled = true;
-				autoLootTextBoxDelay.Enabled = true;
+                    if (StartCheck)
+                    {
+                        // Stop autoloot
+                        RazorEnhanced.AutoLoot.AutoMode = true;
+                        RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
+                        RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
+                    }
+                    else
+                    {
+                        // Stop autoloot
+                        RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
+                        RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine fail to Start...");
+                        autoLootCheckBox.Checked = false;
+                    }
+                }
+                else
+                {
+                    autolootListSelect.Enabled = true;
+                    autolootButtonAddList.Enabled = true;
+                    autoLootButtonListExport.Enabled = true;
+                    autoLootButtonListImport.Enabled = true;
+                    autoLootButtonRemoveList.Enabled = true;
+                    autoLootTextBoxDelay.Enabled = true;
 
-				// Stop autoloot
-				RazorEnhanced.AutoLoot.AutoMode = false;
-				RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Stop...");
-				RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Stop...");
-			}
+                    // Stop autoloot
+                    RazorEnhanced.AutoLoot.AutoMode = false;
+                    RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Stop...");
+                    RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Stop...");
+                }
+            }
+            else
+            {
+                autoLootCheckBox.Enabled = false;
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+            }
 		}
 
 		private void autoLootListSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -8810,71 +8844,89 @@ namespace Assistant
 		// ------------ SCAVENGER ----------------
 		private void scavengerRemoveItem_Click(object sender, EventArgs e)
 		{
-			if (scavengerListView.SelectedItems.Count == 1)
-			{
-				int index = scavengerListView.SelectedItems[0].Index;
-				string selection = scavengerListSelect.Text;
+            if (scavengerListSelect.Text != "")
+            {
+                if (scavengerListView.SelectedItems.Count == 1)
+                {
+                    int index = scavengerListView.SelectedItems[0].Index;
+                    string selection = scavengerListSelect.Text;
 
-				if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-				{
-					List<Scavenger.ScavengerItem> items;
-					RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						RazorEnhanced.Settings.Scavenger.ItemDelete(selection, items[index]);
-						RazorEnhanced.Scavenger.RefreshItems();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
+                    {
+                        List<Scavenger.ScavengerItem> items;
+                        RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            RazorEnhanced.Settings.Scavenger.ItemDelete(selection, items[index]);
+                            RazorEnhanced.Scavenger.RefreshItems();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void scavengerEditProps_Click(object sender, EventArgs e)
 		{
-			if (scavengerListView.SelectedItems.Count == 1)
-			{
-				int index = scavengerListView.SelectedItems[0].Index;
-				string selection = ScavengerListSelect.Text;
+            if (scavengerListSelect.Text != "")
+            {
+                if (scavengerListView.SelectedItems.Count == 1)
+                {
+                    int index = scavengerListView.SelectedItems[0].Index;
+                    string selection = ScavengerListSelect.Text;
 
-				if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-				{
-					List<Scavenger.ScavengerItem> items;
-					RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						Scavenger.ScavengerItem item = items[index];
-						EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(selection, index, item);
-						editProp.TopMost = true;
-						editProp.Show();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
+                    {
+                        List<Scavenger.ScavengerItem> items;
+                        RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            Scavenger.ScavengerItem item = items[index];
+                            EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(selection, index, item);
+                            editProp.TopMost = true;
+                            editProp.Show();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void scavengerEditItem_Click(object sender, EventArgs e)
 		{
-			if (scavengerListView.SelectedItems.Count == 1)
-			{
-				int index = scavengerListView.SelectedItems[0].Index;
-				string selection = scavengerListSelect.Text;
+            if (scavengerListSelect.Text != "")
+            {
+                if (scavengerListView.SelectedItems.Count == 1)
+                {
+                    int index = scavengerListView.SelectedItems[0].Index;
+                    string selection = scavengerListSelect.Text;
 
-				if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-				{
-					List<Scavenger.ScavengerItem> items;
-					RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						Scavenger.ScavengerItem item = items[index];
-						EnhancedScavengerEditItem editItem = new EnhancedScavengerEditItem(selection, index, item);
-						editItem.TopMost = true;
-						editItem.Show();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
+                    {
+                        List<Scavenger.ScavengerItem> items;
+                        RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            Scavenger.ScavengerItem item = items[index];
+                            EnhancedScavengerEditItem editItem = new EnhancedScavengerEditItem(selection, index, item);
+                            editItem.TopMost = true;
+                            editItem.Show();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void scavengerAddItemTarget_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemTarget_Callback));
+            if (scavengerListSelect.Text != "")
+			    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemTarget_Callback));
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void ScavengerItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -8894,14 +8946,22 @@ namespace Assistant
 
 		private void scavengerAdItemdManual_Click(object sender, EventArgs e)
 		{
-			EnhancedScavengerManualAdd manualAddItem = new EnhancedScavengerManualAdd();
-			manualAddItem.TopMost = true;
-			manualAddItem.Show();
+            if (scavengerListSelect.Text != "")
+            {
+                EnhancedScavengerManualAdd manualAddItem = new EnhancedScavengerManualAdd();
+                manualAddItem.TopMost = true;
+                manualAddItem.Show();
+            }
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void scavengerSetContainer_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemContainerTarget_Callback));
+            if (scavengerListSelect.Text != "")
+		    	Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemContainerTarget_Callback));
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void ScavengerItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -8957,59 +9017,67 @@ namespace Assistant
 
 		private void scavengerEnableCheck_CheckedChanged(object sender, EventArgs e)
 		{
-			if (scavengerCheckBox.Checked)
-			{
-				int delay = -1;
-				bool StartCheck = true;
-				ScavengerListSelect.Enabled = false;
-				scavengerButtonAddList.Enabled = false;
-				scavengerButtonRemoveList.Enabled = false;
-				scavengerButtonExport.Enabled = false;
-				scavengerButtonImport.Enabled = false;
-				scavengerDragDelay.Enabled = false;
-				try
-				{
-					delay = Convert.ToInt32(scavengerDragDelay.Text);
-				}
-				catch
-				{
-					StartCheck = false;
-					RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
-				}
-				if (delay < 0)
-				{
-					StartCheck = false;
-					RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
-				}
+            if (scavengerListSelect.Text != "")
+            {
+                if (scavengerCheckBox.Checked)
+                {
+                    int delay = -1;
+                    bool StartCheck = true;
+                    ScavengerListSelect.Enabled = false;
+                    scavengerButtonAddList.Enabled = false;
+                    scavengerButtonRemoveList.Enabled = false;
+                    scavengerButtonExport.Enabled = false;
+                    scavengerButtonImport.Enabled = false;
+                    scavengerDragDelay.Enabled = false;
+                    try
+                    {
+                        delay = Convert.ToInt32(scavengerDragDelay.Text);
+                    }
+                    catch
+                    {
+                        StartCheck = false;
+                        RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
+                    }
+                    if (delay < 0)
+                    {
+                        StartCheck = false;
+                        RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
+                    }
 
-				if (StartCheck)
-				{
-					RazorEnhanced.Scavenger.AutoMode = true;
-					RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
-					RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
-				}
-				else
-				{
-					RazorEnhanced.Scavenger.AutoMode = false;
-					RazorEnhanced.Scavenger.AddLog("Fail to start Scavenger Engine...");
-					RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
-					scavengerCheckBox.Checked = false;
-				}
-			}
-			else
-			{
-				ScavengerListSelect.Enabled = true;
-				scavengerButtonAddList.Enabled = true;
-				scavengerButtonRemoveList.Enabled = true;
-				scavengerButtonExport.Enabled = true;
-				scavengerButtonImport.Enabled = true;
-				scavengerDragDelay.Enabled = true;
+                    if (StartCheck)
+                    {
+                        RazorEnhanced.Scavenger.AutoMode = true;
+                        RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
+                        RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
+                    }
+                    else
+                    {
+                        RazorEnhanced.Scavenger.AutoMode = false;
+                        RazorEnhanced.Scavenger.AddLog("Fail to start Scavenger Engine...");
+                        RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
+                        scavengerCheckBox.Checked = false;
+                    }
+                }
+                else
+                {
+                    ScavengerListSelect.Enabled = true;
+                    scavengerButtonAddList.Enabled = true;
+                    scavengerButtonRemoveList.Enabled = true;
+                    scavengerButtonExport.Enabled = true;
+                    scavengerButtonImport.Enabled = true;
+                    scavengerDragDelay.Enabled = true;
 
 
-				RazorEnhanced.Scavenger.AutoMode = false;
-				RazorEnhanced.Scavenger.AddLog("Scavenger Engine Stop...");
-				RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
-			}
+                    RazorEnhanced.Scavenger.AutoMode = false;
+                    RazorEnhanced.Scavenger.AddLog("Scavenger Engine Stop...");
+                    RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
+                }
+            }
+            else
+            {
+                scavengerCheckBox.Enabled = false;
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+            }
 		}
 
 		private void scavengerDragDelay_TextChanged(object sender, EventArgs e)
@@ -9040,61 +9108,81 @@ namespace Assistant
 			if (organizerListSelect.Text != null)
 				RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
 
+            RazorEnhanced.Organizer.OrganizerSource = 0;
+            RazorEnhanced.Organizer.OrganizerDestination = 0;
 			RazorEnhanced.Organizer.RemoveList(organizerListSelect.Text);
 		}
 
 		private void organizerAddManual_Click(object sender, EventArgs e)
 		{
-			EnhancedOrganizerManualAdd manualAddItem = new EnhancedOrganizerManualAdd();
-			manualAddItem.TopMost = true;
-			manualAddItem.Show();
+            if (organizerListSelect.Text != "")
+            {
+                EnhancedOrganizerManualAdd manualAddItem = new EnhancedOrganizerManualAdd();
+                manualAddItem.TopMost = true;
+                manualAddItem.Show();
+            }
+            else
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
 
 		private void organizerEdit_Click(object sender, EventArgs e)
 		{
-			if (organizerListView.SelectedItems.Count == 1)
-			{
-				int index = organizerListView.SelectedItems[0].Index;
-				string selection = organizerListSelect.Text;
+            if (organizerListSelect.Text != "")
+            {
+                if (organizerListView.SelectedItems.Count == 1)
+                {
+                    int index = organizerListView.SelectedItems[0].Index;
+                    string selection = organizerListSelect.Text;
 
-				if (RazorEnhanced.Settings.Organizer.ListExists(selection))
-				{
-					List<Organizer.OrganizerItem> items;
-					RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						Organizer.OrganizerItem item = items[index];
-						EnhancedOrganizerEditItem editItem = new EnhancedOrganizerEditItem(selection, index, item);
-						editItem.TopMost = true;
-						editItem.Show();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.Organizer.ListExists(selection))
+                    {
+                        List<Organizer.OrganizerItem> items;
+                        RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            Organizer.OrganizerItem item = items[index];
+                            EnhancedOrganizerEditItem editItem = new EnhancedOrganizerEditItem(selection, index, item);
+                            editItem.TopMost = true;
+                            editItem.Show();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
 
 		private void organizerRemoveItem_Click(object sender, EventArgs e)
 		{
-			if (organizerListView.SelectedItems.Count == 1)
-			{
-				int index = organizerListView.SelectedItems[0].Index;
-				string selection = organizerListSelect.Text;
+            if (organizerListSelect.Text != "")
+            {
+                if (organizerListView.SelectedItems.Count == 1)
+                {
+                    int index = organizerListView.SelectedItems[0].Index;
+                    string selection = organizerListSelect.Text;
 
-				if (RazorEnhanced.Settings.Organizer.ListExists(selection))
-				{
-					List<Organizer.OrganizerItem> items;
-					RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
-					if (index <= items.Count - 1)
-					{
-						RazorEnhanced.Settings.Organizer.ItemDelete(selection, items[index]);
-						RazorEnhanced.Organizer.RefreshItems();
-					}
-				}
-			}
+                    if (RazorEnhanced.Settings.Organizer.ListExists(selection))
+                    {
+                        List<Organizer.OrganizerItem> items;
+                        RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            RazorEnhanced.Settings.Organizer.ItemDelete(selection, items[index]);
+                            RazorEnhanced.Organizer.RefreshItems();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
 
 		private void organizerSetSource_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
+            if (organizerListSelect.Text != "")
+			    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
+            else
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
 
 		private void OrganizerSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -9124,7 +9212,10 @@ namespace Assistant
 
 		private void organizerSetDestination_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
+            if (organizerListSelect.Text != "")
+			    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
+            else
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
 
 		private void OrganizerDestinationContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -9154,7 +9245,10 @@ namespace Assistant
 
 		private void organizerListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
+            RazorEnhanced.Organizer.OrganizerSource = RazorEnhanced.Settings.Organizer.BagSourceRead(organizerListSelect.Text);
+            RazorEnhanced.Organizer.OrganizerDestination = RazorEnhanced.Settings.Organizer.BagDestinationRead(organizerListSelect.Text);
+
+            RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 			RazorEnhanced.Organizer.RefreshItems();
 
 			if (organizerListSelect.Text != "")
@@ -9163,7 +9257,10 @@ namespace Assistant
 
 		private void organizerAddTarget_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
+            if (organizerListSelect.Text != "")
+			    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
+            else
+                RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
 
 		private void OrganizerItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -9172,7 +9269,7 @@ namespace Assistant
 			if (organizerItem != null && organizerItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
-				RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Amount, organizerItem.Hue);
+				RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, -1, organizerItem.Hue);
 			}
 			else
 			{
@@ -9363,7 +9460,7 @@ namespace Assistant
 		// ------------------ SELL AGENT --------------------------
 		private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            RazorEnhanced.SellAgent.SellBag = RazorEnhanced.Settings.SellAgent.BagRead(autolootListSelect.Text);
+            RazorEnhanced.SellAgent.SellBag = RazorEnhanced.Settings.SellAgent.BagRead(sellListSelect.Text);
 			RazorEnhanced.SellAgent.RefreshItems();
 			if (sellListSelect.Text != "")
 				RazorEnhanced.SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);

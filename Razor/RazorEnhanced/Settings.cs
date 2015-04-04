@@ -552,7 +552,7 @@ namespace RazorEnhanced
 			}
             internal static int BagRead(string listname)
             {
-                foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
+                foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
                 {
                     if ((string)row["Description"] == listname)
                     {
@@ -756,6 +756,32 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
+
+            internal static int BagSourceRead(string listname)
+            {
+                foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        return (int)row["Source"];
+                    }
+                }
+
+                return 0;
+            }
+
+            internal static int BagDestinationRead(string listname)
+            {
+                foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        return (int)row["Destination"];
+                    }
+                }
+
+                return 0;
+            }
 		}
 		// ------------- ORGANIZER END-----------------
 
