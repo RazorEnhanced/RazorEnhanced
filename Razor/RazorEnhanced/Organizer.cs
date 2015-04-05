@@ -218,7 +218,7 @@ namespace RazorEnhanced
 						if (item.Color == -1)
 							listitem.SubItems.Add("All");
 						else
-							listitem.SubItems.Add(item.Color.ToString());
+                            listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
 
 						if (item.Amount == -1)
 							listitem.SubItems.Add("All");
