@@ -206,130 +206,133 @@ namespace Assistant
 		private static bool m_Running;
 		private static string m_Version;
 
-		[STAThread]
-		public static void Main(string[] Args)
-		{
-			m_Running = true;
-			Thread.CurrentThread.Name = "Razor Main Thread";
+        [STAThread]
+        public static void Main(string[] Args)
+        {
+            m_Running = true;
+            Thread.CurrentThread.Name = "Razor Main Thread";
 
-			if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
-				throw new InvalidOperationException("This Razor installation is corrupted.");
+            if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
+                throw new InvalidOperationException("This Razor installation is corrupted.");
 
-			RazorEnhanced.Settings.Load();
+            RazorEnhanced.Settings.Load();
 
-			RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
-			launcher.ShowDialog();
+            RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
+            DialogResult laucherdialog = launcher.ShowDialog();
 
-			List<RazorEnhanced.Shard> shards;
-			RazorEnhanced.Settings.Shards.Read(out shards);
-			RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
+            if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
+            {
+                List<RazorEnhanced.Shard> shards;
+                RazorEnhanced.Settings.Shards.Read(out shards);
+                RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
 
-			if (selected == null)
-			{
-				MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-			else
-			{
-				ClientCommunication.ClientEncrypted = selected.PatchEnc;
-				ClientCommunication.ServerEncrypted = selected.OSIEnc;
-				string clientPath = selected.ClientPath;
-				string dataDir = selected.ClientFolder;
-				string addr = selected.Host;
-				int port = selected.Port;
+                if (selected == null)
+                {
+                    MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    ClientCommunication.ClientEncrypted = selected.PatchEnc;
+                    ClientCommunication.ServerEncrypted = selected.OSIEnc;
+                    string clientPath = selected.ClientPath;
+                    string dataDir = selected.ClientFolder;
+                    string addr = selected.Host;
+                    int port = selected.Port;
 
-				if (!Language.Load("ENU"))
-				{
-					SplashScreen.End();
-					MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
+                    if (!Language.Load("ENU"))
+                    {
+                        SplashScreen.End();
+                        MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-				if (dataDir != null && Directory.Exists(dataDir))
-				{
-					Ultima.Files.SetMulPath(dataDir);
-				}
-				else
-				{
-					MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
+                    if (dataDir != null && Directory.Exists(dataDir))
+                    {
+                        Ultima.Files.SetMulPath(dataDir);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
 
-				Language.LoadCliLoc();
-				SplashScreen.Message = LocString.Initializing;
-				Initialize(typeof(Assistant.Engine).Assembly);
+                    Language.LoadCliLoc();
+                    SplashScreen.Message = LocString.Initializing;
+                    Initialize(typeof(Assistant.Engine).Assembly);
 
-				SplashScreen.Message = LocString.LoadingLastProfile;
-				Config.LoadCharList();
-				if (!Config.LoadLastProfile())
-					MessageBox.Show(SplashScreen.Instance, "The selected profile could not be loaded, using default instead.", "Profile Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    SplashScreen.Message = LocString.LoadingLastProfile;
+                    Config.LoadCharList();
+                    if (!Config.LoadLastProfile())
+                        MessageBox.Show(SplashScreen.Instance, "The selected profile could not be loaded, using default instead.", "Profile Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-				ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
-				ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
+                    ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
+                    ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
 
-				SplashScreen.Message = LocString.LoadingClient;
+                    SplashScreen.Message = LocString.LoadingClient;
 
-				if (clientPath != null && File.Exists(clientPath))
-					result = ClientCommunication.LaunchClient(clientPath);
+                    if (clientPath != null && File.Exists(clientPath))
+                        result = ClientCommunication.LaunchClient(clientPath);
 
-				if (result != ClientCommunication.Loader_Error.SUCCESS)
-				{
-					if (clientPath == null && File.Exists(clientPath))
-						MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					else
-						MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					SplashScreen.End();
-					return;
-				}
+                    if (result != ClientCommunication.Loader_Error.SUCCESS)
+                    {
+                        if (clientPath == null && File.Exists(clientPath))
+                            MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        else
+                            MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        SplashScreen.End();
+                        return;
+                    }
 
-				// if these are null then the registry entry does not exist (old razor version)
-				IPAddress ip = Resolve(addr);
-				if (ip == IPAddress.None || port == 0)
-				{
-					MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					SplashScreen.End();
-					return;
-				}
+                    // if these are null then the registry entry does not exist (old razor version)
+                    IPAddress ip = Resolve(addr);
+                    if (ip == IPAddress.None || port == 0)
+                    {
+                        MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        SplashScreen.End();
+                        return;
+                    }
 
-				SplashScreen.Start();
-				m_ActiveWnd = SplashScreen.Instance;
+                    SplashScreen.Start();
+                    m_ActiveWnd = SplashScreen.Instance;
 
-				ClientCommunication.SetConnectionInfo(ip, port);
-				ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
+                    ClientCommunication.SetConnectionInfo(ip, port);
+                    ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
 
-				Ultima.Multis.PostHSFormat = UsePostHSChanges;
+                    Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
-				SplashScreen.Message = LocString.WaitingForClient;
+                    SplashScreen.Message = LocString.WaitingForClient;
 
-				MainWnd = new MainForm();
-				Application.Run(MainWnd);
+                    MainWnd = new MainForm();
+                    Application.Run(MainWnd);
 
-				m_Running = false;
+                    m_Running = false;
 
-				RazorEnhanced.UI.EnhancedScriptEditor.End();
-				RazorEnhanced.Scripts.Auto = false;
+                    RazorEnhanced.UI.EnhancedScriptEditor.End();
+                    RazorEnhanced.Scripts.Auto = false;
 
-				try
-				{
-					PacketPlayer.Stop();
-				}
-				catch (Exception ex)
-				{
-				}
+                    try
+                    {
+                        PacketPlayer.Stop();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
 
-				try
-				{
-					AVIRec.Stop();
-				}
-				catch (Exception ex)
-				{
-				}
+                    try
+                    {
+                        AVIRec.Stop();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
 
-				ClientCommunication.Close();
-				Counter.Save();
-				Macros.MacroManager.Save();
-				Config.Save();
-			}
-		}
+                    ClientCommunication.Close();
+                    Counter.Save();
+                    Macros.MacroManager.Save();
+                    Config.Save();
+                }
+            }
+        }
 
 		internal static void EnsureDirectory(string dir)
 		{

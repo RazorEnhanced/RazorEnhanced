@@ -174,8 +174,6 @@ namespace RazorEnhanced.UI
 
 			// Genero Login.cfg
 			StreamWriter login;
-			bool start = true;
-			int port = 0;
 			string LoginString = "LoginServer=" + hostLabel.Text + "," + portLabel.Text;
 			string logincfgpath = clientPathLabel.Text.Substring(0, clientPathLabel.Text.LastIndexOf("\\") + 1);
 
@@ -200,14 +198,8 @@ namespace RazorEnhanced.UI
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1);
-				start = false;
+                this.Close();
 			}
-
-			if (start)
-			{
-				// avvio
-			}
-
 		}
 
 		private void quit_Click(object sender, EventArgs e)
