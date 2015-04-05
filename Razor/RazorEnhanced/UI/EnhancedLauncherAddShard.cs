@@ -56,7 +56,7 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-                RazorEnhanced.Settings.Shards.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);
+                RazorEnhanced.Settings.Shards.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);            
                 this.Close();
 			}
 		}

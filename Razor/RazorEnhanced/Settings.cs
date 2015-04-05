@@ -1245,8 +1245,23 @@ namespace RazorEnhanced
 				}
 			}
 
+            internal static void UpdateLast(string description)
+            {
+                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+                {
+                    if ((string)row["Description"] == description)
+                    {
+                        row["Selected"] = true;
+                    }
+                    else
+                        row["Selected"] = false;
+                }
+                Save();
+            }
+
 			internal static void Delete(string shardname)
 			{
+                bool last = true;
 				for (int i = m_Dataset.Tables["SHARDS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["SHARDS"].Rows[i];
@@ -1254,7 +1269,18 @@ namespace RazorEnhanced
 					{
 						row.Delete();
 					}
+                    else
+                    {
+                        if (last)
+                        {
+                            row["Selected"] = true;
+                            last = false;
+                        }
+                        else
+                            row["Selected"] = false;
+                    }
 				}
+
 				Save();
 			}
 

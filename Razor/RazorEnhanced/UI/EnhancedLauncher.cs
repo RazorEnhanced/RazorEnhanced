@@ -41,9 +41,15 @@ namespace RazorEnhanced.UI
 
 			if (shardlistCombobox.SelectedIndex == -1)
 				groupBox2.Enabled = false;
+
+            if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
+                okay.Enabled = true;
+            else
+                okay.Enabled = false;
+
 		}
 
-		private void UpdateGUI()
+		internal void UpdateGUI()
 		{
 			int port = 2593;
 			Int32.TryParse(portLabel.Text, out port);
@@ -62,6 +68,7 @@ namespace RazorEnhanced.UI
 			RefreshGUI();
 		}
 
+
 		private void EnhancedLauncher_Load(object sender, EventArgs e)
 		{
 			RefreshGUI();
@@ -70,14 +77,52 @@ namespace RazorEnhanced.UI
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			EnhancedLauncherAddShard AddShard = new EnhancedLauncherAddShard();
+            AddShard.FormClosed += new FormClosedEventHandler(addshard_refresh);
 			AddShard.TopMost = true;
 			AddShard.Show();
-			RefreshGUI();
 		}
+
+        private void addshard_refresh(object sender, EventArgs e)
+        {
+            int port = 2593;
+            Int32.TryParse(portLabel.Text, out port);
+
+            List<RazorEnhanced.Shard> shards;
+            RazorEnhanced.Settings.Shards.Read(out shards);
+
+            shardlistCombobox.Items.Clear();
+            foreach (Shard shard in shards)
+            {
+                shardlistCombobox.Items.Add(shard.Description);
+            }
+
+            RefreshGUI();
+            groupBox2.Enabled = true;
+        }
 
 		private void shardlistCombobox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RefreshGUI();
+            List<RazorEnhanced.Shard> shards;
+            RazorEnhanced.Settings.Shards.UpdateLast(shardlistCombobox.Text);
+            RazorEnhanced.Settings.Shards.Read(out shards);
+
+            foreach (Shard shard in shards)
+            {
+                if (shard.Selected)
+                {
+                    shardlistCombobox.SelectedIndex = shardlistCombobox.Items.IndexOf(shard.Description);
+                    clientPathLabel.Text = shard.ClientPath;
+                    clientFolderLabel.Text = shard.ClientFolder;
+                    hostLabel.Text = shard.Host;
+                    portLabel.Text = shard.Port.ToString();
+                    patchEnc.Checked = shard.PatchEnc;
+                    osiEnc.Checked = shard.OSIEnc;
+                }
+            }
+
+            if (shardlistCombobox.SelectedIndex == -1)
+                groupBox2.Enabled = false;
+            groupBox2.Enabled = true;
 		}
 
 		private void patchEncy_CheckedChanged(object sender, EventArgs e)
@@ -158,27 +203,6 @@ namespace RazorEnhanced.UI
 				start = false;
 			}
 
-			// check client
-			if (!File.Exists(clientPathLabel.Text))
-			{
-				MessageBox.Show("Client file location is not accessible or not exist!",
-				"Client Error!",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Exclamation,
-				MessageBoxDefaultButton.Button1);
-				start = false;
-			}
-
-			// check data folder
-			if (!Directory.Exists(clientFolderLabel.Text))
-			{
-				MessageBox.Show("Data folder location is not accessible or not exist!",
-				"Uo data Error!",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Exclamation,
-				MessageBoxDefaultButton.Button1);
-				start = false;
-			}
 			if (start)
 			{
 				// avvio
@@ -197,6 +221,7 @@ namespace RazorEnhanced.UI
 			{
 				RazorEnhanced.Settings.Shards.Delete(shardlistCombobox.Text);
 			}
+            UpdateGUI();
 		}
 	}
 }
