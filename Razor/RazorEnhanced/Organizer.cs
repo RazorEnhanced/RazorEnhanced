@@ -112,11 +112,13 @@ namespace RazorEnhanced
 					else
 					{
 						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-						if (bag.RootContainer != World.Player)
+						if (bag == null)
 							serialBag = (int)World.Player.Backpack.Serial.Value;
+                        else
+                            serialBag = bag.Serial;
 					}
 				}
-				catch (Exception ex)
+				catch
 				{
 				}
 
@@ -146,11 +148,13 @@ namespace RazorEnhanced
 					else
 					{
 						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-						if (bag.RootContainer != World.Player)
+                        if (bag == null)
 							serialBag = (int)World.Player.Backpack.Serial.Value;
+                        else
+                            serialBag = bag.Serial;
 					}
 				}
-				catch (Exception ex)
+				catch
 				{
 				}
 
