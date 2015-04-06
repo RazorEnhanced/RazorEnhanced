@@ -464,19 +464,10 @@ namespace Assistant
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
 		internal List<RazorEnhanced.Dress.DressItem> DressItemList { get { return dressItemList; } }
 		internal ListBox DressLogBox { get { return dressLogBox; } }
-		internal ListView DressListView { get { return dressListView; } }
+        internal RazorTextBox DressDragDelay { get { return dressDragDelay; } }
+        internal ComboBox DressListSelect { get { return dressListSelect; } }
+        internal Label DressBagLabel { get { return dressBagLabel; } }
 
-		internal int DressDragDelay
-		{
-			get
-			{
-				int delay = 100;
-				Int32.TryParse(dressDragDelay.Text, out delay);
-				return delay;
-			}
-		}
-
-		internal ComboBox DressListSelect { get { return dressListSelect; } }
 		private DataTable scriptTable;
 
 		internal MainForm()
