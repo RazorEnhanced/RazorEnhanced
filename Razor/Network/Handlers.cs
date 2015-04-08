@@ -2010,12 +2010,12 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-            RazorEnhanced.GumpInspector.NewGumpStandardAddLog(p, args);
-
 			World.Player.CurrentGumpS = p.ReadUInt32();
 			World.Player.CurrentGumpI = p.ReadUInt32();
 			World.Player.HasGump = true;
-			//byte[] data = p.CopyBytes( 11, p.Length - 11 );
+            RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
+			
+            //byte[] data = p.CopyBytes( 11, p.Length - 11 );
 
 			if (Macros.MacroManager.AcceptActions && MacroManager.Action(new WaitForGumpAction(World.Player.CurrentGumpI)))
 				args.Block = true;
@@ -2501,7 +2501,7 @@ namespace Assistant
 
 		private static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
 		{
-
+            World.Player.HasGump = true;
 			if (World.Player != null)
 			{
                 List<string> stringlist = new List<string>();

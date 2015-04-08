@@ -62,24 +62,19 @@ namespace RazorEnhanced
             int bid = p.ReadInt32();
             AddLog("Gump Close Button: " + bid.ToString());
             AddLog("----------- Close Recevied END -----------");
-            return;
         }
 
-        internal static void NewGumpStandardAddLog(PacketReader p, PacketHandlerEventArgs args)
+        internal static void NewGumpStandardAddLog(uint GumpS, uint GumpI)
         {
             if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
                 return;
 
             AddLog("----------- New Recevied START -----------");
-            
-            Assistant.Serial ser = p.ReadUInt32();
-            AddLog("Gump Operation: " + ser.ToString());
 
-            uint gid = p.ReadUInt32();
-            AddLog("Gump ID: " + gid.ToString());
+            AddLog("Gump Operation: " + GumpS.ToString());
+            AddLog("Gump ID: " + GumpI.ToString());
 
             AddLog("----------- New Recevied END -----------");
-            return;
         }
 
         internal static void NewGumpCompressedAddLog(uint GumpS, uint GumpI, List<string> stringlist)
@@ -96,7 +91,6 @@ namespace RazorEnhanced
                 AddLog("Gump Text Data: " + text);
 
             AddLog("----------- New Recevied END -----------");
-            return;
         }
         internal static void AddLog(string addlog)
         {
