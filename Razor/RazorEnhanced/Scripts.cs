@@ -195,7 +195,10 @@ namespace RazorEnhanced
 			scope.SetVariable("Player", new RazorEnhanced.Player());
 			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
 			scope.SetVariable("Spells", new RazorEnhanced.Spells());
-
+            scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
+            scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
+            scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
+            scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
 			return scope;
 		}
 
