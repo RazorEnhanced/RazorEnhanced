@@ -2509,6 +2509,7 @@ namespace Assistant
                 List<string> stringlist = new List<string>();
 				World.Player.CurrentGumpS = p.ReadUInt32();
 				World.Player.CurrentGumpI = p.ReadUInt32();
+                string tempstring = "";
 			    try
 			    {
 				    int x = p.ReadInt32(), y = p.ReadInt32();
@@ -2525,8 +2526,9 @@ namespace Assistant
                     World.Player.CurrentGumpStrings.Clear();
                     while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
                     {
-                        stringlist.Add(pComp.ReadUnicodeString(len));
-                        World.Player.CurrentGumpStrings.Add(pComp.ReadUnicodeString(len).ToString());
+                        tempstring = pComp.ReadUnicodeString(len);
+                        stringlist.Add(tempstring);
+                        World.Player.CurrentGumpStrings.Add(tempstring);
                     }
 			    }
 			    catch

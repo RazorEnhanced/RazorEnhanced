@@ -864,7 +864,7 @@ namespace Assistant
 
 		internal uint CurrentGumpS, CurrentGumpI;
 		internal bool HasGump;
-        internal List<string> CurrentGumpStrings;
+        internal List<string> CurrentGumpStrings = new List<string>();
 		internal uint CurrentMenuS;
 		internal ushort CurrentMenuI;
 		internal bool HasMenu;
