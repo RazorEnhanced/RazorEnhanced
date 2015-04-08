@@ -244,10 +244,15 @@ namespace Assistant
 			ushort ext = p.ReadUInt16();
 			switch (ext)
 			{
-				case 0x10: // query object properties
+				case 0x04: // Gump close
 					{
-						break;
+                        RazorEnhanced.GumpInspector.GumpCloseAddLog(p, args);
+                        break;
 					}
+                case 0x10: // query object properties
+                    {
+                        break;
+                    }
 				case 0x15: // context menu response
 					{
 						UOEntity ent = null;
@@ -2004,6 +2009,8 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
+            RazorEnhanced.GumpInspector.NewGumpStandardAddLog(p, args);
+
 			World.Player.CurrentGumpS = p.ReadUInt32();
 			World.Player.CurrentGumpI = p.ReadUInt32();
 			World.Player.HasGump = true;
@@ -2020,6 +2027,7 @@ namespace Assistant
 		{
 			if (World.Player == null)
 				return;
+            RazorEnhanced.GumpInspector.GumpResponseAddLog(p, args);
 
 			Serial ser = p.ReadUInt32();
 			uint tid = p.ReadUInt32();
@@ -2485,6 +2493,7 @@ namespace Assistant
 		{
 			if (World.Player != null)
 			{
+                RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(p, args);
 				World.Player.CurrentGumpS = p.ReadUInt32();
 				World.Player.CurrentGumpI = p.ReadUInt32();
 			}

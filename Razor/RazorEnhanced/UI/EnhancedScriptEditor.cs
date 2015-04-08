@@ -421,5 +421,18 @@ namespace RazorEnhanced.UI
 				}
 			}
 		}
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
+            ginspector.FormClosed += new FormClosedEventHandler(gumpinspector_close);
+            ginspector.TopMost = true;
+            ginspector.Show();
+        }
+
+        private void gumpinspector_close(object sender, EventArgs e)
+        {
+            Assistant.Engine.MainWindow.GumpInspectorEnable = false;
+        }
 	}
 }

@@ -292,8 +292,15 @@
     </Compile>
     <Compile Include="RazorEnhanced\AutoLoot.cs" />
     <Compile Include="RazorEnhanced\Dress.cs" />
+    <Compile Include="RazorEnhanced\GumpInspector.cs" />
     <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.Designer.cs">
+      <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -503,6 +510,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGumpInspector.resx">
+      <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.resx">
       <DependentUpon>EnhancedBuyAgentAddIList.cs</DependentUpon>

@@ -468,6 +468,10 @@ namespace Assistant
         internal ComboBox DressListSelect { get { return dressListSelect; } }
         internal Label DressBagLabel { get { return dressBagLabel; } }
 
+        // GumpInspector Flag
+
+        internal bool GumpInspectorEnable = false;
+
 		private DataTable scriptTable;
 
 		internal MainForm()
