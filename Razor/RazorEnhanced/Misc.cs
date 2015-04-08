@@ -37,5 +37,11 @@ namespace RazorEnhanced
 				Assistant.World.Player.SendMessage(MsgLevel.Info, msg);
 		}
 
+        public static void SendMessage(bool msg)
+        {
+            if (Assistant.World.Player != null)
+                Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
+        }
+
 	}
 }
