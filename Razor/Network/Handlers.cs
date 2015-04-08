@@ -2035,6 +2035,7 @@ namespace Assistant
 
 			World.Player.HasGump = false;
             World.Player.CurrentGumpI = 0;
+            World.Player.CurrentGumpStrings.Clear();
 
 			int sc = p.ReadInt32();
 			if (sc < 0 || sc > 2000)
@@ -2085,6 +2086,7 @@ namespace Assistant
                         {
 							World.Player.HasGump = false;
                             World.Player.CurrentGumpI = 0;
+                            World.Player.CurrentGumpStrings.Clear();
                             RazorEnhanced.GumpInspector.GumpCloseAddLog(p, args);
                         }
 						break;
@@ -2519,9 +2521,13 @@ namespace Assistant
 				    ArrayList strings = new ArrayList( numStrings );
 				    PacketReader pComp = p.GetCompressedReader();
 				    int len = 0;
+
+                    World.Player.CurrentGumpStrings.Clear();
                     while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
+                    {
                         stringlist.Add(pComp.ReadUnicodeString(len));
-//					    strings.Add( pComp.ReadUnicodeString( len ) );
+                        World.Player.CurrentGumpStrings.Add(pComp.ReadUnicodeString(len).ToString());
+                    }
 			    }
 			    catch
 			    {

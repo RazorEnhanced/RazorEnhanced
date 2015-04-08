@@ -36,5 +36,21 @@ namespace RazorEnhanced
                  subdelay -= 2;
              }
         }
+        public static void SendAction(int gumpid, int buttonid) 
+        {
+            int[] nullswitch = new int[0];
+            GumpTextEntry[] nullentries = new GumpTextEntry[0];
+            ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
+            ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, nullswitch, nullentries));
+            World.Player.HasGump = false;
+            World.Player.CurrentGumpStrings.Clear();
+        }
+        public static void SendAdvancedAction(int gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
+        {
+            ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
+            ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs, entries));
+            World.Player.HasGump = false;
+            World.Player.CurrentGumpStrings.Clear();
+        }
 	}
 }
