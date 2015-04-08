@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Collections;
 using System.Collections.Generic;
 using Assistant.Macros;
 
@@ -2027,11 +2028,15 @@ namespace Assistant
 		{
 			if (World.Player == null)
 				return;
-            RazorEnhanced.GumpInspector.GumpResponseAddLog(p, args);
+            
 
 			Serial ser = p.ReadUInt32();
 			uint tid = p.ReadUInt32();
 			int bid = p.ReadInt32();
+            List<int> switchesid = new List<int>();
+            List<string> texts = new List<string>();
+
+            RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, tid, bid);
 
 			World.Player.HasGump = false;
 
@@ -2039,9 +2044,12 @@ namespace Assistant
 			if (sc < 0 || sc > 2000)
 				return;
 			int[] switches = new int[sc];
-			for (int i = 0; i < sc; i++)
-				switches[i] = p.ReadInt32();
-
+            for (int i = 0; i < sc; i++)
+            {
+                switches[i] = p.ReadInt32();
+                switchesid.Add(switches[i]);
+            }
+            RazorEnhanced.GumpInspector.GumpResponseAddLogSwitchID(switchesid);
 			int ec = p.ReadInt32();
 			if (ec < 0 || ec > 2000)
 				return;
@@ -2054,8 +2062,10 @@ namespace Assistant
 					return;
 				string text = p.ReadUnicodeStringSafe(len);
 				entries[i] = new GumpTextEntry(id, text);
+                texts.Add(entries[i].Text);
 			}
-
+            RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(texts);
+            RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 			if (Macros.MacroManager.AcceptActions)
 				MacroManager.Action(new GumpResponseAction(bid, switches, entries));
 		}
@@ -2491,32 +2501,33 @@ namespace Assistant
 
 		private static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
 		{
+
 			if (World.Player != null)
 			{
-                RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(p, args);
+                List<string> stringlist = new List<string>();
 				World.Player.CurrentGumpS = p.ReadUInt32();
 				World.Player.CurrentGumpI = p.ReadUInt32();
-			}
+			    try
+			    {
+				    int x = p.ReadInt32(), y = p.ReadInt32();
 
-			/*try
-			{
-				int x = p.ReadInt32(), y = p.ReadInt32();
+				    string layout = p.GetCompressedReader().ReadString();
 
-				string layout = p.GetCompressedReader().ReadString();
-
-				int numStrings = p.ReadInt32();
-				if ( numStrings < 0 || numStrings > 256 )
-					numStrings = 0;
-				ArrayList strings = new ArrayList( numStrings );
-				PacketReader pComp = p.GetCompressedReader();
-				int len = 0;
-				while ( !pComp.AtEnd && (len=pComp.ReadInt16()) > 0 )
-					strings.Add( pComp.ReadUnicodeString( len ) );
-			}
-			catch
-			{
-			}*/
-
+				    int numStrings = p.ReadInt32();
+				    if ( numStrings < 0 || numStrings > 256 )
+					    numStrings = 0;
+				    ArrayList strings = new ArrayList( numStrings );
+				    PacketReader pComp = p.GetCompressedReader();
+				    int len = 0;
+                    while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
+                        stringlist.Add(pComp.ReadUnicodeString(len));
+//					    strings.Add( pComp.ReadUnicodeString( len ) );
+			    }
+			    catch
+			    {
+			    }
+                RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+            }
 			if (Macros.MacroManager.AcceptActions && MacroManager.Action(new WaitForGumpAction(World.Player.CurrentGumpI)))
 				args.Block = true;
 

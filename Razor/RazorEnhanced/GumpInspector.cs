@@ -7,54 +7,49 @@ namespace RazorEnhanced
 {
     public class GumpInspector
     {
-        internal static void GumpResponseAddLog(PacketReader p, PacketHandlerEventArgs args)
+
+        internal static void GumpResponseAddLogMain(Assistant.Serial ser, uint tid, int bid)
+        {
+            if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
+            return;
+
+            AddLog("----------- Response Recevied START -----------");
+            AddLog("Gump Operation: " + ser.ToString());
+            AddLog("Gump ID: " + tid.ToString(""));
+            AddLog("Gump Button: " + bid.ToString());
+        }
+
+        internal static void GumpResponseAddLogSwitchID(List<int> switchid)
         {
             if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
                 return;
-
-            AddLog("----------- Response Recevied START -----------");
-
-            Assistant.Serial ser = p.ReadUInt32();
-            AddLog("Gump Operation:" + ser.ToString());
-            
-            uint gid = p.ReadUInt32();
-            AddLog("Gump ID: 0x" + gid.ToString("X8"));
-            
-            int bid = p.ReadInt32();
-            AddLog("Gump Button:" + bid.ToString());
-
-            int sc = p.ReadInt32();
-            if (sc < 0 || sc > 2000)
+            int i = 0;
+            foreach (int sid in switchid)
             {
-                AddLog("----------- Response Recevied END -----------");
+                AddLog("Switch ID: " + i + " Value: +" + sid.ToString());
+                i++;
+            }
+        }
+
+        internal static void GumpResponseAddLogTextID(List<string> texts)
+        {
+            if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
                 return;
-            }
-
-            int[] switches = new int[sc];
-            for (int i = 0; i < sc; i++)
+            int i = 0;
+            foreach (string stext in texts)
             {
-                switches[i] = p.ReadInt32();
-                AddLog("Switch ID: " + i + " Value: +" + switches[i].ToString());
+                AddLog("Text ID: " + i + " String: +" + stext);
+                i++;
             }
+        }
 
-            int ec = p.ReadInt32();
-            if (ec < 0 || ec > 2000)
-            {
-                AddLog("----------- Response Recevied END -----------");
+        internal static void GumpResponseAddLogEnd()
+        {
+            if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
                 return;
-            }
-
-            for (int i = 0; i < ec; i++)
-            {
-                ushort id = p.ReadUInt16();
-                ushort len = p.ReadUInt16();
-                if (len >= 240)
-                    return;
-                string text = p.ReadUnicodeStringSafe(len);
-                AddLog("Text ID: " + i + " String: +" + text);
-            }
             AddLog("----------- Response Recevied END -----------");
         }
+
 
         internal static void GumpCloseAddLog(Packet p, PacketHandlerEventArgs args)
         {
@@ -63,10 +58,11 @@ namespace RazorEnhanced
             AddLog("----------- Close Recevied START -----------");
             ushort ext = p.ReadUInt16(); // Scarto primo uint
             uint gid = p.ReadUInt32();
-            AddLog("Gump ID: 0x" + gid.ToString("X8"));
+            AddLog("Gump ID: " + gid.ToString());
             int bid = p.ReadInt32();
-            AddLog("Gump Close Button:" + bid.ToString());
+            AddLog("Gump Close Button: " + bid.ToString());
             AddLog("----------- Close Recevied END -----------");
+            return;
         }
 
         internal static void NewGumpStandardAddLog(PacketReader p, PacketHandlerEventArgs args)
@@ -77,48 +73,30 @@ namespace RazorEnhanced
             AddLog("----------- New Recevied START -----------");
             
             Assistant.Serial ser = p.ReadUInt32();
-            AddLog("Gump Operation:" + ser.ToString());
+            AddLog("Gump Operation: " + ser.ToString());
 
             uint gid = p.ReadUInt32();
-            AddLog("Gump ID: 0x" + gid.ToString("X8"));
+            AddLog("Gump ID: " + gid.ToString());
 
             AddLog("----------- New Recevied END -----------");
+            return;
         }
 
-
-        internal static void NewGumpCompressedAddLog(PacketReader p, PacketHandlerEventArgs args)
+        internal static void NewGumpCompressedAddLog(uint GumpS, uint GumpI, List<string> stringlist)
         {
             if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
                 return;
 
             AddLog("----------- New Recevied START -----------");
 
-            Assistant.Serial ser = p.ReadUInt32();
-            AddLog("Gump Operation:" + ser.ToString());
+            AddLog("Gump Operation: " + GumpS.ToString());
+            AddLog("Gump ID: " + GumpI.ToString());
 
-            uint gid = p.ReadUInt32();
-            AddLog("Gump ID: 0x" + gid.ToString("X8"));
-
-            try
-            {
-                int x = p.ReadInt32(), y = p.ReadInt32();
-
-                string layout = p.GetCompressedReader().ReadString();
-
-                int numStrings = p.ReadInt32();
-                if ( numStrings < 0 || numStrings > 256 )
-                    numStrings = 0;
-                ArrayList strings = new ArrayList( numStrings );
-                PacketReader pComp = p.GetCompressedReader();
-                int len = 0;
-                while ( !pComp.AtEnd && (len=pComp.ReadInt16()) > 0 )
-                   AddLog("Gump Text Data: " + pComp.ReadUnicodeString(len));
-            }
-            catch
-            {
-            }
+            foreach (string text in stringlist)
+                AddLog("Gump Text Data: " + text);
 
             AddLog("----------- New Recevied END -----------");
+            return;
         }
         internal static void AddLog(string addlog)
         {
