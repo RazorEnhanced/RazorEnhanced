@@ -1748,6 +1748,29 @@ namespace Assistant
             Write((uint)serial);
         }
     }
+
+    internal sealed class QuestButton : Packet
+    {
+        internal QuestButton(uint serial)
+            : base(0xD7)
+        {
+            EnsureCapacity(2 + 4 + 2 + 2);
+            Write((uint)serial);
+            Write((ushort)0x32);
+            Write((byte)0x0A); 
+        }
+    }
+    internal sealed class GuildButton : Packet
+    {
+        internal GuildButton(uint serial)
+            : base(0xD7)
+        {
+            EnsureCapacity(2 + 4 + 2 + 2);
+            Write((uint)serial);
+            Write((ushort)0x28);
+            Write((byte)0x0A);
+        }
+    }
 }
 
 

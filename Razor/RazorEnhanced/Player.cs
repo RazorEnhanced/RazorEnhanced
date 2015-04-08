@@ -1387,8 +1387,18 @@ namespace RazorEnhanced
 
 		public static void HeadMessage(int hue, string message)
 		{
-
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
 		}
+
+        // Paperdool button click
+        public static void QuestButton()
+		{
+            Assistant.ClientCommunication.SendToServer(new QuestButton(World.Player.Serial));
+		}
+        public static void GuildButton()
+        {
+            Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
+        }
+
 	}
 }
