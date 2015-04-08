@@ -52,5 +52,44 @@ namespace RazorEnhanced
             World.Player.HasGump = false;
             World.Player.CurrentGumpStrings.Clear();
         }
+        public static string LastGumpGetLine(int line)
+        {
+            if (line > World.Player.CurrentGumpStrings.Count)
+            {
+                Misc.SendMessage("Script Error: LastGumpGetLine: Text line (" + line + ") not exist");
+                return "";
+            }
+            else
+            {
+                return World.Player.CurrentGumpStrings[line];
+            }
+        }
+        public static List<string> LastGumpGetLineList()
+        {
+            return World.Player.CurrentGumpStrings;
+        }
+        public static bool LastGumpTextExist(string text)
+        {
+            foreach (string stext in World.Player.CurrentGumpStrings)
+                if (stext.Contains(text))
+                    return true;
+            return false;
+        }
+
+        public static bool LastGumpTextExistByLine(int line, string text)
+        {
+            if (line > World.Player.CurrentGumpStrings.Count)
+            {
+                Misc.SendMessage("Script Error: LastGumpTextExistByLine: Text line (" + line + ") not exist");
+                return false;
+            }
+            else
+            {
+                if (World.Player.CurrentGumpStrings[line].Contains(text))
+                    return true;
+                else
+                    return false;
+            }
+        }
 	}
 }
