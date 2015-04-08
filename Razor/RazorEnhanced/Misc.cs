@@ -28,7 +28,7 @@ namespace RazorEnhanced
 		public static void SendMessage(int num)
 		{
 			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, (Assistant.LocString)num);
+				Assistant.World.Player.SendMessage(MsgLevel.Info, num.ToString());
 		}
 
 		public static void SendMessage(string msg)
