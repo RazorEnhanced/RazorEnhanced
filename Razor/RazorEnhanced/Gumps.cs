@@ -45,13 +45,13 @@ namespace RazorEnhanced
             World.Player.HasGump = false;
             World.Player.CurrentGumpStrings.Clear();
         }
-        public static void SendAdvancedAction(int gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
+      /*  public static void SendAdvancedAction(int gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
         {
             ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
             ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs, entries));
             World.Player.HasGump = false;
             World.Player.CurrentGumpStrings.Clear();
-        }
+        }*/
         public static string LastGumpGetLine(int line)
         {
             if (line > World.Player.CurrentGumpStrings.Count)
