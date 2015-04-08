@@ -29,15 +29,12 @@ namespace RazorEnhanced
 
         public static void WaitForGump(int gumpid, int delay) // Delay in MS
         {
-             RazorEnhanced.Misc.SendMessage("Start");
              int subdelay = delay;
-             while (CurrentGump() != gumpid && subdelay > 0 && World.Player.HasGump == false)
+             while (CurrentGump() != gumpid && subdelay > 0)
              {
-                 RazorEnhanced.Misc.SendMessage("Loop");
                  Thread.Sleep(2);
                  subdelay -= 2;
              }
-             RazorEnhanced.Misc.SendMessage("OK");
         }
 	}
 }

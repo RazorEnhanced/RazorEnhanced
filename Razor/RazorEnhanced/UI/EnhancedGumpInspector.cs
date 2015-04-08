@@ -42,12 +42,18 @@ namespace RazorEnhanced.UI
 
         private void EnhancedGumpInspector_Load(object sender, EventArgs e)
         {
-            Assistant.Engine.MainWindow.GumpInspectorEnable = true;
+             Assistant.Engine.MainWindow.GumpInspectorEnable = true;
         }
 
         private void razorButton1_Click(object sender, EventArgs e)
         {
             EnhancedGumpInspectorListBox.Items.Clear();
+        }
+
+        private void razorButton1_Click_1(object sender, EventArgs e)
+        {
+            string selected = EnhancedGumpInspectorListBox.SelectedItem.ToString();
+            Clipboard.SetText(selected.Substring(selected.IndexOf(':') + 1));
         }
 
 

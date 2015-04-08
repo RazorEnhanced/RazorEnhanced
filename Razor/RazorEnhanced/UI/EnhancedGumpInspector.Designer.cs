@@ -35,6 +35,7 @@
             this.clear = new RazorEnhanced.UI.RazorButton();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.razorButton1 = new RazorEnhanced.UI.RazorButton();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -90,13 +91,26 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.razorButton1);
             this.groupBox2.Controls.Add(this.clear);
             this.groupBox2.Location = new System.Drawing.Point(514, 12);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(108, 58);
+            this.groupBox2.Size = new System.Drawing.Size(108, 86);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Command";
+            // 
+            // razorButton1
+            // 
+            this.razorButton1.ColorTable = office2010BlueTheme1;
+            this.razorButton1.Location = new System.Drawing.Point(19, 48);
+            this.razorButton1.Name = "razorButton1";
+            this.razorButton1.Size = new System.Drawing.Size(75, 32);
+            this.razorButton1.TabIndex = 5;
+            this.razorButton1.Text = "Copy value to Clipboard";
+            this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.razorButton1.UseVisualStyleBackColor = true;
+            this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click_1);
             // 
             // EnhancedGumpInspector
             // 
@@ -121,6 +135,7 @@
 
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
+        private RazorButton razorButton1;
 
 
 

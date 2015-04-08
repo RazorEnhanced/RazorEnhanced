@@ -7,8 +7,7 @@ namespace RazorEnhanced
 {
     public class GumpInspector
     {
-
-        internal static void GumpResponseAddLogMain(Assistant.Serial ser, uint tid, int bid)
+        internal static void GumpResponseAddLogMain(uint ser, uint tid, int bid)
         {
             if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
             return;
@@ -51,7 +50,7 @@ namespace RazorEnhanced
         }
 
 
-        internal static void GumpCloseAddLog(Packet p, PacketHandlerEventArgs args)
+        internal static void GumpCloseAddLog(PacketReader p, PacketHandlerEventArgs args)
         {
             if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
                 return;
@@ -94,7 +93,8 @@ namespace RazorEnhanced
         }
         internal static void AddLog(string addlog)
         {
-            RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Invoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Add(addlog)));           
+            RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Invoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Add(addlog)));
+            RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Invoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.SelectedIndex = RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Count - 1));
         }
     }
 }
