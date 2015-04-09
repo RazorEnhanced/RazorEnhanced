@@ -1803,6 +1803,8 @@ namespace Assistant
 				return;
 
             World.Player.Journal.Add(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name));          // Journal buffer
+            if (World.Player.Journal.Count > 3000)
+                World.Player.Journal.Clear();
 
 			if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
 			{

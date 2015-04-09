@@ -37,16 +37,55 @@ namespace RazorEnhanced
             World.Player.Journal.Clear();
             Misc.SendMessage("Journal Cleared");
         }
-
-        public static void Dump()
+        public static bool Search(string text)
         {
-
-            foreach (JournalEntry entry in World.Player.Journal)
+            foreach (JournalEntry entrys in World.Player.Journal)
             {
-                Misc.SendMessage(entry.Text);
-                Misc.SendMessage(entry.Name);
-
+                if (entrys.Text.Contains(text))
+                    return true;
             }
+            return false;
+        }
+        public static bool SearchByName(string text, string name)
+        {
+            foreach (JournalEntry entrys in World.Player.Journal)
+            {
+                if (entrys.Name == name)
+                    if (entrys.Text.Contains(text))
+                        return true;
+            }
+            return false;
+        }
+        public static bool SearchByColor(string text, int color)
+        {
+            foreach (JournalEntry entrys in World.Player.Journal)
+            {
+                if (entrys.Color == color)
+                    if (entrys.Text.Contains(text))
+                        return true;
+            }
+            return false;
+        }
+        public static bool SearchByType(string text, string type)
+        {
+            foreach (JournalEntry entrys in World.Player.Journal)
+            {
+                if (entrys.Type.ToString() == type)
+                    if (entrys.Text.Contains(text))
+                        return true;
+            }
+            return false;
+        }
+
+        public static string GetLineText(string text)
+        {
+            string result = "";
+            foreach (JournalEntry entrys in World.Player.Journal)
+            {
+                if (entrys.Text.Contains(text))
+                    result = entrys.Text;
+            }
+            return result;
         }
 	}
 }
