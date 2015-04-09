@@ -1802,6 +1802,8 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
+            World.Player.Journal.Add(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue));          // Journal buffer
+
 			if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
 			{
 				SysMessages.Add(text.ToLower());
