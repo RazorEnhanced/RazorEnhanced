@@ -199,6 +199,7 @@ namespace RazorEnhanced
             scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
             scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
             scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
+            scope.SetVariable("Journal", new RazorEnhanced.Journal());
 			return scope;
 		}
 

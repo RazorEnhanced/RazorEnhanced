@@ -21,17 +21,32 @@ namespace RazorEnhanced
 			private int m_Color;
 			public int Color { get { return m_Color; } }
 
-            public JournalEntry(string text, string type, int color)
+            private string m_Name;
+            public string Name { get { return m_Name; } }
+
+            public JournalEntry(string text, string type, int color, string name)
 			{
                 m_Text = text;
                 m_Type = type;
 				m_Color = color;
+                m_Name = name;
 			}
     	}
         public static void Clear()
         {
             World.Player.Journal.Clear();
             Misc.SendMessage("Journal Cleared");
+        }
+
+        public static void Dump()
+        {
+
+            foreach (JournalEntry entry in World.Player.Journal)
+            {
+                Misc.SendMessage(entry.Text);
+                Misc.SendMessage(entry.Name);
+
+            }
         }
 	}
 }
