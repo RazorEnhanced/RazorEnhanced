@@ -200,6 +200,7 @@ namespace RazorEnhanced
             scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
             scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
             scope.SetVariable("Journal", new RazorEnhanced.Journal());
+            scope.SetVariable("Target", new RazorEnhanced.Target());
 			return scope;
 		}
 
