@@ -87,5 +87,15 @@ namespace RazorEnhanced
             }
             return result;
         }
+
+        public static void WaitJournal(string text, int delay)
+        {
+            int subdelay = delay;
+            while (Search(text) == false && subdelay > 0)
+            {
+                Thread.Sleep(10);
+                subdelay -= 10;
+            }
+        }
 	}
 }

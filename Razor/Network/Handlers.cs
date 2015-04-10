@@ -2296,8 +2296,9 @@ namespace Assistant
 				case 0x03: // text message
 				case 0x04: // 3 = private, 4 = public
 					{
-						//Serial from = p.ReadUInt32();
-						//string text = p.ReadUnicodeStringSafe();
+						Serial from = p.ReadUInt32();
+						string text = p.ReadUnicodeStringSafe();
+                        World.Player.Journal.Add(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null"));          // Journal buffer
 						break;
 					}
 				case 0x07: // party invite
