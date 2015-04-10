@@ -52,6 +52,9 @@ namespace RazorEnhanced.UI
 		private string m_CurrentResult;
 		private object m_CurrentPayload;
 
+		private Marker m_Marker;
+		private List<int> m_Breakpoints = new List<int>();
+
 		private volatile bool m_Breaktrace = false;
 
 		internal static void Init()
@@ -89,26 +92,28 @@ namespace RazorEnhanced.UI
 				if (m_CurrentCommand == Command.None)
 				{
 					SetTraceback("");
-					ResetCurrentCommand();
 				}
-				else if (result == "call" && m_CurrentCommand == Command.Call)
+				else
 				{
 					UpdateCurrentState(frame, result, payload);
-					TracebackCall();
-					ResetCurrentCommand();
-				}
-				else if (result == "line" && m_CurrentCommand == Command.Line)
-				{
-					UpdateCurrentState(frame, result, payload);
-					TracebackLine();
-					ResetCurrentCommand();
-				}
+					int line = (int)m_CurrentFrame.f_lineno;
 
-				else if (result == "return" && m_CurrentCommand == Command.Return)
-				{
-					UpdateCurrentState(frame, result, payload);
-					TracebackReturn();
-					ResetCurrentCommand();
+					if (m_Breakpoints.Contains(line))
+					{
+						TracebackBreakpoint();
+					}
+					else if (result == "call" && m_CurrentCommand == Command.Call)
+					{
+						TracebackCall();
+					}
+					else if (result == "line" && m_CurrentCommand == Command.Line)
+					{
+						TracebackLine();
+					}
+					else if (result == "return" && m_CurrentCommand == Command.Return)
+					{
+						TracebackReturn();
+					}
 				}
 
 				return OnTraceback;
@@ -123,14 +128,16 @@ namespace RazorEnhanced.UI
 			SetHighlightLine(true, (int)m_CurrentFrame.f_lineno, Color.LightGreen);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
+			ResetCurrentCommand();
 		}
 
 		private void TracebackReturn()
 		{
 			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Return {0}", m_CurrentCode.co_name));
-			SetHighlightLine(true, m_CurrentCode.co_firstlineno, Color.LightPink);
+			SetHighlightLine(true, m_CurrentCode.co_firstlineno, Color.LightBlue);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
+			ResetCurrentCommand();
 		}
 
 		private void TracebackLine()
@@ -139,6 +146,15 @@ namespace RazorEnhanced.UI
 			SetHighlightLine(true, (int)m_CurrentFrame.f_lineno, Color.Yellow);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
+			ResetCurrentCommand();
+		}
+
+		private void TracebackBreakpoint()
+		{
+			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Breakpoint at line {0}", m_CurrentFrame.f_lineno));
+			string locals = GetLocalsText(m_CurrentFrame);
+			SetTraceback(locals);
+			ResetCurrentCommand();
 		}
 
 		private void EnqueueCommand(Command command)
@@ -300,6 +316,10 @@ namespace RazorEnhanced.UI
 		private void EnhancedScriptEditor_Load(object sender, EventArgs e)
 		{
 			scintillaEditor.Margins[0].Width = 20;
+
+			m_Marker = scintillaEditor.Markers[0];
+			m_Marker.Symbol = MarkerSymbol.Background;
+			m_Marker.BackColor = Color.Red;
 		}
 
 		private void scintillaEditor_TextChanged(object sender, EventArgs e)
@@ -344,10 +364,24 @@ namespace RazorEnhanced.UI
 
 		private void toolStripButtonAddBreakpoint_Click(object sender, EventArgs e)
 		{
+			int line = scintillaEditor.Caret.LineNumber;
+
+			if (!m_Breakpoints.Contains(line))
+			{
+				m_Breakpoints.Add(line);
+				scintillaEditor.Lines[line].AddMarker(m_Marker);
+			}
 		}
 
 		private void toolStripButtonRemoveBreakpoints_Click(object sender, EventArgs e)
 		{
+			int line = scintillaEditor.Caret.LineNumber;
+
+			if (m_Breakpoints.Contains(line))
+			{
+				m_Breakpoints.Remove(line);
+				scintillaEditor.Lines[line].DeleteMarker(m_Marker);
+			}
 		}
 
 		private void toolStripButtonOpen_Click(object sender, EventArgs e)
@@ -422,17 +456,17 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-            EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
-            ginspector.FormClosed += new FormClosedEventHandler(gumpinspector_close);
-            ginspector.TopMost = true;
-            ginspector.Show();
-        }
+		private void toolStripButton1_Click(object sender, EventArgs e)
+		{
+			EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
+			ginspector.FormClosed += new FormClosedEventHandler(gumpinspector_close);
+			ginspector.TopMost = true;
+			ginspector.Show();
+		}
 
-        private void gumpinspector_close(object sender, EventArgs e)
-        {
-            Assistant.Engine.MainWindow.GumpInspectorEnable = false;
-        }
+		private void gumpinspector_close(object sender, EventArgs e)
+		{
+			Assistant.Engine.MainWindow.GumpInspectorEnable = false;
+		}
 	}
 }

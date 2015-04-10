@@ -345,6 +345,12 @@
     <Compile Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.Designer.cs">
       <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedToolbar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedToolbar.Designer.cs">
+      <DependentUpon>EnhancedToolbar.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\Vendor.cs" />
     <Compile Include="RazorEnhanced\Organizer.cs" />
     <Compile Include="RazorEnhanced\Scavenger.cs" />
@@ -582,6 +588,9 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedToolbar.resx">
+      <DependentUpon>EnhancedToolbar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\AddCounter.resx">
       <DependentUpon>AddCounter.cs</DependentUpon>
     </EmbeddedResource>
@@ -626,6 +635,7 @@
     <None Include="RazorEnhanced\Resources\media-playback-pause-3.png" />
     <None Include="RazorEnhanced\Resources\razor-enhanced.ico" />
     <None Include="RazorEnhanced\Resources\razor-enhanced.png" />
+    <None Include="RazorEnhanced\Resources\gump.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />

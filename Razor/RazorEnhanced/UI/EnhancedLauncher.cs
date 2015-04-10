@@ -68,7 +68,6 @@ namespace RazorEnhanced.UI
 			RefreshGUI();
 		}
 
-
 		private void EnhancedLauncher_Load(object sender, EventArgs e)
 		{
 			RefreshGUI();
