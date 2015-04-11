@@ -26,6 +26,7 @@ namespace RazorEnhanced
         {
             Assistant.Targeting.Target(serial);
         }
+
         public static void TargetExecute(RazorEnhanced.Item item)
         {
             Assistant.Targeting.Target(item);
@@ -54,6 +55,16 @@ namespace RazorEnhanced
         {
             Assistant.Targeting.LastTarget();
         }
-        
+        public static void SetLast(RazorEnhanced.Mobile mob)
+        {
+            Assistant.Mobile mobile = World.FindMobile(mob.Serial);
+            Assistant.Targeting.SetLastTargetTo(mobile);
+        }
+        public static void SetLast(int serial)
+        {
+            Assistant.Mobile mobile = World.FindMobile(serial);
+            if (mobile!= null)
+                Assistant.Targeting.SetLastTargetTo(mobile);
+        }
 	}
 }

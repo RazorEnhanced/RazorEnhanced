@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Media;
 using System.Collections.Generic;
 using Assistant;
 
@@ -42,6 +43,9 @@ namespace RazorEnhanced
             if (Assistant.World.Player != null)
                 Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
         }
-
+        public static void Beep()
+        {
+            SystemSounds.Beep.Play();
+        }
 	}
 }
