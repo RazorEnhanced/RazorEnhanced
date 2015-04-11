@@ -10,27 +10,19 @@ namespace RazorEnhanced
 {
 	public class Gumps 
 	{
-        public static int CurrentGump()
+        public static uint CurrentGump()
         {
-            int currentgump = 0;
-            try
-            {
-                currentgump = Convert.ToInt32(World.Player.CurrentGumpI);
-            }
-            catch
-            { }
-
-            return currentgump;
+            return World.Player.CurrentGumpI;
         }
         public static bool HasGump()
         {
             return World.Player.HasGump;
         }
 
-        public static void WaitForGump(int delay) // Delay in MS
+        public static void WaitForGump(uint gumpid, int delay) // Delay in MS
         {
              int subdelay = delay;
-             while (HasGump() == false && subdelay > 0)
+             while (World.Player.CurrentGumpI != gumpid && subdelay > 0)
              {
                  Thread.Sleep(2);
                  subdelay -= 2;
@@ -45,7 +37,7 @@ namespace RazorEnhanced
             World.Player.HasGump = false;
             World.Player.CurrentGumpStrings.Clear();
         }
-      /*  public static void SendAdvancedAction(int gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
+      /*  public static void SendAdvancedAction(uint gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
         {
             ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
             ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs, entries));
