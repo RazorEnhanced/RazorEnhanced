@@ -590,6 +590,12 @@ namespace RazorEnhanced
 		public static void UseItem(uint itemserial)
 		{
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (item == null)
+            {
+                Misc.SendMessage("Script Error: UseItem: Invalid Serial");
+                return;
+            }
+
 			if (item.Serial.IsItem)
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 			else

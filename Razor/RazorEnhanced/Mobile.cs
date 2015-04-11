@@ -440,7 +440,27 @@ namespace RazorEnhanced
 
 			return result;
 		}
+        // USe
 
+        public static void UseMobile(Mobile mobile)
+        {
+            Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
+        }
+        public static void UseMobile(uint mobileserial)
+        {
+            Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
+            if (mobile == null)
+            {
+                Misc.SendMessage("Script Error: UseMobile: Invalid Serial");
+                return;
+            }
+
+            if (mobile.Serial.IsMobile)
+                Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
+            else
+                Misc.SendMessage("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
+
+        }
 		// Message
 		public static void Message(Mobile mobile, int hue, string message)
 		{
