@@ -19,10 +19,10 @@ namespace RazorEnhanced
             return World.Player.HasGump;
         }
 
-        public static void WaitForGump(uint gumpid, int delay) // Delay in MS
+        public static void WaitForGump(int delay) // Delay in MS
         {
              int subdelay = delay;
-             while (World.Player.CurrentGumpI != gumpid && subdelay > 0)
+             while (World.Player.HasGump != true && subdelay > 0)
              {
                  Thread.Sleep(2);
                  subdelay -= 2;
