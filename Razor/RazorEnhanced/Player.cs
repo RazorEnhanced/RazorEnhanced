@@ -37,7 +37,7 @@ namespace RazorEnhanced
 		public static String Name { get { return Assistant.World.Player.Name; } }
         public static byte Notoriety { get { return Assistant.World.Player.Notoriety; } }
 
-		public Item Backpack
+        public static Item Backpack
 		{
 			get
 			{
@@ -52,7 +52,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public Item Bank
+        public static Item Bank
 		{
 			get
 			{
@@ -67,7 +67,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public Item Quiver
+        public static Item Quiver
 		{
 			get
 			{
@@ -82,7 +82,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public Item Mount
+        public static Item Mount
 		{
 			get
 			{
@@ -464,7 +464,15 @@ namespace RazorEnhanced
 				return buffs;
 			}
 		}
-
+        public static bool BuffsExist(string buffname)
+        {
+            foreach (ushort icon in Assistant.World.Player.Buffs)
+            {
+                if (icon.ToString() == buffname)
+                      return true;
+            }
+            return false;
+        }
 		// Layer
 		internal static Assistant.Layer GetAssistantLayer(string layer)
 		{
