@@ -32,6 +32,12 @@ namespace RazorEnhanced
 				Assistant.World.Player.SendMessage(MsgLevel.Info, num.ToString());
 		}
 
+        public static void SendMessage(uint num)
+        {
+            if (Assistant.World.Player != null)
+                Assistant.World.Player.SendMessage(MsgLevel.Info, num.ToString());
+        }
+
 		public static void SendMessage(string msg)
 		{
 			if (Assistant.World.Player != null)
@@ -46,6 +52,27 @@ namespace RazorEnhanced
         public static void Beep()
         {
             SystemSounds.Beep.Play();
+        }
+        // Login and logout
+        public static void Disconnect()
+        {
+            Assistant.ClientCommunication.SendToServer(new Disconnect());
+        }
+        // Context Menu
+        public static void ContextReply(int serial, int idx)
+        {
+            ClientCommunication.SendToServer(new ContextMenuRequest(serial));
+            ClientCommunication.SendToServer(new ContextMenuResponse(serial, (ushort)idx));
+        }
+        public static void ContextReply(Mobile mob, int idx)
+        {
+            ClientCommunication.SendToServer(new ContextMenuRequest(mob.Serial));
+            ClientCommunication.SendToServer(new ContextMenuResponse(mob.Serial, (ushort)idx));
+        }
+        public static void ContextReply(Item item, int idx)
+        {
+            ClientCommunication.SendToServer(new ContextMenuRequest(item.Serial));
+            ClientCommunication.SendToServer(new ContextMenuResponse(item.Serial, (ushort)idx));
         }
 	}
 }

@@ -1771,6 +1771,15 @@ namespace Assistant
             Write((byte)0x0A);
         }
     }
+
+    internal sealed class Disconnect : Packet
+    {
+        internal Disconnect()
+            : base(0xD1)
+        {
+            EnsureCapacity(1);
+        }
+    }
 }
 
 
