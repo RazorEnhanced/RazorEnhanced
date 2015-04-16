@@ -290,6 +290,7 @@
     <Compile Include="Core\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\ImportExport.cs" />
     <Compile Include="RazorEnhanced\Target.cs" />
     <Compile Include="RazorEnhanced\Journal.cs" />
     <Compile Include="RazorEnhanced\AutoLoot.cs" />
