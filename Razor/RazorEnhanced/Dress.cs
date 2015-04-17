@@ -184,12 +184,13 @@ namespace RazorEnhanced
                 {
                     List<Dress.DressItem> items;
                     RazorEnhanced.Settings.Dress.ItemsRead(l.Description, out items);
-                    ListViewItem listitem = new ListViewItem();
+                    
 
                     foreach (DressItem item in items)
                     {
                         if (item.Layer == 0)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("RightHand");
                             listitem.SubItems.Add(item.Name);
@@ -199,6 +200,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 1)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("LeftHand");
                             listitem.SubItems.Add(item.Name);
@@ -208,6 +210,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 2)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Shoes");
                             listitem.SubItems.Add(item.Name);
@@ -217,6 +220,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 3)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Pants");
                             listitem.SubItems.Add(item.Name);
@@ -226,6 +230,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 4)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Shirt");
                             listitem.SubItems.Add(item.Name);
@@ -235,6 +240,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 5)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Head");
                             listitem.SubItems.Add(item.Name);
@@ -244,6 +250,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 6)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Gloves");
                             listitem.SubItems.Add(item.Name);
@@ -253,6 +260,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 7)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Ring");
                             listitem.SubItems.Add(item.Name);
@@ -262,6 +270,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 8)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Neck");
                             listitem.SubItems.Add(item.Name);
@@ -271,6 +280,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 9)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Waist");
                             listitem.SubItems.Add(item.Name);
@@ -280,6 +290,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 10)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("InnerTorso");
                             listitem.SubItems.Add(item.Name);
@@ -289,6 +300,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 11)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Bracelet");
                             listitem.SubItems.Add(item.Name);
@@ -298,6 +310,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 12)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("MiddleTorso");
                             listitem.SubItems.Add(item.Name);
@@ -307,6 +320,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 13)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Earrings");
                             listitem.SubItems.Add(item.Name);
@@ -316,6 +330,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 14)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Arms");
                             listitem.SubItems.Add(item.Name);
@@ -325,6 +340,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 15)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("Cloak");
                             listitem.SubItems.Add(item.Name);
@@ -334,6 +350,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 16)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("OuterTorso");
                             listitem.SubItems.Add(item.Name);
@@ -343,6 +360,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 17)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("OuterLegs");
                             listitem.SubItems.Add(item.Name);
@@ -352,6 +370,7 @@ namespace RazorEnhanced
                         }
                         if (item.Layer == 18)
                         {
+                            ListViewItem listitem = new ListViewItem();
                             listitem.Checked = item.Selected;
                             listitem.SubItems.Add("InnerLegs");
                             listitem.SubItems.Add(item.Name);
@@ -363,6 +382,144 @@ namespace RazorEnhanced
                 }
             }
         }
+        internal static void ReadPlayerDress()
+        {
+            RazorEnhanced.Settings.Dress.ItemClear(Assistant.Engine.MainWindow.DressListSelect.Text);
 
+            Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 0, layeritem.Serial,true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 1, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shoes);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 2, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Pants);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 3, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shirt);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 4, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Head);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 5, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Gloves);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 6, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Ring);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 7, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Neck);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 8, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Waist);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 9, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerTorso);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 10, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Bracelet);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 11, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.MiddleTorso);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 12, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Earrings);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 13, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Arms);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 14, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Cloak);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 15, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterTorso);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 16, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterLegs);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 17, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerLegs);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 18, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
+
+            RazorEnhanced.Dress.RefreshItems();
+        }
     }
 }

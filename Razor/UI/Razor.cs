@@ -386,9 +386,9 @@ namespace Assistant
 		private RazorButton razorButton10;
 		private RazorButton razorButton11;
 		private GroupBox groupBox22;
-		private RazorButton dressClearSlotB;
+		private RazorButton dressAddTargetB;
 		private RazorButton dressAddManualB;
-		private RazorButton dressClearAllB;
+		private RazorButton dressRemoveB;
 		private RazorButton dressReadB;
 		private Label label29;
 		private RazorTextBox dressDragDelay;
@@ -528,6 +528,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -887,9 +888,9 @@ namespace Assistant
             this.razorButton10 = new RazorEnhanced.UI.RazorButton();
             this.razorButton11 = new RazorEnhanced.UI.RazorButton();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
-            this.dressClearSlotB = new RazorEnhanced.UI.RazorButton();
+            this.dressAddTargetB = new RazorEnhanced.UI.RazorButton();
             this.dressAddManualB = new RazorEnhanced.UI.RazorButton();
-            this.dressClearAllB = new RazorEnhanced.UI.RazorButton();
+            this.dressRemoveB = new RazorEnhanced.UI.RazorButton();
             this.dressReadB = new RazorEnhanced.UI.RazorButton();
             this.label29 = new System.Windows.Forms.Label();
             this.dressDragDelay = new RazorEnhanced.UI.RazorTextBox();
@@ -964,24 +965,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -4834,9 +4835,9 @@ namespace Assistant
             // 
             // groupBox22
             // 
-            this.groupBox22.Controls.Add(this.dressClearSlotB);
+            this.groupBox22.Controls.Add(this.dressAddTargetB);
             this.groupBox22.Controls.Add(this.dressAddManualB);
-            this.groupBox22.Controls.Add(this.dressClearAllB);
+            this.groupBox22.Controls.Add(this.dressRemoveB);
             this.groupBox22.Controls.Add(this.dressReadB);
             this.groupBox22.Location = new System.Drawing.Point(551, 186);
             this.groupBox22.Name = "groupBox22";
@@ -4845,36 +4846,36 @@ namespace Assistant
             this.groupBox22.TabStop = false;
             this.groupBox22.Text = "Item List";
             // 
-            // dressClearSlotB
+            // dressAddTargetB
             // 
-            this.dressClearSlotB.ColorTable = office2010BlueTheme1;
-            this.dressClearSlotB.Location = new System.Drawing.Point(5, 68);
-            this.dressClearSlotB.Name = "dressClearSlotB";
-            this.dressClearSlotB.Size = new System.Drawing.Size(90, 20);
-            this.dressClearSlotB.TabIndex = 48;
-            this.dressClearSlotB.Text = "Clear Slot";
-            this.dressClearSlotB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressAddTargetB.ColorTable = office2010BlueTheme2;
+            this.dressAddTargetB.Location = new System.Drawing.Point(5, 68);
+            this.dressAddTargetB.Name = "dressAddTargetB";
+            this.dressAddTargetB.Size = new System.Drawing.Size(90, 20);
+            this.dressAddTargetB.TabIndex = 48;
+            this.dressAddTargetB.Text = "Add Target";
+            this.dressAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
             // dressAddManualB
             // 
-            this.dressAddManualB.ColorTable = office2010BlueTheme1;
+            this.dressAddManualB.ColorTable = office2010BlueTheme2;
             this.dressAddManualB.Location = new System.Drawing.Point(5, 43);
             this.dressAddManualB.Name = "dressAddManualB";
             this.dressAddManualB.Size = new System.Drawing.Size(90, 20);
             this.dressAddManualB.TabIndex = 47;
-            this.dressAddManualB.Text = "Manual Add";
+            this.dressAddManualB.Text = "Add Clear Layer";
             this.dressAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.dressAddManualB.Click += new System.EventHandler(this.dressAddManualB_Click);
             // 
-            // dressClearAllB
+            // dressRemoveB
             // 
-            this.dressClearAllB.ColorTable = office2010BlueTheme1;
-            this.dressClearAllB.Location = new System.Drawing.Point(5, 94);
-            this.dressClearAllB.Name = "dressClearAllB";
-            this.dressClearAllB.Size = new System.Drawing.Size(90, 20);
-            this.dressClearAllB.TabIndex = 46;
-            this.dressClearAllB.Text = "Clear All";
-            this.dressClearAllB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressRemoveB.ColorTable = office2010BlueTheme1;
+            this.dressRemoveB.Location = new System.Drawing.Point(5, 94);
+            this.dressRemoveB.Name = "dressRemoveB";
+            this.dressRemoveB.Size = new System.Drawing.Size(90, 20);
+            this.dressRemoveB.TabIndex = 46;
+            this.dressRemoveB.Text = "Remove";
+            this.dressRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
             // dressReadB
             // 
@@ -4885,6 +4886,7 @@ namespace Assistant
             this.dressReadB.TabIndex = 45;
             this.dressReadB.Text = "Read Current";
             this.dressReadB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressReadB.Click += new System.EventHandler(this.dressReadB_Click);
             // 
             // label29
             // 
@@ -9926,6 +9928,12 @@ namespace Assistant
             RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
             RazorEnhanced.Dress.RefreshLists();
         }
+
+        private void dressReadB_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.Dress.ReadPlayerDress();
+        }
+
         // --------------- DRESS END ---------
 		private void dressAddManualB_Click(object sender, EventArgs e)
 		{
@@ -9935,6 +9943,8 @@ namespace Assistant
 		{
 
 		}
+
+
 
 
 

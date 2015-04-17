@@ -1331,8 +1331,29 @@ namespace RazorEnhanced
                 conflict = conflictOut;
 
             }
-        }
 
+            internal static void ItemClear(string list)
+            {
+                if (ListExists(list))
+                {
+                    foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
+                    {
+                        if ((string)row["List"] == list)
+                            row.Delete();
+                    }
+                }
+                Save();
+            }
+            internal static void ItemInsert(string list, RazorEnhanced.Dress.DressItem item)
+            {
+                DataRow row = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
+                row["List"] = list;
+                row["Item"] = item;
+                m_Dataset.Tables["DRESS_ITEMS"].Rows.Add(row);
+
+                Save();
+            }
+        }
 
         // ------------- DRESS END-----------------
 
