@@ -1353,6 +1353,37 @@ namespace RazorEnhanced
 
                 Save();
             }
+            internal static void ItemDelete(string list, RazorEnhanced.Dress.DressItem item)
+            {
+                for (int i = m_Dataset.Tables["DRESS_ITEMS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["DRESS_ITEMS"].Rows[i];
+                    if ((string)row["List"] == list && (RazorEnhanced.Dress.DressItem)row["Item"] == item)
+                    {
+                        row.Delete();
+                        break;
+                    }
+                }
+
+                Save();
+            }
+            internal static void ItemReplace(string list, int index, RazorEnhanced.Dress.DressItem item)
+            {
+                int count = -1;
+                foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
+                {
+                    if ((string)row["List"] == list)
+                    {
+                        count++;
+                        if (count == index)
+                        {
+                            row["Item"] = item;
+                        }
+                    }
+                }
+
+                Save();
+            }
         }
 
         // ------------- DRESS END-----------------

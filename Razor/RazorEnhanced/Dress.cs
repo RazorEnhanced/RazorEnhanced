@@ -129,6 +129,18 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.DressCheckBox.Checked = value;
             }
         }
+        internal static string DressListName
+        {
+            get
+            {
+                return (string)Assistant.Engine.MainWindow.DressListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.DressListSelect.Text));
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.DressListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.DressListSelect.Text = value));
+            }
+        }
 
         internal static void RefreshLists()
         {
@@ -170,6 +182,29 @@ namespace RazorEnhanced
 
             RazorEnhanced.Dress.RefreshLists();
             RazorEnhanced.Dress.RefreshItems();
+        }
+
+        internal static void UpdateSelectedItems()
+        {
+            List<DressItem> items;
+            RazorEnhanced.Settings.Dress.ItemsRead(DressListName, out items);
+
+            if (items.Count != Assistant.Engine.MainWindow.DressListView.Items.Count)
+            {
+                return;
+            }
+
+            for (int i = 0; i < Assistant.Engine.MainWindow.DressListView.Items.Count; i++)
+            {
+                ListViewItem lvi = Assistant.Engine.MainWindow.DressListView.Items[i];
+                DressItem old = items[i];
+
+                if (lvi != null && old != null)
+                {
+                    DressItem item = new Dress.DressItem(old.Name, old.Layer, old.Serial, lvi.Checked);
+                    RazorEnhanced.Settings.Dress.ItemReplace(RazorEnhanced.Dress.DressListName, i, item);
+                }
+            }
         }
 
         internal static void RefreshItems()
@@ -382,6 +417,7 @@ namespace RazorEnhanced
                 }
             }
         }
+
         internal static void ReadPlayerDress()
         {
             RazorEnhanced.Settings.Dress.ItemClear(Assistant.Engine.MainWindow.DressListSelect.Text);
