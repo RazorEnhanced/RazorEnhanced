@@ -299,6 +299,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedDressAddList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedDressAddList.designer.cs">
+      <DependentUpon>EnhancedDressAddList.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -520,6 +526,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedDressAddList.resx">
+      <DependentUpon>EnhancedDressAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGumpInspector.resx">
       <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>

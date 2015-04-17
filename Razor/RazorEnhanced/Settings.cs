@@ -136,7 +136,19 @@ namespace RazorEnhanced
 				buy_items.Columns.Add("Item", typeof(RazorEnhanced.BuyAgent.BuyAgentItem));
 				m_Dataset.Tables.Add(buy_items);
 
+                // ----------- DRESS ----------
+                DataTable dress_lists = new DataTable("DRESS_LISTS");
+                dress_lists.Columns.Add("Description", typeof(string));
+                dress_lists.Columns.Add("Bag", typeof(int));
+                dress_lists.Columns.Add("Delay", typeof(int));
+                dress_lists.Columns.Add("Conflict", typeof(bool));
+                dress_lists.Columns.Add("Selected", typeof(bool));
+                m_Dataset.Tables.Add(dress_lists);
 
+                DataTable dress_items = new DataTable("DRESS_ITEMS");
+                dress_items.Columns.Add("List", typeof(string));
+                dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItem));
+                m_Dataset.Tables.Add(dress_items);
 
 				// ----------- SHARDS ----------
 				DataTable shards = new DataTable("SHARDS");
@@ -348,17 +360,20 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
-            internal static int BagRead(string listname)
+            internal static void ListDetailsRead(string listname, out int bag, out int delay)
             {
+                int bagOut = 0;
+                int delayOut = 0;  
                 foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
                 {
                     if ((string)row["Description"] == listname)
                     {
-                        return (int)row["Bag"];
+                        bagOut = (int)row["Bag"];
+                        delayOut = (int)row["Delay"];
                     }
                 }
-
-                return 0;
+                bag = bagOut;
+                delay = delayOut;
             }
         }
 
@@ -550,17 +565,21 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
-            internal static int BagRead(string listname)
+
+            internal static void ListDetailsRead(string listname, out int bag, out int delay)
             {
+                int bagOut = 0;
+                int delayOut = 0;
                 foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
                 {
                     if ((string)row["Description"] == listname)
                     {
-                        return (int)row["Bag"];
+                        bagOut = (int)row["Bag"];
+                        delayOut = (int)row["Delay"];
                     }
                 }
-
-                return 0;
+                bag = bagOut;
+                delay = delayOut;
             }
 		}
 		// ------------- SCAVENGER END-----------------
@@ -757,30 +776,23 @@ namespace RazorEnhanced
 				items = itemsOut;
 			}
 
-            internal static int BagSourceRead(string listname)
+            internal static void ListDetailsRead(string listname, out int bags, out int bagd, out int delay)
             {
+                int bagsOut = 0;
+                int bagdOut = 0;
+                int delayOut = 0;
                 foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
                 {
                     if ((string)row["Description"] == listname)
                     {
-                        return (int)row["Source"];
+                        bagsOut = (int)row["Source"];
+                        bagdOut = (int)row["Destination"];
+                        delayOut = (int)row["Delay"];
                     }
                 }
-
-                return 0;
-            }
-
-            internal static int BagDestinationRead(string listname)
-            {
-                foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
-                {
-                    if ((string)row["Description"] == listname)
-                    {
-                        return (int)row["Destination"];
-                    }
-                }
-
-                return 0;
+                bags = bagsOut;
+                bagd = bagdOut;
+                delay = delayOut;
             }
 		}
 		// ------------- ORGANIZER END-----------------
@@ -1166,7 +1178,163 @@ namespace RazorEnhanced
 		}
 		// ------------- BUY AGENT END-----------------
 
+        // ------------- DRESS ----------------
 
+        internal class Dress
+        {
+            internal static bool ListExists(string description)
+            {
+                foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+                {
+                    if (((string)row["Description"]).ToLower() == description.ToLower())
+                        return true;
+                }
+
+                return false;
+            }
+
+            internal static void ListInsert(string description, int delay, int bag, bool conflict)
+            {
+                foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+                {
+                    row["Selected"] = false;
+                }
+
+                DataRow newRow = m_Dataset.Tables["DRESS_LISTS"].NewRow();
+                newRow["Description"] = description;
+                newRow["Delay"] = delay;
+                newRow["Bag"] = bag;
+                newRow["Conflict"] = conflict;
+                newRow["Selected"] = true;
+                m_Dataset.Tables["DRESS_LISTS"].Rows.Add(newRow);
+
+                Save();
+            }
+
+            internal static void ListUpdate(string description, int delay, int bag, bool conflict, bool selected)
+            {
+
+                bool found = false;
+                foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == description)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    if (selected)
+                    {
+                        foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+                        {
+                            row["Selected"] = false;
+                        }
+                    }
+
+                    foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+                    {
+                        if ((string)row["Description"] == description)
+                        {
+                            row["Delay"] = delay;
+                            row["Bag"] = bag;
+                            row["Conflict"] = conflict;
+                            row["Selected"] = selected;
+                            break;
+                        }
+                    }
+
+                    Save();
+                }
+            }
+
+            internal static void ListDelete(string description)
+            {
+                for (int i = m_Dataset.Tables["DRESS_ITEMS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["DRESS_ITEMS"].Rows[i];
+                    if ((string)row["List"] == description)
+                    {
+                        row.Delete();
+                    }
+                }
+
+                for (int i = m_Dataset.Tables["DRESS_LISTS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["DRESS_LISTS"].Rows[i];
+                    if ((string)row["Description"] == description)
+                    {
+                        row.Delete();
+                        break;
+                    }
+                    row["Selected"] = false;
+                }
+
+                Save();
+            }
+
+            internal static void ListsRead(out List<RazorEnhanced.Dress.DressList> lists)
+            {
+                List<RazorEnhanced.Dress.DressList> listsOut = new List<RazorEnhanced.Dress.DressList>();
+
+                foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+                {
+                    string description = (string)row["Description"];
+                    int delay = (int)row["Delay"];
+                    int bag = (int)row["Bag"];
+                    bool conflict = (bool)row["Conflict"];
+                    bool selected = (bool)row["Selected"];
+
+                    RazorEnhanced.Dress.DressList list = new RazorEnhanced.Dress.DressList(description, delay, bag, conflict, selected);
+                    listsOut.Add(list);
+                }
+
+                lists = listsOut;
+            }
+
+            internal static void ItemsRead(string list, out List<RazorEnhanced.Dress.DressItem> items)
+            {
+                List<RazorEnhanced.Dress.DressItem> itemsOut = new List<RazorEnhanced.Dress.DressItem>();
+
+                if (ListExists(list))
+                {
+                    foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
+                    {
+                        if ((string)row["List"] == list)
+                        {
+                            itemsOut.Add((RazorEnhanced.Dress.DressItem)row["Item"]);
+                        }
+                    }
+                }
+
+                items = itemsOut;
+            }
+
+            internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool conflict)
+            {
+                int bagOut = 0;
+                int delayOut = 0;
+                bool conflictOut = false;
+                foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        bagOut = (int)row["Bag"];
+                        delayOut = (int)row["Delay"];
+                        conflictOut = (bool)row["Conflict"];
+                    }
+                }
+                bag = bagOut;
+                delay = delayOut;
+                conflict = conflictOut;
+
+            }
+        }
+
+
+        // ------------- DRESS END-----------------
 
 		// ------------- SHARDS -----------------
 		internal class Shards
