@@ -20,6 +20,8 @@ namespace RazorEnhanced
             OpenFileDialog od = new OpenFileDialog();
             od.Filter = "Enhanced Razor Export|*.raz";
             od.Title = "Import Autoloot List";
+            od.RestoreDirectory = true;
+
             if (od.ShowDialog() == DialogResult.OK)
             {
                 if (File.Exists(od.FileName))
@@ -86,6 +88,8 @@ namespace RazorEnhanced
             sd.Filter = "Enhanced Razor Export|*.raz";
             sd.Title = "Export Autoloot List";
             sd.FileName = "AU." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
             if (sd.ShowDialog() == DialogResult.OK)
             {
                 DataSet m_Dataset = new DataSet();
@@ -143,6 +147,7 @@ namespace RazorEnhanced
             OpenFileDialog od = new OpenFileDialog();
             od.Filter = "Enhanced Razor Export|*.raz";
             od.Title = "Import Scavenger List";
+            od.RestoreDirectory = true;
 
             if (od.ShowDialog() == DialogResult.OK)
             {
@@ -209,6 +214,8 @@ namespace RazorEnhanced
             sd.Filter = "Enhanced Razor Export|*.raz";
             sd.Title = "Export Scavenger List";
             sd.FileName = "SC." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
             if (sd.ShowDialog() == DialogResult.OK)
             {
                 DataSet m_Dataset = new DataSet();
@@ -266,6 +273,7 @@ namespace RazorEnhanced
             OpenFileDialog od = new OpenFileDialog();
             od.Filter = "Enhanced Razor Export|*.raz";
             od.Title = "Import Organizer List";
+            od.RestoreDirectory = true;
 
             if (od.ShowDialog() == DialogResult.OK)
             {
@@ -333,6 +341,8 @@ namespace RazorEnhanced
             sd.Filter = "Enhanced Razor Export|*.raz";
             sd.Title = "Export Organizer List";
             sd.FileName = "OR." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
             if (sd.ShowDialog() == DialogResult.OK)
             {
                 DataSet m_Dataset = new DataSet();
@@ -386,6 +396,7 @@ namespace RazorEnhanced
             OpenFileDialog od = new OpenFileDialog();
             od.Filter = "Enhanced Razor Export|*.raz";
             od.Title = "Import Sell Agent List";
+            od.RestoreDirectory = true;
 
             if (od.ShowDialog() == DialogResult.OK)
             {
@@ -455,6 +466,8 @@ namespace RazorEnhanced
             sd.Filter = "Enhanced Razor Export|*.raz";
             sd.Title = "Export Sell Agent List";
             sd.FileName = "SA." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
             if (sd.ShowDialog() == DialogResult.OK)
             {
                 DataSet m_Dataset = new DataSet();
@@ -510,6 +523,7 @@ namespace RazorEnhanced
             OpenFileDialog od = new OpenFileDialog();
             od.Filter = "Enhanced Razor Export|*.raz";
             od.Title = "Import Buy Agent List";
+            od.RestoreDirectory = true;
 
             if (od.ShowDialog() == DialogResult.OK)
             {
@@ -576,6 +590,8 @@ namespace RazorEnhanced
             sd.Filter = "Enhanced Razor Export|*.raz";
             sd.Title = "Export Buy Agent List";
             sd.FileName = "BA." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
             if (sd.ShowDialog() == DialogResult.OK)
             {
                 DataSet m_Dataset = new DataSet();

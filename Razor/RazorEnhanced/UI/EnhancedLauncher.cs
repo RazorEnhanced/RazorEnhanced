@@ -160,9 +160,10 @@ namespace RazorEnhanced.UI
 
 		private void bNameCopy_Click(object sender, EventArgs e)
 		{
-			if (openFile.ShowDialog(this) == DialogResult.OK)
+            openclientlocation.RestoreDirectory = true;
+			if (openclientlocation.ShowDialog(this) == DialogResult.OK)
 			{
-				clientPathLabel.Text = openFile.FileName;
+				clientPathLabel.Text = openclientlocation.FileName;
 				UpdateGUI();
 			}
 		}
