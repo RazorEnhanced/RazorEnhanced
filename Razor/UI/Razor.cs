@@ -406,7 +406,7 @@ namespace Assistant
 		private RazorButton dressExportListB;
 		private Label label28;
 		private NotifyIcon m_NotifyIcon;
-		private OpenFileDialog openFileDialog1;
+		private OpenFileDialog openFileDialogscript;
 		private System.Windows.Forms.Timer timerTimer;
 
 		private bool m_CanClose = true;
@@ -907,7 +907,7 @@ namespace Assistant
             this.dressExportListB = new RazorEnhanced.UI.RazorButton();
             this.label28 = new System.Windows.Forms.Label();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
@@ -5041,9 +5041,10 @@ namespace Assistant
             this.m_NotifyIcon.DoubleClick += new System.EventHandler(this.NotifyIcon_DoubleClick);
             this.m_NotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.m_NotifyIcon_MouseDoubleClick);
             // 
-            // openFileDialog1
+            // openFileDialogscript
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialogscript.Filter = "Script Files|*.py";
+            this.openFileDialogscript.RestoreDirectory = true;
             // 
             // timerTimer
             // 
@@ -8453,11 +8454,11 @@ namespace Assistant
 
 		private void xButton2_Click(object sender, EventArgs e)
 		{
-			DialogResult result = openFileDialog1.ShowDialog();
+			DialogResult result = openFileDialogscript.ShowDialog();
 
 			if (result == DialogResult.OK) // Test result.
 			{
-				scriptTable.Rows.Add(false, openFileDialog1.FileName, Properties.Resources.yellow, "Idle");
+				scriptTable.Rows.Add(false, openFileDialogscript.FileName, Properties.Resources.yellow, "Idle");
 				RazorEnhanced.Settings.Save();
 
 				dataGridViewScripting.DataSource = null;
