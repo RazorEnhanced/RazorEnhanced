@@ -215,7 +215,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateSelectedItems()
+		internal static void UpdateSelectedItems(int i)
 		{
 			List<ScavengerItem> items;
 			RazorEnhanced.Settings.Scavenger.ItemsRead(ScavengerListName, out items);
@@ -225,16 +225,13 @@ namespace RazorEnhanced
 				return;
 			}
 
-			for (int i = 0; i < Assistant.Engine.MainWindow.ScavengerListView.Items.Count; i++)
-			{
-				ListViewItem lvi = Assistant.Engine.MainWindow.ScavengerListView.Items[i];
-				ScavengerItem old = items[i];
+			ListViewItem lvi = Assistant.Engine.MainWindow.ScavengerListView.Items[i];
+			ScavengerItem old = items[i];
 
-				if (lvi != null && old != null)
-				{
-					ScavengerItem item = new Scavenger.ScavengerItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
-					RazorEnhanced.Settings.Scavenger.ItemReplace(RazorEnhanced.Scavenger.ScavengerListName, i, item);
-				}
+			if (lvi != null && old != null)
+			{
+				ScavengerItem item = new Scavenger.ScavengerItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
+				RazorEnhanced.Settings.Scavenger.ItemReplace(RazorEnhanced.Scavenger.ScavengerListName, i, item);
 			}
 		}
 

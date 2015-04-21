@@ -8851,7 +8851,11 @@ namespace Assistant
 
 		private void autolootlistView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			RazorEnhanced.AutoLoot.UpdateSelectedItems();
+            if (autolootlistView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.AutoLoot.UpdateSelectedItems(item.Index);
+            }
 		}
 
 		delegate void SetBoolCallback(bool check);
@@ -9145,7 +9149,11 @@ namespace Assistant
 
 		private void scavengerListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			RazorEnhanced.Scavenger.UpdateSelectedItems();
+            if (scavengerListView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.Scavenger.UpdateSelectedItems(item.Index);
+            }
 		}
         private void scavengerButtonImport_Click(object sender, EventArgs e)
         {
@@ -9368,7 +9376,11 @@ namespace Assistant
 
 		private void organizerListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			RazorEnhanced.Organizer.UpdateSelectedItems();
+            if (organizerListView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.Organizer.UpdateSelectedItems(item.Index);
+            }
 		}
 
 		private void organizerExecute_Click(object sender, EventArgs e)
@@ -9708,7 +9720,11 @@ namespace Assistant
 
 		private void sellagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			RazorEnhanced.SellAgent.UpdateSelectedItems();
+            if (sellListView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.SellAgent.UpdateSelectedItems(item.Index);
+            }
 		}
         private void sellImportListButton_Click(object sender, EventArgs e)
         {
@@ -9876,7 +9892,11 @@ namespace Assistant
 
 		private void buyagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-			RazorEnhanced.BuyAgent.UpdateSelectedItems();
+            if (buyListView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.BuyAgent.UpdateSelectedItems(item.Index);
+            }
 		}
         private void buyImportListButton_Click(object sender, EventArgs e)
         {
@@ -10006,7 +10026,11 @@ namespace Assistant
 
         private void dresslistView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            RazorEnhanced.Dress.UpdateSelectedItems();
+            if (dressListView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.Dress.UpdateSelectedItems(item.Index);
+            }
         }
 
         private void dressAddTargetB_Click(object sender, EventArgs e)

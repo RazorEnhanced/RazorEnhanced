@@ -171,7 +171,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateSelectedItems()
+		internal static void UpdateSelectedItems(int i)
 		{
 			List<SellAgentItem> items;
 			RazorEnhanced.Settings.SellAgent.ItemsRead(SellListName, out items);
@@ -181,16 +181,13 @@ namespace RazorEnhanced
 				return;
 			}
 
-			for (int i = 0; i < Assistant.Engine.MainWindow.SellListView.Items.Count; i++)
-			{
-				ListViewItem lvi = Assistant.Engine.MainWindow.SellListView.Items[i];
-				SellAgentItem old = items[i];
+			ListViewItem lvi = Assistant.Engine.MainWindow.SellListView.Items[i];
+			SellAgentItem old = items[i];
 
-				if (lvi != null && old != null)
-				{
-					SellAgentItem item = new SellAgent.SellAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
-					RazorEnhanced.Settings.SellAgent.ItemReplace(RazorEnhanced.SellAgent.SellListName, i, item);
-				}
+			if (lvi != null && old != null)
+			{
+				SellAgentItem item = new SellAgent.SellAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
+				RazorEnhanced.Settings.SellAgent.ItemReplace(RazorEnhanced.SellAgent.SellListName, i, item);
 			}
 		}
 
@@ -547,7 +544,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateSelectedItems()
+		internal static void UpdateSelectedItems(int i)
 		{
 			List<BuyAgentItem> items;
 			RazorEnhanced.Settings.BuyAgent.ItemsRead(BuyListName, out items);
@@ -557,16 +554,13 @@ namespace RazorEnhanced
 				return;
 			}
 
-			for (int i = 0; i < Assistant.Engine.MainWindow.BuyListView.Items.Count; i++)
-			{
-				ListViewItem lvi = Assistant.Engine.MainWindow.BuyListView.Items[i];
-				BuyAgentItem old = items[i];
+			ListViewItem lvi = Assistant.Engine.MainWindow.BuyListView.Items[i];
+			BuyAgentItem old = items[i];
 
-				if (lvi != null && old != null)
-				{
-					BuyAgentItem item = new BuyAgent.BuyAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
-					RazorEnhanced.Settings.BuyAgent.ItemReplace(RazorEnhanced.BuyAgent.BuyListName, i, item);
-				}
+			if (lvi != null && old != null)
+			{
+				BuyAgentItem item = new BuyAgent.BuyAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
+				RazorEnhanced.Settings.BuyAgent.ItemReplace(RazorEnhanced.BuyAgent.BuyListName, i, item);
 			}
 		}
 

@@ -184,7 +184,7 @@ namespace RazorEnhanced
             RazorEnhanced.Dress.RefreshItems();
         }
 
-        internal static void UpdateSelectedItems()
+        internal static void UpdateSelectedItems(int i)
         {
             List<DressItem> items;
             RazorEnhanced.Settings.Dress.ItemsRead(DressListName, out items);
@@ -194,16 +194,13 @@ namespace RazorEnhanced
                 return;
             }
 
-            for (int i = 0; i < Assistant.Engine.MainWindow.DressListView.Items.Count; i++)
-            {
-                ListViewItem lvi = Assistant.Engine.MainWindow.DressListView.Items[i];
-                DressItem old = items[i];
+            ListViewItem lvi = Assistant.Engine.MainWindow.DressListView.Items[i];
+            DressItem old = items[i];
 
-                if (lvi != null && old != null)
-                {
-                    DressItem item = new Dress.DressItem(old.Name, old.Layer, old.Serial, lvi.Checked);
-                    RazorEnhanced.Settings.Dress.ItemReplace(RazorEnhanced.Dress.DressListName, i, item);
-                }
+            if (lvi != null && old != null)
+            {
+                DressItem item = new Dress.DressItem(old.Name, old.Layer, old.Serial, lvi.Checked);
+                RazorEnhanced.Settings.Dress.ItemReplace(RazorEnhanced.Dress.DressListName, i, item);
             }
         }
 

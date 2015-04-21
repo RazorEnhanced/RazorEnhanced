@@ -237,7 +237,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateSelectedItems()
+		internal static void UpdateSelectedItems(int i)
 		{
 			List<OrganizerItem> items;
 			RazorEnhanced.Settings.Organizer.ItemsRead(OrganizerListName, out items);
@@ -247,16 +247,13 @@ namespace RazorEnhanced
 				return;
 			}
 
-			for (int i = 0; i < Assistant.Engine.MainWindow.OrganizerListView.Items.Count; i++)
-			{
-				ListViewItem lvi = Assistant.Engine.MainWindow.OrganizerListView.Items[i];
-				OrganizerItem old = items[i];
+			ListViewItem lvi = Assistant.Engine.MainWindow.OrganizerListView.Items[i];
+			OrganizerItem old = items[i];
 
-				if (lvi != null && old != null)
-				{
-					OrganizerItem item = new Organizer.OrganizerItem(old.Name, old.Graphics, old.Color, old.Amount, lvi.Checked);
-					RazorEnhanced.Settings.Organizer.ItemReplace(RazorEnhanced.Organizer.OrganizerListName, i, item);
-				}
+			if (lvi != null && old != null)
+			{
+				OrganizerItem item = new Organizer.OrganizerItem(old.Name, old.Graphics, old.Color, old.Amount, lvi.Checked);
+				RazorEnhanced.Settings.Organizer.ItemReplace(RazorEnhanced.Organizer.OrganizerListName, i, item);
 			}
 		}
 

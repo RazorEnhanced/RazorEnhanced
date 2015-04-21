@@ -215,7 +215,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateSelectedItems()
+		internal static void UpdateSelectedItems(int i)
 		{
 			List<AutoLootItem> items;
 			RazorEnhanced.Settings.AutoLoot.ItemsRead(AutoLootListName, out items);
@@ -225,16 +225,13 @@ namespace RazorEnhanced
 				return;
 			}
 
-			for (int i = 0; i < Assistant.Engine.MainWindow.AutoLootListView.Items.Count; i++)
-			{
-				ListViewItem lvi = Assistant.Engine.MainWindow.AutoLootListView.Items[i];
-				AutoLootItem old = items[i];
+			ListViewItem lvi = Assistant.Engine.MainWindow.AutoLootListView.Items[i];
+			AutoLootItem old = items[i];
 
-				if (lvi != null && old != null)
-				{
-					AutoLootItem item = new AutoLoot.AutoLootItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
-					RazorEnhanced.Settings.AutoLoot.ItemReplace(RazorEnhanced.AutoLoot.AutoLootListName, i, item);
-				}
+			if (lvi != null && old != null)
+			{
+				AutoLootItem item = new AutoLoot.AutoLootItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
+				RazorEnhanced.Settings.AutoLoot.ItemReplace(RazorEnhanced.AutoLoot.AutoLootListName, i, item);
 			}
 		}
 
