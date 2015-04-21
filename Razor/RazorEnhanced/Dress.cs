@@ -219,200 +219,22 @@ namespace RazorEnhanced
                 {
                     List<Dress.DressItem> items;
                     RazorEnhanced.Settings.Dress.ItemsRead(l.Description, out items);
-                    
-
                     foreach (DressItem item in items)
                     {
-                        if (item.Layer == 0)
+                        ListViewItem listitem = new ListViewItem();
+                        listitem.Checked = item.Selected;
+                        listitem.SubItems.Add(LayerIntToLayerString(item.Layer));
+                        if (item.Name != "UNDRESS")
                         {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("RightHand");
                             listitem.SubItems.Add(item.Name);
                             listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
                         }
-                        if (item.Layer == 1)
+                        else
                         {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("LeftHand");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
+                            listitem.SubItems.Add("UNDRESS");
+                            listitem.SubItems.Add("UNDRESS");
                         }
-                        if (item.Layer == 2)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Shoes");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 3)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Pants");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 4)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Shirt");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 5)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Head");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 6)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Gloves");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 7)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Ring");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 8)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Neck");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 9)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Waist");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 10)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("InnerTorso");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 11)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Bracelet");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 12)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("MiddleTorso");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 13)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Earrings");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 14)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Arms");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 15)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("Cloak");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 16)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("OuterTorso");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 17)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("OuterLegs");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
-                        if (item.Layer == 18)
-                        {
-                            ListViewItem listitem = new ListViewItem();
-                            listitem.Checked = item.Selected;
-                            listitem.SubItems.Add("InnerLegs");
-                            listitem.SubItems.Add(item.Name);
-                            listitem.SubItems.Add("0x" + item.Serial.ToString("X8"));
-                            Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);
-                            continue;
-                        }
+                        Assistant.Engine.MainWindow.DressListView.Items.Add(listitem);  
                     }        
                 }
             }
@@ -555,7 +377,216 @@ namespace RazorEnhanced
                 RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
             }
 
+            layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Unused_x9);
+            if (layeritem != null)
+            {
+                RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 19, layeritem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
+            }
             RazorEnhanced.Dress.RefreshItems();
+        }
+        internal static void AddItemByTarger(Assistant.Item dressItem)
+        {
+            int layertoinsert = LayerLayerToInt(dressItem.Layer);
+            if (layertoinsert != -1)
+            {
+                RazorEnhanced.Dress.DressItem toinsert = new RazorEnhanced.Dress.DressItem(dressItem.Name, LayerLayerToInt(dressItem.Layer), dressItem.Serial, true);
+                RazorEnhanced.Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);
+                RazorEnhanced.Dress.RefreshItems();
+            }
+            else
+            {
+                Misc.SendMessage("This item not have valid layer: " + layertoinsert);
+            }
+        }
+        private static Assistant.Layer LayerNumberToLayer(int layer)
+        {  
+            switch (layer)
+            { 
+                case 0:
+                    return Assistant.Layer.RightHand;
+                case 1:
+                    return Assistant.Layer.LeftHand;
+                case 2:
+                    return Assistant.Layer.Shoes;
+                case 3:
+                    return Assistant.Layer.Pants;
+                case 4:
+                    return Assistant.Layer.Shirt;
+                case 5:
+                    return Assistant.Layer.Head;
+                case 6:
+                    return Assistant.Layer.Gloves;
+                case 7:
+                    return Assistant.Layer.Ring;
+                case 8:
+                    return Assistant.Layer.Neck;
+                case 9:
+                    return Assistant.Layer.Waist;
+                case 10:
+                    return Assistant.Layer.InnerTorso;
+                case 11:
+                    return Assistant.Layer.Bracelet;
+                case 12:
+                    return Assistant.Layer.MiddleTorso;
+                case 13:
+                    return Assistant.Layer.Earrings;
+                case 14:
+                    return Assistant.Layer.Arms;
+                case 15:
+                    return Assistant.Layer.Cloak;
+                case 16:
+                    return Assistant.Layer.OuterTorso;
+                case 17:
+                    return Assistant.Layer.OuterLegs;
+                case 18:
+                    return Assistant.Layer.InnerLegs;
+                case 19:
+                    return Assistant.Layer.Unused_x9;
+            }
+            return 0;
+        }
+        private static string LayerIntToLayerString(int layer)
+        {
+            switch (layer)
+            {
+                case 0:
+                    return "RightHand";
+                case 1:
+                    return "LeftHand";
+                case 2:
+                    return "Shoes";
+                case 3:
+                    return "Pants";
+                case 4:
+                    return "Shirt";
+                case 5:
+                    return "Head";
+                case 6:
+                    return "Gloves";
+                case 7:
+                    return "Ring";
+                case 8:
+                    return "Neck";
+                case 9:
+                    return "Waist";
+                case 10:
+                    return "InnerTorso";
+                case 11:
+                    return "Bracelet";
+                case 12:
+                    return "MiddleTorso";
+                case 13:
+                    return "Earrings";
+                case 14:
+                    return "Arms";
+                case 15:
+                    return "Cloak";
+                case 16:
+                    return "OuterTorso";
+                case 17:
+                    return "OuterLegs";
+                case 18:
+                    return "InnerLegs";
+                case 19:
+                    return "Unused_x9";
+            }
+            return null;
+        }
+        private static int LayerLayerToInt(Assistant.Layer layer)
+        {
+            switch (layer)
+            {
+                case Assistant.Layer.RightHand:
+                    return 0;
+                case Assistant.Layer.LeftHand:
+                    return 1;
+                case Assistant.Layer.Shoes:
+                    return 2;
+                case Assistant.Layer.Pants:
+                    return 3;
+                case Assistant.Layer.Shirt:
+                    return 4;
+                case Assistant.Layer.Head:
+                    return 5;
+                case Assistant.Layer.Gloves:
+                    return 6;
+                case Assistant.Layer.Ring:
+                    return 7;
+                case Assistant.Layer.Neck:
+                    return 8;
+                case Assistant.Layer.Waist:
+                    return 9;
+                case Assistant.Layer.InnerTorso:
+                    return 10;
+                case Assistant.Layer.Bracelet:
+                    return 11;
+                case Assistant.Layer.MiddleTorso:
+                    return 12;
+                case Assistant.Layer.Earrings:
+                    return 13;
+                case Assistant.Layer.Arms:
+                    return 14;
+                case Assistant.Layer.Cloak:
+                    return 15;
+                case Assistant.Layer.OuterTorso:
+                    return 16;
+                case Assistant.Layer.OuterLegs:
+                    return 17;
+                case Assistant.Layer.InnerLegs:
+                    return 18;
+                case Assistant.Layer.Unused_x9:
+                    return 19;
+                default:
+                    return -1;
+            }
+        }
+        internal static int LayerStringToInt(string layer)
+        {
+            switch (layer)
+            {
+                case "RightHand":
+                    return 0;
+                case "LeftHand":
+                    return 1;
+                case "Shoes":
+                    return 2;
+                case "Pants":
+                    return 3;
+                case "Shirt":
+                    return 4;
+                case "Head":
+                    return 5;
+                case "Gloves":
+                    return 6;
+                case "Ring":
+                    return 7;
+                case "Neck":
+                    return 8;
+                case "Waist":
+                    return 9;
+                case "InnerTorso":
+                    return 10;
+                case "Bracelet":
+                    return 11;
+                case "MiddleTorso":
+                    return 12;
+                case "Earrings":
+                    return 13;
+                case "Arms":
+                    return 14;
+                case "Cloak":
+                    return 15;
+                case "OuterTorso":
+                    return 16;
+                case "OuterLegs":
+                    return 17;
+                case "InnerLegs":
+                    return 18;
+                case "Unused_x9":
+                    return 19;
+            }
+            return 1;
         }
     }
 }

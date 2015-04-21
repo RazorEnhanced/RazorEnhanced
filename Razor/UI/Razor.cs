@@ -529,6 +529,7 @@ namespace Assistant
 		{
             this.components = new System.ComponentModel.Container();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
@@ -964,24 +965,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -5004,6 +5005,7 @@ namespace Assistant
             this.dressImportListB.TabIndex = 59;
             this.dressImportListB.Text = "Import";
             this.dressImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressImportListB.Click += new System.EventHandler(this.dressImportListB_Click);
             // 
             // dressListSelect
             // 
@@ -5017,13 +5019,14 @@ namespace Assistant
             // 
             // dressExportListB
             // 
-            this.dressExportListB.ColorTable = office2010BlueTheme1;
+            this.dressExportListB.ColorTable = office2010BlueTheme2;
             this.dressExportListB.Location = new System.Drawing.Point(558, 14);
             this.dressExportListB.Name = "dressExportListB";
             this.dressExportListB.Size = new System.Drawing.Size(90, 20);
             this.dressExportListB.TabIndex = 58;
             this.dressExportListB.Text = "Export";
             this.dressExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressExportListB.Click += new System.EventHandler(this.dressExportListB_Click);
             // 
             // label28
             // 
@@ -5039,7 +5042,6 @@ namespace Assistant
             this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
             this.m_NotifyIcon.Text = "Razor Enhanced";
             this.m_NotifyIcon.DoubleClick += new System.EventHandler(this.NotifyIcon_DoubleClick);
-            this.m_NotifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.m_NotifyIcon_MouseDoubleClick);
             // 
             // openFileDialogscript
             // 
@@ -9937,7 +9939,10 @@ namespace Assistant
 
         private void dressReadB_Click(object sender, EventArgs e)
         {
-            RazorEnhanced.Dress.ReadPlayerDress();
+            if (dressListSelect.Text != "")
+                RazorEnhanced.Dress.ReadPlayerDress();
+            else
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
         }
 
         private void dressSetBagB_Click(object sender, EventArgs e)
@@ -10006,19 +10011,46 @@ namespace Assistant
 
         private void dressAddTargetB_Click(object sender, EventArgs e)
         {
+            if (dressListSelect.Text != "")
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemTarget_Callback));
+            else
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
+        }
 
+        private void DressItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item dressItem = Assistant.World.FindItem(serial);
+            if (dressItem != null && dressItem.Serial.IsItem)
+                RazorEnhanced.Dress.AddItemByTarger(dressItem);
+            else
+                RazorEnhanced.Misc.SendMessage("Invalid target");
+        }
+
+    	private void dressAddManualB_Click(object sender, EventArgs e)
+		{
+            if (dressListSelect.Text != "")
+            {
+                EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer();
+                ManualAddLayer.TopMost = true;
+                ManualAddLayer.Show();
+            }
+            else
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
+		}
+
+        private void dressImportListB_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.ImportExport.ImportDress();
+        }
+
+        private void dressExportListB_Click(object sender, EventArgs e)
+        {
+            if (dressListSelect.Text != "")
+                RazorEnhanced.ImportExport.ExportDress(dressListSelect.Text);
+            else
+                RazorEnhanced.Dress.AddLog("Item list not selected!");
         }
 
         // --------------- DRESS END ---------
-		private void dressAddManualB_Click(object sender, EventArgs e)
-		{
-		}
-
-		private void m_NotifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-
-		}
-
-
 	}
 }

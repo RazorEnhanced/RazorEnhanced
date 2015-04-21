@@ -640,5 +640,129 @@ namespace RazorEnhanced
         }
         ////////////// BUY AGENT END //////////////
 
+        ////////////// DRESS START //////////////
+        internal static void ImportDress()
+        {
+            DataSet m_Dataset = new DataSet();
+            DataTable m_DatasetTable = new DataTable();
+            OpenFileDialog od = new OpenFileDialog();
+            od.Filter = "Enhanced Razor Export|*.raz";
+            od.Title = "Import Dress List";
+            od.RestoreDirectory = true;
+
+            if (od.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(od.FileName))
+                {
+                    try
+                    {
+                        m_Dataset.RemotingFormat = SerializationFormat.Binary;
+                        m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+                        Stream stream = File.Open(od.FileName, FileMode.Open);
+                        GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
+                        BinaryFormatter bin = new BinaryFormatter();
+                        m_Dataset = bin.Deserialize(decompress) as DataSet;
+                        decompress.Close();
+                        decompress.Dispose();
+                        stream.Close();
+                        stream.Dispose();
+                    }
+                    catch
+                    {
+                        Dress.AddLog("File is corrupted!");
+                    }
+                }
+                else
+                {
+                    Dress.AddLog("Unable to access file!");
+                }
+                if (m_Dataset.Tables.Contains("DESS_ITEMS"))
+                {
+                    m_DatasetTable = m_Dataset.Tables["DESS_ITEMS"];
+                    if (m_DatasetTable.Rows.Count > 0)
+                    {
+                        if (RazorEnhanced.Settings.Dress.ListExists(m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString()))
+                            Dress.AddLog("List: " + m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString() + " already exist");
+                        else
+                        {
+                            Dress.AddList(m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString());
+                            foreach (DataRow row in m_Dataset.Tables["DESS_ITEMS"].Rows)
+                            {
+                                RazorEnhanced.Settings.Dress.ItemInsert((string)row["List"], (RazorEnhanced.Dress.DressItem)row["Item"]);
+                            }
+                            RazorEnhanced.Dress.RefreshItems();
+                            Dress.AddLog("List: " + m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString() + " imported!");
+                        }
+                    }
+                    else
+                    {
+                        Dress.AddLog("This list is empty!");
+                    }
+                }
+                else
+                {
+                    Dress.AddLog("This file not contain Dress data!");
+                }
+            }
+            else
+            {
+                Dress.AddLog("Import list cancelled.");
+            }
+        }
+        internal static void ExportDress(string listname)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.Filter = "Enhanced Razor Export|*.raz";
+            sd.Title = "Export Dress List";
+            sd.FileName = "DR." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                DataSet m_Dataset = new DataSet();
+                DataTable dress_items = new DataTable("DRESS_ITEMS");
+                dress_items.Columns.Add("List", typeof(string));
+                dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItem));
+                m_Dataset.Tables.Add(dress_items);
+                m_Dataset.AcceptChanges();
+
+                List<Dress.DressItem> items;
+                RazorEnhanced.Settings.Dress.ItemsRead(listname, out items);
+
+                foreach (RazorEnhanced.Dress.DressItem item in items)
+                {
+                    DataRow row = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
+                    row["List"] = listname;
+                    row["Item"] = item;
+                    m_Dataset.Tables["DRESS_ITEMS"].Rows.Add(row);
+                }
+
+                try
+                {
+                    m_Dataset.RemotingFormat = SerializationFormat.Binary;
+                    m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+                    Stream stream = File.Create(sd.FileName);
+                    GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(compress, m_Dataset);
+                    compress.Close();
+                    compress.Dispose();
+                    stream.Close();
+                    stream.Dispose();
+                    Dress.AddLog("List: " + listname + " exported");
+                }
+                catch (Exception ex)
+                {
+                    Dress.AddLog("Export list fail");
+                    Dress.AddLog(ex.ToString());
+                }
+            }
+            else
+            {
+                Dress.AddLog("Export list cancelled.");
+            }
+
+        }
+        ////////////// BUY AGENT END //////////////
     }
 }

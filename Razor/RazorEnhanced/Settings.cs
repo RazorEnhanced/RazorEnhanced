@@ -1381,7 +1381,31 @@ namespace RazorEnhanced
                         }
                     }
                 }
+                Save();
+            }
 
+            internal static void ItemInsertByLayer(string list, RazorEnhanced.Dress.DressItem item)
+            {
+                bool found = false;
+                foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
+                {
+                    if ((string)row["List"] == list)
+                    {
+                        RazorEnhanced.Dress.DressItem itemtoscan;
+                        itemtoscan = (RazorEnhanced.Dress.DressItem)row["Item"];
+                        if (itemtoscan.Layer == item.Layer)
+                        {
+                            RazorEnhanced.Dress.AddLog("Item repaced");
+                            row["Item"] = item;
+                            found = true;
+                        }
+                    }
+                }
+                if (!found)
+                {
+                    RazorEnhanced.Dress.AddLog("New item added");
+                    ItemInsert(list, item);
+                }
                 Save();
             }
         }
