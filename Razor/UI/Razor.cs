@@ -383,8 +383,8 @@ namespace Assistant
 		private RazorCheckBox dressConflictCheckB;
 		private Label dressBagLabel;
 		private RazorButton dressSetBagB;
-		private RazorButton razorButton10;
-		private RazorButton razorButton11;
+		private RazorButton undressExecuteButton;
+		private RazorButton dressExecuteButton;
 		private GroupBox groupBox22;
 		private RazorButton dressAddTargetB;
 		private RazorButton dressAddManualB;
@@ -885,8 +885,8 @@ namespace Assistant
             this.dressConflictCheckB = new RazorEnhanced.UI.RazorCheckBox();
             this.dressBagLabel = new System.Windows.Forms.Label();
             this.dressSetBagB = new RazorEnhanced.UI.RazorButton();
-            this.razorButton10 = new RazorEnhanced.UI.RazorButton();
-            this.razorButton11 = new RazorEnhanced.UI.RazorButton();
+            this.undressExecuteButton = new RazorEnhanced.UI.RazorButton();
+            this.dressExecuteButton = new RazorEnhanced.UI.RazorButton();
             this.groupBox22 = new System.Windows.Forms.GroupBox();
             this.dressAddTargetB = new RazorEnhanced.UI.RazorButton();
             this.dressAddManualB = new RazorEnhanced.UI.RazorButton();
@@ -4765,8 +4765,8 @@ namespace Assistant
             this.Dress.Controls.Add(this.dressConflictCheckB);
             this.Dress.Controls.Add(this.dressBagLabel);
             this.Dress.Controls.Add(this.dressSetBagB);
-            this.Dress.Controls.Add(this.razorButton10);
-            this.Dress.Controls.Add(this.razorButton11);
+            this.Dress.Controls.Add(this.undressExecuteButton);
+            this.Dress.Controls.Add(this.dressExecuteButton);
             this.Dress.Controls.Add(this.groupBox22);
             this.Dress.Controls.Add(this.label29);
             this.Dress.Controls.Add(this.dressDragDelay);
@@ -4814,25 +4814,26 @@ namespace Assistant
             this.dressSetBagB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.dressSetBagB.Click += new System.EventHandler(this.dressSetBagB_Click);
             // 
-            // razorButton10
+            // undressExecuteButton
             // 
-            this.razorButton10.ColorTable = office2010BlueTheme1;
-            this.razorButton10.Location = new System.Drawing.Point(340, 58);
-            this.razorButton10.Name = "razorButton10";
-            this.razorButton10.Size = new System.Drawing.Size(61, 20);
-            this.razorButton10.TabIndex = 87;
-            this.razorButton10.Text = "Undres";
-            this.razorButton10.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.undressExecuteButton.ColorTable = office2010BlueTheme2;
+            this.undressExecuteButton.Location = new System.Drawing.Point(340, 58);
+            this.undressExecuteButton.Name = "undressExecuteButton";
+            this.undressExecuteButton.Size = new System.Drawing.Size(61, 20);
+            this.undressExecuteButton.TabIndex = 87;
+            this.undressExecuteButton.Text = "Undres";
+            this.undressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.undressExecuteButton.Click += new System.EventHandler(this.razorButton10_Click);
             // 
-            // razorButton11
+            // dressExecuteButton
             // 
-            this.razorButton11.ColorTable = office2010BlueTheme1;
-            this.razorButton11.Location = new System.Drawing.Point(274, 58);
-            this.razorButton11.Name = "razorButton11";
-            this.razorButton11.Size = new System.Drawing.Size(61, 20);
-            this.razorButton11.TabIndex = 86;
-            this.razorButton11.Text = "Dress";
-            this.razorButton11.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressExecuteButton.ColorTable = office2010BlueTheme1;
+            this.dressExecuteButton.Location = new System.Drawing.Point(274, 58);
+            this.dressExecuteButton.Name = "dressExecuteButton";
+            this.dressExecuteButton.Size = new System.Drawing.Size(61, 20);
+            this.dressExecuteButton.TabIndex = 86;
+            this.dressExecuteButton.Text = "Dress";
+            this.dressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
             // groupBox22
             // 
@@ -5019,7 +5020,7 @@ namespace Assistant
             // 
             // dressExportListB
             // 
-            this.dressExportListB.ColorTable = office2010BlueTheme2;
+            this.dressExportListB.ColorTable = office2010BlueTheme1;
             this.dressExportListB.Location = new System.Drawing.Point(558, 14);
             this.dressExportListB.Name = "dressExportListB";
             this.dressExportListB.Size = new System.Drawing.Size(90, 20);
@@ -10073,6 +10074,85 @@ namespace Assistant
                 RazorEnhanced.ImportExport.ExportDress(dressListSelect.Text);
             else
                 RazorEnhanced.Dress.AddLog("Item list not selected!");
+        }
+
+        private void razorButton10_Click(object sender, EventArgs e)
+        {
+            int delay = 100;
+
+			RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+			int undressbagserial = RazorEnhanced.Dress.DressBag;
+
+			bool StartCheck = true;
+
+			undressbag = RazorEnhanced.Items.FindBySerial(undressbagserial);
+			if (undressbag != null)
+			{
+				RazorEnhanced.Dress.AddLog("Undress Container OK: 0x" + undressbag.Serial.ToString("X8"));
+			}
+			else
+			{
+				RazorEnhanced.Dress.AddLog("Undress Container Fail, switch packpack: 0x" + Assistant.World.Player.Backpack.Serial.Value.ToString("X8"));
+				RazorEnhanced.Dress.DressBag = Assistant.World.Player.Backpack.Serial;
+			}
+            
+			if (StartCheck)
+			{
+				RazorEnhanced.Dress.UndressStart();
+
+				RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
+				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
+
+                dressConflictCheckB.Enabled = false;
+                dressExecuteButton.Enabled = false;
+                undressExecuteButton.Enabled = false;
+                dressAddListB.Enabled = false;
+                dressRemoveListB.Enabled = false;
+                dressExportListB.Enabled = false;
+                dressImportListB.Enabled = false;
+				dressDragDelay.Enabled = false;
+			}
+			else
+			{
+				RazorEnhanced.Organizer.AddLog("Fail to start Organizer Engine...");
+                dressConflictCheckB.Enabled = true;
+                dressExecuteButton.Enabled = true;
+                undressExecuteButton.Enabled = true;
+                dressAddListB.Enabled = true;
+                dressRemoveListB.Enabled = true;
+                dressExportListB.Enabled = true;
+                dressImportListB.Enabled = true;
+                dressDragDelay.Enabled = true;
+			}
+		}
+
+        delegate void UndressFinishWorkCallback();
+
+        internal void UndressFinishWork()
+        {
+            if (dressConflictCheckB.InvokeRequired ||
+                dressExecuteButton.InvokeRequired ||
+                undressExecuteButton.InvokeRequired ||
+                dressAddListB.InvokeRequired ||
+                dressRemoveListB.InvokeRequired ||
+                organizerExportListB.InvokeRequired ||
+                organizerImportListB.InvokeRequired ||
+                organizerDragDelay.InvokeRequired)
+            {
+                UndressFinishWorkCallback d = new UndressFinishWorkCallback(UndressFinishWork);
+                this.Invoke(d, null);
+            }
+            else
+            {
+                dressConflictCheckB.Enabled = true;
+                dressExecuteButton.Enabled = true;
+                undressExecuteButton.Enabled = true;
+                dressAddListB.Enabled = true;
+                dressRemoveListB.Enabled = true;
+                dressExportListB.Enabled = true;
+                dressImportListB.Enabled = true;
+                dressDragDelay.Enabled = true;
+            }
         }
 
         // --------------- DRESS END ---------

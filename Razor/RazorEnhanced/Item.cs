@@ -561,6 +561,41 @@ namespace RazorEnhanced
 			}
 		}
 
+        public static void Move(int itemserial, int bagserial, int amount)
+        {
+            Assistant.Item bag = Assistant.World.FindItem(bagserial);
+            Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (item == null)
+            {
+                Misc.SendMessage("Script Error: Move: Source Item  not found");
+                return;
+            }
+            if (bag == null)
+            {
+                Misc.SendMessage("Script Error: Move: Destination Item not found");
+                return;
+            }
+            if (!bag.IsContainer)
+            {
+                Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+                return;
+            }
+            if (amount == 0)
+            {
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+            }
+            else
+            {
+                if (item.Amount < amount)
+                {
+                    amount = item.Amount;
+                }
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+            }
+        }
+
 		public static void DropItemGroundSelf(Item item, int amount)
 		{
 			if (item == null)

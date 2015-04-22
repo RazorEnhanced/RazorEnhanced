@@ -585,5 +585,40 @@ namespace RazorEnhanced
             }
             return 1;
         }
+        internal static int UndressEngine(int mseconds, int undressbagserial)
+        {
+            Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
+            if (itemtomove != null && itemtomove.Movable)
+            {
+                RazorEnhanced.Dress.AddLog("Item 0x" + itemtomove.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.RightHand)) + " undressed!");
+                RazorEnhanced.Items.Move(itemtomove.Serial, undressbagserial, 0);
+            }
+
+            RazorEnhanced.Dress.AddLog("Finish!");
+            RazorEnhanced.Misc.SendMessage("Enhanced UnDress: Finish!");
+            Assistant.Engine.MainWindow.UndressFinishWork();
+            return 0;
+        }
+
+        internal static void UndressEngine()
+        {
+            int exit = UndressEngine(Dress.DressDelay, Dress.DressBag);
+        }
+
+        private static Thread m_UndressThread;
+
+        internal static void UndressStart()
+        {
+            if (m_UndressThread == null ||
+                        (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Running &&
+                        m_UndressThread.ThreadState != ThreadState.Unstarted &&
+                        m_UndressThread.ThreadState != ThreadState.WaitSleepJoin)
+                    )
+            {
+                m_UndressThread = new Thread(Dress.UndressEngine);
+                m_UndressThread.Start();
+            }
+
+        }
     }
 }
