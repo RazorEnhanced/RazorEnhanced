@@ -227,18 +227,18 @@ namespace Assistant
 		}
 
 		private static MinHeap m_Heap = new MinHeap();
-		private static System.Windows.Forms.Timer m_Ctrl;
+		private static System.Timers.Timer m_SystemTimer;
 
-		internal static System.Windows.Forms.Timer Control
+		internal static System.Timers.Timer SystemTimer
 		{
-			get { return m_Ctrl; }
+			get { return m_SystemTimer; }
 			set
 			{
-				if (m_Ctrl != value)
+				if (m_SystemTimer != value)
 				{
-					if (m_Ctrl != null)
-						m_Ctrl.Stop();
-					m_Ctrl = value;
+					if (m_SystemTimer != null)
+						m_SystemTimer.Stop();
+					m_SystemTimer = value;
 					ChangedNextTick();
 				}
 			}
@@ -251,10 +251,10 @@ namespace Assistant
 
 		private static void ChangedNextTick(bool allowImmediate)
 		{
-			if (m_Ctrl == null)
+			if (m_SystemTimer == null)
 				return;
 
-			m_Ctrl.Stop();
+			m_SystemTimer.Stop();
 
 			if (!m_Heap.IsEmpty)
 			{
@@ -268,8 +268,8 @@ namespace Assistant
 					if (interval <= 0)
 						interval = 1;
 
-					m_Ctrl.Interval = interval;
-					m_Ctrl.Start();
+					m_SystemTimer.Interval = interval;
+					m_SystemTimer.Start();
 				}
 			}
 		}
