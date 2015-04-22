@@ -529,7 +529,6 @@ namespace Assistant
 		{
             this.components = new System.ComponentModel.Container();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
-            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
@@ -965,24 +964,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme2;
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme1;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -4816,7 +4815,7 @@ namespace Assistant
             // 
             // undressExecuteButton
             // 
-            this.undressExecuteButton.ColorTable = office2010BlueTheme2;
+            this.undressExecuteButton.ColorTable = office2010BlueTheme1;
             this.undressExecuteButton.Location = new System.Drawing.Point(340, 58);
             this.undressExecuteButton.Name = "undressExecuteButton";
             this.undressExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -4834,6 +4833,7 @@ namespace Assistant
             this.dressExecuteButton.TabIndex = 86;
             this.dressExecuteButton.Text = "Dress";
             this.dressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.dressExecuteButton.Click += new System.EventHandler(this.dressExecuteButton_Click);
             // 
             // groupBox22
             // 
@@ -10078,9 +10078,7 @@ namespace Assistant
 
         private void razorButton10_Click(object sender, EventArgs e)
         {
-            int delay = 100;
-
-			RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+   			RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
 			int undressbagserial = RazorEnhanced.Dress.DressBag;
 
 			bool StartCheck = true;
@@ -10114,7 +10112,7 @@ namespace Assistant
 			}
 			else
 			{
-				RazorEnhanced.Organizer.AddLog("Fail to start Organizer Engine...");
+				RazorEnhanced.Organizer.AddLog("Fail to start Undress Engine...");
                 dressConflictCheckB.Enabled = true;
                 dressExecuteButton.Enabled = true;
                 undressExecuteButton.Enabled = true;
@@ -10144,6 +10142,54 @@ namespace Assistant
             }
             else
             {
+                dressConflictCheckB.Enabled = true;
+                dressExecuteButton.Enabled = true;
+                undressExecuteButton.Enabled = true;
+                dressAddListB.Enabled = true;
+                dressRemoveListB.Enabled = true;
+                dressExportListB.Enabled = true;
+                dressImportListB.Enabled = true;
+                dressDragDelay.Enabled = true;
+            }
+        }
+
+        private void dressExecuteButton_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+            int undressbagserial = RazorEnhanced.Dress.DressBag;
+
+            bool StartCheck = true;
+
+            undressbag = RazorEnhanced.Items.FindBySerial(undressbagserial);
+            if (undressbag != null)
+            {
+                RazorEnhanced.Dress.AddLog("Undress Container OK: 0x" + undressbag.Serial.ToString("X8"));
+            }
+            else
+            {
+                RazorEnhanced.Dress.AddLog("Undress Container Fail, switch packpack: 0x" + Assistant.World.Player.Backpack.Serial.Value.ToString("X8"));
+                RazorEnhanced.Dress.DressBag = Assistant.World.Player.Backpack.Serial;
+            }
+
+            if (StartCheck)
+            {
+                RazorEnhanced.Dress.DressStart();
+
+                RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
+                RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
+
+                dressConflictCheckB.Enabled = false;
+                dressExecuteButton.Enabled = false;
+                undressExecuteButton.Enabled = false;
+                dressAddListB.Enabled = false;
+                dressRemoveListB.Enabled = false;
+                dressExportListB.Enabled = false;
+                dressImportListB.Enabled = false;
+                dressDragDelay.Enabled = false;
+            }
+            else
+            {
+                RazorEnhanced.Organizer.AddLog("Fail to start Dress Engine...");
                 dressConflictCheckB.Enabled = true;
                 dressExecuteButton.Enabled = true;
                 undressExecuteButton.Enabled = true;
