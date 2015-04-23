@@ -127,7 +127,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Assistant.Engine.MainWindow.OrganizerSourceLabel.Text = "0x" + value.ToString("X8");
+                Assistant.Engine.MainWindow.OrganizerSourceLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerSourceLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
@@ -163,7 +163,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Assistant.Engine.MainWindow.OrganizerDestinationLabel.Text = "0x" + value.ToString("X8");
+                Assistant.Engine.MainWindow.OrganizerDestinationLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerDestinationLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 

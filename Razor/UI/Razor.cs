@@ -8230,7 +8230,6 @@ namespace Assistant
                     if (autoLootCheckBox.Checked)
                     {
                         int delay = -1;
-                        bool StartCheck = true;
                         autolootListSelect.Enabled = false;
                         autolootButtonAddList.Enabled = false;
                         autoLootButtonListExport.Enabled = false;
@@ -8243,30 +8242,21 @@ namespace Assistant
                         }
                         catch
                         {
-                            StartCheck = false;
+                            RazorEnhanced.AutoLoot.AutoMode = false;
                             RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
+                            return;
                         }
 
                         if (delay < 0)
                         {
-                            StartCheck = false;
+                            RazorEnhanced.AutoLoot.AutoMode = false;
                             RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
+                            return;
                         }
 
-                        if (StartCheck)
-                        {
-                            // Stop autoloot
-                            RazorEnhanced.AutoLoot.AutoMode = true;
-                            RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
-                            RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
-                        }
-                        else
-                        {
-                            // Stop autoloot
-                            RazorEnhanced.AutoLoot.AddLog("Fail to start Autoloot Engine...");
-                            RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine fail to Start...");
-                            autoLootCheckBox.Checked = false;
-                        }
+                        RazorEnhanced.AutoLoot.AutoMode = true;
+                        RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
+                        RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
                     }
                     else
                     {
@@ -8475,7 +8465,7 @@ namespace Assistant
 			if (autoLootItem != null && autoLootItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
-				RazorEnhanced.Scavenger.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue);
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
 
 			}
 			else
@@ -8525,8 +8515,8 @@ namespace Assistant
 				Scavenger.ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, serial, true);
-			RazorEnhanced.Scavenger.RefreshLists();
+			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, serial, true); });
+            this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.RefreshLists(); });
 		}
 
 		private void scavengerAddList_Click(object sender, EventArgs e)
@@ -8569,7 +8559,6 @@ namespace Assistant
                     if (scavengerCheckBox.Checked)
                     {
                         int delay = -1;
-                        bool StartCheck = true;
                         ScavengerListSelect.Enabled = false;
                         scavengerButtonAddList.Enabled = false;
                         scavengerButtonRemoveList.Enabled = false;
@@ -8582,28 +8571,22 @@ namespace Assistant
                         }
                         catch
                         {
-                            StartCheck = false;
                             RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
+                            RazorEnhanced.Scavenger.AutoMode = false;
+                            return;
                         }
                         if (delay < 0)
                         {
-                            StartCheck = false;
                             RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
+                            RazorEnhanced.Scavenger.AutoMode = false;
+                            return;
                         }
 
-                        if (StartCheck)
-                        {
-                            RazorEnhanced.Scavenger.AutoMode = true;
-                            RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
-                            RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
-                        }
-                        else
-                        {
-                            RazorEnhanced.Scavenger.AutoMode = false;
-                            RazorEnhanced.Scavenger.AddLog("Fail to start Scavenger Engine...");
-                            RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
-                            scavengerCheckBox.Checked = false;
-                        }
+                        RazorEnhanced.Scavenger.AutoMode = false;
+                        RazorEnhanced.Scavenger.AddLog("Fail to start Scavenger Engine...");
+                        RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
+                        scavengerCheckBox.Checked = false;
+
                     }
                     else
                     {
@@ -8779,8 +8762,8 @@ namespace Assistant
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, serial, RazorEnhanced.Organizer.OrganizerDestination, true);
-			RazorEnhanced.Organizer.RefreshLists();
+			 this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, serial, RazorEnhanced.Organizer.OrganizerDestination, true); });
+             this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.RefreshLists(); });
 		}
 
 		private void organizerSetDestination_Click(object sender, EventArgs e)
@@ -8817,8 +8800,8 @@ namespace Assistant
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, serial, true);
-			RazorEnhanced.Organizer.RefreshLists();
+			 this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, serial, true); });
+             this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.RefreshLists(); });
 		}
 
 		private void organizerListSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -8852,7 +8835,7 @@ namespace Assistant
 			if (organizerItem != null && organizerItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
-				RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, -1, -1);
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, -1, -1); });
 			}
 			else
 			{
@@ -8912,17 +8895,33 @@ namespace Assistant
 			    }
 
 
-				RazorEnhanced.Organizer.Start();
-				RazorEnhanced.Organizer.AddLog("Organizer Engine Start...");
-				RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
-				organizerStopButton.Enabled = true;
-				organizerExecuteButton.Enabled = false;
-				organizerListSelect.Enabled = false;
-				organizerAddListB.Enabled = false;
-				organizerRemoveListB.Enabled = false;
-				organizerExportListB.Enabled = false;
-				organizerImportListB.Enabled = false;
-				organizerDragDelay.Enabled = false;
+                int delay = -1;
+                try
+                {
+                    delay = Convert.ToInt32(organizerDragDelay.Text);
+                }
+                catch
+                {
+                    RazorEnhanced.Organizer.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
+                if (delay < 0)
+                {
+                    RazorEnhanced.Organizer.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
+
+                RazorEnhanced.Organizer.Start();
+                RazorEnhanced.Organizer.AddLog("Organizer Engine Start...");
+                RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
+                organizerStopButton.Enabled = true;
+                organizerExecuteButton.Enabled = false;
+                organizerListSelect.Enabled = false;
+                organizerAddListB.Enabled = false;
+                organizerRemoveListB.Enabled = false;
+                organizerExportListB.Enabled = false;
+                organizerImportListB.Enabled = false;
+                organizerDragDelay.Enabled = false;
 			}
 			else
 			{
@@ -9047,7 +9046,7 @@ namespace Assistant
 			if (sellItem != null && sellItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString());
-				RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue);
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue); });
 			}
 			else
 			{
@@ -9173,7 +9172,7 @@ namespace Assistant
 			if (sellListSelect.Text != "")
 			{
 				RazorEnhanced.SellAgent.SellBag = 0;
-				RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, 0, true);
+                RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, 0, true);
 			}
 			else
 				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
@@ -9208,8 +9207,8 @@ namespace Assistant
 				RazorEnhanced.SellAgent.SellBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true);
-			RazorEnhanced.SellAgent.RefreshLists();
+			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, serial, true); });
+            this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.RefreshLists(); });
 		}
 
 		private void sellagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -9291,7 +9290,7 @@ namespace Assistant
 			if (buyItem != null && buyItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Buy Agent item added: " + buyItem.ToString());
-				RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue);
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue); });
 			}
 			else
 			{
@@ -9497,8 +9496,8 @@ namespace Assistant
 				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-			RazorEnhanced.Dress.RefreshLists();
+			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true); });
+            this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Dress.RefreshLists(); });
 		}
 		private void dressRemoveB_Click(object sender, EventArgs e)
 		{
@@ -9546,10 +9545,10 @@ namespace Assistant
 		private void DressItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item dressItem = Assistant.World.FindItem(serial);
-			if (dressItem != null && dressItem.Serial.IsItem)
-				RazorEnhanced.Dress.AddItemByTarger(dressItem);
-			else
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+            if (dressItem != null && dressItem.Serial.IsItem)
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Dress.AddItemByTarger(dressItem); });
+            else
+                RazorEnhanced.Misc.SendMessage("Invalid target");
 		}
 
 		private void dressAddManualB_Click(object sender, EventArgs e)
@@ -9594,6 +9593,22 @@ namespace Assistant
 				    RazorEnhanced.Dress.AddLog("Undress Container Fail, switch packpack: 0x" + Assistant.World.Player.Backpack.Serial.Value.ToString("X8"));
 				    RazorEnhanced.Dress.DressBag = Assistant.World.Player.Backpack.Serial;
 			    }
+
+                int delay = -1;
+                try
+                {
+                    delay = Convert.ToInt32(dressDragDelay.Text);
+                }
+                catch
+                {
+                    RazorEnhanced.Dress.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
+                if (delay < 0)
+                {
+                    RazorEnhanced.Dress.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
 
 				RazorEnhanced.Dress.UndressStart();
 
@@ -9674,6 +9689,21 @@ namespace Assistant
 				    RazorEnhanced.Dress.DressBag = Assistant.World.Player.Backpack.Serial;
 			    }
 
+                int delay = -1;
+                try
+                {
+                    delay = Convert.ToInt32(dressDragDelay.Text);
+                }
+                catch
+                {
+                    RazorEnhanced.Dress.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
+                if (delay < 0)
+                {
+                    RazorEnhanced.Dress.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
 
 				RazorEnhanced.Dress.DressStart();
 

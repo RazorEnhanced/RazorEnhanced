@@ -115,7 +115,7 @@ namespace RazorEnhanced
             }
             set
             {
-                Assistant.Engine.MainWindow.DressBagLabel.Text = "0x" + value.ToString("X8");
+                Assistant.Engine.MainWindow.DressBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.DressBagLabel.Text = "0x" + value.ToString("X8")));
             }
         }
         internal static bool DressConflict

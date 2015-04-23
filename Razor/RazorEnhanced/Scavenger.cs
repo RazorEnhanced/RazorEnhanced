@@ -147,7 +147,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Assistant.Engine.MainWindow.ScavengerContainerLabel.Text = "0x" + value.ToString("X8");
+                Assistant.Engine.MainWindow.ScavengerContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerContainerLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 

@@ -147,7 +147,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Assistant.Engine.MainWindow.AutoLootContainerLabel.Text = "0x" + value.ToString("X8");
+                Assistant.Engine.MainWindow.AutoLootContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootContainerLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 

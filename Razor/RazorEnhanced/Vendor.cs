@@ -92,7 +92,7 @@ namespace RazorEnhanced
 							serialBag = (int)World.Player.Backpack.Serial.Value;
 					}
 				}
-				catch (Exception ex)
+				catch
 				{
 				}
 
@@ -101,7 +101,7 @@ namespace RazorEnhanced
 
 			set
 			{
-				Assistant.Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8");
+                Assistant.Engine.MainWindow.SellBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
