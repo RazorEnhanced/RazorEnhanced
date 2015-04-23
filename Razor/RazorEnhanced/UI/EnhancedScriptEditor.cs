@@ -439,9 +439,11 @@ namespace RazorEnhanced.UI
 			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
 			if (assistantItem != null && assistantItem.Serial.IsItem)
 			{
-				EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem);
-				inspector.TopMost = true;
-				inspector.Show();
+				this.BeginInvoke((MethodInvoker)delegate { 
+                    EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem);
+				    inspector.TopMost = true;
+				    inspector.Show();
+                });
 			}
 
 			else
@@ -449,9 +451,11 @@ namespace RazorEnhanced.UI
 				Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
 				if (assistantMobile != null && assistantMobile.Serial.IsMobile)
 				{
-					EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile);
-					inspector.TopMost = true;
-					inspector.Show();
+                    this.BeginInvoke((MethodInvoker)delegate {
+					    EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile);
+					    inspector.TopMost = true;
+					    inspector.Show();
+                    });
 				}
 			}
 		}
