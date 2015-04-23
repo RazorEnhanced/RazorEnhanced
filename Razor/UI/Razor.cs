@@ -5142,8 +5142,8 @@ namespace Assistant
 		{
 			if (msg.Msg == ClientCommunication.WM_UONETEVENT)
 				msg.Result = (IntPtr)(ClientCommunication.OnMessage(this, (uint)msg.WParam.ToInt32(), msg.LParam.ToInt32()) ? 1 : 0);
-			//else if (msg.Msg >= (int)ClientCommunication.UOAMessage.First && msg.Msg <= (int)ClientCommunication.UOAMessage.Last)
-			//	msg.Result = (IntPtr)ClientCommunication.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
+			else if (msg.Msg >= (int)ClientCommunication.UOAMessage.First && msg.Msg <= (int)ClientCommunication.UOAMessage.Last)
+				msg.Result = (IntPtr)ClientCommunication.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
 			else
 				base.WndProc(ref msg);
 		}
@@ -5154,27 +5154,11 @@ namespace Assistant
 			EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
 			m_CanClose = false;
 		}
-
-		[DllImport("dwmapi.dll", PreserveSig = false)]
-		public static extern void DwmEnableComposition(CompositionAction uCompositionAction);
-
-		[Flags]
-		public enum CompositionAction : uint
-		{
-			/// <summary>
-			/// To enable DWM composition
-			/// </summary>
-			DWM_EC_DISABLECOMPOSITION = 0,
-			/// <summary>
-			/// To disable composition.
-			/// </summary>
-			DWM_EC_ENABLECOMPOSITION = 1
-		}
+	
 
 		private void MainForm_Load(object sender, System.EventArgs e)
 		{
 			//ClientCommunication.SetCustomNotoHue( 0x2 );
-			//DwmEnableComposition(CompositionAction.DWM_EC_DISABLECOMPOSITION);
 			Timer.SystemTimer = new System.Timers.Timer(5);
 
 			new StatsTimer(this).Start();
