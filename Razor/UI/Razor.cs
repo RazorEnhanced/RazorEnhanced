@@ -2780,7 +2780,7 @@ namespace Assistant
             "wmf",
             "exif",
             "emf"});
-            this.imgFmt.Location = new System.Drawing.Point(90, 193);
+            this.imgFmt.Location = new System.Drawing.Point(94, 202);
             this.imgFmt.Name = "imgFmt";
             this.imgFmt.Size = new System.Drawing.Size(71, 22);
             this.imgFmt.TabIndex = 11;
@@ -2788,7 +2788,7 @@ namespace Assistant
             // 
             // label12
             // 
-            this.label12.Location = new System.Drawing.Point(4, 196);
+            this.label12.Location = new System.Drawing.Point(8, 205);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(80, 20);
             this.label12.TabIndex = 10;
@@ -2797,7 +2797,7 @@ namespace Assistant
             // capNow
             // 
             this.capNow.ColorTable = office2010BlueTheme1;
-            this.capNow.Location = new System.Drawing.Point(246, 13);
+            this.capNow.Location = new System.Drawing.Point(314, 14);
             this.capNow.Name = "capNow";
             this.capNow.Size = new System.Drawing.Size(285, 20);
             this.capNow.TabIndex = 8;
@@ -2822,7 +2822,7 @@ namespace Assistant
             // 
             // radioUO
             // 
-            this.radioUO.Location = new System.Drawing.Point(7, 217);
+            this.radioUO.Location = new System.Drawing.Point(11, 228);
             this.radioUO.Name = "radioUO";
             this.radioUO.Size = new System.Drawing.Size(87, 20);
             this.radioUO.TabIndex = 6;
@@ -2831,7 +2831,7 @@ namespace Assistant
             // 
             // radioFull
             // 
-            this.radioFull.Location = new System.Drawing.Point(98, 217);
+            this.radioFull.Location = new System.Drawing.Point(102, 228);
             this.radioFull.Name = "radioFull";
             this.radioFull.Size = new System.Drawing.Size(89, 20);
             this.radioFull.TabIndex = 5;
@@ -2840,7 +2840,7 @@ namespace Assistant
             // 
             // screenAutoCap
             // 
-            this.screenAutoCap.Location = new System.Drawing.Point(7, 269);
+            this.screenAutoCap.Location = new System.Drawing.Point(11, 284);
             this.screenAutoCap.Name = "screenAutoCap";
             this.screenAutoCap.Size = new System.Drawing.Size(180, 20);
             this.screenAutoCap.TabIndex = 4;
@@ -2874,7 +2874,7 @@ namespace Assistant
             this.screenPrev.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.screenPrev.Location = new System.Drawing.Point(246, 36);
             this.screenPrev.Name = "screenPrev";
-            this.screenPrev.Size = new System.Drawing.Size(285, 241);
+            this.screenPrev.Size = new System.Drawing.Size(412, 322);
             this.screenPrev.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.screenPrev.TabIndex = 0;
             this.screenPrev.TabStop = false;
@@ -2882,7 +2882,7 @@ namespace Assistant
             // 
             // dispTime
             // 
-            this.dispTime.Location = new System.Drawing.Point(7, 243);
+            this.dispTime.Location = new System.Drawing.Point(11, 256);
             this.dispTime.Name = "dispTime";
             this.dispTime.Size = new System.Drawing.Size(180, 20);
             this.dispTime.TabIndex = 9;
@@ -2903,7 +2903,7 @@ namespace Assistant
             this.statusTab.Name = "statusTab";
             this.statusTab.Size = new System.Drawing.Size(666, 366);
             this.statusTab.TabIndex = 9;
-            this.statusTab.Text = "Help & Status";
+            this.statusTab.Text = "Help  / Status";
             // 
             // panelLogo
             // 
