@@ -409,6 +409,7 @@ namespace Assistant
 		private OpenFileDialog openFileDialogscript;
 		private System.Timers.Timer m_SystemTimer;
         private RazorButton dressStopButton;
+        private System.Windows.Forms.Timer timerupdatestatus;
 
 		private bool m_CanClose = true;
 
@@ -910,6 +911,7 @@ namespace Assistant
             this.label28 = new System.Windows.Forms.Label();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
+            this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -5062,6 +5064,12 @@ namespace Assistant
             this.openFileDialogscript.Filter = "Script Files|*.py";
             this.openFileDialogscript.RestoreDirectory = true;
             // 
+            // timerupdatestatus
+            // 
+            this.timerupdatestatus.Enabled = true;
+            this.timerupdatestatus.Interval = 1000;
+            this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -5172,7 +5180,6 @@ namespace Assistant
 
 		private void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
 		{
-			//this.BeginInvoke((MethodInvoker)delegate { Assistant.Timer.Slice(); });
             Assistant.Timer.Slice();
 		}
 
@@ -5182,8 +5189,6 @@ namespace Assistant
 			m_SystemTimer = new System.Timers.Timer(5);
 			m_SystemTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimedEvent);
 			Timer.SystemTimer = m_SystemTimer;
-
-			new StatsTimer(this).Start();
 
 			this.Hide();
 			Language.LoadControlNames(this);
@@ -5526,21 +5531,6 @@ namespace Assistant
 		private uint m_OutPrev;
 		private uint m_InPrev;
 
-		private class StatsTimer : Timer
-		{
-			MainForm m_Form;
-			internal StatsTimer(MainForm form)
-				: base(TimeSpan.FromSeconds(0.5), TimeSpan.FromSeconds(0.5))
-			{
-				m_Form = form;
-			}
-
-			protected override void OnTick()
-			{
-				m_Form.UpdateRazorStatus();
-			}
-		}
-
 		private void UpdateRazorStatus()
 		{
 			if (!ClientCommunication.ClientRunning)
@@ -5586,8 +5576,8 @@ namespace Assistant
 				}
 			}
 
-			//if (tabs.SelectedTab != statusTab)
-			//	return;
+			if (tabs.SelectedTab != statusTab)
+				return;
 
 			int time = 0;
 			if (ClientCommunication.ConnectionStart != DateTime.MinValue)
@@ -8583,7 +8573,7 @@ namespace Assistant
 
 		private void razorButtonWiki_Click(object sender, EventArgs e)
 		{
-			System.Diagnostics.Process.Start("http://razorenhanced.wikidot.com/");
+            System.Diagnostics.Process.Start("http://razorenhanced.marcocarlotto.net/doku.php");
 		}
 
 		private void groupBox12_Enter(object sender, EventArgs e)
@@ -10239,6 +10229,11 @@ namespace Assistant
             dressExportListB.Enabled = true;
             dressImportListB.Enabled = true;
             dressDragDelay.Enabled = true;
+        }
+
+        private void timerupdatestatus_Tick(object sender, EventArgs e)
+        {
+            UpdateRazorStatus();
         }
 
 
