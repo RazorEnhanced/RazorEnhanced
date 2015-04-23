@@ -901,5 +901,16 @@ namespace RazorEnhanced
             }
 
         }
+        internal static void ForceStop()
+        {
+            if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
+            {
+                m_DressThread.Abort();
+            }
+            if (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Stopped)
+            {
+                m_UndressThread.Abort();
+            }
+        }
     }
 }
