@@ -526,7 +526,6 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-<<<<<<< HEAD
 			this.components = new System.ComponentModel.Container();
 			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
@@ -1043,11 +1042,8 @@ namespace Assistant
 			this.clientPrio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-			this.clientPrio.Items.AddRange(new object[] {
-=======
+			this.clientPrio.Items.AddRange(new object[] { });
             this.components = new System.ComponentModel.Container();
-            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
@@ -1426,7 +1422,6 @@ namespace Assistant
             this.label28 = new System.Windows.Forms.Label();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
-            this.timerTimer = new System.Windows.Forms.Timer(this.components);
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1563,7 +1558,6 @@ namespace Assistant
             this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.clientPrio.Items.AddRange(new object[] {
->>>>>>> f2d4c1243c45404415cfb19364581ede67267e70
             "Idle",
             "BelowNormal",
             "Normal",
@@ -5176,7 +5170,6 @@ namespace Assistant
             this.columnHeader20,
             this.columnHeader21,
             this.columnHeader22});
-<<<<<<< HEAD
 			this.sellListView.FullRowSelect = true;
 			this.sellListView.GridLines = true;
 			this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5422,8 +5415,7 @@ namespace Assistant
 			// 
 			// dressDragDelay
 			// 
-			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-=======
+			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)))));
             this.sellListView.FullRowSelect = true;
             this.sellListView.GridLines = true;
             this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5671,7 +5663,6 @@ namespace Assistant
             // dressDragDelay
             // 
             this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
->>>>>>> f2d4c1243c45404415cfb19364581ede67267e70
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.dressDragDelay.BackColor = System.Drawing.Color.White;
@@ -5904,7 +5895,7 @@ namespace Assistant
 			this.groupBox22.ResumeLayout(false);
 			this.groupBox21.ResumeLayout(false);
 			this.ResumeLayout(false);
-
+		
 		}
 		#endregion
 
