@@ -407,6 +407,7 @@ namespace Assistant
 		private Label label28;
 		private NotifyIcon m_NotifyIcon;
 		private OpenFileDialog openFileDialogscript;
+		private System.Timers.Timer m_SystemTimer;
 
 		private bool m_CanClose = true;
 
@@ -5154,12 +5155,18 @@ namespace Assistant
 			EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
 			m_CanClose = false;
 		}
-	
+
+		private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
+		{
+			Assistant.Timer.Slice();
+		}
 
 		private void MainForm_Load(object sender, System.EventArgs e)
 		{
 			//ClientCommunication.SetCustomNotoHue( 0x2 );
-			Timer.SystemTimer = new System.Timers.Timer(5);
+			m_SystemTimer = new System.Timers.Timer(5);
+			m_SystemTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimedEvent);
+			Timer.SystemTimer = m_SystemTimer;
 
 			new StatsTimer(this).Start();
 
@@ -5563,8 +5570,8 @@ namespace Assistant
 				}
 			}
 
-			if (tabs.SelectedTab != statusTab)
-				return;
+			//if (tabs.SelectedTab != statusTab)
+			//	return;
 
 			int time = 0;
 			if (ClientCommunication.ConnectionStart != DateTime.MinValue)
