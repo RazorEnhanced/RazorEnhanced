@@ -465,7 +465,7 @@ namespace Assistant
 
 		// Dress Agent
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
-        internal ListView DressListView { get { return dressListView; } }
+		internal ListView DressListView { get { return dressListView; } }
 		internal ListBox DressLogBox { get { return dressLogBox; } }
 		internal RazorTextBox DressDragDelay { get { return dressDragDelay; } }
 		internal ComboBox DressListSelect { get { return dressListSelect; } }
@@ -1042,522 +1042,7 @@ namespace Assistant
 			this.clientPrio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-			this.clientPrio.Items.AddRange(new object[] { });
-            this.components = new System.ComponentModel.Container();
-            this.playMacro = new RazorEnhanced.UI.RazorButton();
-            this.tabs = new System.Windows.Forms.TabControl();
-            this.generalTab = new System.Windows.Forms.TabPage();
-            this.clientPrio = new RazorEnhanced.UI.RazorComboBox();
-            this.btnMap = new RazorEnhanced.UI.RazorButton();
-            this.lockBox = new System.Windows.Forms.PictureBox();
-            this.systray = new RazorEnhanced.UI.RazorRadioButton();
-            this.taskbar = new RazorEnhanced.UI.RazorRadioButton();
-            this.smartCPU = new RazorEnhanced.UI.RazorCheckBox();
-            this.langSel = new RazorEnhanced.UI.RazorComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.importProfile = new RazorEnhanced.UI.RazorButton();
-            this.exportProfile = new RazorEnhanced.UI.RazorButton();
-            this.delProfile = new RazorEnhanced.UI.RazorButton();
-            this.newProfile = new RazorEnhanced.UI.RazorButton();
-            this.profiles = new RazorEnhanced.UI.RazorComboBox();
-            this.showWelcome = new RazorEnhanced.UI.RazorCheckBox();
-            this.opacity = new System.Windows.Forms.TrackBar();
-            this.alwaysTop = new RazorEnhanced.UI.RazorCheckBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.filters = new System.Windows.Forms.CheckedListBox();
-            this.opacityLabel = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.moreOptTab = new System.Windows.Forms.TabPage();
-            this.preAOSstatbar = new RazorEnhanced.UI.RazorCheckBox();
-            this.negotiate = new RazorEnhanced.UI.RazorCheckBox();
-            this.setLTHilight = new RazorEnhanced.UI.RazorButton();
-            this.lthilight = new RazorEnhanced.UI.RazorCheckBox();
-            this.filterSnoop = new RazorEnhanced.UI.RazorCheckBox();
-            this.corpseRange = new RazorEnhanced.UI.RazorTextBox();
-            this.incomingCorpse = new RazorEnhanced.UI.RazorCheckBox();
-            this.incomingMob = new RazorEnhanced.UI.RazorCheckBox();
-            this.setHarmHue = new RazorEnhanced.UI.RazorButton();
-            this.setNeuHue = new RazorEnhanced.UI.RazorButton();
-            this.lblHarmHue = new System.Windows.Forms.Label();
-            this.lblNeuHue = new System.Windows.Forms.Label();
-            this.lblBeneHue = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblWarnHue = new System.Windows.Forms.Label();
-            this.lblMsgHue = new System.Windows.Forms.Label();
-            this.lblExHue = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.setBeneHue = new RazorEnhanced.UI.RazorButton();
-            this.setSpeechHue = new RazorEnhanced.UI.RazorButton();
-            this.setWarnHue = new RazorEnhanced.UI.RazorButton();
-            this.setMsgHue = new RazorEnhanced.UI.RazorButton();
-            this.setExHue = new RazorEnhanced.UI.RazorButton();
-            this.autoStackRes = new RazorEnhanced.UI.RazorCheckBox();
-            this.queueTargets = new RazorEnhanced.UI.RazorCheckBox();
-            this.spamFilter = new RazorEnhanced.UI.RazorCheckBox();
-            this.openCorpses = new RazorEnhanced.UI.RazorCheckBox();
-            this.blockDis = new RazorEnhanced.UI.RazorCheckBox();
-            this.txtSpellFormat = new RazorEnhanced.UI.RazorTextBox();
-            this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
-            this.moreMoreOptTab = new System.Windows.Forms.TabPage();
-            this.msglvl = new RazorEnhanced.UI.RazorComboBox();
-            this.forceSizeX = new RazorEnhanced.UI.RazorTextBox();
-            this.forceSizeY = new RazorEnhanced.UI.RazorTextBox();
-            this.healthFmt = new RazorEnhanced.UI.RazorTextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.showHealthOH = new RazorEnhanced.UI.RazorCheckBox();
-            this.blockHealPoison = new RazorEnhanced.UI.RazorCheckBox();
-            this.ltRange = new RazorEnhanced.UI.RazorTextBox();
-            this.potionEquip = new RazorEnhanced.UI.RazorCheckBox();
-            this.txtObjDelay = new RazorEnhanced.UI.RazorTextBox();
-            this.QueueActions = new RazorEnhanced.UI.RazorCheckBox();
-            this.spellUnequip = new RazorEnhanced.UI.RazorCheckBox();
-            this.autoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
-            this.alwaysStealth = new RazorEnhanced.UI.RazorCheckBox();
-            this.autoFriend = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkStealth = new RazorEnhanced.UI.RazorCheckBox();
-            this.rememberPwds = new RazorEnhanced.UI.RazorCheckBox();
-            this.showtargtext = new RazorEnhanced.UI.RazorCheckBox();
-            this.logPackets = new RazorEnhanced.UI.RazorCheckBox();
-            this.rangeCheckLT = new RazorEnhanced.UI.RazorCheckBox();
-            this.actionStatusMsg = new RazorEnhanced.UI.RazorCheckBox();
-            this.smartLT = new RazorEnhanced.UI.RazorCheckBox();
-            this.gameSize = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
-            this.displayTab = new System.Windows.Forms.TabPage();
-            this.showNotoHue = new RazorEnhanced.UI.RazorCheckBox();
-            this.warnNum = new RazorEnhanced.UI.RazorTextBox();
-            this.warnCount = new RazorEnhanced.UI.RazorCheckBox();
-            this.excludePouches = new RazorEnhanced.UI.RazorCheckBox();
-            this.highlightSpellReags = new RazorEnhanced.UI.RazorCheckBox();
-            this.titlebarImages = new RazorEnhanced.UI.RazorCheckBox();
-            this.checkNewConts = new RazorEnhanced.UI.RazorCheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.titleStr = new System.Windows.Forms.TextBox();
-            this.showInBar = new RazorEnhanced.UI.RazorCheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.counters = new System.Windows.Forms.ListView();
-            this.cntName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.cntCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.delCounter = new RazorEnhanced.UI.RazorButton();
-            this.addCounter = new RazorEnhanced.UI.RazorButton();
-            this.recount = new RazorEnhanced.UI.RazorButton();
-            this.dressTab = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.clearDress = new RazorEnhanced.UI.RazorButton();
-            this.dressDelSel = new RazorEnhanced.UI.RazorButton();
-            this.undressBag = new RazorEnhanced.UI.RazorButton();
-            this.undressList = new RazorEnhanced.UI.RazorButton();
-            this.dressUseCur = new RazorEnhanced.UI.RazorButton();
-            this.targItem = new RazorEnhanced.UI.RazorButton();
-            this.dressItems = new System.Windows.Forms.ListBox();
-            this.dressNow = new RazorEnhanced.UI.RazorButton();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.removeDress = new RazorEnhanced.UI.RazorButton();
-            this.addDress = new RazorEnhanced.UI.RazorButton();
-            this.dressList = new System.Windows.Forms.ListBox();
-            this.undressConflicts = new RazorEnhanced.UI.RazorCheckBox();
-            this.skillsTab = new System.Windows.Forms.TabPage();
-            this.dispDelta = new RazorEnhanced.UI.RazorCheckBox();
-            this.skillCopyAll = new RazorEnhanced.UI.RazorButton();
-            this.skillCopySel = new RazorEnhanced.UI.RazorButton();
-            this.baseTotal = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.locks = new RazorEnhanced.UI.RazorComboBox();
-            this.setlocks = new RazorEnhanced.UI.RazorButton();
-            this.resetDelta = new RazorEnhanced.UI.RazorButton();
-            this.skillList = new System.Windows.Forms.ListView();
-            this.skillHDRName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRvalue = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRbase = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRdelta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRcap = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.skillHDRlock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.agentsTab = new System.Windows.Forms.TabPage();
-            this.agentB6 = new RazorEnhanced.UI.RazorButton();
-            this.agentB5 = new RazorEnhanced.UI.RazorButton();
-            this.agentList = new RazorEnhanced.UI.RazorComboBox();
-            this.agentGroup = new System.Windows.Forms.GroupBox();
-            this.agentSubList = new System.Windows.Forms.ListBox();
-            this.agentB4 = new RazorEnhanced.UI.RazorButton();
-            this.agentB1 = new RazorEnhanced.UI.RazorButton();
-            this.agentB2 = new RazorEnhanced.UI.RazorButton();
-            this.agentB3 = new RazorEnhanced.UI.RazorButton();
-            this.hotkeysTab = new System.Windows.Forms.TabPage();
-            this.hkStatus = new System.Windows.Forms.Label();
-            this.hotkeyTree = new System.Windows.Forms.TreeView();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.chkPass = new RazorEnhanced.UI.RazorCheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.unsetHK = new RazorEnhanced.UI.RazorButton();
-            this.setHK = new RazorEnhanced.UI.RazorButton();
-            this.key = new System.Windows.Forms.TextBox();
-            this.chkCtrl = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkAlt = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkShift = new RazorEnhanced.UI.RazorCheckBox();
-            this.dohotkey = new RazorEnhanced.UI.RazorButton();
-            this.macrosTab = new System.Windows.Forms.TabPage();
-            this.macroTree = new System.Windows.Forms.TreeView();
-            this.macroActGroup = new System.Windows.Forms.GroupBox();
-            this.macroImport = new RazorEnhanced.UI.RazorButton();
-            this.exportMacro = new RazorEnhanced.UI.RazorButton();
-            this.waitDisp = new System.Windows.Forms.Label();
-            this.loopMacro = new RazorEnhanced.UI.RazorCheckBox();
-            this.recMacro = new RazorEnhanced.UI.RazorButton();
-            this.actionList = new System.Windows.Forms.ListBox();
-            this.delMacro = new RazorEnhanced.UI.RazorButton();
-            this.newMacro = new RazorEnhanced.UI.RazorButton();
-            this.videoTab = new System.Windows.Forms.TabPage();
-            this.txtRecFolder = new RazorEnhanced.UI.RazorTextBox();
-            this.recFolder = new RazorEnhanced.UI.RazorButton();
-            this.label13 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.vidRec = new RazorEnhanced.UI.RazorButton();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.flipVidVert = new RazorEnhanced.UI.RazorCheckBox();
-            this.flipVidHoriz = new RazorEnhanced.UI.RazorCheckBox();
-            this.recAVI = new RazorEnhanced.UI.RazorButton();
-            this.aviRes = new RazorEnhanced.UI.RazorComboBox();
-            this.aviFPS = new RazorEnhanced.UI.RazorTextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.rpvTime = new System.Windows.Forms.Label();
-            this.playSpeed = new RazorEnhanced.UI.RazorComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.vidClose = new RazorEnhanced.UI.RazorButton();
-            this.playPos = new System.Windows.Forms.TrackBar();
-            this.vidPlayStop = new RazorEnhanced.UI.RazorButton();
-            this.vidPlay = new RazorEnhanced.UI.RazorButton();
-            this.vidPlayInfo = new System.Windows.Forms.Label();
-            this.vidOpen = new RazorEnhanced.UI.RazorButton();
-            this.screenshotTab = new System.Windows.Forms.TabPage();
-            this.imgFmt = new RazorEnhanced.UI.RazorComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.capNow = new RazorEnhanced.UI.RazorButton();
-            this.screenPath = new RazorEnhanced.UI.RazorTextBox();
-            this.radioUO = new RazorEnhanced.UI.RazorRadioButton();
-            this.radioFull = new RazorEnhanced.UI.RazorRadioButton();
-            this.screenAutoCap = new RazorEnhanced.UI.RazorCheckBox();
-            this.setScnPath = new RazorEnhanced.UI.RazorButton();
-            this.screensList = new System.Windows.Forms.ListBox();
-            this.screenPrev = new System.Windows.Forms.PictureBox();
-            this.dispTime = new RazorEnhanced.UI.RazorCheckBox();
-            this.statusTab = new System.Windows.Forms.TabPage();
-            this.panelLogo = new System.Windows.Forms.Panel();
-            this.razorButtonWiki = new RazorEnhanced.UI.RazorButton();
-            this.razorButtonCreateUODAccount = new RazorEnhanced.UI.RazorButton();
-            this.labelUOD = new System.Windows.Forms.Label();
-            this.razorButtonVisitUOD = new RazorEnhanced.UI.RazorButton();
-            this.panelUODlogo = new System.Windows.Forms.Panel();
-            this.labelStatus = new System.Windows.Forms.Label();
-            this.labelFeatures = new System.Windows.Forms.Label();
-            this.scriptingTab = new System.Windows.Forms.TabPage();
-            this.razorButtonEdit = new RazorEnhanced.UI.RazorButton();
-            this.razorCheckBoxAuto = new RazorEnhanced.UI.RazorCheckBox();
-            this.razorButtonUp = new RazorEnhanced.UI.RazorButton();
-            this.razorButtonDown = new RazorEnhanced.UI.RazorButton();
-            this.dataGridViewScripting = new System.Windows.Forms.DataGridView();
-            this.xButton3 = new RazorEnhanced.UI.RazorButton();
-            this.xButton2 = new RazorEnhanced.UI.RazorButton();
-            this.EnhancedAgent = new System.Windows.Forms.TabPage();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.eautoloot = new System.Windows.Forms.TabPage();
-            this.razorButtonResetIgnore = new RazorEnhanced.UI.RazorButton();
-            this.label21 = new System.Windows.Forms.Label();
-            this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorTextBox();
-            this.autoLootButtonRemoveList = new RazorEnhanced.UI.RazorButton();
-            this.autolootButtonAddList = new RazorEnhanced.UI.RazorButton();
-            this.autoLootButtonListImport = new RazorEnhanced.UI.RazorButton();
-            this.autolootListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.autoLootButtonListExport = new RazorEnhanced.UI.RazorButton();
-            this.label20 = new System.Windows.Forms.Label();
-            this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.autolootLogBox = new System.Windows.Forms.ListBox();
-            this.autolootContainerLabel = new System.Windows.Forms.Label();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
-            this.autolootItemEditB = new RazorEnhanced.UI.RazorButton();
-            this.autolootAddItemBTarget = new RazorEnhanced.UI.RazorButton();
-            this.autolootRemoveItemB = new RazorEnhanced.UI.RazorButton();
-            this.autolootAddItemBManual = new RazorEnhanced.UI.RazorButton();
-            this.autolootContainerButton = new RazorEnhanced.UI.RazorButton();
-            this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.autolootlistView = new System.Windows.Forms.ListView();
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.escavenger = new System.Windows.Forms.TabPage();
-            this.groupBox14 = new System.Windows.Forms.GroupBox();
-            this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
-            this.scavengerButtonEditItem = new RazorEnhanced.UI.RazorButton();
-            this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
-            this.scavengerButtonRemoveItem = new RazorEnhanced.UI.RazorButton();
-            this.scavengerButtonAddManual = new RazorEnhanced.UI.RazorButton();
-            this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.scavengerLogBox = new System.Windows.Forms.ListBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.scavengerDragDelay = new RazorEnhanced.UI.RazorTextBox();
-            this.scavengerContainerLabel = new System.Windows.Forms.Label();
-            this.scavengerButtonSetContainer = new RazorEnhanced.UI.RazorButton();
-            this.scavengerCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.scavengerListView = new System.Windows.Forms.ListView();
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.scavengerButtonRemoveList = new RazorEnhanced.UI.RazorButton();
-            this.scavengerButtonAddList = new RazorEnhanced.UI.RazorButton();
-            this.scavengerButtonImport = new RazorEnhanced.UI.RazorButton();
-            this.scavengerListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.scavengerButtonExport = new RazorEnhanced.UI.RazorButton();
-            this.label22 = new System.Windows.Forms.Label();
-            this.Organizer = new System.Windows.Forms.TabPage();
-            this.organizerStopButton = new RazorEnhanced.UI.RazorButton();
-            this.organizerExecuteButton = new RazorEnhanced.UI.RazorButton();
-            this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.organizerLogBox = new System.Windows.Forms.ListBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.organizerDragDelay = new RazorEnhanced.UI.RazorTextBox();
-            this.organizerDestinationLabel = new System.Windows.Forms.Label();
-            this.organizerSetDestinationB = new RazorEnhanced.UI.RazorButton();
-            this.organizerSourceLabel = new System.Windows.Forms.Label();
-            this.groupBox15 = new System.Windows.Forms.GroupBox();
-            this.organizerEditB = new RazorEnhanced.UI.RazorButton();
-            this.organizerAddTargetB = new RazorEnhanced.UI.RazorButton();
-            this.organizerRemoveB = new RazorEnhanced.UI.RazorButton();
-            this.organizerAddManualB = new RazorEnhanced.UI.RazorButton();
-            this.organizerSetSourceB = new RazorEnhanced.UI.RazorButton();
-            this.organizerListView = new System.Windows.Forms.ListView();
-            this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.organizerRemoveListB = new RazorEnhanced.UI.RazorButton();
-            this.organizerAddListB = new RazorEnhanced.UI.RazorButton();
-            this.organizerImportListB = new RazorEnhanced.UI.RazorButton();
-            this.organizerListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
-            this.label24 = new System.Windows.Forms.Label();
-            this.VendorBuy = new System.Windows.Forms.TabPage();
-            this.groupBox17 = new System.Windows.Forms.GroupBox();
-            this.buyEditB = new RazorEnhanced.UI.RazorButton();
-            this.buyAddTargetB = new RazorEnhanced.UI.RazorButton();
-            this.buyRemoveB = new RazorEnhanced.UI.RazorButton();
-            this.buyAddManualB = new RazorEnhanced.UI.RazorButton();
-            this.groupBox18 = new System.Windows.Forms.GroupBox();
-            this.buyLogBox = new System.Windows.Forms.ListBox();
-            this.buyEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.buyListView = new System.Windows.Forms.ListView();
-            this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buyRemoveListButton = new RazorEnhanced.UI.RazorButton();
-            this.buyAddListButton = new RazorEnhanced.UI.RazorButton();
-            this.buyImportListButton = new RazorEnhanced.UI.RazorButton();
-            this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.buyExportListButton = new RazorEnhanced.UI.RazorButton();
-            this.label25 = new System.Windows.Forms.Label();
-            this.VendorSell = new System.Windows.Forms.TabPage();
-            this.razorButton1 = new RazorEnhanced.UI.RazorButton();
-            this.sellBagLabel = new System.Windows.Forms.Label();
-            this.sellSetBagButton = new RazorEnhanced.UI.RazorButton();
-            this.groupBox19 = new System.Windows.Forms.GroupBox();
-            this.sellEditButton = new RazorEnhanced.UI.RazorButton();
-            this.sellAddTargerButton = new RazorEnhanced.UI.RazorButton();
-            this.sellRemoveButton = new RazorEnhanced.UI.RazorButton();
-            this.sellAddManualButton = new RazorEnhanced.UI.RazorButton();
-            this.groupBox20 = new System.Windows.Forms.GroupBox();
-            this.sellLogBox = new System.Windows.Forms.ListBox();
-            this.sellEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.sellListView = new System.Windows.Forms.ListView();
-            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.sellRemoveListButton = new RazorEnhanced.UI.RazorButton();
-            this.sellAddListButton = new RazorEnhanced.UI.RazorButton();
-            this.sellImportListButton = new RazorEnhanced.UI.RazorButton();
-            this.sellListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.sellExportListButton = new RazorEnhanced.UI.RazorButton();
-            this.label26 = new System.Windows.Forms.Label();
-            this.Dress = new System.Windows.Forms.TabPage();
-            this.dressConflictCheckB = new RazorEnhanced.UI.RazorCheckBox();
-            this.dressBagLabel = new System.Windows.Forms.Label();
-            this.dressSetBagB = new RazorEnhanced.UI.RazorButton();
-            this.undressExecuteButton = new RazorEnhanced.UI.RazorButton();
-            this.dressExecuteButton = new RazorEnhanced.UI.RazorButton();
-            this.groupBox22 = new System.Windows.Forms.GroupBox();
-            this.dressAddTargetB = new RazorEnhanced.UI.RazorButton();
-            this.dressAddManualB = new RazorEnhanced.UI.RazorButton();
-            this.dressRemoveB = new RazorEnhanced.UI.RazorButton();
-            this.dressReadB = new RazorEnhanced.UI.RazorButton();
-            this.label29 = new System.Windows.Forms.Label();
-            this.dressDragDelay = new RazorEnhanced.UI.RazorTextBox();
-            this.groupBox21 = new System.Windows.Forms.GroupBox();
-            this.dressLogBox = new System.Windows.Forms.ListBox();
-            this.dressListView = new System.Windows.Forms.ListView();
-            this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader26 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader27 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.dressRemoveListB = new RazorEnhanced.UI.RazorButton();
-            this.dressAddListB = new RazorEnhanced.UI.RazorButton();
-            this.dressImportListB = new RazorEnhanced.UI.RazorButton();
-            this.dressListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.dressExportListB = new RazorEnhanced.UI.RazorButton();
-            this.label28 = new System.Windows.Forms.Label();
-            this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
-            this.tabs.SuspendLayout();
-            this.generalTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.opacity)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.moreOptTab.SuspendLayout();
-            this.moreMoreOptTab.SuspendLayout();
-            this.displayTab.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.dressTab.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox5.SuspendLayout();
-            this.skillsTab.SuspendLayout();
-            this.agentsTab.SuspendLayout();
-            this.agentGroup.SuspendLayout();
-            this.hotkeysTab.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.macrosTab.SuspendLayout();
-            this.macroActGroup.SuspendLayout();
-            this.videoTab.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playPos)).BeginInit();
-            this.screenshotTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
-            this.statusTab.SuspendLayout();
-            this.scriptingTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScripting)).BeginInit();
-            this.EnhancedAgent.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.eautoloot.SuspendLayout();
-            this.groupBox13.SuspendLayout();
-            this.groupBox11.SuspendLayout();
-            this.escavenger.SuspendLayout();
-            this.groupBox14.SuspendLayout();
-            this.groupBox12.SuspendLayout();
-            this.Organizer.SuspendLayout();
-            this.groupBox16.SuspendLayout();
-            this.groupBox15.SuspendLayout();
-            this.VendorBuy.SuspendLayout();
-            this.groupBox17.SuspendLayout();
-            this.groupBox18.SuspendLayout();
-            this.VendorSell.SuspendLayout();
-            this.groupBox19.SuspendLayout();
-            this.groupBox20.SuspendLayout();
-            this.Dress.SuspendLayout();
-            this.groupBox22.SuspendLayout();
-            this.groupBox21.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // playMacro
-            // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
-            this.playMacro.Location = new System.Drawing.Point(311, 18);
-            this.playMacro.Name = "playMacro";
-            this.playMacro.Size = new System.Drawing.Size(60, 20);
-            this.playMacro.TabIndex = 9;
-            this.playMacro.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.playMacro.Click += new System.EventHandler(this.playMacro_Click);
-            // 
-            // tabs
-            // 
-            this.tabs.Controls.Add(this.generalTab);
-            this.tabs.Controls.Add(this.moreOptTab);
-            this.tabs.Controls.Add(this.moreMoreOptTab);
-            this.tabs.Controls.Add(this.displayTab);
-            this.tabs.Controls.Add(this.dressTab);
-            this.tabs.Controls.Add(this.skillsTab);
-            this.tabs.Controls.Add(this.agentsTab);
-            this.tabs.Controls.Add(this.hotkeysTab);
-            this.tabs.Controls.Add(this.macrosTab);
-            this.tabs.Controls.Add(this.videoTab);
-            this.tabs.Controls.Add(this.screenshotTab);
-            this.tabs.Controls.Add(this.statusTab);
-            this.tabs.Controls.Add(this.scriptingTab);
-            this.tabs.Controls.Add(this.EnhancedAgent);
-            this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabs.Location = new System.Drawing.Point(0, 0);
-            this.tabs.Multiline = true;
-            this.tabs.Name = "tabs";
-            this.tabs.SelectedIndex = 0;
-            this.tabs.Size = new System.Drawing.Size(674, 410);
-            this.tabs.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
-            this.tabs.TabIndex = 0;
-            this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_IndexChanged);
-            // 
-            // generalTab
-            // 
-            this.generalTab.Controls.Add(this.clientPrio);
-            this.generalTab.Controls.Add(this.btnMap);
-            this.generalTab.Controls.Add(this.lockBox);
-            this.generalTab.Controls.Add(this.systray);
-            this.generalTab.Controls.Add(this.taskbar);
-            this.generalTab.Controls.Add(this.smartCPU);
-            this.generalTab.Controls.Add(this.langSel);
-            this.generalTab.Controls.Add(this.label7);
-            this.generalTab.Controls.Add(this.label11);
-            this.generalTab.Controls.Add(this.groupBox4);
-            this.generalTab.Controls.Add(this.showWelcome);
-            this.generalTab.Controls.Add(this.opacity);
-            this.generalTab.Controls.Add(this.alwaysTop);
-            this.generalTab.Controls.Add(this.groupBox1);
-            this.generalTab.Controls.Add(this.opacityLabel);
-            this.generalTab.Controls.Add(this.label9);
-            this.generalTab.Location = new System.Drawing.Point(4, 40);
-            this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(666, 366);
-            this.generalTab.TabIndex = 0;
-            this.generalTab.Text = "General";
-            // 
-            // clientPrio
-            // 
-            this.clientPrio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.clientPrio.Items.AddRange(new object[] {
+			this.clientPrio.Items.AddRange(new object[] {
             "Idle",
             "BelowNormal",
             "Normal",
@@ -1875,9 +1360,9 @@ namespace Assistant
 			// 
 			// corpseRange
 			// 
-			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.corpseRange.BackColor = System.Drawing.Color.White;
 			this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.corpseRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2097,9 +1582,9 @@ namespace Assistant
 			// 
 			// txtSpellFormat
 			// 
-			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSpellFormat.BackColor = System.Drawing.Color.White;
 			this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2183,9 +1668,9 @@ namespace Assistant
 			// 
 			// forceSizeX
 			// 
-			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeX.BackColor = System.Drawing.Color.White;
 			this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2198,9 +1683,9 @@ namespace Assistant
 			// 
 			// forceSizeY
 			// 
-			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeY.BackColor = System.Drawing.Color.White;
 			this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2213,9 +1698,9 @@ namespace Assistant
 			// 
 			// healthFmt
 			// 
-			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.healthFmt.BackColor = System.Drawing.Color.White;
 			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2294,9 +1779,9 @@ namespace Assistant
 			// 
 			// ltRange
 			// 
-			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.ltRange.BackColor = System.Drawing.Color.White;
 			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2318,9 +1803,9 @@ namespace Assistant
 			// 
 			// txtObjDelay
 			// 
-			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtObjDelay.BackColor = System.Drawing.Color.White;
 			this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2484,9 +1969,9 @@ namespace Assistant
 			// 
 			// warnNum
 			// 
-			this.warnNum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.warnNum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.warnNum.BackColor = System.Drawing.Color.White;
 			this.warnNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.warnNum.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3334,9 +2819,9 @@ namespace Assistant
 			// 
 			// txtRecFolder
 			// 
-			this.txtRecFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtRecFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtRecFolder.BackColor = System.Drawing.Color.White;
 			this.txtRecFolder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtRecFolder.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3451,9 +2936,9 @@ namespace Assistant
 			// 
 			// aviFPS
 			// 
-			this.aviFPS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.aviFPS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.aviFPS.BackColor = System.Drawing.Color.White;
 			this.aviFPS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.aviFPS.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3665,9 +3150,9 @@ namespace Assistant
 			// 
 			// screenPath
 			// 
-			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.screenPath.BackColor = System.Drawing.Color.White;
 			this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.screenPath.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3804,7 +3289,7 @@ namespace Assistant
 			this.labelUOD.Size = new System.Drawing.Size(213, 64);
 			this.labelUOD.TabIndex = 4;
 			this.labelUOD.Text = "To support the development of the Razor Enhanced project,  you can visit UODreams" +
-    " shard and stay with us! You are welcome!";
+	" shard and stay with us! You are welcome!";
 			this.labelUOD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// razorButtonVisitUOD
@@ -4011,9 +3496,9 @@ namespace Assistant
 			// 
 			// autoLootTextBoxDelay
 			// 
-			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
 			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.autoLootTextBoxDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4365,9 +3850,9 @@ namespace Assistant
 			// 
 			// scavengerDragDelay
 			// 
-			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
 			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.scavengerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4588,9 +4073,9 @@ namespace Assistant
 			// 
 			// organizerDragDelay
 			// 
-			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.organizerDragDelay.BackColor = System.Drawing.Color.White;
 			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.organizerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5346,6 +4831,7 @@ namespace Assistant
 			this.dressExecuteButton.TabIndex = 86;
 			this.dressExecuteButton.Text = "Dress";
 			this.dressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.dressExecuteButton.Click += new System.EventHandler(this.dressExecuteButton_Click);
 			// 
 			// groupBox22
 			// 
@@ -5415,256 +4901,9 @@ namespace Assistant
 			// 
 			// dressDragDelay
 			// 
-			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)))));
-            this.sellListView.FullRowSelect = true;
-            this.sellListView.GridLines = true;
-            this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.sellListView.HideSelection = false;
-            this.sellListView.LabelWrap = false;
-            this.sellListView.Location = new System.Drawing.Point(6, 51);
-            this.sellListView.MultiSelect = false;
-            this.sellListView.Name = "sellListView";
-            this.sellListView.Size = new System.Drawing.Size(255, 284);
-            this.sellListView.TabIndex = 81;
-            this.sellListView.UseCompatibleStateImageBehavior = false;
-            this.sellListView.View = System.Windows.Forms.View.Details;
-            this.sellListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.sellagentListView_ItemChecked);
-            // 
-            // columnHeader18
-            // 
-            this.columnHeader18.Text = "X";
-            this.columnHeader18.Width = 22;
-            // 
-            // columnHeader19
-            // 
-            this.columnHeader19.Text = "Item Name";
-            this.columnHeader19.Width = 78;
-            // 
-            // columnHeader20
-            // 
-            this.columnHeader20.Text = "Graphics";
-            this.columnHeader20.Width = 54;
-            // 
-            // columnHeader21
-            // 
-            this.columnHeader21.Text = "Amount";
-            this.columnHeader21.Width = 50;
-            // 
-            // columnHeader22
-            // 
-            this.columnHeader22.Text = "Color";
-            this.columnHeader22.Width = 50;
-            // 
-            // sellRemoveListButton
-            // 
-            this.sellRemoveListButton.ColorTable = office2010BlueTheme1;
-            this.sellRemoveListButton.Location = new System.Drawing.Point(369, 14);
-            this.sellRemoveListButton.Name = "sellRemoveListButton";
-            this.sellRemoveListButton.Size = new System.Drawing.Size(90, 20);
-            this.sellRemoveListButton.TabIndex = 80;
-            this.sellRemoveListButton.Text = "Remove";
-            this.sellRemoveListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.sellRemoveListButton.Click += new System.EventHandler(this.sellRemoveList_Click);
-            // 
-            // sellAddListButton
-            // 
-            this.sellAddListButton.ColorTable = office2010BlueTheme1;
-            this.sellAddListButton.Location = new System.Drawing.Point(273, 14);
-            this.sellAddListButton.Name = "sellAddListButton";
-            this.sellAddListButton.Size = new System.Drawing.Size(90, 20);
-            this.sellAddListButton.TabIndex = 79;
-            this.sellAddListButton.Text = "Add";
-            this.sellAddListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.sellAddListButton.Click += new System.EventHandler(this.sellAddList_Click);
-            // 
-            // sellImportListButton
-            // 
-            this.sellImportListButton.ColorTable = office2010BlueTheme1;
-            this.sellImportListButton.Location = new System.Drawing.Point(465, 14);
-            this.sellImportListButton.Name = "sellImportListButton";
-            this.sellImportListButton.Size = new System.Drawing.Size(90, 20);
-            this.sellImportListButton.TabIndex = 76;
-            this.sellImportListButton.Text = "Import";
-            this.sellImportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.sellImportListButton.Click += new System.EventHandler(this.sellImportListButton_Click);
-            // 
-            // sellListSelect
-            // 
-            this.sellListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.sellListSelect.FormattingEnabled = true;
-            this.sellListSelect.Location = new System.Drawing.Point(73, 12);
-            this.sellListSelect.Name = "sellListSelect";
-            this.sellListSelect.Size = new System.Drawing.Size(183, 24);
-            this.sellListSelect.TabIndex = 78;
-            this.sellListSelect.SelectedIndexChanged += new System.EventHandler(this.sellListSelect_SelectedIndexChanged);
-            // 
-            // sellExportListButton
-            // 
-            this.sellExportListButton.ColorTable = office2010BlueTheme1;
-            this.sellExportListButton.Location = new System.Drawing.Point(561, 14);
-            this.sellExportListButton.Name = "sellExportListButton";
-            this.sellExportListButton.Size = new System.Drawing.Size(90, 20);
-            this.sellExportListButton.TabIndex = 75;
-            this.sellExportListButton.Text = "Export";
-            this.sellExportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.sellExportListButton.Click += new System.EventHandler(this.sellExportListButton_Click);
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(3, 18);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(64, 13);
-            this.label26.TabIndex = 77;
-            this.label26.Text = "Vendor Sell:";
-            // 
-            // Dress
-            // 
-            this.Dress.Controls.Add(this.dressConflictCheckB);
-            this.Dress.Controls.Add(this.dressBagLabel);
-            this.Dress.Controls.Add(this.dressSetBagB);
-            this.Dress.Controls.Add(this.undressExecuteButton);
-            this.Dress.Controls.Add(this.dressExecuteButton);
-            this.Dress.Controls.Add(this.groupBox22);
-            this.Dress.Controls.Add(this.label29);
-            this.Dress.Controls.Add(this.dressDragDelay);
-            this.Dress.Controls.Add(this.groupBox21);
-            this.Dress.Controls.Add(this.dressListView);
-            this.Dress.Controls.Add(this.dressRemoveListB);
-            this.Dress.Controls.Add(this.dressAddListB);
-            this.Dress.Controls.Add(this.dressImportListB);
-            this.Dress.Controls.Add(this.dressListSelect);
-            this.Dress.Controls.Add(this.dressExportListB);
-            this.Dress.Controls.Add(this.label28);
-            this.Dress.Location = new System.Drawing.Point(4, 22);
-            this.Dress.Name = "Dress";
-            this.Dress.Padding = new System.Windows.Forms.Padding(3);
-            this.Dress.Size = new System.Drawing.Size(659, 341);
-            this.Dress.TabIndex = 5;
-            this.Dress.Text = "Dress / Arm";
-            this.Dress.UseVisualStyleBackColor = true;
-            // 
-            // dressConflictCheckB
-            // 
-            this.dressConflictCheckB.Location = new System.Drawing.Point(274, 84);
-            this.dressConflictCheckB.Name = "dressConflictCheckB";
-            this.dressConflictCheckB.Size = new System.Drawing.Size(241, 19);
-            this.dressConflictCheckB.TabIndex = 90;
-            this.dressConflictCheckB.Text = "Remove Conflict Item";
-            this.dressConflictCheckB.CheckedChanged += new System.EventHandler(this.dressConflictCheckB_CheckedChanged);
-            // 
-            // dressBagLabel
-            // 
-            this.dressBagLabel.Location = new System.Drawing.Point(566, 154);
-            this.dressBagLabel.Name = "dressBagLabel";
-            this.dressBagLabel.Size = new System.Drawing.Size(82, 19);
-            this.dressBagLabel.TabIndex = 89;
-            this.dressBagLabel.Text = "0x00000000";
-            // 
-            // dressSetBagB
-            // 
-            this.dressSetBagB.ColorTable = office2010BlueTheme1;
-            this.dressSetBagB.Location = new System.Drawing.Point(558, 127);
-            this.dressSetBagB.Name = "dressSetBagB";
-            this.dressSetBagB.Size = new System.Drawing.Size(88, 20);
-            this.dressSetBagB.TabIndex = 88;
-            this.dressSetBagB.Text = "Undress Bag";
-            this.dressSetBagB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressSetBagB.Click += new System.EventHandler(this.dressSetBagB_Click);
-            // 
-            // undressExecuteButton
-            // 
-            this.undressExecuteButton.ColorTable = office2010BlueTheme1;
-            this.undressExecuteButton.Location = new System.Drawing.Point(340, 58);
-            this.undressExecuteButton.Name = "undressExecuteButton";
-            this.undressExecuteButton.Size = new System.Drawing.Size(61, 20);
-            this.undressExecuteButton.TabIndex = 87;
-            this.undressExecuteButton.Text = "Undres";
-            this.undressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.undressExecuteButton.Click += new System.EventHandler(this.razorButton10_Click);
-            // 
-            // dressExecuteButton
-            // 
-            this.dressExecuteButton.ColorTable = office2010BlueTheme1;
-            this.dressExecuteButton.Location = new System.Drawing.Point(274, 58);
-            this.dressExecuteButton.Name = "dressExecuteButton";
-            this.dressExecuteButton.Size = new System.Drawing.Size(61, 20);
-            this.dressExecuteButton.TabIndex = 86;
-            this.dressExecuteButton.Text = "Dress";
-            this.dressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressExecuteButton.Click += new System.EventHandler(this.dressExecuteButton_Click);
-            // 
-            // groupBox22
-            // 
-            this.groupBox22.Controls.Add(this.dressAddTargetB);
-            this.groupBox22.Controls.Add(this.dressAddManualB);
-            this.groupBox22.Controls.Add(this.dressRemoveB);
-            this.groupBox22.Controls.Add(this.dressReadB);
-            this.groupBox22.Location = new System.Drawing.Point(551, 186);
-            this.groupBox22.Name = "groupBox22";
-            this.groupBox22.Size = new System.Drawing.Size(100, 125);
-            this.groupBox22.TabIndex = 85;
-            this.groupBox22.TabStop = false;
-            this.groupBox22.Text = "Item List";
-            // 
-            // dressAddTargetB
-            // 
-            this.dressAddTargetB.ColorTable = office2010BlueTheme1;
-            this.dressAddTargetB.Location = new System.Drawing.Point(5, 68);
-            this.dressAddTargetB.Name = "dressAddTargetB";
-            this.dressAddTargetB.Size = new System.Drawing.Size(90, 20);
-            this.dressAddTargetB.TabIndex = 48;
-            this.dressAddTargetB.Text = "Add Target";
-            this.dressAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressAddTargetB.Click += new System.EventHandler(this.dressAddTargetB_Click);
-            // 
-            // dressAddManualB
-            // 
-            this.dressAddManualB.ColorTable = office2010BlueTheme1;
-            this.dressAddManualB.Location = new System.Drawing.Point(5, 43);
-            this.dressAddManualB.Name = "dressAddManualB";
-            this.dressAddManualB.Size = new System.Drawing.Size(90, 20);
-            this.dressAddManualB.TabIndex = 47;
-            this.dressAddManualB.Text = "Add Clear Layer";
-            this.dressAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressAddManualB.Click += new System.EventHandler(this.dressAddManualB_Click);
-            // 
-            // dressRemoveB
-            // 
-            this.dressRemoveB.ColorTable = office2010BlueTheme1;
-            this.dressRemoveB.Location = new System.Drawing.Point(5, 94);
-            this.dressRemoveB.Name = "dressRemoveB";
-            this.dressRemoveB.Size = new System.Drawing.Size(90, 20);
-            this.dressRemoveB.TabIndex = 46;
-            this.dressRemoveB.Text = "Remove";
-            this.dressRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressRemoveB.Click += new System.EventHandler(this.dressRemoveB_Click);
-            // 
-            // dressReadB
-            // 
-            this.dressReadB.ColorTable = office2010BlueTheme1;
-            this.dressReadB.Location = new System.Drawing.Point(5, 18);
-            this.dressReadB.Name = "dressReadB";
-            this.dressReadB.Size = new System.Drawing.Size(90, 20);
-            this.dressReadB.TabIndex = 45;
-            this.dressReadB.Text = "Read Current";
-            this.dressReadB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressReadB.Click += new System.EventHandler(this.dressReadB_Click);
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(457, 61);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(105, 13);
-            this.label29.TabIndex = 76;
-            this.label29.Text = "Drag Item Delay (ms)";
-            // 
-            // dressDragDelay
-            // 
-            this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dressDragDelay.BackColor = System.Drawing.Color.White;
 			this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.dressDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5895,7 +5134,7 @@ namespace Assistant
 			this.groupBox22.ResumeLayout(false);
 			this.groupBox21.ResumeLayout(false);
 			this.ResumeLayout(false);
-		
+
 		}
 		#endregion
 
@@ -5903,8 +5142,8 @@ namespace Assistant
 		{
 			if (msg.Msg == ClientCommunication.WM_UONETEVENT)
 				msg.Result = (IntPtr)(ClientCommunication.OnMessage(this, (uint)msg.WParam.ToInt32(), msg.LParam.ToInt32()) ? 1 : 0);
-			else if (msg.Msg >= (int)ClientCommunication.UOAMessage.First && msg.Msg <= (int)ClientCommunication.UOAMessage.Last)
-				msg.Result = (IntPtr)ClientCommunication.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
+			//else if (msg.Msg >= (int)ClientCommunication.UOAMessage.First && msg.Msg <= (int)ClientCommunication.UOAMessage.Last)
+			//	msg.Result = (IntPtr)ClientCommunication.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
 			else
 				base.WndProc(ref msg);
 		}
@@ -5936,9 +5175,7 @@ namespace Assistant
 		{
 			//ClientCommunication.SetCustomNotoHue( 0x2 );
 			//DwmEnableComposition(CompositionAction.DWM_EC_DISABLECOMPOSITION);
-
-			System.Timers.Timer timer = new System.Timers.Timer(5);
-			Assistant.Timer.SystemTimer = timer;
+			Timer.SystemTimer = new System.Timers.Timer(5);
 
 			new StatsTimer(this).Start();
 
@@ -6025,7 +5262,7 @@ namespace Assistant
 
 
 			// ------------------ DRESS AGENT -------------------------
-            RazorEnhanced.Dress.RefreshLists();
+			RazorEnhanced.Dress.RefreshLists();
 
 		}
 
@@ -6677,6 +5914,7 @@ namespace Assistant
 			Config.SetProperty("CounterWarn", warnCount.Checked);
 			warnNum.Enabled = warnCount.Checked;
 		}
+
 
 		private void warnNum_TextChanged(object sender, System.EventArgs e)
 		{
@@ -9564,11 +8802,11 @@ namespace Assistant
 
 		private void autoLootListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            int bag = 0;
-            int delay = 0;
-            RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay);
-            RazorEnhanced.AutoLoot.AutoLootBag = bag;
-            RazorEnhanced.AutoLoot.AutoLootDelay = delay;
+			int bag = 0;
+			int delay = 0;
+			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay);
+			RazorEnhanced.AutoLoot.AutoLootBag = bag;
+			RazorEnhanced.AutoLoot.AutoLootDelay = delay;
 
 			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true);
 			RazorEnhanced.AutoLoot.RefreshItems();
@@ -9601,11 +8839,11 @@ namespace Assistant
 
 		private void autolootlistView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-            if (autolootlistView.FocusedItem != null)
-            {
-                ListViewItem item = e.Item as ListViewItem;
-                RazorEnhanced.AutoLoot.UpdateSelectedItems(item.Index);
-            }
+			if (autolootlistView.FocusedItem != null)
+			{
+				ListViewItem item = e.Item as ListViewItem;
+				RazorEnhanced.AutoLoot.UpdateSelectedItems(item.Index);
+			}
 		}
 
 		delegate void SetBoolCallback(bool check);
@@ -9631,16 +8869,16 @@ namespace Assistant
 			RazorEnhanced.AutoLoot.ResetIgnore();
 		}
 
-        private void autoLootButtonListExport_Click(object sender, EventArgs e)
-        {
-            if (autolootListSelect.Text != "")
-                RazorEnhanced.ImportExport.ExportAutoloot(autolootListSelect.Text);
-            else
-                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-        }
-  		private void autoLootImport_Click(object sender, EventArgs e)
+		private void autoLootButtonListExport_Click(object sender, EventArgs e)
 		{
-            RazorEnhanced.ImportExport.ImportAutoloot();
+			if (autolootListSelect.Text != "")
+				RazorEnhanced.ImportExport.ExportAutoloot(autolootListSelect.Text);
+			else
+				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+		}
+		private void autoLootImport_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ImportAutoloot();
 		}
 		// ------------ AUTOLOOT END ----------------
 
@@ -9813,11 +9051,11 @@ namespace Assistant
 
 		private void scavengertListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            int bag = 0;
-            int delay = 0;
-            RazorEnhanced.Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out bag, out delay);
-            RazorEnhanced.Scavenger.ScavengerBag = bag;
-            RazorEnhanced.Scavenger.ScavengerDelay = delay;
+			int bag = 0;
+			int delay = 0;
+			RazorEnhanced.Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out bag, out delay);
+			RazorEnhanced.Scavenger.ScavengerBag = bag;
+			RazorEnhanced.Scavenger.ScavengerDelay = delay;
 
 			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, RazorEnhanced.Scavenger.ScavengerBag, true);
 			RazorEnhanced.Scavenger.RefreshItems();
@@ -9899,24 +9137,24 @@ namespace Assistant
 
 		private void scavengerListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-            if (scavengerListView.FocusedItem != null)
-            {
-                ListViewItem item = e.Item as ListViewItem;
-                RazorEnhanced.Scavenger.UpdateSelectedItems(item.Index);
-            }
+			if (scavengerListView.FocusedItem != null)
+			{
+				ListViewItem item = e.Item as ListViewItem;
+				RazorEnhanced.Scavenger.UpdateSelectedItems(item.Index);
+			}
 		}
-        private void scavengerButtonImport_Click(object sender, EventArgs e)
-        {
-            RazorEnhanced.ImportExport.ImportScavenger();
-        }
+		private void scavengerButtonImport_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ImportScavenger();
+		}
 
-        private void scavengerButtonExport_Click(object sender, EventArgs e)
-        {
-            if (scavengerListSelect.Text != "")
-                RazorEnhanced.ImportExport.ExportScavenger(scavengerListSelect.Text);
-            else
-                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
-        }
+		private void scavengerButtonExport_Click(object sender, EventArgs e)
+		{
+			if (scavengerListSelect.Text != "")
+				RazorEnhanced.ImportExport.ExportScavenger(scavengerListSelect.Text);
+			else
+				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+		}
 
 		// ------------ SCAVENGER END ----------------
 
@@ -10081,13 +9319,13 @@ namespace Assistant
 
 		private void organizerListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            int bagsource;
-            int bagdestination;
-            int delay;
-            RazorEnhanced.Settings.Organizer.ListDetailsRead(organizerListSelect.Text, out bagsource, out bagdestination, out delay);
-            RazorEnhanced.Organizer.OrganizerDelay = delay;
-            RazorEnhanced.Organizer.OrganizerSource = bagsource;
-            RazorEnhanced.Organizer.OrganizerDestination = bagdestination;
+			int bagsource;
+			int bagdestination;
+			int delay;
+			RazorEnhanced.Settings.Organizer.ListDetailsRead(organizerListSelect.Text, out bagsource, out bagdestination, out delay);
+			RazorEnhanced.Organizer.OrganizerDelay = delay;
+			RazorEnhanced.Organizer.OrganizerSource = bagsource;
+			RazorEnhanced.Organizer.OrganizerDestination = bagdestination;
 
 			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 			RazorEnhanced.Organizer.RefreshItems();
@@ -10126,11 +9364,11 @@ namespace Assistant
 
 		private void organizerListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-            if (organizerListView.FocusedItem != null)
-            {
-                ListViewItem item = e.Item as ListViewItem;
-                RazorEnhanced.Organizer.UpdateSelectedItems(item.Index);
-            }
+			if (organizerListView.FocusedItem != null)
+			{
+				ListViewItem item = e.Item as ListViewItem;
+				RazorEnhanced.Organizer.UpdateSelectedItems(item.Index);
+			}
 		}
 
 		private void organizerExecute_Click(object sender, EventArgs e)
@@ -10251,18 +9489,18 @@ namespace Assistant
 				organizerDragDelay.Enabled = true;
 			}
 		}
-        private void organizerImportListB_Click(object sender, EventArgs e)
-        {
-            RazorEnhanced.ImportExport.ImportOrganizer();
-        }
+		private void organizerImportListB_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ImportOrganizer();
+		}
 
-        private void organizerExportListB_Click(object sender, EventArgs e)
-        {
-            if (organizerListSelect.Text != "")
-                RazorEnhanced.ImportExport.ExportOrganizer(organizerListSelect.Text);
-            else
-                RazorEnhanced.Organizer.AddLog("Item list not selected!");
-        }
+		private void organizerExportListB_Click(object sender, EventArgs e)
+		{
+			if (organizerListSelect.Text != "")
+				RazorEnhanced.ImportExport.ExportOrganizer(organizerListSelect.Text);
+			else
+				RazorEnhanced.Organizer.AddLog("Item list not selected!");
+		}
 		// ------------------ ORGANIZER END--------------------------
 
 
@@ -10470,24 +9708,24 @@ namespace Assistant
 
 		private void sellagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-            if (sellListView.FocusedItem != null)
-            {
-                ListViewItem item = e.Item as ListViewItem;
-                RazorEnhanced.SellAgent.UpdateSelectedItems(item.Index);
-            }
+			if (sellListView.FocusedItem != null)
+			{
+				ListViewItem item = e.Item as ListViewItem;
+				RazorEnhanced.SellAgent.UpdateSelectedItems(item.Index);
+			}
 		}
-        private void sellImportListButton_Click(object sender, EventArgs e)
-        {
-            RazorEnhanced.ImportExport.ImportSell();
-        }
+		private void sellImportListButton_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ImportSell();
+		}
 
-        private void sellExportListButton_Click(object sender, EventArgs e)
-        {
-            if (sellListSelect.Text != "")
-                RazorEnhanced.ImportExport.ExportSell(sellListSelect.Text);
-            else
-                RazorEnhanced.SellAgent.AddLog("Item list not selected!");
-        }
+		private void sellExportListButton_Click(object sender, EventArgs e)
+		{
+			if (sellListSelect.Text != "")
+				RazorEnhanced.ImportExport.ExportSell(sellListSelect.Text);
+			else
+				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
+		}
 		// ------------------ SELL AGENT END--------------------------
 
 
@@ -10642,192 +9880,192 @@ namespace Assistant
 
 		private void buyagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
 		{
-            if (buyListView.FocusedItem != null)
-            {
-                ListViewItem item = e.Item as ListViewItem;
-                RazorEnhanced.BuyAgent.UpdateSelectedItems(item.Index);
-            }
+			if (buyListView.FocusedItem != null)
+			{
+				ListViewItem item = e.Item as ListViewItem;
+				RazorEnhanced.BuyAgent.UpdateSelectedItems(item.Index);
+			}
 		}
-        private void buyImportListButton_Click(object sender, EventArgs e)
-        {
-            RazorEnhanced.ImportExport.ImportBuy();
-        }
-        private void buyExportListButton_Click(object sender, EventArgs e)
-        {
-            if (buyListSelect.Text != "")
-                RazorEnhanced.ImportExport.ExportBuy(buyListSelect.Text);
-            else
-                RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
-        }
+		private void buyImportListButton_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ImportBuy();
+		}
+		private void buyExportListButton_Click(object sender, EventArgs e)
+		{
+			if (buyListSelect.Text != "")
+				RazorEnhanced.ImportExport.ExportBuy(buyListSelect.Text);
+			else
+				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
+		}
 		// --------------- BUY AGENT END ---------
 
-        // --------------- DRESS START ---------
+		// --------------- DRESS START ---------
 		private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int bag = 0;
-            int delay = 0;
-            bool conflict = false;
-            RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out bag, out delay, out conflict);
-            RazorEnhanced.Dress.DressBag = bag;
-            RazorEnhanced.Dress.DressDelay = delay;
-            RazorEnhanced.Dress.DressConflict = conflict;
-            RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-            RazorEnhanced.Dress.RefreshItems();
-
-            if (dressListSelect.Text != "")
-                RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.Text);
-        }
-        private void dressAddListB_Click(object sender, EventArgs e)
-        {
-            EnhancedDressAddList AddItemList = new EnhancedDressAddList();
-            AddItemList.TopMost = true;
-            AddItemList.Show();
-        }
-
-        private void dressRemoveListB_Click(object sender, EventArgs e)
-        {
-            if (dressListSelect.Text != null)
-                RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");
-
-            RazorEnhanced.Dress.DressBag = 0;
-            RazorEnhanced.Dress.DressDelay = 100;
-            RazorEnhanced.Dress.DressConflict = false;
-            RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
-        }
-
-        private void dressDragDelay_TextChanged(object sender, EventArgs e)
-        {
-            RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-            RazorEnhanced.Dress.RefreshLists();
-        }
-
-        private void dressConflictCheckB_CheckedChanged(object sender, EventArgs e)
-        {
-            RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-            RazorEnhanced.Dress.RefreshLists();
-        }
-
-        private void dressReadB_Click(object sender, EventArgs e)
-        {
-            if (dressListSelect.Text != "")
-                RazorEnhanced.Dress.ReadPlayerDress();
-            else
-                RazorEnhanced.Dress.AddLog("Item list not selected!");
-        }
-
-        private void dressSetBagB_Click(object sender, EventArgs e)
-        {
-
-            if (dressListSelect.Text != "")
-                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemContainerTarget_Callback));
-            else
-                RazorEnhanced.Dress.AddLog("Item list not selected!");
-        }
-
-        private void DressItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-        {
-            Assistant.Item dressBag = Assistant.World.FindItem(serial);
-
-            if (dressBag == null)
-                return;
-
-            if (dressBag != null && dressBag.Serial.IsItem && dressBag.IsContainer)
-            {
-                RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString());
-                RazorEnhanced.Dress.AddLog("Undress Container set to: " + dressBag.ToString());
-                RazorEnhanced.Dress.DressBag = (int)dressBag.Serial.Value;
-
-            }
-            else
-            {
-                RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack");
-                RazorEnhanced.Dress.AddLog("Invalid Undress Container, set backpack");
-                RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
-            }
-
-            RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-            RazorEnhanced.Dress.RefreshLists();
-        }
-        private void dressRemoveB_Click(object sender, EventArgs e)
 		{
-            if (dressListSelect.Text != "")
+			int bag = 0;
+			int delay = 0;
+			bool conflict = false;
+			RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out bag, out delay, out conflict);
+			RazorEnhanced.Dress.DressBag = bag;
+			RazorEnhanced.Dress.DressDelay = delay;
+			RazorEnhanced.Dress.DressConflict = conflict;
+			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshItems();
+
+			if (dressListSelect.Text != "")
+				RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.Text);
+		}
+		private void dressAddListB_Click(object sender, EventArgs e)
+		{
+			EnhancedDressAddList AddItemList = new EnhancedDressAddList();
+			AddItemList.TopMost = true;
+			AddItemList.Show();
+		}
+
+		private void dressRemoveListB_Click(object sender, EventArgs e)
+		{
+			if (dressListSelect.Text != null)
+				RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");
+
+			RazorEnhanced.Dress.DressBag = 0;
+			RazorEnhanced.Dress.DressDelay = 100;
+			RazorEnhanced.Dress.DressConflict = false;
+			RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
+		}
+
+		private void dressDragDelay_TextChanged(object sender, EventArgs e)
+		{
+			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshLists();
+		}
+
+		private void dressConflictCheckB_CheckedChanged(object sender, EventArgs e)
+		{
+			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshLists();
+		}
+
+		private void dressReadB_Click(object sender, EventArgs e)
+		{
+			if (dressListSelect.Text != "")
+				RazorEnhanced.Dress.ReadPlayerDress();
+			else
+				RazorEnhanced.Dress.AddLog("Item list not selected!");
+		}
+
+		private void dressSetBagB_Click(object sender, EventArgs e)
+		{
+
+			if (dressListSelect.Text != "")
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemContainerTarget_Callback));
+			else
+				RazorEnhanced.Dress.AddLog("Item list not selected!");
+		}
+
+		private void DressItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item dressBag = Assistant.World.FindItem(serial);
+
+			if (dressBag == null)
+				return;
+
+			if (dressBag != null && dressBag.Serial.IsItem && dressBag.IsContainer)
+			{
+				RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString());
+				RazorEnhanced.Dress.AddLog("Undress Container set to: " + dressBag.ToString());
+				RazorEnhanced.Dress.DressBag = (int)dressBag.Serial.Value;
+
+			}
+			else
+			{
+				RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack");
+				RazorEnhanced.Dress.AddLog("Invalid Undress Container, set backpack");
+				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
+			}
+
+			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshLists();
+		}
+		private void dressRemoveB_Click(object sender, EventArgs e)
+		{
+			if (dressListSelect.Text != "")
 			{
 				if (dressListView.SelectedItems.Count == 1)
 				{
-                    int index = dressListView.SelectedItems[0].Index;
+					int index = dressListView.SelectedItems[0].Index;
 					string selection = dressListSelect.Text;
 
 					if (RazorEnhanced.Settings.Dress.ListExists(selection))
 					{
 						List<Dress.DressItem> items;
-                        RazorEnhanced.Settings.Dress.ItemsRead(selection, out items);
+						RazorEnhanced.Settings.Dress.ItemsRead(selection, out items);
 						if (index <= items.Count - 1)
 						{
-                            RazorEnhanced.Settings.Dress.ItemDelete(selection, items[index]);
-                            RazorEnhanced.Dress.RefreshItems();
+							RazorEnhanced.Settings.Dress.ItemDelete(selection, items[index]);
+							RazorEnhanced.Dress.RefreshItems();
 						}
 					}
 				}
 			}
 			else
 				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		
-        }
 
-        private void dresslistView_ItemChecked(object sender, ItemCheckedEventArgs e)
-        {
-            if (dressListView.FocusedItem != null)
-            {
-                ListViewItem item = e.Item as ListViewItem;
-                RazorEnhanced.Dress.UpdateSelectedItems(item.Index);
-            }
-        }
-
-        private void dressAddTargetB_Click(object sender, EventArgs e)
-        {
-            if (dressListSelect.Text != "")
-                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemTarget_Callback));
-            else
-                RazorEnhanced.Dress.AddLog("Item list not selected!");
-        }
-
-        private void DressItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-        {
-            Assistant.Item dressItem = Assistant.World.FindItem(serial);
-            if (dressItem != null && dressItem.Serial.IsItem)
-                RazorEnhanced.Dress.AddItemByTarger(dressItem);
-            else
-                RazorEnhanced.Misc.SendMessage("Invalid target");
-        }
-
-    	private void dressAddManualB_Click(object sender, EventArgs e)
-		{
-            if (dressListSelect.Text != "")
-            {
-                EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer();
-                ManualAddLayer.TopMost = true;
-                ManualAddLayer.Show();
-            }
-            else
-                RazorEnhanced.Dress.AddLog("Item list not selected!");
 		}
 
-        private void dressImportListB_Click(object sender, EventArgs e)
-        {
-            RazorEnhanced.ImportExport.ImportDress();
-        }
+		private void dresslistView_ItemChecked(object sender, ItemCheckedEventArgs e)
+		{
+			if (dressListView.FocusedItem != null)
+			{
+				ListViewItem item = e.Item as ListViewItem;
+				RazorEnhanced.Dress.UpdateSelectedItems(item.Index);
+			}
+		}
 
-        private void dressExportListB_Click(object sender, EventArgs e)
-        {
-            if (dressListSelect.Text != "")
-                RazorEnhanced.ImportExport.ExportDress(dressListSelect.Text);
-            else
-                RazorEnhanced.Dress.AddLog("Item list not selected!");
-        }
+		private void dressAddTargetB_Click(object sender, EventArgs e)
+		{
+			if (dressListSelect.Text != "")
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemTarget_Callback));
+			else
+				RazorEnhanced.Dress.AddLog("Item list not selected!");
+		}
 
-        private void razorButton10_Click(object sender, EventArgs e)
-        {
-   			RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+		private void DressItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item dressItem = Assistant.World.FindItem(serial);
+			if (dressItem != null && dressItem.Serial.IsItem)
+				RazorEnhanced.Dress.AddItemByTarger(dressItem);
+			else
+				RazorEnhanced.Misc.SendMessage("Invalid target");
+		}
+
+		private void dressAddManualB_Click(object sender, EventArgs e)
+		{
+			if (dressListSelect.Text != "")
+			{
+				EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer();
+				ManualAddLayer.TopMost = true;
+				ManualAddLayer.Show();
+			}
+			else
+				RazorEnhanced.Dress.AddLog("Item list not selected!");
+		}
+
+		private void dressImportListB_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.ImportExport.ImportDress();
+		}
+
+		private void dressExportListB_Click(object sender, EventArgs e)
+		{
+			if (dressListSelect.Text != "")
+				RazorEnhanced.ImportExport.ExportDress(dressListSelect.Text);
+			else
+				RazorEnhanced.Dress.AddLog("Item list not selected!");
+		}
+
+		private void razorButton10_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
 			int undressbagserial = RazorEnhanced.Dress.DressBag;
 
 			bool StartCheck = true;
@@ -10842,7 +10080,7 @@ namespace Assistant
 				RazorEnhanced.Dress.AddLog("Undress Container Fail, switch packpack: 0x" + Assistant.World.Player.Backpack.Serial.Value.ToString("X8"));
 				RazorEnhanced.Dress.DressBag = Assistant.World.Player.Backpack.Serial;
 			}
-            
+
 			if (StartCheck)
 			{
 				RazorEnhanced.Dress.UndressStart();
@@ -10850,106 +10088,106 @@ namespace Assistant
 				RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
 				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
 
-                dressConflictCheckB.Enabled = false;
-                dressExecuteButton.Enabled = false;
-                undressExecuteButton.Enabled = false;
-                dressAddListB.Enabled = false;
-                dressRemoveListB.Enabled = false;
-                dressExportListB.Enabled = false;
-                dressImportListB.Enabled = false;
+				dressConflictCheckB.Enabled = false;
+				dressExecuteButton.Enabled = false;
+				undressExecuteButton.Enabled = false;
+				dressAddListB.Enabled = false;
+				dressRemoveListB.Enabled = false;
+				dressExportListB.Enabled = false;
+				dressImportListB.Enabled = false;
 				dressDragDelay.Enabled = false;
 			}
 			else
 			{
 				RazorEnhanced.Organizer.AddLog("Fail to start Undress Engine...");
-                dressConflictCheckB.Enabled = true;
-                dressExecuteButton.Enabled = true;
-                undressExecuteButton.Enabled = true;
-                dressAddListB.Enabled = true;
-                dressRemoveListB.Enabled = true;
-                dressExportListB.Enabled = true;
-                dressImportListB.Enabled = true;
-                dressDragDelay.Enabled = true;
+				dressConflictCheckB.Enabled = true;
+				dressExecuteButton.Enabled = true;
+				undressExecuteButton.Enabled = true;
+				dressAddListB.Enabled = true;
+				dressRemoveListB.Enabled = true;
+				dressExportListB.Enabled = true;
+				dressImportListB.Enabled = true;
+				dressDragDelay.Enabled = true;
 			}
 		}
 
-        delegate void UndressFinishWorkCallback();
+		delegate void UndressFinishWorkCallback();
 
-        internal void UndressFinishWork()
-        {
-            if (dressConflictCheckB.InvokeRequired ||
-                dressExecuteButton.InvokeRequired ||
-                undressExecuteButton.InvokeRequired ||
-                dressAddListB.InvokeRequired ||
-                dressRemoveListB.InvokeRequired ||
-                organizerExportListB.InvokeRequired ||
-                organizerImportListB.InvokeRequired ||
-                organizerDragDelay.InvokeRequired)
-            {
-                UndressFinishWorkCallback d = new UndressFinishWorkCallback(UndressFinishWork);
-                this.Invoke(d, null);
-            }
-            else
-            {
-                dressConflictCheckB.Enabled = true;
-                dressExecuteButton.Enabled = true;
-                undressExecuteButton.Enabled = true;
-                dressAddListB.Enabled = true;
-                dressRemoveListB.Enabled = true;
-                dressExportListB.Enabled = true;
-                dressImportListB.Enabled = true;
-                dressDragDelay.Enabled = true;
-            }
-        }
+		internal void UndressFinishWork()
+		{
+			if (dressConflictCheckB.InvokeRequired ||
+				dressExecuteButton.InvokeRequired ||
+				undressExecuteButton.InvokeRequired ||
+				dressAddListB.InvokeRequired ||
+				dressRemoveListB.InvokeRequired ||
+				organizerExportListB.InvokeRequired ||
+				organizerImportListB.InvokeRequired ||
+				organizerDragDelay.InvokeRequired)
+			{
+				UndressFinishWorkCallback d = new UndressFinishWorkCallback(UndressFinishWork);
+				this.Invoke(d, null);
+			}
+			else
+			{
+				dressConflictCheckB.Enabled = true;
+				dressExecuteButton.Enabled = true;
+				undressExecuteButton.Enabled = true;
+				dressAddListB.Enabled = true;
+				dressRemoveListB.Enabled = true;
+				dressExportListB.Enabled = true;
+				dressImportListB.Enabled = true;
+				dressDragDelay.Enabled = true;
+			}
+		}
 
-        private void dressExecuteButton_Click(object sender, EventArgs e)
-        {
-            RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
-            int undressbagserial = RazorEnhanced.Dress.DressBag;
+		private void dressExecuteButton_Click(object sender, EventArgs e)
+		{
+			RazorEnhanced.Item undressbag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+			int undressbagserial = RazorEnhanced.Dress.DressBag;
 
-            bool StartCheck = true;
+			bool StartCheck = true;
 
-            undressbag = RazorEnhanced.Items.FindBySerial(undressbagserial);
-            if (undressbag != null)
-            {
-                RazorEnhanced.Dress.AddLog("Undress Container OK: 0x" + undressbag.Serial.ToString("X8"));
-            }
-            else
-            {
-                RazorEnhanced.Dress.AddLog("Undress Container Fail, switch packpack: 0x" + Assistant.World.Player.Backpack.Serial.Value.ToString("X8"));
-                RazorEnhanced.Dress.DressBag = Assistant.World.Player.Backpack.Serial;
-            }
+			undressbag = RazorEnhanced.Items.FindBySerial(undressbagserial);
+			if (undressbag != null)
+			{
+				RazorEnhanced.Dress.AddLog("Undress Container OK: 0x" + undressbag.Serial.ToString("X8"));
+			}
+			else
+			{
+				RazorEnhanced.Dress.AddLog("Undress Container Fail, switch packpack: 0x" + Assistant.World.Player.Backpack.Serial.Value.ToString("X8"));
+				RazorEnhanced.Dress.DressBag = Assistant.World.Player.Backpack.Serial;
+			}
 
-            if (StartCheck)
-            {
-                RazorEnhanced.Dress.DressStart();
+			if (StartCheck)
+			{
+				RazorEnhanced.Dress.DressStart();
 
-                RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
-                RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
+				RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
+				RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
 
-                dressConflictCheckB.Enabled = false;
-                dressExecuteButton.Enabled = false;
-                undressExecuteButton.Enabled = false;
-                dressAddListB.Enabled = false;
-                dressRemoveListB.Enabled = false;
-                dressExportListB.Enabled = false;
-                dressImportListB.Enabled = false;
-                dressDragDelay.Enabled = false;
-            }
-            else
-            {
-                RazorEnhanced.Organizer.AddLog("Fail to start Dress Engine...");
-                dressConflictCheckB.Enabled = true;
-                dressExecuteButton.Enabled = true;
-                undressExecuteButton.Enabled = true;
-                dressAddListB.Enabled = true;
-                dressRemoveListB.Enabled = true;
-                dressExportListB.Enabled = true;
-                dressImportListB.Enabled = true;
-                dressDragDelay.Enabled = true;
-            }
-        }
+				dressConflictCheckB.Enabled = false;
+				dressExecuteButton.Enabled = false;
+				undressExecuteButton.Enabled = false;
+				dressAddListB.Enabled = false;
+				dressRemoveListB.Enabled = false;
+				dressExportListB.Enabled = false;
+				dressImportListB.Enabled = false;
+				dressDragDelay.Enabled = false;
+			}
+			else
+			{
+				RazorEnhanced.Organizer.AddLog("Fail to start Dress Engine...");
+				dressConflictCheckB.Enabled = true;
+				dressExecuteButton.Enabled = true;
+				undressExecuteButton.Enabled = true;
+				dressAddListB.Enabled = true;
+				dressRemoveListB.Enabled = true;
+				dressExportListB.Enabled = true;
+				dressImportListB.Enabled = true;
+				dressDragDelay.Enabled = true;
+			}
+		}
 
-        // --------------- DRESS END ---------
+		// --------------- DRESS END ---------
 	}
 }
