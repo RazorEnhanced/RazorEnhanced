@@ -59,7 +59,7 @@ namespace Assistant
 			m_PlaySpeed = speed;
 		}
 
-		internal static void Stop()
+		/*internal static void Stop()
 		{
 			if (m_Recording)
 			{
@@ -111,7 +111,7 @@ namespace Assistant
 			}
 		}
 
-		internal static void Record()
+		/*internal static void Record()
 		{
 			if (m_Recording || Playing || World.Player == null)
 				return;
@@ -190,7 +190,7 @@ namespace Assistant
 				MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.RecError), "Rec Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				Engine.LogCrash(e);
 			}
-		}
+		}*/
 
 		private static void SaveWorldState()
 		{
@@ -233,10 +233,8 @@ namespace Assistant
 			else if (m_Recording && p != null)
 			{
 				if (World.Player == null)
-				{
-					Stop();
 					return true;
-				}
+
 
 				switch (p.PacketID)
 				{
@@ -568,10 +566,6 @@ namespace Assistant
 				m_PlayTimer = Timer.DelayedCallback(TimeSpan.FromMilliseconds(delay * SpeedScalar() * 0.75), m_SendNext);
 				m_PlayTimer.Start();
 			}
-			else
-			{
-				Stop();
-			}
 		}
 
 		internal static void OnScroll()
@@ -647,10 +641,6 @@ namespace Assistant
 				{
 					m_PlayTimer = Timer.DelayedCallback(delay, m_SendNext);
 					m_PlayTimer.Start();
-				}
-				else
-				{
-					Stop();
 				}
 			}
 

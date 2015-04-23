@@ -1005,7 +1005,6 @@ namespace Assistant
 							BringToFront(FindUOWindow());
 							PacketPlayer.Open(sb.ToString());
 							Engine.MainWindow.ShowMe();
-							Engine.MainWindow.SwitchToVidTab();
 						}
 						break;
 					}
@@ -1065,10 +1064,6 @@ namespace Assistant
 				case UONetMessage.Close:
 					OnLogout();
 					ClientProc = null;
-					try { PacketPlayer.Stop(); }
-					catch { }
-					try { AVIRec.Stop(); }
-					catch { }
 					Engine.MainWindow.CanClose = true;
 					Engine.MainWindow.Close();
 					break;

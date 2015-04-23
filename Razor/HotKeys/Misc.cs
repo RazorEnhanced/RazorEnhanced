@@ -8,9 +8,6 @@ namespace Assistant.HotKeys
 		public static void Initialize()
 		{
 			HotKey.Add(HKCategory.Misc, LocString.Resync, new HotKeyCallback(Resync));
-			HotKey.Add(HKCategory.Misc, LocString.RecStart, new HotKeyCallback(PacketPlayer.Record));
-			HotKey.Add(HKCategory.Misc, LocString.VidStop, new HotKeyCallback(PacketPlayer.Stop));
-
 			HotKey.Add(HKCategory.Misc, LocString.ClearDragDropQueue, new HotKeyCallback(DragDropManager.GracefulStop));
 
 			HotKey.Add(HKCategory.Misc, LocString.LastSpell, new HotKeyCallback(LastSpell));

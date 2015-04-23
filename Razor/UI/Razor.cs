@@ -172,28 +172,7 @@ namespace Assistant
 		private RazorCheckBox rememberPwds;
 		private RazorCheckBox blockDis;
 		private System.Windows.Forms.Label label12;
-		private RazorComboBox imgFmt;
-		private System.Windows.Forms.TabPage videoTab;
-		private RazorButton vidRec;
-		private System.Windows.Forms.GroupBox groupBox7;
-		private System.Windows.Forms.GroupBox groupBox9;
-		private RazorButton vidOpen;
-		private RazorButton vidPlay;
-		private RazorButton vidPlayStop;
-		private System.Windows.Forms.Label vidPlayInfo;
-		private System.Windows.Forms.TrackBar playPos;
-		private RazorButton vidClose;
-		private System.Windows.Forms.Label label14;
-		private RazorComboBox playSpeed;
-		private System.Windows.Forms.GroupBox groupBox10;
-		private System.Windows.Forms.Label label15;
-		private RazorEnhanced.UI.RazorTextBox aviFPS;
-		private System.Windows.Forms.Label label16;
-		private RazorComboBox aviRes;
-		private RazorButton recAVI;
-		private RazorButton recFolder;
-		private System.Windows.Forms.Label label13;
-		private RazorEnhanced.UI.RazorTextBox txtRecFolder;
+        private RazorComboBox imgFmt;
 		private System.Windows.Forms.TreeView macroTree;
 		private ToolTip m_Tip;
 		#endregion
@@ -209,18 +188,14 @@ namespace Assistant
 		private RazorTextBox forceSizeX;
 		private RazorTextBox forceSizeY;
 		private System.Windows.Forms.Label label18;
-		private RazorCheckBox gameSize;
-		private RazorCheckBox flipVidHoriz;
-		private RazorCheckBox flipVidVert;
-		private System.Windows.Forms.Label label19;
+        private RazorCheckBox gameSize;
 		private RazorCheckBox potionEquip;
 		private RazorTextBox warnNum;
 		private RazorCheckBox warnCount;
 		private RazorCheckBox blockHealPoison;
 		private RazorCheckBox negotiate;
 		private System.Windows.Forms.PictureBox lockBox;
-		private RazorButton btnMap;
-		private System.Windows.Forms.Label rpvTime;
+        private RazorButton btnMap;
 		private RazorCheckBox showNotoHue;
 		private RazorCheckBox preAOSstatbar;
 		private RazorCheckBox showHealthOH;
@@ -502,11 +477,6 @@ namespace Assistant
 			m_NotifyIcon.ContextMenu.MenuItems[0].DefaultItem = true;
 		}
 
-		internal void SwitchToVidTab()
-		{
-			tabs.SelectedTab = videoTab;
-		}
-
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
@@ -702,31 +672,6 @@ namespace Assistant
             this.actionList = new System.Windows.Forms.ListBox();
             this.delMacro = new RazorEnhanced.UI.RazorButton();
             this.newMacro = new RazorEnhanced.UI.RazorButton();
-            this.videoTab = new System.Windows.Forms.TabPage();
-            this.txtRecFolder = new RazorEnhanced.UI.RazorTextBox();
-            this.recFolder = new RazorEnhanced.UI.RazorButton();
-            this.label13 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.vidRec = new RazorEnhanced.UI.RazorButton();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.flipVidVert = new RazorEnhanced.UI.RazorCheckBox();
-            this.flipVidHoriz = new RazorEnhanced.UI.RazorCheckBox();
-            this.recAVI = new RazorEnhanced.UI.RazorButton();
-            this.aviRes = new RazorEnhanced.UI.RazorComboBox();
-            this.aviFPS = new RazorEnhanced.UI.RazorTextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.rpvTime = new System.Windows.Forms.Label();
-            this.playSpeed = new RazorEnhanced.UI.RazorComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.vidClose = new RazorEnhanced.UI.RazorButton();
-            this.playPos = new System.Windows.Forms.TrackBar();
-            this.vidPlayStop = new RazorEnhanced.UI.RazorButton();
-            this.vidPlay = new RazorEnhanced.UI.RazorButton();
-            this.vidPlayInfo = new System.Windows.Forms.Label();
-            this.vidOpen = new RazorEnhanced.UI.RazorButton();
             this.screenshotTab = new System.Windows.Forms.TabPage();
             this.imgFmt = new RazorEnhanced.UI.RazorComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -933,11 +878,6 @@ namespace Assistant
             this.groupBox8.SuspendLayout();
             this.macrosTab.SuspendLayout();
             this.macroActGroup.SuspendLayout();
-            this.videoTab.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox10.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.playPos)).BeginInit();
             this.screenshotTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
             this.statusTab.SuspendLayout();
@@ -1003,7 +943,6 @@ namespace Assistant
             this.tabs.Controls.Add(this.agentsTab);
             this.tabs.Controls.Add(this.hotkeysTab);
             this.tabs.Controls.Add(this.macrosTab);
-            this.tabs.Controls.Add(this.videoTab);
             this.tabs.Controls.Add(this.screenshotTab);
             this.tabs.Controls.Add(this.statusTab);
             this.tabs.Controls.Add(this.scriptingTab);
@@ -2807,293 +2746,6 @@ namespace Assistant
             this.newMacro.Text = "New...";
             this.newMacro.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.newMacro.Click += new System.EventHandler(this.newMacro_Click);
-            // 
-            // videoTab
-            // 
-            this.videoTab.Controls.Add(this.txtRecFolder);
-            this.videoTab.Controls.Add(this.recFolder);
-            this.videoTab.Controls.Add(this.label13);
-            this.videoTab.Controls.Add(this.groupBox7);
-            this.videoTab.Controls.Add(this.groupBox10);
-            this.videoTab.Controls.Add(this.groupBox9);
-            this.videoTab.Location = new System.Drawing.Point(4, 40);
-            this.videoTab.Name = "videoTab";
-            this.videoTab.Size = new System.Drawing.Size(666, 366);
-            this.videoTab.TabIndex = 11;
-            this.videoTab.Text = "Video Capture";
-            // 
-            // txtRecFolder
-            // 
-            this.txtRecFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRecFolder.BackColor = System.Drawing.Color.White;
-            this.txtRecFolder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRecFolder.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.txtRecFolder.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtRecFolder.Location = new System.Drawing.Point(7, 29);
-            this.txtRecFolder.Name = "txtRecFolder";
-            this.txtRecFolder.Size = new System.Drawing.Size(225, 20);
-            this.txtRecFolder.TabIndex = 16;
-            this.txtRecFolder.TextChanged += new System.EventHandler(this.txtRecFolder_TextChanged);
-            // 
-            // recFolder
-            // 
-            this.recFolder.ColorTable = office2010BlueTheme1;
-            this.recFolder.Location = new System.Drawing.Point(237, 29);
-            this.recFolder.Name = "recFolder";
-            this.recFolder.Size = new System.Drawing.Size(23, 19);
-            this.recFolder.TabIndex = 15;
-            this.recFolder.Text = "...";
-            this.recFolder.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.recFolder.Click += new System.EventHandler(this.recFolder_Click);
-            // 
-            // label13
-            // 
-            this.label13.Location = new System.Drawing.Point(7, 14);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(100, 15);
-            this.label13.TabIndex = 17;
-            this.label13.Text = "Recordings Folder:";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.vidRec);
-            this.groupBox7.Location = new System.Drawing.Point(9, 68);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(251, 48);
-            this.groupBox7.TabIndex = 12;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "PacketVideo Recording";
-            // 
-            // vidRec
-            // 
-            this.vidRec.ColorTable = office2010BlueTheme1;
-            this.vidRec.Location = new System.Drawing.Point(36, 18);
-            this.vidRec.Name = "vidRec";
-            this.vidRec.Size = new System.Drawing.Size(181, 20);
-            this.vidRec.TabIndex = 1;
-            this.vidRec.Text = "Record PacketVideo";
-            this.vidRec.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.vidRec.Click += new System.EventHandler(this.vidRec_Click);
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.Controls.Add(this.flipVidVert);
-            this.groupBox10.Controls.Add(this.flipVidHoriz);
-            this.groupBox10.Controls.Add(this.recAVI);
-            this.groupBox10.Controls.Add(this.aviRes);
-            this.groupBox10.Controls.Add(this.aviFPS);
-            this.groupBox10.Controls.Add(this.label16);
-            this.groupBox10.Controls.Add(this.label15);
-            this.groupBox10.Controls.Add(this.label19);
-            this.groupBox10.Location = new System.Drawing.Point(9, 138);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(251, 111);
-            this.groupBox10.TabIndex = 14;
-            this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "AVI Video Recording";
-            // 
-            // flipVidVert
-            // 
-            this.flipVidVert.Location = new System.Drawing.Point(128, 46);
-            this.flipVidVert.Name = "flipVidVert";
-            this.flipVidVert.Size = new System.Drawing.Size(62, 20);
-            this.flipVidVert.TabIndex = 6;
-            this.flipVidVert.Text = "Verticle";
-            this.flipVidVert.CheckedChanged += new System.EventHandler(this.flipVidVert_CheckedChanged);
-            // 
-            // flipVidHoriz
-            // 
-            this.flipVidHoriz.Location = new System.Drawing.Point(50, 46);
-            this.flipVidHoriz.Name = "flipVidHoriz";
-            this.flipVidHoriz.Size = new System.Drawing.Size(74, 20);
-            this.flipVidHoriz.TabIndex = 5;
-            this.flipVidHoriz.Text = "Horizontal";
-            this.flipVidHoriz.CheckedChanged += new System.EventHandler(this.flipVidHoriz_CheckedChanged);
-            // 
-            // recAVI
-            // 
-            this.recAVI.ColorTable = office2010BlueTheme1;
-            this.recAVI.Location = new System.Drawing.Point(10, 68);
-            this.recAVI.Name = "recAVI";
-            this.recAVI.Size = new System.Drawing.Size(182, 20);
-            this.recAVI.TabIndex = 4;
-            this.recAVI.Text = "Record AVI Video...";
-            this.recAVI.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.recAVI.Click += new System.EventHandler(this.recAVI_Click);
-            // 
-            // aviRes
-            // 
-            this.aviRes.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.aviRes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.aviRes.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.aviRes.Items.AddRange(new object[] {
-            "Full Size",
-            "3/4",
-            "1/2",
-            "1/4"});
-            this.aviRes.Location = new System.Drawing.Point(126, 16);
-            this.aviRes.Name = "aviRes";
-            this.aviRes.Size = new System.Drawing.Size(66, 22);
-            this.aviRes.TabIndex = 3;
-            this.aviRes.SelectedIndexChanged += new System.EventHandler(this.aviRes_SelectedIndexChanged);
-            // 
-            // aviFPS
-            // 
-            this.aviFPS.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.aviFPS.BackColor = System.Drawing.Color.White;
-            this.aviFPS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.aviFPS.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.aviFPS.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.aviFPS.Location = new System.Drawing.Point(36, 17);
-            this.aviFPS.Name = "aviFPS";
-            this.aviFPS.Size = new System.Drawing.Size(26, 20);
-            this.aviFPS.TabIndex = 1;
-            this.aviFPS.TextChanged += new System.EventHandler(this.aviFPS_TextChanged);
-            // 
-            // label16
-            // 
-            this.label16.Location = new System.Drawing.Point(70, 20);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(62, 16);
-            this.label16.TabIndex = 2;
-            this.label16.Text = "Resolution:";
-            // 
-            // label15
-            // 
-            this.label15.Location = new System.Drawing.Point(10, 20);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(30, 16);
-            this.label15.TabIndex = 0;
-            this.label15.Text = "FPS:";
-            // 
-            // label19
-            // 
-            this.label19.Location = new System.Drawing.Point(10, 46);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(50, 18);
-            this.label19.TabIndex = 7;
-            this.label19.Text = "Flip:";
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Controls.Add(this.rpvTime);
-            this.groupBox9.Controls.Add(this.playSpeed);
-            this.groupBox9.Controls.Add(this.label14);
-            this.groupBox9.Controls.Add(this.vidClose);
-            this.groupBox9.Controls.Add(this.playPos);
-            this.groupBox9.Controls.Add(this.vidPlayStop);
-            this.groupBox9.Controls.Add(this.vidPlay);
-            this.groupBox9.Controls.Add(this.vidPlayInfo);
-            this.groupBox9.Controls.Add(this.vidOpen);
-            this.groupBox9.Location = new System.Drawing.Point(281, 14);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(245, 263);
-            this.groupBox9.TabIndex = 13;
-            this.groupBox9.TabStop = false;
-            this.groupBox9.Text = "PacketVideo Playback";
-            // 
-            // rpvTime
-            // 
-            this.rpvTime.Location = new System.Drawing.Point(132, 68);
-            this.rpvTime.Name = "rpvTime";
-            this.rpvTime.Size = new System.Drawing.Size(108, 20);
-            this.rpvTime.TabIndex = 8;
-            this.rpvTime.Text = "00:00/00:00";
-            // 
-            // playSpeed
-            // 
-            this.playSpeed.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.playSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.playSpeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.playSpeed.Items.AddRange(new object[] {
-            "1/4",
-            "1/2",
-            "Reg",
-            "2x",
-            "4x"});
-            this.playSpeed.Location = new System.Drawing.Point(194, 41);
-            this.playSpeed.Name = "playSpeed";
-            this.playSpeed.Size = new System.Drawing.Size(44, 22);
-            this.playSpeed.TabIndex = 7;
-            this.playSpeed.SelectedIndexChanged += new System.EventHandler(this.playSpeed_SelectedIndexChanged);
-            // 
-            // label14
-            // 
-            this.label14.Location = new System.Drawing.Point(146, 44);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(44, 17);
-            this.label14.TabIndex = 6;
-            this.label14.Text = "Speed:";
-            // 
-            // vidClose
-            // 
-            this.vidClose.ColorTable = office2010BlueTheme1;
-            this.vidClose.Enabled = false;
-            this.vidClose.Location = new System.Drawing.Point(134, 18);
-            this.vidClose.Name = "vidClose";
-            this.vidClose.Size = new System.Drawing.Size(104, 20);
-            this.vidClose.TabIndex = 5;
-            this.vidClose.Text = "Close";
-            this.vidClose.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.vidClose.Click += new System.EventHandler(this.vidClose_Click);
-            // 
-            // playPos
-            // 
-            this.playPos.AutoSize = false;
-            this.playPos.Location = new System.Drawing.Point(4, 68);
-            this.playPos.Maximum = 1;
-            this.playPos.Name = "playPos";
-            this.playPos.Size = new System.Drawing.Size(132, 20);
-            this.playPos.TabIndex = 4;
-            this.playPos.TickFrequency = 5;
-            this.playPos.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.playPos.Scroll += new System.EventHandler(this.playPos_Scroll);
-            // 
-            // vidPlayStop
-            // 
-            this.vidPlayStop.ColorTable = office2010BlueTheme1;
-            this.vidPlayStop.Enabled = false;
-            this.vidPlayStop.Location = new System.Drawing.Point(68, 42);
-            this.vidPlayStop.Name = "vidPlayStop";
-            this.vidPlayStop.Size = new System.Drawing.Size(46, 20);
-            this.vidPlayStop.TabIndex = 3;
-            this.vidPlayStop.Text = "Stop";
-            this.vidPlayStop.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.vidPlayStop.Click += new System.EventHandler(this.vidPlayStop_Click);
-            // 
-            // vidPlay
-            // 
-            this.vidPlay.ColorTable = office2010BlueTheme1;
-            this.vidPlay.Enabled = false;
-            this.vidPlay.Location = new System.Drawing.Point(10, 42);
-            this.vidPlay.Name = "vidPlay";
-            this.vidPlay.Size = new System.Drawing.Size(46, 20);
-            this.vidPlay.TabIndex = 2;
-            this.vidPlay.Text = "Play";
-            this.vidPlay.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.vidPlay.Click += new System.EventHandler(this.vidPlay_Click);
-            // 
-            // vidPlayInfo
-            // 
-            this.vidPlayInfo.Location = new System.Drawing.Point(7, 93);
-            this.vidPlayInfo.Name = "vidPlayInfo";
-            this.vidPlayInfo.Size = new System.Drawing.Size(233, 168);
-            this.vidPlayInfo.TabIndex = 1;
-            // 
-            // vidOpen
-            // 
-            this.vidOpen.ColorTable = office2010BlueTheme1;
-            this.vidOpen.Location = new System.Drawing.Point(10, 18);
-            this.vidOpen.Name = "vidOpen";
-            this.vidOpen.Size = new System.Drawing.Size(104, 20);
-            this.vidOpen.TabIndex = 0;
-            this.vidOpen.Text = "Open...";
-            this.vidOpen.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.vidOpen.Click += new System.EventHandler(this.vidOpen_Click);
             // 
             // screenshotTab
             // 
@@ -5117,13 +4769,6 @@ namespace Assistant
             this.groupBox8.PerformLayout();
             this.macrosTab.ResumeLayout(false);
             this.macroActGroup.ResumeLayout(false);
-            this.videoTab.ResumeLayout(false);
-            this.videoTab.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox10.ResumeLayout(false);
-            this.groupBox10.PerformLayout();
-            this.groupBox9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.playPos)).EndInit();
             this.screenshotTab.ResumeLayout(false);
             this.screenshotTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
@@ -5376,12 +5021,6 @@ namespace Assistant
 				Config.SetProperty("ImageFormat", "jpg");
 			}
 
-			PacketPlayer.SetControls(vidPlayInfo, vidRec, vidPlay, vidPlayStop, vidClose, playPos, rpvTime);
-			txtRecFolder.Text = Config.GetString("RecFolder");
-			aviFPS.Text = Config.GetInt("AviFPS").ToString();
-			aviRes.SelectedIndex = Config.GetInt("AviRes");
-			playSpeed.SelectedIndex = 2;
-
 			InitPreviewHue(lblExHue, "ExemptColor");
 			InitPreviewHue(lblMsgHue, "SysColor");
 			InitPreviewHue(lblWarnHue, "WarningColor");
@@ -5417,9 +5056,6 @@ namespace Assistant
 			smartCPU.Checked = Config.GetBool("SmartCPU");
 
 			autoFriend.Checked = Config.GetBool("AutoFriend");
-
-			flipVidHoriz.Checked = Config.GetBool("FlipVidH");
-			flipVidVert.Checked = Config.GetBool("FlipVidV");
 
 			try
 			{
@@ -6075,13 +5711,6 @@ namespace Assistant
 				DisableCloseButton();
 				e.Cancel = true;
 			}
-			else
-			{
-				PacketPlayer.Stop();
-				AVIRec.Stop();
-			}
-			//if ( Engine.NoPatch )
-			//	e.Cancel = MessageBox.Show( this, "Are you sure you want to close Razor?\n(This will not close the UO client.)", "Close Razor?", MessageBoxButtons.YesNo, MessageBoxIcon.Question ) == DialogResult.No;
 		}
 
 		private void skillCopySel_Click(object sender, System.EventArgs e)
@@ -7949,131 +7578,6 @@ namespace Assistant
 			else
 				Config.SetProperty("ImageFormat", "jpg");
 		}
-
-		private void vidRec_Click(object sender, System.EventArgs e)
-		{
-			if (!PacketPlayer.Playing)
-			{
-				if (PacketPlayer.Recording)
-					PacketPlayer.Stop();
-				else
-					PacketPlayer.Record();
-			}
-		}
-
-		private void recFolder_Click(object sender, System.EventArgs e)
-		{
-			FolderBrowserDialog folder = new FolderBrowserDialog();
-			folder.Description = "Select Recording Folder";//Language.GetString( LocString.SelRecFolder );
-			folder.SelectedPath = Config.GetString("RecFolder");
-			folder.ShowNewFolderButton = true;
-
-			if (folder.ShowDialog(this) == DialogResult.OK)
-			{
-				Config.SetProperty("RecFolder", folder.SelectedPath);
-				txtRecFolder.Text = folder.SelectedPath;
-			}
-		}
-
-		private void vidPlay_Click(object sender, System.EventArgs e)
-		{
-			if (!PacketPlayer.Playing)
-				PacketPlayer.Play();
-			else
-				PacketPlayer.Pause();
-		}
-
-		private void vidPlayStop_Click(object sender, System.EventArgs e)
-		{
-			if (PacketPlayer.Playing)
-				PacketPlayer.Stop();
-		}
-
-		private void vidOpen_Click(object sender, System.EventArgs e)
-		{
-			OpenFileDialog ofd = new OpenFileDialog();
-			ofd.AddExtension = false;
-			ofd.CheckFileExists = true;
-			ofd.CheckPathExists = true;
-			ofd.DefaultExt = "rpv";
-			ofd.DereferenceLinks = true;
-			ofd.Filter = "Razor PacketVideo (*.rpv)|*.rpv|All Files (*.*)|*.*";
-			ofd.FilterIndex = 0;
-			ofd.InitialDirectory = Config.GetString("RecFolder");
-			ofd.Multiselect = false;
-			ofd.RestoreDirectory = true;
-			ofd.ShowHelp = ofd.ShowReadOnly = false;
-			ofd.Title = "Select a Video File...";
-			ofd.ValidateNames = true;
-
-			if (ofd.ShowDialog(this) == DialogResult.OK)
-				PacketPlayer.Open(ofd.FileName);
-		}
-
-		private void playPos_Scroll(object sender, System.EventArgs e)
-		{
-			PacketPlayer.OnScroll();
-		}
-
-		private void txtRecFolder_TextChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("RecFolder", txtRecFolder.Text);
-		}
-
-		private void vidClose_Click(object sender, System.EventArgs e)
-		{
-			PacketPlayer.Close();
-		}
-
-		private void playSpeed_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			PacketPlayer.SetSpeed(playSpeed.SelectedIndex - 2);
-		}
-
-		private void recAVI_Click(object sender, System.EventArgs e)
-		{
-			if (!AVIRec.Recording)
-			{
-				double res = 1.00;
-				switch (Config.GetInt("AviRes"))
-				{
-					case 1: res = 0.75; break;
-					case 2: res = 0.50; break;
-					case 3: res = 0.25; break;
-				}
-				if (AVIRec.Record(Config.GetInt("AviFPS"), res))
-				{
-					recAVI.Text = "Stop Rec";
-				}
-			}
-			else
-			{
-				AVIRec.Stop();
-				recAVI.Text = "Record AVI Video";
-			}
-		}
-
-		private void aviFPS_TextChanged(object sender, System.EventArgs e)
-		{
-			try
-			{
-				int fps = Convert.ToInt32(aviFPS.Text);
-				if (fps < 5)
-					fps = 5;
-				else if (fps > 30)
-					fps = 30;
-				Config.SetProperty("AviFPS", fps);
-			}
-			catch
-			{
-			}
-		}
-
-		private void aviRes_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("AviRes", aviRes.SelectedIndex);
-		}
-
 		private void autoFriend_CheckedChanged(object sender, System.EventArgs e)
 		{
 			Config.SetProperty("AutoFriend", autoFriend.Checked);
@@ -8099,18 +7603,6 @@ namespace Assistant
 			string file = screensList.SelectedItem as String;
 			if (file != null)
 				System.Diagnostics.Process.Start(Path.Combine(Config.GetString("CapPath"), file));
-		}
-
-		private void flipVidHoriz_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("FlipVidH", flipVidHoriz.Checked);
-			AVIRec.UpdateFlip();
-		}
-
-		private void flipVidVert_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("FlipVidV", flipVidVert.Checked);
-			AVIRec.UpdateFlip();
 		}
 
 		private Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));
@@ -8623,9 +8115,8 @@ namespace Assistant
 				RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
 				AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
-
-			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true);
-			RazorEnhanced.AutoLoot.RefreshLists();
+			 this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true);});
+             this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.RefreshLists(); });
 		}
 
 		private void autoLootAddItemTarget_Click(object sender, EventArgs e)
@@ -8642,7 +8133,7 @@ namespace Assistant
 			if (autoLootItem != null && autoLootItem.Serial.IsItem)
 			{
 				RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
-				RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue);
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
 
 			}
 			else

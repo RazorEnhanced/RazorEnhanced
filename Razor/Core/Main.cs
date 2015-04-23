@@ -310,22 +310,6 @@ namespace Assistant
                     RazorEnhanced.UI.EnhancedScriptEditor.End();
                     RazorEnhanced.Scripts.Auto = false;
 
-                    try
-                    {
-                        PacketPlayer.Stop();
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-
-                    try
-                    {
-                        AVIRec.Stop();
-                    }
-                    catch (Exception ex)
-                    {
-                    }
-
                     ClientCommunication.Close();
                     Counter.Save();
                     Macros.MacroManager.Save();
