@@ -5156,9 +5156,9 @@ namespace Assistant
 			m_CanClose = false;
 		}
 
-		private static void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
+		private void OnTimedEvent(object source, System.Timers.ElapsedEventArgs e)
 		{
-			Assistant.Timer.Slice();
+			this.BeginInvoke((MethodInvoker)delegate { Assistant.Timer.Slice(); });
 		}
 
 		private void MainForm_Load(object sender, System.EventArgs e)
@@ -5570,8 +5570,8 @@ namespace Assistant
 				}
 			}
 
-			//if (tabs.SelectedTab != statusTab)
-			//	return;
+			if (tabs.SelectedTab != statusTab)
+				return;
 
 			int time = 0;
 			if (ClientCommunication.ConnectionStart != DateTime.MinValue)
