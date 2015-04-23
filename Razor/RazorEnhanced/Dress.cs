@@ -912,5 +912,78 @@ namespace RazorEnhanced
                 m_UndressThread.Abort();
             }
         }
+
+        // Funzioni da script
+
+        public static bool DressStatus()
+        {
+            if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
+                return true;
+            else
+                return false;
+        }
+
+        public static bool UnDressStatus()
+        {
+            if (m_UndressThread != null && m_UndressThread.ThreadState != ThreadState.Stopped)
+                return true;
+            else
+                return false;
+        }
+
+        public static void DressFStart()
+        {
+            if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressExecuteButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressExecuteButton.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
+        }
+        public static void UnDressFStart()
+        {
+            if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
+                Assistant.Engine.MainWindow.UnDressExecuteButton.Invoke(new Action(() => Assistant.Engine.MainWindow.UnDressExecuteButton.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
+        }
+        public static void DressFStop()
+        {
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStopButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressStopButton.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Dress.DressFStop: Dress not running");
+        }
+
+        public static void UnDressFStop()
+        {
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStopButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressStopButton.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
+        }
+
+        public static void ChangeList(string nomelista)
+        {
+            bool ListaOK = false;
+            for (int i = 0; i < Assistant.Engine.MainWindow.DressListSelect.Items.Count; i++)
+            {
+                if (nomelista == Assistant.Engine.MainWindow.DressListSelect.GetItemText(Assistant.Engine.MainWindow.DressListSelect.Items[i]))
+                    ListaOK = true;
+            }
+            if (!ListaOK)
+                Misc.SendMessage("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
+            else
+            {
+                if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart
+                {
+                    Assistant.Engine.MainWindow.DressStopButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressStopButton.PerformClick()));
+                    Assistant.Engine.MainWindow.DressListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = Assistant.Engine.MainWindow.DressListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                    Assistant.Engine.MainWindow.DressExecuteButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressExecuteButton.PerformClick()));
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.DressListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = Assistant.Engine.MainWindow.DressListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                }
+            }
+        }
     }
 }

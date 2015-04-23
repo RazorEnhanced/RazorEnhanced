@@ -449,6 +449,10 @@ namespace Assistant
 		internal ComboBox DressListSelect { get { return dressListSelect; } }
 		internal Label DressBagLabel { get { return dressBagLabel; } }
 
+        internal Button DressExecuteButton { get { return dressExecuteButton; } }
+        internal Button UnDressExecuteButton { get { return undressExecuteButton; } }
+        internal Button DressStopButton { get { return dressStopButton; } }
+
 		// GumpInspector Flag
 
 		internal bool GumpInspectorEnable = false;
@@ -2903,7 +2907,7 @@ namespace Assistant
             this.statusTab.Name = "statusTab";
             this.statusTab.Size = new System.Drawing.Size(666, 366);
             this.statusTab.TabIndex = 9;
-            this.statusTab.Text = "Help  / Status";
+            this.statusTab.Text = "Help / Status";
             // 
             // panelLogo
             // 
@@ -9751,6 +9755,7 @@ namespace Assistant
             dressImportListB.Enabled = true;
             dressDragDelay.Enabled = true;
         }
+        // --------------- DRESS END ---------
 
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {
@@ -9758,6 +9763,6 @@ namespace Assistant
         }
 
 
-		// --------------- DRESS END ---------
+
 	}
 }

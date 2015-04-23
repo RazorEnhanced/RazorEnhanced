@@ -189,18 +189,21 @@ namespace RazorEnhanced
 
 			ScriptScope scope = engine.CreateScope(globals);
 			scope.SetVariable("Misc", new RazorEnhanced.Misc());
-			scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
 			scope.SetVariable("Items", new RazorEnhanced.Items());
 			scope.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
 			scope.SetVariable("Player", new RazorEnhanced.Player());
-			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
 			scope.SetVariable("Spells", new RazorEnhanced.Spells());
-            scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
-            scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
-            scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
             scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
             scope.SetVariable("Journal", new RazorEnhanced.Journal());
             scope.SetVariable("Target", new RazorEnhanced.Target());
+
+            scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
+            scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
+            scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
+            scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
+            scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
+            scope.SetVariable("Dress", new RazorEnhanced.Dress());
+
 			return scope;
 		}
 
