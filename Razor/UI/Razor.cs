@@ -342,12 +342,11 @@ namespace Assistant
         private System.Windows.Forms.Timer timerupdatestatus;
         private TabPage friends;
         private RazorButton btnMap;
-        private GroupBox groupBox2;
+        private GroupBox friendloggroupBox;
         private ListBox friendLogBox;
         private RazorCheckBox friendIncludePartyCheckBox;
         private RazorCheckBox friendAttackCheckBox;
         private RazorCheckBox friendPartyCheckBox;
-        private RazorCheckBox friendEnableCheckBox;
         private ListView friendlistView;
         private ColumnHeader columnHeader28;
         private ColumnHeader columnHeader29;
@@ -357,7 +356,7 @@ namespace Assistant
         private RazorButton friendButtonImportList;
         private RazorComboBox friendListSelect;
         private RazorButton friendButtonExportList;
-        private Label label7;
+        private Label labelfriend;
         private GroupBox friendGroupBox;
         private RazorButton friendAddTargetButton;
         private RazorButton friendRemoveButton;
@@ -434,7 +433,6 @@ namespace Assistant
         internal ListBox FriendLogBox { get { return friendLogBox; } }
         internal ListView FriendListView { get { return friendlistView; } }
         internal RazorComboBox FriendListSelect { get { return FriendListSelect; } }
-        internal RazorCheckBox FriendEnableCheckBox { get { return friendEnableCheckBox; } }
         internal RazorCheckBox FriendPartyCheckBox { get { return friendPartyCheckBox; } }
         internal RazorCheckBox FriendAttackCheckBox { get { return friendAttackCheckBox; } }
         internal RazorCheckBox FriendIncludePartyCheckBox { get { return friendIncludePartyCheckBox; } }
@@ -805,12 +803,11 @@ namespace Assistant
             this.friendAddTargetButton = new RazorEnhanced.UI.RazorButton();
             this.friendRemoveButton = new RazorEnhanced.UI.RazorButton();
             this.friendAddButton = new RazorEnhanced.UI.RazorButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.friendloggroupBox = new System.Windows.Forms.GroupBox();
             this.friendLogBox = new System.Windows.Forms.ListBox();
             this.friendIncludePartyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.friendAttackCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.friendPartyCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.friendEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.friendlistView = new System.Windows.Forms.ListView();
             this.columnHeader28 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader29 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -820,7 +817,7 @@ namespace Assistant
             this.friendButtonImportList = new RazorEnhanced.UI.RazorButton();
             this.friendListSelect = new RazorEnhanced.UI.RazorComboBox();
             this.friendButtonExportList = new RazorEnhanced.UI.RazorButton();
-            this.label7 = new System.Windows.Forms.Label();
+            this.labelfriend = new System.Windows.Forms.Label();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
@@ -865,7 +862,7 @@ namespace Assistant
             this.groupBox21.SuspendLayout();
             this.friends.SuspendLayout();
             this.friendGroupBox.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.friendloggroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
@@ -4195,18 +4192,17 @@ namespace Assistant
             // friends
             // 
             this.friends.Controls.Add(this.friendGroupBox);
-            this.friends.Controls.Add(this.groupBox2);
+            this.friends.Controls.Add(this.friendloggroupBox);
             this.friends.Controls.Add(this.friendIncludePartyCheckBox);
             this.friends.Controls.Add(this.friendAttackCheckBox);
             this.friends.Controls.Add(this.friendPartyCheckBox);
-            this.friends.Controls.Add(this.friendEnableCheckBox);
             this.friends.Controls.Add(this.friendlistView);
             this.friends.Controls.Add(this.friendButtonRemoveList);
             this.friends.Controls.Add(this.friendButtonAddList);
             this.friends.Controls.Add(this.friendButtonImportList);
             this.friends.Controls.Add(this.friendListSelect);
             this.friends.Controls.Add(this.friendButtonExportList);
-            this.friends.Controls.Add(this.label7);
+            this.friends.Controls.Add(this.labelfriend);
             this.friends.Location = new System.Drawing.Point(4, 22);
             this.friends.Name = "friends";
             this.friends.Padding = new System.Windows.Forms.Padding(3);
@@ -4220,7 +4216,7 @@ namespace Assistant
             this.friendGroupBox.Controls.Add(this.friendAddTargetButton);
             this.friendGroupBox.Controls.Add(this.friendRemoveButton);
             this.friendGroupBox.Controls.Add(this.friendAddButton);
-            this.friendGroupBox.Location = new System.Drawing.Point(545, 63);
+            this.friendGroupBox.Location = new System.Drawing.Point(545, 51);
             this.friendGroupBox.Name = "friendGroupBox";
             this.friendGroupBox.Size = new System.Drawing.Size(103, 100);
             this.friendGroupBox.TabIndex = 76;
@@ -4257,35 +4253,35 @@ namespace Assistant
             this.friendAddButton.Text = "Add Manual";
             this.friendAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
-            // groupBox2
+            // friendloggroupBox
             // 
-            this.groupBox2.Controls.Add(this.friendLogBox);
-            this.groupBox2.Location = new System.Drawing.Point(270, 179);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(378, 156);
-            this.groupBox2.TabIndex = 74;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Friend Log";
+            this.friendloggroupBox.Controls.Add(this.friendLogBox);
+            this.friendloggroupBox.Location = new System.Drawing.Point(270, 157);
+            this.friendloggroupBox.Name = "friendloggroupBox";
+            this.friendloggroupBox.Size = new System.Drawing.Size(378, 184);
+            this.friendloggroupBox.TabIndex = 74;
+            this.friendloggroupBox.TabStop = false;
+            this.friendloggroupBox.Text = "Friend Log";
             // 
             // friendLogBox
             // 
             this.friendLogBox.FormattingEnabled = true;
             this.friendLogBox.Location = new System.Drawing.Point(7, 18);
             this.friendLogBox.Name = "friendLogBox";
-            this.friendLogBox.Size = new System.Drawing.Size(365, 134);
+            this.friendLogBox.Size = new System.Drawing.Size(365, 160);
             this.friendLogBox.TabIndex = 0;
             // 
             // friendIncludePartyCheckBox
             // 
-            this.friendIncludePartyCheckBox.Location = new System.Drawing.Point(270, 151);
+            this.friendIncludePartyCheckBox.Location = new System.Drawing.Point(270, 107);
             this.friendIncludePartyCheckBox.Name = "friendIncludePartyCheckBox";
             this.friendIncludePartyCheckBox.Size = new System.Drawing.Size(234, 22);
             this.friendIncludePartyCheckBox.TabIndex = 68;
-            this.friendIncludePartyCheckBox.Text = "Include party member in Friendlist";
+            this.friendIncludePartyCheckBox.Text = "Include party member in Friend List";
             // 
             // friendAttackCheckBox
             // 
-            this.friendAttackCheckBox.Location = new System.Drawing.Point(270, 126);
+            this.friendAttackCheckBox.Location = new System.Drawing.Point(270, 82);
             this.friendAttackCheckBox.Name = "friendAttackCheckBox";
             this.friendAttackCheckBox.Size = new System.Drawing.Size(252, 22);
             this.friendAttackCheckBox.TabIndex = 67;
@@ -4293,19 +4289,11 @@ namespace Assistant
             // 
             // friendPartyCheckBox
             // 
-            this.friendPartyCheckBox.Location = new System.Drawing.Point(270, 101);
+            this.friendPartyCheckBox.Location = new System.Drawing.Point(270, 57);
             this.friendPartyCheckBox.Name = "friendPartyCheckBox";
             this.friendPartyCheckBox.Size = new System.Drawing.Size(241, 22);
             this.friendPartyCheckBox.TabIndex = 66;
             this.friendPartyCheckBox.Text = "Autoaccept party from Friends";
-            // 
-            // friendEnableCheckBox
-            // 
-            this.friendEnableCheckBox.Location = new System.Drawing.Point(270, 63);
-            this.friendEnableCheckBox.Name = "friendEnableCheckBox";
-            this.friendEnableCheckBox.Size = new System.Drawing.Size(114, 22);
-            this.friendEnableCheckBox.TabIndex = 65;
-            this.friendEnableCheckBox.Text = "Enable Friend List";
             // 
             // friendlistView
             // 
@@ -4391,14 +4379,14 @@ namespace Assistant
             this.friendButtonExportList.Text = "Export";
             this.friendButtonExportList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
-            // label7
+            // labelfriend
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 18);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 13);
-            this.label7.TabIndex = 60;
-            this.label7.Text = "Friend List:";
+            this.labelfriend.AutoSize = true;
+            this.labelfriend.Location = new System.Drawing.Point(6, 18);
+            this.labelfriend.Name = "labelfriend";
+            this.labelfriend.Size = new System.Drawing.Size(58, 13);
+            this.labelfriend.TabIndex = 60;
+            this.labelfriend.Text = "Friend List:";
             // 
             // m_NotifyIcon
             // 
@@ -4490,7 +4478,7 @@ namespace Assistant
             this.friends.ResumeLayout(false);
             this.friends.PerformLayout();
             this.friendGroupBox.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
+            this.friendloggroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
