@@ -1802,9 +1802,9 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-            World.Player.Journal.Add(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name));          // Journal buffer
-            if (World.Player.Journal.Count > 3000)
-                World.Player.Journal.Clear();
+            World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name));          // Journal buffer
+            if (World.Player.Journal.Count > 100)
+                World.Player.Journal.Dequeue();
 
 			if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
 			{
@@ -2298,7 +2298,9 @@ namespace Assistant
 					{
 						Serial from = p.ReadUInt32();
 						string text = p.ReadUnicodeStringSafe();
-                        World.Player.Journal.Add(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null"));          // Journal buffer
+                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null"));          // Journal buffer
+                        if (World.Player.Journal.Count > 100)
+                            World.Player.Journal.Dequeue();
 						break;
 					}
 				case 0x07: // party invite
