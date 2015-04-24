@@ -1386,7 +1386,7 @@ namespace Assistant.Macros
 		}
 	}
 
-	internal class DressAction : MacroWaitAction
+	/*internal class DressAction : MacroWaitAction
 	{
 		private string m_Name;
 
@@ -1428,9 +1428,9 @@ namespace Assistant.Macros
 		{
 			return Language.Format(LocString.DressA1, m_Name);
 		}
-	}
+	}*/
 
-	internal class UnDressAction : MacroWaitAction
+	/*internal class UnDressAction : MacroWaitAction
 	{
 		private string m_Name;
 		private byte m_Layer;
@@ -1479,7 +1479,7 @@ namespace Assistant.Macros
 					return true;
 				}
 			}
-			else if (m_Layer == 0)
+			/*else if (m_Layer == 0)
 			{
 				HotKeys.UndressHotKeys.OnUndressAll();
 				return false;
@@ -1510,7 +1510,7 @@ namespace Assistant.Macros
 				return Language.Format(LocString.UndressLayerA1, (Layer)m_Layer);
 		}
 	}
-
+*/
 	internal class WalkAction : MacroWaitAction
 	{
 		private Direction m_Dir;

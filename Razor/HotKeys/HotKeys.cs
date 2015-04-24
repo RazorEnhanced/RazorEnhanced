@@ -24,8 +24,6 @@ namespace Assistant
 		None = 0,
 		Items,
 		Targets,
-		Agents,
-		Dress,
 		Macros,
 		Spells,
 		Skills,
@@ -315,10 +313,6 @@ namespace Assistant
 			MakeNode(items, "Potions", HKSubCat.Potions);
 
 			MakeNode("Targets", HKCategory.Targets);
-
-			MakeNode("Agents", HKCategory.Agents);
-
-			MakeNode("Dress", HKCategory.Dress);
 
 			MakeNode("Macros", HKCategory.Macros);
 

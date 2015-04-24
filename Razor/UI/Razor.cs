@@ -37,17 +37,9 @@ namespace Assistant
 		private RazorButton delProfile;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.TextBox baseTotal;
-		private System.Windows.Forms.TabPage dressTab;
+		private System.Windows.Forms.TabPage emptyTab;
 		private RazorButton skillCopySel;
-		private RazorButton skillCopyAll;
-		private System.Windows.Forms.GroupBox groupBox5;
-		private RazorButton removeDress;
-		private RazorButton addDress;
-		private System.Windows.Forms.ListBox dressList;
-		private System.Windows.Forms.GroupBox groupBox6;
-		private RazorButton targItem;
-		private System.Windows.Forms.ListBox dressItems;
-		private RazorButton dressUseCur;
+        private RazorButton skillCopyAll;
 		private System.Windows.Forms.TabPage generalTab;
 		private System.Windows.Forms.TabPage toolbarTab;
 		private System.Windows.Forms.TabPage skillsTab;
@@ -85,9 +77,7 @@ namespace Assistant
 		private System.Windows.Forms.ListBox actionList;
 		private RazorButton playMacro;
 		private RazorButton recMacro;
-		private RazorCheckBox loopMacro;
-		private RazorButton dressNow;
-		private RazorButton undressList;
+        private RazorCheckBox loopMacro;
 		private RazorCheckBox spamFilter;
 		private System.Windows.Forms.PictureBox screenPrev;
 		private System.Windows.Forms.ListBox screensList;
@@ -98,7 +88,6 @@ namespace Assistant
 		private RazorTextBox screenPath;
 		private RazorButton capNow;
         private RazorCheckBox dispTime;
-        private RazorCheckBox undressConflicts;
         private RazorCheckBox showWelcome;
 		private System.Windows.Forms.ColumnHeader skillHDRlock;
 		private System.ComponentModel.IContainer components;
@@ -106,9 +95,7 @@ namespace Assistant
 		private RazorRadioButton systray;
 		private RazorRadioButton taskbar;
 		private System.Windows.Forms.Label label11;
-		private RazorCheckBox autoStackRes;
-		private RazorButton undressBag;
-		private RazorButton dressDelSel;
+        private RazorCheckBox autoStackRes;
 		private RazorButton setExHue;
 		private RazorButton setMsgHue;
 		private RazorButton setWarnHue;
@@ -123,12 +110,9 @@ namespace Assistant
 		private System.Windows.Forms.Label lblHarmHue;
 		private System.Windows.Forms.Label lblNeuHue;
 		private RazorCheckBox incomingCorpse;
-		private RazorCheckBox incomingMob;
-		private RazorComboBox langSel;
-		private System.Windows.Forms.Label label7;
+        private RazorCheckBox incomingMob;
 		private RazorComboBox profiles;
-		private System.Windows.Forms.Label hkStatus;
-		private RazorButton clearDress;
+        private System.Windows.Forms.Label hkStatus;
 		private System.Windows.Forms.TabPage moreMoreOptTab;
 		private RazorCheckBox actionStatusMsg;
 		private RazorTextBox txtObjDelay;
@@ -176,9 +160,7 @@ namespace Assistant
 		private RazorTextBox healthFmt;
 		private RazorComboBox clientPrio;
 		private System.Windows.Forms.Label label9;
-		private RazorCheckBox chkPartyOverhead;
-		private RazorButton exportProfile;
-		private RazorButton importProfile;
+        private RazorCheckBox chkPartyOverhead;
 		private RazorButton macroImport;
 		private RazorButton exportMacro;
 		private TabPage scriptingTab;
@@ -489,12 +471,8 @@ namespace Assistant
             this.systray = new RazorEnhanced.UI.RazorRadioButton();
             this.taskbar = new RazorEnhanced.UI.RazorRadioButton();
             this.smartCPU = new RazorEnhanced.UI.RazorCheckBox();
-            this.langSel = new RazorEnhanced.UI.RazorComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.importProfile = new RazorEnhanced.UI.RazorButton();
-            this.exportProfile = new RazorEnhanced.UI.RazorButton();
             this.delProfile = new RazorEnhanced.UI.RazorButton();
             this.newProfile = new RazorEnhanced.UI.RazorButton();
             this.profiles = new RazorEnhanced.UI.RazorComboBox();
@@ -568,21 +546,7 @@ namespace Assistant
             this.gameSize = new RazorEnhanced.UI.RazorCheckBox();
             this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
-            this.dressTab = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.clearDress = new RazorEnhanced.UI.RazorButton();
-            this.dressDelSel = new RazorEnhanced.UI.RazorButton();
-            this.undressBag = new RazorEnhanced.UI.RazorButton();
-            this.undressList = new RazorEnhanced.UI.RazorButton();
-            this.dressUseCur = new RazorEnhanced.UI.RazorButton();
-            this.targItem = new RazorEnhanced.UI.RazorButton();
-            this.dressItems = new System.Windows.Forms.ListBox();
-            this.dressNow = new RazorEnhanced.UI.RazorButton();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.removeDress = new RazorEnhanced.UI.RazorButton();
-            this.addDress = new RazorEnhanced.UI.RazorButton();
-            this.dressList = new System.Windows.Forms.ListBox();
-            this.undressConflicts = new RazorEnhanced.UI.RazorCheckBox();
+            this.emptyTab = new System.Windows.Forms.TabPage();
             this.skillsTab = new System.Windows.Forms.TabPage();
             this.dispDelta = new RazorEnhanced.UI.RazorCheckBox();
             this.skillCopyAll = new RazorEnhanced.UI.RazorButton();
@@ -600,6 +564,7 @@ namespace Assistant
             this.skillHDRcap = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.skillHDRlock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mapsTab = new System.Windows.Forms.TabPage();
+            this.btnMap = new RazorEnhanced.UI.RazorButton();
             this.hotkeysTab = new System.Windows.Forms.TabPage();
             this.hkStatus = new System.Windows.Forms.Label();
             this.hotkeyTree = new System.Windows.Forms.TreeView();
@@ -810,7 +775,6 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.btnMap = new RazorEnhanced.UI.RazorButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -819,9 +783,6 @@ namespace Assistant
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
             this.moreMoreOptTab.SuspendLayout();
-            this.dressTab.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.skillsTab.SuspendLayout();
             this.mapsTab.SuspendLayout();
             this.hotkeysTab.SuspendLayout();
@@ -888,7 +849,7 @@ namespace Assistant
             this.tabs.Controls.Add(this.moreOptTab);
             this.tabs.Controls.Add(this.moreMoreOptTab);
             this.tabs.Controls.Add(this.toolbarTab);
-            this.tabs.Controls.Add(this.dressTab);
+            this.tabs.Controls.Add(this.emptyTab);
             this.tabs.Controls.Add(this.skillsTab);
             this.tabs.Controls.Add(this.mapsTab);
             this.tabs.Controls.Add(this.hotkeysTab);
@@ -914,8 +875,6 @@ namespace Assistant
             this.generalTab.Controls.Add(this.systray);
             this.generalTab.Controls.Add(this.taskbar);
             this.generalTab.Controls.Add(this.smartCPU);
-            this.generalTab.Controls.Add(this.langSel);
-            this.generalTab.Controls.Add(this.label7);
             this.generalTab.Controls.Add(this.label11);
             this.generalTab.Controls.Add(this.groupBox4);
             this.generalTab.Controls.Add(this.showWelcome);
@@ -942,7 +901,7 @@ namespace Assistant
             "AboveNormal",
             "High",
             "Realtime"});
-            this.clientPrio.Location = new System.Drawing.Point(297, 127);
+            this.clientPrio.Location = new System.Drawing.Point(363, 134);
             this.clientPrio.Name = "clientPrio";
             this.clientPrio.Size = new System.Drawing.Size(88, 22);
             this.clientPrio.TabIndex = 60;
@@ -951,7 +910,7 @@ namespace Assistant
             // 
             this.lockBox.Cursor = System.Windows.Forms.Cursors.Help;
             this.lockBox.Image = ((System.Drawing.Image)(resources.GetObject("lockBox.Image")));
-            this.lockBox.Location = new System.Drawing.Point(402, 100);
+            this.lockBox.Location = new System.Drawing.Point(490, 103);
             this.lockBox.Name = "lockBox";
             this.lockBox.Size = new System.Drawing.Size(16, 16);
             this.lockBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -962,7 +921,7 @@ namespace Assistant
             // 
             // systray
             // 
-            this.systray.Location = new System.Drawing.Point(297, 99);
+            this.systray.Location = new System.Drawing.Point(363, 101);
             this.systray.Name = "systray";
             this.systray.Size = new System.Drawing.Size(99, 20);
             this.systray.TabIndex = 35;
@@ -971,7 +930,7 @@ namespace Assistant
             // 
             // taskbar
             // 
-            this.taskbar.Location = new System.Drawing.Point(235, 99);
+            this.taskbar.Location = new System.Drawing.Point(301, 102);
             this.taskbar.Name = "taskbar";
             this.taskbar.Size = new System.Drawing.Size(63, 20);
             this.taskbar.TabIndex = 34;
@@ -980,35 +939,16 @@ namespace Assistant
             // 
             // smartCPU
             // 
-            this.smartCPU.Location = new System.Drawing.Point(187, 49);
+            this.smartCPU.Location = new System.Drawing.Point(253, 50);
             this.smartCPU.Name = "smartCPU";
             this.smartCPU.Size = new System.Drawing.Size(241, 19);
             this.smartCPU.TabIndex = 53;
             this.smartCPU.Text = "Use smart CPU usage reduction";
             this.smartCPU.CheckedChanged += new System.EventHandler(this.smartCPU_CheckedChanged);
             // 
-            // langSel
-            // 
-            this.langSel.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.langSel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.langSel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.langSel.Location = new System.Drawing.Point(297, 162);
-            this.langSel.Name = "langSel";
-            this.langSel.Size = new System.Drawing.Size(50, 22);
-            this.langSel.TabIndex = 52;
-            this.langSel.SelectedIndexChanged += new System.EventHandler(this.langSel_SelectedIndexChanged);
-            // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(184, 168);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(58, 18);
-            this.label7.TabIndex = 51;
-            this.label7.Text = "Language:";
-            // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(187, 99);
+            this.label11.Location = new System.Drawing.Point(251, 104);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(50, 15);
             this.label11.TabIndex = 33;
@@ -1016,44 +956,20 @@ namespace Assistant
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.importProfile);
-            this.groupBox4.Controls.Add(this.exportProfile);
             this.groupBox4.Controls.Add(this.delProfile);
             this.groupBox4.Controls.Add(this.newProfile);
             this.groupBox4.Controls.Add(this.profiles);
-            this.groupBox4.Location = new System.Drawing.Point(178, 198);
+            this.groupBox4.Location = new System.Drawing.Point(253, 173);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(353, 42);
+            this.groupBox4.Size = new System.Drawing.Size(253, 50);
             this.groupBox4.TabIndex = 4;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Profiles";
             // 
-            // importProfile
-            // 
-            this.importProfile.ColorTable = office2010BlueTheme1;
-            this.importProfile.Location = new System.Drawing.Point(297, 14);
-            this.importProfile.Name = "importProfile";
-            this.importProfile.Size = new System.Drawing.Size(50, 20);
-            this.importProfile.TabIndex = 4;
-            this.importProfile.Text = "Import";
-            this.importProfile.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.importProfile.Click += new System.EventHandler(this.importProfile_Click);
-            // 
-            // exportProfile
-            // 
-            this.exportProfile.ColorTable = office2010BlueTheme1;
-            this.exportProfile.Location = new System.Drawing.Point(243, 14);
-            this.exportProfile.Name = "exportProfile";
-            this.exportProfile.Size = new System.Drawing.Size(50, 20);
-            this.exportProfile.TabIndex = 3;
-            this.exportProfile.Text = "Export";
-            this.exportProfile.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.exportProfile.Click += new System.EventHandler(this.exportProfile_Click);
-            // 
             // delProfile
             // 
             this.delProfile.ColorTable = office2010BlueTheme1;
-            this.delProfile.Location = new System.Drawing.Point(188, 14);
+            this.delProfile.Location = new System.Drawing.Point(192, 17);
             this.delProfile.Name = "delProfile";
             this.delProfile.Size = new System.Drawing.Size(50, 20);
             this.delProfile.TabIndex = 2;
@@ -1064,7 +980,7 @@ namespace Assistant
             // newProfile
             // 
             this.newProfile.ColorTable = office2010BlueTheme1;
-            this.newProfile.Location = new System.Drawing.Point(134, 14);
+            this.newProfile.Location = new System.Drawing.Point(135, 17);
             this.newProfile.Name = "newProfile";
             this.newProfile.Size = new System.Drawing.Size(50, 20);
             this.newProfile.TabIndex = 1;
@@ -1087,7 +1003,7 @@ namespace Assistant
             // 
             // showWelcome
             // 
-            this.showWelcome.Location = new System.Drawing.Point(187, 23);
+            this.showWelcome.Location = new System.Drawing.Point(253, 24);
             this.showWelcome.Name = "showWelcome";
             this.showWelcome.Size = new System.Drawing.Size(244, 20);
             this.showWelcome.TabIndex = 26;
@@ -1098,11 +1014,11 @@ namespace Assistant
             // 
             this.opacity.AutoSize = false;
             this.opacity.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.opacity.Location = new System.Drawing.Point(254, 257);
+            this.opacity.Location = new System.Drawing.Point(331, 242);
             this.opacity.Maximum = 100;
             this.opacity.Minimum = 10;
             this.opacity.Name = "opacity";
-            this.opacity.Size = new System.Drawing.Size(277, 16);
+            this.opacity.Size = new System.Drawing.Size(312, 16);
             this.opacity.TabIndex = 22;
             this.opacity.TickFrequency = 0;
             this.opacity.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -1111,7 +1027,7 @@ namespace Assistant
             // 
             // alwaysTop
             // 
-            this.alwaysTop.Location = new System.Drawing.Point(187, 74);
+            this.alwaysTop.Location = new System.Drawing.Point(253, 75);
             this.alwaysTop.Name = "alwaysTop";
             this.alwaysTop.Size = new System.Drawing.Size(241, 20);
             this.alwaysTop.TabIndex = 3;
@@ -1121,9 +1037,9 @@ namespace Assistant
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.filters);
-            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Location = new System.Drawing.Point(3, 8);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(165, 245);
+            this.groupBox1.Size = new System.Drawing.Size(202, 350);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Filters";
@@ -1134,13 +1050,13 @@ namespace Assistant
             this.filters.IntegralHeight = false;
             this.filters.Location = new System.Drawing.Point(6, 16);
             this.filters.Name = "filters";
-            this.filters.Size = new System.Drawing.Size(155, 224);
+            this.filters.Size = new System.Drawing.Size(190, 328);
             this.filters.TabIndex = 0;
             this.filters.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnFilterCheck);
             // 
             // opacityLabel
             // 
-            this.opacityLabel.Location = new System.Drawing.Point(176, 255);
+            this.opacityLabel.Location = new System.Drawing.Point(253, 242);
             this.opacityLabel.Name = "opacityLabel";
             this.opacityLabel.Size = new System.Drawing.Size(78, 16);
             this.opacityLabel.TabIndex = 23;
@@ -1148,7 +1064,7 @@ namespace Assistant
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(184, 133);
+            this.label9.Location = new System.Drawing.Point(251, 137);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(114, 19);
             this.label9.TabIndex = 59;
@@ -1832,173 +1748,14 @@ namespace Assistant
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Enhanced Toolbar";
             // 
-            // dressTab
+            // emptyTab
             // 
-            this.dressTab.Controls.Add(this.groupBox6);
-            this.dressTab.Controls.Add(this.groupBox5);
-            this.dressTab.Location = new System.Drawing.Point(4, 40);
-            this.dressTab.Name = "dressTab";
-            this.dressTab.Size = new System.Drawing.Size(666, 366);
-            this.dressTab.TabIndex = 3;
-            this.dressTab.Text = "Arm/Dress";
-            this.dressTab.Click += new System.EventHandler(this.dressTab_Click);
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.clearDress);
-            this.groupBox6.Controls.Add(this.dressDelSel);
-            this.groupBox6.Controls.Add(this.undressBag);
-            this.groupBox6.Controls.Add(this.undressList);
-            this.groupBox6.Controls.Add(this.dressUseCur);
-            this.groupBox6.Controls.Add(this.targItem);
-            this.groupBox6.Controls.Add(this.dressItems);
-            this.groupBox6.Controls.Add(this.dressNow);
-            this.groupBox6.Location = new System.Drawing.Point(224, 16);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(302, 257);
-            this.groupBox6.TabIndex = 7;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Arm/Dress Items";
-            // 
-            // clearDress
-            // 
-            this.clearDress.ColorTable = office2010BlueTheme1;
-            this.clearDress.Location = new System.Drawing.Point(160, 112);
-            this.clearDress.Name = "clearDress";
-            this.clearDress.Size = new System.Drawing.Size(137, 20);
-            this.clearDress.TabIndex = 13;
-            this.clearDress.Text = "Clear List";
-            this.clearDress.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.clearDress.Click += new System.EventHandler(this.clearDress_Click);
-            // 
-            // dressDelSel
-            // 
-            this.dressDelSel.ColorTable = office2010BlueTheme1;
-            this.dressDelSel.Location = new System.Drawing.Point(160, 88);
-            this.dressDelSel.Name = "dressDelSel";
-            this.dressDelSel.Size = new System.Drawing.Size(137, 19);
-            this.dressDelSel.TabIndex = 12;
-            this.dressDelSel.Text = "Remove";
-            this.dressDelSel.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressDelSel.Click += new System.EventHandler(this.dressDelSel_Click);
-            // 
-            // undressBag
-            // 
-            this.undressBag.ColorTable = office2010BlueTheme1;
-            this.undressBag.Location = new System.Drawing.Point(160, 155);
-            this.undressBag.Name = "undressBag";
-            this.undressBag.Size = new System.Drawing.Size(137, 34);
-            this.undressBag.TabIndex = 11;
-            this.undressBag.Text = "Change Undress Bag";
-            this.undressBag.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.undressBag.Click += new System.EventHandler(this.undressBag_Click);
-            // 
-            // undressList
-            // 
-            this.undressList.ColorTable = office2010BlueTheme1;
-            this.undressList.Location = new System.Drawing.Point(242, 14);
-            this.undressList.Name = "undressList";
-            this.undressList.Size = new System.Drawing.Size(55, 20);
-            this.undressList.TabIndex = 10;
-            this.undressList.Text = "Undress";
-            this.undressList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.undressList.Click += new System.EventHandler(this.undressList_Click);
-            // 
-            // dressUseCur
-            // 
-            this.dressUseCur.ColorTable = office2010BlueTheme1;
-            this.dressUseCur.Location = new System.Drawing.Point(160, 64);
-            this.dressUseCur.Name = "dressUseCur";
-            this.dressUseCur.Size = new System.Drawing.Size(137, 20);
-            this.dressUseCur.TabIndex = 9;
-            this.dressUseCur.Text = "Add Current";
-            this.dressUseCur.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressUseCur.Click += new System.EventHandler(this.dressUseCur_Click);
-            // 
-            // targItem
-            // 
-            this.targItem.ColorTable = office2010BlueTheme1;
-            this.targItem.Location = new System.Drawing.Point(160, 40);
-            this.targItem.Name = "targItem";
-            this.targItem.Size = new System.Drawing.Size(137, 20);
-            this.targItem.TabIndex = 7;
-            this.targItem.Text = "Add (Target)";
-            this.targItem.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.targItem.Click += new System.EventHandler(this.targItem_Click);
-            // 
-            // dressItems
-            // 
-            this.dressItems.IntegralHeight = false;
-            this.dressItems.Location = new System.Drawing.Point(8, 14);
-            this.dressItems.Name = "dressItems";
-            this.dressItems.Size = new System.Drawing.Size(146, 237);
-            this.dressItems.TabIndex = 6;
-            this.dressItems.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dressItems_KeyDown);
-            this.dressItems.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dressItems_MouseDown);
-            // 
-            // dressNow
-            // 
-            this.dressNow.ColorTable = office2010BlueTheme1;
-            this.dressNow.Location = new System.Drawing.Point(160, 14);
-            this.dressNow.Name = "dressNow";
-            this.dressNow.Size = new System.Drawing.Size(54, 20);
-            this.dressNow.TabIndex = 6;
-            this.dressNow.Text = "Dress";
-            this.dressNow.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dressNow.Click += new System.EventHandler(this.dressNow_Click);
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.removeDress);
-            this.groupBox5.Controls.Add(this.addDress);
-            this.groupBox5.Controls.Add(this.dressList);
-            this.groupBox5.Controls.Add(this.undressConflicts);
-            this.groupBox5.Location = new System.Drawing.Point(7, 16);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(212, 257);
-            this.groupBox5.TabIndex = 6;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Arm/Dress Selection";
-            // 
-            // removeDress
-            // 
-            this.removeDress.ColorTable = office2010BlueTheme1;
-            this.removeDress.Location = new System.Drawing.Point(72, 206);
-            this.removeDress.Name = "removeDress";
-            this.removeDress.Size = new System.Drawing.Size(60, 20);
-            this.removeDress.TabIndex = 5;
-            this.removeDress.Text = "Remove";
-            this.removeDress.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.removeDress.Click += new System.EventHandler(this.removeDress_Click);
-            // 
-            // addDress
-            // 
-            this.addDress.ColorTable = office2010BlueTheme1;
-            this.addDress.Location = new System.Drawing.Point(8, 206);
-            this.addDress.Name = "addDress";
-            this.addDress.Size = new System.Drawing.Size(60, 20);
-            this.addDress.TabIndex = 4;
-            this.addDress.Text = "Add...";
-            this.addDress.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.addDress.Click += new System.EventHandler(this.addDress_Click);
-            // 
-            // dressList
-            // 
-            this.dressList.IntegralHeight = false;
-            this.dressList.Location = new System.Drawing.Point(8, 14);
-            this.dressList.Name = "dressList";
-            this.dressList.Size = new System.Drawing.Size(199, 187);
-            this.dressList.TabIndex = 3;
-            this.dressList.SelectedIndexChanged += new System.EventHandler(this.dressList_SelectedIndexChanged);
-            // 
-            // undressConflicts
-            // 
-            this.undressConflicts.Location = new System.Drawing.Point(0, 231);
-            this.undressConflicts.Name = "undressConflicts";
-            this.undressConflicts.Size = new System.Drawing.Size(207, 20);
-            this.undressConflicts.TabIndex = 6;
-            this.undressConflicts.Text = "Automatically move conflicting items";
-            this.undressConflicts.CheckedChanged += new System.EventHandler(this.undressConflicts_CheckedChanged);
+            this.emptyTab.Location = new System.Drawing.Point(4, 40);
+            this.emptyTab.Name = "emptyTab";
+            this.emptyTab.Size = new System.Drawing.Size(666, 366);
+            this.emptyTab.TabIndex = 3;
+            this.emptyTab.Text = " UNUSESD";
+            this.emptyTab.Click += new System.EventHandler(this.dressTab_Click);
             // 
             // skillsTab
             // 
@@ -2157,6 +1914,16 @@ namespace Assistant
             this.mapsTab.Size = new System.Drawing.Size(666, 366);
             this.mapsTab.TabIndex = 6;
             this.mapsTab.Text = "Enhanced Map";
+            // 
+            // btnMap
+            // 
+            this.btnMap.ColorTable = office2010BlueTheme1;
+            this.btnMap.Location = new System.Drawing.Point(8, 17);
+            this.btnMap.Name = "btnMap";
+            this.btnMap.Size = new System.Drawing.Size(102, 31);
+            this.btnMap.TabIndex = 59;
+            this.btnMap.Text = "Map UO";
+            this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
             // hotkeysTab
             // 
@@ -4399,16 +4166,6 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
-            // btnMap
-            // 
-            this.btnMap.ColorTable = office2010BlueTheme1;
-            this.btnMap.Location = new System.Drawing.Point(8, 17);
-            this.btnMap.Name = "btnMap";
-            this.btnMap.Size = new System.Drawing.Size(102, 31);
-            this.btnMap.TabIndex = 59;
-            this.btnMap.Text = "Map UO";
-            this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -4439,9 +4196,6 @@ namespace Assistant
             this.moreOptTab.PerformLayout();
             this.moreMoreOptTab.ResumeLayout(false);
             this.moreMoreOptTab.PerformLayout();
-            this.dressTab.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
             this.skillsTab.ResumeLayout(false);
             this.skillsTab.PerformLayout();
             this.mapsTab.ResumeLayout(false);
@@ -4688,7 +4442,6 @@ namespace Assistant
 			InitPreviewHue(lblHarmHue, "HarmfulSpellHue");
 			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
 
-			undressConflicts.Checked = Config.GetBool("UndressConflicts");
 			taskbar.Checked = !(systray.Checked = Config.GetBool("Systray"));
 			dispDelta.Checked = Config.GetBool("DisplaySkillChanges");
 			corpseRange.Enabled = openCorpses.Checked = Config.GetBool("AutoOpenCorpses");
@@ -4736,7 +4489,6 @@ namespace Assistant
 			if (smartCPU.Checked)
 				ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal;
 
-			dressList.SelectedIndex = -1;
 			hotkeyTree.SelectedNode = null;
 
 			m_Initializing = false;
@@ -4751,23 +4503,10 @@ namespace Assistant
 			if (tabs.SelectedTab == generalTab)
 			{
 				Filters.Filter.Draw(filters);
-				langSel.BeginUpdate();
-				langSel.Items.Clear();
-				langSel.Items.AddRange(Language.GetPackNames());
-				langSel.SelectedItem = Language.Current;
-				langSel.EndUpdate();
 			}
 			else if (tabs.SelectedTab == skillsTab)
 			{
 				RedrawSkills();
-			}
-			else if (tabs.SelectedTab == dressTab)
-			{
-				int sel = dressList.SelectedIndex;
-				dressItems.Items.Clear();
-				DressList.Redraw(dressList);
-				if (sel >= 0 && sel < dressList.Items.Count)
-					dressList.SelectedIndex = sel;
 			}
 			else if (tabs.SelectedTab == hotkeysTab)
 			{
@@ -5325,199 +5064,6 @@ namespace Assistant
 				Clipboard.SetDataObject(sb.ToString(), true);
 		}
 
-		private void addDress_Click(object sender, System.EventArgs e)
-		{
-			if (InputBox.Show(this, Language.GetString(LocString.DressName), Language.GetString(LocString.EnterAName)))
-			{
-				string str = InputBox.GetString();
-				if (str == null || str == "")
-					return;
-				DressList list = new DressList(str);
-				DressList.Add(list);
-				dressList.Items.Add(list);
-				dressList.SelectedItem = list;
-			}
-		}
-
-		private void removeDress_Click(object sender, System.EventArgs e)
-		{
-			DressList dress = (DressList)dressList.SelectedItem;
-
-			if (dress != null && MessageBox.Show(this, Language.GetString(LocString.DelDressQ), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-			{
-				dress.Items.Clear();
-				dressList.Items.Remove(dress);
-				dressList.SelectedIndex = -1;
-				dressItems.Items.Clear();
-				DressList.Remove(dress);
-			}
-		}
-
-		private void dressNow_Click(object sender, System.EventArgs e)
-		{
-			DressList dress = (DressList)dressList.SelectedItem;
-			if (dress != null && World.Player != null)
-				dress.Dress();
-		}
-
-		private void undressList_Click(object sender, System.EventArgs e)
-		{
-			DressList dress = (DressList)dressList.SelectedItem;
-			if (dress != null && World.Player != null && World.Player.Backpack != null)
-				dress.Undress();
-		}
-
-		private void targItem_Click(object sender, System.EventArgs e)
-		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OnDressItemTarget));
-		}
-
-		private void OnDressItemTarget(bool loc, Serial serial, Point3D pt, ushort itemid)
-		{
-			if (loc)
-				return;
-
-			ShowMe();
-			if (serial.IsItem)
-			{
-				DressList list = (DressList)dressList.SelectedItem;
-
-				if (list == null)
-					return;
-
-				list.Items.Add(serial);
-				Item item = World.FindItem(serial);
-
-				if (item == null)
-					dressItems.Items.Add(Language.Format(LocString.OutOfRangeA1, serial));
-				else
-					dressItems.Items.Add(item.ToString());
-			}
-		}
-
-		private void dressDelSel_Click(object sender, System.EventArgs e)
-		{
-			DressList list = (DressList)dressList.SelectedItem;
-			if (list == null)
-				return;
-
-			int sel = dressItems.SelectedIndex;
-			if (sel < 0 || sel >= list.Items.Count)
-				return;
-
-			if (MessageBox.Show(this, Language.GetString(LocString.DelDressItemQ), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-			{
-				try
-				{
-					list.Items.RemoveAt(sel);
-					dressItems.Items.RemoveAt(sel);
-				}
-				catch
-				{
-				}
-			}
-		}
-
-		private void clearDress_Click(object sender, System.EventArgs e)
-		{
-			DressList list = (DressList)dressList.SelectedItem;
-			if (list == null)
-				return;
-
-			list.Items.Clear();
-			dressItems.Items.Clear();
-		}
-
-		private DressList undressBagList = null;
-		private void undressBag_Click(object sender, System.EventArgs e)
-		{
-			if (World.Player == null)
-				return;
-
-			DressList list = (DressList)dressList.SelectedItem;
-			if (list == null)
-				return;
-
-			undressBagList = list;
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(onDressBagTarget));
-			World.Player.SendMessage(MsgLevel.Force, LocString.TargUndressBag, list.Name);
-		}
-
-		void onDressBagTarget(bool location, Serial serial, Point3D p, ushort gfxid)
-		{
-			if (undressBagList == null)
-				return;
-
-			ShowMe();
-			if (serial.IsItem)
-			{
-				Item item = World.FindItem(serial);
-				if (item != null)
-				{
-					undressBagList.SetUndressBag(item.Serial);
-					World.Player.SendMessage(MsgLevel.Force, LocString.UB_Set);
-				}
-				else
-				{
-					undressBagList.SetUndressBag(Serial.Zero);
-					World.Player.SendMessage(MsgLevel.Force, LocString.ItemNotFound);
-				}
-			}
-			else
-			{
-				World.Player.SendMessage(MsgLevel.Force, LocString.ItemNotFound);
-			}
-
-			undressBagList = null;
-		}
-
-		private void dressList_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			DressList list = (DressList)dressList.SelectedItem;
-
-			dressItems.BeginUpdate();
-			dressItems.Items.Clear();
-			if (list != null)
-			{
-				for (int i = 0; i < list.Items.Count; i++)
-				{
-					if (list.Items[i] is Serial)
-					{
-						Serial serial = (Serial)list.Items[i];
-						Item item = World.FindItem(serial);
-
-						if (item != null)
-							dressItems.Items.Add(item.ToString());
-						else
-							dressItems.Items.Add(Language.Format(LocString.OutOfRangeA1, serial));
-					}
-					else if (list.Items[i] is ItemID)
-					{
-						dressItems.Items.Add(list.Items[i].ToString());
-					}
-				}
-			}
-			dressItems.EndUpdate();
-		}
-
-		private void dressUseCur_Click(object sender, System.EventArgs e)
-		{
-			DressList list = (DressList)dressList.SelectedItem;
-			if (World.Player == null)
-				return;
-			if (list == null)
-				return;
-
-			for (int i = 0; i < World.Player.Contains.Count; i++)
-			{
-				Item item = (Item)World.Player.Contains[i];
-				if (item.Layer <= Layer.LastUserValid && item.Layer != Layer.Backpack && item.Layer != Layer.Hair && item.Layer != Layer.FacialHair)
-					list.Items.Add(item.Serial);
-			}
-			dressList.SelectedItem = null;
-			dressList.SelectedItem = list;
-		}
-
 		private void hotkeyTree_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
 		{
 			ClearHKCtrls();
@@ -5893,7 +5439,7 @@ namespace Assistant
 			int o = opacity.Value;
 			Config.SetProperty("Opacity", o);
 			opacityLabel.Text = String.Format("Opacity: {0}%", o);
-			//this.Opacity = ((double)o) / 100.0;
+			this.Opacity = ((double)o) / 100.0;
 		}
 
 		private void dispDelta_CheckedChanged(object sender, System.EventArgs e)
@@ -5930,39 +5476,6 @@ namespace Assistant
 		private void showWelcome_CheckedChanged(object sender, System.EventArgs e)
 		{
 			Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "ShowWelcome", (showWelcome.Checked ? 1 : 0).ToString());
-		}
-
-		private ContextMenu m_DressItemsMenu = null;
-		private void dressItems_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				m_DressItemsMenu = new ContextMenu(new MenuItem[] { new MenuItem(Language.GetString(LocString.Conv2Type), new EventHandler(OnMakeType)) });
-				m_DressItemsMenu.Show(dressItems, new Point(e.X, e.Y));
-			}
-		}
-
-		private void OnMakeType(object sender, System.EventArgs e)
-		{
-			DressList list = (DressList)dressList.SelectedItem;
-			if (list == null)
-				return;
-			int sel = dressItems.SelectedIndex;
-			if (sel < 0 || sel >= list.Items.Count)
-				return;
-
-			if (list.Items[sel] is Serial)
-			{
-				Serial s = (Serial)list.Items[sel];
-				Item item = World.FindItem(s);
-				if (item != null)
-				{
-					list.Items[sel] = item.ItemID;
-					dressItems.BeginUpdate();
-					dressItems.Items[sel] = item.ItemID.ToString();
-					dressItems.EndUpdate();
-				}
-			}
 		}
 
 		private static char[] m_InvalidNameChars = new char[] { '/', '\\', ';', '?', ':', '*' };
@@ -6795,11 +6308,6 @@ namespace Assistant
 			}
 		}
 
-		private void undressConflicts_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("UndressConflicts", undressConflicts.Checked);
-		}
-
 		private void taskbar_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (taskbar.Checked)
@@ -6920,25 +6428,6 @@ namespace Assistant
 			Config.SetProperty("RememberPwds", rememberPwds.Checked);
 		}
 
-		private void langSel_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			string lang = langSel.SelectedItem as String;
-			if (lang != null && lang != Language.Current)
-			{
-				if (!Language.Load(lang))
-				{
-					MessageBox.Show(this, "Unable to load that language.", "Load Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					langSel.SelectedItem = Language.Current;
-				}
-				else
-				{
-					Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "DefaultLanguage", Language.Current);
-					Language.LoadControlNames(this);
-					HotKey.RebuildList(hotkeyTree);
-				}
-			}
-		}
-
 		//private void tabs_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		//{
 		//	HotKey.KeyDown(e.KeyData);
@@ -7003,37 +6492,9 @@ namespace Assistant
 		private void smartCPU_CheckedChanged(object sender, System.EventArgs e)
 		{
 			Config.SetProperty("SmartCPU", smartCPU.Checked);
-
-			//if ( !m_Initializing )
-			//	MessageBox.Show( this, Language.GetString( LocString.RestartClient ), "Restart Required", MessageBoxButtons.OK, MessageBoxIcon.Information );
 			ClientCommunication.SetSmartCPU(smartCPU.Checked);
 		}
 
-		private void dressItems_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Delete)
-			{
-				DressList list = (DressList)dressList.SelectedItem;
-				if (list == null)
-					return;
-
-				int sel = dressItems.SelectedIndex;
-				if (sel < 0 || sel >= list.Items.Count)
-					return;
-
-				if (MessageBox.Show(this, Language.GetString(LocString.DelDressItemQ), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-				{
-					try
-					{
-						list.Items.RemoveAt(sel);
-						dressItems.Items.RemoveAt(sel);
-					}
-					catch
-					{
-					}
-				}
-			}
-		}
 
 		private void blockDis_CheckedChanged(object sender, System.EventArgs e)
 		{
@@ -7340,16 +6801,6 @@ namespace Assistant
 		private void btcLabel_Click(object sender, EventArgs e)
 		{
 
-		}
-
-		private void exportProfile_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("TODO!", "TODO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-		}
-
-		private void importProfile_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("TODO!", "TODO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 		}
 
 		private void dressTab_Click(object sender, EventArgs e)
@@ -7744,7 +7195,7 @@ namespace Assistant
                 }
                 else
                 {
-                    autoLootCheckBox.Enabled = false;
+                    autoLootCheckBox.Checked = false;
                     RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
                 }
             }
@@ -8074,7 +7525,7 @@ namespace Assistant
                 }
                 else
                 {
-                    scavengerCheckBox.Enabled = false;
+                    scavengerCheckBox.Checked = false;
                     RazorEnhanced.Scavenger.AddLog("Item list not selected!");
                 }
             }
@@ -8851,12 +8302,14 @@ namespace Assistant
                 {
                     buyEnableCheckBox.Checked = false;
                     RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
+                    return;
                 }
             }
             else
             {
                 buyEnableCheckBox.Checked = false;
                 RazorEnhanced.BuyAgent.AddLog("You are not logged in game!");
+                return;
             }
 		}
 
@@ -9226,6 +8679,5 @@ namespace Assistant
         {
             UpdateRazorStatus();
         }
-
 	}
 }

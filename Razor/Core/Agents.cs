@@ -280,7 +280,7 @@ namespace Assistant
 		{
 			m_ItemIDs = new List<ushort>();
 
-			HotKey.Add(HKCategory.Agents, LocString.ClearScavCache, new HotKeyCallback(ClearCache));
+		//	HotKey.Add(HKCategory.Agents, LocString.ClearScavCache, new HotKeyCallback(ClearCache));
 			PacketHandler.RegisterClientToServerViewer(0x09, new PacketViewerCallback(OnSingleClick));
 
 			Agent.OnItemCreated += new ItemCreatedEventHandler(CheckBagOPL);

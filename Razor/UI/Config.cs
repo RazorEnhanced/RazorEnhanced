@@ -138,11 +138,11 @@ namespace Assistant
 			AddProperty("ShowPartyStats", false);
 			AddProperty("PartyStatFmt", "[{0}% / {1}%]");
 
-			Counter.Default();
+			//Counter.Default();
 			Filter.DisableAll();
-			DressList.ClearAll();
+			//DressList.ClearAll();
 			HotKey.ClearAll();
-			Agent.ClearAll();
+			//Agent.ClearAll();
 			PasswordMemory.ClearAll();
 		}
 
