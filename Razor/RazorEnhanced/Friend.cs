@@ -36,19 +36,164 @@ namespace RazorEnhanced
 			private string m_Description;
 			internal string Description { get { return m_Description; } }
 
-			private int m_Bag;
-			internal int Bag { get { return m_Bag; } }
+			private bool m_AutoacceptParty;
+            internal bool AutoacceptParty { get { return m_AutoacceptParty; } }
 
-			private bool m_Selected;
+            private bool m_PreventAttack;
+            internal bool PreventAttack { get { return m_PreventAttack; } }
+
+            private bool m_IncludeParty;
+            internal bool IncludeParty { get { return m_IncludeParty; } }
+
+            private bool m_Selected;
 			internal bool Selected { get { return m_Selected; } }
 
-            public FriendList(string description, int bag, bool selected)
+            public FriendList(string description, bool autoacceptparty, bool preventattack, bool includeparty, bool selected)
 			{
 				m_Description = description;
-				m_Bag = bag;
+                m_AutoacceptParty = autoacceptparty;
+                m_PreventAttack = preventattack;
+                m_IncludeParty = includeparty;
 				m_Selected = selected;
 			}
-		}		
+		}
+
+        internal static void AddLog(string addlog)
+        {
+            Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Add(addlog)));
+            Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.SelectedIndex = Engine.MainWindow.FriendLogBox.Items.Count - 1));
+            if (Assistant.Engine.MainWindow.FriendLogBox.Items.Count > 300)
+                Assistant.Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendLogBox.Items.Clear()));
+        }
+        internal static bool IncludeParty
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked;
+            }
+            set
+            {
+                Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked = value));
+            }
+        }
+        internal static bool PreventAttack
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked;
+            }
+            set
+            {
+                Assistant.Engine.MainWindow.FriendAttackCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked = value));
+            }
+        }
+        internal static bool AutoacceptParty
+        {
+            get
+            {
+                return Assistant.Engine.MainWindow.FriendPartyCheckBox.Checked;
+            }
+            set
+            {
+                Assistant.Engine.MainWindow.FriendPartyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendPartyCheckBox.Checked = value));
+            }
+        }
+
+        internal static string FriendListName
+        {
+            get
+            {
+                return (string)Assistant.Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.FriendListSelect.Text));
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendListSelect.Text = value));
+            }
+        }
+
+        internal static void RefreshLists()
+        {
+            List<FriendList> lists;
+            RazorEnhanced.Settings.Friend.ListsRead(out lists);
+
+            FriendList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+            if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.FriendListSelect.Text)
+                return;
+
+            Assistant.Engine.MainWindow.FriendListSelect.Items.Clear();
+            foreach (FriendList l in lists)
+            {
+                Assistant.Engine.MainWindow.FriendListSelect.Items.Add(l.Description);
+
+                if (l.Selected)
+                {
+                    Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = Assistant.Engine.MainWindow.FriendListSelect.Items.IndexOf(l.Description);
+                    IncludeParty = l.IncludeParty;
+                    PreventAttack = l.PreventAttack;
+                    AutoacceptParty = l.AutoacceptParty;
+                }
+            }
+        }
+
+        internal static void RefreshPlayers()
+        {
+            List<FriendList> lists;
+            RazorEnhanced.Settings.Friend.ListsRead(out lists);
+
+            Assistant.Engine.MainWindow.FriendListView.Items.Clear();
+            foreach (FriendList l in lists)
+            {
+                if (l.Selected)
+                {
+                    List<Friend.FriendPlayer> players;
+                    RazorEnhanced.Settings.Friend.PlayersRead(l.Description, out players);
+
+                    foreach (FriendPlayer player in players)
+                    {
+                        ListViewItem listitem = new ListViewItem();
+
+                        listitem.Checked = player.Selected;
+
+                        listitem.SubItems.Add(player.Name);
+                        listitem.SubItems.Add("0x" + player.Serial.ToString("X8"));
+
+                        Assistant.Engine.MainWindow.FriendListView.Items.Add(listitem);
+                    }
+                }
+            }
+        }
+
+        internal static void AddList(string newList)
+        {
+            RazorEnhanced.Settings.Friend.ListInsert(newList, false, false, false);
+
+            RazorEnhanced.Friend.RefreshLists();
+            RazorEnhanced.Friend.RefreshPlayers();
+        }
+
+        internal static void RemoveList(string list)
+        {
+            if (RazorEnhanced.Settings.Friend.ListExists(list))
+            {
+                RazorEnhanced.Settings.Friend.ListDelete(list);
+            }
+
+            RazorEnhanced.Friend.RefreshLists();
+            RazorEnhanced.Friend.RefreshPlayers();
+        }
+        internal static void AddPlayerToList(string name, int serial)
+        {
+            string selection = Assistant.Engine.MainWindow.FriendListSelect.Text;
+            FriendPlayer player = new FriendPlayer(name, serial, true);
+
+            if (RazorEnhanced.Settings.Friend.ListExists(selection))
+            {
+                if (!RazorEnhanced.Settings.Friend.PlayerExists(selection, player))
+                    RazorEnhanced.Settings.Friend.PlayerInsert(selection, player);
+            }
+            RazorEnhanced.Friend.RefreshPlayers();
+        }
 	}
 
 }

@@ -150,6 +150,20 @@ namespace RazorEnhanced
                 dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItem));
                 m_Dataset.Tables.Add(dress_items);
 
+                // ----------- FRIEND ----------
+                DataTable friend_lists = new DataTable("FRIEND_LISTS");
+                friend_lists.Columns.Add("Description", typeof(string));
+                friend_lists.Columns.Add("IncludeParty", typeof(bool));
+                friend_lists.Columns.Add("PreventAttack", typeof(bool));
+                friend_lists.Columns.Add("AutoacceptParty", typeof(bool));
+                friend_lists.Columns.Add("Selected", typeof(bool));
+                m_Dataset.Tables.Add(friend_lists);
+
+                DataTable friend_player = new DataTable("FRIEND_PLAYERS");
+                friend_player.Columns.Add("List", typeof(string));
+                friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
+                m_Dataset.Tables.Add(dress_items);
+
 				// ----------- SHARDS ----------
 				DataTable shards = new DataTable("SHARDS");
 				shards.Columns.Add("Description", typeof(string)); // Key
@@ -1412,6 +1426,218 @@ namespace RazorEnhanced
 
         // ------------- DRESS END-----------------
 
+        // ------------- FRIEND START -----------------
+
+        internal class Friend
+        {
+            internal static bool ListExists(string description)
+            {
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
+                {
+                    if (((string)row["Description"]).ToLower() == description.ToLower())
+                        return true;
+                }
+
+                return false;
+            }
+
+
+            internal static void ListInsert(string description, bool includeparty, bool preventattack, bool autoacceptparty)
+            {
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
+                {
+                    row["Selected"] = false;
+                }
+
+                DataRow newRow = m_Dataset.Tables["FRIEND_LISTS"].NewRow();
+                newRow["Description"] = description;
+                newRow["IncludeParty"] = includeparty;
+                newRow["PreventAttack"] = preventattack;
+                newRow["AutoacceptParty"] = autoacceptparty;
+                newRow["Selected"] = true;
+                m_Dataset.Tables["FRIEND_LISTS"].Rows.Add(newRow);
+
+                Save();
+            }
+
+            internal static void ListUpdate(string description, bool includeparty, bool preventattack, bool autoacceptparty, bool selected)
+            {
+
+                bool found = false;
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == description)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    if (selected)
+                    {
+                        foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
+                        {
+                            row["Selected"] = false;
+                        }
+                    }
+
+                    foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
+                    {
+                        if ((string)row["Description"] == description)
+                        {
+                            row["Description"] = description;
+                            row["IncludeParty"] = includeparty;
+                            row["PreventAttack"] = preventattack;
+                            row["AutoacceptParty"] = autoacceptparty;
+                            row["Selected"] = selected;
+                            break;
+                        }
+                    }
+
+                    Save();
+                }
+            }
+
+            internal static void ListDelete(string description)
+            {
+                for (int i = m_Dataset.Tables["FRIEND_PLAYER"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].Rows[i];
+                    if ((string)row["List"] == description)
+                    {
+                        row.Delete();
+                    }
+                }
+
+                for (int i = m_Dataset.Tables["FRIEND_LISTS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["FRIEND_LISTS"].Rows[i];
+                    if ((string)row["FRIEND_LISTS"] == description)
+                    {
+                        row.Delete();
+                        break;
+                    }
+                    row["Selected"] = false;
+                }
+                Save();
+            }
+
+            internal static void ListsRead(out List<RazorEnhanced.Friend.FriendList> lists)
+            {
+                List<RazorEnhanced.Friend.FriendList> listsOut = new List<RazorEnhanced.Friend.FriendList>();
+
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
+                {
+                    string description = (string)row["Description"];
+                    bool includeparty = (bool)row["IncludeParty"];
+                    bool preventattack = (bool)row["PreventAttack"];
+                    bool autoacceptparty = (bool)row["AutoacceptParty"];
+                    bool selected = (bool)row["Selected"];
+
+                    RazorEnhanced.Friend.FriendList list = new RazorEnhanced.Friend.FriendList(description, autoacceptparty, preventattack, includeparty, selected);
+                    listsOut.Add(list);
+                }
+                lists = listsOut;
+            }
+
+
+
+            internal static bool PlayerExists(string list, RazorEnhanced.Friend.FriendPlayer player)
+            {
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+                {
+                    if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendPlayer)row["Player"] == player)
+                        return true;
+                }
+
+                return false;
+            }
+
+            internal static void PlayerInsert(string list, RazorEnhanced.Friend.FriendPlayer player)
+            {
+                DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].NewRow();
+                row["List"] = list;
+                row["Player"] = player;
+                m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
+
+                Save();
+            }
+
+            internal static void PlayerReplace(string list, int index, RazorEnhanced.Friend.FriendPlayer player)
+            {
+                int count = -1;
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+                {
+                    if ((string)row["List"] == list)
+                    {
+                        count++;
+                        if (count == index)
+                        {
+                            row["Player"] = player;
+                        }
+                    }
+                }
+
+                Save();
+            }
+
+            internal static void PlayerDelete(string list, RazorEnhanced.Friend.FriendPlayer player)
+            {
+                for (int i = m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].Rows[i];
+                    if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendPlayer)row["Player"] == player)
+                    {
+                        row.Delete();
+                        break;
+                    }
+                }
+
+                Save();
+            }
+
+            internal static void PlayersRead(string list, out List<RazorEnhanced.Friend.FriendPlayer> players)
+            {
+                List<RazorEnhanced.Friend.FriendPlayer> playersOut = new List<RazorEnhanced.Friend.FriendPlayer>();
+
+                if (ListExists(list))
+                {
+                    foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+                    {
+                        if ((string)row["List"] == list)
+                        {
+                            playersOut.Add((RazorEnhanced.Friend.FriendPlayer)row["Player"]);
+                        }
+                    }
+                }
+
+                players = playersOut;
+            }
+
+            internal static void ListDetailsRead(string listname, out bool includeparty, out bool preventattack, out bool autoacceptparty)
+            {
+                bool includepartyOut = false;
+                bool preventattackOut = false;
+                bool autoacceptpartyOut = false;
+
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        includepartyOut = (bool)row["IncludeParty"];
+                        preventattackOut = (bool)row["PreventAttack"];
+                        autoacceptpartyOut = (bool)row["AutoacceptParty"];
+                    }
+                }
+                includeparty = includepartyOut;
+                preventattack = preventattackOut;
+                autoacceptparty = autoacceptpartyOut;
+            }
+        }
+        // ------------- FRIEND END-----------------
+        
 		// ------------- SHARDS -----------------
 		internal class Shards
 		{
