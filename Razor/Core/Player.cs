@@ -695,6 +695,7 @@ namespace Assistant
 						Targeting.CheckLastTargetRange(m);
 				}
 			}
+         
 
 			List<Item> items = new List<Item>(World.Items.Values);
 			ScavengerAgent s = ScavengerAgent.Instance;

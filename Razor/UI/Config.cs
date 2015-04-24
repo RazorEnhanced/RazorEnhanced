@@ -242,9 +242,9 @@ namespace Assistant
 			}
 
 			Filter.Load(root["filters"]);
-			Counter.LoadProfile(root["counters"]);
-			Agent.LoadProfile(root["agents"]);
-			DressList.Load(root["dresslists"]);
+			//Counter.LoadProfile(root["counters"]);
+			//Agent.LoadProfile(root["agents"]);
+			//DressList.Load(root["dresslists"]);
 			HotKey.Load(root["hotkeys"]);
 			PasswordMemory.Load(root["passwords"]);
 
@@ -362,17 +362,17 @@ namespace Assistant
 			Filter.Save(xml);
 			xml.WriteEndElement();
 
-			xml.WriteStartElement("counters");
-			Counter.SaveProfile(xml);
-			xml.WriteEndElement();
+			//xml.WriteStartElement("counters");
+			//Counter.SaveProfile(xml);
+			//xml.WriteEndElement();
 
-			xml.WriteStartElement("agents");
-			Agent.SaveProfile(xml);
-			xml.WriteEndElement();
+			//xml.WriteStartElement("agents");
+			//Agent.SaveProfile(xml);
+			//xml.WriteEndElement();
 
-			xml.WriteStartElement("dresslists");
-			DressList.Save(xml);
-			xml.WriteEndElement();
+			//xml.WriteStartElement("dresslists");
+			//DressList.Save(xml);
+			//xml.WriteEndElement();
 
 			xml.WriteStartElement("hotkeys");
 			HotKey.Save(xml);

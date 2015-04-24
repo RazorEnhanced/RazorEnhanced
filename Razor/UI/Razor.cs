@@ -67,18 +67,11 @@ namespace Assistant
 		private RazorTextBox txtSpellFormat;
 		private RazorCheckBox chkForceSpellHue;
 		private RazorCheckBox chkStealth;
-		private System.Windows.Forms.TabPage agentsTab;
-		private System.Windows.Forms.GroupBox agentGroup;
-		private System.Windows.Forms.ListBox agentSubList;
-		private RazorButton agentB1;
-		private RazorButton agentB2;
-		private RazorButton agentB3;
-		private RazorButton dohotkey;
-		private RazorButton agentB4;
+        private System.Windows.Forms.TabPage mapsTab;
+        private RazorButton dohotkey;
 		private System.Windows.Forms.Label opacityLabel;
 		private System.Windows.Forms.TrackBar opacity;
-		private RazorCheckBox dispDelta;
-        private RazorComboBox agentList;
+        private RazorCheckBox dispDelta;
 		private RazorCheckBox openCorpses;
 		private RazorTextBox corpseRange;
 		private System.Windows.Forms.Label label4;
@@ -104,9 +97,7 @@ namespace Assistant
 		private RazorCheckBox screenAutoCap;
 		private RazorTextBox screenPath;
 		private RazorButton capNow;
-		private RazorCheckBox dispTime;
-		private RazorButton agentB5;
-		private RazorButton agentB6;
+        private RazorCheckBox dispTime;
         private RazorCheckBox undressConflicts;
         private RazorCheckBox showWelcome;
 		private System.Windows.Forms.ColumnHeader skillHDRlock;
@@ -178,8 +169,7 @@ namespace Assistant
         private RazorCheckBox potionEquip;
 		private RazorCheckBox blockHealPoison;
 		private RazorCheckBox negotiate;
-		private System.Windows.Forms.PictureBox lockBox;
-        private RazorButton btnMap;
+        private System.Windows.Forms.PictureBox lockBox;
 		private RazorCheckBox preAOSstatbar;
 		private RazorCheckBox showHealthOH;
 		private System.Windows.Forms.Label label10;
@@ -368,6 +358,8 @@ namespace Assistant
 		private System.Timers.Timer m_SystemTimer;
         private RazorButton dressStopButton;
         private System.Windows.Forms.Timer timerupdatestatus;
+        private TabPage friends;
+        private RazorButton btnMap;
 
 		private bool m_CanClose = true;
 
@@ -488,13 +480,11 @@ namespace Assistant
 		{
             this.components = new System.ComponentModel.Container();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
-            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.clientPrio = new RazorEnhanced.UI.RazorComboBox();
-            this.btnMap = new RazorEnhanced.UI.RazorButton();
             this.lockBox = new System.Windows.Forms.PictureBox();
             this.systray = new RazorEnhanced.UI.RazorRadioButton();
             this.taskbar = new RazorEnhanced.UI.RazorRadioButton();
@@ -609,16 +599,7 @@ namespace Assistant
             this.skillHDRdelta = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.skillHDRcap = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.skillHDRlock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.agentsTab = new System.Windows.Forms.TabPage();
-            this.agentB6 = new RazorEnhanced.UI.RazorButton();
-            this.agentB5 = new RazorEnhanced.UI.RazorButton();
-            this.agentList = new RazorEnhanced.UI.RazorComboBox();
-            this.agentGroup = new System.Windows.Forms.GroupBox();
-            this.agentSubList = new System.Windows.Forms.ListBox();
-            this.agentB4 = new RazorEnhanced.UI.RazorButton();
-            this.agentB1 = new RazorEnhanced.UI.RazorButton();
-            this.agentB2 = new RazorEnhanced.UI.RazorButton();
-            this.agentB3 = new RazorEnhanced.UI.RazorButton();
+            this.mapsTab = new System.Windows.Forms.TabPage();
             this.hotkeysTab = new System.Windows.Forms.TabPage();
             this.hkStatus = new System.Windows.Forms.Label();
             this.hotkeyTree = new System.Windows.Forms.TreeView();
@@ -825,9 +806,11 @@ namespace Assistant
             this.dressListSelect = new RazorEnhanced.UI.RazorComboBox();
             this.dressExportListB = new RazorEnhanced.UI.RazorButton();
             this.label28 = new System.Windows.Forms.Label();
+            this.friends = new System.Windows.Forms.TabPage();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.btnMap = new RazorEnhanced.UI.RazorButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -840,8 +823,7 @@ namespace Assistant
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.skillsTab.SuspendLayout();
-            this.agentsTab.SuspendLayout();
-            this.agentGroup.SuspendLayout();
+            this.mapsTab.SuspendLayout();
             this.hotkeysTab.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.macrosTab.SuspendLayout();
@@ -875,24 +857,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme2;
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme1;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -908,7 +890,7 @@ namespace Assistant
             this.tabs.Controls.Add(this.toolbarTab);
             this.tabs.Controls.Add(this.dressTab);
             this.tabs.Controls.Add(this.skillsTab);
-            this.tabs.Controls.Add(this.agentsTab);
+            this.tabs.Controls.Add(this.mapsTab);
             this.tabs.Controls.Add(this.hotkeysTab);
             this.tabs.Controls.Add(this.macrosTab);
             this.tabs.Controls.Add(this.screenshotTab);
@@ -928,7 +910,6 @@ namespace Assistant
             // generalTab
             // 
             this.generalTab.Controls.Add(this.clientPrio);
-            this.generalTab.Controls.Add(this.btnMap);
             this.generalTab.Controls.Add(this.lockBox);
             this.generalTab.Controls.Add(this.systray);
             this.generalTab.Controls.Add(this.taskbar);
@@ -965,17 +946,6 @@ namespace Assistant
             this.clientPrio.Name = "clientPrio";
             this.clientPrio.Size = new System.Drawing.Size(88, 22);
             this.clientPrio.TabIndex = 60;
-            // 
-            // btnMap
-            // 
-            this.btnMap.ColorTable = office2010BlueTheme1;
-            this.btnMap.Location = new System.Drawing.Point(23, 251);
-            this.btnMap.Name = "btnMap";
-            this.btnMap.Size = new System.Drawing.Size(102, 31);
-            this.btnMap.TabIndex = 58;
-            this.btnMap.Text = "Map UO";
-            this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
             // 
             // lockBox
             // 
@@ -2179,109 +2149,14 @@ namespace Assistant
             this.skillHDRlock.Text = "Lock";
             this.skillHDRlock.Width = 55;
             // 
-            // agentsTab
+            // mapsTab
             // 
-            this.agentsTab.Controls.Add(this.agentB6);
-            this.agentsTab.Controls.Add(this.agentB5);
-            this.agentsTab.Controls.Add(this.agentList);
-            this.agentsTab.Controls.Add(this.agentGroup);
-            this.agentsTab.Controls.Add(this.agentB4);
-            this.agentsTab.Controls.Add(this.agentB1);
-            this.agentsTab.Controls.Add(this.agentB2);
-            this.agentsTab.Controls.Add(this.agentB3);
-            this.agentsTab.Location = new System.Drawing.Point(4, 40);
-            this.agentsTab.Name = "agentsTab";
-            this.agentsTab.Size = new System.Drawing.Size(666, 366);
-            this.agentsTab.TabIndex = 6;
-            this.agentsTab.Text = "Agents";
-            // 
-            // agentB6
-            // 
-            this.agentB6.ColorTable = office2010BlueTheme1;
-            this.agentB6.Location = new System.Drawing.Point(7, 175);
-            this.agentB6.Name = "agentB6";
-            this.agentB6.Size = new System.Drawing.Size(127, 20);
-            this.agentB6.TabIndex = 6;
-            this.agentB6.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.agentB6.Click += new System.EventHandler(this.agentB6_Click);
-            // 
-            // agentB5
-            // 
-            this.agentB5.ColorTable = office2010BlueTheme1;
-            this.agentB5.Location = new System.Drawing.Point(7, 150);
-            this.agentB5.Name = "agentB5";
-            this.agentB5.Size = new System.Drawing.Size(127, 20);
-            this.agentB5.TabIndex = 5;
-            this.agentB5.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.agentB5.Click += new System.EventHandler(this.agentB5_Click);
-            // 
-            // agentList
-            // 
-            this.agentList.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.agentList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.agentList.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.agentList.Location = new System.Drawing.Point(7, 18);
-            this.agentList.Name = "agentList";
-            this.agentList.Size = new System.Drawing.Size(127, 22);
-            this.agentList.TabIndex = 2;
-            this.agentList.SelectedIndexChanged += new System.EventHandler(this.agentList_SelectedIndexChanged);
-            // 
-            // agentGroup
-            // 
-            this.agentGroup.Controls.Add(this.agentSubList);
-            this.agentGroup.Location = new System.Drawing.Point(142, 8);
-            this.agentGroup.Name = "agentGroup";
-            this.agentGroup.Size = new System.Drawing.Size(384, 265);
-            this.agentGroup.TabIndex = 1;
-            this.agentGroup.TabStop = false;
-            // 
-            // agentSubList
-            // 
-            this.agentSubList.IntegralHeight = false;
-            this.agentSubList.Location = new System.Drawing.Point(8, 16);
-            this.agentSubList.Name = "agentSubList";
-            this.agentSubList.Size = new System.Drawing.Size(370, 244);
-            this.agentSubList.TabIndex = 0;
-            // 
-            // agentB4
-            // 
-            this.agentB4.ColorTable = office2010BlueTheme1;
-            this.agentB4.Location = new System.Drawing.Point(7, 125);
-            this.agentB4.Name = "agentB4";
-            this.agentB4.Size = new System.Drawing.Size(127, 20);
-            this.agentB4.TabIndex = 4;
-            this.agentB4.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.agentB4.Click += new System.EventHandler(this.agentB4_Click);
-            // 
-            // agentB1
-            // 
-            this.agentB1.ColorTable = office2010BlueTheme1;
-            this.agentB1.Location = new System.Drawing.Point(7, 49);
-            this.agentB1.Name = "agentB1";
-            this.agentB1.Size = new System.Drawing.Size(127, 19);
-            this.agentB1.TabIndex = 1;
-            this.agentB1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.agentB1.Click += new System.EventHandler(this.agentB1_Click);
-            // 
-            // agentB2
-            // 
-            this.agentB2.ColorTable = office2010BlueTheme1;
-            this.agentB2.Location = new System.Drawing.Point(7, 74);
-            this.agentB2.Name = "agentB2";
-            this.agentB2.Size = new System.Drawing.Size(127, 20);
-            this.agentB2.TabIndex = 2;
-            this.agentB2.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.agentB2.Click += new System.EventHandler(this.agentB2_Click);
-            // 
-            // agentB3
-            // 
-            this.agentB3.ColorTable = office2010BlueTheme1;
-            this.agentB3.Location = new System.Drawing.Point(7, 100);
-            this.agentB3.Name = "agentB3";
-            this.agentB3.Size = new System.Drawing.Size(127, 20);
-            this.agentB3.TabIndex = 3;
-            this.agentB3.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.agentB3.Click += new System.EventHandler(this.agentB3_Click);
+            this.mapsTab.Controls.Add(this.btnMap);
+            this.mapsTab.Location = new System.Drawing.Point(4, 40);
+            this.mapsTab.Name = "mapsTab";
+            this.mapsTab.Size = new System.Drawing.Size(666, 366);
+            this.mapsTab.TabIndex = 6;
+            this.mapsTab.Text = "Enhanced Map";
             // 
             // hotkeysTab
             // 
@@ -2891,6 +2766,7 @@ namespace Assistant
             this.tabControl1.Controls.Add(this.VendorBuy);
             this.tabControl1.Controls.Add(this.VendorSell);
             this.tabControl1.Controls.Add(this.Dress);
+            this.tabControl1.Controls.Add(this.friends);
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -4496,6 +4372,16 @@ namespace Assistant
             this.label28.TabIndex = 60;
             this.label28.Text = "Dress List:";
             // 
+            // friends
+            // 
+            this.friends.Location = new System.Drawing.Point(4, 22);
+            this.friends.Name = "friends";
+            this.friends.Padding = new System.Windows.Forms.Padding(3);
+            this.friends.Size = new System.Drawing.Size(659, 341);
+            this.friends.TabIndex = 6;
+            this.friends.Text = "Friends List";
+            this.friends.UseVisualStyleBackColor = true;
+            // 
             // m_NotifyIcon
             // 
             this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
@@ -4512,6 +4398,16 @@ namespace Assistant
             this.timerupdatestatus.Enabled = true;
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
+            // 
+            // btnMap
+            // 
+            this.btnMap.ColorTable = office2010BlueTheme1;
+            this.btnMap.Location = new System.Drawing.Point(8, 17);
+            this.btnMap.Name = "btnMap";
+            this.btnMap.Size = new System.Drawing.Size(102, 31);
+            this.btnMap.TabIndex = 59;
+            this.btnMap.Text = "Map UO";
+            this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             // 
             // MainForm
             // 
@@ -4548,8 +4444,7 @@ namespace Assistant
             this.groupBox5.ResumeLayout(false);
             this.skillsTab.ResumeLayout(false);
             this.skillsTab.PerformLayout();
-            this.agentsTab.ResumeLayout(false);
-            this.agentGroup.ResumeLayout(false);
+            this.mapsTab.ResumeLayout(false);
             this.hotkeysTab.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
@@ -4883,13 +4778,7 @@ namespace Assistant
 				else
 					HotKey.RebuildList(hotkeyTree);
 			}
-			else if (tabs.SelectedTab == agentsTab)
-			{
-				int sel = agentList.SelectedIndex;
-				Agent.Redraw(agentList, agentGroup, agentB1, agentB2, agentB3, agentB4, agentB5, agentB6);
-				if (sel >= 0 && sel < agentList.Items.Count)
-					agentList.SelectedIndex = sel;
-			}
+
 			else if (tabs.SelectedTab == statusTab)
 			{
 				UpdateRazorStatus();
@@ -5952,59 +5841,6 @@ namespace Assistant
 			Config.SetProperty("CountStealthSteps", chkStealth.Checked);
 		}
 
-		private void agentList_SelectedIndexChanged(object sender, System.EventArgs e)
-		{
-			try
-			{
-				Agent.Select(agentList.SelectedIndex, agentList, agentSubList, agentGroup, agentB1, agentB2, agentB3, agentB4, agentB5, agentB6);
-			}
-			catch
-			{
-			}
-		}
-
-		private void Agent_Button(int b)
-		{
-			if (World.Player == null)
-				return;
-
-			Agent a = agentList.SelectedItem as Agent;
-			if (a == null)
-				agentList.SelectedIndex = -1;
-			else
-				a.OnButtonPress(b);
-		}
-
-		private void agentB1_Click(object sender, System.EventArgs e)
-		{
-			Agent_Button(1);
-		}
-
-		private void agentB2_Click(object sender, System.EventArgs e)
-		{
-			Agent_Button(2);
-		}
-
-		private void agentB3_Click(object sender, System.EventArgs e)
-		{
-			Agent_Button(3);
-		}
-
-		private void agentB4_Click(object sender, System.EventArgs e)
-		{
-			Agent_Button(4);
-		}
-
-		private void agentB5_Click(object sender, System.EventArgs e)
-		{
-			Agent_Button(5);
-		}
-
-		private void agentB6_Click(object sender, System.EventArgs e)
-		{
-			Agent_Button(6);
-		}
-
 		private void MainForm_Activated(object sender, System.EventArgs e)
 		{
 			DisableCloseButton();
@@ -6790,12 +6626,6 @@ namespace Assistant
 		private void spamFilter_CheckedChanged(object sender, System.EventArgs e)
 		{
 			Config.SetProperty("FilterSpam", spamFilter.Checked);
-		}
-
-		private void jump2SearchEx_Click(object sender, System.EventArgs e)
-		{
-			tabs.SelectedTab = agentsTab;
-			agentList.SelectedItem = SearchExemptionAgent.Instance;
 		}
 
 		private void screenAutoCap_CheckedChanged(object sender, System.EventArgs e)
@@ -9396,5 +9226,6 @@ namespace Assistant
         {
             UpdateRazorStatus();
         }
+
 	}
 }
