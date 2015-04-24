@@ -142,7 +142,7 @@ namespace Assistant
 
 			foreach (Counter c in Counter.List)
 				c.Flag = false;
-
+            /*
 			if (Config.GetBool("HighlightReagents"))
 			{
 				foreach (string reagent in Reagents)
@@ -163,7 +163,7 @@ namespace Assistant
 					m_UnflagTimer = new UnflagTimer();
 				m_UnflagTimer.Start();
 			}
-
+            */
 			ClientCommunication.PostSpellCast(this.Number);
 
 			if (World.Player != null)

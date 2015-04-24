@@ -30,18 +30,8 @@ namespace Assistant
 		private RazorButton setlocks;
 		private RazorComboBox locks;
 		private System.Windows.Forms.ListView skillList;
-		private System.Windows.Forms.ColumnHeader skillHDRcap;
-		private System.Windows.Forms.GroupBox groupBox2;
-		private RazorButton addCounter;
-		private RazorButton delCounter;
-		private System.Windows.Forms.GroupBox groupBox3;
-		private RazorCheckBox showInBar;
-		private System.Windows.Forms.TextBox titleStr;
-		private RazorCheckBox checkNewConts;
-		private RazorCheckBox alwaysTop;
-		private System.Windows.Forms.ColumnHeader cntName;
-		private System.Windows.Forms.ColumnHeader cntCount;
-		private System.Windows.Forms.ListView counters;
+        private System.Windows.Forms.ColumnHeader skillHDRcap;
+        private RazorCheckBox alwaysTop;
 		private System.Windows.Forms.GroupBox groupBox4;
 		private RazorButton newProfile;
 		private RazorButton delProfile;
@@ -59,7 +49,7 @@ namespace Assistant
 		private System.Windows.Forms.ListBox dressItems;
 		private RazorButton dressUseCur;
 		private System.Windows.Forms.TabPage generalTab;
-		private System.Windows.Forms.TabPage displayTab;
+		private System.Windows.Forms.TabPage toolbarTab;
 		private System.Windows.Forms.TabPage skillsTab;
 		private System.Windows.Forms.TabPage hotkeysTab;
 		private RazorCheckBox chkCtrl;
@@ -88,8 +78,7 @@ namespace Assistant
 		private System.Windows.Forms.Label opacityLabel;
 		private System.Windows.Forms.TrackBar opacity;
 		private RazorCheckBox dispDelta;
-		private RazorComboBox agentList;
-		private RazorButton recount;
+        private RazorComboBox agentList;
 		private RazorCheckBox openCorpses;
 		private RazorTextBox corpseRange;
 		private System.Windows.Forms.Label label4;
@@ -118,10 +107,8 @@ namespace Assistant
 		private RazorCheckBox dispTime;
 		private RazorButton agentB5;
 		private RazorButton agentB6;
-		private RazorCheckBox undressConflicts;
-		private RazorCheckBox titlebarImages;
-		private RazorCheckBox showWelcome;
-		private RazorCheckBox highlightSpellReags;
+        private RazorCheckBox undressConflicts;
+        private RazorCheckBox showWelcome;
 		private System.Windows.Forms.ColumnHeader skillHDRlock;
 		private System.ComponentModel.IContainer components;
 		private RazorCheckBox queueTargets;
@@ -159,8 +146,7 @@ namespace Assistant
 		private RazorCheckBox QueueActions;
 		private RazorCheckBox rangeCheckLT;
 		private RazorTextBox ltRange;
-		private System.Windows.Forms.Label label8;
-		private RazorCheckBox excludePouches;
+        private System.Windows.Forms.Label label8;
 		private RazorCheckBox logPackets;
 		private RazorCheckBox filterSnoop;
 		private RazorCheckBox smartLT;
@@ -189,14 +175,11 @@ namespace Assistant
 		private RazorTextBox forceSizeY;
 		private System.Windows.Forms.Label label18;
         private RazorCheckBox gameSize;
-		private RazorCheckBox potionEquip;
-		private RazorTextBox warnNum;
-		private RazorCheckBox warnCount;
+        private RazorCheckBox potionEquip;
 		private RazorCheckBox blockHealPoison;
 		private RazorCheckBox negotiate;
 		private System.Windows.Forms.PictureBox lockBox;
         private RazorButton btnMap;
-		private RazorCheckBox showNotoHue;
 		private RazorCheckBox preAOSstatbar;
 		private RazorCheckBox showHealthOH;
 		private System.Windows.Forms.Label label10;
@@ -505,6 +488,7 @@ namespace Assistant
 		{
             this.components = new System.ComponentModel.Container();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
@@ -593,24 +577,7 @@ namespace Assistant
             this.smartLT = new RazorEnhanced.UI.RazorCheckBox();
             this.gameSize = new RazorEnhanced.UI.RazorCheckBox();
             this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
-            this.displayTab = new System.Windows.Forms.TabPage();
-            this.showNotoHue = new RazorEnhanced.UI.RazorCheckBox();
-            this.warnNum = new RazorEnhanced.UI.RazorTextBox();
-            this.warnCount = new RazorEnhanced.UI.RazorCheckBox();
-            this.excludePouches = new RazorEnhanced.UI.RazorCheckBox();
-            this.highlightSpellReags = new RazorEnhanced.UI.RazorCheckBox();
-            this.titlebarImages = new RazorEnhanced.UI.RazorCheckBox();
-            this.checkNewConts = new RazorEnhanced.UI.RazorCheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.titleStr = new System.Windows.Forms.TextBox();
-            this.showInBar = new RazorEnhanced.UI.RazorCheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.counters = new System.Windows.Forms.ListView();
-            this.cntName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.cntCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.delCounter = new RazorEnhanced.UI.RazorButton();
-            this.addCounter = new RazorEnhanced.UI.RazorButton();
-            this.recount = new RazorEnhanced.UI.RazorButton();
+            this.toolbarTab = new System.Windows.Forms.TabPage();
             this.dressTab = new System.Windows.Forms.TabPage();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.clearDress = new RazorEnhanced.UI.RazorButton();
@@ -869,9 +836,6 @@ namespace Assistant
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
             this.moreMoreOptTab.SuspendLayout();
-            this.displayTab.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.dressTab.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -911,24 +875,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -941,7 +905,7 @@ namespace Assistant
             this.tabs.Controls.Add(this.generalTab);
             this.tabs.Controls.Add(this.moreOptTab);
             this.tabs.Controls.Add(this.moreMoreOptTab);
-            this.tabs.Controls.Add(this.displayTab);
+            this.tabs.Controls.Add(this.toolbarTab);
             this.tabs.Controls.Add(this.dressTab);
             this.tabs.Controls.Add(this.skillsTab);
             this.tabs.Controls.Add(this.agentsTab);
@@ -1890,190 +1854,13 @@ namespace Assistant
             this.chkPartyOverhead.Text = "Show mana/stam above party members";
             this.chkPartyOverhead.CheckedChanged += new System.EventHandler(this.chkPartyOverhead_CheckedChanged);
             // 
-            // displayTab
+            // toolbarTab
             // 
-            this.displayTab.Controls.Add(this.showNotoHue);
-            this.displayTab.Controls.Add(this.warnNum);
-            this.displayTab.Controls.Add(this.warnCount);
-            this.displayTab.Controls.Add(this.excludePouches);
-            this.displayTab.Controls.Add(this.highlightSpellReags);
-            this.displayTab.Controls.Add(this.titlebarImages);
-            this.displayTab.Controls.Add(this.checkNewConts);
-            this.displayTab.Controls.Add(this.groupBox3);
-            this.displayTab.Controls.Add(this.groupBox2);
-            this.displayTab.Location = new System.Drawing.Point(4, 40);
-            this.displayTab.Name = "displayTab";
-            this.displayTab.Size = new System.Drawing.Size(666, 366);
-            this.displayTab.TabIndex = 1;
-            this.displayTab.Text = "Display/Counters";
-            // 
-            // showNotoHue
-            // 
-            this.showNotoHue.Location = new System.Drawing.Point(242, 197);
-            this.showNotoHue.Name = "showNotoHue";
-            this.showNotoHue.Size = new System.Drawing.Size(228, 20);
-            this.showNotoHue.TabIndex = 47;
-            this.showNotoHue.Text = "Show noto hue on {char} in TitleBar";
-            // 
-            // warnNum
-            // 
-            this.warnNum.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.warnNum.BackColor = System.Drawing.Color.White;
-            this.warnNum.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.warnNum.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.warnNum.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.warnNum.Location = new System.Drawing.Point(414, 237);
-            this.warnNum.Name = "warnNum";
-            this.warnNum.Size = new System.Drawing.Size(20, 20);
-            this.warnNum.TabIndex = 46;
-            this.warnNum.TextChanged += new System.EventHandler(this.warnNum_TextChanged);
-            // 
-            // warnCount
-            // 
-            this.warnCount.Location = new System.Drawing.Point(242, 237);
-            this.warnCount.Name = "warnCount";
-            this.warnCount.Size = new System.Drawing.Size(178, 19);
-            this.warnCount.TabIndex = 45;
-            this.warnCount.Text = "Warn when a counter is below:";
-            this.warnCount.CheckedChanged += new System.EventHandler(this.warnCount_CheckedChanged);
-            // 
-            // excludePouches
-            // 
-            this.excludePouches.Location = new System.Drawing.Point(15, 219);
-            this.excludePouches.Name = "excludePouches";
-            this.excludePouches.Size = new System.Drawing.Size(192, 20);
-            this.excludePouches.TabIndex = 14;
-            this.excludePouches.Text = "Never auto-search pouches";
-            this.excludePouches.CheckedChanged += new System.EventHandler(this.excludePouches_CheckedChanged);
-            // 
-            // highlightSpellReags
-            // 
-            this.highlightSpellReags.Location = new System.Drawing.Point(242, 177);
-            this.highlightSpellReags.Name = "highlightSpellReags";
-            this.highlightSpellReags.Size = new System.Drawing.Size(200, 20);
-            this.highlightSpellReags.TabIndex = 13;
-            this.highlightSpellReags.Text = "Highlight Spell Reagents on Cast";
-            // 
-            // titlebarImages
-            // 
-            this.titlebarImages.Location = new System.Drawing.Point(242, 217);
-            this.titlebarImages.Name = "titlebarImages";
-            this.titlebarImages.Size = new System.Drawing.Size(200, 20);
-            this.titlebarImages.TabIndex = 12;
-            this.titlebarImages.Text = "Show Images with Counters";
-            // 
-            // checkNewConts
-            // 
-            this.checkNewConts.Location = new System.Drawing.Point(15, 194);
-            this.checkNewConts.Name = "checkNewConts";
-            this.checkNewConts.Size = new System.Drawing.Size(200, 20);
-            this.checkNewConts.TabIndex = 9;
-            this.checkNewConts.Text = "Auto search new containers";
-            this.checkNewConts.CheckedChanged += new System.EventHandler(this.checkNewConts_CheckedChanged);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.titleStr);
-            this.groupBox3.Controls.Add(this.showInBar);
-            this.groupBox3.Location = new System.Drawing.Point(234, 16);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(292, 137);
-            this.groupBox3.TabIndex = 3;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Title Bar Display";
-            // 
-            // titleStr
-            // 
-            this.titleStr.Location = new System.Drawing.Point(8, 36);
-            this.titleStr.Multiline = true;
-            this.titleStr.Name = "titleStr";
-            this.titleStr.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.titleStr.Size = new System.Drawing.Size(279, 96);
-            this.titleStr.TabIndex = 4;
-            // 
-            // showInBar
-            // 
-            this.showInBar.Location = new System.Drawing.Point(8, 16);
-            this.showInBar.Name = "showInBar";
-            this.showInBar.Size = new System.Drawing.Size(180, 20);
-            this.showInBar.TabIndex = 3;
-            this.showInBar.Text = "Show this in the UO title bar:";
-            this.showInBar.CheckedChanged += new System.EventHandler(this.showInBar_CheckedChanged);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.counters);
-            this.groupBox2.Controls.Add(this.delCounter);
-            this.groupBox2.Controls.Add(this.addCounter);
-            this.groupBox2.Controls.Add(this.recount);
-            this.groupBox2.Location = new System.Drawing.Point(7, 16);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 163);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Counters";
-            // 
-            // counters
-            // 
-            this.counters.CheckBoxes = true;
-            this.counters.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.cntName,
-            this.cntCount});
-            this.counters.GridLines = true;
-            this.counters.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.counters.LabelWrap = false;
-            this.counters.Location = new System.Drawing.Point(8, 15);
-            this.counters.MultiSelect = false;
-            this.counters.Name = "counters";
-            this.counters.Size = new System.Drawing.Size(180, 108);
-            this.counters.TabIndex = 11;
-            this.counters.UseCompatibleStateImageBehavior = false;
-            this.counters.View = System.Windows.Forms.View.Details;
-            this.counters.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.counters_ItemCheck);
-            // 
-            // cntName
-            // 
-            this.cntName.Text = "Name (Format)";
-            this.cntName.Width = 130;
-            // 
-            // cntCount
-            // 
-            this.cntCount.Text = "Count";
-            // 
-            // delCounter
-            // 
-            this.delCounter.ColorTable = office2010BlueTheme1;
-            this.delCounter.Location = new System.Drawing.Point(64, 133);
-            this.delCounter.Name = "delCounter";
-            this.delCounter.Size = new System.Drawing.Size(60, 20);
-            this.delCounter.TabIndex = 4;
-            this.delCounter.Text = "Del/Edit";
-            this.delCounter.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.delCounter.Click += new System.EventHandler(this.delCounter_Click);
-            // 
-            // addCounter
-            // 
-            this.addCounter.ColorTable = office2010BlueTheme1;
-            this.addCounter.Location = new System.Drawing.Point(8, 133);
-            this.addCounter.Name = "addCounter";
-            this.addCounter.Size = new System.Drawing.Size(52, 20);
-            this.addCounter.TabIndex = 3;
-            this.addCounter.Text = "Add...";
-            this.addCounter.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.addCounter.Click += new System.EventHandler(this.addCounter_Click);
-            // 
-            // recount
-            // 
-            this.recount.ColorTable = office2010BlueTheme1;
-            this.recount.Location = new System.Drawing.Point(128, 133);
-            this.recount.Name = "recount";
-            this.recount.Size = new System.Drawing.Size(60, 20);
-            this.recount.TabIndex = 2;
-            this.recount.Text = "Recount";
-            this.recount.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.recount.Click += new System.EventHandler(this.recount_Click);
+            this.toolbarTab.Location = new System.Drawing.Point(4, 40);
+            this.toolbarTab.Name = "toolbarTab";
+            this.toolbarTab.Size = new System.Drawing.Size(666, 366);
+            this.toolbarTab.TabIndex = 1;
+            this.toolbarTab.Text = "Enhanced Toolbar";
             // 
             // dressTab
             // 
@@ -4756,11 +4543,6 @@ namespace Assistant
             this.moreOptTab.PerformLayout();
             this.moreMoreOptTab.ResumeLayout(false);
             this.moreMoreOptTab.PerformLayout();
-            this.displayTab.ResumeLayout(false);
-            this.displayTab.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
             this.dressTab.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
@@ -4877,8 +4659,6 @@ namespace Assistant
 			showWelcome.Checked = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ShowWelcome"), 1) == 1;
 
 			m_Tip.Active = true;
-			m_Tip.SetToolTip(titleStr, Language.GetString(LocString.TitleBarTip));
-
 			SplashScreen.End();
 
 			LoadSettings();
@@ -4962,28 +4742,8 @@ namespace Assistant
 			ltRange.Enabled = rangeCheckLT.Checked = Config.GetBool("RangeCheckLT");
 			ltRange.Text = Config.GetInt("LTRange").ToString();
 
-			counters.BeginUpdate();
-			if (Config.GetBool("SortCounters"))
-			{
-				counters.Sorting = SortOrder.None;
-				counters.ListViewItemSorter = CounterLVIComparer.Instance;
-				counters.Sort();
-			}
-			else
-			{
-				counters.ListViewItemSorter = null;
-				counters.Sorting = SortOrder.Ascending;
-			}
-			counters.EndUpdate();
-			counters.Refresh();
-
 			incomingMob.Checked = Config.GetBool("ShowMobNames");
 			incomingCorpse.Checked = Config.GetBool("ShowCorpseNames");
-			checkNewConts.Checked = Config.GetBool("AutoSearch");
-			excludePouches.Checked = Config.GetBool("NoSearchPouches");
-			excludePouches.Enabled = checkNewConts.Checked;
-			warnNum.Enabled = warnCount.Checked = Config.GetBool("CounterWarn");
-			warnNum.Text = Config.GetInt("CounterWarnAmount").ToString();
 			QueueActions.Checked = Config.GetBool("QueueActions");
 			queueTargets.Checked = Config.GetBool("QueueTargets");
 			chkForceSpeechHue.Checked = setSpeechHue.Enabled = Config.GetBool("ForceSpeechHue");
@@ -5035,15 +4795,7 @@ namespace Assistant
 
 			undressConflicts.Checked = Config.GetBool("UndressConflicts");
 			taskbar.Checked = !(systray.Checked = Config.GetBool("Systray"));
-			titlebarImages.Checked = Config.GetBool("TitlebarImages");
-			highlightSpellReags.Checked = Config.GetBool("HighlightReagents");
-
 			dispDelta.Checked = Config.GetBool("DisplaySkillChanges");
-			titleStr.Enabled = showInBar.Checked = Config.GetBool("TitleBarDisplay");
-			titleStr.Text = Config.GetString("TitleBarText");
-
-			showNotoHue.Checked = Config.GetBool("ShowNotoHue");
-
 			corpseRange.Enabled = openCorpses.Checked = Config.GetBool("AutoOpenCorpses");
 			corpseRange.Text = Config.GetInt("CorpseRange").ToString();
 
@@ -5113,10 +4865,6 @@ namespace Assistant
 			else if (tabs.SelectedTab == skillsTab)
 			{
 				RedrawSkills();
-			}
-			else if (tabs.SelectedTab == displayTab)
-			{
-				Counter.Redraw(counters);
 			}
 			else if (tabs.SelectedTab == dressTab)
 			{
@@ -5484,80 +5232,6 @@ namespace Assistant
 		{
 			Config.SetProperty("DispSkillChanges", dispDelta.Checked);
 		}
-
-		private void delCounter_Click(object sender, System.EventArgs e)
-		{
-			if (counters.SelectedItems.Count <= 0)
-				return;
-
-			Counter c = counters.SelectedItems[0].Tag as Counter;
-
-			if (c != null)
-			{
-				AddCounter ac = new AddCounter(c);
-				switch (ac.ShowDialog(this))
-				{
-					case DialogResult.Abort:
-						counters.Items.Remove(c.ViewItem);
-						Counter.List.Remove(c);
-						break;
-
-					case DialogResult.OK:
-						c.Set((ushort)ac.ItemID, ac.Hue, ac.NameStr, ac.FmtStr, ac.DisplayImage);
-						break;
-				}
-			}
-		}
-
-		private void addCounter_Click(object sender, System.EventArgs e)
-		{
-			AddCounter dlg = new AddCounter();
-
-			if (dlg.ShowDialog(this) == DialogResult.OK)
-			{
-				Counter.Register(new Counter(dlg.NameStr, dlg.FmtStr, (ushort)dlg.ItemID, (int)dlg.Hue, dlg.DisplayImage));
-				Counter.Redraw(counters);
-			}
-		}
-
-		private void showInBar_CheckedChanged(object sender, System.EventArgs e)
-		{
-			titleStr.Enabled = showInBar.Checked;
-		}
-
-		private void counters_ItemCheck(object sender, System.Windows.Forms.ItemCheckEventArgs e)
-		{
-			if (e.Index >= 0 && e.Index < Counter.List.Count && !Counter.SupressChecks)
-			{
-				((Counter)(counters.Items[e.Index].Tag)).SetEnabled(e.NewValue == CheckState.Checked);
-
-				counters.Sort();
-			}
-		}
-
-		internal void RedrawCounters()
-		{
-			Counter.Redraw(counters);
-		}
-
-		private void checkNewConts_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("AutoSearch", checkNewConts.Checked);
-			excludePouches.Enabled = checkNewConts.Checked;
-		}
-
-		private void warnCount_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("CounterWarn", warnCount.Checked);
-			warnNum.Enabled = warnCount.Checked;
-		}
-
-
-		private void warnNum_TextChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("CounterWarnAmount", Utility.ToInt32(warnNum.Text.Trim(), 3));
-		}
-
 		private void alwaysTop_CheckedChanged(object sender, System.EventArgs e)
 		{
 			Config.SetProperty("AlwaysOnTop", this.TopMost = alwaysTop.Checked);
@@ -6391,35 +6065,6 @@ namespace Assistant
 			Config.SetProperty("DisplaySkillChanges", dispDelta.Checked);
 		}
 
-		/*private void saveProfile_Click(object sender, System.EventArgs e)
-		{
-			Counter.Save();
-			Config.Save();
-			MacroManager.Save();
-			MessageBox.Show( this, Language.GetString( LocString.SaveOK ), "Save OK", MessageBoxButtons.OK, MessageBoxIcon.Information );
-		}
-		
-		private void edit_Click(object sender, System.EventArgs e)
-		{
-			if ( counters.SelectedItems.Count <= 0 )
-				return;
-
-			Counter c = counters.SelectedItems[0].Tag as Counter;
-			if ( c == null )
-				return;
-
-			AddCounter dlg = new AddCounter( c.Name, c.Format, c.ItemID, c.Hue );
-
-			if ( dlg.ShowDialog( this ) == DialogResult.OK )
-			{
-				c.Name = dlg.NameStr;
-				c.Format = dlg.FmtStr;
-				c.ItemID = (ushort)dlg.ItemID;
-				c.Hue = (int)dlg.Hue;
-				Counter.Redraw( counters );
-			}
-		}*/
-
 		private void logPackets_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (logPackets.Checked)
@@ -6433,11 +6078,6 @@ namespace Assistant
 			{
 				Packet.Logging = false;
 			}
-		}
-
-		private void recount_Click(object sender, System.EventArgs e)
-		{
-			Counter.FullRecount();
 		}
 
 		private void openCorpses_CheckedChanged(object sender, System.EventArgs e)
@@ -7492,11 +7132,6 @@ namespace Assistant
 		private void ltRange_TextChanged(object sender, System.EventArgs e)
 		{
 			Config.SetProperty("LTRange", Utility.ToInt32(ltRange.Text, 11));
-		}
-
-		private void excludePouches_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("NoSearchPouches", excludePouches.Checked);
 		}
 
 		private void clientPrio_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -9761,8 +9396,5 @@ namespace Assistant
         {
             UpdateRazorStatus();
         }
-
-
-
 	}
 }

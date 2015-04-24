@@ -442,13 +442,6 @@ namespace Assistant
 			}
 		}
 
-		internal static void Register(Counter c)
-		{
-			m_List.Add(c);
-			m_NeedXMLSave = true;
-			Engine.MainWindow.RedrawCounters();
-		}
-
 		internal static void Uncount(Item item)
 		{
 			foreach (Item cont in item.Contains)
@@ -562,7 +555,7 @@ namespace Assistant
 			SupressWarnings = false;
 		}
 
-		internal static void Redraw(ListView list)
+	/*	internal static void Redraw(ListView list)
 		{
 			m_SupressChecks = true;
 			list.BeginUpdate();
@@ -573,7 +566,7 @@ namespace Assistant
 
 			list.EndUpdate();
 			m_SupressChecks = false;
-		}
+		}*/
 	}
 }
 

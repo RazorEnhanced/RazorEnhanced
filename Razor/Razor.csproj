@@ -132,9 +132,6 @@
     <Compile Include="Core\Agents.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\AVIRec.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\BandageTimer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -474,9 +471,6 @@
     </Compile>
     <Compile Include="RazorEnhanced\Mobile.cs" />
     <Compile Include="RazorEnhanced\Property.cs" />
-    <Compile Include="UI\AddCounter.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -610,9 +604,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedToolbar.resx">
       <DependentUpon>EnhancedToolbar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\AddCounter.resx">
-      <DependentUpon>AddCounter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\App.ico" />
     <EmbeddedResource Include="UI\HueEntry.resx">
