@@ -162,7 +162,7 @@ namespace RazorEnhanced
                 DataTable friend_player = new DataTable("FRIEND_PLAYERS");
                 friend_player.Columns.Add("List", typeof(string));
                 friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
-                m_Dataset.Tables.Add(dress_items);
+                m_Dataset.Tables.Add(friend_player);
 
 				// ----------- SHARDS ----------
 				DataTable shards = new DataTable("SHARDS");
@@ -1502,7 +1502,7 @@ namespace RazorEnhanced
 
             internal static void ListDelete(string description)
             {
-                for (int i = m_Dataset.Tables["FRIEND_PLAYER"].Rows.Count - 1; i >= 0; i--)
+                for (int i = m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Count - 1; i >= 0; i--)
                 {
                     DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].Rows[i];
                     if ((string)row["List"] == description)
@@ -1514,7 +1514,7 @@ namespace RazorEnhanced
                 for (int i = m_Dataset.Tables["FRIEND_LISTS"].Rows.Count - 1; i >= 0; i--)
                 {
                     DataRow row = m_Dataset.Tables["FRIEND_LISTS"].Rows[i];
-                    if ((string)row["FRIEND_LISTS"] == description)
+                    if ((string)row["Description"] == description)
                     {
                         row.Delete();
                         break;
@@ -1622,7 +1622,7 @@ namespace RazorEnhanced
                 bool preventattackOut = false;
                 bool autoacceptpartyOut = false;
 
-                foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+                foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
                 {
                     if ((string)row["Description"] == listname)
                     {

@@ -764,5 +764,131 @@ namespace RazorEnhanced
 
         }
         ////////////// BUY AGENT END //////////////
+
+        ////////////// FRIENDS START //////////////
+        internal static void ImportFriends()
+        {
+            DataSet m_Dataset = new DataSet();
+            DataTable m_DatasetTable = new DataTable();
+            OpenFileDialog od = new OpenFileDialog();
+            od.Filter = "Enhanced Razor Export|*.raz";
+            od.Title = "Import Friends List";
+            od.RestoreDirectory = true;
+
+            if (od.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(od.FileName))
+                {
+                    try
+                    {
+                        m_Dataset.RemotingFormat = SerializationFormat.Binary;
+                        m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+                        Stream stream = File.Open(od.FileName, FileMode.Open);
+                        GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
+                        BinaryFormatter bin = new BinaryFormatter();
+                        m_Dataset = bin.Deserialize(decompress) as DataSet;
+                        decompress.Close();
+                        decompress.Dispose();
+                        stream.Close();
+                        stream.Dispose();
+                    }
+                    catch
+                    {
+                        Friend.AddLog("File is corrupted!");
+                    }
+                }
+                else
+                {
+                    Friend.AddLog("Unable to access file!");
+                }
+                if (m_Dataset.Tables.Contains("FRIEND_PLAYERS"))
+                {
+                    m_DatasetTable = m_Dataset.Tables["FRIEND_PLAYERS"];
+                    if (m_DatasetTable.Rows.Count > 0)
+                    {
+                        if (RazorEnhanced.Settings.Friend.ListExists(m_Dataset.Tables["FRIEND_PLAYERS"].Rows[0]["List"].ToString()))
+                            Friend.AddLog("List: " + m_Dataset.Tables["FRIEND_PLAYERS"].Rows[0]["List"].ToString() + " already exist");
+                        else
+                        {
+                            Friend.AddList(m_Dataset.Tables["FRIEND_PLAYERS"].Rows[0]["List"].ToString());
+                            foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
+                            {
+                                RazorEnhanced.Settings.Friend.PlayerInsert((string)row["List"], (RazorEnhanced.Friend.FriendPlayer)row["Item"]);
+                            }
+                            RazorEnhanced.Friend.RefreshPlayers();
+                            Friend.AddLog("List: " + m_Dataset.Tables["FRIEND_PLAYERS"].Rows[0]["List"].ToString() + " imported!");
+                        }
+                    }
+                    else
+                    {
+                        Friend.AddLog("This list is empty!");
+                    }
+                }
+                else
+                {
+                    Friend.AddLog("This file not contain Friends data!");
+                }
+            }
+            else
+            {
+                Friend.AddLog("Import list cancelled.");
+            }
+
+        }
+        internal static void ExportFriends(string listname)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.Filter = "Enhanced Razor Export|*.raz";
+            sd.Title = "Export Friend List";
+            sd.FileName = "FL." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                DataSet m_Dataset = new DataSet();
+                DataTable friend_player = new DataTable("FRIEND_PLAYERS");
+                friend_player.Columns.Add("List", typeof(string));
+                friend_player.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendPlayer));
+                m_Dataset.Tables.Add(friend_player);
+                m_Dataset.AcceptChanges();
+
+                List<Friend.FriendPlayer> players;
+                RazorEnhanced.Settings.Friend.PlayersRead(listname, out players);
+
+                foreach (RazorEnhanced.Friend.FriendPlayer player in players)
+                {
+                    DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].NewRow();
+                    row["List"] = listname;
+                    row["Item"] = player;
+                    m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
+                }
+
+                try
+                {
+                    m_Dataset.RemotingFormat = SerializationFormat.Binary;
+                    m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+                    Stream stream = File.Create(sd.FileName);
+                    GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(compress, m_Dataset);
+                    compress.Close();
+                    compress.Dispose();
+                    stream.Close();
+                    stream.Dispose();
+                    Friend.AddLog("List: " + listname + " exported");
+                }
+                catch (Exception ex)
+                {
+                    Friend.AddLog("Export list fail");
+                    Friend.AddLog(ex.ToString());
+                }
+
+            }
+            else
+            {
+                Friend.AddLog("Export list cancelled.");
+            }
+        }
+        ////////////// FRIENDS END //////////////
     }
 }

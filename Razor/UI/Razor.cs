@@ -432,7 +432,7 @@ namespace Assistant
         // Friend List
         internal ListBox FriendLogBox { get { return friendLogBox; } }
         internal ListView FriendListView { get { return friendlistView; } }
-        internal RazorComboBox FriendListSelect { get { return FriendListSelect; } }
+        internal ComboBox FriendListSelect { get { return friendListSelect; } }
         internal RazorCheckBox FriendPartyCheckBox { get { return friendPartyCheckBox; } }
         internal RazorCheckBox FriendAttackCheckBox { get { return friendAttackCheckBox; } }
         internal RazorCheckBox FriendIncludePartyCheckBox { get { return friendIncludePartyCheckBox; } }
@@ -4278,6 +4278,7 @@ namespace Assistant
             this.friendIncludePartyCheckBox.Size = new System.Drawing.Size(234, 22);
             this.friendIncludePartyCheckBox.TabIndex = 68;
             this.friendIncludePartyCheckBox.Text = "Include party member in Friend List";
+            this.friendIncludePartyCheckBox.CheckedChanged += new System.EventHandler(this.friendIncludePartyCheckBox_CheckedChanged);
             // 
             // friendAttackCheckBox
             // 
@@ -4286,6 +4287,7 @@ namespace Assistant
             this.friendAttackCheckBox.Size = new System.Drawing.Size(252, 22);
             this.friendAttackCheckBox.TabIndex = 67;
             this.friendAttackCheckBox.Text = "Prevent attacking friends in warmode";
+            this.friendAttackCheckBox.CheckedChanged += new System.EventHandler(this.friendAttackCheckBox_CheckedChanged);
             // 
             // friendPartyCheckBox
             // 
@@ -4294,6 +4296,7 @@ namespace Assistant
             this.friendPartyCheckBox.Size = new System.Drawing.Size(241, 22);
             this.friendPartyCheckBox.TabIndex = 66;
             this.friendPartyCheckBox.Text = "Autoaccept party from Friends";
+            this.friendPartyCheckBox.CheckedChanged += new System.EventHandler(this.friendPartyCheckBox_CheckedChanged);
             // 
             // friendlistView
             // 
@@ -4314,6 +4317,7 @@ namespace Assistant
             this.friendlistView.TabIndex = 64;
             this.friendlistView.UseCompatibleStateImageBehavior = false;
             this.friendlistView.View = System.Windows.Forms.View.Details;
+            this.friendlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.friendlistView_PlayerChecked);
             // 
             // columnHeader28
             // 
@@ -4339,6 +4343,7 @@ namespace Assistant
             this.friendButtonRemoveList.TabIndex = 63;
             this.friendButtonRemoveList.Text = "Remove";
             this.friendButtonRemoveList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.friendButtonRemoveList.Click += new System.EventHandler(this.friendButtonRemoveList_Click);
             // 
             // friendButtonAddList
             // 
@@ -4349,6 +4354,7 @@ namespace Assistant
             this.friendButtonAddList.TabIndex = 62;
             this.friendButtonAddList.Text = "Add";
             this.friendButtonAddList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.friendButtonAddList.Click += new System.EventHandler(this.friendButtonAddList_Click);
             // 
             // friendButtonImportList
             // 
@@ -4359,6 +4365,7 @@ namespace Assistant
             this.friendButtonImportList.TabIndex = 59;
             this.friendButtonImportList.Text = "Import";
             this.friendButtonImportList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.friendButtonImportList.Click += new System.EventHandler(this.friendButtonImportList_Click);
             // 
             // friendListSelect
             // 
@@ -4368,6 +4375,7 @@ namespace Assistant
             this.friendListSelect.Name = "friendListSelect";
             this.friendListSelect.Size = new System.Drawing.Size(183, 24);
             this.friendListSelect.TabIndex = 61;
+            this.friendListSelect.SelectedIndexChanged += new System.EventHandler(this.friendListSelect_SelectedIndexChanged);
             // 
             // friendButtonExportList
             // 
@@ -4378,6 +4386,7 @@ namespace Assistant
             this.friendButtonExportList.TabIndex = 58;
             this.friendButtonExportList.Text = "Export";
             this.friendButtonExportList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.friendButtonExportList.Click += new System.EventHandler(this.friendButtonExportList_Click);
             // 
             // labelfriend
             // 
@@ -7479,11 +7488,12 @@ namespace Assistant
 
 		private void autoLootButtonRemoveList_Click(object sender, EventArgs e)
 		{
-			if (autolootListSelect.Text != null)
-				RazorEnhanced.AutoLoot.AddLog("Autoloot list " + autolootListSelect.Text + " removed!");
-
-			RazorEnhanced.AutoLoot.AutoLootBag = 0;
-			RazorEnhanced.AutoLoot.RemoveList(autolootListSelect.Text);
+            if (autolootListSelect.Text != "")
+            {
+                RazorEnhanced.AutoLoot.AddLog("Autoloot list " + autolootListSelect.Text + " removed!");
+                RazorEnhanced.AutoLoot.AutoLootBag = 0;
+                RazorEnhanced.AutoLoot.RemoveList(autolootListSelect.Text);
+            }
 		}
 
 		private void autolootlistView_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -7691,11 +7701,12 @@ namespace Assistant
 
 		private void scavengerRemoveList_Click(object sender, EventArgs e)
 		{
-			if (scavengerListSelect.Text != null)
-				RazorEnhanced.Scavenger.AddLog("Scavenger list " + scavengerListSelect.Text + " removed!");
-
-			RazorEnhanced.Scavenger.ScavengerBag = 0;
-			RazorEnhanced.Scavenger.RemoveList(scavengerListSelect.Text);
+            if (scavengerListSelect.Text != "")
+            {
+                RazorEnhanced.Scavenger.AddLog("Scavenger list " + scavengerListSelect.Text + " removed!");
+                RazorEnhanced.Scavenger.ScavengerBag = 0;
+                RazorEnhanced.Scavenger.RemoveList(scavengerListSelect.Text);
+            }
 		}
 
 		private void scavengertListSelect_SelectedIndexChanged(object sender, EventArgs e)
@@ -7821,12 +7832,13 @@ namespace Assistant
 
 		private void organizerRemoveList_Click(object sender, EventArgs e)
 		{
-			if (organizerListSelect.Text != null)
-				RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
-
-			RazorEnhanced.Organizer.OrganizerSource = 0;
-			RazorEnhanced.Organizer.OrganizerDestination = 0;
-			RazorEnhanced.Organizer.RemoveList(organizerListSelect.Text);
+            if (organizerListSelect.Text != "")
+            {
+                RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
+                RazorEnhanced.Organizer.OrganizerSource = 0;
+                RazorEnhanced.Organizer.OrganizerDestination = 0;
+                RazorEnhanced.Organizer.RemoveList(organizerListSelect.Text);
+            }
 		}
 
 		private void organizerAddManual_Click(object sender, EventArgs e)
@@ -8177,10 +8189,11 @@ namespace Assistant
 
 		private void sellRemoveList_Click(object sender, EventArgs e)
 		{
-			if (sellListSelect.Text != null)
+			if (sellListSelect.Text != "")
+            { 
 				RazorEnhanced.SellAgent.AddLog("Sell Agent list " + sellListSelect.Text + " removed!");
-
-			RazorEnhanced.SellAgent.RemoveList(sellListSelect.Text);
+			    RazorEnhanced.SellAgent.RemoveList(sellListSelect.Text);
+            }
 		}
 
 		private void sellAddManual_Click(object sender, EventArgs e)
@@ -8419,10 +8432,11 @@ namespace Assistant
 
 		private void buyRemoveList_Click(object sender, EventArgs e)
 		{
-			if (buyListSelect.Text != null)
-				RazorEnhanced.BuyAgent.AddLog("Buy Agent list " + buyListSelect.Text + " removed!");
-
-			RazorEnhanced.BuyAgent.RemoveList(buyListSelect.Text);
+            if (buyListSelect.Text != "")
+            {
+                RazorEnhanced.BuyAgent.AddLog("Buy Agent list " + buyListSelect.Text + " removed!");
+                RazorEnhanced.BuyAgent.RemoveList(buyListSelect.Text);
+            }
 		}
 
 		private void buyAddManual_Click(object sender, EventArgs e)
@@ -8602,13 +8616,14 @@ namespace Assistant
 
 		private void dressRemoveListB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != null)
-				RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");
-
-			RazorEnhanced.Dress.DressBag = 0;
-			RazorEnhanced.Dress.DressDelay = 100;
-			RazorEnhanced.Dress.DressConflict = false;
-			RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
+            if (dressListSelect.Text != "")
+            {
+                RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");
+                RazorEnhanced.Dress.DressBag = 0;
+                RazorEnhanced.Dress.DressDelay = 100;
+                RazorEnhanced.Dress.DressConflict = false;
+                RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
+            }
 		}
 
 		private void dressDragDelay_TextChanged(object sender, EventArgs e)
@@ -8917,6 +8932,81 @@ namespace Assistant
             dressDragDelay.Enabled = true;
         }
         // --------------- DRESS END ---------
+
+        // --------------- FRIENDS START ---------
+        private void friendButtonAddList_Click(object sender, EventArgs e)
+        {
+            EnhancedFriendAddList AddPlayerList = new EnhancedFriendAddList();
+            AddPlayerList.TopMost = true;
+            AddPlayerList.Show();
+        }
+        private void friendButtonRemoveList_Click(object sender, EventArgs e)
+        {
+            if (friendListSelect.Text != "")
+            {
+                RazorEnhanced.Friend.AddLog("Friends list " + friendListSelect.Text + " removed!");
+                RazorEnhanced.Friend.AutoacceptParty = false;
+                RazorEnhanced.Friend.IncludeParty = false;
+                RazorEnhanced.Friend.PreventAttack = false;
+                RazorEnhanced.Friend.RemoveList(friendListSelect.Text);
+            }
+        }
+        private void friendButtonImportList_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.ImportExport.ImportFriends();
+        }
+
+        private void friendButtonExportList_Click(object sender, EventArgs e)
+        {
+            if (friendListSelect.Text != "")
+                RazorEnhanced.ImportExport.ExportFriends(friendListSelect.Text);
+            else
+                RazorEnhanced.Friend.AddLog("Friend list not selected!");
+        }
+        private void friendPartyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, true);
+            RazorEnhanced.Friend.RefreshLists();
+        }
+
+        private void friendAttackCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, true);
+            RazorEnhanced.Friend.RefreshLists();
+        }
+
+        private void friendIncludePartyCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, true);
+            RazorEnhanced.Friend.RefreshLists();
+        }
+        private void friendListSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool includeparty = false;
+            bool preventattack = false;
+            bool autoacceptparty = false;
+            RazorEnhanced.Settings.Friend.ListDetailsRead(friendListSelect.Text, out includeparty, out preventattack, out autoacceptparty);
+            RazorEnhanced.Friend.IncludeParty = includeparty;
+            RazorEnhanced.Friend.PreventAttack = preventattack;
+            RazorEnhanced.Friend.AutoacceptParty = autoacceptparty;
+
+            RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, true);
+            RazorEnhanced.Friend.RefreshLists();
+
+            if (friendListSelect.Text != "")
+                RazorEnhanced.Friend.AddLog("Friends list changed to: " + friendListSelect.Text);
+        }
+
+        private void friendlistView_PlayerChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (friendlistView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.Friend.UpdateSelectedPlayer(item.Index);
+            }
+        }
+
+        // --------------- FRIENDS END ---------
 
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {

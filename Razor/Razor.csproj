@@ -287,6 +287,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddList.Designer.cs">
+      <DependentUpon>EnhancedFriendAddList.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -518,6 +524,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddList.resx">
+      <DependentUpon>EnhancedFriendAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.resx">
       <DependentUpon>EnhancedDressAddUndressLayer.cs</DependentUpon>

@@ -194,6 +194,24 @@ namespace RazorEnhanced
             }
             RazorEnhanced.Friend.RefreshPlayers();
         }
-	}
+        internal static void UpdateSelectedPlayer(int i)
+        {
+            List<FriendPlayer> players;
+            RazorEnhanced.Settings.Friend.PlayersRead(FriendListName, out players);
 
+            if (players.Count != Assistant.Engine.MainWindow.FriendListView.Items.Count)
+            {
+                return;
+            }
+
+            ListViewItem lvi = Assistant.Engine.MainWindow.FriendListView.Items[i];
+            FriendPlayer old = players[i];
+
+            if (lvi != null && old != null)
+            {
+                FriendPlayer player = new Friend.FriendPlayer(old.Name, old.Serial, lvi.Checked);
+                RazorEnhanced.Settings.Friend.PlayerReplace(RazorEnhanced.Friend.FriendListName, i, player);
+            }
+        }
+	}
 }
