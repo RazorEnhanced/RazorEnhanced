@@ -140,8 +140,7 @@ namespace Assistant
 
 		private int m_LastKV = 0;
 		private bool m_ProfileConfirmLoad;
-		private RazorCheckBox spellUnequip;
-		private RazorCheckBox autoFriend;
+        private RazorCheckBox spellUnequip;
 		private RazorCheckBox alwaysStealth;
 		private RazorCheckBox autoOpenDoors;
 		private System.Windows.Forms.Label label17;
@@ -562,7 +561,6 @@ namespace Assistant
             this.spellUnequip = new RazorEnhanced.UI.RazorCheckBox();
             this.autoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
             this.alwaysStealth = new RazorEnhanced.UI.RazorCheckBox();
-            this.autoFriend = new RazorEnhanced.UI.RazorCheckBox();
             this.chkStealth = new RazorEnhanced.UI.RazorCheckBox();
             this.rememberPwds = new RazorEnhanced.UI.RazorCheckBox();
             this.showtargtext = new RazorEnhanced.UI.RazorCheckBox();
@@ -1481,7 +1479,6 @@ namespace Assistant
             this.moreMoreOptTab.Controls.Add(this.spellUnequip);
             this.moreMoreOptTab.Controls.Add(this.autoOpenDoors);
             this.moreMoreOptTab.Controls.Add(this.alwaysStealth);
-            this.moreMoreOptTab.Controls.Add(this.autoFriend);
             this.moreMoreOptTab.Controls.Add(this.chkStealth);
             this.moreMoreOptTab.Controls.Add(this.rememberPwds);
             this.moreMoreOptTab.Controls.Add(this.showtargtext);
@@ -1698,15 +1695,6 @@ namespace Assistant
             this.alwaysStealth.TabIndex = 57;
             this.alwaysStealth.Text = "Always show stealth steps ";
             this.alwaysStealth.CheckedChanged += new System.EventHandler(this.alwaysStealth_CheckedChanged);
-            // 
-            // autoFriend
-            // 
-            this.autoFriend.Location = new System.Drawing.Point(238, 35);
-            this.autoFriend.Name = "autoFriend";
-            this.autoFriend.Size = new System.Drawing.Size(190, 20);
-            this.autoFriend.TabIndex = 56;
-            this.autoFriend.Text = "Treat party members as \'Friends\'";
-            this.autoFriend.CheckedChanged += new System.EventHandler(this.autoFriend_CheckedChanged);
             // 
             // chkStealth
             // 
@@ -4718,8 +4706,6 @@ namespace Assistant
 
 			smartCPU.Checked = Config.GetBool("SmartCPU");
 
-			autoFriend.Checked = Config.GetBool("AutoFriend");
-
 			try
 			{
 				clientPrio.SelectedItem = Config.GetString("ClientPrio");
@@ -6766,10 +6752,6 @@ namespace Assistant
 				Config.SetProperty("ImageFormat", imgFmt.SelectedItem);
 			else
 				Config.SetProperty("ImageFormat", "jpg");
-		}
-		private void autoFriend_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("AutoFriend", autoFriend.Checked);
 		}
 
 		private void alwaysStealth_CheckedChanged(object sender, System.EventArgs e)
@@ -9061,24 +9043,23 @@ namespace Assistant
                 RazorEnhanced.Friend.AddLog("Friends list not selected!");
         }
 
+        private void friendAddButton_Click(object sender, EventArgs e)
+        {
+            if (friendListSelect.Text != "")
+            {
+                EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual();
+                ManualAddPlayer.TopMost = true;
+                ManualAddPlayer.Show();
+            }
+            else
+                RazorEnhanced.Friend.AddLog("Friends list not selected!");
+        }
+
         // --------------- FRIENDS END ---------
 
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {
             UpdateRazorStatus();
         }
-
-        private void friendAddButton_Click(object sender, EventArgs e)
-        {
-            if (friendListSelect.Text != "")
-			{
-                EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual();
-                ManualAddPlayer.TopMost = true;
-                ManualAddPlayer.Show();
-			}
-			else
-                RazorEnhanced.Friend.AddLog("Friends list not selected!");
-		}
-
 	}
 }

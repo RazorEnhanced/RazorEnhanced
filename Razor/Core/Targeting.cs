@@ -384,7 +384,7 @@ namespace Assistant
 			List<Mobile> list = new List<Mobile>();
 			foreach (Mobile m in World.MobilesInRange(12))
 			{
-				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
+                if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
@@ -419,7 +419,7 @@ namespace Assistant
 				if (m.Body != 0x0190 && m.Body != 0x0191 && m.Body != 0x025D && m.Body != 0x025E)
 					continue;
 
-				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
+                if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
@@ -512,7 +512,7 @@ namespace Assistant
 			List<Mobile> list = new List<Mobile>();
 			foreach (Mobile m in World.MobilesInRange(12))
 			{
-				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
+                if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{
@@ -561,7 +561,7 @@ namespace Assistant
 				if (m.Body != 0x0190 && m.Body != 0x0191 && m.Body != 0x025D && m.Body != 0x025E)
 					continue;
 
-				if ((!FriendsAgent.IsFriend(m) || (noto.Length > 0 && noto[0] == 0)) &&
+				if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
 					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
 				{

@@ -203,6 +203,7 @@ namespace RazorEnhanced
             scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
             scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
             scope.SetVariable("Dress", new RazorEnhanced.Dress());
+            scope.SetVariable("Friend", new RazorEnhanced.Friend());
 
 			return scope;
 		}

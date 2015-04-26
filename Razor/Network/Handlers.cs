@@ -17,6 +17,7 @@ namespace Assistant
 			//Client -> Server handlers
 			PacketHandler.RegisterClientToServerViewer(0x00, new PacketViewerCallback(CreateCharacter));
 			PacketHandler.RegisterClientToServerViewer(0x02, new PacketViewerCallback(MovementRequest));
+            PacketHandler.RegisterClientToServerFilter(0x05, new PacketFilterCallback(AttackRequest));
 			PacketHandler.RegisterClientToServerViewer(0x06, new PacketViewerCallback(ClientDoubleClick));
 			PacketHandler.RegisterClientToServerViewer(0x07, new PacketViewerCallback(LiftRequest));
 			PacketHandler.RegisterClientToServerViewer(0x08, new PacketViewerCallback(DropRequest));
@@ -2597,6 +2598,16 @@ namespace Assistant
 		i just snapped
 		since packet lengths are int16's
 		*/
+
+        private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
+        {
+            if (RazorEnhanced.Friend.PreventAttack && RazorEnhanced.Friend.IsFriend((int)p.ReadUInt32()) )
+            {
+                RazorEnhanced.Misc.SendMessage("Can't attack a friend player");
+                args.Block = true;
+                return;
+            }
+        }
 
 	}
 }

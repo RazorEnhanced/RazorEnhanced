@@ -213,5 +213,24 @@ namespace RazorEnhanced
                 RazorEnhanced.Settings.Friend.PlayerReplace(RazorEnhanced.Friend.FriendListName, i, player);
             }
         }
+
+        public static bool IsFriend(int serial)
+        {
+            List<Friend.FriendPlayer> players;
+            RazorEnhanced.Settings.Friend.PlayersRead(Friend.FriendListName, out players);
+            foreach (FriendPlayer player in players)        // Ricerca nella friend list normale
+            {
+                if (player.Selected)
+                    if (player.Serial == serial)
+                        return true;
+            }
+
+            if (Friend.IncludeParty && PacketHandlers.Party.Contains(serial))            // Ricerco nel party se attiva l'opzione
+            {
+                return true;
+            }
+
+            return false;
+        }
 	}
 }
