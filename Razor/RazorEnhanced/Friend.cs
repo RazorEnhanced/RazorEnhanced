@@ -232,5 +232,21 @@ namespace RazorEnhanced
 
             return false;
         }
+
+        public static void ChangeList(string nomelista)
+        {
+            bool ListaOK = false;
+            for (int i = 0; i < Assistant.Engine.MainWindow.FriendListSelect.Items.Count; i++)
+            {
+                if (nomelista == Assistant.Engine.MainWindow.FriendListSelect.GetItemText(Assistant.Engine.MainWindow.FriendListSelect.Items[i]))
+                    ListaOK = true;
+            }
+            if (!ListaOK)
+                Misc.SendMessage("Script Error: Friend.ChangeList: Friend List: " + nomelista + " not exist");
+            else
+            {
+                Assistant.Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = Assistant.Engine.MainWindow.FriendListSelect.Items.IndexOf(nomelista)));  // cambio lista
+            }
+        }
 	}
 }
