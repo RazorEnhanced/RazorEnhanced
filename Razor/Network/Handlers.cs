@@ -2605,7 +2605,7 @@ namespace Assistant
 		int packLength = pvSrc.ReadInt32();
 		int fullLength = pvSrc.ReadInt32();
 		byte[] buffer = pvSrc.ReadBytes( packLength );
-
+        a
 		packLength==0 || fullLength==0 just break out
 		osi is rage
 		when i saw they used int32's for those lengths
@@ -2621,8 +2621,11 @@ namespace Assistant
                 if (RazorEnhanced.Friend.IsFriend((int)serialbersaglio))
                 {
                     Assistant.Mobile bersaglio = World.FindMobile(serialbersaglio);
-                    RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
-                    RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+                    if (bersaglio != null)
+                    {
+                        RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+                        RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+                    }
                     args.Block = true;
                     return;
                 }
