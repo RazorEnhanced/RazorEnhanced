@@ -444,6 +444,7 @@ namespace Assistant
 
 		internal MainForm()
 		{
+
 			m_ProfileConfirmLoad = true;
 			m_Tip = new ToolTip();
 			//
@@ -488,6 +489,7 @@ namespace Assistant
 		{
             this.components = new System.ComponentModel.Container();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
@@ -865,24 +867,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -1813,17 +1815,17 @@ namespace Assistant
             // 
             // dispDelta
             // 
-            this.dispDelta.Location = new System.Drawing.Point(402, 132);
+            this.dispDelta.Location = new System.Drawing.Point(527, 144);
             this.dispDelta.Name = "dispDelta";
-            this.dispDelta.Size = new System.Drawing.Size(113, 20);
+            this.dispDelta.Size = new System.Drawing.Size(113, 22);
             this.dispDelta.TabIndex = 11;
-            this.dispDelta.Text = "Display skill and stat changes";
+            this.dispDelta.Text = "Display Changes";
             this.dispDelta.CheckedChanged += new System.EventHandler(this.dispDelta_CheckedChanged);
             // 
             // skillCopyAll
             // 
-            this.skillCopyAll.ColorTable = office2010BlueTheme1;
-            this.skillCopyAll.Location = new System.Drawing.Point(402, 100);
+            this.skillCopyAll.ColorTable = office2010BlueTheme2;
+            this.skillCopyAll.Location = new System.Drawing.Point(527, 109);
             this.skillCopyAll.Name = "skillCopyAll";
             this.skillCopyAll.Size = new System.Drawing.Size(115, 20);
             this.skillCopyAll.TabIndex = 9;
@@ -1833,8 +1835,8 @@ namespace Assistant
             // 
             // skillCopySel
             // 
-            this.skillCopySel.ColorTable = office2010BlueTheme1;
-            this.skillCopySel.Location = new System.Drawing.Point(402, 75);
+            this.skillCopySel.ColorTable = office2010BlueTheme2;
+            this.skillCopySel.Location = new System.Drawing.Point(527, 81);
             this.skillCopySel.Name = "skillCopySel";
             this.skillCopySel.Size = new System.Drawing.Size(115, 21);
             this.skillCopySel.TabIndex = 8;
@@ -1844,19 +1846,21 @@ namespace Assistant
             // 
             // baseTotal
             // 
-            this.baseTotal.Location = new System.Drawing.Point(471, 161);
+            this.baseTotal.Location = new System.Drawing.Point(596, 174);
             this.baseTotal.Name = "baseTotal";
             this.baseTotal.ReadOnly = true;
             this.baseTotal.Size = new System.Drawing.Size(44, 20);
             this.baseTotal.TabIndex = 7;
+            this.baseTotal.TextChanged += new System.EventHandler(this.baseTotal_TextChanged);
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(401, 164);
+            this.label1.Location = new System.Drawing.Point(526, 179);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 15);
             this.label1.TabIndex = 6;
             this.label1.Text = "Base Total:";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // locks
             // 
@@ -1867,15 +1871,16 @@ namespace Assistant
             "Up",
             "Down",
             "Locked"});
-            this.locks.Location = new System.Drawing.Point(483, 42);
+            this.locks.Location = new System.Drawing.Point(608, 45);
             this.locks.Name = "locks";
             this.locks.Size = new System.Drawing.Size(37, 22);
             this.locks.TabIndex = 5;
+            this.locks.SelectedIndexChanged += new System.EventHandler(this.locks_SelectedIndexChanged);
             // 
             // setlocks
             // 
-            this.setlocks.ColorTable = office2010BlueTheme1;
-            this.setlocks.Location = new System.Drawing.Point(402, 42);
+            this.setlocks.ColorTable = office2010BlueTheme2;
+            this.setlocks.Location = new System.Drawing.Point(527, 46);
             this.setlocks.Name = "setlocks";
             this.setlocks.Size = new System.Drawing.Size(76, 20);
             this.setlocks.TabIndex = 4;
@@ -1885,8 +1890,8 @@ namespace Assistant
             // 
             // resetDelta
             // 
-            this.resetDelta.ColorTable = office2010BlueTheme1;
-            this.resetDelta.Location = new System.Drawing.Point(402, 13);
+            this.resetDelta.ColorTable = office2010BlueTheme2;
+            this.resetDelta.Location = new System.Drawing.Point(527, 13);
             this.resetDelta.Name = "resetDelta";
             this.resetDelta.Size = new System.Drawing.Size(115, 20);
             this.resetDelta.TabIndex = 3;
@@ -1907,7 +1912,7 @@ namespace Assistant
             this.skillList.FullRowSelect = true;
             this.skillList.Location = new System.Drawing.Point(7, 13);
             this.skillList.Name = "skillList";
-            this.skillList.Size = new System.Drawing.Size(376, 260);
+            this.skillList.Size = new System.Drawing.Size(492, 345);
             this.skillList.TabIndex = 1;
             this.skillList.UseCompatibleStateImageBehavior = false;
             this.skillList.View = System.Windows.Forms.View.Details;
@@ -9060,6 +9065,21 @@ namespace Assistant
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {
             UpdateRazorStatus();
+        }
+
+        private void baseTotal_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void locks_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 	}
 }
