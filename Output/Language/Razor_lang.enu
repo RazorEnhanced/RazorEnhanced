@@ -119,7 +119,6 @@ MainForm::removeDress=Remove
 MainForm::addDress=Add...
 MainForm::undressConflicts=Automatically move conflicting items
 MainForm::skillsTab=Skills
-MainForm::dispDelta=Display skill and stat changes
 MainForm::skillCopyAll=Copy All
 MainForm::skillCopySel=Copy Selected
 MainForm::label1=Base Total:
