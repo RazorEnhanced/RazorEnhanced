@@ -2308,9 +2308,23 @@ namespace Assistant
 					{
 						//Serial leader = p.ReadUInt32();
 						PartyLeader = p.ReadUInt32();
-						if (m_PartyDeclineTimer == null)
-							m_PartyDeclineTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(10.0), new TimerCallback(PartyAutoDecline));
-						m_PartyDeclineTimer.Start();
+                        if (RazorEnhanced.Friend.AutoacceptParty && RazorEnhanced.Friend.IsFriend(PartyLeader))     // Autoaccept party from friend
+                        {
+                            if (PacketHandlers.PartyLeader != Serial.Zero)
+                            {
+                                Assistant.Mobile leader = World.FindMobile(PartyLeader);
+                                RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")" );
+                                RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+                                ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
+                                PacketHandlers.PartyLeader = Serial.Zero;
+                            }
+                        }
+                        else
+                        { 
+						    if (m_PartyDeclineTimer == null)
+							    m_PartyDeclineTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(10.0), new TimerCallback(PartyAutoDecline));
+						    m_PartyDeclineTimer.Start();
+                        }
 						break;
 					}
 			}
@@ -2601,11 +2615,17 @@ namespace Assistant
 
         private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
         {
-            if (RazorEnhanced.Friend.PreventAttack && RazorEnhanced.Friend.IsFriend((int)p.ReadUInt32()) )
+            if (RazorEnhanced.Friend.PreventAttack)
             {
-                RazorEnhanced.Misc.SendMessage("Can't attack a friend player");
-                args.Block = true;
-                return;
+                uint serialbersaglio = p.ReadUInt32();
+                if (RazorEnhanced.Friend.IsFriend((int)serialbersaglio))
+                {
+                    Assistant.Mobile bersaglio = World.FindMobile(serialbersaglio);
+                    RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+                    RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+                    args.Block = true;
+                    return;
+                }
             }
         }
 
