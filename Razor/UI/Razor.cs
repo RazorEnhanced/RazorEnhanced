@@ -1973,6 +1973,7 @@ namespace Assistant
             this.btnMap.TabIndex = 59;
             this.btnMap.Text = "Map UO";
             this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
             // 
             // hotkeysTab
             // 
@@ -4232,6 +4233,7 @@ namespace Assistant
             this.friendAddTargetButton.TabIndex = 50;
             this.friendAddTargetButton.Text = "Add Target";
             this.friendAddTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.friendAddTargetButton.Click += new System.EventHandler(this.friendAddTargetButton_Click);
             // 
             // friendRemoveButton
             // 
@@ -4242,6 +4244,7 @@ namespace Assistant
             this.friendRemoveButton.TabIndex = 49;
             this.friendRemoveButton.Text = "Remove";
             this.friendRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.friendRemoveButton.Click += new System.EventHandler(this.friendRemoveButton_Click);
             // 
             // friendAddButton
             // 
@@ -4252,6 +4255,7 @@ namespace Assistant
             this.friendAddButton.TabIndex = 48;
             this.friendAddButton.Text = "Add Manual";
             this.friendAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.friendAddButton.Click += new System.EventHandler(this.friendAddButton_Click);
             // 
             // friendloggroupBox
             // 
@@ -4605,6 +4609,9 @@ namespace Assistant
 
 			// ------------------ DRESS AGENT -------------------------
 			RazorEnhanced.Dress.RefreshLists();
+
+            // ------------------ FRIEND -------------------------
+            RazorEnhanced.Friend.RefreshLists();
 
 		}
 
@@ -8985,13 +8992,14 @@ namespace Assistant
             bool includeparty = false;
             bool preventattack = false;
             bool autoacceptparty = false;
+            
             RazorEnhanced.Settings.Friend.ListDetailsRead(friendListSelect.Text, out includeparty, out preventattack, out autoacceptparty);
             RazorEnhanced.Friend.IncludeParty = includeparty;
             RazorEnhanced.Friend.PreventAttack = preventattack;
             RazorEnhanced.Friend.AutoacceptParty = autoacceptparty;
 
             RazorEnhanced.Settings.Friend.ListUpdate(friendListSelect.Text, RazorEnhanced.Friend.IncludeParty, RazorEnhanced.Friend.PreventAttack, RazorEnhanced.Friend.AutoacceptParty, true);
-            RazorEnhanced.Friend.RefreshLists();
+            RazorEnhanced.Friend.RefreshPlayers();
 
             if (friendListSelect.Text != "")
                 RazorEnhanced.Friend.AddLog("Friends list changed to: " + friendListSelect.Text);
@@ -9006,11 +9014,71 @@ namespace Assistant
             }
         }
 
+        private void friendAddTargetButton_Click(object sender, EventArgs e)
+        {
+            if (friendListSelect.Text != "")
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(FriendPlayerTarget_Callback));
+            else
+                RazorEnhanced.Friend.AddLog("Friends list not selected!");
+        }
+
+        private void FriendPlayerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Mobile friendplayer = Assistant.World.FindMobile(serial);
+            if (friendplayer != null && friendplayer.Serial.IsMobile)
+            {
+                RazorEnhanced.Misc.SendMessage("Friend player added: " + friendplayer.Name.ToString());
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Friend.AddPlayerToList(friendplayer.Name, friendplayer.Serial); });
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid target");
+            }
+        }
+
+        private void friendRemoveButton_Click(object sender, EventArgs e)
+        {
+            if (friendListSelect.Text != "")
+            {
+                if (friendlistView.SelectedItems.Count == 1)
+                {
+                    int index = friendlistView.SelectedItems[0].Index;
+                    string selection = friendListSelect.Text;
+
+                    if (RazorEnhanced.Settings.Friend.ListExists(selection))
+                    {
+                        List<Friend.FriendPlayer> players;
+                        RazorEnhanced.Settings.Friend.PlayersRead(selection, out players);
+                        if (index <= players.Count - 1)
+                        {
+                            RazorEnhanced.Settings.Friend.PlayerDelete(selection, players[index]);
+                            RazorEnhanced.Friend.RefreshPlayers();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Friend.AddLog("Friends list not selected!");
+        }
+
         // --------------- FRIENDS END ---------
 
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {
             UpdateRazorStatus();
         }
+
+        private void friendAddButton_Click(object sender, EventArgs e)
+        {
+            if (friendListSelect.Text != "")
+			{
+                EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual();
+                ManualAddPlayer.TopMost = true;
+                ManualAddPlayer.Show();
+			}
+			else
+                RazorEnhanced.Friend.AddLog("Friends list not selected!");
+		}
+
 	}
 }

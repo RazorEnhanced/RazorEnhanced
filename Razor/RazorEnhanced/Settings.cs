@@ -1548,7 +1548,8 @@ namespace RazorEnhanced
             {
                 foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
                 {
-                    if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendPlayer)row["Player"] == player)
+                    RazorEnhanced.Friend.FriendPlayer dacercare =(RazorEnhanced.Friend.FriendPlayer)row["Player"];
+                    if ((string)row["List"] == list && dacercare.Serial == player.Serial)
                         return true;
                 }
 
