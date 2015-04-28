@@ -109,14 +109,6 @@ namespace RazorEnhanced
 					{
 						serialBag = (int)World.Player.Backpack.Serial.Value;
 					}
-					else
-					{
-						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-						if (bag == null)
-							serialBag = (int)World.Player.Backpack.Serial.Value;
-                        else
-                            serialBag = bag.Serial;
-					}
 				}
 				catch
 				{
@@ -144,14 +136,6 @@ namespace RazorEnhanced
 					if (serialBag == 0)
 					{
 						serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-					else
-					{
-						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-                        if (bag == null)
-							serialBag = (int)World.Player.Backpack.Serial.Value;
-                        else
-                            serialBag = bag.Serial;
 					}
 				}
 				catch
@@ -359,10 +343,8 @@ namespace RazorEnhanced
                                 RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
                                 RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, oggettoDaLista.Amount);
 								Thread.Sleep(mseconds);
-							}
-							
+							}	
 						}
-
 					}
 				}
 			}
@@ -379,7 +361,10 @@ namespace RazorEnhanced
 			Assistant.Item destinationBag = Assistant.World.FindItem(OrganizerDestination);
 
 			if (sourceBag == null || destinationBag == null)
-				return;
+            {
+                AddLog("Source or destination bag is invalid or inaccessible");
+                return;
+            }
 
 			RazorEnhanced.Item razorSource = new RazorEnhanced.Item(sourceBag);
 			RazorEnhanced.Item razorDestination = new RazorEnhanced.Item(destinationBag);

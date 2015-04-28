@@ -296,7 +296,7 @@ namespace RazorEnhanced
                     return false;
         }
 
-        internal static int Engine(List<RestockItem> organizerItemList, int mseconds, Item sourceBag, Item destinationBag)
+        internal static int Engine(List<RestockItem> restockItemList, int mseconds, Item sourceBag, Item destinationBag)
         {
             // Apre le bag per item contenuti
             Items.UseItem(sourceBag);
@@ -304,9 +304,38 @@ namespace RazorEnhanced
             Items.UseItem(destinationBag);
             Items.WaitForContents(destinationBag, 1500);
 
-            /////// 
-            ///////
-            ///////
+            foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
+            {
+                foreach (RestockItem oggettoDaLista in restockItemList)
+                {
+                    if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))     // Verifico il match fra colore e grafica
+                    {
+                        int amountpresente = RazorEnhanced.Items.ContainerCount(destinationBag.Serial, oggettoDaLista.Graphics, oggettoDaLista.Color);
+                        AddLog("Detected:" + amountpresente + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " on destination bag.");
+                        int left = oggettoDaLista.AmountLimit - amountpresente;
+                        if (left > 0)
+                        {
+                            AddLog("Left:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " on destination bag.");
+                            if (oggettoContenuto.Amount > left)
+                            {
+                                AddLog("Moving:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " to destination bag.");
+                                RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, left);
+                                Thread.Sleep(mseconds);
+                            }
+                            else
+                            {
+                                AddLog("Moving:" + oggettoContenuto.Amount + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " to destination bag.");
+                                RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
+                                Thread.Sleep(mseconds);
+                            }
+                        }
+                        else
+                        {
+                            AddLog("Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + "limit reached.");
+                        }
+                    }
+                }
+            }
 
             RazorEnhanced.Restock.AddLog("Finish!");
             RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!");
@@ -320,7 +349,10 @@ namespace RazorEnhanced
             Assistant.Item destinationBag = Assistant.World.FindItem(RestockDestination);
 
             if (sourceBag == null || destinationBag == null)
+            {
+                AddLog("Source or destination bag is invalid or inaccessible");
                 return;
+            }
 
             RazorEnhanced.Item razorSource = new RazorEnhanced.Item(sourceBag);
             RazorEnhanced.Item razorDestination = new RazorEnhanced.Item(destinationBag);

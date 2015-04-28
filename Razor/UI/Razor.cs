@@ -384,7 +384,7 @@ namespace Assistant
         private ColumnHeader columnHeader35;
         private RazorButton restockRemoveListB;
         private RazorButton restockAddListB;
-        private RazorButton restockImportB;
+        private RazorButton restockImportListB;
         private RazorComboBox restockListSelect;
         private RazorButton restockExportListB;
         private Label label7;
@@ -880,7 +880,7 @@ namespace Assistant
             this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.restockRemoveListB = new RazorEnhanced.UI.RazorButton();
             this.restockAddListB = new RazorEnhanced.UI.RazorButton();
-            this.restockImportB = new RazorEnhanced.UI.RazorButton();
+            this.restockImportListB = new RazorEnhanced.UI.RazorButton();
             this.restockListSelect = new RazorEnhanced.UI.RazorComboBox();
             this.restockExportListB = new RazorEnhanced.UI.RazorButton();
             this.label7 = new System.Windows.Forms.Label();
@@ -1921,7 +1921,6 @@ namespace Assistant
             this.baseTotal.ReadOnly = true;
             this.baseTotal.Size = new System.Drawing.Size(44, 20);
             this.baseTotal.TabIndex = 7;
-            this.baseTotal.TextChanged += new System.EventHandler(this.baseTotal_TextChanged);
             // 
             // label1
             // 
@@ -1930,7 +1929,6 @@ namespace Assistant
             this.label1.Size = new System.Drawing.Size(65, 15);
             this.label1.TabIndex = 6;
             this.label1.Text = "Base Total:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // locks
             // 
@@ -1945,7 +1943,6 @@ namespace Assistant
             this.locks.Name = "locks";
             this.locks.Size = new System.Drawing.Size(37, 22);
             this.locks.TabIndex = 5;
-            this.locks.SelectedIndexChanged += new System.EventHandler(this.locks_SelectedIndexChanged);
             // 
             // setlocks
             // 
@@ -4481,7 +4478,7 @@ namespace Assistant
             this.restock.Controls.Add(this.restocklistView);
             this.restock.Controls.Add(this.restockRemoveListB);
             this.restock.Controls.Add(this.restockAddListB);
-            this.restock.Controls.Add(this.restockImportB);
+            this.restock.Controls.Add(this.restockImportListB);
             this.restock.Controls.Add(this.restockListSelect);
             this.restock.Controls.Add(this.restockExportListB);
             this.restock.Controls.Add(this.label7);
@@ -4502,6 +4499,7 @@ namespace Assistant
             this.restockStopButton.TabIndex = 85;
             this.restockStopButton.Text = "Stop";
             this.restockStopButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockStopButton.Click += new System.EventHandler(this.restockStopButton_Click);
             // 
             // restockExecuteButton
             // 
@@ -4512,6 +4510,7 @@ namespace Assistant
             this.restockExecuteButton.TabIndex = 84;
             this.restockExecuteButton.Text = "Execute";
             this.restockExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockExecuteButton.Click += new System.EventHandler(this.restockExecuteButton_Click);
             // 
             // groupBox2
             // 
@@ -4553,6 +4552,7 @@ namespace Assistant
             this.restockDragDelay.Name = "restockDragDelay";
             this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
             this.restockDragDelay.TabIndex = 81;
+            this.restockDragDelay.TextChanged += new System.EventHandler(this.restockDragDelay_TextChanged);
             // 
             // restockDestinationLabel
             // 
@@ -4571,6 +4571,7 @@ namespace Assistant
             this.restockSetDestinationButton.TabIndex = 79;
             this.restockSetDestinationButton.Text = "Destination Cont";
             this.restockSetDestinationButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockSetDestinationButton.Click += new System.EventHandler(this.restockSetDestinationButton_Click);
             // 
             // restockSourceLabel
             // 
@@ -4602,6 +4603,7 @@ namespace Assistant
             this.restockEditButton.TabIndex = 48;
             this.restockEditButton.Text = "Edit";
             this.restockEditButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockEditButton.Click += new System.EventHandler(this.restockEditButton_Click);
             // 
             // restockAddTargetButton
             // 
@@ -4612,6 +4614,7 @@ namespace Assistant
             this.restockAddTargetButton.TabIndex = 47;
             this.restockAddTargetButton.Text = "Add Target";
             this.restockAddTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockAddTargetButton.Click += new System.EventHandler(this.restockAddTargetButton_Click);
             // 
             // restockRemoveButton
             // 
@@ -4622,6 +4625,7 @@ namespace Assistant
             this.restockRemoveButton.TabIndex = 46;
             this.restockRemoveButton.Text = "Remove";
             this.restockRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockRemoveButton.Click += new System.EventHandler(this.restockRemoveButton_Click);
             // 
             // restockAddManualButton
             // 
@@ -4632,6 +4636,7 @@ namespace Assistant
             this.restockAddManualButton.TabIndex = 45;
             this.restockAddManualButton.Text = "Add Manual";
             this.restockAddManualButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockAddManualButton.Click += new System.EventHandler(this.restockAddManualButton_Click);
             // 
             // restockSetSourceButton
             // 
@@ -4642,6 +4647,7 @@ namespace Assistant
             this.restockSetSourceButton.TabIndex = 76;
             this.restockSetSourceButton.Text = "Source Cont";
             this.restockSetSourceButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockSetSourceButton.Click += new System.EventHandler(this.restockSetSourceButton_Click);
             // 
             // restocklistView
             // 
@@ -4664,6 +4670,7 @@ namespace Assistant
             this.restocklistView.TabIndex = 70;
             this.restocklistView.UseCompatibleStateImageBehavior = false;
             this.restocklistView.View = System.Windows.Forms.View.Details;
+            this.restocklistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.restocklistView_ItemChecked);
             // 
             // columnHeader31
             // 
@@ -4699,6 +4706,7 @@ namespace Assistant
             this.restockRemoveListB.TabIndex = 69;
             this.restockRemoveListB.Text = "Remove";
             this.restockRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockRemoveListB.Click += new System.EventHandler(this.restockRemoveListB_Click);
             // 
             // restockAddListB
             // 
@@ -4709,16 +4717,18 @@ namespace Assistant
             this.restockAddListB.TabIndex = 68;
             this.restockAddListB.Text = "Add";
             this.restockAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockAddListB.Click += new System.EventHandler(this.restockAddListB_Click);
             // 
-            // restockImportB
+            // restockImportListB
             // 
-            this.restockImportB.ColorTable = office2010BlueTheme1;
-            this.restockImportB.Location = new System.Drawing.Point(462, 14);
-            this.restockImportB.Name = "restockImportB";
-            this.restockImportB.Size = new System.Drawing.Size(90, 20);
-            this.restockImportB.TabIndex = 65;
-            this.restockImportB.Text = "Import";
-            this.restockImportB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockImportListB.ColorTable = office2010BlueTheme1;
+            this.restockImportListB.Location = new System.Drawing.Point(462, 14);
+            this.restockImportListB.Name = "restockImportListB";
+            this.restockImportListB.Size = new System.Drawing.Size(90, 20);
+            this.restockImportListB.TabIndex = 65;
+            this.restockImportListB.Text = "Import";
+            this.restockImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockImportListB.Click += new System.EventHandler(this.restockImportB_Click);
             // 
             // restockListSelect
             // 
@@ -4728,6 +4738,7 @@ namespace Assistant
             this.restockListSelect.Name = "restockListSelect";
             this.restockListSelect.Size = new System.Drawing.Size(183, 24);
             this.restockListSelect.TabIndex = 67;
+            this.restockListSelect.SelectedIndexChanged += new System.EventHandler(this.restockListSelect_SelectedIndexChanged);
             // 
             // restockExportListB
             // 
@@ -4738,6 +4749,7 @@ namespace Assistant
             this.restockExportListB.TabIndex = 64;
             this.restockExportListB.Text = "Export";
             this.restockExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.restockExportListB.Click += new System.EventHandler(this.restockExportListB_Click);
             // 
             // label7
             // 
@@ -4973,6 +4985,9 @@ namespace Assistant
 
             // ------------------ FRIEND -------------------------
             RazorEnhanced.Friend.RefreshLists();
+            
+            // ------------------ RESTOCK -------------------------
+            RazorEnhanced.Restock.RefreshLists();
 
 		}
 
@@ -8199,6 +8214,7 @@ namespace Assistant
                 RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
                 RazorEnhanced.Organizer.OrganizerSource = 0;
                 RazorEnhanced.Organizer.OrganizerDestination = 0;
+                RazorEnhanced.Organizer.OrganizerDelay = 100;
                 RazorEnhanced.Organizer.RemoveList(organizerListSelect.Text);
             }
 		}
@@ -9430,24 +9446,358 @@ namespace Assistant
 
         // --------------- FRIENDS END ---------
 
+        // --------------- RESTOCK START -------------
+
+        private void restockListSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int bagsource;
+            int bagdestination;
+            int delay;
+            RazorEnhanced.Settings.Restock.ListDetailsRead(restockListSelect.Text, out bagsource, out bagdestination, out delay);
+            RazorEnhanced.Restock.RestockDelay = delay;
+            RazorEnhanced.Restock.RestockSource = bagsource;
+            RazorEnhanced.Restock.RestockDestination = bagdestination;
+
+            RazorEnhanced.Settings.Restock.ListUpdate(restockListSelect.Text, RazorEnhanced.Restock.RestockDelay, RazorEnhanced.Restock.RestockSource, RazorEnhanced.Restock.RestockDestination, true);
+            RazorEnhanced.Restock.RefreshItems();
+
+            if (restockListSelect.Text != "")
+                RazorEnhanced.Restock.AddLog("Restock list changed to: " + restockListSelect.Text);
+        }
+
+        private void restockAddListB_Click(object sender, EventArgs e)
+        {
+            EnhancedRestockAddList addItemList = new EnhancedRestockAddList();
+            addItemList.TopMost = true;
+            addItemList.Show();
+        }
+
+        private void restockRemoveListB_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+            {
+                RazorEnhanced.Restock.AddLog("Restock list " + restockListSelect.Text + " removed!");
+                RazorEnhanced.Restock.RestockSource = 0;
+                RazorEnhanced.Restock.RestockDestination = 0;
+                RazorEnhanced.Restock.RestockDelay = 100;
+                RazorEnhanced.Restock.RemoveList(restockListSelect.Text);
+            }
+        }
+
+        private void restockImportB_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.ImportExport.ImportRestock();
+        }
+
+        private void restockExportListB_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+                RazorEnhanced.ImportExport.ExportRestock(restockListSelect.Text);
+            else
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+        }
+
+        private void restockSetSourceButton_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockSourceContainerTarget_Callback));
+            else
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+        }
+
+        private void RestockSourceContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item restockBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+            if (restockBag == null)
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+                RazorEnhanced.Restock.AddLog("Invalid Source Container, set backpack");
+                RazorEnhanced.Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
+                return;
+            }
+
+            if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
+            {
+                RazorEnhanced.Misc.SendMessage("Source Container set to: " + restockBag.ToString());
+                RazorEnhanced.Restock.AddLog("Source Container set to: " + restockBag.ToString());
+                RazorEnhanced.Restock.RestockSource = (int)restockBag.Serial.Value;
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+                RazorEnhanced.Restock.AddLog("Invalid Source Container, set backpack");
+                RazorEnhanced.Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
+            }
+
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                RazorEnhanced.Settings.Restock.ListUpdate(restockListSelect.Text, RazorEnhanced.Restock.RestockDelay, serial, RazorEnhanced.Restock.RestockDestination, true);
+                RazorEnhanced.Restock.RefreshLists();
+            });
+        }
+
+        private void restockSetDestinationButton_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockDestinationContainerTarget_Callback));
+            else
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+        }
+
+        private void RestockDestinationContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item restockBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+            if (restockBag == null)
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+                RazorEnhanced.Restock.AddLog("Invalid Destination Container, set backpack");
+                RazorEnhanced.Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
+                return;
+            }
+
+            if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
+            {
+                RazorEnhanced.Misc.SendMessage("Destination Container set to: " + restockBag.ToString());
+                RazorEnhanced.Restock.AddLog("Destination Container set to: " + restockBag.ToString());
+                RazorEnhanced.Restock.RestockDestination = (int)restockBag.Serial.Value;
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+                RazorEnhanced.Restock.AddLog("Invalid Destination Container, set backpack");
+                RazorEnhanced.Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
+            }
+
+            this.BeginInvoke((MethodInvoker)delegate
+            {
+                RazorEnhanced.Settings.Restock.ListUpdate(restockListSelect.Text, RazorEnhanced.Restock.RestockDelay, RazorEnhanced.Restock.RestockSource, serial, true);
+                RazorEnhanced.Restock.RefreshLists();
+            });
+        }
+
+        private void restockAddManualButton_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+            {
+                EnhancedRestockManualAdd manualAddItem = new EnhancedRestockManualAdd();
+                manualAddItem.TopMost = true;
+                manualAddItem.Show();
+            }
+            else
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+        }
+
+        private void restockDragDelay_TextChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.Restock.ListUpdate(restockListSelect.Text, RazorEnhanced.Restock.RestockDelay, RazorEnhanced.Restock.RestockSource, RazorEnhanced.Restock.RestockDestination, true);
+            RazorEnhanced.AutoLoot.RefreshLists();
+        }
+
+        private void restockEditButton_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+            {
+                if (restocklistView.SelectedItems.Count == 1)
+                {
+                    int index = restocklistView.SelectedItems[0].Index;
+                    string selection = restockListSelect.Text;
+
+                    if (RazorEnhanced.Settings.Restock.ListExists(selection))
+                    {
+                        List<Restock.RestockItem> items;
+                        RazorEnhanced.Settings.Restock.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            Restock.RestockItem item = items[index];
+                            EnhancedRestockEditItem editItem = new EnhancedRestockEditItem(selection, index, item);
+                            editItem.TopMost = true;
+                            editItem.Show();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+        }
+
+        private void restockRemoveButton_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+            {
+                if (restocklistView.SelectedItems.Count == 1)
+                {
+                    int index = restocklistView.SelectedItems[0].Index;
+                    string selection = restockListSelect.Text;
+
+                    if (RazorEnhanced.Settings.Restock.ListExists(selection))
+                    {
+                        List<Restock.RestockItem> items;
+                        RazorEnhanced.Settings.Restock.ItemsRead(selection, out items);
+                        if (index <= items.Count - 1)
+                        {
+                            RazorEnhanced.Settings.Restock.ItemDelete(selection, items[index]);
+                            RazorEnhanced.Restock.RefreshItems();
+                        }
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+        }
+
+        private void restocklistView_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (restocklistView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.Restock.UpdateSelectedItems(item.Index);
+            }
+        }
+
+        private void restockExecuteButton_Click(object sender, EventArgs e)
+        {
+            if (World.Player != null)
+            {
+                RazorEnhanced.Item sourceBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+
+                RazorEnhanced.Item destinationBag = RazorEnhanced.Items.FindBySerial(World.Player.Backpack.Serial);
+
+                sourceBag = RazorEnhanced.Items.FindBySerial(Restock.RestockSource);
+                if (sourceBag != null)
+                {
+                    RazorEnhanced.Restock.AddLog("Source Container OK: 0x" + sourceBag.Serial.ToString("X8"));
+                }
+                else
+                {
+                    RazorEnhanced.Restock.AddLog("Source Container not valid or inaccessible!");
+                    return;
+                }
+
+                destinationBag = RazorEnhanced.Items.FindBySerial(Restock.RestockDestination);
+                if (sourceBag != null)
+                {
+                    RazorEnhanced.Restock.AddLog("Destination Container OK: 0x" + destinationBag.Serial.ToString("X8"));
+                }
+                else
+                {
+                    RazorEnhanced.Restock.AddLog("Destination Container not valid or inaccessible!");
+                    return;
+                }
+
+
+                int delay = -1;
+                try
+                {
+                    delay = Convert.ToInt32(restockDragDelay.Text);
+                }
+                catch
+                {
+                    RazorEnhanced.Restock.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
+                if (delay < 0)
+                {
+                    RazorEnhanced.Restock.AddLog("ERROR: Drag item delay is not valid");
+                    return;
+                }
+
+                RazorEnhanced.Restock.Start();
+                RazorEnhanced.Restock.AddLog("Restock Engine Start...");
+                RazorEnhanced.Misc.SendMessage("RESTOCK: Engine Start...");
+                restockStopButton.Enabled = true;
+                restockExecuteButton.Enabled = false;
+                restockListSelect.Enabled = false;
+                restockAddListB.Enabled = false;
+                restockRemoveListB.Enabled = false;
+                restockExportListB.Enabled = false;
+                restockImportListB.Enabled = false;
+                restockDragDelay.Enabled = false;
+            }
+            else
+            {
+                RazorEnhanced.Restock.AddLog("You are not logged in game!");
+                restockStopButton.Enabled = false;
+                restockExecuteButton.Enabled = true;
+                restockListSelect.Enabled = true;
+                restockAddListB.Enabled = true;
+                restockRemoveListB.Enabled = true;
+                restockExportListB.Enabled = true;
+                restockImportListB.Enabled = true;
+                restockDragDelay.Enabled = true;
+            }
+        }
+
+        private void restockStopButton_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.Restock.ForceStop();
+
+            RazorEnhanced.Restock.AddLog("Restock Engine force stop...");
+            RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...");
+            restockStopButton.Enabled = false;
+            restockExecuteButton.Enabled = true;
+            restockListSelect.Enabled = true;
+            restockAddListB.Enabled = true;
+            restockRemoveListB.Enabled = true;
+            restockExportListB.Enabled = true;
+            restockImportListB.Enabled = true;
+            restockDragDelay.Enabled = true;
+        }
+
+        delegate void RestockFinishWorkCallback();
+
+        internal void RestockFinishWork()
+        {
+            if (restockStopButton.InvokeRequired ||
+                restockExecuteButton.InvokeRequired ||
+                restockListSelect.InvokeRequired ||
+                restockAddListB.InvokeRequired ||
+                restockRemoveListB.InvokeRequired ||
+                restockExportListB.InvokeRequired ||
+                restockImportListB.InvokeRequired ||
+                restockDragDelay.Enabled)
+            {
+                RestockFinishWorkCallback d = new RestockFinishWorkCallback(RestockFinishWork);
+                this.Invoke(d, null);
+            }
+            else
+            {
+                restockStopButton.Enabled = false;
+                restockExecuteButton.Enabled = true;
+                restockListSelect.Enabled = true;
+                restockAddListB.Enabled = true;
+                restockRemoveListB.Enabled = true;
+                restockExportListB.Enabled = true;
+                restockImportListB.Enabled = true;
+                restockDragDelay.Enabled = true;
+            }
+        }
+
+        private void restockAddTargetButton_Click(object sender, EventArgs e)
+        {
+            if (restockListSelect.Text != "")
+                Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockItemTarget_Callback));
+            else
+                RazorEnhanced.Restock.AddLog("Item list not selected!");
+        }
+
+        private void RestockItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item restockItem = Assistant.World.FindItem(serial);
+            if (restockItem != null && restockItem.Serial.IsItem)
+            {
+                RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString());
+                this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, 0, restockItem.Hue); });
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid target");
+            }
+        }
+
+        // --------------- RESTOCK END -------------
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {
             UpdateRazorStatus();
-        }
-
-        private void baseTotal_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void locks_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 	}
 }
