@@ -297,13 +297,13 @@ namespace RazorEnhanced
 
 			string selection = Assistant.Engine.MainWindow.OrganizerListSelect.Text;
 
-			if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
+            if (RazorEnhanced.Settings.Organizer.ListExists(selection))
 			{
 				if (RazorEnhanced.Settings.Organizer.ItemExists(selection, old))
 					RazorEnhanced.Settings.Organizer.ItemReplace(selection, index, item);
 			}
 
-			RazorEnhanced.AutoLoot.RefreshItems();
+            RazorEnhanced.Organizer.RefreshItems();
 		}
 
         private static bool ColorCheck(int colorDaLista, int colorDaItem)

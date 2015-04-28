@@ -93,7 +93,6 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(scavenger_items);
 
 
-
 				// ----------- ORGANIZER ----------
 				DataTable organizer_lists = new DataTable("ORGANIZER_LISTS");
 				organizer_lists.Columns.Add("Description", typeof(string));
@@ -109,8 +108,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(organizer_items);
 
 
-
-				// ----------- SELL AGENT ----------
+                // ----------- SELL AGENT ----------
 				DataTable sell_lists = new DataTable("SELL_LISTS");
 				sell_lists.Columns.Add("Description", typeof(string));
 				sell_lists.Columns.Add("Bag", typeof(int));
@@ -122,8 +120,7 @@ namespace RazorEnhanced
 				sell_items.Columns.Add("Item", typeof(RazorEnhanced.SellAgent.SellAgentItem));
 				m_Dataset.Tables.Add(sell_items);
 
-
-
+                
 
 				// ----------- BUY AGENT ----------
 				DataTable buy_lists = new DataTable("BUY_LISTS");
@@ -135,6 +132,7 @@ namespace RazorEnhanced
 				buy_items.Columns.Add("List", typeof(string));
 				buy_items.Columns.Add("Item", typeof(RazorEnhanced.BuyAgent.BuyAgentItem));
 				m_Dataset.Tables.Add(buy_items);
+
 
                 // ----------- DRESS ----------
                 DataTable dress_lists = new DataTable("DRESS_LISTS");
@@ -150,6 +148,7 @@ namespace RazorEnhanced
                 dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItem));
                 m_Dataset.Tables.Add(dress_items);
 
+
                 // ----------- FRIEND ----------
                 DataTable friend_lists = new DataTable("FRIEND_LISTS");
                 friend_lists.Columns.Add("Description", typeof(string));
@@ -163,6 +162,22 @@ namespace RazorEnhanced
                 friend_player.Columns.Add("List", typeof(string));
                 friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
                 m_Dataset.Tables.Add(friend_player);
+
+
+                // ----------- RESTOCK ----------
+                DataTable restock_lists = new DataTable("RESTOCK_LISTS");
+                restock_lists.Columns.Add("Description", typeof(string));
+                restock_lists.Columns.Add("Delay", typeof(int));
+                restock_lists.Columns.Add("Source", typeof(int));
+                restock_lists.Columns.Add("Destination", typeof(int));
+                restock_lists.Columns.Add("Selected", typeof(bool));
+                m_Dataset.Tables.Add(restock_lists);
+
+                DataTable restock_items = new DataTable("RESTOCK_ITEMS");
+                restock_items.Columns.Add("List", typeof(string));
+                restock_items.Columns.Add("Item", typeof(RazorEnhanced.Restock.RestockItem));
+                m_Dataset.Tables.Add(restock_items);
+
 
 				// ----------- SHARDS ----------
 				DataTable shards = new DataTable("SHARDS");
@@ -1638,7 +1653,219 @@ namespace RazorEnhanced
             }
         }
         // ------------- FRIEND END-----------------
-        
+
+
+        // ------------- RESTOCK  -----------------
+
+        internal class Restock
+        {
+            internal static bool ListExists(string description)
+            {
+                foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
+                {
+                    if (((string)row["Description"]).ToLower() == description.ToLower())
+                        return true;
+                }
+
+                return false;
+            }
+
+            internal static void ListInsert(string description, int delay, int source, int destination)
+            {
+                foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
+                {
+                    row["Selected"] = false;
+                }
+
+                DataRow newRow = m_Dataset.Tables["RESTOCK_LISTS"].NewRow();
+                newRow["Description"] = description;
+                newRow["Delay"] = delay;
+                newRow["Source"] = source;
+                newRow["Destination"] = destination;
+                newRow["Selected"] = true;
+                m_Dataset.Tables["RESTOCK_LISTS"].Rows.Add(newRow);
+
+                Save();
+            }
+
+            internal static void ListUpdate(string description, int delay, int source, int destination, bool selected)
+            {
+
+                bool found = false;
+                foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == description)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found)
+                {
+                    if (selected)
+                    {
+                        foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
+                        {
+                            row["Selected"] = false;
+                        }
+                    }
+
+                    foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
+                    {
+                        if ((string)row["Description"] == description)
+                        {
+                            row["Delay"] = delay;
+                            row["Source"] = source;
+                            row["Destination"] = destination;
+                            row["Selected"] = selected;
+                            break;
+                        }
+                    }
+
+                    Save();
+                }
+            }
+
+            internal static void ListDelete(string description)
+            {
+                for (int i = m_Dataset.Tables["RESTOCK_ITEMS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["RESTOCK_ITEMS"].Rows[i];
+                    if ((string)row["List"] == description)
+                    {
+                        row.Delete();
+                    }
+                }
+
+                for (int i = m_Dataset.Tables["RESTOCK_LISTS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["RESTOCK_LISTS"].Rows[i];
+                    if ((string)row["Description"] == description)
+                    {
+                        row.Delete();
+                        break;
+                    }
+                    row["Selected"] = false;
+                }
+
+                Save();
+            }
+
+            internal static void ListsRead(out List<RazorEnhanced.Restock.RestockList> lists)
+            {
+                List<RazorEnhanced.Restock.RestockList> listsOut = new List<RazorEnhanced.Restock.RestockList>();
+
+                foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
+                {
+
+                    string description = (string)row["Description"];
+                    int delay = (int)row["Delay"];
+                    int source = (int)row["Source"];
+                    int destination = (int)row["Destination"];
+                    bool selected = (bool)row["Selected"];
+
+                    RazorEnhanced.Restock.RestockList list = new RazorEnhanced.Restock.RestockList(description, delay, source, destination, selected);
+                    listsOut.Add(list);
+                }
+
+                lists = listsOut;
+            }
+
+            internal static bool ItemExists(string list, RazorEnhanced.Restock.RestockItem item)
+            {
+                foreach (DataRow row in m_Dataset.Tables["RESTOCK_ITEMS"].Rows)
+                {
+                    if ((string)row["List"] == list && (RazorEnhanced.Restock.RestockItem)row["Item"] == item)
+                        return true;
+                }
+
+                return false;
+            }
+
+            internal static void ItemInsert(string list, RazorEnhanced.Restock.RestockItem item)
+            {
+                DataRow row = m_Dataset.Tables["RESTOCK_ITEMS"].NewRow();
+                row["List"] = list;
+                row["Item"] = item;
+                m_Dataset.Tables["RESTOCK_ITEMS"].Rows.Add(row);
+
+                Save();
+            }
+
+            internal static void ItemReplace(string list, int index, RazorEnhanced.Restock.RestockItem item)
+            {
+                int count = -1;
+                foreach (DataRow row in m_Dataset.Tables["RESTOCK_ITEMS"].Rows)
+                {
+                    if ((string)row["List"] == list)
+                    {
+                        count++;
+                        if (count == index)
+                        {
+                            row["Item"] = item;
+                        }
+                    }
+                }
+
+                Save();
+            }
+
+            internal static void ItemDelete(string list, RazorEnhanced.Restock.RestockItem item)
+            {
+                for (int i = m_Dataset.Tables["RESTOCK_ITEMS"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["RESTOCK_ITEMS"].Rows[i];
+                    if ((string)row["List"] == list && (RazorEnhanced.Restock.RestockItem)row["Item"] == item)
+                    {
+                        row.Delete();
+                        break;
+                    }
+                }
+
+                Save();
+            }
+
+            internal static void ItemsRead(string list, out List<RazorEnhanced.Restock.RestockItem> items)
+            {
+                List<RazorEnhanced.Restock.RestockItem> itemsOut = new List<RazorEnhanced.Restock.RestockItem>();
+
+                if (ListExists(list))
+                {
+                    foreach (DataRow row in m_Dataset.Tables["RESTOCK_ITEMS"].Rows)
+                    {
+                        if ((string)row["List"] == list)
+                        {
+                            itemsOut.Add((RazorEnhanced.Restock.RestockItem)row["Item"]);
+                        }
+                    }
+                }
+
+                items = itemsOut;
+            }
+
+            internal static void ListDetailsRead(string listname, out int bags, out int bagd, out int delay)
+            {
+                int bagsOut = 0;
+                int bagdOut = 0;
+                int delayOut = 0;
+                foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
+                {
+                    if ((string)row["Description"] == listname)
+                    {
+                        bagsOut = (int)row["Source"];
+                        bagdOut = (int)row["Destination"];
+                        delayOut = (int)row["Delay"];
+                    }
+                }
+                bags = bagsOut;
+                bagd = bagdOut;
+                delay = delayOut;
+            }
+        }
+        // ------------- RESTOCK END-----------------
+
+
 		// ------------- SHARDS -----------------
 		internal class Shards
 		{

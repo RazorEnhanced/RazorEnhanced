@@ -364,7 +364,7 @@ namespace Assistant
         private RazorButton restockStopButton;
         private RazorButton restockExecuteButton;
         private GroupBox groupBox2;
-        private ListBox listBox1;
+        private ListBox restockLogBox;
         private Label label13;
         private RazorTextBox restockDragDelay;
         private Label restockDestinationLabel;
@@ -464,6 +464,16 @@ namespace Assistant
         internal RazorCheckBox FriendPartyCheckBox { get { return friendPartyCheckBox; } }
         internal RazorCheckBox FriendAttackCheckBox { get { return friendAttackCheckBox; } }
         internal RazorCheckBox FriendIncludePartyCheckBox { get { return friendIncludePartyCheckBox; } }
+
+        // Restock
+        internal RazorTextBox RestockDragDelay { get { return restockDragDelay; } }
+        internal Label RestockSourceLabel { get { return restockSourceLabel; } }
+        internal Label RestockDestinationLabel { get { return restockDestinationLabel; } }
+        internal ListBox RestockLogBox { get { return restockLogBox; } }
+        internal ListView RestockListView { get { return restocklistView; } }
+        internal RazorComboBox RestockListSelect { get { return restockListSelect; } }
+        internal Button RestockExecute { get { return restockExecuteButton; } }
+        internal Button RestockStop { get { return restockStopButton; } }
 
 		// GumpInspector Flag
 
@@ -846,27 +856,11 @@ namespace Assistant
             this.friendListSelect = new RazorEnhanced.UI.RazorComboBox();
             this.friendButtonExportList = new RazorEnhanced.UI.RazorButton();
             this.labelfriend = new System.Windows.Forms.Label();
-            this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
-            this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
             this.restock = new System.Windows.Forms.TabPage();
-            this.bandageheal = new System.Windows.Forms.TabPage();
-            this.restockRemoveListB = new RazorEnhanced.UI.RazorButton();
-            this.restockAddListB = new RazorEnhanced.UI.RazorButton();
-            this.restockImportB = new RazorEnhanced.UI.RazorButton();
-            this.restockListSelect = new RazorEnhanced.UI.RazorComboBox();
-            this.restockExportListB = new RazorEnhanced.UI.RazorButton();
-            this.label7 = new System.Windows.Forms.Label();
-            this.restocklistView = new System.Windows.Forms.ListView();
-            this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.restockStopButton = new RazorEnhanced.UI.RazorButton();
             this.restockExecuteButton = new RazorEnhanced.UI.RazorButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.restockLogBox = new System.Windows.Forms.ListBox();
             this.label13 = new System.Windows.Forms.Label();
             this.restockDragDelay = new RazorEnhanced.UI.RazorTextBox();
             this.restockDestinationLabel = new System.Windows.Forms.Label();
@@ -878,6 +872,22 @@ namespace Assistant
             this.restockRemoveButton = new RazorEnhanced.UI.RazorButton();
             this.restockAddManualButton = new RazorEnhanced.UI.RazorButton();
             this.restockSetSourceButton = new RazorEnhanced.UI.RazorButton();
+            this.restocklistView = new System.Windows.Forms.ListView();
+            this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.restockRemoveListB = new RazorEnhanced.UI.RazorButton();
+            this.restockAddListB = new RazorEnhanced.UI.RazorButton();
+            this.restockImportB = new RazorEnhanced.UI.RazorButton();
+            this.restockListSelect = new RazorEnhanced.UI.RazorComboBox();
+            this.restockExportListB = new RazorEnhanced.UI.RazorButton();
+            this.label7 = new System.Windows.Forms.Label();
+            this.bandageheal = new System.Windows.Forms.TabPage();
+            this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
+            this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -4456,23 +4466,6 @@ namespace Assistant
             this.labelfriend.TabIndex = 60;
             this.labelfriend.Text = "Friend List:";
             // 
-            // m_NotifyIcon
-            // 
-            this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
-            this.m_NotifyIcon.Text = "Razor Enhanced";
-            this.m_NotifyIcon.DoubleClick += new System.EventHandler(this.NotifyIcon_DoubleClick);
-            // 
-            // openFileDialogscript
-            // 
-            this.openFileDialogscript.Filter = "Script Files|*.py";
-            this.openFileDialogscript.RestoreDirectory = true;
-            // 
-            // timerupdatestatus
-            // 
-            this.timerupdatestatus.Enabled = true;
-            this.timerupdatestatus.Interval = 1000;
-            this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
-            // 
             // restock
             // 
             this.restock.Controls.Add(this.restockStopButton);
@@ -4500,121 +4493,6 @@ namespace Assistant
             this.restock.Text = "Restock";
             this.restock.UseVisualStyleBackColor = true;
             // 
-            // bandageheal
-            // 
-            this.bandageheal.Location = new System.Drawing.Point(4, 22);
-            this.bandageheal.Name = "bandageheal";
-            this.bandageheal.Padding = new System.Windows.Forms.Padding(3);
-            this.bandageheal.Size = new System.Drawing.Size(659, 341);
-            this.bandageheal.TabIndex = 8;
-            this.bandageheal.Text = "Bandage Heal";
-            this.bandageheal.UseVisualStyleBackColor = true;
-            // 
-            // restockRemoveListB
-            // 
-            this.restockRemoveListB.ColorTable = office2010BlueTheme1;
-            this.restockRemoveListB.Location = new System.Drawing.Point(366, 14);
-            this.restockRemoveListB.Name = "restockRemoveListB";
-            this.restockRemoveListB.Size = new System.Drawing.Size(90, 20);
-            this.restockRemoveListB.TabIndex = 69;
-            this.restockRemoveListB.Text = "Remove";
-            this.restockRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // restockAddListB
-            // 
-            this.restockAddListB.ColorTable = office2010BlueTheme1;
-            this.restockAddListB.Location = new System.Drawing.Point(270, 14);
-            this.restockAddListB.Name = "restockAddListB";
-            this.restockAddListB.Size = new System.Drawing.Size(90, 20);
-            this.restockAddListB.TabIndex = 68;
-            this.restockAddListB.Text = "Add";
-            this.restockAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // restockImportB
-            // 
-            this.restockImportB.ColorTable = office2010BlueTheme1;
-            this.restockImportB.Location = new System.Drawing.Point(462, 14);
-            this.restockImportB.Name = "restockImportB";
-            this.restockImportB.Size = new System.Drawing.Size(90, 20);
-            this.restockImportB.TabIndex = 65;
-            this.restockImportB.Text = "Import";
-            this.restockImportB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // restockListSelect
-            // 
-            this.restockListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.restockListSelect.FormattingEnabled = true;
-            this.restockListSelect.Location = new System.Drawing.Point(78, 12);
-            this.restockListSelect.Name = "restockListSelect";
-            this.restockListSelect.Size = new System.Drawing.Size(183, 24);
-            this.restockListSelect.TabIndex = 67;
-            // 
-            // restockExportListB
-            // 
-            this.restockExportListB.ColorTable = office2010BlueTheme1;
-            this.restockExportListB.Location = new System.Drawing.Point(558, 14);
-            this.restockExportListB.Name = "restockExportListB";
-            this.restockExportListB.Size = new System.Drawing.Size(90, 20);
-            this.restockExportListB.TabIndex = 64;
-            this.restockExportListB.Text = "Export";
-            this.restockExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 18);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(69, 13);
-            this.label7.TabIndex = 66;
-            this.label7.Text = "Restock List:";
-            // 
-            // restocklistView
-            // 
-            this.restocklistView.CheckBoxes = true;
-            this.restocklistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader31,
-            this.columnHeader32,
-            this.columnHeader33,
-            this.columnHeader34,
-            this.columnHeader35});
-            this.restocklistView.FullRowSelect = true;
-            this.restocklistView.GridLines = true;
-            this.restocklistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.restocklistView.HideSelection = false;
-            this.restocklistView.LabelWrap = false;
-            this.restocklistView.Location = new System.Drawing.Point(6, 51);
-            this.restocklistView.MultiSelect = false;
-            this.restocklistView.Name = "restocklistView";
-            this.restocklistView.Size = new System.Drawing.Size(255, 284);
-            this.restocklistView.TabIndex = 70;
-            this.restocklistView.UseCompatibleStateImageBehavior = false;
-            this.restocklistView.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader31
-            // 
-            this.columnHeader31.Text = "X";
-            this.columnHeader31.Width = 22;
-            // 
-            // columnHeader32
-            // 
-            this.columnHeader32.Text = "Item Name";
-            this.columnHeader32.Width = 85;
-            // 
-            // columnHeader33
-            // 
-            this.columnHeader33.Text = "Graphics";
-            this.columnHeader33.Width = 55;
-            // 
-            // columnHeader34
-            // 
-            this.columnHeader34.Text = "Color";
-            this.columnHeader34.Width = 44;
-            // 
-            // columnHeader35
-            // 
-            this.columnHeader35.Text = "Limit";
-            this.columnHeader35.Width = 43;
-            // 
             // restockStopButton
             // 
             this.restockStopButton.ColorTable = office2010BlueTheme1;
@@ -4637,7 +4515,7 @@ namespace Assistant
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.listBox1);
+            this.groupBox2.Controls.Add(this.restockLogBox);
             this.groupBox2.Location = new System.Drawing.Point(267, 84);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(278, 251);
@@ -4645,13 +4523,13 @@ namespace Assistant
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Restock Log";
             // 
-            // listBox1
+            // restockLogBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(7, 18);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(265, 225);
-            this.listBox1.TabIndex = 0;
+            this.restockLogBox.FormattingEnabled = true;
+            this.restockLogBox.Location = new System.Drawing.Point(7, 18);
+            this.restockLogBox.Name = "restockLogBox";
+            this.restockLogBox.Size = new System.Drawing.Size(265, 225);
+            this.restockLogBox.TabIndex = 0;
             // 
             // label13
             // 
@@ -4764,6 +4642,138 @@ namespace Assistant
             this.restockSetSourceButton.TabIndex = 76;
             this.restockSetSourceButton.Text = "Source Cont";
             this.restockSetSourceButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // restocklistView
+            // 
+            this.restocklistView.CheckBoxes = true;
+            this.restocklistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader31,
+            this.columnHeader32,
+            this.columnHeader33,
+            this.columnHeader34,
+            this.columnHeader35});
+            this.restocklistView.FullRowSelect = true;
+            this.restocklistView.GridLines = true;
+            this.restocklistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.restocklistView.HideSelection = false;
+            this.restocklistView.LabelWrap = false;
+            this.restocklistView.Location = new System.Drawing.Point(6, 51);
+            this.restocklistView.MultiSelect = false;
+            this.restocklistView.Name = "restocklistView";
+            this.restocklistView.Size = new System.Drawing.Size(255, 284);
+            this.restocklistView.TabIndex = 70;
+            this.restocklistView.UseCompatibleStateImageBehavior = false;
+            this.restocklistView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader31
+            // 
+            this.columnHeader31.Text = "X";
+            this.columnHeader31.Width = 22;
+            // 
+            // columnHeader32
+            // 
+            this.columnHeader32.Text = "Item Name";
+            this.columnHeader32.Width = 85;
+            // 
+            // columnHeader33
+            // 
+            this.columnHeader33.Text = "Graphics";
+            this.columnHeader33.Width = 55;
+            // 
+            // columnHeader34
+            // 
+            this.columnHeader34.Text = "Color";
+            this.columnHeader34.Width = 44;
+            // 
+            // columnHeader35
+            // 
+            this.columnHeader35.Text = "Limit";
+            this.columnHeader35.Width = 43;
+            // 
+            // restockRemoveListB
+            // 
+            this.restockRemoveListB.ColorTable = office2010BlueTheme1;
+            this.restockRemoveListB.Location = new System.Drawing.Point(366, 14);
+            this.restockRemoveListB.Name = "restockRemoveListB";
+            this.restockRemoveListB.Size = new System.Drawing.Size(90, 20);
+            this.restockRemoveListB.TabIndex = 69;
+            this.restockRemoveListB.Text = "Remove";
+            this.restockRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // restockAddListB
+            // 
+            this.restockAddListB.ColorTable = office2010BlueTheme1;
+            this.restockAddListB.Location = new System.Drawing.Point(270, 14);
+            this.restockAddListB.Name = "restockAddListB";
+            this.restockAddListB.Size = new System.Drawing.Size(90, 20);
+            this.restockAddListB.TabIndex = 68;
+            this.restockAddListB.Text = "Add";
+            this.restockAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // restockImportB
+            // 
+            this.restockImportB.ColorTable = office2010BlueTheme1;
+            this.restockImportB.Location = new System.Drawing.Point(462, 14);
+            this.restockImportB.Name = "restockImportB";
+            this.restockImportB.Size = new System.Drawing.Size(90, 20);
+            this.restockImportB.TabIndex = 65;
+            this.restockImportB.Text = "Import";
+            this.restockImportB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // restockListSelect
+            // 
+            this.restockListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.restockListSelect.FormattingEnabled = true;
+            this.restockListSelect.Location = new System.Drawing.Point(78, 12);
+            this.restockListSelect.Name = "restockListSelect";
+            this.restockListSelect.Size = new System.Drawing.Size(183, 24);
+            this.restockListSelect.TabIndex = 67;
+            // 
+            // restockExportListB
+            // 
+            this.restockExportListB.ColorTable = office2010BlueTheme1;
+            this.restockExportListB.Location = new System.Drawing.Point(558, 14);
+            this.restockExportListB.Name = "restockExportListB";
+            this.restockExportListB.Size = new System.Drawing.Size(90, 20);
+            this.restockExportListB.TabIndex = 64;
+            this.restockExportListB.Text = "Export";
+            this.restockExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 18);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 13);
+            this.label7.TabIndex = 66;
+            this.label7.Text = "Restock List:";
+            // 
+            // bandageheal
+            // 
+            this.bandageheal.Location = new System.Drawing.Point(4, 22);
+            this.bandageheal.Name = "bandageheal";
+            this.bandageheal.Padding = new System.Windows.Forms.Padding(3);
+            this.bandageheal.Size = new System.Drawing.Size(659, 341);
+            this.bandageheal.TabIndex = 8;
+            this.bandageheal.Text = "Bandage Heal";
+            this.bandageheal.UseVisualStyleBackColor = true;
+            // 
+            // m_NotifyIcon
+            // 
+            this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
+            this.m_NotifyIcon.Text = "Razor Enhanced";
+            this.m_NotifyIcon.DoubleClick += new System.EventHandler(this.NotifyIcon_DoubleClick);
+            // 
+            // openFileDialogscript
+            // 
+            this.openFileDialogscript.Filter = "Script Files|*.py";
+            this.openFileDialogscript.RestoreDirectory = true;
+            // 
+            // timerupdatestatus
+            // 
+            this.timerupdatestatus.Enabled = true;
+            this.timerupdatestatus.Interval = 1000;
+            this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
             // MainForm
             // 
