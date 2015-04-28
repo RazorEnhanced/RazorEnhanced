@@ -349,6 +349,24 @@
     <Compile Include="RazorEnhanced\UI\EnhancedLauncherAddShard.designer.cs">
       <DependentUpon>EnhancedLauncherAddShard.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedRestockEditItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedRestockEditItem.Designer.cs">
+      <DependentUpon>EnhancedRestockEditItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedRestockManualAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedRestockManualAdd.Designer.cs">
+      <DependentUpon>EnhancedRestockManualAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedRestockAddList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedRestockAddList.Designer.cs">
+      <DependentUpon>EnhancedRestockAddList.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -562,6 +580,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedLauncherAddShard.resx">
       <DependentUpon>EnhancedLauncherAddShard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedRestockEditItem.resx">
+      <DependentUpon>EnhancedRestockEditItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedRestockManualAdd.resx">
+      <DependentUpon>EnhancedRestockManualAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedRestockAddList.resx">
+      <DependentUpon>EnhancedRestockAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.resx">
       <DependentUpon>EnhancedSellAgentManualAdd.cs</DependentUpon>

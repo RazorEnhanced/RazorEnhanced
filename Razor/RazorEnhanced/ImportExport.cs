@@ -826,7 +826,7 @@ namespace RazorEnhanced
                 }
                 else
                 {
-                    Friend.AddLog("This file not contain Friends data!");
+                    Friend.AddLog("This file not contain Restock data!");
                 }
             }
             else
@@ -846,10 +846,10 @@ namespace RazorEnhanced
             if (sd.ShowDialog() == DialogResult.OK)
             {
                 DataSet m_Dataset = new DataSet();
-                DataTable friend_player = new DataTable("FRIEND_PLAYERS");
-                friend_player.Columns.Add("List", typeof(string));
-                friend_player.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendPlayer));
-                m_Dataset.Tables.Add(friend_player);
+                DataTable restock_item = new DataTable("FRIEND_PLAYERS");
+                restock_item.Columns.Add("List", typeof(string));
+                restock_item.Columns.Add("Item", typeof(RazorEnhanced.Friend.FriendPlayer));
+                m_Dataset.Tables.Add(restock_item);
                 m_Dataset.AcceptChanges();
 
                 List<Friend.FriendPlayer> players;
@@ -890,5 +890,132 @@ namespace RazorEnhanced
             }
         }
         ////////////// FRIENDS END //////////////
+
+
+        ////////////// RESTOCK START //////////////
+        internal static void ImportRestock()
+        {
+            DataSet m_Dataset = new DataSet();
+            DataTable m_DatasetTable = new DataTable();
+            OpenFileDialog od = new OpenFileDialog();
+            od.Filter = "Enhanced Razor Export|*.raz";
+            od.Title = "Import Restock List";
+            od.RestoreDirectory = true;
+
+            if (od.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(od.FileName))
+                {
+                    try
+                    {
+                        m_Dataset.RemotingFormat = SerializationFormat.Binary;
+                        m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+                        Stream stream = File.Open(od.FileName, FileMode.Open);
+                        GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
+                        BinaryFormatter bin = new BinaryFormatter();
+                        m_Dataset = bin.Deserialize(decompress) as DataSet;
+                        decompress.Close();
+                        decompress.Dispose();
+                        stream.Close();
+                        stream.Dispose();
+                    }
+                    catch
+                    {
+                        Restock.AddLog("File is corrupted!");
+                    }
+                }
+                else
+                {
+                    Restock.AddLog("Unable to access file!");
+                }
+                if (m_Dataset.Tables.Contains("RESTOCK_ITEMS"))
+                {
+                    m_DatasetTable = m_Dataset.Tables["RESTOCK_ITEMS"];
+                    if (m_DatasetTable.Rows.Count > 0)
+                    {
+                        if (RazorEnhanced.Settings.Restock.ListExists(m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString()))
+                            Restock.AddLog("List: " + m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString() + " already exist");
+                        else
+                        {
+                            Restock.AddList(m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString());
+                            foreach (DataRow row in m_Dataset.Tables["RESTOCK_ITEMS"].Rows)
+                            {
+                                RazorEnhanced.Settings.Restock.ItemInsert((string)row["List"], (RazorEnhanced.Restock.RestockItem)row["Item"]);
+                            }
+                            RazorEnhanced.Restock.RefreshItems();
+                            Restock.AddLog("List: " + m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString() + " imported!");
+                        }
+                    }
+                    else
+                    {
+                        Restock.AddLog("This list is empty!");
+                    }
+                }
+                else
+                {
+                    Restock.AddLog("This file not contain Friends data!");
+                }
+            }
+            else
+            {
+                Restock.AddLog("Import list cancelled.");
+            }
+
+        }
+        internal static void ExportRestock(string listname)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.Filter = "Enhanced Razor Export|*.raz";
+            sd.Title = "Export Restock List";
+            sd.FileName = "RR." + listname + ".raz";
+            sd.RestoreDirectory = true;
+
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                DataSet m_Dataset = new DataSet();
+                DataTable friend_player = new DataTable("RESTOCK_ITEMS");
+                friend_player.Columns.Add("List", typeof(string));
+                friend_player.Columns.Add("Item", typeof(RazorEnhanced.Restock.RestockItem));
+                m_Dataset.Tables.Add(friend_player);
+                m_Dataset.AcceptChanges();
+
+                List<Restock.RestockItem> items;
+                RazorEnhanced.Settings.Restock.ItemsRead(listname, out items);
+
+                foreach (RazorEnhanced.Restock.RestockItem item in items)
+                {
+                    DataRow row = m_Dataset.Tables["RESTOCK_ITEMS"].NewRow();
+                    row["List"] = listname;
+                    row["Item"] = item;
+                    m_Dataset.Tables["RESTOCK_ITEMS"].Rows.Add(row);
+                }
+
+                try
+                {
+                    m_Dataset.RemotingFormat = SerializationFormat.Binary;
+                    m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+                    Stream stream = File.Create(sd.FileName);
+                    GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
+                    BinaryFormatter bin = new BinaryFormatter();
+                    bin.Serialize(compress, m_Dataset);
+                    compress.Close();
+                    compress.Dispose();
+                    stream.Close();
+                    stream.Dispose();
+                    Restock.AddLog("List: " + listname + " exported");
+                }
+                catch (Exception ex)
+                {
+                    Restock.AddLog("Export list fail");
+                    Restock.AddLog(ex.ToString());
+                }
+
+            }
+            else
+            {
+                Restock.AddLog("Export list cancelled.");
+            }
+        }
+        ////////////// RESTOCK END //////////////
     }
 }

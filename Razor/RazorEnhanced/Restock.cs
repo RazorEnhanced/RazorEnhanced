@@ -107,14 +107,6 @@ namespace RazorEnhanced
                     {
                         serialBag = (int)World.Player.Backpack.Serial.Value;
                     }
-                    else
-                    {
-                        Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-                        if (bag == null)
-                            serialBag = (int)World.Player.Backpack.Serial.Value;
-                        else
-                            serialBag = bag.Serial;
-                    }
                 }
                 catch
                 {
@@ -142,14 +134,6 @@ namespace RazorEnhanced
                     if (serialBag == 0)
                     {
                         serialBag = (int)World.Player.Backpack.Serial.Value;
-                    }
-                    else
-                    {
-                        Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-                        if (bag == null)
-                            serialBag = (int)World.Player.Backpack.Serial.Value;
-                        else
-                            serialBag = bag.Serial;
                     }
                 }
                 catch
@@ -310,6 +294,66 @@ namespace RazorEnhanced
                     return true;
                 else // Match fallito
                     return false;
+        }
+
+        internal static int Engine(List<RestockItem> organizerItemList, int mseconds, Item sourceBag, Item destinationBag)
+        {
+            // Apre le bag per item contenuti
+            Items.UseItem(sourceBag);
+            Items.WaitForContents(sourceBag, 1500);
+            Items.UseItem(destinationBag);
+            Items.WaitForContents(destinationBag, 1500);
+
+            /////// 
+            ///////
+            ///////
+
+            RazorEnhanced.Restock.AddLog("Finish!");
+            RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!");
+            Assistant.Engine.MainWindow.RestockFinishWork();
+            return 0;
+        }
+
+        internal static void Engine()
+        {
+            Assistant.Item sourceBag = Assistant.World.FindItem(RestockSource);
+            Assistant.Item destinationBag = Assistant.World.FindItem(RestockDestination);
+
+            if (sourceBag == null || destinationBag == null)
+                return;
+
+            RazorEnhanced.Item razorSource = new RazorEnhanced.Item(sourceBag);
+            RazorEnhanced.Item razorDestination = new RazorEnhanced.Item(destinationBag);
+
+            List<Restock.RestockItem> items;
+            string list = Restock.RestockListName;
+            RazorEnhanced.Settings.Restock.ItemsRead(list, out items);
+
+            int exit = Engine(items, RestockDelay, razorSource, razorDestination);
+        }
+
+        private static Thread m_RestockThread;
+
+        internal static void Start()
+        {
+            if (m_RestockThread == null ||
+                        (m_RestockThread != null && m_RestockThread.ThreadState != ThreadState.Running &&
+                        m_RestockThread.ThreadState != ThreadState.Unstarted &&
+                        m_RestockThread.ThreadState != ThreadState.WaitSleepJoin)
+                    )
+            {
+                m_RestockThread = new Thread(Restock.Engine);
+                m_RestockThread.Start();
+            }
+
+        }
+
+        internal static void ForceStop()
+        {
+            if (m_RestockThread != null && m_RestockThread.ThreadState != ThreadState.Stopped)
+            {
+                m_RestockThread.Abort();
+            }
         }
     }
 }
