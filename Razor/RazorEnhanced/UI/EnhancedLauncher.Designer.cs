@@ -33,8 +33,15 @@
             this.openclientlocation = new System.Windows.Forms.OpenFileDialog();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.removeShard = new RazorEnhanced.UI.RazorButton();
+            this.addShard = new RazorEnhanced.UI.RazorButton();
+            this.shardlistCombobox = new RazorEnhanced.UI.RazorComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.osiEnc = new RazorEnhanced.UI.RazorCheckBox();
+            this.patchEnc = new RazorEnhanced.UI.RazorCheckBox();
+            this.portLabel = new RazorEnhanced.UI.RazorTextBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.hostLabel = new RazorEnhanced.UI.RazorTextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.clientFolderLabel = new System.Windows.Forms.Label();
@@ -44,13 +51,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.quit = new RazorEnhanced.UI.RazorButton();
             this.okay = new RazorEnhanced.UI.RazorButton();
-            this.osiEnc = new RazorEnhanced.UI.RazorCheckBox();
-            this.patchEnc = new RazorEnhanced.UI.RazorCheckBox();
-            this.portLabel = new RazorEnhanced.UI.RazorTextBox();
-            this.hostLabel = new RazorEnhanced.UI.RazorTextBox();
-            this.removeShard = new RazorEnhanced.UI.RazorButton();
-            this.addShard = new RazorEnhanced.UI.RazorButton();
-            this.shardlistCombobox = new RazorEnhanced.UI.RazorComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -85,6 +85,57 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Shard Selection";
             // 
+            // removeShard
+            // 
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.removeShard.ColorTable = office2010BlueTheme1;
+            this.removeShard.Location = new System.Drawing.Point(300, 19);
+            this.removeShard.Name = "removeShard";
+            this.removeShard.Size = new System.Drawing.Size(60, 23);
+            this.removeShard.TabIndex = 3;
+            this.removeShard.Text = "Remove";
+            this.removeShard.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.removeShard.UseVisualStyleBackColor = true;
+            this.removeShard.Click += new System.EventHandler(this.razorButton2_Click);
+            // 
+            // addShard
+            // 
+            this.addShard.ColorTable = office2010BlueTheme1;
+            this.addShard.Location = new System.Drawing.Point(242, 19);
+            this.addShard.Name = "addShard";
+            this.addShard.Size = new System.Drawing.Size(52, 23);
+            this.addShard.TabIndex = 2;
+            this.addShard.Text = "Add";
+            this.addShard.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.addShard.UseVisualStyleBackColor = true;
+            this.addShard.Click += new System.EventHandler(this.razorButton1_Click);
+            // 
+            // shardlistCombobox
+            // 
+            this.shardlistCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.shardlistCombobox.FormattingEnabled = true;
+            this.shardlistCombobox.Location = new System.Drawing.Point(51, 19);
+            this.shardlistCombobox.Name = "shardlistCombobox";
+            this.shardlistCombobox.Size = new System.Drawing.Size(185, 24);
+            this.shardlistCombobox.TabIndex = 1;
+            this.shardlistCombobox.SelectedIndexChanged += new System.EventHandler(this.shardlistCombobox_SelectedIndexChanged);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.osiEnc);
@@ -106,6 +157,42 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Shard Config";
             // 
+            // osiEnc
+            // 
+            this.osiEnc.Location = new System.Drawing.Point(208, 93);
+            this.osiEnc.Name = "osiEnc";
+            this.osiEnc.Size = new System.Drawing.Size(140, 22);
+            this.osiEnc.TabIndex = 15;
+            this.osiEnc.Text = "Use OSI Encryption";
+            this.osiEnc.CheckedChanged += new System.EventHandler(this.OsiEnc_CheckedChanged);
+            // 
+            // patchEnc
+            // 
+            this.patchEnc.BackColor = System.Drawing.SystemColors.Control;
+            this.patchEnc.Location = new System.Drawing.Point(6, 92);
+            this.patchEnc.Name = "patchEnc";
+            this.patchEnc.Size = new System.Drawing.Size(140, 22);
+            this.patchEnc.TabIndex = 14;
+            this.patchEnc.Text = "Patch client encryption";
+            this.patchEnc.UseVisualStyleBackColor = false;
+            this.patchEnc.CheckedChanged += new System.EventHandler(this.patchEncy_CheckedChanged);
+            // 
+            // portLabel
+            // 
+            this.portLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.portLabel.BackColor = System.Drawing.Color.White;
+            this.portLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.portLabel.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.portLabel.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.portLabel.Location = new System.Drawing.Point(332, 66);
+            this.portLabel.Name = "portLabel";
+            this.portLabel.Size = new System.Drawing.Size(35, 20);
+            this.portLabel.TabIndex = 13;
+            this.portLabel.Text = "2593";
+            this.portLabel.TextChanged += new System.EventHandler(this.serverportT_TextChanged);
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -114,6 +201,21 @@
             this.label7.Size = new System.Drawing.Size(29, 13);
             this.label7.TabIndex = 12;
             this.label7.Text = "Port:";
+            // 
+            // hostLabel
+            // 
+            this.hostLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hostLabel.BackColor = System.Drawing.Color.White;
+            this.hostLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hostLabel.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.hostLabel.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.hostLabel.Location = new System.Drawing.Point(93, 66);
+            this.hostLabel.Name = "hostLabel";
+            this.hostLabel.Size = new System.Drawing.Size(200, 20);
+            this.hostLabel.TabIndex = 11;
+            this.hostLabel.TextChanged += new System.EventHandler(this.serveraddressT_TextChanged);
             // 
             // label6
             // 
@@ -205,108 +307,6 @@
             this.okay.Text = "Launch";
             this.okay.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.okay.Click += new System.EventHandler(this.okay_Click);
-            // 
-            // osiEnc
-            // 
-            this.osiEnc.Location = new System.Drawing.Point(208, 93);
-            this.osiEnc.Name = "osiEnc";
-            this.osiEnc.Size = new System.Drawing.Size(140, 21);
-            this.osiEnc.TabIndex = 15;
-            this.osiEnc.Text = "Use OSI Encryption";
-            this.osiEnc.CheckedChanged += new System.EventHandler(this.OsiEnc_CheckedChanged);
-            // 
-            // patchEnc
-            // 
-            this.patchEnc.BackColor = System.Drawing.SystemColors.Control;
-            this.patchEnc.Location = new System.Drawing.Point(6, 92);
-            this.patchEnc.Name = "patchEnc";
-            this.patchEnc.Size = new System.Drawing.Size(140, 21);
-            this.patchEnc.TabIndex = 14;
-            this.patchEnc.Text = "Patch client encryption";
-            this.patchEnc.UseVisualStyleBackColor = false;
-            this.patchEnc.CheckedChanged += new System.EventHandler(this.patchEncy_CheckedChanged);
-            // 
-            // portLabel
-            // 
-            this.portLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.portLabel.BackColor = System.Drawing.Color.White;
-            this.portLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.portLabel.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.portLabel.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.portLabel.Location = new System.Drawing.Point(332, 66);
-            this.portLabel.Name = "portLabel";
-            this.portLabel.Size = new System.Drawing.Size(35, 20);
-            this.portLabel.TabIndex = 13;
-            this.portLabel.Text = "2593";
-            this.portLabel.TextChanged += new System.EventHandler(this.serverportT_TextChanged);
-            // 
-            // hostLabel
-            // 
-            this.hostLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hostLabel.BackColor = System.Drawing.Color.White;
-            this.hostLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.hostLabel.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.hostLabel.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.hostLabel.Location = new System.Drawing.Point(93, 66);
-            this.hostLabel.Name = "hostLabel";
-            this.hostLabel.Size = new System.Drawing.Size(200, 20);
-            this.hostLabel.TabIndex = 11;
-            this.hostLabel.TextChanged += new System.EventHandler(this.serveraddressT_TextChanged);
-            // 
-            // removeShard
-            // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.removeShard.ColorTable = office2010BlueTheme1;
-            this.removeShard.Location = new System.Drawing.Point(300, 19);
-            this.removeShard.Name = "removeShard";
-            this.removeShard.Size = new System.Drawing.Size(60, 23);
-            this.removeShard.TabIndex = 3;
-            this.removeShard.Text = "Remove";
-            this.removeShard.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.removeShard.UseVisualStyleBackColor = true;
-            this.removeShard.Click += new System.EventHandler(this.razorButton2_Click);
-            // 
-            // addShard
-            // 
-            this.addShard.ColorTable = office2010BlueTheme1;
-            this.addShard.Location = new System.Drawing.Point(242, 19);
-            this.addShard.Name = "addShard";
-            this.addShard.Size = new System.Drawing.Size(52, 23);
-            this.addShard.TabIndex = 2;
-            this.addShard.Text = "Add";
-            this.addShard.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.addShard.UseVisualStyleBackColor = true;
-            this.addShard.Click += new System.EventHandler(this.razorButton1_Click);
-            // 
-            // shardlistCombobox
-            // 
-            this.shardlistCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.shardlistCombobox.FormattingEnabled = true;
-            this.shardlistCombobox.Location = new System.Drawing.Point(51, 19);
-            this.shardlistCombobox.Name = "shardlistCombobox";
-            this.shardlistCombobox.Size = new System.Drawing.Size(185, 24);
-            this.shardlistCombobox.TabIndex = 1;
-            this.shardlistCombobox.SelectedIndexChanged += new System.EventHandler(this.shardlistCombobox_SelectedIndexChanged);
             // 
             // EnhancedLauncher
             // 

@@ -2385,7 +2385,7 @@ namespace Assistant
             // 
             this.screenAutoCap.Location = new System.Drawing.Point(11, 284);
             this.screenAutoCap.Name = "screenAutoCap";
-            this.screenAutoCap.Size = new System.Drawing.Size(180, 20);
+            this.screenAutoCap.Size = new System.Drawing.Size(180, 22);
             this.screenAutoCap.TabIndex = 4;
             this.screenAutoCap.Text = "Auto Death Screen Capture";
             this.screenAutoCap.CheckedChanged += new System.EventHandler(this.screenAutoCap_CheckedChanged);
@@ -2427,7 +2427,7 @@ namespace Assistant
             // 
             this.dispTime.Location = new System.Drawing.Point(11, 256);
             this.dispTime.Name = "dispTime";
-            this.dispTime.Size = new System.Drawing.Size(180, 20);
+            this.dispTime.Size = new System.Drawing.Size(180, 22);
             this.dispTime.TabIndex = 9;
             this.dispTime.Text = "Include Timestamp on images";
             this.dispTime.CheckedChanged += new System.EventHandler(this.dispTime_CheckedChanged);
