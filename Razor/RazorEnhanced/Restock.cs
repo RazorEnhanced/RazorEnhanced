@@ -308,30 +308,33 @@ namespace RazorEnhanced
             {
                 foreach (RestockItem oggettoDaLista in restockItemList)
                 {
-                    if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))     // Verifico il match fra colore e grafica
+                    if (oggettoDaLista.Selected)
                     {
-                        int amountpresente = RazorEnhanced.Items.ContainerCount(destinationBag.Serial, oggettoDaLista.Graphics, oggettoDaLista.Color);
-                        AddLog("Detected:" + amountpresente + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " on destination bag.");
-                        int left = oggettoDaLista.AmountLimit - amountpresente;
-                        if (left > 0)
+                        if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))     // Verifico il match fra colore e grafica
                         {
-                            AddLog("Left:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " on destination bag.");
-                            if (oggettoContenuto.Amount > left)
+                            int amountpresente = RazorEnhanced.Items.ContainerCount(destinationBag.Serial, oggettoDaLista.Graphics, oggettoDaLista.Color);
+                            AddLog("Detected:" + amountpresente + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " on destination bag.");
+                            int left = oggettoDaLista.AmountLimit - amountpresente;
+                            if (left > 0)
                             {
-                                AddLog("Moving:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " to destination bag.");
-                                RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, left);
-                                Thread.Sleep(mseconds);
+                                AddLog("Left:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " on destination bag.");
+                                if (oggettoContenuto.Amount > left)
+                                {
+                                    AddLog("Moving:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " to destination bag.");
+                                    RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, left);
+                                    Thread.Sleep(mseconds);
+                                }
+                                else
+                                {
+                                    AddLog("Moving:" + oggettoContenuto.Amount + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " to destination bag.");
+                                    RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
+                                    Thread.Sleep(mseconds);
+                                }
                             }
                             else
                             {
-                                AddLog("Moving:" + oggettoContenuto.Amount + " Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + " to destination bag.");
-                                RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
-                                Thread.Sleep(mseconds);
+                                AddLog("Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + "limit reached.");
                             }
-                        }
-                        else
-                        {
-                            AddLog("Item: 0x" + oggettoDaLista.Graphics.ToString("X8") + "limit reached.");
                         }
                     }
                 }
@@ -385,6 +388,56 @@ namespace RazorEnhanced
             if (m_RestockThread != null && m_RestockThread.ThreadState != ThreadState.Stopped)
             {
                 m_RestockThread.Abort();
+            }
+        }
+
+        // Funzioni da script
+
+        public static void FStart()
+        {
+            if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
+                Assistant.Engine.MainWindow.RestockExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockExecute.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Restock.FStart: Restock already running");
+        }
+
+        public static void FStop()
+        {
+            if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
+                Assistant.Engine.MainWindow.RestockExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockExecute.PerformClick()));
+            else
+                Misc.SendMessage("Script Error: Restock.FStart: Restock not running");
+        }
+
+        public static bool Status()
+        {
+            if (m_RestockThread != null && m_RestockThread.ThreadState != ThreadState.Stopped)
+                return true;
+            else
+                return false;
+        }
+        public static void ChangeList(string nomelista)
+        {
+            bool ListaOK = false;
+            for (int i = 0; i < Assistant.Engine.MainWindow.RestockListSelect.Items.Count; i++)
+            {
+                if (nomelista == Assistant.Engine.MainWindow.RestockListSelect.GetItemText(Assistant.Engine.MainWindow.RestockListSelect.Items[i]))
+                    ListaOK = true;
+            }
+            if (!ListaOK)
+                Misc.SendMessage("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
+            else
+            {
+                if (Assistant.Engine.MainWindow.RestockStop.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart
+                {
+                    Assistant.Engine.MainWindow.RestockStop.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockStop.PerformClick()));
+                    Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                    Assistant.Engine.MainWindow.RestockExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockExecute.PerformClick()));
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(nomelista)));  // cambio lista
+                }
             }
         }
     }

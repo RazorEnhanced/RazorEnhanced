@@ -433,7 +433,7 @@ namespace RazorEnhanced
                     ListaOK = true;
             }
             if (!ListaOK)
-                Misc.SendMessage("Script Error: Organizer.ChangeList: Scavenger list: " + nomelista + " not exist");
+                Misc.SendMessage("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
             else
             {
                 if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart
