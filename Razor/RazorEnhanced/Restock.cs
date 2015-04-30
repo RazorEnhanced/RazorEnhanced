@@ -333,7 +333,7 @@ namespace RazorEnhanced
                             }
                             else
                             {
-                                AddLog("Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + "limit reached.");
+                                AddLog("Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " limit reached.");
                             }
                         }
                     }

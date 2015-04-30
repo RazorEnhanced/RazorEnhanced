@@ -389,6 +389,30 @@ namespace Assistant
         private RazorButton restockExportListB;
         private Label label7;
         private TabPage bandageheal;
+        private GroupBox groupBox6;
+        private RazorCheckBox bandagehealcountdownCheckBox;
+        private RazorCheckBox bandagehealhiddedCheckBox;
+        private RazorCheckBox bandagehealmortalCheckBox;
+        private RazorCheckBox bandagehealpoisonCheckBox;
+        private Label label33;
+        private RazorTextBox bandagehealhpTextBox;
+        private Label label32;
+        private RazorTextBox bandagehealdelayTextBox;
+        private Label label31;
+        private RazorCheckBox bandagehealdexformulaCheckBox;
+        private RazorTextBox bandagehealcustomcolorTextBox;
+        private Label label30;
+        private RazorTextBox bandagehealcustomIDTextBox;
+        private Label label19;
+        private RazorCheckBox bandagehealcustomCheckBox;
+        private Label bandagehealtargetLabel;
+        private Label label15;
+        private RazorButton bandagehealsettargetButton;
+        private RazorComboBox bandagehealtargetComboBox;
+        private Label label14;
+        private RazorCheckBox bandagehealenableCheckBox;
+        private GroupBox groupBox5;
+        private ListBox bandagehealLogBox;
 
 		private bool m_CanClose = true;
 
@@ -475,6 +499,21 @@ namespace Assistant
         internal Button RestockExecute { get { return restockExecuteButton; } }
         internal Button RestockStop { get { return restockStopButton; } }
 
+        // Bandage Heal
+        internal ListBox BandageHealLogBox { get { return bandagehealLogBox; } }
+        internal RazorCheckBox BandageHealenableCheckBox { get { return bandagehealenableCheckBox; } }
+        internal RazorComboBox BandageHealtargetComboBox { get { return bandagehealtargetComboBox; } }
+        internal Label BandageHealtargetLabel { get { return bandagehealtargetLabel; } }
+        internal RazorCheckBox BandageHealcustomCheckBox { get { return bandagehealcustomCheckBox; } }
+        internal RazorTextBox BandageHealcustomIDTextBox { get { return bandagehealcustomIDTextBox; } }
+        internal RazorTextBox BandageHealcustomcolorTextBox { get { return bandagehealcustomcolorTextBox; } }
+        internal RazorCheckBox BandageHealdexformulaCheckBox { get { return bandagehealdexformulaCheckBox; } }
+        internal RazorTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
+        internal RazorTextBox BandageHealhpTextBox { get { return bandagehealhpTextBox; } }
+        internal RazorCheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
+        internal RazorCheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
+        internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
+        internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
 		// GumpInspector Flag
 
 		internal bool GumpInspectorEnable = false;
@@ -885,6 +924,30 @@ namespace Assistant
             this.restockExportListB = new RazorEnhanced.UI.RazorButton();
             this.label7 = new System.Windows.Forms.Label();
             this.bandageheal = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.bandagehealcountdownCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.bandagehealhiddedCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.bandagehealmortalCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.bandagehealpoisonCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.bandagehealhpTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.bandagehealdelayTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.bandagehealdexformulaCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.bandagehealcustomcolorTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label30 = new System.Windows.Forms.Label();
+            this.bandagehealcustomIDTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.bandagehealcustomCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.bandagehealtargetLabel = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.bandagehealsettargetButton = new RazorEnhanced.UI.RazorButton();
+            this.bandagehealtargetComboBox = new RazorEnhanced.UI.RazorComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.bandagehealenableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.bandagehealLogBox = new System.Windows.Forms.ListBox();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
@@ -933,6 +996,9 @@ namespace Assistant
             this.restock.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.bandageheal.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
@@ -4762,6 +4828,9 @@ namespace Assistant
             // 
             // bandageheal
             // 
+            this.bandageheal.Controls.Add(this.groupBox6);
+            this.bandageheal.Controls.Add(this.bandagehealenableCheckBox);
+            this.bandageheal.Controls.Add(this.groupBox5);
             this.bandageheal.Location = new System.Drawing.Point(4, 22);
             this.bandageheal.Name = "bandageheal";
             this.bandageheal.Padding = new System.Windows.Forms.Padding(3);
@@ -4769,6 +4838,277 @@ namespace Assistant
             this.bandageheal.TabIndex = 8;
             this.bandageheal.Text = "Bandage Heal";
             this.bandageheal.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.bandagehealcountdownCheckBox);
+            this.groupBox6.Controls.Add(this.bandagehealhiddedCheckBox);
+            this.groupBox6.Controls.Add(this.bandagehealmortalCheckBox);
+            this.groupBox6.Controls.Add(this.bandagehealpoisonCheckBox);
+            this.groupBox6.Controls.Add(this.label33);
+            this.groupBox6.Controls.Add(this.bandagehealhpTextBox);
+            this.groupBox6.Controls.Add(this.label32);
+            this.groupBox6.Controls.Add(this.bandagehealdelayTextBox);
+            this.groupBox6.Controls.Add(this.label31);
+            this.groupBox6.Controls.Add(this.bandagehealdexformulaCheckBox);
+            this.groupBox6.Controls.Add(this.bandagehealcustomcolorTextBox);
+            this.groupBox6.Controls.Add(this.label30);
+            this.groupBox6.Controls.Add(this.bandagehealcustomIDTextBox);
+            this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Controls.Add(this.bandagehealcustomCheckBox);
+            this.groupBox6.Controls.Add(this.bandagehealtargetLabel);
+            this.groupBox6.Controls.Add(this.label15);
+            this.groupBox6.Controls.Add(this.bandagehealsettargetButton);
+            this.groupBox6.Controls.Add(this.bandagehealtargetComboBox);
+            this.groupBox6.Controls.Add(this.label14);
+            this.groupBox6.Location = new System.Drawing.Point(304, 43);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(347, 295);
+            this.groupBox6.TabIndex = 74;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Settings";
+            // 
+            // bandagehealcountdownCheckBox
+            // 
+            this.bandagehealcountdownCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealcountdownCheckBox.Location = new System.Drawing.Point(10, 246);
+            this.bandagehealcountdownCheckBox.Name = "bandagehealcountdownCheckBox";
+            this.bandagehealcountdownCheckBox.Size = new System.Drawing.Size(155, 22);
+            this.bandagehealcountdownCheckBox.TabIndex = 89;
+            this.bandagehealcountdownCheckBox.Text = "Show Heal Countdown";
+            this.bandagehealcountdownCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealcountdownCheckBox_CheckedChanged);
+            // 
+            // bandagehealhiddedCheckBox
+            // 
+            this.bandagehealhiddedCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealhiddedCheckBox.Location = new System.Drawing.Point(10, 218);
+            this.bandagehealhiddedCheckBox.Name = "bandagehealhiddedCheckBox";
+            this.bandagehealhiddedCheckBox.Size = new System.Drawing.Size(155, 22);
+            this.bandagehealhiddedCheckBox.TabIndex = 88;
+            this.bandagehealhiddedCheckBox.Text = "Block heal if hidded";
+            this.bandagehealhiddedCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealhiddedCheckBox_CheckedChanged);
+            // 
+            // bandagehealmortalCheckBox
+            // 
+            this.bandagehealmortalCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealmortalCheckBox.Location = new System.Drawing.Point(10, 190);
+            this.bandagehealmortalCheckBox.Name = "bandagehealmortalCheckBox";
+            this.bandagehealmortalCheckBox.Size = new System.Drawing.Size(155, 22);
+            this.bandagehealmortalCheckBox.TabIndex = 87;
+            this.bandagehealmortalCheckBox.Text = "Block heal if mortalled";
+            this.bandagehealmortalCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealmortalCheckBox_CheckedChanged);
+            // 
+            // bandagehealpoisonCheckBox
+            // 
+            this.bandagehealpoisonCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealpoisonCheckBox.Location = new System.Drawing.Point(10, 162);
+            this.bandagehealpoisonCheckBox.Name = "bandagehealpoisonCheckBox";
+            this.bandagehealpoisonCheckBox.Size = new System.Drawing.Size(155, 22);
+            this.bandagehealpoisonCheckBox.TabIndex = 86;
+            this.bandagehealpoisonCheckBox.Text = "Block heal if poisoned";
+            this.bandagehealpoisonCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealpoisonCheckBox_CheckedChanged);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(135, 139);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(34, 13);
+            this.label33.TabIndex = 85;
+            this.label33.Text = "% hits";
+            // 
+            // bandagehealhpTextBox
+            // 
+            this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealhpTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.bandagehealhpTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.bandagehealhpTextBox.Location = new System.Drawing.Point(76, 136);
+            this.bandagehealhpTextBox.Name = "bandagehealhpTextBox";
+            this.bandagehealhpTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealhpTextBox.TabIndex = 84;
+            this.bandagehealhpTextBox.TextChanged += new System.EventHandler(this.bandagehealhpTextBox_TextChanged);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(7, 138);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(64, 13);
+            this.label32.TabIndex = 83;
+            this.label32.Text = "Start Below:";
+            // 
+            // bandagehealdelayTextBox
+            // 
+            this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealdelayTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.bandagehealdelayTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.bandagehealdelayTextBox.Location = new System.Drawing.Point(234, 103);
+            this.bandagehealdelayTextBox.Name = "bandagehealdelayTextBox";
+            this.bandagehealdelayTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealdelayTextBox.TabIndex = 82;
+            this.bandagehealdelayTextBox.TextChanged += new System.EventHandler(this.bandagehealdelayTextBox_TextChanged);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(153, 106);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(75, 13);
+            this.label31.TabIndex = 81;
+            this.label31.Text = "Custom Delay:";
+            // 
+            // bandagehealdexformulaCheckBox
+            // 
+            this.bandagehealdexformulaCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealdexformulaCheckBox.Location = new System.Drawing.Point(10, 102);
+            this.bandagehealdexformulaCheckBox.Name = "bandagehealdexformulaCheckBox";
+            this.bandagehealdexformulaCheckBox.Size = new System.Drawing.Size(155, 22);
+            this.bandagehealdexformulaCheckBox.TabIndex = 80;
+            this.bandagehealdexformulaCheckBox.Text = "Use DEX formula delay";
+            this.bandagehealdexformulaCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealdexformulaCheckBox_CheckedChanged);
+            // 
+            // bandagehealcustomcolorTextBox
+            // 
+            this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealcustomcolorTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.bandagehealcustomcolorTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.bandagehealcustomcolorTextBox.Location = new System.Drawing.Point(286, 76);
+            this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
+            this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealcustomcolorTextBox.TabIndex = 79;
+            this.bandagehealcustomcolorTextBox.TextChanged += new System.EventHandler(this.bandagehealcustomcolorTextBox_TextChanged);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(246, 79);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(34, 13);
+            this.label30.TabIndex = 78;
+            this.label30.Text = "Color:";
+            // 
+            // bandagehealcustomIDTextBox
+            // 
+            this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
+            this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.bandagehealcustomIDTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.bandagehealcustomIDTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.bandagehealcustomIDTextBox.Location = new System.Drawing.Point(180, 75);
+            this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
+            this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
+            this.bandagehealcustomIDTextBox.TabIndex = 77;
+            this.bandagehealcustomIDTextBox.TextChanged += new System.EventHandler(this.bandagehealcustomIDTextBox_TextChanged);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(153, 78);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(21, 13);
+            this.label19.TabIndex = 76;
+            this.label19.Text = "ID:";
+            // 
+            // bandagehealcustomCheckBox
+            // 
+            this.bandagehealcustomCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealcustomCheckBox.Location = new System.Drawing.Point(10, 74);
+            this.bandagehealcustomCheckBox.Name = "bandagehealcustomCheckBox";
+            this.bandagehealcustomCheckBox.Size = new System.Drawing.Size(137, 22);
+            this.bandagehealcustomCheckBox.TabIndex = 75;
+            this.bandagehealcustomCheckBox.Text = "Use Custom Bandage";
+            this.bandagehealcustomCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealcustomCheckBox_CheckedChanged);
+            // 
+            // bandagehealtargetLabel
+            // 
+            this.bandagehealtargetLabel.AutoSize = true;
+            this.bandagehealtargetLabel.Location = new System.Drawing.Point(73, 49);
+            this.bandagehealtargetLabel.Name = "bandagehealtargetLabel";
+            this.bandagehealtargetLabel.Size = new System.Drawing.Size(93, 13);
+            this.bandagehealtargetLabel.TabIndex = 4;
+            this.bandagehealtargetLabel.Text = "Null (0x00000000)";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(7, 49);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(41, 13);
+            this.label15.TabIndex = 3;
+            this.label15.Text = "Target:";
+            // 
+            // bandagehealsettargetButton
+            // 
+            this.bandagehealsettargetButton.ColorTable = office2010BlueTheme1;
+            this.bandagehealsettargetButton.Location = new System.Drawing.Point(213, 16);
+            this.bandagehealsettargetButton.Name = "bandagehealsettargetButton";
+            this.bandagehealsettargetButton.Size = new System.Drawing.Size(75, 23);
+            this.bandagehealsettargetButton.TabIndex = 2;
+            this.bandagehealsettargetButton.Text = "Set Target";
+            this.bandagehealsettargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.bandagehealsettargetButton.UseVisualStyleBackColor = true;
+            this.bandagehealsettargetButton.Click += new System.EventHandler(this.bandagehealsettargetButton_Click);
+            // 
+            // bandagehealtargetComboBox
+            // 
+            this.bandagehealtargetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bandagehealtargetComboBox.FormattingEnabled = true;
+            this.bandagehealtargetComboBox.Location = new System.Drawing.Point(76, 15);
+            this.bandagehealtargetComboBox.Name = "bandagehealtargetComboBox";
+            this.bandagehealtargetComboBox.Size = new System.Drawing.Size(121, 24);
+            this.bandagehealtargetComboBox.TabIndex = 1;
+            this.bandagehealtargetComboBox.SelectedIndexChanged += new System.EventHandler(this.bandagehealtargetComboBox_SelectedIndexChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(7, 20);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(66, 13);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Heal Target:";
+            // 
+            // bandagehealenableCheckBox
+            // 
+            this.bandagehealenableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bandagehealenableCheckBox.Location = new System.Drawing.Point(304, 15);
+            this.bandagehealenableCheckBox.Name = "bandagehealenableCheckBox";
+            this.bandagehealenableCheckBox.Size = new System.Drawing.Size(185, 22);
+            this.bandagehealenableCheckBox.TabIndex = 73;
+            this.bandagehealenableCheckBox.Text = "Enable Bandage Heal";
+            this.bandagehealenableCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealenableCheckBox_CheckedChanged);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.bandagehealLogBox);
+            this.groupBox5.Location = new System.Drawing.Point(6, 6);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(278, 332);
+            this.groupBox5.TabIndex = 54;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Bandage Heal Log";
+            // 
+            // bandagehealLogBox
+            // 
+            this.bandagehealLogBox.FormattingEnabled = true;
+            this.bandagehealLogBox.Location = new System.Drawing.Point(7, 18);
+            this.bandagehealLogBox.Name = "bandagehealLogBox";
+            this.bandagehealLogBox.Size = new System.Drawing.Size(265, 303);
+            this.bandagehealLogBox.TabIndex = 0;
             // 
             // m_NotifyIcon
             // 
@@ -4865,6 +5205,10 @@ namespace Assistant
             this.restock.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.bandageheal.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -4988,6 +5332,10 @@ namespace Assistant
             
             // ------------------ RESTOCK -------------------------
             RazorEnhanced.Restock.RefreshLists();
+
+            // ------------------ BANDAGE HEAL --------------------
+            bandagehealtargetComboBox.Items.Add("Self");
+            bandagehealtargetComboBox.Items.Add("Target");
 
 		}
 
@@ -9795,9 +10143,109 @@ namespace Assistant
         }
 
         // --------------- RESTOCK END -------------
+
+
+        // ---------------- HEAL BANDAGE START -----------------
+
+        private void bandagehealenableCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bandagehealenableCheckBox.Checked)
+                groupBox6.Enabled = false;
+            else
+                groupBox6.Enabled = true;
+
+            // Avvio healer engine e check vari
+
+        }
+
+        private void bandagehealtargetComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Check target e update label target
+            // save data
+            if (BandageHealtargetComboBox.Text == "Target")
+                bandagehealsettargetButton.Enabled = true;
+            else
+                bandagehealsettargetButton.Enabled = false;
+        }
+
+        private void bandagehealsettargetButton_Click(object sender, EventArgs e)
+        {
+            // acquisizione target
+            // save data
+        }
+
+        private void bandagehealcustomCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // save data
+            if (bandagehealcustomCheckBox.Checked)
+            {
+                bandagehealcustomIDTextBox.Enabled = true;
+                bandagehealcustomcolorTextBox.Enabled = true;
+            }
+            else
+            {
+                bandagehealcustomIDTextBox.Enabled = false;
+                bandagehealcustomcolorTextBox.Enabled = false;
+            }
+        }
+
+        private void bandagehealcustomIDTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // dave data
+        }
+
+        private void bandagehealcustomcolorTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // save data
+        }
+
+        private void bandagehealdexformulaCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (bandagehealdexformulaCheckBox.Checked)
+                bandagehealdelayTextBox.Enabled = true;
+            else
+                bandagehealdelayTextBox.Enabled = false;
+        }
+
+        private void bandagehealdelayTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // save data
+        }
+
+        private void bandagehealhpTextBox_TextChanged(object sender, EventArgs e)
+        {
+            // save data
+        }
+
+        private void bandagehealpoisonCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // save data
+        }
+
+        private void bandagehealmortalCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // save data
+        }
+
+        private void bandagehealhiddedCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // save data
+        }
+
+        private void bandagehealcountdownCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // save data
+        }
+
+        // ---------------- HEAL BANDAGE END ----------------
+
+
+
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {
             UpdateRazorStatus();
         }
+
+
 	}
 }
