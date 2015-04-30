@@ -193,11 +193,39 @@ namespace RazorEnhanced
 				DataRow uod = shards.NewRow();
 				uod.ItemArray = new object[] { "UODreams", "", "", "login.uodreams.com", 2593, true, false, true };
 				shards.Rows.Add(uod);
+                m_Dataset.Tables.Add(shards);
+
+
+                // ----------- GENERAL SETTINGS ----------
+                DataTable general = new DataTable("GENERAL");
+
+                // Parametri Tab (Agent --> Heal)
+                general.Columns.Add("BandageHealcountdownCheckBox", typeof(bool));
+                general.Columns.Add("BandageHealtargetComboBox", typeof(string));
+                general.Columns.Add("BandageHealtargetLabel", typeof(int));
+                general.Columns.Add("BandageHealcustomCheckBox", typeof(bool)); 
+                general.Columns.Add("BandageHealcustomIDTextBox", typeof(int)); 
+                general.Columns.Add("BandageHealcustomcolorTextBox", typeof(int)); 
+                general.Columns.Add("BandageHealdexformulaCheckBox", typeof(bool)); 
+                general.Columns.Add("BandageHealdelayTextBox", typeof(int));
+                general.Columns.Add("BandageHealhpTextBox", typeof(int)); 
+                general.Columns.Add("BandageHealpoisonCheckBox", typeof(bool)); 
+                general.Columns.Add("BandageHealmortalCheckBox", typeof(bool));
+                general.Columns.Add("BandageHealhiddedCheckBox", typeof(bool));  
+                // Parametri primo avvio per tab agent Bandage heal
+                object[] bandagehealparameters = new object[] { false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false };
+
+
+                // Composizione Parematri base primo avvio
+                DataRow generalsettings = general.NewRow();
+                generalsettings.ItemArray = bandagehealparameters;
+                general.Rows.Add(generalsettings);
+
+                m_Dataset.Tables.Add(general);
 
 
 
-				m_Dataset.Tables.Add(shards);
-
+				
 
 
 
@@ -2004,8 +2032,74 @@ namespace RazorEnhanced
 				shards = shardsOut;
 			}
 		}
-		// ------------- LAUNCHER END-----------------
+		// ------------- LAUNCHER END -----------------
 
+        // ------------- GENERAL SETTINGS START -----------------
+        internal class General
+		{
+            internal static bool ReadBool(string name)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row =  m_Dataset.Tables["GENERAL"].Rows[0];
+                    return (bool)row[name];
+                }
+                return false;
+            }
+
+            internal static void WriteBool(string name, bool value)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    row[name] = value;
+                    Save();
+                }
+            }
+
+            internal static string ReadString(string name)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    return (string)row[name];
+                }
+                return "";
+            }
+
+            internal static void WriteString(string name, string value)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    row[name] = value;
+                    Save();
+                }
+            }
+            internal static int ReadInt(string name)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    return (int)row[name];
+                }
+                return 1;
+            }
+
+            internal static void WriteInt(string name, int value)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    row[name] = value;
+                    Save();
+                }
+            }
+        }
+
+
+
+        // ------------- GENERAL SETTINGS END -----------------
 
 		internal static void Save()
 		{

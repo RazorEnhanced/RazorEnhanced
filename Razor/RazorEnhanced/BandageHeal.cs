@@ -31,16 +31,18 @@ namespace RazorEnhanced
             }
         }
 
-        internal static string TargetSerial
+        internal static int TargetSerial
         {
             get
             {
-                return (string)Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.BandageHealtargetLabel.Text));
+                int serial = 0;
+                Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealtargetLabel.Text, out serial)));
+                return serial;
             }
 
             set
             {
-                Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealtargetLabel.Text = value));
+                Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealtargetLabel.Text = "0x" + value.ToString("X8")));
             }
         }
         internal static bool CustomCheckBox 
@@ -60,28 +62,38 @@ namespace RazorEnhanced
         {
             get
             {
-                int ID = 0x0001;
-                Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text, out ID)));
+                int ID = 0;
+                try
+                {
+                   ID = Convert.ToInt32(Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text, 16);
+                }
+                catch
+                { }
                 return ID;
             }
 
             set
             {
-                Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text = value.ToString("X8")));
+                Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4")));
             }
         }
         internal static int CustomColor
         {
             get
             {
-                int ID = 0x0001;
-                Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text, out ID)));
-                return ID;
+                int color = 0;
+                try
+                {
+                    color = Convert.ToInt32(Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text, 16);
+                }
+                catch
+                { }
+                return color;
             }
 
             set
             {
-                Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text = value.ToString("X8")));
+                Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4")));
             }
         }
         internal static int CustomDelay
@@ -129,7 +141,7 @@ namespace RazorEnhanced
 
             set
             {
-                Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text = value.ToString("X8")));
+                Assistant.Engine.MainWindow.BandageHealhpTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealhpTextBox.Text = value.ToString()));
             }
         }
 
@@ -183,5 +195,48 @@ namespace RazorEnhanced
             }
         }
 
+        internal static void LoadSettings()
+        {
+            Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
+            Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
+            ShowCountdown = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
+            HiddenBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
+            MortalBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
+            PoisonBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
+            HpLimit = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
+            CustomDelay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
+            CustomDexFormula = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+            if (CustomDexFormula)
+                Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = false;
+            else
+                Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = true;
+
+            CustomColor = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox");
+            CustomID = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
+            CustomCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
+            if (CustomCheckBox)
+            {
+                Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Enabled = true;
+                Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Enabled = true;
+            }
+            else
+            {
+                Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Enabled = false;
+                Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Enabled = false;
+            }
+
+            TargetSerial = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
+            TargetType = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
+            if (TargetType == "Target")
+            {
+                Assistant.Engine.MainWindow.BandageHealsettargetButton.Enabled = true;
+                Assistant.Engine.MainWindow.BandageHealtargetLabel.Enabled = true;
+            }
+            else
+            {
+                Assistant.Engine.MainWindow.BandageHealsettargetButton.Enabled = false;
+                Assistant.Engine.MainWindow.BandageHealtargetLabel.Enabled = false;
+            }
+        }
 	}
 }

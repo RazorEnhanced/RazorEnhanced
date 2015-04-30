@@ -514,6 +514,9 @@ namespace Assistant
         internal RazorCheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
         internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
         internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
+        internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
+
+
 		// GumpInspector Flag
 
 		internal bool GumpInspectorEnable = false;
@@ -5334,8 +5337,7 @@ namespace Assistant
             RazorEnhanced.Restock.RefreshLists();
 
             // ------------------ BANDAGE HEAL --------------------
-            bandagehealtargetComboBox.Items.Add("Self");
-            bandagehealtargetComboBox.Items.Add("Target");
+            RazorEnhanced.BandageHeal.LoadSettings();
 
 		}
 
@@ -10160,12 +10162,18 @@ namespace Assistant
 
         private void bandagehealtargetComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Check target e update label target
-            // save data
             if (BandageHealtargetComboBox.Text == "Target")
+            {
                 bandagehealsettargetButton.Enabled = true;
+                bandagehealtargetLabel.Enabled = true;
+            }
             else
+            {
                 bandagehealsettargetButton.Enabled = false;
+                bandagehealtargetLabel.Enabled = false;
+            }
+
+            RazorEnhanced.Settings.General.WriteString("BandageHealtargetComboBox", bandagehealtargetComboBox.Text);
         }
 
         private void bandagehealsettargetButton_Click(object sender, EventArgs e)
@@ -10176,7 +10184,6 @@ namespace Assistant
 
         private void bandagehealcustomCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // save data
             if (bandagehealcustomCheckBox.Checked)
             {
                 bandagehealcustomIDTextBox.Enabled = true;
@@ -10187,54 +10194,62 @@ namespace Assistant
                 bandagehealcustomIDTextBox.Enabled = false;
                 bandagehealcustomcolorTextBox.Enabled = false;
             }
+
+            RazorEnhanced.Settings.General.WriteBool("BandageHealcustomCheckBox", bandagehealcustomCheckBox.Checked);
         }
 
         private void bandagehealcustomIDTextBox_TextChanged(object sender, EventArgs e)
         {
-            // dave data
+            RazorEnhanced.Settings.General.WriteInt("BandageHealcustomIDTextBox", RazorEnhanced.BandageHeal.CustomID);
         }
 
         private void bandagehealcustomcolorTextBox_TextChanged(object sender, EventArgs e)
         {
-            // save data
+            RazorEnhanced.Settings.General.WriteInt("BandageHealcustomcolorTextBox", RazorEnhanced.BandageHeal.CustomColor);
         }
 
         private void bandagehealdexformulaCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (bandagehealdexformulaCheckBox.Checked)
-                bandagehealdelayTextBox.Enabled = true;
-            else
                 bandagehealdelayTextBox.Enabled = false;
+            else
+                bandagehealdelayTextBox.Enabled = true;
+
+            RazorEnhanced.Settings.General.WriteBool("BandageHealdexformulaCheckBox", bandagehealdexformulaCheckBox.Checked);
         }
 
         private void bandagehealdelayTextBox_TextChanged(object sender, EventArgs e)
         {
-            // save data
+            RazorEnhanced.Settings.General.WriteInt("BandageHealdelayTextBox", RazorEnhanced.BandageHeal.CustomDelay);
         }
 
         private void bandagehealhpTextBox_TextChanged(object sender, EventArgs e)
         {
-            // save data
+            RazorEnhanced.Settings.General.WriteInt("BandageHealhpTextBox", RazorEnhanced.BandageHeal.HpLimit);
         }
 
         private void bandagehealpoisonCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // save data
+            if (bandagehealpoisonCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("BandageHealpoisonCheckBox", bandagehealpoisonCheckBox.Checked);
         }
 
         private void bandagehealmortalCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // save data
+            if (bandagehealmortalCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("BandageHealmortalCheckBox", bandagehealmortalCheckBox.Checked);
         }
 
         private void bandagehealhiddedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // save data
+            if (bandagehealhiddedCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("BandageHealhiddedCheckBox", bandagehealhiddedCheckBox.Checked);
         }
 
         private void bandagehealcountdownCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // save data
+            if (bandagehealcountdownCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("BandageHealcountdownCheckBox", bandagehealcountdownCheckBox.Checked);
         }
 
         // ---------------- HEAL BANDAGE END ----------------
