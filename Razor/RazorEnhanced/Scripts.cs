@@ -102,6 +102,7 @@ namespace RazorEnhanced
 		{
 			private Thread m_AutoLootThread;
 			private Thread m_ScavengerThread;
+            private Thread m_BandageHealThread;
 
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
@@ -118,7 +119,7 @@ namespace RazorEnhanced
 					}
 				}
 
-				Thread.Sleep(50);
+				//Thread.Sleep(50);
 
 				if (AutoLoot.AutoMode)
 				{
@@ -133,7 +134,7 @@ namespace RazorEnhanced
 					}
 				}
 
-				Thread.Sleep(50);
+				//Thread.Sleep(50);
 
 				if (Scavenger.AutoMode)
 				{
@@ -147,6 +148,19 @@ namespace RazorEnhanced
 						m_ScavengerThread.Start();
 					}
 				}
+
+                if (BandageHeal.AutoMode)
+                {
+                    if (m_BandageHealThread == null ||
+                        (m_BandageHealThread != null && m_BandageHealThread.ThreadState != ThreadState.Running &&
+                        m_BandageHealThread.ThreadState != ThreadState.Unstarted &&
+                        m_BandageHealThread.ThreadState != ThreadState.WaitSleepJoin)
+                    )
+                    {
+                        m_BandageHealThread = new Thread(BandageHeal.Engine);
+                        m_BandageHealThread.Start();
+                    }
+                }
 			}
 		}
 

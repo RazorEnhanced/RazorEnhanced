@@ -6,15 +6,22 @@ using Assistant;
 using System.Windows.Forms;
 using System.Threading;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace RazorEnhanced
 {
     public class BandageHeal
 	{
+        private static bool m_AutoMode;
+        internal static bool AutoMode
+        {
+            get { return m_AutoMode; }
+            set { m_AutoMode = value; }
+        }
         internal static void AddLog(string addlog)
         {
-            Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.Items.Add(addlog)));
-            Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Engine.MainWindow.BandageHealLogBox.SelectedIndex = Engine.MainWindow.BandageHealLogBox.Items.Count - 1));
+            Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.Items.Add(addlog)));
+            Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.SelectedIndex = Assistant.Engine.MainWindow.BandageHealLogBox.Items.Count - 1));
             if (Assistant.Engine.MainWindow.BandageHealLogBox.Items.Count > 300)
                 Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.Items.Clear()));
         }
@@ -111,7 +118,7 @@ namespace RazorEnhanced
             }
         }
 
-        internal static bool CustomDexFormula
+        internal static bool DexFormula
         {
             get
             {
@@ -130,13 +137,7 @@ namespace RazorEnhanced
             {
                 int hplimit = 100;
                 Assistant.Engine.MainWindow.BandageHealhpTextBox.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealhpTextBox.Text, out hplimit)));
-                if (hplimit > 100)
-                {
-                    HpLimit = 100;
-                    return hplimit;
-                }
-                else
-                    return hplimit;
+                return hplimit;
             }
 
             set
@@ -221,8 +222,8 @@ namespace RazorEnhanced
             PoisonBlock = BandageHealpoisonCheckBox;
             HpLimit = BandageHealhpTextBox;
             CustomDelay = BandageHealdelayTextBox;
-            CustomDexFormula = BandageHealdexformulaCheckBox;
-            if (CustomDexFormula)
+            DexFormula = BandageHealdexformulaCheckBox;
+            if (DexFormula)
                 Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = false;
             else
                 Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = true;
@@ -253,6 +254,145 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.BandageHealsettargetButton.Enabled = false;
                 Assistant.Engine.MainWindow.BandageHealtargetLabel.Enabled = false;
             }
+        }
+
+        // Core
+
+        internal static int EngineRun()
+        {
+            if ((int)(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? (ushort)1 : World.Player.HitsMax)) < HpLimit)       // Check HP se bendare o meno.
+            {
+                if (HiddenBlock)
+                {
+                    if (!World.Player.Visible)  // Esce se attivo blocco hidded 
+                        return 0;
+                }
+
+                if (PoisonBlock)
+                {
+                    if (World.Player.Poisoned) // Esce se attivo blocco poison
+                        return 0;
+                }
+
+                if (MortalBlock)                // Esce se attivo blocco mortal 
+                {
+                    if (Player.BuffsExist("Mortal Strike"))
+                        return 0;
+                }
+
+                int serialbende = FindBandage();
+                if (serialbende != 0)        // Cerca le bende
+                {
+                    Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)serialbende));
+                    AddLog("Using bandage!");
+                    Target.WaitForTarget(1000);
+                    Target.TargetExecute(World.Player.Serial);
+                    AddLog("Targetting: " + World.Player.Serial.Value.ToString("X8"));
+                    if (DexFormula)         
+                    {
+                        double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
+                        if (ShowCountdown)          // Se deve mostrare il cooldown
+                        {
+                            int second = 0;
+
+                            var delays = delay.ToString(CultureInfo.InvariantCulture).Split('.');
+                            int first = int.Parse(delays[0]);
+                            if (delays.Count() > 1)
+                                second = int.Parse(delays[1]);
+
+                            while (first > 0)
+                            {
+                                Player.HeadMessage(10, (first/1000).ToString());
+                                AddLog("Delay counting....");
+                                first = first -1000;
+                                Thread.Sleep(1000);
+                            }
+                            Thread.Sleep(second);           // Pausa dei decimali rimasti
+                        }
+                        else
+                        {
+                            Thread.Sleep((Int32)delay+10);
+                        }
+                    }
+                    else                // Se ho un delay custom
+                    {
+                        double delay = CustomDelay;
+                        if (ShowCountdown)          // Se deve mostrare il cooldown
+                        {
+
+                            double subdelay = delay / 1000;
+
+                            int second = 0;
+
+                            var delays = subdelay.ToString(CultureInfo.InvariantCulture).Split('.');
+                            int first = int.Parse(delays[0]);
+                            if (delays.Count() > 1)
+                                second = int.Parse(delays[1]);
+
+                            while (first > 0)
+                            {
+                                Player.HeadMessage(10, (first / 1000).ToString());
+                                AddLog("Delay counting....");
+                                first --;
+                                Thread.Sleep(1000);
+                            }
+                            Thread.Sleep(second);           // Pausa dei decimali rimasti
+                        }
+                        else
+                        {
+                            Thread.Sleep((Int32)delay + 10);
+                        }               
+                    }
+                }
+                else        // Fine bende
+                {
+                    Player.HeadMessage(10, "Bandage not found");
+                    AddLog("Bandage not found");
+                    Thread.Sleep(5000);
+                }
+            }
+            return 0;
+        }
+
+        internal static int FindBandage()
+        {
+            if (CustomCheckBox)         // Se cerco bende custom
+            {
+                foreach (Assistant.Item iteminzaino in Assistant.World.Player.Backpack.Contains)
+                {
+                    if (iteminzaino.ItemID == CustomID && iteminzaino.Hue == CustomColor)
+                    {
+                        if (iteminzaino.Amount < 11)
+                        {
+                            Player.HeadMessage(10, "Warning: Low bandage: " + iteminzaino.Amount + " left");
+                            AddLog("Warning: Low bandage: " + iteminzaino.Amount + " left");
+                        }
+                        return iteminzaino.Serial;
+                    }
+                }
+            }
+            else
+            {
+                foreach (Assistant.Item iteminzaino in Assistant.World.Player.Backpack.Contains)
+                {
+                    if (iteminzaino.ItemID == 0x0E21)
+                    {
+                        if (iteminzaino.Amount < 11)
+                        {
+                            Player.HeadMessage(10, "Warning: Low bandage: " + iteminzaino.Amount + " left");
+                            AddLog("Warning: Low bandage: " + iteminzaino.Amount + " left");
+                        }
+                        return iteminzaino.Serial;
+                    }
+                }
+            }
+            return 0;
+        }
+
+        internal static void Engine()
+        {
+            int exit = Int32.MinValue;
+            exit = EngineRun();
         }
 	}
 }

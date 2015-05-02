@@ -10151,6 +10151,28 @@ namespace Assistant
 
         private void bandagehealenableCheckBox_CheckedChanged(object sender, EventArgs e)
         {
+            if (World.Player != null)
+            {
+                if (bandagehealenableCheckBox.Checked)
+                    {
+                        RazorEnhanced.BandageHeal.AutoMode = true;
+                        RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Start...");
+                        RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...");
+                    }
+                    else
+                    {
+                        // Stop BANDAGEHEAL
+                        RazorEnhanced.BandageHeal.AutoMode = false;
+                        RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...");
+                        RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Stop...");
+                    }
+            }
+            else
+            {
+                autoLootCheckBox.Checked = false;
+                RazorEnhanced.BandageHeal.AddLog("You are not logged in game!");
+            }
+
             if (bandagehealenableCheckBox.Checked)
                 groupBox6.Enabled = false;
             else
