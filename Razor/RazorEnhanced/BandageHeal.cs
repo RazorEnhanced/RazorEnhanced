@@ -197,23 +197,39 @@ namespace RazorEnhanced
 
         internal static void LoadSettings()
         {
+            bool BandageHealcountdownCheckBox = false;
+            string BandageHealtargetComboBox = "Self";
+            int BandageHealtargetLabel = 0;
+            bool BandageHealcustomCheckBox = false;
+            int BandageHealcustomIDTextBox = 0;
+            int BandageHealcustomcolorTextBox = 0;
+            bool BandageHealdexformulaCheckBox = false;
+            int BandageHealdelayTextBox = 0;
+            int BandageHealhpTextBox = 0;
+            bool BandageHealpoisonCheckBox = false;
+            bool BandageHealmortalCheckBox = false;
+            bool BandageHealhiddedCheckBox = false;
+
+            RazorEnhanced.Settings.General.AssistantBandageHealLoadAll(out BandageHealcountdownCheckBox, out BandageHealtargetComboBox, out BandageHealtargetLabel, out BandageHealcustomCheckBox, out BandageHealcustomIDTextBox, out BandageHealcustomcolorTextBox, out BandageHealdexformulaCheckBox, out BandageHealdelayTextBox, out BandageHealhpTextBox, out BandageHealpoisonCheckBox, out BandageHealmortalCheckBox, out BandageHealhiddedCheckBox);
+           
             Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
             Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
-            ShowCountdown = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
-            HiddenBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
-            MortalBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
-            PoisonBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
-            HpLimit = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
-            CustomDelay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
-            CustomDexFormula = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+
+            ShowCountdown = BandageHealcountdownCheckBox;
+            HiddenBlock = BandageHealhiddedCheckBox;
+            MortalBlock = BandageHealmortalCheckBox;
+            PoisonBlock = BandageHealpoisonCheckBox;
+            HpLimit = BandageHealhpTextBox;
+            CustomDelay = BandageHealdelayTextBox;
+            CustomDexFormula = BandageHealdexformulaCheckBox;
             if (CustomDexFormula)
                 Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = false;
             else
                 Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = true;
 
-            CustomColor = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox");
-            CustomID = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
-            CustomCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
+            CustomColor = BandageHealcustomcolorTextBox;
+            CustomID = BandageHealcustomIDTextBox;
+            CustomCheckBox = BandageHealcustomCheckBox;
             if (CustomCheckBox)
             {
                 Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Enabled = true;
@@ -225,8 +241,8 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Enabled = false;
             }
 
-            TargetSerial = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
-            TargetType = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
+            TargetSerial = BandageHealtargetLabel;
+            TargetType = BandageHealtargetComboBox;
             if (TargetType == "Target")
             {
                 Assistant.Engine.MainWindow.BandageHealsettargetButton.Enabled = true;
