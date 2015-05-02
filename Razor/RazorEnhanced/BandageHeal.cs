@@ -307,11 +307,11 @@ namespace RazorEnhanced
                                 first = first -1000;
                                 Thread.Sleep(1000);
                             }
-                            Thread.Sleep(second);           // Pausa dei decimali rimasti
+                            Thread.Sleep(second + 300);           // Pausa dei decimali rimasti
                         }
                         else
                         {
-                            Thread.Sleep((Int32)delay+10);
+                            Thread.Sleep((Int32)delay + 300);
                         }
                     }
                     else                // Se ho un delay custom
@@ -336,11 +336,11 @@ namespace RazorEnhanced
                                 first --;
                                 Thread.Sleep(1000);
                             }
-                            Thread.Sleep(second);           // Pausa dei decimali rimasti
+                            Thread.Sleep(second+300);           // Pausa dei decimali rimasti
                         }
                         else
                         {
-                            Thread.Sleep((Int32)delay + 10);
+                            Thread.Sleep((Int32)delay + 300);
                         }               
                     }
                 }
