@@ -43,7 +43,12 @@ namespace RazorEnhanced
             get
             {
                 int serial = 0;
-                Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealtargetLabel.Text, out serial)));
+                try
+                {
+                    serial = Convert.ToInt32(Assistant.Engine.MainWindow.BandageHealtargetLabel.Text, 16);
+                }
+                catch
+                { }
                 return serial;
             }
 
@@ -286,8 +291,19 @@ namespace RazorEnhanced
                     Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)serialbende));
                     AddLog("Using bandage!");
                     Target.WaitForTarget(1000);
-                    Target.TargetExecute(World.Player.Serial);
-                    AddLog("Targetting: " + World.Player.Serial.Value.ToString("X8"));
+
+                    if (BandageHeal.TargetType != "Self")
+                    {
+                        Target.TargetExecute(TargetSerial);
+                        AddLog("Targetting: 0x" + TargetSerial.ToString("X8"));
+                    }
+                    else
+                    {
+                        Target.TargetExecute(World.Player.Serial);
+                        AddLog("Targetting: 0x" + World.Player.Serial.Value.ToString("X8"));
+                    }
+
+                    
                     if (DexFormula)         
                     {
                         double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS

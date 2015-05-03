@@ -10199,11 +10199,34 @@ namespace Assistant
         }
 
         private void bandagehealsettargetButton_Click(object sender, EventArgs e)
-        {
-            // acquisizione target
-            // save data
-        }
+		{
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BandageHeakMobileTarget_Callback));
+		}
 
+        private void BandageHeakMobileTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+            Assistant.Mobile mobile = Assistant.World.FindMobile(serial);
+
+            if (mobile == null)
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid Target!");
+                RazorEnhanced.BandageHeal.AddLog("Invalid Target!");
+                return;
+            }
+
+            if (mobile.Serial.IsMobile)
+			{
+                RazorEnhanced.Misc.SendMessage("Bandage Heal target set to: " + mobile.ToString());
+                RazorEnhanced.BandageHeal.AddLog("Scavenger Container set to: " + mobile.ToString());
+                BandageHeal.TargetSerial = mobile.Serial;
+                RazorEnhanced.Settings.General.WriteInt("BandageHealtargetLabel", mobile.Serial);
+			}
+			else
+			{
+                RazorEnhanced.Misc.SendMessage("Invalid Target!");
+                RazorEnhanced.Scavenger.AddLog("Invalid Target!");
+			}
+		}
         private void bandagehealcustomCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (bandagehealcustomCheckBox.Checked)
