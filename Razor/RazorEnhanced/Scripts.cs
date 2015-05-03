@@ -219,6 +219,7 @@ namespace RazorEnhanced
             scope.SetVariable("Dress", new RazorEnhanced.Dress());
             scope.SetVariable("Friend", new RazorEnhanced.Friend());
             scope.SetVariable("Restock", new RazorEnhanced.Restock());
+            scope.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
 
 			return scope;
 		}

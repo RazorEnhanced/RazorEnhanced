@@ -410,5 +410,27 @@ namespace RazorEnhanced
             int exit = Int32.MinValue;
             exit = EngineRun();
         }
+
+        // Funzioni da script
+        public static void Start()
+        {
+            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+                Misc.SendMessage("Script Error: BandageHeal.Start: Bandage Heal already running");
+            else
+                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = true));
+        }
+
+        public static void Stop()
+        {
+            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == false)
+                Misc.SendMessage("Script Error: BandageHeal.Stop: Bandage Heal already sleeping");
+            else
+                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false));
+        }
+
+        public static bool Status()
+        {
+            return Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked;
+        }
 	}
 }
