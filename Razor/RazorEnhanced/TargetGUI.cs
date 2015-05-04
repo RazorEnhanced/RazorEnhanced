@@ -164,6 +164,27 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.TargetListView.Items.Add(listitem);
             }
         }
-
+        internal static byte GetNotoByte(string notoname)
+        {
+            switch (notoname)
+            {
+                case "Innocent":
+                    return 0x01;
+                case "Ally":
+                    return 0x02;
+                case "Can be attacked":
+                    return 0x03;
+                case "Criminal":
+                    return 0x04;
+                case "Enemy":
+                    return 0x05;
+                case "Murderer":
+                    return 0x06;
+                case "Invulnerable":
+                    return 0x07;
+                default:
+                    return 0x00;
+            }
+        }
 	}
 }

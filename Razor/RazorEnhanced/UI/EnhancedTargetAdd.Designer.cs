@@ -145,6 +145,7 @@
             this.razorButton1.Text = "Close";
             this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.razorButton1.UseVisualStyleBackColor = true;
+            this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
             // 
             // groupBox8
             // 
@@ -192,6 +193,7 @@
             this.razorButton2.Text = "Save";
             this.razorButton2.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.razorButton2.UseVisualStyleBackColor = true;
+            this.razorButton2.Click += new System.EventHandler(this.razorButton2_Click);
             // 
             // groupBox7
             // 

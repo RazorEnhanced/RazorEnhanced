@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 using Assistant;
 
 namespace RazorEnhanced.UI
@@ -35,6 +36,7 @@ namespace RazorEnhanced.UI
             SelectorComboBox.Items.Add("Farthest");
             SelectorComboBox.Items.Add("Weakest");
             SelectorComboBox.Items.Add("Strongest");
+            SelectorComboBox.Text = "Random";
 
             notocolorComboBox.Items.Add("Innocent");
             notocolorComboBox.Items.Add("Ally");
@@ -43,6 +45,7 @@ namespace RazorEnhanced.UI
             notocolorComboBox.Items.Add("Enemy");
             notocolorComboBox.Items.Add("Murderer");
             notocolorComboBox.Items.Add("Invulnerable");
+            notocolorComboBox.Text = "Criminal";
 		}
 
         private void bodyaddButton_Click(object sender, EventArgs e)
@@ -121,5 +124,94 @@ namespace RazorEnhanced.UI
                 notolistBox.Items.RemoveAt(notolistBox.SelectedIndex);     
         }
 
+        private void razorButton2_Click(object sender, EventArgs e)
+        {
+            bool fail = false;
+            string newtargetid = "";
+
+            if (tTargetID.Text == "")
+                fail = true;
+
+            if (!Regex.IsMatch(tTargetID.Text, "^[a-zA-Z0-9_]+$"))
+                fail = true;
+
+            newtargetid = tTargetID.Text.ToLower();
+            if (RazorEnhanced.Settings.Target.TargetExist(newtargetid))
+                fail = true;
+
+            if (fail)
+            {
+                MessageBox.Show("Invalid Target ID!",
+                "Invalid Target ID!",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Exclamation,
+                MessageBoxDefaultButton.Button1);
+            }
+            else
+            {
+                List<int> bodylist = new List<int>();
+                List<int> huelist = new List<int>();
+                List<byte> notolist = new List<byte>();
+                int maxrange = -1;
+                int minrange = -1;
+
+                // body list
+                foreach (var listBoxItem in bodylistBox.Items)
+                {
+                    bodylist.Add(Convert.ToInt32(listBoxItem.ToString(), 16));
+                }
+
+                // hue list
+                foreach (var listBoxItem in huelistBox.Items)
+                {
+                    huelist.Add(Convert.ToInt32(listBoxItem.ToString(), 16));
+                }
+
+                // max range
+                Int32.TryParse(tRangeMax.Text, out maxrange);
+
+                // min range
+                Int32.TryParse(tRangeMin.Text, out minrange);
+
+                // notocolor
+                foreach (var listBoxItem in notolistBox.Items)
+                {
+                    notolist.Add(RazorEnhanced.TargetGUI.GetNotoByte(listBoxItem.ToString()));
+                }
+                
+                // Genero filtro da salvare
+                Mobiles.Filter filtertosave = new Mobiles.Filter();
+                filtertosave.Enabled = true;
+                filtertosave.Bodies = bodylist;
+                filtertosave.Name = tName.Text;
+                filtertosave.Hues = huelist;
+                filtertosave.RangeMax = maxrange;
+                filtertosave.RangeMin = minrange;
+                filtertosave.Poisoned = poisonedCheckBox.Checked;
+                filtertosave.Blessed = blessedCheckBox.Checked;
+                filtertosave.IsHuman = humanCheckBox.Checked;
+                filtertosave.IsGhost = ghostCheckBox.Checked;
+                filtertosave.Female = femaleCheckBox.Checked;
+                filtertosave.Warmode = warCheckBox.Checked;
+                filtertosave.Friend = friendCheckBox.Checked;
+                filtertosave.Notorieties = notolist;
+
+                // Genero struttura da salvare
+                TargetGUI.TargetGUIObject targetguitosave = new TargetGUI.TargetGUIObject(SelectorComboBox.Text, filtertosave);
+
+                // Salvo struttura
+                RazorEnhanced.Settings.Target.TargetSave(newtargetid, targetguitosave);
+                RazorEnhanced.TargetGUI.RefreshTarget();
+
+                this.Close();
+            }
+        }
+
+        private void razorButton1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+      
 	}
 }
