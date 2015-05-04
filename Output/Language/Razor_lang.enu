@@ -145,7 +145,6 @@ MainForm::delMacro=Remove
 MainForm::newMacro=New...
 MainForm::videoTab=Video Capture
 MainForm::recFolder=...
-MainForm::groupBox7=PacketVideo Recording
 MainForm::vidRec=Record PacketVideo
 MainForm::groupBox10=AVI Video Recording
 MainForm::flipVidVert=Verticle

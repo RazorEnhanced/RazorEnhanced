@@ -179,6 +179,13 @@ namespace RazorEnhanced
                 m_Dataset.Tables.Add(restock_items);
 
 
+                // ----------- TARGET ----------             
+                DataTable targets = new DataTable("TARGETS");
+                targets.Columns.Add("Name", typeof(string));
+                targets.Columns.Add("TargetGUIObject", typeof(RazorEnhanced.TargetGUI.TargetGUIObject));
+                m_Dataset.Tables.Add(targets);
+
+
 				// ----------- SHARDS ----------
 				DataTable shards = new DataTable("SHARDS");
 				shards.Columns.Add("Description", typeof(string)); // Key
@@ -1894,6 +1901,25 @@ namespace RazorEnhanced
         // ------------- RESTOCK END-----------------
 
 
+        // ------------- TARGET SETTINGS START -----------------
+        internal class Target
+        {
+            internal static List<TargetGUI.TargetGUIObjectList> ReadAll()
+            {
+                List<TargetGUI.TargetGUIObjectList> list = new List<TargetGUI.TargetGUIObjectList>();
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    string name = (string)row["Name"];
+                    TargetGUI.TargetGUIObject target = (TargetGUI.TargetGUIObject)row["TargetGUIObject"];
+                    list.Add(new TargetGUI.TargetGUIObjectList(name, target));
+                }
+                return list;
+            }
+        }
+
+        // ------------- TARGET SETTINGS END -----------------
+        
+
 		// ------------- SHARDS -----------------
 		internal class Shards
 		{
@@ -2142,8 +2168,6 @@ namespace RazorEnhanced
                 }
             }
         }
-
-
 
         // ------------- GENERAL SETTINGS END -----------------
 

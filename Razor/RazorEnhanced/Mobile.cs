@@ -257,6 +257,7 @@ namespace RazorEnhanced
 			public bool IsGhost = false;
 			public bool Female = false;
 			public bool Warmode = false;
+            public bool Friend = false;
 			public List<byte> Notorieties = new List<byte>();
 
 			public Filter()

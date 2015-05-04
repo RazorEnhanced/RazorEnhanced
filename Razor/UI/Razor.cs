@@ -413,6 +413,27 @@ namespace Assistant
         private RazorCheckBox bandagehealenableCheckBox;
         private GroupBox groupBox5;
         private ListBox bandagehealLogBox;
+        private ListView TargetlistView;
+        private ColumnHeader columnHeader36;
+        private ColumnHeader columnHeader37;
+        private ColumnHeader columnHeader38;
+        private ColumnHeader columnHeader39;
+        private ColumnHeader columnHeader40;
+        private ColumnHeader columnHeader41;
+        private ColumnHeader columnHeader42;
+        private ColumnHeader columnHeader43;
+        private ColumnHeader columnHeader44;
+        private ColumnHeader columnHeader45;
+        private ColumnHeader columnHeader46;
+        private ColumnHeader columnHeader47;
+        private ColumnHeader columnHeader48;
+        private ColumnHeader columnHeader49;
+        private ColumnHeader columnHeader50;
+        private GroupBox groupBox7;
+        private RazorButton editTargetButton;
+        private RazorButton removeTargetButton;
+        private RazorButton addTargetButton;
+        private RazorButton performTargetButton;
 
 		private bool m_CanClose = true;
 
@@ -516,6 +537,9 @@ namespace Assistant
         internal RazorCheckBox BandageHealcountdownCheckBox { get { return bandagehealcountdownCheckBox; } }
         internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
 
+        // Target
+
+        internal ListView TargetListView { get { return TargetlistView; } }
 
 		// GumpInspector Flag
 
@@ -654,6 +678,26 @@ namespace Assistant
             this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
             this.emptyTab = new System.Windows.Forms.TabPage();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.editTargetButton = new RazorEnhanced.UI.RazorButton();
+            this.removeTargetButton = new RazorEnhanced.UI.RazorButton();
+            this.addTargetButton = new RazorEnhanced.UI.RazorButton();
+            this.TargetlistView = new System.Windows.Forms.ListView();
+            this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader39 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader40 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader41 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader42 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader43 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader44 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader45 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader46 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader47 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader48 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader49 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader50 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.skillsTab = new System.Windows.Forms.TabPage();
             this.dispDelta = new RazorEnhanced.UI.RazorCheckBox();
             this.skillCopyAll = new RazorEnhanced.UI.RazorButton();
@@ -954,6 +998,7 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.performTargetButton = new RazorEnhanced.UI.RazorButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -962,6 +1007,8 @@ namespace Assistant
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
             this.moreMoreOptTab.SuspendLayout();
+            this.emptyTab.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.skillsTab.SuspendLayout();
             this.mapsTab.SuspendLayout();
             this.hotkeysTab.SuspendLayout();
@@ -1928,12 +1975,176 @@ namespace Assistant
             // 
             // emptyTab
             // 
+            this.emptyTab.Controls.Add(this.groupBox7);
+            this.emptyTab.Controls.Add(this.TargetlistView);
             this.emptyTab.Location = new System.Drawing.Point(4, 40);
             this.emptyTab.Name = "emptyTab";
             this.emptyTab.Size = new System.Drawing.Size(666, 366);
             this.emptyTab.TabIndex = 3;
             this.emptyTab.Text = "Enhanced Targetting";
             this.emptyTab.Click += new System.EventHandler(this.dressTab_Click);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.performTargetButton);
+            this.groupBox7.Controls.Add(this.editTargetButton);
+            this.groupBox7.Controls.Add(this.removeTargetButton);
+            this.groupBox7.Controls.Add(this.addTargetButton);
+            this.groupBox7.Location = new System.Drawing.Point(8, 297);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(650, 61);
+            this.groupBox7.TabIndex = 49;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Manage Targets";
+            // 
+            // editTargetButton
+            // 
+            this.editTargetButton.ColorTable = office2010BlueTheme1;
+            this.editTargetButton.Location = new System.Drawing.Point(338, 23);
+            this.editTargetButton.Name = "editTargetButton";
+            this.editTargetButton.Size = new System.Drawing.Size(136, 23);
+            this.editTargetButton.TabIndex = 2;
+            this.editTargetButton.Text = "Edit Target Filter";
+            this.editTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.editTargetButton.UseVisualStyleBackColor = true;
+            // 
+            // removeTargetButton
+            // 
+            this.removeTargetButton.ColorTable = office2010BlueTheme1;
+            this.removeTargetButton.Location = new System.Drawing.Point(177, 23);
+            this.removeTargetButton.Name = "removeTargetButton";
+            this.removeTargetButton.Size = new System.Drawing.Size(136, 23);
+            this.removeTargetButton.TabIndex = 1;
+            this.removeTargetButton.Text = "Remove Target Filter";
+            this.removeTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.removeTargetButton.UseVisualStyleBackColor = true;
+            // 
+            // addTargetButton
+            // 
+            this.addTargetButton.ColorTable = office2010BlueTheme1;
+            this.addTargetButton.Location = new System.Drawing.Point(16, 23);
+            this.addTargetButton.Name = "addTargetButton";
+            this.addTargetButton.Size = new System.Drawing.Size(136, 23);
+            this.addTargetButton.TabIndex = 0;
+            this.addTargetButton.Text = "Add Target Filter";
+            this.addTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.addTargetButton.UseVisualStyleBackColor = true;
+            // 
+            // TargetlistView
+            // 
+            this.TargetlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader36,
+            this.columnHeader37,
+            this.columnHeader38,
+            this.columnHeader39,
+            this.columnHeader40,
+            this.columnHeader41,
+            this.columnHeader42,
+            this.columnHeader43,
+            this.columnHeader44,
+            this.columnHeader45,
+            this.columnHeader46,
+            this.columnHeader47,
+            this.columnHeader48,
+            this.columnHeader49,
+            this.columnHeader50});
+            this.TargetlistView.FullRowSelect = true;
+            this.TargetlistView.GridLines = true;
+            this.TargetlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.TargetlistView.HideSelection = false;
+            this.TargetlistView.LabelWrap = false;
+            this.TargetlistView.Location = new System.Drawing.Point(8, 12);
+            this.TargetlistView.MultiSelect = false;
+            this.TargetlistView.Name = "TargetlistView";
+            this.TargetlistView.Size = new System.Drawing.Size(650, 279);
+            this.TargetlistView.TabIndex = 48;
+            this.TargetlistView.UseCompatibleStateImageBehavior = false;
+            this.TargetlistView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader36
+            // 
+            this.columnHeader36.Text = "Target ID";
+            // 
+            // columnHeader37
+            // 
+            this.columnHeader37.Text = "Body List";
+            this.columnHeader37.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader37.Width = 80;
+            // 
+            // columnHeader38
+            // 
+            this.columnHeader38.Text = "Name";
+            this.columnHeader38.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // columnHeader39
+            // 
+            this.columnHeader39.Text = "Hue List";
+            this.columnHeader39.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader39.Width = 80;
+            // 
+            // columnHeader40
+            // 
+            this.columnHeader40.Text = "Min";
+            this.columnHeader40.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader40.Width = 32;
+            // 
+            // columnHeader41
+            // 
+            this.columnHeader41.Text = "Max";
+            this.columnHeader41.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader41.Width = 32;
+            // 
+            // columnHeader42
+            // 
+            this.columnHeader42.Text = "P";
+            this.columnHeader42.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader42.Width = 25;
+            // 
+            // columnHeader43
+            // 
+            this.columnHeader43.Text = "B";
+            this.columnHeader43.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader43.Width = 25;
+            // 
+            // columnHeader44
+            // 
+            this.columnHeader44.Text = "H";
+            this.columnHeader44.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader44.Width = 25;
+            // 
+            // columnHeader45
+            // 
+            this.columnHeader45.Text = "G";
+            this.columnHeader45.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader45.Width = 25;
+            // 
+            // columnHeader46
+            // 
+            this.columnHeader46.Text = "S";
+            this.columnHeader46.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader46.Width = 25;
+            // 
+            // columnHeader47
+            // 
+            this.columnHeader47.Text = "W";
+            this.columnHeader47.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader47.Width = 25;
+            // 
+            // columnHeader48
+            // 
+            this.columnHeader48.Text = "F";
+            this.columnHeader48.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader48.Width = 25;
+            // 
+            // columnHeader49
+            // 
+            this.columnHeader49.Text = "Notorietie";
+            this.columnHeader49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // columnHeader50
+            // 
+            this.columnHeader50.Text = "Selector";
+            this.columnHeader50.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // skillsTab
             // 
@@ -5130,6 +5341,17 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
+            // performTargetButton
+            // 
+            this.performTargetButton.ColorTable = office2010BlueTheme1;
+            this.performTargetButton.Location = new System.Drawing.Point(495, 23);
+            this.performTargetButton.Name = "performTargetButton";
+            this.performTargetButton.Size = new System.Drawing.Size(136, 23);
+            this.performTargetButton.TabIndex = 3;
+            this.performTargetButton.Text = "Perform Target Filter";
+            this.performTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.performTargetButton.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -5160,6 +5382,8 @@ namespace Assistant
             this.moreOptTab.PerformLayout();
             this.moreMoreOptTab.ResumeLayout(false);
             this.moreMoreOptTab.PerformLayout();
+            this.emptyTab.ResumeLayout(false);
+            this.groupBox7.ResumeLayout(false);
             this.skillsTab.ResumeLayout(false);
             this.skillsTab.PerformLayout();
             this.mapsTab.ResumeLayout(false);
