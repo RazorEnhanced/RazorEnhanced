@@ -242,6 +242,7 @@ namespace RazorEnhanced
 			}
 		}
 
+        [Serializable]
 		public class Filter
 		{
 			public bool Enabled = false;

@@ -413,7 +413,7 @@ namespace Assistant
         private RazorCheckBox bandagehealenableCheckBox;
         private GroupBox groupBox5;
         private ListBox bandagehealLogBox;
-        private ListView TargetlistView;
+        private ListView targetlistView;
         private ColumnHeader columnHeader36;
         private ColumnHeader columnHeader37;
         private ColumnHeader columnHeader38;
@@ -434,6 +434,7 @@ namespace Assistant
         private RazorButton removeTargetButton;
         private RazorButton addTargetButton;
         private RazorButton performTargetButton;
+        private ColumnHeader columnHeader51;
 
 		private bool m_CanClose = true;
 
@@ -539,7 +540,7 @@ namespace Assistant
 
         // Target
 
-        internal ListView TargetListView { get { return TargetlistView; } }
+        internal ListView TargetListView { get { return targetlistView; } }
 
 		// GumpInspector Flag
 
@@ -593,6 +594,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -679,10 +681,12 @@ namespace Assistant
             this.toolbarTab = new System.Windows.Forms.TabPage();
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.performTargetButton = new RazorEnhanced.UI.RazorButton();
             this.editTargetButton = new RazorEnhanced.UI.RazorButton();
             this.removeTargetButton = new RazorEnhanced.UI.RazorButton();
             this.addTargetButton = new RazorEnhanced.UI.RazorButton();
-            this.TargetlistView = new System.Windows.Forms.ListView();
+            this.targetlistView = new System.Windows.Forms.ListView();
+            this.columnHeader51 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader36 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader37 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader38 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -998,7 +1002,6 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.performTargetButton = new RazorEnhanced.UI.RazorButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1053,24 +1056,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -1976,7 +1979,7 @@ namespace Assistant
             // emptyTab
             // 
             this.emptyTab.Controls.Add(this.groupBox7);
-            this.emptyTab.Controls.Add(this.TargetlistView);
+            this.emptyTab.Controls.Add(this.targetlistView);
             this.emptyTab.Location = new System.Drawing.Point(4, 40);
             this.emptyTab.Name = "emptyTab";
             this.emptyTab.Size = new System.Drawing.Size(666, 366);
@@ -1996,6 +1999,17 @@ namespace Assistant
             this.groupBox7.TabIndex = 49;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Manage Targets";
+            // 
+            // performTargetButton
+            // 
+            this.performTargetButton.ColorTable = office2010BlueTheme1;
+            this.performTargetButton.Location = new System.Drawing.Point(495, 23);
+            this.performTargetButton.Name = "performTargetButton";
+            this.performTargetButton.Size = new System.Drawing.Size(136, 23);
+            this.performTargetButton.TabIndex = 3;
+            this.performTargetButton.Text = "Perform Target Filter";
+            this.performTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.performTargetButton.UseVisualStyleBackColor = true;
             // 
             // editTargetButton
             // 
@@ -2018,6 +2032,7 @@ namespace Assistant
             this.removeTargetButton.Text = "Remove Target Filter";
             this.removeTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.removeTargetButton.UseVisualStyleBackColor = true;
+            this.removeTargetButton.Click += new System.EventHandler(this.removeTargetButton_Click);
             // 
             // addTargetButton
             // 
@@ -2029,10 +2044,12 @@ namespace Assistant
             this.addTargetButton.Text = "Add Target Filter";
             this.addTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.addTargetButton.UseVisualStyleBackColor = true;
+            this.addTargetButton.Click += new System.EventHandler(this.addTargetButton_Click);
             // 
-            // TargetlistView
+            // targetlistView
             // 
-            this.TargetlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.targetlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader51,
             this.columnHeader36,
             this.columnHeader37,
             this.columnHeader38,
@@ -2048,18 +2065,23 @@ namespace Assistant
             this.columnHeader48,
             this.columnHeader49,
             this.columnHeader50});
-            this.TargetlistView.FullRowSelect = true;
-            this.TargetlistView.GridLines = true;
-            this.TargetlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.TargetlistView.HideSelection = false;
-            this.TargetlistView.LabelWrap = false;
-            this.TargetlistView.Location = new System.Drawing.Point(8, 12);
-            this.TargetlistView.MultiSelect = false;
-            this.TargetlistView.Name = "TargetlistView";
-            this.TargetlistView.Size = new System.Drawing.Size(650, 279);
-            this.TargetlistView.TabIndex = 48;
-            this.TargetlistView.UseCompatibleStateImageBehavior = false;
-            this.TargetlistView.View = System.Windows.Forms.View.Details;
+            this.targetlistView.FullRowSelect = true;
+            this.targetlistView.GridLines = true;
+            this.targetlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.targetlistView.HideSelection = false;
+            this.targetlistView.LabelWrap = false;
+            this.targetlistView.Location = new System.Drawing.Point(8, 12);
+            this.targetlistView.MultiSelect = false;
+            this.targetlistView.Name = "targetlistView";
+            this.targetlistView.Size = new System.Drawing.Size(650, 279);
+            this.targetlistView.TabIndex = 48;
+            this.targetlistView.UseCompatibleStateImageBehavior = false;
+            this.targetlistView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader51
+            // 
+            this.columnHeader51.Text = "";
+            this.columnHeader51.Width = 1;
             // 
             // columnHeader36
             // 
@@ -2730,7 +2752,7 @@ namespace Assistant
             // 
             // panelLogo
             // 
-            this.panelLogo.BackgroundImage = global::Assistant.Properties.Resources.razor_enhanced_png;
+            this.panelLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelLogo.BackgroundImage")));
             this.panelLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.panelLogo.Location = new System.Drawing.Point(250, 155);
             this.panelLogo.Name = "panelLogo";
@@ -2786,7 +2808,7 @@ namespace Assistant
             // 
             // panelUODlogo
             // 
-            this.panelUODlogo.BackgroundImage = global::Assistant.Properties.Resources.uod_logo;
+            this.panelUODlogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelUODlogo.BackgroundImage")));
             this.panelUODlogo.Location = new System.Drawing.Point(8, 9);
             this.panelUODlogo.Name = "panelUODlogo";
             this.panelUODlogo.Size = new System.Drawing.Size(213, 163);
@@ -5341,17 +5363,6 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
-            // performTargetButton
-            // 
-            this.performTargetButton.ColorTable = office2010BlueTheme1;
-            this.performTargetButton.Location = new System.Drawing.Point(495, 23);
-            this.performTargetButton.Name = "performTargetButton";
-            this.performTargetButton.Size = new System.Drawing.Size(136, 23);
-            this.performTargetButton.TabIndex = 3;
-            this.performTargetButton.Text = "Perform Target Filter";
-            this.performTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.performTargetButton.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -5563,6 +5574,8 @@ namespace Assistant
             // ------------------ BANDAGE HEAL --------------------
             RazorEnhanced.BandageHeal.LoadSettings();
 
+            // ------------------ TARGETS --------------------
+            RazorEnhanced.TargetGUI.RefreshTarget();
 		}
 
 		private bool m_Initializing = false;
@@ -10523,13 +10536,31 @@ namespace Assistant
 
         // ---------------- HEAL BANDAGE END ----------------
 
+        // ---------------- TARGETTING START ----------------
 
+        private void addTargetButton_Click(object sender, EventArgs e)
+        {
+            EnhancedTargetAdd addtarget = new EnhancedTargetAdd();
+            addtarget.TopMost = true;
+            addtarget.Show();
+        }
+
+        private void removeTargetButton_Click(object sender, EventArgs e)
+        {
+            if (targetlistView.SelectedItems.Count == 1)
+            {
+                RazorEnhanced.Settings.Target.TargetDelete(targetlistView.SelectedItems[0].SubItems[1].Text);
+                MessageBox.Show(targetlistView.SelectedItems[0].SubItems[1].Text); 
+
+                TargetGUI.RefreshTarget();
+            }
+        }
+
+        // ---------------- TARGETTING END ----------------
 
         private void timerupdatestatus_Tick(object sender, EventArgs e)
         {
             UpdateRazorStatus();
         }
-
-
 	}
 }

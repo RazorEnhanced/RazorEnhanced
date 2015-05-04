@@ -58,7 +58,7 @@ namespace RazorEnhanced
                     string bodylist = "";
                     foreach (int body in target.TargetObject.Filter.Bodies)
                     {
-                        bodylist = bodylist + body.ToString() + " - ";
+                        bodylist = bodylist + "0x" + body.ToString("X4") + " - ";
                     }
                     listitem.SubItems.Add(bodylist);
                 }
@@ -79,7 +79,7 @@ namespace RazorEnhanced
                     string huelist = "";
                     foreach (int hue in target.TargetObject.Filter.Hues)
                     {
-                        huelist = huelist + hue.ToString() + " - ";
+                        huelist = huelist + "0x" + hue.ToString("X4") + " - ";
                     }
                     listitem.SubItems.Add(huelist);
                 }
@@ -104,25 +104,25 @@ namespace RazorEnhanced
                 if (target.TargetObject.Filter.Poisoned)
                     listitem.SubItems.Add("X");
                 else
-                    listitem.SubItems.Add("O");
+                    listitem.SubItems.Add("-");
 
                 // Blessed
                 if (target.TargetObject.Filter.Blessed)
                     listitem.SubItems.Add("X");
                 else
-                    listitem.SubItems.Add("O");
+                    listitem.SubItems.Add("-");
 
                 // Human
                 if (target.TargetObject.Filter.IsHuman)
                     listitem.SubItems.Add("X");
                 else
-                    listitem.SubItems.Add("O");
+                    listitem.SubItems.Add("-");
 
                 // Ghost
                 if (target.TargetObject.Filter.IsGhost)
                     listitem.SubItems.Add("X");
                 else
-                    listitem.SubItems.Add("O");
+                    listitem.SubItems.Add("-");
 
                 // Female
                 if (target.TargetObject.Filter.Female)
@@ -134,13 +134,13 @@ namespace RazorEnhanced
                 if (target.TargetObject.Filter.Warmode)
                     listitem.SubItems.Add("X");
                 else
-                    listitem.SubItems.Add("O");
+                    listitem.SubItems.Add("-");
 
                 // Female
                 if (target.TargetObject.Filter.Friend)
                     listitem.SubItems.Add("X");
                 else
-                    listitem.SubItems.Add("O");
+                    listitem.SubItems.Add("-");
 
                 // NotoColor list
                 if (target.TargetObject.Filter.Notorieties.Count > 0)

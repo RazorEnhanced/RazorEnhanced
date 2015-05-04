@@ -1915,6 +1915,42 @@ namespace RazorEnhanced
                 }
                 return list;
             }
+
+            internal static bool TargetExist(string targetid)
+            {
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((string)row["Name"] == targetid)
+                        return true;
+                }
+                return false;
+            }
+
+            internal static void TargetSave(string targetid, TargetGUI.TargetGUIObject target)
+            {
+                DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
+                row["Name"] = targetid;
+                row["TargetGUIObject"] = target;
+                m_Dataset.Tables["TARGETS"].Rows.Add(row);
+
+                Save();
+            }
+
+            internal static void TargetDelete(string targetid)
+            {
+                if (TargetExist(targetid))
+                {
+                    foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                    {
+                        if ((string)row["Name"] == targetid)
+                        {
+                            row.Delete();
+                            break;
+                        }
+                    }
+                }
+                Save();
+            }
         }
 
         // ------------- TARGET SETTINGS END -----------------
