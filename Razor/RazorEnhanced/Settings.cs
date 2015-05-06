@@ -1951,7 +1951,17 @@ namespace RazorEnhanced
                 }
                 Save();
             }
+            internal static TargetGUI.TargetGUIObject TargetRead(string targetid)
+            {
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((string)row["Name"] == targetid)
+                        return (TargetGUI.TargetGUIObject)row["TargetGUIObject"];
+                }
+                return null;
+            }
         }
+
 
         // ------------- TARGET SETTINGS END -----------------
         

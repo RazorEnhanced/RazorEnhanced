@@ -594,7 +594,6 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -1056,24 +1055,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme2;
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme1;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -2010,6 +2009,7 @@ namespace Assistant
             this.performTargetButton.Text = "Perform Target Filter";
             this.performTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.performTargetButton.UseVisualStyleBackColor = true;
+            this.performTargetButton.Click += new System.EventHandler(this.performTargetButton_Click);
             // 
             // editTargetButton
             // 
@@ -2021,6 +2021,7 @@ namespace Assistant
             this.editTargetButton.Text = "Edit Target Filter";
             this.editTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.editTargetButton.UseVisualStyleBackColor = true;
+            this.editTargetButton.Click += new System.EventHandler(this.editTargetButton_Click);
             // 
             // removeTargetButton
             // 
@@ -10550,10 +10551,22 @@ namespace Assistant
             if (targetlistView.SelectedItems.Count == 1)
             {
                 RazorEnhanced.Settings.Target.TargetDelete(targetlistView.SelectedItems[0].SubItems[1].Text);
-                MessageBox.Show(targetlistView.SelectedItems[0].SubItems[1].Text); 
-
                 TargetGUI.RefreshTarget();
             }
+        }
+
+        private void performTargetButton_Click(object sender, EventArgs e)
+        {
+            if (targetlistView.SelectedItems.Count == 1)
+            {
+                TargetGUI.PerformTarget(targetlistView.SelectedItems[0].SubItems[1].Text);
+            }
+        }
+
+        private void editTargetButton_Click(object sender, EventArgs e)
+        {
+
+
         }
 
         // ---------------- TARGETTING END ----------------

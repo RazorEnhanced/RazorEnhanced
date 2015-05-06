@@ -58,7 +58,7 @@ namespace RazorEnhanced
                     string bodylist = "";
                     foreach (int body in target.TargetObject.Filter.Bodies)
                     {
-                        bodylist = bodylist + "0x" + body.ToString("X4") + " - ";
+                        bodylist = bodylist + body.ToString("X4") + " - ";
                     }
                     listitem.SubItems.Add(bodylist);
                 }
@@ -148,7 +148,7 @@ namespace RazorEnhanced
                     string notolist = "";
                     foreach (int noto in target.TargetObject.Filter.Notorieties)
                     {
-                        notolist = notolist + noto.ToString() + " - ";
+                        notolist = notolist + GetNotoString((byte)noto) + " - ";
                     }
                     listitem.SubItems.Add(notolist);
                 }
@@ -185,6 +185,63 @@ namespace RazorEnhanced
                 default:
                     return 0x00;
             }
+        }
+
+        internal static string GetNotoString(byte notobyte)
+        {
+            switch (notobyte)
+            {
+                case 0x01:
+                    return "Innocent";
+                case 0x02:
+                    return "Ally";
+                case 0x03:
+                    return "Can be attacked";
+                case 0x04:
+                    return "Criminal";
+                case 0x05:
+                    return "Enemy";
+                case 0x06:
+                    return "Murderer";
+                case 0x07:
+                    return "Invulnerable";
+                default:
+                    return "Null";
+            }
+        }
+
+        public static void PerformTarget(string targetid)
+        {
+            TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+            if (targetdata!= null)
+            {
+                Mobiles.Filter filter = targetdata.Filter;
+                string selector = targetdata.Selector;
+
+                List<Mobile> filterresult;
+                filterresult = Mobiles.ApplyFilter(filter);
+
+                Misc.SendMessage("SL: "+ selector);
+                foreach(Mobile aa in filterresult)
+                {
+                    Misc.SendMessage("TL name: " + aa.Name);
+                    Misc.SendMessage("TL serial: " + aa.Serial);
+                }
+
+
+                Mobile mobtarget = Mobiles.Select(filterresult, selector);
+                if (mobtarget != null)
+                {
+                    Misc.SendMessage("DEBUG TARGET IS:" + mobtarget.Name);
+                    RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
+                    RazorEnhanced.Target.SetLast(mobtarget);
+                }
+            }
+            else
+            {
+                Misc.SendMessage("Invalid target data!");
+            }
+
         }
 	}
 }
