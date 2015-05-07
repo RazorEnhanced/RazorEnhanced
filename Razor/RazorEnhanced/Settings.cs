@@ -1928,6 +1928,11 @@ namespace RazorEnhanced
 
             internal static void TargetSave(string targetid, TargetGUI.TargetGUIObject target)
             {
+                if (TargetExist(targetid))
+                {
+                    TargetDelete(targetid);
+                }
+
                 DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
                 row["Name"] = targetid;
                 row["TargetGUIObject"] = target;

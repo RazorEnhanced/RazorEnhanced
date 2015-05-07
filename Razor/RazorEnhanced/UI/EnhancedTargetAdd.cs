@@ -169,9 +169,13 @@ namespace RazorEnhanced.UI
 
                 // max range
                 Int32.TryParse(tRangeMax.Text, out maxrange);
+                if (maxrange < -1)
+                    maxrange = -1;
 
                 // min range
                 Int32.TryParse(tRangeMin.Text, out minrange);
+                if (minrange < -1)
+                    minrange = -1;
 
                 // notocolor
                 foreach (var listBoxItem in notolistBox.Items)

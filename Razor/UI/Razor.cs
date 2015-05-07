@@ -10565,7 +10565,12 @@ namespace Assistant
 
         private void editTargetButton_Click(object sender, EventArgs e)
         {
-
+            if (targetlistView.SelectedItems.Count == 1)
+            {
+                EnhancedTargetEdit edittarget = new EnhancedTargetEdit(targetlistView.SelectedItems[0].SubItems[1].Text);
+                edittarget.TopMost = true;
+                edittarget.Show();
+            }
 
         }
 
