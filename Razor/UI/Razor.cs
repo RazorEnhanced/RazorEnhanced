@@ -8721,9 +8721,9 @@ namespace Assistant
                             return;
                         }
 
-                        RazorEnhanced.Scavenger.AutoMode = false;
-                        RazorEnhanced.Scavenger.AddLog("Fail to start Scavenger Engine...");
-                        RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
+                        RazorEnhanced.Scavenger.AutoMode = true;
+                        RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
+                        RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
                         scavengerCheckBox.Checked = false;
 
                     }
