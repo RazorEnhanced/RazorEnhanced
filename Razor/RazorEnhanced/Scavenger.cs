@@ -299,12 +299,20 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item itemGround in itemsOnGround)
 			{
+                if (World.Player.IsGhost)
+                {
+                    Thread.Sleep(2000);
+                    return -1;
+                }
+
 				if (World.Player.Weight - 20 > World.Player.MaxWeight)      // Controllo peso
 				{
 					RazorEnhanced.Scavenger.AddLog("- Max weight reached, Wait untill free some space");
 					RazorEnhanced.Misc.SendMessage("SCAVENGER: Max weight reached, Wait untill free some space");
+                    Thread.Sleep(2000);
 					return -1;
 				}
+
 				foreach (ScavengerItem scavengerItem in scavengerItemList)
 				{
 					if (!scavengerItem.Selected)

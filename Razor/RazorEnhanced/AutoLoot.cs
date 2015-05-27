@@ -302,10 +302,17 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
+                if (World.Player.IsGhost)
+                {
+                    Thread.Sleep(2000);
+                    return -1;
+                }
+
 				if (World.Player.Weight - 20 > World.Player.MaxWeight)
 				{
 					RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
 					RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space");
+                    Thread.Sleep(2000);
 					return -1;
 				}
 

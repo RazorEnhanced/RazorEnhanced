@@ -265,6 +265,12 @@ namespace RazorEnhanced
 
         internal static int EngineRun()
         {
+            if (World.Player.IsGhost)
+            {
+                Thread.Sleep(2000);
+                return -1;
+            }
+
             if ((int)(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? (ushort)1 : World.Player.HitsMax)) < HpLimit)       // Check HP se bendare o meno.
             {
                 if (HiddenBlock)
