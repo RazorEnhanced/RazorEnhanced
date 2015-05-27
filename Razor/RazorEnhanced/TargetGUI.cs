@@ -221,18 +221,11 @@ namespace RazorEnhanced
                 List<Mobile> filterresult;
                 filterresult = Mobiles.ApplyFilter(filter);
 
-                Misc.SendMessage("SL: "+ selector);
-                foreach(Mobile aa in filterresult)
-                {
-                    Misc.SendMessage("TL name: " + aa.Name);
-                    Misc.SendMessage("TL serial: " + aa.Serial);
-                }
-
-
                 Mobile mobtarget = Mobiles.Select(filterresult, selector);
                 if (mobtarget != null)
                 {
-                    Misc.SendMessage("DEBUG TARGET IS:" + mobtarget.Name);
+                    Misc.SendMessage("Target:" + mobtarget.Name);
+                    Mobiles.Message(mobtarget.Serial, 10, "* Target *");
                     RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
                     RazorEnhanced.Target.SetLast(mobtarget);
                 }
