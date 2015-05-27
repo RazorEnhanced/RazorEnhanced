@@ -431,6 +431,28 @@ namespace Assistant
         private RazorTextBox healthFmt;
         private Label label10;
         private RazorCheckBox chkPartyOverhead;
+        private GroupBox groupBox23;
+        private RazorButton mobfilterRemoveButton;
+        private RazorButton mobfilterAddButton;
+        private ListView mobfilterlistView;
+        private ColumnHeader columnHeader52;
+        private ColumnHeader columnHeader53;
+        private ColumnHeader columnHeader54;
+        private RazorCheckBox mobfilterCheckBox;
+        private GroupBox groupBox10;
+        private Label autocarverbladeLabel;
+        private Label label34;
+        private RazorButton autocarverrazorButton;
+        private RazorCheckBox autocarverCheckBox;
+        private GroupBox groupBox9;
+        private Label bonebladeLabel;
+        private Label label16;
+        private RazorButton boneCutterrazorButton;
+        private RazorCheckBox razorCheckBox1;
+        private RazorCheckBox showstiticfieldCheckBox;
+        private RazorCheckBox flagsHighlightCheckBox;
+        private RazorCheckBox highlighttargetCheckBox;
+        private GroupBox groupBox24;
 
 		private bool m_CanClose = true;
 
@@ -670,6 +692,27 @@ namespace Assistant
             this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
             this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
             this.enhancedFilterTab = new System.Windows.Forms.TabPage();
+            this.groupBox23 = new System.Windows.Forms.GroupBox();
+            this.mobfilterRemoveButton = new RazorEnhanced.UI.RazorButton();
+            this.mobfilterAddButton = new RazorEnhanced.UI.RazorButton();
+            this.mobfilterlistView = new System.Windows.Forms.ListView();
+            this.columnHeader52 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader53 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader54 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.mobfilterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.autocarverbladeLabel = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
+            this.autocarverrazorButton = new RazorEnhanced.UI.RazorButton();
+            this.autocarverCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.bonebladeLabel = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.boneCutterrazorButton = new RazorEnhanced.UI.RazorButton();
+            this.razorCheckBox1 = new RazorEnhanced.UI.RazorCheckBox();
+            this.showstiticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.flagsHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.highlighttargetCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -994,6 +1037,7 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.groupBox24 = new System.Windows.Forms.GroupBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1001,6 +1045,10 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.opacity)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
+            this.enhancedFilterTab.SuspendLayout();
+            this.groupBox23.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.emptyTab.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.skillsTab.SuspendLayout();
@@ -1043,6 +1091,7 @@ namespace Assistant
             this.bandageheal.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox24.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
@@ -1912,11 +1961,217 @@ namespace Assistant
             // 
             // enhancedFilterTab
             // 
+            this.enhancedFilterTab.Controls.Add(this.groupBox24);
+            this.enhancedFilterTab.Controls.Add(this.groupBox23);
+            this.enhancedFilterTab.Controls.Add(this.groupBox10);
+            this.enhancedFilterTab.Controls.Add(this.groupBox9);
             this.enhancedFilterTab.Location = new System.Drawing.Point(4, 40);
             this.enhancedFilterTab.Name = "enhancedFilterTab";
             this.enhancedFilterTab.Size = new System.Drawing.Size(666, 366);
             this.enhancedFilterTab.TabIndex = 10;
-            this.enhancedFilterTab.Text = "Enhanced Filter";
+            this.enhancedFilterTab.Text = "Enhanced Filters";
+            // 
+            // groupBox23
+            // 
+            this.groupBox23.Controls.Add(this.mobfilterRemoveButton);
+            this.groupBox23.Controls.Add(this.mobfilterAddButton);
+            this.groupBox23.Controls.Add(this.mobfilterlistView);
+            this.groupBox23.Controls.Add(this.mobfilterCheckBox);
+            this.groupBox23.Location = new System.Drawing.Point(8, 122);
+            this.groupBox23.Name = "groupBox23";
+            this.groupBox23.Size = new System.Drawing.Size(283, 219);
+            this.groupBox23.TabIndex = 66;
+            this.groupBox23.TabStop = false;
+            this.groupBox23.Text = "Mobile Graphics Change Filter";
+            // 
+            // mobfilterRemoveButton
+            // 
+            this.mobfilterRemoveButton.ColorTable = office2010BlueTheme2;
+            this.mobfilterRemoveButton.Location = new System.Drawing.Point(202, 76);
+            this.mobfilterRemoveButton.Name = "mobfilterRemoveButton";
+            this.mobfilterRemoveButton.Size = new System.Drawing.Size(75, 23);
+            this.mobfilterRemoveButton.TabIndex = 68;
+            this.mobfilterRemoveButton.Text = "Remove Filter";
+            this.mobfilterRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.mobfilterRemoveButton.UseVisualStyleBackColor = true;
+            // 
+            // mobfilterAddButton
+            // 
+            this.mobfilterAddButton.ColorTable = office2010BlueTheme1;
+            this.mobfilterAddButton.Location = new System.Drawing.Point(202, 47);
+            this.mobfilterAddButton.Name = "mobfilterAddButton";
+            this.mobfilterAddButton.Size = new System.Drawing.Size(75, 23);
+            this.mobfilterAddButton.TabIndex = 67;
+            this.mobfilterAddButton.Text = "Add Filter";
+            this.mobfilterAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.mobfilterAddButton.UseVisualStyleBackColor = true;
+            // 
+            // mobfilterlistView
+            // 
+            this.mobfilterlistView.CheckBoxes = true;
+            this.mobfilterlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader52,
+            this.columnHeader53,
+            this.columnHeader54});
+            this.mobfilterlistView.FullRowSelect = true;
+            this.mobfilterlistView.GridLines = true;
+            this.mobfilterlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.mobfilterlistView.HideSelection = false;
+            this.mobfilterlistView.LabelWrap = false;
+            this.mobfilterlistView.Location = new System.Drawing.Point(6, 47);
+            this.mobfilterlistView.MultiSelect = false;
+            this.mobfilterlistView.Name = "mobfilterlistView";
+            this.mobfilterlistView.Size = new System.Drawing.Size(192, 158);
+            this.mobfilterlistView.TabIndex = 67;
+            this.mobfilterlistView.UseCompatibleStateImageBehavior = false;
+            this.mobfilterlistView.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader52
+            // 
+            this.columnHeader52.Text = "X";
+            this.columnHeader52.Width = 22;
+            // 
+            // columnHeader53
+            // 
+            this.columnHeader53.Text = "Old Graphics";
+            this.columnHeader53.Width = 80;
+            // 
+            // columnHeader54
+            // 
+            this.columnHeader54.Text = "New Graphics";
+            this.columnHeader54.Width = 80;
+            // 
+            // mobfilterCheckBox
+            // 
+            this.mobfilterCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.mobfilterCheckBox.Name = "mobfilterCheckBox";
+            this.mobfilterCheckBox.Size = new System.Drawing.Size(79, 22);
+            this.mobfilterCheckBox.TabIndex = 61;
+            this.mobfilterCheckBox.Text = "Enable";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.autocarverbladeLabel);
+            this.groupBox10.Controls.Add(this.label34);
+            this.groupBox10.Controls.Add(this.autocarverrazorButton);
+            this.groupBox10.Controls.Add(this.autocarverCheckBox);
+            this.groupBox10.Location = new System.Drawing.Point(365, 14);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(166, 80);
+            this.groupBox10.TabIndex = 65;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Auto Carver";
+            // 
+            // autocarverbladeLabel
+            // 
+            this.autocarverbladeLabel.AutoSize = true;
+            this.autocarverbladeLabel.Location = new System.Drawing.Point(78, 48);
+            this.autocarverbladeLabel.Name = "autocarverbladeLabel";
+            this.autocarverbladeLabel.Size = new System.Drawing.Size(66, 13);
+            this.autocarverbladeLabel.TabIndex = 64;
+            this.autocarverbladeLabel.Text = "0x00000000";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Location = new System.Drawing.Point(6, 48);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(66, 13);
+            this.label34.TabIndex = 63;
+            this.label34.Text = "Blade Serial:";
+            // 
+            // autocarverrazorButton
+            // 
+            this.autocarverrazorButton.ColorTable = office2010BlueTheme1;
+            this.autocarverrazorButton.Location = new System.Drawing.Point(74, 18);
+            this.autocarverrazorButton.Name = "autocarverrazorButton";
+            this.autocarverrazorButton.Size = new System.Drawing.Size(75, 23);
+            this.autocarverrazorButton.TabIndex = 62;
+            this.autocarverrazorButton.Text = "Set Blade";
+            this.autocarverrazorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autocarverrazorButton.UseVisualStyleBackColor = true;
+            // 
+            // autocarverCheckBox
+            // 
+            this.autocarverCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.autocarverCheckBox.Name = "autocarverCheckBox";
+            this.autocarverCheckBox.Size = new System.Drawing.Size(79, 22);
+            this.autocarverCheckBox.TabIndex = 61;
+            this.autocarverCheckBox.Text = "Enable";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.bonebladeLabel);
+            this.groupBox9.Controls.Add(this.label16);
+            this.groupBox9.Controls.Add(this.boneCutterrazorButton);
+            this.groupBox9.Controls.Add(this.razorCheckBox1);
+            this.groupBox9.Location = new System.Drawing.Point(179, 14);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(166, 80);
+            this.groupBox9.TabIndex = 62;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Bone Cutter";
+            // 
+            // bonebladeLabel
+            // 
+            this.bonebladeLabel.AutoSize = true;
+            this.bonebladeLabel.Location = new System.Drawing.Point(78, 48);
+            this.bonebladeLabel.Name = "bonebladeLabel";
+            this.bonebladeLabel.Size = new System.Drawing.Size(66, 13);
+            this.bonebladeLabel.TabIndex = 64;
+            this.bonebladeLabel.Text = "0x00000000";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(6, 48);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(66, 13);
+            this.label16.TabIndex = 63;
+            this.label16.Text = "Blade Serial:";
+            // 
+            // boneCutterrazorButton
+            // 
+            this.boneCutterrazorButton.ColorTable = office2010BlueTheme1;
+            this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 18);
+            this.boneCutterrazorButton.Name = "boneCutterrazorButton";
+            this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 23);
+            this.boneCutterrazorButton.TabIndex = 62;
+            this.boneCutterrazorButton.Text = "Set Blade";
+            this.boneCutterrazorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.boneCutterrazorButton.UseVisualStyleBackColor = true;
+            // 
+            // razorCheckBox1
+            // 
+            this.razorCheckBox1.Location = new System.Drawing.Point(6, 19);
+            this.razorCheckBox1.Name = "razorCheckBox1";
+            this.razorCheckBox1.Size = new System.Drawing.Size(79, 22);
+            this.razorCheckBox1.TabIndex = 61;
+            this.razorCheckBox1.Text = "Enable";
+            // 
+            // showstiticfieldCheckBox
+            // 
+            this.showstiticfieldCheckBox.Location = new System.Drawing.Point(6, 63);
+            this.showstiticfieldCheckBox.Name = "showstiticfieldCheckBox";
+            this.showstiticfieldCheckBox.Size = new System.Drawing.Size(118, 22);
+            this.showstiticfieldCheckBox.TabIndex = 60;
+            this.showstiticfieldCheckBox.Text = "Show Static Field";
+            // 
+            // flagsHighlightCheckBox
+            // 
+            this.flagsHighlightCheckBox.Location = new System.Drawing.Point(6, 41);
+            this.flagsHighlightCheckBox.Name = "flagsHighlightCheckBox";
+            this.flagsHighlightCheckBox.Size = new System.Drawing.Size(132, 22);
+            this.flagsHighlightCheckBox.TabIndex = 59;
+            this.flagsHighlightCheckBox.Text = "Flags Highlight";
+            // 
+            // highlighttargetCheckBox
+            // 
+            this.highlighttargetCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.highlighttargetCheckBox.Name = "highlighttargetCheckBox";
+            this.highlighttargetCheckBox.Size = new System.Drawing.Size(145, 22);
+            this.highlighttargetCheckBox.TabIndex = 58;
+            this.highlighttargetCheckBox.Text = "Highlight current target";
             // 
             // toolbarTab
             // 
@@ -5315,6 +5570,18 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
+            // groupBox24
+            // 
+            this.groupBox24.Controls.Add(this.highlighttargetCheckBox);
+            this.groupBox24.Controls.Add(this.flagsHighlightCheckBox);
+            this.groupBox24.Controls.Add(this.showstiticfieldCheckBox);
+            this.groupBox24.Location = new System.Drawing.Point(8, 14);
+            this.groupBox24.Name = "groupBox24";
+            this.groupBox24.Size = new System.Drawing.Size(153, 100);
+            this.groupBox24.TabIndex = 67;
+            this.groupBox24.TabStop = false;
+            this.groupBox24.Text = "Misc";
+            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -5343,6 +5610,12 @@ namespace Assistant
             this.groupBox1.ResumeLayout(false);
             this.moreOptTab.ResumeLayout(false);
             this.moreOptTab.PerformLayout();
+            this.enhancedFilterTab.ResumeLayout(false);
+            this.groupBox23.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox9.PerformLayout();
             this.emptyTab.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.skillsTab.ResumeLayout(false);
@@ -5397,6 +5670,7 @@ namespace Assistant
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox24.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -10499,7 +10773,6 @@ namespace Assistant
         {
             UpdateRazorStatus();
         }
-
 
 	}
 }
