@@ -57,8 +57,7 @@ namespace Assistant
 		private RazorCheckBox chkForceSpeechHue;
 		private System.Windows.Forms.Label label3;
 		private RazorTextBox txtSpellFormat;
-		private RazorCheckBox chkForceSpellHue;
-		private RazorCheckBox chkStealth;
+        private RazorCheckBox chkForceSpellHue;
         private System.Windows.Forms.TabPage mapsTab;
         private RazorButton dohotkey;
 		private System.Windows.Forms.Label opacityLabel;
@@ -88,7 +87,6 @@ namespace Assistant
 		private RazorTextBox screenPath;
 		private RazorButton capNow;
         private RazorCheckBox dispTime;
-        private RazorCheckBox showWelcome;
 		private System.Windows.Forms.ColumnHeader skillHDRlock;
 		private System.ComponentModel.IContainer components;
 		private RazorCheckBox queueTargets;
@@ -113,24 +111,12 @@ namespace Assistant
         private RazorCheckBox incomingMob;
 		private RazorComboBox profiles;
         private System.Windows.Forms.Label hkStatus;
-		private System.Windows.Forms.TabPage moreMoreOptTab;
-		private RazorCheckBox actionStatusMsg;
-		private RazorTextBox txtObjDelay;
-		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.Label label5;
-		private RazorCheckBox QueueActions;
-		private RazorCheckBox rangeCheckLT;
-		private RazorTextBox ltRange;
-        private System.Windows.Forms.Label label8;
-		private RazorCheckBox logPackets;
-		private RazorCheckBox filterSnoop;
-		private RazorCheckBox smartLT;
-		private RazorCheckBox showtargtext;
+        private System.Windows.Forms.TabPage enhancedFilterTab;
+        private RazorCheckBox filterSnoop;
 		private RazorCheckBox smartCPU;
 		private System.Windows.Forms.Label waitDisp;
 		private RazorButton setLTHilight;
-		private RazorCheckBox lthilight;
-		private RazorCheckBox rememberPwds;
+        private RazorCheckBox lthilight;
 		private RazorCheckBox blockDis;
 		private System.Windows.Forms.Label label12;
         private RazorComboBox imgFmt;
@@ -139,27 +125,12 @@ namespace Assistant
 		#endregion
 
 		private int m_LastKV = 0;
-		private bool m_ProfileConfirmLoad;
-        private RazorCheckBox spellUnequip;
-		private RazorCheckBox alwaysStealth;
-		private RazorCheckBox autoOpenDoors;
-		private System.Windows.Forms.Label label17;
-		private RazorComboBox msglvl;
-		private RazorTextBox forceSizeX;
-		private RazorTextBox forceSizeY;
-		private System.Windows.Forms.Label label18;
-        private RazorCheckBox gameSize;
-        private RazorCheckBox potionEquip;
-		private RazorCheckBox blockHealPoison;
+        private bool m_ProfileConfirmLoad;
 		private RazorCheckBox negotiate;
         private System.Windows.Forms.PictureBox lockBox;
-		private RazorCheckBox preAOSstatbar;
-		private RazorCheckBox showHealthOH;
-		private System.Windows.Forms.Label label10;
-		private RazorTextBox healthFmt;
+        private RazorCheckBox preAOSstatbar;
 		private RazorComboBox clientPrio;
-		private System.Windows.Forms.Label label9;
-        private RazorCheckBox chkPartyOverhead;
+        private System.Windows.Forms.Label label9;
 		private RazorButton macroImport;
 		private RazorButton exportMacro;
 		private TabPage scriptingTab;
@@ -435,6 +406,31 @@ namespace Assistant
         private RazorButton addTargetButton;
         private RazorButton performTargetButton;
         private ColumnHeader columnHeader51;
+        private RazorCheckBox rememberPwds;
+        private RazorCheckBox gameSize;
+        private RazorTextBox forceSizeX;
+        private RazorTextBox forceSizeY;
+        private RazorCheckBox chkStealth;
+        private RazorCheckBox alwaysStealth;
+        private RazorCheckBox autoOpenDoors;
+        private RazorCheckBox spellUnequip;
+        private RazorCheckBox potionEquip;
+        private Label label17;
+        private RazorComboBox msglvl;
+        private RazorCheckBox actionStatusMsg;
+        private RazorCheckBox QueueActions;
+        private RazorTextBox txtObjDelay;
+        private Label label5;
+        private Label label6;
+        private RazorCheckBox smartLT;
+        private RazorCheckBox rangeCheckLT;
+        private RazorTextBox ltRange;
+        private Label label8;
+        private RazorCheckBox showtargtext;
+        private RazorCheckBox showHealthOH;
+        private RazorTextBox healthFmt;
+        private Label label10;
+        private RazorCheckBox chkPartyOverhead;
 
 		private bool m_CanClose = true;
 
@@ -594,11 +590,16 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
+            this.forceSizeY = new RazorEnhanced.UI.RazorTextBox();
+            this.forceSizeX = new RazorEnhanced.UI.RazorTextBox();
+            this.gameSize = new RazorEnhanced.UI.RazorCheckBox();
+            this.rememberPwds = new RazorEnhanced.UI.RazorCheckBox();
             this.clientPrio = new RazorEnhanced.UI.RazorComboBox();
             this.lockBox = new System.Windows.Forms.PictureBox();
             this.systray = new RazorEnhanced.UI.RazorRadioButton();
@@ -609,7 +610,6 @@ namespace Assistant
             this.delProfile = new RazorEnhanced.UI.RazorButton();
             this.newProfile = new RazorEnhanced.UI.RazorButton();
             this.profiles = new RazorEnhanced.UI.RazorComboBox();
-            this.showWelcome = new RazorEnhanced.UI.RazorCheckBox();
             this.opacity = new System.Windows.Forms.TrackBar();
             this.alwaysTop = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -617,6 +617,27 @@ namespace Assistant
             this.opacityLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.moreOptTab = new System.Windows.Forms.TabPage();
+            this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.healthFmt = new RazorEnhanced.UI.RazorTextBox();
+            this.showHealthOH = new RazorEnhanced.UI.RazorCheckBox();
+            this.showtargtext = new RazorEnhanced.UI.RazorCheckBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.ltRange = new RazorEnhanced.UI.RazorTextBox();
+            this.rangeCheckLT = new RazorEnhanced.UI.RazorCheckBox();
+            this.smartLT = new RazorEnhanced.UI.RazorCheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtObjDelay = new RazorEnhanced.UI.RazorTextBox();
+            this.QueueActions = new RazorEnhanced.UI.RazorCheckBox();
+            this.actionStatusMsg = new RazorEnhanced.UI.RazorCheckBox();
+            this.msglvl = new RazorEnhanced.UI.RazorComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.potionEquip = new RazorEnhanced.UI.RazorCheckBox();
+            this.spellUnequip = new RazorEnhanced.UI.RazorCheckBox();
+            this.autoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
+            this.alwaysStealth = new RazorEnhanced.UI.RazorCheckBox();
+            this.chkStealth = new RazorEnhanced.UI.RazorCheckBox();
             this.preAOSstatbar = new RazorEnhanced.UI.RazorCheckBox();
             this.negotiate = new RazorEnhanced.UI.RazorCheckBox();
             this.setLTHilight = new RazorEnhanced.UI.RazorButton();
@@ -648,35 +669,7 @@ namespace Assistant
             this.txtSpellFormat = new RazorEnhanced.UI.RazorTextBox();
             this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
             this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
-            this.moreMoreOptTab = new System.Windows.Forms.TabPage();
-            this.msglvl = new RazorEnhanced.UI.RazorComboBox();
-            this.forceSizeX = new RazorEnhanced.UI.RazorTextBox();
-            this.forceSizeY = new RazorEnhanced.UI.RazorTextBox();
-            this.healthFmt = new RazorEnhanced.UI.RazorTextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.showHealthOH = new RazorEnhanced.UI.RazorCheckBox();
-            this.blockHealPoison = new RazorEnhanced.UI.RazorCheckBox();
-            this.ltRange = new RazorEnhanced.UI.RazorTextBox();
-            this.potionEquip = new RazorEnhanced.UI.RazorCheckBox();
-            this.txtObjDelay = new RazorEnhanced.UI.RazorTextBox();
-            this.QueueActions = new RazorEnhanced.UI.RazorCheckBox();
-            this.spellUnequip = new RazorEnhanced.UI.RazorCheckBox();
-            this.autoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
-            this.alwaysStealth = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkStealth = new RazorEnhanced.UI.RazorCheckBox();
-            this.rememberPwds = new RazorEnhanced.UI.RazorCheckBox();
-            this.showtargtext = new RazorEnhanced.UI.RazorCheckBox();
-            this.logPackets = new RazorEnhanced.UI.RazorCheckBox();
-            this.rangeCheckLT = new RazorEnhanced.UI.RazorCheckBox();
-            this.actionStatusMsg = new RazorEnhanced.UI.RazorCheckBox();
-            this.smartLT = new RazorEnhanced.UI.RazorCheckBox();
-            this.gameSize = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
+            this.enhancedFilterTab = new System.Windows.Forms.TabPage();
             this.toolbarTab = new System.Windows.Forms.TabPage();
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -1008,7 +1001,6 @@ namespace Assistant
             ((System.ComponentModel.ISupportInitialize)(this.opacity)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
-            this.moreMoreOptTab.SuspendLayout();
             this.emptyTab.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.skillsTab.SuspendLayout();
@@ -1055,24 +1047,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -1084,7 +1076,7 @@ namespace Assistant
             // 
             this.tabs.Controls.Add(this.generalTab);
             this.tabs.Controls.Add(this.moreOptTab);
-            this.tabs.Controls.Add(this.moreMoreOptTab);
+            this.tabs.Controls.Add(this.enhancedFilterTab);
             this.tabs.Controls.Add(this.toolbarTab);
             this.tabs.Controls.Add(this.emptyTab);
             this.tabs.Controls.Add(this.skillsTab);
@@ -1107,6 +1099,10 @@ namespace Assistant
             // 
             // generalTab
             // 
+            this.generalTab.Controls.Add(this.forceSizeY);
+            this.generalTab.Controls.Add(this.forceSizeX);
+            this.generalTab.Controls.Add(this.gameSize);
+            this.generalTab.Controls.Add(this.rememberPwds);
             this.generalTab.Controls.Add(this.clientPrio);
             this.generalTab.Controls.Add(this.lockBox);
             this.generalTab.Controls.Add(this.systray);
@@ -1114,7 +1110,6 @@ namespace Assistant
             this.generalTab.Controls.Add(this.smartCPU);
             this.generalTab.Controls.Add(this.label11);
             this.generalTab.Controls.Add(this.groupBox4);
-            this.generalTab.Controls.Add(this.showWelcome);
             this.generalTab.Controls.Add(this.opacity);
             this.generalTab.Controls.Add(this.alwaysTop);
             this.generalTab.Controls.Add(this.groupBox1);
@@ -1125,6 +1120,54 @@ namespace Assistant
             this.generalTab.Size = new System.Drawing.Size(666, 366);
             this.generalTab.TabIndex = 0;
             this.generalTab.Text = "General";
+            // 
+            // forceSizeY
+            // 
+            this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.forceSizeY.BackColor = System.Drawing.Color.White;
+            this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.forceSizeY.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.forceSizeY.Location = new System.Drawing.Point(399, 99);
+            this.forceSizeY.Name = "forceSizeY";
+            this.forceSizeY.Size = new System.Drawing.Size(30, 20);
+            this.forceSizeY.TabIndex = 64;
+            this.forceSizeY.TextChanged += new System.EventHandler(this.forceSizeY_TextChanged);
+            // 
+            // forceSizeX
+            // 
+            this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.forceSizeX.BackColor = System.Drawing.Color.White;
+            this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.forceSizeX.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.forceSizeX.Location = new System.Drawing.Point(363, 99);
+            this.forceSizeX.Name = "forceSizeX";
+            this.forceSizeX.Size = new System.Drawing.Size(30, 20);
+            this.forceSizeX.TabIndex = 63;
+            this.forceSizeX.TextChanged += new System.EventHandler(this.forceSizeX_TextChanged);
+            // 
+            // gameSize
+            // 
+            this.gameSize.Location = new System.Drawing.Point(253, 99);
+            this.gameSize.Name = "gameSize";
+            this.gameSize.Size = new System.Drawing.Size(114, 22);
+            this.gameSize.TabIndex = 65;
+            this.gameSize.Text = "Force Game Size:";
+            this.gameSize.CheckedChanged += new System.EventHandler(this.gameSize_CheckedChanged);
+            // 
+            // rememberPwds
+            // 
+            this.rememberPwds.Location = new System.Drawing.Point(253, 74);
+            this.rememberPwds.Name = "rememberPwds";
+            this.rememberPwds.Size = new System.Drawing.Size(190, 22);
+            this.rememberPwds.TabIndex = 54;
+            this.rememberPwds.Text = "Remember passwords ";
+            this.rememberPwds.CheckedChanged += new System.EventHandler(this.rememberPwds_CheckedChanged);
             // 
             // clientPrio
             // 
@@ -1138,7 +1181,7 @@ namespace Assistant
             "AboveNormal",
             "High",
             "Realtime"});
-            this.clientPrio.Location = new System.Drawing.Point(363, 134);
+            this.clientPrio.Location = new System.Drawing.Point(363, 175);
             this.clientPrio.Name = "clientPrio";
             this.clientPrio.Size = new System.Drawing.Size(88, 22);
             this.clientPrio.TabIndex = 60;
@@ -1147,7 +1190,7 @@ namespace Assistant
             // 
             this.lockBox.Cursor = System.Windows.Forms.Cursors.Help;
             this.lockBox.Image = ((System.Drawing.Image)(resources.GetObject("lockBox.Image")));
-            this.lockBox.Location = new System.Drawing.Point(253, 302);
+            this.lockBox.Location = new System.Drawing.Point(211, 336);
             this.lockBox.Name = "lockBox";
             this.lockBox.Size = new System.Drawing.Size(16, 16);
             this.lockBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1158,7 +1201,7 @@ namespace Assistant
             // 
             // systray
             // 
-            this.systray.Location = new System.Drawing.Point(363, 101);
+            this.systray.Location = new System.Drawing.Point(363, 142);
             this.systray.Name = "systray";
             this.systray.Size = new System.Drawing.Size(99, 20);
             this.systray.TabIndex = 35;
@@ -1167,7 +1210,7 @@ namespace Assistant
             // 
             // taskbar
             // 
-            this.taskbar.Location = new System.Drawing.Point(301, 102);
+            this.taskbar.Location = new System.Drawing.Point(301, 143);
             this.taskbar.Name = "taskbar";
             this.taskbar.Size = new System.Drawing.Size(63, 20);
             this.taskbar.TabIndex = 34;
@@ -1176,16 +1219,16 @@ namespace Assistant
             // 
             // smartCPU
             // 
-            this.smartCPU.Location = new System.Drawing.Point(253, 50);
+            this.smartCPU.Location = new System.Drawing.Point(253, 24);
             this.smartCPU.Name = "smartCPU";
-            this.smartCPU.Size = new System.Drawing.Size(241, 19);
+            this.smartCPU.Size = new System.Drawing.Size(241, 22);
             this.smartCPU.TabIndex = 53;
             this.smartCPU.Text = "Use smart CPU usage reduction";
             this.smartCPU.CheckedChanged += new System.EventHandler(this.smartCPU_CheckedChanged);
             // 
             // label11
             // 
-            this.label11.Location = new System.Drawing.Point(251, 104);
+            this.label11.Location = new System.Drawing.Point(251, 145);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(50, 15);
             this.label11.TabIndex = 33;
@@ -1196,7 +1239,7 @@ namespace Assistant
             this.groupBox4.Controls.Add(this.delProfile);
             this.groupBox4.Controls.Add(this.newProfile);
             this.groupBox4.Controls.Add(this.profiles);
-            this.groupBox4.Location = new System.Drawing.Point(253, 173);
+            this.groupBox4.Location = new System.Drawing.Point(253, 214);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(253, 50);
             this.groupBox4.TabIndex = 4;
@@ -1238,20 +1281,11 @@ namespace Assistant
             this.profiles.TabIndex = 0;
             this.profiles.SelectedIndexChanged += new System.EventHandler(this.profiles_SelectedIndexChanged);
             // 
-            // showWelcome
-            // 
-            this.showWelcome.Location = new System.Drawing.Point(253, 24);
-            this.showWelcome.Name = "showWelcome";
-            this.showWelcome.Size = new System.Drawing.Size(244, 20);
-            this.showWelcome.TabIndex = 26;
-            this.showWelcome.Text = "Show Welcome Screen";
-            this.showWelcome.CheckedChanged += new System.EventHandler(this.showWelcome_CheckedChanged);
-            // 
             // opacity
             // 
             this.opacity.AutoSize = false;
             this.opacity.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.opacity.Location = new System.Drawing.Point(331, 242);
+            this.opacity.Location = new System.Drawing.Point(331, 283);
             this.opacity.Maximum = 100;
             this.opacity.Minimum = 10;
             this.opacity.Name = "opacity";
@@ -1264,9 +1298,9 @@ namespace Assistant
             // 
             // alwaysTop
             // 
-            this.alwaysTop.Location = new System.Drawing.Point(253, 75);
+            this.alwaysTop.Location = new System.Drawing.Point(253, 49);
             this.alwaysTop.Name = "alwaysTop";
-            this.alwaysTop.Size = new System.Drawing.Size(241, 20);
+            this.alwaysTop.Size = new System.Drawing.Size(241, 22);
             this.alwaysTop.TabIndex = 3;
             this.alwaysTop.Text = "Use Smart Always on Top";
             this.alwaysTop.CheckedChanged += new System.EventHandler(this.alwaysTop_CheckedChanged);
@@ -1293,7 +1327,7 @@ namespace Assistant
             // 
             // opacityLabel
             // 
-            this.opacityLabel.Location = new System.Drawing.Point(253, 242);
+            this.opacityLabel.Location = new System.Drawing.Point(253, 283);
             this.opacityLabel.Name = "opacityLabel";
             this.opacityLabel.Size = new System.Drawing.Size(78, 16);
             this.opacityLabel.TabIndex = 23;
@@ -1301,7 +1335,7 @@ namespace Assistant
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(251, 137);
+            this.label9.Location = new System.Drawing.Point(251, 178);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(114, 19);
             this.label9.TabIndex = 59;
@@ -1309,6 +1343,27 @@ namespace Assistant
             // 
             // moreOptTab
             // 
+            this.moreOptTab.Controls.Add(this.chkPartyOverhead);
+            this.moreOptTab.Controls.Add(this.label10);
+            this.moreOptTab.Controls.Add(this.healthFmt);
+            this.moreOptTab.Controls.Add(this.showHealthOH);
+            this.moreOptTab.Controls.Add(this.showtargtext);
+            this.moreOptTab.Controls.Add(this.label8);
+            this.moreOptTab.Controls.Add(this.ltRange);
+            this.moreOptTab.Controls.Add(this.rangeCheckLT);
+            this.moreOptTab.Controls.Add(this.smartLT);
+            this.moreOptTab.Controls.Add(this.label5);
+            this.moreOptTab.Controls.Add(this.label6);
+            this.moreOptTab.Controls.Add(this.txtObjDelay);
+            this.moreOptTab.Controls.Add(this.QueueActions);
+            this.moreOptTab.Controls.Add(this.actionStatusMsg);
+            this.moreOptTab.Controls.Add(this.msglvl);
+            this.moreOptTab.Controls.Add(this.label17);
+            this.moreOptTab.Controls.Add(this.potionEquip);
+            this.moreOptTab.Controls.Add(this.spellUnequip);
+            this.moreOptTab.Controls.Add(this.autoOpenDoors);
+            this.moreOptTab.Controls.Add(this.alwaysStealth);
+            this.moreOptTab.Controls.Add(this.chkStealth);
             this.moreOptTab.Controls.Add(this.preAOSstatbar);
             this.moreOptTab.Controls.Add(this.negotiate);
             this.moreOptTab.Controls.Add(this.setLTHilight);
@@ -1346,11 +1401,218 @@ namespace Assistant
             this.moreOptTab.TabIndex = 5;
             this.moreOptTab.Text = "Options";
             // 
+            // chkPartyOverhead
+            // 
+            this.chkPartyOverhead.Location = new System.Drawing.Point(451, 203);
+            this.chkPartyOverhead.Name = "chkPartyOverhead";
+            this.chkPartyOverhead.Size = new System.Drawing.Size(214, 22);
+            this.chkPartyOverhead.TabIndex = 72;
+            this.chkPartyOverhead.Text = "Show mana/stam above party members";
+            this.chkPartyOverhead.CheckedChanged += new System.EventHandler(this.chkPartyOverhead_CheckedChanged);
+            // 
+            // label10
+            // 
+            this.label10.Location = new System.Drawing.Point(467, 184);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(80, 17);
+            this.label10.TabIndex = 73;
+            this.label10.Text = "Health Format:";
+            // 
+            // healthFmt
+            // 
+            this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.healthFmt.BackColor = System.Drawing.Color.White;
+            this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.healthFmt.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.healthFmt.Location = new System.Drawing.Point(553, 181);
+            this.healthFmt.Name = "healthFmt";
+            this.healthFmt.Size = new System.Drawing.Size(46, 20);
+            this.healthFmt.TabIndex = 71;
+            this.healthFmt.TextChanged += new System.EventHandler(this.healthFmt_TextChanged);
+            // 
+            // showHealthOH
+            // 
+            this.showHealthOH.Location = new System.Drawing.Point(451, 162);
+            this.showHealthOH.Name = "showHealthOH";
+            this.showHealthOH.Size = new System.Drawing.Size(211, 22);
+            this.showHealthOH.TabIndex = 69;
+            this.showHealthOH.Text = "Show health above people/creatures";
+            this.showHealthOH.CheckedChanged += new System.EventHandler(this.showHealthOH_CheckedChanged);
+            // 
+            // showtargtext
+            // 
+            this.showtargtext.Location = new System.Drawing.Point(451, 140);
+            this.showtargtext.Name = "showtargtext";
+            this.showtargtext.Size = new System.Drawing.Size(190, 22);
+            this.showtargtext.TabIndex = 53;
+            this.showtargtext.Text = "Show target flag on single click";
+            this.showtargtext.CheckedChanged += new System.EventHandler(this.showtargtext_CheckedChanged);
+            // 
+            // label8
+            // 
+            this.label8.Location = new System.Drawing.Point(467, 121);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(37, 18);
+            this.label8.TabIndex = 72;
+            this.label8.Text = "Tiles:";
+            // 
+            // ltRange
+            // 
+            this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ltRange.BackColor = System.Drawing.Color.White;
+            this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.ltRange.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.ltRange.Location = new System.Drawing.Point(506, 119);
+            this.ltRange.Name = "ltRange";
+            this.ltRange.Size = new System.Drawing.Size(32, 20);
+            this.ltRange.TabIndex = 41;
+            this.ltRange.TextChanged += new System.EventHandler(this.ltRange_TextChanged);
+            // 
+            // rangeCheckLT
+            // 
+            this.rangeCheckLT.Location = new System.Drawing.Point(451, 99);
+            this.rangeCheckLT.Name = "rangeCheckLT";
+            this.rangeCheckLT.Size = new System.Drawing.Size(151, 22);
+            this.rangeCheckLT.TabIndex = 40;
+            this.rangeCheckLT.Text = "Range check Last Target:";
+            this.rangeCheckLT.CheckedChanged += new System.EventHandler(this.rangeCheckLT_CheckedChanged);
+            // 
+            // smartLT
+            // 
+            this.smartLT.Location = new System.Drawing.Point(451, 77);
+            this.smartLT.Name = "smartLT";
+            this.smartLT.Size = new System.Drawing.Size(185, 22);
+            this.smartLT.TabIndex = 52;
+            this.smartLT.Text = "Use smart last target";
+            this.smartLT.CheckedChanged += new System.EventHandler(this.smartLT_CheckedChanged);
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(467, 60);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(71, 18);
+            this.label5.TabIndex = 70;
+            this.label5.Text = "Object delay:";
+            // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(582, 59);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(30, 18);
+            this.label6.TabIndex = 71;
+            this.label6.Text = "ms";
+            // 
+            // txtObjDelay
+            // 
+            this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtObjDelay.BackColor = System.Drawing.Color.White;
+            this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.txtObjDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.txtObjDelay.Location = new System.Drawing.Point(544, 56);
+            this.txtObjDelay.Name = "txtObjDelay";
+            this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
+            this.txtObjDelay.TabIndex = 37;
+            this.txtObjDelay.TextChanged += new System.EventHandler(this.txtObjDelay_TextChanged);
+            // 
+            // QueueActions
+            // 
+            this.QueueActions.Location = new System.Drawing.Point(451, 36);
+            this.QueueActions.Name = "QueueActions";
+            this.QueueActions.Size = new System.Drawing.Size(211, 22);
+            this.QueueActions.TabIndex = 34;
+            this.QueueActions.Text = "Auto-Queue Object Delay actions ";
+            this.QueueActions.CheckedChanged += new System.EventHandler(this.QueueActions_CheckedChanged);
+            // 
+            // actionStatusMsg
+            // 
+            this.actionStatusMsg.Location = new System.Drawing.Point(451, 14);
+            this.actionStatusMsg.Name = "actionStatusMsg";
+            this.actionStatusMsg.Size = new System.Drawing.Size(211, 22);
+            this.actionStatusMsg.TabIndex = 38;
+            this.actionStatusMsg.Text = "Show Action-Queue status messages";
+            this.actionStatusMsg.CheckedChanged += new System.EventHandler(this.actionStatusMsg_CheckedChanged);
+            // 
+            // msglvl
+            // 
+            this.msglvl.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.msglvl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.msglvl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.msglvl.Items.AddRange(new object[] {
+            "Show All",
+            "Warnings & Errors",
+            "Errors Only",
+            "None"});
+            this.msglvl.Location = new System.Drawing.Point(99, 246);
+            this.msglvl.Name = "msglvl";
+            this.msglvl.Size = new System.Drawing.Size(88, 22);
+            this.msglvl.TabIndex = 69;
+            // 
+            // label17
+            // 
+            this.label17.Location = new System.Drawing.Point(8, 250);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(91, 18);
+            this.label17.TabIndex = 68;
+            this.label17.Text = "Razor messages:";
+            // 
+            // potionEquip
+            // 
+            this.potionEquip.Location = new System.Drawing.Point(204, 318);
+            this.potionEquip.Name = "potionEquip";
+            this.potionEquip.Size = new System.Drawing.Size(214, 22);
+            this.potionEquip.TabIndex = 67;
+            this.potionEquip.Text = "Auto Un/Re-equip hands for potions";
+            this.potionEquip.CheckedChanged += new System.EventHandler(this.potionEquip_CheckedChanged);
+            // 
+            // spellUnequip
+            // 
+            this.spellUnequip.Location = new System.Drawing.Point(204, 296);
+            this.spellUnequip.Name = "spellUnequip";
+            this.spellUnequip.Size = new System.Drawing.Size(214, 22);
+            this.spellUnequip.TabIndex = 39;
+            this.spellUnequip.Text = "Auto Unequip hands before casting";
+            this.spellUnequip.CheckedChanged += new System.EventHandler(this.spellUnequip_CheckedChanged);
+            // 
+            // autoOpenDoors
+            // 
+            this.autoOpenDoors.Location = new System.Drawing.Point(204, 274);
+            this.autoOpenDoors.Name = "autoOpenDoors";
+            this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
+            this.autoOpenDoors.TabIndex = 59;
+            this.autoOpenDoors.Text = "Automatically open doors";
+            // 
+            // alwaysStealth
+            // 
+            this.alwaysStealth.Location = new System.Drawing.Point(204, 252);
+            this.alwaysStealth.Name = "alwaysStealth";
+            this.alwaysStealth.Size = new System.Drawing.Size(190, 22);
+            this.alwaysStealth.TabIndex = 57;
+            this.alwaysStealth.Text = "Always show stealth steps ";
+            this.alwaysStealth.CheckedChanged += new System.EventHandler(this.alwaysStealth_CheckedChanged);
+            // 
+            // chkStealth
+            // 
+            this.chkStealth.Location = new System.Drawing.Point(204, 230);
+            this.chkStealth.Name = "chkStealth";
+            this.chkStealth.Size = new System.Drawing.Size(190, 22);
+            this.chkStealth.TabIndex = 12;
+            this.chkStealth.Text = "Count stealth steps";
+            this.chkStealth.CheckedChanged += new System.EventHandler(this.chkStealth_CheckedChanged);
+            // 
             // preAOSstatbar
             // 
             this.preAOSstatbar.Location = new System.Drawing.Point(204, 13);
             this.preAOSstatbar.Name = "preAOSstatbar";
-            this.preAOSstatbar.Size = new System.Drawing.Size(190, 20);
+            this.preAOSstatbar.Size = new System.Drawing.Size(190, 22);
             this.preAOSstatbar.TabIndex = 57;
             this.preAOSstatbar.Text = "Use Pre-AOS status window";
             this.preAOSstatbar.CheckedChanged += new System.EventHandler(this.preAOSstatbar_CheckedChanged);
@@ -1359,7 +1621,7 @@ namespace Assistant
             // 
             this.negotiate.Location = new System.Drawing.Point(204, 186);
             this.negotiate.Name = "negotiate";
-            this.negotiate.Size = new System.Drawing.Size(224, 20);
+            this.negotiate.Size = new System.Drawing.Size(224, 22);
             this.negotiate.TabIndex = 56;
             this.negotiate.Text = "Negotiate features with server";
             this.negotiate.CheckedChanged += new System.EventHandler(this.negotiate_CheckedChanged);
@@ -1367,7 +1629,7 @@ namespace Assistant
             // setLTHilight
             // 
             this.setLTHilight.ColorTable = office2010BlueTheme1;
-            this.setLTHilight.Location = new System.Drawing.Point(142, 108);
+            this.setLTHilight.Location = new System.Drawing.Point(142, 115);
             this.setLTHilight.Name = "setLTHilight";
             this.setLTHilight.Size = new System.Drawing.Size(32, 20);
             this.setLTHilight.TabIndex = 51;
@@ -1377,9 +1639,9 @@ namespace Assistant
             // 
             // lthilight
             // 
-            this.lthilight.Location = new System.Drawing.Point(7, 111);
+            this.lthilight.Location = new System.Drawing.Point(7, 118);
             this.lthilight.Name = "lthilight";
-            this.lthilight.Size = new System.Drawing.Size(131, 20);
+            this.lthilight.Size = new System.Drawing.Size(131, 22);
             this.lthilight.TabIndex = 50;
             this.lthilight.Text = "Last Target Highlight:";
             this.lthilight.CheckedChanged += new System.EventHandler(this.lthilight_CheckedChanged);
@@ -1388,7 +1650,7 @@ namespace Assistant
             // 
             this.filterSnoop.Location = new System.Drawing.Point(204, 143);
             this.filterSnoop.Name = "filterSnoop";
-            this.filterSnoop.Size = new System.Drawing.Size(230, 20);
+            this.filterSnoop.Size = new System.Drawing.Size(230, 22);
             this.filterSnoop.TabIndex = 49;
             this.filterSnoop.Text = "Filter Snooping Messages";
             this.filterSnoop.CheckedChanged += new System.EventHandler(this.filterSnoop_CheckedChanged);
@@ -1412,7 +1674,7 @@ namespace Assistant
             // 
             this.incomingCorpse.Location = new System.Drawing.Point(204, 208);
             this.incomingCorpse.Name = "incomingCorpse";
-            this.incomingCorpse.Size = new System.Drawing.Size(226, 20);
+            this.incomingCorpse.Size = new System.Drawing.Size(226, 22);
             this.incomingCorpse.TabIndex = 48;
             this.incomingCorpse.Text = "Show Names of New/Incoming Corpses";
             this.incomingCorpse.CheckedChanged += new System.EventHandler(this.incomingCorpse_CheckedChanged);
@@ -1421,7 +1683,7 @@ namespace Assistant
             // 
             this.incomingMob.Location = new System.Drawing.Point(204, 165);
             this.incomingMob.Name = "incomingMob";
-            this.incomingMob.Size = new System.Drawing.Size(244, 20);
+            this.incomingMob.Size = new System.Drawing.Size(244, 22);
             this.incomingMob.TabIndex = 47;
             this.incomingMob.Text = "Show Names of Incoming People/Creatures";
             this.incomingMob.CheckedChanged += new System.EventHandler(this.incomingMob_CheckedChanged);
@@ -1430,7 +1692,7 @@ namespace Assistant
             // 
             this.setHarmHue.ColorTable = office2010BlueTheme1;
             this.setHarmHue.Enabled = false;
-            this.setHarmHue.Location = new System.Drawing.Point(79, 177);
+            this.setHarmHue.Location = new System.Drawing.Point(79, 184);
             this.setHarmHue.Name = "setHarmHue";
             this.setHarmHue.Size = new System.Drawing.Size(32, 20);
             this.setHarmHue.TabIndex = 42;
@@ -1442,7 +1704,7 @@ namespace Assistant
             // 
             this.setNeuHue.ColorTable = office2010BlueTheme1;
             this.setNeuHue.Enabled = false;
-            this.setNeuHue.Location = new System.Drawing.Point(137, 177);
+            this.setNeuHue.Location = new System.Drawing.Point(137, 184);
             this.setNeuHue.Name = "setNeuHue";
             this.setNeuHue.Size = new System.Drawing.Size(31, 20);
             this.setNeuHue.TabIndex = 43;
@@ -1452,7 +1714,7 @@ namespace Assistant
             // 
             // lblHarmHue
             // 
-            this.lblHarmHue.Location = new System.Drawing.Point(77, 160);
+            this.lblHarmHue.Location = new System.Drawing.Point(77, 167);
             this.lblHarmHue.Name = "lblHarmHue";
             this.lblHarmHue.Size = new System.Drawing.Size(45, 14);
             this.lblHarmHue.TabIndex = 46;
@@ -1460,7 +1722,7 @@ namespace Assistant
             // 
             // lblNeuHue
             // 
-            this.lblNeuHue.Location = new System.Drawing.Point(135, 160);
+            this.lblNeuHue.Location = new System.Drawing.Point(135, 167);
             this.lblNeuHue.Name = "lblNeuHue";
             this.lblNeuHue.Size = new System.Drawing.Size(42, 14);
             this.lblNeuHue.TabIndex = 45;
@@ -1468,7 +1730,7 @@ namespace Assistant
             // 
             // lblBeneHue
             // 
-            this.lblBeneHue.Location = new System.Drawing.Point(17, 160);
+            this.lblBeneHue.Location = new System.Drawing.Point(17, 167);
             this.lblBeneHue.Name = "lblBeneHue";
             this.lblBeneHue.Size = new System.Drawing.Size(55, 14);
             this.lblBeneHue.TabIndex = 44;
@@ -1484,7 +1746,7 @@ namespace Assistant
             // 
             // lblWarnHue
             // 
-            this.lblWarnHue.Location = new System.Drawing.Point(7, 62);
+            this.lblWarnHue.Location = new System.Drawing.Point(7, 69);
             this.lblWarnHue.Name = "lblWarnHue";
             this.lblWarnHue.Size = new System.Drawing.Size(120, 16);
             this.lblWarnHue.TabIndex = 16;
@@ -1492,7 +1754,7 @@ namespace Assistant
             // 
             // lblMsgHue
             // 
-            this.lblMsgHue.Location = new System.Drawing.Point(7, 37);
+            this.lblMsgHue.Location = new System.Drawing.Point(7, 44);
             this.lblMsgHue.Name = "lblMsgHue";
             this.lblMsgHue.Size = new System.Drawing.Size(115, 17);
             this.lblMsgHue.TabIndex = 15;
@@ -1500,7 +1762,7 @@ namespace Assistant
             // 
             // lblExHue
             // 
-            this.lblExHue.Location = new System.Drawing.Point(7, 13);
+            this.lblExHue.Location = new System.Drawing.Point(7, 20);
             this.lblExHue.Name = "lblExHue";
             this.lblExHue.Size = new System.Drawing.Size(120, 16);
             this.lblExHue.TabIndex = 14;
@@ -1508,7 +1770,7 @@ namespace Assistant
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(7, 213);
+            this.label3.Location = new System.Drawing.Point(7, 220);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 16);
             this.label3.TabIndex = 4;
@@ -1518,7 +1780,7 @@ namespace Assistant
             // 
             this.setBeneHue.ColorTable = office2010BlueTheme1;
             this.setBeneHue.Enabled = false;
-            this.setBeneHue.Location = new System.Drawing.Point(24, 177);
+            this.setBeneHue.Location = new System.Drawing.Point(24, 184);
             this.setBeneHue.Name = "setBeneHue";
             this.setBeneHue.Size = new System.Drawing.Size(33, 20);
             this.setBeneHue.TabIndex = 41;
@@ -1529,7 +1791,7 @@ namespace Assistant
             // setSpeechHue
             // 
             this.setSpeechHue.ColorTable = office2010BlueTheme1;
-            this.setSpeechHue.Location = new System.Drawing.Point(142, 84);
+            this.setSpeechHue.Location = new System.Drawing.Point(142, 91);
             this.setSpeechHue.Name = "setSpeechHue";
             this.setSpeechHue.Size = new System.Drawing.Size(32, 20);
             this.setSpeechHue.TabIndex = 40;
@@ -1540,7 +1802,7 @@ namespace Assistant
             // setWarnHue
             // 
             this.setWarnHue.ColorTable = office2010BlueTheme1;
-            this.setWarnHue.Location = new System.Drawing.Point(142, 60);
+            this.setWarnHue.Location = new System.Drawing.Point(142, 67);
             this.setWarnHue.Name = "setWarnHue";
             this.setWarnHue.Size = new System.Drawing.Size(32, 20);
             this.setWarnHue.TabIndex = 39;
@@ -1551,7 +1813,7 @@ namespace Assistant
             // setMsgHue
             // 
             this.setMsgHue.ColorTable = office2010BlueTheme1;
-            this.setMsgHue.Location = new System.Drawing.Point(142, 36);
+            this.setMsgHue.Location = new System.Drawing.Point(142, 43);
             this.setMsgHue.Name = "setMsgHue";
             this.setMsgHue.Size = new System.Drawing.Size(32, 19);
             this.setMsgHue.TabIndex = 38;
@@ -1562,7 +1824,7 @@ namespace Assistant
             // setExHue
             // 
             this.setExHue.ColorTable = office2010BlueTheme1;
-            this.setExHue.Location = new System.Drawing.Point(142, 11);
+            this.setExHue.Location = new System.Drawing.Point(142, 18);
             this.setExHue.Name = "setExHue";
             this.setExHue.Size = new System.Drawing.Size(32, 20);
             this.setExHue.TabIndex = 37;
@@ -1574,7 +1836,7 @@ namespace Assistant
             // 
             this.autoStackRes.Location = new System.Drawing.Point(204, 78);
             this.autoStackRes.Name = "autoStackRes";
-            this.autoStackRes.Size = new System.Drawing.Size(228, 20);
+            this.autoStackRes.Size = new System.Drawing.Size(228, 22);
             this.autoStackRes.TabIndex = 35;
             this.autoStackRes.Text = "Auto-Stack Ore/Fish/Logs at Feet";
             this.autoStackRes.CheckedChanged += new System.EventHandler(this.autoStackRes_CheckedChanged);
@@ -1583,7 +1845,7 @@ namespace Assistant
             // 
             this.queueTargets.Location = new System.Drawing.Point(204, 35);
             this.queueTargets.Name = "queueTargets";
-            this.queueTargets.Size = new System.Drawing.Size(228, 20);
+            this.queueTargets.Size = new System.Drawing.Size(228, 22);
             this.queueTargets.TabIndex = 34;
             this.queueTargets.Text = "Queue LastTarget and TargetSelf";
             this.queueTargets.CheckedChanged += new System.EventHandler(this.queueTargets_CheckedChanged);
@@ -1592,7 +1854,7 @@ namespace Assistant
             // 
             this.spamFilter.Location = new System.Drawing.Point(204, 121);
             this.spamFilter.Name = "spamFilter";
-            this.spamFilter.Size = new System.Drawing.Size(228, 20);
+            this.spamFilter.Size = new System.Drawing.Size(228, 22);
             this.spamFilter.TabIndex = 26;
             this.spamFilter.Text = "Filter repeating system messages";
             this.spamFilter.CheckedChanged += new System.EventHandler(this.spamFilter_CheckedChanged);
@@ -1601,7 +1863,7 @@ namespace Assistant
             // 
             this.openCorpses.Location = new System.Drawing.Point(204, 100);
             this.openCorpses.Name = "openCorpses";
-            this.openCorpses.Size = new System.Drawing.Size(156, 20);
+            this.openCorpses.Size = new System.Drawing.Size(156, 22);
             this.openCorpses.TabIndex = 22;
             this.openCorpses.Text = "Open new corpses within";
             this.openCorpses.CheckedChanged += new System.EventHandler(this.openCorpses_CheckedChanged);
@@ -1610,7 +1872,7 @@ namespace Assistant
             // 
             this.blockDis.Location = new System.Drawing.Point(204, 56);
             this.blockDis.Name = "blockDis";
-            this.blockDis.Size = new System.Drawing.Size(184, 20);
+            this.blockDis.Size = new System.Drawing.Size(184, 22);
             this.blockDis.TabIndex = 55;
             this.blockDis.Text = "Block dismount in war mode";
             this.blockDis.CheckedChanged += new System.EventHandler(this.blockDis_CheckedChanged);
@@ -1624,7 +1886,7 @@ namespace Assistant
             this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.txtSpellFormat.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtSpellFormat.Location = new System.Drawing.Point(81, 211);
+            this.txtSpellFormat.Location = new System.Drawing.Point(81, 218);
             this.txtSpellFormat.Name = "txtSpellFormat";
             this.txtSpellFormat.Size = new System.Drawing.Size(106, 20);
             this.txtSpellFormat.TabIndex = 5;
@@ -1632,340 +1894,29 @@ namespace Assistant
             // 
             // chkForceSpellHue
             // 
-            this.chkForceSpellHue.Location = new System.Drawing.Point(7, 135);
+            this.chkForceSpellHue.Location = new System.Drawing.Point(7, 142);
             this.chkForceSpellHue.Name = "chkForceSpellHue";
-            this.chkForceSpellHue.Size = new System.Drawing.Size(127, 20);
+            this.chkForceSpellHue.Size = new System.Drawing.Size(127, 22);
             this.chkForceSpellHue.TabIndex = 2;
             this.chkForceSpellHue.Text = "Override Spell Hues:";
             this.chkForceSpellHue.CheckedChanged += new System.EventHandler(this.chkForceSpellHue_CheckedChanged);
             // 
             // chkForceSpeechHue
             // 
-            this.chkForceSpeechHue.Location = new System.Drawing.Point(7, 87);
+            this.chkForceSpeechHue.Location = new System.Drawing.Point(7, 94);
             this.chkForceSpeechHue.Name = "chkForceSpeechHue";
-            this.chkForceSpeechHue.Size = new System.Drawing.Size(131, 20);
+            this.chkForceSpeechHue.Size = new System.Drawing.Size(131, 22);
             this.chkForceSpeechHue.TabIndex = 0;
             this.chkForceSpeechHue.Text = "Override Speech Hue";
             this.chkForceSpeechHue.CheckedChanged += new System.EventHandler(this.chkForceSpeechHue_CheckedChanged);
             // 
-            // moreMoreOptTab
+            // enhancedFilterTab
             // 
-            this.moreMoreOptTab.Controls.Add(this.msglvl);
-            this.moreMoreOptTab.Controls.Add(this.forceSizeX);
-            this.moreMoreOptTab.Controls.Add(this.forceSizeY);
-            this.moreMoreOptTab.Controls.Add(this.healthFmt);
-            this.moreMoreOptTab.Controls.Add(this.label10);
-            this.moreMoreOptTab.Controls.Add(this.label17);
-            this.moreMoreOptTab.Controls.Add(this.label5);
-            this.moreMoreOptTab.Controls.Add(this.label8);
-            this.moreMoreOptTab.Controls.Add(this.label6);
-            this.moreMoreOptTab.Controls.Add(this.label18);
-            this.moreMoreOptTab.Controls.Add(this.showHealthOH);
-            this.moreMoreOptTab.Controls.Add(this.blockHealPoison);
-            this.moreMoreOptTab.Controls.Add(this.ltRange);
-            this.moreMoreOptTab.Controls.Add(this.potionEquip);
-            this.moreMoreOptTab.Controls.Add(this.txtObjDelay);
-            this.moreMoreOptTab.Controls.Add(this.QueueActions);
-            this.moreMoreOptTab.Controls.Add(this.spellUnequip);
-            this.moreMoreOptTab.Controls.Add(this.autoOpenDoors);
-            this.moreMoreOptTab.Controls.Add(this.alwaysStealth);
-            this.moreMoreOptTab.Controls.Add(this.chkStealth);
-            this.moreMoreOptTab.Controls.Add(this.rememberPwds);
-            this.moreMoreOptTab.Controls.Add(this.showtargtext);
-            this.moreMoreOptTab.Controls.Add(this.logPackets);
-            this.moreMoreOptTab.Controls.Add(this.rangeCheckLT);
-            this.moreMoreOptTab.Controls.Add(this.actionStatusMsg);
-            this.moreMoreOptTab.Controls.Add(this.smartLT);
-            this.moreMoreOptTab.Controls.Add(this.gameSize);
-            this.moreMoreOptTab.Controls.Add(this.chkPartyOverhead);
-            this.moreMoreOptTab.Location = new System.Drawing.Point(4, 40);
-            this.moreMoreOptTab.Name = "moreMoreOptTab";
-            this.moreMoreOptTab.Size = new System.Drawing.Size(666, 366);
-            this.moreMoreOptTab.TabIndex = 10;
-            this.moreMoreOptTab.Text = "More Options";
-            // 
-            // msglvl
-            // 
-            this.msglvl.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.msglvl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.msglvl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.msglvl.Items.AddRange(new object[] {
-            "Show All",
-            "Warnings & Errors",
-            "Errors Only",
-            "None"});
-            this.msglvl.Location = new System.Drawing.Point(118, 211);
-            this.msglvl.Name = "msglvl";
-            this.msglvl.Size = new System.Drawing.Size(88, 22);
-            this.msglvl.TabIndex = 60;
-            this.msglvl.SelectedIndexChanged += new System.EventHandler(this.msglvl_SelectedIndexChanged);
-            // 
-            // forceSizeX
-            // 
-            this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.forceSizeX.BackColor = System.Drawing.Color.White;
-            this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.forceSizeX.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.forceSizeX.Location = new System.Drawing.Point(375, 186);
-            this.forceSizeX.Name = "forceSizeX";
-            this.forceSizeX.Size = new System.Drawing.Size(30, 20);
-            this.forceSizeX.TabIndex = 63;
-            this.forceSizeX.TextChanged += new System.EventHandler(this.forceSizeX_TextChanged);
-            // 
-            // forceSizeY
-            // 
-            this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.forceSizeY.BackColor = System.Drawing.Color.White;
-            this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.forceSizeY.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.forceSizeY.Location = new System.Drawing.Point(417, 186);
-            this.forceSizeY.Name = "forceSizeY";
-            this.forceSizeY.Size = new System.Drawing.Size(30, 20);
-            this.forceSizeY.TabIndex = 64;
-            this.forceSizeY.TextChanged += new System.EventHandler(this.forceSizeY_TextChanged);
-            // 
-            // healthFmt
-            // 
-            this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.healthFmt.BackColor = System.Drawing.Color.White;
-            this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.healthFmt.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.healthFmt.Location = new System.Drawing.Point(159, 159);
-            this.healthFmt.Name = "healthFmt";
-            this.healthFmt.Size = new System.Drawing.Size(46, 20);
-            this.healthFmt.TabIndex = 71;
-            this.healthFmt.TextChanged += new System.EventHandler(this.healthFmt_TextChanged);
-            // 
-            // label10
-            // 
-            this.label10.Location = new System.Drawing.Point(7, 164);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(80, 17);
-            this.label10.TabIndex = 70;
-            this.label10.Text = "Health Format:";
-            // 
-            // label17
-            // 
-            this.label17.Location = new System.Drawing.Point(7, 216);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(114, 18);
-            this.label17.TabIndex = 59;
-            this.label17.Text = "Razor messages:";
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(7, 57);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 18);
-            this.label5.TabIndex = 35;
-            this.label5.Text = "Object delay:";
-            // 
-            // label8
-            // 
-            this.label8.Location = new System.Drawing.Point(196, 99);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(31, 18);
-            this.label8.TabIndex = 42;
-            this.label8.Text = "tiles";
-            // 
-            // label6
-            // 
-            this.label6.Location = new System.Drawing.Point(197, 57);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(30, 18);
-            this.label6.TabIndex = 36;
-            this.label6.Text = "ms";
-            // 
-            // label18
-            // 
-            this.label18.Location = new System.Drawing.Point(372, 211);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(10, 19);
-            this.label18.TabIndex = 66;
-            this.label18.Text = "x";
-            // 
-            // showHealthOH
-            // 
-            this.showHealthOH.Location = new System.Drawing.Point(7, 143);
-            this.showHealthOH.Name = "showHealthOH";
-            this.showHealthOH.Size = new System.Drawing.Size(214, 20);
-            this.showHealthOH.TabIndex = 69;
-            this.showHealthOH.Text = "Show health above people/creatures";
-            this.showHealthOH.CheckedChanged += new System.EventHandler(this.showHealthOH_CheckedChanged);
-            // 
-            // blockHealPoison
-            // 
-            this.blockHealPoison.Location = new System.Drawing.Point(238, 165);
-            this.blockHealPoison.Name = "blockHealPoison";
-            this.blockHealPoison.Size = new System.Drawing.Size(214, 20);
-            this.blockHealPoison.TabIndex = 68;
-            this.blockHealPoison.Text = "Block heal if target is poisoned";
-            this.blockHealPoison.CheckedChanged += new System.EventHandler(this.blockHealPoison_CheckedChanged);
-            // 
-            // ltRange
-            // 
-            this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ltRange.BackColor = System.Drawing.Color.White;
-            this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.ltRange.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.ltRange.Location = new System.Drawing.Point(159, 99);
-            this.ltRange.Name = "ltRange";
-            this.ltRange.Size = new System.Drawing.Size(32, 20);
-            this.ltRange.TabIndex = 41;
-            this.ltRange.TextChanged += new System.EventHandler(this.ltRange_TextChanged);
-            // 
-            // potionEquip
-            // 
-            this.potionEquip.Location = new System.Drawing.Point(238, 143);
-            this.potionEquip.Name = "potionEquip";
-            this.potionEquip.Size = new System.Drawing.Size(214, 20);
-            this.potionEquip.TabIndex = 67;
-            this.potionEquip.Text = "Auto Un/Re-equip hands for potions";
-            this.potionEquip.CheckedChanged += new System.EventHandler(this.potionEquip_CheckedChanged);
-            // 
-            // txtObjDelay
-            // 
-            this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtObjDelay.BackColor = System.Drawing.Color.White;
-            this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.txtObjDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtObjDelay.Location = new System.Drawing.Point(159, 55);
-            this.txtObjDelay.Name = "txtObjDelay";
-            this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
-            this.txtObjDelay.TabIndex = 37;
-            this.txtObjDelay.TextChanged += new System.EventHandler(this.txtObjDelay_TextChanged);
-            // 
-            // QueueActions
-            // 
-            this.QueueActions.Location = new System.Drawing.Point(7, 35);
-            this.QueueActions.Name = "QueueActions";
-            this.QueueActions.Size = new System.Drawing.Size(211, 20);
-            this.QueueActions.TabIndex = 34;
-            this.QueueActions.Text = "Auto-Queue Object Delay actions ";
-            this.QueueActions.CheckedChanged += new System.EventHandler(this.QueueActions_CheckedChanged);
-            // 
-            // spellUnequip
-            // 
-            this.spellUnequip.Location = new System.Drawing.Point(238, 121);
-            this.spellUnequip.Name = "spellUnequip";
-            this.spellUnequip.Size = new System.Drawing.Size(214, 20);
-            this.spellUnequip.TabIndex = 39;
-            this.spellUnequip.Text = "Auto Unequip hands before casting";
-            this.spellUnequip.CheckedChanged += new System.EventHandler(this.spellUnequip_CheckedChanged);
-            // 
-            // autoOpenDoors
-            // 
-            this.autoOpenDoors.Location = new System.Drawing.Point(238, 100);
-            this.autoOpenDoors.Name = "autoOpenDoors";
-            this.autoOpenDoors.Size = new System.Drawing.Size(190, 20);
-            this.autoOpenDoors.TabIndex = 58;
-            this.autoOpenDoors.Text = "Automatically open doors";
-            this.autoOpenDoors.CheckedChanged += new System.EventHandler(this.autoOpenDoors_CheckedChanged);
-            // 
-            // alwaysStealth
-            // 
-            this.alwaysStealth.Location = new System.Drawing.Point(238, 78);
-            this.alwaysStealth.Name = "alwaysStealth";
-            this.alwaysStealth.Size = new System.Drawing.Size(190, 20);
-            this.alwaysStealth.TabIndex = 57;
-            this.alwaysStealth.Text = "Always show stealth steps ";
-            this.alwaysStealth.CheckedChanged += new System.EventHandler(this.alwaysStealth_CheckedChanged);
-            // 
-            // chkStealth
-            // 
-            this.chkStealth.Location = new System.Drawing.Point(238, 56);
-            this.chkStealth.Name = "chkStealth";
-            this.chkStealth.Size = new System.Drawing.Size(190, 20);
-            this.chkStealth.TabIndex = 12;
-            this.chkStealth.Text = "Count stealth steps";
-            this.chkStealth.CheckedChanged += new System.EventHandler(this.chkStealth_CheckedChanged);
-            // 
-            // rememberPwds
-            // 
-            this.rememberPwds.Location = new System.Drawing.Point(238, 13);
-            this.rememberPwds.Name = "rememberPwds";
-            this.rememberPwds.Size = new System.Drawing.Size(190, 20);
-            this.rememberPwds.TabIndex = 54;
-            this.rememberPwds.Text = "Remember passwords ";
-            this.rememberPwds.CheckedChanged += new System.EventHandler(this.rememberPwds_CheckedChanged);
-            // 
-            // showtargtext
-            // 
-            this.showtargtext.Location = new System.Drawing.Point(7, 121);
-            this.showtargtext.Name = "showtargtext";
-            this.showtargtext.Size = new System.Drawing.Size(190, 20);
-            this.showtargtext.TabIndex = 53;
-            this.showtargtext.Text = "Show target flag on single click";
-            this.showtargtext.CheckedChanged += new System.EventHandler(this.showtargtext_CheckedChanged);
-            // 
-            // logPackets
-            // 
-            this.logPackets.Location = new System.Drawing.Point(238, 208);
-            this.logPackets.Name = "logPackets";
-            this.logPackets.Size = new System.Drawing.Size(186, 22);
-            this.logPackets.TabIndex = 50;
-            this.logPackets.Text = "Enable packet logging";
-            this.logPackets.CheckedChanged += new System.EventHandler(this.logPackets_CheckedChanged);
-            // 
-            // rangeCheckLT
-            // 
-            this.rangeCheckLT.Location = new System.Drawing.Point(7, 100);
-            this.rangeCheckLT.Name = "rangeCheckLT";
-            this.rangeCheckLT.Size = new System.Drawing.Size(151, 20);
-            this.rangeCheckLT.TabIndex = 40;
-            this.rangeCheckLT.Text = "Range check Last Target:";
-            this.rangeCheckLT.CheckedChanged += new System.EventHandler(this.rangeCheckLT_CheckedChanged);
-            // 
-            // actionStatusMsg
-            // 
-            this.actionStatusMsg.Location = new System.Drawing.Point(7, 13);
-            this.actionStatusMsg.Name = "actionStatusMsg";
-            this.actionStatusMsg.Size = new System.Drawing.Size(211, 20);
-            this.actionStatusMsg.TabIndex = 38;
-            this.actionStatusMsg.Text = "Show Action-Queue status messages";
-            this.actionStatusMsg.CheckedChanged += new System.EventHandler(this.actionStatusMsg_CheckedChanged);
-            // 
-            // smartLT
-            // 
-            this.smartLT.Location = new System.Drawing.Point(7, 78);
-            this.smartLT.Name = "smartLT";
-            this.smartLT.Size = new System.Drawing.Size(185, 20);
-            this.smartLT.TabIndex = 52;
-            this.smartLT.Text = "Use smart last target";
-            this.smartLT.CheckedChanged += new System.EventHandler(this.smartLT_CheckedChanged);
-            // 
-            // gameSize
-            // 
-            this.gameSize.Location = new System.Drawing.Point(238, 186);
-            this.gameSize.Name = "gameSize";
-            this.gameSize.Size = new System.Drawing.Size(114, 19);
-            this.gameSize.TabIndex = 65;
-            this.gameSize.Text = "Force Game Size:";
-            this.gameSize.CheckedChanged += new System.EventHandler(this.gameSize_CheckedChanged);
-            // 
-            // chkPartyOverhead
-            // 
-            this.chkPartyOverhead.Location = new System.Drawing.Point(7, 183);
-            this.chkPartyOverhead.Name = "chkPartyOverhead";
-            this.chkPartyOverhead.Size = new System.Drawing.Size(224, 20);
-            this.chkPartyOverhead.TabIndex = 72;
-            this.chkPartyOverhead.Text = "Show mana/stam above party members";
-            this.chkPartyOverhead.CheckedChanged += new System.EventHandler(this.chkPartyOverhead_CheckedChanged);
+            this.enhancedFilterTab.Location = new System.Drawing.Point(4, 40);
+            this.enhancedFilterTab.Name = "enhancedFilterTab";
+            this.enhancedFilterTab.Size = new System.Drawing.Size(666, 366);
+            this.enhancedFilterTab.TabIndex = 10;
+            this.enhancedFilterTab.Text = "Enhanced Filter";
             // 
             // toolbarTab
             // 
@@ -5392,8 +5343,6 @@ namespace Assistant
             this.groupBox1.ResumeLayout(false);
             this.moreOptTab.ResumeLayout(false);
             this.moreOptTab.PerformLayout();
-            this.moreMoreOptTab.ResumeLayout(false);
-            this.moreMoreOptTab.PerformLayout();
             this.emptyTab.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.skillsTab.ResumeLayout(false);
@@ -5517,7 +5466,6 @@ namespace Assistant
 			Config.SetupProfilesList(profiles, Config.CurrentProfile.Name);
 			m_ProfileConfirmLoad = true;
 
-			showWelcome.Checked = Utility.ToInt32(Config.GetRegString(Microsoft.Win32.Registry.CurrentUser, "ShowWelcome"), 1) == 1;
 
 			m_Tip.Active = true;
 			SplashScreen.End();
@@ -5697,11 +5645,8 @@ namespace Assistant
 			gameSize.Checked = Config.GetBool("ForceSizeEnabled");
 
 			potionEquip.Checked = Config.GetBool("PotionEquip");
-			blockHealPoison.Checked = Config.GetBool("BlockHealPoison");
 
 			negotiate.Checked = Config.GetBool("Negotiate");
-
-			logPackets.Checked = Config.GetBool("LogPacketsByDefault");
 
 			healthFmt.Enabled = showHealthOH.Checked = Config.GetBool("ShowHealth");
 			healthFmt.Text = Config.GetString("HealthFmt");
@@ -6594,7 +6539,6 @@ namespace Assistant
 
 		private void QueueActions_CheckedChanged(object sender, System.EventArgs e)
 		{
-			//txtObjDelay.Enabled = QueueActions.Checked;
 			Config.SetProperty("QueueActions", QueueActions.Checked);
 		}
 
@@ -6668,21 +6612,6 @@ namespace Assistant
 			Config.SetProperty("DisplaySkillChanges", dispDelta.Checked);
 		}
 
-		private void logPackets_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if (logPackets.Checked)
-			{
-				if (m_Initializing || MessageBox.Show(this, Language.GetString(LocString.PacketLogWarn), "Caution!", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-					Packet.Logging = true;
-				else
-					logPackets.Checked = false;
-			}
-			else
-			{
-				Packet.Logging = false;
-			}
-		}
-
 		private void openCorpses_CheckedChanged(object sender, System.EventArgs e)
 		{
 			Config.SetProperty("AutoOpenCorpses", openCorpses.Checked);
@@ -6694,10 +6623,6 @@ namespace Assistant
 			Config.SetProperty("CorpseRange", Utility.ToInt32(corpseRange.Text, 2));
 		}
 
-		private void showWelcome_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetRegString(Microsoft.Win32.Registry.CurrentUser, "ShowWelcome", (showWelcome.Checked ? 1 : 0).ToString());
-		}
 
 		private static char[] m_InvalidNameChars = new char[] { '/', '\\', ';', '?', ':', '*' };
 		private void newMacro_Click(object sender, System.EventArgs e)
@@ -7832,11 +7757,6 @@ namespace Assistant
 			Config.SetProperty("PotionEquip", potionEquip.Checked);
 		}
 
-		private void blockHealPoison_CheckedChanged(object sender, System.EventArgs e)
-		{
-			Config.SetProperty("BlockHealPoison", blockHealPoison.Checked);
-		}
-
 		private void negotiate_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (!m_Initializing)
@@ -7953,7 +7873,7 @@ namespace Assistant
 			}
 			m_LockBoxes.Clear();
 
-			if (!ClientCommunication.AllowBit(FeatureBit.SmartLT))
+		/*	if (!ClientCommunication.AllowBit(FeatureBit.SmartLT))
 				LockControl(this.smartLT);
 
 			if (!ClientCommunication.AllowBit(FeatureBit.RangeCheckLT))
@@ -7968,8 +7888,7 @@ namespace Assistant
 			if (!ClientCommunication.AllowBit(FeatureBit.AutoPotionEquip))
 				LockControl(this.potionEquip);
 
-			if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
-				LockControl(this.blockHealPoison);
+
 
 			if (!ClientCommunication.AllowBit(FeatureBit.LoopingMacros))
 				LockControl(this.loopMacro);
@@ -7980,6 +7899,7 @@ namespace Assistant
 				LockControl(this.healthFmt);
 				LockControl(this.chkPartyOverhead);
 			}
+         * */
 		}
 
 		internal Assistant.MapUO.MapWindow MapWindow;
@@ -10579,5 +10499,7 @@ namespace Assistant
         {
             UpdateRazorStatus();
         }
+
+
 	}
 }
