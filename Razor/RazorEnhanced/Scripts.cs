@@ -103,6 +103,7 @@ namespace RazorEnhanced
 			private Thread m_AutoLootThread;
 			private Thread m_ScavengerThread;
             private Thread m_BandageHealThread;
+            private Thread m_AutoCarverThread;
 
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
@@ -159,6 +160,19 @@ namespace RazorEnhanced
                     {
                         m_BandageHealThread = new Thread(BandageHeal.Engine);
                         m_BandageHealThread.Start();
+                    }
+                }
+
+                if (Filters.AutoCarver)
+                {
+                    if (m_AutoCarverThread == null ||
+                        (m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
+                        m_AutoCarverThread.ThreadState != ThreadState.Unstarted &&
+                        m_AutoCarverThread.ThreadState != ThreadState.WaitSleepJoin)
+                    )
+                    {
+                        m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
+                        m_AutoCarverThread.Start();
                     }
                 }
 			}

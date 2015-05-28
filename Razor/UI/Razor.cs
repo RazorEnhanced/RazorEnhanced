@@ -10862,7 +10862,11 @@ namespace Assistant
         }
         private void autocarverCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            // TODO: Start autocarver
+            if (autocarverCheckBox.Checked)
+              RazorEnhanced.Filters.AutoCarver = true;
+           else
+               RazorEnhanced.Filters.AutoCarver = false;
+
             // TODO: SAVE DATA
         }
 

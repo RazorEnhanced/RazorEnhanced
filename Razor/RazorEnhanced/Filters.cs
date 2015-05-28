@@ -18,7 +18,9 @@ namespace RazorEnhanced
                 {
                     int serialblade = Convert.ToInt32(Assistant.Engine.MainWindow.BoneBladeLabel.Text, 16);
                     if (serialblade == 0)
+                    {
                         return 0;
+                    }
 
                     Item blade = RazorEnhanced.Items.FindBySerial(serialblade);
                     if (blade != null && blade.RootContainer == World.Player)
@@ -86,6 +88,72 @@ namespace RazorEnhanced
             }
 
         }
+
+
+        //////////////// AUTOCARVER START ////////////////
+
+        private static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
+        private static bool m_AutoCarver;
+
+        internal static bool AutoCarver
+        {
+            get { return m_AutoCarver; }
+            set { m_AutoCarver = value; }
+        }
+
+        internal static int AutoCarverEngine(Items.Filter filter)
+        {
+            bool giaTagliato = false;
+            if (World.Player == null)       // Esce se non loggato
+                return 0;
+
+            if (AutoCarverBlade == 0)       // Esce in caso di errore lettura blade
+                return 0;
+
+
+            List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
+
+            foreach (RazorEnhanced.Item corpo in corpi)
+            {
+                foreach (RazorEnhanced.Item corpoIgnorato in m_IgnoreCorpiQueue)
+                {
+                    if (corpoIgnorato.Serial == corpo.Serial)
+                        giaTagliato = true;
+                }
+                if (!giaTagliato)
+                {
+                    Thread.Sleep(200);
+                    Items.UseItem(Items.FindBySerial(AutoCarverBlade));
+                    Target.WaitForTarget(1000);
+                    Target.TargetExecute(corpo.Serial);
+                    Items.Message(corpo.Serial, 10, "*Cutting*");
+                    
+                    m_IgnoreCorpiQueue.Enqueue(corpo);
+                    if (m_IgnoreCorpiQueue.Count > 50)
+                        m_IgnoreCorpiQueue.Dequeue();
+                    Thread.Sleep(200);
+                }
+            }
+            return 0;
+        }
+
+
+        internal static void AutoCarverEngine()
+        {
+            int exit = Int32.MinValue;
+
+            // Genero filtro per corpi
+            Items.Filter corpseFilter = new Items.Filter();
+            corpseFilter.RangeMax = 3;
+            corpseFilter.Movable = false;
+            corpseFilter.IsCorpse = true;
+            corpseFilter.OnGround = true;
+            corpseFilter.Enabled = true;
+
+            exit = AutoCarverEngine(corpseFilter);
+        }
+
+        //////////////// AUTOCARVER STOP ////////////////
 
 	}
 }
