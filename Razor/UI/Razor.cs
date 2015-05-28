@@ -565,6 +565,8 @@ namespace Assistant
         internal RazorCheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
         internal RazorCheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }
         internal RazorCheckBox ShowStaticFieldCheckBox { get { return showstaticfieldCheckBox; } }
+        internal RazorCheckBox FlagsHighlightCheckBox { get { return flagsHighlightCheckBox; } }
+        internal RazorCheckBox HighlightTargetCheckBox { get { return highlighttargetCheckBox; } }
         
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
@@ -2038,7 +2040,7 @@ namespace Assistant
             this.groupBox23.Controls.Add(this.mobfilterAddButton);
             this.groupBox23.Controls.Add(this.mobfilterlistView);
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
-            this.groupBox23.Location = new System.Drawing.Point(179, 112);
+            this.groupBox23.Location = new System.Drawing.Point(179, 14);
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.Size = new System.Drawing.Size(283, 246);
             this.groupBox23.TabIndex = 66;
@@ -2116,7 +2118,7 @@ namespace Assistant
             this.groupBox10.Controls.Add(this.label34);
             this.groupBox10.Controls.Add(this.autocarverrazorButton);
             this.groupBox10.Controls.Add(this.autocarverCheckBox);
-            this.groupBox10.Location = new System.Drawing.Point(365, 14);
+            this.groupBox10.Location = new System.Drawing.Point(475, 19);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(166, 80);
             this.groupBox10.TabIndex = 65;
@@ -2166,7 +2168,7 @@ namespace Assistant
             this.groupBox9.Controls.Add(this.label16);
             this.groupBox9.Controls.Add(this.boneCutterrazorButton);
             this.groupBox9.Controls.Add(this.razorCheckBox1);
-            this.groupBox9.Location = new System.Drawing.Point(179, 14);
+            this.groupBox9.Location = new System.Drawing.Point(475, 105);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(166, 80);
             this.groupBox9.TabIndex = 62;

@@ -1140,8 +1140,9 @@ namespace Assistant
 				{
 					ClientCommunication.PostHitsUpdate();
 				}
+                RazorEnhanced.Filters.ProcessMessage(m);
 
-				if (ClientCommunication.AllowBit(FeatureBit.OverheadHealth) && Config.GetBool("ShowHealth"))
+				if (Config.GetBool("ShowHealth"))
 				{
 					int percent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
 
@@ -1292,6 +1293,8 @@ namespace Assistant
 				bool wasPoisoned = m.Poisoned;
 				m.Poisoned = (flag != 0);
 			}
+            // Highlight 
+            RazorEnhanced.Filters.ProcessMessage(m);
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1310,72 +1313,75 @@ namespace Assistant
 
 			byte type = p.ReadByte();
 
-			if (m == World.Player && type != 0x00)
-			{
-				PlayerData player = (PlayerData)m;
+            if (m == World.Player && type != 0x00)
+            {
+                PlayerData player = (PlayerData)m;
 
-				player.Female = p.ReadBoolean();
+                player.Female = p.ReadBoolean();
 
-				int oStr = player.Str, oDex = player.Dex, oInt = player.Int;
+                int oStr = player.Str, oDex = player.Dex, oInt = player.Int;
 
-				player.Str = p.ReadUInt16();
-				player.Dex = p.ReadUInt16();
-				player.Int = p.ReadUInt16();
+                player.Str = p.ReadUInt16();
+                player.Dex = p.ReadUInt16();
+                player.Int = p.ReadUInt16();
 
-				if (player.Str != oStr && oStr != 0 && Config.GetBool("DisplaySkillChanges"))
-					World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
+                if (player.Str != oStr && oStr != 0 && Config.GetBool("DisplaySkillChanges"))
+                    World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
 
-				if (player.Dex != oDex && oDex != 0 && Config.GetBool("DisplaySkillChanges"))
-					World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
+                if (player.Dex != oDex && oDex != 0 && Config.GetBool("DisplaySkillChanges"))
+                    World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
 
-				if (player.Int != oInt && oInt != 0 && Config.GetBool("DisplaySkillChanges"))
-					World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
+                if (player.Int != oInt && oInt != 0 && Config.GetBool("DisplaySkillChanges"))
+                    World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
 
-				player.Stam = p.ReadUInt16();
-				player.StamMax = p.ReadUInt16();
-				player.Mana = p.ReadUInt16();
-				player.ManaMax = p.ReadUInt16();
+                player.Stam = p.ReadUInt16();
+                player.StamMax = p.ReadUInt16();
+                player.Mana = p.ReadUInt16();
+                player.ManaMax = p.ReadUInt16();
 
-				player.Gold = p.ReadUInt32();
-				player.AR = p.ReadUInt16(); // ar / physical resist
-				player.Weight = p.ReadUInt16();
+                player.Gold = p.ReadUInt32();
+                player.AR = p.ReadUInt16(); // ar / physical resist
+                player.Weight = p.ReadUInt16();
 
-				if (type >= 0x03)
-				{
-					if (type > 0x04)
-					{
-						player.MaxWeight = p.ReadUInt16();
+                if (type >= 0x03)
+                {
+                    if (type > 0x04)
+                    {
+                        player.MaxWeight = p.ReadUInt16();
 
-						p.ReadByte(); // race?
-					}
+                        p.ReadByte(); // race?
+                    }
 
-					player.StatCap = p.ReadUInt16();
+                    player.StatCap = p.ReadUInt16();
 
-					if (type > 0x03)
-					{
-						player.Followers = p.ReadByte();
-						player.FollowersMax = p.ReadByte();
+                    if (type > 0x03)
+                    {
+                        player.Followers = p.ReadByte();
+                        player.FollowersMax = p.ReadByte();
 
-						player.FireResistance = p.ReadInt16();
-						player.ColdResistance = p.ReadInt16();
-						player.PoisonResistance = p.ReadInt16();
-						player.EnergyResistance = p.ReadInt16();
+                        player.FireResistance = p.ReadInt16();
+                        player.ColdResistance = p.ReadInt16();
+                        player.PoisonResistance = p.ReadInt16();
+                        player.EnergyResistance = p.ReadInt16();
 
-						player.Luck = p.ReadInt16();
+                        player.Luck = p.ReadInt16();
 
-						player.DamageMin = p.ReadUInt16();
-						player.DamageMax = p.ReadUInt16();
+                        player.DamageMin = p.ReadUInt16();
+                        player.DamageMax = p.ReadUInt16();
 
-						player.Tithe = p.ReadInt32();
-					}
-				}
+                        player.Tithe = p.ReadInt32();
+                    }
+                }
 
-				ClientCommunication.PostHitsUpdate();
-				ClientCommunication.PostStamUpdate();
-				ClientCommunication.PostManaUpdate();
+                ClientCommunication.PostHitsUpdate();
+                ClientCommunication.PostStamUpdate();
+                ClientCommunication.PostManaUpdate();
 
-				Engine.MainWindow.UpdateTitle(); // update player name
-			}
+                Engine.MainWindow.UpdateTitle(); // update player name
+            }
+
+            // Highlight 
+            RazorEnhanced.Filters.ProcessMessage(m);
 		}
 
 		private static void MobileUpdate(Packet p, PacketHandlerEventArgs args)
@@ -1424,8 +1430,9 @@ namespace Assistant
 			p.ReadUInt16(); //always 0?
 			m.Direction = (Direction)p.ReadByte();
 			m.Position = new Point3D(x, y, p.ReadSByte());
-
 			Item.UpdateContainers();
+
+
 		}
 
 		private static void MobileIncoming(Packet p, PacketHandlerEventArgs args)
@@ -1553,6 +1560,8 @@ namespace Assistant
 					PlayerData.DoubleClick(item);
 				}
 			}
+            // Highlight 
+            RazorEnhanced.Filters.ProcessMessage(m);
 
 			Item.UpdateContainers();
 		}
@@ -1669,8 +1678,47 @@ namespace Assistant
 						s.Scavenge(item);
 				}
 			}
-
 			Item.UpdateContainers();
+            // Filtro muri 
+            if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+            {
+                if (item.ItemID == 0x0080)      // Wall of Stone
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x3B1;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+                    return;
+                }
+                if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x0845;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+                    return;
+                }
+                if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x016A;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+                    return;
+                }
+                if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x0060;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+                    return;
+                }
+            }
 		}
 
 		private static void SAWorldItem(PacketReader p, PacketHandlerEventArgs args)
@@ -1804,6 +1852,7 @@ namespace Assistant
                     item.ItemID = 0x28A8;
                     item.Hue = 0x3B1;
                     ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
                     return;
                 }
                 if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
@@ -1812,6 +1861,7 @@ namespace Assistant
                     item.ItemID = 0x28A8;
                     item.Hue = 0x0845;
                     ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
                     return;
                 }
                 if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
@@ -1820,6 +1870,7 @@ namespace Assistant
                     item.ItemID = 0x28A8;
                     item.Hue = 0x016A;
                     ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
                     return;
                 }
                 if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
@@ -1828,6 +1879,7 @@ namespace Assistant
                     item.ItemID = 0x28A8;
                     item.Hue = 0x0060;
                     ClientCommunication.SendToClient(new WorldItem(item));
+                    RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
                     return;
                 }
             }
