@@ -559,7 +559,7 @@ namespace Assistant
 
 			e.Position = Position;
 
-			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && Config.GetBool("AutoOpenDoors") && ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
+			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && Config.GetBool("AutoOpenDoors"))
 			{
 				int x = Position.X, y = Position.Y;
 				Utility.Offset(e.Dir, ref x, ref y);
@@ -912,7 +912,7 @@ namespace Assistant
 			if (s != Serial.Zero)
 			{
 				Item free = null, pack = World.Player.Backpack;
-				if (s.IsItem && pack != null && Config.GetBool("PotionEquip") && ClientCommunication.AllowBit(FeatureBit.AutoPotionEquip))
+				if (s.IsItem && pack != null && Config.GetBool("PotionEquip"))
 				{
 					Item i = World.FindItem(s);
 					if (i != null && i.IsPotion && i.ItemID != 3853) // dont unequip for exploison potions

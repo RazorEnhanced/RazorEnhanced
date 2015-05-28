@@ -1179,7 +1179,7 @@ namespace Assistant
 					ClientCommunication.PostStamUpdate();
 				}
 
-				if (m != World.Player && ClientCommunication.AllowBit(FeatureBit.OverheadHealth) && Config.GetBool("ShowPartyStats"))
+				if (m != World.Player && Config.GetBool("ShowPartyStats"))
 				{
 					int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 					int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
@@ -1217,7 +1217,7 @@ namespace Assistant
 					ClientCommunication.PostManaUpdate();
 				}
 
-				if (m != World.Player && ClientCommunication.AllowBit(FeatureBit.OverheadHealth) && Config.GetBool("ShowPartyStats"))
+				if (m != World.Player && Config.GetBool("ShowPartyStats"))
 				{
 					int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 					int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));

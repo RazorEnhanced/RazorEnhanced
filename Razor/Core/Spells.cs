@@ -110,7 +110,7 @@ namespace Assistant
 
 		private void Cast()
 		{
-			if (Config.GetBool("SpellUnequip") && ClientCommunication.AllowBit(FeatureBit.UnequipBeforeCast))
+			if (Config.GetBool("SpellUnequip"))
 			{
 				Item pack = World.Player.Backpack;
 				if (pack != null)
@@ -248,7 +248,20 @@ namespace Assistant
 		{
 			Spell s = null;
 
-			if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
+		/*	if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
+			{
+				if (World.Player.Hits + 30 < World.Player.HitsMax && World.Player.Mana >= 12)
+					s = Get(4, 5); // greater heal
+				else
+					s = Get(1, 4); // mini heal
+			}
+			else
+			{*/
+			if (World.Player.Poisoned)
+			{
+				s = Get(2, 3); // cure 
+			}
+			else if (World.Player.Hits + 2 < World.Player.HitsMax)
 			{
 				if (World.Player.Hits + 30 < World.Player.HitsMax && World.Player.Mana >= 12)
 					s = Get(4, 5); // greater heal
@@ -257,25 +270,12 @@ namespace Assistant
 			}
 			else
 			{
-				if (World.Player.Poisoned && ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
-				{
-					s = Get(2, 3); // cure 
-				}
-				else if (World.Player.Hits + 2 < World.Player.HitsMax)
-				{
-					if (World.Player.Hits + 30 < World.Player.HitsMax && World.Player.Mana >= 12)
-						s = Get(4, 5); // greater heal
-					else
-						s = Get(1, 4); // mini heal
-				}
+				if (World.Player.Mana >= 12)
+					s = Get(4, 5); // greater heal
 				else
-				{
-					if (World.Player.Mana >= 12)
-						s = Get(4, 5); // greater heal
-					else
-						s = Get(1, 4); // mini heal
-				}
+					s = Get(1, 4); // mini heal
 			}
+		//	}
 
 			if (s != null)
 			{
@@ -290,17 +290,17 @@ namespace Assistant
 		{
 			Spell s = null;
 
-			if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
+		/*	if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
 			{
 				s = Get(1, 4); // mini heal
 			}
 			else
-			{
-				if (World.Player.Poisoned)
-					s = Get(2, 3); // cure
-				else
-					s = Get(1, 4); // mini heal
-			}
+			{*/
+			if (World.Player.Poisoned)
+				s = Get(2, 3); // cure
+			else
+				s = Get(1, 4); // mini heal
+			//}
 
 			if (s != null)
 			{
