@@ -2004,6 +2004,7 @@ namespace Assistant
             this.blockpartyinviteCheckBox.Size = new System.Drawing.Size(141, 22);
             this.blockpartyinviteCheckBox.TabIndex = 62;
             this.blockpartyinviteCheckBox.Text = "Block Party Invite";
+            this.blockpartyinviteCheckBox.CheckedChanged += new System.EventHandler(this.blockpartyinviteCheckBox_CheckedChanged);
             // 
             // blocktraderequestCheckBox
             // 
@@ -2012,6 +2013,7 @@ namespace Assistant
             this.blocktraderequestCheckBox.Size = new System.Drawing.Size(141, 22);
             this.blocktraderequestCheckBox.TabIndex = 61;
             this.blocktraderequestCheckBox.Text = "Block Trade Request";
+            this.blocktraderequestCheckBox.CheckedChanged += new System.EventHandler(this.blocktraderequestCheckBox_CheckedChanged);
             // 
             // highlighttargetCheckBox
             // 
@@ -2020,6 +2022,7 @@ namespace Assistant
             this.highlighttargetCheckBox.Size = new System.Drawing.Size(145, 22);
             this.highlighttargetCheckBox.TabIndex = 58;
             this.highlighttargetCheckBox.Text = "Highlight current target";
+            this.highlighttargetCheckBox.CheckedChanged += new System.EventHandler(this.highlighttargetCheckBox_CheckedChanged);
             // 
             // flagsHighlightCheckBox
             // 
@@ -2028,6 +2031,7 @@ namespace Assistant
             this.flagsHighlightCheckBox.Size = new System.Drawing.Size(132, 22);
             this.flagsHighlightCheckBox.TabIndex = 59;
             this.flagsHighlightCheckBox.Text = "Flags Highlight";
+            this.flagsHighlightCheckBox.CheckedChanged += new System.EventHandler(this.flagsHighlightCheckBox_CheckedChanged);
             // 
             // showstaticfieldCheckBox
             // 
@@ -2036,6 +2040,7 @@ namespace Assistant
             this.showstaticfieldCheckBox.Size = new System.Drawing.Size(118, 22);
             this.showstaticfieldCheckBox.TabIndex = 60;
             this.showstaticfieldCheckBox.Text = "Show Static Field";
+            this.showstaticfieldCheckBox.CheckedChanged += new System.EventHandler(this.showstaticfieldCheckBox_CheckedChanged);
             // 
             // groupBox23
             // 
@@ -2165,6 +2170,7 @@ namespace Assistant
             this.autocarverCheckBox.Size = new System.Drawing.Size(79, 22);
             this.autocarverCheckBox.TabIndex = 61;
             this.autocarverCheckBox.Text = "Enable";
+            this.autocarverCheckBox.CheckedChanged += new System.EventHandler(this.autocarverCheckBox_CheckedChanged);
             // 
             // groupBox9
             // 
@@ -2199,7 +2205,7 @@ namespace Assistant
             // 
             // boneCutterrazorButton
             // 
-            this.boneCutterrazorButton.ColorTable = office2010BlueTheme2;
+            this.boneCutterrazorButton.ColorTable = office2010BlueTheme1;
             this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 18);
             this.boneCutterrazorButton.Name = "boneCutterrazorButton";
             this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 23);
@@ -2216,6 +2222,7 @@ namespace Assistant
             this.razorCheckBox1.Size = new System.Drawing.Size(79, 22);
             this.razorCheckBox1.TabIndex = 61;
             this.razorCheckBox1.Text = "Enable";
+            this.razorCheckBox1.CheckedChanged += new System.EventHandler(this.razorCheckBox1_CheckedChanged);
             // 
             // toolbarTab
             // 
@@ -10804,12 +10811,90 @@ namespace Assistant
         // ---------------- FILTERS START ----------------
         private void autocarverrazorButton_Click(object sender, EventArgs e)
         {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autocarverbladeTarget_Callback));
+		}
 
+        private void autocarverbladeTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item blade = Assistant.World.FindItem(serial);
+
+            if (blade == null)
+                return;
+
+            if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
+            {
+                RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString());
+                RazorEnhanced.Filters.AutoCarverBlade = (int)blade.Serial.Value;
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid AutoCarve Blade");
+                RazorEnhanced.Filters.AutoCarverBlade = 0;
+            }
+
+            // TODO: SAVE DATA
         }
 
         private void boneCutterrazorButton_Click(object sender, EventArgs e)
         {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(bonecutterbladeTarget_Callback));
+        }
 
+        private void bonecutterbladeTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Assistant.Item blade = Assistant.World.FindItem(serial);
+
+            if (blade == null)
+                return;
+
+            if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
+            {
+                RazorEnhanced.Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString());
+                RazorEnhanced.Filters.BoneCutterBlade = (int)blade.Serial.Value;
+            }
+            else
+            {
+                RazorEnhanced.Misc.SendMessage("Invalid BoneCutter Blade");
+                RazorEnhanced.Filters.BoneCutterBlade = 0;
+            }
+
+            // TODO: SAVE DATA
+        }
+        private void autocarverCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // TODO: Start autocarver
+            // TODO: SAVE DATA
+        }
+
+        private void razorCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            // TODO: Start bonecutter
+            // TODO: SAVE DATA
+        }
+
+        private void highlighttargetCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // TODO: SAVE DATA
+        }
+
+        private void flagsHighlightCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // TODO: SAVE DATA
+        }
+
+        private void showstaticfieldCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // TODO: SAVE DATA
+        }
+
+        private void blocktraderequestCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // TODO: SAVE DATA
+        }
+
+        private void blockpartyinviteCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            // TODO: SAVE DATA
         }
 
         // ---------------- FILTERS END ----------------
@@ -10818,8 +10903,5 @@ namespace Assistant
         {
             UpdateRazorStatus();
         }
-
-
-
 	}
 }
