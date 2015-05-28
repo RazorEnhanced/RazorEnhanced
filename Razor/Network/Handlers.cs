@@ -58,6 +58,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientFilter(0x3C, new PacketFilterCallback(ContainerContent));
 			PacketHandler.RegisterServerToClientViewer(0x4E, new PacketViewerCallback(PersonalLight));
 			PacketHandler.RegisterServerToClientViewer(0x4F, new PacketViewerCallback(GlobalLight));
+            PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
 			PacketHandler.RegisterServerToClientViewer(0x72, new PacketViewerCallback(ServerSetWarMode));
 			PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
 			PacketHandler.RegisterServerToClientViewer(0x76, new PacketViewerCallback(ServerChange));
@@ -1794,6 +1795,42 @@ namespace Assistant
 			}
 
 			Item.UpdateContainers();
+            // Filtro muri 
+            if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+            {
+                if (item.ItemID == 0x0080)      // Wall of Stone
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x3B1;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    return;
+                }
+                if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x0845;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    return;
+                }
+                if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x016A;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    return;
+                }
+                if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
+                {
+                    args.Block = true;
+                    item.ItemID = 0x28A8;
+                    item.Hue = 0x0060;
+                    ClientCommunication.SendToClient(new WorldItem(item));
+                    return;
+                }
+            }
 		}
 
 		internal static List<string> SysMessages = new List<string>(21);
@@ -2308,6 +2345,11 @@ namespace Assistant
 					{
 						//Serial leader = p.ReadUInt32();
 						PartyLeader = p.ReadUInt32();
+                        if (Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked)                           // AutoDecline Party
+                        {
+                            ClientCommunication.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
+                        }
+
                         if (RazorEnhanced.Friend.AutoacceptParty && RazorEnhanced.Friend.IsFriend(PartyLeader))     // Autoaccept party from friend
                         {
                             if (PacketHandlers.PartyLeader != Serial.Zero)
@@ -2629,6 +2671,14 @@ namespace Assistant
                     args.Block = true;
                     return;
                 }
+            }
+        }
+
+        private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args)
+        {
+            if (Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
+            {
+                args.Block = true;
             }
         }
 

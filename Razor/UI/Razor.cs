@@ -449,10 +449,12 @@ namespace Assistant
         private Label label16;
         private RazorButton boneCutterrazorButton;
         private RazorCheckBox razorCheckBox1;
-        private RazorCheckBox showstiticfieldCheckBox;
+        private RazorCheckBox showstaticfieldCheckBox;
         private RazorCheckBox flagsHighlightCheckBox;
         private RazorCheckBox highlighttargetCheckBox;
         private GroupBox groupBox24;
+        private RazorCheckBox blockpartyinviteCheckBox;
+        private RazorCheckBox blocktraderequestCheckBox;
 
 		private bool m_CanClose = true;
 
@@ -557,12 +559,16 @@ namespace Assistant
         internal RazorButton BandageHealsettargetButton { get { return bandagehealsettargetButton; } }
 
         // Target
-
         internal ListView TargetListView { get { return targetlistView; } }
 
+        // Enhanced Filrers
+        internal RazorCheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
+        internal RazorCheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }
+        internal RazorCheckBox ShowStaticFieldCheckBox { get { return showstaticfieldCheckBox; } }
+        
 		// GumpInspector Flag
-
 		internal bool GumpInspectorEnable = false;
+
 
 		private DataTable scriptTable;
 
@@ -612,7 +618,6 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -692,6 +697,12 @@ namespace Assistant
             this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
             this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
             this.enhancedFilterTab = new System.Windows.Forms.TabPage();
+            this.groupBox24 = new System.Windows.Forms.GroupBox();
+            this.blockpartyinviteCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.blocktraderequestCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.highlighttargetCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.flagsHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.showstaticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox23 = new System.Windows.Forms.GroupBox();
             this.mobfilterRemoveButton = new RazorEnhanced.UI.RazorButton();
             this.mobfilterAddButton = new RazorEnhanced.UI.RazorButton();
@@ -710,9 +721,6 @@ namespace Assistant
             this.label16 = new System.Windows.Forms.Label();
             this.boneCutterrazorButton = new RazorEnhanced.UI.RazorButton();
             this.razorCheckBox1 = new RazorEnhanced.UI.RazorCheckBox();
-            this.showstiticfieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.flagsHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.highlighttargetCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
@@ -1037,7 +1045,6 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.groupBox24 = new System.Windows.Forms.GroupBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1046,6 +1053,7 @@ namespace Assistant
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
             this.enhancedFilterTab.SuspendLayout();
+            this.groupBox24.SuspendLayout();
             this.groupBox23.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -1091,29 +1099,28 @@ namespace Assistant
             this.bandageheal.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox24.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
             // 
-            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme2;
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme1;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -1452,16 +1459,16 @@ namespace Assistant
             // 
             // chkPartyOverhead
             // 
-            this.chkPartyOverhead.Location = new System.Drawing.Point(451, 203);
+            this.chkPartyOverhead.Location = new System.Drawing.Point(441, 203);
             this.chkPartyOverhead.Name = "chkPartyOverhead";
-            this.chkPartyOverhead.Size = new System.Drawing.Size(214, 22);
+            this.chkPartyOverhead.Size = new System.Drawing.Size(222, 22);
             this.chkPartyOverhead.TabIndex = 72;
             this.chkPartyOverhead.Text = "Show mana/stam above party members";
             this.chkPartyOverhead.CheckedChanged += new System.EventHandler(this.chkPartyOverhead_CheckedChanged);
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(467, 184);
+            this.label10.Location = new System.Drawing.Point(457, 184);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(80, 17);
             this.label10.TabIndex = 73;
@@ -1476,7 +1483,7 @@ namespace Assistant
             this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.healthFmt.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.healthFmt.Location = new System.Drawing.Point(553, 181);
+            this.healthFmt.Location = new System.Drawing.Point(543, 181);
             this.healthFmt.Name = "healthFmt";
             this.healthFmt.Size = new System.Drawing.Size(46, 20);
             this.healthFmt.TabIndex = 71;
@@ -1484,16 +1491,16 @@ namespace Assistant
             // 
             // showHealthOH
             // 
-            this.showHealthOH.Location = new System.Drawing.Point(451, 162);
+            this.showHealthOH.Location = new System.Drawing.Point(441, 162);
             this.showHealthOH.Name = "showHealthOH";
-            this.showHealthOH.Size = new System.Drawing.Size(211, 22);
+            this.showHealthOH.Size = new System.Drawing.Size(222, 22);
             this.showHealthOH.TabIndex = 69;
             this.showHealthOH.Text = "Show health above people/creatures";
             this.showHealthOH.CheckedChanged += new System.EventHandler(this.showHealthOH_CheckedChanged);
             // 
             // showtargtext
             // 
-            this.showtargtext.Location = new System.Drawing.Point(451, 140);
+            this.showtargtext.Location = new System.Drawing.Point(441, 140);
             this.showtargtext.Name = "showtargtext";
             this.showtargtext.Size = new System.Drawing.Size(190, 22);
             this.showtargtext.TabIndex = 53;
@@ -1502,7 +1509,7 @@ namespace Assistant
             // 
             // label8
             // 
-            this.label8.Location = new System.Drawing.Point(467, 121);
+            this.label8.Location = new System.Drawing.Point(457, 121);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(37, 18);
             this.label8.TabIndex = 72;
@@ -1517,7 +1524,7 @@ namespace Assistant
             this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.ltRange.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.ltRange.Location = new System.Drawing.Point(506, 119);
+            this.ltRange.Location = new System.Drawing.Point(496, 119);
             this.ltRange.Name = "ltRange";
             this.ltRange.Size = new System.Drawing.Size(32, 20);
             this.ltRange.TabIndex = 41;
@@ -1525,16 +1532,16 @@ namespace Assistant
             // 
             // rangeCheckLT
             // 
-            this.rangeCheckLT.Location = new System.Drawing.Point(451, 99);
+            this.rangeCheckLT.Location = new System.Drawing.Point(441, 99);
             this.rangeCheckLT.Name = "rangeCheckLT";
-            this.rangeCheckLT.Size = new System.Drawing.Size(151, 22);
+            this.rangeCheckLT.Size = new System.Drawing.Size(185, 22);
             this.rangeCheckLT.TabIndex = 40;
             this.rangeCheckLT.Text = "Range check Last Target:";
             this.rangeCheckLT.CheckedChanged += new System.EventHandler(this.rangeCheckLT_CheckedChanged);
             // 
             // smartLT
             // 
-            this.smartLT.Location = new System.Drawing.Point(451, 77);
+            this.smartLT.Location = new System.Drawing.Point(441, 77);
             this.smartLT.Name = "smartLT";
             this.smartLT.Size = new System.Drawing.Size(185, 22);
             this.smartLT.TabIndex = 52;
@@ -1543,7 +1550,7 @@ namespace Assistant
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(467, 60);
+            this.label5.Location = new System.Drawing.Point(457, 60);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 18);
             this.label5.TabIndex = 70;
@@ -1551,7 +1558,7 @@ namespace Assistant
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(582, 59);
+            this.label6.Location = new System.Drawing.Point(572, 59);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(30, 18);
             this.label6.TabIndex = 71;
@@ -1566,7 +1573,7 @@ namespace Assistant
             this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.txtObjDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtObjDelay.Location = new System.Drawing.Point(544, 56);
+            this.txtObjDelay.Location = new System.Drawing.Point(534, 56);
             this.txtObjDelay.Name = "txtObjDelay";
             this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
             this.txtObjDelay.TabIndex = 37;
@@ -1574,18 +1581,18 @@ namespace Assistant
             // 
             // QueueActions
             // 
-            this.QueueActions.Location = new System.Drawing.Point(451, 36);
+            this.QueueActions.Location = new System.Drawing.Point(441, 36);
             this.QueueActions.Name = "QueueActions";
-            this.QueueActions.Size = new System.Drawing.Size(211, 22);
+            this.QueueActions.Size = new System.Drawing.Size(222, 22);
             this.QueueActions.TabIndex = 34;
             this.QueueActions.Text = "Auto-Queue Object Delay actions ";
             this.QueueActions.CheckedChanged += new System.EventHandler(this.QueueActions_CheckedChanged);
             // 
             // actionStatusMsg
             // 
-            this.actionStatusMsg.Location = new System.Drawing.Point(451, 14);
+            this.actionStatusMsg.Location = new System.Drawing.Point(441, 14);
             this.actionStatusMsg.Name = "actionStatusMsg";
-            this.actionStatusMsg.Size = new System.Drawing.Size(211, 22);
+            this.actionStatusMsg.Size = new System.Drawing.Size(222, 22);
             this.actionStatusMsg.TabIndex = 38;
             this.actionStatusMsg.Text = "Show Action-Queue status messages";
             this.actionStatusMsg.CheckedChanged += new System.EventHandler(this.actionStatusMsg_CheckedChanged);
@@ -1971,22 +1978,76 @@ namespace Assistant
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Enhanced Filters";
             // 
+            // groupBox24
+            // 
+            this.groupBox24.Controls.Add(this.blockpartyinviteCheckBox);
+            this.groupBox24.Controls.Add(this.blocktraderequestCheckBox);
+            this.groupBox24.Controls.Add(this.highlighttargetCheckBox);
+            this.groupBox24.Controls.Add(this.flagsHighlightCheckBox);
+            this.groupBox24.Controls.Add(this.showstaticfieldCheckBox);
+            this.groupBox24.Location = new System.Drawing.Point(8, 14);
+            this.groupBox24.Name = "groupBox24";
+            this.groupBox24.Size = new System.Drawing.Size(153, 139);
+            this.groupBox24.TabIndex = 67;
+            this.groupBox24.TabStop = false;
+            this.groupBox24.Text = "Misc";
+            // 
+            // blockpartyinviteCheckBox
+            // 
+            this.blockpartyinviteCheckBox.Location = new System.Drawing.Point(6, 107);
+            this.blockpartyinviteCheckBox.Name = "blockpartyinviteCheckBox";
+            this.blockpartyinviteCheckBox.Size = new System.Drawing.Size(141, 22);
+            this.blockpartyinviteCheckBox.TabIndex = 62;
+            this.blockpartyinviteCheckBox.Text = "Block Party Invite";
+            // 
+            // blocktraderequestCheckBox
+            // 
+            this.blocktraderequestCheckBox.Location = new System.Drawing.Point(6, 85);
+            this.blocktraderequestCheckBox.Name = "blocktraderequestCheckBox";
+            this.blocktraderequestCheckBox.Size = new System.Drawing.Size(141, 22);
+            this.blocktraderequestCheckBox.TabIndex = 61;
+            this.blocktraderequestCheckBox.Text = "Block Trade Request";
+            // 
+            // highlighttargetCheckBox
+            // 
+            this.highlighttargetCheckBox.Location = new System.Drawing.Point(6, 19);
+            this.highlighttargetCheckBox.Name = "highlighttargetCheckBox";
+            this.highlighttargetCheckBox.Size = new System.Drawing.Size(145, 22);
+            this.highlighttargetCheckBox.TabIndex = 58;
+            this.highlighttargetCheckBox.Text = "Highlight current target";
+            // 
+            // flagsHighlightCheckBox
+            // 
+            this.flagsHighlightCheckBox.Location = new System.Drawing.Point(6, 41);
+            this.flagsHighlightCheckBox.Name = "flagsHighlightCheckBox";
+            this.flagsHighlightCheckBox.Size = new System.Drawing.Size(132, 22);
+            this.flagsHighlightCheckBox.TabIndex = 59;
+            this.flagsHighlightCheckBox.Text = "Flags Highlight";
+            // 
+            // showstaticfieldCheckBox
+            // 
+            this.showstaticfieldCheckBox.Location = new System.Drawing.Point(6, 63);
+            this.showstaticfieldCheckBox.Name = "showstaticfieldCheckBox";
+            this.showstaticfieldCheckBox.Size = new System.Drawing.Size(118, 22);
+            this.showstaticfieldCheckBox.TabIndex = 60;
+            this.showstaticfieldCheckBox.Text = "Show Static Field";
+            // 
             // groupBox23
             // 
             this.groupBox23.Controls.Add(this.mobfilterRemoveButton);
             this.groupBox23.Controls.Add(this.mobfilterAddButton);
             this.groupBox23.Controls.Add(this.mobfilterlistView);
             this.groupBox23.Controls.Add(this.mobfilterCheckBox);
-            this.groupBox23.Location = new System.Drawing.Point(8, 122);
+            this.groupBox23.Location = new System.Drawing.Point(179, 112);
             this.groupBox23.Name = "groupBox23";
-            this.groupBox23.Size = new System.Drawing.Size(283, 219);
+            this.groupBox23.Size = new System.Drawing.Size(283, 246);
             this.groupBox23.TabIndex = 66;
             this.groupBox23.TabStop = false;
             this.groupBox23.Text = "Mobile Graphics Change Filter";
             // 
             // mobfilterRemoveButton
             // 
-            this.mobfilterRemoveButton.ColorTable = office2010BlueTheme2;
+            this.mobfilterRemoveButton.ColorTable = office2010BlueTheme1;
             this.mobfilterRemoveButton.Location = new System.Drawing.Point(202, 76);
             this.mobfilterRemoveButton.Name = "mobfilterRemoveButton";
             this.mobfilterRemoveButton.Size = new System.Drawing.Size(75, 23);
@@ -2021,7 +2082,7 @@ namespace Assistant
             this.mobfilterlistView.Location = new System.Drawing.Point(6, 47);
             this.mobfilterlistView.MultiSelect = false;
             this.mobfilterlistView.Name = "mobfilterlistView";
-            this.mobfilterlistView.Size = new System.Drawing.Size(192, 158);
+            this.mobfilterlistView.Size = new System.Drawing.Size(192, 193);
             this.mobfilterlistView.TabIndex = 67;
             this.mobfilterlistView.UseCompatibleStateImageBehavior = false;
             this.mobfilterlistView.View = System.Windows.Forms.View.Details;
@@ -2148,30 +2209,6 @@ namespace Assistant
             this.razorCheckBox1.Size = new System.Drawing.Size(79, 22);
             this.razorCheckBox1.TabIndex = 61;
             this.razorCheckBox1.Text = "Enable";
-            // 
-            // showstiticfieldCheckBox
-            // 
-            this.showstiticfieldCheckBox.Location = new System.Drawing.Point(6, 63);
-            this.showstiticfieldCheckBox.Name = "showstiticfieldCheckBox";
-            this.showstiticfieldCheckBox.Size = new System.Drawing.Size(118, 22);
-            this.showstiticfieldCheckBox.TabIndex = 60;
-            this.showstiticfieldCheckBox.Text = "Show Static Field";
-            // 
-            // flagsHighlightCheckBox
-            // 
-            this.flagsHighlightCheckBox.Location = new System.Drawing.Point(6, 41);
-            this.flagsHighlightCheckBox.Name = "flagsHighlightCheckBox";
-            this.flagsHighlightCheckBox.Size = new System.Drawing.Size(132, 22);
-            this.flagsHighlightCheckBox.TabIndex = 59;
-            this.flagsHighlightCheckBox.Text = "Flags Highlight";
-            // 
-            // highlighttargetCheckBox
-            // 
-            this.highlighttargetCheckBox.Location = new System.Drawing.Point(6, 19);
-            this.highlighttargetCheckBox.Name = "highlighttargetCheckBox";
-            this.highlighttargetCheckBox.Size = new System.Drawing.Size(145, 22);
-            this.highlighttargetCheckBox.TabIndex = 58;
-            this.highlighttargetCheckBox.Text = "Highlight current target";
             // 
             // toolbarTab
             // 
@@ -5570,18 +5607,6 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
-            // groupBox24
-            // 
-            this.groupBox24.Controls.Add(this.highlighttargetCheckBox);
-            this.groupBox24.Controls.Add(this.flagsHighlightCheckBox);
-            this.groupBox24.Controls.Add(this.showstiticfieldCheckBox);
-            this.groupBox24.Location = new System.Drawing.Point(8, 14);
-            this.groupBox24.Name = "groupBox24";
-            this.groupBox24.Size = new System.Drawing.Size(153, 100);
-            this.groupBox24.TabIndex = 67;
-            this.groupBox24.TabStop = false;
-            this.groupBox24.Text = "Misc";
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -5611,6 +5636,7 @@ namespace Assistant
             this.moreOptTab.ResumeLayout(false);
             this.moreOptTab.PerformLayout();
             this.enhancedFilterTab.ResumeLayout(false);
+            this.groupBox24.ResumeLayout(false);
             this.groupBox23.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
@@ -5670,7 +5696,6 @@ namespace Assistant
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
-            this.groupBox24.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
