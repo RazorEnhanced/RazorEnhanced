@@ -7,6 +7,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
+using System.Text;
 using Assistant;
 
 namespace RazorEnhanced
@@ -219,23 +220,34 @@ namespace RazorEnhanced
                 general.Columns.Add("BandageHealpoisonCheckBox", typeof(bool)); 
                 general.Columns.Add("BandageHealmortalCheckBox", typeof(bool));
                 general.Columns.Add("BandageHealhiddedCheckBox", typeof(bool));  
-                // Parametri primo avvio per tab agent Bandage heal
-                object[] bandagehealparameters = new object[] { false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false };
 
+                // Parametri Tab (Enhanced Filters)
+                general.Columns.Add("HighlightTargetCheckBox", typeof(bool));
+                general.Columns.Add("FlagsHighlightCheckBox", typeof(bool));
+                general.Columns.Add("ShowStaticFieldCheckBox", typeof(bool));
+                general.Columns.Add("BlockTradeRequestCheckBox", typeof(bool));
+                general.Columns.Add("BlockPartyInviteCheckBox", typeof(bool));
+                general.Columns.Add("MobFilterCheckBox", typeof(bool));
+                general.Columns.Add("AutoCarverCheckBox", typeof(bool));
+                general.Columns.Add("BoneCutterCheckBox", typeof(bool));
+                general.Columns.Add("AutoCarverBladeLabel", typeof(int));
+                general.Columns.Add("BoneBladeLabel", typeof(int));
 
+               
                 // Composizione Parematri base primo avvio
+                object[] generalstartparam = new object[] { 
+                    // Parametri primo avvio per tab agent Bandage heal
+                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false,
+
+                    // Parametri primo avvio per tab Enhanced Filters
+                    false, false, false, false, false, false, false, false, 0, 0
+                };
+
                 DataRow generalsettings = general.NewRow();
-                generalsettings.ItemArray = bandagehealparameters;
+                generalsettings.ItemArray = generalstartparam;
                 general.Rows.Add(generalsettings);
 
                 m_Dataset.Tables.Add(general);
-
-
-
-				
-
-
-
 				m_Dataset.AcceptChanges();
 			}
 		}
@@ -270,6 +282,7 @@ namespace RazorEnhanced
 
 				Save();
 			}
+
 
 			internal static void ListUpdate(string description, int delay, int bag, bool selected)
 			{
@@ -2114,6 +2127,7 @@ namespace RazorEnhanced
         // ------------- GENERAL SETTINGS START -----------------
         internal class General
 		{
+            // Bandage heal tab
             internal static void AssistantBandageHealLoadAll(out bool BandageHealcountdownCheckBox, out string BandageHealtargetComboBox, out int BandageHealtargetLabel, out bool BandageHealcustomCheckBox, out int BandageHealcustomIDTextBox, out int BandageHealcustomcolorTextBox, out bool BandageHealdexformulaCheckBox, out int BandageHealdelayTextBox, out int BandageHealhpTextBox, out bool BandageHealpoisonCheckBox, out bool BandageHealmortalCheckBox, out bool BandageHealhiddedCheckBox)
             {
                 bool BandageHealcountdownCheckBoxOut = false;
@@ -2158,6 +2172,48 @@ namespace RazorEnhanced
                 BandageHealpoisonCheckBox = BandageHealpoisonCheckBoxOut;
                 BandageHealmortalCheckBox = BandageHealmortalCheckBoxOut;
                 BandageHealhiddedCheckBox = BandageHealhiddedCheckBoxOut;
+            }
+
+            // EnhancedFilterTab
+            internal static void EnhancedFilterLoadAll(out bool HighlightTargetCheckBox, out bool FlagsHighlightCheckBox, out bool ShowStaticFieldCheckBox, out bool BlockTradeRequestCheckBox, out bool BlockPartyInviteCheckBox, out bool MobFilterCheckBox, out bool AutoCarverCheckBox, out bool BoneCutterCheckBox, out int AutoCarverBladeLabel, out int BoneBladeLabel)
+            {
+                bool HighlightTargetCheckBoxOut = false;
+                bool FlagsHighlightCheckBoxOut = false;
+                bool ShowStaticFieldCheckBoxOut = false;
+                bool BlockTradeRequestCheckBoxOut = false;
+                bool BlockPartyInviteCheckBoxOut = false;
+                bool MobFilterCheckBoxOut = false;
+                bool AutoCarverCheckBoxOut = false;
+                bool BoneCutterCheckBoxOut = false;
+                int AutoCarverBladeLabelOut = 0;
+                int BoneBladeLabelOut = 0;
+                
+
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    HighlightTargetCheckBoxOut = (bool)row["HighlightTargetCheckBox"];
+                    FlagsHighlightCheckBoxOut = (bool)row["FlagsHighlightCheckBox"];
+                    ShowStaticFieldCheckBoxOut = (bool)row["ShowStaticFieldCheckBox"];
+                    BlockTradeRequestCheckBoxOut = (bool)row["BlockTradeRequestCheckBox"];
+                    BlockPartyInviteCheckBoxOut = (bool)row["BlockPartyInviteCheckBox"];
+                    MobFilterCheckBoxOut = (bool)row["MobFilterCheckBox"];
+                    AutoCarverCheckBoxOut = (bool)row["AutoCarverCheckBox"];
+                    BoneCutterCheckBoxOut = (bool)row["BoneCutterCheckBox"];
+                    AutoCarverBladeLabelOut = (int)row["AutoCarverBladeLabel"];
+                    BoneBladeLabelOut = (int)row["BoneBladeLabel"];
+                }
+
+                HighlightTargetCheckBox = HighlightTargetCheckBoxOut;
+                FlagsHighlightCheckBox = FlagsHighlightCheckBoxOut;
+                ShowStaticFieldCheckBox = ShowStaticFieldCheckBoxOut;
+                BlockTradeRequestCheckBox = BlockTradeRequestCheckBoxOut;
+                BlockPartyInviteCheckBox = BlockPartyInviteCheckBoxOut;
+                MobFilterCheckBox = MobFilterCheckBoxOut;
+                AutoCarverCheckBox = AutoCarverCheckBoxOut;
+                BoneCutterCheckBox = BoneCutterCheckBoxOut;
+                AutoCarverBladeLabel = AutoCarverBladeLabelOut;
+                BoneBladeLabel = BoneBladeLabelOut;
             }
 
             internal static bool ReadBool(string name)

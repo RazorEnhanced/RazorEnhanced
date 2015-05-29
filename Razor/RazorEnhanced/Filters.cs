@@ -155,5 +155,32 @@ namespace RazorEnhanced
 
         //////////////// AUTOCARVER STOP ////////////////
 
+        //////////////// Load settings ////////////////
+        internal static void LoadSettings()
+        {
+            bool HighlightTargetCheckBox = false;
+            bool FlagsHighlightCheckBox = false;
+            bool ShowStaticFieldCheckBox = false;
+            bool BlockTradeRequestCheckBox = false;
+            bool BlockPartyInviteCheckBox = false;
+            bool MobFilterCheckBox = false;
+            bool AutoCarverCheckBox = false;
+            bool BoneCutterCheckBox = false;
+            int AutoCarverBladeLabel = 0;
+            int BoneBladeLabel = 0;
+
+            RazorEnhanced.Settings.General.EnhancedFilterLoadAll(out HighlightTargetCheckBox, out FlagsHighlightCheckBox, out ShowStaticFieldCheckBox, out BlockTradeRequestCheckBox, out BlockPartyInviteCheckBox, out MobFilterCheckBox, out AutoCarverCheckBox, out BoneCutterCheckBox, out AutoCarverBladeLabel, out BoneBladeLabel);
+
+            Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = HighlightTargetCheckBox;
+            Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = FlagsHighlightCheckBox;
+            Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked = ShowStaticFieldCheckBox;
+            Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked = BlockTradeRequestCheckBox;
+            Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked = BlockPartyInviteCheckBox;
+            Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = MobFilterCheckBox;
+            Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = AutoCarverCheckBox;
+            Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = BoneCutterCheckBox;
+            Filters.AutoCarverBlade = AutoCarverBladeLabel;
+            Filters.BoneCutterBlade = BoneBladeLabel;
+        }
 	}
 }
