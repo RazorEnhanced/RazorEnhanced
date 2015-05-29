@@ -179,8 +179,8 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = MobFilterCheckBox;
             Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = AutoCarverCheckBox;
             Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = BoneCutterCheckBox;
-            Filters.AutoCarverBlade = AutoCarverBladeLabel;
-            Filters.BoneCutterBlade = BoneBladeLabel;
+            Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = AutoCarverBladeLabel.ToString("X8");
+            Assistant.Engine.MainWindow.BoneBladeLabel.Text = BoneBladeLabel.ToString("X8");
         }
 	}
 }
