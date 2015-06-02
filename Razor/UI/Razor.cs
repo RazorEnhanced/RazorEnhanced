@@ -455,6 +455,8 @@ namespace Assistant
         private GroupBox groupBox24;
         private RazorCheckBox blockpartyinviteCheckBox;
         private RazorCheckBox blocktraderequestCheckBox;
+        private RazorButton autolootMoveDownButton;
+        private RazorButton autolootMoveUpButton;
 
 		private bool m_CanClose = true;
 
@@ -839,6 +841,8 @@ namespace Assistant
             this.autolootLogBox = new System.Windows.Forms.ListBox();
             this.autolootContainerLabel = new System.Windows.Forms.Label();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.autolootMoveDownButton = new RazorEnhanced.UI.RazorButton();
+            this.autolootMoveUpButton = new RazorEnhanced.UI.RazorButton();
             this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
             this.autolootItemEditB = new RazorEnhanced.UI.RazorButton();
             this.autolootAddItemBTarget = new RazorEnhanced.UI.RazorButton();
@@ -3242,7 +3246,7 @@ namespace Assistant
             // razorButtonResetIgnore
             // 
             this.razorButtonResetIgnore.ColorTable = office2010BlueTheme1;
-            this.razorButtonResetIgnore.Location = new System.Drawing.Point(558, 273);
+            this.razorButtonResetIgnore.Location = new System.Drawing.Point(558, 310);
             this.razorButtonResetIgnore.Name = "razorButtonResetIgnore";
             this.razorButtonResetIgnore.Size = new System.Drawing.Size(90, 20);
             this.razorButtonResetIgnore.TabIndex = 60;
@@ -3365,6 +3369,8 @@ namespace Assistant
             // 
             // groupBox11
             // 
+            this.groupBox11.Controls.Add(this.autolootMoveDownButton);
+            this.groupBox11.Controls.Add(this.autolootMoveUpButton);
             this.groupBox11.Controls.Add(this.autolootItemPropsB);
             this.groupBox11.Controls.Add(this.autolootItemEditB);
             this.groupBox11.Controls.Add(this.autolootAddItemBTarget);
@@ -3372,10 +3378,32 @@ namespace Assistant
             this.groupBox11.Controls.Add(this.autolootAddItemBManual);
             this.groupBox11.Location = new System.Drawing.Point(553, 104);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(100, 147);
+            this.groupBox11.Size = new System.Drawing.Size(100, 197);
             this.groupBox11.TabIndex = 51;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Loot List";
+            // 
+            // autolootMoveDownButton
+            // 
+            this.autolootMoveDownButton.ColorTable = office2010BlueTheme1;
+            this.autolootMoveDownButton.Location = new System.Drawing.Point(6, 171);
+            this.autolootMoveDownButton.Name = "autolootMoveDownButton";
+            this.autolootMoveDownButton.Size = new System.Drawing.Size(90, 20);
+            this.autolootMoveDownButton.TabIndex = 51;
+            this.autolootMoveDownButton.Text = "Move Down";
+            this.autolootMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootMoveDownButton.Click += new System.EventHandler(this.autolootMoveDownButton_Click);
+            // 
+            // autolootMoveUpButton
+            // 
+            this.autolootMoveUpButton.ColorTable = office2010BlueTheme1;
+            this.autolootMoveUpButton.Location = new System.Drawing.Point(5, 145);
+            this.autolootMoveUpButton.Name = "autolootMoveUpButton";
+            this.autolootMoveUpButton.Size = new System.Drawing.Size(90, 20);
+            this.autolootMoveUpButton.TabIndex = 50;
+            this.autolootMoveUpButton.Text = "Move Up";
+            this.autolootMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.autolootMoveUpButton.Click += new System.EventHandler(this.autolootMoveUpButton_Click);
             // 
             // autolootItemPropsB
             // 
@@ -8541,6 +8569,58 @@ namespace Assistant
 			else
 				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
 		}
+
+        private void autolootMoveUpButton_Click(object sender, EventArgs e)
+        {
+            if (autolootListSelect.Text != "")
+            {
+                if (autolootlistView.SelectedItems.Count == 1)
+                {
+                    int index = autolootlistView.SelectedItems[0].Index;
+                    if (index != 0)
+                    {
+                        string selection = autolootListSelect.Text;
+                        List<AutoLoot.AutoLootItem> items;
+                        RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
+                        AutoLoot.AutoLootItem itemUp = items[index];
+                        AutoLoot.AutoLootItem itemDown = items[index - 1];
+                        RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index - 1, itemUp);
+                        RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index, itemDown);
+                        RazorEnhanced.AutoLoot.RefreshItems();
+                        autolootlistView.Items[index - 1].Selected = true;
+                        autolootlistView.Focus();
+                    }
+                }
+            }
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+        }
+
+        private void autolootMoveDownButton_Click(object sender, EventArgs e)
+        {
+            if (autolootListSelect.Text != "")
+            {
+                if (autolootlistView.SelectedItems.Count == 1)
+                {
+                    int index = autolootlistView.SelectedItems[0].Index;
+                    if (index != autolootlistView.SelectedItems.Count + 1)
+                    {
+                        string selection = autolootListSelect.Text;
+                        List<AutoLoot.AutoLootItem> items;
+                        RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
+                        AutoLoot.AutoLootItem itemDown = items[index];
+                        AutoLoot.AutoLootItem itemUp = items[index + 1];
+                        RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index + 1, itemDown);
+                        RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index, itemUp);
+                        RazorEnhanced.AutoLoot.RefreshItems();
+                        autolootlistView.Items[index + 1].Selected = true;
+                        autolootlistView.Focus();
+                    }
+                }
+            }
+            else
+                RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+        }
 
 		private void autoLootItemEdit_Click(object sender, EventArgs e)
 		{
