@@ -271,7 +271,7 @@ namespace RazorEnhanced
                 return -1;
             }
 
-            if ((int)(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? (ushort)1 : World.Player.HitsMax)) < HpLimit)       // Check HP se bendare o meno.
+            if ((int)(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? (ushort)1 : World.Player.HitsMax)) < HpLimit || World.Player.Poisoned)       // Check HP se bendare o meno.
             {
                 if (HiddenBlock)
                 {

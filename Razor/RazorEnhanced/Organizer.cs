@@ -304,10 +304,14 @@ namespace RazorEnhanced
 		internal static int Engine(List<OrganizerItem> organizerItemList, int mseconds, Item sourceBag, Item destinationBag)
 		{
 			// Apre le bag per item contenuti
+            RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
             Items.UseItem(sourceBag);
 			Items.WaitForContents(sourceBag, 1500);
+            Thread.Sleep(mseconds);
+            RazorEnhanced.Organizer.AddLog("- Refresh Destination Container");
 			Items.UseItem(destinationBag);
 			Items.WaitForContents(destinationBag, 1500);
+            Thread.Sleep(mseconds);
 
 			// Inizia scansione 
 			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
