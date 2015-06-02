@@ -457,6 +457,8 @@ namespace Assistant
         private RazorCheckBox blocktraderequestCheckBox;
         private RazorButton autolootMoveDownButton;
         private RazorButton autolootMoveUpButton;
+        private RazorButton scavengerMoveDownButton;
+        private RazorButton scavengerMoveUpButton;
 
 		private bool m_CanClose = true;
 
@@ -627,6 +629,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -1056,6 +1059,8 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.scavengerMoveUpButton = new RazorEnhanced.UI.RazorButton();
+            this.scavengerMoveDownButton = new RazorEnhanced.UI.RazorButton();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1114,24 +1119,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -3547,6 +3552,8 @@ namespace Assistant
             // 
             // groupBox14
             // 
+            this.groupBox14.Controls.Add(this.scavengerMoveDownButton);
+            this.groupBox14.Controls.Add(this.scavengerMoveUpButton);
             this.groupBox14.Controls.Add(this.scavengerButtonEditProps);
             this.groupBox14.Controls.Add(this.scavengerButtonEditItem);
             this.groupBox14.Controls.Add(this.scavengerButtonAddTarget);
@@ -3554,7 +3561,7 @@ namespace Assistant
             this.groupBox14.Controls.Add(this.scavengerButtonAddManual);
             this.groupBox14.Location = new System.Drawing.Point(553, 104);
             this.groupBox14.Name = "groupBox14";
-            this.groupBox14.Size = new System.Drawing.Size(100, 147);
+            this.groupBox14.Size = new System.Drawing.Size(100, 199);
             this.groupBox14.TabIndex = 71;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Item List";
@@ -5650,6 +5657,28 @@ namespace Assistant
             this.timerupdatestatus.Enabled = true;
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
+            // 
+            // scavengerMoveUpButton
+            // 
+            this.scavengerMoveUpButton.ColorTable = office2010BlueTheme1;
+            this.scavengerMoveUpButton.Location = new System.Drawing.Point(5, 145);
+            this.scavengerMoveUpButton.Name = "scavengerMoveUpButton";
+            this.scavengerMoveUpButton.Size = new System.Drawing.Size(90, 20);
+            this.scavengerMoveUpButton.TabIndex = 50;
+            this.scavengerMoveUpButton.Text = "Move Up";
+            this.scavengerMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.scavengerMoveUpButton.Click += new System.EventHandler(this.scavengerMoveUpButton_Click);
+            // 
+            // scavengerMoveDownButton
+            // 
+            this.scavengerMoveDownButton.ColorTable = office2010BlueTheme2;
+            this.scavengerMoveDownButton.Location = new System.Drawing.Point(5, 171);
+            this.scavengerMoveDownButton.Name = "scavengerMoveDownButton";
+            this.scavengerMoveDownButton.Size = new System.Drawing.Size(90, 20);
+            this.scavengerMoveDownButton.TabIndex = 51;
+            this.scavengerMoveDownButton.Text = "Move Down";
+            this.scavengerMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.scavengerMoveDownButton.Click += new System.EventHandler(this.scavengerMoveDownButton_Click);
             // 
             // MainForm
             // 
@@ -8603,7 +8632,7 @@ namespace Assistant
                 if (autolootlistView.SelectedItems.Count == 1)
                 {
                     int index = autolootlistView.SelectedItems[0].Index;
-                    if (index != autolootlistView.SelectedItems.Count + 1)
+                    if (index != autolootlistView.Items.Count - 1)
                     {
                         string selection = autolootListSelect.Text;
                         List<AutoLoot.AutoLootItem> items;
@@ -9099,6 +9128,57 @@ namespace Assistant
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
+        private void scavengerMoveUpButton_Click(object sender, EventArgs e)
+        {
+            if (scavengerListSelect.Text != "")
+            {
+                if (scavengerListView.SelectedItems.Count == 1)
+                {
+                    int index = scavengerListView.SelectedItems[0].Index;
+                    if (index != 0)
+                    {
+                        string selection = scavengerListSelect.Text;
+                        List<Scavenger.ScavengerItem> items;
+                        RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
+                        Scavenger.ScavengerItem itemUp = items[index];
+                        Scavenger.ScavengerItem itemDown = items[index - 1];
+                        RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index - 1, itemUp);
+                        RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index, itemDown);
+                        RazorEnhanced.Scavenger.RefreshItems();
+                        scavengerListView.Items[index - 1].Selected = true;
+                        scavengerListView.Focus();
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+        }
+
+        private void scavengerMoveDownButton_Click(object sender, EventArgs e)
+        {
+            if (scavengerListSelect.Text != "")
+            {
+                if (scavengerListView.SelectedItems.Count == 1)
+                {
+                    int index = scavengerListView.SelectedItems[0].Index;
+                    if (index != scavengerListView.Items.Count -1)
+                    {
+                        string selection = scavengerListSelect.Text;
+                        List<Scavenger.ScavengerItem> items;
+                        RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
+                        Scavenger.ScavengerItem itemDown = items[index];
+                        Scavenger.ScavengerItem itemUp = items[index + 1];
+                        RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index + 1, itemDown);
+                        RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index, itemUp);
+                        RazorEnhanced.Scavenger.RefreshItems();
+                        scavengerListView.Items[index + 1].Selected = true;
+                        scavengerListView.Focus();
+                    }
+                }
+            }
+            else
+                RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+        }
 		// ------------ SCAVENGER END ----------------
 
 
@@ -10992,5 +11072,7 @@ namespace Assistant
         {
             UpdateRazorStatus();
         }
+
+
 	}
 }
