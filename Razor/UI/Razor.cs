@@ -472,6 +472,7 @@ namespace Assistant
 		// Enhanced Toolbar
 		private EnhancedToolbar enhancedToolbar;
 		internal EnhancedToolbar ToolBar { get { return enhancedToolbar; } }
+        internal bool ToolBarOpen = false;
 
 		// Scripting
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
