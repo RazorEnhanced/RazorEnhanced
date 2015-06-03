@@ -1138,7 +1138,11 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-					ClientCommunication.PostHitsUpdate();
+                    // Update toolbar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
+
+                    ClientCommunication.PostHitsUpdate();
 				}
                 RazorEnhanced.Filters.ProcessMessage(m);
 
@@ -1175,7 +1179,11 @@ namespace Assistant
 				m.Stam = p.ReadUInt16();
 
 				if (m == World.Player)
-				{
+                {                    
+                    // Update toolbar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
+
 					ClientCommunication.PostStamUpdate();
 				}
 
@@ -1214,6 +1222,10 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
+                    // Update toolbar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
+
 					ClientCommunication.PostManaUpdate();
 				}
 
