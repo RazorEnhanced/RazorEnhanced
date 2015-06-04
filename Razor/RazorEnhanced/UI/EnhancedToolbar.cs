@@ -53,15 +53,32 @@ namespace RazorEnhanced.UI
             set { labelBarMana.BackColor = value; }
         }
 
+        // Weight
+        internal string LabelWeight
+        {
+            set { labelWeight.Text = value; }
+        }
+
 		public EnhancedToolbar()
 		{
             this.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
+            this.Move += new System.EventHandler(this.EnhancedToolbar_Move);
 			InitializeComponent();
 		}
 
         private void EnhancedToolbar_close(object sender, EventArgs e)
         {
             Assistant.Engine.MainWindow.ToolBarOpen = false;
+        }
+
+        private void EnhancedToolbar_Move(object sender, System.EventArgs e)
+        {
+            System.Drawing.Point pt = this.Location;
+            if (this.WindowState != FormWindowState.Minimized )
+            {
+                Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
+                // TODO: Save DATA
+            }
         }
 
         private void EnhancedToolbar_Load(object sender, EventArgs e)
@@ -72,7 +89,11 @@ namespace RazorEnhanced.UI
             if (Assistant.World.Player != null)         
             {
                 RazorEnhanced.ToolBar.UpdateHits(Assistant.World.Player.HitsMax, Assistant.World.Player.Hits);
+                RazorEnhanced.ToolBar.UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
+                RazorEnhanced.ToolBar.UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
+                RazorEnhanced.ToolBar.UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);                
             }
         }
+
 	}
 }

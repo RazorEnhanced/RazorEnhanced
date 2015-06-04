@@ -459,6 +459,26 @@ namespace Assistant
         private RazorButton autolootMoveUpButton;
         private RazorButton scavengerMoveDownButton;
         private RazorButton scavengerMoveUpButton;
+        private RazorButton openToolBarButton;
+        private GroupBox groupBox25;
+        private RazorCheckBox razorCheckBox1;
+        private RazorCheckBox autoopenToolBarCheckBox;
+        private Label locationToolBarLabel;
+        private RazorButton closeToolBarButton;
+        private GroupBox groupBox26;
+        private Label label38;
+        private RazorTextBox toolboxcountNameTextBox;
+        private Label label37;
+        private RazorButton toolboxcountClearButton;
+        private RazorButton toolboxcountTargetButton;
+        private RazorTextBox toolboxcountWarningTextBox;
+        private Label label36;
+        private RazorCheckBox toolboxcountHueWarningCheckBox;
+        private RazorTextBox toolboxcountHueTextBox;
+        private Label label35;
+        private RazorTextBox toolboxcountGraphTextBox;
+        private Label label18;
+        private RazorComboBox toolboxcountComboBox;
 
 		private bool m_CanClose = true;
 
@@ -473,6 +493,7 @@ namespace Assistant
 		private EnhancedToolbar enhancedToolbar;
 		internal EnhancedToolbar ToolBar { get { return enhancedToolbar; } }
         internal bool ToolBarOpen = false;
+        internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
 
 		// Scripting
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
@@ -630,7 +651,6 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -735,6 +755,12 @@ namespace Assistant
             this.boneCutterrazorButton = new RazorEnhanced.UI.RazorButton();
             this.bonecutterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
+            this.groupBox25 = new System.Windows.Forms.GroupBox();
+            this.razorCheckBox1 = new RazorEnhanced.UI.RazorCheckBox();
+            this.autoopenToolBarCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.locationToolBarLabel = new System.Windows.Forms.Label();
+            this.closeToolBarButton = new RazorEnhanced.UI.RazorButton();
+            this.openToolBarButton = new RazorEnhanced.UI.RazorButton();
             this.emptyTab = new System.Windows.Forms.TabPage();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.performTargetButton = new RazorEnhanced.UI.RazorButton();
@@ -861,6 +887,8 @@ namespace Assistant
             this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.escavenger = new System.Windows.Forms.TabPage();
             this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.scavengerMoveDownButton = new RazorEnhanced.UI.RazorButton();
+            this.scavengerMoveUpButton = new RazorEnhanced.UI.RazorButton();
             this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
             this.scavengerButtonEditItem = new RazorEnhanced.UI.RazorButton();
             this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
@@ -1060,8 +1088,20 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.scavengerMoveUpButton = new RazorEnhanced.UI.RazorButton();
-            this.scavengerMoveDownButton = new RazorEnhanced.UI.RazorButton();
+            this.groupBox26 = new System.Windows.Forms.GroupBox();
+            this.toolboxcountComboBox = new RazorEnhanced.UI.RazorComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.toolboxcountHueTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.toolboxcountHueWarningCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.toolboxcountTargetButton = new RazorEnhanced.UI.RazorButton();
+            this.toolboxcountClearButton = new RazorEnhanced.UI.RazorButton();
+            this.toolboxcountNameTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1074,6 +1114,8 @@ namespace Assistant
             this.groupBox23.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
+            this.toolbarTab.SuspendLayout();
+            this.groupBox25.SuspendLayout();
             this.emptyTab.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.skillsTab.SuspendLayout();
@@ -1116,28 +1158,29 @@ namespace Assistant
             this.bandageheal.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox26.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
             // 
-            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme2;
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme1;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -2238,11 +2281,74 @@ namespace Assistant
             // 
             // toolbarTab
             // 
+            this.toolbarTab.Controls.Add(this.groupBox26);
+            this.toolbarTab.Controls.Add(this.groupBox25);
             this.toolbarTab.Location = new System.Drawing.Point(4, 40);
             this.toolbarTab.Name = "toolbarTab";
             this.toolbarTab.Size = new System.Drawing.Size(666, 366);
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Enhanced Toolbar";
+            // 
+            // groupBox25
+            // 
+            this.groupBox25.Controls.Add(this.razorCheckBox1);
+            this.groupBox25.Controls.Add(this.autoopenToolBarCheckBox);
+            this.groupBox25.Controls.Add(this.locationToolBarLabel);
+            this.groupBox25.Controls.Add(this.closeToolBarButton);
+            this.groupBox25.Controls.Add(this.openToolBarButton);
+            this.groupBox25.Location = new System.Drawing.Point(8, 7);
+            this.groupBox25.Name = "groupBox25";
+            this.groupBox25.Size = new System.Drawing.Size(121, 159);
+            this.groupBox25.TabIndex = 59;
+            this.groupBox25.TabStop = false;
+            this.groupBox25.Text = "General";
+            // 
+            // razorCheckBox1
+            // 
+            this.razorCheckBox1.Location = new System.Drawing.Point(6, 71);
+            this.razorCheckBox1.Name = "razorCheckBox1";
+            this.razorCheckBox1.Size = new System.Drawing.Size(99, 22);
+            this.razorCheckBox1.TabIndex = 63;
+            this.razorCheckBox1.Text = "Lock ToolBox";
+            // 
+            // autoopenToolBarCheckBox
+            // 
+            this.autoopenToolBarCheckBox.Location = new System.Drawing.Point(6, 93);
+            this.autoopenToolBarCheckBox.Name = "autoopenToolBarCheckBox";
+            this.autoopenToolBarCheckBox.Size = new System.Drawing.Size(112, 22);
+            this.autoopenToolBarCheckBox.TabIndex = 62;
+            this.autoopenToolBarCheckBox.Text = "Open On Login";
+            // 
+            // locationToolBarLabel
+            // 
+            this.locationToolBarLabel.AutoSize = true;
+            this.locationToolBarLabel.Location = new System.Drawing.Point(6, 118);
+            this.locationToolBarLabel.Name = "locationToolBarLabel";
+            this.locationToolBarLabel.Size = new System.Drawing.Size(42, 13);
+            this.locationToolBarLabel.TabIndex = 61;
+            this.locationToolBarLabel.Text = "X:0 Y:0";
+            // 
+            // closeToolBarButton
+            // 
+            this.closeToolBarButton.ColorTable = office2010BlueTheme1;
+            this.closeToolBarButton.Location = new System.Drawing.Point(6, 45);
+            this.closeToolBarButton.Name = "closeToolBarButton";
+            this.closeToolBarButton.Size = new System.Drawing.Size(90, 20);
+            this.closeToolBarButton.TabIndex = 59;
+            this.closeToolBarButton.Text = "Close";
+            this.closeToolBarButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.closeToolBarButton.Click += new System.EventHandler(this.closeToolBarButton_Click);
+            // 
+            // openToolBarButton
+            // 
+            this.openToolBarButton.ColorTable = office2010BlueTheme1;
+            this.openToolBarButton.Location = new System.Drawing.Point(6, 19);
+            this.openToolBarButton.Name = "openToolBarButton";
+            this.openToolBarButton.Size = new System.Drawing.Size(90, 20);
+            this.openToolBarButton.TabIndex = 58;
+            this.openToolBarButton.Text = "Open";
+            this.openToolBarButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.openToolBarButton.Click += new System.EventHandler(this.openToolBarButton_Click);
             // 
             // emptyTab
             // 
@@ -3566,6 +3672,28 @@ namespace Assistant
             this.groupBox14.TabIndex = 71;
             this.groupBox14.TabStop = false;
             this.groupBox14.Text = "Item List";
+            // 
+            // scavengerMoveDownButton
+            // 
+            this.scavengerMoveDownButton.ColorTable = office2010BlueTheme1;
+            this.scavengerMoveDownButton.Location = new System.Drawing.Point(5, 171);
+            this.scavengerMoveDownButton.Name = "scavengerMoveDownButton";
+            this.scavengerMoveDownButton.Size = new System.Drawing.Size(90, 20);
+            this.scavengerMoveDownButton.TabIndex = 51;
+            this.scavengerMoveDownButton.Text = "Move Down";
+            this.scavengerMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.scavengerMoveDownButton.Click += new System.EventHandler(this.scavengerMoveDownButton_Click);
+            // 
+            // scavengerMoveUpButton
+            // 
+            this.scavengerMoveUpButton.ColorTable = office2010BlueTheme1;
+            this.scavengerMoveUpButton.Location = new System.Drawing.Point(5, 145);
+            this.scavengerMoveUpButton.Name = "scavengerMoveUpButton";
+            this.scavengerMoveUpButton.Size = new System.Drawing.Size(90, 20);
+            this.scavengerMoveUpButton.TabIndex = 50;
+            this.scavengerMoveUpButton.Text = "Move Up";
+            this.scavengerMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.scavengerMoveUpButton.Click += new System.EventHandler(this.scavengerMoveUpButton_Click);
             // 
             // scavengerButtonEditProps
             // 
@@ -5659,27 +5787,165 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
-            // scavengerMoveUpButton
+            // groupBox26
             // 
-            this.scavengerMoveUpButton.ColorTable = office2010BlueTheme1;
-            this.scavengerMoveUpButton.Location = new System.Drawing.Point(5, 145);
-            this.scavengerMoveUpButton.Name = "scavengerMoveUpButton";
-            this.scavengerMoveUpButton.Size = new System.Drawing.Size(90, 20);
-            this.scavengerMoveUpButton.TabIndex = 50;
-            this.scavengerMoveUpButton.Text = "Move Up";
-            this.scavengerMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.scavengerMoveUpButton.Click += new System.EventHandler(this.scavengerMoveUpButton_Click);
+            this.groupBox26.Controls.Add(this.label38);
+            this.groupBox26.Controls.Add(this.toolboxcountNameTextBox);
+            this.groupBox26.Controls.Add(this.label37);
+            this.groupBox26.Controls.Add(this.toolboxcountClearButton);
+            this.groupBox26.Controls.Add(this.toolboxcountTargetButton);
+            this.groupBox26.Controls.Add(this.toolboxcountWarningTextBox);
+            this.groupBox26.Controls.Add(this.label36);
+            this.groupBox26.Controls.Add(this.toolboxcountHueWarningCheckBox);
+            this.groupBox26.Controls.Add(this.toolboxcountHueTextBox);
+            this.groupBox26.Controls.Add(this.label35);
+            this.groupBox26.Controls.Add(this.toolboxcountGraphTextBox);
+            this.groupBox26.Controls.Add(this.label18);
+            this.groupBox26.Controls.Add(this.toolboxcountComboBox);
+            this.groupBox26.Location = new System.Drawing.Point(132, 7);
+            this.groupBox26.Name = "groupBox26";
+            this.groupBox26.Size = new System.Drawing.Size(214, 203);
+            this.groupBox26.TabIndex = 60;
+            this.groupBox26.TabStop = false;
+            this.groupBox26.Text = "Item Count";
             // 
-            // scavengerMoveDownButton
+            // toolboxcountComboBox
             // 
-            this.scavengerMoveDownButton.ColorTable = office2010BlueTheme2;
-            this.scavengerMoveDownButton.Location = new System.Drawing.Point(5, 171);
-            this.scavengerMoveDownButton.Name = "scavengerMoveDownButton";
-            this.scavengerMoveDownButton.Size = new System.Drawing.Size(90, 20);
-            this.scavengerMoveDownButton.TabIndex = 51;
-            this.scavengerMoveDownButton.Text = "Move Down";
-            this.scavengerMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.scavengerMoveDownButton.Click += new System.EventHandler(this.scavengerMoveDownButton_Click);
+            this.toolboxcountComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolboxcountComboBox.FormattingEnabled = true;
+            this.toolboxcountComboBox.Location = new System.Drawing.Point(6, 19);
+            this.toolboxcountComboBox.Name = "toolboxcountComboBox";
+            this.toolboxcountComboBox.Size = new System.Drawing.Size(202, 24);
+            this.toolboxcountComboBox.TabIndex = 0;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 76);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(52, 13);
+            this.label18.TabIndex = 1;
+            this.label18.Text = "Graphics:";
+            // 
+            // toolboxcountGraphTextBox
+            // 
+            this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountGraphTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountGraphTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountGraphTextBox.Location = new System.Drawing.Point(64, 73);
+            this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
+            this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountGraphTextBox.TabIndex = 2;
+            // 
+            // toolboxcountHueTextBox
+            // 
+            this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountHueTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountHueTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountHueTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountHueTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountHueTextBox.Location = new System.Drawing.Point(64, 99);
+            this.toolboxcountHueTextBox.Name = "toolboxcountHueTextBox";
+            this.toolboxcountHueTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountHueTextBox.TabIndex = 4;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(6, 102);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(34, 13);
+            this.label35.TabIndex = 3;
+            this.label35.Text = "Color:";
+            // 
+            // toolboxcountHueWarningCheckBox
+            // 
+            this.toolboxcountHueWarningCheckBox.Location = new System.Drawing.Point(9, 125);
+            this.toolboxcountHueWarningCheckBox.Name = "toolboxcountHueWarningCheckBox";
+            this.toolboxcountHueWarningCheckBox.Size = new System.Drawing.Size(99, 22);
+            this.toolboxcountHueWarningCheckBox.TabIndex = 64;
+            this.toolboxcountHueWarningCheckBox.Text = "Show Warning";
+            // 
+            // toolboxcountWarningTextBox
+            // 
+            this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountWarningTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountWarningTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountWarningTextBox.Location = new System.Drawing.Point(64, 148);
+            this.toolboxcountWarningTextBox.Name = "toolboxcountWarningTextBox";
+            this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountWarningTextBox.TabIndex = 66;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(6, 151);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(50, 13);
+            this.label36.TabIndex = 65;
+            this.label36.Text = "Warning:";
+            // 
+            // toolboxcountTargetButton
+            // 
+            this.toolboxcountTargetButton.ColorTable = office2010BlueTheme1;
+            this.toolboxcountTargetButton.Location = new System.Drawing.Point(9, 177);
+            this.toolboxcountTargetButton.Name = "toolboxcountTargetButton";
+            this.toolboxcountTargetButton.Size = new System.Drawing.Size(77, 20);
+            this.toolboxcountTargetButton.TabIndex = 64;
+            this.toolboxcountTargetButton.Text = "Get Data";
+            this.toolboxcountTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // toolboxcountClearButton
+            // 
+            this.toolboxcountClearButton.ColorTable = office2010BlueTheme1;
+            this.toolboxcountClearButton.Location = new System.Drawing.Point(131, 177);
+            this.toolboxcountClearButton.Name = "toolboxcountClearButton";
+            this.toolboxcountClearButton.Size = new System.Drawing.Size(77, 20);
+            this.toolboxcountClearButton.TabIndex = 67;
+            this.toolboxcountClearButton.Text = "Clear Slot";
+            this.toolboxcountClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // toolboxcountNameTextBox
+            // 
+            this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountNameTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountNameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountNameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountNameTextBox.Location = new System.Drawing.Point(64, 49);
+            this.toolboxcountNameTextBox.Name = "toolboxcountNameTextBox";
+            this.toolboxcountNameTextBox.Size = new System.Drawing.Size(144, 20);
+            this.toolboxcountNameTextBox.TabIndex = 69;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(6, 52);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(38, 13);
+            this.label37.TabIndex = 68;
+            this.label37.Text = "Name:";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(131, 102);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(44, 13);
+            this.label38.TabIndex = 70;
+            this.label38.Text = "-1 for all";
             // 
             // MainForm
             // 
@@ -5716,6 +5982,9 @@ namespace Assistant
             this.groupBox10.PerformLayout();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            this.toolbarTab.ResumeLayout(false);
+            this.groupBox25.ResumeLayout(false);
+            this.groupBox25.PerformLayout();
             this.emptyTab.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
             this.skillsTab.ResumeLayout(false);
@@ -5770,6 +6039,8 @@ namespace Assistant
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
+            this.groupBox26.ResumeLayout(false);
+            this.groupBox26.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -5844,9 +6115,6 @@ namespace Assistant
 			SplashScreen.End();
 
 			LoadSettings();
-
-			enhancedToolbar = new EnhancedToolbar();
-			enhancedToolbar.Show();
 		}
 
 		private void LoadSettings()
@@ -11074,6 +11342,22 @@ namespace Assistant
             UpdateRazorStatus();
         }
 
+        // ---------------- TOOLBAR START ----------------
+        private void openToolBarButton_Click(object sender, EventArgs e)
+        {
+            if (Assistant.World.Player != null)
+            {
+                enhancedToolbar = new EnhancedToolbar();
+                enhancedToolbar.Show();
+            }
+        }
 
+        private void closeToolBarButton_Click(object sender, EventArgs e)
+        {
+            if (enhancedToolbar != null)
+                enhancedToolbar.Close();
+        }
+
+        // ---------------- TOOLBAR END ----------------
 	}
 }

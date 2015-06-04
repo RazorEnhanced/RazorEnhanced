@@ -44,6 +44,15 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.ToolBar.LabelBarManaColor = GetColor(percent);
             });
         }
+
+        internal static void UpdateWeight(int maxweight, int weight)
+        {
+            Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+            {
+                Assistant.Engine.MainWindow.ToolBar.LabelWeight = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
+            });
+        }
+
         private static Color GetColor(int percent)
         {
             if (percent <= 10)

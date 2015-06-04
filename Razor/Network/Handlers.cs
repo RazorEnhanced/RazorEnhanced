@@ -1361,6 +1361,10 @@ namespace Assistant
                     {
                         player.MaxWeight = p.ReadUInt16();
 
+                        // Update toolbar
+                        if (Assistant.Engine.MainWindow.ToolBarOpen)
+                            RazorEnhanced.ToolBar.UpdateWeight(player.MaxWeight, player.Weight);
+
                         p.ReadByte(); // race?
                     }
 
