@@ -69,6 +69,7 @@ namespace RazorEnhanced.UI
         private void EnhancedToolbar_close(object sender, EventArgs e)
         {
             Assistant.Engine.MainWindow.ToolBarOpen = false;
+            Assistant.Engine.MainWindow.ToolBar = null;
         }
 
         private void EnhancedToolbar_Move(object sender, System.EventArgs e)
@@ -77,7 +78,8 @@ namespace RazorEnhanced.UI
             if (this.WindowState != FormWindowState.Minimized )
             {
                 Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
-                // TODO: Save DATA
+                RazorEnhanced.Settings.General.WriteInt("PosXToolBar", pt.X);
+                RazorEnhanced.Settings.General.WriteInt("PosYToolBar", pt.Y);
             }
         }
 

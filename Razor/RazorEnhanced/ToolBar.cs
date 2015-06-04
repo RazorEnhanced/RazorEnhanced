@@ -68,5 +68,37 @@ namespace RazorEnhanced
             else
                 return Color.ForestGreen;
         }
+
+        internal static void Open()
+        {
+            if (Assistant.World.Player != null)
+            {
+                if (Assistant.Engine.MainWindow.ToolBar == null)
+                {
+                    Assistant.Engine.MainWindow.ToolBar = new RazorEnhanced.UI.EnhancedToolbar();
+                    Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+                    Assistant.Engine.MainWindow.ToolBar.Show();
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.ToolBar.Show();
+                }
+            }
+        }
+
+        //////////////// Load settings ////////////////
+        internal static void LoadSettings()
+        {
+            bool LockToolBarCheckBox = false;
+            bool AutoopenToolBarCheckBox = false;
+            int PosXToolBar = 10;
+            int PosYToolBar = 10;
+
+            RazorEnhanced.Settings.General.EnhancedToolBarLoadAll(out LockToolBarCheckBox, out AutoopenToolBarCheckBox, out PosXToolBar, out PosYToolBar);
+
+            Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = LockToolBarCheckBox;
+            Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked = AutoopenToolBarCheckBox;
+            Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + PosXToolBar + " - Y:" + PosYToolBar;
+        }
     }   
 }

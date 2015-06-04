@@ -461,7 +461,7 @@ namespace Assistant
         private RazorButton scavengerMoveUpButton;
         private RazorButton openToolBarButton;
         private GroupBox groupBox25;
-        private RazorCheckBox razorCheckBox1;
+        private RazorCheckBox lockToolBarCheckBox;
         private RazorCheckBox autoopenToolBarCheckBox;
         private Label locationToolBarLabel;
         private RazorButton closeToolBarButton;
@@ -491,9 +491,12 @@ namespace Assistant
 
 		// Enhanced Toolbar
 		private EnhancedToolbar enhancedToolbar;
-		internal EnhancedToolbar ToolBar { get { return enhancedToolbar; } }
+        internal EnhancedToolbar ToolBar { get { return enhancedToolbar; } set { enhancedToolbar = value; } }
         internal bool ToolBarOpen = false;
         internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
+        internal RazorCheckBox LockToolBarCheckBox { get { return lockToolBarCheckBox; } }
+        internal RazorCheckBox AutoopenToolBarCheckBox { get { return autoopenToolBarCheckBox; } }
+
 
 		// Scripting
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
@@ -755,8 +758,22 @@ namespace Assistant
             this.boneCutterrazorButton = new RazorEnhanced.UI.RazorButton();
             this.bonecutterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.toolbarTab = new System.Windows.Forms.TabPage();
+            this.groupBox26 = new System.Windows.Forms.GroupBox();
+            this.label38 = new System.Windows.Forms.Label();
+            this.toolboxcountNameTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.toolboxcountClearButton = new RazorEnhanced.UI.RazorButton();
+            this.toolboxcountTargetButton = new RazorEnhanced.UI.RazorButton();
+            this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label36 = new System.Windows.Forms.Label();
+            this.toolboxcountHueWarningCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+            this.toolboxcountHueTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.toolboxcountComboBox = new RazorEnhanced.UI.RazorComboBox();
             this.groupBox25 = new System.Windows.Forms.GroupBox();
-            this.razorCheckBox1 = new RazorEnhanced.UI.RazorCheckBox();
+            this.lockToolBarCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.autoopenToolBarCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.locationToolBarLabel = new System.Windows.Forms.Label();
             this.closeToolBarButton = new RazorEnhanced.UI.RazorButton();
@@ -1088,20 +1105,6 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.groupBox26 = new System.Windows.Forms.GroupBox();
-            this.toolboxcountComboBox = new RazorEnhanced.UI.RazorComboBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorTextBox();
-            this.toolboxcountHueTextBox = new RazorEnhanced.UI.RazorTextBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.toolboxcountHueWarningCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorTextBox();
-            this.label36 = new System.Windows.Forms.Label();
-            this.toolboxcountTargetButton = new RazorEnhanced.UI.RazorButton();
-            this.toolboxcountClearButton = new RazorEnhanced.UI.RazorButton();
-            this.toolboxcountNameTextBox = new RazorEnhanced.UI.RazorTextBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1115,6 +1118,7 @@ namespace Assistant
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.toolbarTab.SuspendLayout();
+            this.groupBox26.SuspendLayout();
             this.groupBox25.SuspendLayout();
             this.emptyTab.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -1158,7 +1162,6 @@ namespace Assistant
             this.bandageheal.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox26.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
@@ -2289,9 +2292,169 @@ namespace Assistant
             this.toolbarTab.TabIndex = 1;
             this.toolbarTab.Text = "Enhanced Toolbar";
             // 
+            // groupBox26
+            // 
+            this.groupBox26.Controls.Add(this.label38);
+            this.groupBox26.Controls.Add(this.toolboxcountNameTextBox);
+            this.groupBox26.Controls.Add(this.label37);
+            this.groupBox26.Controls.Add(this.toolboxcountClearButton);
+            this.groupBox26.Controls.Add(this.toolboxcountTargetButton);
+            this.groupBox26.Controls.Add(this.toolboxcountWarningTextBox);
+            this.groupBox26.Controls.Add(this.label36);
+            this.groupBox26.Controls.Add(this.toolboxcountHueWarningCheckBox);
+            this.groupBox26.Controls.Add(this.toolboxcountHueTextBox);
+            this.groupBox26.Controls.Add(this.label35);
+            this.groupBox26.Controls.Add(this.toolboxcountGraphTextBox);
+            this.groupBox26.Controls.Add(this.label18);
+            this.groupBox26.Controls.Add(this.toolboxcountComboBox);
+            this.groupBox26.Location = new System.Drawing.Point(132, 7);
+            this.groupBox26.Name = "groupBox26";
+            this.groupBox26.Size = new System.Drawing.Size(214, 203);
+            this.groupBox26.TabIndex = 60;
+            this.groupBox26.TabStop = false;
+            this.groupBox26.Text = "Item Count";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(131, 102);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(44, 13);
+            this.label38.TabIndex = 70;
+            this.label38.Text = "-1 for all";
+            // 
+            // toolboxcountNameTextBox
+            // 
+            this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountNameTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountNameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountNameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountNameTextBox.Location = new System.Drawing.Point(64, 49);
+            this.toolboxcountNameTextBox.Name = "toolboxcountNameTextBox";
+            this.toolboxcountNameTextBox.Size = new System.Drawing.Size(144, 20);
+            this.toolboxcountNameTextBox.TabIndex = 69;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(6, 52);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(38, 13);
+            this.label37.TabIndex = 68;
+            this.label37.Text = "Name:";
+            // 
+            // toolboxcountClearButton
+            // 
+            this.toolboxcountClearButton.ColorTable = office2010BlueTheme1;
+            this.toolboxcountClearButton.Location = new System.Drawing.Point(131, 177);
+            this.toolboxcountClearButton.Name = "toolboxcountClearButton";
+            this.toolboxcountClearButton.Size = new System.Drawing.Size(77, 20);
+            this.toolboxcountClearButton.TabIndex = 67;
+            this.toolboxcountClearButton.Text = "Clear Slot";
+            this.toolboxcountClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // toolboxcountTargetButton
+            // 
+            this.toolboxcountTargetButton.ColorTable = office2010BlueTheme1;
+            this.toolboxcountTargetButton.Location = new System.Drawing.Point(9, 177);
+            this.toolboxcountTargetButton.Name = "toolboxcountTargetButton";
+            this.toolboxcountTargetButton.Size = new System.Drawing.Size(77, 20);
+            this.toolboxcountTargetButton.TabIndex = 64;
+            this.toolboxcountTargetButton.Text = "Get Data";
+            this.toolboxcountTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // toolboxcountWarningTextBox
+            // 
+            this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountWarningTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountWarningTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountWarningTextBox.Location = new System.Drawing.Point(64, 148);
+            this.toolboxcountWarningTextBox.Name = "toolboxcountWarningTextBox";
+            this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountWarningTextBox.TabIndex = 66;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(6, 151);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(50, 13);
+            this.label36.TabIndex = 65;
+            this.label36.Text = "Warning:";
+            // 
+            // toolboxcountHueWarningCheckBox
+            // 
+            this.toolboxcountHueWarningCheckBox.Location = new System.Drawing.Point(9, 125);
+            this.toolboxcountHueWarningCheckBox.Name = "toolboxcountHueWarningCheckBox";
+            this.toolboxcountHueWarningCheckBox.Size = new System.Drawing.Size(99, 22);
+            this.toolboxcountHueWarningCheckBox.TabIndex = 64;
+            this.toolboxcountHueWarningCheckBox.Text = "Show Warning";
+            // 
+            // toolboxcountHueTextBox
+            // 
+            this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountHueTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountHueTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountHueTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountHueTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountHueTextBox.Location = new System.Drawing.Point(64, 99);
+            this.toolboxcountHueTextBox.Name = "toolboxcountHueTextBox";
+            this.toolboxcountHueTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountHueTextBox.TabIndex = 4;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(6, 102);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(34, 13);
+            this.label35.TabIndex = 3;
+            this.label35.Text = "Color:";
+            // 
+            // toolboxcountGraphTextBox
+            // 
+            this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
+            this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.toolboxcountGraphTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.toolboxcountGraphTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.toolboxcountGraphTextBox.Location = new System.Drawing.Point(64, 73);
+            this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
+            this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
+            this.toolboxcountGraphTextBox.TabIndex = 2;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(6, 76);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(52, 13);
+            this.label18.TabIndex = 1;
+            this.label18.Text = "Graphics:";
+            // 
+            // toolboxcountComboBox
+            // 
+            this.toolboxcountComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolboxcountComboBox.FormattingEnabled = true;
+            this.toolboxcountComboBox.Location = new System.Drawing.Point(6, 19);
+            this.toolboxcountComboBox.Name = "toolboxcountComboBox";
+            this.toolboxcountComboBox.Size = new System.Drawing.Size(202, 24);
+            this.toolboxcountComboBox.TabIndex = 0;
+            // 
             // groupBox25
             // 
-            this.groupBox25.Controls.Add(this.razorCheckBox1);
+            this.groupBox25.Controls.Add(this.lockToolBarCheckBox);
             this.groupBox25.Controls.Add(this.autoopenToolBarCheckBox);
             this.groupBox25.Controls.Add(this.locationToolBarLabel);
             this.groupBox25.Controls.Add(this.closeToolBarButton);
@@ -2303,13 +2466,14 @@ namespace Assistant
             this.groupBox25.TabStop = false;
             this.groupBox25.Text = "General";
             // 
-            // razorCheckBox1
+            // lockToolBarCheckBox
             // 
-            this.razorCheckBox1.Location = new System.Drawing.Point(6, 71);
-            this.razorCheckBox1.Name = "razorCheckBox1";
-            this.razorCheckBox1.Size = new System.Drawing.Size(99, 22);
-            this.razorCheckBox1.TabIndex = 63;
-            this.razorCheckBox1.Text = "Lock ToolBox";
+            this.lockToolBarCheckBox.Location = new System.Drawing.Point(6, 71);
+            this.lockToolBarCheckBox.Name = "lockToolBarCheckBox";
+            this.lockToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
+            this.lockToolBarCheckBox.TabIndex = 63;
+            this.lockToolBarCheckBox.Text = "Lock ToolBox";
+            this.lockToolBarCheckBox.CheckedChanged += new System.EventHandler(this.lockToolBarCheckBox_CheckedChanged);
             // 
             // autoopenToolBarCheckBox
             // 
@@ -2318,6 +2482,7 @@ namespace Assistant
             this.autoopenToolBarCheckBox.Size = new System.Drawing.Size(112, 22);
             this.autoopenToolBarCheckBox.TabIndex = 62;
             this.autoopenToolBarCheckBox.Text = "Open On Login";
+            this.autoopenToolBarCheckBox.CheckedChanged += new System.EventHandler(this.autoopenToolBarCheckBox_CheckedChanged);
             // 
             // locationToolBarLabel
             // 
@@ -5787,166 +5952,6 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
-            // groupBox26
-            // 
-            this.groupBox26.Controls.Add(this.label38);
-            this.groupBox26.Controls.Add(this.toolboxcountNameTextBox);
-            this.groupBox26.Controls.Add(this.label37);
-            this.groupBox26.Controls.Add(this.toolboxcountClearButton);
-            this.groupBox26.Controls.Add(this.toolboxcountTargetButton);
-            this.groupBox26.Controls.Add(this.toolboxcountWarningTextBox);
-            this.groupBox26.Controls.Add(this.label36);
-            this.groupBox26.Controls.Add(this.toolboxcountHueWarningCheckBox);
-            this.groupBox26.Controls.Add(this.toolboxcountHueTextBox);
-            this.groupBox26.Controls.Add(this.label35);
-            this.groupBox26.Controls.Add(this.toolboxcountGraphTextBox);
-            this.groupBox26.Controls.Add(this.label18);
-            this.groupBox26.Controls.Add(this.toolboxcountComboBox);
-            this.groupBox26.Location = new System.Drawing.Point(132, 7);
-            this.groupBox26.Name = "groupBox26";
-            this.groupBox26.Size = new System.Drawing.Size(214, 203);
-            this.groupBox26.TabIndex = 60;
-            this.groupBox26.TabStop = false;
-            this.groupBox26.Text = "Item Count";
-            // 
-            // toolboxcountComboBox
-            // 
-            this.toolboxcountComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.toolboxcountComboBox.FormattingEnabled = true;
-            this.toolboxcountComboBox.Location = new System.Drawing.Point(6, 19);
-            this.toolboxcountComboBox.Name = "toolboxcountComboBox";
-            this.toolboxcountComboBox.Size = new System.Drawing.Size(202, 24);
-            this.toolboxcountComboBox.TabIndex = 0;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(6, 76);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(52, 13);
-            this.label18.TabIndex = 1;
-            this.label18.Text = "Graphics:";
-            // 
-            // toolboxcountGraphTextBox
-            // 
-            this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
-            this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.toolboxcountGraphTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.toolboxcountGraphTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.toolboxcountGraphTextBox.Location = new System.Drawing.Point(64, 73);
-            this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
-            this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
-            this.toolboxcountGraphTextBox.TabIndex = 2;
-            // 
-            // toolboxcountHueTextBox
-            // 
-            this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.toolboxcountHueTextBox.BackColor = System.Drawing.Color.White;
-            this.toolboxcountHueTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.toolboxcountHueTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.toolboxcountHueTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.toolboxcountHueTextBox.Location = new System.Drawing.Point(64, 99);
-            this.toolboxcountHueTextBox.Name = "toolboxcountHueTextBox";
-            this.toolboxcountHueTextBox.Size = new System.Drawing.Size(61, 20);
-            this.toolboxcountHueTextBox.TabIndex = 4;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(6, 102);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(34, 13);
-            this.label35.TabIndex = 3;
-            this.label35.Text = "Color:";
-            // 
-            // toolboxcountHueWarningCheckBox
-            // 
-            this.toolboxcountHueWarningCheckBox.Location = new System.Drawing.Point(9, 125);
-            this.toolboxcountHueWarningCheckBox.Name = "toolboxcountHueWarningCheckBox";
-            this.toolboxcountHueWarningCheckBox.Size = new System.Drawing.Size(99, 22);
-            this.toolboxcountHueWarningCheckBox.TabIndex = 64;
-            this.toolboxcountHueWarningCheckBox.Text = "Show Warning";
-            // 
-            // toolboxcountWarningTextBox
-            // 
-            this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
-            this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.toolboxcountWarningTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.toolboxcountWarningTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.toolboxcountWarningTextBox.Location = new System.Drawing.Point(64, 148);
-            this.toolboxcountWarningTextBox.Name = "toolboxcountWarningTextBox";
-            this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
-            this.toolboxcountWarningTextBox.TabIndex = 66;
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(6, 151);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(50, 13);
-            this.label36.TabIndex = 65;
-            this.label36.Text = "Warning:";
-            // 
-            // toolboxcountTargetButton
-            // 
-            this.toolboxcountTargetButton.ColorTable = office2010BlueTheme1;
-            this.toolboxcountTargetButton.Location = new System.Drawing.Point(9, 177);
-            this.toolboxcountTargetButton.Name = "toolboxcountTargetButton";
-            this.toolboxcountTargetButton.Size = new System.Drawing.Size(77, 20);
-            this.toolboxcountTargetButton.TabIndex = 64;
-            this.toolboxcountTargetButton.Text = "Get Data";
-            this.toolboxcountTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // toolboxcountClearButton
-            // 
-            this.toolboxcountClearButton.ColorTable = office2010BlueTheme1;
-            this.toolboxcountClearButton.Location = new System.Drawing.Point(131, 177);
-            this.toolboxcountClearButton.Name = "toolboxcountClearButton";
-            this.toolboxcountClearButton.Size = new System.Drawing.Size(77, 20);
-            this.toolboxcountClearButton.TabIndex = 67;
-            this.toolboxcountClearButton.Text = "Clear Slot";
-            this.toolboxcountClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            // 
-            // toolboxcountNameTextBox
-            // 
-            this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.toolboxcountNameTextBox.BackColor = System.Drawing.Color.White;
-            this.toolboxcountNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.toolboxcountNameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.toolboxcountNameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.toolboxcountNameTextBox.Location = new System.Drawing.Point(64, 49);
-            this.toolboxcountNameTextBox.Name = "toolboxcountNameTextBox";
-            this.toolboxcountNameTextBox.Size = new System.Drawing.Size(144, 20);
-            this.toolboxcountNameTextBox.TabIndex = 69;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(6, 52);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(38, 13);
-            this.label37.TabIndex = 68;
-            this.label37.Text = "Name:";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(131, 102);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(44, 13);
-            this.label38.TabIndex = 70;
-            this.label38.Text = "-1 for all";
-            // 
             // MainForm
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -5983,6 +5988,8 @@ namespace Assistant
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             this.toolbarTab.ResumeLayout(false);
+            this.groupBox26.ResumeLayout(false);
+            this.groupBox26.PerformLayout();
             this.groupBox25.ResumeLayout(false);
             this.groupBox25.PerformLayout();
             this.emptyTab.ResumeLayout(false);
@@ -6039,8 +6046,6 @@ namespace Assistant
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
-            this.groupBox26.ResumeLayout(false);
-            this.groupBox26.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -6166,6 +6171,9 @@ namespace Assistant
 
             // ------------------ ENHANCED FILTERS --------------------
             RazorEnhanced.Filters.LoadSettings();
+
+            // ------------------ ENHANCED TOOLBAR --------------------
+            RazorEnhanced.ToolBar.LoadSettings();
 
             // ------------------ TARGETS --------------------
             RazorEnhanced.TargetGUI.RefreshTarget();
@@ -11345,17 +11353,23 @@ namespace Assistant
         // ---------------- TOOLBAR START ----------------
         private void openToolBarButton_Click(object sender, EventArgs e)
         {
-            if (Assistant.World.Player != null)
-            {
-                enhancedToolbar = new EnhancedToolbar();
-                enhancedToolbar.Show();
-            }
+            RazorEnhanced.ToolBar.Open();
         }
 
         private void closeToolBarButton_Click(object sender, EventArgs e)
         {
             if (enhancedToolbar != null)
                 enhancedToolbar.Close();
+        }
+
+        private void lockToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.General.WriteBool("LockToolBarCheckBox", lockToolBarCheckBox.Checked);
+        }
+
+        private void autoopenToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.General.WriteBool("AutoopenToolBarCheckBox", autoopenToolBarCheckBox.Checked);
         }
 
         // ---------------- TOOLBAR END ----------------

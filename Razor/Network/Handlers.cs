@@ -1069,6 +1069,7 @@ namespace Assistant
 
 			ClientCommunication.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
+
 			/*
 			//the rest of the packet: (total length: 37)
 			m_Stream.Write( (byte) 0 );
@@ -1081,6 +1082,10 @@ namespace Assistant
 
 			Stream.Fill();
 			*/
+
+            // Apertura automatica toolbar se abilitata
+            if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked)
+                RazorEnhanced.ToolBar.Open();
 
 			ClientCommunication.BeginCalibratePosition();
 		}

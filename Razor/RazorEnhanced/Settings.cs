@@ -232,15 +232,23 @@ namespace RazorEnhanced
                 general.Columns.Add("BoneCutterCheckBox", typeof(bool));
                 general.Columns.Add("AutoCarverBladeLabel", typeof(int));
                 general.Columns.Add("BoneBladeLabel", typeof(int));
+                
+                // Parametri Tab (Enhanced ToolBar)
+                general.Columns.Add("LockToolBarCheckBox", typeof(bool));
+                general.Columns.Add("AutoopenToolBarCheckBox", typeof(bool));
+                general.Columns.Add("PosXToolBar", typeof(int));
+                general.Columns.Add("PosYToolBar", typeof(int));
 
-               
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false,
 
                     // Parametri primo avvio per tab Enhanced Filters
-                    false, false, false, false, false, false, false, false, 0, 0
+                    false, false, false, false, false, false, false, false, 0, 0,
+                    
+                    // Parametri primo avvio per tab Enhanced ToolBar
+                    false, false, 10, 10
                 };
 
                 DataRow generalsettings = general.NewRow();
@@ -419,7 +427,6 @@ namespace RazorEnhanced
 
 				Save();
 			}
-
 			internal static void ItemsRead(string list, out List<RazorEnhanced.AutoLoot.AutoLootItem> items)
 			{
 				List<RazorEnhanced.AutoLoot.AutoLootItem> itemsOut = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
@@ -2214,6 +2221,29 @@ namespace RazorEnhanced
                 BoneCutterCheckBox = BoneCutterCheckBoxOut;
                 AutoCarverBladeLabel = AutoCarverBladeLabelOut;
                 BoneBladeLabel = BoneBladeLabelOut;
+            }
+
+            // Enhanced Toolbar Tab
+            internal static void EnhancedToolBarLoadAll(out bool LockToolBarCheckBox, out bool AutoopenToolBarCheckBox, out int PosXToolBar, out int PosYToolBar)
+            {
+                bool LockToolBarCheckBoxOut = false;
+                bool AutoopenToolBarCheckOut = false;
+                int PosXToolBarOut = 10;
+                int PosYToolBarOut = 10;
+
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    LockToolBarCheckBoxOut = (bool)row["LockToolBarCheckBox"];
+                    AutoopenToolBarCheckOut = (bool)row["AutoopenToolBarCheckBox"];
+                    PosXToolBarOut = (int)row["PosXToolBar"];
+                    PosYToolBarOut = (int)row["PosYToolBar"];
+                }
+
+                LockToolBarCheckBox = LockToolBarCheckBoxOut;
+                AutoopenToolBarCheckBox = AutoopenToolBarCheckOut;
+                PosXToolBar = PosXToolBarOut;
+                PosYToolBar = PosYToolBarOut;
             }
 
             internal static bool ReadBool(string name)
