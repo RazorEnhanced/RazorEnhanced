@@ -9698,7 +9698,7 @@ namespace Assistant
 
 			    destinationBagSerial = Convert.ToInt32(Assistant.Engine.MainWindow.organizerDestinationLabel.Text, 16);
 			    destinationBag = RazorEnhanced.Items.FindBySerial(destinationBagSerial);
-			    if (sourceBag != null)
+                if (destinationBag != null)
 			    {
 				    RazorEnhanced.Organizer.AddLog("Destination Container OK: 0x" + destinationBag.Serial.ToString("X8"));
 				    RazorEnhanced.Organizer.OrganizerDestination = destinationBag.Serial;

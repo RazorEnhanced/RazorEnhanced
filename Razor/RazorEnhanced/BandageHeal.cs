@@ -268,7 +268,7 @@ namespace RazorEnhanced
             if (World.Player.IsGhost)
             {
                 Thread.Sleep(2000);
-                return -1;
+                return 0;
             }
 
             if ((int)(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? (ushort)1 : World.Player.HitsMax)) < HpLimit || World.Player.Poisoned)       // Check HP se bendare o meno.

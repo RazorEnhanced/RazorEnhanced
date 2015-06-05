@@ -305,7 +305,7 @@ namespace RazorEnhanced
                 if (World.Player.IsGhost)
                 {
                     Thread.Sleep(2000);
-                    return -1;
+                    return 0;
                 }
 
 				if (World.Player.Weight - 20 > World.Player.MaxWeight)
@@ -469,7 +469,7 @@ namespace RazorEnhanced
 
 			// Genero filtro per corpi
 			Items.Filter corpseFilter = new Items.Filter();
-			corpseFilter.RangeMax = 3;
+			corpseFilter.RangeMax = 2;
 			corpseFilter.Movable = false;
 			corpseFilter.IsCorpse = true;
 			corpseFilter.OnGround = true;

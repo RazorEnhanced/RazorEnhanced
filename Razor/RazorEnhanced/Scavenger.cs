@@ -302,7 +302,7 @@ namespace RazorEnhanced
                 if (World.Player.IsGhost)
                 {
                     Thread.Sleep(2000);
-                    return -1;
+                    return 0;
                 }
 
 				if (World.Player.Weight - 20 > World.Player.MaxWeight)      // Controllo peso

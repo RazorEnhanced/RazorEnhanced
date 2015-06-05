@@ -119,11 +119,11 @@ namespace RazorEnhanced
 						script.Start();
 					}
 				}
-
-				//Thread.Sleep(50);
+				
 
 				if (AutoLoot.AutoMode)
 				{
+                    Thread.Sleep(5);
 					if (m_AutoLootThread == null ||
 						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
 						m_AutoLootThread.ThreadState != ThreadState.Unstarted &&
@@ -132,13 +132,12 @@ namespace RazorEnhanced
 					{
 						m_AutoLootThread = new Thread(AutoLoot.Engine);
 						m_AutoLootThread.Start();
-					}
+					}   
 				}
-
-				//Thread.Sleep(50);
 
 				if (Scavenger.AutoMode)
 				{
+                    Thread.Sleep(5);
 					if (m_ScavengerThread == null ||
 						(m_ScavengerThread != null && m_ScavengerThread.ThreadState != ThreadState.Running &&
 						m_ScavengerThread.ThreadState != ThreadState.Unstarted &&
@@ -152,6 +151,7 @@ namespace RazorEnhanced
 
                 if (BandageHeal.AutoMode)
                 {
+                    Thread.Sleep(5);
                     if (m_BandageHealThread == null ||
                         (m_BandageHealThread != null && m_BandageHealThread.ThreadState != ThreadState.Running &&
                         m_BandageHealThread.ThreadState != ThreadState.Unstarted &&
@@ -165,6 +165,7 @@ namespace RazorEnhanced
 
                 if (Filters.AutoCarver)
                 {
+                    Thread.Sleep(5);
                     if (m_AutoCarverThread == null ||
                         (m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
                         m_AutoCarverThread.ThreadState != ThreadState.Unstarted &&
