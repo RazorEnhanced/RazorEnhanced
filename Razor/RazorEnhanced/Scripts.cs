@@ -123,57 +123,83 @@ namespace RazorEnhanced
 
 				if (AutoLoot.AutoMode)
 				{
-                    Thread.Sleep(5);
+                   // Thread.Sleep(5);
 					if (m_AutoLootThread == null ||
 						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
 						m_AutoLootThread.ThreadState != ThreadState.Unstarted &&
 						m_AutoLootThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 					{
-						m_AutoLootThread = new Thread(AutoLoot.Engine);
-						m_AutoLootThread.Start();
+                        try
+                        {
+                            m_AutoLootThread = new Thread(AutoLoot.Engine);
+                            m_AutoLootThread.Start();
+                        }
+                        catch
+                        {
+                            AutoLoot.AddLog("Exception detected, restarting");
+                        }
 					}   
 				}
 
 				if (Scavenger.AutoMode)
 				{
-                    Thread.Sleep(5);
+                   // Thread.Sleep(5);
 					if (m_ScavengerThread == null ||
 						(m_ScavengerThread != null && m_ScavengerThread.ThreadState != ThreadState.Running &&
 						m_ScavengerThread.ThreadState != ThreadState.Unstarted &&
 						m_ScavengerThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 					{
-						m_ScavengerThread = new Thread(Scavenger.Engine);
-						m_ScavengerThread.Start();
+                        try
+                        {
+                            m_ScavengerThread = new Thread(Scavenger.Engine);
+                            m_ScavengerThread.Start();
+                        }
+                        catch
+                        {
+                            Scavenger.AddLog("Exception detected, restarting");
+                        }
 					}
 				}
 
                 if (BandageHeal.AutoMode)
                 {
-                    Thread.Sleep(5);
+                    //Thread.Sleep(5);
                     if (m_BandageHealThread == null ||
                         (m_BandageHealThread != null && m_BandageHealThread.ThreadState != ThreadState.Running &&
                         m_BandageHealThread.ThreadState != ThreadState.Unstarted &&
                         m_BandageHealThread.ThreadState != ThreadState.WaitSleepJoin)
                     )
                     {
-                        m_BandageHealThread = new Thread(BandageHeal.Engine);
-                        m_BandageHealThread.Start();
+                        try
+                        {
+                            m_BandageHealThread = new Thread(BandageHeal.Engine);
+                            m_BandageHealThread.Start();
+                        }
+                        catch
+                        {
+                            BandageHeal.AddLog("Exception detected, restarting");
+                        }
                     }
                 }
 
                 if (Filters.AutoCarver)
                 {
-                    Thread.Sleep(5);
+                   // Thread.Sleep(5);
                     if (m_AutoCarverThread == null ||
                         (m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
                         m_AutoCarverThread.ThreadState != ThreadState.Unstarted &&
                         m_AutoCarverThread.ThreadState != ThreadState.WaitSleepJoin)
                     )
                     {
-                        m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
-                        m_AutoCarverThread.Start();
+                        try
+                        {
+                            m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
+                            m_AutoCarverThread.Start();
+                        }
+                        catch
+                        { }
                     }
                 }
 			}
