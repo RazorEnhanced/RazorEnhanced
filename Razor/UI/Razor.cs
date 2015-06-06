@@ -2356,6 +2356,7 @@ namespace Assistant
             this.toolboxcountClearButton.TabIndex = 67;
             this.toolboxcountClearButton.Text = "Clear Slot";
             this.toolboxcountClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.toolboxcountClearButton.Click += new System.EventHandler(this.toolboxcountClearButton_Click);
             // 
             // toolboxcountTargetButton
             // 
@@ -2366,6 +2367,7 @@ namespace Assistant
             this.toolboxcountTargetButton.TabIndex = 64;
             this.toolboxcountTargetButton.Text = "Get Data";
             this.toolboxcountTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.toolboxcountTargetButton.Click += new System.EventHandler(this.toolboxcountTargetButton_Click);
             // 
             // toolboxcountWarningTextBox
             // 
@@ -11365,7 +11367,10 @@ namespace Assistant
         private void closeToolBarButton_Click(object sender, EventArgs e)
         {
             if (enhancedToolbar != null)
+            {
                 enhancedToolbar.Close();
+                Assistant.Engine.MainWindow.ToolBar = null;
+            }
         }
 
         private void lockToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -11393,7 +11398,11 @@ namespace Assistant
         private void toolboxcountNameTextBox_TextChanged(object sender, EventArgs e)
         {
             if (toolboxcountNameTextBox.Focused)
-                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+            {
+                int index = toolboxcountComboBox.SelectedIndex;
+                RazorEnhanced.Settings.Toolbar.UpdateItem(index, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+                RazorEnhanced.ToolBar.UptateToolBarComboBox(index);
+            }
         }
 
         private void toolboxcountGraphTextBox_TextChanged(object sender, EventArgs e)
@@ -11418,6 +11427,44 @@ namespace Assistant
         {
             if (toolboxcountWarningTextBox.Focused)
                 RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+        }
+
+        private void toolboxcountClearButton_Click(object sender, EventArgs e)
+        {
+            int index = toolboxcountComboBox.SelectedIndex;
+            toolboxcountNameTextBox.Text = "Empty";
+            toolboxcountGraphTextBox.Text = "0x0000";
+            toolboxcountHueTextBox.Text = "0x0000";
+            toolboxcountHueWarningCheckBox.Checked = false;
+            toolboxcountWarningTextBox.Text ="0";
+            RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+            RazorEnhanced.ToolBar.UptateToolBarComboBox(index);
+        }
+
+        private void toolboxcountTargetButton_Click(object sender, EventArgs e)
+        {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ToolBarItemTarget_Callback));
+        }
+
+        private void ToolBarItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            this.BeginInvoke((MethodInvoker)delegate {  
+                int index = toolboxcountComboBox.SelectedIndex;
+                Assistant.Item item = Assistant.World.FindItem(serial);
+
+                if (item == null)
+                    return;
+
+                if (item.Serial.IsItem)
+                {
+                    toolboxcountNameTextBox.Text = item.Name;
+                    int itemgraph = item.ItemID;
+                    toolboxcountGraphTextBox.Text = itemgraph.ToString("X4");
+                    toolboxcountHueTextBox.Text = item.Hue.ToString("X4");
+                    RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+                    RazorEnhanced.ToolBar.UptateToolBarComboBox(index);
+                }
+            });
         }
 
         // ---------------- TOOLBAR END ----------------

@@ -104,14 +104,28 @@ namespace RazorEnhanced
                 if (Assistant.Engine.MainWindow.ToolBar == null)
                 {
                     Assistant.Engine.MainWindow.ToolBar = new RazorEnhanced.UI.EnhancedToolbar();
-                    Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
                     Assistant.Engine.MainWindow.ToolBar.Show();
+                    Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
                 }
                 else
                 {
                     Assistant.Engine.MainWindow.ToolBar.Show();
+                    Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
                 }
             }
+        }
+
+        internal static void UptateToolBarComboBox(int index)
+        {
+            List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+            Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
+            int i = 0;
+            foreach (RazorEnhanced.ToolBar.ToolBarItem item in items)
+            {
+                Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Add("Slot " + i + ": " + item.Name);
+                i++;
+            }
+            Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
         }
 
         //////////////// Thread di aggiornamento barra ////////////////
@@ -149,6 +163,7 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Add("Slot " + i + ": " + item.Name);
                 i++;
             }
+            Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = 0;
         }
     }   
 }

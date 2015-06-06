@@ -68,22 +68,30 @@ namespace RazorEnhanced.UI
 
         private void EnhancedToolbar_close(object sender, EventArgs e)
         {
+            Assistant.Engine.MainWindow.ToolBarOpen = false;
+            Assistant.Engine.MainWindow.ToolBar = null;
             if (ToolBar.UpdateThread != null && ToolBar.UpdateThread.IsAlive)
-            {
                 ToolBar.UpdateThread.Abort();
-                Assistant.Engine.MainWindow.ToolBarOpen = false;
-                Assistant.Engine.MainWindow.ToolBar = null;
-            }
         }
 
         private void EnhancedToolbar_Move(object sender, System.EventArgs e)
         {
-            System.Drawing.Point pt = this.Location;
-            if (this.WindowState != FormWindowState.Minimized )
+            if (this.Focused)
             {
-                Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
-                RazorEnhanced.Settings.General.WriteInt("PosXToolBar", pt.X);
-                RazorEnhanced.Settings.General.WriteInt("PosYToolBar", pt.Y);
+                if (Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked)
+                {
+                    this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("PosXToolBar"), RazorEnhanced.Settings.General.ReadInt("PosYToolBar"));
+                }
+                else
+                {
+                    System.Drawing.Point pt = this.Location;
+                    if (this.WindowState != FormWindowState.Minimized)
+                    {
+                        Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
+                        RazorEnhanced.Settings.General.WriteInt("PosXToolBar", pt.X);
+                        RazorEnhanced.Settings.General.WriteInt("PosYToolBar", pt.Y);
+                    }
+                }
             }
         }
 
