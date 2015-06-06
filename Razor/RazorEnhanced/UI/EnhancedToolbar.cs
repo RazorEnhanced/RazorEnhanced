@@ -68,8 +68,12 @@ namespace RazorEnhanced.UI
 
         private void EnhancedToolbar_close(object sender, EventArgs e)
         {
-            Assistant.Engine.MainWindow.ToolBarOpen = false;
-            Assistant.Engine.MainWindow.ToolBar = null;
+            if (ToolBar.UpdateThread != null && ToolBar.UpdateThread.IsAlive)
+            {
+                ToolBar.UpdateThread.Abort();
+                Assistant.Engine.MainWindow.ToolBarOpen = false;
+                Assistant.Engine.MainWindow.ToolBar = null;
+            }
         }
 
         private void EnhancedToolbar_Move(object sender, System.EventArgs e)
@@ -86,13 +90,8 @@ namespace RazorEnhanced.UI
         private void EnhancedToolbar_Load(object sender, EventArgs e)
         {
             Assistant.Engine.MainWindow.ToolBarOpen = true;
+            ToolBar.UpdateThread.Start();
             ToolBar.UpdateAll();
         }
-
-        private void updateToolBarTimer_Tick(object sender, EventArgs e)
-        {
-            ToolBar.UpdateAll();
-        }
-
 	}
 }

@@ -392,7 +392,7 @@ namespace RazorEnhanced
 
 		internal static void Engine()
 		{
-			int exit = Int32.MinValue;
+            int exit = Int32.MinValue;
 
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter();

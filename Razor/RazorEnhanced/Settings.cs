@@ -2164,6 +2164,45 @@ namespace RazorEnhanced
             {
                 return (RazorEnhanced.ToolBar.ToolBarItem)m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index]["Item"];
             }
+
+            internal static void UpdateItem(int index, string name, string graphics, string color, bool warning, string warninglimit)
+            {
+                int convgraphics = 0;
+                int convcolor = 0;
+                int convwarninglimit = 0;
+
+                try
+                {
+                    convgraphics = Convert.ToInt32(graphics, 16);
+                }
+                catch
+                { }
+
+                if (color == "-1")
+                {
+                    convcolor = -1;
+                }
+                else
+                {
+                    try
+                    {
+                        convcolor = Convert.ToInt32(color, 16);
+                    }
+                    catch
+                    { }
+                }
+
+                try
+                {
+                    convwarninglimit = Convert.ToInt32(warninglimit);
+                }
+                catch
+                { }
+
+                RazorEnhanced.ToolBar.ToolBarItem item = new RazorEnhanced.ToolBar.ToolBarItem(name, convgraphics, convcolor, warning, convwarninglimit);
+                m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index]["Item"] = item;
+                Save();
+            }
         }
 
         // ------------- TOOLBAR END -----------------

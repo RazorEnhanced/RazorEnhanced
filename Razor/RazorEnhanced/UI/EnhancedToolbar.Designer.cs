@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.components = new System.ComponentModel.Container();
             this.labelBarHits = new System.Windows.Forms.Label();
             this.labelTextHits = new System.Windows.Forms.Label();
             this.labelTextMana = new System.Windows.Forms.Label();
@@ -51,7 +50,6 @@
             this.panel12 = new System.Windows.Forms.Panel();
             this.panel14 = new System.Windows.Forms.Panel();
             this.panel13 = new System.Windows.Forms.Panel();
-            this.updateToolBarTimer = new System.Windows.Forms.Timer(this.components);
             this.panel12.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -241,12 +239,6 @@
             this.panel13.Size = new System.Drawing.Size(60, 60);
             this.panel13.TabIndex = 11;
             // 
-            // updateToolBarTimer
-            // 
-            this.updateToolBarTimer.Enabled = true;
-            this.updateToolBarTimer.Interval = 500;
-            this.updateToolBarTimer.Tick += new System.EventHandler(this.updateToolBarTimer_Tick);
-            // 
             // EnhancedToolbar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,6 +303,5 @@
 		private System.Windows.Forms.Panel panel13;
 		private System.Windows.Forms.Panel panel14;
         public System.Windows.Forms.Label labelBarHits;
-        private System.Windows.Forms.Timer updateToolBarTimer;
 	}
 }

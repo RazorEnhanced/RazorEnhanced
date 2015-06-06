@@ -2336,6 +2336,7 @@ namespace Assistant
             this.toolboxcountNameTextBox.Name = "toolboxcountNameTextBox";
             this.toolboxcountNameTextBox.Size = new System.Drawing.Size(144, 20);
             this.toolboxcountNameTextBox.TabIndex = 69;
+            this.toolboxcountNameTextBox.TextChanged += new System.EventHandler(this.toolboxcountNameTextBox_TextChanged);
             // 
             // label37
             // 
@@ -2379,6 +2380,7 @@ namespace Assistant
             this.toolboxcountWarningTextBox.Name = "toolboxcountWarningTextBox";
             this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
             this.toolboxcountWarningTextBox.TabIndex = 66;
+            this.toolboxcountWarningTextBox.TextChanged += new System.EventHandler(this.toolboxcountWarningTextBox_TextChanged);
             // 
             // label36
             // 
@@ -2396,6 +2398,7 @@ namespace Assistant
             this.toolboxcountHueWarningCheckBox.Size = new System.Drawing.Size(99, 22);
             this.toolboxcountHueWarningCheckBox.TabIndex = 64;
             this.toolboxcountHueWarningCheckBox.Text = "Show Warning";
+            this.toolboxcountHueWarningCheckBox.CheckedChanged += new System.EventHandler(this.toolboxcountHueWarningCheckBox_CheckedChanged);
             // 
             // toolboxcountHueTextBox
             // 
@@ -2410,6 +2413,7 @@ namespace Assistant
             this.toolboxcountHueTextBox.Name = "toolboxcountHueTextBox";
             this.toolboxcountHueTextBox.Size = new System.Drawing.Size(61, 20);
             this.toolboxcountHueTextBox.TabIndex = 4;
+            this.toolboxcountHueTextBox.TextChanged += new System.EventHandler(this.toolboxcountHueTextBox_TextChanged);
             // 
             // label35
             // 
@@ -2433,6 +2437,7 @@ namespace Assistant
             this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
             this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
             this.toolboxcountGraphTextBox.TabIndex = 2;
+            this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountGraphTextBox_TextChanged);
             // 
             // label18
             // 
@@ -11383,6 +11388,36 @@ namespace Assistant
             toolboxcountGraphTextBox.Text = "0x" + item.Graphics.ToString("X4");
             toolboxcountHueWarningCheckBox.Checked = item.Warning;
             toolboxcountWarningTextBox.Text = item.WarningLimit.ToString();
+        }
+
+        private void toolboxcountNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (toolboxcountNameTextBox.Focused)
+                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+        }
+
+        private void toolboxcountGraphTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (toolboxcountGraphTextBox.Focused)
+                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+        }
+
+        private void toolboxcountHueTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (toolboxcountHueTextBox.Focused)
+                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+        }
+
+        private void toolboxcountHueWarningCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (toolboxcountHueWarningCheckBox.Focused)
+                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+        }
+
+        private void toolboxcountWarningTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (toolboxcountWarningTextBox.Focused)
+                RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
         }
 
         // ---------------- TOOLBAR END ----------------

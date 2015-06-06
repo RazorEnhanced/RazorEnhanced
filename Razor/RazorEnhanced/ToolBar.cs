@@ -6,6 +6,7 @@ using Assistant;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -38,7 +39,6 @@ namespace RazorEnhanced
                 m_WarningLimit = warninglimit;
             }
         }
-
         internal static void UpdateHits(int maxhits, int hits)
         {
             int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
@@ -81,17 +81,6 @@ namespace RazorEnhanced
             });
         }
 
-        internal static void UpdateAll()
-        {
-            if (Assistant.World.Player != null)
-            {
-                RazorEnhanced.ToolBar.UpdateHits(Assistant.World.Player.HitsMax, Assistant.World.Player.Hits);
-                RazorEnhanced.ToolBar.UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
-                RazorEnhanced.ToolBar.UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
-                RazorEnhanced.ToolBar.UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);
-            }
-        }
-
         private static Color GetColor(int percent)
         {
             if (percent <= 10)
@@ -122,6 +111,19 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.Show();
                 }
+            }
+        }
+
+        //////////////// Thread di aggiornamento barra ////////////////
+        internal static Thread UpdateThread = new Thread(new ThreadStart(UpdateAll));
+        internal static void UpdateAll()
+        {
+            if (Assistant.World.Player != null && Assistant.Engine.MainWindow.ToolBarOpen)
+            {
+                RazorEnhanced.ToolBar.UpdateHits(Assistant.World.Player.HitsMax, Assistant.World.Player.Hits);
+                RazorEnhanced.ToolBar.UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
+                RazorEnhanced.ToolBar.UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
+                RazorEnhanced.ToolBar.UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);
             }
         }
 
