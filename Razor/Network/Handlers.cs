@@ -1143,10 +1143,6 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-                    // Update toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
-
                     ClientCommunication.PostHitsUpdate();
 				}
                 RazorEnhanced.Filters.ProcessMessage(m);
@@ -1185,10 +1181,6 @@ namespace Assistant
 
 				if (m == World.Player)
                 {                    
-                    // Update toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
-
 					ClientCommunication.PostStamUpdate();
 				}
 
@@ -1227,10 +1219,6 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-                    // Update toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
-
 					ClientCommunication.PostManaUpdate();
 				}
 
@@ -1365,10 +1353,6 @@ namespace Assistant
                     if (type > 0x04)
                     {
                         player.MaxWeight = p.ReadUInt16();
-
-                        // Update toolbar
-                        if (Assistant.Engine.MainWindow.ToolBarOpen)
-                            RazorEnhanced.ToolBar.UpdateWeight(player.MaxWeight, player.Weight);
 
                         p.ReadByte(); // race?
                     }

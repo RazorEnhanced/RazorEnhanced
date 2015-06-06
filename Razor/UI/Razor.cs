@@ -496,8 +496,8 @@ namespace Assistant
         internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
         internal RazorCheckBox LockToolBarCheckBox { get { return lockToolBarCheckBox; } }
         internal RazorCheckBox AutoopenToolBarCheckBox { get { return autoopenToolBarCheckBox; } }
-
-
+        internal RazorComboBox ToolBoxCountComboBox { get { return toolboxcountComboBox; } }
+        
 		// Scripting
 		internal DataGridView ScriptDataGrid { get { return dataGridViewScripting; } }
 
@@ -2451,6 +2451,7 @@ namespace Assistant
             this.toolboxcountComboBox.Name = "toolboxcountComboBox";
             this.toolboxcountComboBox.Size = new System.Drawing.Size(202, 24);
             this.toolboxcountComboBox.TabIndex = 0;
+            this.toolboxcountComboBox.SelectedIndexChanged += new System.EventHandler(this.toolboxcountComboBox_SelectedIndexChanged);
             // 
             // groupBox25
             // 
@@ -11370,6 +11371,18 @@ namespace Assistant
         private void autoopenToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             RazorEnhanced.Settings.General.WriteBool("AutoopenToolBarCheckBox", autoopenToolBarCheckBox.Checked);
+        }
+
+        private void toolboxcountComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = toolboxcountComboBox.SelectedIndex;
+            RazorEnhanced.ToolBar.ToolBarItem item = RazorEnhanced.Settings.Toolbar.ReadSelectedItem(index);
+
+            toolboxcountNameTextBox.Text = item.Name;
+            toolboxcountHueTextBox.Text = "0x"+ item.Color.ToString("X4");
+            toolboxcountGraphTextBox.Text = "0x" + item.Graphics.ToString("X4");
+            toolboxcountHueWarningCheckBox.Checked = item.Warning;
+            toolboxcountWarningTextBox.Text = item.WarningLimit.ToString();
         }
 
         // ---------------- TOOLBAR END ----------------

@@ -204,6 +204,20 @@ namespace RazorEnhanced
                 m_Dataset.Tables.Add(shards);
 
 
+                // ----------- TOOLBAR ITEM ----------
+                DataTable toolbar_items = new DataTable("TOOLBAR_ITEMS");
+                toolbar_items.Columns.Add("Item", typeof(RazorEnhanced.ToolBar.ToolBarItem));
+
+                for (int i = 0; i < 14; i++)  // Popolo di slot vuoti al primo avvio
+                {
+                    DataRow emptytoolbar = toolbar_items.NewRow();
+                    RazorEnhanced.ToolBar.ToolBarItem emptyitem = new RazorEnhanced.ToolBar.ToolBarItem("Empty", 0x0000, 0x0000, false, 0);
+                    emptytoolbar.ItemArray = new object[] { emptyitem };
+                    toolbar_items.Rows.Add(emptytoolbar);
+                }
+                m_Dataset.Tables.Add(toolbar_items);
+
+
                 // ----------- GENERAL SETTINGS ----------
                 DataTable general = new DataTable("GENERAL");
 
@@ -2130,6 +2144,30 @@ namespace RazorEnhanced
 			}
 		}
 		// ------------- LAUNCHER END -----------------
+
+        // ------------- TOOLBAR -----------------
+        internal class Toolbar
+        {
+            internal static List<RazorEnhanced.ToolBar.ToolBarItem> ReadItems()
+            {
+                List<RazorEnhanced.ToolBar.ToolBarItem> itemsOut = new List<RazorEnhanced.ToolBar.ToolBarItem>();
+
+                foreach (DataRow row in m_Dataset.Tables["TOOLBAR_ITEMS"].Rows)
+                {
+                    RazorEnhanced.ToolBar.ToolBarItem item = (RazorEnhanced.ToolBar.ToolBarItem)row["Item"];
+                    itemsOut.Add(item);
+                }
+                return itemsOut;
+            }
+
+            internal static RazorEnhanced.ToolBar.ToolBarItem ReadSelectedItem(int index)
+            {
+                return (RazorEnhanced.ToolBar.ToolBarItem)m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index]["Item"];
+            }
+        }
+
+        // ------------- TOOLBAR END -----------------
+
 
         // ------------- GENERAL SETTINGS START -----------------
         internal class General

@@ -85,7 +85,6 @@ MainForm::actionStatusMsg=Show Action-Queue status messages
 MainForm::label5=Object delay:
 MainForm::label8=tiles
 MainForm::label6=ms
-MainForm::label18=x
 MainForm::smartLT=Use smart last target
 MainForm::gameSize=Force Game Size:
 MainForm::chkPartyOverhead=Show mana/stam above party members

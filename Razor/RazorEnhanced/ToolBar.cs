@@ -11,6 +11,34 @@ namespace RazorEnhanced
 {
     public class ToolBar
     {
+        [Serializable]
+        public class ToolBarItem
+        {
+            private string m_Name;
+            public string Name { get { return m_Name; } }
+
+            private int m_Graphics;
+            public int Graphics { get { return m_Graphics; } }
+
+            private int m_Color;
+            public int Color { get { return m_Color; } }
+
+            private bool m_Warning;
+            internal bool Warning { get { return m_Warning; } }
+
+            private int m_WarningLimit;
+            public int WarningLimit { get { return m_WarningLimit; } }
+
+            public ToolBarItem(string name, int graphics, int color, bool warning, int warninglimit)
+            {
+                m_Name = name;
+                m_Graphics = graphics;
+                m_Color = color;
+                m_Warning = warning;
+                m_WarningLimit = warninglimit;
+            }
+        }
+
         internal static void UpdateHits(int maxhits, int hits)
         {
             int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
@@ -51,6 +79,17 @@ namespace RazorEnhanced
             {
                 Assistant.Engine.MainWindow.ToolBar.LabelWeight = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
             });
+        }
+
+        internal static void UpdateAll()
+        {
+            if (Assistant.World.Player != null)
+            {
+                RazorEnhanced.ToolBar.UpdateHits(Assistant.World.Player.HitsMax, Assistant.World.Player.Hits);
+                RazorEnhanced.ToolBar.UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
+                RazorEnhanced.ToolBar.UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
+                RazorEnhanced.ToolBar.UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);
+            }
         }
 
         private static Color GetColor(int percent)
@@ -99,6 +138,15 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = LockToolBarCheckBox;
             Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked = AutoopenToolBarCheckBox;
             Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + PosXToolBar + " - Y:" + PosYToolBar;
+
+            List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+
+            int i = 0;
+            foreach (RazorEnhanced.ToolBar.ToolBarItem item in items)
+            {
+                Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Add("Slot " + i + ": " + item.Name);
+                i++;
+            }
         }
     }   
 }

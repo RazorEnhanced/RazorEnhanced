@@ -86,15 +86,12 @@ namespace RazorEnhanced.UI
         private void EnhancedToolbar_Load(object sender, EventArgs e)
         {
             Assistant.Engine.MainWindow.ToolBarOpen = true;
+            ToolBar.UpdateAll();
+        }
 
-            // Carico parametri del char quando apro la barra
-            if (Assistant.World.Player != null)         
-            {
-                RazorEnhanced.ToolBar.UpdateHits(Assistant.World.Player.HitsMax, Assistant.World.Player.Hits);
-                RazorEnhanced.ToolBar.UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
-                RazorEnhanced.ToolBar.UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
-                RazorEnhanced.ToolBar.UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);                
-            }
+        private void updateToolBarTimer_Tick(object sender, EventArgs e)
+        {
+            ToolBar.UpdateAll();
         }
 
 	}
