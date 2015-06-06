@@ -39,14 +39,22 @@ namespace RazorEnhanced
                 m_WarningLimit = warninglimit;
             }
         }
+
+        internal static List<RazorEnhanced.ToolBar.ToolBarItem> ItemCache;
+        internal static void UpdateItemCache()
+        {
+            ItemCache = RazorEnhanced.Settings.Toolbar.ReadItems();
+        }
+
         internal static void UpdateHits(int maxhits, int hits)
         {
             int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
 
-            Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate {
-                Assistant.Engine.MainWindow.ToolBar.LabelTextHits = "Hits: " + maxhits.ToString() + " / " + hits.ToString();
-                Assistant.Engine.MainWindow.ToolBar.LabelBarHitsSize = new System.Drawing.Size(percent, 10);
-                Assistant.Engine.MainWindow.ToolBar.LabelBarHitsColor = GetColor(percent);
+            Assistant.Engine.MainWindow.enhancedToolbar.BeginInvoke((MethodInvoker)delegate
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.labelTextHits.Text = "Hits: " + maxhits.ToString() + " / " + hits.ToString();
+                Assistant.Engine.MainWindow.enhancedToolbar.labelBarHits.Size = new System.Drawing.Size(percent, 10);
+                Assistant.Engine.MainWindow.enhancedToolbar.labelBarHits.BackColor = GetColor(percent);
             });
         }
 
@@ -56,9 +64,9 @@ namespace RazorEnhanced
 
             Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
             {
-                Assistant.Engine.MainWindow.ToolBar.LabelTextStam = "Stam: " + maxstam.ToString() + " / " + stam.ToString();
-                Assistant.Engine.MainWindow.ToolBar.LabelBarStamSize = new System.Drawing.Size(percent, 10);
-                Assistant.Engine.MainWindow.ToolBar.LabelBarStamColor = GetColor(percent);
+                Assistant.Engine.MainWindow.enhancedToolbar.labelTextStamina.Text = "Stam: " + maxstam.ToString() + " / " + stam.ToString();
+                Assistant.Engine.MainWindow.enhancedToolbar.labelBarStamina.Size = new System.Drawing.Size(percent, 10);
+                Assistant.Engine.MainWindow.enhancedToolbar.labelBarStamina.BackColor = GetColor(percent);
             });
         }
         internal static void UpdateMana(int maxmana, int mana)
@@ -67,9 +75,9 @@ namespace RazorEnhanced
 
             Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
             {
-                Assistant.Engine.MainWindow.ToolBar.LabelTextMana = "Mana: " + maxmana.ToString() + " / " + mana.ToString();
-                Assistant.Engine.MainWindow.ToolBar.LabelBarManaSize = new System.Drawing.Size(percent, 10);
-                Assistant.Engine.MainWindow.ToolBar.LabelBarManaColor = GetColor(percent);
+                Assistant.Engine.MainWindow.enhancedToolbar.labelTextMana.Text = "Mana: " + maxmana.ToString() + " / " + mana.ToString();
+                Assistant.Engine.MainWindow.enhancedToolbar.labelBarMana.Size = new System.Drawing.Size(percent, 10);
+                Assistant.Engine.MainWindow.enhancedToolbar.labelBarMana.BackColor = GetColor(percent);
             });
         }
 
@@ -77,7 +85,7 @@ namespace RazorEnhanced
         {
             Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
             {
-                Assistant.Engine.MainWindow.ToolBar.LabelWeight = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
+                Assistant.Engine.MainWindow.enhancedToolbar.labelWeight.Text = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
             });
         }
 
@@ -112,6 +120,8 @@ namespace RazorEnhanced
                     Assistant.Engine.MainWindow.ToolBar.Show();
                     Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
                 }
+                UpdatePanelImage();
+                UpdateItemCache();
             }
         }
 
@@ -128,8 +138,127 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
         }
 
-        //////////////// Thread di aggiornamento barra ////////////////
-        internal static Thread UpdateThread = new Thread(new ThreadStart(UpdateAll));
+        internal static void UpdatePanelImage()
+        {
+            List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+
+            if (items[0].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel1.BackgroundImage = Ultima.Art.GetStatic(items[0].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel1.Enabled = true;
+            }
+            else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel1.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel1.BackColor = Color.DarkGray;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel1.Enabled = false;
+            }
+
+            if (items[1].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel2.BackgroundImage = Ultima.Art.GetStatic(items[1].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel2.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel2.Enabled = false;
+
+            if (items[2].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel3.BackgroundImage = Ultima.Art.GetStatic(items[2].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel3.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel3.Enabled = false;
+
+            if (items[3].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel4.BackgroundImage = Ultima.Art.GetStatic(items[3].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel4.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel4.Enabled = false;
+
+            if (items[4].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel5.BackgroundImage = Ultima.Art.GetStatic(items[4].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel5.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel5.Enabled = false;
+
+            if (items[5].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel6.BackgroundImage = Ultima.Art.GetStatic(items[5].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel6.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel6.Enabled = false;
+
+            if (items[6].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel7.BackgroundImage = Ultima.Art.GetStatic(items[6].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel7.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel7.Enabled = false;
+
+            if (items[7].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel8.BackgroundImage = Ultima.Art.GetStatic(items[7].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel8.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel8.Enabled = false;
+
+            if (items[8].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel9.BackgroundImage = Ultima.Art.GetStatic(items[8].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel9.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel9.Enabled = false;
+
+            if (items[9].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel10.BackgroundImage = Ultima.Art.GetStatic(items[9].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel10.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel10.Enabled = false;
+
+            if (items[10].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel11.BackgroundImage = Ultima.Art.GetStatic(items[10].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel11.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel11.Enabled = false;
+
+            if (items[11].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel12.BackgroundImage = Ultima.Art.GetStatic(items[11].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel12.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel12.Enabled = false;
+
+            if (items[12].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel13.BackgroundImage = Ultima.Art.GetStatic(items[12].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel13.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel13.Enabled = false;
+
+            if (items[13].Graphics != 0)
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel14.BackgroundImage = Ultima.Art.GetStatic(items[13].Graphics);
+                Assistant.Engine.MainWindow.enhancedToolbar.panel14.Enabled = true;
+            }
+            else
+                Assistant.Engine.MainWindow.enhancedToolbar.panel14.Enabled = false;
+        }
+
         internal static void UpdateAll()
         {
             if (Assistant.World.Player != null && Assistant.Engine.MainWindow.ToolBarOpen)
@@ -137,9 +266,30 @@ namespace RazorEnhanced
                 RazorEnhanced.ToolBar.UpdateHits(Assistant.World.Player.HitsMax, Assistant.World.Player.Hits);
                 RazorEnhanced.ToolBar.UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
                 RazorEnhanced.ToolBar.UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
-                RazorEnhanced.ToolBar.UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);
+                RazorEnhanced.ToolBar.UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);               
+            }
+
+            UpdateCount();
+
+        }
+
+        internal static void UpdateCount()
+        {
+            if (Assistant.World.Player != null && Assistant.Engine.MainWindow.ToolBarOpen)
+            {
+                List<RazorEnhanced.ToolBar.ToolBarItem> items = ItemCache;
+
+                if (items[0].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel1count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[0].Graphics, items[0].Color).ToString();
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel2count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[1].Graphics, items[1].Color).ToString();
+                    });
+                }
             }
         }
+
 
         //////////////// Load settings ////////////////
         internal static void LoadSettings()

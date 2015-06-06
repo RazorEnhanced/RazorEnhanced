@@ -11,55 +11,7 @@ namespace RazorEnhanced.UI
 {
 	public partial class EnhancedToolbar : Form
 	{
-        // Hits
-        internal string LabelTextHits
-        {
-            set { labelTextHits.Text = value; }
-        }
-        internal System.Drawing.Size LabelBarHitsSize
-        {
-            set { labelBarHits.Size = value; }
-        }
-        internal System.Drawing.Color LabelBarHitsColor
-        {
-            set { labelBarHits.BackColor = value; }
-        }
-
-        // Stam
-        internal string LabelTextStam
-        {
-            set { labelTextStamina.Text = value; }
-        }
-        internal System.Drawing.Size LabelBarStamSize
-        {
-            set { labelBarStamina.Size = value; }
-        }
-        internal System.Drawing.Color LabelBarStamColor
-        {
-            set { labelBarStamina.BackColor = value; }
-        }
-
-        // Mana
-        internal string LabelTextMana
-        {
-            set { labelTextMana.Text = value; }
-        }
-        internal System.Drawing.Size LabelBarManaSize
-        {
-            set { labelBarMana.Size = value; }
-        }
-        internal System.Drawing.Color LabelBarManaColor
-        {
-            set { labelBarMana.BackColor = value; }
-        }
-
-        // Weight
-        internal string LabelWeight
-        {
-            set { labelWeight.Text = value; }
-        }
-
-		public EnhancedToolbar()
+ 		public EnhancedToolbar()
 		{
             this.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
             this.Move += new System.EventHandler(this.EnhancedToolbar_Move);
@@ -70,8 +22,6 @@ namespace RazorEnhanced.UI
         {
             Assistant.Engine.MainWindow.ToolBarOpen = false;
             Assistant.Engine.MainWindow.ToolBar = null;
-            if (ToolBar.UpdateThread != null && ToolBar.UpdateThread.IsAlive)
-                ToolBar.UpdateThread.Abort();
         }
 
         private void EnhancedToolbar_Move(object sender, System.EventArgs e)
@@ -98,7 +48,6 @@ namespace RazorEnhanced.UI
         private void EnhancedToolbar_Load(object sender, EventArgs e)
         {
             Assistant.Engine.MainWindow.ToolBarOpen = true;
-            ToolBar.UpdateThread.Start();
             ToolBar.UpdateAll();
         }
 	}

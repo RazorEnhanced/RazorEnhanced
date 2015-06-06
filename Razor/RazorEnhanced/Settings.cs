@@ -2202,6 +2202,7 @@ namespace RazorEnhanced
                 RazorEnhanced.ToolBar.ToolBarItem item = new RazorEnhanced.ToolBar.ToolBarItem(name, convgraphics, convcolor, warning, convwarninglimit);
                 m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index]["Item"] = item;
                 Save();
+                RazorEnhanced.ToolBar.UpdateItemCache();
             }
         }
 

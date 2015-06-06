@@ -490,8 +490,9 @@ namespace Assistant
 		internal Label WaitDisplay { get { return waitDisp; } }
 
 		// Enhanced Toolbar
-		private EnhancedToolbar enhancedToolbar;
+        internal EnhancedToolbar enhancedToolbar;
         internal EnhancedToolbar ToolBar { get { return enhancedToolbar; } set { enhancedToolbar = value; } }
+
         internal bool ToolBarOpen = false;
         internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
         internal RazorCheckBox LockToolBarCheckBox { get { return lockToolBarCheckBox; } }
@@ -11408,7 +11409,11 @@ namespace Assistant
         private void toolboxcountGraphTextBox_TextChanged(object sender, EventArgs e)
         {
             if (toolboxcountGraphTextBox.Focused)
+            {
                 RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+                RazorEnhanced.ToolBar.UpdatePanelImage();
+                RazorEnhanced.ToolBar.UpdateCount();
+            }
         }
 
         private void toolboxcountHueTextBox_TextChanged(object sender, EventArgs e)
@@ -11439,6 +11444,8 @@ namespace Assistant
             toolboxcountWarningTextBox.Text ="0";
             RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
             RazorEnhanced.ToolBar.UptateToolBarComboBox(index);
+            RazorEnhanced.ToolBar.UpdatePanelImage();
+            RazorEnhanced.ToolBar.UpdateCount();
         }
 
         private void toolboxcountTargetButton_Click(object sender, EventArgs e)
@@ -11463,6 +11470,8 @@ namespace Assistant
                     toolboxcountHueTextBox.Text = item.Hue.ToString("X4");
                     RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
                     RazorEnhanced.ToolBar.UptateToolBarComboBox(index);
+                    RazorEnhanced.ToolBar.UpdatePanelImage();
+                    RazorEnhanced.ToolBar.UpdateCount();
                 }
             });
         }

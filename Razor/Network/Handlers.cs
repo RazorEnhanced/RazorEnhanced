@@ -632,7 +632,11 @@ namespace Assistant
 			if (i.IsNew)
 				Item.UpdateContainers();
 			if (!SearchExemptionAgent.IsExempt(i) && (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver)))
-				Counter.Count(i);
+				// Update Contatori Item ToolBar
+                if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    RazorEnhanced.ToolBar.UpdateCount();
+
+                //Counter.Count(i);
 
 			return new ContainerItem(i, Engine.UsePostKRPackets).Compile();
 		}
@@ -699,7 +703,10 @@ namespace Assistant
 			if (i.IsNew)
 				Item.UpdateContainers();
 			if (!SearchExemptionAgent.IsExempt(i) && (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver)))
-				Counter.Count(i);
+                // Update Contatori Item ToolBar
+                if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    RazorEnhanced.ToolBar.UpdateCount();
+				//Counter.Count(i);
 		}
 
 		private static void BeginContainerContent(PacketReader p, PacketHandlerEventArgs args)
@@ -782,7 +789,10 @@ namespace Assistant
 
 				item.Container = cont; // must be done after hue is set (for counters)
 				if (!SearchExemptionAgent.IsExempt(item) && (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver)))
-					Counter.Count(item);
+                    // Update Contatori Item ToolBar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateCount();
+					//Counter.Count(item);
 
 				list.Add(item);
 			}
@@ -842,7 +852,10 @@ namespace Assistant
 
 				item.Container = cont; // must be done after hue is set (for counters)
 				if (!SearchExemptionAgent.IsExempt(item) && (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver)))
-					Counter.Count(item);
+                    // Update Contatori Item ToolBar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateCount();
+					//Counter.Count(item);
 			}
 
 			foreach (Item container in updated)
@@ -1143,6 +1156,10 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
+                    // Update hits toolbar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
+
                     ClientCommunication.PostHitsUpdate();
 				}
                 RazorEnhanced.Filters.ProcessMessage(m);
@@ -1180,7 +1197,11 @@ namespace Assistant
 				m.Stam = p.ReadUInt16();
 
 				if (m == World.Player)
-                {                    
+                {
+                    // Update Stam Toolbar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateHits(m.StamMax, m.Stam);
+
 					ClientCommunication.PostStamUpdate();
 				}
 
@@ -1219,6 +1240,10 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
+                    // Update Mana toolbar
+                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                        RazorEnhanced.ToolBar.UpdateHits(m.ManaMax, m.Mana);
+
 					ClientCommunication.PostManaUpdate();
 				}
 
@@ -1348,6 +1373,7 @@ namespace Assistant
                 player.AR = p.ReadUInt16(); // ar / physical resist
                 player.Weight = p.ReadUInt16();
 
+                
                 if (type >= 0x03)
                 {
                     if (type > 0x04)
@@ -1377,6 +1403,9 @@ namespace Assistant
                         player.Tithe = p.ReadInt32();
                     }
                 }
+                // Update Weight toolbar
+                if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    RazorEnhanced.ToolBar.UpdateWeight(World.Player.MaxWeight, World.Player.Weight);
 
                 ClientCommunication.PostHitsUpdate();
                 ClientCommunication.PostStamUpdate();
@@ -1598,6 +1627,9 @@ namespace Assistant
 					}
 				}
 			}
+            // Update Contatori Item ToolBar
+            if (Assistant.Engine.MainWindow.ToolBarOpen)
+                RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		private static void ServerChange(PacketReader p, PacketHandlerEventArgs args)
@@ -1626,7 +1658,10 @@ namespace Assistant
 				return;
 
 			item.Container = null;
-			Counter.Uncount(item);
+            // Update Contatori Item ToolBar
+            if (Assistant.Engine.MainWindow.ToolBarOpen)
+                RazorEnhanced.ToolBar.UpdateCount();
+			//Counter.Uncount(item);
 
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(itemID & 0x7FFF);
@@ -1796,7 +1831,11 @@ namespace Assistant
 				return;
 
 			item.Container = null;
-			Counter.Uncount(item);
+
+            // Update Contatori Item ToolBar
+            if (Assistant.Engine.MainWindow.ToolBarOpen)
+                RazorEnhanced.ToolBar.UpdateCount(); 
+            //Counter.Uncount(item);
 
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
