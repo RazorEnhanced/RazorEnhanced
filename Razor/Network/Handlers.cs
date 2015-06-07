@@ -1153,7 +1153,7 @@ namespace Assistant
 				{
                     // Update hits toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateHits(m.Hits, m.HitsMax);
+                        RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
                     ClientCommunication.PostHitsUpdate();
 				}
@@ -1195,7 +1195,7 @@ namespace Assistant
                 {
                     // Update Stam Toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateStam(m.Stam, m.StamMax);
+                        RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
 					ClientCommunication.PostStamUpdate();
 				}
@@ -1237,7 +1237,7 @@ namespace Assistant
 				{
                     // Update Mana toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateMana(m.Mana, m.ManaMax);
+                        RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
 					ClientCommunication.PostManaUpdate();
 				}

@@ -10667,7 +10667,7 @@ namespace Assistant
         private void FriendPlayerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
         {
             Assistant.Mobile friendplayer = Assistant.World.FindMobile(serial);
-            if (friendplayer != null && friendplayer.Serial.IsMobile)
+            if (friendplayer != null && friendplayer.Serial.IsMobile && friendplayer.Serial != World.Player.Serial)
             {
                 RazorEnhanced.Misc.SendMessage("Friend player added: " + friendplayer.Name.ToString());
                 this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Friend.AddPlayerToList(friendplayer.Name, friendplayer.Serial); });

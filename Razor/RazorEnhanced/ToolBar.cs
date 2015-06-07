@@ -46,7 +46,7 @@ namespace RazorEnhanced
 
             Assistant.Engine.MainWindow.enhancedToolbar.BeginInvoke((MethodInvoker)delegate
             {
-                Assistant.Engine.MainWindow.enhancedToolbar.labelTextHits.Text = "Hits: " + maxhits.ToString() + " / " + hits.ToString();
+                Assistant.Engine.MainWindow.enhancedToolbar.labelTextHits.Text = "Hits: " + hits.ToString() + " / " + maxhits.ToString();
                 Assistant.Engine.MainWindow.enhancedToolbar.labelBarHits.Size = new System.Drawing.Size(percent, 10);
                 Assistant.Engine.MainWindow.enhancedToolbar.labelBarHits.BackColor = GetColor(percent);
             });
@@ -58,7 +58,7 @@ namespace RazorEnhanced
 
             Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
             {
-                Assistant.Engine.MainWindow.enhancedToolbar.labelTextStamina.Text = "Stam: " + maxstam.ToString() + " / " + stam.ToString();
+                Assistant.Engine.MainWindow.enhancedToolbar.labelTextStamina.Text = "Stam: " + stam.ToString() + " / " + maxstam.ToString();
                 Assistant.Engine.MainWindow.enhancedToolbar.labelBarStamina.Size = new System.Drawing.Size(percent, 10);
                 Assistant.Engine.MainWindow.enhancedToolbar.labelBarStamina.BackColor = GetColor(percent);
             });
@@ -69,7 +69,7 @@ namespace RazorEnhanced
 
             Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
             {
-                Assistant.Engine.MainWindow.enhancedToolbar.labelTextMana.Text = "Mana: " + maxmana.ToString() + " / " + mana.ToString();
+                Assistant.Engine.MainWindow.enhancedToolbar.labelTextMana.Text = "Mana: " + mana.ToString() + " / " + maxmana.ToString();
                 Assistant.Engine.MainWindow.enhancedToolbar.labelBarMana.Size = new System.Drawing.Size(percent, 10);
                 Assistant.Engine.MainWindow.enhancedToolbar.labelBarMana.BackColor = GetColor(percent);
             });

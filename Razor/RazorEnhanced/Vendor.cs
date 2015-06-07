@@ -325,7 +325,7 @@ namespace RazorEnhanced
 						{
 							if (alreadySold) // Gia venduto oggetto stessa grafica
 							{
-								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount + " - Left: " + amountLeft);
+								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount);
 								if (amount < amountLeft)        // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
 								{
 									int amountTemp = amountLeft - amount;
@@ -346,7 +346,7 @@ namespace RazorEnhanced
 							}
 							else // Mai venduto oggetto stessa grafica
 							{
-								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount + " - Left: " + sellItem.Amount);
+								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount);
 								if (amount < sellItem.Amount) // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
 								{
 									list.Add(new SellListItem(ser, amount));  // Lista processo vendita
