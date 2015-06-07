@@ -234,7 +234,7 @@ namespace Assistant
 		private static void DeathAnimation(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial killed = p.ReadUInt32();
-			if (Config.GetBool("AutoCap"))
+            if (RazorEnhanced.Settings.General.ReadBool("AutoCap"))
 			{
 				Mobile m = World.FindMobile(killed);
 				if (m != null && ((m.Body >= 0x0190 && m.Body <= 0x0193) || (m.Body >= 0x025D && m.Body <= 0x0260)) && Utility.Distance(World.Player.Position, m.Position) <= 12)

@@ -6191,6 +6191,14 @@ namespace Assistant
 
             // ------------------ TARGETS --------------------
             RazorEnhanced.TargetGUI.RefreshTarget();
+
+            // ------------------ PARAMETRI GENERALI -------------------
+            screenPath.Text = RazorEnhanced.Settings.General.ReadString("CapPath");
+            radioUO.Checked = !(radioFull.Checked = RazorEnhanced.Settings.General.ReadBool("CapFullScreen"));
+            imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
+            dispTime.Checked = RazorEnhanced.Settings.General.ReadBool("CapTimeStamp");
+            screenAutoCap.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCap");
+
 		}
 
 		private bool m_Initializing = false;
@@ -6251,10 +6259,10 @@ namespace Assistant
 			chkStealth.Checked = Config.GetBool("CountStealthSteps");
 
 			spamFilter.Checked = Config.GetBool("FilterSpam");
-			screenAutoCap.Checked = Config.GetBool("AutoCap");
-			radioUO.Checked = !(radioFull.Checked = Config.GetBool("CapFullScreen"));
-			screenPath.Text = Config.GetString("CapPath");
-			dispTime.Checked = Config.GetBool("CapTimeStamp");
+            
+            
+            
+			
 			blockDis.Checked = Config.GetBool("BlockDismount");
 			alwaysStealth.Checked = Config.GetBool("AlwaysStealth");
 			autoOpenDoors.Checked = Config.GetBool("AutoOpenDoors");
@@ -6263,12 +6271,13 @@ namespace Assistant
 
 			try
 			{
-				imgFmt.SelectedItem = Config.GetString("ImageFormat");
+                imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
+				//im//gFmt.SelectedItem = Config.GetString("ImageFormat");
 			}
 			catch
 			{
 				imgFmt.SelectedIndex = 0;
-				Config.SetProperty("ImageFormat", "jpg");
+                RazorEnhanced.Settings.General.WriteString("ImageFormat", "jpg");
 			}
 
 			InitPreviewHue(lblExHue, "ExemptColor");
@@ -7955,19 +7964,19 @@ namespace Assistant
 
 		private void screenAutoCap_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("AutoCap", screenAutoCap.Checked);
+            RazorEnhanced.Settings.General.WriteBool("AutoCap", screenAutoCap.Checked);
 		}
 
 		private void setScnPath_Click(object sender, System.EventArgs e)
 		{
 			FolderBrowserDialog folder = new FolderBrowserDialog();
 			folder.Description = Language.GetString(LocString.SelSSFolder);
-			folder.SelectedPath = Config.GetString("CapPath");
+            folder.SelectedPath = RazorEnhanced.Settings.General.ReadString("CapPath");
 			folder.ShowNewFolderButton = true;
 
 			if (folder.ShowDialog(this) == DialogResult.OK)
 			{
-				Config.SetProperty("CapPath", folder.SelectedPath);
+                RazorEnhanced.Settings.General.WriteString("CapPath", folder.SelectedPath);
 				screenPath.Text = folder.SelectedPath;
 
 				ReloadScreenShotsList();
@@ -7989,7 +7998,7 @@ namespace Assistant
 			if (radioFull.Checked)
 			{
 				radioUO.Checked = false;
-				Config.SetProperty("CapFullScreen", true);
+                RazorEnhanced.Settings.General.WriteBool("CapFullScreen", true);
 			}
 		}
 
@@ -7998,7 +8007,7 @@ namespace Assistant
 			if (radioUO.Checked)
 			{
 				radioFull.Checked = false;
-				Config.SetProperty("CapFullScreen", false);
+                RazorEnhanced.Settings.General.WriteBool("CapFullScreen", false);
 			}
 		}
 
@@ -8013,7 +8022,7 @@ namespace Assistant
 			if (screensList.SelectedIndex == -1)
 				return;
 
-			string file = Path.Combine(Config.GetString("CapPath"), screensList.SelectedItem.ToString());
+			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), screensList.SelectedItem.ToString());
 			if (!File.Exists(file))
 			{
 				MessageBox.Show(this, Language.Format(LocString.FileNotFoundA1, file), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -8047,7 +8056,7 @@ namespace Assistant
 			if (sel == -1)
 				return;
 
-			string file = Path.Combine(Config.GetString("CapPath"), (string)screensList.SelectedItem);
+			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), (string)screensList.SelectedItem);
 			if (MessageBox.Show(this, Language.Format(LocString.DelConf, file), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 				return;
 
@@ -8073,7 +8082,7 @@ namespace Assistant
 
 		private void ClearScreensDirectory(object sender, System.EventArgs e)
 		{
-			string dir = Config.GetString("CapPath");
+            string dir = RazorEnhanced.Settings.General.ReadString("CapPath");
 			if (MessageBox.Show(this, Language.Format(LocString.Confirm, dir), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
 				return;
 
@@ -8105,7 +8114,7 @@ namespace Assistant
 
 		private void dispTime_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("CapTimeStamp", dispTime.Checked);
+            RazorEnhanced.Settings.General.WriteBool("CapTimeStamp", dispTime.Checked);
 		}
 
 		internal static void LaunchBrowser(string site)
@@ -8224,7 +8233,7 @@ namespace Assistant
 
 		private void screenPath_TextChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("CapPath", screenPath.Text);
+            RazorEnhanced.Settings.General.WriteString("CapPath", screenPath.Text);
 		}
 
 		private void rememberPwds_CheckedChanged(object sender, System.EventArgs e)
@@ -8316,9 +8325,9 @@ namespace Assistant
 		private void imgFmt_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			if (imgFmt.SelectedIndex != -1)
-				Config.SetProperty("ImageFormat", imgFmt.SelectedItem);
+                RazorEnhanced.Settings.General.WriteString("ImageFormat",  imgFmt.SelectedItem.ToString());
 			else
-				Config.SetProperty("ImageFormat", "jpg");
+                RazorEnhanced.Settings.General.WriteString("ImageFormat", "jpg");
 		}
 
 		private void alwaysStealth_CheckedChanged(object sender, System.EventArgs e)
@@ -8340,7 +8349,7 @@ namespace Assistant
 		{
 			string file = screensList.SelectedItem as String;
 			if (file != null)
-				System.Diagnostics.Process.Start(Path.Combine(Config.GetString("CapPath"), file));
+				System.Diagnostics.Process.Start(Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), file));
 		}
 
 		private Timer m_ResizeTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(1.0), new TimerCallback(ForceSize));

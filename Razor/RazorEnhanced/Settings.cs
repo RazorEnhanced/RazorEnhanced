@@ -259,6 +259,13 @@ namespace RazorEnhanced
                 general.Columns.Add("PosXToolBar", typeof(int));
                 general.Columns.Add("PosYToolBar", typeof(int));
 
+                // Parametri Tab (Screenshot)
+                general.Columns.Add("CapPath", typeof(string));
+                general.Columns.Add("ImageFormat", typeof(string));
+                general.Columns.Add("CapFullScreen", typeof(bool));
+                general.Columns.Add("CapTimeStamp", typeof(bool));
+                general.Columns.Add("AutoCap", typeof(bool));
+
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -268,7 +275,10 @@ namespace RazorEnhanced
                     false, false, false, false, false, false, false, false, 0, 0,
                     
                     // Parametri primo avvio per tab Enhanced ToolBar
-                    false, false, 10, 10
+                    false, false, 10, 10,
+
+                    // Parametri primo avvio per tab screenshot
+                    Directory.GetCurrentDirectory(), "jpg", false, false, false
                 };
 
                 DataRow generalsettings = general.NewRow();

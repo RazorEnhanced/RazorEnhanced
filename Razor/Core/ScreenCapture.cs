@@ -28,15 +28,15 @@ namespace Assistant
 			string filename;
 			string timestamp;
 			string name = "Unknown";
-			string path = Config.GetString("CapPath");
-			string type = Config.GetString("ImageFormat").ToLower();
+            string path = RazorEnhanced.Settings.General.ReadString("CapPath");
+            string type = RazorEnhanced.Settings.General.ReadString("ImageFormat").ToLower();
 
 			if (World.Player != null)
 				name = World.Player.Name;
 			if (name == null || name.Trim() == "" || name.IndexOfAny(Path.GetInvalidPathChars()) != -1)
 				name = "Unknown";
 
-			if (Config.GetBool("CapTimeStamp"))
+			if (RazorEnhanced.Settings.General.ReadBool("CapTimeStamp"))
 				timestamp = String.Format("{0} ({1}) - {2}", name, World.ShardName, DateTime.Now.ToString(@"M/dd/yy - HH:mm:ss"));
 			else
 				timestamp = "";
@@ -51,7 +51,7 @@ namespace Assistant
 				try
 				{
 					path = Config.GetUserDirectory("ScreenShots");
-					Config.SetProperty("CapPath", path);
+                    RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				}
 				catch
 				{
@@ -69,7 +69,7 @@ namespace Assistant
 
 			try
 			{
-				IntPtr hBmp = ClientCommunication.CaptureScreen(Config.GetBool("CapFullScreen"), timestamp);
+				IntPtr hBmp = ClientCommunication.CaptureScreen(RazorEnhanced.Settings.General.ReadBool("CapFullScreen"), timestamp);
 				using (Image img = Image.FromHbitmap(hBmp))
 					img.Save(filename, GetFormat(type));
 				DeleteObject(hBmp);
@@ -106,7 +106,7 @@ namespace Assistant
 
 		internal static void DisplayTo(ListBox list)
 		{
-			string path = Config.GetString("CapPath");
+            string path = RazorEnhanced.Settings.General.ReadString("CapPath");
 			Engine.EnsureDirectory(path);
 
 			//list.BeginUpdate();
