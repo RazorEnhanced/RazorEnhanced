@@ -289,6 +289,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.Designer.cs">
+      <DependentUpon>EnhancedGraphFilterAdd.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedTargetEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -562,6 +568,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.resx">
+      <DependentUpon>EnhancedGraphFilterAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedTargetEdit.resx">
       <DependentUpon>EnhancedTargetEdit.cs</DependentUpon>

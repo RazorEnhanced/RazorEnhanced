@@ -602,6 +602,7 @@ namespace Assistant
         internal RazorCheckBox MobFilterCheckBox { get { return mobfilterCheckBox; } }
         internal Label AutoCarverBladeLabel { get { return autocarverbladeLabel; } }
         internal Label BoneBladeLabel { get { return bonebladeLabel; } }
+        internal ListView MobFilterlistView { get { return mobfilterlistView; } }
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
@@ -2124,6 +2125,7 @@ namespace Assistant
             this.mobfilterRemoveButton.Text = "Remove Filter";
             this.mobfilterRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.mobfilterRemoveButton.UseVisualStyleBackColor = true;
+            this.mobfilterRemoveButton.Click += new System.EventHandler(this.mobfilterRemoveButton_Click);
             // 
             // mobfilterAddButton
             // 
@@ -2135,6 +2137,7 @@ namespace Assistant
             this.mobfilterAddButton.Text = "Add Filter";
             this.mobfilterAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.mobfilterAddButton.UseVisualStyleBackColor = true;
+            this.mobfilterAddButton.Click += new System.EventHandler(this.mobfilterAddButton_Click);
             // 
             // mobfilterlistView
             // 
@@ -2155,6 +2158,7 @@ namespace Assistant
             this.mobfilterlistView.TabIndex = 67;
             this.mobfilterlistView.UseCompatibleStateImageBehavior = false;
             this.mobfilterlistView.View = System.Windows.Forms.View.Details;
+            this.mobfilterlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.mobfilterlistView_ItemChecked);
             // 
             // columnHeader52
             // 
@@ -2178,6 +2182,7 @@ namespace Assistant
             this.mobfilterCheckBox.Size = new System.Drawing.Size(79, 22);
             this.mobfilterCheckBox.TabIndex = 61;
             this.mobfilterCheckBox.Text = "Enable";
+            this.mobfilterCheckBox.CheckedChanged += new System.EventHandler(this.mobfilterCheckBox_CheckedChanged);
             // 
             // groupBox10
             // 
@@ -11352,6 +11357,42 @@ namespace Assistant
             RazorEnhanced.Settings.General.WriteBool("BlockPartyInviteCheckBox", blockpartyinviteCheckBox.Checked);
         }
 
+        private void mobfilterRemoveButton_Click(object sender, EventArgs e)
+        {
+            if (mobfilterlistView.SelectedItems.Count == 1)
+				{
+                    int index = mobfilterlistView.SelectedIndices[0];
+                    int graph = 0;
+                    try
+                    {
+                        graph = Convert.ToInt32(mobfilterlistView.Items[index].SubItems[1].Text.ToString(), 16);
+                    }
+                    catch
+                    { }
+
+    				RazorEnhanced.Settings.GraphFilter.Delete(graph);
+					RazorEnhanced.Filters.RefreshLists();
+				}
+        }
+        private void mobfilterAddButton_Click(object sender, EventArgs e)
+        {
+            EnhancedGraphFilterAdd ManualAddGraphFilter = new EnhancedGraphFilterAdd();
+            ManualAddGraphFilter.TopMost = true;
+            ManualAddGraphFilter.Show();
+        }
+        private void mobfilterlistView_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            if (mobfilterlistView.FocusedItem != null)
+            {
+                ListViewItem item = e.Item as ListViewItem;
+                RazorEnhanced.Filters.UpdateSelectedItems(item.Index);
+            }
+        }
+
+        private void mobfilterCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
+        }
         // ---------------- FILTERS END ----------------
 
         private void timerupdatestatus_Tick(object sender, EventArgs e)
@@ -11475,7 +11516,6 @@ namespace Assistant
                 }
             });
         }
-
         // ---------------- TOOLBAR END ----------------
 	}
 }

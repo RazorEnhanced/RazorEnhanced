@@ -1105,6 +1105,23 @@ namespace Assistant
 			if (m != null)
 			{
 				m.Body = p.ReadUInt16();
+
+                // Blocco filtro graph mobs
+                if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
+                {
+                    List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
+                    foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+                    {
+                        if (m.Body == graphdata.GraphReal)
+                        {
+                            p.Seek(-2, SeekOrigin.Current);
+                            p.Write((ushort)(graphdata.GraphNew));
+                            break;
+                        }
+                    }
+
+                }
+
 				m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
 				if (World.Player != null && !Utility.InRange(World.Player.Position, m.Position, World.Player.VisRange))
@@ -1431,6 +1448,22 @@ namespace Assistant
 			bool wasHidden = !m.Visible;
 
 			m.Body = (ushort)(p.ReadUInt16() + p.ReadSByte());
+
+            // Blocco filtro graph mobs
+            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
+            {
+                List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
+                foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+                {
+                    if (m.Body == graphdata.GraphReal)
+                    {
+                        p.Seek(-2, SeekOrigin.Current);
+                        p.Write((ushort)(graphdata.GraphNew));
+                        break;
+                    }
+                }
+            }
+
 			m.Hue = p.ReadUInt16();
 			int ltHue = Config.GetInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
@@ -1476,6 +1509,24 @@ namespace Assistant
 
 			Serial serial = p.ReadUInt32();
 			ushort body = p.ReadUInt16();
+
+            // Blocco filtro graph mobs
+            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
+            {
+                List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
+                foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+                {
+                    if (body == graphdata.GraphReal)
+                    {
+                        p.Seek(-2, SeekOrigin.Current);
+                        p.Write((ushort)(graphdata.GraphNew));
+                        body = (ushort)graphdata.GraphNew;
+                        break;
+                    }
+                }
+                
+            }
+
 			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
 			if (World.Player.Position != Point3D.Zero && !Utility.InRange(World.Player.Position, position, World.Player.VisRange))
@@ -1500,6 +1551,7 @@ namespace Assistant
 				isLT = false;
 
 			m.Body = body;
+
 			if (m != World.Player || World.Player.OutstandingMoveReqs == 0)
 				m.Position = position;
 			m.Direction = (Direction)p.ReadByte();

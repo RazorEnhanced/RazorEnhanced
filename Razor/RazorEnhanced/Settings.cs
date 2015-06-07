@@ -204,6 +204,12 @@ namespace RazorEnhanced
                 m_Dataset.Tables.Add(shards);
 
 
+                // ----------- FILTER GRAPH CHANGE ----------
+                DataTable filter_graph = new DataTable("FILTER_GRAPH");
+                filter_graph.Columns.Add("Graph", typeof(RazorEnhanced.Filters.GraphChangeData));
+                m_Dataset.Tables.Add(filter_graph);
+
+
                 // ----------- TOOLBAR ITEM ----------
                 DataTable toolbar_items = new DataTable("TOOLBAR_ITEMS");
                 toolbar_items.Columns.Add("Item", typeof(RazorEnhanced.ToolBar.ToolBarItem));
@@ -1933,6 +1939,83 @@ namespace RazorEnhanced
             }
         }
         // ------------- RESTOCK END-----------------
+
+
+        // ------------- GRAPH FILTER  -----------------
+
+        internal class GraphFilter
+        {
+            internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
+            {
+                List<RazorEnhanced.Filters.GraphChangeData> graphdatalist = new List<RazorEnhanced.Filters.GraphChangeData>();
+
+                foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
+                {
+                    RazorEnhanced.Filters.GraphChangeData graphdata = (RazorEnhanced.Filters.GraphChangeData)row["Graph"];
+                    graphdatalist.Add(graphdata);
+                }
+
+                return graphdatalist;
+            }
+
+            internal static void Insert(int graphreal, int graphnew)
+            {
+                RazorEnhanced.Filters.GraphChangeData graphdata = new RazorEnhanced.Filters.GraphChangeData(true, graphreal, graphnew);
+
+                DataRow row = m_Dataset.Tables["FILTER_GRAPH"].NewRow();
+                row["Graph"] = graphdata;
+                m_Dataset.Tables["FILTER_GRAPH"].Rows.Add(row);
+
+                Save();
+            }
+
+            internal static void Replace(int index, RazorEnhanced.Filters.GraphChangeData graphdata)
+            {
+                int count = -1;
+                foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
+                {
+                        count++;
+                        if (count == index)
+                        {
+                            row["Graph"] = graphdata;
+                        }
+                }
+
+                Save();
+            }
+
+            internal static bool Exist(int graphreal)
+            {
+                for (int i = m_Dataset.Tables["FILTER_GRAPH"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["FILTER_GRAPH"].Rows[i];
+                    RazorEnhanced.Filters.GraphChangeData graphdata = (RazorEnhanced.Filters.GraphChangeData)row["Graph"];
+                    if (graphdata.GraphReal == graphreal)
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+
+            internal static void Delete(int graphreal)
+            {
+                for (int i = m_Dataset.Tables["FILTER_GRAPH"].Rows.Count - 1; i >= 0; i--)
+                {
+                    DataRow row = m_Dataset.Tables["FILTER_GRAPH"].Rows[i];
+                    RazorEnhanced.Filters.GraphChangeData graphdata = (RazorEnhanced.Filters.GraphChangeData)row["Graph"];
+                    if (graphdata.GraphReal == graphreal)
+                    {
+                        row.Delete();
+                        break;
+                    }
+                }
+
+                Save();
+            }
+
+        }
+        // ------------- GRAPH FILTER END-----------------
 
 
         // ------------- TARGET SETTINGS START -----------------

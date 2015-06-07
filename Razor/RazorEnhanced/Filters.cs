@@ -10,6 +10,26 @@ namespace RazorEnhanced
 {
 	public class Filters
 	{
+        [Serializable]
+        public class GraphChangeData
+        {
+            private bool m_Selected;
+            public bool Selected { get { return m_Selected; } }
+
+            private int m_GraphReal;
+            public int GraphReal { get { return m_GraphReal; } }
+
+            private int m_GraphNew;
+            public int GraphNew { get { return m_GraphNew; } }
+
+            public GraphChangeData(bool selected, int graphreal, int graphnew)
+            {
+                m_Selected = selected;
+                m_GraphReal = graphreal;
+                m_GraphNew = graphnew;
+            }
+        }
+
         internal static int BoneCutterBlade
         {
             get
@@ -88,7 +108,47 @@ namespace RazorEnhanced
             }
 
         }
+        //////////////// GRAPH FILTER ///////////////////////
 
+        internal static void RefreshLists()
+        {
+            List<RazorEnhanced.Filters.GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
+
+            Assistant.Engine.MainWindow.MobFilterlistView.Items.Clear();
+
+            foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+            {
+                ListViewItem listitem = new ListViewItem();
+
+                listitem.Checked = graphdata.Selected;
+
+                listitem.SubItems.Add("0x" + graphdata.GraphReal.ToString("X4"));
+                listitem.SubItems.Add("0x" + graphdata.GraphNew.ToString("X4"));
+
+                Assistant.Engine.MainWindow.MobFilterlistView.Items.Add(listitem);
+            }         
+        }
+
+        internal static void UpdateSelectedItems(int i)
+        {
+            List<RazorEnhanced.Filters.GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
+
+            if (graphdatas.Count != Assistant.Engine.MainWindow.MobFilterlistView.Items.Count)
+            {
+                return;
+            }
+
+            ListViewItem lvi = Assistant.Engine.MainWindow.MobFilterlistView.Items[i];
+            GraphChangeData old = graphdatas[i];
+
+            if (lvi != null && old != null)
+            {
+                GraphChangeData graph = new GraphChangeData(lvi.Checked, old.GraphReal, old.GraphNew);
+                RazorEnhanced.Settings.GraphFilter.Replace(i, graph);
+            }
+        }
+
+        //////////////// GRAPH FILTER END /////////////////////
 
         //////////////// AUTOCARVER START ////////////////
 
@@ -181,6 +241,8 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = BoneCutterCheckBox;
             Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = AutoCarverBladeLabel.ToString("X8");
             Assistant.Engine.MainWindow.BoneBladeLabel.Text = BoneBladeLabel.ToString("X8");
+
+            RefreshLists();
         }
 	}
 }
