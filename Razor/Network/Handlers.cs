@@ -1153,7 +1153,7 @@ namespace Assistant
 				{
                     // Update hits toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
+                        RazorEnhanced.ToolBar.UpdateHits(m.Hits, m.HitsMax);
 
                     ClientCommunication.PostHitsUpdate();
 				}
@@ -1195,7 +1195,7 @@ namespace Assistant
                 {
                     // Update Stam Toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
+                        RazorEnhanced.ToolBar.UpdateStam(m.Stam, m.StamMax);
 
 					ClientCommunication.PostStamUpdate();
 				}
@@ -1237,7 +1237,7 @@ namespace Assistant
 				{
                     // Update Mana toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
+                        RazorEnhanced.ToolBar.UpdateMana(m.Mana, m.ManaMax);
 
 					ClientCommunication.PostManaUpdate();
 				}
@@ -1400,7 +1400,7 @@ namespace Assistant
                 }
 
                 // Apertura automatica toolbar se abilitata
-                if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked)
+                if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && !Assistant.Engine.MainWindow.ToolBarOpen)
                     RazorEnhanced.ToolBar.Open();
 
                 // Update Weight toolbar
@@ -1617,9 +1617,9 @@ namespace Assistant
 				{
 					if (DragDropManager.Holding == i)
 					{
-						Counter.SupressWarnings = true;
+						//Counter.SupressWarnings = true;
 						i.Container = null;
-						Counter.SupressWarnings = false;
+						//Counter.SupressWarnings = false;
 					}
 					else
 					{
