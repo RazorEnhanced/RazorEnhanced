@@ -725,7 +725,7 @@ namespace Assistant
 			}
 
 			World.Items.Clear();
-			Counter.Reset();
+			//Counter.Reset();
 			for (int i = 0; i < Contains.Count; i++)
 			{
 				Item item = (Item)Contains[i];

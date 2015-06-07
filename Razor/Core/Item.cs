@@ -318,8 +318,8 @@ namespace Assistant
 				else if (m_Parent is Item)
 					((Item)m_Parent).RemoveItem(this);
 
-				if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
-					Counter.Uncount(this);
+			//	if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
+			//		Counter.Uncount(this);
 
 				if (value is Mobile)
 					m_Parent = ((Mobile)value).Serial;
@@ -357,16 +357,16 @@ namespace Assistant
 
 			if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
 			{
-				bool exempt = SearchExemptionAgent.IsExempt(this);
-				if (!exempt)
-					Counter.Count(this);
+			//	bool exempt = SearchExemptionAgent.IsExempt(this);
+			//	if (!exempt)
+			//		Counter.Count(this);
 
 				if (m_IsNew)
 				{
 					if (m_AutoStack)
 						AutoStackResource();
 
-					if (IsContainer && !exempt && (!IsPouch || !Config.GetBool("NoSearchPouches")) && Config.GetBool("AutoSearch"))
+					if (IsContainer && (!IsPouch || !Config.GetBool("NoSearchPouches")) && Config.GetBool("AutoSearch"))
 					{
 						PacketHandlers.IgnoreGumps.Add(this);
 						PlayerData.DoubleClick(this);
@@ -554,7 +554,7 @@ namespace Assistant
 			foreach (Item r in rem)
 				r.Remove();
 
-			Counter.Uncount(this);
+			//Counter.Uncount(this);
 
 			if (m_Parent is Mobile)
 				((Mobile)m_Parent).RemoveItem(this);

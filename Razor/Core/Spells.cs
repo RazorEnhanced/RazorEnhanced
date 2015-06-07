@@ -140,8 +140,8 @@ namespace Assistant
 				}
 			}
 
-			foreach (Counter c in Counter.List)
-				c.Flag = false;
+		//	foreach (Counter c in Counter.List)
+		//		c.Flag = false;
             /*
 			if (Config.GetBool("HighlightReagents"))
 			{
@@ -185,8 +185,8 @@ namespace Assistant
 
 			protected override void OnTick()
 			{
-				foreach (Counter c in Counter.List)
-					c.Flag = false;
+				//foreach (Counter c in Counter.List)
+				//	c.Flag = false;
 			}
 		}
 

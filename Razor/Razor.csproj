@@ -138,9 +138,6 @@
     <Compile Include="Core\Commands.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Counters.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Filters\Death.cs">
       <SubType>Code</SubType>
     </Compile>

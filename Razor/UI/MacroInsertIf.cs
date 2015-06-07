@@ -37,8 +37,8 @@ namespace Assistant
 			//
 			InitializeComponent();
 
-			foreach (Counter c in Counter.List)
-				varList.Items.Add(c.Name);
+			//foreach (Counter c in Counter.List)
+			//	varList.Items.Add(c.Name);
 		}
 
 		internal MacroInsertIf(MacroAction a)
@@ -49,8 +49,8 @@ namespace Assistant
 			//
 			InitializeComponent();
 
-			foreach (Counter c in Counter.List)
-				varList.Items.Add(c.Name);
+			//foreach (Counter c in Counter.List)
+			//	varList.Items.Add(c.Name);
 		}
 
 		/// <summary>

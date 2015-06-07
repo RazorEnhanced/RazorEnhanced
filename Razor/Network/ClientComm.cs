@@ -185,11 +185,11 @@ namespace Assistant
 
 						return 1;
 					}
-				case UOAMessage.COUNT_RESOURCES:
+			/*	case UOAMessage.COUNT_RESOURCES:
 					{
 						Counter.FullRecount();
 						return 0;
-					}
+					}*/
 				case UOAMessage.GET_COORDS:
 					{
 						if (World.Player == null)
@@ -976,7 +976,7 @@ namespace Assistant
 			World.Mobiles.Clear();
 			Macros.MacroManager.Stop();
 			ActionQueue.Stop();
-			Counter.Reset();
+			//Counter.Reset();
 			StealthSteps.Unhide();
 			Engine.MainWindow.OnLogout();
 			if (Engine.MainWindow.MapWindow != null)

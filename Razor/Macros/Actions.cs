@@ -2004,7 +2004,7 @@ namespace Assistant.Macros
 		private object m_Value;
 		private IfVarType m_Var;
 		private string m_Counter;
-		private Assistant.Counter m_CountObj;
+		//private Assistant.Counter m_CountObj;
 
 		internal sbyte Op { get { return m_Direction; } }
 		internal object Value { get { return m_Value; } }
@@ -2150,7 +2150,7 @@ namespace Assistant.Macros
 						return World.Player.GetItemOnLayer(Layer.LeftHand) == null;
 					}
 
-				case IfVarType.Counter:
+			/*	case IfVarType.Counter:
 					{
 						if (m_CountObj == null)
 						{
@@ -2171,7 +2171,7 @@ namespace Assistant.Macros
 							return m_CountObj.Amount >= (int)m_Value;
 						else
 							return m_CountObj.Amount <= (int)m_Value;
-					}
+					}*/
 
 				default:
 					return false;

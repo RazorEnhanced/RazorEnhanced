@@ -311,7 +311,7 @@ namespace Assistant
                     RazorEnhanced.Scripts.Auto = false;
 
                     ClientCommunication.Close();
-                    Counter.Save();
+                    //Counter.Save();
                     Macros.MacroManager.Save();
                     Config.Save();
                 }
