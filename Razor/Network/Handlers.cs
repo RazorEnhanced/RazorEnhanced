@@ -1095,11 +1095,6 @@ namespace Assistant
 
 			Stream.Fill();
 			*/
-
-            // Apertura automatica toolbar se abilitata
-            if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked)
-                RazorEnhanced.ToolBar.Open();
-
 			ClientCommunication.BeginCalibratePosition();
 		}
 
@@ -1200,7 +1195,7 @@ namespace Assistant
                 {
                     // Update Stam Toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateHits(m.StamMax, m.Stam);
+                        RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
 					ClientCommunication.PostStamUpdate();
 				}
@@ -1242,7 +1237,7 @@ namespace Assistant
 				{
                     // Update Mana toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
-                        RazorEnhanced.ToolBar.UpdateHits(m.ManaMax, m.Mana);
+                        RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
 					ClientCommunication.PostManaUpdate();
 				}
@@ -1403,6 +1398,11 @@ namespace Assistant
                         player.Tithe = p.ReadInt32();
                     }
                 }
+
+                // Apertura automatica toolbar se abilitata
+                if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked)
+                    RazorEnhanced.ToolBar.Open();
+
                 // Update Weight toolbar
                 if (Assistant.Engine.MainWindow.ToolBarOpen)
                     RazorEnhanced.ToolBar.UpdateWeight(World.Player.MaxWeight, World.Player.Weight);

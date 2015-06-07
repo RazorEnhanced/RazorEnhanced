@@ -160,7 +160,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel2.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel2.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel2.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel2.Enabled = false;
+            }
 
             if (items[2].Graphics != 0)
             {
@@ -168,7 +172,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel3.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel3.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel3.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel3.Enabled = false;
+            }
 
             if (items[3].Graphics != 0)
             {
@@ -176,7 +184,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel4.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel4.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel4.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel4.Enabled = false;
+            }
 
             if (items[4].Graphics != 0)
             {
@@ -184,7 +196,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel5.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel5.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel5.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel5.Enabled = false;
+            }
 
             if (items[5].Graphics != 0)
             {
@@ -192,7 +208,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel6.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel6.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel6.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel6.Enabled = false;
+            }
 
             if (items[6].Graphics != 0)
             {
@@ -200,7 +220,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel7.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel7.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel7.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel7.Enabled = false;
+            }
 
             if (items[7].Graphics != 0)
             {
@@ -208,7 +232,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel8.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel8.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel8.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel8.Enabled = false;
+            }
 
             if (items[8].Graphics != 0)
             {
@@ -216,7 +244,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel9.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel9.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel9.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel9.Enabled = false;
+            }
 
             if (items[9].Graphics != 0)
             {
@@ -224,7 +256,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel10.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel10.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel10.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel10.Enabled = false;
+            }
 
             if (items[10].Graphics != 0)
             {
@@ -232,7 +268,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel11.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel11.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel11.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel11.Enabled = false;
+            }
 
             if (items[11].Graphics != 0)
             {
@@ -240,7 +280,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel12.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel12.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel12.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel12.Enabled = false;
+            }
 
             if (items[12].Graphics != 0)
             {
@@ -248,7 +292,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel13.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel13.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel13.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel13.Enabled = false;
+            }
 
             if (items[13].Graphics != 0)
             {
@@ -256,7 +304,11 @@ namespace RazorEnhanced
                 Assistant.Engine.MainWindow.enhancedToolbar.panel14.Enabled = true;
             }
             else
+            {
+                Assistant.Engine.MainWindow.enhancedToolbar.panel14.BackgroundImage = null;
+                Assistant.Engine.MainWindow.enhancedToolbar.panel14.BackColor = Color.DarkGray;
                 Assistant.Engine.MainWindow.enhancedToolbar.panel14.Enabled = false;
+            }
         }
 
         internal static void UpdateAll()
@@ -284,7 +336,97 @@ namespace RazorEnhanced
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
                         Assistant.Engine.MainWindow.enhancedToolbar.panel1count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[0].Graphics, items[0].Color).ToString();
+                    });
+                }
+                if (items[1].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
                         Assistant.Engine.MainWindow.enhancedToolbar.panel2count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[1].Graphics, items[1].Color).ToString();
+                    });
+                }
+                if (items[2].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel3count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[2].Graphics, items[2].Color).ToString();
+                    });
+                }
+                if (items[3].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel4count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[3].Graphics, items[3].Color).ToString();
+                    });
+                }
+                if (items[4].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel5count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[4].Graphics, items[4].Color).ToString();
+                    });
+                }
+                if (items[5].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel6count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[5].Graphics, items[5].Color).ToString();
+                    });
+                }
+                if (items[6].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel7count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[6].Graphics, items[6].Color).ToString();
+                    });
+                }
+                if (items[7].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel8count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[7].Graphics, items[7].Color).ToString();
+                    });
+                }
+                if (items[8].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel9count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[8].Graphics, items[8].Color).ToString();
+                    });
+                }
+                if (items[9].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel10count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[9].Graphics, items[9].Color).ToString();
+                    });
+                }
+                if (items[10].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel11count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[10].Graphics, items[10].Color).ToString();
+                    });
+                }
+                if (items[11].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel12count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[11].Graphics, items[11].Color).ToString();
+                    });
+                }
+                if (items[12].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel13count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[12].Graphics, items[12].Color).ToString();
+                    });
+                }
+                if (items[13].Graphics != 0)
+                {
+                    Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
+                    {
+                        Assistant.Engine.MainWindow.enhancedToolbar.panel14count.Text = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[13].Graphics, items[13].Color).ToString();
                     });
                 }
             }
