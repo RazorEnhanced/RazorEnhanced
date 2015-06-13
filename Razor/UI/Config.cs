@@ -241,7 +241,7 @@ namespace Assistant
 				}
 			}
 
-			Filter.Load(root["filters"]);
+			//Filter.Load(root["filters"]);
 			//Counter.LoadProfile(root["counters"]);
 			//Agent.LoadProfile(root["agents"]);
 			//DressList.Load(root["dresslists"]);
@@ -359,7 +359,7 @@ namespace Assistant
 			}
 
 			xml.WriteStartElement("filters");
-			Filter.Save(xml);
+			//Filter.Save(xml);
 			xml.WriteEndElement();
 
 			//xml.WriteStartElement("counters");

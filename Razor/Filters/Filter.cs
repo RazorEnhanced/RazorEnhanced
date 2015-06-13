@@ -15,35 +15,15 @@ namespace Assistant.Filters
 			m_Filters.Add(filter);
 		}
 
-		internal static void Load(XmlElement xml)
+		internal static void Load()
 		{
 			DisableAll();
-
-			if (xml == null)
-				return;
-
-			foreach (XmlElement el in xml.GetElementsByTagName("filter"))
-			{
-				try
-				{
-					LocString name = (LocString)Convert.ToInt32(el.GetAttribute("name"));
-					string enable = el.GetAttribute("enable");
-
-					for (int i = 0; i < m_Filters.Count; i++)
-					{
-						Filter f = m_Filters[i];
-						if (f.Name == name)
-						{
-							if (Convert.ToBoolean(enable))
-								f.OnEnable();
-							break;
-						}
-					}
-				}
-				catch
-				{
-				}
-			}
+            for (int i = 0; i < m_Filters.Count; i++)
+            {
+                Filter f = m_Filters[i];
+                if (RazorEnhanced.Settings.General.ReadBool(((int)f.Name).ToString()))
+                   f.OnEnable();
+            }
 		}
 
 		internal static void DisableAll()
@@ -52,17 +32,14 @@ namespace Assistant.Filters
 				m_Filters[i].OnDisable();
 		}
 
-		internal static void Save(XmlTextWriter xml)
+		internal static void Save()
 		{
 			for (int i = 0; i < m_Filters.Count; i++)
 			{
 				Filter f = m_Filters[i];
 				if (f.Enabled)
 				{
-					xml.WriteStartElement("filter");
-					xml.WriteAttributeString("name", ((int)f.Name).ToString());
-					xml.WriteAttributeString("enable", f.Enabled.ToString());
-					xml.WriteEndElement();
+                    RazorEnhanced.Settings.General.WriteBool(((int)f.Name).ToString(), f.Enabled);
 				}
 			}
 		}
@@ -116,10 +93,16 @@ namespace Assistant.Filters
 
 		internal void OnCheckChanged(CheckState newValue)
 		{
-			if (Enabled && newValue == CheckState.Unchecked)
-				OnDisable();
-			else if (!Enabled && newValue == CheckState.Checked)
-				OnEnable();
+            if (Enabled && newValue == CheckState.Unchecked)
+            {
+                OnDisable();
+                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), false);
+            }
+            else if (!Enabled && newValue == CheckState.Checked)
+            {
+                OnEnable();
+                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), true);
+            }           
 		}
 	}
 }

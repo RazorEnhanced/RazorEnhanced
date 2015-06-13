@@ -266,6 +266,23 @@ namespace RazorEnhanced
                 general.Columns.Add("CapTimeStamp", typeof(bool));
                 general.Columns.Add("AutoCap", typeof(bool));
 
+                // Parametri Tab (Filtri veccchi)
+                general.Columns.Add("1001", typeof(bool));
+                general.Columns.Add("1387", typeof(bool));
+                general.Columns.Add("1002", typeof(bool));
+                general.Columns.Add("1003", typeof(bool));
+                general.Columns.Add("1004", typeof(bool));
+                general.Columns.Add("1005", typeof(bool));
+                general.Columns.Add("1006", typeof(bool));
+                general.Columns.Add("1007", typeof(bool));
+                general.Columns.Add("1008", typeof(bool));
+                general.Columns.Add("1321", typeof(bool));
+                general.Columns.Add("1507", typeof(bool));
+                general.Columns.Add("1478", typeof(bool));
+                general.Columns.Add("1009", typeof(bool));
+
+              
+
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -278,7 +295,11 @@ namespace RazorEnhanced
                     false, false, 10, 10,
 
                     // Parametri primo avvio per tab screenshot
-                    Directory.GetCurrentDirectory(), "jpg", false, false, false
+                    Directory.GetCurrentDirectory(), "jpg", false, false, false,
+                    
+                    // Parametri primo avvio per vecchi filtri
+                    false, false, false, false, false, false, false, false, false, false, false, false, false
+
                 };
 
                 DataRow generalsettings = general.NewRow();

@@ -6198,6 +6198,8 @@ namespace Assistant
             imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
             dispTime.Checked = RazorEnhanced.Settings.General.ReadBool("CapTimeStamp");
             screenAutoCap.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCap");
+            Filter.Load();
+            Filter.Draw(filters);
 
 		}
 
@@ -6340,11 +6342,6 @@ namespace Assistant
 		{
 			if (tabs == null)
 				return;
-
-			if (tabs.SelectedTab == generalTab)
-			{
-				Filters.Filter.Draw(filters);
-			}
 			else if (tabs.SelectedTab == skillsTab)
 			{
 				RedrawSkills();
@@ -11525,6 +11522,7 @@ namespace Assistant
                 }
             });
         }
+
         // ---------------- TOOLBAR END ----------------
 	}
 }
