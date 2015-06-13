@@ -770,8 +770,8 @@ namespace Assistant
 				try
 				{
 					ClientProc = Process.GetProcessById((int)pid);
-					if (ClientProc != null && !Config.GetBool("SmartCPU"))
-						ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), Config.GetString("ClientPrio"), true);
+					if (ClientProc != null && !RazorEnhanced.Settings.General.ReadBool("SmartCPU"))
+                        ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), RazorEnhanced.Settings.General.ReadString("ClientPrio"), true);
 				}
 				catch
 				{
@@ -1102,7 +1102,7 @@ namespace Assistant
 					break;
 
 				case UONetMessage.Focus:
-					if (Config.GetBool("AlwaysOnTop"))
+					if (RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop"))
 					{
 						if (lParam != 0 && !razor.TopMost)
 						{

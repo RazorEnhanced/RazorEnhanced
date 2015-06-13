@@ -223,6 +223,13 @@ namespace RazorEnhanced
                 }
                 m_Dataset.Tables.Add(toolbar_items);
 
+                // ----------- SAVE PASSWORD ----------
+                DataTable password = new DataTable("PASSWORD");
+                password.Columns.Add("IP", typeof(string));
+                password.Columns.Add("User", typeof(string));
+                password.Columns.Add("Password", typeof(string));
+                m_Dataset.Tables.Add(password);
+
 
                 // ----------- GENERAL SETTINGS ----------
                 DataTable general = new DataTable("GENERAL");
@@ -281,7 +288,20 @@ namespace RazorEnhanced
                 general.Columns.Add("1478", typeof(bool));
                 general.Columns.Add("1009", typeof(bool));
 
-              
+                // Parametri Tab (General)
+                general.Columns.Add("SmartCPU", typeof(bool));
+                general.Columns.Add("AlwaysOnTop", typeof(bool));
+                general.Columns.Add("RememberPwds", typeof(bool));
+                general.Columns.Add("Systray", typeof(bool));
+                general.Columns.Add("ForceSizeEnabled", typeof(bool));
+                general.Columns.Add("ForceSizeX", typeof(int));
+                general.Columns.Add("ForceSizeY", typeof(int));
+                general.Columns.Add("ClientPrio", typeof(string));
+                general.Columns.Add("Opacity", typeof(int));
+                general.Columns.Add("WindowX", typeof(int));
+                general.Columns.Add("WindowY", typeof(int));
+                
+                
 
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
@@ -298,7 +318,10 @@ namespace RazorEnhanced
                     Directory.GetCurrentDirectory(), "jpg", false, false, false,
                     
                     // Parametri primo avvio per vecchi filtri
-                    false, false, false, false, false, false, false, false, false, false, false, false, false
+                    false, false, false, false, false, false, false, false, false, false, false, false, false,
+
+                    // Parametri primo avvio tab general
+                    false, false, false, false, false, 800, 600, "Normal", 100, 400, 400
 
                 };
 
@@ -2320,6 +2343,47 @@ namespace RazorEnhanced
         }
 
         // ------------- TOOLBAR END -----------------
+
+        // ------------- PASSWORD START -----------------
+        internal class Password
+        {
+            internal static void Insert(string IP, string user, string password)
+            {
+                foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)
+                {
+                    string ip = (string)row["IP"];
+                    string username = (string)row["User"];
+                    if (ip == IP && username == user)
+                        row.Delete();
+                }
+
+                DataRow newRow = m_Dataset.Tables["PASSWORD"].NewRow();
+                newRow["IP"] = IP;
+                newRow["User"] = user;
+                newRow["Password"] = password;
+                m_Dataset.Tables["PASSWORD"].Rows.Add(newRow);
+
+                Save();
+            }
+
+            internal static List<Assistant.PasswordMemory.PasswordData> RealAll()
+            {
+                List<Assistant.PasswordMemory.PasswordData> dataOut = new List<Assistant.PasswordMemory.PasswordData>();
+
+                foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)
+                {
+                    string ip = (string)row["IP"];
+                    string user = (string)row["User"];
+                    string password = (string)row["Password"];
+
+                    Assistant.PasswordMemory.PasswordData data = new Assistant.PasswordMemory.PasswordData(ip, user, password);
+                    dataOut.Add(data);
+                }
+                return dataOut;
+            }
+        }
+
+        // ------------- PASSWORD END -----------------
 
 
         // ------------- GENERAL SETTINGS START -----------------

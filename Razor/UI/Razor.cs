@@ -1251,7 +1251,7 @@ namespace Assistant
             this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.forceSizeY.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.forceSizeY.Location = new System.Drawing.Point(399, 99);
+            this.forceSizeY.Location = new System.Drawing.Point(411, 99);
             this.forceSizeY.Name = "forceSizeY";
             this.forceSizeY.Size = new System.Drawing.Size(30, 20);
             this.forceSizeY.TabIndex = 64;
@@ -1266,7 +1266,7 @@ namespace Assistant
             this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.forceSizeX.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.forceSizeX.Location = new System.Drawing.Point(363, 99);
+            this.forceSizeX.Location = new System.Drawing.Point(375, 99);
             this.forceSizeX.Name = "forceSizeX";
             this.forceSizeX.Size = new System.Drawing.Size(30, 20);
             this.forceSizeX.TabIndex = 63;
@@ -1306,6 +1306,7 @@ namespace Assistant
             this.clientPrio.Name = "clientPrio";
             this.clientPrio.Size = new System.Drawing.Size(88, 22);
             this.clientPrio.TabIndex = 60;
+            this.clientPrio.SelectedIndexChanged += new System.EventHandler(this.clientPrio_SelectedIndexChanged);
             // 
             // lockBox
             // 
@@ -6097,7 +6098,7 @@ namespace Assistant
 			this.Hide();
 			Language.LoadControlNames(this);
 
-			bool st = Config.GetBool("Systray");
+			bool st = RazorEnhanced.Settings.General.ReadBool("Systray");
 			taskbar.Checked = this.ShowInTaskbar = !st;
 			systray.Checked = m_NotifyIcon.Visible = st;
 
@@ -6191,6 +6192,13 @@ namespace Assistant
 
             // ------------------ TARGETS --------------------
             RazorEnhanced.TargetGUI.RefreshTarget();
+		}
+
+		private bool m_Initializing = false;
+
+		internal void InitConfig()
+		{
+            m_Initializing = true;
 
             // ------------------ PARAMETRI GENERALI -------------------
             screenPath.Text = RazorEnhanced.Settings.General.ReadString("CapPath");
@@ -6200,39 +6208,42 @@ namespace Assistant
             screenAutoCap.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCap");
             Filter.Load();
             Filter.Draw(filters);
+            smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
+            this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
+            rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");
+            gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
+            forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
+            forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
+            forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
+            taskbar.Checked = !(systray.Checked = RazorEnhanced.Settings.General.ReadBool("Systray"));
+            clientPrio.SelectedItem = RazorEnhanced.Settings.General.ReadString("ClientPrio");
+            opacity.AutoSize = false;
+            opacity.Value = RazorEnhanced.Settings.General.ReadInt("Opacity");
+            this.Opacity = ((float)opacity.Value) / 100.0;
+            opacityLabel.Text = Language.Format(LocString.OpacityA1, opacity.Value);
 
-		}
+            this.Location = new System.Drawing.Point(RazorEnhanced.Settings.General.ReadInt("WindowX"), RazorEnhanced.Settings.General.ReadInt("WindowY"));
+            this.TopLevel = true;
 
-		private bool m_Initializing = false;
+            bool onScreen = false;
+            foreach (Screen s in Screen.AllScreens)
+            {
+                if (s.Bounds.Contains(this.Location.X + this.Width, this.Location.Y + this.Height) ||
+                    s.Bounds.Contains(this.Location.X - this.Width, this.Location.Y - this.Height))
+                {
+                    onScreen = true;
+                    break;
+                }
+            }
 
-		internal void InitConfig()
-		{
-			m_Initializing = true;
+            if (!onScreen)
+                this.Location = Point.Empty;
 
-			this.opacity.AutoSize = false;
-			//this.opacity.Size = new System.Drawing.Size(156, 16);
+            PasswordMemory.Load();
 
-			opacity.Value = Config.GetInt("Opacity");
-			this.Opacity = ((float)opacity.Value) / 100.0;
-			opacityLabel.Text = Language.Format(LocString.OpacityA1, opacity.Value);
 
-			this.TopMost = alwaysTop.Checked = Config.GetBool("AlwaysOnTop");
-			this.Location = new System.Drawing.Point(Config.GetInt("WindowX"), Config.GetInt("WindowY"));
-			this.TopLevel = true;
 
-			bool onScreen = false;
-			foreach (Screen s in Screen.AllScreens)
-			{
-				if (s.Bounds.Contains(this.Location.X + this.Width, this.Location.Y + this.Height) ||
-					s.Bounds.Contains(this.Location.X - this.Width, this.Location.Y - this.Height))
-				{
-					onScreen = true;
-					break;
-				}
-			}
-
-			if (!onScreen)
-				this.Location = Point.Empty;
+            // Vecchi parametri
 
 			spellUnequip.Checked = Config.GetBool("SpellUnequip");
 			ltRange.Enabled = rangeCheckLT.Checked = Config.GetBool("RangeCheckLT");
@@ -6290,7 +6301,7 @@ namespace Assistant
 			InitPreviewHue(lblHarmHue, "HarmfulSpellHue");
 			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
 
-			taskbar.Checked = !(systray.Checked = Config.GetBool("Systray"));
+			
 			dispDelta.Checked = Config.GetBool("DisplaySkillChanges");
 			corpseRange.Enabled = openCorpses.Checked = Config.GetBool("AutoOpenCorpses");
 			corpseRange.Text = Config.GetInt("CorpseRange").ToString();
@@ -6298,28 +6309,12 @@ namespace Assistant
 			actionStatusMsg.Checked = Config.GetBool("ActionStatusMsg");
 			autoStackRes.Checked = Config.GetBool("AutoStack");
 
-			rememberPwds.Checked = Config.GetBool("RememberPwds");
+            
 			filterSnoop.Checked = Config.GetBool("FilterSnoopMsg");
 
 			preAOSstatbar.Checked = Config.GetBool("OldStatBar");
 			showtargtext.Checked = Config.GetBool("LastTargTextFlags");
 			smartLT.Checked = Config.GetBool("SmartLastTarget");
-
-			smartCPU.Checked = Config.GetBool("SmartCPU");
-
-			try
-			{
-				clientPrio.SelectedItem = Config.GetString("ClientPrio");
-			}
-			catch
-			{
-				clientPrio.SelectedItem = "Normal";
-			}
-
-			forceSizeX.Text = Config.GetInt("ForceSizeX").ToString();
-			forceSizeY.Text = Config.GetInt("ForceSizeY").ToString();
-
-			gameSize.Checked = Config.GetBool("ForceSizeEnabled");
 
 			potionEquip.Checked = Config.GetBool("PotionEquip");
 
@@ -6700,7 +6695,8 @@ namespace Assistant
 		}
 		private void alwaysTop_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("AlwaysOnTop", this.TopMost = alwaysTop.Checked);
+            if (alwaysTop.Focused)
+                RazorEnhanced.Settings.General.WriteBool("AlwaysOnTop", this.TopMost = alwaysTop.Checked);
 		}
 
 		private void profiles_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -7266,15 +7262,16 @@ namespace Assistant
 					pt.Y = screen.Top;
 
 				this.Location = pt;
-				Config.SetProperty("WindowX", (int)pt.X);
-				Config.SetProperty("WindowY", (int)pt.Y);
 			}
 		}
 
 		private void opacity_Scroll(object sender, System.EventArgs e)
 		{
-			int o = opacity.Value;
-			Config.SetProperty("Opacity", o);
+            int o = opacity.Value;
+
+            if (opacity.Focused)
+                RazorEnhanced.Settings.General.WriteInt("Opacity", o);
+			
 			opacityLabel.Text = String.Format("Opacity: {0}%", o);
 			this.Opacity = ((double)o) / 100.0;
 		}
@@ -8128,24 +8125,30 @@ namespace Assistant
 
 		private void taskbar_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (taskbar.Checked)
-			{
-				systray.Checked = false;
-				Config.SetProperty("Systray", false);
-				if (!this.ShowInTaskbar)
-					MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
+            if (taskbar.Focused)
+            {
+                if (taskbar.Checked)
+                {
+                    systray.Checked = false;
+                    RazorEnhanced.Settings.General.WriteBool("Systray", false);
+                    if (!this.ShowInTaskbar)
+                        MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
 		}
 
 		private void systray_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (systray.Checked)
-			{
-				taskbar.Checked = false;
-				Config.SetProperty("Systray", true);
-				if (this.ShowInTaskbar)
-					MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
-			}
+            if (systray.Focused)
+            {
+                if (systray.Checked)
+                {
+                    taskbar.Checked = false;
+                    RazorEnhanced.Settings.General.WriteBool("Systray", true);
+                    if (this.ShowInTaskbar)
+                        MessageBox.Show(this, Language.GetString(LocString.NextRestart), "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
 		}
 
 		internal void UpdateTitle()
@@ -8184,7 +8187,7 @@ namespace Assistant
 			// Fuck windows, seriously.
 
 			ClientCommunication.BringToFront(this.Handle);
-			if (Config.GetBool("AlwaysOnTop"))
+			if (RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop"))
 				this.TopMost = true;
 			if (WindowState != FormWindowState.Normal)
 				WindowState = FormWindowState.Normal;
@@ -8235,15 +8238,18 @@ namespace Assistant
 
 		private void rememberPwds_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (rememberPwds.Checked && !Config.GetBool("RememberPwds"))
-			{
-				if (MessageBox.Show(this, Language.GetString(LocString.PWWarn), "Security Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-				{
-					rememberPwds.Checked = false;
-					return;
-				}
-			}
-			Config.SetProperty("RememberPwds", rememberPwds.Checked);
+            if (rememberPwds.Focused)
+            {
+                if (rememberPwds.Checked && !RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
+                {
+                    if (MessageBox.Show(this, Language.GetString(LocString.PWWarn), "Security Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    {
+                        rememberPwds.Checked = false;
+                        return;
+                    }
+                }
+                RazorEnhanced.Settings.General.WriteBool("RememberPwds", rememberPwds.Checked);
+            }
 		}
 
 		//private void tabs_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -8274,7 +8280,10 @@ namespace Assistant
 		private void clientPrio_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
 			string str = (string)clientPrio.SelectedItem;
-			Config.SetProperty("ClientPrio", str);
+
+            if (clientPrio.Focused)
+                RazorEnhanced.Settings.General.WriteString("ClientPrio", str);
+
 			try
 			{
 				ClientCommunication.ClientProcess.PriorityClass = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), str, true);
@@ -8309,7 +8318,8 @@ namespace Assistant
 
 		private void smartCPU_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("SmartCPU", smartCPU.Checked);
+            if (smartCPU.Focused)
+			    RazorEnhanced.Settings.General.WriteBool("SmartCPU", smartCPU.Checked);
 			ClientCommunication.SetSmartCPU(smartCPU.Checked);
 		}
 
@@ -8355,10 +8365,10 @@ namespace Assistant
 		{
 			int x, y;
 
-			if (Config.GetBool("ForceSizeEnabled"))
+            if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
 			{
-				x = Config.GetInt("ForceSizeX");
-				y = Config.GetInt("ForceSizeY");
+                x = RazorEnhanced.Settings.General.ReadInt("ForceSizeX");
+                y = RazorEnhanced.Settings.General.ReadInt("ForceSizeY");
 
 				if (x > 100 && x < 2000 && y > 100 && y < 2000)
 					ClientCommunication.SetGameSize(x, y);
@@ -8369,59 +8379,67 @@ namespace Assistant
 
 		private void gameSize_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("ForceSizeEnabled", gameSize.Checked);
-			forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
+            if (gameSize.Focused)
+                RazorEnhanced.Settings.General.WriteBool("ForceSizeEnabled", gameSize.Checked);
 
-			if (gameSize.Checked)
-			{
-				int x = Utility.ToInt32(forceSizeX.Text, 800);
-				int y = Utility.ToInt32(forceSizeY.Text, 600);
+            forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
 
-				if (x < 100 || y < 100 || x > 2000 || y > 2000)
-					MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-				else
-					ClientCommunication.SetGameSize(x, y);
-			}
-			else
-			{
-				ClientCommunication.SetGameSize(800, 600);
-			}
+            if (gameSize.Checked)
+                {
+                    int x = Utility.ToInt32(forceSizeX.Text, 800);
+                    int y = Utility.ToInt32(forceSizeY.Text, 600);
 
-			if (!m_Initializing)
-				MessageBox.Show(this, Language.GetString(LocString.RelogRequired), "Relog Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (x < 100 || y < 100 || x > 2000 || y > 2000)
+                        MessageBox.Show(this, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                    else
+                        ClientCommunication.SetGameSize(x, y);
+                }
+                else
+                {
+                    ClientCommunication.SetGameSize(800, 600);
+                }
 
+                if (!m_Initializing)
+                    MessageBox.Show(this, Language.GetString(LocString.RelogRequired), "Relog Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            
 		}
 
 		private void forceSizeX_TextChanged(object sender, System.EventArgs e)
 		{
-			int x = Utility.ToInt32(forceSizeX.Text, 600);
-			if (x >= 100 && x <= 2000)
-				Config.SetProperty("ForceSizeX", x);
+            if (forceSizeX.Focused)
+            {
+                int x = Utility.ToInt32(forceSizeX.Text, 600);
+                if (x >= 100 && x <= 2000)
+                    RazorEnhanced.Settings.General.WriteInt("ForceSizeX", x);
 
-			if (!m_Initializing)
-			{
-				if (x > 100 && x < 2000)
-				{
-					m_ResizeTimer.Stop();
-					m_ResizeTimer.Start();
-				}
-			}
+                if (!m_Initializing)
+                {
+                    if (x > 100 && x < 2000)
+                    {
+                        m_ResizeTimer.Stop();
+                        m_ResizeTimer.Start();
+                    }
+                }
+            }
 		}
 
 		private void forceSizeY_TextChanged(object sender, System.EventArgs e)
 		{
-			int y = Utility.ToInt32(forceSizeY.Text, 600);
-			if (y >= 100 && y <= 2000)
-				Config.SetProperty("ForceSizeY", y);
+            if (forceSizeY.Focused)
+            {
+                int y = Utility.ToInt32(forceSizeY.Text, 600);
+                if (y >= 100 && y <= 2000)
+                    RazorEnhanced.Settings.General.WriteInt("ForceSizeY", y);
 
-			if (!m_Initializing)
-			{
-				if (y > 100 && y < 2000)
-				{
-					m_ResizeTimer.Stop();
-					m_ResizeTimer.Start();
-				}
-			}
+                if (!m_Initializing)
+                {
+                    if (y > 100 && y < 2000)
+                    {
+                        m_ResizeTimer.Stop();
+                        m_ResizeTimer.Start();
+                    }
+                }
+            }
 		}
 
 		private void potionEquip_CheckedChanged(object sender, System.EventArgs e)

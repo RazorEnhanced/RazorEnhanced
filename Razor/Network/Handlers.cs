@@ -1096,6 +1096,7 @@ namespace Assistant
 			Stream.Fill();
 			*/
 			ClientCommunication.BeginCalibratePosition();
+    
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
@@ -2559,13 +2560,13 @@ namespace Assistant
 		private static void ServerListLogin(Packet p, PacketHandlerEventArgs args)
 		{
 			m_LastPW = "";
-			if (!Config.GetBool("RememberPwds"))
+			if (!RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
 				return;
 
 			World.AccountName = p.ReadStringSafe(30);
 			string pass = p.ReadStringSafe(30);
 
-			if (pass == "")
+            if (pass == "" || pass == null)
 			{
 				pass = PasswordMemory.Find(World.AccountName, ClientCommunication.LastConnection);
 				if (pass != null && pass != "")
@@ -2588,7 +2589,7 @@ namespace Assistant
 			World.AccountName = p.ReadString(30);
 			string password = p.ReadString(30);
 
-			if (password == "" && m_LastPW != "" && Config.GetBool("RememberPwds"))
+            if (password == "" && m_LastPW != "" && RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
 			{
 				p.Seek(35, SeekOrigin.Begin);
 				p.WriteAsciiFixed(m_LastPW, 30);

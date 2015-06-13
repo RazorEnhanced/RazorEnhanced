@@ -246,7 +246,7 @@ namespace Assistant
 			//Agent.LoadProfile(root["agents"]);
 			//DressList.Load(root["dresslists"]);
 			HotKey.Load(root["hotkeys"]);
-			PasswordMemory.Load(root["passwords"]);
+			//PasswordMemory.Load(root["passwords"]);
 
 			if (m_Props.ContainsKey("ForceSize"))
 			{
@@ -358,9 +358,9 @@ namespace Assistant
 				xml.WriteEndElement();
 			}
 
-			xml.WriteStartElement("filters");
+			//xml.WriteStartElement("filters");
 			//Filter.Save(xml);
-			xml.WriteEndElement();
+			//xml.WriteEndElement();
 
 			//xml.WriteStartElement("counters");
 			//Counter.SaveProfile(xml);
@@ -378,9 +378,10 @@ namespace Assistant
 			HotKey.Save(xml);
 			xml.WriteEndElement();
 
-			xml.WriteStartElement("passwords");
-			PasswordMemory.Save(xml);
-			xml.WriteEndElement();
+			//xml.WriteStartElement("passwords");
+			//PasswordMemory.Save(xml);
+			//xml.WriteEndElement();
+            PasswordMemory.Save();
 
 			xml.WriteEndElement(); // end profile section
 

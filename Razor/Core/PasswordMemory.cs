@@ -17,6 +17,26 @@ namespace Assistant
 			internal IPAddress Address;
 		}
 
+        [Serializable]
+        internal class PasswordData
+        {
+            private string m_IP;
+            public string IP { get { return m_IP; } }
+
+            private string m_User;
+            public string User { get { return m_User; } }
+
+            private string m_Password;
+            public string Password { get { return m_Password; } }
+
+            public PasswordData(string ip, string user, string password)
+            {
+                m_IP = ip;
+                m_User = user;
+                m_Password = password;
+            }
+        }
+
 		private static List<Entry> m_List = new List<Entry>();
 
 		internal static string Encrypt(string source)
@@ -86,52 +106,26 @@ namespace Assistant
 			return ASCIIEncoding.ASCII.GetString(buff);
 		}
 
-		internal static void Load(XmlElement xml)
+		internal static void Load()
 		{
 			ClearAll();
 
-			if (xml == null)
-				return;
+            List<PasswordData> allpassword = RazorEnhanced.Settings.Password.RealAll();
 
-			foreach (XmlElement el in xml.GetElementsByTagName("password"))
-			{
-				try
-				{
-					string user = el.GetAttribute("user");
-					string addr = el.GetAttribute("ip");
-
-					if (el.InnerText == null)
-						continue;
-
-					m_List.Add(new Entry(user, el.InnerText, IPAddress.Parse(addr)));
-				}
-				catch
-				{
-				}
-			}
+            foreach (PasswordData password in allpassword)
+            {
+                if (password.Password == null)
+                    continue;
+                m_List.Add(new Entry(password.User, password.Password, IPAddress.Parse(password.IP)));
+            }
 		}
 
-		internal static void Save(XmlTextWriter xml)
+		internal static void Save()
 		{
-			if (m_List == null)
-				return;
-
 			foreach (Entry e in m_List)
 			{
 				if (e.Pass != String.Empty)
-				{
-					xml.WriteStartElement("password");
-					try
-					{
-						xml.WriteAttributeString("user", e.User);
-						xml.WriteAttributeString("ip", e.Address.ToString());
-						xml.WriteString(e.Pass);
-					}
-					catch
-					{
-					}
-					xml.WriteEndElement();
-				}
+                    RazorEnhanced.Settings.Password.Insert(e.Address.ToString(), e.User, e.Pass);
 			}
 		}
 
@@ -164,6 +158,7 @@ namespace Assistant
 			user = user.ToLower();
 			for (int i = 0; i < m_List.Count; i++)
 			{
+
 				Entry e = m_List[i];
 				if (e.User == user && e.Address.Equals(addr))
 					return Decrypt(e.Pass);

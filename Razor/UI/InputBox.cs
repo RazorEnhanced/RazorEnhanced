@@ -212,7 +212,7 @@ namespace Assistant
 			Language.LoadControlNames(this);
 
 			if (this.Location.X <= 0 || this.Location.Y <= 0)
-				this.Location = new System.Drawing.Point(Config.GetInt("WindowX"), Config.GetInt("WindowY"));
+                this.Location = new System.Drawing.Point(RazorEnhanced.Settings.General.ReadInt("WindowX"), RazorEnhanced.Settings.General.ReadInt("WindowY"));
 
 			this.WindowState = FormWindowState.Normal;
 			this.BringToFront();
