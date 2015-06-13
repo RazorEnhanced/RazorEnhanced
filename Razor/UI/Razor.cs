@@ -11119,7 +11119,7 @@ namespace Assistant
             }
             else
             {
-                autoLootCheckBox.Checked = false;
+                bandagehealenableCheckBox.Checked = false;
                 RazorEnhanced.BandageHeal.AddLog("You are not logged in game!");
             }
 
