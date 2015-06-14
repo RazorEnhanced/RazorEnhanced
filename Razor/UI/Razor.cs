@@ -11427,7 +11427,7 @@ namespace Assistant
         // ---------------- TOOLBAR START ----------------
         private void openToolBarButton_Click(object sender, EventArgs e)
         {
-            RazorEnhanced.ToolBar.Open();
+            RazorEnhanced.ToolBar.Open(true);
         }
 
         private void closeToolBarButton_Click(object sender, EventArgs e)

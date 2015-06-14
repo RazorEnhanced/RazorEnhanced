@@ -984,7 +984,7 @@ namespace Assistant
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
 			Config.Save();
-
+            
 			TranslateEnabled = false;
 		}
 

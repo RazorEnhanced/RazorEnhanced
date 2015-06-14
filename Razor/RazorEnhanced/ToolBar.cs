@@ -40,6 +40,7 @@ namespace RazorEnhanced
             }
         }
 
+        internal static bool closedbyuser = false;
         internal static void UpdateHits(int maxhits, int hits)
         {
             int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
@@ -98,24 +99,37 @@ namespace RazorEnhanced
             else
                 return Color.ForestGreen;
         }
+       internal static void Open(bool force)
+        {
+            if (force)
+            {
+                if (Assistant.World.Player != null)
+                    Open();
+            }
+            else
+            {
+                if (!closedbyuser)
+                   Open();
+            }
+        }
 
         internal static void Open()
         {
-            if (Assistant.World.Player != null)
-            {
-                if (Assistant.Engine.MainWindow.ToolBar == null)
+                if (Assistant.World.Player != null)
                 {
-                    Assistant.Engine.MainWindow.ToolBar = new RazorEnhanced.UI.EnhancedToolbar();
-                    Assistant.Engine.MainWindow.ToolBar.Show();
-                    Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+                    if (Assistant.Engine.MainWindow.ToolBar == null)
+                    {
+                        Assistant.Engine.MainWindow.ToolBar = new RazorEnhanced.UI.EnhancedToolbar();
+                        Assistant.Engine.MainWindow.ToolBar.Show();
+                        Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+                    }
+                    else
+                    {
+                        Assistant.Engine.MainWindow.ToolBar.Show();
+                        Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+                    }
+                    UpdatePanelImage();
                 }
-                else
-                {
-                    Assistant.Engine.MainWindow.ToolBar.Show();
-                    Assistant.Engine.MainWindow.ToolBar.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-                }
-                UpdatePanelImage();
-            }
         }
 
         internal static void UptateToolBarComboBox(int index)

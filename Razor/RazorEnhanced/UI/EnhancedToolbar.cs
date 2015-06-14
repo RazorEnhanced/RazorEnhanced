@@ -22,6 +22,7 @@ namespace RazorEnhanced.UI
         {
             Assistant.Engine.MainWindow.ToolBarOpen = false;
             Assistant.Engine.MainWindow.ToolBar = null;
+            RazorEnhanced.ToolBar.closedbyuser = true;
         }
 
         private void EnhancedToolbar_Move(object sender, System.EventArgs e)

@@ -1419,7 +1419,7 @@ namespace Assistant
 
                 // Apertura automatica toolbar se abilitata
                 if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && !Assistant.Engine.MainWindow.ToolBarOpen)
-                    RazorEnhanced.ToolBar.Open();
+                    RazorEnhanced.ToolBar.Open(false);
 
                 // Update Weight toolbar
                 if (Assistant.Engine.MainWindow.ToolBarOpen)
