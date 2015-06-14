@@ -6211,10 +6211,10 @@ namespace Assistant
             smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
             this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
             rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");
-            gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
-            forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
             forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
             forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
+            gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
+            forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
             taskbar.Checked = !(systray.Checked = RazorEnhanced.Settings.General.ReadBool("Systray"));
             clientPrio.SelectedItem = RazorEnhanced.Settings.General.ReadString("ClientPrio");
             opacity.AutoSize = false;
@@ -8238,18 +8238,17 @@ namespace Assistant
 
 		private void rememberPwds_CheckedChanged(object sender, System.EventArgs e)
 		{
-            if (rememberPwds.Focused)
+
+            if (rememberPwds.Checked && !RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
             {
-                if (rememberPwds.Checked && !RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
+                if (MessageBox.Show(this, Language.GetString(LocString.PWWarn), "Security Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
-                    if (MessageBox.Show(this, Language.GetString(LocString.PWWarn), "Security Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                    {
-                        rememberPwds.Checked = false;
-                        return;
-                    }
+                    rememberPwds.Checked = false;
+                    return;
                 }
-                RazorEnhanced.Settings.General.WriteBool("RememberPwds", rememberPwds.Checked);
             }
+            if (rememberPwds.Focused)
+                    RazorEnhanced.Settings.General.WriteBool("RememberPwds", rememberPwds.Checked);
 		}
 
 		//private void tabs_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
@@ -8406,8 +8405,6 @@ namespace Assistant
 
 		private void forceSizeX_TextChanged(object sender, System.EventArgs e)
 		{
-            if (forceSizeX.Focused)
-            {
                 int x = Utility.ToInt32(forceSizeX.Text, 600);
                 if (x >= 100 && x <= 2000)
                     RazorEnhanced.Settings.General.WriteInt("ForceSizeX", x);
@@ -8420,13 +8417,10 @@ namespace Assistant
                         m_ResizeTimer.Start();
                     }
                 }
-            }
 		}
 
 		private void forceSizeY_TextChanged(object sender, System.EventArgs e)
 		{
-            if (forceSizeY.Focused)
-            {
                 int y = Utility.ToInt32(forceSizeY.Text, 600);
                 if (y >= 100 && y <= 2000)
                     RazorEnhanced.Settings.General.WriteInt("ForceSizeY", y);
@@ -8439,7 +8433,6 @@ namespace Assistant
                         m_ResizeTimer.Start();
                     }
                 }
-            }
 		}
 
 		private void potionEquip_CheckedChanged(object sender, System.EventArgs e)
