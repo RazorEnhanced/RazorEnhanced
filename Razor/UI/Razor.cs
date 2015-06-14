@@ -6201,6 +6201,8 @@ namespace Assistant
             m_Initializing = true;
 
             // ------------------ PARAMETRI GENERALI -------------------
+            imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
+
             screenPath.Text = RazorEnhanced.Settings.General.ReadString("CapPath");
             radioUO.Checked = !(radioFull.Checked = RazorEnhanced.Settings.General.ReadBool("CapFullScreen"));
             imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
@@ -6209,6 +6211,9 @@ namespace Assistant
             Filter.Load();
             Filter.Draw(filters);
             smartCPU.Checked = RazorEnhanced.Settings.General.ReadBool("SmartCPU");
+            if (smartCPU.Checked)
+                ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal;
+
             this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
             rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");
             forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
@@ -6282,17 +6287,6 @@ namespace Assistant
 
 			msglvl.SelectedIndex = Config.GetInt("MessageLevel");
 
-			try
-			{
-                imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
-				//im//gFmt.SelectedItem = Config.GetString("ImageFormat");
-			}
-			catch
-			{
-				imgFmt.SelectedIndex = 0;
-                RazorEnhanced.Settings.General.WriteString("ImageFormat", "jpg");
-			}
-
 			InitPreviewHue(lblExHue, "ExemptColor");
 			InitPreviewHue(lblMsgHue, "SysColor");
 			InitPreviewHue(lblWarnHue, "WarningColor");
@@ -6324,8 +6318,7 @@ namespace Assistant
 			healthFmt.Text = Config.GetString("HealthFmt");
 			chkPartyOverhead.Checked = Config.GetBool("ShowPartyStats");
 
-			if (smartCPU.Checked)
-				ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal;
+
 
 			hotkeyTree.SelectedNode = null;
 
