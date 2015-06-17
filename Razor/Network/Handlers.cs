@@ -1017,7 +1017,7 @@ namespace Assistant
 							skill.FixedCap = p.ReadUInt16();
 							Engine.MainWindow.UpdateSkill(skill);
 
-							if (Config.GetBool("DisplaySkillChanges") && skill.FixedBase != old)
+                            if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
 							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
 						}
@@ -1041,7 +1041,7 @@ namespace Assistant
 							skill.Lock = (LockType)p.ReadByte();
 							skill.FixedCap = 100;
 							Engine.MainWindow.UpdateSkill(skill);
-							if (Config.GetBool("DisplaySkillChanges") && skill.FixedBase != old)
+                            if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
 							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
 						}
@@ -1368,13 +1368,13 @@ namespace Assistant
                 player.Dex = p.ReadUInt16();
                 player.Int = p.ReadUInt16();
 
-                if (player.Str != oStr && oStr != 0 && Config.GetBool("DisplaySkillChanges"))
+                if (player.Str != oStr && oStr != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
                     World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
 
-                if (player.Dex != oDex && oDex != 0 && Config.GetBool("DisplaySkillChanges"))
+                if (player.Dex != oDex && oDex != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
                     World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
 
-                if (player.Int != oInt && oInt != 0 && Config.GetBool("DisplaySkillChanges"))
+                if (player.Int != oInt && oInt != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
                     World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
 
                 player.Stam = p.ReadUInt16();

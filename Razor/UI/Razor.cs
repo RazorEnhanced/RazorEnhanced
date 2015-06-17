@@ -2487,7 +2487,7 @@ namespace Assistant
             this.lockToolBarCheckBox.Name = "lockToolBarCheckBox";
             this.lockToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
             this.lockToolBarCheckBox.TabIndex = 63;
-            this.lockToolBarCheckBox.Text = "Lock ToolBox";
+            this.lockToolBarCheckBox.Text = "Lock ToolBar";
             this.lockToolBarCheckBox.CheckedChanged += new System.EventHandler(this.lockToolBarCheckBox_CheckedChanged);
             // 
             // autoopenToolBarCheckBox
@@ -6246,6 +6246,8 @@ namespace Assistant
 
             PasswordMemory.Load();
 
+            dispDelta.Checked = RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges");
+
 
 
             // Vecchi parametri
@@ -6295,8 +6297,8 @@ namespace Assistant
 			InitPreviewHue(lblHarmHue, "HarmfulSpellHue");
 			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
 
-			
-			dispDelta.Checked = Config.GetBool("DisplaySkillChanges");
+
+            
 			corpseRange.Enabled = openCorpses.Checked = Config.GetBool("AutoOpenCorpses");
 			corpseRange.Text = Config.GetInt("CorpseRange").ToString();
 
@@ -7271,7 +7273,8 @@ namespace Assistant
 
 		private void dispDelta_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("DisplaySkillChanges", dispDelta.Checked);
+            if (dispDelta.Focused)
+                RazorEnhanced.Settings.General.WriteBool("DisplaySkillChanges", dispDelta.Checked);
 		}
 
 		private void openCorpses_CheckedChanged(object sender, System.EventArgs e)

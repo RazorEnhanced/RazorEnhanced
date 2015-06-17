@@ -300,7 +300,10 @@ namespace RazorEnhanced
                 general.Columns.Add("Opacity", typeof(int));
                 general.Columns.Add("WindowX", typeof(int));
                 general.Columns.Add("WindowY", typeof(int));
-                
+
+                // Parametri Tab (Skill)
+                general.Columns.Add("DisplaySkillChanges", typeof(bool));
+                          
                 
 
                 // Composizione Parematri base primo avvio
@@ -321,7 +324,10 @@ namespace RazorEnhanced
                     false, false, false, false, false, false, false, false, false, false, false, false, false,
 
                     // Parametri primo avvio tab general
-                    false, false, false, false, false, 800, 600, "Normal", 100, 400, 400
+                    false, false, false, false, false, 800, 600, "Normal", 100, 400, 400,
+
+                    // Parametri primo avvio tab skill
+                    false
 
                 };
 
