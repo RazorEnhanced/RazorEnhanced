@@ -414,6 +414,9 @@ namespace RazorEnhanced
 
 		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, Item corpo, int mseconds)
 		{
+            if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
+                return;
+
 			if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
 			{
 				if (autoLoootItem.Properties.Count > 0) // Item con props

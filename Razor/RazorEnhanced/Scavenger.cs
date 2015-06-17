@@ -341,6 +341,9 @@ namespace RazorEnhanced
 
 		internal static void GrabItem(ScavengerItem scavengerItem, Item itemGround, int mseconds)
 		{
+            if (!itemGround.Movable || !itemGround.Visible)
+                return;
+
 			if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(itemGround.Position.X, itemGround.Position.Y)) <= 3)
 			{
 				if (scavengerItem.Properties.Count > 0) // Item con props
