@@ -636,8 +636,6 @@ namespace Assistant
                 if (Assistant.Engine.MainWindow.ToolBarOpen)
                     RazorEnhanced.ToolBar.UpdateCount();
 
-                //Counter.Count(i);
-
 			return new ContainerItem(i, Engine.UsePostKRPackets).Compile();
 		}
 
@@ -706,7 +704,6 @@ namespace Assistant
                 // Update Contatori Item ToolBar
                 if (Assistant.Engine.MainWindow.ToolBarOpen)
                     RazorEnhanced.ToolBar.UpdateCount();
-				//Counter.Count(i);
 		}
 
 		private static void BeginContainerContent(PacketReader p, PacketHandlerEventArgs args)
@@ -792,7 +789,6 @@ namespace Assistant
                     // Update Contatori Item ToolBar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
                         RazorEnhanced.ToolBar.UpdateCount();
-					//Counter.Count(item);
 
 				list.Add(item);
 			}
@@ -855,7 +851,6 @@ namespace Assistant
                     // Update Contatori Item ToolBar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
                         RazorEnhanced.ToolBar.UpdateCount();
-					//Counter.Count(item);
 			}
 
 			foreach (Item container in updated)
@@ -1423,7 +1418,7 @@ namespace Assistant
 
                 // Update Weight toolbar
                 if (Assistant.Engine.MainWindow.ToolBarOpen)
-                    RazorEnhanced.ToolBar.UpdateWeight(World.Player.MaxWeight, World.Player.Weight);
+                    RazorEnhanced.ToolBar.UpdateAll();
 
                 ClientCommunication.PostHitsUpdate();
                 ClientCommunication.PostStamUpdate();
@@ -1714,7 +1709,7 @@ namespace Assistant
             // Update Contatori Item ToolBar
             if (Assistant.Engine.MainWindow.ToolBarOpen)
                 RazorEnhanced.ToolBar.UpdateCount();
-			//Counter.Uncount(item);
+
 
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(itemID & 0x7FFF);
@@ -1888,7 +1883,6 @@ namespace Assistant
             // Update Contatori Item ToolBar
             if (Assistant.Engine.MainWindow.ToolBarOpen)
                 RazorEnhanced.ToolBar.UpdateCount(); 
-            //Counter.Uncount(item);
 
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
