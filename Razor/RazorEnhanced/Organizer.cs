@@ -318,6 +318,9 @@ namespace RazorEnhanced
 			{
 				foreach (OrganizerItem oggettoDaLista in organizerItemList)
 				{
+                    if (!oggettoDaLista.Selected)
+                        continue;
+
                     if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))     // Verifico il match fra colore e grafica
 					{
 						// Controllo amount e caso -1
