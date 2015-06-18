@@ -1525,16 +1525,16 @@ namespace Assistant
             // 
             // chkPartyOverhead
             // 
-            this.chkPartyOverhead.Location = new System.Drawing.Point(441, 203);
+            this.chkPartyOverhead.Location = new System.Drawing.Point(437, 203);
             this.chkPartyOverhead.Name = "chkPartyOverhead";
-            this.chkPartyOverhead.Size = new System.Drawing.Size(222, 22);
+            this.chkPartyOverhead.Size = new System.Drawing.Size(226, 22);
             this.chkPartyOverhead.TabIndex = 72;
             this.chkPartyOverhead.Text = "Show mana/stam above party members";
             this.chkPartyOverhead.CheckedChanged += new System.EventHandler(this.chkPartyOverhead_CheckedChanged);
             // 
             // label10
             // 
-            this.label10.Location = new System.Drawing.Point(457, 184);
+            this.label10.Location = new System.Drawing.Point(453, 184);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(80, 17);
             this.label10.TabIndex = 73;
@@ -1549,7 +1549,7 @@ namespace Assistant
             this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.healthFmt.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.healthFmt.Location = new System.Drawing.Point(543, 181);
+            this.healthFmt.Location = new System.Drawing.Point(539, 181);
             this.healthFmt.Name = "healthFmt";
             this.healthFmt.Size = new System.Drawing.Size(46, 20);
             this.healthFmt.TabIndex = 71;
@@ -1557,7 +1557,7 @@ namespace Assistant
             // 
             // showHealthOH
             // 
-            this.showHealthOH.Location = new System.Drawing.Point(441, 162);
+            this.showHealthOH.Location = new System.Drawing.Point(437, 162);
             this.showHealthOH.Name = "showHealthOH";
             this.showHealthOH.Size = new System.Drawing.Size(222, 22);
             this.showHealthOH.TabIndex = 69;
@@ -1566,7 +1566,7 @@ namespace Assistant
             // 
             // showtargtext
             // 
-            this.showtargtext.Location = new System.Drawing.Point(441, 140);
+            this.showtargtext.Location = new System.Drawing.Point(437, 140);
             this.showtargtext.Name = "showtargtext";
             this.showtargtext.Size = new System.Drawing.Size(190, 22);
             this.showtargtext.TabIndex = 53;
@@ -1590,7 +1590,7 @@ namespace Assistant
             this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.ltRange.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.ltRange.Location = new System.Drawing.Point(496, 119);
+            this.ltRange.Location = new System.Drawing.Point(495, 119);
             this.ltRange.Name = "ltRange";
             this.ltRange.Size = new System.Drawing.Size(32, 20);
             this.ltRange.TabIndex = 41;
@@ -1598,7 +1598,7 @@ namespace Assistant
             // 
             // rangeCheckLT
             // 
-            this.rangeCheckLT.Location = new System.Drawing.Point(441, 99);
+            this.rangeCheckLT.Location = new System.Drawing.Point(437, 99);
             this.rangeCheckLT.Name = "rangeCheckLT";
             this.rangeCheckLT.Size = new System.Drawing.Size(185, 22);
             this.rangeCheckLT.TabIndex = 40;
@@ -1607,7 +1607,7 @@ namespace Assistant
             // 
             // smartLT
             // 
-            this.smartLT.Location = new System.Drawing.Point(441, 77);
+            this.smartLT.Location = new System.Drawing.Point(437, 77);
             this.smartLT.Name = "smartLT";
             this.smartLT.Size = new System.Drawing.Size(185, 22);
             this.smartLT.TabIndex = 52;
@@ -1616,7 +1616,7 @@ namespace Assistant
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(457, 60);
+            this.label5.Location = new System.Drawing.Point(453, 60);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(71, 18);
             this.label5.TabIndex = 70;
@@ -1624,7 +1624,7 @@ namespace Assistant
             // 
             // label6
             // 
-            this.label6.Location = new System.Drawing.Point(572, 59);
+            this.label6.Location = new System.Drawing.Point(568, 59);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(30, 18);
             this.label6.TabIndex = 71;
@@ -1639,7 +1639,7 @@ namespace Assistant
             this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.txtObjDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtObjDelay.Location = new System.Drawing.Point(534, 56);
+            this.txtObjDelay.Location = new System.Drawing.Point(530, 56);
             this.txtObjDelay.Name = "txtObjDelay";
             this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
             this.txtObjDelay.TabIndex = 37;
@@ -1647,7 +1647,7 @@ namespace Assistant
             // 
             // QueueActions
             // 
-            this.QueueActions.Location = new System.Drawing.Point(441, 36);
+            this.QueueActions.Location = new System.Drawing.Point(437, 36);
             this.QueueActions.Name = "QueueActions";
             this.QueueActions.Size = new System.Drawing.Size(222, 22);
             this.QueueActions.TabIndex = 34;
@@ -1656,7 +1656,7 @@ namespace Assistant
             // 
             // actionStatusMsg
             // 
-            this.actionStatusMsg.Location = new System.Drawing.Point(441, 14);
+            this.actionStatusMsg.Location = new System.Drawing.Point(437, 14);
             this.actionStatusMsg.Name = "actionStatusMsg";
             this.actionStatusMsg.Size = new System.Drawing.Size(222, 22);
             this.actionStatusMsg.TabIndex = 38;
@@ -1677,6 +1677,7 @@ namespace Assistant
             this.msglvl.Name = "msglvl";
             this.msglvl.Size = new System.Drawing.Size(88, 22);
             this.msglvl.TabIndex = 69;
+            this.msglvl.SelectedIndexChanged += new System.EventHandler(this.msglvl_SelectedIndexChanged);
             // 
             // label17
             // 
@@ -6275,38 +6276,34 @@ namespace Assistant
             spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
             potionEquip.Checked = RazorEnhanced.Settings.General.ReadBool("PotionEquip");
 
+            chkForceSpeechHue.Checked = setSpeechHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue");
+            chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpellHue");
+            if (RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0)
+            {
+                InitPreviewHue(lthilight, "LTHilight");
+                lthilight.Checked = setLTHilight.Enabled = true;
+            }
+            else
+            {
+                lthilight.Checked = setLTHilight.Enabled = false;
+            }
+            InitPreviewHue(lblExHue, "ExemptColor");
+            InitPreviewHue(lblMsgHue, "SysColor");
+            InitPreviewHue(lblWarnHue, "WarningColor");
+            InitPreviewHue(chkForceSpeechHue, "SpeechHue");
+            InitPreviewHue(lblBeneHue, "BeneficialSpellHue");
+            InitPreviewHue(lblHarmHue, "HarmfulSpellHue");
+            InitPreviewHue(lblNeuHue, "NeutralSpellHue");
+
+            txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
+            msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
+
             // Vecchi parametri
 
-			chkForceSpeechHue.Checked = setSpeechHue.Enabled = Config.GetBool("ForceSpeechHue");
-			chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = Config.GetBool("ForceSpellHue");
-			if (Config.GetInt("LTHilight") != 0)
-			{
-				InitPreviewHue(lthilight, "LTHilight");
-				//ClientCommunication.SetCustomNotoHue( Config.GetInt( "LTHilight" ) );
-				lthilight.Checked = setLTHilight.Enabled = true;
-			}
-			else
-			{
-				//ClientCommunication.SetCustomNotoHue( 0 );
-				lthilight.Checked = setLTHilight.Enabled = false;
-			}
-
-			txtSpellFormat.Text = Config.GetString("SpellFormat");
-
-			msglvl.SelectedIndex = Config.GetInt("MessageLevel");
-
-			InitPreviewHue(lblExHue, "ExemptColor");
-			InitPreviewHue(lblMsgHue, "SysColor");
-			InitPreviewHue(lblWarnHue, "WarningColor");
-			InitPreviewHue(chkForceSpeechHue, "SpeechHue");
-			InitPreviewHue(lblBeneHue, "BeneficialSpellHue");
-			InitPreviewHue(lblHarmHue, "HarmfulSpellHue");
-			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
-
+            
 			hotkeyTree.SelectedNode = null;
 
 			m_Initializing = false;
-			//Load macro list
 		}
 
 		private void tabs_IndexChanged(object sender, System.EventArgs e)
@@ -7078,14 +7075,15 @@ namespace Assistant
 		private void chkForceSpeechHue_CheckedChanged(object sender, System.EventArgs e)
 		{
 			setSpeechHue.Enabled = chkForceSpeechHue.Checked;
-			Config.SetProperty("ForceSpeechHue", chkForceSpeechHue.Checked);
+            if (chkForceSpeechHue.Focused)
+                RazorEnhanced.Settings.General.WriteBool("ForceSpeechHue", chkForceSpeechHue.Checked);
 		}
 
 		private void lthilight_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (!(setLTHilight.Enabled = lthilight.Checked))
 			{
-				Config.SetProperty("LTHilight", 0);
+                RazorEnhanced.Settings.General.WriteInt("LTHilight", 0);
 				ClientCommunication.SetCustomNotoHue(0);
 				lthilight.BackColor = SystemColors.Control;
 				lthilight.ForeColor = SystemColors.ControlText;
@@ -7097,23 +7095,24 @@ namespace Assistant
 			if (chkForceSpellHue.Checked)
 			{
 				setBeneHue.Enabled = setHarmHue.Enabled = setNeuHue.Enabled = true;
-				Config.SetProperty("ForceSpellHue", true);
+				RazorEnhanced.Settings.General.WriteBool("ForceSpellHue", true);
 			}
 			else
 			{
 				setBeneHue.Enabled = setHarmHue.Enabled = setNeuHue.Enabled = false;
-				Config.SetProperty("ForceSpellHue", false);
+                RazorEnhanced.Settings.General.WriteBool("ForceSpellHue", false);
 			}
 		}
 
 		private void txtSpellFormat_TextChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("SpellFormat", txtSpellFormat.Text.Trim());
+            if (txtSpellFormat.Focused)
+                RazorEnhanced.Settings.General.WriteString("SpellFormat", txtSpellFormat.Text.Trim());
 		}
 
 		private void InitPreviewHue(Control ctrl, string cfg)
 		{
-			int hueIdx = Config.GetInt(cfg);
+            int hueIdx = RazorEnhanced.Settings.General.ReadInt(cfg);
 			if (hueIdx > 0 && hueIdx < 3000)
 				ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
 			else
@@ -7123,12 +7122,12 @@ namespace Assistant
 
 		private bool SetHue(Control ctrl, string cfg)
 		{
-			HueEntry h = new HueEntry(Config.GetInt(cfg));
+            HueEntry h = new HueEntry(RazorEnhanced.Settings.General.ReadInt(cfg));
 
 			if (h.ShowDialog(this) == DialogResult.OK)
 			{
 				int hueIdx = h.Hue;
-				Config.SetProperty(cfg, hueIdx);
+                RazorEnhanced.Settings.General.WriteInt(cfg, hueIdx);
 				if (hueIdx > 0 && hueIdx < 3000)
 					ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
 				else
@@ -7166,7 +7165,7 @@ namespace Assistant
 		private void setLTHilight_Click(object sender, System.EventArgs e)
 		{
 			if (SetHue(lthilight, "LTHilight"))
-				ClientCommunication.SetCustomNotoHue(Config.GetInt("LTHilight"));
+                ClientCommunication.SetCustomNotoHue(RazorEnhanced.Settings.General.ReadInt("LTHilight"));
 		}
 
 		private void setBeneHue_Click(object sender, System.EventArgs e)
@@ -8346,7 +8345,8 @@ namespace Assistant
 
 		private void msglvl_SelectedIndexChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("MessageLevel", msglvl.SelectedIndex);
+            if (msglvl.Focused)
+                RazorEnhanced.Settings.General.WriteInt("MessageLevel", msglvl.SelectedIndex);
 		}
 
 		private void screenPrev_Click(object sender, System.EventArgs e)

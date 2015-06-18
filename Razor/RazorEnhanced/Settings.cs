@@ -331,7 +331,21 @@ namespace RazorEnhanced
                 general.Columns.Add("AutoOpenDoors", typeof(bool));
                 general.Columns.Add("SpellUnequip", typeof(bool));
                 general.Columns.Add("PotionEquip", typeof(bool));
-                
+                general.Columns.Add("ForceSpeechHue", typeof(bool));
+                general.Columns.Add("ForceSpellHue", typeof(bool));
+                general.Columns.Add("SpellFormat", typeof(string));
+                general.Columns.Add("MessageLevel", typeof(int));
+
+                // Parametri Tab (Options -> Hues)
+                general.Columns.Add("LTHilight", typeof(int));
+                general.Columns.Add("NeutralSpellHue", typeof(int));
+                general.Columns.Add("HarmfulSpellHue", typeof(int));
+                general.Columns.Add("BeneficialSpellHue", typeof(int));
+                general.Columns.Add("SpeechHue", typeof(int));
+                general.Columns.Add("ExemptColor", typeof(int));
+                general.Columns.Add("WarningColor", typeof(int));
+                general.Columns.Add("SysColor", typeof(int));
+
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -356,7 +370,10 @@ namespace RazorEnhanced
                     false,
                     
                     // Parametri primo avvio tab Options
-                    false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false
+                    false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false, false, false, @"{power} [{spell}]", 0,
+
+                    // Parametri primo avvio tab Options -> Hues
+                    (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1
 
                 };
 

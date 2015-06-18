@@ -124,7 +124,7 @@ namespace Assistant
 				Write((uint)0x7FFFFFFF);
 
 			if (SearchExemptionAgent.Contains(item))
-				Write((ushort)Config.GetInt("ExemptColor"));
+                Write((ushort)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
 			else
 				Write(item.Hue);
 		}
@@ -880,7 +880,7 @@ namespace Assistant
 			Write((int)m.Serial);
 			Write((short)m.Body);
 			Write((byte)0);
-			int ltHue = Config.GetInt("LTHilight");
+            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 				Write((short)(ltHue | 0x8000));
 			else
@@ -900,7 +900,7 @@ namespace Assistant
 			: base(0x78)
 		{
 			int count = m.Contains.Count;
-			int ltHue = Config.GetInt("LTHilight");
+            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			bool isLT;
 			if (ltHue != 0)
 				isLT = Targeting.IsLastTarget(m);

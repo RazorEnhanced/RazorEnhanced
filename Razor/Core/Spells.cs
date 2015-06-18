@@ -71,16 +71,16 @@ namespace Assistant
 
 		internal int GetHue(int def)
 		{
-			if (Config.GetBool("ForceSpellHue"))
+            if (RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
 			{
 				switch (Flag)
 				{
 					case SpellFlag.Beneficial:
-						return Config.GetInt("BeneficialSpellHue");
+                        return RazorEnhanced.Settings.General.ReadInt("BeneficialSpellHue");
 					case SpellFlag.Harmful:
-						return Config.GetInt("HarmfulSpellHue");
+                        return RazorEnhanced.Settings.General.ReadInt("HarmfulSpellHue");
 					case SpellFlag.Neutral:
-						return Config.GetInt("NeutralSpellHue");
+                        return RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue");
 					default:
 						return def;
 				}

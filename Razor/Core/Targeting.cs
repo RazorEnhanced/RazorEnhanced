@@ -274,7 +274,7 @@ namespace Assistant
 		{
 			if (m_LastTarget != null)
 			{
-				bool lth = Config.GetInt("LTHilight") != 0;
+                bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
 
 				if (m_OldLT.IsItem)
 				{

@@ -839,18 +839,18 @@ namespace Assistant
 
 		internal void SendMessage(MsgLevel lvl, string text)
 		{
-			if (lvl >= (MsgLevel)Config.GetInt("MessageLevel") && text.Length > 0)
+            if (lvl >= (MsgLevel)RazorEnhanced.Settings.General.ReadInt("MessageLevel") && text.Length > 0)
 			{
 				int hue;
 				switch (lvl)
 				{
 					case MsgLevel.Error:
 					case MsgLevel.Warning:
-						hue = Config.GetInt("WarningColor");
+                        hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
 						break;
 
 					default:
-						hue = Config.GetInt("SysColor");
+                        hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
 						break;
 				}
 

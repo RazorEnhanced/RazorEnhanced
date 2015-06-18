@@ -696,7 +696,7 @@ namespace Assistant
 			if (SearchExemptionAgent.Contains(i))
 			{
 				p.Seek(-2, System.IO.SeekOrigin.Current);
-				p.Write((short)Config.GetInt("ExemptColor"));
+                p.Write((short)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
 			}
 
 			i.Container = cser;
@@ -784,7 +784,7 @@ namespace Assistant
 				if (SearchExemptionAgent.Contains(item))
 				{
 					p.Seek(-2, System.IO.SeekOrigin.Current);
-					p.Write((short)Config.GetInt("ExemptColor"));
+                    p.Write((short)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
 				}
 
 				item.Container = cont; // must be done after hue is set (for counters)
@@ -847,7 +847,7 @@ namespace Assistant
 				if (SearchExemptionAgent.Contains(item))
 				{
 					p.Seek(-2, System.IO.SeekOrigin.Current);
-					p.Write((short)Config.GetInt("ExemptColor"));
+                    p.Write((short)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
 				}
 
 				item.Container = cont; // must be done after hue is set (for counters)
@@ -900,7 +900,7 @@ namespace Assistant
 
 			i.Container = ser;
 
-			int ltHue = Config.GetInt("LTHilight");
+            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(i.Container as Mobile))
 			{
 				p.Seek(-2, SeekOrigin.Current);
@@ -1135,7 +1135,7 @@ namespace Assistant
 
 				m.Direction = (Direction)p.ReadByte();
 				m.Hue = p.ReadUInt16();
-				int ltHue = Config.GetInt("LTHilight");
+                int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 				if (ltHue != 0 && Targeting.IsLastTarget(m))
 				{
 					p.Seek(-2, SeekOrigin.Current);
@@ -1466,7 +1466,7 @@ namespace Assistant
             }
 
 			m.Hue = p.ReadUInt16();
-			int ltHue = Config.GetInt("LTHilight");
+            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 			{
 				p.Seek(-2, SeekOrigin.Current);
@@ -1544,7 +1544,7 @@ namespace Assistant
             if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
 				Targeting.CheckTextFlags(m);
 
-			int ltHue = Config.GetInt("LTHilight");
+            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			bool isLT;
 			if (ltHue != 0)
 				isLT = Targeting.IsLastTarget(m);
@@ -2007,7 +2007,7 @@ namespace Assistant
 				bool replaced = false;
 				if (s != null)
 				{
-					System.Text.StringBuilder sb = new System.Text.StringBuilder(Config.GetString("SpellFormat"));
+                    System.Text.StringBuilder sb = new System.Text.StringBuilder(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
 					sb.Replace(@"{power}", s.WordsOfPower);
 					string spell = Language.GetString(s.Name);
 					sb.Replace(@"{spell}", spell);
@@ -2024,13 +2024,13 @@ namespace Assistant
 					}
 				}
 
-				if (!replaced && Config.GetBool("ForceSpellHue"))
+                if (!replaced && RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
 				{
 					p.Seek(10, SeekOrigin.Begin);
 					if (s != null)
 						p.Write((ushort)s.GetHue(hue));
 					else
-						p.Write((ushort)Config.GetInt("NeutralSpellHue"));
+                        p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue"));
 				}
 			}
 			else if (ser.IsMobile && type == MessageType.Label)
@@ -2061,10 +2061,10 @@ namespace Assistant
 
 				if ((type == MessageType.Emote || type == MessageType.Regular || type == MessageType.Whisper || type == MessageType.Yell) && ser.IsMobile && ser != World.Player.Serial)
 				{
-					if (Config.GetBool("ForceSpeechHue"))
+                    if (RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue"))
 					{
 						p.Seek(10, SeekOrigin.Begin);
-						p.Write((ushort)Config.GetInt("SpeechHue"));
+                        p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("SpeechHue"));
 					}
 				}
 

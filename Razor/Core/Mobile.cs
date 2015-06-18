@@ -430,12 +430,12 @@ namespace Assistant
 
 		internal void OverheadMessage(string text)
 		{
-			OverheadMessage(Config.GetInt("SysColor"), text);
+            OverheadMessage(RazorEnhanced.Settings.General.ReadInt("SysColor"), text);
 		}
 
 		internal void OverheadMessage(string format, params object[] args)
 		{
-			OverheadMessage(Config.GetInt("SysColor"), String.Format(format, args));
+            OverheadMessage(RazorEnhanced.Settings.General.ReadInt("SysColor"), String.Format(format, args));
 		}
 
 		internal void OverheadMessage(int hue, string format, params object[] args)
