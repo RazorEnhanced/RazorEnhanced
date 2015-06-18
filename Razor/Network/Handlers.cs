@@ -181,7 +181,7 @@ namespace Assistant
 		private static void ClientSingleClick(PacketReader p, PacketHandlerEventArgs args)
 		{
 			// if you modify this, don't forget to modify the allnames hotkey
-			if (Config.GetBool("LastTargTextFlags"))
+            if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
 			{
 				Mobile m = World.FindMobile(p.ReadUInt32());
 				if (m != null)
@@ -200,7 +200,7 @@ namespace Assistant
 					item.Updated = false;
 			}
 
-			if (Config.GetBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
+            if (RazorEnhanced.Settings.General.ReadBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
 			{ // mount layer = 0x19
 				World.Player.SendMessage(LocString.DismountBlocked);
 				args.Block = true;
@@ -436,7 +436,7 @@ namespace Assistant
 			if (item != null)
 				iid = item.ItemID.Value;
 
-			if (Config.GetBool("QueueActions"))
+            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 			{
 				if (item == null)
 				{
@@ -500,7 +500,7 @@ namespace Assistant
 			if (m == null)
 				return;
 
-			if (Config.GetBool("QueueActions"))
+            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(item, m, layer);
 		}
 
@@ -527,7 +527,7 @@ namespace Assistant
 			if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
 				i.IsNew = true;
 
-			if (Config.GetBool("QueueActions"))
+            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(i, dser, newPos);
 		}
 
@@ -1177,7 +1177,7 @@ namespace Assistant
 				}
                 RazorEnhanced.Filters.ProcessMessage(m);
 
-				if (Config.GetBool("ShowHealth"))
+                if (RazorEnhanced.Settings.General.ReadBool("ShowHealth"))
 				{
 					int percent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
 
@@ -1188,7 +1188,7 @@ namespace Assistant
 						{
 							m.OverheadMessageFrom(HealthHues[((percent + 5) / 10) % HealthHues.Length],
 								Language.Format(LocString.sStatsA1, m.Name),
-								Config.GetString("HealthFmt"), percent);
+                                RazorEnhanced.Settings.General.ReadString("HealthFmt"), percent);
 						}
 						catch
 						{
@@ -1218,7 +1218,7 @@ namespace Assistant
 					ClientCommunication.PostStamUpdate();
 				}
 
-				if (m != World.Player && Config.GetBool("ShowPartyStats"))
+                if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
 				{
 					int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 					int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
@@ -1260,7 +1260,7 @@ namespace Assistant
 					ClientCommunication.PostManaUpdate();
 				}
 
-				if (m != World.Player && Config.GetBool("ShowPartyStats"))
+                if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
 				{
 					int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 					int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
@@ -1484,7 +1484,7 @@ namespace Assistant
 
 				if (!wasHidden && !m.Visible)
 				{
-					if (Config.GetBool("AlwaysStealth"))
+                    if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
 						StealthSteps.Hide();
 				}
 				else if (wasHidden && m.Visible)
@@ -1539,9 +1539,9 @@ namespace Assistant
 
 			bool wasHidden = !m.Visible;
 
-			if (m != World.Player && Config.GetBool("ShowMobNames"))
+            if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowMobNames"))
 				ClientCommunication.SendToServer(new SingleClick(m));
-			if (Config.GetBool("LastTargTextFlags"))
+            if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
 				Targeting.CheckTextFlags(m);
 
 			int ltHue = Config.GetInt("LTHilight");
@@ -1574,7 +1574,7 @@ namespace Assistant
 
 				if (!wasHidden && !m.Visible)
 				{
-					if (Config.GetBool("AlwaysStealth"))
+                    if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
 						StealthSteps.Hide();
 				}
 				else if (wasHidden && m.Visible)
@@ -1754,9 +1754,9 @@ namespace Assistant
 			{
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
 				{
-					if (Config.GetBool("ShowCorpseNames"))
+                    if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
 						ClientCommunication.SendToServer(new SingleClick(item));
-					if (Config.GetBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, Config.GetInt("CorpseRange")) && World.Player != null && World.Player.Visible)
+                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible)
 						PlayerData.DoubleClick(item);
 				}
 				else if (item.IsMulti)
@@ -1921,9 +1921,9 @@ namespace Assistant
 			{
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
 				{
-					if (Config.GetBool("ShowCorpseNames"))
+                    if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
 						ClientCommunication.SendToServer(new SingleClick(item));
-					if (Config.GetBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, Config.GetInt("CorpseRange")) && World.Player != null && World.Player.Visible)
+                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible)
 						PlayerData.DoubleClick(item);
 				}
 				else if (item.IsMulti)
@@ -2048,7 +2048,7 @@ namespace Assistant
 			{
 				if (ser == Serial.MinusOne && name == "System")
 				{
-					if (Config.GetBool("FilterSnoopMsg") && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
+                    if (RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg") && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
 					{
 						args.Block = true;
 						return;
@@ -2068,7 +2068,7 @@ namespace Assistant
 					}
 				}
 
-				if (Config.GetBool("FilterSpam") && (ser == Serial.MinusOne || ser == Serial.Zero))
+                if (RazorEnhanced.Settings.General.ReadBool("FilterSpam") && (ser == Serial.MinusOne || ser == Serial.Zero))
 				{
 					if (!MessageQueue.Enqueue(ser, body, type, hue, font, lang, name, text))
 					{

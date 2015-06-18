@@ -110,7 +110,7 @@ namespace Assistant
 
 		private void Cast()
 		{
-			if (Config.GetBool("SpellUnequip"))
+            if (RazorEnhanced.Settings.General.ReadBool("SpellUnequip"))
 			{
 				Item pack = World.Player.Backpack;
 				if (pack != null)

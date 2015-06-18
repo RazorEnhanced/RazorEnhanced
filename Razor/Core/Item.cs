@@ -404,7 +404,7 @@ namespace Assistant
 		private static List<Serial> m_AutoStackCache = new List<Serial>();
 		internal void AutoStackResource()
 		{
-			if (!IsResource || !Config.GetBool("AutoStack") || m_AutoStackCache.Contains(Serial))
+            if (!IsResource || !RazorEnhanced.Settings.General.ReadBool("AutoStack") || m_AutoStackCache.Contains(Serial))
 				return;
 
 			foreach (Item check in World.Items.Values)

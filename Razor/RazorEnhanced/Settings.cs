@@ -303,9 +303,35 @@ namespace RazorEnhanced
 
                 // Parametri Tab (Skill)
                 general.Columns.Add("DisplaySkillChanges", typeof(bool));
-                          
-                
 
+                // Parametri Tab (Options)
+                general.Columns.Add("ActionStatusMsg", typeof(bool));
+                general.Columns.Add("QueueActions", typeof(bool));
+                general.Columns.Add("ObjectDelay", typeof(int));
+                general.Columns.Add("SmartLastTarget", typeof(bool));
+                general.Columns.Add("RangeCheckLT", typeof(bool));
+                general.Columns.Add("LTRange", typeof(int));
+                general.Columns.Add("LastTargTextFlags", typeof(bool));
+                general.Columns.Add("ShowHealth", typeof(bool));
+                general.Columns.Add("HealthFmt", typeof(string));
+                general.Columns.Add("ShowPartyStats", typeof(bool));
+                general.Columns.Add("OldStatBar", typeof(bool));
+                general.Columns.Add("QueueTargets", typeof(bool));
+                general.Columns.Add("BlockDismount", typeof(bool));
+                general.Columns.Add("AutoStack", typeof(bool));
+                general.Columns.Add("AutoOpenCorpses", typeof(bool));
+                general.Columns.Add("CorpseRange", typeof(int));
+                general.Columns.Add("FilterSpam", typeof(bool));
+                general.Columns.Add("FilterSnoopMsg", typeof(bool));
+                general.Columns.Add("ShowMobNames", typeof(bool));
+                general.Columns.Add("Negotiate", typeof(bool));
+                general.Columns.Add("ShowCorpseNames", typeof(bool));
+                general.Columns.Add("CountStealthSteps", typeof(bool));
+                general.Columns.Add("AlwaysStealth", typeof(bool));
+                general.Columns.Add("AutoOpenDoors", typeof(bool));
+                general.Columns.Add("SpellUnequip", typeof(bool));
+                general.Columns.Add("PotionEquip", typeof(bool));
+                
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -327,7 +353,10 @@ namespace RazorEnhanced
                     false, false, false, false, false, 800, 600, "Normal", 100, 400, 400,
 
                     // Parametri primo avvio tab skill
-                    false
+                    false,
+                    
+                    // Parametri primo avvio tab Options
+                    false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false
 
                 };
 

@@ -1711,6 +1711,7 @@ namespace Assistant
             this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
             this.autoOpenDoors.TabIndex = 59;
             this.autoOpenDoors.Text = "Automatically open doors";
+            this.autoOpenDoors.CheckedChanged += new System.EventHandler(this.autoOpenDoors_CheckedChanged);
             // 
             // alwaysStealth
             // 
@@ -6247,19 +6248,35 @@ namespace Assistant
             PasswordMemory.Load();
 
             dispDelta.Checked = RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges");
-
-
+            actionStatusMsg.Checked = RazorEnhanced.Settings.General.ReadBool("ActionStatusMsg");
+            QueueActions.Checked = RazorEnhanced.Settings.General.ReadBool("QueueActions");
+            txtObjDelay.Text = RazorEnhanced.Settings.General.ReadInt("ObjectDelay").ToString();
+            smartLT.Checked = RazorEnhanced.Settings.General.ReadBool("SmartLastTarget");
+            ltRange.Enabled = rangeCheckLT.Checked = RazorEnhanced.Settings.General.ReadBool("RangeCheckLT");
+            ltRange.Text = RazorEnhanced.Settings.General.ReadInt("LTRange").ToString();
+            showtargtext.Checked = RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags");
+            healthFmt.Enabled = showHealthOH.Checked = RazorEnhanced.Settings.General.ReadBool("ShowHealth");
+            healthFmt.Text = RazorEnhanced.Settings.General.ReadString("HealthFmt");
+            chkPartyOverhead.Checked = RazorEnhanced.Settings.General.ReadBool("ShowPartyStats");
+            preAOSstatbar.Checked = RazorEnhanced.Settings.General.ReadBool("OldStatBar");
+            queueTargets.Checked = RazorEnhanced.Settings.General.ReadBool("QueueTargets");
+            blockDis.Checked = RazorEnhanced.Settings.General.ReadBool("BlockDismount");
+            autoStackRes.Checked = RazorEnhanced.Settings.General.ReadBool("AutoStack");
+            corpseRange.Enabled = openCorpses.Checked = RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses");
+            corpseRange.Text = RazorEnhanced.Settings.General.ReadInt("CorpseRange").ToString();
+            spamFilter.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSpam");
+            filterSnoop.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg");
+            incomingMob.Checked = RazorEnhanced.Settings.General.ReadBool("ShowMobNames");
+            negotiate.Checked = RazorEnhanced.Settings.General.ReadBool("Negotiate");
+            incomingCorpse.Checked = RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames");
+            chkStealth.Checked = RazorEnhanced.Settings.General.ReadBool("CountStealthSteps");
+            alwaysStealth.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysStealth");
+            autoOpenDoors.Checked = RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors");
+            spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
+            potionEquip.Checked = RazorEnhanced.Settings.General.ReadBool("PotionEquip");
 
             // Vecchi parametri
 
-			spellUnequip.Checked = Config.GetBool("SpellUnequip");
-			ltRange.Enabled = rangeCheckLT.Checked = Config.GetBool("RangeCheckLT");
-			ltRange.Text = Config.GetInt("LTRange").ToString();
-
-			incomingMob.Checked = Config.GetBool("ShowMobNames");
-			incomingCorpse.Checked = Config.GetBool("ShowCorpseNames");
-			QueueActions.Checked = Config.GetBool("QueueActions");
-			queueTargets.Checked = Config.GetBool("QueueTargets");
 			chkForceSpeechHue.Checked = setSpeechHue.Enabled = Config.GetBool("ForceSpeechHue");
 			chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = Config.GetBool("ForceSpellHue");
 			if (Config.GetInt("LTHilight") != 0)
@@ -6275,17 +6292,6 @@ namespace Assistant
 			}
 
 			txtSpellFormat.Text = Config.GetString("SpellFormat");
-			txtObjDelay.Text = Config.GetInt("ObjectDelay").ToString();
-			chkStealth.Checked = Config.GetBool("CountStealthSteps");
-
-			spamFilter.Checked = Config.GetBool("FilterSpam");
-            
-            
-            
-			
-			blockDis.Checked = Config.GetBool("BlockDismount");
-			alwaysStealth.Checked = Config.GetBool("AlwaysStealth");
-			autoOpenDoors.Checked = Config.GetBool("AutoOpenDoors");
 
 			msglvl.SelectedIndex = Config.GetInt("MessageLevel");
 
@@ -6296,31 +6302,6 @@ namespace Assistant
 			InitPreviewHue(lblBeneHue, "BeneficialSpellHue");
 			InitPreviewHue(lblHarmHue, "HarmfulSpellHue");
 			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
-
-
-            
-			corpseRange.Enabled = openCorpses.Checked = Config.GetBool("AutoOpenCorpses");
-			corpseRange.Text = Config.GetInt("CorpseRange").ToString();
-
-			actionStatusMsg.Checked = Config.GetBool("ActionStatusMsg");
-			autoStackRes.Checked = Config.GetBool("AutoStack");
-
-            
-			filterSnoop.Checked = Config.GetBool("FilterSnoopMsg");
-
-			preAOSstatbar.Checked = Config.GetBool("OldStatBar");
-			showtargtext.Checked = Config.GetBool("LastTargTextFlags");
-			smartLT.Checked = Config.GetBool("SmartLastTarget");
-
-			potionEquip.Checked = Config.GetBool("PotionEquip");
-
-			negotiate.Checked = Config.GetBool("Negotiate");
-
-			healthFmt.Enabled = showHealthOH.Checked = Config.GetBool("ShowHealth");
-			healthFmt.Text = Config.GetString("HealthFmt");
-			chkPartyOverhead.Checked = Config.GetBool("ShowPartyStats");
-
-
 
 			hotkeyTree.SelectedNode = null;
 
@@ -6387,7 +6368,7 @@ namespace Assistant
 
 			if (PacketHandlers.PlayCharTime < DateTime.Now && PacketHandlers.PlayCharTime + TimeSpan.FromSeconds(30) > DateTime.Now)
 			{
-				if (Config.GetBool("Negotiate"))
+                if (RazorEnhanced.Settings.General.ReadBool("Negotiate"))
 				{
 					bool allAllowed = true;
 					StringBuilder text = new StringBuilder();
@@ -6505,12 +6486,14 @@ namespace Assistant
 
 		private void incomingMob_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("ShowMobNames", incomingMob.Checked);
+            if (incomingMob.Focused)
+                RazorEnhanced.Settings.General.WriteBool("ShowMobNames", incomingMob.Checked);
 		}
 
 		private void incomingCorpse_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("ShowCorpseNames", incomingCorpse.Checked);
+            if (incomingCorpse.Focused)
+                RazorEnhanced.Settings.General.WriteBool("ShowCorpseNames", incomingCorpse.Checked);
 		}
 
 		private ContextMenu m_SkillMenu;
@@ -7088,7 +7071,8 @@ namespace Assistant
 
 		private void queueTargets_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("QueueTargets", queueTargets.Checked);
+            if (queueTargets.Focused)
+                RazorEnhanced.Settings.General.WriteBool("QueueTargets", queueTargets.Checked);
 		}
 
 		private void chkForceSpeechHue_CheckedChanged(object sender, System.EventArgs e)
@@ -7202,23 +7186,25 @@ namespace Assistant
 
 		private void QueueActions_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("QueueActions", QueueActions.Checked);
+            if (QueueActions.Focused)
+                RazorEnhanced.Settings.General.WriteBool("QueueActions", QueueActions.Checked);
 		}
 
 		private void txtObjDelay_TextChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("ObjectDelay", Utility.ToInt32(txtObjDelay.Text.Trim(), 500));
+            if (txtObjDelay.Focused)
+                RazorEnhanced.Settings.General.WriteInt("ObjectDelay", Utility.ToInt32(txtObjDelay.Text.Trim(), 500));
 		}
 
 		private void chkStealth_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("CountStealthSteps", chkStealth.Checked);
+            if (chkStealth.Focused)
+                RazorEnhanced.Settings.General.WriteBool("CountStealthSteps", chkStealth.Checked);
 		}
 
 		private void MainForm_Activated(object sender, System.EventArgs e)
 		{
 			DisableCloseButton();
-			//this.TopMost = true;
 		}
 
 		private void MainForm_Deactivate(object sender, System.EventArgs e)
@@ -7279,13 +7265,15 @@ namespace Assistant
 
 		private void openCorpses_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("AutoOpenCorpses", openCorpses.Checked);
+            if (openCorpses.Focused)
+                RazorEnhanced.Settings.General.WriteBool("AutoOpenCorpses", openCorpses.Checked);
 			corpseRange.Enabled = openCorpses.Checked;
 		}
 
 		private void corpseRange_TextChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("CorpseRange", Utility.ToInt32(corpseRange.Text, 2));
+            if (corpseRange.Focused)
+                RazorEnhanced.Settings.General.WriteInt("CorpseRange", Utility.ToInt32(corpseRange.Text, 2));
 		}
 
 
@@ -7949,7 +7937,8 @@ namespace Assistant
 
 		private void spamFilter_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("FilterSpam", spamFilter.Checked);
+            if (spamFilter.Focused)
+                RazorEnhanced.Settings.General.WriteBool("FilterSpam", spamFilter.Checked);
 		}
 
 		private void screenAutoCap_CheckedChanged(object sender, System.EventArgs e)
@@ -8218,13 +8207,14 @@ namespace Assistant
 
 		private void actionStatusMsg_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("ActionStatusMsg", actionStatusMsg.Checked);
+            if (actionStatusMsg.Focused)
+			    RazorEnhanced.Settings.General.WriteBool("ActionStatusMsg", actionStatusMsg.Checked);
 		}
 
 		private void autoStackRes_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("AutoStack", autoStackRes.Checked);
-			//setAutoStackDest.Enabled = autoStackRes.Checked;
+            if (autoStackRes.Focused)
+                RazorEnhanced.Settings.General.WriteBool("AutoStack", autoStackRes.Checked);
 		}
 
 		private void screenPath_TextChanged(object sender, System.EventArgs e)
@@ -8259,17 +8249,21 @@ namespace Assistant
 
 		private void spellUnequip_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("SpellUnequip", spellUnequip.Checked);
+            if (spellUnequip.Focused)
+                RazorEnhanced.Settings.General.WriteBool("SpellUnequip", spellUnequip.Checked);
 		}
 
 		private void rangeCheckLT_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("RangeCheckLT", ltRange.Enabled = rangeCheckLT.Checked);
+            if (rangeCheckLT.Focused)
+                RazorEnhanced.Settings.General.WriteBool("RangeCheckLT", rangeCheckLT.Checked);
+            ltRange.Enabled = rangeCheckLT.Checked;
 		}
 
 		private void ltRange_TextChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("LTRange", Utility.ToInt32(ltRange.Text, 11));
+            if (ltRange.Focused)
+                RazorEnhanced.Settings.General.WriteInt("LTRange", Utility.ToInt32(ltRange.Text, 11));
 		}
 
 		private void clientPrio_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -8290,12 +8284,15 @@ namespace Assistant
 
 		private void filterSnoop_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("FilterSnoopMsg", filterSnoop.Checked);
+            if (filterSnoop.Focused)
+                RazorEnhanced.Settings.General.WriteBool("FilterSnoopMsg", filterSnoop.Checked);
 		}
 
 		private void preAOSstatbar_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("OldStatBar", preAOSstatbar.Checked);
+            if (preAOSstatbar.Focused)
+                RazorEnhanced.Settings.General.WriteBool("OldStatBar", preAOSstatbar.Checked);
+
 			ClientCommunication.RequestStatbarPatch(preAOSstatbar.Checked);
 			if (World.Player != null && !m_Initializing)
 				MessageBox.Show(this, "Close and re-open your status bar for the change to take effect.", "Status Window Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -8303,12 +8300,14 @@ namespace Assistant
 
 		private void smartLT_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("SmartLastTarget", smartLT.Checked);
+            if (smartLT.Focused)
+                RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", smartLT.Checked);
 		}
 
 		private void showtargtext_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("LastTargTextFlags", showtargtext.Checked);
+            if (showtargtext.Focused)
+                RazorEnhanced.Settings.General.WriteBool("LastTargTextFlags", showtargtext.Checked);
 		}
 
 		private void smartCPU_CheckedChanged(object sender, System.EventArgs e)
@@ -8321,7 +8320,8 @@ namespace Assistant
 
 		private void blockDis_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("BlockDismount", blockDis.Checked);
+            if (blockDis.Focused)
+                RazorEnhanced.Settings.General.WriteBool("BlockDismount", blockDis.Checked);
 		}
 
 		private void imgFmt_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -8334,12 +8334,14 @@ namespace Assistant
 
 		private void alwaysStealth_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("AlwaysStealth", alwaysStealth.Checked);
+            if (alwaysStealth.Focused)
+                RazorEnhanced.Settings.General.WriteBool("AlwaysStealth", alwaysStealth.Checked);
 		}
 
 		private void autoOpenDoors_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("AutoOpenDoors", autoOpenDoors.Checked);
+            if (autoOpenDoors.Focused)
+                RazorEnhanced.Settings.General.WriteBool("AutoOpenDoors", autoOpenDoors.Checked);
 		}
 
 		private void msglvl_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -8433,14 +8435,16 @@ namespace Assistant
 
 		private void potionEquip_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("PotionEquip", potionEquip.Checked);
+            if (potionEquip.Focused)
+                RazorEnhanced.Settings.General.WriteBool("PotionEquip", potionEquip.Checked);
 		}
 
 		private void negotiate_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (!m_Initializing)
 			{
-				Config.SetProperty("Negotiate", negotiate.Checked);
+                if (negotiate.Focused)
+                    RazorEnhanced.Settings.General.WriteBool("Negotiate", negotiate.Checked);
 				ClientCommunication.SetNegotiate(negotiate.Checked);
 			}
 		}
@@ -8601,17 +8605,21 @@ namespace Assistant
 
 		private void showHealthOH_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("ShowHealth", healthFmt.Enabled = showHealthOH.Checked);
+            if (showHealthOH.Focused)
+                RazorEnhanced.Settings.General.WriteBool("ShowHealth", showHealthOH.Checked);
+            healthFmt.Enabled = showHealthOH.Checked;
 		}
 
 		private void healthFmt_TextChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("HealthFmt", healthFmt.Text);
+            if (healthFmt.Focused)
+                RazorEnhanced.Settings.General.WriteString("HealthFmt", healthFmt.Text);
 		}
 
 		private void chkPartyOverhead_CheckedChanged(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("ShowPartyStats", chkPartyOverhead.Checked);
+            if (chkPartyOverhead.Focused)
+                RazorEnhanced.Settings.General.WriteBool("ShowPartyStats", chkPartyOverhead.Checked);
 		}
 
 		private void btcLabel_Click(object sender, EventArgs e)

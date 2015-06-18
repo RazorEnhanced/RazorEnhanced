@@ -795,7 +795,7 @@ namespace Assistant
 			InitError error;
 			int flags = 0;
 
-			if (Config.GetBool("Negotiate"))
+            if (RazorEnhanced.Settings.General.ReadBool("Negotiate"))
 				flags |= 0x04;
 
 			if (ClientEncrypted)
@@ -850,7 +850,7 @@ namespace Assistant
 				SetDataPath("");
 			}
 
-			if (Config.GetBool("OldStatBar"))
+            if (RazorEnhanced.Settings.General.ReadBool("OldStatBar"))
 				ClientCommunication.RequestStatbarPatch(true);
 
 			return true;

@@ -63,7 +63,7 @@ namespace Assistant.HotKeys
 
 		private static void AllNames()
 		{
-			bool textFlags = Config.GetBool("LastTargTextFlags");
+            bool textFlags = RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags");
 
 			foreach (Mobile m in World.MobilesInRange())
 			{

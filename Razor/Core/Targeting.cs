@@ -244,7 +244,7 @@ namespace Assistant
 			{
 				bool oplchanged = false;
 
-				if (Config.GetBool("SmartLastTarget"))
+                if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 				{
 					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 					{
@@ -386,7 +386,7 @@ namespace Assistant
 			{
                 if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
+                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -421,7 +421,7 @@ namespace Assistant
 
                 if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
+                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -514,7 +514,7 @@ namespace Assistant
 			{
                 if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
+                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -563,7 +563,7 @@ namespace Assistant
 
 				if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-					Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
+                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -632,12 +632,12 @@ namespace Assistant
 			m_LastCombatant = m.Serial;
 			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
-			bool wasSmart = Config.GetBool("SmartLastTarget");
+			bool wasSmart = RazorEnhanced.Settings.General.ReadBool("SmartLastTarget");
 			if (wasSmart)
-				Config.SetProperty("SmartLastTarget", false);
+                RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", false);
 			LastTarget();
 			if (wasSmart)
-				Config.SetProperty("SmartLastTarget", true);
+                RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", true);
 			LastTargetChanged();
 		}
 
@@ -666,7 +666,7 @@ namespace Assistant
 				if (!DoTargetSelf())
 					ResendTarget();
 			}
-			else if (forceQ || Config.GetBool("QueueTargets"))
+            else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 			{
 				if (!forceQ)
 					World.Player.OverheadMessage(LocString.QueuedTS);
@@ -722,7 +722,7 @@ namespace Assistant
 				if (!DoLastTarget())
 					ResendTarget();
 			}
-			else if (forceQ || Config.GetBool("QueueTargets"))
+            else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 			{
 				if (!forceQ)
 					World.Player.OverheadMessage(LocString.QueuedLT);
@@ -733,7 +733,7 @@ namespace Assistant
 		internal static bool DoLastTarget()
 		{
 			TargetInfo targ;
-			if (Config.GetBool("SmartLastTarget") && ClientCommunication.AllowBit(FeatureBit.SmartLT))
+            if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 			{
 				if (m_AllowGround && m_LastGroundTarg != null)
 					targ = m_LastGroundTarg;
@@ -805,9 +805,9 @@ namespace Assistant
 				}
 			}
 
-			if (Config.GetBool("RangeCheckLT") && ClientCommunication.AllowBit(FeatureBit.RangeCheckLT) && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, Config.GetInt("LTRange"))))
+            if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT") && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, RazorEnhanced.Settings.General.ReadInt("LTRange"))))
 			{
-				if (Config.GetBool("QueueTargets"))
+                if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 					m_QueueTarget = LastTargetAction;
 				World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
 				return false;
@@ -999,7 +999,7 @@ namespace Assistant
 
 		internal static void CheckTextFlags(Mobile m)
 		{
-			if (Config.GetBool("SmartLastTarget") && ClientCommunication.AllowBit(FeatureBit.SmartLT))
+            if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 			{
 				bool harm = m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial;
 				bool bene = m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial;
@@ -1017,7 +1017,7 @@ namespace Assistant
 		{
 			if (m != null)
 			{
-				if (Config.GetBool("SmartLastTarget") && ClientCommunication.AllowBit(FeatureBit.SmartLT))
+                if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 				{
 					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 						return true;
@@ -1173,9 +1173,9 @@ namespace Assistant
 
 			if (m_HasTarget && m != null && m_LastTarget != null && m.Serial == m_LastTarget.Serial && m_QueueTarget == LastTargetAction)
 			{
-				if (Config.GetBool("RangeCheckLT") && ClientCommunication.AllowBit(FeatureBit.RangeCheckLT))
+                if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT"))
 				{
-					if (Utility.InRange(World.Player.Position, m.Position, Config.GetInt("LTRange")))
+                    if (Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 					{
 						if (m_QueueTarget())
 							ClearQueue();
