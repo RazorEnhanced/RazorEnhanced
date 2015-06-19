@@ -275,6 +275,7 @@
     <Compile Include="Core\Timer.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\HotKey.cs" />
     <Compile Include="RazorEnhanced\ToolBar.cs" />
     <Compile Include="RazorEnhanced\BandageHeal.cs" />
     <Compile Include="RazorEnhanced\Restock.cs" />

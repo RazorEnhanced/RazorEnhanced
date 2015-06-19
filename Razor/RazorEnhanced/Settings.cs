@@ -71,6 +71,7 @@ namespace RazorEnhanced
 				autoloot_lists.Columns.Add("Delay", typeof(int));
 				autoloot_lists.Columns.Add("Bag", typeof(int));
 				autoloot_lists.Columns.Add("Selected", typeof(bool));
+                autoloot_lists.Columns.Add("HotKey", typeof(Keys));
 				m_Dataset.Tables.Add(autoloot_lists);
 
 				DataTable autoloot_items = new DataTable("AUTOLOOT_ITEMS");
@@ -86,6 +87,7 @@ namespace RazorEnhanced
 				scavenger_lists.Columns.Add("Delay", typeof(int));
 				scavenger_lists.Columns.Add("Bag", typeof(int));
 				scavenger_lists.Columns.Add("Selected", typeof(bool));
+                scavenger_lists.Columns.Add("HotKey", typeof(Keys));
 				m_Dataset.Tables.Add(scavenger_lists);
 
 				DataTable scavenger_items = new DataTable("SCAVENGER_ITEMS");
@@ -229,6 +231,101 @@ namespace RazorEnhanced
                 password.Columns.Add("User", typeof(string));
                 password.Columns.Add("Password", typeof(string));
                 m_Dataset.Tables.Add(password);
+
+
+                // ----------- HOTKEYS ----------
+                DataTable hotkey = new DataTable("HOTKEYS");
+                hotkey.Columns.Add("Group", typeof(string));
+                hotkey.Columns.Add("Name", typeof(string));
+                hotkey.Columns.Add("Key", typeof(Keys));
+
+                // Parametri primo avvio HotKey
+               
+                DataRow hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "General", "Resync", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+                
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "General", "Take Screen Shot", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "General", "Ping Server", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Actions", "Unmount", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Actions", "Grab Item", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Actions", "Drop Item", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Use", "Left Hand", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Use", "Right Hand", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Show Names", "All", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Show Names", "Corpses", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Show Names", "Mobiles", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Come", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Follow", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Guard", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Kill", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stay", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stop", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Autoloot", "Start", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Autoloot", "Stop", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Scavenger", "Start", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Scavenger", "Stop", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                m_Dataset.Tables.Add(hotkey);
 
 
                 // ----------- GENERAL SETTINGS ----------
@@ -412,6 +509,7 @@ namespace RazorEnhanced
 				newRow["Delay"] = delay;
 				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
+                newRow["HotKey"] = Keys.None;
 				m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
 
 				Save();
@@ -618,6 +716,7 @@ namespace RazorEnhanced
 				newRow["Delay"] = delay;
 				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
+                newRow["HotKey"] = Keys.None;
 				m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Add(newRow);
 
 				Save();
@@ -2437,6 +2536,79 @@ namespace RazorEnhanced
 
         // ------------- PASSWORD END -----------------
 
+        // ------------- HOTKEYS START -----------------
+        internal class HotKey
+        {
+            internal static List<RazorEnhanced.HotKey.HotKeyData> ReadGroup(string gname)
+            {
+                List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((string)row["Group"] == gname)
+                    {
+                        string name = (string)row["Name"];
+                        Keys key = (Keys)row["Key"];
+                        keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
+                    }
+                }
+                return keydataOut;
+            }
+
+            internal static void UpdateKey(string name, Keys key)
+            {
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((string)row["Name"] == name)
+                    {
+                        row["Key"] = key;
+                    }
+
+                }
+                Save();
+            }
+
+            internal static Keys FindKey(string name)
+            {
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((string)row["Name"] == name)
+                    {
+                        return (Keys)row["Key"];
+                    }
+                }
+                return Keys.None;
+            }
+
+            internal static string FindString(Keys key)
+            {
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((Keys)row["Key"] == key)
+                    {
+                        return (String)row["Name"];
+                    }
+                }
+                return null;
+            }
+
+            internal static List<RazorEnhanced.HotKey.HotKeyData> AgentListKey(string agentdatatable)
+            {
+                List<RazorEnhanced.HotKey.HotKeyData> listsOut = new List<RazorEnhanced.HotKey.HotKeyData>();
+
+                foreach (DataRow row in m_Dataset.Tables[agentdatatable].Rows)
+                {
+                    string description = (string)row["Description"];
+                    Keys key = (Keys)row["HotKey"];
+
+                    RazorEnhanced.HotKey.HotKeyData list = new RazorEnhanced.HotKey.HotKeyData(description, key);
+                    listsOut.Add(list);
+                }
+
+                return listsOut;
+            }
+        }
+        // ------------- HOTKEYS END -----------------
 
         // ------------- GENERAL SETTINGS START -----------------
         internal class General

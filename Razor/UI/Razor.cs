@@ -479,6 +479,13 @@ namespace Assistant
         private RazorTextBox toolboxcountGraphTextBox;
         private Label label18;
         private RazorComboBox toolboxcountComboBox;
+        private TabPage enhancedHotKeytabPage;
+        private TreeView hotkeytreeView;
+        private RazorTextBox hotkeytextbox;
+        private GroupBox groupBox27;
+        private RazorButton hotkeyClearButton;
+        private RazorButton hotkeySetButton;
+        private Label label39;
 
 		private bool m_CanClose = true;
 
@@ -606,6 +613,10 @@ namespace Assistant
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
+
+        // Hotkey 
+        internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
+        internal TreeView HotKeyTreeView { get { return hotkeytreeView; } }
 
 
 		private DataTable scriptTable;
@@ -1104,6 +1115,13 @@ namespace Assistant
             this.bandagehealenableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.bandagehealLogBox = new System.Windows.Forms.ListBox();
+            this.enhancedHotKeytabPage = new System.Windows.Forms.TabPage();
+            this.groupBox27 = new System.Windows.Forms.GroupBox();
+            this.hotkeyClearButton = new RazorEnhanced.UI.RazorButton();
+            this.hotkeySetButton = new RazorEnhanced.UI.RazorButton();
+            this.label39 = new System.Windows.Forms.Label();
+            this.hotkeytextbox = new RazorEnhanced.UI.RazorTextBox();
+            this.hotkeytreeView = new System.Windows.Forms.TreeView();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
@@ -1164,6 +1182,8 @@ namespace Assistant
             this.bandageheal.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.enhancedHotKeytabPage.SuspendLayout();
+            this.groupBox27.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
@@ -1208,6 +1228,7 @@ namespace Assistant
             this.tabs.Controls.Add(this.statusTab);
             this.tabs.Controls.Add(this.scriptingTab);
             this.tabs.Controls.Add(this.EnhancedAgent);
+            this.tabs.Controls.Add(this.enhancedHotKeytabPage);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabs.Location = new System.Drawing.Point(0, 0);
             this.tabs.Multiline = true;
@@ -5952,6 +5973,87 @@ namespace Assistant
             this.bandagehealLogBox.Size = new System.Drawing.Size(265, 303);
             this.bandagehealLogBox.TabIndex = 0;
             // 
+            // enhancedHotKeytabPage
+            // 
+            this.enhancedHotKeytabPage.Controls.Add(this.groupBox27);
+            this.enhancedHotKeytabPage.Controls.Add(this.hotkeytreeView);
+            this.enhancedHotKeytabPage.Location = new System.Drawing.Point(4, 40);
+            this.enhancedHotKeytabPage.Name = "enhancedHotKeytabPage";
+            this.enhancedHotKeytabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.enhancedHotKeytabPage.Size = new System.Drawing.Size(666, 366);
+            this.enhancedHotKeytabPage.TabIndex = 15;
+            this.enhancedHotKeytabPage.Text = "Enhanced HotKey";
+            this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox27
+            // 
+            this.groupBox27.Controls.Add(this.hotkeyClearButton);
+            this.groupBox27.Controls.Add(this.hotkeySetButton);
+            this.groupBox27.Controls.Add(this.label39);
+            this.groupBox27.Controls.Add(this.hotkeytextbox);
+            this.groupBox27.Location = new System.Drawing.Point(502, 7);
+            this.groupBox27.Name = "groupBox27";
+            this.groupBox27.Size = new System.Drawing.Size(156, 100);
+            this.groupBox27.TabIndex = 2;
+            this.groupBox27.TabStop = false;
+            this.groupBox27.Text = "groupBox27";
+            // 
+            // hotkeyClearButton
+            // 
+            this.hotkeyClearButton.ColorTable = office2010BlueTheme1;
+            this.hotkeyClearButton.Location = new System.Drawing.Point(83, 45);
+            this.hotkeyClearButton.Name = "hotkeyClearButton";
+            this.hotkeyClearButton.Size = new System.Drawing.Size(45, 23);
+            this.hotkeyClearButton.TabIndex = 4;
+            this.hotkeyClearButton.Text = "Clear";
+            this.hotkeyClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.hotkeyClearButton.UseVisualStyleBackColor = true;
+            this.hotkeyClearButton.Click += new System.EventHandler(this.hotkeyClearButton_Click);
+            // 
+            // hotkeySetButton
+            // 
+            this.hotkeySetButton.ColorTable = office2010BlueTheme1;
+            this.hotkeySetButton.Location = new System.Drawing.Point(15, 45);
+            this.hotkeySetButton.Name = "hotkeySetButton";
+            this.hotkeySetButton.Size = new System.Drawing.Size(45, 23);
+            this.hotkeySetButton.TabIndex = 3;
+            this.hotkeySetButton.Text = "Set";
+            this.hotkeySetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.hotkeySetButton.UseVisualStyleBackColor = true;
+            this.hotkeySetButton.Click += new System.EventHandler(this.hotkeySetButton_Click);
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(7, 20);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(28, 13);
+            this.label39.TabIndex = 2;
+            this.label39.Text = "Key:";
+            // 
+            // hotkeytextbox
+            // 
+            this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hotkeytextbox.BackColor = System.Drawing.Color.White;
+            this.hotkeytextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hotkeytextbox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.hotkeytextbox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.hotkeytextbox.Location = new System.Drawing.Point(41, 17);
+            this.hotkeytextbox.Name = "hotkeytextbox";
+            this.hotkeytextbox.ReadOnly = true;
+            this.hotkeytextbox.Size = new System.Drawing.Size(104, 20);
+            this.hotkeytextbox.TabIndex = 1;
+            // 
+            // hotkeytreeView
+            // 
+            this.hotkeytreeView.Location = new System.Drawing.Point(9, 7);
+            this.hotkeytreeView.Name = "hotkeytreeView";
+            this.hotkeytreeView.Size = new System.Drawing.Size(487, 353);
+            this.hotkeytreeView.TabIndex = 0;
+            this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
+            // 
             // m_NotifyIcon
             // 
             this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
@@ -6063,6 +6165,9 @@ namespace Assistant
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
+            this.enhancedHotKeytabPage.ResumeLayout(false);
+            this.groupBox27.ResumeLayout(false);
+            this.groupBox27.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -6194,6 +6299,9 @@ namespace Assistant
 
             // ------------------ TARGETS --------------------
             RazorEnhanced.TargetGUI.RefreshTarget();
+
+            // ------------------ HOTKEY --------------------
+            RazorEnhanced.HotKey.Init();
 		}
 
 		private bool m_Initializing = false;
@@ -8243,7 +8351,8 @@ namespace Assistant
 
 		private void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			HotKey.KeyDown(e.KeyData);
+			//HotKey.KeyDown(e.KeyData);
+            RazorEnhanced.HotKey.KeyDown(e.KeyData);
 		}
 
 		private void spellUnequip_CheckedChanged(object sender, System.EventArgs e)
@@ -11538,6 +11647,35 @@ namespace Assistant
             });
         }
 
+        private void razorButton2_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
+        }
+
         // ---------------- TOOLBAR END ----------------
+
+        // ----------------- HOT KEY -----------------------
+        private void hotkeySetButton_Click(object sender, EventArgs e)
+        {
+            if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
+             RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
+        }
+
+        private void hotkeyClearButton_Click(object sender, EventArgs e)
+        {
+            if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
+                RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode.Name);
+        }
+        private void hotkeytreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+        {
+                if (RazorEnhanced.Settings.HotKey.FindKey(hotkeytreeView.SelectedNode.Name) != Keys.None)
+                    hotkeytextbox.Text = RazorEnhanced.Settings.HotKey.FindKey(hotkeytreeView.SelectedNode.Name).ToString();
+                else
+                    hotkeytextbox.Text = "None";           
+        }
+
+
+
+        // ----------------- HOT KEY END -------------------
 	}
 }
