@@ -71,7 +71,6 @@ namespace RazorEnhanced
 				autoloot_lists.Columns.Add("Delay", typeof(int));
 				autoloot_lists.Columns.Add("Bag", typeof(int));
 				autoloot_lists.Columns.Add("Selected", typeof(bool));
-                autoloot_lists.Columns.Add("HotKey", typeof(Keys));
 				m_Dataset.Tables.Add(autoloot_lists);
 
 				DataTable autoloot_items = new DataTable("AUTOLOOT_ITEMS");
@@ -87,7 +86,6 @@ namespace RazorEnhanced
 				scavenger_lists.Columns.Add("Delay", typeof(int));
 				scavenger_lists.Columns.Add("Bag", typeof(int));
 				scavenger_lists.Columns.Add("Selected", typeof(bool));
-                scavenger_lists.Columns.Add("HotKey", typeof(Keys));
 				m_Dataset.Tables.Add(scavenger_lists);
 
 				DataTable scavenger_items = new DataTable("SCAVENGER_ITEMS");
@@ -310,23 +308,136 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Autoloot", "Start", Keys.None };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Start", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Autoloot", "Stop", Keys.None };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Scavenger", "Start", Keys.None };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Start", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Scavenger", "Stop", Keys.None };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Start", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Stop", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Enable", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Disable", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Enable", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Disable", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Dress Start", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Dress Stop", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Undress", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Restock Start", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Restock Stop", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Enable", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Disable", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Primary", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Secondary", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Stun", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Disarm", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Attack", "Attack Last Target", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Bandage", "Self", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Bandage", "Last", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Bandage", "Target", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Potions", "Agility", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Potions", "Cure", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Potions", "Explosion", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Potions", "Heal", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Potions", "Refresh", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Potions", "Strenght", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Potions", "Nightsight", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+
 
                 m_Dataset.Tables.Add(hotkey);
-
 
                 // ----------- GENERAL SETTINGS ----------
                 DataTable general = new DataTable("GENERAL");
@@ -509,7 +620,6 @@ namespace RazorEnhanced
 				newRow["Delay"] = delay;
 				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
-                newRow["HotKey"] = Keys.None;
 				m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
 
 				Save();
@@ -716,7 +826,6 @@ namespace RazorEnhanced
 				newRow["Delay"] = delay;
 				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
-                newRow["HotKey"] = Keys.None;
 				m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Add(newRow);
 
 				Save();
