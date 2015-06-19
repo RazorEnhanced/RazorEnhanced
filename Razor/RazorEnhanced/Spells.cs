@@ -230,7 +230,7 @@ namespace RazorEnhanced
 				case "CorpseSkin":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(103));
 					break;
-				case "CurseWeapon ":
+				case "CurseWeapon":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(104));
 					break;
 				case "EvilOmen":
