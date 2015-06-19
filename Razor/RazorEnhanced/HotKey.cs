@@ -78,7 +78,6 @@ namespace RazorEnhanced
 
         internal static void Init()
         {
-            int subcount = 0;
             Engine.MainWindow.HotKeyTreeView.Nodes.Clear();
             Engine.MainWindow.HotKeyTreeView.Nodes.Add("HotKeys");
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("General");
@@ -87,14 +86,7 @@ namespace RazorEnhanced
             List<HotKeyData> keylist = RazorEnhanced.Settings.HotKey.ReadGroup("General");
             foreach(HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Actions
@@ -102,14 +94,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Actions");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Actions -> Use
@@ -117,14 +102,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Use");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Actions -> Show Names
@@ -132,14 +110,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Show Names");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Actions -> Per Commands
@@ -147,14 +118,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Pet Commands");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Agents
@@ -162,14 +126,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Agents");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Combats
@@ -180,14 +137,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Abilities");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Combat  --> Attack
@@ -195,14 +145,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Attack");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Combat  --> Bandage
@@ -210,14 +153,7 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Bandage");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[2].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[2].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
             // Combat  --> Consumable
@@ -228,17 +164,69 @@ namespace RazorEnhanced
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Potions");
             foreach (HotKeyData keydata in keylist)
             {
-                if (keydata.Key != Keys.None)
-                {
                     Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
-                }
-                else
-                {
-                    Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( None )");
-                }
             }
 
+            // Combat --> Consumable --> Other
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes.Add("Other");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Other");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Combat --> Hands
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes.Add("Hands");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Hands");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Combat --> Hands
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes.Add("Equip Wands");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Equip Wands");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Skills
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Skills");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Skills");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Spells
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Spells");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsAgent");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Spells -- > Magery
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Magery");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMagery");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Spells -- > Magery
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Necro");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNecro");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+                
+          
+
             Engine.MainWindow.HotKeyTreeView.ExpandAll();
+
         }
 
         internal static void UpdateKey(string name)
