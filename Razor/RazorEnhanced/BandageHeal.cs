@@ -203,21 +203,19 @@ namespace RazorEnhanced
 
         internal static void LoadSettings()
         {
-            bool BandageHealcountdownCheckBox = false;
-            string BandageHealtargetComboBox = "Self";
-            int BandageHealtargetLabel = 0;
-            bool BandageHealcustomCheckBox = false;
-            int BandageHealcustomIDTextBox = 0;
-            int BandageHealcustomcolorTextBox = 0;
-            bool BandageHealdexformulaCheckBox = false;
-            int BandageHealdelayTextBox = 0;
-            int BandageHealhpTextBox = 0;
-            bool BandageHealpoisonCheckBox = false;
-            bool BandageHealmortalCheckBox = false;
-            bool BandageHealhiddedCheckBox = false;
-
-            RazorEnhanced.Settings.General.AssistantBandageHealLoadAll(out BandageHealcountdownCheckBox, out BandageHealtargetComboBox, out BandageHealtargetLabel, out BandageHealcustomCheckBox, out BandageHealcustomIDTextBox, out BandageHealcustomcolorTextBox, out BandageHealdexformulaCheckBox, out BandageHealdelayTextBox, out BandageHealhpTextBox, out BandageHealpoisonCheckBox, out BandageHealmortalCheckBox, out BandageHealhiddedCheckBox);
-           
+            bool BandageHealcountdownCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
+            string BandageHealtargetComboBox = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
+            int BandageHealtargetLabel = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
+            bool BandageHealcustomCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
+            int BandageHealcustomIDTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
+            int BandageHealcustomcolorTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox");
+            bool BandageHealdexformulaCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+            int BandageHealdelayTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
+            int BandageHealhpTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
+            bool BandageHealpoisonCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
+            bool BandageHealmortalCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
+            bool BandageHealhiddedCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
+      
             Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
             Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
 

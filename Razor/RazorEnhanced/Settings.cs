@@ -3402,54 +3402,7 @@ namespace RazorEnhanced
         // ------------- GENERAL SETTINGS START -----------------
         internal class General
 		{
-            // Bandage heal tab
-            internal static void AssistantBandageHealLoadAll(out bool BandageHealcountdownCheckBox, out string BandageHealtargetComboBox, out int BandageHealtargetLabel, out bool BandageHealcustomCheckBox, out int BandageHealcustomIDTextBox, out int BandageHealcustomcolorTextBox, out bool BandageHealdexformulaCheckBox, out int BandageHealdelayTextBox, out int BandageHealhpTextBox, out bool BandageHealpoisonCheckBox, out bool BandageHealmortalCheckBox, out bool BandageHealhiddedCheckBox)
-            {
-                bool BandageHealcountdownCheckBoxOut = false;
-                string BandageHealtargetComboBoxOut = "Self";
-                int BandageHealtargetLabelOut = 0;
-                bool BandageHealcustomCheckBoxOut = false;
-                int BandageHealcustomIDTextBoxOut = 0;
-                int BandageHealcustomcolorTextBoxOut = 0;
-                bool BandageHealdexformulaCheckBoxOut = false;
-                int BandageHealdelayTextBoxOut = 0;
-                int BandageHealhpTextBoxOut = 0;
-                bool BandageHealpoisonCheckBoxOut = false;
-                bool BandageHealmortalCheckBoxOut = false;
-                bool BandageHealhiddedCheckBoxOut = false;
-
-                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
-                {
-                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
-                    BandageHealcountdownCheckBoxOut = (bool)row["BandageHealcountdownCheckBox"];
-                    BandageHealtargetComboBoxOut = (string)row["BandageHealtargetComboBox"];
-                    BandageHealtargetLabelOut = (int)row["BandageHealtargetLabel"];
-                    BandageHealcustomCheckBoxOut = (bool)row["BandageHealcustomCheckBox"];
-                    BandageHealcustomIDTextBoxOut = (int)row["BandageHealcustomIDTextBox"];
-                    BandageHealcustomcolorTextBoxOut = (int)row["BandageHealcustomcolorTextBox"];
-                    BandageHealdexformulaCheckBoxOut = (bool)row["BandageHealdexformulaCheckBox"];
-                    BandageHealdelayTextBoxOut = (int)row["BandageHealdelayTextBox"];
-                    BandageHealhpTextBoxOut = (int)row["BandageHealhpTextBox"];
-                    BandageHealpoisonCheckBoxOut = (bool)row["BandageHealpoisonCheckBox"];
-                    BandageHealmortalCheckBoxOut = (bool)row["BandageHealmortalCheckBox"];
-                    BandageHealhiddedCheckBoxOut = (bool)row["BandageHealhiddedCheckBox"];
-                }
-
-                BandageHealcountdownCheckBox = BandageHealcountdownCheckBoxOut;
-                BandageHealtargetComboBox = BandageHealtargetComboBoxOut;
-                BandageHealtargetLabel = BandageHealtargetLabelOut;
-                BandageHealcustomCheckBox = BandageHealcustomCheckBoxOut;
-                BandageHealcustomIDTextBox = BandageHealcustomIDTextBoxOut;
-                BandageHealcustomcolorTextBox = BandageHealcustomcolorTextBoxOut;
-                BandageHealdexformulaCheckBox = BandageHealdexformulaCheckBoxOut;
-                BandageHealdelayTextBox = BandageHealdelayTextBoxOut;
-                BandageHealhpTextBox = BandageHealhpTextBoxOut;
-                BandageHealpoisonCheckBox = BandageHealpoisonCheckBoxOut;
-                BandageHealmortalCheckBox = BandageHealmortalCheckBoxOut;
-                BandageHealhiddedCheckBox = BandageHealhiddedCheckBoxOut;
-            }
-
-            // EnhancedFilterTab
+              // EnhancedFilterTab
             internal static void EnhancedFilterLoadAll(out bool HighlightTargetCheckBox, out bool FlagsHighlightCheckBox, out bool ShowStaticFieldCheckBox, out bool BlockTradeRequestCheckBox, out bool BlockPartyInviteCheckBox, out bool MobFilterCheckBox, out bool AutoCarverCheckBox, out bool BoneCutterCheckBox, out int AutoCarverBladeLabel, out int BoneBladeLabel)
             {
                 bool HighlightTargetCheckBoxOut = false;

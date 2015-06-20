@@ -218,29 +218,16 @@ namespace RazorEnhanced
         //////////////// Load settings ////////////////
         internal static void LoadSettings()
         {
-            bool HighlightTargetCheckBox = false;
-            bool FlagsHighlightCheckBox = false;
-            bool ShowStaticFieldCheckBox = false;
-            bool BlockTradeRequestCheckBox = false;
-            bool BlockPartyInviteCheckBox = false;
-            bool MobFilterCheckBox = false;
-            bool AutoCarverCheckBox = false;
-            bool BoneCutterCheckBox = false;
-            int AutoCarverBladeLabel = 0;
-            int BoneBladeLabel = 0;
-
-            RazorEnhanced.Settings.General.EnhancedFilterLoadAll(out HighlightTargetCheckBox, out FlagsHighlightCheckBox, out ShowStaticFieldCheckBox, out BlockTradeRequestCheckBox, out BlockPartyInviteCheckBox, out MobFilterCheckBox, out AutoCarverCheckBox, out BoneCutterCheckBox, out AutoCarverBladeLabel, out BoneBladeLabel);
-
-            Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = HighlightTargetCheckBox;
-            Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = FlagsHighlightCheckBox;
-            Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked = ShowStaticFieldCheckBox;
-            Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked = BlockTradeRequestCheckBox;
-            Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked = BlockPartyInviteCheckBox;
-            Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = MobFilterCheckBox;
-            Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = AutoCarverCheckBox;
-            Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = BoneCutterCheckBox;
-            Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = AutoCarverBladeLabel.ToString("X8");
-            Assistant.Engine.MainWindow.BoneBladeLabel.Text = BoneBladeLabel.ToString("X8");
+            Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox");
+            Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("FlagsHighlightCheckBox");
+            Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowStaticFieldCheckBox");
+            Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockTradeRequestCheckBox");
+            Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockPartyInviteCheckBox");
+            Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MobFilterCheckBox");
+            Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCarverCheckBox");
+            Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BoneCutterCheckBox");
+            Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("AutoCarverBladeLabel").ToString("X8");
+            Assistant.Engine.MainWindow.BoneBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("BoneBladeLabel").ToString("X8");
 
             RefreshLists();
         }
