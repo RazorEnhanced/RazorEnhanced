@@ -3339,10 +3339,37 @@ namespace RazorEnhanced
                     if ((string)row["Name"] == name)
                     {
                         row["Key"] = key;
+                        break;
                     }
 
                 }
                 Save();
+            }
+
+            internal static void UnassignKey(Keys key)
+            {
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((Keys)row["Key"] == key)
+                    {
+                        row["Key"] = Keys.None;
+                    }
+
+                }
+                Save();
+            }
+
+            internal static bool AssignedKey(Keys key)
+            {
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((Keys)row["Key"] == key)
+                    {
+                        return true;
+                    }
+
+                }
+                return false;
             }
 
             internal static Keys FindKey(string name)
