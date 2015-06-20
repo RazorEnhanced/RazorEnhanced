@@ -215,18 +215,40 @@ namespace RazorEnhanced
                 Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
             }
 
-            // Spells -- > Magery
+            // Spells -- > Necro
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Necro");
             keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNecro");
             foreach (HotKeyData keydata in keylist)
             {
                 Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
             }
-                
-          
+
+            // Spells -- > Bushido
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Bushido");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsBushido");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Spells -- > Ninjitsu
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Ninjitsu");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNinjitsu");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Spells -- > Spellweaving
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Spellweaving");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsSpellweaving");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
 
             Engine.MainWindow.HotKeyTreeView.ExpandAll();
-
+            
         }
 
         internal static void UpdateKey(string name)
