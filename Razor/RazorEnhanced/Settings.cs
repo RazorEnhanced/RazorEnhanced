@@ -3354,8 +3354,14 @@ namespace RazorEnhanced
                     {
                         row["Key"] = Keys.None;
                     }
-
                 }
+
+                if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
+                {
+                    RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", Keys.None);
+                    Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.m_Masterkey.ToString();
+                }
+
                 Save();
             }
 
@@ -3367,8 +3373,10 @@ namespace RazorEnhanced
                     {
                         return true;
                     }
-
                 }
+                if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
+                    return true;
+
                 return false;
             }
 

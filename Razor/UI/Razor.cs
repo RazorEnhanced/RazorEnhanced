@@ -6029,6 +6029,7 @@ namespace Assistant
             this.hotkeyMasterClearButton.Text = "Clear";
             this.hotkeyMasterClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.hotkeyMasterClearButton.UseVisualStyleBackColor = true;
+            this.hotkeyMasterClearButton.Click += new System.EventHandler(this.hotkeyMasterClearButton_Click);
             // 
             // hotkeyMasterSetButton
             // 
@@ -10219,8 +10220,11 @@ namespace Assistant
                     sellRemoveListButton.Enabled = true;
                     sellImportListButton.Enabled = true;
                     sellExportListButton.Enabled = true;
-                    RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-                    RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                    if (sellListSelect.Text != "")
+                    {
+                        RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                        RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+                    }
                 }
             }
             else
@@ -11760,14 +11764,16 @@ namespace Assistant
         // ----------------- HOT KEY -----------------------
         private void hotkeySetButton_Click(object sender, EventArgs e)
         {
-            if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
-             RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
+            if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null && hotkeytextbox.Text != "" && hotkeytextbox.Text != "None")
+                RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
+            hotkeytextbox.Text = "";
         }
 
         private void hotkeyClearButton_Click(object sender, EventArgs e)
         {
             if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
                 RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode.Name);
+            hotkeytextbox.Text = "";
         }
         private void hotkeytreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
         {
@@ -11777,8 +11783,16 @@ namespace Assistant
 
         private void hotkeyMasterSetButton_Click(object sender, EventArgs e)
         {
-            RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", RazorEnhanced.HotKey.m_Masterkey);
-            hotkeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.m_Masterkey.ToString();
+            if (hotkeyKeyMasterTextBox.Text != "" && hotkeyKeyMasterTextBox.Text != "None")
+            {
+                RazorEnhanced.HotKey.UpdateMaster();
+                hotkeyKeyMasterTextBox.Text = "";
+            }
+        }
+
+        private void hotkeyMasterClearButton_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.HotKey.ClearMasterKey();
         }
 
 

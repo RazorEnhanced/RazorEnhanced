@@ -38,29 +38,32 @@ namespace RazorEnhanced
 
         internal static bool GameKeyDown(Keys k)
         {
-            KeyDown(k);
+            KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto
             return true;
         }
 
         internal static void KeyDown(Keys k)
         {
-            if (k == RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"))         // Pressione master key abilita o disabilita 
+            if (!Engine.MainWindow.HotKeyTextBox.Focused && !Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)
             {
-                if (RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
+                if (k == RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"))         // Pressione master key abilita o disabilita 
                 {
-                    RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
-                    Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
-                    if (World.Player != null)
-                        RazorEnhanced.Misc.SendMessage("HotKey: DISABLED");
+                    if (RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
+                    {
+                        RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
+                        Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
+                        if (World.Player != null)
+                            RazorEnhanced.Misc.SendMessage("HotKey: DISABLED");
+                    }
+                    else
+                    {
+                        Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
+                        RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
+                        if (World.Player != null)
+                            RazorEnhanced.Misc.SendMessage("HotKey: ENABLED");
+                    }
+                    return;
                 }
-                else
-                {
-                    Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
-                    RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
-                    if (World.Player != null)
-                        RazorEnhanced.Misc.SendMessage("HotKey: ENABLED");
-                }
-                return;
             }
 
             if (Engine.MainWindow.HotKeyTextBox.Focused)                // In caso di assegnazione hotKey normale
@@ -213,6 +216,24 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Come":
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Come");
+                    break;
+                case "Follow":
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Follow");
+                    break;
+                case "Guard":
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Guard");
+                    break;
+                case "Kill":
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Kill");
+                    break;
+                case "Stay":
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "Stay");
+                    break;
+                case "Stop":
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "Stop");
+                    break;
                 default:
                     break;
             }
@@ -222,6 +243,57 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Autoloot Start":
+                    RazorEnhanced.AutoLoot.Start();
+                    break;
+                case "Autoloot Stop":
+                    RazorEnhanced.AutoLoot.Stop();
+                    break;
+                case "Scavenger Start":
+                    RazorEnhanced.Scavenger.Start();
+                    break;
+                case "Scavenger Stop":
+                    RazorEnhanced.Scavenger.Stop();
+                    break;
+                case "Organizer Start":
+                    RazorEnhanced.Organizer.FStop();
+                    break;
+                case "Organizer Stop":
+                    RazorEnhanced.Organizer.FStart();
+                    break;
+                case "Sell Agent Enable":
+                    RazorEnhanced.SellAgent.Enable();
+                    break;
+                case "Sell Agent Disable":
+                    RazorEnhanced.SellAgent.Disable();
+                    break;
+                case "Buy Agent Enable":
+                    RazorEnhanced.BuyAgent.Enable();
+                    break;
+                case "Buy Agent Disable":
+                    RazorEnhanced.BuyAgent.Disable();
+                    break;
+                case "Dress Start":
+                    RazorEnhanced.Dress.DressFStart();
+                    break;
+                case "Dress Stop":
+                    RazorEnhanced.Dress.DressFStop();
+                    break;
+                case "Undress":
+                    RazorEnhanced.Dress.UnDressFStart();
+                    break;
+                case "Restock Start":
+                    RazorEnhanced.Restock.FStart();
+                    break;
+                case "Restock Stop":
+                    RazorEnhanced.Restock.FStop();
+                    break;
+                case "Bandage Heal Enable":
+                    RazorEnhanced.BandageHeal.Start();
+                    break;
+                case "Bandage Heal Dasable":
+                    RazorEnhanced.BandageHeal.Stop();
+                    break;
                 default:
                     break;
             }
@@ -572,14 +644,54 @@ namespace RazorEnhanced
 
         internal static void UpdateKey(string name)
         {
-            RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key);
-            Init();
+            if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
+            {
+                RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key);
+                Init();
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Key: "+ m_key.ToString() + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                if(dialogResult == DialogResult.Yes)
+                {
+                    RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
+                    RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key);
+                    Init();
+                }
+            }
+
+        }
+
+        internal static void UpdateMaster()
+        {
+            if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_Masterkey))
+            {
+                RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", RazorEnhanced.HotKey.m_Masterkey);
+                Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.m_Masterkey.ToString();
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Key: " + m_key.ToString() + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    RazorEnhanced.Settings.HotKey.UnassignKey(m_Masterkey);
+                    RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", RazorEnhanced.HotKey.m_Masterkey);
+                    Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.m_Masterkey.ToString();
+                    Init();
+                }
+            }
         }
 
         internal static void ClearKey(string name)
         {
             RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None);
             Init();
+        }
+
+        internal static void ClearMasterKey()
+        {
+            RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", Keys.None);
+            Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey").ToString();
         }
 	}
 }
