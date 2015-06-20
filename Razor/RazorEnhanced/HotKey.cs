@@ -31,7 +31,7 @@ namespace RazorEnhanced
 
         internal static Keys m_key;
 
-
+        internal static Keys m_Masterkey;
 
         [DllImport("user32.dll")]
         private static extern ushort GetAsyncKeyState(int key);
@@ -44,35 +44,338 @@ namespace RazorEnhanced
 
         internal static void KeyDown(Keys k)
         {
-            if (Engine.MainWindow.HotKeyTextBox.Focused)                // In caso di assegnazione
+            if (k == RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"))         // Pressione master key abilita o disabilita 
+            {
+                if (RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
+                {
+                    RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
+                    Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
+                    if (World.Player != null)
+                        RazorEnhanced.Misc.SendMessage("HotKey: DISABLED");
+                }
+                else
+                {
+                    Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
+                    RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
+                    if (World.Player != null)
+                        RazorEnhanced.Misc.SendMessage("HotKey: ENABLED");
+                }
+                return;
+            }
+
+            if (Engine.MainWindow.HotKeyTextBox.Focused)                // In caso di assegnazione hotKey normale
             {
                 m_key = k;
                 Engine.MainWindow.HotKeyTextBox.Text = k.ToString();
             }
+            else if (Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)                // In caso di assegnazione hotKey primaria
+            {
+                m_Masterkey = k;
+                Engine.MainWindow.HotKeyKeyMasterTextBox.Text = k.ToString();
+            }
             else    // Esecuzine reale
             {
-                ExecFunction(RazorEnhanced.Settings.HotKey.FindString(k));
+                if (World.Player != null && RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
+                 ProcessGroup(RazorEnhanced.Settings.HotKey.FindGroup(k), k);
             }
         }
-
-        private static void ExecFunction(string function)
+        private static void ProcessGroup(string group, Keys k)
         {
-            if (function != "" && World.Player != null)
+            if (group != "")
             {
-                switch (function)
+                switch (group)
                 {
-                    case "Resync":
-                        RazorEnhanced.Misc.Resync();
+                    case "General":
+                        ProcessGeneral(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
-                    case "Take Screen Shot":
-                        ScreenCapManager.CaptureNow();
+                    case "Actions":
+                        ProcessActions(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
-                    case "Ping Server":
-                        Assistant.Ping.StartPing(4);
+                    case "Use":
+                        ProcessUse(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Show Names":
+                        ProcessShowName(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Pet Commands":
+                        ProcessPetCommands(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Agents":
+                        ProcessAgents(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Abilities":
+                        ProcessAbilities(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Attack":
+                        ProcessAttack(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Bandage":
+                        ProcessBandage(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Potions":
+                        ProcessPotions(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Other":
+                        ProcessOther(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Hands":
+                        ProcessHands(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Equip Wands":
+                        ProcessEquipWands(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Skills":
+                        ProcessSkills(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "SpellsAgent":
+                        ProcessSpellsAgent(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "SpellsMagery":
+                        ProcessSpellsMagery(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "SpellsNecro":
+                        ProcessSpellsNecro(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "SpellsBushido":
+                        ProcessSpellsBushido(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "SpellsNinjitsu":
+                        ProcessSpellsNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "SpellsSpellweaving":
+                        ProcessSpellsSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "SpellsMysticism":
+                        ProcessSpellsMysticism(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Target":
+                        ProcessTarget(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "TargetList":
+                        ProcessTargetList(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "Script":
+                        ProcessScript(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
+                    case "ScriptList":
+                        ProcessScriptList(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     default:
                         break;
                 }
+            }
+        }
+
+        private static void ProcessGeneral(string function)
+        {
+            switch (function)
+            {
+                case "Resync":
+                    RazorEnhanced.Misc.Resync();
+                    break;
+                case "Take Screen Shot":
+                    ScreenCapManager.CaptureNow();
+                    break;
+                case "Ping Server":
+                    Assistant.Ping.StartPing(4);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private static void ProcessActions(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessUse(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+
+        private static void ProcessShowName(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessPetCommands(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+
+        private static void ProcessAgents(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessAbilities(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessAttack(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessBandage(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessPotions(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessOther(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessHands(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessEquipWands(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSkills(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSpellsAgent(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSpellsMagery(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSpellsNecro(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSpellsBushido(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSpellsNinjitsu(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSpellsSpellweaving(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessSpellsMysticism(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessTarget(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessTargetList(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessScript(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
+            }
+        }
+        private static void ProcessScriptList(string function)
+        {
+            switch (function)
+            {
+                default:
+                    break;
             }
         }
 
@@ -247,8 +550,24 @@ namespace RazorEnhanced
                 Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
             }
 
+            // Spells -- > Spellweaving
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Mysticism");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMysticism");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Target
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Target");
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add("List");
+
+            // Script
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Script");
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add("List");
+
+
             Engine.MainWindow.HotKeyTreeView.ExpandAll();
-            
         }
 
         internal static void UpdateKey(string name)

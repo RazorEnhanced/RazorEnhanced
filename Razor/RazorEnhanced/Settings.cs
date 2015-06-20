@@ -1040,7 +1040,59 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Arcane Empowerment", Keys.None };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Animated Weapon", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Healing Stone", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Purge", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Enchant", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Eagle Strike", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "StoneForm", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Spell Trigger", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Mass Sleep", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Cleansing Winds", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Bombard", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Spell Plague", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Hail Storm", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Nether Cyclone", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Rising Colossus", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
 
@@ -1163,6 +1215,10 @@ namespace RazorEnhanced
                 general.Columns.Add("WarningColor", typeof(int));
                 general.Columns.Add("SysColor", typeof(int));
 
+                // Parametri Tab (HotKey)
+                general.Columns.Add("HotKeyEnable", typeof(bool));
+                general.Columns.Add("HotKeyMasterKey", typeof(Keys));
+
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -1190,7 +1246,10 @@ namespace RazorEnhanced
                     false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false, false, false, @"{power} [{spell}]", 0,
 
                     // Parametri primo avvio tab Options -> Hues
-                    (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1
+                    (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
+
+                    // Parametri primo avvio tab HotKey
+                    false, Keys.None
 
                 };
 
@@ -3310,6 +3369,18 @@ namespace RazorEnhanced
                 return null;
             }
 
+            internal static string FindGroup(Keys key)
+            {
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                {
+                    if ((Keys)row["Key"] == key)
+                    {
+                        return (String)row["Group"];
+                    }
+                }
+                return null;
+            }
+
             internal static List<RazorEnhanced.HotKey.HotKeyData> AgentListKey(string agentdatatable)
             {
                 List<RazorEnhanced.HotKey.HotKeyData> listsOut = new List<RazorEnhanced.HotKey.HotKeyData>();
@@ -3498,6 +3569,26 @@ namespace RazorEnhanced
                 {
                     DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
                     row[name] = value;
+                    Save();
+                }
+            }
+
+            internal static Keys ReadKey(string name)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    return (Keys)row[name];
+                }
+                return Keys.None;
+            }
+
+            internal static void WriteKey(string name, Keys k)
+            {
+                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+                {
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    row[name] = k;
                     Save();
                 }
             }
