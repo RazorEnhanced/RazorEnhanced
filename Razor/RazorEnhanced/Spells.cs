@@ -15,7 +15,7 @@ namespace RazorEnhanced
 				case "Clumsy":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(1));
 					break;
-				case "CreateFood":
+				case "Create Food":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(2));
 					break;
 				case "Feeblemind":
@@ -24,13 +24,13 @@ namespace RazorEnhanced
 				case "Heal":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(4));
 					break;
-				case "MagicArrow":
+				case "Magic Arrow":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(5));
 					break;
-				case "NightSight":
+				case "Night Sight":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(6));
 					break;
-				case "ReactiveArmor":
+				case "Reactive Armor":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(7));
 					break;
 				case "Weaken":
@@ -49,10 +49,10 @@ namespace RazorEnhanced
 				case "Harm":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(12));
 					break;
-				case "MagicTrap":
+				case "Magic Trap":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(13));
 					break;
-				case "MagicUntrap":
+				case "Magic Untrap":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(14));
 					break;
 				case "Protection":
@@ -68,7 +68,7 @@ namespace RazorEnhanced
 				case "Fireball":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(18));
 					break;
-				case "MagicLock":
+				case "Magic Lock":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(19));
 					break;
 				case "Poison":
@@ -83,64 +83,64 @@ namespace RazorEnhanced
 				case "Unlock":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(23));
 					break;
-				case "WallofStone":
+				case "Wall Of Stone":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(24));
 					break;
 				// Quarto circolo magery
-				case "ArchCure":
+				case "Arch Cure":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(25));
 					break;
-				case "ArchProtection":
+				case "Arch Protection":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(26));
 					break;
 				case "Curse":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(27));
 					break;
-				case "FireField":
+				case "Fire Field":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(28));
 					break;
-				case "GreaterHeal":
+				case "Greater Heal":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(29));
 					break;
 				case "Lightning":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(30));
 					break;
-				case "ManaDrain":
+				case "Mana Drain":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(31));
 					break;
 				case "Recall":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(32));
 					break;
 				// Quinto circolo magery
-				case "BladeSpirits":
+				case "Blade Spirits":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(33));
 					break;
-				case "DispelField":
+				case "Dispel Field":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(34));
 					break;
 				case "Incognito":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(35));
 					break;
-				case "MagicReflection":
+				case "Magic Reflection":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(36));
 					break;
-				case "MindBlast":
+				case "Mind Blast":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(37));
 					break;
 				case "Paralyze":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(38));
 					break;
-				case "PoisonField":
+				case "Poison Field":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(39));
 					break;
-				case "SummonCreature":
+				case "Summon Creature":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(40));
 					break;
 				// Sesto circolo magery
 				case "Dispel":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(41));
 					break;
-				case "EnergyBolt":
+				case "Energy Bolt":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(42));
 					break;
 				case "Explosion":
@@ -152,35 +152,35 @@ namespace RazorEnhanced
 				case "Mark":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(45));
 					break;
-				case "MassCurse":
+				case "Mass Curse":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(46));
 					break;
-				case "ParalyzeField":
+				case "Paralyze Field":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(47));
 					break;
 				case "Reveal":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(48));
 					break;
 				// Settimo circolo magery
-				case "ChainLightning":
+				case "Chain Lightning":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(49));
 					break;
-				case "EnergyField":
+				case "Energy Field":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(50));
 					break;
 				case "Flamestrike":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(51));
 					break;
-				case "GateTravel":
+				case "Gate Travel":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(52));
 					break;
-				case "ManaVampire":
+				case "Mana Vampire":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(53));
 					break;
-				case "MassDispel":
+				case "Mass Dispel":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(54));
 					break;
-				case "MeteorSwarm":
+				case "Meteor Swarm":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(55));
 					break;
 				case "Polymorph":
@@ -190,25 +190,25 @@ namespace RazorEnhanced
 				case "Earthquake":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(57));
 					break;
-				case "EnergyVortex":
+				case "Energy Vortex":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(58));
 					break;
 				case "Resurrection":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(59));
 					break;
-				case "SummonAirElemental":
+				case "Summon Air Elemental":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(60));
 					break;
-				case "SummonDaemon":
+				case "Summon Daemon":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(61));
 					break;
-				case "SummonEarthElemental":
+				case "Summon Earth Elemental":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(62));
 					break;
-				case "SummonFireElemental":
+				case "Summon Fire Elemental":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(63));
 					break;
-				case "SummonWaterElemental":
+				case "Summon Water Elemental":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(64));
 					break;
 				default:
@@ -221,52 +221,52 @@ namespace RazorEnhanced
 		{
 			switch (SpellName)
 			{
-				case "AnimateDead":
+				case "Animate Dead":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(101));
 					break;
-				case "BloodOath":
+				case "Blood Oath":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(102));
 					break;
-				case "CorpseSkin":
+				case "Corpse Skin":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(103));
 					break;
-				case "CurseWeapon":
+				case "Curse Weapon":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(104));
 					break;
-				case "EvilOmen":
+				case "Evil Omen":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(105));
 					break;
-				case "HorrificBeast":
+				case "Horrific Beast":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(106));
 					break;
-				case "LichForm":
+				case "Lich Form":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(107));
 					break;
-				case "MindRot":
+				case "Mind Rot":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(108));
 					break;
-				case "PainSpike":
+				case "Pain Spike":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(109));
 					break;
-				case "PoisonStrike":
+				case "Poison Strike":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(110));
 					break;
 				case "Strangle":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(111));
 					break;
-				case "SummonFamiliar":
+				case "Summon Familiar":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(112));
 					break;
-				case "VampiricEmbrace":
+				case "Vampiric Embrace":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(113));
 					break;
-				case "VengefulSpirit":
+				case "Vengeful Spirit":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(114));
 					break;
 				case "Wither":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(115));
 					break;
-				case "WraithForm":
+				case "Wraith Form":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(116));
 					break;
 				case "Exorcism":
@@ -281,34 +281,34 @@ namespace RazorEnhanced
 		{
 			switch (SpellName)
 			{
-				case "CleanseByFire":
+				case "Cleanse By Fire":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(201));
 					break;
-				case "CloseWounds":
+				case "Close Wounds":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(202));
 					break;
-				case "ConsecrateWeapon":
+				case "Consecrate Weapon":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(203));
 					break;
-				case "DispelEvil":
+				case "Dispel Evil":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(204));
 					break;
-				case "DivineFury":
+				case "Divine Fury":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(205));
 					break;
-				case "EnemyOfOne":
+				case "Enemy Of One":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(206));
 					break;
-				case "HolyLight":
+				case "Holy Light":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(207));
 					break;
-				case "NobleSacrifice":
+				case "Noble Sacrifice":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(208));
 					break;
-				case "RemoveCurse":
+				case "Remove Curse":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(209));
 					break;
-				case "SacredJourney":
+				case "Sacred Journey":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(210));
 					break;
 				default:
@@ -320,7 +320,7 @@ namespace RazorEnhanced
 		{
 			switch (SpellName)
 			{
-				case "HonorableExecution":
+				case "Honorable Execution":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(401));
 					break;
 				case "Confidence":
@@ -329,13 +329,13 @@ namespace RazorEnhanced
 				case "Evasion":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(403));
 					break;
-				case "CounterAttack":
+				case "Counter Attack":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(404));
 					break;
-				case "LightningStrike":
+				case "Lightning Strike":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(405));
 					break;
-				case "MomentumStrike":
+				case "Momentum Strike":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(406));
 					break;
 				default:
@@ -347,28 +347,28 @@ namespace RazorEnhanced
 		{
 			switch (SpellName)
 			{
-				case "FocusAttack":
+				case "Focus Attack":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(501));
 					break;
-				case "DeathStrike":
+				case "Death Strike":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(502));
 					break;
-				case "AnimalForm":
+				case "Animal Form":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(503));
 					break;
-				case "KiAttack":
+				case "Ki Attack":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(504));
 					break;
-				case "SurpriseAttack":
+				case "Surprise Attack":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(505));
 					break;
 				case "Backstab":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(506));
 					break;
-				case "Shadowjump":
+				case "Shadow jump":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(507));
 					break;
-				case "MirrorImage":
+				case "Mirror Image":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(508));
 					break;
 				default:
@@ -380,52 +380,52 @@ namespace RazorEnhanced
 		{
 			switch (SpellName)
 			{
-				case "ArcaneCircle":
+				case "Arcane Circle":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(601));
 					break;
-				case "GiftOfRenewal":
+				case "Gift Of Renewal":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(602));
 					break;
-				case "ImmolatingWeapon":
+				case "Immolating Weapon":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(603));
 					break;
-				case "AttuneWeapon":
+				case "Attune Weapon":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(604));
 					break;
 				case "Thunderstorm":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(605));
 					break;
-				case "NaturesFury":
+				case "Natures Fury":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(606));
 					break;
-				case "SummonFey":
+				case "Summon Fey":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(607));
 					break;
 				case "Summoniend":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(608));
 					break;
-				case "ReaperForm":
+				case "Reaper Form":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(609));
 					break;
 				case "Wildfire":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(610));
 					break;
-				case "EssenceOfWind":
+				case "Essence Of Wind":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(611));
 					break;
-				case "DryadAllure":
+				case "Dryad Allure":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(612));
 					break;
-				case "EtherealVoyage":
+				case "Ethereal Voyage":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(613));
 					break;
-				case "WordOfDeath":
+				case "Word Of Death":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(614));
 					break;
-				case "GiftOfLife":
+				case "Gift Of Life":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(615));
 					break;
-				case "ArcaneEmpowerment":
+				case "Arcane Empowerment":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(616));
 					break;
 				default:
@@ -437,10 +437,10 @@ namespace RazorEnhanced
 		{
 			switch (SpellName)
 			{
-				case "AnimatedWeapon":
+				case "Animated Weapon":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(678));
 					break;
-				case "HealingStone":
+				case "Healing Stone":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(679));
 					break;
 				case "Purge":
@@ -452,34 +452,34 @@ namespace RazorEnhanced
 				case "Sleep":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(682));
 					break;
-				case "EagleStrike":
+				case "Eagle Strike":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(683));
 					break;
-				case "StoneForm":
+				case "Stone Form":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(684));
 					break;
-				case "SpellTrigger":
+				case "Spell Trigger":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(685));
 					break;
-				case "MassSleep":
+				case "Mass Sleep":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(686));
 					break;
-				case "CleansingWinds":
+				case "Cleansing Winds":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(687));
 					break;
 				case "Bombard":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(688));
 					break;
-				case "SpellPlague":
+				case "Spell Plague":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(689));
 					break;
-				case "HailStorm":
+				case "Hail Storm":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(690));
 					break;
-				case "NetherCyclone":
+				case "Nether Cyclone":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(691));
 					break;
-				case "RisingColossus":
+				case "Rising Colossus":
 					Assistant.ClientCommunication.SendToServer(new CastSpellFromMacro(692));
 					break;
 				default:

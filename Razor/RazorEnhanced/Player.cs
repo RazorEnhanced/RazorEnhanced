@@ -993,13 +993,13 @@ namespace RazorEnhanced
 		{
 			switch (skillname)
 			{
-				case "AnimalLore":
+				case "Animal Lore":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalLore)));
 					break;
-				case "ItemID":
+				case "Item ID":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ItemID)));
 					break;
-				case "ArmsLore":
+				case "Arms Lore":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ArmsLore)));
 					break;
 				case "Begging":
@@ -1011,13 +1011,13 @@ namespace RazorEnhanced
 				case "Cartography":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Cartography)));
 					break;
-				case "DetectHidden":
+				case "Detect Hidden":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.DetectHidden)));
 					break;
 				case "Discordance":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Discordance)));
 					break;
-				case "EvalInt":
+				case "Eval Int":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.EvalInt)));
 					break;
 				case "Forensics":
@@ -1032,16 +1032,16 @@ namespace RazorEnhanced
 				case "Poisoning":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Poisoning)));
 					break;
-				case "SpiritSpeak":
+				case "Spirit Speak":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.SpiritSpeak)));
 					break;
 				case "Stealing":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealing)));
 					break;
-				case "AnimalTaming":
+				case "Animal Taming":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalTaming)));
 					break;
-				case "TasteID":
+				case "Taste ID":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.TasteID)));
 					break;
 				case "Tracking":
@@ -1053,7 +1053,7 @@ namespace RazorEnhanced
 				case "Stealth":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealth)));
 					break;
-				case "RemoveTrap":
+				case "Remove Trap":
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.RemoveTrap)));
 					break;
 				case "Inscribe":

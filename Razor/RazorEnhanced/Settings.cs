@@ -252,6 +252,14 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "General", "Accept Party", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "General", "Decline Party", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
                 hotkeyrow.ItemArray = new object[] { "Actions", "Unmount", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
@@ -1107,8 +1115,73 @@ namespace RazorEnhanced
                 hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Rising Colossus", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Cleanse By Fire", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
 
-                              
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Close Wounds", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Consecrate Weapon", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Dispel Evil", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Divine Fury", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Enemy Of One", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Holy Light", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Noble Sacrifice", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Remove Curse", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Sacred Journey", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Honor", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Sacrifice", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Compassion", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Valor", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Honesty", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Humility", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Justice", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
 
                 m_Dataset.Tables.Add(hotkey);
 

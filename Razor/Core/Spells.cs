@@ -248,15 +248,6 @@ namespace Assistant
 		{
 			Spell s = null;
 
-		/*	if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
-			{
-				if (World.Player.Hits + 30 < World.Player.HitsMax && World.Player.Mana >= 12)
-					s = Get(4, 5); // greater heal
-				else
-					s = Get(1, 4); // mini heal
-			}
-			else
-			{*/
 			if (World.Player.Poisoned)
 			{
 				s = Get(2, 3); // cure 
@@ -275,7 +266,6 @@ namespace Assistant
 				else
 					s = Get(1, 4); // mini heal
 			}
-		//	}
 
 			if (s != null)
 			{
@@ -290,17 +280,10 @@ namespace Assistant
 		{
 			Spell s = null;
 
-		/*	if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
-			{
-				s = Get(1, 4); // mini heal
-			}
-			else
-			{*/
 			if (World.Player.Poisoned)
 				s = Get(2, 3); // cure
 			else
 				s = Get(1, 4); // mini heal
-			//}
 
 			if (s != null)
 			{
@@ -310,6 +293,24 @@ namespace Assistant
 				s.Cast();
 			}
 		}
+
+        internal static void HealOrCureSelfChiva()
+        {
+            Spell s = null;
+
+            if (World.Player.Poisoned)
+                s = Get(20, 1); // cure
+            else
+                s = Get(20, 2); // mini heal
+
+            if (s != null)
+            {
+                if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+                    Targeting.TargetSelf(true);
+                ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+                s.Cast();
+            }
+        }
 
 		internal static void Initialize()
 		{
