@@ -184,6 +184,7 @@ namespace RazorEnhanced
                 DataTable targets = new DataTable("TARGETS");
                 targets.Columns.Add("Name", typeof(string));
                 targets.Columns.Add("TargetGUIObject", typeof(RazorEnhanced.TargetGUI.TargetGUIObject));
+                targets.Columns.Add("HotKey", typeof(Keys));
                 m_Dataset.Tables.Add(targets);
 
 
@@ -1181,6 +1182,22 @@ namespace RazorEnhanced
 
                 hotkeyrow = hotkey.NewRow();
                 hotkeyrow.ItemArray = new object[] { "UseVirtue", "Justice", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Target", "Target Self", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Target", "Target Last", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Target", "Target Cancel", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Script", "Stop All", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 m_Dataset.Tables.Add(hotkey);
@@ -3120,6 +3137,7 @@ namespace RazorEnhanced
                 DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
                 row["Name"] = targetid;
                 row["TargetGUIObject"] = target;
+                row["HotKey"] = Keys.None;
                 m_Dataset.Tables["TARGETS"].Rows.Add(row);
 
                 Save();
@@ -3417,17 +3435,48 @@ namespace RazorEnhanced
                 return keydataOut;
             }
 
+            internal static List<RazorEnhanced.HotKey.HotKeyData> ReadTarget()
+            {
+                List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
+
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    string name = (string)row["Name"];
+                    Keys key = (Keys)row["HotKey"];
+                    keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
+                }
+                return keydataOut;
+            }
+
             internal static void UpdateKey(string name, Keys key)
             {
-                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+
+                    foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    {
+                        if ((string)row["Name"] == name)
+                        {
+                            row["Key"] = key;
+                            break;
+                        }
+
+                    }
+
+                Save();
+            }
+
+            internal static void UpdateTargetKey(string name, Keys key)
+            {
+
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
                 {
                     if ((string)row["Name"] == name)
                     {
-                        row["Key"] = key;
+                        row["HotKey"] = key;
                         break;
                     }
 
                 }
+
                 Save();
             }
 
@@ -3438,6 +3487,14 @@ namespace RazorEnhanced
                     if ((Keys)row["Key"] == key)
                     {
                         row["Key"] = Keys.None;
+                    }
+                }
+
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        row["HotKey"] = Keys.None;
                     }
                 }
 
@@ -3459,6 +3516,15 @@ namespace RazorEnhanced
                         return true;
                     }
                 }
+
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        return true;
+                    }
+                }
+
                 if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
                     return true;
 
@@ -3486,6 +3552,21 @@ namespace RazorEnhanced
                         return (String)row["Name"];
                     }
                 }
+
+                return null;
+            }
+
+            internal static string FindTargetString(Keys key)
+            {
+
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        return (String)row["Name"];
+                    }
+                }
+
                 return null;
             }
 
@@ -3498,73 +3579,24 @@ namespace RazorEnhanced
                         return (String)row["Group"];
                     }
                 }
+
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        return "LTarget";
+                    }
+                }
                 return null;
             }
 
-            internal static List<RazorEnhanced.HotKey.HotKeyData> AgentListKey(string agentdatatable)
-            {
-                List<RazorEnhanced.HotKey.HotKeyData> listsOut = new List<RazorEnhanced.HotKey.HotKeyData>();
-
-                foreach (DataRow row in m_Dataset.Tables[agentdatatable].Rows)
-                {
-                    string description = (string)row["Description"];
-                    Keys key = (Keys)row["HotKey"];
-
-                    RazorEnhanced.HotKey.HotKeyData list = new RazorEnhanced.HotKey.HotKeyData(description, key);
-                    listsOut.Add(list);
-                }
-
-                return listsOut;
-            }
         }
         // ------------- HOTKEYS END -----------------
 
         // ------------- GENERAL SETTINGS START -----------------
         internal class General
 		{
-              // EnhancedFilterTab
-            internal static void EnhancedFilterLoadAll(out bool HighlightTargetCheckBox, out bool FlagsHighlightCheckBox, out bool ShowStaticFieldCheckBox, out bool BlockTradeRequestCheckBox, out bool BlockPartyInviteCheckBox, out bool MobFilterCheckBox, out bool AutoCarverCheckBox, out bool BoneCutterCheckBox, out int AutoCarverBladeLabel, out int BoneBladeLabel)
-            {
-                bool HighlightTargetCheckBoxOut = false;
-                bool FlagsHighlightCheckBoxOut = false;
-                bool ShowStaticFieldCheckBoxOut = false;
-                bool BlockTradeRequestCheckBoxOut = false;
-                bool BlockPartyInviteCheckBoxOut = false;
-                bool MobFilterCheckBoxOut = false;
-                bool AutoCarverCheckBoxOut = false;
-                bool BoneCutterCheckBoxOut = false;
-                int AutoCarverBladeLabelOut = 0;
-                int BoneBladeLabelOut = 0;
-                
-
-                if (m_Dataset.Tables["GENERAL"].Rows.Count > 0)
-                {
-                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
-                    HighlightTargetCheckBoxOut = (bool)row["HighlightTargetCheckBox"];
-                    FlagsHighlightCheckBoxOut = (bool)row["FlagsHighlightCheckBox"];
-                    ShowStaticFieldCheckBoxOut = (bool)row["ShowStaticFieldCheckBox"];
-                    BlockTradeRequestCheckBoxOut = (bool)row["BlockTradeRequestCheckBox"];
-                    BlockPartyInviteCheckBoxOut = (bool)row["BlockPartyInviteCheckBox"];
-                    MobFilterCheckBoxOut = (bool)row["MobFilterCheckBox"];
-                    AutoCarverCheckBoxOut = (bool)row["AutoCarverCheckBox"];
-                    BoneCutterCheckBoxOut = (bool)row["BoneCutterCheckBox"];
-                    AutoCarverBladeLabelOut = (int)row["AutoCarverBladeLabel"];
-                    BoneBladeLabelOut = (int)row["BoneBladeLabel"];
-                }
-
-                HighlightTargetCheckBox = HighlightTargetCheckBoxOut;
-                FlagsHighlightCheckBox = FlagsHighlightCheckBoxOut;
-                ShowStaticFieldCheckBox = ShowStaticFieldCheckBoxOut;
-                BlockTradeRequestCheckBox = BlockTradeRequestCheckBoxOut;
-                BlockPartyInviteCheckBox = BlockPartyInviteCheckBoxOut;
-                MobFilterCheckBox = MobFilterCheckBoxOut;
-                AutoCarverCheckBox = AutoCarverCheckBoxOut;
-                BoneCutterCheckBox = BoneCutterCheckBoxOut;
-                AutoCarverBladeLabel = AutoCarverBladeLabelOut;
-                BoneBladeLabel = BoneBladeLabelOut;
-            }
-
-            // Enhanced Toolbar Tab
+              // Enhanced Toolbar Tab
             internal static void EnhancedToolBarLoadAll(out bool LockToolBarCheckBox, out bool AutoopenToolBarCheckBox, out int PosXToolBar, out int PosYToolBar)
             {
                 bool LockToolBarCheckBoxOut = false;

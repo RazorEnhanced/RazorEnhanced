@@ -51,6 +51,11 @@ namespace RazorEnhanced
             Assistant.Targeting.CancelOneTimeTarget();
         }
 
+        public static void Self()
+        {
+            Assistant.Targeting.Target(World.Player);
+        }
+
         public static void Last()
         {
             Assistant.Targeting.LastTarget();

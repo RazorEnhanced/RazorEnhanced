@@ -206,6 +206,7 @@ namespace RazorEnhanced.UI
                 // Salvo struttura
                 RazorEnhanced.Settings.Target.TargetSave(newtargetid, targetguitosave);
                 RazorEnhanced.TargetGUI.RefreshTarget();
+                RazorEnhanced.HotKey.Init();
 
                 this.Close();
             }

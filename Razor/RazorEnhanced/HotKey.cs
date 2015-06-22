@@ -134,40 +134,40 @@ namespace RazorEnhanced
                         ProcessSpellsAgent(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "SpellsMagery":
-                        ProcessSpellsMagery(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Spells.CastMagery(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "SpellsNecro":
-                        ProcessSpellsNecro(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Spells.CastNecro(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "SpellsBushido":
-                        ProcessSpellsBushido(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Spells.CastBushido(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "SpellsNinjitsu":
-                        ProcessSpellsNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Spells.CastNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "SpellsSpellweaving":
-                        ProcessSpellsSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Spells.CastSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "SpellsMysticism":
-                        ProcessSpellsMysticism(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Spells.CastMysticism(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "SpellsChivalry":
-                        ProcessSpellsChivalry(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Spells.CastChivalry(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "Target":
                         ProcessTarget(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
-                    case "TargetList":
-                        ProcessTargetList(RazorEnhanced.Settings.HotKey.FindString(k));
+                    case "LTarget":
+                        TargetGUI.PerformTarget(RazorEnhanced.Settings.HotKey.FindTargetString(k));
                         break;
                     case "Script":
-                        ProcessScript(RazorEnhanced.Settings.HotKey.FindString(k));
+                        
                         break;
-                    case "ScriptList":
-                        ProcessScriptList(RazorEnhanced.Settings.HotKey.FindString(k));
+                    case "LScript":
+                       // ProcessScriptList(RazorEnhanced.Settings.HotKey.FindScriptString(k));
                         break;
                     case "UseVirtue":
-                        ProcessUseVirtue(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Player.InvokeVirtue(RazorEnhanced.Settings.HotKey.FindString(k));                  
                         break;
                     default:
                         break;
@@ -618,50 +618,25 @@ namespace RazorEnhanced
                     break;
             }
         }
-        private static void ProcessSpellsMagery(string function)
-        {
-            RazorEnhanced.Spells.CastMagery(function);
-        }
-        private static void ProcessSpellsNecro(string function)
-        {
-            RazorEnhanced.Spells.CastNecro(function);
-        }
-        private static void ProcessSpellsBushido(string function)
-        {
-            RazorEnhanced.Spells.CastBushido(function);
-        }
-        private static void ProcessSpellsNinjitsu(string function)
-        {
-            RazorEnhanced.Spells.CastNinjitsu(function);
-        }
-        private static void ProcessSpellsSpellweaving(string function)
-        {
-            RazorEnhanced.Spells.CastSpellweaving(function);
-        }
-        private static void ProcessSpellsMysticism(string function)
-        {
-            RazorEnhanced.Spells.CastMysticism(function);
-        }
-        private static void ProcessSpellsChivalry(string function)
-        {
-            RazorEnhanced.Spells.CastChivalry(function);
-        }
+
         private static void ProcessTarget(string function)
         {
             switch (function)
             {
+                case "Target Self":
+                    RazorEnhanced.Target.Self();
+                    break;
+                case "Target Last":
+                    Assistant.Targeting.LastTarget();
+                    break;
+                case "Target Cancel":
+                    RazorEnhanced.Target.Cancel();
+                    break;
                 default:
                     break;
             }
         }
-        private static void ProcessTargetList(string function)
-        {
-            switch (function)
-            {
-                default:
-                    break;
-            }
-        }
+
         private static void ProcessScript(string function)
         {
             switch (function)
@@ -677,10 +652,6 @@ namespace RazorEnhanced
                 default:
                     break;
             }
-        }
-        private static void ProcessUseVirtue(string function)
-        {
-            RazorEnhanced.Player.InvokeVirtue(function);
         }
 
         internal static void Init()
@@ -872,11 +843,29 @@ namespace RazorEnhanced
 
             // Target
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Target");
-            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add("List");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Target");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
+
+            // Target -> List
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add("TList", "List");
+            keylist = RazorEnhanced.Settings.HotKey.ReadTarget();
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
 
             // Script
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Script");
+            keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Script");
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add("List");
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes[1].Nodes.Add("aaaa");
 
             // Virtue
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Virtue");
@@ -885,7 +874,7 @@ namespace RazorEnhanced
             {
                 Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[8].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
             }
-
+            
 
             Engine.MainWindow.HotKeyTreeView.ExpandAll();
         }
@@ -904,6 +893,26 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
                     RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key);
+                    Init();
+                }
+            }
+
+        }
+
+        internal static void UpdateTargetKey(string name)
+        {
+            if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
+            {
+                RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key);
+                Init();
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Key: "+ m_key.ToString() + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                if(dialogResult == DialogResult.Yes)
+                {
+                    RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
+                    RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key);
                     Init();
                 }
             }

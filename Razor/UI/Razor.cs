@@ -11477,6 +11477,7 @@ namespace Assistant
             {
                 RazorEnhanced.Settings.Target.TargetDelete(targetlistView.SelectedItems[0].SubItems[1].Text);
                 TargetGUI.RefreshTarget();
+                RazorEnhanced.HotKey.Init();
             }
         }
 
@@ -11765,7 +11766,15 @@ namespace Assistant
         private void hotkeySetButton_Click(object sender, EventArgs e)
         {
             if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null && hotkeytextbox.Text != "" && hotkeytextbox.Text != "None")
-                RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
+            {
+                if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "TList" )
+                    RazorEnhanced.HotKey.UpdateTargetKey(hotkeytreeView.SelectedNode.Name);     // Aggiorno hotkey target 
+                else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "SList" )
+                    // HotKey Script 
+                { }
+                else
+                    RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
+            }
             hotkeytextbox.Text = "";
         }
 
