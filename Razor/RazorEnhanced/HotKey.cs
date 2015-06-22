@@ -191,14 +191,41 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Unmount":
+                    if (World.Player.GetItemOnLayer(Layer.Mount) != null)
+                        ActionQueue.DoubleClick(true, World.Player.Serial);
+                    else
+                        World.Player.SendMessage("You are not mounted.");
+                    break;
+                case "Grab Item":
+                    World.Player.SendMessage("Da implementare");
+                    break;
+                case "Drop Item":
+                    World.Player.SendMessage("Da implementare");
+                    break;
                 default:
                     break;
             }
         }
         private static void ProcessUse(string function)
         {
+            Assistant.Item item;
             switch (function)
             {
+                case "Last Item":
+                    if (World.Player.LastObject != Assistant.Serial.Zero)
+                        RazorEnhanced.Items.UseItem(World.Player.LastObject);
+                    break;
+                case "Left Hand":
+                    item = World.Player.GetItemOnLayer(Layer.LeftHand);
+                    if (item != null)
+                        RazorEnhanced.Items.UseItem(item.Serial);
+                    break;
+                case "Right Hand":
+                    item = World.Player.GetItemOnLayer(Layer.RightHand);
+                    if (item != null)
+                        RazorEnhanced.Items.UseItem(item.Serial);
+                    break;
                 default:
                     break;
             }
@@ -208,6 +235,44 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "All":
+                    foreach (Assistant.Mobile m in World.MobilesInRange())
+			        {
+				        if (m != World.Player)
+					        ClientCommunication.SendToServer(new SingleClick(m));
+
+				        if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+					        Targeting.CheckTextFlags(m);
+			        }
+                    foreach (Assistant.Item i in World.Items.Values)
+			        {
+				        if (i.IsCorpse)
+					        ClientCommunication.SendToServer(new SingleClick(i));
+			        }
+                    break;
+                case "Corpses":
+                    foreach (Assistant.Item i in World.Items.Values)
+                    {
+                        if (i.IsCorpse)
+                            ClientCommunication.SendToServer(new SingleClick(i));
+                    }
+                    break;
+                case "Mobiles":
+                    foreach (Assistant.Mobile m in World.MobilesInRange())
+			        {
+				        if (m != World.Player)
+					        ClientCommunication.SendToServer(new SingleClick(m));
+
+				        if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+					        Targeting.CheckTextFlags(m);
+			        }
+                    break;
+                case "Items":
+                    foreach (Assistant.Item i in World.Items.Values)
+                    {
+                            ClientCommunication.SendToServer(new SingleClick(i));
+                    }
+                    break;
                 default:
                     break;
             }
@@ -316,8 +381,44 @@ namespace RazorEnhanced
         }
         private static void ProcessBandage(string function)
         {
+            Assistant.Item pack = World.Player.Backpack;
             switch (function)
             {
+                case "Self":
+			        if (pack != null)
+			        {
+                        if (!UseItemById(pack, 3617))
+				        {
+					        World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
+				        }
+				        else
+				        {
+					        Targeting.ClearQueue();
+					        Targeting.TargetSelf(true);
+				        }
+			        }
+                    break;
+                case "Last":
+			        if (pack != null)
+			        {
+                        if (!UseItemById(pack, 3617))
+				        {
+					        World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
+				        }
+				        else
+				        {
+                            Targeting.ClearQueue();
+					        Targeting.LastTarget(true);
+				        }
+			        }
+                    break;
+                case "UseOnly":
+                    if (pack != null)
+                    {
+                        if (!UseItemById(pack, 3617))
+                            World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -358,6 +459,76 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Last Used":
+                    if (World.Player.LastSkill != -1)
+                        ClientCommunication.SendToServer(new UseSkill(World.Player.LastSkill));
+                    break;
+                case "Animal Lore":
+                    RazorEnhanced.Player.UseSkill("AnimalLore");
+                    break;
+                case "Item ID":
+                    RazorEnhanced.Player.UseSkill("ItemID");
+                    break;
+                case "Arms Lore":
+                    RazorEnhanced.Player.UseSkill("ArmsLore");
+                    break;
+                case "Begging":
+                    RazorEnhanced.Player.UseSkill("Begging");
+                    break;
+                case "Peacemaking":
+                    RazorEnhanced.Player.UseSkill("Peacemaking");
+                    break;
+                case "Evasion":
+                    RazorEnhanced.Player.UseSkill("Evasion");
+                    break;
+                case "Cartography":
+                    RazorEnhanced.Player.UseSkill("Cartography");
+                    break;
+                case "Detect Hidden":
+                    RazorEnhanced.Player.UseSkill("DetectHidden");
+                    break;
+                case "Eval Int":
+                    RazorEnhanced.Player.UseSkill("EvalInt");
+                    break;
+                case "Forensics":
+                    RazorEnhanced.Player.UseSkill("Forensics");
+                    break;
+                case "Hiding":
+                    RazorEnhanced.Player.UseSkill("Hiding");
+                    break;
+                case "Provocation":
+                    RazorEnhanced.Player.UseSkill("Provocation");
+                    break;
+                case "Spirit Speak":
+                    RazorEnhanced.Player.UseSkill("SpiritSpeak");
+                    break;
+                case "Stealing":
+                    RazorEnhanced.Player.UseSkill("Stealing");
+                    break;
+                case "Animal Taming":
+                    RazorEnhanced.Player.UseSkill("AnimalTaming");
+                    break;
+                case "Taste ID":
+                    RazorEnhanced.Player.UseSkill("TasteID");
+                    break;
+                case "Tracking":
+                    RazorEnhanced.Player.UseSkill("Tracking");
+                    break;
+                case "Meditation":
+                    RazorEnhanced.Player.UseSkill("Meditation");
+                    break;
+                case "Stealth":
+                    RazorEnhanced.Player.UseSkill("Stealth");
+                    break;
+                case "RemoveTrap":
+                    RazorEnhanced.Player.UseSkill("RemoveTrap");
+                    break;
+                case "Inscribe":
+                    RazorEnhanced.Player.UseSkill("Inscribe");
+                    break;
+                case "Anatomy":
+                    RazorEnhanced.Player.UseSkill("Anatomy");
+                    break;
                 default:
                     break;
             }
@@ -390,6 +561,24 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Honorable Execution":
+                    RazorEnhanced.Spells.CastBushido("HonorableExecution");
+                    break;
+                case "Confidence":
+                    RazorEnhanced.Spells.CastBushido("Confidence");
+                    break;
+                case "Evasion":
+                    RazorEnhanced.Spells.CastBushido("Evasion");
+                    break;
+                case "Counter Attack":
+                    RazorEnhanced.Spells.CastBushido("CounterAttack");
+                    break;
+                case "Lightning Strike":
+                    RazorEnhanced.Spells.CastBushido("LightningStrike");
+                    break;
+                case "Momentum Strike":
+                    RazorEnhanced.Spells.CastBushido("MomentumStrike");
+                    break;
                 default:
                     break;
             }
@@ -398,6 +587,30 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Focus Attack":
+                    RazorEnhanced.Spells.CastNinjitsu("FocusAttack");
+                    break;
+                case "Death Strike":
+                    RazorEnhanced.Spells.CastNinjitsu("DeathStrike");
+                    break;
+                case "Animal Form":
+                    RazorEnhanced.Spells.CastNinjitsu("AnimalForm");
+                    break;
+                case "Ki Attack":
+                    RazorEnhanced.Spells.CastNinjitsu("KiAttack");
+                    break;
+                case "Surprise Attack":
+                    RazorEnhanced.Spells.CastNinjitsu("SurpriseAttack");
+                    break;
+                case "Backstab":
+                    RazorEnhanced.Spells.CastNinjitsu("Backstab");
+                    break;
+                case "Shadow jump":
+                    RazorEnhanced.Spells.CastNinjitsu("Shadowjump");
+                    break;
+                case "Mirror Image":
+                    RazorEnhanced.Spells.CastNinjitsu("MirrorImage");
+                    break;
                 default:
                     break;
             }
@@ -406,6 +619,48 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Arcane Circle":
+                    RazorEnhanced.Spells.CastSpellweaving("ArcaneCircle");
+                    break;
+                case "Gift Of Renewal":
+                    RazorEnhanced.Spells.CastSpellweaving("GiftOfRenewal");
+                    break;
+                case "Immolating Weapon":
+                    RazorEnhanced.Spells.CastSpellweaving("ImmolatingWeapon");
+                    break;
+                case "Thunderstorm":
+                    RazorEnhanced.Spells.CastSpellweaving("Thunderstorm");
+                    break;
+                case "Natures Fury":
+                    RazorEnhanced.Spells.CastSpellweaving("NaturesFury");
+                    break;
+                case "Summon Fey":
+                    RazorEnhanced.Spells.CastSpellweaving("SummonFey");
+                    break;
+                case "Summoniend":
+                    RazorEnhanced.Spells.CastSpellweaving("Summoniend");
+                    break;
+                case "Reaper Form":
+                    RazorEnhanced.Spells.CastSpellweaving("ReaperForm");
+                    break;
+                case "Wildfire":
+                    RazorEnhanced.Spells.CastSpellweaving("Wildfire");
+                    break;
+                case "Essence Of Wind":
+                    RazorEnhanced.Spells.CastSpellweaving("EssenceOfWind");
+                    break;
+                case "Dryad Allure":
+                    RazorEnhanced.Spells.CastSpellweaving("DryadAllure");
+                    break;
+                case "Ethereal Voyage":
+                    RazorEnhanced.Spells.CastSpellweaving("EtherealVoyage");
+                    break;
+                case "Word Of Death":
+                    RazorEnhanced.Spells.CastSpellweaving("WordOfDeath");
+                    break;
+                case "Gift Of Life":
+                    RazorEnhanced.Spells.CastSpellweaving("GiftOfLife");
+                    break;
                 default:
                     break;
             }
@@ -414,6 +669,51 @@ namespace RazorEnhanced
         {
             switch (function)
             {
+                case "Animated Weapon":
+                    RazorEnhanced.Spells.CastMysticism("AnimatedWeapon");
+                    break;
+                case "Healing Stone":
+                    RazorEnhanced.Spells.CastMysticism("HealingStone");
+                    break;
+                case "Purge":
+                    RazorEnhanced.Spells.CastMysticism("Purge");
+                    break;
+                case "Eagle Strike":
+                    RazorEnhanced.Spells.CastMysticism("EagleStrike");
+                    break;
+                case "Enchant":
+                    RazorEnhanced.Spells.CastMysticism("Enchant");
+                    break;
+                case "StoneForm":
+                    RazorEnhanced.Spells.CastMysticism("StoneForm");
+                    break;
+                case "Spell Trigger":
+                    RazorEnhanced.Spells.CastMysticism("SpellTrigger");
+                    break;
+                case "AutolootStart":
+                    RazorEnhanced.Spells.CastMysticism("AutolootStart");
+                    break;
+                case "Mass Sleep":
+                    RazorEnhanced.Spells.CastMysticism("MassSleep");
+                    break;
+                case "Cleansing Winds":
+                    RazorEnhanced.Spells.CastMysticism("CleansingWinds");
+                    break;
+                case "Bombard":
+                    RazorEnhanced.Spells.CastMysticism("Bombard");
+                    break;
+                case "Spell Plague":
+                    RazorEnhanced.Spells.CastMysticism("SpellPlague");
+                    break;
+                case "Hail Storm":
+                    RazorEnhanced.Spells.CastMysticism("HailStorm");
+                    break;
+                case "Nether Cyclone":
+                    RazorEnhanced.Spells.CastMysticism("NetherCyclone");
+                    break;
+                case "Rising Colossus":
+                    RazorEnhanced.Spells.CastMysticism("RisingColossus");
+                    break;
                 default:
                     break;
             }
@@ -692,6 +992,27 @@ namespace RazorEnhanced
         {
             RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", Keys.None);
             Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey").ToString();
+        }
+
+        private static bool UseItemById(Assistant.Item cont, ushort find)
+        {
+            for (int i = 0; i < cont.Contains.Count; i++)
+            {
+                Assistant.Item item = (Assistant.Item)cont.Contains[i];
+
+                if (item.ItemID == find)
+                {
+                    RazorEnhanced.Items.UseItem(item.Serial);
+                    return true;
+                }
+                else if (item.Contains != null && item.Contains.Count > 0)
+                {
+                    if (UseItemById(item, find))
+                        return true;
+                }
+            }
+
+            return false;
         }
 	}
 }

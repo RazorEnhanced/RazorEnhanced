@@ -264,6 +264,10 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Use", "Last Item", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
                 hotkeyrow.ItemArray = new object[] { "Use", "Left Hand", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
@@ -281,6 +285,10 @@ namespace RazorEnhanced
 
                 hotkeyrow = hotkey.NewRow();
                 hotkeyrow.ItemArray = new object[] { "Show Names", "Mobiles", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Show Names", "Items", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
@@ -404,7 +412,7 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Bandage", "Target", Keys.None };
+                hotkeyrow.ItemArray = new object[] { "Bandage", "Use Only", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
@@ -513,6 +521,10 @@ namespace RazorEnhanced
 
                 hotkeyrow = hotkey.NewRow();
                 hotkeyrow.ItemArray = new object[] { "Equip Wands", "Mana Drain", Keys.None };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Skills", "Last Used", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
@@ -960,7 +972,7 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "AnimalForm", Keys.None };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Animal Form", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
