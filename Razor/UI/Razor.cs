@@ -480,6 +480,10 @@ namespace Assistant
         private Label hotkeyKeyMasterLabel;
         private RazorTextBox hotkeyKeyMasterTextBox;
         private Label hotkeyStatusLabel;
+        private GroupBox groupBox8;
+        private RazorButton hotkeyDisableButton;
+        private RazorButton hotkeyEnableButton;
+        private RazorCheckBox hotkeypassCheckBox;
 
 		private bool m_CanClose = true;
 
@@ -616,6 +620,7 @@ namespace Assistant
         internal TextBox HotKeyKeyMasterTextBox { get { return hotkeyKeyMasterTextBox; } }
 
 
+
 		private DataTable scriptTable;
 
 		internal MainForm()
@@ -664,6 +669,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -1100,12 +1106,15 @@ namespace Assistant
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.bandagehealLogBox = new System.Windows.Forms.ListBox();
             this.enhancedHotKeytabPage = new System.Windows.Forms.TabPage();
-            this.groupBox28 = new System.Windows.Forms.GroupBox();
-            this.hotkeyMasterClearButton = new RazorEnhanced.UI.RazorButton();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.hotkeyKeyMasterTextBox = new RazorEnhanced.UI.RazorTextBox();
             this.hotkeyMasterSetButton = new RazorEnhanced.UI.RazorButton();
             this.label42 = new System.Windows.Forms.Label();
+            this.hotkeyMasterClearButton = new RazorEnhanced.UI.RazorButton();
+            this.groupBox28 = new System.Windows.Forms.GroupBox();
+            this.hotkeyDisableButton = new RazorEnhanced.UI.RazorButton();
+            this.hotkeyEnableButton = new RazorEnhanced.UI.RazorButton();
             this.hotkeyKeyMasterLabel = new System.Windows.Forms.Label();
-            this.hotkeyKeyMasterTextBox = new RazorEnhanced.UI.RazorTextBox();
             this.hotkeyStatusLabel = new System.Windows.Forms.Label();
             this.groupBox27 = new System.Windows.Forms.GroupBox();
             this.hotkeyClearButton = new RazorEnhanced.UI.RazorButton();
@@ -1116,6 +1125,7 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.hotkeypassCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1172,30 +1182,31 @@ namespace Assistant
             this.groupBox6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.enhancedHotKeytabPage.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.groupBox28.SuspendLayout();
             this.groupBox27.SuspendLayout();
             this.SuspendLayout();
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -5834,6 +5845,7 @@ namespace Assistant
             // 
             // enhancedHotKeytabPage
             // 
+            this.enhancedHotKeytabPage.Controls.Add(this.groupBox8);
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox28);
             this.enhancedHotKeytabPage.Controls.Add(this.groupBox27);
             this.enhancedHotKeytabPage.Controls.Add(this.hotkeytreeView);
@@ -5845,37 +5857,38 @@ namespace Assistant
             this.enhancedHotKeytabPage.Text = "Enhanced HotKey";
             this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
             // 
-            // groupBox28
+            // groupBox8
             // 
-            this.groupBox28.Controls.Add(this.hotkeyMasterClearButton);
-            this.groupBox28.Controls.Add(this.hotkeyMasterSetButton);
-            this.groupBox28.Controls.Add(this.label42);
-            this.groupBox28.Controls.Add(this.hotkeyKeyMasterLabel);
-            this.groupBox28.Controls.Add(this.hotkeyKeyMasterTextBox);
-            this.groupBox28.Controls.Add(this.hotkeyStatusLabel);
-            this.groupBox28.Location = new System.Drawing.Point(502, 7);
-            this.groupBox28.Name = "groupBox28";
-            this.groupBox28.Size = new System.Drawing.Size(156, 136);
-            this.groupBox28.TabIndex = 3;
-            this.groupBox28.TabStop = false;
-            this.groupBox28.Text = "General";
+            this.groupBox8.Controls.Add(this.hotkeyKeyMasterTextBox);
+            this.groupBox8.Controls.Add(this.hotkeyMasterSetButton);
+            this.groupBox8.Controls.Add(this.label42);
+            this.groupBox8.Controls.Add(this.hotkeyMasterClearButton);
+            this.groupBox8.Location = new System.Drawing.Point(502, 115);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(156, 86);
+            this.groupBox8.TabIndex = 5;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Master Key";
             // 
-            // hotkeyMasterClearButton
+            // hotkeyKeyMasterTextBox
             // 
-            this.hotkeyMasterClearButton.ColorTable = office2010BlueTheme1;
-            this.hotkeyMasterClearButton.Location = new System.Drawing.Point(92, 94);
-            this.hotkeyMasterClearButton.Name = "hotkeyMasterClearButton";
-            this.hotkeyMasterClearButton.Size = new System.Drawing.Size(53, 23);
-            this.hotkeyMasterClearButton.TabIndex = 5;
-            this.hotkeyMasterClearButton.Text = "Clear";
-            this.hotkeyMasterClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.hotkeyMasterClearButton.UseVisualStyleBackColor = true;
-            this.hotkeyMasterClearButton.Click += new System.EventHandler(this.hotkeyMasterClearButton_Click);
+            this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
+            this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.hotkeyKeyMasterTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.hotkeyKeyMasterTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.hotkeyKeyMasterTextBox.Location = new System.Drawing.Point(41, 19);
+            this.hotkeyKeyMasterTextBox.Name = "hotkeyKeyMasterTextBox";
+            this.hotkeyKeyMasterTextBox.ReadOnly = true;
+            this.hotkeyKeyMasterTextBox.Size = new System.Drawing.Size(104, 20);
+            this.hotkeyKeyMasterTextBox.TabIndex = 5;
             // 
             // hotkeyMasterSetButton
             // 
             this.hotkeyMasterSetButton.ColorTable = office2010BlueTheme1;
-            this.hotkeyMasterSetButton.Location = new System.Drawing.Point(10, 94);
+            this.hotkeyMasterSetButton.Location = new System.Drawing.Point(10, 50);
             this.hotkeyMasterSetButton.Name = "hotkeyMasterSetButton";
             this.hotkeyMasterSetButton.Size = new System.Drawing.Size(53, 23);
             this.hotkeyMasterSetButton.TabIndex = 7;
@@ -5887,11 +5900,60 @@ namespace Assistant
             // label42
             // 
             this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(7, 66);
+            this.label42.Location = new System.Drawing.Point(7, 21);
             this.label42.Name = "label42";
             this.label42.Size = new System.Drawing.Size(28, 13);
             this.label42.TabIndex = 6;
             this.label42.Text = "Key:";
+            // 
+            // hotkeyMasterClearButton
+            // 
+            this.hotkeyMasterClearButton.ColorTable = office2010BlueTheme1;
+            this.hotkeyMasterClearButton.Location = new System.Drawing.Point(92, 50);
+            this.hotkeyMasterClearButton.Name = "hotkeyMasterClearButton";
+            this.hotkeyMasterClearButton.Size = new System.Drawing.Size(53, 23);
+            this.hotkeyMasterClearButton.TabIndex = 5;
+            this.hotkeyMasterClearButton.Text = "Clear";
+            this.hotkeyMasterClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.hotkeyMasterClearButton.UseVisualStyleBackColor = true;
+            this.hotkeyMasterClearButton.Click += new System.EventHandler(this.hotkeyMasterClearButton_Click);
+            // 
+            // groupBox28
+            // 
+            this.groupBox28.Controls.Add(this.hotkeyDisableButton);
+            this.groupBox28.Controls.Add(this.hotkeyEnableButton);
+            this.groupBox28.Controls.Add(this.hotkeyKeyMasterLabel);
+            this.groupBox28.Controls.Add(this.hotkeyStatusLabel);
+            this.groupBox28.Location = new System.Drawing.Point(502, 7);
+            this.groupBox28.Name = "groupBox28";
+            this.groupBox28.Size = new System.Drawing.Size(156, 102);
+            this.groupBox28.TabIndex = 3;
+            this.groupBox28.TabStop = false;
+            this.groupBox28.Text = "General";
+            // 
+            // hotkeyDisableButton
+            // 
+            this.hotkeyDisableButton.ColorTable = office2010BlueTheme1;
+            this.hotkeyDisableButton.Location = new System.Drawing.Point(92, 59);
+            this.hotkeyDisableButton.Name = "hotkeyDisableButton";
+            this.hotkeyDisableButton.Size = new System.Drawing.Size(53, 23);
+            this.hotkeyDisableButton.TabIndex = 8;
+            this.hotkeyDisableButton.Text = "Disable";
+            this.hotkeyDisableButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.hotkeyDisableButton.UseVisualStyleBackColor = true;
+            this.hotkeyDisableButton.Click += new System.EventHandler(this.hotkeyDisableButton_Click);
+            // 
+            // hotkeyEnableButton
+            // 
+            this.hotkeyEnableButton.ColorTable = office2010BlueTheme1;
+            this.hotkeyEnableButton.Location = new System.Drawing.Point(10, 59);
+            this.hotkeyEnableButton.Name = "hotkeyEnableButton";
+            this.hotkeyEnableButton.Size = new System.Drawing.Size(53, 23);
+            this.hotkeyEnableButton.TabIndex = 9;
+            this.hotkeyEnableButton.Text = "Enable";
+            this.hotkeyEnableButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.hotkeyEnableButton.UseVisualStyleBackColor = true;
+            this.hotkeyEnableButton.Click += new System.EventHandler(this.hotkeyEnableButton_Click);
             // 
             // hotkeyKeyMasterLabel
             // 
@@ -5901,21 +5963,6 @@ namespace Assistant
             this.hotkeyKeyMasterLabel.Size = new System.Drawing.Size(101, 13);
             this.hotkeyKeyMasterLabel.TabIndex = 4;
             this.hotkeyKeyMasterLabel.Text = "ON/OFF Key: None";
-            // 
-            // hotkeyKeyMasterTextBox
-            // 
-            this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
-            this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.hotkeyKeyMasterTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            this.hotkeyKeyMasterTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.hotkeyKeyMasterTextBox.Location = new System.Drawing.Point(41, 63);
-            this.hotkeyKeyMasterTextBox.Name = "hotkeyKeyMasterTextBox";
-            this.hotkeyKeyMasterTextBox.ReadOnly = true;
-            this.hotkeyKeyMasterTextBox.Size = new System.Drawing.Size(104, 20);
-            this.hotkeyKeyMasterTextBox.TabIndex = 5;
             // 
             // hotkeyStatusLabel
             // 
@@ -5928,21 +5975,22 @@ namespace Assistant
             // 
             // groupBox27
             // 
+            this.groupBox27.Controls.Add(this.hotkeypassCheckBox);
             this.groupBox27.Controls.Add(this.hotkeyClearButton);
-            this.groupBox27.Controls.Add(this.hotkeySetButton);
             this.groupBox27.Controls.Add(this.label39);
             this.groupBox27.Controls.Add(this.hotkeytextbox);
-            this.groupBox27.Location = new System.Drawing.Point(502, 149);
+            this.groupBox27.Controls.Add(this.hotkeySetButton);
+            this.groupBox27.Location = new System.Drawing.Point(502, 207);
             this.groupBox27.Name = "groupBox27";
-            this.groupBox27.Size = new System.Drawing.Size(156, 86);
+            this.groupBox27.Size = new System.Drawing.Size(156, 109);
             this.groupBox27.TabIndex = 2;
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "Modify Key";
             // 
             // hotkeyClearButton
             // 
-            this.hotkeyClearButton.ColorTable = office2010BlueTheme1;
-            this.hotkeyClearButton.Location = new System.Drawing.Point(92, 45);
+            this.hotkeyClearButton.ColorTable = office2010BlueTheme2;
+            this.hotkeyClearButton.Location = new System.Drawing.Point(92, 71);
             this.hotkeyClearButton.Name = "hotkeyClearButton";
             this.hotkeyClearButton.Size = new System.Drawing.Size(53, 23);
             this.hotkeyClearButton.TabIndex = 4;
@@ -5953,8 +6001,8 @@ namespace Assistant
             // 
             // hotkeySetButton
             // 
-            this.hotkeySetButton.ColorTable = office2010BlueTheme1;
-            this.hotkeySetButton.Location = new System.Drawing.Point(10, 45);
+            this.hotkeySetButton.ColorTable = office2010BlueTheme2;
+            this.hotkeySetButton.Location = new System.Drawing.Point(10, 71);
             this.hotkeySetButton.Name = "hotkeySetButton";
             this.hotkeySetButton.Size = new System.Drawing.Size(53, 23);
             this.hotkeySetButton.TabIndex = 3;
@@ -6011,6 +6059,14 @@ namespace Assistant
             this.timerupdatestatus.Enabled = true;
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
+            // 
+            // hotkeypassCheckBox
+            // 
+            this.hotkeypassCheckBox.Location = new System.Drawing.Point(10, 43);
+            this.hotkeypassCheckBox.Name = "hotkeypassCheckBox";
+            this.hotkeypassCheckBox.Size = new System.Drawing.Size(122, 22);
+            this.hotkeypassCheckBox.TabIndex = 49;
+            this.hotkeypassCheckBox.Text = "Pass Key to UO";
             // 
             // MainForm
             // 
@@ -6104,6 +6160,8 @@ namespace Assistant
             this.groupBox6.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.enhancedHotKeytabPage.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.groupBox28.ResumeLayout(false);
             this.groupBox28.PerformLayout();
             this.groupBox27.ResumeLayout(false);
@@ -8523,7 +8581,7 @@ namespace Assistant
 
 			if (result == DialogResult.OK) // Test result.
 			{
-				scriptTable.Rows.Add(false, openFileDialogscript.FileName, Properties.Resources.yellow, "Idle", Keys.None);
+				scriptTable.Rows.Add(false, openFileDialogscript.FileName, Properties.Resources.yellow, "Idle", Keys.None, true);
 				RazorEnhanced.Settings.Save();
 
 				dataGridViewScripting.DataSource = null;
@@ -11386,11 +11444,6 @@ namespace Assistant
             });
         }
 
-        private void razorButton2_Click(object sender, EventArgs e)
-        {
-            RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
-        }
-
         // ---------------- TOOLBAR END ----------------
 
         // ----------------- HOT KEY -----------------------
@@ -11399,14 +11452,14 @@ namespace Assistant
             if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null && hotkeytextbox.Text != "" && hotkeytextbox.Text != "None")
             {
                 if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "TList" )
-                    RazorEnhanced.HotKey.UpdateTargetKey(hotkeytreeView.SelectedNode.Name);     // Aggiorno hotkey target 
+                    RazorEnhanced.HotKey.UpdateTargetKey(hotkeytreeView.SelectedNode.Name, hotkeypassCheckBox.Checked);     // Aggiorno hotkey target 
                 else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "SList")
                 {
                     RazorEnhanced.AutoLoot.AddLog("SS");
-                    RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode.Name);     // Aggiorno hotkey Script 
+                    RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode.Name, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Script 
                 }
                 else
-                    RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
+                    RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name, hotkeypassCheckBox.Checked);
             }
             hotkeytextbox.Text = "";
         }
@@ -11423,7 +11476,13 @@ namespace Assistant
         private void hotkeytreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
         {
             if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
-                hotkeytextbox.Text = RazorEnhanced.Settings.HotKey.FindKey(hotkeytreeView.SelectedNode.Name).ToString();      
+            {
+                bool passkey = true;
+                Keys k = Keys.None;
+                RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out passkey);
+                hotkeytextbox.Text = k.ToString();
+                hotkeypassCheckBox.Checked = passkey;
+            }
         }
 
         private void hotkeyMasterSetButton_Click(object sender, EventArgs e)
@@ -11440,9 +11499,21 @@ namespace Assistant
             RazorEnhanced.HotKey.ClearMasterKey();
         }
 
-        private void chkPass_CheckedChanged(object sender, EventArgs e)
-        {
 
+        private void hotkeyEnableButton_Click(object sender, EventArgs e)
+        {
+            Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
+            RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
+            if (World.Player != null)
+                RazorEnhanced.Misc.SendMessage("HotKey: ENABLED");
+        }
+
+        private void hotkeyDisableButton_Click(object sender, EventArgs e)
+        {
+            RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
+            Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
+            if (World.Player != null)
+                RazorEnhanced.Misc.SendMessage("HotKey: DISABLED");
         }
 
 
