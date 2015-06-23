@@ -84,7 +84,6 @@ namespace RazorEnhanced
         }
         private static void ProcessGroup(string group, Keys k)
         {
-            RazorEnhanced.Misc.SendMessage("Debug: " + group);
             if (group != "")
             {
                 switch (group)
@@ -378,7 +377,7 @@ namespace RazorEnhanced
                 case "Bandage Heal Enable":
                     RazorEnhanced.BandageHeal.Start();
                     break;
-                case "Bandage Heal Dasable":
+                case "Bandage Heal Disable":
                     RazorEnhanced.BandageHeal.Stop();
                     break;
                 default:
