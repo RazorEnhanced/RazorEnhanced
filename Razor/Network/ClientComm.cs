@@ -239,21 +239,11 @@ namespace Assistant
 					}
 				case UOAMessage.SET_MACRO:
 					{
-						try
-						{
-							//if ( wParam >= 0 && wParam < Engine.MainWindow.macroList.Items.Count )
-							//	Engine.MainWindow.macroList.SelectedIndex = wParam;
-						}
-						catch
-						{
-						}
 						return 0;
 					}
 				case UOAMessage.PLAY_MACRO:
 					{
-						if (razor != null)
-							razor.playMacro_Click(razor, new EventArgs());
-						return Macros.MacroManager.Playing ? 1 : 0;
+                        return 0;
 					}
 				case UOAMessage.DISPLAY_TEXT:
 					{
