@@ -224,7 +224,6 @@ namespace RazorEnhanced
                 Mobile mobtarget = Mobiles.Select(filterresult, selector);
                 if (mobtarget != null)
                 {
-                    Misc.SendMessage("Target:" + mobtarget.Name);
                     Mobiles.Message(mobtarget.Serial, 10, "* Target *");
                     RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
                     RazorEnhanced.Target.SetLast(mobtarget);
