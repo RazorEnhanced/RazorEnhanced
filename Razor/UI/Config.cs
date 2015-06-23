@@ -141,7 +141,7 @@ namespace Assistant
 			//Counter.Default();
 			Filter.DisableAll();
 			//DressList.ClearAll();
-			HotKey.ClearAll();
+			//HotKey.ClearAll();
 			//Agent.ClearAll();
 			PasswordMemory.ClearAll();
 		}
@@ -245,7 +245,7 @@ namespace Assistant
 			//Counter.LoadProfile(root["counters"]);
 			//Agent.LoadProfile(root["agents"]);
 			//DressList.Load(root["dresslists"]);
-			HotKey.Load(root["hotkeys"]);
+			//HotKey.Load(root["hotkeys"]);
 			//PasswordMemory.Load(root["passwords"]);
 
 			if (m_Props.ContainsKey("ForceSize"))
@@ -375,7 +375,7 @@ namespace Assistant
 			//xml.WriteEndElement();
 
 			xml.WriteStartElement("hotkeys");
-			HotKey.Save(xml);
+		//	HotKey.Save(xml);
 			xml.WriteEndElement();
 
 			//xml.WriteStartElement("passwords");

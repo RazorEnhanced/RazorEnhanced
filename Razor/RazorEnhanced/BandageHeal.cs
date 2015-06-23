@@ -268,8 +268,17 @@ namespace RazorEnhanced
                 Thread.Sleep(2000);
                 return 0;
             }
+            Assistant.Mobile target;
 
-            if ((int)(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? (ushort)1 : World.Player.HitsMax)) < HpLimit || World.Player.Poisoned)       // Check HP se bendare o meno.
+            if (BandageHeal.TargetType != "Self")
+            {
+                target = Assistant.World.FindMobile(TargetSerial);
+            }
+            else
+            {
+                target = Assistant.World.FindMobile(World.Player.Serial);
+            }
+            if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < HpLimit || target.Poisoned)       // Check HP se bendare o meno.
             {
                 if (HiddenBlock)
                 {
@@ -292,22 +301,19 @@ namespace RazorEnhanced
                 int serialbende = FindBandage();
                 if (serialbende != 0)        // Cerca le bende
                 {
+                    if (Targeting.HasTarget)
+                    {
+                        Target.Cancel();
+                        Thread.Sleep(100);
+                    }
+                   
                     Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)serialbende));
                     AddLog("Using bandage!");
                     Target.WaitForTarget(1000);
+                    AddLog("Targetting: 0x" + target.Serial.ToString());
+                    Assistant.Targeting.Target(target);
 
-                    if (BandageHeal.TargetType != "Self")
-                    {
-                        Target.TargetExecute(TargetSerial);
-                        AddLog("Targetting: 0x" + TargetSerial.ToString("X8"));
-                    }
-                    else
-                    {
-                        Target.TargetExecute(World.Player.Serial);
-                        AddLog("Targetting: 0x" + World.Player.Serial.Value.ToString("X8"));
-                    }
-
-                    
+                   
                     if (DexFormula)         
                     {
                         double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS

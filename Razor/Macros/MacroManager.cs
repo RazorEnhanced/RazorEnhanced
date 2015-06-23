@@ -14,7 +14,7 @@ namespace Assistant.Macros
 
 		public static void Initialize()
 		{
-			HotKey.Add(HKCategory.Macros, LocString.StopCurrent, new HotKeyCallback(HotKeyStop));
+			//HotKey.Add(HKCategory.Macros, LocString.StopCurrent, new HotKeyCallback(HotKeyStop));
 
 			string path = Config.GetUserDirectory("Macros");
 			Recurse(null, path);
@@ -45,13 +45,13 @@ namespace Assistant.Macros
 
 		internal static void Add(Macro m)
 		{
-			HotKey.Add(HKCategory.Macros, HKSubCat.None, Language.Format(LocString.PlayA1, m), new HotKeyCallbackState(HotKeyPlay), m);
+			//HotKey.Add(HKCategory.Macros, HKSubCat.None, Language.Format(LocString.PlayA1, m), new HotKeyCallbackState(HotKeyPlay), m);
 			m_List.Add(m);
 		}
 
 		internal static void Remove(Macro m)
 		{
-			HotKey.Remove(Language.Format(LocString.PlayA1, m));
+			//HotKey.Remove(Language.Format(LocString.PlayA1, m));
 			m_List.Remove(m);
 		}
 
@@ -94,8 +94,8 @@ namespace Assistant.Macros
 			m_Timer.Macro = m_Current;
 			m_Timer.Start();
 
-			if (Engine.MainWindow.WaitDisplay != null)
-				Engine.MainWindow.WaitDisplay.Text = "";
+			//if (Engine.MainWindow.WaitDisplay != null)
+			//	Engine.MainWindow.WaitDisplay.Text = "";
 		}
 
 		private static void HotKeyPlay(ref object state)
@@ -109,7 +109,7 @@ namespace Assistant.Macros
 			{
 				Play(m);
 				World.Player.SendMessage(LocString.PlayingA1, m);
-				Engine.MainWindow.PlayMacro(m);
+				//Engine.MainWindow.PlayMacro(m);
 			}
 		}
 
@@ -136,8 +136,8 @@ namespace Assistant.Macros
 			m_Timer.Macro = m_Current;
 			m_Timer.Start();
 
-			if (Engine.MainWindow.WaitDisplay != null)
-				Engine.MainWindow.WaitDisplay.Text = "";
+		//	if (Engine.MainWindow.WaitDisplay != null)
+			//	Engine.MainWindow.WaitDisplay.Text = "";
 		}
 
 		private static void HotKeyStop()
@@ -160,10 +160,10 @@ namespace Assistant.Macros
 			}
 			ClientCommunication.PostMacroStop();
 
-			if (Engine.MainWindow.WaitDisplay != null)
+			/*if (Engine.MainWindow.WaitDisplay != null)
 				Engine.MainWindow.WaitDisplay.Text = "";
 
-			Engine.MainWindow.OnMacroStop();
+			Engine.MainWindow.OnMacroStop();*/
 
 			//if ( restartPrev )
 			//	Play( m_PrevPlay );

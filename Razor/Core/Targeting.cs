@@ -64,7 +64,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x6C, new PacketViewerCallback(NewTarget));
 			PacketHandler.RegisterServerToClientViewer(0xAA, new PacketViewerCallback(CombatantChange));
 
-			HotKey.Add(HKCategory.Targets, LocString.LastTarget, new HotKeyCallback(LastTarget));
+	/*		HotKey.Add(HKCategory.Targets, LocString.LastTarget, new HotKeyCallback(LastTarget));
 			HotKey.Add(HKCategory.Targets, LocString.TargetSelf, new HotKeyCallback(TargetSelf));
 			HotKey.Add(HKCategory.Targets, LocString.ClearTargQueue, new HotKeyCallback(OnClearQueue));
 			HotKey.Add(HKCategory.Targets, LocString.SetLT, new HotKeyCallback(TargetSetLastTarget));
@@ -100,7 +100,7 @@ namespace Assistant
 			HotKey.Add(HKCategory.Targets, LocString.TargCloseGreyHuman, new HotKeyCallback(TargetCloseGreyHumanoid));
 			HotKey.Add(HKCategory.Targets, LocString.TargCloseInnocentHuman, new HotKeyCallback(TargetCloseInnocentHumanoid));
 			HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminalHuman, new HotKeyCallback(TargetCloseCriminalHumanoid));
-
+            */
 		}
 
 		private static void CombatantChange(PacketReader p, PacketHandlerEventArgs e)
@@ -1316,10 +1316,10 @@ namespace Assistant
 			{
 				if (Macros.MacroManager.AcceptActions)
 				{
-					KeyData hk = HotKey.Get((int)LocString.TargetSelf);
-					if (hk != null)
-						MacroManager.Action(new HotKeyAction(hk));
-					else
+					//KeyData hk = HotKey.Get((int)LocString.TargetSelf);
+					//if (hk != null)
+					//	MacroManager.Action(new HotKeyAction(hk));
+					//else
 						MacroManager.Action(new AbsoluteTargetAction(info));
 				}
 			}

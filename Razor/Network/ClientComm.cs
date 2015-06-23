@@ -251,8 +251,8 @@ namespace Assistant
 					}
 				case UOAMessage.PLAY_MACRO:
 					{
-						if (razor != null)
-							razor.playMacro_Click(razor, new EventArgs());
+						//if (razor != null)
+						//	razor.playMacro_Click(razor, new EventArgs());
 						return Macros.MacroManager.Playing ? 1 : 0;
 					}
 				case UOAMessage.DISPLAY_TEXT:
@@ -1070,7 +1070,7 @@ namespace Assistant
 
 				// Hot Keys
 				case UONetMessage.Mouse:
-					HotKey.OnMouse((ushort)(lParam & 0xFFFF), (short)(lParam >> 16));
+					//HotKey.OnMouse((ushort)(lParam & 0xFFFF), (short)(lParam >> 16));
 					break;
 				case UONetMessage.KeyDown:
 					//retVal = HotKey.OnKeyDown(lParam);

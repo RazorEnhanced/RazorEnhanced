@@ -110,7 +110,7 @@ namespace Assistant.MapUO
 		{
 			new ReqPartyLocTimer().Start();
 
-			HotKey.Add(HKCategory.Misc, LocString.ToggleMap, new HotKeyCallback(ToggleMap));
+			//HotKey.Add(HKCategory.Misc, LocString.ToggleMap, new HotKeyCallback(ToggleMap));
 		}
 
 		internal static void ToggleMap()

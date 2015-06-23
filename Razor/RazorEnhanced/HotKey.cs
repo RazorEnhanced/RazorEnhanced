@@ -38,11 +38,10 @@ namespace RazorEnhanced
 
         internal static bool GameKeyDown(Keys k)
         {
-            KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto
-            return true;
+            return KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto;
         }
 
-        internal static void KeyDown(Keys k)
+        internal static bool KeyDown(Keys k)
         {
             if (!Engine.MainWindow.HotKeyTextBox.Focused && !Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)
             {
@@ -62,7 +61,6 @@ namespace RazorEnhanced
                         if (World.Player != null)
                             RazorEnhanced.Misc.SendMessage("HotKey: ENABLED");
                     }
-                    return;
                 }
             }
 
@@ -70,21 +68,29 @@ namespace RazorEnhanced
             {
                 m_key = k;
                 Engine.MainWindow.HotKeyTextBox.Text = k.ToString();
+                return false;
             }
             else if (Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)                // In caso di assegnazione hotKey primaria
             {
                 m_Masterkey = k;
                 Engine.MainWindow.HotKeyKeyMasterTextBox.Text = k.ToString();
+                return false;
             }
             else    // Esecuzine reale
             {
                 if (World.Player != null && RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
-                 ProcessGroup(RazorEnhanced.Settings.HotKey.FindGroup(k), k);
+                {
+                    bool passkey = true;
+                    string group = "";
+                    RazorEnhanced.Settings.HotKey.FindGroup(k, out group, out passkey);
+                    ProcessGroup(group, k);
+                    return passkey;
+                }
+                return true;
             }
         }
         private static void ProcessGroup(string group, Keys k)
         {
-            RazorEnhanced.Misc.SendMessage("Debug: " + group);
             if (group != "")
             {
                 switch (group)
@@ -378,7 +384,7 @@ namespace RazorEnhanced
                 case "Bandage Heal Enable":
                     RazorEnhanced.BandageHeal.Start();
                     break;
-                case "Bandage Heal Dasable":
+                case "Bandage Heal Disable":
                     RazorEnhanced.BandageHeal.Stop();
                     break;
                 default:
@@ -882,11 +888,11 @@ namespace RazorEnhanced
             Engine.MainWindow.HotKeyTreeView.ExpandAll();
         }
 
-        internal static void UpdateKey(string name)
+        internal static void UpdateKey(string name, bool passkey)
         {
             if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
             {
-                RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key);
+                RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key, passkey);
                 Init();
             }
             else
@@ -895,17 +901,17 @@ namespace RazorEnhanced
                 if(dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
-                    RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key);
+                    RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key, passkey);
                     Init();
                 }
             }
         }
 
-        internal static void UpdateTargetKey(string name)
+        internal static void UpdateTargetKey(string name, bool passkey)
         {
             if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
             {
-                RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key);
+                RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key, passkey);
                 Init();
             }
             else
@@ -914,17 +920,17 @@ namespace RazorEnhanced
                 if(dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
-                    RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key);
+                    RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key, passkey);
                     Init();
                 }
             }
         }
 
-        internal static void UpdateScriptKey(string name)
+        internal static void UpdateScriptKey(string name, bool passkey)
         {
             if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
             {
-                RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key);
+                RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
                 Init();
             }
             else
@@ -933,7 +939,7 @@ namespace RazorEnhanced
                 if (dialogResult == DialogResult.Yes)
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
-                    RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key);
+                    RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
                     Init();
                 }
             }
@@ -962,11 +968,11 @@ namespace RazorEnhanced
         internal static void ClearKey(string name, string group)
         {
             if (group == "SList")
-                RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, Keys.None);
+                RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, Keys.None, true);
             else if (group == "TList")
-                RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, Keys.None);
+                RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, Keys.None, true);
             else
-                RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None);
+                RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None, true);
             Init();
         }
 
