@@ -141,7 +141,7 @@ namespace Assistant
 			//Counter.Default();
 			Filter.DisableAll();
 			//DressList.ClearAll();
-			//HotKey.ClearAll();
+			HotKey.ClearAll();
 			//Agent.ClearAll();
 			PasswordMemory.ClearAll();
 		}
@@ -245,7 +245,7 @@ namespace Assistant
 			//Counter.LoadProfile(root["counters"]);
 			//Agent.LoadProfile(root["agents"]);
 			//DressList.Load(root["dresslists"]);
-			//HotKey.Load(root["hotkeys"]);
+			HotKey.Load(root["hotkeys"]);
 			//PasswordMemory.Load(root["passwords"]);
 
 			if (m_Props.ContainsKey("ForceSize"))
@@ -358,7 +358,29 @@ namespace Assistant
 				xml.WriteEndElement();
 			}
 
+			//xml.WriteStartElement("filters");
+			//Filter.Save(xml);
+			//xml.WriteEndElement();
 
+			//xml.WriteStartElement("counters");
+			//Counter.SaveProfile(xml);
+			//xml.WriteEndElement();
+
+			//xml.WriteStartElement("agents");
+			//Agent.SaveProfile(xml);
+			//xml.WriteEndElement();
+
+			//xml.WriteStartElement("dresslists");
+			//DressList.Save(xml);
+			//xml.WriteEndElement();
+
+			xml.WriteStartElement("hotkeys");
+			HotKey.Save(xml);
+			xml.WriteEndElement();
+
+			//xml.WriteStartElement("passwords");
+			//PasswordMemory.Save(xml);
+			//xml.WriteEndElement();
             PasswordMemory.Save();
 
 			xml.WriteEndElement(); // end profile section

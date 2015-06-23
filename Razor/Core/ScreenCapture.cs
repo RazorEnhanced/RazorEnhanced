@@ -14,7 +14,7 @@ namespace Assistant
 		private static TimerCallback m_DoCaptureCall = new TimerCallback(CaptureNow);
 		public static void Initialize()
 		{
-			
+			HotKey.Add(HKCategory.Misc, LocString.TakeSS, new HotKeyCallback(CaptureNow));
 		}
 
 		internal static void DeathCapture()

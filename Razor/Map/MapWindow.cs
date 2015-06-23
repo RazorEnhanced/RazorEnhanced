@@ -109,6 +109,8 @@ namespace Assistant.MapUO
 		public static void Initialize()
 		{
 			new ReqPartyLocTimer().Start();
+
+			HotKey.Add(HKCategory.Misc, LocString.ToggleMap, new HotKeyCallback(ToggleMap));
 		}
 
 		internal static void ToggleMap()

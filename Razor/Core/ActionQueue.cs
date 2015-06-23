@@ -85,6 +85,7 @@ namespace Assistant
 		{
 			try { File.Delete("DragDrop.log"); }
 			catch { }
+			HotKey.Add(HKCategory.Misc, LocString.DropCur, new HotKeyCallback(DropCurrent));
 		}
 
 		private static void DropCurrent()

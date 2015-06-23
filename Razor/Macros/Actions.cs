@@ -2263,7 +2263,7 @@ namespace Assistant.Macros
 		}
 	}
 
-/*	internal class HotKeyAction : MacroAction
+	internal class HotKeyAction : MacroAction
 	{
 		private KeyData m_Key;
 
@@ -2307,7 +2307,7 @@ namespace Assistant.Macros
 		{
 			return String.Format("Exec: {0}", m_Key.DispName);
 		}
-	}*/
+	}
 
 	internal class ForAction : MacroAction
 	{

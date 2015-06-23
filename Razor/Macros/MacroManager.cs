@@ -14,7 +14,7 @@ namespace Assistant.Macros
 
 		public static void Initialize()
 		{
-			
+			HotKey.Add(HKCategory.Macros, LocString.StopCurrent, new HotKeyCallback(HotKeyStop));
 
 			string path = Config.GetUserDirectory("Macros");
 			Recurse(null, path);
@@ -45,13 +45,13 @@ namespace Assistant.Macros
 
 		internal static void Add(Macro m)
 		{
-			//HotKey.Add(HKCategory.Macros, HKSubCat.None, Language.Format(LocString.PlayA1, m), new HotKeyCallbackState(HotKeyPlay), m);
+			HotKey.Add(HKCategory.Macros, HKSubCat.None, Language.Format(LocString.PlayA1, m), new HotKeyCallbackState(HotKeyPlay), m);
 			m_List.Add(m);
 		}
 
 		internal static void Remove(Macro m)
 		{
-			//HotKey.Remove(Language.Format(LocString.PlayA1, m));
+			HotKey.Remove(Language.Format(LocString.PlayA1, m));
 			m_List.Remove(m);
 		}
 
