@@ -42,32 +42,20 @@ namespace Assistant
         private RazorButton skillCopyAll;
 		private System.Windows.Forms.TabPage generalTab;
 		private System.Windows.Forms.TabPage toolbarTab;
-		private System.Windows.Forms.TabPage skillsTab;
-		private System.Windows.Forms.TabPage hotkeysTab;
-		private RazorCheckBox chkCtrl;
-		private RazorCheckBox chkAlt;
-		private RazorCheckBox chkShift;
-		private System.Windows.Forms.GroupBox groupBox8;
-		private System.Windows.Forms.TextBox key;
-		private RazorButton setHK;
-		private RazorButton unsetHK;
-		private System.Windows.Forms.Label label2;
-		private RazorCheckBox chkPass;
+        private System.Windows.Forms.TabPage skillsTab;
 		private System.Windows.Forms.TabPage moreOptTab;
 		private RazorCheckBox chkForceSpeechHue;
 		private System.Windows.Forms.Label label3;
 		private RazorTextBox txtSpellFormat;
         private RazorCheckBox chkForceSpellHue;
         private System.Windows.Forms.TabPage mapsTab;
-        private RazorButton dohotkey;
 		private System.Windows.Forms.Label opacityLabel;
 		private System.Windows.Forms.TrackBar opacity;
         private RazorCheckBox dispDelta;
 		private RazorCheckBox openCorpses;
 		private RazorTextBox corpseRange;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.TabPage macrosTab;
-		private System.Windows.Forms.TreeView hotkeyTree;
+        private System.Windows.Forms.TabPage macrosTab;
 		private System.Windows.Forms.TabPage screenshotTab;
 		private System.Windows.Forms.TabPage statusTab;
 		private RazorButton newMacro;
@@ -109,8 +97,7 @@ namespace Assistant
 		private System.Windows.Forms.Label lblNeuHue;
 		private RazorCheckBox incomingCorpse;
         private RazorCheckBox incomingMob;
-		private RazorComboBox profiles;
-        private System.Windows.Forms.Label hkStatus;
+        private RazorComboBox profiles;
         private System.Windows.Forms.TabPage enhancedFilterTab;
         private RazorCheckBox filterSnoop;
 		private RazorCheckBox smartCPU;
@@ -842,19 +829,6 @@ namespace Assistant
             this.skillHDRlock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mapsTab = new System.Windows.Forms.TabPage();
             this.btnMap = new RazorEnhanced.UI.RazorButton();
-            this.hotkeysTab = new System.Windows.Forms.TabPage();
-            this.hkStatus = new System.Windows.Forms.Label();
-            this.hotkeyTree = new System.Windows.Forms.TreeView();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.chkPass = new RazorEnhanced.UI.RazorCheckBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.unsetHK = new RazorEnhanced.UI.RazorButton();
-            this.setHK = new RazorEnhanced.UI.RazorButton();
-            this.key = new System.Windows.Forms.TextBox();
-            this.chkCtrl = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkAlt = new RazorEnhanced.UI.RazorCheckBox();
-            this.chkShift = new RazorEnhanced.UI.RazorCheckBox();
-            this.dohotkey = new RazorEnhanced.UI.RazorButton();
             this.macrosTab = new System.Windows.Forms.TabPage();
             this.macroTree = new System.Windows.Forms.TreeView();
             this.macroActGroup = new System.Windows.Forms.GroupBox();
@@ -1161,8 +1135,6 @@ namespace Assistant
             this.groupBox7.SuspendLayout();
             this.skillsTab.SuspendLayout();
             this.mapsTab.SuspendLayout();
-            this.hotkeysTab.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.macrosTab.SuspendLayout();
             this.macroActGroup.SuspendLayout();
             this.screenshotTab.SuspendLayout();
@@ -1240,7 +1212,6 @@ namespace Assistant
             this.tabs.Controls.Add(this.emptyTab);
             this.tabs.Controls.Add(this.skillsTab);
             this.tabs.Controls.Add(this.mapsTab);
-            this.tabs.Controls.Add(this.hotkeysTab);
             this.tabs.Controls.Add(this.macrosTab);
             this.tabs.Controls.Add(this.screenshotTab);
             this.tabs.Controls.Add(this.statusTab);
@@ -2933,136 +2904,6 @@ namespace Assistant
             this.btnMap.Text = "Map UO";
             this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
-            // 
-            // hotkeysTab
-            // 
-            this.hotkeysTab.Controls.Add(this.hkStatus);
-            this.hotkeysTab.Controls.Add(this.hotkeyTree);
-            this.hotkeysTab.Controls.Add(this.groupBox8);
-            this.hotkeysTab.Controls.Add(this.dohotkey);
-            this.hotkeysTab.Location = new System.Drawing.Point(4, 40);
-            this.hotkeysTab.Name = "hotkeysTab";
-            this.hotkeysTab.Size = new System.Drawing.Size(666, 366);
-            this.hotkeysTab.TabIndex = 4;
-            this.hotkeysTab.Text = "Hot Keys";
-            // 
-            // hkStatus
-            // 
-            this.hkStatus.Location = new System.Drawing.Point(366, 177);
-            this.hkStatus.Name = "hkStatus";
-            this.hkStatus.Size = new System.Drawing.Size(160, 15);
-            this.hkStatus.TabIndex = 7;
-            // 
-            // hotkeyTree
-            // 
-            this.hotkeyTree.HideSelection = false;
-            this.hotkeyTree.Location = new System.Drawing.Point(7, 13);
-            this.hotkeyTree.Name = "hotkeyTree";
-            this.hotkeyTree.Size = new System.Drawing.Size(345, 260);
-            this.hotkeyTree.Sorted = true;
-            this.hotkeyTree.TabIndex = 6;
-            this.hotkeyTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeyTree_AfterSelect);
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.chkPass);
-            this.groupBox8.Controls.Add(this.label2);
-            this.groupBox8.Controls.Add(this.unsetHK);
-            this.groupBox8.Controls.Add(this.setHK);
-            this.groupBox8.Controls.Add(this.key);
-            this.groupBox8.Controls.Add(this.chkCtrl);
-            this.groupBox8.Controls.Add(this.chkAlt);
-            this.groupBox8.Controls.Add(this.chkShift);
-            this.groupBox8.Location = new System.Drawing.Point(366, 13);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(160, 124);
-            this.groupBox8.TabIndex = 4;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Hot Key";
-            // 
-            // chkPass
-            // 
-            this.chkPass.Location = new System.Drawing.Point(8, 68);
-            this.chkPass.Name = "chkPass";
-            this.chkPass.Size = new System.Drawing.Size(144, 20);
-            this.chkPass.TabIndex = 9;
-            this.chkPass.Text = "Pass to UO";
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(8, 44);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 20);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "Key:";
-            // 
-            // unsetHK
-            // 
-            this.unsetHK.ColorTable = office2010BlueTheme1;
-            this.unsetHK.Location = new System.Drawing.Point(8, 96);
-            this.unsetHK.Name = "unsetHK";
-            this.unsetHK.Size = new System.Drawing.Size(52, 20);
-            this.unsetHK.TabIndex = 6;
-            this.unsetHK.Text = "Unset";
-            this.unsetHK.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.unsetHK.Click += new System.EventHandler(this.unsetHK_Click);
-            // 
-            // setHK
-            // 
-            this.setHK.ColorTable = office2010BlueTheme1;
-            this.setHK.Location = new System.Drawing.Point(104, 96);
-            this.setHK.Name = "setHK";
-            this.setHK.Size = new System.Drawing.Size(48, 20);
-            this.setHK.TabIndex = 5;
-            this.setHK.Text = "Set";
-            this.setHK.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.setHK.Click += new System.EventHandler(this.setHK_Click);
-            // 
-            // key
-            // 
-            this.key.Location = new System.Drawing.Point(36, 43);
-            this.key.Name = "key";
-            this.key.ReadOnly = true;
-            this.key.Size = new System.Drawing.Size(116, 20);
-            this.key.TabIndex = 4;
-            this.key.KeyUp += new System.Windows.Forms.KeyEventHandler(this.key_KeyUp);
-            this.key.MouseDown += new System.Windows.Forms.MouseEventHandler(this.key_MouseDown);
-            this.key.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.key_MouseWheel);
-            // 
-            // chkCtrl
-            // 
-            this.chkCtrl.Location = new System.Drawing.Point(8, 20);
-            this.chkCtrl.Name = "chkCtrl";
-            this.chkCtrl.Size = new System.Drawing.Size(44, 20);
-            this.chkCtrl.TabIndex = 1;
-            this.chkCtrl.Text = "Ctrl";
-            // 
-            // chkAlt
-            // 
-            this.chkAlt.Location = new System.Drawing.Point(60, 20);
-            this.chkAlt.Name = "chkAlt";
-            this.chkAlt.Size = new System.Drawing.Size(36, 20);
-            this.chkAlt.TabIndex = 2;
-            this.chkAlt.Text = "Alt";
-            // 
-            // chkShift
-            // 
-            this.chkShift.Location = new System.Drawing.Point(104, 20);
-            this.chkShift.Name = "chkShift";
-            this.chkShift.Size = new System.Drawing.Size(48, 20);
-            this.chkShift.TabIndex = 3;
-            this.chkShift.Text = "Shift";
-            // 
-            // dohotkey
-            // 
-            this.dohotkey.ColorTable = office2010BlueTheme1;
-            this.dohotkey.Location = new System.Drawing.Point(366, 145);
-            this.dohotkey.Name = "dohotkey";
-            this.dohotkey.Size = new System.Drawing.Size(160, 20);
-            this.dohotkey.TabIndex = 5;
-            this.dohotkey.Text = "Execute Selected";
-            this.dohotkey.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.dohotkey.Click += new System.EventHandler(this.dohotkey_Click);
             // 
             // macrosTab
             // 
@@ -6216,9 +6057,6 @@ namespace Assistant
             this.skillsTab.ResumeLayout(false);
             this.skillsTab.PerformLayout();
             this.mapsTab.ResumeLayout(false);
-            this.hotkeysTab.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.macrosTab.ResumeLayout(false);
             this.macroActGroup.ResumeLayout(false);
             this.screenshotTab.ResumeLayout(false);
@@ -6519,16 +6357,7 @@ namespace Assistant
 			{
 				RedrawSkills();
 			}
-			else if (tabs.SelectedTab == hotkeysTab)
-			{
-				hotkeyTree.SelectedNode = null;
-				HotKey.Status = hkStatus;
-				if (hotkeyTree.TopNode != null)
-					hotkeyTree.TopNode.Expand();
-				else
-					HotKey.RebuildList(hotkeyTree);
-			}
-
+			
 			else if (tabs.SelectedTab == statusTab)
 			{
 				UpdateRazorStatus();
@@ -7076,199 +6905,6 @@ namespace Assistant
 
 			if (sb.Length > 0)
 				Clipboard.SetDataObject(sb.ToString(), true);
-		}
-
-		private void hotkeyTree_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
-		{
-			ClearHKCtrls();
-
-			if (e.Node == null || !(e.Node.Tag is KeyData))
-				return;
-			KeyData hk = (KeyData)e.Node.Tag;
-
-			try
-			{
-				m_LastKV = hk.Key;
-				switch (hk.Key)
-				{
-					case -1:
-						key.Text = ("MouseWheel UP");
-						break;
-					case -2:
-						key.Text = ("MouseWheel DOWN");
-						break;
-					case -3:
-						key.Text = ("Mouse MID Button");
-						break;
-					case -4:
-						key.Text = ("Mouse XButton 1");
-						break;
-					case -5:
-						key.Text = ("Mouse XButton 2");
-						break;
-					default:
-						if (hk.Key > 0 && hk.Key < 256)
-							key.Text = (((Keys)hk.Key).ToString());
-						else
-							key.Text = ("");
-						break;
-				}
-			}
-			catch
-			{
-				key.Text = ">>ERROR<<";
-			}
-
-			chkCtrl.Checked = (hk.Mod & ModKeys.Control) != 0;
-			chkAlt.Checked = (hk.Mod & ModKeys.Alt) != 0;
-			chkShift.Checked = (hk.Mod & ModKeys.Shift) != 0;
-			chkPass.Checked = hk.SendToUO;
-
-			if ((hk.LocName >= (int)LocString.DrinkHeal && hk.LocName <= (int)LocString.DrinkAg && !ClientCommunication.AllowBit(FeatureBit.PotionHotkeys)) ||
-				(hk.LocName >= (int)LocString.TargCloseRed && hk.LocName <= (int)LocString.TargCloseCriminal && !ClientCommunication.AllowBit(FeatureBit.ClosestTargets)) ||
-				(((hk.LocName >= (int)LocString.TargRandRed && hk.LocName <= (int)LocString.TargRandNFriend) ||
-				(hk.LocName >= (int)LocString.TargRandEnemyHuman && hk.LocName <= (int)LocString.TargRandCriminal)) && !ClientCommunication.AllowBit(FeatureBit.RandomTargets)))
-			{
-				LockControl(chkCtrl);
-				LockControl(chkAlt);
-				LockControl(chkShift);
-				LockControl(chkPass);
-				LockControl(key);
-				LockControl(unsetHK);
-				LockControl(setHK);
-				LockControl(dohotkey);
-			}
-		}
-
-		private KeyData GetSelectedHK()
-		{
-			if (hotkeyTree != null && hotkeyTree.SelectedNode != null)
-				return hotkeyTree.SelectedNode.Tag as KeyData;
-			else
-				return null;
-		}
-
-		private void ClearHKCtrls()
-		{
-			m_LastKV = 0;
-			key.Text = "";
-			chkCtrl.Checked = false;
-			chkAlt.Checked = false;
-			chkShift.Checked = false;
-			chkPass.Checked = false;
-
-			UnlockControl(chkCtrl);
-			UnlockControl(chkAlt);
-			UnlockControl(chkShift);
-			UnlockControl(chkPass);
-			UnlockControl(key);
-			UnlockControl(unsetHK);
-			UnlockControl(setHK);
-			UnlockControl(dohotkey);
-		}
-
-		private void setHK_Click(object sender, System.EventArgs e)
-		{
-			KeyData hk = GetSelectedHK();
-			if (hk == null || m_LastKV == 0)
-				return;
-
-			ModKeys mod = ModKeys.None;
-			if (chkCtrl.Checked)
-				mod |= ModKeys.Control;
-			if (chkAlt.Checked)
-				mod |= ModKeys.Alt;
-			if (chkShift.Checked)
-				mod |= ModKeys.Shift;
-
-			KeyData g = HotKey.Get(m_LastKV, mod);
-			bool block = false;
-			if (g != null && g != hk)
-			{
-				if (MessageBox.Show(this, Language.Format(LocString.KeyUsed, g.DispName, hk.DispName), "Hot Key Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-				{
-					g.Key = 0;
-					g.Mod = ModKeys.None;
-					g.SendToUO = false;
-				}
-				else
-				{
-					block = true;
-				}
-			}
-
-			if (!block)
-			{
-				hk.Key = m_LastKV;
-				hk.Mod = mod;
-
-				hk.SendToUO = chkPass.Checked;
-			}
-		}
-
-		private void unsetHK_Click(object sender, System.EventArgs e)
-		{
-			KeyData hk = GetSelectedHK();
-			if (hk == null)
-				return;
-
-			hk.Key = 0;
-			hk.Mod = 0;
-			hk.SendToUO = false;
-
-			ClearHKCtrls();
-		}
-
-		private void key_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			m_LastKV = (int)e.KeyCode;
-			key.Text = e.KeyCode.ToString();
-
-			e.Handled = true;
-		}
-
-		private void key_MouseWheel(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Delta > 0)
-			{
-				m_LastKV = -1;
-				key.Text = "MouseWheel UP";
-			}
-			else if (e.Delta < 0)
-			{
-				m_LastKV = -2;
-				key.Text = "MouseWheel DOWN";
-			}
-		}
-
-		private void key_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Middle)
-			{
-				m_LastKV = -3;
-				key.Text = "Mouse MID Button";
-			}
-			else if (e.Button == MouseButtons.XButton1)
-			{
-				m_LastKV = -4;
-				key.Text = "Mouse XButton 1";
-			}
-			else if (e.Button == MouseButtons.XButton2)
-			{
-				m_LastKV = -5;
-				key.Text = "Mouse XButton 2";
-			}
-		}
-
-		private void dohotkey_Click(object sender, System.EventArgs e)
-		{
-			KeyData hk = GetSelectedHK();
-			if (hk != null && World.Player != null)
-			{
-				if (MacroManager.AcceptActions)
-					MacroManager.Action(new HotKeyAction(hk));
-				hk.Callback();
-			}
 		}
 
 		private void queueTargets_CheckedChanged(object sender, System.EventArgs e)
@@ -11804,6 +11440,10 @@ namespace Assistant
             RazorEnhanced.HotKey.ClearMasterKey();
         }
 
+        private void chkPass_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
 
 
         // ----------------- HOT KEY END -------------------

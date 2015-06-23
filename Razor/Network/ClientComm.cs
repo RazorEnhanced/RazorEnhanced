@@ -1070,10 +1070,9 @@ namespace Assistant
 
 				// Hot Keys
 				case UONetMessage.Mouse:
-					HotKey.OnMouse((ushort)(lParam & 0xFFFF), (short)(lParam >> 16));
+					//HotKey.OnMouse((ushort)(lParam & 0xFFFF), (short)(lParam >> 16));
 					break;
 				case UONetMessage.KeyDown:
-					//retVal = HotKey.OnKeyDown(lParam);
                     retVal = RazorEnhanced.HotKey.GameKeyDown((Keys)(lParam));
 					break;
 
