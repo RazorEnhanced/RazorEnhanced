@@ -354,7 +354,8 @@ namespace Assistant.Macros
 					{
 						if (Loop)
 						{
-
+							if (Engine.MainWindow.WaitDisplay != null)
+								Engine.MainWindow.WaitDisplay.Text = "";
 							m_CurrentAction = -1;
 							m_IfStatus.Clear();
 							PauseB4Loop.Perform();
@@ -373,11 +374,12 @@ namespace Assistant.Macros
 						if (!m_Wait.PerformWait())
 						{
 							m_Wait = null; // done waiting
-
+							if (Engine.MainWindow.WaitDisplay != null)
+								Engine.MainWindow.WaitDisplay.Text = "";
 						}
 						else
 						{
-							if (waitLen >= TimeSpan.FromSeconds(4.0))
+							if (waitLen >= TimeSpan.FromSeconds(4.0) && Engine.MainWindow.WaitDisplay != null)
 							{
 								StringBuilder sb = new StringBuilder(Language.GetString(LocString.WaitingTimeout));
 								int s = (int)(m_Wait.Timeout - waitLen).TotalSeconds;
@@ -395,7 +397,7 @@ namespace Assistant.Macros
 								}
 
 								sb.AppendFormat("{0:00}:{1:00}", m, s);
-
+								Engine.MainWindow.WaitDisplay.Text = sb.ToString();
 							}
 							return true; // keep waiting
 						}
@@ -547,6 +549,8 @@ namespace Assistant.Macros
 				}
 				else
 				{
+					if (Engine.MainWindow.WaitDisplay != null)
+						Engine.MainWindow.WaitDisplay.Text = "";
 
 					if (Loop)
 					{

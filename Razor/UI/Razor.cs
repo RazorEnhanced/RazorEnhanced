@@ -54,9 +54,17 @@ namespace Assistant
         private RazorCheckBox dispDelta;
 		private RazorCheckBox openCorpses;
 		private RazorTextBox corpseRange;
-        private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabPage macrosTab;
 		private System.Windows.Forms.TabPage screenshotTab;
-        private System.Windows.Forms.TabPage statusTab;
+		private System.Windows.Forms.TabPage statusTab;
+		private RazorButton newMacro;
+		private RazorButton delMacro;
+		private System.Windows.Forms.GroupBox macroActGroup;
+		private System.Windows.Forms.ListBox actionList;
+		private RazorButton playMacro;
+		private RazorButton recMacro;
+        private RazorCheckBox loopMacro;
 		private RazorCheckBox spamFilter;
 		private System.Windows.Forms.PictureBox screenPrev;
 		private System.Windows.Forms.ListBox screensList;
@@ -92,12 +100,14 @@ namespace Assistant
         private RazorComboBox profiles;
         private System.Windows.Forms.TabPage enhancedFilterTab;
         private RazorCheckBox filterSnoop;
-        private RazorCheckBox smartCPU;
+		private RazorCheckBox smartCPU;
+		private System.Windows.Forms.Label waitDisp;
 		private RazorButton setLTHilight;
         private RazorCheckBox lthilight;
 		private RazorCheckBox blockDis;
 		private System.Windows.Forms.Label label12;
         private RazorComboBox imgFmt;
+		private System.Windows.Forms.TreeView macroTree;
 		private ToolTip m_Tip;
 		#endregion
 
@@ -108,6 +118,8 @@ namespace Assistant
         private RazorCheckBox preAOSstatbar;
 		private RazorComboBox clientPrio;
         private System.Windows.Forms.Label label9;
+		private RazorButton macroImport;
+		private RazorButton exportMacro;
 		private TabPage scriptingTab;
 		private RazorButton xButton2;
 		private RazorButton xButton3;
@@ -480,6 +492,8 @@ namespace Assistant
 		[DllImport("User32.dll")]
 		private static extern IntPtr EnableMenuItem(IntPtr menu, uint item, uint options);
 
+		internal Label WaitDisplay { get { return waitDisp; } }
+
 		// Enhanced Toolbar
         internal EnhancedToolbar enhancedToolbar;
         internal EnhancedToolbar ToolBar { get { return enhancedToolbar; } set { enhancedToolbar = value; } }
@@ -655,8 +669,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.playMacro = new RazorEnhanced.UI.RazorButton();
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
             this.forceSizeY = new RazorEnhanced.UI.RazorTextBox();
@@ -819,6 +834,17 @@ namespace Assistant
             this.skillHDRlock = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.mapsTab = new System.Windows.Forms.TabPage();
             this.btnMap = new RazorEnhanced.UI.RazorButton();
+            this.macrosTab = new System.Windows.Forms.TabPage();
+            this.macroTree = new System.Windows.Forms.TreeView();
+            this.macroActGroup = new System.Windows.Forms.GroupBox();
+            this.macroImport = new RazorEnhanced.UI.RazorButton();
+            this.exportMacro = new RazorEnhanced.UI.RazorButton();
+            this.waitDisp = new System.Windows.Forms.Label();
+            this.loopMacro = new RazorEnhanced.UI.RazorCheckBox();
+            this.recMacro = new RazorEnhanced.UI.RazorButton();
+            this.actionList = new System.Windows.Forms.ListBox();
+            this.delMacro = new RazorEnhanced.UI.RazorButton();
+            this.newMacro = new RazorEnhanced.UI.RazorButton();
             this.screenshotTab = new System.Windows.Forms.TabPage();
             this.imgFmt = new RazorEnhanced.UI.RazorComboBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -1118,6 +1144,8 @@ namespace Assistant
             this.groupBox7.SuspendLayout();
             this.skillsTab.SuspendLayout();
             this.mapsTab.SuspendLayout();
+            this.macrosTab.SuspendLayout();
+            this.macroActGroup.SuspendLayout();
             this.screenshotTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).BeginInit();
             this.statusTab.SuspendLayout();
@@ -1158,6 +1186,33 @@ namespace Assistant
             this.groupBox27.SuspendLayout();
             this.SuspendLayout();
             // 
+            // playMacro
+            // 
+            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme1;
+            this.playMacro.Location = new System.Drawing.Point(311, 18);
+            this.playMacro.Name = "playMacro";
+            this.playMacro.Size = new System.Drawing.Size(60, 20);
+            this.playMacro.TabIndex = 9;
+            this.playMacro.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.playMacro.Click += new System.EventHandler(this.playMacro_Click);
+            // 
             // tabs
             // 
             this.tabs.Controls.Add(this.generalTab);
@@ -1167,6 +1222,7 @@ namespace Assistant
             this.tabs.Controls.Add(this.emptyTab);
             this.tabs.Controls.Add(this.skillsTab);
             this.tabs.Controls.Add(this.mapsTab);
+            this.tabs.Controls.Add(this.macrosTab);
             this.tabs.Controls.Add(this.screenshotTab);
             this.tabs.Controls.Add(this.statusTab);
             this.tabs.Controls.Add(this.scriptingTab);
@@ -1334,23 +1390,6 @@ namespace Assistant
             // 
             // delProfile
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
             this.delProfile.ColorTable = office2010BlueTheme1;
             this.delProfile.Location = new System.Drawing.Point(192, 17);
             this.delProfile.Name = "delProfile";
@@ -2875,6 +2914,131 @@ namespace Assistant
             this.btnMap.Text = "Map UO";
             this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
+            // 
+            // macrosTab
+            // 
+            this.macrosTab.Controls.Add(this.macroTree);
+            this.macrosTab.Controls.Add(this.macroActGroup);
+            this.macrosTab.Controls.Add(this.delMacro);
+            this.macrosTab.Controls.Add(this.newMacro);
+            this.macrosTab.Location = new System.Drawing.Point(4, 40);
+            this.macrosTab.Name = "macrosTab";
+            this.macrosTab.Size = new System.Drawing.Size(666, 366);
+            this.macrosTab.TabIndex = 7;
+            this.macrosTab.Text = "Macros";
+            // 
+            // macroTree
+            // 
+            this.macroTree.FullRowSelect = true;
+            this.macroTree.HideSelection = false;
+            this.macroTree.Location = new System.Drawing.Point(7, 12);
+            this.macroTree.Name = "macroTree";
+            this.macroTree.Size = new System.Drawing.Size(135, 231);
+            this.macroTree.Sorted = true;
+            this.macroTree.TabIndex = 4;
+            this.macroTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.macroTree_AfterSelect);
+            this.macroTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.macroTree_MouseDown);
+            // 
+            // macroActGroup
+            // 
+            this.macroActGroup.Controls.Add(this.macroImport);
+            this.macroActGroup.Controls.Add(this.exportMacro);
+            this.macroActGroup.Controls.Add(this.waitDisp);
+            this.macroActGroup.Controls.Add(this.loopMacro);
+            this.macroActGroup.Controls.Add(this.recMacro);
+            this.macroActGroup.Controls.Add(this.playMacro);
+            this.macroActGroup.Controls.Add(this.actionList);
+            this.macroActGroup.Location = new System.Drawing.Point(150, 9);
+            this.macroActGroup.Name = "macroActGroup";
+            this.macroActGroup.Size = new System.Drawing.Size(376, 264);
+            this.macroActGroup.TabIndex = 3;
+            this.macroActGroup.TabStop = false;
+            this.macroActGroup.Text = "Actions";
+            this.macroActGroup.Visible = false;
+            // 
+            // macroImport
+            // 
+            this.macroImport.ColorTable = office2010BlueTheme1;
+            this.macroImport.Location = new System.Drawing.Point(311, 106);
+            this.macroImport.Name = "macroImport";
+            this.macroImport.Size = new System.Drawing.Size(60, 20);
+            this.macroImport.TabIndex = 7;
+            this.macroImport.Text = "Import";
+            this.macroImport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.macroImport.Click += new System.EventHandler(this.macroImport_Click);
+            // 
+            // exportMacro
+            // 
+            this.exportMacro.ColorTable = office2010BlueTheme1;
+            this.exportMacro.Location = new System.Drawing.Point(311, 81);
+            this.exportMacro.Name = "exportMacro";
+            this.exportMacro.Size = new System.Drawing.Size(60, 20);
+            this.exportMacro.TabIndex = 6;
+            this.exportMacro.Text = "Export";
+            this.exportMacro.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.exportMacro.Click += new System.EventHandler(this.exportMacro_Click);
+            // 
+            // waitDisp
+            // 
+            this.waitDisp.Location = new System.Drawing.Point(308, 176);
+            this.waitDisp.Name = "waitDisp";
+            this.waitDisp.Size = new System.Drawing.Size(60, 43);
+            this.waitDisp.TabIndex = 5;
+            this.waitDisp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // loopMacro
+            // 
+            this.loopMacro.Location = new System.Drawing.Point(311, 232);
+            this.loopMacro.Name = "loopMacro";
+            this.loopMacro.Size = new System.Drawing.Size(60, 20);
+            this.loopMacro.TabIndex = 4;
+            this.loopMacro.Text = "Loop";
+            this.loopMacro.CheckedChanged += new System.EventHandler(this.loopMacro_CheckedChanged);
+            // 
+            // recMacro
+            // 
+            this.recMacro.ColorTable = office2010BlueTheme1;
+            this.recMacro.Location = new System.Drawing.Point(311, 55);
+            this.recMacro.Name = "recMacro";
+            this.recMacro.Size = new System.Drawing.Size(60, 20);
+            this.recMacro.TabIndex = 3;
+            this.recMacro.Text = "Record";
+            this.recMacro.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.recMacro.Click += new System.EventHandler(this.recMacro_Click);
+            // 
+            // actionList
+            // 
+            this.actionList.BackColor = System.Drawing.SystemColors.Window;
+            this.actionList.HorizontalScrollbar = true;
+            this.actionList.IntegralHeight = false;
+            this.actionList.Location = new System.Drawing.Point(8, 16);
+            this.actionList.Name = "actionList";
+            this.actionList.Size = new System.Drawing.Size(288, 243);
+            this.actionList.TabIndex = 0;
+            this.actionList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.actionList_KeyDown);
+            this.actionList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.actionList_MouseDown);
+            // 
+            // delMacro
+            // 
+            this.delMacro.ColorTable = office2010BlueTheme1;
+            this.delMacro.Location = new System.Drawing.Point(82, 248);
+            this.delMacro.Name = "delMacro";
+            this.delMacro.Size = new System.Drawing.Size(60, 20);
+            this.delMacro.TabIndex = 2;
+            this.delMacro.Text = "Remove";
+            this.delMacro.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.delMacro.Click += new System.EventHandler(this.delMacro_Click);
+            // 
+            // newMacro
+            // 
+            this.newMacro.ColorTable = office2010BlueTheme1;
+            this.newMacro.Location = new System.Drawing.Point(7, 248);
+            this.newMacro.Name = "newMacro";
+            this.newMacro.Size = new System.Drawing.Size(60, 20);
+            this.newMacro.TabIndex = 1;
+            this.newMacro.Text = "New...";
+            this.newMacro.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.newMacro.Click += new System.EventHandler(this.newMacro_Click);
             // 
             // screenshotTab
             // 
@@ -5948,6 +6112,8 @@ namespace Assistant
             this.skillsTab.ResumeLayout(false);
             this.skillsTab.PerformLayout();
             this.mapsTab.ResumeLayout(false);
+            this.macrosTab.ResumeLayout(false);
+            this.macroActGroup.ResumeLayout(false);
             this.screenshotTab.ResumeLayout(false);
             this.screenshotTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
@@ -6252,7 +6418,21 @@ namespace Assistant
 			else if (tabs.SelectedTab == statusTab)
 			{
 				UpdateRazorStatus();
-			}		
+			}
+			else if (tabs.SelectedTab == macrosTab)
+			{
+				RedrawMacros();
+
+				if (MacroManager.Playing || MacroManager.Recording)
+					OnMacroStart(MacroManager.Current);
+				else
+					OnMacroStop();
+
+				if (MacroManager.Current != null)
+					MacroManager.Current.DisplayTo(actionList);
+
+				macroActGroup.Visible = macroTree.SelectedNode != null;
+			}
 			else if (tabs.SelectedTab == screenshotTab)
 			{
 				ReloadScreenShotsList();
@@ -6995,8 +7175,274 @@ namespace Assistant
 
 
 		private static char[] m_InvalidNameChars = new char[] { '/', '\\', ';', '?', ':', '*' };
+		private void newMacro_Click(object sender, System.EventArgs e)
+		{
+			if (InputBox.Show(this, Language.GetString(LocString.NewMacro), Language.GetString(LocString.EnterAName)))
+			{
+				string name = InputBox.GetString();
+				if (name == null || name == "" || name.IndexOfAny(Path.GetInvalidPathChars()) != -1 || name.IndexOfAny(m_InvalidNameChars) != -1)
+				{
+					MessageBox.Show(this, Language.GetString(LocString.InvalidChars), Language.GetString(LocString.Invalid), MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
+
+				TreeNode node = GetMacroDirNode();
+				string path = (node == null || !(node.Tag is string)) ? Config.GetUserDirectory("Macros") : (string)node.Tag;
+				path = Path.Combine(path, name + ".macro");
+				if (File.Exists(path))
+				{
+					MessageBox.Show(this, Language.GetString(LocString.MacroExists), Language.GetString(LocString.Invalid), MessageBoxButtons.OK, MessageBoxIcon.Error);
+					return;
+				}
+
+				try
+				{
+					File.CreateText(path).Close();
+				}
+				catch
+				{
+					return;
+				}
+
+				Macro m = new Macro(path);
+				MacroManager.Add(m);
+				TreeNode newNode = new TreeNode(Path.GetFileNameWithoutExtension(m.Filename));
+				newNode.Tag = m;
+				if (node == null)
+					macroTree.Nodes.Add(newNode);
+				else
+					node.Nodes.Add(newNode);
+				macroTree.SelectedNode = newNode;
+			}
+
+			RedrawMacros();
+		}
+
+		internal Macro GetMacroSel()
+		{
+			if (macroTree.SelectedNode == null || !(macroTree.SelectedNode.Tag is Macro))
+				return null;
+			else
+				return (Macro)macroTree.SelectedNode.Tag;
+		}
+
+		internal void playMacro_Click(object sender, System.EventArgs e)
+		{
+			if (World.Player == null)
+				return;
+
+			if (MacroManager.Playing)
+			{
+				MacroManager.Stop();
+				OnMacroStop();
+			}
+			else
+			{
+				Macro m = GetMacroSel();
+				if (m == null || m.Actions.Count <= 0)
+					return;
+
+				actionList.SelectedIndex = 0;
+				MacroManager.Play(m);
+				playMacro.Text = "Stop";
+				recMacro.Enabled = false;
+				OnMacroStart(m);
+			}
+		}
+
+		private void recMacro_Click(object sender, System.EventArgs e)
+		{
+			if (World.Player == null)
+				return;
+
+			if (MacroManager.Recording)
+			{
+				MacroManager.Stop();
+				//OnMacroStop();
+			}
+			else
+			{
+				Macro m = GetMacroSel();
+				if (m == null)
+					return;
+
+				bool rec = true;
+				if (m.Actions.Count > 0)
+					rec = MessageBox.Show(this, Language.GetString(LocString.MacroConfRec), "Overwrite?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+
+				if (rec)
+				{
+					MacroManager.Record(m);
+					OnMacroStart(m);
+					recMacro.Text = "Stop";
+					playMacro.Enabled = false;
+				}
+			}
+		}
+
+		internal void OnMacroStart(Macro m)
+		{
+			actionList.SelectedIndex = -1;
+			macroTree.Enabled = actionList.Enabled = false;
+			newMacro.Enabled = delMacro.Enabled = false;
+			//macroList.SelectedItem = m;
+			macroTree.SelectedNode = FindNode(macroTree.Nodes, m);
+			macroTree.Update();
+			macroTree.Refresh();
+			m.DisplayTo(actionList);
+		}
+
+		internal void PlayMacro(Macro m)
+		{
+			playMacro.Text = "Stop";
+			recMacro.Enabled = false;
+		}
+
+		internal void OnMacroStop()
+		{
+			recMacro.Text = "Record";
+			recMacro.Enabled = true;
+			playMacro.Text = "Play";
+			playMacro.Enabled = true;
+			actionList.SelectedIndex = -1;
+			macroTree.Enabled = actionList.Enabled = true;
+			newMacro.Enabled = delMacro.Enabled = true;
+			RedrawMacros();
+		}
 
 		private ContextMenu m_MacroContextMenu = null;
+		private void macroTree_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right && e.Clicks == 1)
+			{
+				if (m_MacroContextMenu == null)
+				{
+					m_MacroContextMenu = new ContextMenu(new MenuItem[]
+						{
+							new MenuItem( "Add Category", new EventHandler( Macro_AddCategory ) ),
+							new MenuItem( "Delete Category", new EventHandler( Macro_DeleteCategory ) ),
+							new MenuItem( "Move to Category", new EventHandler( Macro_Move2Category ) ),
+							new MenuItem( "-" ),
+							new MenuItem( "Refresh Macro List", new EventHandler( Macro_RefreshList ) ),
+					});
+				}
+
+				Macro sel = GetMacroSel();
+
+				m_MacroContextMenu.MenuItems[1].Enabled = sel == null;
+				m_MacroContextMenu.MenuItems[2].Enabled = sel != null;
+
+				m_MacroContextMenu.Show(this, new Point(e.X, e.Y));
+			}
+
+			//RedrawMacros();
+		}
+
+		private TreeNode GetMacroDirNode()
+		{
+			if (macroTree.SelectedNode == null)
+			{
+				return null;
+			}
+			else
+			{
+				if (macroTree.SelectedNode.Tag is string)
+					return macroTree.SelectedNode;
+				else if (macroTree.SelectedNode.Parent == null || !(macroTree.SelectedNode.Parent.Tag is string))
+					return null;
+				else
+					return macroTree.SelectedNode.Parent;
+			}
+		}
+
+		private void Macro_AddCategory(object sender, EventArgs args)
+		{
+			if (!InputBox.Show(this, Language.GetString(LocString.CatName)))
+				return;
+
+			string path = InputBox.GetString();
+			if (path == null || path == "" || path.IndexOfAny(Path.GetInvalidPathChars()) != -1 || path.IndexOfAny(m_InvalidNameChars) != -1)
+			{
+				MessageBox.Show(this, Language.GetString(LocString.InvalidChars), "Invalid Path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			TreeNode node = GetMacroDirNode();
+
+			try
+			{
+				if (node == null || !(node.Tag is string))
+					path = Path.Combine(Config.GetUserDirectory("Macros"), path);
+				else
+					path = Path.Combine((string)node.Tag, path);
+				Engine.EnsureDirectory(path);
+			}
+			catch
+			{
+				MessageBox.Show(this, Language.Format(LocString.CanCreateDir, path), "Unabled to Create Directory", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			TreeNode newNode = new TreeNode(String.Format("[{0}]", Path.GetFileName(path)));
+			newNode.Tag = path;
+			if (node == null)
+				macroTree.Nodes.Add(newNode);
+			else
+				node.Nodes.Add(newNode);
+			RedrawMacros();
+			macroTree.SelectedNode = newNode;
+		}
+
+		private void Macro_DeleteCategory(object sender, EventArgs args)
+		{
+			string path = null;
+			if (macroTree.SelectedNode != null)
+				path = macroTree.SelectedNode.Tag as string;
+
+			if (path == null)
+				return;
+
+			try
+			{
+				Directory.Delete(path);
+			}
+			catch
+			{
+				MessageBox.Show(this, Language.GetString(LocString.CantDelDir), "Unabled to Delete Directory", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			TreeNode node = FindNode(macroTree.Nodes, path);
+			if (node != null)
+				node.Remove();
+		}
+
+		private void Macro_Move2Category(object sender, EventArgs args)
+		{
+			Macro sel = GetMacroSel();
+			if (sel == null)
+				return;
+
+			if (!InputBox.Show(this, Language.GetString(LocString.CatName)))
+				return;
+
+			try
+			{
+				File.Move(sel.Filename, Path.Combine(Config.GetUserDirectory("Macros"), String.Format("{0}/{1}", InputBox.GetString(), Path.GetFileName(sel.Filename))));
+			}
+			catch
+			{
+				MessageBox.Show(this, Language.GetString(LocString.CantMoveMacro), "Unabled to Move Macro", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			}
+
+			RedrawMacros();
+			macroTree.SelectedNode = FindNode(macroTree.Nodes, sel);
+		}
+
+		private void Macro_RefreshList(object sender, EventArgs args)
+		{
+			RedrawMacros();
+		}
 
 		private static TreeNode FindNode(TreeNodeCollection nodes, object tag)
 		{
@@ -7017,6 +7463,373 @@ namespace Assistant
 			}
 
 			return null;
+		}
+
+		private void RedrawMacros()
+		{
+			Macro ms = GetMacroSel();
+			MacroManager.DisplayTo(macroTree);
+			if (ms != null)
+				macroTree.SelectedNode = FindNode(macroTree.Nodes, ms);
+		}
+
+		private void macroTree_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
+		{
+			if (MacroManager.Recording)
+				return;
+
+			Macro m = e.Node.Tag as Macro;
+			macroActGroup.Visible = m != null;
+			MacroManager.Select(m, actionList, playMacro, recMacro, loopMacro);
+		}
+
+		private void delMacro_Click(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel();
+			if (m == null)
+			{
+				Macro_DeleteCategory(sender, e);
+				return;
+			}
+
+			if (m == MacroManager.Current)
+				return;
+
+			if (m.Actions.Count <= 0 || MessageBox.Show(this, Language.Format(LocString.DelConf, m.ToString()), "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				try
+				{
+					File.Delete(m.Filename);
+				}
+				catch
+				{
+					return;
+				}
+
+				MacroManager.Remove(m);
+
+				TreeNode node = FindNode(macroTree.Nodes, m);
+				if (node != null)
+					node.Remove();
+			}
+
+			if (macroTree.Nodes.Count == 0)
+				macroActGroup.Visible = false;
+		}
+
+		private void actionList_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right && e.Clicks == 1)
+			{
+				if (MacroManager.Playing || MacroManager.Recording || World.Player == null)
+					return;
+
+				ContextMenu menu = new ContextMenu();
+				menu.MenuItems.Add(Language.GetString(LocString.Reload), new EventHandler(onMacroReload));
+				menu.MenuItems.Add(Language.GetString(LocString.Save), new EventHandler(onMacroSave));
+
+				MacroAction a;
+				try
+				{
+					a = actionList.SelectedItem as MacroAction;
+				}
+				catch
+				{
+					a = null;
+				}
+
+				if (a != null)
+				{
+					int pos = actionList.SelectedIndex;
+
+					menu.MenuItems.Add("-");
+					if (actionList.Items.Count > 1)
+					{
+						menu.MenuItems.Add(Language.GetString(LocString.MoveUp), new EventHandler(OnMacroActionMoveUp));
+						if (pos <= 0)
+							menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
+						menu.MenuItems.Add(Language.GetString(LocString.MoveDown), new EventHandler(OnMacroActionMoveDown));
+						if (pos >= actionList.Items.Count - 1)
+							menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
+						menu.MenuItems.Add("-");
+					}
+					menu.MenuItems.Add(Language.GetString(LocString.RemAct), new EventHandler(onMacroActionDelete));
+					menu.MenuItems.Add("-");
+					menu.MenuItems.Add(Language.GetString(LocString.BeginRec), new EventHandler(onMacroBegRecHere));
+					menu.MenuItems.Add(Language.GetString(LocString.PlayFromHere), new EventHandler(onMacroPlayHere));
+
+					MenuItem[] aMenus = a.GetContextMenuItems();
+					if (aMenus != null && aMenus.Length > 0)
+					{
+						menu.MenuItems.Add("-");
+						menu.MenuItems.AddRange(aMenus);
+					}
+				}
+
+				menu.MenuItems.Add("-");
+				menu.MenuItems.Add(Language.GetString(LocString.Constructs), new MenuItem[]
+					{
+						new MenuItem( Language.GetString( LocString.InsWait ), new EventHandler( onMacroInsPause ) ),
+						new MenuItem( Language.GetString( LocString.InsLT ), new EventHandler( onMacroInsertSetLT ) ),
+						new MenuItem( Language.GetString( LocString.InsComment ), new EventHandler( onMacroInsertComment ) ),
+						new MenuItem( "-" ),
+						new MenuItem( Language.GetString( LocString.InsIF ), new EventHandler( onMacroInsertIf ) ),
+						new MenuItem( Language.GetString( LocString.InsELSE ), new EventHandler( onMacroInsertElse ) ),
+						new MenuItem( Language.GetString( LocString.InsENDIF ), new EventHandler( onMacroInsertEndIf ) ),
+						new MenuItem( "-" ),
+						new MenuItem( Language.GetString( LocString.InsFOR ), new EventHandler( onMacroInsertFor ) ),
+						new MenuItem( Language.GetString( LocString.InsENDFOR ), new EventHandler( onMacroInsertEndFor ) ),
+				});
+
+				menu.Show(actionList, new Point(e.X, e.Y));
+			}
+		}
+
+		private void onMacroPlayHere(object sender, EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int sel = actionList.SelectedIndex + 1;
+			if (sel < 0 || sel > m.Actions.Count)
+				sel = m.Actions.Count;
+
+			MacroManager.PlayAt(m, sel);
+			playMacro.Text = "Stop";
+			recMacro.Enabled = false;
+
+			OnMacroStart(m);
+		}
+
+		private void onMacroInsertComment(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel();
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			if (InputBox.Show(Language.GetString(LocString.InsComment)))
+			{
+				m.Actions.Insert(a + 1, new MacroComment(InputBox.GetString()));
+				RedrawActionList(m);
+			}
+		}
+
+		private void onMacroInsertIf(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel();
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			MacroInsertIf ins = new MacroInsertIf(m, a);
+			if (ins.ShowDialog(this) == DialogResult.OK)
+				RedrawActionList(m);
+		}
+
+		private void onMacroInsertElse(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			m.Actions.Insert(a + 1, new ElseAction());
+			RedrawActionList(m);
+		}
+
+		private void onMacroInsertEndIf(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			m.Actions.Insert(a + 1, new EndIfAction());
+			RedrawActionList(m);
+		}
+
+		private void onMacroInsertFor(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel();
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			if (InputBox.Show(Language.GetString(LocString.NumIter)))
+			{
+				m.Actions.Insert(a + 1, new ForAction(InputBox.GetInt(1)));
+				RedrawActionList(m);
+			}
+		}
+
+		private void onMacroInsertEndFor(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel();
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			m.Actions.Insert(a + 1, new EndForAction());
+			RedrawActionList(m);
+		}
+
+		private void OnMacroActionMoveUp(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int move = actionList.SelectedIndex;
+			if (move > 0 && move < m.Actions.Count)
+			{
+				MacroAction a = (MacroAction)m.Actions[move - 1];
+				m.Actions[move - 1] = m.Actions[move];
+				m.Actions[move] = a;
+
+				RedrawActionList(m);
+				actionList.SelectedIndex = move - 1;
+			}
+		}
+
+		private void OnMacroActionMoveDown(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int move = actionList.SelectedIndex;
+			if (move + 1 < m.Actions.Count)
+			{
+				MacroAction a = (MacroAction)m.Actions[move + 1];
+				m.Actions[move + 1] = m.Actions[move];
+				m.Actions[move] = a;
+
+				RedrawActionList(m);
+				actionList.SelectedIndex = move + 1;
+			}
+		}
+
+		private void RedrawActionList(Macro m)
+		{
+			int sel = actionList.SelectedIndex;
+			m.DisplayTo(actionList);
+			actionList.SelectedIndex = sel;
+		}
+
+		private void actionList_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Delete)
+				onMacroActionDelete(sender, e);
+		}
+
+		private void onMacroActionDelete(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a < 0 || a >= m.Actions.Count)
+				return;
+
+			if (MessageBox.Show(this, Language.Format(LocString.DelConf, m.Actions[a].ToString()), "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+			{
+				m.Actions.RemoveAt(a);
+				actionList.Items.RemoveAt(a);
+			}
+		}
+
+		private void onMacroBegRecHere(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int sel = actionList.SelectedIndex + 1;
+			if (sel < 0 || sel > m.Actions.Count)
+				sel = m.Actions.Count;
+
+			MacroManager.RecordAt(m, sel);
+			recMacro.Text = "Stop";
+			playMacro.Enabled = false;
+			OnMacroStart(m);
+		}
+
+		private void onMacroInsPause(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			MacroInsertWait ins = new MacroInsertWait(m, a);
+			if (ins.ShowDialog(this) == DialogResult.OK)
+				RedrawActionList(m);
+		}
+
+		private void onMacroReload(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			m.Load();
+			RedrawActionList(m);
+		}
+
+		private void onMacroSave(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			m.Save();
+			RedrawActionList(m);
+		}
+
+		private void onMacroInsertSetLT(object sender, EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+
+			int a = actionList.SelectedIndex;
+			if (a >= m.Actions.Count) // -1 is valid, will insert @ top
+				return;
+
+			m.Actions.Insert(a + 1, new SetLastTargetAction());
+			RedrawActionList(m);
+		}
+
+		private void loopMacro_CheckedChanged(object sender, System.EventArgs e)
+		{
+			Macro m = GetMacroSel(); ;
+			if (m == null)
+				return;
+			m.Loop = loopMacro.Checked;
 		}
 
 		private void spamFilter_CheckedChanged(object sender, System.EventArgs e)
@@ -7611,6 +8424,7 @@ namespace Assistant
 
 		internal void OnLogout()
 		{
+			OnMacroStop();
 
 			labelFeatures.Visible = false;
 

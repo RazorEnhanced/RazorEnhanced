@@ -94,6 +94,8 @@ namespace Assistant.Macros
 			m_Timer.Macro = m_Current;
 			m_Timer.Start();
 
+			if (Engine.MainWindow.WaitDisplay != null)
+				Engine.MainWindow.WaitDisplay.Text = "";
 		}
 
 		private static void HotKeyPlay(ref object state)
@@ -107,7 +109,7 @@ namespace Assistant.Macros
 			{
 				Play(m);
 				World.Player.SendMessage(LocString.PlayingA1, m);
-				//Engine.MainWindow.PlayMacro(m);
+				Engine.MainWindow.PlayMacro(m);
 			}
 		}
 
@@ -134,7 +136,8 @@ namespace Assistant.Macros
 			m_Timer.Macro = m_Current;
 			m_Timer.Start();
 
-
+			if (Engine.MainWindow.WaitDisplay != null)
+				Engine.MainWindow.WaitDisplay.Text = "";
 		}
 
 		private static void HotKeyStop()
@@ -157,10 +160,10 @@ namespace Assistant.Macros
 			}
 			ClientCommunication.PostMacroStop();
 
-			/*if (Engine.MainWindow.WaitDisplay != null)
+			if (Engine.MainWindow.WaitDisplay != null)
 				Engine.MainWindow.WaitDisplay.Text = "";
-            
-			Engine.MainWindow.OnMacroStop();*/
+
+			Engine.MainWindow.OnMacroStop();
 
 			//if ( restartPrev )
 			//	Play( m_PrevPlay );
