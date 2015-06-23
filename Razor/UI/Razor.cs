@@ -669,6 +669,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.playMacro = new RazorEnhanced.UI.RazorButton();
@@ -1116,15 +1117,15 @@ namespace Assistant
             this.hotkeyKeyMasterLabel = new System.Windows.Forms.Label();
             this.hotkeyStatusLabel = new System.Windows.Forms.Label();
             this.groupBox27 = new System.Windows.Forms.GroupBox();
-            this.hotkeypassCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.hotkeyClearButton = new RazorEnhanced.UI.RazorButton();
+            this.hotkeySetButton = new RazorEnhanced.UI.RazorButton();
             this.label39 = new System.Windows.Forms.Label();
             this.hotkeytextbox = new RazorEnhanced.UI.RazorTextBox();
-            this.hotkeySetButton = new RazorEnhanced.UI.RazorButton();
             this.hotkeytreeView = new System.Windows.Forms.TreeView();
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.hotkeypassCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
@@ -1188,24 +1189,24 @@ namespace Assistant
             // 
             // playMacro
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-            this.playMacro.ColorTable = office2010BlueTheme1;
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.playMacro.ColorTable = office2010BlueTheme2;
             this.playMacro.Location = new System.Drawing.Point(311, 18);
             this.playMacro.Name = "playMacro";
             this.playMacro.Size = new System.Drawing.Size(60, 20);
@@ -1773,7 +1774,7 @@ namespace Assistant
             // setLTHilight
             // 
             this.setLTHilight.ColorTable = office2010BlueTheme1;
-            this.setLTHilight.Location = new System.Drawing.Point(155, 115);
+            this.setLTHilight.Location = new System.Drawing.Point(142, 115);
             this.setLTHilight.Name = "setLTHilight";
             this.setLTHilight.Size = new System.Drawing.Size(32, 20);
             this.setLTHilight.TabIndex = 51;
@@ -1785,7 +1786,7 @@ namespace Assistant
             // 
             this.lthilight.Location = new System.Drawing.Point(7, 118);
             this.lthilight.Name = "lthilight";
-            this.lthilight.Size = new System.Drawing.Size(142, 22);
+            this.lthilight.Size = new System.Drawing.Size(131, 22);
             this.lthilight.TabIndex = 50;
             this.lthilight.Text = "Last Target Highlight:";
             this.lthilight.CheckedChanged += new System.EventHandler(this.lthilight_CheckedChanged);
@@ -1892,7 +1893,7 @@ namespace Assistant
             // 
             this.lblWarnHue.Location = new System.Drawing.Point(7, 69);
             this.lblWarnHue.Name = "lblWarnHue";
-            this.lblWarnHue.Size = new System.Drawing.Size(142, 16);
+            this.lblWarnHue.Size = new System.Drawing.Size(120, 16);
             this.lblWarnHue.TabIndex = 16;
             this.lblWarnHue.Text = "Warning Message Hue";
             // 
@@ -1900,7 +1901,7 @@ namespace Assistant
             // 
             this.lblMsgHue.Location = new System.Drawing.Point(7, 44);
             this.lblMsgHue.Name = "lblMsgHue";
-            this.lblMsgHue.Size = new System.Drawing.Size(142, 17);
+            this.lblMsgHue.Size = new System.Drawing.Size(115, 17);
             this.lblMsgHue.TabIndex = 15;
             this.lblMsgHue.Text = "Razor Message Hue";
             // 
@@ -1908,7 +1909,7 @@ namespace Assistant
             // 
             this.lblExHue.Location = new System.Drawing.Point(7, 20);
             this.lblExHue.Name = "lblExHue";
-            this.lblExHue.Size = new System.Drawing.Size(142, 16);
+            this.lblExHue.Size = new System.Drawing.Size(120, 16);
             this.lblExHue.TabIndex = 14;
             this.lblExHue.Text = "Search Exemption Hue";
             // 
@@ -1935,7 +1936,7 @@ namespace Assistant
             // setSpeechHue
             // 
             this.setSpeechHue.ColorTable = office2010BlueTheme1;
-            this.setSpeechHue.Location = new System.Drawing.Point(155, 91);
+            this.setSpeechHue.Location = new System.Drawing.Point(142, 91);
             this.setSpeechHue.Name = "setSpeechHue";
             this.setSpeechHue.Size = new System.Drawing.Size(32, 20);
             this.setSpeechHue.TabIndex = 40;
@@ -1946,7 +1947,7 @@ namespace Assistant
             // setWarnHue
             // 
             this.setWarnHue.ColorTable = office2010BlueTheme1;
-            this.setWarnHue.Location = new System.Drawing.Point(155, 67);
+            this.setWarnHue.Location = new System.Drawing.Point(142, 67);
             this.setWarnHue.Name = "setWarnHue";
             this.setWarnHue.Size = new System.Drawing.Size(32, 20);
             this.setWarnHue.TabIndex = 39;
@@ -1957,7 +1958,7 @@ namespace Assistant
             // setMsgHue
             // 
             this.setMsgHue.ColorTable = office2010BlueTheme1;
-            this.setMsgHue.Location = new System.Drawing.Point(155, 43);
+            this.setMsgHue.Location = new System.Drawing.Point(142, 43);
             this.setMsgHue.Name = "setMsgHue";
             this.setMsgHue.Size = new System.Drawing.Size(32, 19);
             this.setMsgHue.TabIndex = 38;
@@ -1968,7 +1969,7 @@ namespace Assistant
             // setExHue
             // 
             this.setExHue.ColorTable = office2010BlueTheme1;
-            this.setExHue.Location = new System.Drawing.Point(155, 18);
+            this.setExHue.Location = new System.Drawing.Point(142, 18);
             this.setExHue.Name = "setExHue";
             this.setExHue.Size = new System.Drawing.Size(32, 20);
             this.setExHue.TabIndex = 37;
@@ -2040,7 +2041,7 @@ namespace Assistant
             // 
             this.chkForceSpellHue.Location = new System.Drawing.Point(7, 142);
             this.chkForceSpellHue.Name = "chkForceSpellHue";
-            this.chkForceSpellHue.Size = new System.Drawing.Size(142, 22);
+            this.chkForceSpellHue.Size = new System.Drawing.Size(127, 22);
             this.chkForceSpellHue.TabIndex = 2;
             this.chkForceSpellHue.Text = "Override Spell Hues:";
             this.chkForceSpellHue.CheckedChanged += new System.EventHandler(this.chkForceSpellHue_CheckedChanged);
@@ -2049,7 +2050,7 @@ namespace Assistant
             // 
             this.chkForceSpeechHue.Location = new System.Drawing.Point(7, 94);
             this.chkForceSpeechHue.Name = "chkForceSpeechHue";
-            this.chkForceSpeechHue.Size = new System.Drawing.Size(142, 22);
+            this.chkForceSpeechHue.Size = new System.Drawing.Size(131, 22);
             this.chkForceSpeechHue.TabIndex = 0;
             this.chkForceSpeechHue.Text = "Override Speech Hue";
             this.chkForceSpeechHue.CheckedChanged += new System.EventHandler(this.chkForceSpeechHue_CheckedChanged);
@@ -5986,17 +5987,9 @@ namespace Assistant
             this.groupBox27.TabStop = false;
             this.groupBox27.Text = "Modify Key";
             // 
-            // hotkeypassCheckBox
-            // 
-            this.hotkeypassCheckBox.Location = new System.Drawing.Point(10, 43);
-            this.hotkeypassCheckBox.Name = "hotkeypassCheckBox";
-            this.hotkeypassCheckBox.Size = new System.Drawing.Size(122, 22);
-            this.hotkeypassCheckBox.TabIndex = 49;
-            this.hotkeypassCheckBox.Text = "Pass Key to UO";
-            // 
             // hotkeyClearButton
             // 
-            this.hotkeyClearButton.ColorTable = office2010BlueTheme1;
+            this.hotkeyClearButton.ColorTable = office2010BlueTheme2;
             this.hotkeyClearButton.Location = new System.Drawing.Point(92, 71);
             this.hotkeyClearButton.Name = "hotkeyClearButton";
             this.hotkeyClearButton.Size = new System.Drawing.Size(53, 23);
@@ -6005,6 +5998,18 @@ namespace Assistant
             this.hotkeyClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.hotkeyClearButton.UseVisualStyleBackColor = true;
             this.hotkeyClearButton.Click += new System.EventHandler(this.hotkeyClearButton_Click);
+            // 
+            // hotkeySetButton
+            // 
+            this.hotkeySetButton.ColorTable = office2010BlueTheme2;
+            this.hotkeySetButton.Location = new System.Drawing.Point(10, 71);
+            this.hotkeySetButton.Name = "hotkeySetButton";
+            this.hotkeySetButton.Size = new System.Drawing.Size(53, 23);
+            this.hotkeySetButton.TabIndex = 3;
+            this.hotkeySetButton.Text = "Set";
+            this.hotkeySetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.hotkeySetButton.UseVisualStyleBackColor = true;
+            this.hotkeySetButton.Click += new System.EventHandler(this.hotkeySetButton_Click);
             // 
             // label39
             // 
@@ -6030,18 +6035,6 @@ namespace Assistant
             this.hotkeytextbox.Size = new System.Drawing.Size(104, 20);
             this.hotkeytextbox.TabIndex = 1;
             // 
-            // hotkeySetButton
-            // 
-            this.hotkeySetButton.ColorTable = office2010BlueTheme1;
-            this.hotkeySetButton.Location = new System.Drawing.Point(10, 71);
-            this.hotkeySetButton.Name = "hotkeySetButton";
-            this.hotkeySetButton.Size = new System.Drawing.Size(53, 23);
-            this.hotkeySetButton.TabIndex = 3;
-            this.hotkeySetButton.Text = "Set";
-            this.hotkeySetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-            this.hotkeySetButton.UseVisualStyleBackColor = true;
-            this.hotkeySetButton.Click += new System.EventHandler(this.hotkeySetButton_Click);
-            // 
             // hotkeytreeView
             // 
             this.hotkeytreeView.Location = new System.Drawing.Point(9, 7);
@@ -6066,6 +6059,14 @@ namespace Assistant
             this.timerupdatestatus.Enabled = true;
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
+            // 
+            // hotkeypassCheckBox
+            // 
+            this.hotkeypassCheckBox.Location = new System.Drawing.Point(10, 43);
+            this.hotkeypassCheckBox.Name = "hotkeypassCheckBox";
+            this.hotkeypassCheckBox.Size = new System.Drawing.Size(122, 22);
+            this.hotkeypassCheckBox.TabIndex = 49;
+            this.hotkeypassCheckBox.Text = "Pass Key to UO";
             // 
             // MainForm
             // 
@@ -6200,7 +6201,7 @@ namespace Assistant
 			Timer.SystemTimer = m_SystemTimer;
 
 			this.Hide();
-			//Language.LoadControlNames(this);
+			Language.LoadControlNames(this);
 
 			bool st = RazorEnhanced.Settings.General.ReadBool("Systray");
 			taskbar.Checked = this.ShowInTaskbar = !st;
