@@ -62,7 +62,6 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Flag", typeof(Bitmap));
 				scripting.Columns.Add("Status", typeof(string));
                 scripting.Columns.Add("HotKey", typeof(Keys));
-                scripting.Columns.Add("HotKeyPass", typeof(bool));
 				m_Dataset.Tables.Add(scripting);
 
 
@@ -187,7 +186,6 @@ namespace RazorEnhanced
                 targets.Columns.Add("Name", typeof(string));
                 targets.Columns.Add("TargetGUIObject", typeof(RazorEnhanced.TargetGUI.TargetGUIObject));
                 targets.Columns.Add("HotKey", typeof(Keys));
-                targets.Columns.Add("HotKeyPass", typeof(bool));
                 m_Dataset.Tables.Add(targets);
 
 
@@ -240,969 +238,968 @@ namespace RazorEnhanced
                 hotkey.Columns.Add("Group", typeof(string));
                 hotkey.Columns.Add("Name", typeof(string));
                 hotkey.Columns.Add("Key", typeof(Keys));
-                hotkey.Columns.Add("Pass", typeof(bool));
 
                 // Parametri primo avvio HotKey
+               
                 DataRow hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "General", "Resync", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "General", "Resync", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
                 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "General", "Take Screen Shot", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "General", "Take Screen Shot", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "General", "Ping Server", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "General", "Ping Server", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "General", "Accept Party", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "General", "Accept Party", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "General", "Decline Party", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "General", "Decline Party", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Actions", "Unmount", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Actions", "Unmount", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Actions", "Grab Item", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Actions", "Grab Item", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Actions", "Drop Item", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Actions", "Drop Item", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Use", "Last Item", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Use", "Last Item", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Use", "Left Hand", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Use", "Left Hand", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Use", "Right Hand", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Use", "Right Hand", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Show Names", "All", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Show Names", "All", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Show Names", "Corpses", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Show Names", "Corpses", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Show Names", "Mobiles", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Show Names", "Mobiles", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Show Names", "Items", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Show Names", "Items", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Come", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Come", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Follow", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Follow", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Guard", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Guard", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Kill", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Kill", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stay", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stay", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Start", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Start", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Start", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Start", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Start", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Start", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Organizer Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Enable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Enable", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Disable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Disable", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Enable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Enable", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Disable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Disable", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Dress Start", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Dress Start", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Dress Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Dress Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Undress", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Undress", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Restock Start", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Restock Start", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Restock Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Restock Stop", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Enable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Enable", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Disable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Disable", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Abilities", "Primary", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Primary", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Abilities", "Secondary", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Secondary", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Abilities", "Stun", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Stun", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Abilities", "Disarm", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Abilities", "Disarm", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Attack", "Attack Last Target", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Attack", "Attack Last Target", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Bandage", "Self", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Bandage", "Self", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Bandage", "Last", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Bandage", "Last", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Bandage", "Use Only", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Bandage", "Use Only", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Potions", "Agility", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Potions", "Agility", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Potions", "Cure", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Potions", "Cure", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Potions", "Explosion", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Potions", "Explosion", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Potions", "Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Potions", "Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Potions", "Refresh", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Potions", "Refresh", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Potions", "Strenght", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Potions", "Strenght", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Potions", "Nightsight", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Potions", "Nightsight", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Other", "Enchanted Apple", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Other", "Enchanted Apple", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Other", "Orange Petals", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Other", "Orange Petals", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Other", "Wrath Grapes", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Other", "Wrath Grapes", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Other", "Rose Of Trinsic", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Other", "Rose Of Trinsic", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Other", "Smoke Bomb", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Other", "Smoke Bomb", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Other", "Spell Stone", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Other", "Spell Stone", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Other", "Healing Stone", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Other", "Healing Stone", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Hands", "Clear Left", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Hands", "Clear Left", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Hands", "Clear Right", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Hands", "Clear Right", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Clumsy", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Clumsy", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Identidication", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Identidication", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Feebleming", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Feebleming", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Weakness", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Weakness", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Magic Arrow", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Magic Arrow", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Harm", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Harm", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Fireball", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Fireball", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Greater Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Greater Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Lightning", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Lightning", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Mana Drain", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Equip Wands", "Mana Drain", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Last Used", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Last Used", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Animal Lore", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Animal Lore", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Item ID", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Item ID", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Arms Lore", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Arms Lore", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Begging", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Begging", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Peacemaking", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Peacemaking", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Cartography", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Cartography", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Detect Hidden", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Detect Hidden", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Eval Int", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Eval Int", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Forensics", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Forensics", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Hiding", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Hiding", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Provocation", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Provocation", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Spirit Speak", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Spirit Speak", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Stealing", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Stealing", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Animal Taming", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Animal Taming", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Taste ID", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Taste ID", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Tracking", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Tracking", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Meditation", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Meditation", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Stealth", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Stealth", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "RemoveTrap", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "RemoveTrap", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Inscribe", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Inscribe", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Skills", "Anatomy", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Skills", "Anatomy", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Mini Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Mini Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Big Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Big Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Chivarly Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsAgent", "Chivarly Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Create Food", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Create Food", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Feeblemind", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Feeblemind", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Arrow", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Arrow", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Night Sight", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Night Sight", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Reactive Armor", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Reactive Armor", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Weaken", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Weaken", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Agility", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Agility", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Cunning", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Cunning", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Cure", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Cure", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Harm", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Harm", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Trap", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Trap", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Untrap", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Untrap", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Protection", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Protection", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Strength", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Strength", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Bless", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Bless", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Fireball", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Fireball", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Lock", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Lock", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Poison", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Poison", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Telekinesis", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Telekinesis", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Teleport", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Teleport", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Unlock", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Unlock", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Wall of Stone", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Wall of Stone", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Arch Cure", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Arch Cure", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Arch Protection", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Arch Protection", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Curse", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Curse", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Greater Heal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Greater Heal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Lightning", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Lightning", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mana Drain", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mana Drain", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Recall", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Recall", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Blade Spirits", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Blade Spirits", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Dispel Field", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Dispel Field", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Incognito", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Incognito", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Reflection", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Magic Reflection", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mind Blast", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mind Blast", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Paralyze", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Paralyze", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Poison Field", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Poison Field", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Creature", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Creature", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Dispel", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Dispel", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Energy Bolt", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Energy Bolt", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Explosion", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Explosion", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Invisibility", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Invisibility", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mark", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mark", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mass Curse", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mass Curse", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Paralyze Field", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Paralyze Field", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Reveal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Reveal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Chain Lightning", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Chain Lightning", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Energy Field", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Energy Field", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Flamestrike", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Flamestrike", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Gate Travel", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Gate Travel", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mana Vampire", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mana Vampire", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mass Dispel", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Mass Dispel", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Meteor Swarm", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Meteor Swarm", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Polymorph", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Polymorph", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Earthquake", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Earthquake", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Energy Vortex", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Energy Vortex", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Resurrection", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Resurrection", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Air Elemental", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Air Elemental", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Daemon", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Daemon", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Earth Elemental", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Earth Elemental", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Fire Elemental", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Fire Elemental", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Water Elemental", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Summon Water Elemental", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Animate Dead", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Animate Dead", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Blood Oath", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Blood Oath", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Corpse Skin", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Corpse Skin", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Curse Weapon", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Curse Weapon", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Evil Omen", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Evil Omen", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Horrific Beast", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Horrific Beast", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Lich Form", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Lich Form", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Mind Rot", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Mind Rot", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Pain Spike", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Pain Spike", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Poison Strike", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Poison Strike", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Strangle", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Strangle", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Summon Familiar", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Summon Familiar", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Vampiric Embrace", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Vampiric Embrace", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Vengeful Spirit", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Vengeful Spirit", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Wither", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Wither", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Wraith Form", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Wraith Form", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Exorcism", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNecro", "Exorcism", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Honorable Execution", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Honorable Execution", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Confidence", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Confidence", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Evasion", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Evasion", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Counter Attack", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Counter Attack", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Lightning Strike", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Lightning Strike", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Momentum Strike", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsBushido", "Momentum Strike", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Focus Attack", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Focus Attack", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Death Strike", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Death Strike", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Animal Form", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Animal Form", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Ki Attack", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Ki Attack", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Surprise Attack", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Surprise Attack", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Backstab", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Backstab", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Shadow jump", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Shadow jump", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Mirror Image", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsNinjitsu", "Mirror Image", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Arcane Circle", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Arcane Circle", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Gift Of Renewal", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Gift Of Renewal", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Immolating Weapon", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Immolating Weapon", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Thunderstorm", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Thunderstorm", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Natures Fury", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Natures Fury", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Summon Fey", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Summon Fey", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Summoniend", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Summoniend", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Reaper Form", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Reaper Form", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Wildfire", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Wildfire", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Essence Of Wind", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Essence Of Wind", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Dryad Allure", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Dryad Allure", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Ethereal Voyage", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Ethereal Voyage", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Word Of Death", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Word Of Death", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
-                hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Gift Of Life", Keys.None, true };
+                hotkeyrow = hotkey.NewRow(); 
+                hotkeyrow.ItemArray = new object[] { "SpellsSpellweaving", "Gift Of Life", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Animated Weapon", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Animated Weapon", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Healing Stone", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Healing Stone", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Purge", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Purge", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Enchant", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Enchant", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Eagle Strike", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Eagle Strike", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "StoneForm", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "StoneForm", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Spell Trigger", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Spell Trigger", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Mass Sleep", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Mass Sleep", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Cleansing Winds", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Cleansing Winds", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Bombard", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Bombard", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Spell Plague", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Spell Plague", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Hail Storm", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Hail Storm", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Nether Cyclone", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Nether Cyclone", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Rising Colossus", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Rising Colossus", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Cleanse By Fire", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Cleanse By Fire", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Close Wounds", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Close Wounds", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Consecrate Weapon", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Consecrate Weapon", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Dispel Evil", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Dispel Evil", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Divine Fury", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Divine Fury", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Enemy Of One", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Enemy Of One", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Holy Light", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Holy Light", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Noble Sacrifice", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Noble Sacrifice", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Remove Curse", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Remove Curse", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Sacred Journey", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Sacred Journey", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Honor", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Honor", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Sacrifice", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Sacrifice", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Compassion", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Compassion", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Valor", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Valor", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Honesty", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Honesty", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Humility", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Humility", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Justice", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "UseVirtue", "Justice", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Target", "Target Self", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Target", "Target Self", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Target", "Target Last", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Target", "Target Last", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Target", "Target Cancel", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Target", "Target Cancel", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Script", "Stop All", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Script", "Stop All", Keys.None };
                 hotkey.Rows.Add(hotkeyrow);
-                
 
                 m_Dataset.Tables.Add(hotkey);
 
@@ -3142,8 +3139,6 @@ namespace RazorEnhanced
                 row["Name"] = targetid;
                 row["TargetGUIObject"] = target;
                 row["HotKey"] = Keys.None;
-                row["HotKeyPass"] = true;
-
                 m_Dataset.Tables["TARGETS"].Rows.Add(row);
 
                 Save();
@@ -3467,7 +3462,7 @@ namespace RazorEnhanced
                 return keydataOut;
             }
 
-            internal static void UpdateKey(string name, Keys key, bool passkey)
+            internal static void UpdateKey(string name, Keys key)
             {
 
                     foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
@@ -3475,7 +3470,6 @@ namespace RazorEnhanced
                         if ((string)row["Name"] == name)
                         {
                             row["Key"] = key;
-                            row["Pass"] = passkey;
                             break;
                         }
 
@@ -3484,7 +3478,7 @@ namespace RazorEnhanced
                 Save();
             }
 
-            internal static void UpdateTargetKey(string name, Keys key, bool passkey)
+            internal static void UpdateTargetKey(string name, Keys key)
             {
 
                 foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
@@ -3492,15 +3486,15 @@ namespace RazorEnhanced
                     if ((string)row["Name"] == name)
                     {
                         row["HotKey"] = key;
-                        row["HotKeyPass"] = passkey;
                         break;
                     }
+
                 }
 
                 Save();
             }
 
-            internal static void UpdateScriptKey(string name, Keys key, bool passkey)
+            internal static void UpdateScriptKey(string name, Keys key)
             {
 
                 foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
@@ -3508,9 +3502,9 @@ namespace RazorEnhanced
                     if ((string)row["Filename"] == name)
                     {
                         row["HotKey"] = key;
-                        row["HotKeyPass"] = passkey;
                         break;
                     }
+
                 }
 
                 Save();
@@ -3529,7 +3523,6 @@ namespace RazorEnhanced
                     if ((Keys)row["Key"] == key)
                     {
                         row["Key"] = Keys.None;
-                        row["Pass"] = true;
                     }
                 }
 
@@ -3538,7 +3531,6 @@ namespace RazorEnhanced
                     if ((Keys)row["HotKey"] == key)
                     {
                         row["HotKey"] = Keys.None;
-                        row["HotKeyPass"] = true;
                     }
                 }
                 
@@ -3547,10 +3539,8 @@ namespace RazorEnhanced
                     if ((Keys)row["HotKey"] == key)
                     {
                         row["HotKey"] = Keys.None;
-                        row["HotKeyPass"] = true;
                     }
                 }
-
                 Save();
             }
 
@@ -3586,50 +3576,16 @@ namespace RazorEnhanced
                 return false;
             }
 
-            internal static void FindKeyGui(string name, out Keys outkey, out bool outpasskey)
+            internal static Keys FindKey(string name)
             {
-                Keys key = Keys.None;
-                bool passkey = true;
-                bool found = false;
-
                 foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
                 {
                     if ((string)row["Name"] == name)
                     {
-                        key = (Keys)row["Key"];
-                        passkey = (bool)row["Pass"];
-                        found = true;
-                        break;
+                        return (Keys)row["Key"];
                     }
                 }
-
-                if (!found)
-                    foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-                    {
-                        if ((string)row["Name"] == name)
-                        {
-                            key = (Keys)row["HotKey"];
-                            passkey = (bool)row["HotKeyPass"];
-                            found = true;
-                            break;
-                        }
-                    }
-
-
-                if (!found)
-                    foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
-                    {
-                        if ((string)row["Filename"] == name)
-                        {
-                            key = (Keys)row["HotKey"];
-                            passkey = (bool)row["HotKeyPass"];
-                            found = true;
-                            break;
-                        }
-                    }
-
-                outkey = key;
-                outpasskey = passkey;
+                return Keys.None;
             }
 
             internal static string FindString(Keys key)
@@ -3671,48 +3627,33 @@ namespace RazorEnhanced
                 return null;
             }
 
-            internal static void FindGroup(Keys key, out string outgroup, out bool outpass)
+            internal static string FindGroup(Keys key)
             {
-                string group = "";
-                bool pass = true;
-                bool found = false;
-
                 foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
                 {
                     if ((Keys)row["Key"] == key)
                     {
-                        group = (String)row["Group"];
-                        pass = (bool)row["Pass"];
-                        found = true;
-                        break;
+                        return (String)row["Group"];
                     }
                 }
 
-                if (!found)
-                    foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
                     {
-                        if ((Keys)row["HotKey"] == key)
-                        {
-                            group = "TList";
-                            pass = (bool)row["HotKeyPass"];
-                            found = true;
-                            break;
-                        }
+                        return "TList";
                     }
+                }
 
                 foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
                 {
                     if ((Keys)row["HotKey"] == key)
                     {
-                        group = "SList";
-                        pass = (bool)row["HotKeyPass"];
-                        found = true;
-                        break;
+                        return "SList";
                     }
                 }
 
-                outgroup = group;
-                outpass = pass;
+                return null;
             }
 
         }
