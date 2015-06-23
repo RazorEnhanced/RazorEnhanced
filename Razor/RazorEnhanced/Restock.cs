@@ -299,12 +299,10 @@ namespace RazorEnhanced
         internal static int Engine(List<RestockItem> restockItemList, int mseconds, Item sourceBag, Item destinationBag)
         {
             // Apre le bag per item contenuti
-            RazorEnhanced.Restock.AddLog("- Refresh Source Container");
             Items.UseItem(sourceBag);
-            Thread.Sleep(mseconds);
-            RazorEnhanced.Restock.AddLog("- Refresh Destination Container");
+            Items.WaitForContents(sourceBag, 1500);
             Items.UseItem(destinationBag);
-            Thread.Sleep(mseconds);
+            Items.WaitForContents(destinationBag, 1500);
 
             foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
             {

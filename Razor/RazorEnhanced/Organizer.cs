@@ -306,9 +306,11 @@ namespace RazorEnhanced
 			// Apre le bag per item contenuti
             RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
             Items.UseItem(sourceBag);
+			Items.WaitForContents(sourceBag, 1500);
             Thread.Sleep(mseconds);
             RazorEnhanced.Organizer.AddLog("- Refresh Destination Container");
 			Items.UseItem(destinationBag);
+			Items.WaitForContents(destinationBag, 1500);
             Thread.Sleep(mseconds);
 
 			// Inizia scansione 

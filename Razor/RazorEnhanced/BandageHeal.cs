@@ -292,7 +292,6 @@ namespace RazorEnhanced
                 int serialbende = FindBandage();
                 if (serialbende != 0)        // Cerca le bende
                 {
-                    Target.Cancel();
                     Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)serialbende));
                     AddLog("Using bandage!");
                     Target.WaitForTarget(1000);
