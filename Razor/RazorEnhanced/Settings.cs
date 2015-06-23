@@ -61,6 +61,7 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Filename", typeof(string));
 				scripting.Columns.Add("Flag", typeof(Bitmap));
 				scripting.Columns.Add("Status", typeof(string));
+                scripting.Columns.Add("HotKey", typeof(Keys));
 				m_Dataset.Tables.Add(scripting);
 
 
@@ -3448,6 +3449,19 @@ namespace RazorEnhanced
                 return keydataOut;
             }
 
+            internal static List<RazorEnhanced.HotKey.HotKeyData> ReadScript()
+            {
+                List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
+
+                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+                {
+                    string name = (string)row["Filename"];
+                    Keys key = (Keys)row["HotKey"];
+                    keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
+                }
+                return keydataOut;
+            }
+
             internal static void UpdateKey(string name, Keys key)
             {
 
@@ -3480,8 +3494,30 @@ namespace RazorEnhanced
                 Save();
             }
 
+            internal static void UpdateScriptKey(string name, Keys key)
+            {
+
+                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+                {
+                    if ((string)row["Filename"] == name)
+                    {
+                        row["HotKey"] = key;
+                        break;
+                    }
+
+                }
+
+                Save();
+            }
+
             internal static void UnassignKey(Keys key)
             {
+                if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
+                {
+                    RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", Keys.None);
+                    Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.m_Masterkey.ToString();
+                }
+
                 foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
                 {
                     if ((Keys)row["Key"] == key)
@@ -3497,13 +3533,14 @@ namespace RazorEnhanced
                         row["HotKey"] = Keys.None;
                     }
                 }
-
-                if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
+                
+                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
                 {
-                    RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", Keys.None);
-                    Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.m_Masterkey.ToString();
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        row["HotKey"] = Keys.None;
+                    }
                 }
-
                 Save();
             }
 
@@ -3518,6 +3555,14 @@ namespace RazorEnhanced
                 }
 
                 foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        return true;
+                    }
+                }
+
+                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
                 {
                     if ((Keys)row["HotKey"] == key)
                     {
@@ -3558,12 +3603,24 @@ namespace RazorEnhanced
 
             internal static string FindTargetString(Keys key)
             {
-
                 foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
                 {
                     if ((Keys)row["HotKey"] == key)
                     {
                         return (String)row["Name"];
+                    }
+                }
+
+                return null;
+            }
+
+            internal static string FindScriptString(Keys key)
+            {
+                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        return (String)row["Filename"];
                     }
                 }
 
@@ -3584,9 +3641,18 @@ namespace RazorEnhanced
                 {
                     if ((Keys)row["HotKey"] == key)
                     {
-                        return "LTarget";
+                        return "TList";
                     }
                 }
+
+                foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+                {
+                    if ((Keys)row["HotKey"] == key)
+                    {
+                        return "SList";
+                    }
+                }
+
                 return null;
             }
 

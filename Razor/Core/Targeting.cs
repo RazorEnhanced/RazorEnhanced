@@ -56,7 +56,9 @@ namespace Assistant
 
 		internal static bool HasTarget { get { return m_HasTarget; } }
 
-		public static void Initialize()
+        internal static uint GetLastTarger { get { return m_LastTarget.Serial; } }
+
+        public static void Initialize()
 		{
 			PacketHandler.RegisterClientToServerViewer(0x6C, new PacketViewerCallback(TargetResponse));
 			PacketHandler.RegisterServerToClientViewer(0x6C, new PacketViewerCallback(NewTarget));
@@ -1033,6 +1035,8 @@ namespace Assistant
 		}
 
 		private static int m_NextTargIdx = 0;
+
+
 		internal static void NextTarget()
 		{
 			List<Mobile> list = World.MobilesInRange(12);

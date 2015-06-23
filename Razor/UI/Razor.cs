@@ -6508,13 +6508,6 @@ namespace Assistant
             txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
             msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
 
-            hotkeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey").ToString();
-
-            if (RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
-                hotkeyStatusLabel.Text = "Status: Enabled";
-            else
-                hotkeyStatusLabel.Text = "Status: Disabled";          
-
 			m_Initializing = false;
 		}
 
@@ -8894,11 +8887,12 @@ namespace Assistant
 
 			if (result == DialogResult.OK) // Test result.
 			{
-				scriptTable.Rows.Add(false, openFileDialogscript.FileName, Properties.Resources.yellow, "Idle");
+				scriptTable.Rows.Add(false, openFileDialogscript.FileName, Properties.Resources.yellow, "Idle", Keys.None);
 				RazorEnhanced.Settings.Save();
 
 				dataGridViewScripting.DataSource = null;
 				dataGridViewScripting.DataSource = scriptTable;
+                RazorEnhanced.HotKey.Init();
 			}
 		}
 
@@ -8918,6 +8912,7 @@ namespace Assistant
 
 			dataGridViewScripting.DataSource = null;
 			dataGridViewScripting.DataSource = scriptTable;
+            RazorEnhanced.HotKey.Init();
 		}
 
 		private void MoveUp()
@@ -11769,9 +11764,11 @@ namespace Assistant
             {
                 if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "TList" )
                     RazorEnhanced.HotKey.UpdateTargetKey(hotkeytreeView.SelectedNode.Name);     // Aggiorno hotkey target 
-                else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "SList" )
-                    // HotKey Script 
-                { }
+                else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "SList")
+                {
+                    RazorEnhanced.AutoLoot.AddLog("SS");
+                    RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode.Name);     // Aggiorno hotkey Script 
+                }
                 else
                     RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name);
             }
@@ -11781,7 +11778,10 @@ namespace Assistant
         private void hotkeyClearButton_Click(object sender, EventArgs e)
         {
             if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
-                RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode.Name);
+                if (hotkeytreeView.SelectedNode.Parent.Name!= null)
+                    RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode.Name, hotkeytreeView.SelectedNode.Parent.Name);
+                else
+                    RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode.Name, "General");
             hotkeytextbox.Text = "";
         }
         private void hotkeytreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)

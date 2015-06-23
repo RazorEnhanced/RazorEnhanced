@@ -60,6 +60,11 @@ namespace RazorEnhanced
         {
             Assistant.Targeting.LastTarget();
         }
+
+        public static int GetLast()
+        {
+            return (int)Assistant.Targeting.GetLastTarger;
+        }
         public static void SetLast(RazorEnhanced.Mobile mob)
         {
             Assistant.Mobile mobile = World.FindMobile(mob.Serial);

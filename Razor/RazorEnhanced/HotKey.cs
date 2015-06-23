@@ -84,6 +84,7 @@ namespace RazorEnhanced
         }
         private static void ProcessGroup(string group, Keys k)
         {
+            RazorEnhanced.Misc.SendMessage("Debug: " + group);
             if (group != "")
             {
                 switch (group)
@@ -157,14 +158,15 @@ namespace RazorEnhanced
                     case "Target":
                         ProcessTarget(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
-                    case "LTarget":
+                    case "TList":
                         TargetGUI.PerformTarget(RazorEnhanced.Settings.HotKey.FindTargetString(k));
                         break;
                     case "Script":
-                        
+                        // Stop all Script
                         break;
-                    case "LScript":
-                       // ProcessScriptList(RazorEnhanced.Settings.HotKey.FindScriptString(k));
+                    case "SList":
+                        RazorEnhanced.Misc.SendMessage("Debug: " + RazorEnhanced.Settings.HotKey.FindScriptString(k));
+                        // start script RazorEnhanced.Settings.HotKey.FindScriptString(k)
                         break;
                     case "UseVirtue":
                         RazorEnhanced.Player.InvokeVirtue(RazorEnhanced.Settings.HotKey.FindString(k));                  
@@ -314,10 +316,10 @@ namespace RazorEnhanced
                     RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Kill");
                     break;
                 case "Stay":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "Stay");
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Stay");
                     break;
                 case "Stop":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "Stop");
+                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Stop");
                     break;
                 default:
                     break;
@@ -388,6 +390,7 @@ namespace RazorEnhanced
             switch (function)
             {
                 default:
+                    World.Player.SendMessage("Da implementare");
                     break;
             }
         }
@@ -396,6 +399,7 @@ namespace RazorEnhanced
             switch (function)
             {
                 default:
+                    RazorEnhanced.Player.Attack(Assistant.Targeting.GetLastTarger);
                     break;
             }
         }
@@ -637,25 +641,18 @@ namespace RazorEnhanced
             }
         }
 
-        private static void ProcessScript(string function)
-        {
-            switch (function)
-            {
-                default:
-                    break;
-            }
-        }
-        private static void ProcessScriptList(string function)
-        {
-            switch (function)
-            {
-                default:
-                    break;
-            }
-        }
-
         internal static void Init()
         {
+            // BLocco generico
+            Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey").ToString();
+
+            if (RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
+                Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enabled";
+            else
+                Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disabled";          
+
+
+            // Parametri lista
             Engine.MainWindow.HotKeyTreeView.Nodes.Clear();
             Engine.MainWindow.HotKeyTreeView.Nodes.Add("HotKeys");
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("General");
@@ -864,8 +861,14 @@ namespace RazorEnhanced
             {
                 Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
             }
-            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add("List");
-            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes[1].Nodes.Add("aaaa");
+
+            // Script -> List
+            Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add("SList", "List");
+            keylist = RazorEnhanced.Settings.HotKey.ReadScript();
+            foreach (HotKeyData keydata in keylist)
+            {
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + keydata.Key.ToString() + " )");
+            }  
 
             // Virtue
             Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Virtue");
@@ -896,7 +899,6 @@ namespace RazorEnhanced
                     Init();
                 }
             }
-
         }
 
         internal static void UpdateTargetKey(string name)
@@ -916,7 +918,25 @@ namespace RazorEnhanced
                     Init();
                 }
             }
+        }
 
+        internal static void UpdateScriptKey(string name)
+        {
+            if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
+            {
+                RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key);
+                Init();
+            }
+            else
+            {
+                DialogResult dialogResult = MessageBox.Show("Key: " + m_key.ToString() + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
+                    RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key);
+                    Init();
+                }
+            }
         }
 
         internal static void UpdateMaster()
@@ -939,9 +959,14 @@ namespace RazorEnhanced
             }
         }
 
-        internal static void ClearKey(string name)
+        internal static void ClearKey(string name, string group)
         {
-            RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None);
+            if (group == "SList")
+                RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, Keys.None);
+            else if (group == "TList")
+                RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, Keys.None);
+            else
+                RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None);
             Init();
         }
 
