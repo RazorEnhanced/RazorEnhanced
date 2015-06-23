@@ -165,6 +165,18 @@
     <Compile Include="Core\Geometry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="HotKeys\HotKeys.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HotKeys\Misc.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HotKeys\Skills.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="HotKeys\SpecialMoves.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\Item.cs">
       <SubType>Code</SubType>
     </Compile>
