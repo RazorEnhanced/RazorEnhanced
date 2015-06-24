@@ -6036,7 +6036,7 @@ namespace Assistant
 			Timer.SystemTimer = m_SystemTimer;
 
 			this.Hide();
-			Language.LoadControlNames(this);
+			//Language.LoadControlNames(this);
 
 			bool st = RazorEnhanced.Settings.General.ReadBool("Systray");
 			taskbar.Checked = this.ShowInTaskbar = !st;
@@ -6074,7 +6074,7 @@ namespace Assistant
 			m_Tip.Active = true;
 			SplashScreen.End();
 
-			LoadSettings();
+			
 		}
 
 		private void LoadSettings()
@@ -6142,6 +6142,8 @@ namespace Assistant
 		internal void InitConfig()
 		{
             m_Initializing = true;
+
+            LoadSettings();
 
             // ------------------ PARAMETRI GENERALI -------------------
             imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
