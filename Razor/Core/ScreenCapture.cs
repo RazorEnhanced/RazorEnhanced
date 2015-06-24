@@ -50,7 +50,7 @@ namespace Assistant
 			{
 				try
 				{
-					path = Config.GetUserDirectory("ScreenShots");
+                    path = Directory.GetCurrentDirectory();
                     RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				}
 				catch

@@ -16,7 +16,7 @@ namespace Assistant.Macros
 		{
 			//HotKey.Add(HKCategory.Macros, LocString.StopCurrent, new HotKeyCallback(HotKeyStop));
 
-			string path = Config.GetUserDirectory("Macros");
+            string path = Directory.GetCurrentDirectory();
 			Recurse(null, path);
 			/*string[] macros = Directory.GetFiles( path, "*.macro" );
 			for (int i=0;i<macros.Length;i++)
@@ -31,7 +31,7 @@ namespace Assistant.Macros
 
 		internal static void Save()
 		{
-			Engine.EnsureDirectory(Config.GetUserDirectory("Macros"));
+            Engine.EnsureDirectory(Directory.GetCurrentDirectory());
 			for (int i = 0; i < m_List.Count; i++)
 				((Macro)m_List[i]).Save();
 		}
@@ -174,7 +174,7 @@ namespace Assistant.Macros
 		{
 			tree.BeginUpdate();
 			tree.Nodes.Clear();
-			Recurse(tree.Nodes, Config.GetUserDirectory("Macros"));
+            Recurse(tree.Nodes, Directory.GetCurrentDirectory());
 			tree.EndUpdate();
 			tree.Refresh();
 			tree.Update();

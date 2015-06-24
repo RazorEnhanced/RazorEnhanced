@@ -207,7 +207,7 @@ namespace Assistant
 				return;
 			}
 
-			if (Config.GetBool("QueueActions"))
+            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = !PlayerData.DoubleClick(ser, false);
 
 			if (Macros.MacroManager.AcceptActions)
@@ -902,7 +902,7 @@ namespace Assistant
 				p.Write((ushort)(ltHue & 0x3FFF));
 			}
 
-			if (i.Layer == Layer.Backpack && isNew && Config.GetBool("AutoSearch") && ser == World.Player.Serial)
+			if (i.Layer == Layer.Backpack && isNew && RazorEnhanced.Settings.General.ReadBool("AutoSearch") && ser == World.Player.Serial)
 			{
 				m_IgnoreGumps.Add(i);
 				PlayerData.DoubleClick(i);
@@ -1062,7 +1062,6 @@ namespace Assistant
 				test.Remove();
 
 			World.AddMobile(World.Player = m);
-			Config.LoadProfileFor(World.Player);
 
 			PlayerData.ExternalZ = false;
 
@@ -1225,7 +1224,7 @@ namespace Assistant
 						{
 							m.OverheadMessageFrom(0x63,
 								Language.Format(LocString.sStatsA1, m.Name),
-								Config.GetString("PartyStatFmt"), manaPercent, stamPercent);
+								RazorEnhanced.Settings.General.ReadString("PartyStatFmt"), manaPercent, stamPercent);
 						}
 						catch
 						{
@@ -1267,7 +1266,7 @@ namespace Assistant
 						{
 							m.OverheadMessageFrom(0x63,
 								Language.Format(LocString.sStatsA1, m.Name),
-								Config.GetString("PartyStatFmt"), manaPercent, stamPercent);
+								RazorEnhanced.Settings.General.ReadString("PartyStatFmt"), manaPercent, stamPercent);
 						}
 						catch
 						{
@@ -1636,7 +1635,7 @@ namespace Assistant
 					}
 				}
 
-				if (item.Layer == Layer.Backpack && isNew && Config.GetBool("AutoSearch") && m == World.Player && m != null)
+				if (item.Layer == Layer.Backpack && isNew && RazorEnhanced.Settings.General.ReadBool("AutoSearch") && m == World.Player && m != null)
 				{
 					m_IgnoreGumps.Add(item);
 					PlayerData.DoubleClick(item);
@@ -2641,12 +2640,12 @@ namespace Assistant
 
 		private static void ServerAddress(Packet p, PacketHandlerEventArgs args)
 		{
-			int port = Config.GetInt("ForcePort");
+			int port = RazorEnhanced.Settings.General.ReadInt("ForcePort");
 			if (port != 0)
 			{
 				try
 				{
-					string[] parts = Config.GetString("ForceIP").Split('.');
+					string[] parts = RazorEnhanced.Settings.General.ReadString("ForceIP").Split('.');
 					p.Write((byte)Convert.ToInt16(parts[0]));
 					p.Write((byte)Convert.ToInt16(parts[1]));
 					p.Write((byte)Convert.ToInt16(parts[2]));

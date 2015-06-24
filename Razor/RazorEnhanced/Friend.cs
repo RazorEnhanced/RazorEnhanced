@@ -114,6 +114,9 @@ namespace RazorEnhanced
 
         internal static void RefreshLists()
         {
+            Assistant.Engine.MainWindow.FriendListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.FriendListView.Items.Clear();
+
             List<FriendList> lists;
             RazorEnhanced.Settings.Friend.ListsRead(out lists);
 

@@ -366,7 +366,7 @@ namespace Assistant
 					if (m_AutoStack)
 						AutoStackResource();
 
-					if (IsContainer && (!IsPouch || !Config.GetBool("NoSearchPouches")) && Config.GetBool("AutoSearch"))
+                    if (IsContainer && (!IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")) && RazorEnhanced.Settings.General.ReadBool("AutoSearch"))
 					{
 						PacketHandlers.IgnoreGumps.Add(this);
 						PlayerData.DoubleClick(this);
@@ -374,7 +374,7 @@ namespace Assistant
 						for (int c = 0; c < Contains.Count; c++)
 						{
 							Item icheck = Contains[c];
-							if (icheck.IsContainer && !SearchExemptionAgent.IsExempt(icheck) && (!icheck.IsPouch || !Config.GetBool("NoSearchPouches")))
+                            if (icheck.IsContainer && !SearchExemptionAgent.IsExempt(icheck) && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
 							{
 								PacketHandlers.IgnoreGumps.Add(icheck);
 								PlayerData.DoubleClick(icheck);

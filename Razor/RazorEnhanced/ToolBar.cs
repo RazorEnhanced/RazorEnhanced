@@ -723,6 +723,7 @@ namespace RazorEnhanced
         //////////////// Load settings ////////////////
         internal static void LoadSettings()
         {
+            Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
             bool LockToolBarCheckBox = false;
             bool AutoopenToolBarCheckBox = false;
             int PosXToolBar = 10;

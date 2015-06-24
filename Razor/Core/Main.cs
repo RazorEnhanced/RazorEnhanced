@@ -215,6 +215,18 @@ namespace Assistant
             if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
                 throw new InvalidOperationException("This Razor installation is corrupted.");
 
+            // Profili
+            RazorEnhanced.Profiles.Load();
+
+            // Shard Bookmarks
+            RazorEnhanced.Shard.Load();
+
+            // Parametri di razor
+            if (RazorEnhanced.Profiles.LastUsed() == "default")
+                RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
+            else
+                RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
+
             RazorEnhanced.Settings.Load();
 
             RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
@@ -223,7 +235,7 @@ namespace Assistant
             if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
             {
                 List<RazorEnhanced.Shard> shards;
-                RazorEnhanced.Settings.Shards.Read(out shards);
+                RazorEnhanced.Shard.Read(out shards);
                 RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
 
                 if (selected == null)
@@ -261,9 +273,6 @@ namespace Assistant
                     Initialize(typeof(Assistant.Engine).Assembly);
 
                     SplashScreen.Message = LocString.LoadingLastProfile;
-                    Config.LoadCharList();
-                    if (!Config.LoadLastProfile())
-                        MessageBox.Show(SplashScreen.Instance, "The selected profile could not be loaded, using default instead.", "Profile Load Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
                     ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
@@ -311,9 +320,7 @@ namespace Assistant
                     RazorEnhanced.Scripts.Auto = false;
 
                     ClientCommunication.Close();
-                    //Counter.Save();
-                    Macros.MacroManager.Save();
-                    Config.Save();
+                    PasswordMemory.Save();
                 }
             }
         }

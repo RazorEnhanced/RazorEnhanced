@@ -158,6 +158,9 @@ namespace RazorEnhanced
 
         internal static void RefreshLists()
         {
+            Assistant.Engine.MainWindow.RestockListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.RestockListView.Items.Clear();
+
             List<RestockList> lists;
             RazorEnhanced.Settings.Restock.ListsRead(out lists);
 

@@ -161,6 +161,8 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
+            Assistant.Engine.MainWindow.ScavengerListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
 			List<ScavengerList> lists;
 			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
 

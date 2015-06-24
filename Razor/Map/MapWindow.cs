@@ -36,8 +36,8 @@ namespace Assistant.MapUO
 			InitializeComponent();
 			this.ContextMenu = new ContextMenu();
 			this.ContextMenu.Popup += new EventHandler(ContextMenu_Popup);
-			this.Location = new Point(Config.GetInt("MapX"), Config.GetInt("MapY"));
-			this.ClientSize = new Size(Config.GetInt("MapW"), Config.GetInt("MapH"));
+            this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("MapX"), RazorEnhanced.Settings.General.ReadInt("MapY"));
+            this.ClientSize = new Size(RazorEnhanced.Settings.General.ReadInt("MapW"), RazorEnhanced.Settings.General.ReadInt("MapH"));
 
 			if (this.Location.X < -10 || this.Location.Y < -10)
 				this.Location = Point.Empty;
@@ -360,10 +360,10 @@ namespace Assistant.MapUO
 
 			this.Refresh();
 
-			Config.SetProperty("MapX", this.Location.X);
-			Config.SetProperty("MapY", this.Location.Y);
-			Config.SetProperty("MapW", this.ClientSize.Width);
-			Config.SetProperty("MapH", this.ClientSize.Height);
+			RazorEnhanced.Settings.General.WriteInt("MapX", this.Location.X);
+            RazorEnhanced.Settings.General.WriteInt("MapY", this.Location.Y);
+            RazorEnhanced.Settings.General.WriteInt("MapW", this.ClientSize.Width);
+            RazorEnhanced.Settings.General.WriteInt("MapH", this.ClientSize.Height);
 		}
 
 		private void MapWindow_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -403,10 +403,10 @@ namespace Assistant.MapUO
 
 		private void MapWindow_Move(object sender, System.EventArgs e)
 		{
-			Config.SetProperty("MapX", this.Location.X);
-			Config.SetProperty("MapY", this.Location.Y);
-			Config.SetProperty("MapW", this.ClientSize.Width);
-			Config.SetProperty("MapH", this.ClientSize.Height);
+            RazorEnhanced.Settings.General.WriteInt("MapX", this.Location.X);
+            RazorEnhanced.Settings.General.WriteInt("MapY", this.Location.Y);
+            RazorEnhanced.Settings.General.WriteInt("MapW", this.ClientSize.Width);
+            RazorEnhanced.Settings.General.WriteInt("MapH", this.ClientSize.Height);
 		}
 
 		private void MapWindow_Deactivate(object sender, System.EventArgs e)

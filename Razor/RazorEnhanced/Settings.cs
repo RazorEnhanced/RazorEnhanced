@@ -15,13 +15,14 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		private static string m_Save = "RazorEnhanced.settings";
+        internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
 		private static DataSet m_Dataset;
 		internal static DataSet Dataset { get { return m_Dataset; } }
 
 		internal static void Load()
 		{
-			if (m_Dataset != null)
-				return;
+			//if (m_Dataset != null)
+			//	return;
 
 			m_Dataset = new DataSet();
 			string filename = Path.Combine(Directory.GetCurrentDirectory(), m_Save);
@@ -189,24 +190,6 @@ namespace RazorEnhanced
                 targets.Columns.Add("HotKey", typeof(Keys));
                 targets.Columns.Add("HotKeyPass", typeof(bool));
                 m_Dataset.Tables.Add(targets);
-
-
-				// ----------- SHARDS ----------
-				DataTable shards = new DataTable("SHARDS");
-				shards.Columns.Add("Description", typeof(string)); // Key
-				shards.Columns.Add("ClientPath", typeof(string));
-				shards.Columns.Add("ClientFolder", typeof(string));
-				shards.Columns.Add("Host", typeof(string));
-				shards.Columns.Add("Port", typeof(int));
-				shards.Columns.Add("PatchEnc", typeof(bool));
-				shards.Columns.Add("OSIEnc", typeof(bool));
-				shards.Columns.Add("Selected", typeof(bool));
-
-				DataRow uod = shards.NewRow();
-				uod.ItemArray = new object[] { "UODreams", "", "", "login.uodreams.com", 2593, true, false, true };
-				shards.Rows.Add(uod);
-                m_Dataset.Tables.Add(shards);
-
 
                 // ----------- FILTER GRAPH CHANGE ----------
                 DataTable filter_graph = new DataTable("FILTER_GRAPH");
@@ -1278,6 +1261,8 @@ namespace RazorEnhanced
 
                 // Parametri Tab (Skill)
                 general.Columns.Add("DisplaySkillChanges", typeof(bool));
+                general.Columns.Add("SkillListAsc", typeof(bool));
+                general.Columns.Add("SkillListCol", typeof(int));
 
                 // Parametri Tab (Options)
                 general.Columns.Add("ActionStatusMsg", typeof(bool));
@@ -1325,6 +1310,19 @@ namespace RazorEnhanced
                 general.Columns.Add("HotKeyEnable", typeof(bool));
                 general.Columns.Add("HotKeyMasterKey", typeof(Keys));
 
+                // Parametri Interni
+                general.Columns.Add("PartyStatFmt", typeof(string));
+                general.Columns.Add("ForcePort", typeof(int));
+                general.Columns.Add("ForceIP", typeof(string));
+                general.Columns.Add("BlockHealPoison", typeof(bool));
+                general.Columns.Add("AutoSearch", typeof(bool));
+
+                // Parametri Mappa
+                general.Columns.Add("MapX", typeof(int));
+                general.Columns.Add("MapY", typeof(int));
+                general.Columns.Add("MapW", typeof(int));
+                general.Columns.Add("MapG", typeof(int));
+
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -1346,7 +1344,7 @@ namespace RazorEnhanced
                     false, false, false, false, false, 800, 600, "Normal", 100, 400, 400,
 
                     // Parametri primo avvio tab skill
-                    false,
+                    false, false, -1,
                     
                     // Parametri primo avvio tab Options
                     false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false, false, false, @"{power} [{spell}]", 0,
@@ -1355,8 +1353,13 @@ namespace RazorEnhanced
                     (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
 
                     // Parametri primo avvio tab HotKey
-                    false, Keys.None
+                    false, Keys.None,
 
+                    // Parametri primo avvio interni
+                    "[{0}% / {1}%]", 0, "", false, true,
+
+                     // Parametri primo avvio Mappa
+                     200,200,200,200
                 };
 
                 DataRow generalsettings = general.NewRow();
@@ -3178,147 +3181,6 @@ namespace RazorEnhanced
 
         // ------------- TARGET SETTINGS END -----------------
         
-
-		// ------------- SHARDS -----------------
-		internal class Shards
-		{
-			internal static bool Exists(string description)
-			{
-				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
-			}
-
-			internal static void Insert(string description, string clientpath, string clientfolder, string host, string port, bool parchenc, bool osienc)
-			{
-				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-				{
-					row["Selected"] = false;
-				}
-
-				DataRow newRow = m_Dataset.Tables["SHARDS"].NewRow();
-				newRow["Description"] = description;
-				newRow["ClientPath"] = clientpath;
-				newRow["ClientFolder"] = clientfolder;
-				newRow["Host"] = host;
-				newRow["Port"] = port;
-				newRow["PatchEnc"] = parchenc;
-				newRow["OSIEnc"] = osienc;
-				newRow["Selected"] = true;
-				m_Dataset.Tables["SHARDS"].Rows.Add(newRow);
-
-				Save();
-			}
-
-			internal static void Update(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc, bool selected)
-			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
-
-				if (found)
-				{
-					if (selected)
-					{
-						foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-						{
-							row["Selected"] = false;
-						}
-					}
-
-					foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-					{
-						if ((string)row["Description"] == description)
-						{
-							row["Description"] = description;
-							row["ClientPath"] = clientpath;
-							row["ClientFolder"] = clientfolder;
-							row["Host"] = host;
-							row["Port"] = port;
-							row["PatchEnc"] = parchenc;
-							row["OSIEnc"] = osienc;
-							row["Selected"] = selected;
-							break;
-						}
-					}
-
-					Save();
-				}
-			}
-
-            internal static void UpdateLast(string description)
-            {
-                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                {
-                    if ((string)row["Description"] == description)
-                    {
-                        row["Selected"] = true;
-                    }
-                    else
-                        row["Selected"] = false;
-                }
-                Save();
-            }
-
-			internal static void Delete(string shardname)
-			{
-                bool last = true;
-				for (int i = m_Dataset.Tables["SHARDS"].Rows.Count - 1; i >= 0; i--)
-				{
-					DataRow row = m_Dataset.Tables["SHARDS"].Rows[i];
-					if ((string)row["Description"] == shardname)
-					{
-						row.Delete();
-					}
-                    else
-                    {
-                        if (last)
-                        {
-                            row["Selected"] = true;
-                            last = false;
-                        }
-                        else
-                            row["Selected"] = false;
-                    }
-				}
-
-				Save();
-			}
-
-			internal static void Read(out List<RazorEnhanced.Shard> shards)
-			{
-				List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
-
-				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-				{
-					string description = (string)row["Description"];
-					string clientpath = (string)row["ClientPath"];
-					string clientfolder = (string)row["ClientFolder"];
-					string host = (string)row["Host"];
-					int port = (int)row["Port"];
-					bool patchenc = (bool)row["PatchEnc"];
-					bool osienc = (bool)row["OSIEnc"];
-					bool selected = (bool)row["Selected"];
-
-					RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, host, port, patchenc, osienc, selected);
-					shardsOut.Add(shard);
-				}
-
-				shards = shardsOut;
-			}
-		}
-		// ------------- LAUNCHER END -----------------
-
         // ------------- TOOLBAR -----------------
         internal class Toolbar
         {

@@ -161,6 +161,9 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
+            Assistant.Engine.MainWindow.OrganizerListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
+
 			List<OrganizerList> lists;
 			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
 

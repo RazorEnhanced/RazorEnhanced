@@ -161,6 +161,8 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
+            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+            Assistant.Engine.MainWindow.AutoLootListSelect.Items.Clear();
 			List<AutoLootList> lists;
 			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
 

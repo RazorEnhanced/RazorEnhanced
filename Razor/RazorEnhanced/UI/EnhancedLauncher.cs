@@ -23,7 +23,7 @@ namespace RazorEnhanced.UI
 		private void RefreshGUI()
 		{
 			List<RazorEnhanced.Shard> shards;
-			RazorEnhanced.Settings.Shards.Read(out shards);
+			RazorEnhanced.Shard.Read(out shards);
 
 			foreach (Shard shard in shards)
 			{
@@ -54,10 +54,10 @@ namespace RazorEnhanced.UI
 			int port = 2593;
 			Int32.TryParse(portLabel.Text, out port);
 
-			RazorEnhanced.Settings.Shards.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
+			RazorEnhanced.Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
 
 			List<RazorEnhanced.Shard> shards;
-			RazorEnhanced.Settings.Shards.Read(out shards);
+			RazorEnhanced.Shard.Read(out shards);
 
 			shardlistCombobox.Items.Clear();
 			foreach (Shard shard in shards)
@@ -87,7 +87,7 @@ namespace RazorEnhanced.UI
             Int32.TryParse(portLabel.Text, out port);
 
             List<RazorEnhanced.Shard> shards;
-            RazorEnhanced.Settings.Shards.Read(out shards);
+            RazorEnhanced.Shard.Read(out shards);
 
             shardlistCombobox.Items.Clear();
             foreach (Shard shard in shards)
@@ -102,8 +102,8 @@ namespace RazorEnhanced.UI
 		private void shardlistCombobox_SelectedIndexChanged(object sender, EventArgs e)
 		{
             List<RazorEnhanced.Shard> shards;
-            RazorEnhanced.Settings.Shards.UpdateLast(shardlistCombobox.Text);
-            RazorEnhanced.Settings.Shards.Read(out shards);
+            RazorEnhanced.Shard.UpdateLast(shardlistCombobox.Text);
+            RazorEnhanced.Shard.Read(out shards);
 
             foreach (Shard shard in shards)
             {
@@ -211,7 +211,7 @@ namespace RazorEnhanced.UI
 		{
 			if (shardlistCombobox.Text != "")
 			{
-				RazorEnhanced.Settings.Shards.Delete(shardlistCombobox.Text);
+				RazorEnhanced.Shard.Delete(shardlistCombobox.Text);
 			}
             UpdateGUI();
 		}

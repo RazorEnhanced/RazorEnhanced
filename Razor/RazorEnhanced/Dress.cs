@@ -186,6 +186,9 @@ namespace RazorEnhanced
 
         internal static void UpdateSelectedItems(int i)
         {
+            Assistant.Engine.MainWindow.DressListView.Items.Clear();
+            Assistant.Engine.MainWindow.DressListView.Items.Clear();
+
             List<DressItem> items;
             RazorEnhanced.Settings.Dress.ItemsRead(DressListName, out items);
 

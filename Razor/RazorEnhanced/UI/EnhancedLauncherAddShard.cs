@@ -42,7 +42,7 @@ namespace RazorEnhanced.UI
 				fail = true;
 
 			newList = shardAdd.Text.ToLower();
-            if (RazorEnhanced.Settings.Shards.Exists(newList))
+            if (RazorEnhanced.Shard.Exists(newList))
 				fail = true;
 
 			if (fail)
@@ -56,7 +56,7 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-                RazorEnhanced.Settings.Shards.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);            
+                RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);            
                 this.Close();
 			}
 		}

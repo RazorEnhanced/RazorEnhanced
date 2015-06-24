@@ -115,6 +115,9 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
+            Assistant.Engine.MainWindow.SellListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.SellListView.Items.Clear();
+
 			List<SellAgentList> lists;
 			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
@@ -490,6 +493,9 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
+            Assistant.Engine.MainWindow.BuyListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.BuyListView.Items.Clear();
+
 			List<BuyAgentList> lists;
 			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
 
@@ -702,7 +708,7 @@ namespace RazorEnhanced
 
 		public static void Disable()
 		{
-			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == false)
+            if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == false)
 				Misc.SendMessage("Script Error: Buy.Disable: Filter alredy disabled");
 			else
 				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));

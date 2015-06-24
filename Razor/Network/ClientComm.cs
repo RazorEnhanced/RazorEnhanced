@@ -625,8 +625,8 @@ namespace Assistant
 					dllName = string.Empty;
 				}
 
-				if (dllName == string.Empty || dllName == null)
-					dllName = Path.Combine(Config.GetInstallDirectory(), "Translator.dll");
+				//if (dllName == string.Empty || dllName == null)
+				//	dllName = Path.Combine(Config.GetInstallDirectory(), "Translator.dll");
 
 				if (!File.Exists(dllName))
 				{
@@ -976,15 +976,13 @@ namespace Assistant
 			World.Mobiles.Clear();
 			Macros.MacroManager.Stop();
 			ActionQueue.Stop();
-			//Counter.Reset();
 			StealthSteps.Unhide();
 			Engine.MainWindow.OnLogout();
 			if (Engine.MainWindow.MapWindow != null)
 				Engine.MainWindow.MapWindow.Close();
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
-			Config.Save();
-            
+            PasswordMemory.Save();
 			TranslateEnabled = false;
 		}
 

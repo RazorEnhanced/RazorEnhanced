@@ -733,7 +733,7 @@ namespace Assistant
 				item.Contains.Clear();
 			}
 
-			if (Config.GetBool("AutoSearch") && Backpack != null)
+            if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
 
 			ClientCommunication.PostMapChange(cur);
