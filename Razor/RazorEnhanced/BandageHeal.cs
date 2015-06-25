@@ -261,34 +261,8 @@ namespace RazorEnhanced
 
         // Core
 
-        internal static int EngineRun()
+        internal static int EngineRun(Assistant.Mobile target)
         {
-            if (World.Player.IsGhost)
-            {
-                Thread.Sleep(2000);
-                return 0;
-            }
-            Assistant.Mobile target;
-
-            if (BandageHeal.TargetType != "Self")
-            {
-                target = World.Player;
-            }
-            else
-            {
-                target = Assistant.World.FindMobile(World.Player.Serial);
-                if (target == null)         // Verifica se il target è valido
-                {
-                    Thread.Sleep(2000);
-                    return 0;
-                }
-                if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y)) > 2)     // Verifica distanza
-                {
-                    Thread.Sleep(5);
-                    return 0;
-                }
-            }
-
             if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < HpLimit || target.Poisoned)       // Check HP se bendare o meno.
             {
                 if (HiddenBlock)
@@ -429,7 +403,28 @@ namespace RazorEnhanced
         internal static void Engine()
         {
             int exit = Int32.MinValue;
-            exit = EngineRun();
+
+            if (World.Player.IsGhost)
+            {
+                return;
+            }
+            Assistant.Mobile target;
+
+            if (BandageHeal.TargetType != "Self")
+            {
+                target = World.Player;
+            }
+            else
+            {
+                target = Assistant.World.FindMobile(World.Player.Serial);
+                if (target == null)         // Verifica se il target è valido
+                    return;
+
+                if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y)) > 2)     // Verifica distanza
+                    return;
+            }
+
+            exit = EngineRun(target);
         }
 
         // Funzioni da script
