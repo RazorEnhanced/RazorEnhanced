@@ -123,8 +123,20 @@ namespace RazorEnhanced
             row["Name"] = name;
             row["Last"] = true;
             m_Dataset.Tables["PROFILES"].Rows.Add(row);
-
+           
             Save();
+
+            // RImuovo liste residue in caso siano presenti dal profilo precedente
+            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+            Assistant.Engine.MainWindow.DressListView.Items.Clear();
+            Assistant.Engine.MainWindow.FriendListView.Items.Clear();
+            Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
+            Assistant.Engine.MainWindow.RestockListView.Items.Clear();
+            Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
+            Assistant.Engine.MainWindow.BuyListView.Items.Clear();
+            Assistant.Engine.MainWindow.SellListView.Items.Clear();
+            Assistant.Engine.MainWindow.TargetListView.Items.Clear();
+
         }
 
         internal static void Delete(string name)
@@ -201,6 +213,28 @@ namespace RazorEnhanced
             if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
                 Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
 
+            // Svuoto logbox
+            Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
+            AutoLoot.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.ScavengerLogBox.Items.Clear();
+            Scavenger.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.OrganizerLogBox.Items.Clear();
+            Organizer.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.SellLogBox.Items.Clear();
+            SellAgent.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.BuyLogBox.Items.Clear();
+            BuyAgent.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.DressLogBox.Items.Clear();
+            Dress.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.FriendLogBox.Items.Clear();
+            Friend.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.RestockLogBox.Items.Clear();
+            Restock.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.BandageHealLogBox.Items.Clear();
+            BandageHeal.AddLog("Profile Changed!");
+
+
+
             // Cambio file
             if (name == "default")
                 RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
@@ -217,9 +251,10 @@ namespace RazorEnhanced
             // Carico save profilo
             RazorEnhanced.Settings.Load();
 
-
             // Reinizzializzo razor
-            Assistant.Engine.MainWindow.LoadSettings();            
+            Assistant.Engine.MainWindow.LoadSettings();
+
+ 
         }
 
 

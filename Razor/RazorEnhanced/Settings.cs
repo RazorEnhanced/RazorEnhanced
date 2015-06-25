@@ -21,9 +21,9 @@ namespace RazorEnhanced
 
 		internal static void Load()
 		{
-			//if (m_Dataset != null)
-			//	return;
-
+            if (m_Dataset != null)
+                m_Dataset.Clear();
+            
 			m_Dataset = new DataSet();
 			string filename = Path.Combine(Directory.GetCurrentDirectory(), m_Save);
 

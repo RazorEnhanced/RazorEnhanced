@@ -97,7 +97,6 @@ namespace Assistant
 		private ToolTip m_Tip;
 		#endregion
 
-		private int m_LastKV = 0;
 		private RazorCheckBox negotiate;
         private System.Windows.Forms.PictureBox lockBox;
         private RazorCheckBox preAOSstatbar;
@@ -6068,7 +6067,7 @@ namespace Assistant
 
 		internal void LoadSettings()
 		{
-			// Scripting
+            // Scripting
 			scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
 			//dataGridViewScripting.Rows.Clear();
             // X MAGNETO DA VERIDICARE IL CLEAR E LOAD IN QUANTO CAMBIANDO PROFILO SI INCASINA
@@ -7165,15 +7164,6 @@ namespace Assistant
 
 		private void rememberPwds_CheckedChanged(object sender, System.EventArgs e)
 		{
-
-            if (rememberPwds.Checked && !RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
-            {
-                if (MessageBox.Show(this, Language.GetString(LocString.PWWarn), "Security Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                {
-                    rememberPwds.Checked = false;
-                    return;
-                }
-            }
             if (rememberPwds.Focused)
                     RazorEnhanced.Settings.General.WriteBool("RememberPwds", rememberPwds.Checked);
 		}
@@ -7339,7 +7329,7 @@ namespace Assistant
                     ClientCommunication.SetGameSize(800, 600);
                 }
 
-                if (!m_Initializing)
+                if (World.Player != null)
                     MessageBox.Show(this, Language.GetString(LocString.RelogRequired), "Relog Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
             
 		}
@@ -10468,6 +10458,7 @@ namespace Assistant
                 RazorEnhanced.Profiles.SetLast("default");
                 RazorEnhanced.Profiles.Delete(profiletodelete);
                 RazorEnhanced.Profiles.Refresh();
+                RazorEnhanced.Profiles.ProfileChange("default");
                 try
                 {
                     File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced." + profiletodelete + ".settings"));
