@@ -58,10 +58,12 @@ namespace RazorEnhanced
                         else
                         {
                             AutoLoot.AddList(m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[0]["List"].ToString());
+                            List<RazorEnhanced.AutoLoot.AutoLootItem> itemlist = new List<AutoLoot.AutoLootItem>();
                             foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
                             {
-                                RazorEnhanced.Settings.AutoLoot.ItemInsert((string)row["List"], (RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
+                                itemlist.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
                             }
+                            RazorEnhanced.Settings.AutoLoot.ItemInsertFromImport(m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.AutoLoot.RefreshItems();
                             AutoLoot.AddLog("List: " + m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[0]["List"].ToString() + " imported!");
                         }
@@ -185,10 +187,12 @@ namespace RazorEnhanced
                         else
                         {
                             Scavenger.AddList(m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[0]["List"].ToString());
+                            List<RazorEnhanced.Scavenger.ScavengerItem> itemlist = new List<Scavenger.ScavengerItem>();
                             foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
                             {
-                                RazorEnhanced.Settings.Scavenger.ItemInsert((string)row["List"], (RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
+                                itemlist.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
                             }
+                            RazorEnhanced.Settings.Scavenger.ItemInsertFromImport(m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.Scavenger.RefreshItems();
                             Scavenger.AddLog("List: " + m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[0]["List"].ToString() + " imported!");
                         }
@@ -311,10 +315,12 @@ namespace RazorEnhanced
                         else
                         {
                             Organizer.AddList(m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[0]["List"].ToString());
+                            List<RazorEnhanced.Organizer.OrganizerItem> itemlist = new List<Organizer.OrganizerItem>();
                             foreach (DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows)
                             {
-                                RazorEnhanced.Settings.Organizer.ItemInsert((string)row["List"], (RazorEnhanced.Organizer.OrganizerItem)row["Item"]);
+                                itemlist.Add((RazorEnhanced.Organizer.OrganizerItem)row["Item"]);
                             }
+                            RazorEnhanced.Settings.Organizer.ItemInsertFromImport(m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.Organizer.RefreshItems();
                             Organizer.AddLog("List: " + m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[0]["List"].ToString() + " imported!");
                         }
@@ -437,10 +443,12 @@ namespace RazorEnhanced
                         else
                         {
                             SellAgent.AddList(m_Dataset.Tables["SELL_ITEMS"].Rows[0]["List"].ToString());
+                            List<RazorEnhanced.SellAgent.SellAgentItem> itemlist = new List<SellAgent.SellAgentItem>();
                             foreach (DataRow row in m_Dataset.Tables["SELL_ITEMS"].Rows)
                             {
-                                RazorEnhanced.Settings.SellAgent.ItemInsert((string)row["List"], (RazorEnhanced.SellAgent.SellAgentItem)row["Item"]);
+                                itemlist.Add((RazorEnhanced.SellAgent.SellAgentItem)row["Item"]);
                             }
+                            RazorEnhanced.Settings.SellAgent.ItemInsertFromImport(m_Dataset.Tables["SELL_ITEMS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.SellAgent.RefreshItems();
                             SellAgent.AddLog("List: " + m_Dataset.Tables["SELL_ITEMS"].Rows[0]["List"].ToString() + " imported!");
                         }
@@ -561,10 +569,12 @@ namespace RazorEnhanced
                         else
                         {
                             BuyAgent.AddList(m_Dataset.Tables["BUY_ITEMS"].Rows[0]["List"].ToString());
+                            List<RazorEnhanced.BuyAgent.BuyAgentItem> itemlist = new List<BuyAgent.BuyAgentItem>();
                             foreach (DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows)
                             {
-                                RazorEnhanced.Settings.BuyAgent.ItemInsert((string)row["List"], (RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"]);
+                                itemlist.Add((RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"]);
                             }
+                            RazorEnhanced.Settings.BuyAgent.ItemInsertFromImport(m_Dataset.Tables["BUY_ITEMS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.BuyAgent.RefreshItems();
                             BuyAgent.AddLog("List: " + m_Dataset.Tables["BUY_ITEMS"].Rows[0]["List"].ToString() + " imported!");
                         }
@@ -686,10 +696,12 @@ namespace RazorEnhanced
                         else
                         {
                             Dress.AddList(m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString());
+                            List<RazorEnhanced.Dress.DressItem> itemlist = new List<Dress.DressItem>();
                             foreach (DataRow row in m_Dataset.Tables["DESS_ITEMS"].Rows)
                             {
-                                RazorEnhanced.Settings.Dress.ItemInsert((string)row["List"], (RazorEnhanced.Dress.DressItem)row["Item"]);
+                                itemlist.Add((RazorEnhanced.Dress.DressItem)row["Item"]);
                             }
+                            RazorEnhanced.Settings.Dress.ItemInsertFromImport(m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.Dress.RefreshItems();
                             Dress.AddLog("List: " + m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString() + " imported!");
                         }
@@ -811,10 +823,12 @@ namespace RazorEnhanced
                         else
                         {
                             Friend.AddList(m_Dataset.Tables["FRIEND_PLAYERS"].Rows[0]["List"].ToString());
+                            List<RazorEnhanced.Friend.FriendPlayer> itemlist = new List<Friend.FriendPlayer>();
                             foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
                             {
-                                RazorEnhanced.Settings.Friend.PlayerInsert((string)row["List"], (RazorEnhanced.Friend.FriendPlayer)row["Item"]);
+                                itemlist.Add((RazorEnhanced.Friend.FriendPlayer)row["Item"]);
                             }
+                            RazorEnhanced.Settings.Friend.PlayerInsertFromImport(m_Dataset.Tables["FRIEND_PLAYERS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.Friend.RefreshPlayers();
                             Friend.AddLog("List: " + m_Dataset.Tables["FRIEND_PLAYERS"].Rows[0]["List"].ToString() + " imported!");
                         }
@@ -937,11 +951,13 @@ namespace RazorEnhanced
                             Restock.AddLog("List: " + m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString() + " already exist");
                         else
                         {
+                            List<RazorEnhanced.Restock.RestockItem> itemlist = new List<Restock.RestockItem>();
                             Restock.AddList(m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString());
                             foreach (DataRow row in m_Dataset.Tables["RESTOCK_ITEMS"].Rows)
                             {
-                                RazorEnhanced.Settings.Restock.ItemInsert((string)row["List"], (RazorEnhanced.Restock.RestockItem)row["Item"]);
+                                itemlist.Add((RazorEnhanced.Restock.RestockItem)row["Item"]);
                             }
+                            RazorEnhanced.Settings.Restock.ItemInsertFromImport(m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString(), itemlist);
                             RazorEnhanced.Restock.RefreshItems();
                             Restock.AddLog("List: " + m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString() + " imported!");
                         }

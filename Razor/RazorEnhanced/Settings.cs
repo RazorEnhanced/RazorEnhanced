@@ -1507,6 +1507,18 @@ namespace RazorEnhanced
 				Save();
 			}
 
+            internal static void ItemInsertFromImport(string list, List<RazorEnhanced.AutoLoot.AutoLootItem> itemlist)
+            {
+                foreach (RazorEnhanced.AutoLoot.AutoLootItem item in itemlist)
+                {
+                    DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].NewRow();
+                    row["List"] = list;
+                    row["Item"] = item;
+                    m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Add(row);
+                }
+                Save();
+            }
+
 			internal static void ItemReplace(string list, int index, RazorEnhanced.AutoLoot.AutoLootItem item)
 			{
 				int count = -1;
@@ -1710,6 +1722,19 @@ namespace RazorEnhanced
 
 				Save();
 			}
+
+            internal static void ItemInsertFromImport(string list, List<RazorEnhanced.Scavenger.ScavengerItem> itemlist)
+            {
+                foreach (RazorEnhanced.Scavenger.ScavengerItem item in itemlist)
+                {
+                    DataRow row = m_Dataset.Tables["SCAVENGER_ITEMS"].NewRow();
+                    row["List"] = list;
+                    row["Item"] = item;
+                    m_Dataset.Tables["SCAVENGER_ITEMS"].Rows.Add(row);
+                }
+                Save();
+            }
+
 
 			internal static void ItemReplace(string list, int index, RazorEnhanced.Scavenger.ScavengerItem item)
 			{
@@ -1920,6 +1945,18 @@ namespace RazorEnhanced
 
 				Save();
 			}
+
+            internal static void ItemInsertFromImport(string list, List<RazorEnhanced.Organizer.OrganizerItem> itemlist)
+            {
+                foreach (RazorEnhanced.Organizer.OrganizerItem item in itemlist)
+                {
+                    DataRow row = m_Dataset.Tables["ORGANIZER_ITEMS"].NewRow();
+                    row["List"] = list;
+                    row["Item"] = item;
+                    m_Dataset.Tables["ORGANIZER_ITEMS"].Rows.Add(row);
+                }
+                Save();
+            }
 
 			internal static void ItemReplace(string list, int index, RazorEnhanced.Organizer.OrganizerItem item)
 			{
@@ -2138,6 +2175,18 @@ namespace RazorEnhanced
 				Save();
 			}
 
+            internal static void ItemInsertFromImport(string list, List<RazorEnhanced.SellAgent.SellAgentItem> itemlist)
+            {
+                foreach (RazorEnhanced.SellAgent.SellAgentItem item in itemlist)
+                {
+                    DataRow row = m_Dataset.Tables["SELL_ITEMS"].NewRow();
+                    row["List"] = list;
+                    row["Item"] = item;
+                    m_Dataset.Tables["SELL_ITEMS"].Rows.Add(row);
+                }
+                Save();
+            }
+
 			internal static void ItemReplace(string list, int index, RazorEnhanced.SellAgent.SellAgentItem item)
 			{
 				int count = -1;
@@ -2320,6 +2369,18 @@ namespace RazorEnhanced
 
 				Save();
 			}
+
+            internal static void ItemInsertFromImport(string list, List<RazorEnhanced.BuyAgent.BuyAgentItem> itemlist)
+            {
+                foreach (RazorEnhanced.BuyAgent.BuyAgentItem item in itemlist)
+                {
+                    DataRow row = m_Dataset.Tables["BUY_ITEMS"].NewRow();
+                    row["List"] = list;
+                    row["Item"] = item;
+                    m_Dataset.Tables["BUY_ITEMS"].Rows.Add(row);
+                }
+                Save();
+            }
 
 			internal static void ItemReplace(string list, int index, RazorEnhanced.BuyAgent.BuyAgentItem item)
 			{
@@ -2549,6 +2610,19 @@ namespace RazorEnhanced
 
                 Save();
             }
+
+            internal static void ItemInsertFromImport(string list, List<RazorEnhanced.Dress.DressItem> itemlist)
+            {
+                foreach (RazorEnhanced.Dress.DressItem item in itemlist)
+                {
+                    DataRow row = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
+                    row["List"] = list;
+                    row["Item"] = item;
+                    m_Dataset.Tables["DRESS_ITEMS"].Rows.Add(row);
+                }
+                Save();
+            }
+
             internal static void ItemDelete(string list, RazorEnhanced.Dress.DressItem item)
             {
                 for (int i = m_Dataset.Tables["DRESS_ITEMS"].Rows.Count - 1; i >= 0; i--)
@@ -2745,6 +2819,18 @@ namespace RazorEnhanced
                 row["Player"] = player;
                 m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
 
+                Save();
+            }
+
+            internal static void PlayerInsertFromImport(string list, List<RazorEnhanced.Friend.FriendPlayer> playerlist)
+            {
+                foreach (RazorEnhanced.Friend.FriendPlayer player in playerlist)
+                {
+                    DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].NewRow();
+                    row["List"] = list;
+                    row["Player"] = player;
+                    m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
+                }
                 Save();
             }
 
@@ -2957,6 +3043,18 @@ namespace RazorEnhanced
                 row["Item"] = item;
                 m_Dataset.Tables["RESTOCK_ITEMS"].Rows.Add(row);
 
+                Save();
+            }
+
+            internal static void ItemInsertFromImport(string list, List<RazorEnhanced.Restock.RestockItem> itemlist)
+            {
+                foreach (RazorEnhanced.Restock.RestockItem item in itemlist)
+                {
+                    DataRow row = m_Dataset.Tables["RESTOCK_ITEMS"].NewRow();
+                    row["List"] = list;
+                    row["Item"] = item;
+                    m_Dataset.Tables["RESTOCK_ITEMS"].Rows.Add(row);
+                }
                 Save();
             }
 
