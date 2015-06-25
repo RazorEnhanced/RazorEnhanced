@@ -67,9 +67,11 @@ namespace RazorEnhanced
 				DataTable profile = new DataTable("PROFILES");
                 profile.Columns.Add("Name", typeof(string));
                 profile.Columns.Add("Last", typeof(bool));
+                profile.Columns.Add("PlayerName", typeof(string));
+                profile.Columns.Add("PlayerSerial", typeof(int));
 
                 DataRow profilerow = profile.NewRow();
-                profilerow.ItemArray = new object[] { "default", true };
+                profilerow.ItemArray = new object[] { "default", true, "None", 0 };
                 profile.Rows.Add(profilerow);
 
                 m_Dataset.Tables.Add(profile);

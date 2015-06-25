@@ -470,6 +470,13 @@ namespace Assistant
         private RazorButton profilesDeleteButton;
         private RazorButton profilesAddButton;
         private RazorComboBox profilesComboBox;
+        private RazorButton profilesExportButton;
+        private RazorButton profilesCloneButton;
+        private RazorButton profilesRenameButton;
+        private RazorButton profilesImportButton;
+        private RazorButton profilesUnlinkButton;
+        private RazorButton profilesLinkButton;
+        private Label profilelinklabel;
 
 		private bool m_CanClose = true;
 
@@ -656,6 +663,7 @@ namespace Assistant
 		{
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             this.tabs = new System.Windows.Forms.TabControl();
             this.generalTab = new System.Windows.Forms.TabPage();
@@ -867,6 +875,13 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.profilelinklabel = new System.Windows.Forms.Label();
+            this.profilesExportButton = new RazorEnhanced.UI.RazorButton();
+            this.profilesCloneButton = new RazorEnhanced.UI.RazorButton();
+            this.profilesRenameButton = new RazorEnhanced.UI.RazorButton();
+            this.profilesImportButton = new RazorEnhanced.UI.RazorButton();
+            this.profilesUnlinkButton = new RazorEnhanced.UI.RazorButton();
+            this.profilesLinkButton = new RazorEnhanced.UI.RazorButton();
             this.profilesDeleteButton = new RazorEnhanced.UI.RazorButton();
             this.profilesAddButton = new RazorEnhanced.UI.RazorButton();
             this.profilesComboBox = new RazorEnhanced.UI.RazorComboBox();
@@ -1208,12 +1223,19 @@ namespace Assistant
             // 
             // groupBox29
             // 
+            this.groupBox29.Controls.Add(this.profilesExportButton);
+            this.groupBox29.Controls.Add(this.profilesCloneButton);
+            this.groupBox29.Controls.Add(this.profilesRenameButton);
+            this.groupBox29.Controls.Add(this.profilesImportButton);
+            this.groupBox29.Controls.Add(this.profilesUnlinkButton);
+            this.groupBox29.Controls.Add(this.profilesLinkButton);
+            this.groupBox29.Controls.Add(this.profilelinklabel);
             this.groupBox29.Controls.Add(this.profilesDeleteButton);
             this.groupBox29.Controls.Add(this.profilesAddButton);
             this.groupBox29.Controls.Add(this.profilesComboBox);
-            this.groupBox29.Location = new System.Drawing.Point(253, 222);
+            this.groupBox29.Location = new System.Drawing.Point(253, 205);
             this.groupBox29.Name = "groupBox29";
-            this.groupBox29.Size = new System.Drawing.Size(311, 55);
+            this.groupBox29.Size = new System.Drawing.Size(390, 98);
             this.groupBox29.TabIndex = 66;
             this.groupBox29.TabStop = false;
             this.groupBox29.Text = "Profiles";
@@ -1243,7 +1265,7 @@ namespace Assistant
             // 
             this.opacity.AutoSize = false;
             this.opacity.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.opacity.Location = new System.Drawing.Point(331, 283);
+            this.opacity.Location = new System.Drawing.Point(331, 323);
             this.opacity.Maximum = 100;
             this.opacity.Minimum = 10;
             this.opacity.Name = "opacity";
@@ -1276,7 +1298,7 @@ namespace Assistant
             // 
             // opacityLabel
             // 
-            this.opacityLabel.Location = new System.Drawing.Point(253, 283);
+            this.opacityLabel.Location = new System.Drawing.Point(253, 323);
             this.opacityLabel.Name = "opacityLabel";
             this.opacityLabel.Size = new System.Drawing.Size(78, 16);
             this.opacityLabel.TabIndex = 23;
@@ -3318,29 +3340,98 @@ namespace Assistant
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
             // 
+            // profilelinklabel
+            // 
+            this.profilelinklabel.AutoSize = true;
+            this.profilelinklabel.Location = new System.Drawing.Point(7, 50);
+            this.profilelinklabel.Name = "profilelinklabel";
+            this.profilelinklabel.Size = new System.Drawing.Size(81, 13);
+            this.profilelinklabel.TabIndex = 5;
+            this.profilelinklabel.Text = "Linked to: none";
+            // 
+            // profilesExportButton
+            // 
+            office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+            office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+            office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+            office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+            office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+            office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+            office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+            office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+            office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+            office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+            this.profilesExportButton.ColorTable = office2010BlueTheme2;
+            this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
+            this.profilesExportButton.Name = "profilesExportButton";
+            this.profilesExportButton.Size = new System.Drawing.Size(63, 20);
+            this.profilesExportButton.TabIndex = 9;
+            this.profilesExportButton.Text = "Export";
+            this.profilesExportButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // profilesCloneButton
+            // 
+            this.profilesCloneButton.ColorTable = office2010BlueTheme1;
+            this.profilesCloneButton.Location = new System.Drawing.Point(321, 44);
+            this.profilesCloneButton.Name = "profilesCloneButton";
+            this.profilesCloneButton.Size = new System.Drawing.Size(63, 20);
+            this.profilesCloneButton.TabIndex = 9;
+            this.profilesCloneButton.Text = "Clone";
+            this.profilesCloneButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // profilesRenameButton
+            // 
+            this.profilesRenameButton.ColorTable = office2010BlueTheme1;
+            this.profilesRenameButton.Location = new System.Drawing.Point(252, 44);
+            this.profilesRenameButton.Name = "profilesRenameButton";
+            this.profilesRenameButton.Size = new System.Drawing.Size(63, 20);
+            this.profilesRenameButton.TabIndex = 8;
+            this.profilesRenameButton.Text = "Raname";
+            this.profilesRenameButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // profilesImportButton
+            // 
+            this.profilesImportButton.ColorTable = office2010BlueTheme1;
+            this.profilesImportButton.Location = new System.Drawing.Point(252, 70);
+            this.profilesImportButton.Name = "profilesImportButton";
+            this.profilesImportButton.Size = new System.Drawing.Size(63, 20);
+            this.profilesImportButton.TabIndex = 8;
+            this.profilesImportButton.Text = "Import";
+            this.profilesImportButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // profilesUnlinkButton
+            // 
+            this.profilesUnlinkButton.ColorTable = office2010BlueTheme1;
+            this.profilesUnlinkButton.Location = new System.Drawing.Point(75, 70);
+            this.profilesUnlinkButton.Name = "profilesUnlinkButton";
+            this.profilesUnlinkButton.Size = new System.Drawing.Size(63, 20);
+            this.profilesUnlinkButton.TabIndex = 7;
+            this.profilesUnlinkButton.Text = "UnLink";
+            this.profilesUnlinkButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
+            // profilesLinkButton
+            // 
+            this.profilesLinkButton.ColorTable = office2010BlueTheme1;
+            this.profilesLinkButton.Location = new System.Drawing.Point(6, 70);
+            this.profilesLinkButton.Name = "profilesLinkButton";
+            this.profilesLinkButton.Size = new System.Drawing.Size(63, 20);
+            this.profilesLinkButton.TabIndex = 6;
+            this.profilesLinkButton.Text = "Link";
+            this.profilesLinkButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            // 
             // profilesDeleteButton
             // 
-            office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-            office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-            office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-            office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-            office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-            office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-            office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-            office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-            office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-            office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-            office2010BlueTheme1.TextColor = System.Drawing.Color.White;
             this.profilesDeleteButton.ColorTable = office2010BlueTheme1;
-            this.profilesDeleteButton.Location = new System.Drawing.Point(227, 19);
+            this.profilesDeleteButton.Location = new System.Drawing.Point(321, 18);
             this.profilesDeleteButton.Name = "profilesDeleteButton";
-            this.profilesDeleteButton.Size = new System.Drawing.Size(63, 24);
+            this.profilesDeleteButton.Size = new System.Drawing.Size(63, 20);
             this.profilesDeleteButton.TabIndex = 4;
             this.profilesDeleteButton.Text = "Delete";
             this.profilesDeleteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -3349,9 +3440,9 @@ namespace Assistant
             // profilesAddButton
             // 
             this.profilesAddButton.ColorTable = office2010BlueTheme1;
-            this.profilesAddButton.Location = new System.Drawing.Point(158, 19);
+            this.profilesAddButton.Location = new System.Drawing.Point(252, 18);
             this.profilesAddButton.Name = "profilesAddButton";
-            this.profilesAddButton.Size = new System.Drawing.Size(63, 24);
+            this.profilesAddButton.Size = new System.Drawing.Size(63, 20);
             this.profilesAddButton.TabIndex = 3;
             this.profilesAddButton.Text = "Add";
             this.profilesAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -3363,7 +3454,7 @@ namespace Assistant
             this.profilesComboBox.FormattingEnabled = true;
             this.profilesComboBox.Location = new System.Drawing.Point(6, 19);
             this.profilesComboBox.Name = "profilesComboBox";
-            this.profilesComboBox.Size = new System.Drawing.Size(141, 24);
+            this.profilesComboBox.Size = new System.Drawing.Size(240, 24);
             this.profilesComboBox.TabIndex = 0;
             this.profilesComboBox.SelectedIndexChanged += new System.EventHandler(this.profilesComboBox_SelectedIndexChanged);
             // 
@@ -5924,6 +6015,7 @@ namespace Assistant
             this.generalTab.ResumeLayout(false);
             this.generalTab.PerformLayout();
             this.groupBox29.ResumeLayout(false);
+            this.groupBox29.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lockBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.opacity)).EndInit();
             this.groupBox1.ResumeLayout(false);
