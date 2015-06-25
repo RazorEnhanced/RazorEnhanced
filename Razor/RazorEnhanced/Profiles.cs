@@ -169,6 +169,38 @@ namespace RazorEnhanced
             // Salvo password memory 
             PasswordMemory.Save();
 
+            // Stop forzato di tutti gli script 
+            // TODO X Magneto (Funzione STOP DI SCRIPT IN ESECUZIONE)
+
+            // Stop forzato di tutti i thread agent 
+            if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+
+            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
+
+            // Stop filtri
+            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+                Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
+                Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
+
             // Clear componenti agent
             Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
             Assistant.Engine.MainWindow.AutoLootListSelect.Items.Clear();
@@ -206,41 +238,7 @@ namespace RazorEnhanced
 
 
             // Reinizzializzo razor
-            Assistant.Engine.MainWindow.LoadSettings();
-
-
-            // Stop forzato di tutti gli script 
-            // TODO X Magneto (Funzione STOP DI SCRIPT IN ESECUZIONE)
-
-            // Stop forzato di tutti i thread agent 
-            if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
-
-            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
-
-            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
-
-            // Stop filtri
-            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
-                Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
-                Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
-            
+            Assistant.Engine.MainWindow.LoadSettings();            
         }
 
 
