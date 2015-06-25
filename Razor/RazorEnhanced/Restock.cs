@@ -102,15 +102,9 @@ namespace RazorEnhanced
                 try
                 {
                     serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.RestockSourceLabel.Text, 16);
-
-                    if (serialBag == 0)
-                    {
-                        serialBag = (int)World.Player.Backpack.Serial.Value;
-                    }
                 }
                 catch
-                {
-                }
+                { }
 
                 return serialBag;
             }
@@ -130,15 +124,9 @@ namespace RazorEnhanced
                 try
                 {
                     serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.RestockDestinationLabel.Text, 16);
-
-                    if (serialBag == 0)
-                    {
-                        serialBag = (int)World.Player.Backpack.Serial.Value;
-                    }
                 }
                 catch
-                {
-                }
+                { }
 
                 return serialBag;
             }
@@ -158,9 +146,6 @@ namespace RazorEnhanced
 
         internal static void RefreshLists()
         {
-            Assistant.Engine.MainWindow.RestockListSelect.Items.Clear();
-            Assistant.Engine.MainWindow.RestockListView.Items.Clear();
-
             List<RestockList> lists;
             RazorEnhanced.Settings.Restock.ListsRead(out lists);
 
@@ -299,8 +284,11 @@ namespace RazorEnhanced
                     return false;
         }
 
-        internal static int Engine(List<RestockItem> restockItemList, int mseconds, Item sourceBag, Item destinationBag)
+        internal static int Engine(List<RestockItem> restockItemList, int mseconds, int sourceBagserial, int destinationBagserial)
         {
+            Item sourceBag = Items.FindBySerial(sourceBagserial);
+            Item destinationBag = Items.FindBySerial(destinationBagserial);
+
             // Apre le bag per item contenuti
             RazorEnhanced.Restock.AddLog("- Refresh Source Container");
             Items.UseItem(sourceBag);
@@ -353,23 +341,29 @@ namespace RazorEnhanced
 
         internal static void Engine()
         {
-            Assistant.Item sourceBag = Assistant.World.FindItem(RestockSource);
-            Assistant.Item destinationBag = Assistant.World.FindItem(RestockDestination);
-
-            if (sourceBag == null || destinationBag == null)
+            // Check Bag
+            Assistant.Item sbag = Assistant.World.FindItem(RestockSource);
+            if (sbag == null)
             {
-                AddLog("Source or destination bag is invalid or inaccessible");
+                Misc.SendMessage("Restock: Invalid Source Bag");
+                AddLog("Invalid Source Bag");
+                Assistant.Engine.MainWindow.RestockFinishWork();
                 return;
             }
-
-            RazorEnhanced.Item razorSource = new RazorEnhanced.Item(sourceBag);
-            RazorEnhanced.Item razorDestination = new RazorEnhanced.Item(destinationBag);
+            Assistant.Item dbag = Assistant.World.FindItem(RestockDestination);
+            if (dbag == null)
+            {
+                Misc.SendMessage("Restock: Invalid Destination Bag");
+                AddLog("Invalid Destination Bag");
+                Assistant.Engine.MainWindow.RestockFinishWork();
+                return;
+            }
 
             List<Restock.RestockItem> items;
             string list = Restock.RestockListName;
             RazorEnhanced.Settings.Restock.ItemsRead(list, out items);
 
-            int exit = Engine(items, RestockDelay, razorSource, razorDestination);
+            int exit = Engine(items, RestockDelay, RestockSource, RestockDestination);
         }
 
         private static Thread m_RestockThread;

@@ -123,24 +123,12 @@ namespace RazorEnhanced
 			{
 				int serialBag = 0;
 
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
-
-					if (serialBag == 0)
-					{
-						serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-					else
-					{
-						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-						if (bag.RootContainer != World.Player)
-							serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-				}
-				catch (Exception ex)
-				{
-				}
+                try
+                {
+                    serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
+                }
+                catch
+                { }
 
 				return serialBag;
 			}
@@ -160,9 +148,7 @@ namespace RazorEnhanced
 		}
 
 		internal static void RefreshLists()
-		{
-            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
-            Assistant.Engine.MainWindow.AutoLootListSelect.Items.Clear();
+        {
 			List<AutoLootList> lists;
 			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
 
@@ -479,6 +465,26 @@ namespace RazorEnhanced
 			corpseFilter.IsCorpse = true;
 			corpseFilter.OnGround = true;
 			corpseFilter.Enabled = true;
+
+            // Check bag
+            Assistant.Item bag = Assistant.World.FindItem(AutoLootBag);
+            if (bag != null)
+            {
+                if (bag.RootContainer != World.Player)
+                {
+                    Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+                    AddLog("Invalid Bag, Switch to backpack");
+                    AutoLootBag = (int)World.Player.Backpack.Serial.Value;
+                    RazorEnhanced.Settings.AutoLoot.ListUpdate(AutoLootListName, RazorEnhanced.AutoLoot.AutoLootDelay, (int)World.Player.Backpack.Serial.Value, true);
+                }
+            }
+            else
+            {
+                Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+                AddLog("Invalid Bag, Switch to backpack");
+                AutoLootBag = (int)World.Player.Backpack.Serial.Value;
+                RazorEnhanced.Settings.AutoLoot.ListUpdate(AutoLootListName, RazorEnhanced.AutoLoot.AutoLootDelay, (int)World.Player.Backpack.Serial.Value, true);
+            }
 
 			List<AutoLoot.AutoLootItem> items;
 			string list = AutoLoot.AutoLootListName;

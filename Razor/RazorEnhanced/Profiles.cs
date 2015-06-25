@@ -169,6 +169,25 @@ namespace RazorEnhanced
             // Salvo password memory 
             PasswordMemory.Save();
 
+            // Clear componenti agent
+            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+            Assistant.Engine.MainWindow.AutoLootListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.DressListView.Items.Clear();
+            Assistant.Engine.MainWindow.DressListView.Items.Clear();
+            Assistant.Engine.MainWindow.FriendListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.FriendListView.Items.Clear();
+            Assistant.Engine.MainWindow.OrganizerListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
+            Assistant.Engine.MainWindow.RestockListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.RestockListView.Items.Clear();
+            Assistant.Engine.MainWindow.ScavengerListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
+            Assistant.Engine.MainWindow.BuyListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.BuyListView.Items.Clear();
+            Assistant.Engine.MainWindow.SellListSelect.Items.Clear();
+            Assistant.Engine.MainWindow.SellListView.Items.Clear();
+            Assistant.Engine.MainWindow.TargetListView.Items.Clear();
+
             // Cambio file
             if (name == "default")
                 RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
@@ -179,16 +198,16 @@ namespace RazorEnhanced
             PasswordMemory.ClearAll();
             Assistant.Filters.Filter.DisableAll();
 
-
+            // Chiuto toolbar
+            Assistant.Engine.MainWindow.CloseToolBar();
 
             // Carico save profilo
             RazorEnhanced.Settings.Load();
 
+
             // Reinizzializzo razor
             Assistant.Engine.MainWindow.LoadSettings();
 
-            // Chiuto toolbar
-            Assistant.Engine.MainWindow.CloseToolBar();
 
             // Stop forzato di tutti gli script 
             // TODO X Magneto (Funzione STOP DI SCRIPT IN ESECUZIONE)

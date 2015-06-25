@@ -1316,6 +1316,7 @@ namespace RazorEnhanced
                 general.Columns.Add("ForceIP", typeof(string));
                 general.Columns.Add("BlockHealPoison", typeof(bool));
                 general.Columns.Add("AutoSearch", typeof(bool));
+                general.Columns.Add("NoSearchPouches", typeof(bool));
 
                 // Parametri Mappa
                 general.Columns.Add("MapX", typeof(int));
@@ -1356,7 +1357,7 @@ namespace RazorEnhanced
                     false, Keys.None,
 
                     // Parametri primo avvio interni
-                    "[{0}% / {1}%]", 0, "", false, true,
+                    "[{0}% / {1}%]", 0, "", false, true, false,
 
                      // Parametri primo avvio Mappa
                      200,200,200,200

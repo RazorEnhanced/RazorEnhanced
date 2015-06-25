@@ -104,15 +104,10 @@ namespace RazorEnhanced
 				try
 				{
 					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.OrganizerSourceLabel.Text, 16);
-
-					if (serialBag == 0)
-					{
-						serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-				}
-				catch
-				{
-				}
+                }
+                catch
+                {
+                }
 
 				return serialBag;
 			}
@@ -131,16 +126,11 @@ namespace RazorEnhanced
 
 				try
 				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.OrganizerDestinationLabel.Text, 16);
-
-					if (serialBag == 0)
-					{
-						serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-				}
-				catch
-				{
-				}
+                    serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.OrganizerDestinationLabel.Text, 16);
+                }
+                catch
+                {
+                }
 
 				return serialBag;
 			}
@@ -161,9 +151,6 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-            Assistant.Engine.MainWindow.OrganizerListSelect.Items.Clear();
-            Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
-
 			List<OrganizerList> lists;
 			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
 
@@ -304,8 +291,11 @@ namespace RazorEnhanced
                     return false;
         }
 
-		internal static int Engine(List<OrganizerItem> organizerItemList, int mseconds, Item sourceBag, Item destinationBag)
+        internal static int Engine(List<OrganizerItem> organizerItemList, int mseconds, int sourceBagserail, int destinationBagserial)
 		{
+            Item sourceBag = Items.FindBySerial(sourceBagserail);
+            Item destinationBag = Items.FindBySerial(destinationBagserial);
+
 			// Apre le bag per item contenuti
             RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
             Items.UseItem(sourceBag);
@@ -365,23 +355,29 @@ namespace RazorEnhanced
 
 		internal static void Engine()
 		{
-			Assistant.Item sourceBag = Assistant.World.FindItem(OrganizerSource);
-			Assistant.Item destinationBag = Assistant.World.FindItem(OrganizerDestination);
-
-			if (sourceBag == null || destinationBag == null)
+            // Check Bag
+            Assistant.Item sbag = Assistant.World.FindItem(OrganizerSource);
+            if (sbag == null)
             {
-                AddLog("Source or destination bag is invalid or inaccessible");
+                Misc.SendMessage("Organizer: Invalid Source Bag");
+                AddLog("Invalid Source Bag");
+                Assistant.Engine.MainWindow.OrganizerFinishWork();
                 return;
             }
-
-			RazorEnhanced.Item razorSource = new RazorEnhanced.Item(sourceBag);
-			RazorEnhanced.Item razorDestination = new RazorEnhanced.Item(destinationBag);
+            Assistant.Item dbag = Assistant.World.FindItem(OrganizerDestination);
+            if (dbag == null)
+            {
+                Misc.SendMessage("Organizer: Invalid Destination Bag");
+                AddLog("Invalid Destination Bag");
+                Assistant.Engine.MainWindow.OrganizerFinishWork();
+                return;
+            }
 
 			List<Organizer.OrganizerItem> items;
 			string list = Organizer.OrganizerListName;
 			RazorEnhanced.Settings.Organizer.ItemsRead(list, out items);
 
-			int exit = Engine(items, OrganizerDelay, razorSource, razorDestination);
+            int exit = Engine(items, OrganizerDelay, OrganizerSource, OrganizerDestination);
 		}
 
 		private static Thread m_OrganizerThread;

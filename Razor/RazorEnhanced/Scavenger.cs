@@ -121,28 +121,16 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int serialBag = 0;
+                int serialBag = 0;
 
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
+                try
+                {
+                    serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
+                }
+                catch
+                { }
 
-					if (serialBag == 0)
-					{
-						serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-					else
-					{
-						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-						if (bag.RootContainer != World.Player)
-							serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-				}
-				catch (Exception ex)
-				{
-				}
-
-				return serialBag;
+                return serialBag;
 			}
 
 			set
@@ -161,8 +149,6 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-            Assistant.Engine.MainWindow.ScavengerListSelect.Items.Clear();
-            Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
 			List<ScavengerList> lists;
 			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
 
@@ -405,6 +391,26 @@ namespace RazorEnhanced
 			itemFilter.Movable = true;
 			itemFilter.OnGround = true;
 			itemFilter.Enabled = true;
+
+            // Check bag
+            Assistant.Item bag = Assistant.World.FindItem(ScavengerBag);
+            if (bag != null)
+            {
+                if (bag.RootContainer != World.Player)
+                {
+                    Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
+                    AddLog("Invalid Bag, Switch to backpack");
+                    ScavengerBag = (int)World.Player.Backpack.Serial.Value;
+                    RazorEnhanced.Settings.Scavenger.ListUpdate(ScavengerListName, RazorEnhanced.Scavenger.ScavengerDelay, (int)World.Player.Backpack.Serial.Value, true);
+                }
+            }
+            else
+            {
+                Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
+                AddLog("Invalid Bag, Switch to backpack");
+                ScavengerBag = (int)World.Player.Backpack.Serial.Value;
+                RazorEnhanced.Settings.Scavenger.ListUpdate(ScavengerListName, RazorEnhanced.Scavenger.ScavengerDelay, (int)World.Player.Backpack.Serial.Value, true);
+            }
 
 			List<Scavenger.ScavengerItem> items;
 			string list = Scavenger.ScavengerListName;

@@ -80,21 +80,9 @@ namespace RazorEnhanced
 				try
 				{
 					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.SellBagLabel.Text, 16);
-
-					if (serialBag == 0)
-					{
-						serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-					else
-					{
-						Item bag = RazorEnhanced.Items.FindBySerial(serialBag);
-						if (bag.RootContainer != World.Player)
-							serialBag = (int)World.Player.Backpack.Serial.Value;
-					}
-				}
-				catch
-				{
-				}
+                }
+                catch
+                { }
 
 				return serialBag;
 			}
@@ -115,9 +103,6 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-            Assistant.Engine.MainWindow.SellListSelect.Items.Clear();
-            Assistant.Engine.MainWindow.SellListView.Items.Clear();
-
 			List<SellAgentList> lists;
 			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
@@ -493,9 +478,6 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-            Assistant.Engine.MainWindow.BuyListSelect.Items.Clear();
-            Assistant.Engine.MainWindow.BuyListView.Items.Clear();
-
 			List<BuyAgentList> lists;
 			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
 
