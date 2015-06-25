@@ -1090,7 +1090,15 @@ namespace Assistant
 			Stream.Fill();
 			*/
 			ClientCommunication.BeginCalibratePosition();
-    
+            
+            // Carico profili se linkati
+            string profilename = RazorEnhanced.Profiles.IsLinked(serial);
+            if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)
+            {
+                RazorEnhanced.Profiles.SetLast(profilename);
+                RazorEnhanced.Profiles.ProfileChange(profilename);
+                RazorEnhanced.Profiles.Refresh();
+            }
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)

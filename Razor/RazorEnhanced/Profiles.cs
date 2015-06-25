@@ -122,8 +122,10 @@ namespace RazorEnhanced
         internal static void Add(string name)
         {
             DataRow row = m_Dataset.Tables["PROFILES"].NewRow();
-            row["Name"] = name;
-            row["Last"] = true;
+            row["Name"] = (String)name;
+            row["Last"] = (bool)true;
+            row["PlayerName"] = (String)"None";
+            row["PlayerSerial"] = (int)0;
             m_Dataset.Tables["PROFILES"].Rows.Add(row);
            
             Save();
@@ -150,6 +152,64 @@ namespace RazorEnhanced
 
             return false;
         }
+
+        internal static string IsLinked(int serial)
+        {
+            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+            {
+                if ((int)row["PlayerSerial"] == serial)
+                    return (string)row["Name"];
+            }
+
+            return null;
+        }
+
+        internal static string GetLinkName(string profilename)
+        {
+            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+            {
+                if ((string)row["Name"] == profilename)
+                    return (string)row["PlayerName"];
+            }
+
+            return null;
+        }
+
+        internal static void Link(int serial, string profile, string playername)
+        {
+            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)  // Slinka se gia linkato
+            {
+                if ((int)row["PlayerSerial"] == serial)    
+                {
+                    row["PlayerSerial"] = 0;
+                    row["PlayerName"] = "";
+                }
+            }
+            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)  // Linko nuovo profilo
+            {
+                if ((string)row["Name"] == profile)
+                {
+                    row["PlayerSerial"] = serial;
+                    row["PlayerName"] = playername;
+                }
+            }
+            Save();
+        }
+
+        internal static void UnLink(string profile)
+        {
+            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)  
+            {
+                if ((string)row["Name"] == profile)
+                {
+                    row["PlayerSerial"] = 0;
+                    row["PlayerName"] = "None";
+                }
+            }
+            Save();
+        }
+
+
 
         // Funzioni richiamate dalla gui
 
@@ -223,8 +283,6 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.BandageHealLogBox.Items.Clear();
             BandageHeal.AddLog("Profile Changed!");
 
-
-
             // Cambio file
             if (name == "default")
                 RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
@@ -243,8 +301,6 @@ namespace RazorEnhanced
 
             // Reinizzializzo razor
             Assistant.Engine.MainWindow.LoadSettings();
-
- 
         }
 
 
