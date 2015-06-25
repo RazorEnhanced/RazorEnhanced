@@ -154,6 +154,9 @@ namespace RazorEnhanced
 			List<OrganizerList> lists;
 			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
 
+            if (lists.Count == 0)
+                Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
+
 			OrganizerList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
 				return;

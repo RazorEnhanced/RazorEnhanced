@@ -125,18 +125,6 @@ namespace RazorEnhanced
             m_Dataset.Tables["PROFILES"].Rows.Add(row);
            
             Save();
-
-            // RImuovo liste residue in caso siano presenti dal profilo precedente
-            Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
-            Assistant.Engine.MainWindow.DressListView.Items.Clear();
-            Assistant.Engine.MainWindow.FriendListView.Items.Clear();
-            Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
-            Assistant.Engine.MainWindow.RestockListView.Items.Clear();
-            Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
-            Assistant.Engine.MainWindow.BuyListView.Items.Clear();
-            Assistant.Engine.MainWindow.SellListView.Items.Clear();
-            Assistant.Engine.MainWindow.TargetListView.Items.Clear();
-
         }
 
         internal static void Delete(string name)

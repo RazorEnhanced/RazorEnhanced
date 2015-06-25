@@ -106,6 +106,9 @@ namespace RazorEnhanced
 			List<SellAgentList> lists;
 			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
+            if (lists.Count == 0)
+                Assistant.Engine.MainWindow.SellListView.Items.Clear();
+
 			SellAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.SellListSelect.Text)
 				return;
@@ -480,6 +483,9 @@ namespace RazorEnhanced
 		{
 			List<BuyAgentList> lists;
 			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
+
+            if (lists.Count == 0)
+                Assistant.Engine.MainWindow.BuyListView.Items.Clear();
 
 			BuyAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.BuyListSelect.Text)

@@ -117,6 +117,14 @@ namespace RazorEnhanced
             List<FriendList> lists;
             RazorEnhanced.Settings.Friend.ListsRead(out lists);
 
+            if (lists.Count == 0)
+            {
+                Assistant.Engine.MainWindow.FriendListView.Items.Clear();
+                Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked = false;
+                Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked = false;
+                Assistant.Engine.MainWindow.FriendPartyCheckBox.Checked = false;
+            }
+
             FriendList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
             if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.FriendListSelect.Text)
                 return;

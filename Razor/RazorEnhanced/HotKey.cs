@@ -169,9 +169,12 @@ namespace RazorEnhanced
                         break;
                     case "Script":
                         // Stop all Script
+                        // X MAGNETO: Funzione di stop di tutti gli script in esecuzione
                         break;
                     case "SList":
                         RazorEnhanced.Misc.SendMessage("Debug: " + RazorEnhanced.Settings.HotKey.FindScriptString(k));
+                        // X MAGNETO: Funzione di start singolo script, hai gia il ritorno del parametro del file qui: RazorEnhanced.Settings.HotKey.FindScriptString(k)
+                        // Preferibile se prima controlla se è gia in esecuzione lo stesso nome e lo stoppa prima di farlo partire.
                         // start script RazorEnhanced.Settings.HotKey.FindScriptString(k)
                         break;
                     case "UseVirtue":

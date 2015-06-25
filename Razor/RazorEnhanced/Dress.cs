@@ -133,6 +133,9 @@ namespace RazorEnhanced
             List<DressList> lists;
             RazorEnhanced.Settings.Dress.ListsRead(out lists);
 
+            if (lists.Count == 0)
+                Assistant.Engine.MainWindow.DressListView.Items.Clear();
+
             DressList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
             if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.DressListSelect.Text)
                 return;

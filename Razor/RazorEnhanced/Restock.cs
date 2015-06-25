@@ -149,6 +149,9 @@ namespace RazorEnhanced
             List<RestockList> lists;
             RazorEnhanced.Settings.Restock.ListsRead(out lists);
 
+            if (lists.Count == 0)
+                Assistant.Engine.MainWindow.RestockListView.Items.Clear();
+
             RestockList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
             if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.RestockListSelect.Text)
                 return;

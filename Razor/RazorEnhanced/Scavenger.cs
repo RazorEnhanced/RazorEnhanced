@@ -152,6 +152,9 @@ namespace RazorEnhanced
 			List<ScavengerList> lists;
 			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
 
+            if (lists.Count == 0)
+                Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
+
 			ScavengerList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.ScavengerListSelect.Text)
 				return;
