@@ -1322,7 +1322,7 @@ namespace RazorEnhanced
                 general.Columns.Add("MapX", typeof(int));
                 general.Columns.Add("MapY", typeof(int));
                 general.Columns.Add("MapW", typeof(int));
-                general.Columns.Add("MapG", typeof(int));
+                general.Columns.Add("MapH", typeof(int));
 
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
