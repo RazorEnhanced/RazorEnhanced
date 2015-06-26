@@ -136,7 +136,10 @@ namespace RazorEnhanced
             foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
             {
                 if ((string)row["Name"] == name)
+                {
                     row.Delete();
+                    break;
+                }
             }
 
             Save();
@@ -204,6 +207,19 @@ namespace RazorEnhanced
                 {
                     row["PlayerSerial"] = 0;
                     row["PlayerName"] = "None";
+                }
+            }
+            Save();
+        }
+
+        internal static void Rename(string oldname, string newname)
+        {
+            foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+            {
+                if ((string)row["Name"] == oldname)
+                {
+                    row["Name"] = newname;
+                    break;
                 }
             }
             Save();

@@ -13,11 +13,11 @@ using System.IO;
 
 namespace RazorEnhanced.UI
 {
-	public partial class EnhancedProfileAdd : Form
+	public partial class EnhancedProfileRename : Form
 	{
-		private const string m_Title = "Enhanced Add Profile";
+		private const string m_Title = "Enhanced Add Rename";
 
-        public EnhancedProfileAdd()
+        public EnhancedProfileRename()
 		{
 			InitializeComponent();
 			MaximizeBox = false;
@@ -55,12 +55,16 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-                RazorEnhanced.Profiles.Add(newprofile);
-                RazorEnhanced.Profiles.SetLast(newprofile);
+                RazorEnhanced.Profiles.Rename(RazorEnhanced.Profiles.LastUsed(), newprofile);
                 RazorEnhanced.Profiles.Refresh();
-                RazorEnhanced.Profiles.ProfileChange(newprofile);
+
 				this.Close();
 			}
 		}
+
+        private void EnhancedProfileAdd_Load(object sender, EventArgs e)
+        {
+            oldNameLabel.Text = "Old Name: " + RazorEnhanced.Profiles.LastUsed();
+        }
 	}
 }
