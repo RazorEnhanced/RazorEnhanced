@@ -266,19 +266,19 @@ namespace RazorEnhanced
         {
             if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < HpLimit || target.Poisoned)       // Check HP se bendare o meno.
             {
-                if (HiddenBlock)
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
                 {
                     if (!World.Player.Visible)  // Esce se attivo blocco hidded 
                         return 0;
                 }
 
-                if (PoisonBlock)
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox"))
                 {
-                    if (World.Player.Poisoned) // Esce se attivo blocco poison
+                    if (target.Poisoned) // Esce se attivo blocco poison
                         return 0;
                 }
 
-                if (MortalBlock)                // Esce se attivo blocco mortal 
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal 
                 {
                     if (Player.BuffsExist("Mortal Strike"))
                         return 0;
@@ -299,11 +299,11 @@ namespace RazorEnhanced
                     AddLog("Targetting: 0x" + target.Serial.ToString());
                     Assistant.Targeting.Target(target);
 
-                   
-                    if (DexFormula)         
+
+                    if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))         
                     {
                         double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
-                        if (ShowCountdown)          // Se deve mostrare il cooldown
+                        if (RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox"))          // Se deve mostrare il cooldown
                         {
                             int second = 0;
 
@@ -328,8 +328,8 @@ namespace RazorEnhanced
                     }
                     else                // Se ho un delay custom
                     {
-                        double delay = CustomDelay;
-                        if (ShowCountdown)          // Se deve mostrare il cooldown
+                        double delay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
+                        if (RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox"))          // Se deve mostrare il cooldown
                         {
 
                             double subdelay = delay / 1000;
@@ -368,11 +368,11 @@ namespace RazorEnhanced
 
         internal static int FindBandage()
         {
-            if (CustomCheckBox)         // Se cerco bende custom
+            if (RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox"))         // Se cerco bende custom
             {
                 foreach (Assistant.Item iteminzaino in Assistant.World.Player.Backpack.Contains)
                 {
-                    if (iteminzaino.ItemID == CustomID && iteminzaino.Hue == CustomColor)
+                    if (iteminzaino.ItemID == RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox") && iteminzaino.Hue == RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"))
                     {
                         if (iteminzaino.Amount < 11)
                         {
@@ -411,7 +411,7 @@ namespace RazorEnhanced
             }
             Assistant.Mobile target;
 
-            if (BandageHeal.TargetType == "Self")
+            if (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox") == "Self")
             {
                 target = World.Player;
             }
@@ -420,7 +420,7 @@ namespace RazorEnhanced
                 target = Assistant.World.FindMobile(TargetSerial);
                 if (target == null)         // Verifica se il target è valido
                     return;
-                if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), 1)) // Verifica distanza
+                if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), 1)) // Verifica distanza
                     return;
             }
 
