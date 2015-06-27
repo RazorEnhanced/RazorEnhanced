@@ -410,17 +410,16 @@ namespace RazorEnhanced
             }
             Assistant.Mobile target;
 
-            if (BandageHeal.TargetType != "Self")
+            if (BandageHeal.TargetType == "Self")
             {
                 target = World.Player;
             }
             else
             {
-                target = Assistant.World.FindMobile(World.Player.Serial);
+                target = Assistant.World.FindMobile(TargetSerial);
                 if (target == null)         // Verifica se il target è valido
                     return;
-
-                if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y)) > 2)     // Verifica distanza
+                if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), 1)) // Verifica distanza
                     return;
             }
 
