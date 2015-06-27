@@ -24,6 +24,8 @@ namespace RazorEnhanced.UI
 			this.Text = m_Title; ;
 		}
 
+        private Keys m_k;
+        private bool m_pass;
 
         private void EnhancedrgetEdit_Load(object sender, EventArgs e)
 		{
@@ -49,6 +51,8 @@ namespace RazorEnhanced.UI
             tRangeMin.Text = "-1";
 
             RazorEnhanced.TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+            RazorEnhanced.Settings.HotKey.FindTargetData(targetid, out m_k, out m_pass);
+
             tTargetID.Text = targetid;
 
             if (targetdata != null)
@@ -235,7 +239,7 @@ namespace RazorEnhanced.UI
             TargetGUI.TargetGUIObject targetguitosave = new TargetGUI.TargetGUIObject(SelectorComboBox.Text, filtertosave);
 
             // Salvo struttura
-            RazorEnhanced.Settings.Target.TargetSave(tTargetID.Text, targetguitosave);
+            RazorEnhanced.Settings.Target.TargetSave(tTargetID.Text, targetguitosave, m_k, m_pass);
             RazorEnhanced.TargetGUI.RefreshTarget();
 
             this.Close();

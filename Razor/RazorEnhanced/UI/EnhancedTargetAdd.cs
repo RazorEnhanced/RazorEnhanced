@@ -204,7 +204,7 @@ namespace RazorEnhanced.UI
                 TargetGUI.TargetGUIObject targetguitosave = new TargetGUI.TargetGUIObject(SelectorComboBox.Text, filtertosave);
 
                 // Salvo struttura
-                RazorEnhanced.Settings.Target.TargetSave(newtargetid, targetguitosave);
+                RazorEnhanced.Settings.Target.TargetSave(newtargetid, targetguitosave, Keys.None, true);
                 RazorEnhanced.TargetGUI.RefreshTarget();
                 RazorEnhanced.HotKey.Init();
 

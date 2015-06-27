@@ -3233,7 +3233,7 @@ namespace RazorEnhanced
                 return false;
             }
 
-            internal static void TargetSave(string targetid, TargetGUI.TargetGUIObject target)
+            internal static void TargetSave(string targetid, TargetGUI.TargetGUIObject target, Keys k, bool pass)
             {
                 if (TargetExist(targetid))
                 {
@@ -3243,8 +3243,8 @@ namespace RazorEnhanced
                 DataRow row = m_Dataset.Tables["TARGETS"].NewRow();
                 row["Name"] = targetid;
                 row["TargetGUIObject"] = target;
-                row["HotKey"] = Keys.None;
-                row["HotKeyPass"] = true;
+                row["HotKey"] = k;
+                row["HotKeyPass"] = pass;
 
                 m_Dataset.Tables["TARGETS"].Rows.Add(row);
 
@@ -3617,6 +3617,22 @@ namespace RazorEnhanced
                 }
 
                 return null;
+            }
+
+            internal static void FindTargetData(string name, out Keys k, out bool pass)
+            {
+                Keys kOut = Keys.None;
+                bool passOut = true;
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((string)row["Name"] == name)
+                    {
+                        kOut = (Keys)row["HotKey"];
+                        passOut = (bool)row["HotKeyPass"];
+                    }
+                }
+                k = kOut;
+                pass = passOut;
             }
 
             internal static string FindScriptString(Keys key)
