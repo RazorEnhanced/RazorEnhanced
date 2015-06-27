@@ -284,7 +284,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.AutoLoot.ItemReplace(list, index, item);
 		}
 
-		private static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
+        private static Queue<int> m_IgnoreCorpiQueue = new Queue<int>();
 
 		internal static int Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
@@ -300,11 +300,11 @@ namespace RazorEnhanced
 			{
 				// Apertura forzata 1 solo volta (necessaria in caso di corpi uccisi precedentemente da altri fuori schermata, in quanto vengono flaggati come updated anche se non realmente)
 
-                if (!m_IgnoreCorpiQueue.Contains(corpo))
+                if (!m_IgnoreCorpiQueue.Contains(corpo.Serial))
                 {
                     RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
                     Items.UseItem(corpo);
-                    m_IgnoreCorpiQueue.Enqueue(corpo);
+                    m_IgnoreCorpiQueue.Enqueue(corpo.Serial);
                     if (m_IgnoreCorpiQueue.Count > 50)
                         m_IgnoreCorpiQueue.Dequeue();
                     Thread.Sleep(mseconds);

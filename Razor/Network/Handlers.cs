@@ -1177,7 +1177,7 @@ namespace Assistant
 
                     ClientCommunication.PostHitsUpdate();
 				}
-                RazorEnhanced.Filters.ProcessMessage(m);
+                
 
                 if (RazorEnhanced.Settings.General.ReadBool("ShowHealth"))
 				{
@@ -1191,6 +1191,7 @@ namespace Assistant
 							m.OverheadMessageFrom(HealthHues[((percent + 5) / 10) % HealthHues.Length],
 								Language.Format(LocString.sStatsA1, m.Name),
                                 RazorEnhanced.Settings.General.ReadString("HealthFmt"), percent);
+                            RazorEnhanced.Filters.ProcessMessage(m);
 						}
 						catch
 						{
