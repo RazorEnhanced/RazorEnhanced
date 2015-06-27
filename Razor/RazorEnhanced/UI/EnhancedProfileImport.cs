@@ -13,11 +13,11 @@ using System.IO;
 
 namespace RazorEnhanced.UI
 {
-	public partial class EnhancedProfileAdd : Form
+	public partial class EnhancedProfileImport : Form
 	{
-		private const string m_Title = "Enhanced Profile Add";
+		private const string m_Title = "Enhanced Profile Import";
 
-        public EnhancedProfileAdd()
+        public EnhancedProfileImport()
 		{
 			InitializeComponent();
 			MaximizeBox = false;
@@ -45,9 +45,12 @@ namespace RazorEnhanced.UI
 			if (RazorEnhanced.Profiles.Exist(newprofile))
 				fail = true;
 
+            if (!File.Exists(profilefilepathTextBox.Text))
+                fail = true;
+
 			if (fail)
 			{
-				MessageBox.Show("Invalid profile name!",
+				MessageBox.Show("Invalid file or profile name",
                 "Enhanced Profiles",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
@@ -55,17 +58,22 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-                RazorEnhanced.Profiles.Add(newprofile);
-                RazorEnhanced.Profiles.SetLast(newprofile);
-                RazorEnhanced.Profiles.Refresh();
-                RazorEnhanced.Profiles.ProfileChange(newprofile);
-				this.Close();
+                RazorEnhanced.ImportExport.ImportProfiles(newprofile, profilefilepathTextBox.Text);
+                this.Close();
 			}
 		}
 
-        private void EnhancedProfileAdd_Load(object sender, EventArgs e)
+        private void chosefileButton_Click(object sender, EventArgs e)
         {
+            OpenFileDialog od = new OpenFileDialog();
+            od.Filter = "Enhanced Razor Export|*.raz";
+            od.Title = "Import Profiles";
+            od.RestoreDirectory = true;
 
+            if (od.ShowDialog() == DialogResult.OK)
+            {
+                profilefilepathTextBox.Text = od.FileName;
+            }
         }
 	}
 }

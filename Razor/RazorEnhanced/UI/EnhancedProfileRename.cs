@@ -15,7 +15,7 @@ namespace RazorEnhanced.UI
 {
 	public partial class EnhancedProfileRename : Form
 	{
-		private const string m_Title = "Enhanced Add Rename";
+		private const string m_Title = "Enhanced Profile Rename";
 
         public EnhancedProfileRename()
 		{

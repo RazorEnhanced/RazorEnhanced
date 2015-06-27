@@ -1033,5 +1033,75 @@ namespace RazorEnhanced
             }
         }
         ////////////// RESTOCK END //////////////
+
+        ////////////// PROFILES START //////////////
+
+        internal static void ExportProfiles(string profilename)
+        {
+            SaveFileDialog sd = new SaveFileDialog();
+            sd.Filter = "Enhanced Razor Export|*.raz";
+            sd.Title = "Export Profile";
+            sd.FileName = "PROF." + profilename + ".raz";
+            sd.RestoreDirectory = true;
+
+            string oldprofilepath;
+            if (RazorEnhanced.Profiles.LastUsed() == "default")
+                oldprofilepath = Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced.settings");
+            else
+                oldprofilepath = Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings");
+
+            if (sd.ShowDialog() == DialogResult.OK)
+            {
+                if (File.Exists(oldprofilepath))
+                {
+                    File.Copy(oldprofilepath, sd.FileName, true);
+                }
+                else
+                {
+                    MessageBox.Show("Error during exporting profile!",
+                    "Enhanced Profiles",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Exclamation,
+                    MessageBoxDefaultButton.Button1);
+                }
+            }
+        }
+
+        internal static void ImportProfiles(string newprofilename, string oldprofilepath)
+        {
+            DataSet m_Dataset = new DataSet();
+            DataTable m_DatasetTable = new DataTable();
+            try
+            {
+                m_Dataset.RemotingFormat = SerializationFormat.Binary;
+                m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+                Stream stream = File.Open(oldprofilepath, FileMode.Open);
+                GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
+                BinaryFormatter bin = new BinaryFormatter();
+                m_Dataset = bin.Deserialize(decompress) as DataSet;
+                decompress.Close();
+                decompress.Dispose();
+                stream.Close();
+                stream.Dispose();
+            }
+            catch
+            {
+                MessageBox.Show("File is corrupted!");
+            }
+
+            if (!m_Dataset.Tables.Contains("GENERAL"))
+            {
+                MessageBox.Show("This file not contain Profile data!");
+            }
+            else
+            {
+                File.Copy(oldprofilepath, Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced." + newprofilename + ".settings"), true);
+                RazorEnhanced.Profiles.Add(newprofilename);
+                RazorEnhanced.Profiles.Refresh();
+            }
+
+       }
+
+        ////////////// PROFILES END //////////////
     }
 }
