@@ -901,7 +901,6 @@ namespace RazorEnhanced
                     Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
                     AddLog("Invalid Bag, Switch to backpack");
                     DressBag = (int)World.Player.Backpack.Serial.Value;
-                    RazorEnhanced.Settings.Dress.ListUpdate(DressListName, RazorEnhanced.Dress.DressDelay, (int)World.Player.Backpack.Serial.Value, DressConflict, true);
                 }
             }
             else
@@ -909,7 +908,6 @@ namespace RazorEnhanced
                 Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
                 AddLog("Invalid Bag, Switch to backpack");
                 DressBag = (int)World.Player.Backpack.Serial.Value;
-                RazorEnhanced.Settings.Dress.ListUpdate(DressListName, RazorEnhanced.Dress.DressDelay, (int)World.Player.Backpack.Serial.Value, DressConflict, true);
             }
 
             int exit = DressEngine(items, Dress.DressDelay, Dress.DressBag, Dress.DressConflict);

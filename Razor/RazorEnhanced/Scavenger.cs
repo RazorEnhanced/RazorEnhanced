@@ -404,7 +404,6 @@ namespace RazorEnhanced
                     Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
                     AddLog("Invalid Bag, Switch to backpack");
                     ScavengerBag = (int)World.Player.Backpack.Serial.Value;
-                    RazorEnhanced.Settings.Scavenger.ListUpdate(ScavengerListName, RazorEnhanced.Scavenger.ScavengerDelay, (int)World.Player.Backpack.Serial.Value, true);
                 }
             }
             else
@@ -412,7 +411,6 @@ namespace RazorEnhanced
                 Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
                 AddLog("Invalid Bag, Switch to backpack");
                 ScavengerBag = (int)World.Player.Backpack.Serial.Value;
-                RazorEnhanced.Settings.Scavenger.ListUpdate(ScavengerListName, RazorEnhanced.Scavenger.ScavengerDelay, (int)World.Player.Backpack.Serial.Value, true);
             }
 
 			List<Scavenger.ScavengerItem> items;

@@ -474,7 +474,6 @@ namespace RazorEnhanced
                     Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
                     AddLog("Invalid Bag, Switch to backpack");
                     AutoLootBag = (int)World.Player.Backpack.Serial.Value;
-                    RazorEnhanced.Settings.AutoLoot.ListUpdate(AutoLootListName, RazorEnhanced.AutoLoot.AutoLootDelay, (int)World.Player.Backpack.Serial.Value, true);
                 }
             }
             else
@@ -482,7 +481,6 @@ namespace RazorEnhanced
                 Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
                 AddLog("Invalid Bag, Switch to backpack");
                 AutoLootBag = (int)World.Player.Backpack.Serial.Value;
-                RazorEnhanced.Settings.AutoLoot.ListUpdate(AutoLootListName, RazorEnhanced.AutoLoot.AutoLootDelay, (int)World.Player.Backpack.Serial.Value, true);
             }
 
 			List<AutoLoot.AutoLootItem> items;
