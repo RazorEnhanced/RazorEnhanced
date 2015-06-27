@@ -1338,8 +1338,6 @@ namespace Assistant
 				bool wasPoisoned = m.Poisoned;
 				m.Poisoned = (flag != 0);
 			}
-            // Highlight 
-            RazorEnhanced.Filters.ProcessMessage(m);
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1433,9 +1431,6 @@ namespace Assistant
 
                 Engine.MainWindow.UpdateTitle(); // update player name
             }
-
-            // Highlight 
-            RazorEnhanced.Filters.ProcessMessage(m);
 		}
 
 		private static void MobileUpdate(Packet p, PacketHandlerEventArgs args)
@@ -1649,10 +1644,8 @@ namespace Assistant
 					PlayerData.DoubleClick(item);
 				}
 			}
-            // Highlight 
-            RazorEnhanced.Filters.ProcessMessage(m);
-
 			Item.UpdateContainers();
+            RazorEnhanced.Filters.ProcessMessage(m);
 		}
 
 		private static void RemoveObject(PacketReader p, PacketHandlerEventArgs args)
