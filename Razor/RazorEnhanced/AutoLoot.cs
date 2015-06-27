@@ -289,40 +289,27 @@ namespace RazorEnhanced
 		internal static int Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
-			bool giaAperto = false;
+
+            if (World.Player.IsGhost)
+            {
+                Thread.Sleep(2000);
+                return 0;
+            }
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
-                if (World.Player.IsGhost)
-                {
-                    Thread.Sleep(2000);
-                    return 0;
-                }
-
-				if (World.Player.Weight - 20 > World.Player.MaxWeight)
-				{
-					RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
-					RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space");
-                    Thread.Sleep(2000);
-					return -1;
-				}
-
 				// Apertura forzata 1 solo volta (necessaria in caso di corpi uccisi precedentemente da altri fuori schermata, in quanto vengono flaggati come updated anche se non realmente)
-				foreach (RazorEnhanced.Item corpoIgnorato in m_IgnoreCorpiQueue)
-				{
-					if (corpoIgnorato.Serial == corpo.Serial)
-						giaAperto = true;
-				}
-				if (!giaAperto)
-				{
-					RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
-					Items.UseItem(corpo);
-					m_IgnoreCorpiQueue.Enqueue(corpo);
-					if (m_IgnoreCorpiQueue.Count > 50)
-						m_IgnoreCorpiQueue.Dequeue();
-                    Thread.Sleep(mseconds);
-				}
 
+                if (!m_IgnoreCorpiQueue.Contains(corpo))
+                {
+                    RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
+                    Items.UseItem(corpo);
+                    m_IgnoreCorpiQueue.Enqueue(corpo);
+                    if (m_IgnoreCorpiQueue.Count > 50)
+                        m_IgnoreCorpiQueue.Dequeue();
+                    Thread.Sleep(mseconds);
+                }
+				
 				RazorEnhanced.Items.WaitForContents(corpo, 1500);
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
@@ -408,7 +395,16 @@ namespace RazorEnhanced
             if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
                 return;
 
-			if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
+            if (World.Player.Weight - 20 > World.Player.MaxWeight)
+            {
+                RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
+                RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space");
+                Thread.Sleep(2000);
+                return;
+            }
+
+			//if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
+            if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y), 3))
 			{
 				if (autoLoootItem.Properties.Count > 0) // Item con props
 				{
@@ -540,13 +536,7 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.AutoLootListSelect.Items.Count; i++)
-			{
-				if (nomelista == Assistant.Engine.MainWindow.AutoLootListSelect.GetItemText(Assistant.Engine.MainWindow.AutoLootListSelect.Items[i]))
-					ListaOK = true;
-			}
-			if (!ListaOK)
+            if (!Assistant.Engine.MainWindow.AutoLootListSelect.Items.Contains(nomelista))
 				Misc.SendMessage("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
 			else
 			{

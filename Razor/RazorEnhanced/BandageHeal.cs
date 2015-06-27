@@ -215,7 +215,8 @@ namespace RazorEnhanced
             bool BandageHealpoisonCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
             bool BandageHealmortalCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
             bool BandageHealhiddedCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
-      
+
+            Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
             Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
             Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
 

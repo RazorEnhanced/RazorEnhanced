@@ -335,7 +335,7 @@ namespace RazorEnhanced
             if (!itemGround.Movable || !itemGround.Visible)
                 return;
 
-			if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(itemGround.Position.X, itemGround.Position.Y)) <= 3)
+            if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(itemGround.Position.X, itemGround.Position.Y), 3))
 			{
 				if (scavengerItem.Properties.Count > 0) // Item con props
 				{
@@ -462,13 +462,7 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.ScavengerListSelect.Items.Count; i++)
-			{
-				if (nomelista == Assistant.Engine.MainWindow.ScavengerListSelect.GetItemText(Assistant.Engine.MainWindow.ScavengerListSelect.Items[i]))
-					ListaOK = true;
-			}
-			if (!ListaOK)
+            if (!Assistant.Engine.MainWindow.ScavengerListSelect.Items.Contains(nomelista))
 				Misc.SendMessage("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
 			else
 			{
