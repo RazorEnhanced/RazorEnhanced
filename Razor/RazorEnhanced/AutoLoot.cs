@@ -307,10 +307,12 @@ namespace RazorEnhanced
                     m_IgnoreCorpiQueue.Enqueue(corpo.Serial);
                     if (m_IgnoreCorpiQueue.Count > 50)
                         m_IgnoreCorpiQueue.Dequeue();
-                    Thread.Sleep(mseconds);
+                    Thread.Sleep(800);
                 }
-				
-				RazorEnhanced.Items.WaitForContents(corpo, 1500);
+                else
+                    RazorEnhanced.Items.WaitForContents(corpo, 800);
+
+                
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
