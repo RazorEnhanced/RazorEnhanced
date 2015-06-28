@@ -6172,13 +6172,9 @@ namespace Assistant
 			dataGridViewScripting.DataSource = scriptTable;
 
 			// ---------------- AUTOLOOT -----------------
-			autoLootTextBoxDelay.Text = "100";
-			autoLootCheckBox.Checked = false;
 			RazorEnhanced.AutoLoot.RefreshLists();
 
 			// ------------ SCAVENGER -------------------
-			scavengerDragDelay.Text = "100";
-			scavengerCheckBox.Checked = false;
 			RazorEnhanced.Scavenger.RefreshLists();
 
 			// ---------------- ORGANIZER ----------------
