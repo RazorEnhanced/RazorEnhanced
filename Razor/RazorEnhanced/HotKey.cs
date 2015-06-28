@@ -310,25 +310,32 @@ namespace RazorEnhanced
         }
         private static void ProcessPetCommands(string function)
         {
+            List<ushort> kw = new List<ushort>();
             switch (function)
             {
                 case "Come":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Come");
+                    kw = new List<ushort> {33,85,22,64};
+                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all come"));
                     break;
                 case "Follow":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Follow");
+                    kw = new List<ushort> { 48, 232, 22, 49, 108 };
+                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all follow me"));
                     break;
                 case "Guard":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Guard");
+                    kw = new List<ushort> { 48, 7, 22, 177, 153};
+                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all guard me"));
                     break;
                 case "Kill":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Kill");
+                    kw = new List<ushort> { 33, 93, 22, 128 };
+                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all kill"));
                     break;
                 case "Stay":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Stay");
+                    kw = new List<ushort> { 33, 111, 23, 0 };
+                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all stay"));
                     break;
                 case "Stop":
-                    RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), "All Stop");
+                    kw = new List<ushort> { 33, 97, 22, 112};
+                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all stop"));
                     break;
                 default:
                     break;
