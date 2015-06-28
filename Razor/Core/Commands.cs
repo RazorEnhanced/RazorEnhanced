@@ -9,7 +9,7 @@ namespace Assistant
 	{
 		public static void Initialize()
 		{
-			Command.Register("AddUseOnce", new CommandCallback(AddUseOnce));
+			//Command.Register("AddUseOnce", new CommandCallback(AddUseOnce));
 			Command.Register("Time", new CommandCallback(Time));
 			Command.Register("Where", new CommandCallback(Where));
 			Command.Register("Ping", new CommandCallback(Ping));
@@ -50,7 +50,7 @@ namespace Assistant
 			ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
 		}
 
-		private static void AddUseOnce(string[] param)
+	/*	private static void AddUseOnce(string[] param)
 		{
 			string use = Language.GetString(LocString.UseOnce);
 			foreach (Agent agent in Agent.List)
@@ -61,7 +61,7 @@ namespace Assistant
 					break;
 				}
 			}
-		}
+		}*/
 
 		private static void ReNice(string[] param)
 		{

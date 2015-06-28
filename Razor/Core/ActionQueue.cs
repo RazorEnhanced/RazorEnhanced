@@ -480,7 +480,6 @@ namespace Assistant
 					if (Utility.Distance(item.GetWorldPosition(), World.Player.Position) > 3)
 					{
 						Log("Item is too far away... uncaching.");
-						ScavengerAgent.Instance.Uncache(item.Serial);
 						return ProcStatus.Nothing;
 					}
 				}

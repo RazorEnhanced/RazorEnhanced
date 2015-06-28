@@ -1746,13 +1746,7 @@ namespace Assistant
 				{
 					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
 				}
-				else
-				{
-					ScavengerAgent s = ScavengerAgent.Instance;
-					int dist = Utility.Distance(item.GetWorldPosition(), World.Player.Position);
-					if (!World.Player.IsGhost && World.Player.Visible && dist <= 2 && s.Enabled && item.Movable)
-						s.Scavenge(item);
-				}
+
 			}
 			Item.UpdateContainers();
             // Filtro muri 
@@ -1912,13 +1906,7 @@ namespace Assistant
 				{
 					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
 				}
-				else
-				{
-					ScavengerAgent s = ScavengerAgent.Instance;
-					int dist = Utility.Distance(item.GetWorldPosition(), World.Player.Position);
-					if (!World.Player.IsGhost && World.Player.Visible && dist <= 2 && s.Enabled && item.Movable)
-						s.Scavenge(item);
-				}
+				
 			}
 
 			Item.UpdateContainers();

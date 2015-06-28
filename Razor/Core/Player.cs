@@ -698,7 +698,6 @@ namespace Assistant
          
 
 			List<Item> items = new List<Item>(World.Items.Values);
-			ScavengerAgent s = ScavengerAgent.Instance;
 			foreach (Item item in items)
 			{
 				if (item.Deleted || item.Container != null)
@@ -707,8 +706,6 @@ namespace Assistant
 				int dist = Utility.Distance(item.GetWorldPosition(), newPos);
 				if (item != DragDropManager.Holding && (dist > MultiVisRange || (!item.IsMulti && dist > VisRange)))
 					item.Remove();
-				else if (!IsGhost && Visible && dist <= 2 && s.Enabled && item.Movable)
-					s.Scavenge(item);
 			}
 
 			base.OnPositionChanging(newPos);
