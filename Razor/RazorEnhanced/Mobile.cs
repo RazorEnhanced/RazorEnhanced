@@ -307,7 +307,7 @@ namespace RazorEnhanced
 					if (filter.RangeMin != -1)
 					{
 						assistantMobiles = assistantMobiles.Where((m) =>
-							Utility.DistanceSqrt
+                            Utility.DistanceSqrt
 							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(m.Position.X, m.Position.Y)) >= filter.RangeMin
 						).ToList();
 					}
@@ -315,7 +315,7 @@ namespace RazorEnhanced
 					if (filter.RangeMax != -1)
 					{
 						assistantMobiles = assistantMobiles.Where((m) =>
-							Utility.DistanceSqrt
+                            Utility.DistanceSqrt
 							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(m.Position.X, m.Position.Y)) <= filter.RangeMax
 						).ToList();
 					}
@@ -354,49 +354,39 @@ namespace RazorEnhanced
 						result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
 						break;
 					case "Nearest":
-						Mobile nearest = mobiles[0] as Mobile;
-						if (nearest != null)
-						{
-							double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
-							for (int i = 0; i < mobiles.Count; i++)
-							{
-								Mobile mob = mobiles[i] as Mobile;
-								if (mob != null)
-								{
-									double dist = Misc.DistanceSqrt(Player.Position, mob.Position);
-									if (dist < minDist)
-									{
-										nearest = mob;
-										minDist = dist;
-									}
-								}
-							}
-							result = nearest;
-						}
+                        Mobile closest = null;
+			            double closestDist = double.MaxValue;
+
+                        foreach (Mobile m in mobiles)
+			            {
+				            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y) , World.Player.Position);
+
+				            if (dist < closestDist || closest == null)
+				            {
+					            closestDist = dist;
+					            closest = m;
+				            }
+			            }
+                        result = closest;
 						break;
 					case "Farthest":
-						Mobile farthest = mobiles[0] as Mobile;
-						if (farthest != null)
-						{
-							double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
-							for (int i = 0; i < mobiles.Count; i++)
-							{
-								Mobile mob = mobiles[i] as Mobile;
-								if (mob != null)
-								{
-									double dist = Misc.DistanceSqrt(Player.Position, mob.Position);
-									if (dist > maxDist)
-									{
-										farthest = mob;
-										maxDist = dist;
-									}
-								}
-							}
-							result = farthest;
-						}
+                        Mobile farthest = null;
+                        double farthestDist = double.MinValue;
+
+                        foreach (Mobile m in mobiles)
+			            {
+				            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y) , World.Player.Position);
+
+                            if (dist > farthestDist || farthest == null)
+				            {
+                                farthestDist = dist;
+                                farthest = m;
+				            }
+			            }
+                        result = farthest;
 						break;
-					case "Weakest":
-						Mobile weakest = mobiles[0] as Mobile;
+					case "Weakest":			
+                        Mobile weakest = mobiles[0] as Mobile;
 						if (weakest != null)
 						{
 							int minHits = weakest.Hits;
