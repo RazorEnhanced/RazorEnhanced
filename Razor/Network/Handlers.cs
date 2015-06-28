@@ -209,26 +209,6 @@ namespace Assistant
 
             if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = !PlayerData.DoubleClick(ser, false);
-
-			if (Macros.MacroManager.AcceptActions)
-			{
-				ushort gfx = 0;
-				if (ser.IsItem)
-				{
-					Item i = World.FindItem(ser);
-					if (i != null)
-						gfx = i.ItemID;
-				}
-				else
-				{
-					Mobile m = World.FindMobile(ser);
-					if (m != null)
-						gfx = m.Body;
-				}
-
-				if (gfx != 0)
-					MacroManager.Action(new DoubleClickAction(ser, gfx));
-			}
 		}
 
 		private static void DeathAnimation(PacketReader p, PacketHandlerEventArgs args)
@@ -265,9 +245,6 @@ namespace Assistant
 						if (ent != null && ent.ContextMenu != null && ent.ContextMenu.ContainsKey(idx))
 						{
 							ushort menu = ent.ContextMenu[idx];
-
-							if (menu != 0 && MacroManager.AcceptActions)
-								MacroManager.Action(new ContextMenuAction(ent, idx, menu));
 						}
 						break;
 					}
@@ -282,9 +259,6 @@ namespace Assistant
 						{
 							s.OnCast(p);
 							args.Block = true;
-
-							if (Macros.MacroManager.AcceptActions)
-								MacroManager.Action(new ExtCastSpellAction(s, ser));
 						}
 						break;
 					}
@@ -321,9 +295,6 @@ namespace Assistant
 						if (World.Player != null)
 							World.Player.LastSkill = skillIndex;
 
-						if (Macros.MacroManager.AcceptActions)
-							MacroManager.Action(new UseSkillAction(skillIndex));
-
 						if (skillIndex == (int)SkillName.Stealth && !World.Player.Visible)
 							StealthSteps.Hide();
 						break;
@@ -343,8 +314,6 @@ namespace Assistant
 								{
 									s.OnCast(p);
 									args.Block = true;
-									if (Macros.MacroManager.AcceptActions)
-										MacroManager.Action(new BookCastSpellAction(s, serial));
 								}
 							}
 						}
@@ -363,8 +332,6 @@ namespace Assistant
 							{
 								s.OnCast(p);
 								args.Block = true;
-								if (Macros.MacroManager.AcceptActions)
-									MacroManager.Action(new MacroCastSpellAction(s));
 							}
 						}
 						catch
@@ -448,12 +415,6 @@ namespace Assistant
 				//ClientCommunication.SendToClient( new RemoveObject( serial ) ); // remove the object from the client view
 				args.Block = true;
 			}
-
-			if (Macros.MacroManager.AcceptActions)
-			{
-				MacroManager.Action(new LiftAction(serial, amount, iid));
-				//MacroManager.Action( new PauseAction( TimeSpan.FromMilliseconds( Config.GetInt( "ObjectDelay" ) ) ) );
-			}
 		}
 
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
@@ -466,7 +427,6 @@ namespace Assistant
 
 			if (!DragDropManager.LiftReject())
 				args.Block = true;
-			//MacroManager.PlayError( MacroError.LiftRej );
 		}
 
 		private static void EquipRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -476,22 +436,6 @@ namespace Assistant
 			Serial mser = p.ReadUInt32();
 
 			Item item = World.FindItem(iser);
-
-			if (MacroManager.AcceptActions)
-			{
-				if (layer == Layer.Invalid || layer > Layer.LastValid)
-				{
-					if (item != null)
-					{
-						layer = item.Layer;
-						if (layer == Layer.Invalid || layer > Layer.LastValid)
-							layer = (Layer)item.ItemID.ItemData.Quality;
-					}
-				}
-
-				if (layer > Layer.Invalid && layer <= Layer.LastUserValid)
-					MacroManager.Action(new DropAction(mser, Point3D.Zero, layer));
-			}
 
 			if (item == null)
 				return;
@@ -515,9 +459,6 @@ namespace Assistant
 				p.ReadByte();
 			Point3D newPos = new Point3D(x, y, z);
 			Serial dser = p.ReadUInt32();
-
-			if (Macros.MacroManager.AcceptActions)
-				MacroManager.Action(new DropAction(dser, newPos));
 
 			Item i = World.FindItem(iser);
 			if (i == null)
@@ -573,8 +514,6 @@ namespace Assistant
 				World.Player.MoveReq(dir, seq);
 
 				WalkAction.LastWalkTime = DateTime.Now;
-				if (MacroManager.AcceptActions)
-					MacroManager.Action(new WalkAction(dir));
 			}
 		}
 
@@ -2169,15 +2108,7 @@ namespace Assistant
 			World.Player.CurrentGumpS = p.ReadUInt32();
 			World.Player.CurrentGumpI = p.ReadUInt32();
 			World.Player.HasGump = true;
-            RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
-			
-            //byte[] data = p.CopyBytes( 11, p.Length - 11 );
-
-			if (Macros.MacroManager.AcceptActions && MacroManager.Action(new WaitForGumpAction(World.Player.CurrentGumpI)))
-				args.Block = true;
-
-			// ZIPPY REV 80
-			// ClientCommunication.ForwardPacket( p.Pointer, p.Length );
+            RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);	
 		}
 
 		private static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
@@ -2224,8 +2155,6 @@ namespace Assistant
 			}
             RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(texts);
             RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
-			if (Macros.MacroManager.AcceptActions)
-				MacroManager.Action(new GumpResponseAction(bid, switches, entries));
 		}
 
 		private static void ChangeSeason(PacketReader p, PacketHandlerEventArgs args)
@@ -2517,9 +2446,6 @@ namespace Assistant
 						int ability = 0;
 						if (p.ReadByte() == 0)
 							ability = p.ReadInt32();
-
-						if (ability >= 0 && ability < (int)AOSAbility.Invalid && Macros.MacroManager.AcceptActions)
-							MacroManager.Action(new SetAbilityAction((AOSAbility)ability));
 						break;
 					}
 			}
@@ -2579,8 +2505,6 @@ namespace Assistant
 			ushort hue = pvSrc.ReadUInt16();
 
 			World.Player.HasMenu = false;
-			if (MacroManager.AcceptActions)
-				MacroManager.Action(new MenuResponseAction(index, itemID, hue));
 		}
 
 		private static void SendMenu(PacketReader p, PacketHandlerEventArgs args)
@@ -2591,8 +2515,6 @@ namespace Assistant
 			World.Player.CurrentMenuS = p.ReadUInt32();
 			World.Player.CurrentMenuI = p.ReadUInt16();
 			World.Player.HasMenu = true;
-			if (MacroManager.AcceptActions && MacroManager.Action(new WaitForMenuAction(World.Player.CurrentMenuI)))
-				args.Block = true;
 		}
 
 		private static void HueResponse(PacketReader p, PacketHandlerEventArgs args)
@@ -2686,6 +2608,8 @@ namespace Assistant
 
 		private static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
 		{
+            // X MAGNETO: Verificare la lettura dei testi da gump quest e statici.
+
             World.Player.HasGump = true;
 			if (World.Player != null)
 			{
@@ -2719,11 +2643,6 @@ namespace Assistant
 			    }
                 RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
             }
-			if (Macros.MacroManager.AcceptActions && MacroManager.Action(new WaitForGumpAction(World.Player.CurrentGumpI)))
-				args.Block = true;
-
-			// ZIPPY REV 80
-			// ClientCommunication.ForwardPacket( p.Pointer, p.Length );
 		}
 
 		private static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
