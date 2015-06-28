@@ -256,10 +256,15 @@ namespace RazorEnhanced
 
 			int subdelay = delay;
 			if (bag.IsCorpse || bag.IsContainer)
-				while (!bag.Updated || subdelay < 0)
+				while (!bag.Updated)
 				{
-					Thread.Sleep(2);
-					subdelay -= 2;
+                    if (subdelay > 0)
+                    {
+                        Thread.Sleep(2);
+                        subdelay -= 2;
+                    }
+                    else
+                        break;
 				}
 		}
 
