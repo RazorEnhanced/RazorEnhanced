@@ -374,7 +374,7 @@ namespace Assistant
 						for (int c = 0; c < Contains.Count; c++)
 						{
 							Item icheck = Contains[c];
-                            if (icheck.IsContainer && !SearchExemptionAgent.IsExempt(icheck) && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
+                            if (icheck.IsContainer  && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
 							{
 								PacketHandlers.IgnoreGumps.Add(icheck);
 								PlayerData.DoubleClick(icheck);

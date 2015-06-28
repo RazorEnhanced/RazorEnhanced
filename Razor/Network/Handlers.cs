@@ -631,7 +631,7 @@ namespace Assistant
 
 			if (i.IsNew)
 				Item.UpdateContainers();
-			if (!SearchExemptionAgent.IsExempt(i) && (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver)))
+			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
 				// Update Contatori Item ToolBar
                 if (Assistant.Engine.MainWindow.ToolBarOpen)
                     RazorEnhanced.ToolBar.UpdateCount();
@@ -691,16 +691,10 @@ namespace Assistant
 			i.GridNum = gridPos;
 			i.Hue = hue;
 
-			if (SearchExemptionAgent.Contains(i))
-			{
-				p.Seek(-2, System.IO.SeekOrigin.Current);
-                p.Write((short)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
-			}
-
 			i.Container = cser;
 			if (i.IsNew)
 				Item.UpdateContainers();
-			if (!SearchExemptionAgent.IsExempt(i) && (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver)))
+			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
                 // Update Contatori Item ToolBar
                 if (Assistant.Engine.MainWindow.ToolBarOpen)
                     RazorEnhanced.ToolBar.UpdateCount();
@@ -778,14 +772,9 @@ namespace Assistant
 
 				Serial cont = p.ReadUInt32();
 				item.Hue = p.ReadUInt16();
-				if (SearchExemptionAgent.Contains(item))
-				{
-					p.Seek(-2, System.IO.SeekOrigin.Current);
-                    p.Write((short)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
-				}
 
 				item.Container = cont; // must be done after hue is set (for counters)
-				if (!SearchExemptionAgent.IsExempt(item) && (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver)))
+				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
                     // Update Contatori Item ToolBar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
                         RazorEnhanced.ToolBar.UpdateCount();
@@ -840,14 +829,9 @@ namespace Assistant
 				}
 
 				item.Hue = p.ReadUInt16();
-				if (SearchExemptionAgent.Contains(item))
-				{
-					p.Seek(-2, System.IO.SeekOrigin.Current);
-                    p.Write((short)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
-				}
 
 				item.Container = cont; // must be done after hue is set (for counters)
-				if (!SearchExemptionAgent.IsExempt(item) && (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver)))
+				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
                     // Update Contatori Item ToolBar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
                         RazorEnhanced.ToolBar.UpdateCount();
@@ -1091,6 +1075,9 @@ namespace Assistant
 			*/
 			ClientCommunication.BeginCalibratePosition();
             
+            // Salvo password
+            PasswordMemory.Save();
+
             // Carico profili se linkati
             string profilename = RazorEnhanced.Profiles.IsLinked(serial);
             if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)

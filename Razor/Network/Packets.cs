@@ -123,10 +123,7 @@ namespace Assistant
 			else
 				Write((uint)0x7FFFFFFF);
 
-			if (SearchExemptionAgent.Contains(item))
-                Write((ushort)RazorEnhanced.Settings.General.ReadInt("ExemptColor"));
-			else
-				Write(item.Hue);
+        	Write(item.Hue);
 		}
 	}
 
