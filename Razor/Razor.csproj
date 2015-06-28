@@ -165,6 +165,7 @@
     <Compile Include="Core\Geometry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\Pets.cs" />
     <Compile Include="RazorEnhanced\Profiles.cs" />
     <Compile Include="RazorEnhanced\SpecialMoves.cs">
       <SubType>Code</SubType>
