@@ -87,8 +87,8 @@ namespace Assistant.Macros
 
 		private void EditTimeout(object[] args)
 		{
-			if (InputBox.Show(Language.GetString(LocString.NewTimeout), Language.GetString(LocString.ChangeTimeout), ((int)(m_Timeout.TotalSeconds)).ToString()))
-				m_Timeout = TimeSpan.FromSeconds(InputBox.GetInt(60));
+			//if (InputBox.Show(Language.GetString(LocString.NewTimeout), Language.GetString(LocString.ChangeTimeout), ((int)(m_Timeout.TotalSeconds)).ToString()))
+			//	m_Timeout = TimeSpan.FromSeconds(InputBox.GetInt(60));
 		}
 
 		internal virtual bool CheckMatch(MacroAction a)
@@ -145,7 +145,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			if (InputBox.Show(Language.GetString(LocString.InsComment), Language.GetString(LocString.InputReq), m_Comment))
+			/*if (InputBox.Show(Language.GetString(LocString.InsComment), Language.GetString(LocString.InputReq), m_Comment))
 			{
 				if (m_Comment == null)
 					m_Comment = "";
@@ -157,7 +157,7 @@ namespace Assistant.Macros
 
 				if (m_Parent != null)
 					m_Parent.Update();
-			}
+			}*/
 		}
 	}
 
@@ -428,13 +428,13 @@ namespace Assistant.Macros
 
 		private void EditAmount(object[] args)
 		{
-			if (InputBox.Show(Engine.MainWindow, Language.GetString(LocString.EnterAmount), Language.GetString(LocString.InputReq), m_Amount.ToString()))
+			/*if (InputBox.Show(Engine.MainWindow, Language.GetString(LocString.EnterAmount), Language.GetString(LocString.InputReq), m_Amount.ToString()))
 			{
 				m_Amount = (ushort)InputBox.GetInt(m_Amount);
 
 				if (m_Parent != null)
 					m_Parent.Update();
-			}
+			}*/
 		}
 
 		private void ConvertToByType(object[] args)
@@ -523,13 +523,13 @@ namespace Assistant.Macros
 
 		private void EditAmount(object[] args)
 		{
-			if (InputBox.Show(Engine.MainWindow, Language.GetString(LocString.EnterAmount), Language.GetString(LocString.InputReq), m_Amount.ToString()))
+		/*	if (InputBox.Show(Engine.MainWindow, Language.GetString(LocString.EnterAmount), Language.GetString(LocString.InputReq), m_Amount.ToString()))
 			{
 				m_Amount = (ushort)InputBox.GetInt(m_Amount);
 
 				if (m_Parent != null)
 					m_Parent.Update();
-			}
+			}*/
 		}
 
 		public override string ToString()
@@ -1644,7 +1644,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
+		//	new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
 		}
 	}
 
@@ -1744,7 +1744,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
+			//new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
 		}
 
 		private void ToggleStrict(object[] args)
@@ -1816,7 +1816,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
+			//new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
 		}
 	}
 
@@ -1874,7 +1874,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
+			//new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
 		}
 	}
 
@@ -1977,7 +1977,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
+			//new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
 		}
 	}
 
@@ -2225,7 +2225,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			new MacroInsertIf(this).ShowDialog(Engine.MainWindow);
+			//new MacroInsertIf(this).ShowDialog(Engine.MainWindow);
 		}
 	}
 
@@ -2357,8 +2357,8 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-			if (InputBox.Show(Language.GetString(LocString.NumIter), "Input Box", m_Max.ToString()))
-				m_Max = InputBox.GetInt(m_Max);
+			//if (InputBox.Show(Language.GetString(LocString.NumIter), "Input Box", m_Max.ToString()))
+			//	m_Max = InputBox.GetInt(m_Max);
 			if (Parent != null)
 				Parent.Update();
 		}

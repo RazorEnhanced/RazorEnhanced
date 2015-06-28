@@ -129,9 +129,7 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Agents.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Core\Agents.cs" />
     <Compile Include="Core\BandageTimer.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -537,17 +535,8 @@
     <Compile Include="UI\HueEntry.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\InputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="UI\Languages.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="UI\MacroInsertIf.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\MacroInsertWait.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="UI\MessageDialog.cs">
       <SubType>Form</SubType>
@@ -701,15 +690,6 @@
     <EmbeddedResource Include="UI\App.ico" />
     <EmbeddedResource Include="UI\HueEntry.resx">
       <DependentUpon>HueEntry.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\InputBox.resx">
-      <DependentUpon>InputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\MacroInsertIf.resx">
-      <DependentUpon>MacroInsertIf.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\MacroInsertWait.resx">
-      <DependentUpon>MacroInsertWait.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\MessageDialog.resx">
       <DependentUpon>MessageDialog.cs</DependentUpon>
