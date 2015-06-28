@@ -122,11 +122,14 @@ namespace Assistant
 
 		internal static void Save()
 		{
+            List<PasswordData> pdata = new List<PasswordData>();
 			foreach (Entry e in m_List)
 			{
-				if (e.Pass != String.Empty)
-                    RazorEnhanced.Settings.Password.Insert(e.Address.ToString(), e.User, e.Pass);
+                if (e.Pass != String.Empty)
+                    pdata.Add(new PasswordData(e.Address.ToString(), e.User, e.Pass));
 			}
+
+            RazorEnhanced.Settings.Password.Insert(pdata);
 		}
 
 		internal static void ClearAll()

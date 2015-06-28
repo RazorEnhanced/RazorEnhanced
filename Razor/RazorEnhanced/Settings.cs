@@ -3345,22 +3345,18 @@ namespace RazorEnhanced
         // ------------- PASSWORD START -----------------
         internal class Password
         {
-            internal static void Insert(string IP, string user, string password)
+            internal static void Insert(List<PasswordMemory.PasswordData> pdatalist)
             {
-                foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)
+                m_Dataset.Tables["PASSWORD"].Rows.Clear();
+
+                foreach(PasswordMemory.PasswordData pdata in pdatalist)
                 {
-                    string ip = (string)row["IP"];
-                    string username = (string)row["User"];
-                    if (ip == IP && username == user)
-                        row.Delete();
+                    DataRow newRow = m_Dataset.Tables["PASSWORD"].NewRow();
+                    newRow["IP"] = pdata.IP;
+                    newRow["User"] = pdata.User;
+                    newRow["Password"] = pdata.Password;
+                    m_Dataset.Tables["PASSWORD"].Rows.Add(newRow);
                 }
-
-                DataRow newRow = m_Dataset.Tables["PASSWORD"].NewRow();
-                newRow["IP"] = IP;
-                newRow["User"] = user;
-                newRow["Password"] = password;
-                m_Dataset.Tables["PASSWORD"].Rows.Add(newRow);
-
                 Save();
             }
 

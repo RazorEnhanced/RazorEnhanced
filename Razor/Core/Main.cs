@@ -320,7 +320,6 @@ namespace Assistant
                     RazorEnhanced.Scripts.Auto = false;
 
                     ClientCommunication.Close();
-                    PasswordMemory.Save();
                 }
             }
         }
