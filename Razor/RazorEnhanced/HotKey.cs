@@ -108,7 +108,7 @@ namespace RazorEnhanced
                         ProcessShowName(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "Pet Commands":
-                        ProcessPetCommands(RazorEnhanced.Settings.HotKey.FindString(k));
+                        RazorEnhanced.Pets.Command(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "Agents":
                         ProcessAgents(RazorEnhanced.Settings.HotKey.FindString(k));
@@ -303,39 +303,6 @@ namespace RazorEnhanced
                     {
                             ClientCommunication.SendToServer(new SingleClick(i));
                     }
-                    break;
-                default:
-                    break;
-            }
-        }
-        private static void ProcessPetCommands(string function)
-        {
-            List<ushort> kw = new List<ushort>();
-            switch (function)
-            {
-                case "Come":
-                    kw = new List<ushort> {33,85,22,64};
-                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all come"));
-                    break;
-                case "Follow":
-                    kw = new List<ushort> { 48, 232, 22, 49, 108 };
-                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all follow me"));
-                    break;
-                case "Guard":
-                    kw = new List<ushort> { 48, 7, 22, 177, 153};
-                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all guard me"));
-                    break;
-                case "Kill":
-                    kw = new List<ushort> { 33, 93, 22, 128 };
-                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all kill"));
-                    break;
-                case "Stay":
-                    kw = new List<ushort> { 33, 111, 23, 0 };
-                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all stay"));
-                    break;
-                case "Stop":
-                    kw = new List<ushort> { 33, 97, 22, 112};
-                    ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all stop"));
                     break;
                 default:
                     break;
