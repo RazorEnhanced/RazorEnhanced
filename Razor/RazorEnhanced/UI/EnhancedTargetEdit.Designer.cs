@@ -31,8 +31,41 @@
             RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedTargetEdit));
             this.label1 = new System.Windows.Forms.Label();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.groupBox17 = new System.Windows.Forms.GroupBox();
+            this.paralizedBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.paralizedOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.paralizedOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.groupBox16 = new System.Windows.Forms.GroupBox();
+            this.femaleOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.femaleOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.femaleBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.friendOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.friendBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.friendOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.warmodeOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.warmodeBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.warmodeOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.ghostOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.ghostBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.ghostOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.humanOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.humanOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.humanBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.blessedOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.blessedOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.blessedBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.poisonedOn = new RazorEnhanced.UI.RazorRadioButton();
+            this.poisonedOff = new RazorEnhanced.UI.RazorRadioButton();
+            this.poisonedBoth = new RazorEnhanced.UI.RazorRadioButton();
+            this.tTargetID = new System.Windows.Forms.Label();
             this.razorButton1 = new RazorEnhanced.UI.RazorButton();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -46,15 +79,6 @@
             this.notoremoveButton = new RazorEnhanced.UI.RazorButton();
             this.notoaddButton = new RazorEnhanced.UI.RazorButton();
             this.notolistBox = new System.Windows.Forms.ListBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.femaleCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.maleCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.friendCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.warCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.ghostCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.humanCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.blessedCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-            this.poisonedCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.hueremoveButton = new RazorEnhanced.UI.RazorButton();
@@ -73,12 +97,19 @@
             this.tAddBody = new RazorEnhanced.UI.RazorTextBox();
             this.bodyaddButton = new RazorEnhanced.UI.RazorButton();
             this.bodylistBox = new System.Windows.Forms.ListBox();
-            this.tTargetID = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox17.SuspendLayout();
+            this.groupBox16.SuspendLayout();
+            this.groupBox15.SuspendLayout();
+            this.groupBox14.SuspendLayout();
+            this.groupBox12.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -96,6 +127,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.tTargetID);
             this.groupBox1.Controls.Add(this.razorButton1);
             this.groupBox1.Controls.Add(this.groupBox8);
@@ -103,7 +135,6 @@
             this.groupBox1.Controls.Add(this.groupBox7);
             this.groupBox1.Controls.Add(this.notocolorComboBox);
             this.groupBox1.Controls.Add(this.groupBox6);
-            this.groupBox1.Controls.Add(this.groupBox5);
             this.groupBox1.Controls.Add(this.groupBox4);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
@@ -112,10 +143,340 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(680, 427);
+            this.groupBox1.Size = new System.Drawing.Size(711, 455);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Target";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.groupBox17);
+            this.groupBox5.Controls.Add(this.groupBox16);
+            this.groupBox5.Controls.Add(this.groupBox15);
+            this.groupBox5.Controls.Add(this.groupBox14);
+            this.groupBox5.Controls.Add(this.groupBox12);
+            this.groupBox5.Controls.Add(this.groupBox11);
+            this.groupBox5.Controls.Add(this.groupBox10);
+            this.groupBox5.Controls.Add(this.groupBox9);
+            this.groupBox5.Location = new System.Drawing.Point(520, 18);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(180, 428);
+            this.groupBox5.TabIndex = 14;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Flags";
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Controls.Add(this.paralizedBoth);
+            this.groupBox17.Controls.Add(this.paralizedOff);
+            this.groupBox17.Controls.Add(this.paralizedOn);
+            this.groupBox17.Location = new System.Drawing.Point(6, 377);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(163, 45);
+            this.groupBox17.TabIndex = 97;
+            this.groupBox17.TabStop = false;
+            this.groupBox17.Text = "Paralized";
+            // 
+            // paralizedBoth
+            // 
+            this.paralizedBoth.Checked = true;
+            this.paralizedBoth.Location = new System.Drawing.Point(107, 19);
+            this.paralizedBoth.Name = "paralizedBoth";
+            this.paralizedBoth.Size = new System.Drawing.Size(50, 20);
+            this.paralizedBoth.TabIndex = 59;
+            this.paralizedBoth.TabStop = true;
+            this.paralizedBoth.Text = "Both";
+            // 
+            // paralizedOff
+            // 
+            this.paralizedOff.Location = new System.Drawing.Point(60, 19);
+            this.paralizedOff.Name = "paralizedOff";
+            this.paralizedOff.Size = new System.Drawing.Size(41, 20);
+            this.paralizedOff.TabIndex = 58;
+            this.paralizedOff.Text = "No";
+            // 
+            // paralizedOn
+            // 
+            this.paralizedOn.Location = new System.Drawing.Point(6, 19);
+            this.paralizedOn.Name = "paralizedOn";
+            this.paralizedOn.Size = new System.Drawing.Size(48, 20);
+            this.paralizedOn.TabIndex = 57;
+            this.paralizedOn.Text = "Yes";
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Controls.Add(this.femaleOn);
+            this.groupBox16.Controls.Add(this.femaleOff);
+            this.groupBox16.Controls.Add(this.femaleBoth);
+            this.groupBox16.Location = new System.Drawing.Point(6, 326);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(163, 45);
+            this.groupBox16.TabIndex = 96;
+            this.groupBox16.TabStop = false;
+            this.groupBox16.Text = "Female";
+            // 
+            // femaleOn
+            // 
+            this.femaleOn.Location = new System.Drawing.Point(6, 19);
+            this.femaleOn.Name = "femaleOn";
+            this.femaleOn.Size = new System.Drawing.Size(48, 20);
+            this.femaleOn.TabIndex = 61;
+            this.femaleOn.Text = "Yes";
+            // 
+            // femaleOff
+            // 
+            this.femaleOff.Location = new System.Drawing.Point(60, 19);
+            this.femaleOff.Name = "femaleOff";
+            this.femaleOff.Size = new System.Drawing.Size(41, 20);
+            this.femaleOff.TabIndex = 62;
+            this.femaleOff.Text = "No";
+            // 
+            // femaleBoth
+            // 
+            this.femaleBoth.Checked = true;
+            this.femaleBoth.Location = new System.Drawing.Point(107, 19);
+            this.femaleBoth.Name = "femaleBoth";
+            this.femaleBoth.Size = new System.Drawing.Size(50, 20);
+            this.femaleBoth.TabIndex = 63;
+            this.femaleBoth.TabStop = true;
+            this.femaleBoth.Text = "Both";
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.friendOn);
+            this.groupBox15.Controls.Add(this.friendBoth);
+            this.groupBox15.Controls.Add(this.friendOff);
+            this.groupBox15.Location = new System.Drawing.Point(6, 275);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(163, 45);
+            this.groupBox15.TabIndex = 95;
+            this.groupBox15.TabStop = false;
+            this.groupBox15.Text = "Friend";
+            // 
+            // friendOn
+            // 
+            this.friendOn.Location = new System.Drawing.Point(6, 20);
+            this.friendOn.Name = "friendOn";
+            this.friendOn.Size = new System.Drawing.Size(48, 20);
+            this.friendOn.TabIndex = 65;
+            this.friendOn.Text = "Yes";
+            // 
+            // friendBoth
+            // 
+            this.friendBoth.Checked = true;
+            this.friendBoth.Location = new System.Drawing.Point(107, 20);
+            this.friendBoth.Name = "friendBoth";
+            this.friendBoth.Size = new System.Drawing.Size(50, 20);
+            this.friendBoth.TabIndex = 67;
+            this.friendBoth.TabStop = true;
+            this.friendBoth.Text = "Both";
+            // 
+            // friendOff
+            // 
+            this.friendOff.Location = new System.Drawing.Point(60, 19);
+            this.friendOff.Name = "friendOff";
+            this.friendOff.Size = new System.Drawing.Size(41, 20);
+            this.friendOff.TabIndex = 66;
+            this.friendOff.Text = "No";
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.warmodeOn);
+            this.groupBox14.Controls.Add(this.warmodeBoth);
+            this.groupBox14.Controls.Add(this.warmodeOff);
+            this.groupBox14.Location = new System.Drawing.Point(6, 224);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(163, 45);
+            this.groupBox14.TabIndex = 94;
+            this.groupBox14.TabStop = false;
+            this.groupBox14.Text = "Warmode";
+            // 
+            // warmodeOn
+            // 
+            this.warmodeOn.Location = new System.Drawing.Point(6, 19);
+            this.warmodeOn.Name = "warmodeOn";
+            this.warmodeOn.Size = new System.Drawing.Size(48, 20);
+            this.warmodeOn.TabIndex = 69;
+            this.warmodeOn.Text = "Yes";
+            // 
+            // warmodeBoth
+            // 
+            this.warmodeBoth.Checked = true;
+            this.warmodeBoth.Location = new System.Drawing.Point(107, 19);
+            this.warmodeBoth.Name = "warmodeBoth";
+            this.warmodeBoth.Size = new System.Drawing.Size(50, 20);
+            this.warmodeBoth.TabIndex = 71;
+            this.warmodeBoth.TabStop = true;
+            this.warmodeBoth.Text = "Both";
+            // 
+            // warmodeOff
+            // 
+            this.warmodeOff.Location = new System.Drawing.Point(60, 19);
+            this.warmodeOff.Name = "warmodeOff";
+            this.warmodeOff.Size = new System.Drawing.Size(41, 20);
+            this.warmodeOff.TabIndex = 70;
+            this.warmodeOff.Text = "No";
+            // 
+            // groupBox12
+            // 
+            this.groupBox12.Controls.Add(this.ghostOn);
+            this.groupBox12.Controls.Add(this.ghostBoth);
+            this.groupBox12.Controls.Add(this.ghostOff);
+            this.groupBox12.Location = new System.Drawing.Point(6, 173);
+            this.groupBox12.Name = "groupBox12";
+            this.groupBox12.Size = new System.Drawing.Size(163, 45);
+            this.groupBox12.TabIndex = 92;
+            this.groupBox12.TabStop = false;
+            this.groupBox12.Text = "Ghost";
+            // 
+            // ghostOn
+            // 
+            this.ghostOn.Location = new System.Drawing.Point(6, 16);
+            this.ghostOn.Name = "ghostOn";
+            this.ghostOn.Size = new System.Drawing.Size(48, 20);
+            this.ghostOn.TabIndex = 73;
+            this.ghostOn.Text = "Yes";
+            // 
+            // ghostBoth
+            // 
+            this.ghostBoth.Checked = true;
+            this.ghostBoth.Location = new System.Drawing.Point(107, 16);
+            this.ghostBoth.Name = "ghostBoth";
+            this.ghostBoth.Size = new System.Drawing.Size(50, 20);
+            this.ghostBoth.TabIndex = 75;
+            this.ghostBoth.TabStop = true;
+            this.ghostBoth.Text = "Both";
+            // 
+            // ghostOff
+            // 
+            this.ghostOff.Location = new System.Drawing.Point(60, 16);
+            this.ghostOff.Name = "ghostOff";
+            this.ghostOff.Size = new System.Drawing.Size(41, 20);
+            this.ghostOff.TabIndex = 74;
+            this.ghostOff.Text = "No";
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.humanOn);
+            this.groupBox11.Controls.Add(this.humanOff);
+            this.groupBox11.Controls.Add(this.humanBoth);
+            this.groupBox11.Location = new System.Drawing.Point(6, 121);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(163, 45);
+            this.groupBox11.TabIndex = 91;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Human";
+            // 
+            // humanOn
+            // 
+            this.humanOn.Location = new System.Drawing.Point(6, 19);
+            this.humanOn.Name = "humanOn";
+            this.humanOn.Size = new System.Drawing.Size(48, 20);
+            this.humanOn.TabIndex = 77;
+            this.humanOn.Text = "Yes";
+            // 
+            // humanOff
+            // 
+            this.humanOff.Location = new System.Drawing.Point(60, 19);
+            this.humanOff.Name = "humanOff";
+            this.humanOff.Size = new System.Drawing.Size(41, 20);
+            this.humanOff.TabIndex = 78;
+            this.humanOff.Text = "No";
+            // 
+            // humanBoth
+            // 
+            this.humanBoth.Checked = true;
+            this.humanBoth.Location = new System.Drawing.Point(107, 19);
+            this.humanBoth.Name = "humanBoth";
+            this.humanBoth.Size = new System.Drawing.Size(50, 20);
+            this.humanBoth.TabIndex = 79;
+            this.humanBoth.TabStop = true;
+            this.humanBoth.Text = "Both";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.blessedOn);
+            this.groupBox10.Controls.Add(this.blessedOff);
+            this.groupBox10.Controls.Add(this.blessedBoth);
+            this.groupBox10.Location = new System.Drawing.Point(6, 70);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(163, 45);
+            this.groupBox10.TabIndex = 90;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Blessed";
+            // 
+            // blessedOn
+            // 
+            this.blessedOn.Location = new System.Drawing.Point(6, 17);
+            this.blessedOn.Name = "blessedOn";
+            this.blessedOn.Size = new System.Drawing.Size(48, 20);
+            this.blessedOn.TabIndex = 81;
+            this.blessedOn.Text = "Yes";
+            // 
+            // blessedOff
+            // 
+            this.blessedOff.Location = new System.Drawing.Point(60, 17);
+            this.blessedOff.Name = "blessedOff";
+            this.blessedOff.Size = new System.Drawing.Size(41, 20);
+            this.blessedOff.TabIndex = 82;
+            this.blessedOff.Text = "No";
+            // 
+            // blessedBoth
+            // 
+            this.blessedBoth.Checked = true;
+            this.blessedBoth.Location = new System.Drawing.Point(107, 17);
+            this.blessedBoth.Name = "blessedBoth";
+            this.blessedBoth.Size = new System.Drawing.Size(50, 20);
+            this.blessedBoth.TabIndex = 83;
+            this.blessedBoth.TabStop = true;
+            this.blessedBoth.Text = "Both";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.poisonedOn);
+            this.groupBox9.Controls.Add(this.poisonedOff);
+            this.groupBox9.Controls.Add(this.poisonedBoth);
+            this.groupBox9.Location = new System.Drawing.Point(6, 19);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(163, 45);
+            this.groupBox9.TabIndex = 89;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Poisoned";
+            // 
+            // poisonedOn
+            // 
+            this.poisonedOn.Location = new System.Drawing.Point(6, 19);
+            this.poisonedOn.Name = "poisonedOn";
+            this.poisonedOn.Size = new System.Drawing.Size(48, 20);
+            this.poisonedOn.TabIndex = 85;
+            this.poisonedOn.Text = "Yes";
+            // 
+            // poisonedOff
+            // 
+            this.poisonedOff.Location = new System.Drawing.Point(60, 19);
+            this.poisonedOff.Name = "poisonedOff";
+            this.poisonedOff.Size = new System.Drawing.Size(41, 20);
+            this.poisonedOff.TabIndex = 86;
+            this.poisonedOff.Text = "No";
+            // 
+            // poisonedBoth
+            // 
+            this.poisonedBoth.Checked = true;
+            this.poisonedBoth.Location = new System.Drawing.Point(107, 19);
+            this.poisonedBoth.Name = "poisonedBoth";
+            this.poisonedBoth.Size = new System.Drawing.Size(50, 20);
+            this.poisonedBoth.TabIndex = 87;
+            this.poisonedBoth.TabStop = true;
+            this.poisonedBoth.Text = "Both";
+            // 
+            // tTargetID
+            // 
+            this.tTargetID.AutoSize = true;
+            this.tTargetID.Location = new System.Drawing.Point(65, 27);
+            this.tTargetID.Name = "tTargetID";
+            this.tTargetID.Size = new System.Drawing.Size(23, 13);
+            this.tTargetID.TabIndex = 13;
+            this.tTargetID.Text = "null";
             // 
             // razorButton1
             // 
@@ -137,7 +498,7 @@
             office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             office2010BlueTheme1.TextColor = System.Drawing.Color.White;
             this.razorButton1.ColorTable = office2010BlueTheme1;
-            this.razorButton1.Location = new System.Drawing.Point(593, 396);
+            this.razorButton1.Location = new System.Drawing.Point(271, 421);
             this.razorButton1.Margin = new System.Windows.Forms.Padding(2);
             this.razorButton1.Name = "razorButton1";
             this.razorButton1.Size = new System.Drawing.Size(74, 19);
@@ -185,7 +546,7 @@
             // razorButton2
             // 
             this.razorButton2.ColorTable = office2010BlueTheme1;
-            this.razorButton2.Location = new System.Drawing.Point(593, 360);
+            this.razorButton2.Location = new System.Drawing.Point(365, 421);
             this.razorButton2.Margin = new System.Windows.Forms.Padding(2);
             this.razorButton2.Name = "razorButton2";
             this.razorButton2.Size = new System.Drawing.Size(74, 19);
@@ -231,7 +592,7 @@
             this.groupBox6.Controls.Add(this.notolistBox);
             this.groupBox6.Location = new System.Drawing.Point(7, 239);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(219, 176);
+            this.groupBox6.Size = new System.Drawing.Size(219, 207);
             this.groupBox6.TabIndex = 8;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Noto Color";
@@ -239,7 +600,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(6, 153);
+            this.label7.Location = new System.Drawing.Point(3, 185);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(115, 13);
             this.label7.TabIndex = 5;
@@ -276,97 +637,8 @@
             this.notolistBox.FormattingEnabled = true;
             this.notolistBox.Location = new System.Drawing.Point(6, 19);
             this.notolistBox.Name = "notolistBox";
-            this.notolistBox.Size = new System.Drawing.Size(93, 121);
+            this.notolistBox.Size = new System.Drawing.Size(93, 160);
             this.notolistBox.TabIndex = 0;
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.femaleCheckBox);
-            this.groupBox5.Controls.Add(this.maleCheckBox);
-            this.groupBox5.Controls.Add(this.friendCheckBox);
-            this.groupBox5.Controls.Add(this.warCheckBox);
-            this.groupBox5.Controls.Add(this.ghostCheckBox);
-            this.groupBox5.Controls.Add(this.humanCheckBox);
-            this.groupBox5.Controls.Add(this.blessedCheckBox);
-            this.groupBox5.Controls.Add(this.poisonedCheckBox);
-            this.groupBox5.Location = new System.Drawing.Point(520, 18);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(147, 243);
-            this.groupBox5.TabIndex = 7;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Flags";
-            // 
-            // femaleCheckBox
-            // 
-            this.femaleCheckBox.Location = new System.Drawing.Point(6, 211);
-            this.femaleCheckBox.Name = "femaleCheckBox";
-            this.femaleCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.femaleCheckBox.TabIndex = 56;
-            this.femaleCheckBox.Text = "Female";
-            this.femaleCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            // 
-            // maleCheckBox
-            // 
-            this.maleCheckBox.Location = new System.Drawing.Point(6, 183);
-            this.maleCheckBox.Name = "maleCheckBox";
-            this.maleCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.maleCheckBox.TabIndex = 55;
-            this.maleCheckBox.Text = "Male";
-            this.maleCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            // 
-            // friendCheckBox
-            // 
-            this.friendCheckBox.Location = new System.Drawing.Point(6, 157);
-            this.friendCheckBox.Name = "friendCheckBox";
-            this.friendCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.friendCheckBox.TabIndex = 54;
-            this.friendCheckBox.Text = "Friend";
-            this.friendCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            // 
-            // warCheckBox
-            // 
-            this.warCheckBox.Location = new System.Drawing.Point(6, 131);
-            this.warCheckBox.Name = "warCheckBox";
-            this.warCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.warCheckBox.TabIndex = 53;
-            this.warCheckBox.Text = "Warmode";
-            this.warCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            // 
-            // ghostCheckBox
-            // 
-            this.ghostCheckBox.Location = new System.Drawing.Point(6, 103);
-            this.ghostCheckBox.Name = "ghostCheckBox";
-            this.ghostCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.ghostCheckBox.TabIndex = 52;
-            this.ghostCheckBox.Text = "Ghost";
-            this.ghostCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            // 
-            // humanCheckBox
-            // 
-            this.humanCheckBox.Location = new System.Drawing.Point(6, 75);
-            this.humanCheckBox.Name = "humanCheckBox";
-            this.humanCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.humanCheckBox.TabIndex = 51;
-            this.humanCheckBox.Text = "Human";
-            this.humanCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            // 
-            // blessedCheckBox
-            // 
-            this.blessedCheckBox.Location = new System.Drawing.Point(6, 47);
-            this.blessedCheckBox.Name = "blessedCheckBox";
-            this.blessedCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.blessedCheckBox.TabIndex = 50;
-            this.blessedCheckBox.Text = "Blessed";
-            this.blessedCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
-            // 
-            // poisonedCheckBox
-            // 
-            this.poisonedCheckBox.Location = new System.Drawing.Point(6, 19);
-            this.poisonedCheckBox.Name = "poisonedCheckBox";
-            this.poisonedCheckBox.Size = new System.Drawing.Size(125, 22);
-            this.poisonedCheckBox.TabIndex = 49;
-            this.poisonedCheckBox.Text = "Poisoned";
-            this.poisonedCheckBox.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
             // 
             // groupBox4
             // 
@@ -581,20 +853,11 @@
             this.bodylistBox.Size = new System.Drawing.Size(93, 121);
             this.bodylistBox.TabIndex = 0;
             // 
-            // tTargetID
-            // 
-            this.tTargetID.AutoSize = true;
-            this.tTargetID.Location = new System.Drawing.Point(65, 27);
-            this.tTargetID.Name = "tTargetID";
-            this.tTargetID.Size = new System.Drawing.Size(23, 13);
-            this.tTargetID.TabIndex = 13;
-            this.tTargetID.Text = "null";
-            // 
             // EnhancedTargetEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 447);
+            this.ClientSize = new System.Drawing.Size(732, 471);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -603,12 +866,20 @@
             this.Load += new System.EventHandler(this.EnhancedrgetEdit_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox17.ResumeLayout(false);
+            this.groupBox16.ResumeLayout(false);
+            this.groupBox15.ResumeLayout(false);
+            this.groupBox14.ResumeLayout(false);
+            this.groupBox12.ResumeLayout(false);
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -622,7 +893,6 @@
 		#endregion
 
         private System.Windows.Forms.Label label1;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.GroupBox groupBox1;
         private RazorButton bodyaddButton;
         private RazorButton bodyremoveButton;
@@ -642,13 +912,6 @@
         private RazorTextBox tAddHue;
         private RazorButton hueaddButton;
         private System.Windows.Forms.ListBox huelistBox;
-        private System.Windows.Forms.GroupBox groupBox5;
-        private RazorCheckBox poisonedCheckBox;
-        private RazorCheckBox blessedCheckBox;
-        private RazorCheckBox humanCheckBox;
-        private RazorCheckBox warCheckBox;
-        private RazorCheckBox ghostCheckBox;
-        private RazorCheckBox friendCheckBox;
         private RazorButton razorButton1;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Label label8;
@@ -662,9 +925,40 @@
         private RazorButton notoremoveButton;
         private RazorButton notoaddButton;
         private System.Windows.Forms.ListBox notolistBox;
-        private RazorCheckBox femaleCheckBox;
-        private RazorCheckBox maleCheckBox;
         private System.Windows.Forms.Label tTargetID;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.GroupBox groupBox17;
+        private RazorRadioButton paralizedBoth;
+        private RazorRadioButton paralizedOff;
+        private RazorRadioButton paralizedOn;
+        private System.Windows.Forms.GroupBox groupBox16;
+        private RazorRadioButton femaleOn;
+        private RazorRadioButton femaleOff;
+        private RazorRadioButton femaleBoth;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private RazorRadioButton friendOn;
+        private RazorRadioButton friendBoth;
+        private RazorRadioButton friendOff;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private RazorRadioButton warmodeOn;
+        private RazorRadioButton warmodeBoth;
+        private RazorRadioButton warmodeOff;
+        private System.Windows.Forms.GroupBox groupBox12;
+        private RazorRadioButton ghostOn;
+        private RazorRadioButton ghostBoth;
+        private RazorRadioButton ghostOff;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private RazorRadioButton humanOn;
+        private RazorRadioButton humanOff;
+        private RazorRadioButton humanBoth;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private RazorRadioButton blessedOn;
+        private RazorRadioButton blessedOff;
+        private RazorRadioButton blessedBoth;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private RazorRadioButton poisonedOn;
+        private RazorRadioButton poisonedOff;
+        private RazorRadioButton poisonedBoth;
 
     }
 }

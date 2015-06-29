@@ -101,47 +101,69 @@ namespace RazorEnhanced
                     listitem.SubItems.Add("*");
 
                 // Poisoned
-                if (target.TargetObject.Filter.Poisoned)
+                if (target.TargetObject.Filter.Poisoned == 1)
                     listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.Poisoned == -1)
+                    listitem.SubItems.Add("*");
                 else
                     listitem.SubItems.Add("-");
 
                 // Blessed
-                if (target.TargetObject.Filter.Blessed)
+                if (target.TargetObject.Filter.Blessed == 1)
                     listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.Blessed == -1)
+                    listitem.SubItems.Add("*");
                 else
                     listitem.SubItems.Add("-");
 
                 // Human
-                if (target.TargetObject.Filter.IsHuman)
+                if (target.TargetObject.Filter.IsHuman == 1)
                     listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.IsHuman == -1)
+                    listitem.SubItems.Add("*");
                 else
                     listitem.SubItems.Add("-");
-
+               
                 // Ghost
-                if (target.TargetObject.Filter.IsGhost)
+                if (target.TargetObject.Filter.IsGhost == 1)
                     listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.IsGhost == -1)
+                    listitem.SubItems.Add("*");
                 else
                     listitem.SubItems.Add("-");
 
                 // Female
-                if (target.TargetObject.Filter.Female)
-                    listitem.SubItems.Add("F");
-                else
-                    listitem.SubItems.Add("M");
-
-                // Female
-                if (target.TargetObject.Filter.Warmode)
+                if (target.TargetObject.Filter.Female == 1)
                     listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.Female == -1)
+                    listitem.SubItems.Add("*");
                 else
                     listitem.SubItems.Add("-");
 
-                // Female
-                if (target.TargetObject.Filter.Friend)
+                // Warmode
+                if (target.TargetObject.Filter.Warmode == 1)
                     listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.Warmode == -1)
+                    listitem.SubItems.Add("*");
                 else
                     listitem.SubItems.Add("-");
 
+                // Friend
+                if (target.TargetObject.Filter.Friend == 1)
+                    listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.Friend == -1)
+                    listitem.SubItems.Add("*");
+                else
+                    listitem.SubItems.Add("-");
+
+                // Paralized
+                if (target.TargetObject.Filter.Paralized == 1)
+                    listitem.SubItems.Add("X");
+                else if (target.TargetObject.Filter.Paralized == -1)
+                    listitem.SubItems.Add("*");
+                else
+                    listitem.SubItems.Add("-");
+                
                 // NotoColor list
                 if (target.TargetObject.Filter.Notorieties.Count > 0)
                 {

@@ -85,14 +85,62 @@ namespace RazorEnhanced.UI
                 // name
                 tName.Text = targetdata.Filter.Name;
 
-                // Flags
-                poisonedCheckBox.Checked = targetdata.Filter.Poisoned;
-                blessedCheckBox.Checked = targetdata.Filter.Blessed;
-                humanCheckBox.Checked = targetdata.Filter.IsHuman;
-                ghostCheckBox.Checked = targetdata.Filter.IsGhost;
-                warCheckBox.Checked = targetdata.Filter.Warmode;
-                maleCheckBox.Checked = targetdata.Filter.Female;
-                femaleCheckBox.Checked = targetdata.Filter.Female;
+                if (targetdata.Filter.Poisoned == -1)
+                    poisonedBoth.Checked = true;
+                else if (targetdata.Filter.Poisoned == 1)
+                    poisonedOn.Checked = true;
+                else
+                    poisonedOff.Checked = true;
+
+                if (targetdata.Filter.Blessed == -1)
+                    blessedBoth.Checked = true;
+                else if (targetdata.Filter.Blessed == 1)
+                    blessedOn.Checked = true;
+                else
+                    blessedOff.Checked = true;
+
+                if (targetdata.Filter.IsHuman == -1)
+                    humanBoth.Checked = true;
+                else if (targetdata.Filter.IsHuman == 1)
+                    humanOn.Checked = true;
+                else
+                    humanOff.Checked = true;
+
+                if (targetdata.Filter.IsGhost == -1)
+                    ghostBoth.Checked = true;
+                else if (targetdata.Filter.IsGhost == 1)
+                    ghostOn.Checked = true;
+                else
+                    ghostOff.Checked = true;
+
+                if (targetdata.Filter.Warmode == -1)
+                    warmodeBoth.Checked = true;
+                else if (targetdata.Filter.Warmode == 1)
+                    warmodeOn.Checked = true;
+                else
+                    warmodeOff.Checked = true;
+
+                if (targetdata.Filter.Female == -1)
+                    femaleBoth.Checked = true;
+                else if (targetdata.Filter.Female == 1)
+                    femaleOn.Checked = true;
+                else
+                    femaleOff.Checked = true;
+
+                if (targetdata.Filter.Friend == -1)
+                    friendBoth.Checked = true;
+                else if (targetdata.Filter.Friend == 1)
+                    friendOn.Checked = true;
+                else
+                    friendOff.Checked = true;
+
+                if (targetdata.Filter.Paralized == -1)
+                    paralizedBoth.Checked = true;
+                else if (targetdata.Filter.Paralized == 1)
+                    paralizedOn.Checked = true;
+                else
+                    paralizedOff.Checked = true;
+
             }
             else
             {
@@ -226,13 +274,63 @@ namespace RazorEnhanced.UI
             filtertosave.Hues = huelist;
             filtertosave.RangeMax = maxrange;
             filtertosave.RangeMin = minrange;
-            filtertosave.Poisoned = poisonedCheckBox.Checked;
-            filtertosave.Blessed = blessedCheckBox.Checked;
-            filtertosave.IsHuman = humanCheckBox.Checked;
-            filtertosave.IsGhost = ghostCheckBox.Checked;
-            filtertosave.Female = femaleCheckBox.Checked;
-            filtertosave.Warmode = warCheckBox.Checked;
-            filtertosave.Friend = friendCheckBox.Checked;
+
+            if (poisonedBoth.Checked)
+                filtertosave.Poisoned = -1;
+            else if (poisonedOn.Checked)
+                filtertosave.Poisoned = 1;
+            else
+                filtertosave.Poisoned = 0;
+
+            if (blessedBoth.Checked)
+                filtertosave.Blessed = -1;
+            else if (blessedOn.Checked)
+                filtertosave.Blessed = 1;
+            else
+                filtertosave.Blessed = 0;
+
+            if (humanBoth.Checked)
+                filtertosave.IsHuman = -1;
+            else if (humanOn.Checked)
+                filtertosave.IsHuman = 1;
+            else
+                filtertosave.IsHuman = 0;
+
+            if (ghostBoth.Checked)
+                filtertosave.IsGhost = -1;
+            else if (ghostOn.Checked)
+                filtertosave.IsGhost = 1;
+            else
+                filtertosave.IsGhost = 0;
+
+            if (femaleBoth.Checked)
+                filtertosave.Female = -1;
+            else if (femaleOn.Checked)
+                filtertosave.Female = 1;
+            else
+                filtertosave.Female = 0;
+
+            if (warmodeBoth.Checked)
+                filtertosave.Warmode = -1;
+            else if (warmodeOn.Checked)
+                filtertosave.Warmode = 1;
+            else
+                filtertosave.Warmode = 0;
+
+            if (friendBoth.Checked)
+                filtertosave.Friend = -1;
+            else if (friendOn.Checked)
+                filtertosave.Friend = 1;
+            else
+                filtertosave.Friend = 0;
+
+            if (paralizedBoth.Checked)
+                filtertosave.Paralized = -1;
+            else if (paralizedOn.Checked)
+                filtertosave.Paralized = 1;
+            else
+                filtertosave.Paralized = 0;
+
             filtertosave.Notorieties = notolist;
 
             // Genero struttura da salvare

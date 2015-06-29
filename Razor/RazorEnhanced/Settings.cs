@@ -287,27 +287,35 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Come", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Come", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Follow", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Follow Me", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Guard", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Follow", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Kill", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Guard Me", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stay", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Guard", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Kill", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Stay", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Stop", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();

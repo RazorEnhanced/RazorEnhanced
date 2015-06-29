@@ -26,6 +26,7 @@ namespace RazorEnhanced.UI
 
         private void EnhancedrgetAdd_Load(object sender, EventArgs e)
 		{
+           
             tAddBody.Text = "0x0000";
             tAddHue.Text = "0x0000";
             tRangeMax.Text = "-1";
@@ -191,13 +192,63 @@ namespace RazorEnhanced.UI
                 filtertosave.Hues = huelist;
                 filtertosave.RangeMax = maxrange;
                 filtertosave.RangeMin = minrange;
-                filtertosave.Poisoned = poisonedCheckBox.Checked;
-                filtertosave.Blessed = blessedCheckBox.Checked;
-                filtertosave.IsHuman = humanCheckBox.Checked;
-                filtertosave.IsGhost = ghostCheckBox.Checked;
-                filtertosave.Female = femaleCheckBox.Checked;
-                filtertosave.Warmode = warCheckBox.Checked;
-                filtertosave.Friend = friendCheckBox.Checked;
+
+                if (poisonedBoth.Checked)
+                    filtertosave.Poisoned = -1;
+                else if (poisonedOn.Checked)
+                    filtertosave.Poisoned = 1;
+                else
+                    filtertosave.Poisoned = 0;
+
+                if (blessedBoth.Checked)
+                    filtertosave.Blessed = -1;
+                else if (blessedOn.Checked)
+                    filtertosave.Blessed = 1;
+                else
+                    filtertosave.Blessed = 0;
+
+                if (humanBoth.Checked)
+                    filtertosave.IsHuman = -1;
+                else if (humanOn.Checked)
+                    filtertosave.IsHuman = 1;
+                else
+                    filtertosave.IsHuman = 0;
+
+                if (ghostBoth.Checked)
+                    filtertosave.IsGhost = -1;
+                else if (ghostOn.Checked)
+                    filtertosave.IsGhost = 1;
+                else
+                    filtertosave.IsGhost = 0;
+
+                if (femaleBoth.Checked)
+                    filtertosave.Female = -1;
+                else if (femaleOn.Checked)
+                    filtertosave.Female = 1;
+                else
+                    filtertosave.Female = 0;
+
+                if (warmodeBoth.Checked)
+                    filtertosave.Warmode = -1;
+                else if (warmodeOn.Checked)
+                    filtertosave.Warmode = 1;
+                else
+                    filtertosave.Warmode = 0;
+
+                if (friendBoth.Checked)
+                    filtertosave.Friend = -1;
+                else if (friendOn.Checked)
+                    filtertosave.Friend = 1;
+                else
+                    filtertosave.Friend = 0;
+
+                if (paralizedBoth.Checked)
+                    filtertosave.Paralized = -1;
+                else if (paralizedOn.Checked)
+                    filtertosave.Paralized = 1;
+                else
+                    filtertosave.Paralized = 0;
+
                 filtertosave.Notorieties = notolist;
 
                 // Genero struttura da salvare
@@ -215,8 +266,7 @@ namespace RazorEnhanced.UI
         private void razorButton1_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
+        }     
       
 	}
 }

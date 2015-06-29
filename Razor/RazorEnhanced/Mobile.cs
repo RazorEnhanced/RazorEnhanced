@@ -252,13 +252,14 @@ namespace RazorEnhanced
 			public List<int> Hues = new List<int>();
 			public double RangeMin = -1;
 			public double RangeMax = -1;
-			public bool Poisoned = false;
-			public bool Blessed = false;
-			public bool IsHuman = false;
-			public bool IsGhost = false;
-			public bool Female = false;
-			public bool Warmode = false;
-            public bool Friend = false;
+			public int Poisoned = -1;
+            public int Blessed = -1;
+            public int IsHuman = -1;
+            public int IsGhost = -1;
+            public int Female = -1;
+            public int Warmode = -1;
+            public int Friend = -1;
+            public int Paralized = -1;
 			public List<byte> Notorieties = new List<byte>();
 
 			public Filter()
@@ -320,12 +321,46 @@ namespace RazorEnhanced
 						).ToList();
 					}
 
-					assistantMobiles = assistantMobiles.Where((m) => m.Poisoned == filter.Poisoned).ToList();
-					assistantMobiles = assistantMobiles.Where((m) => m.Blessed == filter.Blessed).ToList();
-					assistantMobiles = assistantMobiles.Where((m) => m.IsHuman == filter.IsHuman).ToList();
-					assistantMobiles = assistantMobiles.Where((m) => m.IsGhost == filter.IsGhost).ToList();
-					assistantMobiles = assistantMobiles.Where((m) => m.Female == filter.Female).ToList();
-					assistantMobiles = assistantMobiles.Where((m) => m.Warmode == filter.Warmode).ToList();
+                    if (filter.Warmode != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Warmode == Convert.ToBoolean(filter.Warmode)).ToList();
+                    }
+
+                    if (filter.Poisoned != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Poisoned == Convert.ToBoolean(filter.Poisoned)).ToList();
+                    }
+
+                    if (filter.Blessed != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Blessed == Convert.ToBoolean(filter.Blessed)).ToList();
+                    }
+
+                    if (filter.IsHuman != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.IsHuman == Convert.ToBoolean(filter.IsHuman)).ToList();
+                    }
+
+                    if (filter.IsGhost != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.IsGhost == Convert.ToBoolean(filter.IsGhost)).ToList();
+                    }
+
+                    if (filter.Female != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => m.Female == Convert.ToBoolean(filter.Female)).ToList();
+                    }
+
+                    if (filter.Friend != -1)
+                    {
+                        assistantMobiles = assistantMobiles.Where((m) => RazorEnhanced.Friend.IsFriend(m.Serial) == Convert.ToBoolean(filter.Friend)).ToList();
+                    }
+
+                    if (filter.Paralized != -1)
+                    {
+                        // TODO PARALIZED FLAG
+                        //assistantMobiles = assistantMobiles.Where((m) => m.Paralized == Convert.ToBoolean(filter.Paralized)).ToList();
+                    }
 
 					if (filter.Notorieties.Count > 0)
 					{
@@ -352,13 +387,17 @@ namespace RazorEnhanced
 				{
 					case "Random":
 						result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
-						break;
+                        
+                        break;
 					case "Nearest":
                         Mobile closest = null;
 			            double closestDist = double.MaxValue;
 
                         foreach (Mobile m in mobiles)
 			            {
+                            if (m.Serial == World.Player.Serial)
+                                continue;
+
 				            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y) , World.Player.Position);
 
 				            if (dist < closestDist || closest == null)
@@ -375,6 +414,9 @@ namespace RazorEnhanced
 
                         foreach (Mobile m in mobiles)
 			            {
+                            if (m.Serial == World.Player.Serial)
+                                continue;
+
 				            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y) , World.Player.Position);
 
                             if (dist > farthestDist || farthest == null)
