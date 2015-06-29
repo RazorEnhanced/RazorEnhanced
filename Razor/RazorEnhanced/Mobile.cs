@@ -495,6 +495,24 @@ namespace RazorEnhanced
                 Misc.SendMessage("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
 
         }
+
+        // Single Click
+        public static void SingleClick(Mobile mobile)
+        {
+            ClientCommunication.SendToServer(new SingleClick(mobile));
+        }
+
+        public static void SingleClick(int mobileserial)
+        {
+            Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
+            if (mobile == null)
+            {
+                Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
+                return;
+            }
+            ClientCommunication.SendToServer(new SingleClick(mobile));
+        }
+
 		// Message
 		public static void Message(Mobile mobile, int hue, string message)
 		{

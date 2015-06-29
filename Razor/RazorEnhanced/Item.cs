@@ -627,7 +627,7 @@ namespace RazorEnhanced
 		{
 			Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)item.Serial));
 		}
-		public static void UseItem(uint itemserial)
+		public static void UseItem(int itemserial)
 		{
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
             if (item == null)
@@ -655,6 +655,23 @@ namespace RazorEnhanced
 			else
 				Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
 		}
+
+        // Single Click
+        public static void SingleClick(Item item)
+		{
+            ClientCommunication.SendToServer(new SingleClick(item));
+		}
+
+        public static void SingleClick(int itemserial)
+        {
+            Assistant.Item item = Assistant.World.FindItem(itemserial);
+            if (item == null)
+            {
+                Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
+                return;
+            }
+            ClientCommunication.SendToServer(new SingleClick(item));
+        }
 
 		// Props
 		public static int GetPropByCliloc(RazorEnhanced.Item item, int code)
