@@ -299,7 +299,7 @@ namespace RazorEnhanced
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
 				// Apertura forzata 1 solo volta (necessaria in caso di corpi uccisi precedentemente da altri fuori schermata, in quanto vengono flaggati come updated anche se non realmente)
-
+                
                 if (!m_IgnoreCorpiQueue.Contains(corpo.Serial))
                 {
                     RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
@@ -307,12 +307,9 @@ namespace RazorEnhanced
                     m_IgnoreCorpiQueue.Enqueue(corpo.Serial);
                     if (m_IgnoreCorpiQueue.Count > 50)
                         m_IgnoreCorpiQueue.Dequeue();
-                    Thread.Sleep(800);
                 }
                 else
-                    RazorEnhanced.Items.WaitForContents(corpo, 800);
-
-                
+                    RazorEnhanced.Items.WaitForContents(corpo, 1000);
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
@@ -349,7 +346,7 @@ namespace RazorEnhanced
 						}
 					}
 					//fine Blocco shared
-
+                    
 					foreach (AutoLootItem autoLootItem in autoLootList)
 					{
 						if (!autoLootItem.Selected)
@@ -362,7 +359,7 @@ namespace RazorEnhanced
 								bool grabItem = true;
 								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
 									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-										grabItem = false;
+									grabItem = false;
 
 								if (grabItem)
 								{
@@ -377,7 +374,7 @@ namespace RazorEnhanced
 								bool grabItem = true;
 								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
 									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-										grabItem = false;
+									grabItem = false;
 
 								if (grabItem)
 								{
@@ -387,6 +384,7 @@ namespace RazorEnhanced
 						}
 					}
 				}
+                Thread.Sleep(mseconds/2);         // Pause fra un corpo e l'altro se sono ammassati
 			}
 
 			return 0;
@@ -405,7 +403,6 @@ namespace RazorEnhanced
                 return;
             }
 
-			//if (Utility.DistanceSqrt(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y)) <= 3)
             if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y), 3))
 			{
 				if (autoLoootItem.Properties.Count > 0) // Item con props
@@ -433,8 +430,8 @@ namespace RazorEnhanced
 						RazorEnhanced.Item bag = RazorEnhanced.Items.FindBySerial(AutoLootBag);
 						if (bag != null)
 						{
-							RazorEnhanced.Items.Move(oggettoContenuto, bag, 0);
-							Thread.Sleep(mseconds);
+                    		RazorEnhanced.Items.Move(oggettoContenuto, bag, 0);
+                            Thread.Sleep(mseconds);
 						}
 					}
 					else
@@ -449,7 +446,7 @@ namespace RazorEnhanced
 					if (bag != null)
 					{
 						RazorEnhanced.Items.Move(oggettoContenuto, bag, 0);
-						Thread.Sleep(mseconds);
+                        Thread.Sleep(mseconds);
 					}
 				}
 			}
@@ -461,7 +458,7 @@ namespace RazorEnhanced
 
 			// Genero filtro per corpi
 			Items.Filter corpseFilter = new Items.Filter();
-			corpseFilter.RangeMax = 2;
+			corpseFilter.RangeMax = 3;
 			corpseFilter.Movable = false;
 			corpseFilter.IsCorpse = true;
 			corpseFilter.OnGround = true;
