@@ -229,14 +229,36 @@ namespace RazorEnhanced
                         World.Player.SendMessage("You are not mounted.");
                     break;
                 case "Grab Item":
-                    World.Player.SendMessage("Da implementare");
+                    RazorEnhanced.Misc.SendMessage("Target item to Grab.");
+                    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(grabitemTarget_Callback));
                     break;
                 case "Drop Item":
-                    World.Player.SendMessage("Da implementare");
+                    RazorEnhanced.Misc.SendMessage("Target item to Drop at feet.");
+                    Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(dropitemTarget_Callback));
                     break;
                 default:
                     break;
             }
+        }
+
+        private static void grabitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item itemtograb = Assistant.World.FindItem(serial);
+
+            if (itemtograb != null && itemtograb.Serial.IsItem && itemtograb.Movable)
+                RazorEnhanced.Items.Move(itemtograb.Serial, World.Player.Backpack.Serial, 0);
+            else
+                RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
+		}
+
+        private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            Item itemtodrop = RazorEnhanced.Items.FindBySerial(serial);
+
+            if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player)
+                RazorEnhanced.Items.DropItemGroundSelf(itemtodrop, 0);
+            else
+                RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
         }
         private static void ProcessUse(string function)
         {
