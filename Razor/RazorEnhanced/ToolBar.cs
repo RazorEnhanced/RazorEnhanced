@@ -147,6 +147,9 @@ namespace RazorEnhanced
 
         internal static void UpdatePanelImage()
         {
+            if (Assistant.Engine.MainWindow.ToolBar == null)
+                return;
+
             List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
 
             if (items[0].Graphics != 0)
