@@ -968,6 +968,8 @@ namespace Assistant
 					PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnStart = DateTime.MinValue;
 			}
+            // Chiuto toolbar
+            Assistant.Engine.MainWindow.CloseToolBar();
 
 			PlayerData.ExternalZ = false;
 			World.Player = null;
