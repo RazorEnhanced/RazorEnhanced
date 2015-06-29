@@ -814,6 +814,7 @@ namespace Assistant
             this.columnHeader46 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader47 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader48 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader55 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader49 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader50 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.skillsTab = new System.Windows.Forms.TabPage();
@@ -1114,7 +1115,6 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.columnHeader55 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -1684,7 +1684,7 @@ namespace Assistant
             // 
             this.lblWarnHue.Location = new System.Drawing.Point(7, 69);
             this.lblWarnHue.Name = "lblWarnHue";
-            this.lblWarnHue.Size = new System.Drawing.Size(120, 16);
+            this.lblWarnHue.Size = new System.Drawing.Size(139, 16);
             this.lblWarnHue.TabIndex = 16;
             this.lblWarnHue.Text = "Warning Message Hue";
             // 
@@ -1692,7 +1692,7 @@ namespace Assistant
             // 
             this.lblMsgHue.Location = new System.Drawing.Point(7, 44);
             this.lblMsgHue.Name = "lblMsgHue";
-            this.lblMsgHue.Size = new System.Drawing.Size(115, 17);
+            this.lblMsgHue.Size = new System.Drawing.Size(139, 17);
             this.lblMsgHue.TabIndex = 15;
             this.lblMsgHue.Text = "Razor Message Hue";
             // 
@@ -1700,7 +1700,7 @@ namespace Assistant
             // 
             this.lblExHue.Location = new System.Drawing.Point(7, 20);
             this.lblExHue.Name = "lblExHue";
-            this.lblExHue.Size = new System.Drawing.Size(120, 16);
+            this.lblExHue.Size = new System.Drawing.Size(139, 16);
             this.lblExHue.TabIndex = 14;
             this.lblExHue.Text = "Search Exemption Hue";
             // 
@@ -1708,7 +1708,7 @@ namespace Assistant
             // 
             this.label3.Location = new System.Drawing.Point(7, 220);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(71, 16);
+            this.label3.Size = new System.Drawing.Size(86, 16);
             this.label3.TabIndex = 4;
             this.label3.Text = "Spell Format:";
             // 
@@ -1893,7 +1893,7 @@ namespace Assistant
             // setLTHilight
             // 
             this.setLTHilight.ColorTable = office2010BlueTheme1;
-            this.setLTHilight.Location = new System.Drawing.Point(142, 115);
+            this.setLTHilight.Location = new System.Drawing.Point(152, 115);
             this.setLTHilight.Name = "setLTHilight";
             this.setLTHilight.Size = new System.Drawing.Size(32, 20);
             this.setLTHilight.TabIndex = 51;
@@ -1905,7 +1905,7 @@ namespace Assistant
             // 
             this.lthilight.Location = new System.Drawing.Point(7, 118);
             this.lthilight.Name = "lthilight";
-            this.lthilight.Size = new System.Drawing.Size(131, 22);
+            this.lthilight.Size = new System.Drawing.Size(139, 22);
             this.lthilight.TabIndex = 50;
             this.lthilight.Text = "Last Target Highlight:";
             this.lthilight.CheckedChanged += new System.EventHandler(this.lthilight_CheckedChanged);
@@ -1956,7 +1956,7 @@ namespace Assistant
             // 
             this.setHarmHue.ColorTable = office2010BlueTheme1;
             this.setHarmHue.Enabled = false;
-            this.setHarmHue.Location = new System.Drawing.Point(79, 184);
+            this.setHarmHue.Location = new System.Drawing.Point(83, 184);
             this.setHarmHue.Name = "setHarmHue";
             this.setHarmHue.Size = new System.Drawing.Size(32, 20);
             this.setHarmHue.TabIndex = 42;
@@ -1968,7 +1968,7 @@ namespace Assistant
             // 
             this.setNeuHue.ColorTable = office2010BlueTheme1;
             this.setNeuHue.Enabled = false;
-            this.setNeuHue.Location = new System.Drawing.Point(137, 184);
+            this.setNeuHue.Location = new System.Drawing.Point(140, 184);
             this.setNeuHue.Name = "setNeuHue";
             this.setNeuHue.Size = new System.Drawing.Size(31, 20);
             this.setNeuHue.TabIndex = 43;
@@ -1979,8 +1979,7 @@ namespace Assistant
             // setBeneHue
             // 
             this.setBeneHue.ColorTable = office2010BlueTheme1;
-            this.setBeneHue.Enabled = false;
-            this.setBeneHue.Location = new System.Drawing.Point(24, 184);
+            this.setBeneHue.Location = new System.Drawing.Point(28, 184);
             this.setBeneHue.Name = "setBeneHue";
             this.setBeneHue.Size = new System.Drawing.Size(33, 20);
             this.setBeneHue.TabIndex = 41;
@@ -1991,7 +1990,7 @@ namespace Assistant
             // setSpeechHue
             // 
             this.setSpeechHue.ColorTable = office2010BlueTheme1;
-            this.setSpeechHue.Location = new System.Drawing.Point(142, 91);
+            this.setSpeechHue.Location = new System.Drawing.Point(152, 91);
             this.setSpeechHue.Name = "setSpeechHue";
             this.setSpeechHue.Size = new System.Drawing.Size(32, 20);
             this.setSpeechHue.TabIndex = 40;
@@ -2002,7 +2001,7 @@ namespace Assistant
             // setWarnHue
             // 
             this.setWarnHue.ColorTable = office2010BlueTheme1;
-            this.setWarnHue.Location = new System.Drawing.Point(142, 67);
+            this.setWarnHue.Location = new System.Drawing.Point(152, 67);
             this.setWarnHue.Name = "setWarnHue";
             this.setWarnHue.Size = new System.Drawing.Size(32, 20);
             this.setWarnHue.TabIndex = 39;
@@ -2013,7 +2012,7 @@ namespace Assistant
             // setMsgHue
             // 
             this.setMsgHue.ColorTable = office2010BlueTheme1;
-            this.setMsgHue.Location = new System.Drawing.Point(142, 43);
+            this.setMsgHue.Location = new System.Drawing.Point(152, 43);
             this.setMsgHue.Name = "setMsgHue";
             this.setMsgHue.Size = new System.Drawing.Size(32, 19);
             this.setMsgHue.TabIndex = 38;
@@ -2024,7 +2023,7 @@ namespace Assistant
             // setExHue
             // 
             this.setExHue.ColorTable = office2010BlueTheme1;
-            this.setExHue.Location = new System.Drawing.Point(142, 18);
+            this.setExHue.Location = new System.Drawing.Point(152, 18);
             this.setExHue.Name = "setExHue";
             this.setExHue.Size = new System.Drawing.Size(32, 20);
             this.setExHue.TabIndex = 37;
@@ -2086,9 +2085,9 @@ namespace Assistant
             this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.txtSpellFormat.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtSpellFormat.Location = new System.Drawing.Point(81, 218);
+            this.txtSpellFormat.Location = new System.Drawing.Point(99, 218);
             this.txtSpellFormat.Name = "txtSpellFormat";
-            this.txtSpellFormat.Size = new System.Drawing.Size(106, 20);
+            this.txtSpellFormat.Size = new System.Drawing.Size(87, 20);
             this.txtSpellFormat.TabIndex = 5;
             this.txtSpellFormat.TextChanged += new System.EventHandler(this.txtSpellFormat_TextChanged);
             // 
@@ -2096,7 +2095,7 @@ namespace Assistant
             // 
             this.chkForceSpellHue.Location = new System.Drawing.Point(7, 142);
             this.chkForceSpellHue.Name = "chkForceSpellHue";
-            this.chkForceSpellHue.Size = new System.Drawing.Size(127, 22);
+            this.chkForceSpellHue.Size = new System.Drawing.Size(139, 22);
             this.chkForceSpellHue.TabIndex = 2;
             this.chkForceSpellHue.Text = "Override Spell Hues:";
             this.chkForceSpellHue.CheckedChanged += new System.EventHandler(this.chkForceSpellHue_CheckedChanged);
@@ -2105,7 +2104,7 @@ namespace Assistant
             // 
             this.chkForceSpeechHue.Location = new System.Drawing.Point(7, 94);
             this.chkForceSpeechHue.Name = "chkForceSpeechHue";
-            this.chkForceSpeechHue.Size = new System.Drawing.Size(131, 22);
+            this.chkForceSpeechHue.Size = new System.Drawing.Size(139, 22);
             this.chkForceSpeechHue.TabIndex = 0;
             this.chkForceSpeechHue.Text = "Override Speech Hue";
             this.chkForceSpeechHue.CheckedChanged += new System.EventHandler(this.chkForceSpeechHue_CheckedChanged);
@@ -2792,6 +2791,12 @@ namespace Assistant
             this.columnHeader48.Text = "F";
             this.columnHeader48.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader48.Width = 25;
+            // 
+            // columnHeader55
+            // 
+            this.columnHeader55.Text = "Pa";
+            this.columnHeader55.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader55.Width = 25;
             // 
             // columnHeader49
             // 
@@ -5999,12 +6004,6 @@ namespace Assistant
             this.timerupdatestatus.Enabled = true;
             this.timerupdatestatus.Interval = 1000;
             this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
-            // 
-            // columnHeader55
-            // 
-            this.columnHeader55.Text = "Pa";
-            this.columnHeader55.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader55.Width = 25;
             // 
             // MainForm
             // 
