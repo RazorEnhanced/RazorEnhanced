@@ -304,6 +304,7 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
                     Items.UseItem(corpo);
+                    Thread.Sleep(mseconds);
                     m_IgnoreCorpiQueue.Enqueue(corpo.Serial);
                     if (m_IgnoreCorpiQueue.Count > 50)
                         m_IgnoreCorpiQueue.Dequeue();
@@ -384,7 +385,6 @@ namespace RazorEnhanced
 						}
 					}
 				}
-                Thread.Sleep(mseconds/2);         // Pause fra un corpo e l'altro se sono ammassati
 			}
 
 			return 0;
