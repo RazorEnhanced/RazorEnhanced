@@ -11,6 +11,8 @@ namespace RazorEnhanced
 {
 	public class Scavenger
 	{
+        private static Queue<int> m_IgnoreItemQueue = new Queue<int>();
+
 		[Serializable]
 		public class ScavengerItem
 		{
@@ -335,8 +337,10 @@ namespace RazorEnhanced
             if (!itemGround.Movable || !itemGround.Visible)
                 return;
 
-            if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(itemGround.Position.X, itemGround.Position.Y), 3))
-			{
+            if (m_IgnoreItemQueue.Contains(itemGround.Serial))
+                return;
+
+      
 				if (scavengerItem.Properties.Count > 0) // Item con props
 				{
 					RazorEnhanced.Scavenger.AddLog("- Item Match found scan props");
@@ -358,13 +362,12 @@ namespace RazorEnhanced
 
 					if (propsOK) // Tutte le props match OK
 					{
-						RazorEnhanced.Scavenger.AddLog("- Item Match found (0x" + itemGround.Serial.ToString("X8") + ") ... Grabbing");
-						RazorEnhanced.Item bag = RazorEnhanced.Items.FindBySerial(ScavengerBag);
-						if (bag != null)
-						{
-							RazorEnhanced.Items.Move(itemGround, bag, 0);
-							Thread.Sleep(mseconds);
-						}
+                        if (!DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
+                        {
+                            m_IgnoreItemQueue.Enqueue(itemGround.Serial);
+                            DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
+                            CheckQueues();
+                        }
 					}
 					else
 					{
@@ -373,16 +376,25 @@ namespace RazorEnhanced
 				}
 				else // Item Senza props     
 				{
-					RazorEnhanced.Scavenger.AddLog("- Item Match found (0x" + itemGround.Serial.ToString("X8") + ") ... Grabbing");
-					RazorEnhanced.Item bag = RazorEnhanced.Items.FindBySerial(ScavengerBag);
-					if (bag != null)
-					{
-						RazorEnhanced.Items.Move(itemGround, bag, 0);
-						Thread.Sleep(mseconds);
-					}
+                    if (!DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
+                    {
+                        m_IgnoreItemQueue.Enqueue(itemGround.Serial);
+                        DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
+                        CheckQueues();
+                    }
 				}
-			}
+			
 		}
+
+        private static void CheckQueues()
+        {
+            if (m_IgnoreItemQueue.Count > 50)
+                m_IgnoreItemQueue.Dequeue();
+
+            if (DragDropManager.ScavengerSerialToGrab.Count > 50)
+                DragDropManager.ScavengerSerialToGrab.Dequeue();
+
+        }
 
 		internal static void Engine()
 		{

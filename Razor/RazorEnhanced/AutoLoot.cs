@@ -11,6 +11,9 @@ namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
+        private static Queue<int> m_IgnoreOpenCorpiQueue = new Queue<int>();
+        private static Queue<int> m_IgnoreItemQueue = new Queue<int>();
+        
 		[Serializable]
 		public class AutoLootItem
 		{
@@ -284,8 +287,6 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.AutoLoot.ItemReplace(list, index, item);
 		}
 
-        private static Queue<int> m_IgnoreCorpiQueue = new Queue<int>();
-
 		internal static int Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
@@ -299,15 +300,13 @@ namespace RazorEnhanced
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
 				// Apertura forzata 1 solo volta (necessaria in caso di corpi uccisi precedentemente da altri fuori schermata, in quanto vengono flaggati come updated anche se non realmente)
-                
-                if (!m_IgnoreCorpiQueue.Contains(corpo.Serial))
+
+                if (!m_IgnoreOpenCorpiQueue.Contains(corpo.Serial))
                 {
                     RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
                     Items.UseItem(corpo);
                     Thread.Sleep(mseconds);
-                    m_IgnoreCorpiQueue.Enqueue(corpo.Serial);
-                    if (m_IgnoreCorpiQueue.Count > 50)
-                        m_IgnoreCorpiQueue.Dequeue();
+                    m_IgnoreOpenCorpiQueue.Enqueue(corpo.Serial);
                 }
                 else
                     RazorEnhanced.Items.WaitForContents(corpo, 1000);
@@ -395,6 +394,9 @@ namespace RazorEnhanced
             if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
                 return;
 
+            if (m_IgnoreItemQueue.Contains(oggettoContenuto.Serial))
+                return;
+
             if (World.Player.Weight - 20 > World.Player.MaxWeight)
             {
                 RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
@@ -403,8 +405,6 @@ namespace RazorEnhanced
                 return;
             }
 
-            if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpo.Position.X, corpo.Position.Y), 3))
-			{
 				if (autoLoootItem.Properties.Count > 0) // Item con props
 				{
 					RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
@@ -426,14 +426,13 @@ namespace RazorEnhanced
 
 					if (propsOK) // Tutte le props match OK
 					{
-						RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
-						RazorEnhanced.Item bag = RazorEnhanced.Items.FindBySerial(AutoLootBag);
-						if (bag != null)
-						{
-                    		RazorEnhanced.Items.Move(oggettoContenuto, bag, 0);
-                            Thread.Sleep(mseconds);
-						}
-					}
+                        if (!DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
+                            {
+                                m_IgnoreItemQueue.Enqueue(oggettoContenuto.Serial);
+                                DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+                                CheckQueues();
+                            }
+                    }
 					else
 					{
 						RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
@@ -441,16 +440,26 @@ namespace RazorEnhanced
 				}
 				else // Item Senza props     
 				{
-					RazorEnhanced.AutoLoot.AddLog("- Item Match found (0x" + oggettoContenuto.Serial.ToString("X8") + ") ... Looting");
-					RazorEnhanced.Item bag = RazorEnhanced.Items.FindBySerial(AutoLootBag);
-					if (bag != null)
-					{
-						RazorEnhanced.Items.Move(oggettoContenuto, bag, 0);
-                        Thread.Sleep(mseconds);
-					}
+                    if (!DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
+                    {
+                        m_IgnoreItemQueue.Enqueue(oggettoContenuto.Serial);
+                        DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+                        CheckQueues();
+                    }
 				}
-			}
 		}
+
+        private static void CheckQueues()
+        {
+            if (m_IgnoreItemQueue.Count > 50)
+                m_IgnoreItemQueue.Dequeue();
+
+            if (DragDropManager.AutoLootSerialToGrab.Count > 50)
+                DragDropManager.AutoLootSerialToGrab.Dequeue();
+
+            if (m_IgnoreOpenCorpiQueue.Count > 50)
+                m_IgnoreOpenCorpiQueue.Dequeue();
+        }
 
 		internal static void Engine()
 		{
@@ -491,7 +500,9 @@ namespace RazorEnhanced
 		// Funzioni di controllo da script
 		public static void ResetIgnore()
 		{
-			m_IgnoreCorpiQueue.Clear();
+            m_IgnoreOpenCorpiQueue.Clear();
+            m_IgnoreItemQueue.Clear();
+            DragDropManager.AutoLootSerialToGrab.Clear();
 		}
 
 		public static int RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)

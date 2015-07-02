@@ -104,6 +104,7 @@ namespace RazorEnhanced
 			private Thread m_ScavengerThread;
             private Thread m_BandageHealThread;
             private Thread m_AutoCarverThread;
+            private Thread m_DragDropThread;
 
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
@@ -174,6 +175,19 @@ namespace RazorEnhanced
                     {
                             m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
                             m_AutoCarverThread.Start();
+                    }
+                }
+
+                if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode))
+                {
+                    if (m_DragDropThread == null ||
+                           (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
+                           m_DragDropThread.ThreadState != ThreadState.Unstarted &&
+                           m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
+                       )
+                    {
+                        m_DragDropThread = new Thread(DragDropManager.Engine);
+                        m_DragDropThread.Start();
                     }
                 }
 			}
