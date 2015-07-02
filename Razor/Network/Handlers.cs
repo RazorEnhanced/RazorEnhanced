@@ -1678,8 +1678,8 @@ namespace Assistant
 				{
                     if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
 						ClientCommunication.SendToServer(new SingleClick(item));
-                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible)
-						PlayerData.DoubleClick(item);
+                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible && !Engine.MainWindow.AutolootCheckBox.Checked)
+                        RazorEnhanced.Items.UseItem(item.Serial);
 				}
 				else if (item.IsMulti)
 				{
@@ -1838,8 +1838,8 @@ namespace Assistant
 				{
                     if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
 						ClientCommunication.SendToServer(new SingleClick(item));
-                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible)
-						PlayerData.DoubleClick(item);
+                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible && !Engine.MainWindow.AutolootCheckBox.Checked)
+						RazorEnhanced.Items.UseItem(item.Serial);
 				}
 				else if (item.IsMulti)
 				{
