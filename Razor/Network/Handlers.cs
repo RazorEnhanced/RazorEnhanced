@@ -825,7 +825,7 @@ namespace Assistant
 				p.Write((ushort)(ltHue & 0x3FFF));
 			}
 
-			if (i.Layer == Layer.Backpack && isNew && RazorEnhanced.Settings.General.ReadBool("AutoSearch") && ser == World.Player.Serial)
+			if (i.Layer == Layer.Backpack && isNew && ser == World.Player.Serial) // && RazorEnhanced.Settings.General.ReadBool("AutoSearch")
 			{
 				m_IgnoreGumps.Add(i);
 				PlayerData.DoubleClick(i);
@@ -1565,7 +1565,7 @@ namespace Assistant
 					}
 				}
 
-				if (item.Layer == Layer.Backpack && isNew && RazorEnhanced.Settings.General.ReadBool("AutoSearch") && m == World.Player && m != null)
+                if (item.Layer == Layer.Backpack && isNew && m == World.Player && m != null) //  && RazorEnhanced.Settings.General.ReadBool("AutoSearch")
 				{
 					m_IgnoreGumps.Add(item);
 					PlayerData.DoubleClick(item);
