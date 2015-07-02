@@ -131,8 +131,15 @@ namespace RazorEnhanced
 						m_AutoLootThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 					{
+                        try
+                        {
                             m_AutoLootThread = new Thread(AutoLoot.Engine);
                             m_AutoLootThread.Start();
+                        }
+                        catch
+                        {
+                            AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
+                        }
 					}   
 				}
 
@@ -145,8 +152,15 @@ namespace RazorEnhanced
 						m_ScavengerThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 					{
+                        try
+                        {
                             m_ScavengerThread = new Thread(Scavenger.Engine);
                             m_ScavengerThread.Start();
+                        }
+                        catch
+                        {
+                            Scavenger.AddLog("Error in Scaveger Thread, Restart");
+                        }
 					}
 				}
 
@@ -159,8 +173,15 @@ namespace RazorEnhanced
                         m_BandageHealThread.ThreadState != ThreadState.WaitSleepJoin)
                     )
                     {
+                        try
+                        {
                             m_BandageHealThread = new Thread(BandageHeal.Engine);
                             m_BandageHealThread.Start();
+                        }
+                        catch
+                        {
+                            BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
+                        }
                     }
                 }
 
@@ -173,8 +194,13 @@ namespace RazorEnhanced
                         m_AutoCarverThread.ThreadState != ThreadState.WaitSleepJoin)
                     )
                     {
+                        try
+                        {
                             m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
                             m_AutoCarverThread.Start();
+                        }
+                        catch
+                        { }
                     }
                 }
 
@@ -186,8 +212,13 @@ namespace RazorEnhanced
                            m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
                        )
                     {
-                        m_DragDropThread = new Thread(DragDropManager.Engine);
-                        m_DragDropThread.Start();
+                        try
+                        {
+                            m_DragDropThread = new Thread(DragDropManager.Engine);
+                            m_DragDropThread.Start();
+                        }
+                        catch
+                        { }
                     }
                 }
 			}

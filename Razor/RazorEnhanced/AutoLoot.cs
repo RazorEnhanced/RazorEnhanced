@@ -467,7 +467,7 @@ namespace RazorEnhanced
 
 			// Genero filtro per corpi
 			Items.Filter corpseFilter = new Items.Filter();
-			corpseFilter.RangeMax = 3;
+			corpseFilter.RangeMax = 2;
 			corpseFilter.Movable = false;
 			corpseFilter.IsCorpse = true;
 			corpseFilter.OnGround = true;
