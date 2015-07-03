@@ -642,19 +642,27 @@ namespace RazorEnhanced
 				Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
 
 		}
-		public static void UseItemByID(UInt16 ItemID)                   // Da verificare il findbyid dove cerca
-		{
-			Assistant.Item item = World.Player.FindItemByID(ItemID);
-			if (item.Serial.IsItem)
-			{
-				Misc.SendMessage("Script Error: UseItemByID: No item whit ID:(" + ItemID.ToString() + ") found!");
-				return;
-			}
-			if (item.Serial.IsItem)
-				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
-			else
-				Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
-		}
+
+        public static void UseItemByID(int itemid, int color)
+        {
+            // Genero filtro item
+            Items.Filter itemFilter = new Items.Filter();
+            itemFilter.Enabled = true;
+            itemFilter.Graphics.Add(itemid);
+
+            if (color != -1)
+                itemFilter.Hues.Add(color);
+
+            List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+            foreach (Item found in containeritem)
+            {
+                RazorEnhanced.Items.UseItem(found);
+                break;
+            }
+
+            return;
+        }
 
         // Single Click
         public static void SingleClick(Item item)
