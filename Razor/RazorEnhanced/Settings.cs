@@ -1365,7 +1365,7 @@ namespace RazorEnhanced
                     false, Keys.None,
 
                     // Parametri primo avvio interni
-                    "[{0}% / {1}%]", 0, "", false, true, false,
+                    "[{0}% / {1}%]", 0, "", false, false, true,
 
                      // Parametri primo avvio Mappa
                      200,200,200,200
