@@ -388,11 +388,11 @@ namespace RazorEnhanced
 
         private static void CheckQueues()
         {
-            if (m_IgnoreItemQueue.Count > 50)
-                m_IgnoreItemQueue.Dequeue();
+            if (m_IgnoreItemQueue.Count > 150)
+                m_IgnoreItemQueue.Clear();
 
-            if (DragDropManager.ScavengerSerialToGrab.Count > 50)
-                DragDropManager.ScavengerSerialToGrab.Dequeue();
+            if (DragDropManager.ScavengerSerialToGrab.Count > 150)
+                DragDropManager.ScavengerSerialToGrab.Clear();
 
         }
 
