@@ -657,8 +657,11 @@ namespace RazorEnhanced
 
             foreach (Item found in containeritem)
             {
-                RazorEnhanced.Items.UseItem(found);
-                break;
+                if (!found.IsInBank)
+                {
+                    RazorEnhanced.Items.UseItem(found);
+                    break;
+                }
             }
 
             return;
@@ -1187,11 +1190,11 @@ namespace RazorEnhanced
             int amount = 0;
             foreach (Item found in containeritem)
             {
-                amount = amount + found.Amount;
+                if (!found.IsInBank)
+                    amount = amount + found.Amount;
             }
 
             return amount;
         }
-
 	}
 }
