@@ -387,7 +387,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[0].Graphics, items[0].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[0].Graphics, items[0].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel1count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel1count.Text = amount.ToString();
                         if (items[0].Warning)
@@ -411,7 +411,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[1].Graphics, items[1].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[1].Graphics, items[1].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel2count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel2count.Text = amount.ToString();
                         if (items[1].Warning)
@@ -435,7 +435,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[2].Graphics, items[2].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[2].Graphics, items[2].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel3count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel3count.Text = amount.ToString();
                         if (items[2].Warning)
@@ -459,7 +459,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[3].Graphics, items[3].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[3].Graphics, items[3].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel4count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel4count.Text = amount.ToString();
                         if (items[3].Warning)
@@ -483,7 +483,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[4].Graphics, items[4].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[4].Graphics, items[4].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel5count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel5count.Text = amount.ToString();
                         if (items[4].Warning)
@@ -507,7 +507,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[5].Graphics, items[5].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[5].Graphics, items[5].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel6count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel6count.Text = amount.ToString();
                         if (items[5].Warning)
@@ -531,7 +531,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[6].Graphics, items[6].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[6].Graphics, items[6].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel7count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel7count.Text = amount.ToString();
                         if (items[6].Warning)
@@ -555,7 +555,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[7].Graphics, items[7].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[7].Graphics, items[7].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel8count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel8count.Text = amount.ToString();
                         if (items[7].Warning)
@@ -579,7 +579,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[8].Graphics, items[8].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[8].Graphics, items[8].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel9count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel9count.Text = amount.ToString();
                         if (items[8].Warning)
@@ -603,7 +603,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[9].Graphics, items[9].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[9].Graphics, items[9].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel10count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel10count.Text = amount.ToString();
                         if (items[9].Warning)
@@ -627,7 +627,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[10].Graphics, items[10].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[10].Graphics, items[10].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel11count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel11count.Text = amount.ToString();
                         if (items[10].Warning)
@@ -651,7 +651,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[11].Graphics, items[11].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[11].Graphics, items[11].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel12count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel12count.Text = amount.ToString();
                         if (items[11].Warning)
@@ -675,7 +675,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[12].Graphics, items[12].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[12].Graphics, items[12].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel13count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel13count.Text = amount.ToString();
                         if (items[12].Warning)
@@ -699,7 +699,7 @@ namespace RazorEnhanced
                 {
                     Assistant.Engine.MainWindow.ToolBar.BeginInvoke((MethodInvoker)delegate
                     {
-                        int amount = RazorEnhanced.Items.ContainerCount(World.Player.Backpack.Serial, items[13].Graphics, items[13].Color);
+                        int amount = RazorEnhanced.Items.BackpackCount(items[13].Graphics, items[13].Color);
                         int oldamount = Convert.ToInt32(Assistant.Engine.MainWindow.enhancedToolbar.panel14count.Text);
                         Assistant.Engine.MainWindow.enhancedToolbar.panel14count.Text = amount.ToString();
                         if (items[13].Warning)
