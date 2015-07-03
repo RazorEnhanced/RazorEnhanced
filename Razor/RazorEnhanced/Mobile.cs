@@ -366,6 +366,9 @@ namespace RazorEnhanced
 					{
 						assistantMobiles = assistantMobiles.Where((m) => filter.Notorieties.Contains(m.Notoriety)).ToList();
 					}
+
+                    // Esclude Self dalla ricerca
+                    assistantMobiles = assistantMobiles.Where((m) => m.Serial == World.Player.Serial).ToList();
 				}
 			}
 
