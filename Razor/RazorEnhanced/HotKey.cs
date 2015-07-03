@@ -405,10 +405,7 @@ namespace RazorEnhanced
             {
                 default:
                     uint target = Assistant.Targeting.GetLastTarger;
-                    if (target != null)
-                        RazorEnhanced.Player.Attack(target);
-                    else
-                        RazorEnhanced.Misc.SendMessage("No targer selected!");
+                    RazorEnhanced.Player.Attack(target);
                     break;
             }
         }
