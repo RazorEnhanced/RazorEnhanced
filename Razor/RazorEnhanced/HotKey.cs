@@ -404,7 +404,11 @@ namespace RazorEnhanced
             switch (function)
             {
                 default:
-                    RazorEnhanced.Player.Attack(Assistant.Targeting.GetLastTarger);
+                    uint target = Assistant.Targeting.GetLastTarger;
+                    if (target != null)
+                        RazorEnhanced.Player.Attack(target);
+                    else
+                        RazorEnhanced.Misc.SendMessage("No targer selected!");
                     break;
             }
         }
