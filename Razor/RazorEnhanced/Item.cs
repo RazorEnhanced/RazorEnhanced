@@ -1163,5 +1163,27 @@ namespace RazorEnhanced
             
             return count;
         }
+
+        public static int BackpackCount(int itemid, int color)
+        {
+            // Genero filtro item
+            Items.Filter itemFilter = new Items.Filter();
+            itemFilter.Enabled = true;
+            itemFilter.Graphics.Add(itemid);
+
+            if (color != -1)
+                itemFilter.Hues.Add(color);
+
+            List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+            int amount = 0;
+            foreach (Item found in containeritem)
+            {
+                amount = amount + found.Amount;
+            }
+
+            return amount;
+        }
+
 	}
 }
