@@ -388,6 +388,7 @@ namespace RazorEnhanced.UI
 		{
 			OpenFileDialog open = new OpenFileDialog();
 			open.Filter = "Script Files|*.py";
+            open.RestoreDirectory = true;
 
 			if (open.ShowDialog() == DialogResult.OK)
 			{
@@ -401,6 +402,7 @@ namespace RazorEnhanced.UI
 		{
 			SaveFileDialog save = new SaveFileDialog();
 			save.Filter = "Script Files|*.py";
+            save.RestoreDirectory = true;
 
 			if (save.ShowDialog() == DialogResult.OK)
 			{
