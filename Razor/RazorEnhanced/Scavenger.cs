@@ -294,6 +294,7 @@ namespace RazorEnhanced
 			{
                 if (World.Player.IsGhost)
                 {
+                    ResetIgnore();
                     Thread.Sleep(2000);
                     return 0;
                 }
@@ -388,12 +389,17 @@ namespace RazorEnhanced
 
         private static void CheckQueues()
         {
-            if (m_IgnoreItemQueue.Count > 150)
+            if (m_IgnoreItemQueue.Count > 150 || DragDropManager.ScavengerSerialToGrab.Count > 150)
+            {
                 m_IgnoreItemQueue.Clear();
-
-            if (DragDropManager.ScavengerSerialToGrab.Count > 150)
                 DragDropManager.ScavengerSerialToGrab.Clear();
+            }
+        }
 
+        public static void ResetIgnore()
+        {
+            m_IgnoreItemQueue.Clear();
+            DragDropManager.ScavengerSerialToGrab.Clear();
         }
 
 		internal static void Engine()

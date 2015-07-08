@@ -11,9 +11,9 @@ namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
-        private static Queue<int> m_IgnoreOpenCorpiQueue = new Queue<int>();
         private static Queue<int> m_IgnoreItemQueue = new Queue<int>();
-        
+        private static Queue<int> m_IgnoreCorpseQueue = new Queue<int>();
+
 		[Serializable]
 		public class AutoLootItem
 		{
@@ -294,6 +294,7 @@ namespace RazorEnhanced
             if (World.Player.IsGhost)
             {
                 Thread.Sleep(2000);
+                ResetIgnore();
                 return 0;
             }
 
@@ -301,12 +302,10 @@ namespace RazorEnhanced
 			{
 				// Apertura forzata 1 solo volta (necessaria in caso di corpi uccisi precedentemente da altri fuori schermata, in quanto vengono flaggati come updated anche se non realmente)
 
-                if (!m_IgnoreOpenCorpiQueue.Contains(corpo.Serial))
+                if (!m_IgnoreCorpseQueue.Contains(corpo.Serial))
                 {
-                    RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + corpo.Serial.ToString("X8"));
-                    Items.UseItem(corpo);
-                    Thread.Sleep(mseconds);
-                    m_IgnoreOpenCorpiQueue.Enqueue(corpo.Serial);
+                    m_IgnoreCorpseQueue.Enqueue(corpo.Serial);
+                    DragDropManager.AutoLootOpenAction.Enqueue(corpo.Serial);
                 }
                 else
                     RazorEnhanced.Items.WaitForContents(corpo, 1000);
@@ -451,14 +450,13 @@ namespace RazorEnhanced
 
         private static void CheckQueues()
         {
-            if (m_IgnoreItemQueue.Count > 150)
-                m_IgnoreItemQueue.Clear();
-
-            if (DragDropManager.AutoLootSerialToGrab.Count > 150)
+            if (m_IgnoreItemQueue.Count > 150 || DragDropManager.AutoLootSerialToGrab.Count > 150 || DragDropManager.AutoLootOpenAction.Count > 50 || m_IgnoreCorpseQueue.Count > 50) 
+            {
+                m_IgnoreCorpseQueue.Clear();
+                DragDropManager.AutoLootOpenAction.Clear();
                 DragDropManager.AutoLootSerialToGrab.Clear();
-
-            if (m_IgnoreOpenCorpiQueue.Count > 50)
-                m_IgnoreOpenCorpiQueue.Clear();
+                DragDropManager.AutoLootOpenAction.Clear();
+            }                            
         }
 
 		internal static void Engine()
@@ -500,9 +498,11 @@ namespace RazorEnhanced
 		// Funzioni di controllo da script
 		public static void ResetIgnore()
 		{
-            m_IgnoreOpenCorpiQueue.Clear();
+            m_IgnoreCorpseQueue.Clear();
+            DragDropManager.AutoLootOpenAction.Clear();
             m_IgnoreItemQueue.Clear();
             DragDropManager.AutoLootSerialToGrab.Clear();
+            DragDropManager.ScavengerSerialToGrab.Clear();
 		}
 
 		public static int RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
