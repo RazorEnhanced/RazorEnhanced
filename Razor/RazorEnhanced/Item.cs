@@ -251,21 +251,23 @@ namespace RazorEnhanced
 	{
 		public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
-			if (!bag.Updated)
-				RazorEnhanced.Items.UseItem(bag);
+            if (!bag.Updated)
+            {
+                RazorEnhanced.Items.UseItem(bag);
 
-			int subdelay = delay;
-			if (bag.IsCorpse || bag.IsContainer)
-				while (!bag.Updated)
-				{
-                    if (subdelay > 0)
+                int subdelay = delay;
+                if (bag.IsCorpse || bag.IsContainer)
+                    while (!bag.Updated)
                     {
-                        Thread.Sleep(2);
-                        subdelay -= 2;
+                        if (subdelay > 0)
+                        {
+                            Thread.Sleep(2);
+                            subdelay -= 2;
+                        }
+                        else
+                            break;
                     }
-                    else
-                        break;
-				}
+            }
 		}
 
 		public class Filter
@@ -1190,7 +1192,7 @@ namespace RazorEnhanced
             int amount = 0;
             foreach (Item found in containeritem)
             {
-                if (!found.IsInBank)
+                if (!found.IsInBank && found.RootContainer == World.Player)
                     amount = amount + found.Amount;
             }
 
