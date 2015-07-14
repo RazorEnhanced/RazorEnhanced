@@ -8085,7 +8085,7 @@ namespace Assistant
                             RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
                             return;
                         }
-
+                        RazorEnhanced.AutoLoot.ResetIgnore();
                         RazorEnhanced.AutoLoot.AutoMode = true;
                         RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
                         RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
@@ -8418,7 +8418,7 @@ namespace Assistant
                             RazorEnhanced.Scavenger.AutoMode = false;
                             return;
                         }
-
+                        RazorEnhanced.Scavenger.ResetIgnore();
                         RazorEnhanced.Scavenger.AutoMode = true;
                         RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
                         RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");

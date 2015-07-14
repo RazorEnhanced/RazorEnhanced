@@ -502,7 +502,7 @@ namespace RazorEnhanced
             DragDropManager.AutoLootOpenAction.Clear();
             m_IgnoreItemQueue.Clear();
             DragDropManager.AutoLootSerialToGrab.Clear();
-            DragDropManager.ScavengerSerialToGrab.Clear();
+            Scavenger.ResetIgnore();
 		}
 
 		public static int RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)

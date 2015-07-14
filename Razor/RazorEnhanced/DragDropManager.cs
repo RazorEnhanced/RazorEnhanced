@@ -17,7 +17,7 @@ namespace RazorEnhanced
         internal static void Engine()
         {
 
-            if (AutoLootOpenAction.Count > 0)
+            if (AutoLootOpenAction.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
             {
                 Assistant.Item item = Assistant.World.FindItem(AutoLootOpenAction.Peek());
                 if (item == null)
@@ -35,7 +35,7 @@ namespace RazorEnhanced
 
             }
 
-            if (AutoLootSerialToGrab.Count > 0)
+            if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
             {
                     Assistant.Item item = Assistant.World.FindItem(AutoLootSerialToGrab.Peek());
                     if (item == null)
@@ -59,7 +59,7 @@ namespace RazorEnhanced
                 
             }
 
-            if (ScavengerSerialToGrab.Count > 0)
+            if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
             {
                     Assistant.Item item = Assistant.World.FindItem(ScavengerSerialToGrab.Peek());
                     if (item == null)
