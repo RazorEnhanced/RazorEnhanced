@@ -368,7 +368,7 @@ namespace RazorEnhanced
 					}
 
                     // Esclude Self dalla ricerca
-                    assistantMobiles = assistantMobiles.Where((m) => m.Serial == World.Player.Serial).ToList();
+                    assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
 				}
 			}
 
