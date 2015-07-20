@@ -11,7 +11,7 @@ namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
-        private static Queue<int> m_IgnoreItemQueue = new Queue<int>();
+       // private static Queue<int> m_IgnoreItemQueue = new Queue<int>();
         private static Queue<int> m_IgnoreCorpseQueue = new Queue<int>();
 
 		[Serializable]
@@ -393,7 +393,7 @@ namespace RazorEnhanced
             if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
                 return;
 
-            if (m_IgnoreItemQueue.Contains(oggettoContenuto.Serial))
+            if (DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
                 return;
 
             if (World.Player.Weight - 20 > World.Player.MaxWeight)
@@ -425,12 +425,7 @@ namespace RazorEnhanced
 
 					if (propsOK) // Tutte le props match OK
 					{
-                        if (!DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
-                            {
-                                m_IgnoreItemQueue.Enqueue(oggettoContenuto.Serial);
                                 DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
-                                CheckQueues();
-                            }
                     }
 					else
 					{
@@ -439,26 +434,10 @@ namespace RazorEnhanced
 				}
 				else // Item Senza props     
 				{
-                    if (!DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
-                    {
-                        m_IgnoreItemQueue.Enqueue(oggettoContenuto.Serial);
                         DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
-                        CheckQueues();
-                    }
 				}
 		}
-
-        private static void CheckQueues()
-        {
-            if (m_IgnoreItemQueue.Count > 150 || DragDropManager.AutoLootSerialToGrab.Count > 150 || DragDropManager.AutoLootOpenAction.Count > 50 || m_IgnoreCorpseQueue.Count > 50) 
-            {
-                m_IgnoreCorpseQueue.Clear();
-                DragDropManager.AutoLootOpenAction.Clear();
-                DragDropManager.AutoLootSerialToGrab.Clear();
-                DragDropManager.AutoLootOpenAction.Clear();
-            }                            
-        }
-
+       
 		internal static void Engine()
 		{
 			int exit = Int32.MinValue;
@@ -500,7 +479,6 @@ namespace RazorEnhanced
 		{
             m_IgnoreCorpseQueue.Clear();
             DragDropManager.AutoLootOpenAction.Clear();
-            m_IgnoreItemQueue.Clear();
             DragDropManager.AutoLootSerialToGrab.Clear();
             Scavenger.ResetIgnore();
 		}

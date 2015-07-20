@@ -412,21 +412,14 @@ namespace Assistant
 				}
 
 				DragDropManager.Drag(item, amount, true);
-				//ClientCommunication.SendToClient( new RemoveObject( serial ) ); // remove the object from the client view
 				args.Block = true;
 			}
 		}
 
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			/*
-			if ( ActionQueue.FilterLiftReject() )
-				args.Block = true;
-			*/
 			int reason = p.ReadByte();
-
-			if (!DragDropManager.LiftReject())
-				args.Block = true;
+			args.Block = true;
 		}
 
 		private static void EquipRequest(PacketReader p, PacketHandlerEventArgs args)

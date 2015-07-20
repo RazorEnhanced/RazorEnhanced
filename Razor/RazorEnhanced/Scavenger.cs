@@ -11,8 +11,6 @@ namespace RazorEnhanced
 {
 	public class Scavenger
 	{
-        private static Queue<int> m_IgnoreItemQueue = new Queue<int>();
-
 		[Serializable]
 		public class ScavengerItem
 		{
@@ -338,7 +336,7 @@ namespace RazorEnhanced
             if (!itemGround.Movable || !itemGround.Visible)
                 return;
 
-            if (m_IgnoreItemQueue.Contains(itemGround.Serial))
+            if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
                 return;
 
       
@@ -363,12 +361,7 @@ namespace RazorEnhanced
 
 					if (propsOK) // Tutte le props match OK
 					{
-                        if (!DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
-                        {
-                            m_IgnoreItemQueue.Enqueue(itemGround.Serial);
                             DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
-                            CheckQueues();
-                        }
 					}
 					else
 					{
@@ -377,28 +370,13 @@ namespace RazorEnhanced
 				}
 				else // Item Senza props     
 				{
-                    if (!DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
-                    {
-                        m_IgnoreItemQueue.Enqueue(itemGround.Serial);
                         DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
-                        CheckQueues();
-                    }
 				}
 			
 		}
 
-        private static void CheckQueues()
-        {
-            if (m_IgnoreItemQueue.Count > 150 || DragDropManager.ScavengerSerialToGrab.Count > 150)
-            {
-                m_IgnoreItemQueue.Clear();
-                DragDropManager.ScavengerSerialToGrab.Clear();
-            }
-        }
-
         public static void ResetIgnore()
         {
-            m_IgnoreItemQueue.Clear();
             DragDropManager.ScavengerSerialToGrab.Clear();
         }
 
