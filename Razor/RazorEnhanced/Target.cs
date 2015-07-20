@@ -9,6 +9,7 @@ namespace RazorEnhanced
 {
 	public class Target
 	{
+        private int m_ptarget;
         public static bool HasTarget()
         {
             return Assistant.Targeting.HasTarget;
@@ -75,6 +76,23 @@ namespace RazorEnhanced
             Assistant.Mobile mobile = World.FindMobile(serial);
             if (mobile!= null)
                 Assistant.Targeting.SetLastTargetTo(mobile);
+        }
+
+        public int PromptTarget()
+        {
+            m_ptarget = -1;
+            Misc.SendMessage("Select Item or Mobile");
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
+            
+            while (m_ptarget == -1)
+                Thread.Sleep(30);
+
+            return m_ptarget;
+        }
+
+        private void PromptTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            m_ptarget = serial;
         }
 	}
 }
