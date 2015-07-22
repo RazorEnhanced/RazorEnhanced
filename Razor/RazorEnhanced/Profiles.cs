@@ -279,23 +279,39 @@ namespace RazorEnhanced
             if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
                 Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
 
-            // Svuoto logbox
+            // Svuoto logbox e reset select index
             Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
             AutoLoot.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.ScavengerLogBox.Items.Clear();
             Scavenger.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.OrganizerLogBox.Items.Clear();
             Organizer.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.SellLogBox.Items.Clear();
             SellAgent.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.BuyLogBox.Items.Clear();
             BuyAgent.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.DressLogBox.Items.Clear();
             Dress.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.FriendLogBox.Items.Clear();
             Friend.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.RestockLogBox.Items.Clear();
             Restock.AddLog("Profile Changed!");
+            Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = -1;
+
             Assistant.Engine.MainWindow.BandageHealLogBox.Items.Clear();
             BandageHeal.AddLog("Profile Changed!");
 
