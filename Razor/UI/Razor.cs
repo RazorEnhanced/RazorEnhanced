@@ -10562,7 +10562,7 @@ namespace Assistant
                 RazorEnhanced.Profiles.ProfileChange("default");
                 try
                 {
-                    File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced." + profiletodelete + ".settings"));
+                    File.Delete(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced." + profiletodelete + ".settings"));
                 }
                 catch
                 { }

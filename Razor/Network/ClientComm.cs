@@ -761,7 +761,7 @@ namespace Assistant
 
 		internal static Loader_Error LaunchClient(string client)
 		{
-			string dll = Path.Combine(Directory.GetCurrentDirectory(), "Crypt.dll");
+            string dll = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Crypt.dll");
 			uint pid = 0;
 			Loader_Error err = (Loader_Error)Load(client, dll, "OnAttach", null, 0, out pid);
 

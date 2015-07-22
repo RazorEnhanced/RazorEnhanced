@@ -39,7 +39,7 @@ namespace RazorEnhanced
 				return;
 
 			m_Dataset = new DataSet();
-			string filename = Path.Combine(Directory.GetCurrentDirectory(), m_Save);
+            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
 
 			if (File.Exists(filename))
 			{
@@ -326,7 +326,7 @@ namespace RazorEnhanced
 			{
 				m_Dataset.AcceptChanges();
 
-				string filename = Path.Combine(Directory.GetCurrentDirectory(), m_Save);
+                string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
 
 				m_Dataset.RemotingFormat = SerializationFormat.Binary;
 				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;

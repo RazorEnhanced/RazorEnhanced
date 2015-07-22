@@ -50,7 +50,7 @@ namespace Assistant
 			{
 				try
 				{
-                    path = Directory.GetCurrentDirectory();
+                    path = Path.GetDirectoryName(Application.ExecutablePath);
                     RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				}
 				catch

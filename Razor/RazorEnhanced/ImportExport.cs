@@ -1046,9 +1046,9 @@ namespace RazorEnhanced
 
             string oldprofilepath;
             if (RazorEnhanced.Profiles.LastUsed() == "default")
-                oldprofilepath = Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced.settings");
+                oldprofilepath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced.settings");
             else
-                oldprofilepath = Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings");
+                oldprofilepath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings");
 
             if (sd.ShowDialog() == DialogResult.OK)
             {
@@ -1095,7 +1095,7 @@ namespace RazorEnhanced
             }
             else
             {
-                File.Copy(oldprofilepath, Path.Combine(Directory.GetCurrentDirectory(), "RazorEnhanced." + newprofilename + ".settings"), true);
+                File.Copy(oldprofilepath, Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced." + newprofilename + ".settings"), true);
                 RazorEnhanced.Profiles.Add(newprofilename);
                 RazorEnhanced.Profiles.Refresh();
             }

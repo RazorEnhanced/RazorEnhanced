@@ -25,7 +25,7 @@ namespace RazorEnhanced
                 m_Dataset.Clear();
             
 			m_Dataset = new DataSet();
-			string filename = Path.Combine(Directory.GetCurrentDirectory(), m_Save);
+            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
 
 			if (File.Exists(filename))
 			{
@@ -1344,7 +1344,7 @@ namespace RazorEnhanced
                     false, false, 10, 10,
 
                     // Parametri primo avvio per tab screenshot
-                    Directory.GetCurrentDirectory(), "jpg", false, false, false,
+                    Path.GetDirectoryName(Application.ExecutablePath), "jpg", false, false, false,
                     
                     // Parametri primo avvio per vecchi filtri
                     false, false, false, false, false, false, false, false, false, false, false, false, false,
@@ -3813,7 +3813,7 @@ namespace RazorEnhanced
 			{
 				m_Dataset.AcceptChanges();
 
-				string filename = Path.Combine(Directory.GetCurrentDirectory(), m_Save);
+                string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
 
 				m_Dataset.RemotingFormat = SerializationFormat.Binary;
 				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;

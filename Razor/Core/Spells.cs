@@ -196,7 +196,7 @@ namespace Assistant
 
 		static Spell()
 		{
-			string filename = Path.Combine(Directory.GetCurrentDirectory(), "spells.def");
+            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "spells.def");
 			m_SpellsByPower = new Dictionary<string, Spell>(64 + 10 + 16);
 			m_SpellsByID = new Dictionary<int, Spell>(64 + 10 + 16);
 

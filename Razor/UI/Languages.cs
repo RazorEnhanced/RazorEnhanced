@@ -485,7 +485,7 @@ namespace Assistant
 
 		internal static string[] GetPackNames()
 		{
-			string path = Path.Combine(Directory.GetCurrentDirectory(), "Language");
+            string path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Language");
 			string[] names = Directory.GetFiles(path, "Razor_lang.*");
 			for (int i = 0; i < names.Length; i++)
 				names[i] = Path.GetExtension(names[i]).ToUpper().Substring(1);
@@ -499,7 +499,7 @@ namespace Assistant
 				return true;
 
 			m_CliLocName = "enu";
-			string filename = Path.Combine(Directory.GetCurrentDirectory(), "Language", String.Format("Razor_lang.{0}", lang));
+            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Language", String.Format("Razor_lang.{0}", lang));
 			if (!File.Exists(filename))
 				return false;
 			m_Current = lang;
