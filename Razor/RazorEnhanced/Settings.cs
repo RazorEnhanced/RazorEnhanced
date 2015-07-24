@@ -1332,6 +1332,27 @@ namespace RazorEnhanced
                 general.Columns.Add("MapW", typeof(int));
                 general.Columns.Add("MapH", typeof(int));
 
+                // Parametri Enhanced Map
+                general.Columns.Add("MapOpenOnLoginCheckBox", typeof(bool));
+                general.Columns.Add("MapAutoConnectCheckBox", typeof(bool));
+                general.Columns.Add("MapHpBarCheckBox", typeof(bool));
+                general.Columns.Add("MapStaminaBarCheckBox", typeof(bool));
+                general.Columns.Add("MapManaBarCheckBox", typeof(bool));
+                general.Columns.Add("MapDeathPointCheckBox", typeof(bool));
+                general.Columns.Add("MapPanicCheckBox", typeof(bool));
+                general.Columns.Add("MapPartyMemberCheckBox", typeof(bool));
+                general.Columns.Add("MapGuildCheckBox", typeof(bool));
+                general.Columns.Add("MapServerCheckBox", typeof(bool));
+                general.Columns.Add("MapChatCheckBox", typeof(bool));
+                general.Columns.Add("MapChatPrefixTextBox", typeof(string));
+                general.Columns.Add("MapAutoOpenChatCheckBox", typeof(bool));
+                general.Columns.Add("MapChatColor", typeof(int));
+
+                general.Columns.Add("MapServerAddressTextBox", typeof(string));
+                general.Columns.Add("MapServerPortTextBox", typeof(string));
+                general.Columns.Add("MapLinkUsernameTextBox", typeof(string));
+                general.Columns.Add("MapLinkPasswordTextBox", typeof(string));
+
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -1368,7 +1389,10 @@ namespace RazorEnhanced
                     "[{0}% / {1}%]", 0, "", false, false, true,
 
                      // Parametri primo avvio Mappa
-                     200,200,200,200
+                     200,200,200,200,
+
+                     // Parametri primo avvio enchanced map
+                     false, false, true, false, false, true, true, true, true, true, false, "--", false, 0, "0.0.0.0", "0", "", ""
                 };
 
                 DataRow generalsettings = general.NewRow();

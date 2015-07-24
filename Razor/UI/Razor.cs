@@ -490,7 +490,7 @@ namespace Assistant
         private Label label40;
         private Label label2;
         private GroupBox groupBox4;
-        private RazorCheckBox razorCheckBox1;
+        private RazorCheckBox mapAutoOpenChatCheckBox;
         private RazorButton mapSetChatColorButton;
         private Label mapChatColorlabel;
         private RazorTextBox mapChatPrefixTextBox;
@@ -506,6 +506,11 @@ namespace Assistant
         private RazorCheckBox mapHpBarCheckBox;
         private RazorCheckBox mapAutoconnectCheckBox1;
         private RazorCheckBox mapOpenOnLoginCheckBox;
+        private ColorDialog mapchatcolorDialog;
+        private RazorTextBox mapLinkPasswordTextBox;
+        private Label label46;
+        private RazorTextBox mapLinkUsernameTextBox;
+        private Label label45;
 
 		private bool m_CanClose = true;
 
@@ -865,6 +870,10 @@ namespace Assistant
             this.groupBox31 = new System.Windows.Forms.GroupBox();
             this.mapLoglistBox = new System.Windows.Forms.ListBox();
             this.groupBox30 = new System.Windows.Forms.GroupBox();
+            this.mapLinkPasswordTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.mapLinkUsernameTextBox = new RazorEnhanced.UI.RazorTextBox();
+            this.label45 = new System.Windows.Forms.Label();
             this.mapDisconnectButton = new RazorEnhanced.UI.RazorButton();
             this.mapConnectButton = new RazorEnhanced.UI.RazorButton();
             this.mapserverportTextBox = new RazorEnhanced.UI.RazorTextBox();
@@ -874,7 +883,7 @@ namespace Assistant
             this.label40 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.razorCheckBox1 = new RazorEnhanced.UI.RazorCheckBox();
+            this.mapAutoOpenChatCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.mapSetChatColorButton = new RazorEnhanced.UI.RazorButton();
             this.mapChatColorlabel = new System.Windows.Forms.Label();
             this.mapChatPrefixTextBox = new RazorEnhanced.UI.RazorTextBox();
@@ -1171,6 +1180,7 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+            this.mapchatcolorDialog = new System.Windows.Forms.ColorDialog();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -3031,9 +3041,9 @@ namespace Assistant
             // groupBox31
             // 
             this.groupBox31.Controls.Add(this.mapLoglistBox);
-            this.groupBox31.Location = new System.Drawing.Point(188, 96);
+            this.groupBox31.Location = new System.Drawing.Point(188, 118);
             this.groupBox31.Name = "groupBox31";
-            this.groupBox31.Size = new System.Drawing.Size(470, 262);
+            this.groupBox31.Size = new System.Drawing.Size(470, 240);
             this.groupBox31.TabIndex = 62;
             this.groupBox31.TabStop = false;
             this.groupBox31.Text = "Map Log";
@@ -3043,11 +3053,15 @@ namespace Assistant
             this.mapLoglistBox.FormattingEnabled = true;
             this.mapLoglistBox.Location = new System.Drawing.Point(9, 19);
             this.mapLoglistBox.Name = "mapLoglistBox";
-            this.mapLoglistBox.Size = new System.Drawing.Size(455, 238);
+            this.mapLoglistBox.Size = new System.Drawing.Size(455, 212);
             this.mapLoglistBox.TabIndex = 1;
             // 
             // groupBox30
             // 
+            this.groupBox30.Controls.Add(this.mapLinkPasswordTextBox);
+            this.groupBox30.Controls.Add(this.label46);
+            this.groupBox30.Controls.Add(this.mapLinkUsernameTextBox);
+            this.groupBox30.Controls.Add(this.label45);
             this.groupBox30.Controls.Add(this.mapDisconnectButton);
             this.groupBox30.Controls.Add(this.mapConnectButton);
             this.groupBox30.Controls.Add(this.mapserverportTextBox);
@@ -3058,10 +3072,58 @@ namespace Assistant
             this.groupBox30.Controls.Add(this.label2);
             this.groupBox30.Location = new System.Drawing.Point(188, 5);
             this.groupBox30.Name = "groupBox30";
-            this.groupBox30.Size = new System.Drawing.Size(470, 85);
+            this.groupBox30.Size = new System.Drawing.Size(470, 107);
             this.groupBox30.TabIndex = 61;
             this.groupBox30.TabStop = false;
             this.groupBox30.Text = "Server Link";
+            // 
+            // mapLinkPasswordTextBox
+            // 
+            this.mapLinkPasswordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapLinkPasswordTextBox.BackColor = System.Drawing.Color.White;
+            this.mapLinkPasswordTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mapLinkPasswordTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.mapLinkPasswordTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.mapLinkPasswordTextBox.Location = new System.Drawing.Point(335, 72);
+            this.mapLinkPasswordTextBox.Name = "mapLinkPasswordTextBox";
+            this.mapLinkPasswordTextBox.Size = new System.Drawing.Size(129, 20);
+            this.mapLinkPasswordTextBox.TabIndex = 65;
+            this.mapLinkPasswordTextBox.TextChanged += new System.EventHandler(this.mapLinkPasswordTextBox_TextChanged);
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Location = new System.Drawing.Point(266, 75);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(56, 13);
+            this.label46.TabIndex = 64;
+            this.label46.Text = "Password:";
+            // 
+            // mapLinkUsernameTextBox
+            // 
+            this.mapLinkUsernameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapLinkUsernameTextBox.BackColor = System.Drawing.Color.White;
+            this.mapLinkUsernameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.mapLinkUsernameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.mapLinkUsernameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.mapLinkUsernameTextBox.Location = new System.Drawing.Point(94, 72);
+            this.mapLinkUsernameTextBox.Name = "mapLinkUsernameTextBox";
+            this.mapLinkUsernameTextBox.Size = new System.Drawing.Size(159, 20);
+            this.mapLinkUsernameTextBox.TabIndex = 63;
+            this.mapLinkUsernameTextBox.TextChanged += new System.EventHandler(this.mapLinkUsernameTextBox_TextChanged);
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(6, 75);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(58, 13);
+            this.label45.TabIndex = 62;
+            this.label45.Text = "Username:";
             // 
             // mapDisconnectButton
             // 
@@ -3094,8 +3156,9 @@ namespace Assistant
             this.mapserverportTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
             this.mapserverportTextBox.Location = new System.Drawing.Point(335, 46);
             this.mapserverportTextBox.Name = "mapserverportTextBox";
-            this.mapserverportTextBox.Size = new System.Drawing.Size(65, 20);
+            this.mapserverportTextBox.Size = new System.Drawing.Size(50, 20);
             this.mapserverportTextBox.TabIndex = 5;
+            this.mapserverportTextBox.TextChanged += new System.EventHandler(this.mapserverportTextBox_TextChanged);
             // 
             // label43
             // 
@@ -3119,6 +3182,7 @@ namespace Assistant
             this.mapserveraddressTextBox.Name = "mapserveraddressTextBox";
             this.mapserveraddressTextBox.Size = new System.Drawing.Size(159, 20);
             this.mapserveraddressTextBox.TabIndex = 3;
+            this.mapserveraddressTextBox.TextChanged += new System.EventHandler(this.mapserveraddressTextBox_TextChanged);
             // 
             // label41
             // 
@@ -3150,7 +3214,7 @@ namespace Assistant
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.razorCheckBox1);
+            this.groupBox4.Controls.Add(this.mapAutoOpenChatCheckBox);
             this.groupBox4.Controls.Add(this.mapSetChatColorButton);
             this.groupBox4.Controls.Add(this.mapChatColorlabel);
             this.groupBox4.Controls.Add(this.mapChatPrefixTextBox);
@@ -3173,13 +3237,14 @@ namespace Assistant
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Options";
             // 
-            // razorCheckBox1
+            // mapAutoOpenChatCheckBox
             // 
-            this.razorCheckBox1.Location = new System.Drawing.Point(6, 304);
-            this.razorCheckBox1.Name = "razorCheckBox1";
-            this.razorCheckBox1.Size = new System.Drawing.Size(149, 22);
-            this.razorCheckBox1.TabIndex = 64;
-            this.razorCheckBox1.Text = "AutoOpen Chat Window";
+            this.mapAutoOpenChatCheckBox.Location = new System.Drawing.Point(6, 304);
+            this.mapAutoOpenChatCheckBox.Name = "mapAutoOpenChatCheckBox";
+            this.mapAutoOpenChatCheckBox.Size = new System.Drawing.Size(149, 22);
+            this.mapAutoOpenChatCheckBox.TabIndex = 64;
+            this.mapAutoOpenChatCheckBox.Text = "AutoOpen Chat Window";
+            this.mapAutoOpenChatCheckBox.CheckedChanged += new System.EventHandler(this.mapAutoOpenChatCheckBox_CheckedChanged);
             // 
             // mapSetChatColorButton
             // 
@@ -3190,6 +3255,7 @@ namespace Assistant
             this.mapSetChatColorButton.TabIndex = 62;
             this.mapSetChatColorButton.Text = "Set";
             this.mapSetChatColorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.mapSetChatColorButton.Click += new System.EventHandler(this.mapSetChatColorButton_Click);
             // 
             // mapChatColorlabel
             // 
@@ -3213,6 +3279,7 @@ namespace Assistant
             this.mapChatPrefixTextBox.Name = "mapChatPrefixTextBox";
             this.mapChatPrefixTextBox.Size = new System.Drawing.Size(45, 20);
             this.mapChatPrefixTextBox.TabIndex = 62;
+            this.mapChatPrefixTextBox.TextChanged += new System.EventHandler(this.mapChatPrefixTextBox_TextChanged);
             // 
             // label44
             // 
@@ -3230,6 +3297,7 @@ namespace Assistant
             this.mapChatCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapChatCheckBox.TabIndex = 59;
             this.mapChatCheckBox.Text = "Enable Chat";
+            this.mapChatCheckBox.CheckedChanged += new System.EventHandler(this.mapChatCheckBox_CheckedChanged);
             // 
             // mapserverCheckBox
             // 
@@ -3238,6 +3306,7 @@ namespace Assistant
             this.mapserverCheckBox.Size = new System.Drawing.Size(162, 22);
             this.mapserverCheckBox.TabIndex = 58;
             this.mapserverCheckBox.Text = "Show Server Link Member";
+            this.mapserverCheckBox.CheckedChanged += new System.EventHandler(this.mapserverCheckBox_CheckedChanged);
             // 
             // mapGuildCheckBox
             // 
@@ -3246,6 +3315,7 @@ namespace Assistant
             this.mapGuildCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapGuildCheckBox.TabIndex = 57;
             this.mapGuildCheckBox.Text = "Show Guild Member";
+            this.mapGuildCheckBox.CheckedChanged += new System.EventHandler(this.mapGuildCheckBox_CheckedChanged);
             // 
             // mapPartyMemberCheckBox
             // 
@@ -3254,6 +3324,7 @@ namespace Assistant
             this.mapPartyMemberCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapPartyMemberCheckBox.TabIndex = 56;
             this.mapPartyMemberCheckBox.Text = "Show Party Member";
+            this.mapPartyMemberCheckBox.CheckedChanged += new System.EventHandler(this.mapPartyMemberCheckBox_CheckedChanged);
             // 
             // mapPanicCheckBox
             // 
@@ -3262,6 +3333,7 @@ namespace Assistant
             this.mapPanicCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapPanicCheckBox.TabIndex = 55;
             this.mapPanicCheckBox.Text = "Enable Panic";
+            this.mapPanicCheckBox.CheckedChanged += new System.EventHandler(this.mapPanicCheckBox_CheckedChanged);
             // 
             // mapdeathpointCheckBox
             // 
@@ -3270,6 +3342,7 @@ namespace Assistant
             this.mapdeathpointCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapdeathpointCheckBox.TabIndex = 54;
             this.mapdeathpointCheckBox.Text = "Show Death Point";
+            this.mapdeathpointCheckBox.CheckedChanged += new System.EventHandler(this.mapdeathpointCheckBox_CheckedChanged);
             // 
             // mapManaBarCheckBox
             // 
@@ -3278,6 +3351,7 @@ namespace Assistant
             this.mapManaBarCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapManaBarCheckBox.TabIndex = 53;
             this.mapManaBarCheckBox.Text = "Show Mana Bar";
+            this.mapManaBarCheckBox.CheckedChanged += new System.EventHandler(this.mapManaBarCheckBox_CheckedChanged);
             // 
             // mapStaminaBarCheckBox
             // 
@@ -3286,6 +3360,7 @@ namespace Assistant
             this.mapStaminaBarCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapStaminaBarCheckBox.TabIndex = 52;
             this.mapStaminaBarCheckBox.Text = "Show Stamina Bar";
+            this.mapStaminaBarCheckBox.CheckedChanged += new System.EventHandler(this.mapStaminaBarCheckBox_CheckedChanged);
             // 
             // mapHpBarCheckBox
             // 
@@ -3294,6 +3369,7 @@ namespace Assistant
             this.mapHpBarCheckBox.Size = new System.Drawing.Size(149, 22);
             this.mapHpBarCheckBox.TabIndex = 51;
             this.mapHpBarCheckBox.Text = "Show HP Bar";
+            this.mapHpBarCheckBox.CheckedChanged += new System.EventHandler(this.mapHpBarCheckBox_CheckedChanged);
             // 
             // mapAutoconnectCheckBox1
             // 
@@ -3302,6 +3378,7 @@ namespace Assistant
             this.mapAutoconnectCheckBox1.Size = new System.Drawing.Size(149, 22);
             this.mapAutoconnectCheckBox1.TabIndex = 50;
             this.mapAutoconnectCheckBox1.Text = "Autoconnect On Login";
+            this.mapAutoconnectCheckBox1.CheckedChanged += new System.EventHandler(this.mapAutoconnectCheckBox1_CheckedChanged);
             // 
             // mapOpenOnLoginCheckBox
             // 
@@ -3310,6 +3387,7 @@ namespace Assistant
             this.mapOpenOnLoginCheckBox.Size = new System.Drawing.Size(103, 22);
             this.mapOpenOnLoginCheckBox.TabIndex = 49;
             this.mapOpenOnLoginCheckBox.Text = "Open On Login";
+            this.mapOpenOnLoginCheckBox.CheckedChanged += new System.EventHandler(this.mapOpenOnLoginCheckBox_CheckedChanged);
             // 
             // btnMap
             // 
@@ -8536,7 +8614,10 @@ namespace Assistant
 
 		private void razorButtonResetIgnore_Click(object sender, EventArgs e)
 		{
-			RazorEnhanced.AutoLoot.ResetIgnore();
+            RazorEnhanced.AutoLoot.AddLog(RazorEnhanced.DragDropManager.AutoLootOpenAction.Count.ToString());
+            RazorEnhanced.AutoLoot.AddLog(RazorEnhanced.DragDropManager.ScavengerSerialToGrab.Count.ToString());
+            RazorEnhanced.AutoLoot.AddLog(RazorEnhanced.DragDropManager.AutoLootSerialToGrab.Count.ToString());
+			//RazorEnhanced.AutoLoot.ResetIgnore();
 		}
 
 		private void autoLootButtonListExport_Click(object sender, EventArgs e)
@@ -10965,16 +11046,142 @@ namespace Assistant
 
         private void profilesExportButton_Click(object sender, EventArgs e)
         {
-
+            RazorEnhanced.ImportExport.ExportProfiles(profilesComboBox.Text);
         }
 
         private void profilesImportButton_Click(object sender, EventArgs e)
         {
+            EnhancedProfileImport importprofile = new EnhancedProfileImport();
+            importprofile.TopMost = true;
+            importprofile.Show();
+        }
+        // ----------------- PROFILES END -------------------
+
+        private void mapOpenOnLoginCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapOpenOnLoginCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapOpenOnLoginCheckBox", mapOpenOnLoginCheckBox.Checked);
+        }
+
+        private void mapAutoconnectCheckBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapAutoconnectCheckBox1.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapAutoConnectCheckBox", mapAutoconnectCheckBox1.Checked);
+        }
+
+        private void mapHpBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapHpBarCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapHpBarCheckBox", mapHpBarCheckBox.Checked);
+        }
+
+        private void mapStaminaBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapStaminaBarCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapStaminaBarCheckBox", mapStaminaBarCheckBox.Checked);
+        }
+
+        private void mapManaBarCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapManaBarCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapManaBarCheckBox", mapManaBarCheckBox.Checked);
+        }
+
+        private void mapdeathpointCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapdeathpointCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapDeathPointCheckBox", mapdeathpointCheckBox.Checked);
+        }
+
+        private void mapPanicCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapPanicCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapPanicCheckBox", mapPanicCheckBox.Checked);
+        }
+
+        private void mapPartyMemberCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapPartyMemberCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapPartyMemberCheckBox", mapPartyMemberCheckBox.Checked);
+        }
+
+        private void mapGuildCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapGuildCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapGuildCheckBox", mapGuildCheckBox.Checked);
+        }
+
+        private void mapserverCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapserverCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapServerCheckBox", mapserverCheckBox.Checked);
+        }
+
+        private void mapChatCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapChatCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapChatCheckBox", mapChatCheckBox.Checked);
+
+            if (mapChatCheckBox.Checked)
+            {
+                mapChatPrefixTextBox.Enabled = true;
+                mapSetChatColorButton.Enabled = true;
+                mapAutoOpenChatCheckBox.Enabled = true;
+            }  
+            else
+            {
+                mapChatPrefixTextBox.Enabled = false;
+                mapSetChatColorButton.Enabled = false;
+                mapAutoOpenChatCheckBox.Enabled = false;
+            }  
 
         }
 
-        // ----------------- PROFILES END -------------------
+        private void mapChatPrefixTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (mapChatPrefixTextBox.Focused)
+                RazorEnhanced.Settings.General.WriteString("MapChatPrefixTextBox", mapChatPrefixTextBox.Text);
+        }
 
-       
+        private void mapAutoOpenChatCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (mapAutoOpenChatCheckBox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("MapAutoOpenChatCheckBox", mapAutoOpenChatCheckBox.Checked);
+        }
+
+        private void mapSetChatColorButton_Click(object sender, EventArgs e)
+        {
+            DialogResult result = mapchatcolorDialog.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                mapChatColorlabel.ForeColor = mapchatcolorDialog.Color;
+                RazorEnhanced.Settings.General.WriteInt("MapChatColor", mapchatcolorDialog.Color.ToArgb());
+            }
+
+        }
+
+        private void mapserveraddressTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (mapserveraddressTextBox.Focused)
+                RazorEnhanced.Settings.General.WriteString("MapServerAddressTextBox", mapserveraddressTextBox.Text);
+        }
+
+        private void mapserverportTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (mapserverportTextBox.Focused)
+                RazorEnhanced.Settings.General.WriteString("MapServerPortTextBox", mapserverportTextBox.Text);
+        }
+
+        private void mapLinkUsernameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (mapLinkUsernameTextBox.Focused)
+                RazorEnhanced.Settings.General.WriteString("MapLinkUsernameTextBox", mapLinkUsernameTextBox.Text);
+        }
+
+        private void mapLinkPasswordTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (mapLinkPasswordTextBox.Focused)
+                RazorEnhanced.Settings.General.WriteString("MapLinkPasswordTextBox", mapLinkPasswordTextBox.Text);
+        }
 	}
 }
