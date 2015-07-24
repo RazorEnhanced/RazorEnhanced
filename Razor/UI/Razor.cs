@@ -6741,6 +6741,24 @@ namespace Assistant
             txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
             msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
 
+            mapOpenOnLoginCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapOpenOnLoginCheckBox");
+            mapAutoconnectCheckBox1.Checked = RazorEnhanced.Settings.General.ReadBool("MapAutoConnectCheckBox");
+            mapHpBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox");
+            mapStaminaBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox");
+            mapManaBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox");
+            mapdeathpointCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapDeathPointCheckBox");
+            mapPanicCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapPanicCheckBox");
+            mapPartyMemberCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapPartyMemberCheckBox");
+            mapGuildCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapGuildCheckBox");
+            mapserverCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapServerCheckBox");
+            mapChatCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapChatCheckBox");
+            mapChatPrefixTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox");
+            mapAutoOpenChatCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapAutoOpenChatCheckBox");
+            mapChatColorlabel.ForeColor = Color.FromArgb(RazorEnhanced.Settings.General.ReadInt("MapChatColor"));
+            mapserveraddressTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapServerAddressTextBox");
+            mapserverportTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapServerPortTextBox");
+            mapLinkUsernameTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapLinkUsernameTextBox");
+            mapLinkPasswordTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapLinkPasswordTextBox");
 		}
 
 		private bool m_Initializing = false;
