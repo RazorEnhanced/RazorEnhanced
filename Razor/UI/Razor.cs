@@ -487,7 +487,7 @@ namespace Assistant
         private Label label43;
         private RazorTextBox mapserveraddressTextBox;
         private Label label41;
-        private Label label40;
+        private Label mapLinkStatusLabel;
         private Label label2;
         private GroupBox groupBox4;
         private RazorCheckBox mapAutoOpenChatCheckBox;
@@ -648,6 +648,20 @@ namespace Assistant
         
         // Profiles
         internal RazorComboBox ProfilesComboBox { get { return profilesComboBox; } }
+
+        // Enhanced map
+        internal ListBox MapLogListBox { get { return mapLoglistBox; } }
+        internal TextBox MapServerAddressTextBox { get { return mapserveraddressTextBox; } }
+        internal TextBox MapServerPortTextBox { get { return mapserverportTextBox; } }
+        internal TextBox MapLinkUsernameTextBox { get { return mapLinkUsernameTextBox; } }
+        internal TextBox MapLinkPasswordTextBox { get { return mapLinkPasswordTextBox; } }
+        internal Button MapConnectButton { get { return mapConnectButton; } }
+        internal Label MapLinkStatusLabel { get { return mapLinkStatusLabel; } }
+        
+
+
+
+
 
 		private DataTable scriptTable;
 
@@ -880,7 +894,7 @@ namespace Assistant
             this.label43 = new System.Windows.Forms.Label();
             this.mapserveraddressTextBox = new RazorEnhanced.UI.RazorTextBox();
             this.label41 = new System.Windows.Forms.Label();
-            this.label40 = new System.Windows.Forms.Label();
+            this.mapLinkStatusLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.mapAutoOpenChatCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -3068,7 +3082,7 @@ namespace Assistant
             this.groupBox30.Controls.Add(this.label43);
             this.groupBox30.Controls.Add(this.mapserveraddressTextBox);
             this.groupBox30.Controls.Add(this.label41);
-            this.groupBox30.Controls.Add(this.label40);
+            this.groupBox30.Controls.Add(this.mapLinkStatusLabel);
             this.groupBox30.Controls.Add(this.label2);
             this.groupBox30.Location = new System.Drawing.Point(188, 5);
             this.groupBox30.Name = "groupBox30";
@@ -3134,6 +3148,7 @@ namespace Assistant
             this.mapDisconnectButton.TabIndex = 61;
             this.mapDisconnectButton.Text = "Disconnect";
             this.mapDisconnectButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.mapDisconnectButton.Click += new System.EventHandler(this.mapDisconnectButton_Click);
             // 
             // mapConnectButton
             // 
@@ -3144,6 +3159,7 @@ namespace Assistant
             this.mapConnectButton.TabIndex = 60;
             this.mapConnectButton.Text = "Connect";
             this.mapConnectButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.mapConnectButton.Click += new System.EventHandler(this.mapConnectButton_Click);
             // 
             // mapserverportTextBox
             // 
@@ -3193,15 +3209,15 @@ namespace Assistant
             this.label41.TabIndex = 2;
             this.label41.Text = "Server Address:";
             // 
-            // label40
+            // mapLinkStatusLabel
             // 
-            this.label40.AutoSize = true;
-            this.label40.ForeColor = System.Drawing.Color.Red;
-            this.label40.Location = new System.Drawing.Point(78, 19);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(51, 13);
-            this.label40.TabIndex = 1;
-            this.label40.Text = "OFFLINE";
+            this.mapLinkStatusLabel.AutoSize = true;
+            this.mapLinkStatusLabel.ForeColor = System.Drawing.Color.Red;
+            this.mapLinkStatusLabel.Location = new System.Drawing.Point(78, 19);
+            this.mapLinkStatusLabel.Name = "mapLinkStatusLabel";
+            this.mapLinkStatusLabel.Size = new System.Drawing.Size(51, 13);
+            this.mapLinkStatusLabel.TabIndex = 1;
+            this.mapLinkStatusLabel.Text = "OFFLINE";
             // 
             // label2
             // 
@@ -11200,6 +11216,16 @@ namespace Assistant
         {
             if (mapLinkPasswordTextBox.Focused)
                 RazorEnhanced.Settings.General.WriteString("MapLinkPasswordTextBox", mapLinkPasswordTextBox.Text);
+        }
+
+        private void mapConnectButton_Click(object sender, EventArgs e)
+        {
+            Assistant.MapUO.MapNetwork.TryConnect();
+        }
+
+        private void mapDisconnectButton_Click(object sender, EventArgs e)
+        {
+            Assistant.MapUO.MapNetwork.Disconnect();
         }
 	}
 }
