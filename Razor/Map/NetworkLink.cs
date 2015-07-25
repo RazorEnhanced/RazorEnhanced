@@ -18,6 +18,8 @@ namespace Assistant.MapUO
 {
 	internal class MapNetwork
 	{
+        internal static bool OnClosing = false;
+        internal static bool Connected = false;
         internal static TcpClient clientSocket = new TcpClient();
         internal static NetworkStream serverStream;
         internal static bool InThreadFlag = true;
@@ -26,13 +28,17 @@ namespace Assistant.MapUO
         internal static Thread InThread;
         internal static Thread OutThread;
         internal static int port;
+        internal static List<MapNetworkIn.UserData> UData;
 
         internal static void AddLog(string addlog)
         {
-            Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Add(addlog)));
-            Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.SelectedIndex = Assistant.Engine.MainWindow.MapLogListBox.Items.Count - 1));
-            if (Assistant.Engine.MainWindow.MapLogListBox.Items.Count > 300)
-                Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Clear()));
+            if (!OnClosing)
+            {
+                Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Add(addlog)));
+                Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.SelectedIndex = Assistant.Engine.MainWindow.MapLogListBox.Items.Count - 1));
+                if (Assistant.Engine.MainWindow.MapLogListBox.Items.Count > 300)
+                    Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Clear()));
+            }
         }
 
 		internal static void TryConnect()
@@ -97,13 +103,14 @@ namespace Assistant.MapUO
                 data.AddRange(Encoding.Default.GetBytes(RazorEnhanced.Settings.General.ReadString("MapLinkUsernameTextBox")));
                 data.AddRange(Encoding.Default.GetBytes(RazorEnhanced.Settings.General.ReadString("MapLinkPasswordTextBox")));
                 Byte[] sendBytes = data.ToArray();
-                NetworkStream serverStream = clientSocket.GetStream();
+                serverStream = clientSocket.GetStream();
                 serverStream.Write(sendBytes, 0, sendBytes.Length);
                 serverStream.Flush();
 
                 // Risposta login
                 byte[] bytesFrom = new byte[clientSocket.ReceiveBufferSize];
                 serverStream.Read(bytesFrom, 0, (clientSocket.ReceiveBufferSize));
+                
 
                 byte[] PacketIDByte = new byte[2] { bytesFrom[0], bytesFrom[1] };
                 if (BitConverter.IsLittleEndian)
@@ -113,13 +120,18 @@ namespace Assistant.MapUO
                 {
                     if (bytesFrom[2] == 1)
                     {
+                        UData = new List<MapNetworkIn.UserData>();
+                        serverStream.Flush();
                         AddLog("- Login Succesfull");
                         AddLog("- Start Read Thread");
-                        InThread = new Thread(MapNetworkIn.InThreadEcex);
+                        InThreadFlag = true;
+                        InThread = new Thread(MapNetworkIn.InThreadExec);
                         InThread.Start();
                         AddLog("- Start Write Thread");
-                        OutThread = new Thread(MapNetworkOut.OutThreadEcex);
+                        OutThreadFlag = true;
+                        OutThread = new Thread(MapNetworkOut.OutThreadExec);
                         OutThread.Start();
+                        Connected = true;
                     }
                     else
                     {
@@ -143,11 +155,33 @@ namespace Assistant.MapUO
 
         internal static void Disconnect()
         {
-            clientSocket.GetStream().Close();
-            clientSocket.Close();
-            UnLockItem();
-            Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.Text = "OFFLINE"));
-            Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.ForeColor = Color.Red));
+            try
+            {
+                UData.Clear();
+            }
+            catch { }
+            
+            InThreadFlag = false;
+            OutThreadFlag = false;
+            Connected = false;
+
+            try
+            {
+                clientSocket.GetStream().Close();
+            }
+            catch { }
+
+            try
+            {
+                clientSocket.Close();
+            }
+            catch { }
+            if (!OnClosing)
+            {
+                UnLockItem();
+                Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.Text = "OFFLINE"));
+                Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.ForeColor = Color.Red));
+            }
         }
 
         internal static void LockItem()

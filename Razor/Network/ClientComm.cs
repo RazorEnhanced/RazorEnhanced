@@ -968,6 +968,10 @@ namespace Assistant
 					PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnStart = DateTime.MinValue;
 			}
+            // Disconnetto mappa
+            MapUO.MapNetwork.OnClosing = true;
+            Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
+
             // Chiuto toolbar
             Assistant.Engine.MainWindow.CloseToolBar();
 

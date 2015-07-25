@@ -656,12 +656,8 @@ namespace Assistant
         internal TextBox MapLinkUsernameTextBox { get { return mapLinkUsernameTextBox; } }
         internal TextBox MapLinkPasswordTextBox { get { return mapLinkPasswordTextBox; } }
         internal Button MapConnectButton { get { return mapConnectButton; } }
+        internal Button MapDisconnectButton { get { return mapDisconnectButton; } }
         internal Label MapLinkStatusLabel { get { return mapLinkStatusLabel; } }
-        
-
-
-
-
 
 		private DataTable scriptTable;
 

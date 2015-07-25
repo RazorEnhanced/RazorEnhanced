@@ -494,6 +494,11 @@ namespace Assistant
 					args.Block = true;
 
 				args.Block |= !World.Player.MoveAck(seq);
+                // Enhanced Map move
+                if (MapUO.MapNetwork.Connected)
+                {
+                    MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+                }
 			}
 		}
 
@@ -2181,8 +2186,13 @@ namespace Assistant
 					}
 				case 0x08: // map change
 					{
-						if (World.Player != null)
-							World.Player.Map = p.ReadByte();
+                        if (World.Player != null)
+                        {
+                            World.Player.Map = p.ReadByte();
+                            // Enhanced Map move
+                            if (MapUO.MapNetwork.Connected)
+                                MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+                        }
 						break;
 					}
 				case 0x14: // context menu
