@@ -37,10 +37,43 @@ namespace Assistant.MapUO
             }
         }
 
+        public class SendStat
+        {
+            private int m_hits;
+            public int Hits { get { return m_hits; } }
+
+            private int m_stamina;
+            public int Stamina { get { return m_stamina; } }
+
+            private int m_mana;
+            public int Mana { get { return m_mana; } }
+
+            private int m_hitsmax;
+            public int HitsMax { get { return m_hitsmax; } }
+
+            private int m_staminamax;
+            public int StaminaMax { get { return m_staminamax; } }
+
+            private int m_manamax;
+            public int ManaMax { get { return m_manamax; } }
+            public SendStat(int hits, int stamina, int mana, int hitsmax, int staminamax, int manamax)
+            {
+                m_hits = hits;
+                m_stamina = stamina;
+                m_mana = mana;
+                m_hitsmax = hitsmax;
+                m_staminamax = staminamax;
+                m_manamax = manamax;
+            }
+        }
+
         internal static ConcurrentQueue<SendCoord> SendCoordQueue = new ConcurrentQueue<SendCoord>();
+        internal static ConcurrentQueue<SendStat> SendStatQueue = new ConcurrentQueue<SendStat>();
         internal static void OutThreadExec()
         {
             SendCoordQueue = new ConcurrentQueue<SendCoord>();
+            SendStatQueue = new ConcurrentQueue<SendStat>();
+
             Byte[] outStream;
             while (MapNetwork.OutThreadFlag)
             {
@@ -56,9 +89,34 @@ namespace Assistant.MapUO
                             List<byte> data = new List<byte>();
                             data.Add(0x0);
                             data.Add(0x2);
-                            data.AddRange(BitConverter.GetBytes(coordtosend.X));
-                            data.AddRange(BitConverter.GetBytes(coordtosend.Y));
+                            data.AddRange(BitConverter.GetBytes((short)coordtosend.X));
+                            data.AddRange(BitConverter.GetBytes((short)coordtosend.Y));
                             data.Add((byte)coordtosend.Map);
+                            outStream = data.ToArray();
+                            MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
+                            MapNetwork.serverStream.Flush();
+                            data.Clear();
+                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
+                        }
+                    }
+
+                    // Processo send stats
+                    if (SendStatQueue.Count > 0)
+                    {
+                        SendStat statstosend;
+                        SendStatQueue.TryDequeue(out statstosend);
+                        if (statstosend != null)
+                        {
+                            List<byte> data = new List<byte>();
+                            data.Add(0x0);
+                            data.Add(0x5);
+                            data.AddRange(BitConverter.GetBytes((short)statstosend.Hits));
+                            data.AddRange(BitConverter.GetBytes((short)statstosend.Stamina));
+                            data.AddRange(BitConverter.GetBytes((short)statstosend.Mana));
+                            data.AddRange(BitConverter.GetBytes((short)statstosend.HitsMax));
+                            data.AddRange(BitConverter.GetBytes((short)statstosend.StaminaMax));
+                            data.AddRange(BitConverter.GetBytes((short)statstosend.ManaMax));
+
                             outStream = data.ToArray();
                             MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
                             MapNetwork.serverStream.Flush();

@@ -316,6 +316,44 @@ namespace Assistant
 
                     m_Running = false;
 
+                    // Disconnetto mappa
+                    Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
+
+                    // Chiuto toolbar
+                    Assistant.Engine.MainWindow.CloseToolBar();
+
+                    // Stop forzato di tutti i thread agent 
+                    if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+                        Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+
+                    if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+                        Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+
+                    if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+                        Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+
+                    if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
+                        Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
+
+                    if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+                        Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
+
+                    if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                        Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+
+                    if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+                        Assistant.Engine.MainWindow.RestockStop.PerformClick();
+
+                    if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+                        Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
+
+                    // Stop filtri
+                    if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+                        Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+
+                    if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
+                        Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
+
                     RazorEnhanced.UI.EnhancedScriptEditor.End();
                     RazorEnhanced.Scripts.Auto = false;
 

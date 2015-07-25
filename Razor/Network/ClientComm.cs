@@ -967,43 +967,9 @@ namespace Assistant
 				for (int i = 0; i < m_WndReg.Count; i++)
 					PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnStart = DateTime.MinValue;
+                
 			}
-            // Disconnetto mappa
-            MapUO.MapNetwork.OnClosing = true;
-            Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
-
-            // Chiuto toolbar
-            Assistant.Engine.MainWindow.CloseToolBar();
-
-            // Stop forzato di tutti i thread agent 
-            if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
-
-            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
-
-            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
-
-            // Stop filtri
-            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
-                Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
-
-            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
-                Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
-
+            
 			PlayerData.ExternalZ = false;
 			World.Player = null;
 			PlayerData.FastWalkKey = 0;

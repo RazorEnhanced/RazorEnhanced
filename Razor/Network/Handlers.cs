@@ -1099,6 +1099,10 @@ namespace Assistant
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
                         RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
+                    // Enhanced Map Stats Update
+                    if (MapUO.MapNetwork.Connected)
+                        MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(m.Hits, World.Player.Stam, World.Player.Mana, m.HitsMax, World.Player.StamMax, World.Player.ManaMax));
+
                     ClientCommunication.PostHitsUpdate();
 				}
                 
@@ -1142,6 +1146,10 @@ namespace Assistant
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
                         RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
+                    // Enhanced Map Stats Update
+                    if (MapUO.MapNetwork.Connected)
+                        MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, m.Stam, World.Player.Mana, World.Player.HitsMax, m.StamMax, World.Player.ManaMax));
+
 					ClientCommunication.PostStamUpdate();
 				}
 
@@ -1183,6 +1191,10 @@ namespace Assistant
                     // Update Mana toolbar
                     if (Assistant.Engine.MainWindow.ToolBarOpen)
                         RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
+
+                    // Enhanced Map Stats Update
+                    if (MapUO.MapNetwork.Connected)
+                        MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, m.Mana, World.Player.HitsMax, World.Player.StamMax, m.ManaMax));
 
 					ClientCommunication.PostManaUpdate();
 				}

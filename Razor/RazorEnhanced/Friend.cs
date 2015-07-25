@@ -60,10 +60,13 @@ namespace RazorEnhanced
 
         internal static void AddLog(string addlog)
         {
-            Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Add(addlog)));
-            Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.SelectedIndex = Engine.MainWindow.FriendLogBox.Items.Count - 1));
-            if (Assistant.Engine.MainWindow.FriendLogBox.Items.Count > 300)
-                Assistant.Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendLogBox.Items.Clear()));
+            if (Engine.Running)
+            {
+                Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Add(addlog)));
+                Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.SelectedIndex = Engine.MainWindow.FriendLogBox.Items.Count - 1));
+                if (Assistant.Engine.MainWindow.FriendLogBox.Items.Count > 300)
+                    Assistant.Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendLogBox.Items.Clear()));
+            }
         }
         internal static bool IncludeParty
         {

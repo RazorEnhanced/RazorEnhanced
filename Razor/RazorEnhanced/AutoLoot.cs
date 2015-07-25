@@ -11,7 +11,6 @@ namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
-       // private static Queue<int> m_IgnoreItemQueue = new Queue<int>();
         private static Queue<int> m_IgnoreCorpseQueue = new Queue<int>();
 
 		[Serializable]
@@ -144,10 +143,13 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
-			Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
-            if (Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count > 300)
-                Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear()));
+            if (Assistant.Engine.Running)
+            {
+                Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
+                Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
+                if (Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count > 300)
+                    Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear()));
+            }
 		}
 
 		internal static void RefreshLists()

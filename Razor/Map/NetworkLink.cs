@@ -18,7 +18,6 @@ namespace Assistant.MapUO
 {
 	internal class MapNetwork
 	{
-        internal static bool OnClosing = false;
         internal static bool Connected = false;
         internal static TcpClient clientSocket = new TcpClient();
         internal static NetworkStream serverStream;
@@ -32,7 +31,7 @@ namespace Assistant.MapUO
 
         internal static void AddLog(string addlog)
         {
-            if (!OnClosing)
+            if (Engine.Running)
             {
                 Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Add(addlog)));
                 Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.SelectedIndex = Assistant.Engine.MainWindow.MapLogListBox.Items.Count - 1));
@@ -176,7 +175,8 @@ namespace Assistant.MapUO
                 clientSocket.Close();
             }
             catch { }
-            if (!OnClosing)
+
+            if (Engine.Running)
             {
                 UnLockItem();
                 Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.Text = "OFFLINE"));
