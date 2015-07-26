@@ -267,6 +267,30 @@ namespace Assistant.MapUO
 						gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
 					}
 
+                    // Disegno punti MapNetwork
+                    foreach (MapNetworkIn.UserData user in MapNetwork.UData)
+                    {
+                        string name = user.Nome;
+                        if (name == null || name.Length < 1)
+                            name = "(Not Seen)";
+                        if (name != null && name.Length > 8)
+                            name = name.Substring(0, 8);
+                        Point drawPoint = new Point((user.X) - (mapOrigin.X << 3) - offset.X, (user.Y) - (mapOrigin.Y << 3) - offset.Y);
+                        if (drawPoint.X < 0)
+                            drawPoint.X = 0;
+                        if (drawPoint.X > this.Width)
+                            drawPoint.X = this.Width;
+                        if (drawPoint.Y < 0)
+                            drawPoint.Y = 0;
+                        if (drawPoint.Y > this.Height)
+                            drawPoint.Y = this.Height;
+
+                        PointF drawPointF = RotatePoint(new Point(xtrans, ytrans), drawPoint);
+                        gfx.FillRectangle(Brushes.Azure, drawPointF.X, drawPointF.Y, 2f, 2f);
+                        gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
+
+                    }
+
 					if (World.Player != null)
 					{
 						if (World.Player != this.FocusMobile)

@@ -257,7 +257,7 @@ namespace Assistant
                     if (text.StartsWith(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox")))
                     {
                         string message = text.Replace(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox"), "");
-                        MapUO.MapNetworkOut.SendChatMessageQueue.Enqueue(new MapUO.MapNetworkOut.SendChatMessage(text.Length, RazorEnhanced.Settings.General.ReadInt("MapChatColor"), message));
+                        MapUO.MapNetworkOut.SendChatMessageQueue.Enqueue(new MapUO.MapNetworkOut.SendChatMessage(message.Length, RazorEnhanced.Settings.General.ReadInt("MapChatColor"), message));
                         args.Block = true;
                     }
 

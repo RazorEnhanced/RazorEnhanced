@@ -506,7 +506,6 @@ namespace Assistant
         private RazorCheckBox mapHpBarCheckBox;
         private RazorCheckBox mapAutoconnectCheckBox1;
         private RazorCheckBox mapOpenOnLoginCheckBox;
-        private ColorDialog mapchatcolorDialog;
         private RazorTextBox mapLinkPasswordTextBox;
         private Label label46;
         private RazorTextBox mapLinkUsernameTextBox;
@@ -1190,7 +1189,6 @@ namespace Assistant
             this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
             this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-            this.mapchatcolorDialog = new System.Windows.Forms.ColorDialog();
             this.tabs.SuspendLayout();
             this.generalTab.SuspendLayout();
             this.groupBox29.SuspendLayout();
@@ -6766,7 +6764,7 @@ namespace Assistant
             mapChatCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapChatCheckBox");
             mapChatPrefixTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox");
             mapAutoOpenChatCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapAutoOpenChatCheckBox");
-            mapChatColorlabel.ForeColor = Color.FromArgb(RazorEnhanced.Settings.General.ReadInt("MapChatColor"));
+            InitPreviewHue(mapChatColorlabel, "MapChatColor");
             mapserveraddressTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapServerAddressTextBox");
             mapserverportTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapServerPortTextBox");
             mapLinkUsernameTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapLinkUsernameTextBox");
@@ -7244,11 +7242,23 @@ namespace Assistant
 		private void InitPreviewHue(Control ctrl, string cfg)
 		{
             int hueIdx = RazorEnhanced.Settings.General.ReadInt(cfg);
-			if (hueIdx > 0 && hueIdx < 3000)
-				ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
-			else
-				ctrl.BackColor = SystemColors.Control;
-			ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
+            if (hueIdx > 0 && hueIdx < 3000)
+            {
+                if (ctrl.Name == "mapChatColorlabel")
+                    ctrl.ForeColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
+                else
+                    ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
+            }
+            else
+            {
+                if (ctrl.Name == "mapChatColorlabel")
+                    ctrl.ForeColor = SystemColors.Control;
+                else
+                    ctrl.BackColor = SystemColors.Control;
+            }
+
+            if (ctrl.Name != "mapChatColorlabel")
+			    ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
 		}
 
 		private bool SetHue(Control ctrl, string cfg)
@@ -7259,11 +7269,23 @@ namespace Assistant
 			{
 				int hueIdx = h.Hue;
                 RazorEnhanced.Settings.General.WriteInt(cfg, hueIdx);
-				if (hueIdx > 0 && hueIdx < 3000)
-					ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
-				else
-					ctrl.BackColor = Color.White;
-				ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
+                if (hueIdx > 0 && hueIdx < 3000)
+                {
+                    if (ctrl.Name == "mapChatColorlabel")
+                        ctrl.ForeColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
+                    else
+                        ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
+                }
+                else
+                {
+                    if (ctrl.Name == "mapChatColorlabel")
+                        ctrl.ForeColor = Color.White;
+                    else
+                        ctrl.BackColor = Color.White;
+                }
+
+                if (ctrl.Name != "mapChatColorlabel")
+				    ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
 
 				return true;
 			}
@@ -11181,13 +11203,7 @@ namespace Assistant
 
         private void mapSetChatColorButton_Click(object sender, EventArgs e)
         {
-            DialogResult result = mapchatcolorDialog.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                mapChatColorlabel.ForeColor = mapchatcolorDialog.Color;
-                RazorEnhanced.Settings.General.WriteInt("MapChatColor", mapchatcolorDialog.Color.ToArgb());
-            }
-
+            SetHue(mapChatColorlabel, "MapChatColor");
         }
 
         private void mapserveraddressTextBox_TextChanged(object sender, EventArgs e)
