@@ -280,7 +280,7 @@ namespace Assistant.MapUO
                                 string user = Encoding.Default.GetString(bytesFrom, 9 + msg_lenght, userlenght);
                                 MapNetwork.serverStream.Flush();
 
-                                ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("MapChatColor"), 3, Language.CliLocName, "System", "[MAP-CHAT] " + user + ": " + msg));
+                                ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, msg_color, 3, Language.CliLocName, "System", "[MAP-CHAT] " + user + ": " + msg));
 
                                 MapNetwork.AddLog("DEBUG: Chat message: " + msg + " - Col: " + msg_color.ToString());
 
