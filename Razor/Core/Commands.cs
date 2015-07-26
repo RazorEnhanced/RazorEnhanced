@@ -252,6 +252,15 @@ namespace Assistant
 
 			if (text.Length > 0)
 			{
+                // Enanched Map Chat
+                if (MapUO.MapNetwork.Connected)
+                    if (text.StartsWith(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox")))
+                    {
+                        string message = text.Replace(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox"), "");
+                        MapUO.MapNetworkOut.SendChatMessageQueue.Enqueue(new MapUO.MapNetworkOut.SendChatMessage(text.Length, RazorEnhanced.Settings.General.ReadInt("MapChatColor"), message));
+                        args.Block = true;
+                    }
+
 				if (text[0] != '-')
 				{
 					if (ClientCommunication.TranslateEnabled && text[0] != '[' && text[0] != ']')
@@ -271,7 +280,6 @@ namespace Assistant
 						pvSrc.UnderlyingStream.SetLength(pvSrc.Position);
 					}
 
-					Macros.MacroManager.Action(new Macros.SpeechAction(type, hue, font, lang, keys, text));
 				}
 				else
 				{

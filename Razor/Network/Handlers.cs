@@ -1101,7 +1101,22 @@ namespace Assistant
 
                     // Enhanced Map Stats Update
                     if (MapUO.MapNetwork.Connected)
+                    {
                         MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(m.Hits, World.Player.Stam, World.Player.Mana, m.HitsMax, World.Player.StamMax, World.Player.ManaMax));
+
+                        // Enhanced Map Flags dead
+                        if (m.Hits == 0)
+                        {
+                            MapUO.MapNetworkOut.LastDead = true;
+                            MapUO.MapNetworkOut.SendFlagQueue.Enqueue(4);
+                        }
+
+                        if (m.Hits > 0 && MapUO.MapNetworkOut.LastDead)
+                        {
+                            MapUO.MapNetworkOut.LastDead = false;
+                            MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+                        }
+                    }
 
                     ClientCommunication.PostHitsUpdate();
 				}
@@ -1274,7 +1289,19 @@ namespace Assistant
 			{
 				bool wasPoisoned = m.Poisoned;
 				m.Poisoned = (flag != 0);
+                if (m == World.Player)
+                    if (MapUO.MapNetwork.Connected)
+                        MapUO.MapNetworkOut.SendFlagQueue.Enqueue(1);
 			}
+            else
+            {
+                if (m == World.Player)
+                    if (MapUO.MapNetwork.Connected)
+                        MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+            }
+
+
+
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)

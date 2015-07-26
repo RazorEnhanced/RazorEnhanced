@@ -19,6 +19,7 @@ namespace Assistant.MapUO
 	internal class MapNetworkOut
 	{
         internal static bool SendSleep = false;
+
         public class SendCoord
         {    
             private int m_x;
@@ -66,13 +67,82 @@ namespace Assistant.MapUO
                 m_manamax = manamax;
             }
         }
+        public class SendDeathPoint
+        {
+            private int m_x;
+            public int X { get { return m_x; } }
+
+            private int m_y;
+            public int Y { get { return m_y; } }
+
+            private int m_map;
+            public int Map { get { return m_map; } }
+            public SendDeathPoint(int x, int y, int map)
+            {
+                m_x = x;
+                m_y = y;
+                m_map = map;
+            }
+        }
+
+        public class SendPanic
+        {
+            private int m_x;
+            public int X { get { return m_x; } }
+
+            private int m_y;
+            public int Y { get { return m_y; } }
+
+            private int m_map;
+            public int Map { get { return m_map; } }
+            public SendPanic(int x, int y, int map)
+            {
+                m_x = x;
+                m_y = y;
+                m_map = map;
+            }
+        }
+
+        public class SendChatMessage
+        {
+            private int m_msg_lenght;
+            public int Lenght { get { return m_msg_lenght; } }
+
+            private int m_color;
+            public int Color { get { return m_color; } }
+
+            private string m_msg;
+            public string Msg { get { return m_msg; } }
+            public SendChatMessage(int msg_lenght, int color, string msg)
+            {
+                m_msg_lenght = msg_lenght;
+                m_color = color;
+                m_msg = msg;
+            }
+        }
 
         internal static ConcurrentQueue<SendCoord> SendCoordQueue = new ConcurrentQueue<SendCoord>();
         internal static ConcurrentQueue<SendStat> SendStatQueue = new ConcurrentQueue<SendStat>();
+        internal static ConcurrentQueue<short> SendFlagQueue = new ConcurrentQueue<short>();
+        internal static ConcurrentQueue<SendChatMessage> SendChatMessageQueue = new ConcurrentQueue<SendChatMessage>();
+
+        internal static bool SendPanicFlag = false;
+        internal static bool SendDeathPointFlag = false;
+        internal static SendPanic SendPanicData;
+        internal static SendDeathPoint SendDeathPointData;
+        internal static bool LastDead = false;
+
         internal static void OutThreadExec()
         {
             SendCoordQueue = new ConcurrentQueue<SendCoord>();
             SendStatQueue = new ConcurrentQueue<SendStat>();
+            SendFlagQueue = new ConcurrentQueue<short>();
+            SendChatMessageQueue = new ConcurrentQueue<SendChatMessage>();
+            SendPanicFlag = false;
+            SendDeathPointFlag = false;
+            LastDead = false;
+            SendPanicData = new SendPanic(0,0,0);
+            SendDeathPointData = new SendDeathPoint(0, 0, 0);
 
             Byte[] outStream;
             while (MapNetwork.OutThreadFlag)
@@ -101,7 +171,7 @@ namespace Assistant.MapUO
                     }
 
                     // Processo send stats
-                    if (SendStatQueue.Count > 0)
+                    if (SendFlagQueue.Count > 0)
                     {
                         SendStat statstosend;
                         SendStatQueue.TryDequeue(out statstosend);
@@ -124,6 +194,93 @@ namespace Assistant.MapUO
                             Sleep(); // Attende risposta dall'altro thread di packet ricevuto
                         }
                     }
+
+                    // Processo send Flags
+                    if (SendFlagQueue.Count > 0)
+                    {
+                        short flagtosend;
+                        SendFlagQueue.TryDequeue(out flagtosend);
+                        if (flagtosend != null)
+                        {
+                            List<byte> data = new List<byte>();
+                            data.Add(0x0);
+                            data.Add(0x7);
+                            data.AddRange(BitConverter.GetBytes((short)flagtosend));
+
+                            outStream = data.ToArray();
+                            MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
+                            MapNetwork.serverStream.Flush();
+                            data.Clear();
+                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
+                        }
+                    }
+
+                    // Processo send DeathPoint 
+                    if (SendDeathPointFlag)
+                    {
+                        if (SendDeathPointData != null)
+                        {
+                            List<byte> data = new List<byte>();
+                            data.Add(0x0);
+                            data.Add(0x9);
+                            data.AddRange(BitConverter.GetBytes((short)SendDeathPointData.X));
+                            data.AddRange(BitConverter.GetBytes((short)SendDeathPointData.Y));
+                            data.Add((byte)SendDeathPointData.Map);
+
+                            outStream = data.ToArray();
+                            MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
+                            MapNetwork.serverStream.Flush();
+
+                            SendDeathPointFlag = false;
+                            data.Clear();
+                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
+                        }
+                    }
+
+                    // Processo send Panic 
+                    if (SendPanicFlag)
+                    {
+                        if (SendPanicData != null)
+                        {
+                            List<byte> data = new List<byte>();
+                            data.Add(0x0);
+                            data.Add(0xB);
+                            data.AddRange(BitConverter.GetBytes((short)SendPanicData.X));
+                            data.AddRange(BitConverter.GetBytes((short)SendPanicData.Y));
+                            data.Add((byte)SendPanicData.Map);
+
+                            outStream = data.ToArray();
+                            MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
+                            MapNetwork.serverStream.Flush();
+
+                            SendPanicFlag = false;
+                            data.Clear();
+                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
+                        }
+                    }
+
+                    // Processo send Chat 
+                    if (SendChatMessageQueue.Count > 0)
+                    {
+                        SendChatMessage msgtosend;
+                        SendChatMessageQueue.TryDequeue(out msgtosend);
+                        if (msgtosend != null)
+                        {
+                            List<byte> data = new List<byte>();
+                            data.Add(0x0);
+                            data.Add(0xD);
+                            data.AddRange(BitConverter.GetBytes((short)msgtosend.Lenght));
+                            data.AddRange(BitConverter.GetBytes(msgtosend.Color));
+                            data.AddRange(Encoding.Default.GetBytes(msgtosend.Msg));
+
+                            outStream = data.ToArray();
+                            MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
+                            MapNetwork.serverStream.Flush();
+                            data.Clear();
+                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
+                        }
+                    }
+
                 }
                 catch
                 {
