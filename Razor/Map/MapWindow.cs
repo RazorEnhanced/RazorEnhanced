@@ -16,6 +16,7 @@ namespace Assistant.MapUO
 		internal const int WM_NCLBUTTONDOWN = 0xA1;
 		internal const int HT_CAPTION = 0x2;
 		private UOMapControl uoMapControl1;
+        internal static UOMapControl uoMapControlstatic;
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
@@ -53,6 +54,7 @@ namespace Assistant.MapUO
 
 			this.uoMapControl1.FullUpdate();
 			ClientCommunication.SetMapWndHandle(this);
+            uoMapControlstatic = this.uoMapControl1;
 		}
 
 		internal class MapMenuItem : MenuItem

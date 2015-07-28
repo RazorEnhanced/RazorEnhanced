@@ -126,6 +126,9 @@ namespace Assistant.MapUO
 
 			gfx.FillRectangle(Brushes.Black, 0, 0, this.Width, this.Height);
 
+            gfx.SmoothingMode = SmoothingMode.AntiAlias;
+            gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+
 			gfx.TranslateTransform(-xtrans, -ytrans, MatrixOrder.Append);
 			gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 			gfx.PageUnit = GraphicsUnit.Pixel;
@@ -267,15 +270,21 @@ namespace Assistant.MapUO
 						gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
 					}
 
+
                     // Disegno punti MapNetwork
                     foreach (MapNetworkIn.UserData user in MapNetwork.UData)
                     {
+                        // Nome e punto
                         string name = user.Nome;
                         if (name == null || name.Length < 1)
                             name = "(Not Seen)";
                         if (name != null && name.Length > 8)
                             name = name.Substring(0, 8);
-                        Point drawPoint = new Point((user.X) - (mapOrigin.X << 3) - offset.X, (user.Y) - (mapOrigin.Y << 3) - offset.Y);
+                        
+                        int userx = (user.X) - (mapOrigin.X << 3) - offset.X;
+                        int usery = (user.Y) - (mapOrigin.Y << 3) - offset.Y;
+                        
+                        Point drawPoint = new Point(userx, usery);
                         if (drawPoint.X < 0)
                             drawPoint.X = 0;
                         if (drawPoint.X > this.Width)
@@ -288,6 +297,36 @@ namespace Assistant.MapUO
                         PointF drawPointF = RotatePoint(new Point(xtrans, ytrans), drawPoint);
                         gfx.FillRectangle(Brushes.Azure, drawPointF.X, drawPointF.Y, 2f, 2f);
                         gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
+
+                        // Barre stats
+                        int offsetbarre = 10;
+                        if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
+                        {
+                            Pen selPen = new Pen(Color.Red);
+                            gfx.DrawRectangle(selPen, userx + 10, usery + offsetbarre, 40, 3);
+                            int percent = (int)(user.Hits * 100 / (user.HitsMax == 0 ? (ushort)1 : (ushort)user.HitsMax));
+                            int imagepercent = 40 * percent / 100;
+                            gfx.FillRectangle(Brushes.Red, userx + 10, usery + offsetbarre, imagepercent, 3);
+                            offsetbarre += 4;
+                        }
+                        if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
+                        {
+                            Pen selPen = new Pen(Color.Blue);
+                            gfx.DrawRectangle(selPen, userx + 10, usery + offsetbarre, 40, 3);
+                            int percent = (int)(user.Mana * 100 / (user.ManaMax == 0 ? (ushort)1 : (ushort)user.ManaMax));
+                            int imagepercent = 40 * percent / 100;
+                            gfx.FillRectangle(Brushes.Blue, userx + 10, usery + offsetbarre, imagepercent, 3);
+                            offsetbarre += 4;
+                        }
+                        if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
+                        {
+                            Pen selPen = new Pen(Color.Yellow);
+                            gfx.DrawRectangle(selPen, userx + 10, usery + offsetbarre, 40, 3);
+                            int percent = (int)(user.Stamina * 100 / (user.StaminaMax == 0 ? (ushort)1 : (ushort)user.StaminaMax));
+                            int imagepercent = 40 * percent / 100;
+                            gfx.FillRectangle(Brushes.Yellow, userx + 10, usery + offsetbarre, imagepercent, 3);
+                            offsetbarre += 4;
+                        }
 
                     }
 

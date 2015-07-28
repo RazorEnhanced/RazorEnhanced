@@ -193,6 +193,9 @@ namespace Assistant.MapUO
 
                                 UpdateUserCoords(x, y, map, username);
 
+                                if (MapWindow.uoMapControlstatic != null)
+                                    MapWindow.uoMapControlstatic.Invoke(new Action(() => MapWindow.uoMapControlstatic.FullUpdate()));
+                                
                                 MapNetwork.AddLog("DEBUG: coords: " + x + " - " + y + " - " + map);
 
                                 break;
@@ -216,6 +219,9 @@ namespace Assistant.MapUO
                                 MapNetwork.serverStream.Flush();
 
                                 UpdateUserHits(hits, stamina, mana, hitsmax, staminamax, manamax, username);
+
+                                if (MapWindow.uoMapControlstatic != null)
+                                    MapWindow.uoMapControlstatic.Invoke(new Action(() => MapWindow.uoMapControlstatic.FullUpdate()));
 
                                 MapNetwork.AddLog("DEBUG: stats: " + hits + " - " + stamina + " - " + mana);
 
@@ -294,6 +300,8 @@ namespace Assistant.MapUO
 
                                 UpdateAddUser(username);
 
+                                ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 33, 3, Language.CliLocName, "System", "[MAP-LINK] " + username + ": Logged In"));
+
                                 MapNetwork.AddLog("User: " + username + " Logged In!");
 
                                 break;
@@ -306,14 +314,17 @@ namespace Assistant.MapUO
                                 
                                 UpdateRemoveUser(username);
 
+                                ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 33, 3, Language.CliLocName, "System", "[MAP-LINK] " + username + ": Logged Out"));
+
                                 MapNetwork.AddLog("User: " + username + " Logged Out!");
                                 break;
                             }
                     }
 
                 }
-                catch 
+                catch (Exception ex)
                 {
+                    MessageBox.Show("DEBUG:" + ex.ToString());
                     MapNetwork.Disconnect();
                 }
             }
@@ -385,18 +396,35 @@ namespace Assistant.MapUO
 
         private static void UpdateAddUser(string username)
         {
-            UpdateRemoveUser(username);
-            MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+            bool found = false;
+            foreach (MapNetworkIn.UserData data in MapNetwork.UData)
+            {
+                if (data.Nome == username)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+                MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
         }
 
         private static void UpdateRemoveUser(string username)
         {
-            List<MapNetworkIn.UserData> temp = MapNetwork.UData;
-            foreach (MapNetworkIn.UserData data in temp)
+            int i = 0;
+            bool found = false;
+            foreach (MapNetworkIn.UserData data in MapNetwork.UData)
             {
                 if (data.Nome == username)
-                    MapNetwork.UData.Remove(data);
+                {
+                    found = true;
+                    break;
+                }
+                i++;
             }
+            if (found)
+                MapNetwork.UData.RemoveAt(i);
         }
 	}
 }

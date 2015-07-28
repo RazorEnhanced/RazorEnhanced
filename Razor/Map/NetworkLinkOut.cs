@@ -145,6 +145,20 @@ namespace Assistant.MapUO
             SendDeathPointData = new SendDeathPoint(0, 0, 0);
 
             Byte[] outStream;
+
+            // Invio stato alla connessione effettuata
+            if (World.Player != null)
+            {
+                MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+                MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, World.Player.Mana, World.Player.HitsMax, World.Player.StamMax, World.Player.ManaMax));
+                if (World.Player.Hits == 0)
+                    MapNetworkOut.SendFlagQueue.Enqueue(4);
+                else if (World.Player.Poisoned)
+                    MapUO.MapNetworkOut.SendFlagQueue.Enqueue(1);
+                else
+                    MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+            }
+
             while (MapNetwork.OutThreadFlag)
             {
                 try
