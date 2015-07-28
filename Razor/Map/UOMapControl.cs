@@ -298,6 +298,10 @@ namespace Assistant.MapUO
                         gfx.FillRectangle(Brushes.Azure, drawPointF.X, drawPointF.Y, 2f, 2f);
                         gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
 
+                        // Icone flag poison death paral e mortal
+                        if (user.Flag == 1)
+                            gfx.DrawImage(Properties.Resources.map_poison, userx -4 , usery + 8, 13, 18);
+
                         // Barre stats
                         int offsetbarre = 10;
                         if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))

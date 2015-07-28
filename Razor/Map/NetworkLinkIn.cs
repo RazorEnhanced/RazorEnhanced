@@ -322,9 +322,8 @@ namespace Assistant.MapUO
                     }
 
                 }
-                catch (Exception ex)
+                catch 
                 {
-                    MessageBox.Show("DEBUG:" + ex.ToString());
                     MapNetwork.Disconnect();
                 }
             }

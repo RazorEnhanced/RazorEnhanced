@@ -724,6 +724,7 @@
     <None Include="RazorEnhanced\Resources\razor-enhanced.ico" />
     <None Include="RazorEnhanced\Resources\razor-enhanced.png" />
     <None Include="RazorEnhanced\Resources\gump.png" />
+    <None Include="RazorEnhanced\Resources\map-poison.gif" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />

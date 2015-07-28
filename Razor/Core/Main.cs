@@ -318,6 +318,29 @@ namespace Assistant
 
                     // Disconnetto mappa
                     Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
+                    try
+                    {
+                        MapUO.MapNetwork.clientSocket.GetStream().Close();
+                    }
+                    catch { }
+
+                    try
+                    {
+                        MapUO.MapNetwork.clientSocket.Close();
+                    }
+                    catch { }
+
+                    try
+                    {
+                        MapUO.MapNetwork.InThread.Abort();
+                    }
+                    catch { }
+
+                    try
+                    {
+                        MapUO.MapNetwork.OutThread.Abort();
+                    }
+                    catch { }
 
                     // Chiuto toolbar
                     Assistant.Engine.MainWindow.CloseToolBar();
