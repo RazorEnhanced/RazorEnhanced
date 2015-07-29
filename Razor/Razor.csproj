@@ -725,6 +725,9 @@
     <None Include="RazorEnhanced\Resources\razor-enhanced.png" />
     <None Include="RazorEnhanced\Resources\gump.png" />
     <None Include="RazorEnhanced\Resources\map-poison.gif" />
+    <None Include="RazorEnhanced\Resources\map-dead.gif" />
+    <None Include="RazorEnhanced\Resources\map-mortal.gif" />
+    <None Include="RazorEnhanced\Resources\map-paralized.gif" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />

@@ -255,6 +255,8 @@ namespace Assistant.MapUO
 
                                 MapNetwork.AddLog("DEBUG: Death: " + x + " - " + y + " - " + map);
 
+                                ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 33, 3, Language.CliLocName, "System", "[MAP-LINK] " + username + ": Died at coords: " + x + " - " + y + " facet: " + map));
+
                                 break;
                             }
                         case 12:            // Panic point
