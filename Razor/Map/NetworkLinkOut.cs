@@ -185,7 +185,7 @@ namespace Assistant.MapUO
                     }
 
                     // Processo send stats
-                    if (SendFlagQueue.Count > 0)
+                    if (SendStatQueue.Count > 0)
                     {
                         SendStat statstosend;
                         SendStatQueue.TryDequeue(out statstosend);
