@@ -12,7 +12,8 @@ using System.Net;
 using System.Linq;
 using System.Security.Principal;
 using System.Runtime.InteropServices;
-
+using System.IO.Compression;
+using Ionic.Zip;
 
 namespace Assistant.MapUO
 {
@@ -122,6 +123,9 @@ namespace Assistant.MapUO
                         UData = new List<MapNetworkIn.UserData>();
                         serverStream.Flush();
                         AddLog("- Login Succesfull");
+
+                        RecTCPFile(Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip", serverStream);
+
                         AddLog("- Start Read Thread");
                         InThreadFlag = true;
                         InThread = new Thread(MapNetworkIn.InThreadExec);
@@ -151,6 +155,48 @@ namespace Assistant.MapUO
             }
             AddLog("- Connection Thread End");
         }
+
+        private static void RecTCPFile(string filename, NetworkStream serverStream)
+        {
+            AddLog("- Incoming Data File");
+            byte[] RecData = new byte[1024];
+            int RecBytes;
+            int totalrecbytes = 0;
+            FileStream Fs = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
+            while ((RecBytes = serverStream.Read(RecData, 0, RecData.Length)) > 0)
+            {
+                if (RecData[0] == 0xFE && RecData[1] == 0xFE && RecData[2] == 0xFE && RecData[3] == 0xFE) // End data file
+                    break;
+                else
+                {
+                    Fs.Write(RecData, 0, RecBytes);
+                    totalrecbytes += RecBytes;
+                }
+                RecData = new byte[1024];
+            }
+            Fs.Close();
+            AddLog("- Data file recevied " + totalrecbytes);
+            Decompress(new FileInfo(filename));
+        }
+
+        private static void Decompress(FileInfo fi)
+        {
+            AddLog("- Start Decompress Data file: " + fi.Name);
+            try
+            {
+                using (ZipFile zip = ZipFile.Read(fi.Name))
+                {
+                    zip.ExtractAll(Path.GetDirectoryName(Application.ExecutablePath), ExtractExistingFileAction.OverwriteSilently);
+                }
+                AddLog("- Done Decompress Data file: " + fi.Name);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                AddLog("- Fail Decompress Data file: " + fi.Name);
+            }
+        }
+
 
         internal static void Disconnect()
         {
