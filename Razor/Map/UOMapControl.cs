@@ -307,13 +307,13 @@ namespace Assistant.MapUO
 
                             // Icone flag poison death paral e mortal
                             if (user.Flag == 1) // Poison
-                                gfx.DrawImage(Properties.Resources.map_poison, userx - 4, usery + 8, 13, 18);
+                                gfx.DrawImage(Properties.Resources.map_poison, drawPoint.X - 4, drawPoint.Y + 8, 13, 18);
                             else if (user.Flag == 2) // Paral
-                                gfx.DrawImage(Properties.Resources.map_paralized, userx - 4, usery + 8, 14, 18);
+                                gfx.DrawImage(Properties.Resources.map_paralized, drawPoint.X - 4, drawPoint.Y + 8, 14, 18);
                             else if (user.Flag == 3) // Mortal
-                                gfx.DrawImage(Properties.Resources.map_mortal, userx - 4, usery + 8, 13, 17);
+                                gfx.DrawImage(Properties.Resources.map_mortal, drawPoint.X - 4, drawPoint.Y + 8, 13, 17);
                             else if (user.Flag == 4) // Dead
-                                gfx.DrawImage(Properties.Resources.map_dead, userx - 4, usery + 8, 14, 15);
+                                gfx.DrawImage(Properties.Resources.map_dead, drawPoint.X - 4, drawPoint.Y + 8, 14, 15);
 
 
                             // Barre stats
@@ -321,28 +321,28 @@ namespace Assistant.MapUO
                             if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
                             {
                                 Pen selPen = new Pen(Color.Red);
-                                gfx.DrawRectangle(selPen, userx + 10, usery + offsetbarre, 40, 3);
+                                gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
                                 int percent = (int)(user.Hits * 100 / (user.HitsMax == 0 ? (ushort)1 : (ushort)user.HitsMax));
                                 int imagepercent = 40 * percent / 100;
-                                gfx.FillRectangle(Brushes.Red, userx + 10, usery + offsetbarre, imagepercent, 3);
+                                gfx.FillRectangle(Brushes.Red, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
                                 offsetbarre += 4;
                             }
                             if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
                             {
                                 Pen selPen = new Pen(Color.Blue);
-                                gfx.DrawRectangle(selPen, userx + 10, usery + offsetbarre, 40, 3);
+                                gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
                                 int percent = (int)(user.Mana * 100 / (user.ManaMax == 0 ? (ushort)1 : (ushort)user.ManaMax));
                                 int imagepercent = 40 * percent / 100;
-                                gfx.FillRectangle(Brushes.Blue, userx + 10, usery + offsetbarre, imagepercent, 3);
+                                gfx.FillRectangle(Brushes.Blue, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
                                 offsetbarre += 4;
                             }
                             if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
                             {
                                 Pen selPen = new Pen(Color.Yellow);
-                                gfx.DrawRectangle(selPen, userx + 10, usery + offsetbarre, 40, 3);
+                                gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
                                 int percent = (int)(user.Stamina * 100 / (user.StaminaMax == 0 ? (ushort)1 : (ushort)user.StaminaMax));
                                 int imagepercent = 40 * percent / 100;
-                                gfx.FillRectangle(Brushes.Yellow, userx + 10, usery + offsetbarre, imagepercent, 3);
+                                gfx.FillRectangle(Brushes.Yellow, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
                                 offsetbarre += 4;
                             }
 

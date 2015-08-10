@@ -251,13 +251,6 @@ namespace Assistant
                     string addr = selected.Host;
                     int port = selected.Port;
 
-                    if (!Language.Load("ENU"))
-                    {
-                        SplashScreen.End();
-                        MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
                     if (dataDir != null && Directory.Exists(dataDir))
                     {
                         Ultima.Files.SetMulPath(dataDir);

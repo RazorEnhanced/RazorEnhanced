@@ -123,7 +123,11 @@ namespace Assistant.MapUO
                         UData = new List<MapNetworkIn.UserData>();
                         serverStream.Flush();
                         AddLog("- Login Succesfull");
-
+                        if (File.Exists(Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip"))
+                        {
+                            AddLog("- Delete old datafile");
+                            File.Delete(Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip");
+                        }
                         RecTCPFile(Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip", serverStream);
 
                         AddLog("- Start Read Thread");
@@ -147,9 +151,10 @@ namespace Assistant.MapUO
                     AddLog("- Unknow server response");
                     Disconnect();
                 }
-            }
-            catch
+            } 
+            catch (Exception ex)
             {
+                MessageBox.Show(ex.ToString());
                 AddLog("- Fail to Connect");
                 UnLockItem();
             }
@@ -163,19 +168,30 @@ namespace Assistant.MapUO
             int RecBytes;
             int totalrecbytes = 0;
             FileStream Fs = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
-            while ((RecBytes = serverStream.Read(RecData, 0, RecData.Length)) > 0)
+            while (true)
             {
+                RecBytes = serverStream.Read(RecData, 0, RecData.Length);
+                serverStream.Flush();
+                List<byte> data = new List<byte>();
+                data.Add(0xFF);
+                data.Add(0xFF);
+                byte[] outStream = data.ToArray();
+                serverStream.Write(outStream, 0, outStream.Length);
+                serverStream.Flush();
                 if (RecData[0] == 0xFE && RecData[1] == 0xFE && RecData[2] == 0xFE && RecData[3] == 0xFE) // End data file
+                {
                     break;
+                }
                 else
                 {
                     Fs.Write(RecData, 0, RecBytes);
                     totalrecbytes += RecBytes;
+
                 }
                 RecData = new byte[1024];
             }
             Fs.Close();
-            AddLog("- Data file recevied " + totalrecbytes);
+            AddLog("- Data file recevied: " + totalrecbytes);
             Decompress(new FileInfo(filename));
         }
 

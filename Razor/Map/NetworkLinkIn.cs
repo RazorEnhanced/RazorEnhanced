@@ -320,7 +320,7 @@ namespace Assistant.MapUO
 
                                 MapNetwork.AddLog("User: " + username + " Logged Out!");
                                 break;
-                            }
+                            }           
                     }
 
                 }
