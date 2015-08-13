@@ -275,77 +275,110 @@ namespace Assistant.MapUO
                         }
                     }
 
+                    // Disegno punti interesse
+
+                    foreach (MapUO.MapIcon.MapIconData build in MapUO.MapIcon.IconList)
+                    {
+                        if (build.Facet == World.Player.Map || (build.Facet == 7 && (World.Player.Map == 1 || World.Player.Map == 0)))
+                        {
+                            Point BuildPoint = new Point((build.X) - (mapOrigin.X << 3) - offset.X, (build.Y) - (mapOrigin.Y << 3) - offset.Y);
+                            if (!(BuildPoint.X <= 0 | BuildPoint.X > this.Width + 20 | BuildPoint.Y <= 0 | BuildPoint.Y > this.Height + 20))
+                            {
+                                int userx = (build.X) - (mapOrigin.X << 3) - offset.X;
+                                int usery = (build.Y) - (mapOrigin.Y << 3) - offset.Y;
+
+                                Point drawPoint = new Point(userx, usery);
+                                if (drawPoint.X < 0)
+                                    drawPoint.X = 0;
+                                if (drawPoint.X > this.Width)
+                                    drawPoint.X = this.Width;
+                                if (drawPoint.Y < 0)
+                                    drawPoint.Y = 0;
+                                if (drawPoint.Y > this.Height)
+                                    drawPoint.Y = this.Height;
+
+                                PointF drawPointF = RotatePoint(new Point(xtrans, ytrans), drawPoint);
+                                gfx.DrawImage(build.Icon, drawPointF.X, drawPointF.Y, (float)(build.Icon.Width / 1.2), (float)(build.Icon.Height / 1.2));
+
+                            }
+                        }
+                    }
+			
+
 
                     // Disegno punti MapNetwork
                     if (RazorEnhanced.Settings.General.ReadBool("MapServerCheckBox"))
                     {
                         foreach (MapNetworkIn.UserData user in MapNetwork.UData)
                         {
-                            // Nome e punto
-                            string name = user.Nome;
-                            if (name == null || name.Length < 1)
-                                name = "(Not Seen)";
-                            if (name != null && name.Length > 8)
-                                name = name.Substring(0, 8);
-
-                            int userx = (user.X) - (mapOrigin.X << 3) - offset.X;
-                            int usery = (user.Y) - (mapOrigin.Y << 3) - offset.Y;
-
-                            Point drawPoint = new Point(userx, usery);
-                            if (drawPoint.X < 0)
-                                drawPoint.X = 0;
-                            if (drawPoint.X > this.Width)
-                                drawPoint.X = this.Width;
-                            if (drawPoint.Y < 0)
-                                drawPoint.Y = 0;
-                            if (drawPoint.Y > this.Height)
-                                drawPoint.Y = this.Height;
-
-                            PointF drawPointF = RotatePoint(new Point(xtrans, ytrans), drawPoint);
-                            gfx.FillRectangle(Brushes.Azure, drawPointF.X, drawPointF.Y, 2f, 2f);
-                            gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
-
-                            // Icone flag poison death paral e mortal
-                            if (user.Flag == 1) // Poison
-                                gfx.DrawImage(Properties.Resources.map_poison, drawPoint.X - 4, drawPoint.Y + 8, 13, 18);
-                            else if (user.Flag == 2) // Paral
-                                gfx.DrawImage(Properties.Resources.map_paralized, drawPoint.X - 4, drawPoint.Y + 8, 14, 18);
-                            else if (user.Flag == 3) // Mortal
-                                gfx.DrawImage(Properties.Resources.map_mortal, drawPoint.X - 4, drawPoint.Y + 8, 13, 17);
-                            else if (user.Flag == 4) // Dead
-                                gfx.DrawImage(Properties.Resources.map_dead, drawPoint.X - 4, drawPoint.Y + 8, 14, 15);
-
-
-                            // Barre stats
-                            int offsetbarre = 10;
-                            if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
+                            if (user.Facet == World.Player.Map)
                             {
-                                Pen selPen = new Pen(Color.Red);
-                                gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
-                                int percent = (int)(user.Hits * 100 / (user.HitsMax == 0 ? (ushort)1 : (ushort)user.HitsMax));
-                                int imagepercent = 40 * percent / 100;
-                                gfx.FillRectangle(Brushes.Red, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
-                                offsetbarre += 4;
-                            }
-                            if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
-                            {
-                                Pen selPen = new Pen(Color.Blue);
-                                gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
-                                int percent = (int)(user.Mana * 100 / (user.ManaMax == 0 ? (ushort)1 : (ushort)user.ManaMax));
-                                int imagepercent = 40 * percent / 100;
-                                gfx.FillRectangle(Brushes.Blue, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
-                                offsetbarre += 4;
-                            }
-                            if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
-                            {
-                                Pen selPen = new Pen(Color.Yellow);
-                                gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
-                                int percent = (int)(user.Stamina * 100 / (user.StaminaMax == 0 ? (ushort)1 : (ushort)user.StaminaMax));
-                                int imagepercent = 40 * percent / 100;
-                                gfx.FillRectangle(Brushes.Yellow, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
-                                offsetbarre += 4;
-                            }
+                                // Nome e punto
+                                string name = user.Nome;
+                                if (name == null || name.Length < 1)
+                                    name = "(Not Seen)";
+                                if (name != null && name.Length > 8)
+                                    name = name.Substring(0, 8);
 
+                                int userx = (user.X) - (mapOrigin.X << 3) - offset.X;
+                                int usery = (user.Y) - (mapOrigin.Y << 3) - offset.Y;
+
+                                Point drawPoint = new Point(userx, usery);
+                                if (drawPoint.X < 0)
+                                    drawPoint.X = 0;
+                                if (drawPoint.X > this.Width)
+                                    drawPoint.X = this.Width;
+                                if (drawPoint.Y < 0)
+                                    drawPoint.Y = 0;
+                                if (drawPoint.Y > this.Height)
+                                    drawPoint.Y = this.Height;
+
+                                PointF drawPointF = RotatePoint(new Point(xtrans, ytrans), drawPoint);
+                                gfx.FillRectangle(Brushes.Azure, drawPointF.X, drawPointF.Y, 2f, 2f);
+                                gfx.DrawString(name, m_RegFont, Brushes.White, drawPointF.X, drawPointF.Y);
+
+                                // Icone flag poison death paral e mortal
+                                if (user.Flag == 1) // Poison
+                                    gfx.DrawImage(Properties.Resources.map_poison, drawPoint.X - 4, drawPoint.Y + 8, 13, 18);
+                                else if (user.Flag == 2) // Paral
+                                    gfx.DrawImage(Properties.Resources.map_paralized, drawPoint.X - 4, drawPoint.Y + 8, 14, 18);
+                                else if (user.Flag == 3) // Mortal
+                                    gfx.DrawImage(Properties.Resources.map_mortal, drawPoint.X - 4, drawPoint.Y + 8, 13, 17);
+                                else if (user.Flag == 4) // Dead
+                                    gfx.DrawImage(Properties.Resources.map_dead, drawPoint.X - 4, drawPoint.Y + 8, 14, 15);
+
+
+                                // Barre stats
+                                int offsetbarre = 10;
+                                if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
+                                {
+                                    Pen selPen = new Pen(Color.Red);
+                                    gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
+                                    int percent = (int)(user.Hits * 100 / (user.HitsMax == 0 ? (ushort)1 : (ushort)user.HitsMax));
+                                    int imagepercent = 40 * percent / 100;
+                                    gfx.FillRectangle(Brushes.Red, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
+                                    offsetbarre += 4;
+                                }
+                                if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
+                                {
+                                    Pen selPen = new Pen(Color.Blue);
+                                    gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
+                                    int percent = (int)(user.Mana * 100 / (user.ManaMax == 0 ? (ushort)1 : (ushort)user.ManaMax));
+                                    int imagepercent = 40 * percent / 100;
+                                    gfx.FillRectangle(Brushes.Blue, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
+                                    offsetbarre += 4;
+                                }
+                                if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
+                                {
+                                    Pen selPen = new Pen(Color.Yellow);
+                                    gfx.DrawRectangle(selPen, drawPoint.X + 10, drawPoint.Y + offsetbarre, 40, 3);
+                                    int percent = (int)(user.Stamina * 100 / (user.StaminaMax == 0 ? (ushort)1 : (ushort)user.StaminaMax));
+                                    int imagepercent = 40 * percent / 100;
+                                    gfx.FillRectangle(Brushes.Yellow, drawPoint.X + 10, drawPoint.Y + offsetbarre, imagepercent, 3);
+                                    offsetbarre += 4;
+                                }
+
+                            }
                         }
                     }
 

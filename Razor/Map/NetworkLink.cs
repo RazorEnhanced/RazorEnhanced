@@ -205,6 +205,8 @@ namespace Assistant.MapUO
                     zip.ExtractAll(Path.GetDirectoryName(Application.ExecutablePath), ExtractExistingFileAction.OverwriteSilently);
                 }
                 AddLog("- Done Decompress Data file: " + fi.Name);
+                AddLog("- Start Parsing Datafile: Builds.def");
+                MapIcon.ParseDataFile("Builds.def");
             }
             catch (Exception ex)
             {

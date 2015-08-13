@@ -167,6 +167,7 @@
     <Compile Include="Core\Geometry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Map\MapIcon.cs" />
     <Compile Include="Map\NetworkLinkOut.cs" />
     <Compile Include="Map\NetworkLinkIn.cs" />
     <Compile Include="Map\NetworkLink.cs" />
