@@ -1719,9 +1719,9 @@ namespace Assistant
             // 
             // label17
             // 
-            this.label17.Location = new System.Drawing.Point(8, 250);
+            this.label17.Location = new System.Drawing.Point(7, 250);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(91, 18);
+            this.label17.Size = new System.Drawing.Size(92, 18);
             this.label17.TabIndex = 68;
             this.label17.Text = "Razor messages:";
             // 
@@ -1898,7 +1898,7 @@ namespace Assistant
             "Warnings & Errors",
             "Errors Only",
             "None"});
-            this.msglvl.Location = new System.Drawing.Point(99, 246);
+            this.msglvl.Location = new System.Drawing.Point(106, 246);
             this.msglvl.Name = "msglvl";
             this.msglvl.Size = new System.Drawing.Size(88, 22);
             this.msglvl.TabIndex = 69;
@@ -2162,7 +2162,7 @@ namespace Assistant
             this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
             this.txtSpellFormat.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-            this.txtSpellFormat.Location = new System.Drawing.Point(99, 218);
+            this.txtSpellFormat.Location = new System.Drawing.Point(106, 218);
             this.txtSpellFormat.Name = "txtSpellFormat";
             this.txtSpellFormat.Size = new System.Drawing.Size(87, 20);
             this.txtSpellFormat.TabIndex = 5;
@@ -6680,7 +6680,7 @@ namespace Assistant
             opacity.AutoSize = false;
             opacity.Value = RazorEnhanced.Settings.General.ReadInt("Opacity");
             this.Opacity = ((float)opacity.Value) / 100.0;
-            opacityLabel.Text = Language.Format(LocString.OpacityA1, opacity.Value);
+           // opacityLabel.Text = Language.Format(LocString.OpacityA1, opacity.Value);
 
             this.Location = new System.Drawing.Point(RazorEnhanced.Settings.General.ReadInt("WindowX"), RazorEnhanced.Settings.General.ReadInt("WindowY"));
             this.TopLevel = true;
