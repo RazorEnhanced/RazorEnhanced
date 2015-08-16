@@ -321,4 +321,114 @@ namespace RazorEnhanced
 			return status;
 		}
 	}
+
+    // Blocco HotKey
+    internal class RunningThreads
+    {
+        private string m_Filename;
+        internal string Filename { 
+            get { return m_Filename; }
+            set { m_Filename = value; }
+        }
+
+        private Thread m_Thread;
+        internal Thread Thread
+        {
+            get { return m_Thread; }
+            set { m_Thread = value; }
+        }
+
+        internal RunningThreads(string filename, Thread thread)
+		{
+			m_Filename = filename;
+            m_Thread = thread;
+		}
+
+    }
+
+    internal class EnhancedScriptHotKey
+    {
+        internal static List<RunningThreads> RunningThreadsList = new List<RunningThreads>();
+
+
+        internal static void HotKeyStart(string filename)
+        {
+            Thread m_Thread;
+            bool m_run = true;
+            Thread m_oldthread = null;
+            foreach (RunningThreads t in RunningThreadsList)
+            {
+                if (t.Filename == filename)
+                {
+                    m_run = false;
+                    m_oldthread = t.Thread;
+                    break;
+                }
+            }
+
+            if (m_run)
+            {
+                m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
+                m_Thread.Start(filename);
+                RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
+            }
+            else
+            {
+                if (m_oldthread != null && m_oldthread.ThreadState != ThreadState.Stopped)
+                {
+                    m_oldthread.Abort();
+                    HotKeyScriptDone(filename);
+                    m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
+                    m_Thread.Start(filename);
+                    RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
+                }
+            }
+
+        }
+
+        private static void HotKeyStartThread(object parameter)
+        {
+            ScriptEngine m_Engine;
+            ScriptScope m_Scope;
+            ScriptSource m_Source;
+            try
+            {
+                m_Engine = Python.CreateEngine();
+                m_Source = m_Engine.CreateScriptSourceFromString(File.ReadAllText((string)parameter));
+                m_Scope = Scripts.GetRazorScope(m_Engine);
+                m_Source.Execute(m_Scope);
+                HotKeyScriptDone((string)parameter);
+            }
+            catch { }
+        }
+        private static void HotKeyScriptDone(string filename)
+        {
+            int i = 0;
+            foreach (RunningThreads t in RunningThreadsList)
+            {
+                if (t.Filename == filename)
+                {
+                    break;
+                }
+                i++;
+            }
+            try
+            {
+                RunningThreadsList.RemoveAt(i);
+            }
+            catch { }
+        }
+
+        internal static void HotKeyStopAll()
+        {
+            foreach (RunningThreads t in RunningThreadsList)
+            {
+                if (t.Thread != null && t.Thread.ThreadState != ThreadState.Stopped)
+                {
+                    t.Thread.Abort();
+                }
+            }
+            RunningThreadsList.Clear();
+        }
+    }
 }
