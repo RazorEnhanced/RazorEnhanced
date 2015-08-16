@@ -74,7 +74,7 @@ namespace Assistant.Filters
 
 		public override string ToString()
 		{
-			return this.Name.ToString();
+			return Language.GetString(this.Name);
 		}
 
 		internal virtual void OnEnable()
