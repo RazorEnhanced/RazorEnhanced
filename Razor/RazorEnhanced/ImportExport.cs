@@ -35,9 +35,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -121,9 +119,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     AutoLoot.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -164,9 +160,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -249,9 +243,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     Scavenger.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -292,9 +284,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -378,9 +368,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     Organizer.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -420,9 +408,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -505,9 +491,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     SellAgent.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -546,9 +530,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -631,9 +613,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     BuyAgent.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -673,9 +653,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -758,9 +736,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     Dress.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -800,9 +776,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -886,9 +860,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     Friend.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -929,9 +901,7 @@ namespace RazorEnhanced
                         BinaryFormatter bin = new BinaryFormatter();
                         m_Dataset = bin.Deserialize(decompress) as DataSet;
                         decompress.Close();
-                        decompress.Dispose();
                         stream.Close();
-                        stream.Dispose();
                     }
                     catch
                     {
@@ -1015,9 +985,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                     Restock.AddLog("List: " + listname + " exported");
                 }
                 catch (Exception ex)
@@ -1080,9 +1048,7 @@ namespace RazorEnhanced
                 BinaryFormatter bin = new BinaryFormatter();
                 m_Dataset = bin.Deserialize(decompress) as DataSet;
                 decompress.Close();
-                decompress.Dispose();
                 stream.Close();
-                stream.Dispose();
             }
             catch
             {

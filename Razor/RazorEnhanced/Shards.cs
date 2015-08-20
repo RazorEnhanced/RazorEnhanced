@@ -39,10 +39,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     m_Dataset = bin.Deserialize(decompress) as DataSet;
                     decompress.Close();
-                    decompress.Dispose();
-                    stream.Close();
-                    stream.Dispose();
- 
+                    stream.Close(); 
                 }
                 catch (Exception ex)
                 {
@@ -261,9 +258,7 @@ namespace RazorEnhanced
                     BinaryFormatter bin = new BinaryFormatter();
                     bin.Serialize(compress, m_Dataset);
                     compress.Close();
-                    compress.Dispose();
                     stream.Close();
-                    stream.Dispose();
                 }
                 catch (Exception ex)
                 {
