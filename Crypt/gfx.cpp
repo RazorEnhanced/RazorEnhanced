@@ -4,7 +4,7 @@
 #include <uxtheme.h>
 #include <vssym32.h>
 #include <dwmapi.h>
-
+/**
 int DrawUOItem( HDC, RECT, int, int );
 
 typedef HTHEME (__stdcall *OPENTHEMEDATA)( HWND, LPCWSTR );
@@ -23,11 +23,11 @@ typedef HRESULT (__stdcall *DWMSETWINDOWATTRIBUTE)(HWND, DWORD, LPCVOID, DWORD);
 DWMSETWINDOWATTRIBUTE zDwmSetWindowAttribute = NULL;
 HMODULE hThemes = NULL;
 HMODULE hDwmApi = NULL;
-
+*/
 HICON hRazorIcon = NULL;
 HFONT hRazorFont = NULL;
 
-void InitThemes()
+/*void InitThemes()
 {
 	hThemes = LoadLibrary("UXTHEME.DLL");
 	if( hThemes )
@@ -45,9 +45,9 @@ void InitThemes()
 	{
 		zDwmSetWindowAttribute = (DWMSETWINDOWATTRIBUTE)GetProcAddress(hDwmApi, "DwmSetWindowAttribute");
 	}
-}
+}*/
 
-inline int GetHex2( LPCSTR hex )
+/*inline int GetHex2( LPCSTR hex )
 {
 	int num = 0;
 	if ( !isxdigit( hex[0] ) || !isxdigit( hex[1] ) )
@@ -57,14 +57,14 @@ inline int GetHex2( LPCSTR hex )
 	num += (isdigit(hex[0]) ? ( hex[0]-'0' ) : ( tolower(hex[0])-'a'+10 )) * 16;
 
 	return num;
-}
+}*/
 
-inline int GetHex4( LPCSTR hex )
+/*inline int GetHex4( LPCSTR hex )
 {
 	return (GetHex2( hex ) << 8) | GetHex2( &hex[2] );
-}
+}*/
 
-void DoStat( HDC hDC, int v, int t, int l, int h, int w )
+/*void DoStat( HDC hDC, int v, int t, int l, int h, int w )
 {
 	if ( w <= 0 )
 		return;
@@ -86,9 +86,9 @@ void DoStat( HDC hDC, int v, int t, int l, int h, int w )
 
 	FillRect( hDC, &fill, hBr );
 	DeleteObject( hBr );
-}
+}*/
 
-int DrawStatBar( HDC hDC, RECT rect, int width, int status, int hp, int mn, int st )
+/*int DrawStatBar( HDC hDC, RECT rect, int width, int status, int hp, int mn, int st )
 {
 	HGDIOBJ hOld = NULL;
 	POINT pt[2];
@@ -123,9 +123,9 @@ int DrawStatBar( HDC hDC, RECT rect, int width, int status, int hp, int mn, int 
     
 	SelectObject( hDC, hOld );
 	return width+2;
-}
+}*/
 
-void CheckTitlebarAttr(HWND hWnd)
+/*void CheckTitlebarAttr(HWND hWnd)
 {
 	static bool curNCRP = true;
 	bool newNCRP = !pShared || pShared->TitleBar[0] == '\0';
@@ -136,9 +136,9 @@ void CheckTitlebarAttr(HWND hWnd)
 		zDwmSetWindowAttribute(hWnd, DWMWA_NCRENDERING_POLICY, &policy, sizeof(policy));
 		curNCRP = newNCRP;
 	}
-}
+}*/
 
-void DrawColorTitleBar( HTHEME hTheme, HWND hWnd, HDC hOutDC, bool active, bool maximized, LPCSTR str, int len, RECT orig )
+/*void DrawColorTitleBar( HTHEME hTheme, HWND hWnd, HDC hOutDC, bool active, bool maximized, LPCSTR str, int len, RECT orig )
 {
 	const COLORREF def = GetSysColor( active ? COLOR_CAPTIONTEXT : COLOR_INACTIVECAPTIONTEXT );
 	COLORREF color = def;
@@ -323,9 +323,9 @@ void DrawColorTitleBar( HTHEME hTheme, HWND hWnd, HDC hOutDC, bool active, bool 
 	DeleteObject( hBmp );
 	if ( hFont )
 		DeleteObject( hFont );
-}
+}*/
 
-void RedrawTitleBar( HWND hWnd, bool active )
+/*void RedrawTitleBar( HWND hWnd, bool active )
 {
 	if ( !pShared )
 		return;
@@ -376,7 +376,7 @@ void GetRazorFont()
 	if ( !hRazorFont )
 		hRazorFont = CreateFont( -10, 0, 0, 0, FW_SEMIBOLD, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DRAFT_QUALITY, FIXED_PITCH, "Comic Sans MS" );
 }
-
+*/
 DLLFUNCTION HBITMAP CaptureScreen( BOOL full, const char *msg )
 {
 	HDC hScreen = NULL;

@@ -151,7 +151,7 @@ void MemoryPatch( unsigned long, const void *, int );
 void RedrawTitleBar( HWND, bool );
 void CheckTitlebarAttr(HWND);
 void FreeArt();
-void InitThemes();
+//void InitThemes();
 bool PatchStatusBar( BOOL preAOS );
 
 //#define PACKET_TBL_STR "Got Logout OK packet!\0\0\0"

@@ -1993,7 +1993,7 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 		ClientEncrypted = (wParam & 0x08) != 0;
 		ServerEncrypted = (wParam & 0x10) != 0;
 		
-		InitThemes();
+		//InitThemes();
 
 		if ( !pShared ) // If this failed the first time or was not run at all, try it once more before panicing
 			OnAttach( NULL, 0 );
@@ -2149,7 +2149,7 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 	case WM_SETFOCUS:
 		PostMessage( hPostWnd, WM_UONETEVENT, FOCUS, TRUE );
 		break;
-
+		/*
 		//Custom title bar:
 	case WM_NCACTIVATE:
 		Active = wParam;
@@ -2160,7 +2160,7 @@ void MessageProc( HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg 
 	case WM_CUSTOMTITLE:
 		CheckTitlebarAttr(hWnd);
 		RedrawTitleBar( hWnd, Active );
-		break;
+		break;*/
 	}
 }
 
