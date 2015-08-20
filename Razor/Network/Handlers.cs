@@ -351,8 +351,6 @@ namespace Assistant
 
 			PlayCharTime = DateTime.Now;
 
-			if (Engine.MainWindow != null)
-				Engine.MainWindow.UpdateControlLocks();
 		}
 
 		private static void PlayCharacter(PacketReader p, PacketHandlerEventArgs args)
@@ -361,9 +359,6 @@ namespace Assistant
 			World.OrigPlayerName = p.ReadStringSafe(30);
 
 			PlayCharTime = DateTime.Now;
-
-			if (Engine.MainWindow != null)
-				Engine.MainWindow.UpdateControlLocks();
 
 			ClientCommunication.TranslateLogin(World.OrigPlayerName, World.ShardName);
 		}
@@ -2369,7 +2364,6 @@ namespace Assistant
 						if (ClientCommunication.HandleNegotiate(features))
 						{
 							ClientCommunication.SendToServer(new RazorNegotiateResponse());
-							Engine.MainWindow.UpdateControlLocks();
 						}
 						break;
 					}
