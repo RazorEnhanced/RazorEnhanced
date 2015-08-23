@@ -501,8 +501,6 @@ namespace Assistant
 		[DllImport("Crypt.dll")]
 		private static unsafe extern void TranslateSetup(IntPtr setupFunc);
 		[DllImport("Crypt.dll")]
-		private static unsafe extern void TranslateLogin(IntPtr loginFunc, string name, string shard);
-		[DllImport("Crypt.dll")]
 		private static unsafe extern void TranslateDo(IntPtr translateFunc, string inText, StringBuilder outText, ref uint outLen);
 		[DllImport("Crypt.dll")]
 		private static unsafe extern void SetServer(uint ip, ushort port);
@@ -556,96 +554,6 @@ namespace Assistant
 		[DllImport("Advapi32.dll")]
 		private static extern int GetUserNameA(StringBuilder buff, int* len);
 
-		private static IntPtr m_TranslateDLL = IntPtr.Zero;
-		private static IntPtr m_TranslateSetup = IntPtr.Zero;
-		private static IntPtr m_TranslateLogin = IntPtr.Zero;
-		private static IntPtr m_TranslateDo = IntPtr.Zero;
-		private static bool m_TranslateEnabled = false;
-
-		internal static bool TranslateEnabled
-		{
-			get { return m_TranslateDLL != IntPtr.Zero && m_TranslateDo != IntPtr.Zero && m_TranslateEnabled; }
-			set
-			{
-				m_TranslateEnabled = value;
-				if (value)
-				{
-					TranslateSetup();
-				}
-				else
-				{
-					if (m_TranslateDLL != IntPtr.Zero)
-						FreeLibrary(m_TranslateDLL);
-					m_TranslateDLL = IntPtr.Zero;
-					m_TranslateSetup = IntPtr.Zero;
-					m_TranslateLogin = IntPtr.Zero;
-					m_TranslateDo = IntPtr.Zero;
-				}
-			}
-		}
-
-		internal static void TranslateSetup()
-		{
-			if (m_TranslateDLL == IntPtr.Zero || m_TranslateSetup == IntPtr.Zero)
-			{
-				string dllName = string.Empty;
-				try
-				{
-					RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Software\Tugsoft\UOAssist\ThirdParty");
-					if (key != null)
-					{
-						string v = key.GetValue("TranslationLocation") as string;
-
-						if (v != null)
-							dllName = v.Trim();
-					}
-				}
-				catch
-				{
-					dllName = string.Empty;
-				}
-
-				//if (dllName == string.Empty || dllName == null)
-				//	dllName = Path.Combine(Config.GetInstallDirectory(), "Translator.dll");
-
-				if (!File.Exists(dllName))
-				{
-					MessageBox.Show(Engine.MainWindow, Language.Format(LocString.FileNotFoundA1, dllName), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
-
-				m_TranslateDLL = LoadLibrary(dllName);
-
-				if (m_TranslateDLL != IntPtr.Zero)
-				{
-					m_TranslateSetup = GetProcAddress(m_TranslateDLL, "TranslateSetup");
-					m_TranslateLogin = GetProcAddress(m_TranslateDLL, "TranslateLogin");
-					m_TranslateDo = GetProcAddress(m_TranslateDLL, "Translate");
-				}
-
-				if (m_TranslateDLL == IntPtr.Zero || m_TranslateSetup == IntPtr.Zero || m_TranslateDo == IntPtr.Zero)
-				{
-					TranslateEnabled = false;
-
-					MessageBox.Show(Engine.MainWindow, "The translator DLL could not be loaded.  The file is not a valid translator library.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					return;
-				}
-			}
-
-			m_TranslateEnabled = true;
-
-			TranslateSetup(m_TranslateSetup);
-		}
-
-		internal static void TranslateLogin(string name, string shard)
-		{
-			TranslateLogin(m_TranslateLogin, name, shard);
-		}
-
-		internal static void TranslateDo(string inText, StringBuilder outText, ref uint outLen)
-		{
-			TranslateDo(m_TranslateDo, inText, outText, ref outLen);
-		}
 
 		internal static string GetWindowsUserName()
 		{
@@ -963,7 +871,6 @@ namespace Assistant
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
             PasswordMemory.Save();
-			TranslateEnabled = false;
 		}
 
 		//private static DateTime m_LastActivate;

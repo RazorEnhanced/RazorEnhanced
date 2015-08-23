@@ -19,7 +19,6 @@ namespace Assistant
 			Command.Register("GetSerial", new CommandCallback(GetSerial));
 			Command.Register("RPVInfo", new CommandCallback(GetRPVInfo));
 
-			Command.Register("Setup-T", new CommandCallback(TranslateSetup));
 		}
 
 		private static void GetRPVInfo(string[] param)
@@ -125,24 +124,6 @@ namespace Assistant
 				count = Utility.ToInt32(param[0], 5);
 			Assistant.Ping.StartPing(count);
 		}
-
-	
-		private static void TranslateSetup(string[] param)
-		{
-			//System.Threading.Thread t = new System.Threading.Thread( new System.Threading.ThreadStart( ClientCommunication.TranslateSetup ) );
-			//t.Start();
-			ClientCommunication.TranslateSetup();
-			World.Player.SendMessage("Loading translator plugin configuration... (Use '-disable-t' to disable)");
-			Command.Register("Disable-T", new CommandCallback(TranslateDisable));
-		}
-
-		private static void TranslateDisable(string[] param)
-		{
-			ClientCommunication.TranslateEnabled = false;
-			World.Player.SendMessage("Translator disabled... use '-setup-t' to re-enable.");
-
-			Command.RemoveCommand("Disable-T");
-		}
 	}
 
 	internal delegate void CommandCallback(string[] param);
@@ -242,27 +223,7 @@ namespace Assistant
                         args.Block = true;
                     }
 
-				if (text[0] != '-')
-				{
-					if (ClientCommunication.TranslateEnabled && text[0] != '[' && text[0] != ']')
-					{
-						StringBuilder sb = new StringBuilder(512);
-						uint outLen = 512;
-
-						ClientCommunication.TranslateDo(text, sb, ref outLen);
-
-						text = sb.ToString();
-
-						pvSrc.Seek(txtOffset, System.IO.SeekOrigin.Begin);
-						if (keys != null && keys.Count > 0)
-							pvSrc.WriteUTF8Null(text);
-						else
-							pvSrc.WriteBigUniNull(text);
-						pvSrc.UnderlyingStream.SetLength(pvSrc.Position);
-					}
-
-				}
-				else
+				if (text[0] == '-')
 				{
 					text = text.Substring(1);
 					string[] split = text.Split(' ', '\t');

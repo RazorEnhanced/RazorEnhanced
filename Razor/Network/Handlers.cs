@@ -350,8 +350,6 @@ namespace Assistant
 			World.OrigPlayerName = p.ReadStringSafe(30);
 
 			PlayCharTime = DateTime.Now;
-
-			ClientCommunication.TranslateLogin(World.OrigPlayerName, World.ShardName);
 		}
 
 		private static void ServerList(PacketReader p, PacketHandlerEventArgs args)
