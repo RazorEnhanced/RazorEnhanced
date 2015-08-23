@@ -2026,8 +2026,6 @@ namespace Assistant
 			{
 				HandleSpeech(p, args, serial, body, type, hue, font, "A", name, text);
 
-				if (!serial.IsValid)
-					BandageTimer.OnAsciiMessage(text);
 			}
 		}
 
@@ -2067,8 +2065,6 @@ namespace Assistant
 			{
 				type = MessageType.Spell;
 			}
-
-			BandageTimer.OnLocalizedMessage(num);
 
 			try
 			{
