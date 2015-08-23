@@ -499,10 +499,6 @@ namespace Assistant
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern void SetAllowDisconn(bool allowed);
 		[DllImport("Crypt.dll")]
-		private static unsafe extern void TranslateSetup(IntPtr setupFunc);
-		[DllImport("Crypt.dll")]
-		private static unsafe extern void TranslateDo(IntPtr translateFunc, string inText, StringBuilder outText, ref uint outLen);
-		[DllImport("Crypt.dll")]
 		private static unsafe extern void SetServer(uint ip, ushort port);
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern bool HandleNegotiate(ulong word);

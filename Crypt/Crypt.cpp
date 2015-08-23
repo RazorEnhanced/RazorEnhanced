@@ -635,26 +635,6 @@ DLLFUNCTION void SetAllowDisconn( bool newVal )
 	}
 }
 
-DLLFUNCTION void TranslateSetup( void (__stdcall *SetupFunc)() )
-{
-	if ( SetupFunc )
-		SetupFunc();
-	else
-		MessageBox( hPostWnd, "There is no translation DLL installed.", "No DLL", MB_OK|MB_ICONERROR );
-}
-
-DLLFUNCTION void TranslateLogin( void (__stdcall *LoginFunc)( char *, char * ), char *name, char *shard )
-{
-	if ( LoginFunc && name && shard )
-		LoginFunc( name, shard );
-}
-
-DLLFUNCTION void TranslateDo( void (__stdcall *TransFunc)( char *, char *, DWORD * ), char *in, char *out, DWORD *outLen )
-{
-	if ( TransFunc && in && out && outLen )
-		TransFunc( in, out, outLen );
-}
-
 DLLFUNCTION BOOL HandleNegotiate( __int64 features )
 {
 	if ( pShared && pShared->AuthBits && pShared->AllowNegotiate )
