@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Assistant.Macros;
 
 namespace Assistant
 {
@@ -659,6 +660,9 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
+			//if ( Macros.MacroManager.AcceptActions )
+			//	MacroManager.Action( new TargetSelfAction() );
+
 			if (m_HasTarget)
 			{
 				if (!DoTargetSelf())
@@ -712,6 +716,9 @@ namespace Assistant
 
 		internal static void LastTarget(bool forceQ)
 		{
+			//if ( Macros.MacroManager.AcceptActions )
+			//	MacroManager.Action( new LastTargetAction() );
+
 			if (m_HasTarget)
 			{
 				if (!DoLastTarget())
@@ -843,6 +850,9 @@ namespace Assistant
 				}
 				else
 				{
+					if (Macros.MacroManager.AcceptActions)
+						MacroManager.Action(new AbsoluteTargetAction(info));
+
 					if (m_OnTarget != null)
 						m_OnTarget(info.Type == 1 ? true : false, info.Serial, new Point3D(info.X, info.Y, info.Z), info.Gfx);
 				}
@@ -1299,7 +1309,21 @@ namespace Assistant
 
 				m_LastGroundTarg = info; // ground target is the true last target
 
+				if (Macros.MacroManager.AcceptActions)
+					MacroManager.Action(new AbsoluteTargetAction(info));
 			}
+			else
+			{
+				if (Macros.MacroManager.AcceptActions)
+				{
+					//KeyData hk = HotKey.Get((int)LocString.TargetSelf);
+					//if (hk != null)
+					//	MacroManager.Action(new HotKeyAction(hk));
+					//else
+						MacroManager.Action(new AbsoluteTargetAction(info));
+				}
+			}
+
 			m_FilterCancel.Clear();
 		}
 
@@ -1334,7 +1358,7 @@ namespace Assistant
 			m_HasTarget = true;
 			m_ClientTarget = false;
 
-			if (m_QueueTarget == null )
+			if (m_QueueTarget == null && Macros.MacroManager.AcceptActions && MacroManager.Action(new WaitForTargetAction()))
 			{
 				args.Block = true;
 			}
