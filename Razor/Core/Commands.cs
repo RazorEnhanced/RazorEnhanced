@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
+using Assistant.Macros;
 
 namespace Assistant
 {
@@ -46,19 +47,6 @@ namespace Assistant
 				sb.Append(param[i]);
 			ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
 		}
-
-	/*	private static void AddUseOnce(string[] param)
-		{
-			string use = Language.GetString(LocString.UseOnce);
-			foreach (Agent agent in Agent.List)
-			{
-				if (agent.Name == use)
-				{
-					agent.OnButtonPress(1);
-					break;
-				}
-			}
-		}*/
 
 		private static void ReNice(string[] param)
 		{

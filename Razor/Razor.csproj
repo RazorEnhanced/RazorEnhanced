@@ -183,6 +183,15 @@
     <Compile Include="Core\ItemID.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Macros\Actions.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Macros\Macro.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Macros\MacroManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Core\Main.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -559,6 +568,9 @@
     <Compile Include="Core\ZLib.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="Macros\Actions.resx">
+      <DependentUpon>Actions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Map\MapWindow.resx">
       <DependentUpon>MapWindow.cs</DependentUpon>
     </EmbeddedResource>
