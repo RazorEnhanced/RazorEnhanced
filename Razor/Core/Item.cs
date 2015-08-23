@@ -180,8 +180,6 @@ namespace Assistant
 
 			m_Visible = true;
 			m_Movable = true;
-
-			Agent.InvokeItemCreated(this);
 		}
 
 		internal ItemID ItemID

@@ -105,8 +105,6 @@ namespace Assistant
 			m_Items = new List<Item>();
 			m_Map = World.Player == null ? (byte)0 : World.Player.Map;
 			m_Visible = true;
-
-			Agent.InvokeMobileCreated(this);
 		}
 
 		internal string Name

@@ -133,7 +133,6 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Agents.cs" />
     <Compile Include="Core\BandageTimer.cs">
       <SubType>Code</SubType>
     </Compile>
