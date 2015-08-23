@@ -324,8 +324,6 @@ namespace Assistant
 			if (s != null)
 			{
 				s.OnCast(new CastSpellFromMacro(id));
-				//if ( Macros.MacroManager.AcceptActions )
-				//	Macros.MacroManager.Action( new Macros.MacroCastSpellAction( s ) );
 			}
 		}
 

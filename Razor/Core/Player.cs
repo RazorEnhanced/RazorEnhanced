@@ -578,16 +578,6 @@ namespace Assistant
 				}
 			}
 
-			/*if ( m_OutstandingMoves < 5 && !Macros.WalkAction.IsMacroWalk( seq ) && Config.GetBool( "SmoothWalk" ) )
-			{
-				e.FilterAck = true;
-				ClientCommunication.SendToClient( new MoveAcknowledge( seq, Notoriety ) );
-			}
-			else
-			{
-				e.FilterAck = false;
-			}*/
-
 			e.FilterAck = false;
 
 			m_WalkSeq = (byte)(seq >= 255 ? 1 : seq + 1);

@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
-using Assistant.Macros;
 
 namespace Assistant
 {
@@ -19,7 +18,6 @@ namespace Assistant
 			Command.Register("Echo", new CommandCallback(Echo));
 			Command.Register("GetSerial", new CommandCallback(GetSerial));
 			Command.Register("RPVInfo", new CommandCallback(GetRPVInfo));
-			Command.Register("Macro", new CommandCallback(MacroCmd));
 
 			Command.Register("Setup-T", new CommandCallback(TranslateSetup));
 		}
@@ -128,24 +126,7 @@ namespace Assistant
 			Assistant.Ping.StartPing(count);
 		}
 
-		private static void MacroCmd(string[] param)
-		{
-			if (param.Length <= 0)
-			{
-				World.Player.SendMessage("You must enter a macro name.");
-				return;
-			}
-
-			foreach (Macro m in MacroManager.List)
-			{
-				if (m.ToString() == param[0])
-				{
-					MacroManager.HotKeyPlay(m);
-					break;
-				}
-			}
-		}
-
+	
 		private static void TranslateSetup(string[] param)
 		{
 			//System.Threading.Thread t = new System.Threading.Thread( new System.Threading.ThreadStart( ClientCommunication.TranslateSetup ) );

@@ -9,7 +9,6 @@ using System.IO;
 using System.Text;
 using System.Runtime.InteropServices;
 using Assistant.Filters;
-using Assistant.Macros;
 using RazorEnhanced;
 using RazorEnhanced.UI;
 
@@ -1810,7 +1809,6 @@ namespace Assistant
             this.emptyTab.Size = new System.Drawing.Size(666, 384);
             this.emptyTab.TabIndex = 3;
             this.emptyTab.Text = "Enhanced Targetting";
-            this.emptyTab.Click += new System.EventHandler(this.dressTab_Click);
             // 
             // groupBox7
             // 
@@ -7957,32 +7955,7 @@ namespace Assistant
             if (chkPartyOverhead.Focused)
                 RazorEnhanced.Settings.General.WriteBool("ShowPartyStats", chkPartyOverhead.Checked);
 		}
-
-		private void btcLabel_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void dressTab_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void exportMacro_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("TODO!", "TODO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-		}
-
-		private void macroImport_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("TODO!", "TODO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-		}
-
-		private void adveditorMacro_Click(object sender, EventArgs e)
-		{
-			MessageBox.Show("TODO!", "TODO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-		}
-
+		
 		private void LoadAndInitializeScripts()
 		{
 			RazorEnhanced.Scripts.Auto = false;

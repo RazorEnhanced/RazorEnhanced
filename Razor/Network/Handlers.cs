@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
-using Assistant.Macros;
 
 namespace Assistant
 {
@@ -93,15 +92,7 @@ namespace Assistant
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
-			// See also Packets.cs: StringQueryResponse 
-			/*if ( MacroManager.AcceptActions )
-			{
-				int serial = p.ReadInt32();
-				byte type = p.ReadByte();
-				byte index = p.ReadByte();
-				
-				MacroManager.Action( new WaitForTextEntryAction( serial, type, index ) );
-			}*/
+		
 		}
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
@@ -470,8 +461,6 @@ namespace Assistant
 				Direction dir = (Direction)p.ReadByte();
 				sbyte z = p.ReadSByte();
 
-				if (WalkAction.IsMacroWalk(seq))
-					args.Block = true;
 				World.Player.MoveRej(seq, dir, new Point3D(x, y, z));
 			}
 		}
@@ -484,9 +473,6 @@ namespace Assistant
 
 				byte seq = p.ReadByte();
 				World.Player.Notoriety = p.ReadByte();
-
-				if (WalkAction.IsMacroWalk(seq))
-					args.Block = true;
 
 				args.Block |= !World.Player.MoveAck(seq);
                 // Enhanced Map move
@@ -505,8 +491,6 @@ namespace Assistant
 				byte seq = p.ReadByte();
 
 				World.Player.MoveReq(dir, seq);
-
-				WalkAction.LastWalkTime = DateTime.Now;
 			}
 		}
 
