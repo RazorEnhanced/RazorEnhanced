@@ -398,46 +398,38 @@ namespace RazorEnhanced
             if (DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
                 return;
 
-            if (World.Player.Weight - 20 > World.Player.MaxWeight)
-            {
-                RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
-                RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space");
-                Thread.Sleep(2000);
-                return;
-            }
+			if (autoLoootItem.Properties.Count > 0) // Item con props
+			{
+				RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
 
-				if (autoLoootItem.Properties.Count > 0) // Item con props
+				bool propsOK = false;
+				foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
 				{
-					RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
-
-					bool propsOK = false;
-					foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
+					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
+					if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
 					{
-						int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
-						if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
-						{
-							propsOK = true;
-						}
-						else
-						{
-							propsOK = false;
-							break; // alla prima fallita esce non ha senso controllare le altre
-						}
+						propsOK = true;
 					}
-
-					if (propsOK) // Tutte le props match OK
-					{
-                                DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
-                    }
 					else
 					{
-						RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
+						propsOK = false;
+						break; // alla prima fallita esce non ha senso controllare le altre
 					}
 				}
-				else // Item Senza props     
+
+				if (propsOK) // Tutte le props match OK
 				{
-                        DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+                            DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+                }
+				else
+				{
+					RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
 				}
+			}
+			else // Item Senza props     
+			{
+                    DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+			}
 		}
        
 		internal static void Engine()
