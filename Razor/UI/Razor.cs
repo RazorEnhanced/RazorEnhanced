@@ -10761,25 +10761,24 @@ namespace Assistant
             if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null && hotkeytextbox.Text != "" && hotkeytextbox.Text != "None")
             {
                 if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "TList")
-                    RazorEnhanced.HotKey.UpdateTargetKey(hotkeytreeView.SelectedNode.Name, hotkeypassCheckBox.Checked);     // Aggiorno hotkey target 
+                    RazorEnhanced.HotKey.UpdateTargetKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey target 
                 else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "SList")
                 {
-                    RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode.Name, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Script 
+                    RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Script 
                 }
                 else
-                    RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode.Name, hotkeypassCheckBox.Checked);
+                    RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);
             }
-            hotkeytextbox.Text = "";
         }
 
         private void hotkeyClearButton_Click(object sender, EventArgs e)
         {
             if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
                 if (hotkeytreeView.SelectedNode.Parent.Name != null)
-                    RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode.Name, hotkeytreeView.SelectedNode.Parent.Name);
+                    RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode, hotkeytreeView.SelectedNode.Parent.Name);
                 else
-                    RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode.Name, "General");
-            hotkeytextbox.Text = "";
+                    RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode, "General");
+            hotkeytextbox.Text = Keys.None.ToString();
         }
         private void hotkeytreeView_AfterSelect(object sender, System.Windows.Forms.TreeViewEventArgs e)
         {

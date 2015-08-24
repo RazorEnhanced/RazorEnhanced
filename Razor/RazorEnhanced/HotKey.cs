@@ -929,12 +929,13 @@ namespace RazorEnhanced
             Engine.MainWindow.HotKeyTreeView.ExpandAll();
         }
 
-        internal static void UpdateKey(string name, bool passkey)
+        internal static void UpdateKey(TreeNode node, bool passkey)
         {
+            string name = node.Name;
             if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
             {
                 RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key, passkey);
-                Init();
+                node.Text = node.Name + " ( " + KeyString(m_key) + " )";
             }
             else
             {
@@ -943,17 +944,18 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
                     RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key, passkey);
-                    Init();
+                    node.Text = node.Name + " ( " + KeyString(m_key) + " )";
                 }
             }
         }
 
-        internal static void UpdateTargetKey(string name, bool passkey)
+        internal static void UpdateTargetKey(TreeNode node, bool passkey)
         {
+            string name = node.Name;
             if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
             {
                 RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key, passkey);
-                Init();
+                node.Text = node.Name + " ( " + KeyString(m_key) + " )";
             }
             else
             {
@@ -962,17 +964,18 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
                     RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key, passkey);
-                    Init();
+                    node.Text = node.Name + " ( " + KeyString(m_key) + " )";
                 }
             }
         }
 
-        internal static void UpdateScriptKey(string name, bool passkey)
+        internal static void UpdateScriptKey(TreeNode node, bool passkey)
         {
+            string name = node.Name;
             if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
             {
                 RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
-                Init();
+                node.Text = node.Name + " ( " + KeyString(m_key) + " )";
             }
             else
             {
@@ -981,7 +984,7 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
                     RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
-                    Init();
+                    node.Text = node.Name + " ( " + KeyString(m_key) + " )";
                 }
             }
         }
@@ -1001,20 +1004,20 @@ namespace RazorEnhanced
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_Masterkey);
                     RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", RazorEnhanced.HotKey.m_Masterkey);
                     Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + KeyString(RazorEnhanced.HotKey.m_Masterkey);
-                    Init();
                 }
             }
         }
 
-        internal static void ClearKey(string name, string group)
+        internal static void ClearKey(TreeNode node, string group)
         {
+            string name = node.Name;
             if (group == "SList")
                 RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, Keys.None, true);
             else if (group == "TList")
                 RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, Keys.None, true);
             else
                 RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None, true);
-            Init();
+            node.Text = node.Name + " ( " + KeyString(Keys.None) + " )";
         }
 
         internal static void ClearMasterKey()
@@ -1040,7 +1043,6 @@ namespace RazorEnhanced
                         return true;
                 }
             }
-
             return false;
         }
         private static bool UseItemByIdHue(Assistant.Item cont, ushort find, ushort hue)
