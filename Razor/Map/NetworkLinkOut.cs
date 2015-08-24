@@ -214,19 +214,17 @@ namespace Assistant.MapUO
                     {
                         short flagtosend;
                         SendFlagQueue.TryDequeue(out flagtosend);
-                        if (flagtosend != null)
-                        {
-                            List<byte> data = new List<byte>();
-                            data.Add(0x0);
-                            data.Add(0x7);
-                            data.AddRange(BitConverter.GetBytes((short)flagtosend));
+                        List<byte> data = new List<byte>();
+                        data.Add(0x0);
+                        data.Add(0x7);
+                        data.AddRange(BitConverter.GetBytes((short)flagtosend));
 
-                            outStream = data.ToArray();
-                            MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
-                            MapNetwork.serverStream.Flush();
-                            data.Clear();
-                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
-                        }
+                        outStream = data.ToArray();
+                        MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
+                        MapNetwork.serverStream.Flush();
+                        data.Clear();
+                        Sleep(); // Attende risposta dall'altro thread di packet ricevuto
+
                     }
 
                     // Processo send DeathPoint 

@@ -42,7 +42,7 @@ namespace RazorEnhanced
 					{
 						m_Source.Execute(m_Scope);
 					}
-					catch (Exception ex)
+					catch 
 					{
 						Scripts.Auto = false;
 						Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);

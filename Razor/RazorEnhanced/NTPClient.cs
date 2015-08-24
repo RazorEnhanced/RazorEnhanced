@@ -113,7 +113,7 @@ namespace RazorEnhanced
 					return utc ? date : date.ToLocalTime();
 
 				}
-				catch (Exception ex) { }
+				catch { }
 			}
 
 			throw new NoServerFoundException("no working server has been found");

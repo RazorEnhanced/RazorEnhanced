@@ -212,7 +212,7 @@ namespace RazorEnhanced.UI
 				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 				m_Source.Execute(m_Scope);
 			}
-			catch (Exception ex)
+			catch
 			{
 				if (m_Thread != null)
 					m_Thread.Abort();

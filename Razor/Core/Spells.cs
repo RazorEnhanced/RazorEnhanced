@@ -22,9 +22,7 @@ namespace Assistant
 		readonly internal string WordsOfPower;
 		readonly internal string[] Reagents;
 
-		private static Timer m_UnflagTimer;
-
-		internal Spell(char flag, int n, int c, string power, string[] reags)
+        internal Spell(char flag, int n, int c, string power, string[] reags)
 		{
 			Flag = (SpellFlag)flag;
 			Number = n;
@@ -140,30 +138,6 @@ namespace Assistant
 				}
 			}
 
-		//	foreach (Counter c in Counter.List)
-		//		c.Flag = false;
-            /*
-			if (Config.GetBool("HighlightReagents"))
-			{
-				foreach (string reagent in Reagents)
-				{
-					foreach (Counter c in Counter.List)
-					{
-						if (c.Enabled && c.Format.ToLower() == reagent)
-						{
-							c.Flag = true;
-							break;
-						}
-					}
-				}
-
-				if (m_UnflagTimer != null)
-					m_UnflagTimer.Stop();
-				else
-					m_UnflagTimer = new UnflagTimer();
-				m_UnflagTimer.Start();
-			}
-            */
 			ClientCommunication.PostSpellCast(this.Number);
 
 			if (World.Player != null)
