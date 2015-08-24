@@ -6,13 +6,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.Net.Sockets;
-using System.Reflection;
-using System.Diagnostics;
 using System.Net;
 using System.Linq;
-using System.Security.Principal;
-using System.Runtime.InteropServices;
-using System.IO.Compression;
 using Ionic.Zip;
 
 namespace Assistant.MapUO
@@ -205,8 +200,19 @@ namespace Assistant.MapUO
                     zip.ExtractAll(Path.GetDirectoryName(Application.ExecutablePath), ExtractExistingFileAction.OverwriteSilently);
                 }
                 AddLog("- Done Decompress Data file: " + fi.Name);
-                AddLog("- Start Parsing Datafile: Builds.def");
-                MapIcon.ParseDataFile("Builds.def");
+                AddLog("- Start Parsing Datafile");
+                MapIcon.IconTreasurePFList = MapIcon.ParseDataFile("TreasurePF.def");
+                MapIcon.IconTreasureList = MapIcon.ParseDataFile("Treasure.def");
+                MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile("TokunoIslands.def");
+                MapIcon.IconStealablesList = MapIcon.ParseDataFile("Stealables.def");
+                MapIcon.IconRaresList = MapIcon.ParseDataFile("Rares.def");
+                MapIcon.IconPersonalList = MapIcon.ParseDataFile("Personal.def");
+                MapIcon.IconOldHavenList = MapIcon.ParseDataFile("OldHaven.def");
+                MapIcon.IconNewHavenList = MapIcon.ParseDataFile("NewHaven.def");
+                MapIcon.IconMLList = MapIcon.ParseDataFile("ML.def");
+                MapIcon.IconDungeonsList = MapIcon.ParseDataFile("Dungeons.def");
+                MapIcon.IconcommonList = MapIcon.ParseDataFile("common.def");
+                MapIcon.IconAtlasList = MapIcon.ParseDataFile("Atlas.def");
             }
             catch (Exception ex)
             {

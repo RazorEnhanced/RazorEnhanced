@@ -277,7 +277,7 @@ namespace Assistant.MapUO
 
                     // Disegno punti interesse
 
-                    foreach (MapUO.MapIcon.MapIconData build in MapUO.MapIcon.IconList)
+                 /*   foreach (MapUO.MapIcon.MapIconData build in MapUO.MapIcon.IconList)
                     {
                         if (build.Facet == World.Player.Map || (build.Facet == 7 && (World.Player.Map == 1 || World.Player.Map == 0)))
                         {
@@ -302,7 +302,7 @@ namespace Assistant.MapUO
 
                             }
                         }
-                    }
+                    }*/
 			
 
 

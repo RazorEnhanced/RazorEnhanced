@@ -3,15 +3,7 @@ using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
-using System.Net.Sockets;
-using System.Reflection;
-using System.Diagnostics;
-using System.Net;
-using System.Linq;
-using System.Security.Principal;
-using System.Runtime.InteropServices;
 
 namespace Assistant.MapUO
 {
@@ -60,23 +52,60 @@ namespace Assistant.MapUO
 			}
         }
 
-        internal static List<MapIconData> IconList = new List<MapIconData>();
-        internal static void ParseDataFile(string filename)
+        internal static List<MapIconData> IconTreasurePFList = new List<MapIconData>();
+        internal static List<MapIconData> IconTreasureList = new List<MapIconData>();
+        internal static List<MapIconData> IconTokunoIslandsList = new List<MapIconData>();
+        internal static List<MapIconData> IconStealablesList = new List<MapIconData>();
+        internal static List<MapIconData> IconRaresList = new List<MapIconData>();
+        internal static List<MapIconData> IconPersonalList = new List<MapIconData>();
+        internal static List<MapIconData> IconOldHavenList = new List<MapIconData>();
+        internal static List<MapIconData> IconNewHavenList = new List<MapIconData>();
+        internal static List<MapIconData> IconMLList = new List<MapIconData>();
+        internal static List<MapIconData> IconDungeonsList = new List<MapIconData>();
+        internal static List<MapIconData> IconcommonList = new List<MapIconData>();
+        internal static List<MapIconData> IconAtlasList = new List<MapIconData>();
+
+        internal static List<MapIconData> ParseDataFile(string filename)
         {
-            StreamReader reader = File.OpenText(filename);
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            bool sintaxerror = false;
+            List<MapIconData> lista = new List<MapIconData>();
+            MapNetwork.AddLog("- Try parsing: " + filename);
+            if (File.Exists(filename))
             {
-                string[] items = line.Split('\t');
-                Image imagefile = Image.FromFile("Icon//" + items[0] + ".gif");
-                short x = short.Parse(items[1]);
-                short y = short.Parse(items[2]);
-                short facet = short.Parse(items[3]);
-                string desc = items[4];
-                IconList.Add(new MapIconData(imagefile, x, y, facet, desc));
+                StreamReader reader = File.OpenText(filename);
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] items = line.Split('\t');
+                    if (items.Length != 5)
+                    {
+                        sintaxerror = true;
+                        break;
+                    }
+
+                    if (!File.Exists("Icon//" + items[0] + ".gif"))
+                    {
+                        MapNetwork.AddLog("- Missing Icon file : " + items[0] + ".gif");
+                        continue;
+                    }
+
+                    Image imagefile = Image.FromFile("Icon//" + items[0] + ".gif");
+                    short x = short.Parse(items[1]);
+                    short y = short.Parse(items[2]);
+                    short facet = short.Parse(items[3]);
+                    string desc = items[4];
+                    lista.Add(new MapIconData(imagefile, x, y, facet, desc));
+                }
+                reader.Close();
+                if (sintaxerror)
+                    MapNetwork.AddLog("- Sintax Error in file: " + filename);
+                else
+                    MapNetwork.AddLog("- Done parsing: " + filename);
             }
-            reader.Close();
-            MapNetwork.AddLog("- Done Parsing Datafile: " + filename);
+            else
+                MapNetwork.AddLog("- Fail parsing: " + filename);
+
+            return lista;
         }
 	}
 }
