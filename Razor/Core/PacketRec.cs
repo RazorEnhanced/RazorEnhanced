@@ -17,7 +17,7 @@ namespace Assistant
 
 		private static BinaryWriter m_TempWriter;
 		private static GZBlockIn m_GZIn;
-		private static GZBlockOut m_GZOut;
+		private static GZBlockOut m_GZOut = null;
 		private static DateTime m_LastTime, m_StartTime;
 		private static Dictionary<Serial, bool> m_HouseDataWritten = new Dictionary<Serial, bool>();
 

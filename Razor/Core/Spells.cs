@@ -88,12 +88,6 @@ namespace Assistant
 				return def;
 			}
 		}
-
-	/*	internal HKSubCat GetSubCat()
-		{
-			return GetID() < 678 ? HKSubCat.SpellOffset + Circle : HKSubCat.MysticismC;
-		}*/
-
 		internal void OnCast(PacketReader p)
 		{
 			Cast();
@@ -150,23 +144,8 @@ namespace Assistant
 
 		internal static DateTime LastCastTime = DateTime.MinValue;
 
-		private class UnflagTimer : Timer
-		{
-			internal UnflagTimer()
-				: base(TimeSpan.FromSeconds(30.0))
-			{
-			}
-
-			protected override void OnTick()
-			{
-				//foreach (Counter c in Counter.List)
-				//	c.Flag = false;
-			}
-		}
-
 		private static Dictionary<string, Spell> m_SpellsByPower;
 		private static Dictionary<int, Spell> m_SpellsByID;
-		//private static HotKeyCallbackState HotKeyCallback;
 
 		static Spell()
 		{
@@ -210,12 +189,6 @@ namespace Assistant
 					}
 				}
 			}
-
-		/*	HotKeyCallback = new HotKeyCallbackState(OnHotKey);
-			foreach (Spell s in m_SpellsByID.Values)
-				HotKey.Add(HKCategory.Spells, s.GetSubCat(), s.Name, HotKeyCallback, (ushort)s.GetID());
-			HotKey.Add(HKCategory.Spells, LocString.HealOrCureSelf, new HotKeyCallback(HealOrCureSelf));
-			HotKey.Add(HKCategory.Spells, LocString.MiniHealOrCureSelf, new HotKeyCallback(MiniHealOrCureSelf));*/
 		}
 
 		internal static void HealOrCureSelf()
