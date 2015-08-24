@@ -3263,6 +3263,20 @@ namespace RazorEnhanced
                 return false;
             }
 
+            internal static void TargetReplace(string targetid, TargetGUI.TargetGUIObject target, Keys k, bool pass)
+            {
+                foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+                {
+                    if ((string)row["Name"] == targetid)
+                    {
+                        row["TargetGUIObject"] = target;
+                        row["HotKey"] = k;
+                        row["HotKeyPass"] = pass;
+                    }
+                }
+                Save();
+            }
+
             internal static void TargetSave(string targetid, TargetGUI.TargetGUIObject target, Keys k, bool pass)
             {
                 if (TargetExist(targetid))
@@ -3280,6 +3294,7 @@ namespace RazorEnhanced
 
                 Save();
             }
+
 
             internal static void TargetDelete(string targetid)
             {

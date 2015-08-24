@@ -337,8 +337,9 @@ namespace RazorEnhanced.UI
             TargetGUI.TargetGUIObject targetguitosave = new TargetGUI.TargetGUIObject(SelectorComboBox.Text, filtertosave);
 
             // Salvo struttura
-            RazorEnhanced.Settings.Target.TargetSave(tTargetID.Text, targetguitosave, m_k, m_pass);
+            RazorEnhanced.Settings.Target.TargetReplace(tTargetID.Text, targetguitosave, m_k, m_pass);
             RazorEnhanced.TargetGUI.RefreshTarget();
+            RazorEnhanced.HotKey.Init();
 
             this.Close();
 
