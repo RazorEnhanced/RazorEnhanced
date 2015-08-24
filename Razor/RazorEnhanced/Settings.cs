@@ -3508,7 +3508,7 @@ namespace RazorEnhanced
                 if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
                 {
                     RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", Keys.None);
-                    Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.m_Masterkey.ToString();
+                    Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + RazorEnhanced.HotKey.KeyString(RazorEnhanced.HotKey.m_Masterkey);
                 }
 
                 foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
