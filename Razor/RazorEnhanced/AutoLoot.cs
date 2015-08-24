@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Assistant;
 using System.Windows.Forms;
 using System.Threading;
@@ -472,8 +473,8 @@ namespace RazorEnhanced
 		public static void ResetIgnore()
 		{
             m_IgnoreCorpseQueue.Clear();
-            DragDropManager.AutoLootOpenAction.Clear();
-            DragDropManager.AutoLootSerialToGrab.Clear();
+            DragDropManager.AutoLootOpenAction = new ConcurrentQueue<int>();
+            DragDropManager.AutoLootSerialToGrab = new ConcurrentQueue<int>();
             Scavenger.ResetIgnore();
 		}
 

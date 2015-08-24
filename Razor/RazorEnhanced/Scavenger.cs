@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Text;
 using Assistant;
@@ -372,7 +373,7 @@ namespace RazorEnhanced
 
         public static void ResetIgnore()
         {
-            DragDropManager.ScavengerSerialToGrab.Clear();
+            DragDropManager.ScavengerSerialToGrab = new ConcurrentQueue<int>();
         }
 
 		internal static void Engine()

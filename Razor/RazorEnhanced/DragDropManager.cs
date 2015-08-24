@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Media;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using Assistant;
 using System.Windows.Forms;
 using RazorEnhanced;
@@ -11,49 +11,53 @@ namespace RazorEnhanced
 {
     public class DragDropManager
     {
-        internal static Queue<int> AutoLootSerialToGrab = new Queue<int>();
-        internal static Queue<int> AutoLootOpenAction = new Queue<int>();
-        internal static Queue<int> ScavengerSerialToGrab = new Queue<int>();
+        internal static ConcurrentQueue<int> AutoLootSerialToGrab = new ConcurrentQueue<int>();
+        internal static ConcurrentQueue<int> AutoLootOpenAction = new ConcurrentQueue<int>();
+        internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
         internal static void Engine()
         {
-            if (AutoLootOpenAction.Count > 100)
+           /* if (AutoLootOpenAction.Count > 100)
                 AutoLootOpenAction.Clear();
 
             if (AutoLootSerialToGrab.Count > 100)
                 AutoLootSerialToGrab.Clear();
 
             if (ScavengerSerialToGrab.Count > 100)
-                ScavengerSerialToGrab.Clear();
+                ScavengerSerialToGrab.Clear();*/
 
             if (AutoLootOpenAction.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
             {
-                Assistant.Item item = Assistant.World.FindItem(AutoLootOpenAction.Peek());
+                int itemserial = 0;
+                AutoLootOpenAction.TryPeek(out itemserial);
+                Assistant.Item item = Assistant.World.FindItem(itemserial);
                 if (item == null)
                 {
-                    AutoLootOpenAction.Dequeue();
+                    AutoLootOpenAction.TryDequeue(out itemserial);
                     return;
                 }
                 if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 2))
                 {
-                    RazorEnhanced.AutoLoot.AddLog("- Force Open: 0x" + item.Serial.ToString());
+                    RazorEnhanced.AutoLoot.AddLog("- Force Open: " + item.Serial.ToString());
                     Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));            
                     Thread.Sleep(AutoLoot.AutoLootDelay);
-                    AutoLootOpenAction.Dequeue();
+                    AutoLootOpenAction.TryDequeue(out itemserial);
                 }
 
             }
 
             if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
             {
-                Assistant.Item item = Assistant.World.FindItem(AutoLootSerialToGrab.Peek());
+                int itemserial = 0;
+                AutoLootSerialToGrab.TryPeek(out itemserial);
+                Assistant.Item item = Assistant.World.FindItem(itemserial);
                 if (item == null)
                 {
-                    AutoLootSerialToGrab.Dequeue();
+                    AutoLootSerialToGrab.TryDequeue(out itemserial);
                     return;
                 }
                 if (item.RootContainer == World.Player)
                 {
-                    AutoLootSerialToGrab.Dequeue();
+                    AutoLootSerialToGrab.TryDequeue(out itemserial);
                     return;
                 }
                 Assistant.Item corpse = (Assistant.Item)item.Container;
@@ -78,15 +82,17 @@ namespace RazorEnhanced
 
             if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
             {
-                Assistant.Item item = Assistant.World.FindItem(ScavengerSerialToGrab.Peek());
+                int itemserial = 0;
+                ScavengerSerialToGrab.TryPeek(out itemserial);
+                Assistant.Item item = Assistant.World.FindItem(itemserial);
                 if (item == null)
                 {
-                    ScavengerSerialToGrab.Dequeue();
+                    ScavengerSerialToGrab.TryDequeue(out itemserial);
                     return;
                 }
                 if (item.RootContainer == World.Player)
                 {
-                    ScavengerSerialToGrab.Dequeue();
+                    ScavengerSerialToGrab.TryDequeue(out itemserial);
                     return;
                 }
                 if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 2) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
