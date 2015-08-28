@@ -35,8 +35,6 @@ namespace Assistant.MapUO
 			//
 
 			InitializeComponent();
-			this.ContextMenu = new ContextMenu();
-			this.ContextMenu.Popup += new EventHandler(ContextMenu_Popup);
             this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("MapX"), RazorEnhanced.Settings.General.ReadInt("MapY"));
             this.ClientSize = new Size(RazorEnhanced.Settings.General.ReadInt("MapW"), RazorEnhanced.Settings.General.ReadInt("MapH"));
 
@@ -66,33 +64,6 @@ namespace Assistant.MapUO
 			}
 		}
 
-		private void ContextMenu_Popup(object sender, EventArgs e)
-		{
-			ContextMenu cm = this.ContextMenu;
-			cm.MenuItems.Clear();
-			if (World.Player != null && PacketHandlers.Party.Count > 0)
-			{
-				MapMenuItem mi = new MapMenuItem("You", new EventHandler(FocusChange));
-				mi.Tag = World.Player.Serial;
-				cm.MenuItems.Add(mi);
-				foreach (Serial s in PacketHandlers.Party)
-				{
-					Mobile m = World.FindMobile(s);
-					if (m.Name != null)
-					{
-						mi = new MapMenuItem(m.Name, new EventHandler(FocusChange));
-						mi.Tag = s;
-						if (this.uoMapControl1.FocusMobile == m)
-							mi.Checked = true;
-						cm.MenuItems.Add(mi);
-
-					}
-				}
-			}
-			this.ContextMenu = cm;
-		}
-
-
 		private void FocusChange(object sender, System.EventArgs e)
 		{
 			if (sender != null)
@@ -111,8 +82,6 @@ namespace Assistant.MapUO
 		public static void Initialize()
 		{
 			new ReqPartyLocTimer().Start();
-
-			//HotKey.Add(HKCategory.Misc, LocString.ToggleMap, new HotKeyCallback(ToggleMap));
 		}
 
 		internal static void ToggleMap()
@@ -193,8 +162,6 @@ namespace Assistant.MapUO
 			this.TopMost = true;
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MapWindow_Closing);
 			this.Deactivate += new System.EventHandler(this.MapWindow_Deactivate);
-			this.Load += new System.EventHandler(this.MapWindow_Load);
-			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MapWindow_MouseDown);
 			this.Move += new System.EventHandler(this.MapWindow_Move);
 			this.Resize += new System.EventHandler(this.MapWindow_Resize);
 			this.ResumeLayout(false);
@@ -207,57 +174,6 @@ namespace Assistant.MapUO
 			if (mob.InParty)
 				this.uoMapControl1.FullUpdate();
 		}
-
-		private static Font m_RegFont = new Font("Courier New", 8);
-		/*private   int ButtonRows;
-		protected override void OnPaint(PaintEventArgs e)
-		{
-		base.OnPaint(e);
-		if ( PacketHandlers.Party.Count > 0 )
-		{
-		//75x15
-		int xcount = 0;
-		int ycount = 0;
-		Point org = new Point(0, (ButtonRows * 15));
-		if (this.FormBorderStyle == FormBorderStyle.None)
-		{
-		org = new Point(0,  (ButtonRows * 15) + 32);
-		}
-
-		foreach ( Serial s in PacketHandlers.Party )
-		{
-		Mobile mob = World.FindMobile( s );
-		if ( mob == null )
-			continue;
-
-		if (((75 * (xcount+1)) - this.Width) > 0)
-		{
-			xcount = 0;
-			ycount++;
-		}
-		string name = mob.Name;
-		if ( name != null && name.Length > 8)
-		{
-			name = name.Substring(0, 8);
-			name += "...";
-		}
-		else if ( name == null || name.Length < 1 )
-		{
-			name = "(Not Seen)";
-		}
-
-		Point drawPoint = new Point(org.X + (75 * xcount), org.Y + (15*ycount));
-		mob.ButtonPoint = new Point2D( drawPoint.X, drawPoint.Y );
-		e.Graphics.FillRectangle( Brushes.Black, drawPoint.X, drawPoint.Y, 75, 15 );
-		e.Graphics.DrawRectangle(Pens.Gray, drawPoint.X, drawPoint.Y, 75, 15 );
-		e.Graphics.DrawString(name, m_RegFont, Brushes.White, drawPoint);
-		xcount++;
-		}
-		if(ycount > 0)
-		ButtonRows = ycount;
-		}
-
-		}*/
 
 		private class ReqPartyLocTimer : Timer
 		{
@@ -368,41 +284,6 @@ namespace Assistant.MapUO
             RazorEnhanced.Settings.General.WriteInt("MapH", this.ClientSize.Height);
 		}
 
-		private void MapWindow_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			if (e.Clicks == 2)
-			{
-				if (this.FormBorderStyle == FormBorderStyle.None)
-					this.FormBorderStyle = FormBorderStyle.SizableToolWindow;
-				else
-					this.FormBorderStyle = FormBorderStyle.None;
-			}
-
-			if (e.Button == MouseButtons.Left)
-			{
-				ReleaseCapture();
-				SendMessage(Handle, WM_NCLBUTTONDOWN, (IntPtr)HT_CAPTION, IntPtr.Zero);
-				/*foreach ( Serial s in PacketHandlers.Party )
-				{       
-				Mobile m = World.FindMobile( s );
-				if ( m == null )
-					continue;
-				Rectangle rec = new Rectangle( m.ButtonPoint.X, m.ButtonPoint.Y, 75, 15 );
-				if ( rec.Contains( e.X, e.Y ) )
-				{
-					this.Map.FocusMobile = m;
-					this.Map.Refresh();
-				}
-				}*/
-			}
-			this.uoMapControl1.MapClick(e);
-		}
-
-		private void Map_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-		{
-			MapWindow_MouseDown(sender, e);
-		}
-
 		private void MapWindow_Move(object sender, System.EventArgs e)
 		{
             RazorEnhanced.Settings.General.WriteInt("MapX", this.Location.X);
@@ -415,11 +296,6 @@ namespace Assistant.MapUO
 		{
 			if (this.TopMost)
 				this.TopMost = false;
-		}
-
-		private void MapWindow_Load(object sender, EventArgs e)
-		{
-
 		}
 	}
 }

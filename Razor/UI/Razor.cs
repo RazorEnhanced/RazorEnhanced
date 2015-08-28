@@ -6750,6 +6750,9 @@ namespace Assistant
             txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
             msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
 
+
+            // ------------------ ENHANCED MAP  --------------------
+            MapUO.MapNetwork.Init();
             mapOpenOnLoginCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapOpenOnLoginCheckBox");
             mapAutoconnectCheckBox1.Checked = RazorEnhanced.Settings.General.ReadBool("MapAutoConnectCheckBox");
             mapHpBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox");

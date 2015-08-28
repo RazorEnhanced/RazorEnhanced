@@ -201,6 +201,7 @@ namespace Assistant.MapUO
                 }
                 AddLog("- Done Decompress Data file: " + fi.Name);
                 AddLog("- Start Parsing Datafile");
+                MapIcon.ParseImageFile();
                 MapIcon.IconTreasurePFList = MapIcon.ParseDataFile("TreasurePF.def");
                 MapIcon.IconTreasureList = MapIcon.ParseDataFile("Treasure.def");
                 MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile("TokunoIslands.def");
@@ -221,6 +222,23 @@ namespace Assistant.MapUO
             }
         }
 
+        internal static void Init()
+        {
+            UData = new List<MapNetworkIn.UserData>();
+            MapIcon.ParseImageFile();
+            MapIcon.IconTreasurePFList = MapIcon.ParseDataFile("TreasurePF.def");
+            MapIcon.IconTreasureList = MapIcon.ParseDataFile("Treasure.def");
+            MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile("TokunoIslands.def");
+            MapIcon.IconStealablesList = MapIcon.ParseDataFile("Stealables.def");
+            MapIcon.IconRaresList = MapIcon.ParseDataFile("Rares.def");
+            MapIcon.IconPersonalList = MapIcon.ParseDataFile("Personal.def");
+            MapIcon.IconOldHavenList = MapIcon.ParseDataFile("OldHaven.def");
+            MapIcon.IconNewHavenList = MapIcon.ParseDataFile("NewHaven.def");
+            MapIcon.IconMLList = MapIcon.ParseDataFile("ML.def");
+            MapIcon.IconDungeonsList = MapIcon.ParseDataFile("Dungeons.def");
+            MapIcon.IconcommonList = MapIcon.ParseDataFile("common.def");
+            MapIcon.IconAtlasList = MapIcon.ParseDataFile("Atlas.def");
+        }
 
         internal static void Disconnect()
         {
