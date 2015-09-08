@@ -8,6 +8,18 @@ namespace RazorEnhanced
 {
     public class Pets
     {
+        public static void Stable(string text)
+        {
+            List<ushort> kw = new List<ushort> { 16, 8 };
+            ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
+        }
+
+        public static void Claim(string text)
+        {
+            List<ushort> kw = new List<ushort> { 16, 9 };
+            ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
+        }
+
         public static void Command(string command)
         {
             List<ushort> kw = new List<ushort>();

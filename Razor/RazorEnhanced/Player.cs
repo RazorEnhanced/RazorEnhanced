@@ -1408,5 +1408,12 @@ namespace RazorEnhanced
             Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
         }
 
+        // open bank
+        public static void OpenBank(string text)
+        {
+            List<ushort> kw = new List<ushort> { 16, 2 };
+            ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
+        }
+
 	}
 }
