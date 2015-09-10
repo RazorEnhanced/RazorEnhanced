@@ -42,6 +42,11 @@ namespace RazorEnhanced
                     Thread.Sleep(AutoLoot.AutoLootDelay);
                     AutoLootOpenAction.TryDequeue(out itemserial);
                 }
+                else
+                {
+                    AutoLootOpenAction.TryDequeue(out itemserial);
+                    AutoLootOpenAction.Enqueue(itemserial);
+                }
 
             }
 
@@ -77,6 +82,11 @@ namespace RazorEnhanced
                         Thread.Sleep(AutoLoot.AutoLootDelay);
                     }
                 }
+                else
+                {
+                    AutoLootSerialToGrab.TryDequeue(out itemserial);
+                    AutoLootSerialToGrab.Enqueue(itemserial);
+                }
                 
             }
 
@@ -110,6 +120,11 @@ namespace RazorEnhanced
                         Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, Scavenger.ScavengerBag));
                         Thread.Sleep(Scavenger.ScavengerDelay);
                     }
+                }
+                else
+                {
+                    ScavengerSerialToGrab.TryDequeue(out itemserial);
+                    ScavengerSerialToGrab.Enqueue(itemserial);
                 }
 
            }
