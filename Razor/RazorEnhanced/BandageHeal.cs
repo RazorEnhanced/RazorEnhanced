@@ -299,7 +299,7 @@ namespace RazorEnhanced
                     Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)serialbende));
                     AddLog("Using bandage!");
                     Target.WaitForTarget(1000);
-                    AddLog("Targetting: 0x" + target.Serial.ToString());
+                    AddLog("Targetting: " + target.Serial.ToString());
                     Assistant.Targeting.Target(target);
 
 
