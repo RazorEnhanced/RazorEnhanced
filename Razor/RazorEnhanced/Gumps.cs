@@ -19,10 +19,10 @@ namespace RazorEnhanced
             return World.Player.HasGump;
         }
 
-        public static void WaitForGump(int delay) // Delay in MS
+        public static void WaitForGump(uint gumpid, int delay) // Delay in MS
         {
              int subdelay = delay;
-             while (World.Player.HasGump != true && subdelay > 0)
+             while (World.Player.HasGump != true && World.Player.CurrentGumpI != gumpid && subdelay > 0)
              {
                  Thread.Sleep(2);
                  subdelay -= 2;
@@ -36,6 +36,7 @@ namespace RazorEnhanced
             ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries));
             World.Player.HasGump = false;
             World.Player.CurrentGumpStrings.Clear();
+            World.Player.CurrentGumpI = 0;
         }
       /*  public static void SendAdvancedAction(uint gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
         {

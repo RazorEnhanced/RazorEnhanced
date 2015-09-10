@@ -705,6 +705,7 @@ namespace Assistant.Macros
 			ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
 			ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, World.Player.CurrentGumpI, m_ButtonID, m_Switches, m_TextEntries));
 			World.Player.HasGump = false;
+            World.Player.CurrentGumpI = 0;
 			return true;
 		}
 
