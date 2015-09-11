@@ -376,17 +376,17 @@ namespace RazorEnhanced
         {
             switch (function)
             {
-                case "Autoloot Start":
-                    RazorEnhanced.AutoLoot.Start();
+                case "Autoloot ON/OFF":
+                    if (RazorEnhanced.AutoLoot.Status())
+                        RazorEnhanced.AutoLoot.Stop();
+                    else
+                        RazorEnhanced.AutoLoot.Start();
                     break;
-                case "Autoloot Stop":
-                    RazorEnhanced.AutoLoot.Stop();
-                    break;
-                case "Scavenger Start":
-                    RazorEnhanced.Scavenger.Start();
-                    break;
-                case "Scavenger Stop":
-                    RazorEnhanced.Scavenger.Stop();
+                case "Scavenger ON/OFF":
+                    if (RazorEnhanced.Scavenger.Status())
+                        RazorEnhanced.Scavenger.Stop();
+                    else
+                        RazorEnhanced.Scavenger.Start();
                     break;
                 case "Organizer Start":
                     RazorEnhanced.Organizer.FStop();
@@ -394,17 +394,17 @@ namespace RazorEnhanced
                 case "Organizer Stop":
                     RazorEnhanced.Organizer.FStart();
                     break;
-                case "Sell Agent Enable":
-                    RazorEnhanced.SellAgent.Enable();
+                case "Sell Agent ON/OFF":
+                    if (RazorEnhanced.SellAgent.Status())
+                        RazorEnhanced.SellAgent.Disable();
+                    else
+                        RazorEnhanced.SellAgent.Enable();
                     break;
-                case "Sell Agent Disable":
-                    RazorEnhanced.SellAgent.Disable();
-                    break;
-                case "Buy Agent Enable":
-                    RazorEnhanced.BuyAgent.Enable();
-                    break;
-                case "Buy Agent Disable":
-                    RazorEnhanced.BuyAgent.Disable();
+                case "Buy Agent ON/OFF":
+                    if (RazorEnhanced.BuyAgent.Status())
+                        RazorEnhanced.BuyAgent.Disable();
+                    else
+                        RazorEnhanced.BuyAgent.Enable();
                     break;
                 case "Dress Start":
                     RazorEnhanced.Dress.DressFStart();
@@ -929,6 +929,18 @@ namespace RazorEnhanced
             Engine.MainWindow.HotKeyTreeView.ExpandAll();
         }
 
+       private static void UpdateOldTreeView(TreeNodeCollection nodes, Keys k)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                if (node.Text.Contains(node.Name + " ( " + KeyString(m_key) + " )"))
+                {
+                    node.Text = node.Name + " ( " + KeyString(Keys.None) + " )";
+                    break;
+                }
+                UpdateOldTreeView(node.Nodes, k);
+            }
+        }
         internal static void UpdateKey(TreeNode node, bool passkey)
         {
             string name = node.Name;
@@ -944,6 +956,7 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
                     RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key, passkey);
+                    UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
                     node.Text = node.Name + " ( " + KeyString(m_key) + " )";
                 }
             }
@@ -964,6 +977,7 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
                     RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key, passkey);
+                    UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
                     node.Text = node.Name + " ( " + KeyString(m_key) + " )";
                 }
             }
@@ -984,6 +998,7 @@ namespace RazorEnhanced
                 {
                     RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
                     RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
+                    UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
                     node.Text = node.Name + " ( " + KeyString(m_key) + " )";
                 }
             }

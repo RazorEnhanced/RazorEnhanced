@@ -14,6 +14,7 @@ namespace RazorEnhanced
 {
 	internal class Settings
 	{
+        private static int SettingVersion = 2;     // Versione progressiva della struttura dei salvataggi per successive modifiche
 		private static string m_Save = "RazorEnhanced.settings";
         internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
 		private static DataSet m_Dataset;
@@ -51,6 +52,24 @@ namespace RazorEnhanced
 				{
 					MessageBox.Show("Error loading " + m_Save + ": " + ex);
 				}
+
+                // Version check, Permette update delle tabelle anche se gia esistenti
+                DataRow versionrow = m_Dataset.Tables["GENERAL"].Rows[0];
+                int currentversion = 0;
+                try
+                {
+                    currentversion = (int)versionrow["SettingVersion"];
+                }
+                catch
+                {
+                    DataTable general = m_Dataset.Tables["GENERAL"];
+                    general.Columns.Add("SettingVersion", typeof(int));
+                    DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+                    row["SettingVersion"] = 1;
+                    currentversion = 1;
+                    Save();
+                }
+                UpdateVersion(currentversion);
 			}
 			else
 			{
@@ -317,19 +336,11 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Start", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot ON/OFF", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot Stop", Keys.None, true };
-                hotkey.Rows.Add(hotkeyrow);
-
-                hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Start", Keys.None, true };
-                hotkey.Rows.Add(hotkeyrow);
-
-                hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger Stop", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Scavenger ON/OFF", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
@@ -341,19 +352,11 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Enable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent ON/OFF", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Sell Agent Disable", Keys.None, true };
-                hotkey.Rows.Add(hotkeyrow);
-
-                hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Enable", Keys.None, true };
-                hotkey.Rows.Add(hotkeyrow);
-
-                hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent Disable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Buy Agent ON/OFF", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
@@ -377,11 +380,7 @@ namespace RazorEnhanced
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Enable", Keys.None, true };
-                hotkey.Rows.Add(hotkeyrow);
-
-                hotkeyrow = hotkey.NewRow();
-                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal Disable", Keys.None, true };
+                hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal ON/OFF", Keys.None, true };
                 hotkey.Rows.Add(hotkeyrow);
 
                 hotkeyrow = hotkey.NewRow();
@@ -1351,6 +1350,10 @@ namespace RazorEnhanced
                 general.Columns.Add("MapLinkUsernameTextBox", typeof(string));
                 general.Columns.Add("MapLinkPasswordTextBox", typeof(string));
 
+                // Setting Version
+                general.Columns.Add("SettingVersion", typeof(int));
+                
+
                 // Composizione Parematri base primo avvio
                 object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
@@ -1390,7 +1393,10 @@ namespace RazorEnhanced
                      200,200,200,200,
 
                      // Parametri primo avvio enchanced map
-                     false, false, true, false, false, true, true, true, true, true, false, "--", false, 0, "0.0.0.0", "0", "", ""
+                     false, false, true, false, false, true, true, true, true, true, false, "--", false, 0, "0.0.0.0", "0", "", "",
+                     
+                     // Versione Corrente
+                     SettingVersion
                 };
 
                 DataRow generalsettings = general.NewRow();
@@ -3866,5 +3872,127 @@ namespace RazorEnhanced
 				MessageBox.Show("Error writing " + m_Save + ": " + ex);
 			}
 		}
+        
+        internal static void UpdateVersion(int version)
+        {
+            if (version == 1)  // Passaggi dalla version 1 alle 2
+            {
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Autoloot Start")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Autoloot Stop")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Scavenger Start")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Scavenger Stop")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Sell Agent Enable")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Sell Agent Disable")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Buy Agent Enable")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Buy Agent Disable")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Bandage Heal Enable")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+                    if ((string)row["Name"] == "Bandage Heal Disable")
+                    {
+                        row.Delete();
+                        Save();
+                        break;
+                    }
+
+                DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "Agents";
+                newRow["Name"] = "Autoloot ON/OFF";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+                newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "Agents";
+                newRow["Name"] = "Scavenger ON/OFF";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+                newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "Agents";
+                newRow["Name"] = "Sell Agent ON/OFF";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+                newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "Agents";
+                newRow["Name"] = "Buy Agent ON/OFF";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+                newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "Agents";
+                newRow["Name"] = "Bandage Heal ON/OFF";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+                General.WriteInt("SettingVersion", 2);
+            }
+        }
 	}
 }
