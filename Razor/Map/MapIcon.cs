@@ -71,6 +71,7 @@ namespace Assistant.MapUO
 
         internal static void ParseImageFile()
         {
+            IconImage.Clear();
             if(Directory.Exists("Icon\\")) 
             {
                 MapNetwork.AddLog("- Start parsing Icon File");
