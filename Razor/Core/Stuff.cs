@@ -1,4 +1,4 @@
-//#define STUFF
+#define STUFF
 
 using System;
 using System.Text;
@@ -8,8 +8,6 @@ namespace Assistant
 	internal class FindData
 	{
 #if STUFF
-#warning Extra special leet stuff is enabled.  Don't release this build.
-
 		public static void Initialize()
 		{
 			Command.Register( "ResetFind", new CommandCallback( ResetFind ) );
@@ -193,8 +191,8 @@ namespace Assistant
 				int dist = Utility.Distance( World.Player.Position, newPos );
 				int oldDist = Utility.Distance( World.Player.Position, oldPos );
 				int range = 15;
-				if ( Config.GetBool( "RangeCheckLT" ) )
-					range = Config.GetInt( "LTRange" );
+				if ( RazorEnhanced.Settings.General.ReadBool( "RangeCheckLT" ) )
+                    range = RazorEnhanced.Settings.General.ReadInt("LTRange");
 
 				if ( oldDist > dist && oldDist > range && dist <= range )
 				{
