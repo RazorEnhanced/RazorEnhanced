@@ -100,7 +100,7 @@ namespace RazorEnhanced
 
 		internal class ScriptTimer : Assistant.Timer
 		{
-			private Thread m_AutoLootThread;
+			internal Thread m_AutoLootThread;
 			private Thread m_ScavengerThread;
             private Thread m_BandageHealThread;
             private Thread m_AutoCarverThread;
@@ -122,7 +122,7 @@ namespace RazorEnhanced
 				}
 
 
-                if (AutoLoot.AutoMode && World.Player != null)
+                if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
                     Thread.Sleep(5);
 					if (m_AutoLootThread == null ||
@@ -143,7 +143,7 @@ namespace RazorEnhanced
 					}   
 				}
 
-                if (Scavenger.AutoMode && World.Player != null)
+                if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
                     Thread.Sleep(5);
 					if (m_ScavengerThread == null ||
@@ -164,7 +164,7 @@ namespace RazorEnhanced
 					}
 				}
 
-                if (BandageHeal.AutoMode && World.Player != null)
+                if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running)
                 {
                     Thread.Sleep(5);
                     if (m_BandageHealThread == null ||
@@ -185,7 +185,7 @@ namespace RazorEnhanced
                     }
                 }
 
-                if (Filters.AutoCarver && World.Player != null)
+                if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
                 {
                     Thread.Sleep(5);
                     if (m_AutoCarverThread == null ||
@@ -204,7 +204,7 @@ namespace RazorEnhanced
                     }
                 }
 
-                if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode))
+                if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
                 {
                     if (m_DragDropThread == null ||
                            (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&

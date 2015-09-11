@@ -10,6 +10,20 @@ namespace RazorEnhanced
 {
 	public class Gumps 
 	{
+        public static void CloseGump(uint gumpid)
+        {
+            ClientCommunication.SendToClient(new CloseGump(gumpid));
+            World.Player.HasGump = false;
+            World.Player.CurrentGumpStrings.Clear();
+            World.Player.CurrentGumpI = 0;
+        }
+
+        public static void ResetGump()
+        {
+            World.Player.HasGump = false;
+            World.Player.CurrentGumpStrings.Clear();
+            World.Player.CurrentGumpI = 0;
+        }
         public static uint CurrentGump()
         {
             return World.Player.CurrentGumpI;

@@ -408,10 +408,12 @@ namespace RazorEnhanced
         {
             int exit = Int32.MinValue;
 
-            if (World.Player.IsGhost)
-            {
+            if (World.Player == null)
                 return;
-            }
+
+            if (World.Player.IsGhost)
+                return;
+
             Assistant.Mobile target;
 
             if (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox") == "Self")
