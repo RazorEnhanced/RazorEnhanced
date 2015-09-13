@@ -100,7 +100,7 @@ namespace RazorEnhanced
 
 		internal class ScriptTimer : Assistant.Timer
 		{
-			internal Thread m_AutoLootThread;
+            private Thread m_AutoLootThread;
 			private Thread m_ScavengerThread;
             private Thread m_BandageHealThread;
             private Thread m_AutoCarverThread;
@@ -124,7 +124,6 @@ namespace RazorEnhanced
 
                 if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
-                    Thread.Sleep(5);
 					if (m_AutoLootThread == null ||
 						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
 						m_AutoLootThread.ThreadState != ThreadState.Unstarted &&
@@ -140,12 +139,12 @@ namespace RazorEnhanced
                         {
                             AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
                         }
-					}   
+					}
+                    Thread.Sleep(5);
 				}
 
                 if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
-                    Thread.Sleep(5);
 					if (m_ScavengerThread == null ||
 						(m_ScavengerThread != null && m_ScavengerThread.ThreadState != ThreadState.Running &&
 						m_ScavengerThread.ThreadState != ThreadState.Unstarted &&
@@ -162,11 +161,11 @@ namespace RazorEnhanced
                             Scavenger.AddLog("Error in Scaveger Thread, Restart");
                         }
 					}
+                    Thread.Sleep(5);
 				}
 
                 if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running)
                 {
-                    Thread.Sleep(5);
                     if (m_BandageHealThread == null ||
                         (m_BandageHealThread != null && m_BandageHealThread.ThreadState != ThreadState.Running &&
                         m_BandageHealThread.ThreadState != ThreadState.Unstarted &&
@@ -183,11 +182,11 @@ namespace RazorEnhanced
                             BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
                         }
                     }
+                    Thread.Sleep(5);
                 }
 
                 if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
                 {
-                    Thread.Sleep(5);
                     if (m_AutoCarverThread == null ||
                         (m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
                         m_AutoCarverThread.ThreadState != ThreadState.Unstarted &&
@@ -202,6 +201,7 @@ namespace RazorEnhanced
                         catch
                         { }
                     }
+                    Thread.Sleep(5);
                 }
 
                 if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
