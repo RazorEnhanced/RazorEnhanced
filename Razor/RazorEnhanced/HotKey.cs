@@ -427,9 +427,6 @@ namespace RazorEnhanced
                     else
                         RazorEnhanced.BandageHeal.Start();
                     break;
-                case "Bandage Heal Disable":
-                    
-                    break;
                 default:
                     break;
             }
