@@ -421,11 +421,14 @@ namespace RazorEnhanced
                 case "Restock Stop":
                     RazorEnhanced.Restock.FStop();
                     break;
-                case "Bandage Heal Enable":
-                    RazorEnhanced.BandageHeal.Start();
+                case "Bandage Heal ON/OFF":
+                    if (RazorEnhanced.BandageHeal.Status())
+                        RazorEnhanced.BandageHeal.Stop();
+                    else
+                        RazorEnhanced.BandageHeal.Start();
                     break;
                 case "Bandage Heal Disable":
-                    RazorEnhanced.BandageHeal.Stop();
+                    
                     break;
                 default:
                     break;
