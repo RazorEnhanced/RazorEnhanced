@@ -254,17 +254,14 @@ namespace RazorEnhanced
             if (!bag.Updated)
             {
                 RazorEnhanced.Items.UseItem(bag);
-
                 int subdelay = delay;
+
                 if (bag.IsCorpse || bag.IsContainer)
                     while (!bag.Updated)
                     {
-                        if (subdelay > 0)
-                        {
-                            Thread.Sleep(2);
-                            subdelay -= 2;
-                        }
-                        else
+                        Thread.Sleep(2);
+                        subdelay -= 2;
+                        if (subdelay <= 0)
                             break;
                     }
             }

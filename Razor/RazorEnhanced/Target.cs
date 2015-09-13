@@ -17,10 +17,12 @@ namespace RazorEnhanced
         public static void WaitForTarget(int delay) // Delay in MS
         {
             int subdelay = delay;
-            while (Assistant.Targeting.HasTarget == false && subdelay > 0)
+            while (Assistant.Targeting.HasTarget == false)
             {
                 Thread.Sleep(2);
                 subdelay -= 2;
+                if (subdelay <= 0)
+                    break;
             }
         }
         public static void TargetExecute(int serial) 
