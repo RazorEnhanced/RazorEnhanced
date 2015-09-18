@@ -66,9 +66,7 @@ namespace Assistant.MapUO
         internal static List<MapIconData> IconDungeonsList = new List<MapIconData>();
         internal static List<MapIconData> IconcommonList = new List<MapIconData>();
         internal static List<MapIconData> IconAtlasList = new List<MapIconData>();
-
-       
-
+        internal static List<List<MapIcon.MapIconData>> AllListOfBuilds = new List<List<MapIcon.MapIconData>>();
         internal static void ParseImageFile()
         {
             IconImage.Clear();

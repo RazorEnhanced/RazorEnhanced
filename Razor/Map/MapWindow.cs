@@ -28,32 +28,35 @@ namespace Assistant.MapUO
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-		internal MapWindow()
-		{
-			//
-			// Required for Windows Form Designer support
-			//
+        internal MapWindow()
+        {
+            //
+            // Required for Windows Form Designer support
+            //
 
-			InitializeComponent();
+            InitializeComponent();
             this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("MapX"), RazorEnhanced.Settings.General.ReadInt("MapY"));
             this.ClientSize = new Size(RazorEnhanced.Settings.General.ReadInt("MapW"), RazorEnhanced.Settings.General.ReadInt("MapH"));
 
-			if (this.Location.X < -10 || this.Location.Y < -10)
-				this.Location = Point.Empty;
+            if (this.Location.X < -10 || this.Location.Y < -10)
+                this.Location = Point.Empty;
 
-			if (this.Width < 50)
-				this.Width = 50;
-			if (this.Height < 50)
-				this.Height = 50;
+            if (this.Width < 50)
+                this.Width = 50;
+            if (this.Height < 50)
+                this.Height = 50;
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
-
-			this.uoMapControl1.FullUpdate();
-			ClientCommunication.SetMapWndHandle(this);
+            //
+            // TODO: Add any constructor code after InitializeComponent call
+            //
+            //this.
+            // this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
+            this.uoMapControl1.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseWheel);
+            //  this.startserverbutton.Click += new System.EventHandler(this.button1_Click);
+            this.uoMapControl1.FullUpdate();
+            ClientCommunication.SetMapWndHandle(this);
             uoMapControlstatic = this.uoMapControl1;
-		}
+        }
 
 		internal class MapMenuItem : MenuItem
 		{

@@ -226,18 +226,58 @@ namespace Assistant.MapUO
         {
             UData = new List<MapNetworkIn.UserData>();
             MapIcon.ParseImageFile();
+
+            MapIcon.IconTreasurePFList.Clear();
             MapIcon.IconTreasurePFList = MapIcon.ParseDataFile("TreasurePF.def");
+
+            MapIcon.IconTreasureList.Clear();
             MapIcon.IconTreasureList = MapIcon.ParseDataFile("Treasure.def");
+
+            MapIcon.IconTokunoIslandsList.Clear();
             MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile("TokunoIslands.def");
+
+            MapIcon.IconStealablesList.Clear();
             MapIcon.IconStealablesList = MapIcon.ParseDataFile("Stealables.def");
+
+            MapIcon.IconRaresList.Clear();
             MapIcon.IconRaresList = MapIcon.ParseDataFile("Rares.def");
+
+            MapIcon.IconPersonalList.Clear();
             MapIcon.IconPersonalList = MapIcon.ParseDataFile("Personal.def");
+
+            MapIcon.IconOldHavenList.Clear();
             MapIcon.IconOldHavenList = MapIcon.ParseDataFile("OldHaven.def");
+
+            MapIcon.IconNewHavenList.Clear();
             MapIcon.IconNewHavenList = MapIcon.ParseDataFile("NewHaven.def");
+
+            MapIcon.IconMLList.Clear();
             MapIcon.IconMLList = MapIcon.ParseDataFile("ML.def");
+
+            MapIcon.IconDungeonsList.Clear();
             MapIcon.IconDungeonsList = MapIcon.ParseDataFile("Dungeons.def");
+
+            MapIcon.IconcommonList.Clear();
             MapIcon.IconcommonList = MapIcon.ParseDataFile("common.def");
+
+            MapIcon.IconAtlasList.Clear();
             MapIcon.IconAtlasList = MapIcon.ParseDataFile("Atlas.def");
+
+            MapIcon.AllListOfBuilds.Clear();
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconAtlasList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconcommonList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconDungeonsList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconMLList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconNewHavenList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconOldHavenList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconPersonalList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconRaresList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconTokunoIslandsList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconTreasureList);
+            MapIcon.AllListOfBuilds.Add(MapIcon.IconTreasurePFList);
+
+            Assistant.MapUO.Region.RegionLists.Clear();
+            Assistant.MapUO.Region.Load("guardlines.def");
         }
 
         internal static void Disconnect()

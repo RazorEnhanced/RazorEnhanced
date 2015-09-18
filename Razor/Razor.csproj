@@ -163,6 +163,8 @@
     <Compile Include="Core\Geometry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Map\MapSupportFunction.cs" />
+    <Compile Include="Map\MapGeometry.cs" />
     <Compile Include="Map\MapIcon.cs" />
     <Compile Include="Map\NetworkLinkOut.cs" />
     <Compile Include="Map\NetworkLinkIn.cs" />
@@ -729,6 +731,8 @@
     <None Include="RazorEnhanced\Resources\map-dead.gif" />
     <None Include="RazorEnhanced\Resources\map-mortal.gif" />
     <None Include="RazorEnhanced\Resources\map-paralized.gif" />
+    <None Include="RazorEnhanced\Resources\map-deadIn.png" />
+    <None Include="RazorEnhanced\Resources\map-deadOut.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />

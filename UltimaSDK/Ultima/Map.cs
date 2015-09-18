@@ -2,13 +2,12 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace Ultima
 {
 	public sealed class Map
 	{
+                              
         public TileMatrix m_Tiles;
 		private int m_FileIndex, m_MapID;
 		private int m_Width, m_Height;
@@ -18,39 +17,28 @@ namespace Ultima
 
 		public static bool UseDiff { get { return m_UseDiff; } set { m_UseDiff = value; Reload(); } }
 
-        public static Map Felucca;
-        public static Map Trammel;
-		public static Map Ilshenar;
-		public static Map Malas;
-		public static Map Tokuno;
-		public static Map TerMur;
-		public static Map Custom;
-                  
-        public static void InitializeMap(string _Map, int x, int y, int w, int h)
+        public static Map Felucca, Trammel, Ilshenar, Malas, Tokuno, TerMur, Custom;
+     
+        public static Map InitializeMap(string _Map, int x = 0, int y = 0, int w = 0, int h = 0) 
         {
             switch (_Map)
             {
                 case "Felucca":
-                    Felucca = new Map(0, 0, 7168, 4096); // 6144
-                    break;
+                  return Felucca = new Map(0, 0, 7168, 4096); // 6144
                 case "Trammel":
-                    Trammel = new Map(0, 1, 7168, 4096);
-                    break;
+                  return Trammel = new Map(0, 1, 7168, 4096);
                 case "Ilshenar":
-                    Ilshenar = new Map(2, 2, 2304, 1600);
-                    break;
+                  return Ilshenar = new Map(2, 2, 2304, 1600);                  
                 case "Malas":
-                    Malas = new Map(3, 3, 2560, 2048);
-                    break;
+                  return Malas = new Map(3, 3, 2560, 2048);                 
                 case "Tokuno":
-                    Tokuno = new Map(4, 4, 1448, 1448);
-                    break;
+                  return Tokuno = new Map(4, 4, 1448, 1448);                
                 case "TerMur":
-                    TerMur = new Map(5, 5, 1280, 4096);
-                    break; 
+                  return TerMur = new Map(5, 5, 1280, 4096);                  
                 case "Custom":
-                    Custom = new Map(x, y, w, h);
-                    break;
+                  return Custom = new Map(x, y, w, h);
+                default:
+                  return null;
             }
        }
 
