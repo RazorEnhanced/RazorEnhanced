@@ -133,25 +133,66 @@ namespace Assistant.MapUO
         //////////////////////////////////////////////////////////////////
         /////////////// FUNZIONI DI DISEGNO ELEMENTI /////////////////////
         //////////////////////////////////////////////////////////////////
-        private void NameAndBar(Graphics gfx, Point pntPlayer)
+
+        public void NameAndBar(Graphics gfx, Point pntPlayer)
         {
-            PointF StringPointF = RotatePoint(pntPlayer, new Point(pntPlayer.X, pntPlayer.Y - 1));
+            PointF StringPointF = RotatePoint(pntPlayer, new Point(pntPlayer.X, pntPlayer.Y));
             string Nome = World.Player.Name;
             Font Font = new Font("Arial", 9 / zoom);
-            Brush TextCol = new SolidBrush(Color.Blue);
-
-            gfx.DrawString(Nome, Font, Brushes.Black, ((StringPointF.X - 2.8f) / zoom), (StringPointF.Y / zoom) + 2.5f / zoom);
-            gfx.DrawString(Nome, Font, TextCol, ((StringPointF.X - 2.8f) / zoom), (StringPointF.Y / zoom) + 1f / zoom);
- 
-            int HP = World.Player.Hits;
-            int MaxHP = World.Player.HitsMax;
+            Brush TextCol = new SolidBrush(m_usercolor);
             int offsetbarre = 14;
-            gfx.FillRectangle(Brushes.Red, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, 35 / zoom, 3 / zoom);
-            int percent = Convert.ToInt32(HP * 100 / (MaxHP == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(MaxHP)));
-            float imagepercent = (35 / zoom) * (percent / 100);
-            gfx.FillRectangle(Brushes.Yellow, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, imagepercent, 3 / zoom);
-            offsetbarre += 4;            
+
+            gfx.DrawString(Nome, Font, Brushes.Black, ((StringPointF.X - 2.8f) / zoom), ((StringPointF.Y / 1) + 2.5f) / zoom);
+            gfx.DrawString(Nome, Font, TextCol, ((StringPointF.X - 2.8f) / zoom), ((StringPointF.Y / 1) + 1f) / zoom);
+
+            if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
+            {
+                Brush status = default(Brush);
+                if (World.Player.Poisoned)
+                {
+                    status = Brushes.LimeGreen;
+                }
+         /*       else if (World.Player.YellowHits)
+                {
+                    status = Brushes.Yellow;
+                }
+                else if (World.Player.Paralyzed)
+                {
+                    status = Brushes.AliceBlue;
+                }*/
+                else
+                {
+                    status = Brushes.SteelBlue;
+                }
+                gfx.FillRectangle(Brushes.Red, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, 35 / zoom, 3 / zoom);
+                int percent = Convert.ToInt32(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(World.Player.HitsMax)));
+                float imagepercent = (35 / zoom) * (percent / 100);
+                gfx.FillRectangle(status, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, imagepercent, 3 / zoom);
+                offsetbarre += 4;
+            }
+
+            if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
+            {
+                gfx.FillRectangle(Brushes.Blue, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, 35 / zoom, 3 / zoom);
+                int percent = Convert.ToInt32(World.Player.Mana * 100 / (World.Player.ManaMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(World.Player.ManaMax)));
+                float imagepercent = (35 / zoom) * (percent / 100);
+                gfx.FillRectangle(Brushes.Blue, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, imagepercent, 3 / zoom);
+                offsetbarre += 4;
+            }
+
+            if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
+            {
+                gfx.FillRectangle(Brushes.Orange, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, 35 / zoom, 3 / zoom);
+                int percent = Convert.ToInt32(World.Player.Stam * 100 / (World.Player.StamMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(World.Player.StamMax)));
+                float imagepercent = (35 / zoom) * (percent / 100);
+                gfx.FillRectangle(Brushes.Orange, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, imagepercent, 3 / zoom);
+                offsetbarre += 4;
+            }
+
+            Font.Dispose();
+            TextCol.Dispose();
         }
+
 
         public void Buildings(Graphics gfx, Point pntPlayer, Point mapOrigin, Point offset, Rectangle rect)
         {
@@ -304,6 +345,7 @@ namespace Assistant.MapUO
                 gfx.DrawString(nome, Font, TextCol, -1f / zoom, 0.5f / zoom);
                 Font.Dispose();
                 TextCol.Dispose();
+                int offsetbarre = 14;
 
                 if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
                 {
@@ -330,11 +372,29 @@ namespace Assistant.MapUO
                         status = Brushes.SteelBlue;
                     }
 
-                    int offsetbarre = 14;
+                    
                     gfx.FillRectangle(Brushes.Red, -1 / zoom, offsetbarre / zoom, 35 / zoom, 3 / zoom);
                     int percent = Convert.ToInt32(user.Hits * 100 / (user.HitsMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(user.HitsMax)));
                     float imagepercent = (35 / zoom) * (percent / 100);
                     gfx.FillRectangle(status, -1 / zoom, offsetbarre / zoom, imagepercent, 3 / zoom);
+                    offsetbarre += 4;
+                }
+                if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
+                {
+                    gfx.FillRectangle(Brushes.Blue, -1 / zoom, offsetbarre / zoom, 35 / zoom, 3 / zoom);
+                    int percent = Convert.ToInt32(user.Mana * 100 / (user.ManaMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(user.ManaMax)));
+                    float imagepercent = (35 / zoom) * (percent / 100);
+                    gfx.FillRectangle(Brushes.Blue, -1 / zoom, offsetbarre / zoom, imagepercent, 3 / zoom);
+                    offsetbarre += 4;
+                }
+
+                if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
+                {
+                    gfx.FillRectangle(Brushes.Orange, -1 / zoom, offsetbarre / zoom, 35 / zoom, 3 / zoom);
+                    int percent = Convert.ToInt32(user.Stamina * 100 / (user.StaminaMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(user.StaminaMax)));
+                    float imagepercent = (35 / zoom) * (percent / 100);
+                    gfx.FillRectangle(Brushes.Orange, -1 / zoom, offsetbarre / zoom, imagepercent, 3 / zoom);
+                    offsetbarre += 4;
                 }
             }
         }
@@ -379,6 +439,10 @@ namespace Assistant.MapUO
         /////////////////////////////////////////////////////////////////////
 
 
+        //////////////////////////////////////////////////////////////////
+        ////////////////////////// FUNZIONI EVENTI ///////////////////////
+        //////////////////////////////////////////////////////////////////
+
         internal void PictureBox1_MouseWheel(System.Object sender, MouseEventArgs e)
         {
             if (e.Delta != 0)
@@ -406,15 +470,8 @@ namespace Assistant.MapUO
 
         public void ZoomLevel()
         {
-            Size PicDim = default(Size);
-            if (this.Width == 0 & this.Height == 0)
-            {
-              //  PicDim = new Size(My.Settings.MapW, My.Settings.MapH);
-            }
-            else
-            {
-                PicDim = new Size(this.Width, this.Height);
-            }
+            Size PicDim = new Size(this.Width, this.Height);
+
 
             if (zoom == 0.5f)
             {
@@ -462,6 +519,10 @@ namespace Assistant.MapUO
             if (map__1 != null)
                 SupportFunc.ClearCache(map__1);
         }
+
+        //////////////////////////////////////////////////////////////////
+        ///////////////////// FINE FUNZIONI EVENTI ///////////////////////
+        //////////////////////////////////////////////////////////////////
 
         public void FullUpdate(bool SkipTimerControl = false)
         {
