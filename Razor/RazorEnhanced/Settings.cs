@@ -3846,6 +3846,18 @@ namespace RazorEnhanced
                     Save();
                 }
             }
+
+            internal static void SaveExitData()
+            {
+                WriteInt("PosXToolBar", Assistant.Engine.ToolBarX);
+                WriteInt("PosYToolBar", Assistant.Engine.ToolBarY);
+                WriteInt("MapX", Assistant.Engine.MapWindowX);
+                WriteInt("MapY", Assistant.Engine.MapWindowY);
+                WriteInt("MapH", Assistant.Engine.MapWindowH);
+                WriteInt("MapW", Assistant.Engine.MapWindowW);
+                WriteInt("WindowX", Assistant.Engine.MainWindowX);
+                WriteInt("WindowY", Assistant.Engine.MainWindowY);
+            }
         }
 
         // ------------- GENERAL SETTINGS END -----------------

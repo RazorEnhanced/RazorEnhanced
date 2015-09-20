@@ -184,6 +184,16 @@ namespace Assistant
 		internal static bool Running { get { return m_Running; } }
 		internal static Form ActiveWindow { get { return m_ActiveWnd; } set { m_ActiveWnd = value; } }
 
+        // Blocco parametri salvataggio uscita
+        internal static int MainWindowX { get { return m_MainWindowX; } set { m_MainWindowX = value; } }
+        internal static int MainWindowY { get { return m_MainWindowY; } set { m_MainWindowY = value; } }
+        internal static int ToolBarX { get { return m_ToolBarX; } set { m_ToolBarX = value; } }
+        internal static int ToolBarY { get { return m_ToolBarY; } set { m_ToolBarY = value; } }
+        internal static int MapWindowX { get { return m_MapWindowX; } set { m_MapWindowX = value; } }
+        internal static int MapWindowY { get { return m_MapWindowY; } set { m_MapWindowY = value; } }
+        internal static int MapWindowW { get { return m_MapWindowW; } set { m_MapWindowW = value; } }
+        internal static int MapWindowH { get { return m_MapWindowH; } set { m_MapWindowH = value; } }
+
 		internal static string Version
 		{
 			get
@@ -202,8 +212,16 @@ namespace Assistant
 
 		private static MainForm MainWnd;
 		private static Form m_ActiveWnd;
-		//private static Thread m_TimerThread;
 		private static bool m_Running;
+        private static int m_ToolBarX;
+        private static int m_ToolBarY;
+        private static int m_MainWindowX;
+        private static int m_MainWindowY;
+        private static int m_MapWindowW;
+        private static int m_MapWindowH;
+        private static int m_MapWindowX;
+        private static int m_MapWindowY;
+
 		private static string m_Version;
 
         [STAThread]
@@ -315,6 +333,8 @@ namespace Assistant
                     Application.Run(MainWnd);
 
                     m_Running = false;
+
+                    RazorEnhanced.Settings.General.SaveExitData();
 
                     // Disconnetto mappa
                     Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();

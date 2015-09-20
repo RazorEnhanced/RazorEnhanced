@@ -202,14 +202,14 @@ namespace Assistant
 						keys.Add(pvSrc.ReadByte());
 					}
 				}
-/*
-                foreach (ushort dd in keys)
-                {
-                    RazorEnhanced.Misc.SendMessage(dd.ToString());
-                }
-				txtOffset = pvSrc.Position;
+                /*
+                                foreach (ushort dd in keys)
+                                {
+                                    RazorEnhanced.Misc.SendMessage(dd.ToString());
+                                }*/
+                txtOffset = pvSrc.Position;
 				text = pvSrc.ReadUTF8StringSafe();
-				type &= ~MessageType.Encoded;*/
+				type &= ~MessageType.Encoded;
 			}
 			else
 			{

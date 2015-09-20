@@ -737,6 +737,8 @@ namespace RazorEnhanced
             Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = LockToolBarCheckBox;
             Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked = AutoopenToolBarCheckBox;
             Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + PosXToolBar + " - Y:" + PosYToolBar;
+            Assistant.Engine.ToolBarX = PosXToolBar;
+            Assistant.Engine.ToolBarY = PosYToolBar;
 
             List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
 

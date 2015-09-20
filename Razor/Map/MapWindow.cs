@@ -17,6 +17,7 @@ namespace Assistant.MapUO
 		internal const int HT_CAPTION = 0x2;
 		private UOMapControl uoMapControl1;
         internal static UOMapControl uoMapControlstatic;
+        internal static MapWindow UoMapWindowStatic;
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
@@ -37,6 +38,10 @@ namespace Assistant.MapUO
             InitializeComponent();
             this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("MapX"), RazorEnhanced.Settings.General.ReadInt("MapY"));
             this.ClientSize = new Size(RazorEnhanced.Settings.General.ReadInt("MapW"), RazorEnhanced.Settings.General.ReadInt("MapH"));
+            Assistant.Engine.MapWindowX = RazorEnhanced.Settings.General.ReadInt("MapX");
+            Assistant.Engine.MapWindowY = RazorEnhanced.Settings.General.ReadInt("MapY");
+            Assistant.Engine.MapWindowH = RazorEnhanced.Settings.General.ReadInt("MapH");
+            Assistant.Engine.MapWindowW = RazorEnhanced.Settings.General.ReadInt("MapW");
 
             if (this.Location.X < -10 || this.Location.Y < -10)
                 this.Location = Point.Empty;
@@ -49,13 +54,13 @@ namespace Assistant.MapUO
             //
             // TODO: Add any constructor code after InitializeComponent call
             //
-            //this.
-            // this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
+
             this.uoMapControl1.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseWheel);
-            //  this.startserverbutton.Click += new System.EventHandler(this.button1_Click);
+            this.uoMapControl1.DoubleClick += new System.EventHandler(this.uoMapControl1.picturebox1_DoubleClick);
             this.uoMapControl1.FullUpdate();
             ClientCommunication.SetMapWndHandle(this);
             uoMapControlstatic = this.uoMapControl1;
+            UoMapWindowStatic = this;
         }
 
 		internal class MapMenuItem : MenuItem
@@ -281,18 +286,15 @@ namespace Assistant.MapUO
 
 			this.Refresh();
 
-			RazorEnhanced.Settings.General.WriteInt("MapX", this.Location.X);
-            RazorEnhanced.Settings.General.WriteInt("MapY", this.Location.Y);
-            RazorEnhanced.Settings.General.WriteInt("MapW", this.ClientSize.Width);
-            RazorEnhanced.Settings.General.WriteInt("MapH", this.ClientSize.Height);
+            Assistant.Engine.MapWindowH = this.Height;
+            Assistant.Engine.MapWindowW = this.Width;
 		}
 
 		private void MapWindow_Move(object sender, System.EventArgs e)
 		{
-            RazorEnhanced.Settings.General.WriteInt("MapX", this.Location.X);
-            RazorEnhanced.Settings.General.WriteInt("MapY", this.Location.Y);
-            RazorEnhanced.Settings.General.WriteInt("MapW", this.ClientSize.Width);
-            RazorEnhanced.Settings.General.WriteInt("MapH", this.ClientSize.Height);
+            this.uoMapControl1.Location = this.Location;
+            Assistant.Engine.MapWindowX = this.Location.X;
+            Assistant.Engine.MapWindowY = this.Location.Y;
 		}
 
 		private void MapWindow_Deactivate(object sender, System.EventArgs e)

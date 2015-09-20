@@ -6682,6 +6682,9 @@ namespace Assistant
             this.Opacity = ((float)opacity.Value) / 100.0;
 
             this.Location = new System.Drawing.Point(RazorEnhanced.Settings.General.ReadInt("WindowX"), RazorEnhanced.Settings.General.ReadInt("WindowY"));
+            Assistant.Engine.MainWindowX = RazorEnhanced.Settings.General.ReadInt("WindowX");
+            Assistant.Engine.MainWindowY = RazorEnhanced.Settings.General.ReadInt("WindowY");
+
             this.TopLevel = true;
 
             bool onScreen = false;
@@ -7148,11 +7151,6 @@ namespace Assistant
 				DisableCloseButton();
 				e.Cancel = true;
 			}
-            else
-            {
-                RazorEnhanced.Settings.General.WriteInt("WindowX", windowspt.X);
-                RazorEnhanced.Settings.General.WriteInt("WindowY", windowspt.Y);
-            }
 		}
 
 		private void skillCopySel_Click(object sender, System.EventArgs e)
@@ -7382,6 +7380,8 @@ namespace Assistant
              if (this.WindowState != FormWindowState.Minimized)
              {
                  windowspt = this.Location;
+                 Assistant.Engine.MainWindowX = this.Location.X;
+                 Assistant.Engine.MainWindowY = this.Location.Y;
              }
 		}
 

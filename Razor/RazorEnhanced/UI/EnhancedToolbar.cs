@@ -39,8 +39,8 @@ namespace RazorEnhanced.UI
                     if (this.WindowState != FormWindowState.Minimized)
                     {
                         Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
-                        RazorEnhanced.Settings.General.WriteInt("PosXToolBar", pt.X);
-                        RazorEnhanced.Settings.General.WriteInt("PosYToolBar", pt.Y);
+                        Assistant.Engine.ToolBarX = pt.X;
+                        Assistant.Engine.ToolBarY = pt.Y;
                     }
                 }
             }

@@ -520,6 +520,22 @@ namespace Assistant.MapUO
                 SupportFunc.ClearCache(map__1);
         }
 
+        internal void picturebox1_DoubleClick(object sender, EventArgs e)
+        {
+            if (MapUO.MapWindow.UoMapWindowStatic.FormBorderStyle == FormBorderStyle.None)
+            {
+                MapUO.MapWindow.UoMapWindowStatic.FormBorderStyle = FormBorderStyle.Sizable;
+                MapUO.MapWindow.UoMapWindowStatic.TopMost = false;            
+            }
+            else
+            {
+                MapUO.MapWindow.UoMapWindowStatic.FormBorderStyle = FormBorderStyle.None;
+                MapUO.MapWindow.UoMapWindowStatic.TopMost = true;
+                
+            }
+            FullUpdate(true);
+        }
+
         //////////////////////////////////////////////////////////////////
         ///////////////////// FINE FUNZIONI EVENTI ///////////////////////
         //////////////////////////////////////////////////////////////////
