@@ -18,6 +18,7 @@ namespace Assistant.MapUO
 		private UOMapControl uoMapControl1;
         internal static UOMapControl uoMapControlstatic;
         internal static MapWindow UoMapWindowStatic;
+        internal static ContextMenuStrip UoMenuStatic;
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
@@ -57,10 +58,12 @@ namespace Assistant.MapUO
 
             this.uoMapControl1.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseWheel);
             this.uoMapControl1.DoubleClick += new System.EventHandler(this.uoMapControl1.picturebox1_DoubleClick);
+            this.uoMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseClick);
             this.uoMapControl1.FullUpdate();
             ClientCommunication.SetMapWndHandle(this);
             uoMapControlstatic = this.uoMapControl1;
             UoMapWindowStatic = this;
+            UoMenuStatic = this.contextMenuStrip;
         }
 
 		internal class MapMenuItem : MenuItem
@@ -142,7 +145,9 @@ namespace Assistant.MapUO
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
-		{
+		{   this.components = new System.ComponentModel.Container();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.FreeViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.SuspendLayout();
 			// 
 			// uoMapControl1
@@ -173,9 +178,27 @@ namespace Assistant.MapUO
 			this.Move += new System.EventHandler(this.MapWindow_Move);
 			this.Resize += new System.EventHandler(this.MapWindow_Resize);
 			this.ResumeLayout(false);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FreeViewMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip1";
+            this.contextMenuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.contextMenuStrip.Size = new System.Drawing.Size(87, 26);
+            this.contextMenuStrip.Text = "Menu";
+            // 
+            // aaToolStripMenuItem
+            // 
+            this.FreeViewMenuItem.Name = "FreeView";
+            this.FreeViewMenuItem.Size = new System.Drawing.Size(86, 22);
+            this.FreeViewMenuItem.Text = "Free View";
+            //this.aaToolStripMenuItem.Click += new System.EventHandler(this.aaToolStripMenuItem_Click);
 
 		}
 		#endregion
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem FreeViewMenuItem;
 
 		internal void CheckLocalUpdate(Mobile mob)
 		{

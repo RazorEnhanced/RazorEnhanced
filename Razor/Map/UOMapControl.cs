@@ -536,12 +536,23 @@ namespace Assistant.MapUO
             FullUpdate(true);
         }
 
+        internal void PictureBox1_MouseClick(System.Object sender, MouseEventArgs e)
+        {
+           if (e.Button == MouseButtons.Right)
+           {
+               MapUO.MapWindow.UoMenuStatic.Visible = true;
+               MapUO.MapWindow.UoMenuStatic.Location = Cursor.Position;
+           }
+        }
+
         //////////////////////////////////////////////////////////////////
         ///////////////////// FINE FUNZIONI EVENTI ///////////////////////
         //////////////////////////////////////////////////////////////////
 
         public void FullUpdate(bool SkipTimerControl = false)
         {
+            if (this.Width < 1 || this.Height < 1)
+                return;
 
             if (m_Background != null)
                 m_Background.Dispose();

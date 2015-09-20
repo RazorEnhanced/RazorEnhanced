@@ -3849,13 +3849,28 @@ namespace RazorEnhanced
 
             internal static void SaveExitData()
             {
-                WriteInt("PosXToolBar", Assistant.Engine.ToolBarX);
-                WriteInt("PosYToolBar", Assistant.Engine.ToolBarY);
-                WriteInt("MapX", Assistant.Engine.MapWindowX);
-                WriteInt("MapY", Assistant.Engine.MapWindowY);
-                WriteInt("MapH", Assistant.Engine.MapWindowH);
-                WriteInt("MapW", Assistant.Engine.MapWindowW);
-                WriteInt("WindowX", Assistant.Engine.MainWindowX);
+                if (Assistant.Engine.ToolBarX > 0)
+                    WriteInt("PosXToolBar", Assistant.Engine.ToolBarX);
+
+                if (Assistant.Engine.ToolBarY > 0)
+                    WriteInt("PosYToolBar", Assistant.Engine.ToolBarY);
+
+                if (Assistant.Engine.MapWindowX > 0)
+                    WriteInt("MapX", Assistant.Engine.MapWindowX);
+
+                if (Assistant.Engine.MapWindowY > 0)
+                    WriteInt("MapY", Assistant.Engine.MapWindowY);
+
+                if (Assistant.Engine.MapWindowH > 0)
+                    WriteInt("MapH", Assistant.Engine.MapWindowH);
+
+                if (Assistant.Engine.MapWindowW > 0)
+                    WriteInt("MapW", Assistant.Engine.MapWindowW);
+
+                if (Assistant.Engine.MainWindowX > 0)
+                    WriteInt("WindowX", Assistant.Engine.MainWindowX);
+
+                if (Assistant.Engine.MainWindowY > 0)
                 WriteInt("WindowY", Assistant.Engine.MainWindowY);
             }
         }
