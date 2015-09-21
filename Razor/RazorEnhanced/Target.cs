@@ -96,5 +96,81 @@ namespace RazorEnhanced
         {
             m_ptarget = serial;
         }
+
+        // Funzioni target per richiamare i target della gui
+        public static void SetLastTargetFromList(string targetid)
+        {
+            TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+            if (targetdata != null)
+            {
+                Mobiles.Filter filter = targetdata.Filter;
+                string selector = targetdata.Selector;
+
+                List<Mobile> filterresult;
+                filterresult = Mobiles.ApplyFilter(filter);
+
+                Mobile mobtarget = Mobiles.Select(filterresult, selector);
+                if (mobtarget != null)
+                {
+                    Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+                    RazorEnhanced.Target.SetLast(mobtarget);
+                }
+            }
+            else
+            {
+                Misc.SendMessage("Invalid target data!");
+            }
+        }
+
+        public static void PerformTargetFromList(string targetid)
+        {
+            TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+            if (targetdata != null)
+            {
+                Mobiles.Filter filter = targetdata.Filter;
+                string selector = targetdata.Selector;
+
+                List<Mobile> filterresult;
+                filterresult = Mobiles.ApplyFilter(filter);
+
+                Mobile mobtarget = Mobiles.Select(filterresult, selector);
+                if (mobtarget != null)
+                {
+                    Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+                    RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
+                    RazorEnhanced.Target.SetLast(mobtarget);
+                }
+            }
+            else
+            {
+                Misc.SendMessage("Invalid target data!");
+            }
+        }
+
+        public static void AttackTargetFromList(string targetid)
+        {
+            TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+            if (targetdata != null)
+            {
+                Mobiles.Filter filter = targetdata.Filter;
+                string selector = targetdata.Selector;
+
+                List<Mobile> filterresult;
+                filterresult = Mobiles.ApplyFilter(filter);
+
+                Mobile mobtarget = Mobiles.Select(filterresult, selector);
+                if (mobtarget != null)
+                {
+                    RazorEnhanced.Player.Attack(mobtarget.Serial);
+                    Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+                    RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
+                    RazorEnhanced.Target.SetLast(mobtarget);
+                }
+            }
+            else
+            {
+                Misc.SendMessage("Invalid target data!");
+            }
+        }
 	}
 }

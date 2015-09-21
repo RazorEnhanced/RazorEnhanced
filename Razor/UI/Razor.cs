@@ -10470,7 +10470,7 @@ namespace Assistant
         {
             if (targetlistView.SelectedItems.Count == 1)
             {
-                TargetGUI.PerformTarget(targetlistView.SelectedItems[0].SubItems[1].Text);
+                RazorEnhanced.Target.PerformTargetFromList(targetlistView.SelectedItems[0].SubItems[1].Text);
             }
         }
 

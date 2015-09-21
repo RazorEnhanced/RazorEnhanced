@@ -1105,7 +1105,7 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServer(new SetWarMode(warflag));
 		}
 
-		public static void Attack(uint serial)
+		public static void Attack(int serial)
 		{
 			Assistant.ClientCommunication.SendToServer(new AttackReq(serial));
 		}

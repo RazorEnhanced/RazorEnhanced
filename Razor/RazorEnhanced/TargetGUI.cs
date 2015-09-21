@@ -232,30 +232,5 @@ namespace RazorEnhanced
             }
         }
 
-        public static void PerformTarget(string targetid)
-        {
-            TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
-            if (targetdata!= null)
-            {
-                Mobiles.Filter filter = targetdata.Filter;
-                string selector = targetdata.Selector;
-
-                List<Mobile> filterresult;
-                filterresult = Mobiles.ApplyFilter(filter);
-
-                Mobile mobtarget = Mobiles.Select(filterresult, selector);
-                if (mobtarget != null)
-                {
-                    Mobiles.Message(mobtarget.Serial, 10, "* Target *");
-                    RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
-                    RazorEnhanced.Target.SetLast(mobtarget);
-                }
-            }
-            else
-            {
-                Misc.SendMessage("Invalid target data!");
-            }
-
-        }
 	}
 }

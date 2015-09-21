@@ -210,7 +210,7 @@ namespace RazorEnhanced
                         ProcessTarget(RazorEnhanced.Settings.HotKey.FindString(k));
                         break;
                     case "TList":
-                        TargetGUI.PerformTarget(RazorEnhanced.Settings.HotKey.FindTargetString(k));
+                        RazorEnhanced.Target.PerformTargetFromList(RazorEnhanced.Settings.HotKey.FindTargetString(k));
                         break;
                     case "Script":
                         RazorEnhanced.EnhancedScriptHotKey.HotKeyStopAll();
@@ -446,7 +446,7 @@ namespace RazorEnhanced
             {
                 default:
                     uint target = Assistant.Targeting.GetLastTarger;
-                    RazorEnhanced.Player.Attack(target);
+                    RazorEnhanced.Player.Attack((int)target);
                     break;
             }
         }
