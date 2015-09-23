@@ -20,9 +20,7 @@ namespace RazorEnhanced.UI
 
         private void EnhancedToolbar_close(object sender, EventArgs e)
         {
-            Assistant.Engine.MainWindow.ToolBarOpen = false;
-            Assistant.Engine.MainWindow.ToolBar = null;
-            RazorEnhanced.ToolBar.closedbyuser = true;
+            Assistant.Engine.MainWindow.ToolBarWindows = null;
         }
 
         private void EnhancedToolbar_Move(object sender, System.EventArgs e)
@@ -48,7 +46,6 @@ namespace RazorEnhanced.UI
 
         private void EnhancedToolbar_Load(object sender, EventArgs e)
         {
-            Assistant.Engine.MainWindow.ToolBarOpen = true;
             ToolBar.UpdateAll();
         }
 	}

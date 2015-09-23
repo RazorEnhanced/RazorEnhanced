@@ -520,11 +520,8 @@ namespace Assistant
 
 		//internal Label WaitDisplay { get { return waitDisp; } }
 
-		// Enhanced Toolbar
-        internal EnhancedToolbar enhancedToolbar;
-        internal EnhancedToolbar ToolBar { get { return enhancedToolbar; } set { enhancedToolbar = value; } }
-
-        internal bool ToolBarOpen = false;
+		// Enhanced Toolbar        
+        internal EnhancedToolbar ToolBarWindows;
         internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
         internal RazorCheckBox LockToolBarCheckBox { get { return lockToolBarCheckBox; } }
         internal RazorCheckBox AutoopenToolBarCheckBox { get { return autoopenToolBarCheckBox; } }
@@ -10633,24 +10630,18 @@ namespace Assistant
         // ---------------- TOOLBAR START ----------------
         private void openToolBarButton_Click(object sender, EventArgs e)
         {
-            RazorEnhanced.ToolBar.Open(true);
+            if (ToolBarWindows == null)
+            {
+                RazorEnhanced.ToolBar.Open();
+            }
         }
 
         private void closeToolBarButton_Click(object sender, EventArgs e)
         {
-            if (enhancedToolbar != null)
+            if (ToolBarWindows != null)
             {
-                enhancedToolbar.Close();
-                Assistant.Engine.MainWindow.ToolBar = null;
-            }
-        }
-
-        internal void CloseToolBar()
-        {
-            if (enhancedToolbar != null)
-            {
-                enhancedToolbar.Close();
-                Assistant.Engine.MainWindow.ToolBar = null;
+                ToolBarWindows.Close();
+                ToolBarWindows = null;
             }
         }
 

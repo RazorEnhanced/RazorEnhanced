@@ -547,7 +547,7 @@ namespace Assistant
 				Item.UpdateContainers();
 			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
 				// Update Contatori Item ToolBar
-                if (Assistant.Engine.MainWindow.ToolBarOpen)
+                if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                     RazorEnhanced.ToolBar.UpdateCount();
 
 			return new ContainerItem(i, Engine.UsePostKRPackets).Compile();
@@ -610,7 +610,7 @@ namespace Assistant
 				Item.UpdateContainers();
 			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
                 // Update Contatori Item ToolBar
-                if (Assistant.Engine.MainWindow.ToolBarOpen)
+                if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                     RazorEnhanced.ToolBar.UpdateCount();
 		}
 
@@ -690,7 +690,7 @@ namespace Assistant
 				item.Container = cont; // must be done after hue is set (for counters)
 				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
                     // Update Contatori Item ToolBar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                         RazorEnhanced.ToolBar.UpdateCount();
 
 				list.Add(item);
@@ -747,7 +747,7 @@ namespace Assistant
 				item.Container = cont; // must be done after hue is set (for counters)
 				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
                     // Update Contatori Item ToolBar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                         RazorEnhanced.ToolBar.UpdateCount();
 			}
 
@@ -1073,7 +1073,7 @@ namespace Assistant
 				if (m == World.Player)
 				{
                     // Update hits toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                         RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
                     // Enhanced Map Stats Update
@@ -1135,7 +1135,7 @@ namespace Assistant
 				if (m == World.Player)
                 {
                     // Update Stam Toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                         RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
                     // Enhanced Map Stats Update
@@ -1181,7 +1181,7 @@ namespace Assistant
 				if (m == World.Player)
 				{
                     // Update Mana toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarOpen)
+                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                         RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
                     // Enhanced Map Stats Update
@@ -1359,11 +1359,11 @@ namespace Assistant
                 }
 
                 // Apertura automatica toolbar se abilitata
-                if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && !Assistant.Engine.MainWindow.ToolBarOpen)
-                    RazorEnhanced.ToolBar.Open(false);
+                if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && Assistant.Engine.MainWindow.ToolBarWindows == null)
+                    RazorEnhanced.ToolBar.Open();
 
                 // Update Weight toolbar
-                if (Assistant.Engine.MainWindow.ToolBarOpen)
+                if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                     RazorEnhanced.ToolBar.UpdateAll();
 
                 ClientCommunication.PostHitsUpdate();
@@ -1617,7 +1617,7 @@ namespace Assistant
 				}
 			}
             // Update Contatori Item ToolBar
-            if (Assistant.Engine.MainWindow.ToolBarOpen)
+            if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                 RazorEnhanced.ToolBar.UpdateCount();
 		}
 
@@ -1648,7 +1648,7 @@ namespace Assistant
 
 			item.Container = null;
             // Update Contatori Item ToolBar
-            if (Assistant.Engine.MainWindow.ToolBarOpen)
+            if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                 RazorEnhanced.ToolBar.UpdateCount();
 
 
@@ -1816,7 +1816,7 @@ namespace Assistant
 			item.Container = null;
 
             // Update Contatori Item ToolBar
-            if (Assistant.Engine.MainWindow.ToolBarOpen)
+            if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                 RazorEnhanced.ToolBar.UpdateCount(); 
 
 			ushort itemID = p.ReadUInt16();

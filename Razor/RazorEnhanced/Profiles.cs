@@ -324,13 +324,17 @@ namespace RazorEnhanced
             Assistant.Filters.Filter.DisableAll();
 
             // Chiuto toolbar
-            Assistant.Engine.MainWindow.CloseToolBar();
+            if (Engine.MainWindow.ToolBarWindows != null)
+                Engine.MainWindow.ToolBarWindows.Close();
 
             // Carico save profilo
             RazorEnhanced.Settings.Load();
 
             // Reinizzializzo razor
             Assistant.Engine.MainWindow.LoadSettings();
+
+            // Riapro toollbar se le condizioni lo permettono
+            RazorEnhanced.ToolBar.Open();
         }
 
 

@@ -363,7 +363,8 @@ namespace Assistant
                     catch { }
 
                     // Chiuto toolbar
-                    Assistant.Engine.MainWindow.CloseToolBar();
+                    if (Engine.MainWindow.ToolBarWindows != null)
+                        Engine.MainWindow.ToolBarWindows.Close();
 
                     // Stoppo tick timer agent
                     RazorEnhanced.Scripts.m_Timer.Stop();

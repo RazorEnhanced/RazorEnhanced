@@ -864,6 +864,8 @@ namespace Assistant
 			Engine.MainWindow.OnLogout();
 			if (Engine.MainWindow.MapWindow != null)
 				Engine.MainWindow.MapWindow.Close();
+            if (Engine.MainWindow.ToolBarWindows != null)
+                Engine.MainWindow.ToolBarWindows.Close();
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
             PasswordMemory.Save();
