@@ -7926,12 +7926,6 @@ namespace Assistant
 		{
 			MessageBox.Show(this, Language.GetString(LocString.FeatureDisabledText), Language.GetString(LocString.FeatureDisabled), MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
-		internal void OnLogout()
-		{
-			//OnMacroStop();
-
-			labelFeatures.Visible = false;
-		}
 
 		internal Assistant.MapUO.MapWindow MapWindow;
 

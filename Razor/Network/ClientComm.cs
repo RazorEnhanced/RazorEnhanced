@@ -853,6 +853,28 @@ namespace Assistant
 				m_ConnStart = DateTime.MinValue;
                 
 			}
+
+            
+            // Stop forzato di tutti i thread agent 
+            RazorEnhanced.AutoLoot.AutoMode = false;
+            RazorEnhanced.Scavenger.AutoMode = false;
+            RazorEnhanced.BandageHeal.AutoMode = false;
+
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+
+            if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+                Assistant.Engine.MainWindow.RestockStop.PerformClick();
+
+            // Stop filtri
+            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+                Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
             
 			PlayerData.ExternalZ = false;
 			World.Player = null;
@@ -861,7 +883,6 @@ namespace Assistant
 			World.Mobiles.Clear();
 			ActionQueue.Stop();
 			StealthSteps.Unhide();
-			Engine.MainWindow.OnLogout();
 			if (Engine.MainWindow.MapWindow != null)
 				Engine.MainWindow.MapWindow.Close();
             if (Engine.MainWindow.ToolBarWindows != null)
