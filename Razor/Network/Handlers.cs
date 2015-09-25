@@ -1000,6 +1000,10 @@ namespace Assistant
                 RazorEnhanced.Profiles.ProfileChange(profilename);
                 RazorEnhanced.Profiles.Refresh();
             }
+
+            // Apertura automatica toolbar se abilitata
+            if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && Assistant.Engine.MainWindow.ToolBarWindows == null)
+                RazorEnhanced.ToolBar.Open();
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
@@ -1358,11 +1362,7 @@ namespace Assistant
                     }
                 }
 
-                // Apertura automatica toolbar se abilitata
-                if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && Assistant.Engine.MainWindow.ToolBarWindows == null)
-                    RazorEnhanced.ToolBar.Open();
-
-                // Update Weight toolbar
+                // Update All toolbar
                 if (Assistant.Engine.MainWindow.ToolBarWindows != null)
                     RazorEnhanced.ToolBar.UpdateAll();
 
