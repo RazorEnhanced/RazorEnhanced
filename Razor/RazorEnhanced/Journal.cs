@@ -35,7 +35,7 @@ namespace RazorEnhanced
         public static void Clear()
         {
             World.Player.Journal.Clear();
-            Misc.SendMessage("Journal Cleared");
+            //Misc.SendMessage("Journal Cleared");
         }
         public static bool Search(string text)
         {
