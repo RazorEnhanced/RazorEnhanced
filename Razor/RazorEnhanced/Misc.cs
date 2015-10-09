@@ -74,5 +74,10 @@ namespace RazorEnhanced
             ClientCommunication.SendToServer(new ContextMenuRequest(item.Serial));
             ClientCommunication.SendToServer(new ContextMenuResponse(item.Serial, (ushort)idx));
         }
+        public static void NoOperation()
+        {
+            return;
+        }
+
 	}
 }
