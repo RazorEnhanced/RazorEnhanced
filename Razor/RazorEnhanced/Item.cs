@@ -532,6 +532,48 @@ namespace RazorEnhanced
 				return enhancedItem;
 			}
 		}
+
+        public static void Lift(Item item, int amount)
+        {
+            if (item == null)
+            {
+                Misc.SendMessage("Script Error: Move: Source Item  not found");
+                return;
+            }
+            if (amount == 0)
+            {
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+            }
+            else
+            {
+                if (item.Amount < amount)
+                {
+                    amount = item.Amount;
+                }
+                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+            }
+        }
+
+        public static void DropFromHand(Item item, Item bag)
+        {
+            if (item == null)
+            {
+                Misc.SendMessage("Script Error: Move: Source Item  not found");
+                return;
+            }
+            if (bag == null)
+            {
+                Misc.SendMessage("Script Error: Move: Destination Item not found");
+                return;
+            }
+            if (!bag.IsContainer)
+            {
+                Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+                return;
+            }
+            Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+        }
+
 		public static void Move(Item item, Item bag, int amount)
 		{
 			if (item == null)
