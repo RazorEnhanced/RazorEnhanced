@@ -68,21 +68,17 @@ namespace RazorEnhanced.UI
 				string content = ent.ToString();
 				listBoxAttributes.Items.Add(content);
 			}
+
+            if (mobileTarg.ObjPropList.Content.Count == 0)
+            {
+                lName.Text = mobileTarg.Name.ToString();
+                listBoxAttributes.Items.Add("No Props Readed!");
+            }
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			this.Close();
-		}
-
-		private void lName_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void EnhancedItemInspect_Load(object sender, EventArgs e)
-		{
-
 		}
 
 		private void bNameCopy_Click(object sender, EventArgs e)

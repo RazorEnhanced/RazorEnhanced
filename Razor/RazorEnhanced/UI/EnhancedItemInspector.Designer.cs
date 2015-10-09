@@ -105,7 +105,6 @@
 			this.lName.Size = new System.Drawing.Size(23, 13);
 			this.lName.TabIndex = 17;
 			this.lName.Text = "null";
-			this.lName.Click += new System.EventHandler(this.lName_Click);
 			// 
 			// lSerial
 			// 
@@ -410,7 +409,6 @@
 			this.groupBox3.TabIndex = 9;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Attributes";
-			this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
 			// 
 			// listBoxAttributes
 			// 
@@ -461,7 +459,6 @@
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "EnhancedItemInspector";
 			this.Text = "Enhanced Item Inspector";
-			this.Load += new System.EventHandler(this.EnhancedItemInspect_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);

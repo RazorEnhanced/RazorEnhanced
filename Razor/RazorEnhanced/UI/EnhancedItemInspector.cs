@@ -57,32 +57,30 @@ namespace RazorEnhanced.UI
 			lLayer.Text = itemTarg.Layer.ToString();
 
 			// Attributes
-			for (int i =0; i<itemTarg.ObjPropList.Content.Count;i++)
-			{
-				Assistant.ObjectPropertyList.OPLEntry ent = itemTarg.ObjPropList.Content[i];
-                if (i == 0)
-                    if (ent.ToString() == null)
-                        lName.Text = itemTarg.Name.ToString();
-                    else
-                        lName.Text = ent.ToString();
-				string content = ent.ToString();
-				listBoxAttributes.Items.Add(content);
-			}
+            if (itemTarg.ObjPropList.Content.Count > 0)
+            {
+                for (int i = 0; i < itemTarg.ObjPropList.Content.Count; i++)
+                {
+                    Assistant.ObjectPropertyList.OPLEntry ent = itemTarg.ObjPropList.Content[i];
+                    if (i == 0)
+                        if (ent.ToString() == null)
+                            lName.Text = itemTarg.Name.ToString();
+                        else
+                            lName.Text = ent.ToString();
+                    string content = ent.ToString();
+                    listBoxAttributes.Items.Add(content);
+                }
+            }
+            else
+            {
+                lName.Text = itemTarg.Name.ToString();
+                listBoxAttributes.Items.Add("No Props Readed!");
+            }           
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			this.Close();
-		}
-
-		private void lName_Click(object sender, EventArgs e)
-		{
-
-		}
-
-		private void EnhancedItemInspect_Load(object sender, EventArgs e)
-		{
-
 		}
 
 		private void bNameCopy_Click(object sender, EventArgs e)
@@ -135,9 +133,5 @@ namespace RazorEnhanced.UI
 			Clipboard.SetText(lOwned.Text);
 		}
 
-		private void groupBox3_Enter(object sender, EventArgs e)
-		{
-
-		}
 	}
 }
