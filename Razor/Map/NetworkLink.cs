@@ -118,12 +118,34 @@ namespace Assistant.MapUO
                         UData = new List<MapNetworkIn.UserData>();
                         serverStream.Flush();
                         AddLog("- Login Succesfull");
-                        if (File.Exists(Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip"))
+
+                        if (bytesFrom[3] == 1)
                         {
-                            AddLog("- Delete old datafile");
-                            File.Delete(Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip");
+                            AddLog("- Server require a datafile download");
+                            short URLlenght = bytesFrom[4];
+                            string URL = Encoding.Default.GetString(bytesFrom, 5, URLlenght);
+                            WebClient webClient = new WebClient();
+                            AddLog("- Start Download...");
+                            webClient.DownloadFile(URL, Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip");
+                            AddLog("- Download Done!");
+                            Decompress();
                         }
-                        RecTCPFile(Path.GetDirectoryName(Application.ExecutablePath) + "//mapdata.zip", serverStream);
+
+                        AddLog("- Start Parsing Datafile");
+                        ClearAll();
+                        MapIcon.ParseImageFile();
+                        MapIcon.IconTreasurePFList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\TreasurePF.def");
+                        MapIcon.IconTreasureList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\Treasure.def");
+                        MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\TokunoIslands.def");
+                        MapIcon.IconStealablesList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\Stealables.def");
+                        MapIcon.IconRaresList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\Rares.def");
+                        MapIcon.IconPersonalList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\Personal.def");
+                        MapIcon.IconOldHavenList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\OldHaven.def");
+                        MapIcon.IconNewHavenList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\NewHaven.def");
+                        MapIcon.IconMLList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\ML.def");
+                        MapIcon.IconDungeonsList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\Dungeons.def");
+                        MapIcon.IconcommonList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\common.def");
+                        MapIcon.IconAtlasList = MapIcon.ParseDataFile(Path.GetDirectoryName(Application.ExecutablePath) + "\\Definitions\\Atlas.def");
 
                         AddLog("- Start Read Thread");
                         InThreadFlag = true;
@@ -156,114 +178,87 @@ namespace Assistant.MapUO
             AddLog("- Connection Thread End");
         }
 
-        private static void RecTCPFile(string filename, NetworkStream serverStream)
+        private static void Decompress()
         {
-            AddLog("- Incoming Data File");
-            byte[] RecData = new byte[1024];
-            int RecBytes;
-            int totalrecbytes = 0;
-            FileStream Fs = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write);
-            while (true)
+            ClearAll();
+
+            if (Directory.Exists("Icon\\"))
             {
-                RecBytes = serverStream.Read(RecData, 0, RecData.Length);
-                serverStream.Flush();
-                List<byte> data = new List<byte>();
-                data.Add(0xFF);
-                data.Add(0xFF);
-                byte[] outStream = data.ToArray();
-                serverStream.Write(outStream, 0, outStream.Length);
-                serverStream.Flush();
-                if (RecData[0] == 0xFE && RecData[1] == 0xFE && RecData[2] == 0xFE && RecData[3] == 0xFE) // End data file
+                string[] fileEntries = Directory.GetFiles("Icon\\");
+                foreach (string fileName in fileEntries)
                 {
-                    break;
+                    if (fileName.EndsWith(".tmp", StringComparison.Ordinal))
+                    {
+                        File.Delete(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + fileName);
+                    }
                 }
-                else
-                {
-                    Fs.Write(RecData, 0, RecBytes);
-                    totalrecbytes += RecBytes;
-
-                }
-                RecData = new byte[1024];
             }
-            Fs.Close();
-            AddLog("- Data file recevied: " + totalrecbytes);
-            Decompress(new FileInfo(filename));
-        }
 
-        private static void Decompress(FileInfo fi)
-        {
-            AddLog("- Start Decompress Data file: " + fi.Name);
+            if (Directory.Exists("Definitions\\"))
+            {
+                string[] fileEntries = Directory.GetFiles("Definitions\\");
+                foreach (string fileName in fileEntries)
+                {
+                    if (fileName.EndsWith(".tmp", StringComparison.Ordinal))
+                    {
+                        File.Delete(Path.GetDirectoryName(Application.ExecutablePath) + "\\" + fileName);
+                    }
+                }
+            }
+
+            string filename = Path.GetDirectoryName(Application.ExecutablePath) + "\\mapdata.zip";
+            AddLog("- Start Decompress Data file: " + filename);
             try
             {
-                using (ZipFile zip = ZipFile.Read(fi.Name))
-                {
-                    zip.ExtractAll(Path.GetDirectoryName(Application.ExecutablePath), ExtractExistingFileAction.OverwriteSilently);
-                }
-                AddLog("- Done Decompress Data file: " + fi.Name);
-                AddLog("- Start Parsing Datafile");
-                MapIcon.ParseImageFile();
-                MapIcon.IconTreasurePFList = MapIcon.ParseDataFile("TreasurePF.def");
-                MapIcon.IconTreasureList = MapIcon.ParseDataFile("Treasure.def");
-                MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile("TokunoIslands.def");
-                MapIcon.IconStealablesList = MapIcon.ParseDataFile("Stealables.def");
-                MapIcon.IconRaresList = MapIcon.ParseDataFile("Rares.def");
-                MapIcon.IconPersonalList = MapIcon.ParseDataFile("Personal.def");
-                MapIcon.IconOldHavenList = MapIcon.ParseDataFile("OldHaven.def");
-                MapIcon.IconNewHavenList = MapIcon.ParseDataFile("NewHaven.def");
-                MapIcon.IconMLList = MapIcon.ParseDataFile("ML.def");
-                MapIcon.IconDungeonsList = MapIcon.ParseDataFile("Dungeons.def");
-                MapIcon.IconcommonList = MapIcon.ParseDataFile("common.def");
-                MapIcon.IconAtlasList = MapIcon.ParseDataFile("Atlas.def");
+                ZipFile zip = ZipFile.Read(filename);
+                zip.ExtractAll(Path.GetDirectoryName(Application.ExecutablePath), ExtractExistingFileAction.OverwriteSilently);
+                AddLog("- Done Decompress Data file: " + filename);
+                zip.Dispose();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-                AddLog("- Fail Decompress Data file: " + fi.Name);
+                AddLog("- Fail Decompress Data file: " + filename);
             }
         }
 
-        internal static void Init()
+        internal static void ClearAll()
         {
             UData = new List<MapNetworkIn.UserData>();
-            MapIcon.ParseImageFile();
-
+            MapIcon.IconImage.Clear();
             MapIcon.IconTreasurePFList.Clear();
-            MapIcon.IconTreasurePFList = MapIcon.ParseDataFile("TreasurePF.def");
-
             MapIcon.IconTreasureList.Clear();
-            MapIcon.IconTreasureList = MapIcon.ParseDataFile("Treasure.def");
-
             MapIcon.IconTokunoIslandsList.Clear();
-            MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile("TokunoIslands.def");
-
             MapIcon.IconStealablesList.Clear();
-            MapIcon.IconStealablesList = MapIcon.ParseDataFile("Stealables.def");
-
             MapIcon.IconRaresList.Clear();
-            MapIcon.IconRaresList = MapIcon.ParseDataFile("Rares.def");
-
             MapIcon.IconPersonalList.Clear();
-            MapIcon.IconPersonalList = MapIcon.ParseDataFile("Personal.def");
-
+            MapIcon.IconPersonalList.Clear();
             MapIcon.IconOldHavenList.Clear();
-            MapIcon.IconOldHavenList = MapIcon.ParseDataFile("OldHaven.def");
-
             MapIcon.IconNewHavenList.Clear();
-            MapIcon.IconNewHavenList = MapIcon.ParseDataFile("NewHaven.def");
-
             MapIcon.IconMLList.Clear();
-            MapIcon.IconMLList = MapIcon.ParseDataFile("ML.def");
-
             MapIcon.IconDungeonsList.Clear();
-            MapIcon.IconDungeonsList = MapIcon.ParseDataFile("Dungeons.def");
-
             MapIcon.IconcommonList.Clear();
-            MapIcon.IconcommonList = MapIcon.ParseDataFile("common.def");
-
             MapIcon.IconAtlasList.Clear();
-            MapIcon.IconAtlasList = MapIcon.ParseDataFile("Atlas.def");
-
             MapIcon.AllListOfBuilds.Clear();
+            Assistant.MapUO.Region.RegionLists.Clear();
+        }
+        internal static void Init()
+        {
+            ClearAll();
+            MapIcon.ParseImageFile();
+            MapIcon.IconTreasurePFList = MapIcon.ParseDataFile("TreasurePF.def");         
+            MapIcon.IconTreasureList = MapIcon.ParseDataFile("Treasure.def");
+            MapIcon.IconTokunoIslandsList = MapIcon.ParseDataFile("TokunoIslands.def");
+            MapIcon.IconStealablesList = MapIcon.ParseDataFile("Stealables.def");
+            MapIcon.IconRaresList = MapIcon.ParseDataFile("Rares.def");
+            MapIcon.IconPersonalList = MapIcon.ParseDataFile("Personal.def");
+            MapIcon.IconOldHavenList = MapIcon.ParseDataFile("OldHaven.def");
+            MapIcon.IconNewHavenList = MapIcon.ParseDataFile("NewHaven.def");
+            MapIcon.IconMLList = MapIcon.ParseDataFile("ML.def");
+            MapIcon.IconDungeonsList = MapIcon.ParseDataFile("Dungeons.def");
+            MapIcon.IconcommonList = MapIcon.ParseDataFile("common.def");
+            MapIcon.IconAtlasList = MapIcon.ParseDataFile("Atlas.def");
+            
             MapIcon.AllListOfBuilds.Add(MapIcon.IconAtlasList);
             MapIcon.AllListOfBuilds.Add(MapIcon.IconcommonList);
             MapIcon.AllListOfBuilds.Add(MapIcon.IconDungeonsList);
@@ -276,7 +271,6 @@ namespace Assistant.MapUO
             MapIcon.AllListOfBuilds.Add(MapIcon.IconTreasureList);
             MapIcon.AllListOfBuilds.Add(MapIcon.IconTreasurePFList);
 
-            Assistant.MapUO.Region.RegionLists.Clear();
             Assistant.MapUO.Region.Load("guardlines.def");
         }
 
@@ -314,19 +308,25 @@ namespace Assistant.MapUO
 
         internal static void LockItem()
         {
-            Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = false));
-            Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = false));
-            Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = false));
-            Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = false));
-            Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = false));
+            if (Engine.Running)
+            {
+                Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = false));
+                Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = false));
+                Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = false));
+                Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = false));
+                Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = false));
+            }
         }
         internal static void UnLockItem()
         {
-            Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = true));
-            Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = true));
-            Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = true));
-            Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = true));
-            Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = true));
+            if (Engine.Running)
+            {
+                Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = true));
+                Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = true));
+                Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = true));
+                Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = true));
+                Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = true));
+            }
         }
 
         private static IPAddress Resolve(string addr)

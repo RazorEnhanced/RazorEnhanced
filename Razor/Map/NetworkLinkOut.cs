@@ -14,8 +14,6 @@ namespace Assistant.MapUO
 {
 	internal class MapNetworkOut
 	{
-        internal static bool SendSleep = false;
-
         public class SendCoord
         {    
             private int m_x;
@@ -176,7 +174,6 @@ namespace Assistant.MapUO
                             MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
                             MapNetwork.serverStream.Flush();
                             data.Clear();
-                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
                         }
                     }
 
@@ -201,7 +198,6 @@ namespace Assistant.MapUO
                             MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
                             MapNetwork.serverStream.Flush();
                             data.Clear();
-                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
                         }
                     }
 
@@ -219,8 +215,6 @@ namespace Assistant.MapUO
                         MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
                         MapNetwork.serverStream.Flush();
                         data.Clear();
-                        Sleep(); // Attende risposta dall'altro thread di packet ricevuto
-
                     }
 
                     // Processo send DeathPoint 
@@ -241,7 +235,6 @@ namespace Assistant.MapUO
 
                             SendDeathPointFlag = false;
                             data.Clear();
-                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
                         }
                     }
 
@@ -263,7 +256,6 @@ namespace Assistant.MapUO
 
                             SendPanicFlag = false;
                             data.Clear();
-                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
                         }
                     }
 
@@ -285,7 +277,6 @@ namespace Assistant.MapUO
                             MapNetwork.serverStream.Write(outStream, 0, outStream.Length);
                             MapNetwork.serverStream.Flush();
                             data.Clear();
-                            Sleep(); // Attende risposta dall'altro thread di packet ricevuto
                         }
                     }
 
@@ -299,17 +290,5 @@ namespace Assistant.MapUO
             }
             MapNetwork.AddLog("Write Thread Exit");
         }
-
-        private static void Sleep()
-        {
-            SendSleep = true;
-            int timeout = 1000;
-            while (SendSleep || timeout < 0)
-            {
-                Thread.Sleep(1);
-                timeout -= 1;
-            }
-        }
-       
 	}
 }

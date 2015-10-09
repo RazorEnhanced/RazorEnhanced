@@ -172,7 +172,6 @@ namespace Assistant.MapUO
                     {
                         case 3:         // Ricevuta risposta da send
                             {
-                                MapNetworkOut.SendSleep = false;
                                 MapNetwork.serverStream.Flush();
                                 break;
                             }

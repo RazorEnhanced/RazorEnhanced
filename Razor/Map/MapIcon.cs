@@ -77,7 +77,7 @@ namespace Assistant.MapUO
                 foreach (string fileName in fileEntries)
                 {
 
-                    if (fileName.EndsWith(".gif", StringComparison.Ordinal))
+                    if (fileName.EndsWith(".png", StringComparison.Ordinal))
                     {
                         string nameex = fileName.Substring(fileName.LastIndexOf('\\') + 1);
                         string name = nameex.Substring(0, nameex.IndexOf("."));
@@ -111,7 +111,7 @@ namespace Assistant.MapUO
 
                     if (!IconImage.ContainsKey(items[0]))
                     {
-                        MapNetwork.AddLog("- Missing Icon file : " + items[0] + ".gif");
+                        MapNetwork.AddLog("- Missing Icon file : " + items[0] + ".png");
                         continue;
                     }
 
