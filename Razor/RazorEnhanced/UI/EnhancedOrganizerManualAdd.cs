@@ -1,15 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ScintillaNET;
-using System.IO;
-using Assistant;
 
 
 namespace RazorEnhanced.UI
@@ -49,7 +39,7 @@ namespace RazorEnhanced.UI
 			int graphics = 0;
 			int color = -1;
 			int amount = -1;
-			
+
 			if (tName.Text == null)
 			{
 				MessageBox.Show("Item name is not valid.",

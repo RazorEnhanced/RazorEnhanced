@@ -9,80 +9,80 @@ using System.Runtime.InteropServices;
 
 namespace ScintillaNET
 {
-    [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        #region Fields
+	[Serializable, StructLayout(LayoutKind.Sequential)]
+	public struct RECT
+	{
+		#region Fields
 
-        public int Left;
-        public int Top;
-        public int Right;
-        public int Bottom;
+		public int Left;
+		public int Top;
+		public int Right;
+		public int Bottom;
 
-        #endregion Fields
-
-
-        #region Properties
-
-        public int Height { get { return Bottom - Top; } }
-        public Point Location { get { return new Point(Left, Top); } }
-        public Size Size { get { return new Size(Width, Height); } }
-        public int Width { get { return Right - Left; } }
-
-        #endregion Properties
+		#endregion Fields
 
 
-        #region Methods
+		#region Properties
 
-        public static RECT FromRectangle(Rectangle rectangle)
-        {
-            return new RECT(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
-        }
+		public int Height { get { return Bottom - Top; } }
+		public Point Location { get { return new Point(Left, Top); } }
+		public Size Size { get { return new Size(Width, Height); } }
+		public int Width { get { return Right - Left; } }
 
-
-        public override int GetHashCode()
-        {
-            return Left ^ ((Top << 13) | (Top >> 0x13))
-              ^ ((Width << 0x1a) | (Width >> 6))
-              ^ ((Height << 7) | (Height >> 0x19));
-        }
+		#endregion Properties
 
 
-        // Handy method for converting to a System.Drawing.Rectangle
-        public Rectangle ToRectangle()
-        {
-            return Rectangle.FromLTRB(Left, Top, Right, Bottom);
-        }
+		#region Methods
 
-        #endregion Methods
-
-
-        #region Operators
-
-        public static implicit operator RECT(Rectangle rect)
-        {
-            return FromRectangle(rect);
-        }
+		public static RECT FromRectangle(Rectangle rectangle)
+		{
+			return new RECT(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
+		}
 
 
-        public static implicit operator Rectangle(RECT rect)
-        {
-            return rect.ToRectangle();
-        }
+		public override int GetHashCode()
+		{
+			return Left ^ ((Top << 13) | (Top >> 0x13))
+			  ^ ((Width << 0x1a) | (Width >> 6))
+			  ^ ((Height << 7) | (Height >> 0x19));
+		}
 
-        #endregion Operators
+
+		// Handy method for converting to a System.Drawing.Rectangle
+		public Rectangle ToRectangle()
+		{
+			return Rectangle.FromLTRB(Left, Top, Right, Bottom);
+		}
+
+		#endregion Methods
 
 
-        #region Constructors
+		#region Operators
 
-        public RECT(int left_, int top_, int right_, int bottom_)
-        {
-            Left = left_;
-            Top = top_;
-            Right = right_;
-            Bottom = bottom_;
-        }
+		public static implicit operator RECT(Rectangle rect)
+		{
+			return FromRectangle(rect);
+		}
 
-        #endregion Constructors
-    } 
+
+		public static implicit operator Rectangle(RECT rect)
+		{
+			return rect.ToRectangle();
+		}
+
+		#endregion Operators
+
+
+		#region Constructors
+
+		public RECT(int left_, int top_, int right_, int bottom_)
+		{
+			Left = left_;
+			Top = top_;
+			Right = right_;
+			Bottom = bottom_;
+		}
+
+		#endregion Constructors
+	}
 }

@@ -1,5 +1,3 @@
-using System;
-
 namespace RazorEnhanced
 {
 	public struct Point2D
@@ -9,7 +7,7 @@ namespace RazorEnhanced
 		internal static readonly Point2D Zero = new Point2D(new Assistant.Point2D(0, 0));
 		internal static readonly Point2D MinusOne = new Point2D(new Assistant.Point2D(-1, -1));
 
-		internal Point2D( Assistant.Point2D point2D )
+		internal Point2D(Assistant.Point2D point2D)
 		{
 			m_AssistantPoint2D = point2D;
 		}

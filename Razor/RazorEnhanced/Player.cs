@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Assistant;
+using System;
 using System.Collections.Generic;
-using Assistant;
 
 namespace RazorEnhanced
 {
@@ -35,9 +35,9 @@ namespace RazorEnhanced
 		// Self
 		public static bool Female { get { return Assistant.World.Player.Female; } }
 		public static String Name { get { return Assistant.World.Player.Name; } }
-        public static byte Notoriety { get { return Assistant.World.Player.Notoriety; } }
+		public static byte Notoriety { get { return Assistant.World.Player.Notoriety; } }
 
-        public static Item Backpack
+		public static Item Backpack
 		{
 			get
 			{
@@ -52,7 +52,7 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static Item Bank
+		public static Item Bank
 		{
 			get
 			{
@@ -67,7 +67,7 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static Item Quiver
+		public static Item Quiver
 		{
 			get
 			{
@@ -82,7 +82,7 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static Item Mount
+		public static Item Mount
 		{
 			get
 			{
@@ -464,15 +464,15 @@ namespace RazorEnhanced
 				return buffs;
 			}
 		}
-        public static bool BuffsExist(string buffname)
-        {
-            foreach (ushort icon in Assistant.World.Player.Buffs)
-            {
-                if (icon.ToString() == buffname)
-                      return true;
-            }
-            return false;
-        }
+		public static bool BuffsExist(string buffname)
+		{
+			foreach (ushort icon in Assistant.World.Player.Buffs)
+			{
+				if (icon.ToString() == buffname)
+					return true;
+			}
+			return false;
+		}
 		// Layer
 		internal static Assistant.Layer GetAssistantLayer(string layer)
 		{
@@ -617,25 +617,25 @@ namespace RazorEnhanced
 			}
 		}
 
-        public Item GetItemOnLayer(String layer)
-        {
-            Assistant.Layer assistantLayer = GetAssistantLayer(layer);
+		public Item GetItemOnLayer(String layer)
+		{
+			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
 
-            Assistant.Item assistantItem = null;
-            if (assistantLayer != Assistant.Layer.Invalid)
-            {
-                assistantItem = Assistant.World.Player.GetItemOnLayer(assistantLayer);
-                if (assistantItem == null)
-                    return null;
-                else
-                {
-                    RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
-                    return enhancedItem;
-                }
-            }
-            else
-                return null;
-        }
+			Assistant.Item assistantItem = null;
+			if (assistantLayer != Assistant.Layer.Invalid)
+			{
+				assistantItem = Assistant.World.Player.GetItemOnLayer(assistantLayer);
+				if (assistantItem == null)
+					return null;
+				else
+				{
+					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
+					return enhancedItem;
+				}
+			}
+			else
+				return null;
+		}
 
 		// Skill
 		public static double GetSkillValue(string skillname)
@@ -1398,22 +1398,22 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
 		}
 
-        // Paperdool button click
-        public static void QuestButton()
+		// Paperdool button click
+		public static void QuestButton()
 		{
-            Assistant.ClientCommunication.SendToServer(new QuestButton(World.Player.Serial));
+			Assistant.ClientCommunication.SendToServer(new QuestButton(World.Player.Serial));
 		}
-        public static void GuildButton()
-        {
-            Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
-        }
+		public static void GuildButton()
+		{
+			Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
+		}
 
-        // open bank
-        public static void OpenBank(string text)
-        {
-            List<ushort> kw = new List<ushort> { 16, 2 };
-            ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
-        }
+		// open bank
+		public static void OpenBank(string text)
+		{
+			List<ushort> kw = new List<ushort> { 16, 2 };
+			ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
+		}
 
 	}
 }

@@ -1,68 +1,60 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using System.IO;
+using System.Windows.Forms;
 
 
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedOrganizerAddList : Form
 	{
-        private const string m_Title = "Enhanced Organizer Add Item List";
-        
-        public EnhancedOrganizerAddList()
+		private const string m_Title = "Enhanced Organizer Add Item List";
+
+		public EnhancedOrganizerAddList()
 		{
 			InitializeComponent();
-            MaximizeBox = false;
+			MaximizeBox = false;
 
-			this.Text = m_Title;           
+			this.Text = m_Title;
 		}
 
-        private void EnhancedAutolootAddItemList_Load(object sender, EventArgs e)
-        {
-        }
+		private void EnhancedAutolootAddItemList_Load(object sender, EventArgs e)
+		{
+		}
 
-        private void organizercloseItemList_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
+		private void organizercloseItemList_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
 
-        private void organizeraddItemList_Click(object sender, EventArgs e)
-        {
-            bool fail = false;
-            string newList = "";
+		private void organizeraddItemList_Click(object sender, EventArgs e)
+		{
+			bool fail = false;
+			string newList = "";
 
-            if (organizerListToAdd.Text == "")
-                fail = true;
+			if (organizerListToAdd.Text == "")
+				fail = true;
 
-            if (!Regex.IsMatch(organizerListToAdd.Text, "^[a-zA-Z0-9_]+$"))
-                fail = true;
+			if (!Regex.IsMatch(organizerListToAdd.Text, "^[a-zA-Z0-9_]+$"))
+				fail = true;
 
 			newList = organizerListToAdd.Text.ToLower();
 			if (RazorEnhanced.Settings.Organizer.ListExists(newList))
 				fail = true;
 
-            if (fail)
-            {
-                MessageBox.Show("Invalid list name!",
-                "Invalid list name!",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Exclamation,
-                MessageBoxDefaultButton.Button1);
-                fail = true;
-            }
-            else
-            {
+			if (fail)
+			{
+				MessageBox.Show("Invalid list name!",
+				"Invalid list name!",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Exclamation,
+				MessageBoxDefaultButton.Button1);
+				fail = true;
+			}
+			else
+			{
 				Organizer.AddList(newList);
 				this.Close();
-            }
-        }
+			}
+		}
 	}
 }

@@ -1,8 +1,7 @@
 using System;
-using System.Xml;
-using System.Text;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
 
 namespace Assistant
 {
@@ -17,25 +16,25 @@ namespace Assistant
 			internal IPAddress Address;
 		}
 
-        [Serializable]
-        internal class PasswordData
-        {
-            private string m_IP;
-            public string IP { get { return m_IP; } }
+		[Serializable]
+		internal class PasswordData
+		{
+			private string m_IP;
+			public string IP { get { return m_IP; } }
 
-            private string m_User;
-            public string User { get { return m_User; } }
+			private string m_User;
+			public string User { get { return m_User; } }
 
-            private string m_Password;
-            public string Password { get { return m_Password; } }
+			private string m_Password;
+			public string Password { get { return m_Password; } }
 
-            public PasswordData(string ip, string user, string password)
-            {
-                m_IP = ip;
-                m_User = user;
-                m_Password = password;
-            }
-        }
+			public PasswordData(string ip, string user, string password)
+			{
+				m_IP = ip;
+				m_User = user;
+				m_Password = password;
+			}
+		}
 
 		private static List<Entry> m_List = new List<Entry>();
 
@@ -110,26 +109,26 @@ namespace Assistant
 		{
 			ClearAll();
 
-            List<PasswordData> allpassword = RazorEnhanced.Settings.Password.RealAll();
+			List<PasswordData> allpassword = RazorEnhanced.Settings.Password.RealAll();
 
-            foreach (PasswordData password in allpassword)
-            {
-                if (password.Password == null)
-                    continue;
-                m_List.Add(new Entry(password.User, password.Password, IPAddress.Parse(password.IP)));
-            }
+			foreach (PasswordData password in allpassword)
+			{
+				if (password.Password == null)
+					continue;
+				m_List.Add(new Entry(password.User, password.Password, IPAddress.Parse(password.IP)));
+			}
 		}
 
 		internal static void Save()
 		{
-            List<PasswordData> pdata = new List<PasswordData>();
+			List<PasswordData> pdata = new List<PasswordData>();
 			foreach (Entry e in m_List)
 			{
-                if (e.Pass != String.Empty)
-                    pdata.Add(new PasswordData(e.Address.ToString(), e.User, e.Pass));
+				if (e.Pass != String.Empty)
+					pdata.Add(new PasswordData(e.Address.ToString(), e.User, e.Pass));
 			}
 
-            RazorEnhanced.Settings.Password.Insert(pdata);
+			RazorEnhanced.Settings.Password.Insert(pdata);
 		}
 
 		internal static void ClearAll()

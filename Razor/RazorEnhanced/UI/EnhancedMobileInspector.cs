@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace RazorEnhanced.UI
 {
@@ -69,11 +61,11 @@ namespace RazorEnhanced.UI
 				listBoxAttributes.Items.Add(content);
 			}
 
-            if (mobileTarg.ObjPropList.Content.Count == 0)
-            {
-                lName.Text = mobileTarg.Name.ToString();
-                listBoxAttributes.Items.Add("No Props Readed!");
-            }
+			if (mobileTarg.ObjPropList.Content.Count == 0)
+			{
+				lName.Text = mobileTarg.Name.ToString();
+				listBoxAttributes.Items.Add("No Props Readed!");
+			}
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)

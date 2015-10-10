@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Assistant;
-
-namespace Assistant
+﻿namespace Assistant
 {
 	internal enum BuffIcon : ushort
 	{

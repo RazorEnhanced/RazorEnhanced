@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using System.IO;
-using System.Reflection;
-using System.Threading;
-
+﻿using Assistant;
 using IronPython.Hosting;
-using Microsoft.Scripting.Hosting;
 using IronPython.Runtime.Exceptions;
-
-using Assistant;
-using IronPython.Runtime;
+using Microsoft.Scripting.Hosting;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -42,7 +37,7 @@ namespace RazorEnhanced
 					{
 						m_Source.Execute(m_Scope);
 					}
-					catch 
+					catch
 					{
 						Scripts.Auto = false;
 						Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
@@ -100,11 +95,11 @@ namespace RazorEnhanced
 
 		internal class ScriptTimer : Assistant.Timer
 		{
-            private Thread m_AutoLootThread;
+			private Thread m_AutoLootThread;
 			private Thread m_ScavengerThread;
-            private Thread m_BandageHealThread;
-            private Thread m_AutoCarverThread;
-            private Thread m_DragDropThread;
+			private Thread m_BandageHealThread;
+			private Thread m_AutoCarverThread;
+			private Thread m_DragDropThread;
 
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
@@ -122,7 +117,7 @@ namespace RazorEnhanced
 				}
 
 
-                if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
+				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
 					if (m_AutoLootThread == null ||
 						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
@@ -130,20 +125,20 @@ namespace RazorEnhanced
 						m_AutoLootThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 					{
-                        try
-                        {
-                            m_AutoLootThread = new Thread(AutoLoot.Engine);
-                            m_AutoLootThread.Start();
-                        }
-                        catch
-                        {
-                            AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
-                        }
+						try
+						{
+							m_AutoLootThread = new Thread(AutoLoot.Engine);
+							m_AutoLootThread.Start();
+						}
+						catch
+						{
+							AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
+						}
 					}
-                    Thread.Sleep(5);
+					Thread.Sleep(5);
 				}
 
-                if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running)
+				if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
 					if (m_ScavengerThread == null ||
 						(m_ScavengerThread != null && m_ScavengerThread.ThreadState != ThreadState.Running &&
@@ -151,76 +146,76 @@ namespace RazorEnhanced
 						m_ScavengerThread.ThreadState != ThreadState.WaitSleepJoin)
 					)
 					{
-                        try
-                        {
-                            m_ScavengerThread = new Thread(Scavenger.Engine);
-                            m_ScavengerThread.Start();
-                        }
-                        catch
-                        {
-                            Scavenger.AddLog("Error in Scaveger Thread, Restart");
-                        }
+						try
+						{
+							m_ScavengerThread = new Thread(Scavenger.Engine);
+							m_ScavengerThread.Start();
+						}
+						catch
+						{
+							Scavenger.AddLog("Error in Scaveger Thread, Restart");
+						}
 					}
-                    Thread.Sleep(5);
+					Thread.Sleep(5);
 				}
 
-                if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running)
-                {
-                    if (m_BandageHealThread == null ||
-                        (m_BandageHealThread != null && m_BandageHealThread.ThreadState != ThreadState.Running &&
-                        m_BandageHealThread.ThreadState != ThreadState.Unstarted &&
-                        m_BandageHealThread.ThreadState != ThreadState.WaitSleepJoin)
-                    )
-                    {
-                        try
-                        {
-                            m_BandageHealThread = new Thread(BandageHeal.Engine);
-                            m_BandageHealThread.Start();
-                        }
-                        catch
-                        {
-                            BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
-                        }
-                    }
-                    Thread.Sleep(5);
-                }
+				if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running)
+				{
+					if (m_BandageHealThread == null ||
+						(m_BandageHealThread != null && m_BandageHealThread.ThreadState != ThreadState.Running &&
+						m_BandageHealThread.ThreadState != ThreadState.Unstarted &&
+						m_BandageHealThread.ThreadState != ThreadState.WaitSleepJoin)
+					)
+					{
+						try
+						{
+							m_BandageHealThread = new Thread(BandageHeal.Engine);
+							m_BandageHealThread.Start();
+						}
+						catch
+						{
+							BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
+						}
+					}
+					Thread.Sleep(5);
+				}
 
-                if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
-                {
-                    if (m_AutoCarverThread == null ||
-                        (m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
-                        m_AutoCarverThread.ThreadState != ThreadState.Unstarted &&
-                        m_AutoCarverThread.ThreadState != ThreadState.WaitSleepJoin)
-                    )
-                    {
-                        try
-                        {
-                            m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
-                            m_AutoCarverThread.Start();
-                        }
-                        catch
-                        { }
-                    }
-                    Thread.Sleep(5);
-                }
+				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
+				{
+					if (m_AutoCarverThread == null ||
+						(m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
+						m_AutoCarverThread.ThreadState != ThreadState.Unstarted &&
+						m_AutoCarverThread.ThreadState != ThreadState.WaitSleepJoin)
+					)
+					{
+						try
+						{
+							m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
+							m_AutoCarverThread.Start();
+						}
+						catch
+						{ }
+					}
+					Thread.Sleep(5);
+				}
 
-                if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
-                {
-                    if (m_DragDropThread == null ||
-                           (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
-                           m_DragDropThread.ThreadState != ThreadState.Unstarted &&
-                           m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
-                       )
-                    {
-                        try
-                        {
-                            m_DragDropThread = new Thread(DragDropManager.Engine);
-                            m_DragDropThread.Start();
-                        }
-                        catch
-                        { }
-                    }
-                }
+				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
+				{
+					if (m_DragDropThread == null ||
+						   (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
+						   m_DragDropThread.ThreadState != ThreadState.Unstarted &&
+						   m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
+					   )
+					{
+						try
+						{
+							m_DragDropThread = new Thread(DragDropManager.Engine);
+							m_DragDropThread.Start();
+						}
+						catch
+						{ }
+					}
+				}
 			}
 		}
 
@@ -267,20 +262,20 @@ namespace RazorEnhanced
 			scope.SetVariable("Mobiles", new RazorEnhanced.Mobiles());
 			scope.SetVariable("Player", new RazorEnhanced.Player());
 			scope.SetVariable("Spells", new RazorEnhanced.Spells());
-            scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
-            scope.SetVariable("Journal", new RazorEnhanced.Journal());
-            scope.SetVariable("Target", new RazorEnhanced.Target());
-            scope.SetVariable("Pets", new RazorEnhanced.Pets());
+			scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
+			scope.SetVariable("Journal", new RazorEnhanced.Journal());
+			scope.SetVariable("Target", new RazorEnhanced.Target());
+			scope.SetVariable("Pets", new RazorEnhanced.Pets());
 
-            scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
-            scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
-            scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
-            scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
-            scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
-            scope.SetVariable("Dress", new RazorEnhanced.Dress());
-            scope.SetVariable("Friend", new RazorEnhanced.Friend());
-            scope.SetVariable("Restock", new RazorEnhanced.Restock());
-            scope.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
+			scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
+			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
+			scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
+			scope.SetVariable("BuyAgent", new RazorEnhanced.BuyAgent());
+			scope.SetVariable("Organizer", new RazorEnhanced.Organizer());
+			scope.SetVariable("Dress", new RazorEnhanced.Dress());
+			scope.SetVariable("Friend", new RazorEnhanced.Friend());
+			scope.SetVariable("Restock", new RazorEnhanced.Restock());
+			scope.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
 
 			return scope;
 		}
@@ -322,113 +317,114 @@ namespace RazorEnhanced
 		}
 	}
 
-    // Blocco HotKey
-    internal class RunningThreads
-    {
-        private string m_Filename;
-        internal string Filename { 
-            get { return m_Filename; }
-            set { m_Filename = value; }
-        }
-
-        private Thread m_Thread;
-        internal Thread Thread
-        {
-            get { return m_Thread; }
-            set { m_Thread = value; }
-        }
-
-        internal RunningThreads(string filename, Thread thread)
+	// Blocco HotKey
+	internal class RunningThreads
+	{
+		private string m_Filename;
+		internal string Filename
 		{
-			m_Filename = filename;
-            m_Thread = thread;
+			get { return m_Filename; }
+			set { m_Filename = value; }
 		}
 
-    }
+		private Thread m_Thread;
+		internal Thread Thread
+		{
+			get { return m_Thread; }
+			set { m_Thread = value; }
+		}
 
-    internal class EnhancedScriptHotKey
-    {
-        internal static List<RunningThreads> RunningThreadsList = new List<RunningThreads>();
+		internal RunningThreads(string filename, Thread thread)
+		{
+			m_Filename = filename;
+			m_Thread = thread;
+		}
+
+	}
+
+	internal class EnhancedScriptHotKey
+	{
+		internal static List<RunningThreads> RunningThreadsList = new List<RunningThreads>();
 
 
-        internal static void HotKeyStart(string filename)
-        {
-            Thread m_Thread;
-            bool m_run = true;
-            Thread m_oldthread = null;
-            foreach (RunningThreads t in RunningThreadsList)
-            {
-                if (t.Filename == filename)
-                {
-                    m_run = false;
-                    m_oldthread = t.Thread;
-                    break;
-                }
-            }
+		internal static void HotKeyStart(string filename)
+		{
+			Thread m_Thread;
+			bool m_run = true;
+			Thread m_oldthread = null;
+			foreach (RunningThreads t in RunningThreadsList)
+			{
+				if (t.Filename == filename)
+				{
+					m_run = false;
+					m_oldthread = t.Thread;
+					break;
+				}
+			}
 
-            if (m_run)
-            {
-                m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
-                m_Thread.Start(filename);
-                RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
-            }
-            else
-            {
-                if (m_oldthread != null && m_oldthread.ThreadState != ThreadState.Stopped)
-                {
-                    m_oldthread.Abort();
-                    HotKeyScriptDone(filename);
-                    m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
-                    m_Thread.Start(filename);
-                    RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
-                }
-            }
+			if (m_run)
+			{
+				m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
+				m_Thread.Start(filename);
+				RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
+			}
+			else
+			{
+				if (m_oldthread != null && m_oldthread.ThreadState != ThreadState.Stopped)
+				{
+					m_oldthread.Abort();
+					HotKeyScriptDone(filename);
+					m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
+					m_Thread.Start(filename);
+					RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
+				}
+			}
 
-        }
+		}
 
-        private static void HotKeyStartThread(object parameter)
-        {
-            ScriptEngine m_Engine;
-            ScriptScope m_Scope;
-            ScriptSource m_Source;
-            try
-            {
-                m_Engine = Python.CreateEngine();
-                m_Source = m_Engine.CreateScriptSourceFromString(File.ReadAllText((string)parameter));
-                m_Scope = Scripts.GetRazorScope(m_Engine);
-                m_Source.Execute(m_Scope);
-                HotKeyScriptDone((string)parameter);
-            }
-            catch { }
-        }
-        private static void HotKeyScriptDone(string filename)
-        {
-            int i = 0;
-            foreach (RunningThreads t in RunningThreadsList)
-            {
-                if (t.Filename == filename)
-                {
-                    break;
-                }
-                i++;
-            }
-            try
-            {
-                RunningThreadsList.RemoveAt(i);
-            }
-            catch { }
-        }
+		private static void HotKeyStartThread(object parameter)
+		{
+			ScriptEngine m_Engine;
+			ScriptScope m_Scope;
+			ScriptSource m_Source;
+			try
+			{
+				m_Engine = Python.CreateEngine();
+				m_Source = m_Engine.CreateScriptSourceFromString(File.ReadAllText((string)parameter));
+				m_Scope = Scripts.GetRazorScope(m_Engine);
+				m_Source.Execute(m_Scope);
+				HotKeyScriptDone((string)parameter);
+			}
+			catch { }
+		}
+		private static void HotKeyScriptDone(string filename)
+		{
+			int i = 0;
+			foreach (RunningThreads t in RunningThreadsList)
+			{
+				if (t.Filename == filename)
+				{
+					break;
+				}
+				i++;
+			}
+			try
+			{
+				RunningThreadsList.RemoveAt(i);
+			}
+			catch { }
+		}
 
-        internal static void HotKeyStopAll()
-        {
-            foreach (RunningThreads t in RunningThreadsList)
-            {
-                if (t.Thread != null && t.Thread.ThreadState != ThreadState.Stopped)
-                {
-                    t.Thread.Abort();
-                }
-            }
-            RunningThreadsList.Clear();
-        }
-    }
+		internal static void HotKeyStopAll()
+		{
+			foreach (RunningThreads t in RunningThreadsList)
+			{
+				if (t.Thread != null && t.Thread.ThreadState != ThreadState.Stopped)
+				{
+					t.Thread.Abort();
+				}
+			}
+			RunningThreadsList.Clear();
+		}
+	}
 }

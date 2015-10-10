@@ -1,74 +1,70 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
-using System.Text;
-using Assistant;
 
 namespace RazorEnhanced
 {
 	internal class Shard
 	{
 
-        private static string m_Save = "RazorEnhanced-Shard.settings";
-        
-        private static DataSet m_Dataset;
-        internal static DataSet Dataset { get { return m_Dataset; } }
+		private static string m_Save = "RazorEnhanced.shards                              ";
 
-        internal static void Load()
-        {
-            //if (m_Dataset != null)
-            //	return;
+		private static DataSet m_Dataset;
+		internal static DataSet Dataset { get { return m_Dataset; } }
 
-            m_Dataset = new DataSet();
-            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
+		internal static void Load()
+		{
+			//if (m_Dataset != null)
+			//	return;
 
-            if (File.Exists(filename))
-            {
-                try
-                {
-                    m_Dataset.RemotingFormat = SerializationFormat.Binary;
-                    m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-                    Stream stream = File.Open(filename, FileMode.Open);
-                    GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
-                    BinaryFormatter bin = new BinaryFormatter();
-                    m_Dataset = bin.Deserialize(decompress) as DataSet;
-                    decompress.Close();
-                    stream.Close(); 
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error loading " + m_Save + ": " + ex);
-                }
-            }
-            else
-            {
-               
+			m_Dataset = new DataSet();
+			string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
 
-                // ----------- SHARDS ----------
-                DataTable shards = new DataTable("SHARDS");
-                shards.Columns.Add("Description", typeof(string)); // Key
-                shards.Columns.Add("ClientPath", typeof(string));
-                shards.Columns.Add("ClientFolder", typeof(string));
-                shards.Columns.Add("Host", typeof(string));
-                shards.Columns.Add("Port", typeof(int));
-                shards.Columns.Add("PatchEnc", typeof(bool));
-                shards.Columns.Add("OSIEnc", typeof(bool));
-                shards.Columns.Add("Selected", typeof(bool));
+			if (File.Exists(filename))
+			{
+				try
+				{
+					m_Dataset.RemotingFormat = SerializationFormat.Binary;
+					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+					Stream stream = File.Open(filename, FileMode.Open);
+					GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
+					BinaryFormatter bin = new BinaryFormatter();
+					m_Dataset = bin.Deserialize(decompress) as DataSet;
+					decompress.Close();
+					stream.Close();
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show("Error loading " + m_Save + ": " + ex);
+				}
+			}
+			else
+			{
 
-                DataRow uod = shards.NewRow();
-                uod.ItemArray = new object[] { "UODreams", "", "", "login.uodreams.com", 2593, true, false, true };
-                shards.Rows.Add(uod);
-                m_Dataset.Tables.Add(shards);
 
-                m_Dataset.AcceptChanges();
-            }
-        }
+				// ----------- SHARDS ----------
+				DataTable shards = new DataTable("SHARDS");
+				shards.Columns.Add("Description", typeof(string)); // Key
+				shards.Columns.Add("ClientPath", typeof(string));
+				shards.Columns.Add("ClientFolder", typeof(string));
+				shards.Columns.Add("Host", typeof(string));
+				shards.Columns.Add("Port", typeof(int));
+				shards.Columns.Add("PatchEnc", typeof(bool));
+				shards.Columns.Add("OSIEnc", typeof(bool));
+				shards.Columns.Add("Selected", typeof(bool));
+
+				DataRow uod = shards.NewRow();
+				uod.ItemArray = new object[] { "UODreams", "", "", "login.uodreams.com", 2593, true, false, true };
+				shards.Rows.Add(uod);
+				m_Dataset.Tables.Add(shards);
+
+				m_Dataset.AcceptChanges();
+			}
+		}
 
 
 		private string m_Description;
@@ -108,163 +104,163 @@ namespace RazorEnhanced
 		}
 
 
-            internal static bool Exists(string description)
-            {
-                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                {
-                    if (((string)row["Description"]).ToLower() == description.ToLower())
-                        return true;
-                }
+		internal static bool Exists(string description)
+		{
+			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+			{
+				if (((string)row["Description"]).ToLower() == description.ToLower())
+					return true;
+			}
 
-                return false;
-            }
+			return false;
+		}
 
-            internal static void Insert(string description, string clientpath, string clientfolder, string host, string port, bool parchenc, bool osienc)
-            {
-                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                {
-                    row["Selected"] = false;
-                }
+		internal static void Insert(string description, string clientpath, string clientfolder, string host, string port, bool parchenc, bool osienc)
+		{
+			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+			{
+				row["Selected"] = false;
+			}
 
-                DataRow newRow = m_Dataset.Tables["SHARDS"].NewRow();
-                newRow["Description"] = description;
-                newRow["ClientPath"] = clientpath;
-                newRow["ClientFolder"] = clientfolder;
-                newRow["Host"] = host;
-                newRow["Port"] = port;
-                newRow["PatchEnc"] = parchenc;
-                newRow["OSIEnc"] = osienc;
-                newRow["Selected"] = true;
-                m_Dataset.Tables["SHARDS"].Rows.Add(newRow);
+			DataRow newRow = m_Dataset.Tables["SHARDS"].NewRow();
+			newRow["Description"] = description;
+			newRow["ClientPath"] = clientpath;
+			newRow["ClientFolder"] = clientfolder;
+			newRow["Host"] = host;
+			newRow["Port"] = port;
+			newRow["PatchEnc"] = parchenc;
+			newRow["OSIEnc"] = osienc;
+			newRow["Selected"] = true;
+			m_Dataset.Tables["SHARDS"].Rows.Add(newRow);
 
-                Save();
-            }
+			Save();
+		}
 
-            internal static void Update(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc, bool selected)
-            {
-                bool found = false;
-                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                {
-                    if ((string)row["Description"] == description)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
+		internal static void Update(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc, bool selected)
+		{
+			bool found = false;
+			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+			{
+				if ((string)row["Description"] == description)
+				{
+					found = true;
+					break;
+				}
+			}
 
-                if (found)
-                {
-                    if (selected)
-                    {
-                        foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                        {
-                            row["Selected"] = false;
-                        }
-                    }
+			if (found)
+			{
+				if (selected)
+				{
+					foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+					{
+						row["Selected"] = false;
+					}
+				}
 
-                    foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                    {
-                        if ((string)row["Description"] == description)
-                        {
-                            row["Description"] = description;
-                            row["ClientPath"] = clientpath;
-                            row["ClientFolder"] = clientfolder;
-                            row["Host"] = host;
-                            row["Port"] = port;
-                            row["PatchEnc"] = parchenc;
-                            row["OSIEnc"] = osienc;
-                            row["Selected"] = selected;
-                            break;
-                        }
-                    }
+				foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+				{
+					if ((string)row["Description"] == description)
+					{
+						row["Description"] = description;
+						row["ClientPath"] = clientpath;
+						row["ClientFolder"] = clientfolder;
+						row["Host"] = host;
+						row["Port"] = port;
+						row["PatchEnc"] = parchenc;
+						row["OSIEnc"] = osienc;
+						row["Selected"] = selected;
+						break;
+					}
+				}
 
-                    Save();
-                }
-            }
+				Save();
+			}
+		}
 
-            internal static void UpdateLast(string description)
-            {
-                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                {
-                    if ((string)row["Description"] == description)
-                    {
-                        row["Selected"] = true;
-                    }
-                    else
-                        row["Selected"] = false;
-                }
-                Save();
-            }
+		internal static void UpdateLast(string description)
+		{
+			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+			{
+				if ((string)row["Description"] == description)
+				{
+					row["Selected"] = true;
+				}
+				else
+					row["Selected"] = false;
+			}
+			Save();
+		}
 
-            internal static void Delete(string shardname)
-            {
-                bool last = true;
-                for (int i = m_Dataset.Tables["SHARDS"].Rows.Count - 1; i >= 0; i--)
-                {
-                    DataRow row = m_Dataset.Tables["SHARDS"].Rows[i];
-                    if ((string)row["Description"] == shardname)
-                    {
-                        row.Delete();
-                    }
-                    else
-                    {
-                        if (last)
-                        {
-                            row["Selected"] = true;
-                            last = false;
-                        }
-                        else
-                            row["Selected"] = false;
-                    }
-                }
+		internal static void Delete(string shardname)
+		{
+			bool last = true;
+			for (int i = m_Dataset.Tables["SHARDS"].Rows.Count - 1; i >= 0; i--)
+			{
+				DataRow row = m_Dataset.Tables["SHARDS"].Rows[i];
+				if ((string)row["Description"] == shardname)
+				{
+					row.Delete();
+				}
+				else
+				{
+					if (last)
+					{
+						row["Selected"] = true;
+						last = false;
+					}
+					else
+						row["Selected"] = false;
+				}
+			}
 
-                Save();
-            }
+			Save();
+		}
 
-            internal static void Read(out List<RazorEnhanced.Shard> shards)
-            {
-                List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
+		internal static void Read(out List<RazorEnhanced.Shard> shards)
+		{
+			List<RazorEnhanced.Shard> shardsOut = new List<RazorEnhanced.Shard>();
 
-                foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-                {
-                    string description = (string)row["Description"];
-                    string clientpath = (string)row["ClientPath"];
-                    string clientfolder = (string)row["ClientFolder"];
-                    string host = (string)row["Host"];
-                    int port = (int)row["Port"];
-                    bool patchenc = (bool)row["PatchEnc"];
-                    bool osienc = (bool)row["OSIEnc"];
-                    bool selected = (bool)row["Selected"];
+			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
+			{
+				string description = (string)row["Description"];
+				string clientpath = (string)row["ClientPath"];
+				string clientfolder = (string)row["ClientFolder"];
+				string host = (string)row["Host"];
+				int port = (int)row["Port"];
+				bool patchenc = (bool)row["PatchEnc"];
+				bool osienc = (bool)row["OSIEnc"];
+				bool selected = (bool)row["Selected"];
 
-                    RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, host, port, patchenc, osienc, selected);
-                    shardsOut.Add(shard);
-                }
+				RazorEnhanced.Shard shard = new RazorEnhanced.Shard(description, clientpath, clientfolder, host, port, patchenc, osienc, selected);
+				shardsOut.Add(shard);
+			}
 
-                shards = shardsOut;
-            }
+			shards = shardsOut;
+		}
 
-            internal static void Save()
-            {
-                try
-                {
-                    m_Dataset.AcceptChanges();
+		internal static void Save()
+		{
+			try
+			{
+				m_Dataset.AcceptChanges();
 
-                    string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
+				string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), m_Save);
 
-                    m_Dataset.RemotingFormat = SerializationFormat.Binary;
-                    m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-                    Stream stream = File.Create(filename);
-                    GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
-                    BinaryFormatter bin = new BinaryFormatter();
-                    bin.Serialize(compress, m_Dataset);
-                    compress.Close();
-                    stream.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error writing " + m_Save + ": " + ex);
-                }
-            }
+				m_Dataset.RemotingFormat = SerializationFormat.Binary;
+				m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
+				Stream stream = File.Create(filename);
+				GZipStream compress = new GZipStream(stream, CompressionMode.Compress);
+				BinaryFormatter bin = new BinaryFormatter();
+				bin.Serialize(compress, m_Dataset);
+				compress.Close();
+				stream.Close();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Error writing " + m_Save + ": " + ex);
+			}
+		}
 
 	}
 }

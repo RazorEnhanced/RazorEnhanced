@@ -104,10 +104,10 @@
 
 		#endregion
 
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private RazorTextBox sellagentListToAdd;
-        private RazorButton sellagentcloseItemList;
-        private RazorButton sellagentaddItemList;
+		private System.ComponentModel.BackgroundWorker backgroundWorker1;
+		private RazorTextBox sellagentListToAdd;
+		private RazorButton sellagentcloseItemList;
+		private RazorButton sellagentaddItemList;
 
-    }
+	}
 }

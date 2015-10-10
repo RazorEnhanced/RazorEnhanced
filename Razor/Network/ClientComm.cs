@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using System.Net;
-using Microsoft.Win32;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Assistant
 {
@@ -185,11 +184,11 @@ namespace Assistant
 
 						return 1;
 					}
-			/*	case UOAMessage.COUNT_RESOURCES:
-					{
-						Counter.FullRecount();
-						return 0;
-					}*/
+				/*	case UOAMessage.COUNT_RESOURCES:
+						{
+							Counter.FullRecount();
+							return 0;
+						}*/
 				case UOAMessage.GET_COORDS:
 					{
 						if (World.Player == null)
@@ -645,7 +644,7 @@ namespace Assistant
 
 		internal static Loader_Error LaunchClient(string client)
 		{
-            string dll = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Crypt.dll");
+			string dll = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Crypt.dll");
 			uint pid = 0;
 			Loader_Error err = (Loader_Error)Load(client, dll, "OnAttach", null, 0, out pid);
 
@@ -655,7 +654,7 @@ namespace Assistant
 				{
 					ClientProc = Process.GetProcessById((int)pid);
 					if (ClientProc != null && !RazorEnhanced.Settings.General.ReadBool("SmartCPU"))
-                        ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), RazorEnhanced.Settings.General.ReadString("ClientPrio"), true);
+						ClientProc.PriorityClass = (ProcessPriorityClass)Enum.Parse(typeof(ProcessPriorityClass), RazorEnhanced.Settings.General.ReadString("ClientPrio"), true);
 				}
 				catch
 				{
@@ -679,7 +678,7 @@ namespace Assistant
 			InitError error;
 			int flags = 0;
 
-            if (RazorEnhanced.Settings.General.ReadBool("Negotiate"))
+			if (RazorEnhanced.Settings.General.ReadBool("Negotiate"))
 				flags |= 0x04;
 
 			if (ClientEncrypted)
@@ -734,7 +733,7 @@ namespace Assistant
 				SetDataPath("");
 			}
 
-            if (RazorEnhanced.Settings.General.ReadBool("OldStatBar"))
+			if (RazorEnhanced.Settings.General.ReadBool("OldStatBar"))
 				ClientCommunication.RequestStatbarPatch(true);
 
 			return true;
@@ -851,31 +850,31 @@ namespace Assistant
 				for (int i = 0; i < m_WndReg.Count; i++)
 					PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnStart = DateTime.MinValue;
-                
+
 			}
 
-            
-            // Stop forzato di tutti i thread agent 
-            RazorEnhanced.AutoLoot.AutoMode = false;
-            RazorEnhanced.Scavenger.AutoMode = false;
-            RazorEnhanced.BandageHeal.AutoMode = false;
 
-            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+			// Stop forzato di tutti i thread agent 
+			RazorEnhanced.AutoLoot.AutoMode = false;
+			RazorEnhanced.Scavenger.AutoMode = false;
+			RazorEnhanced.BandageHeal.AutoMode = false;
 
-            if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-                Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+				Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
 
-            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+				Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
 
-            if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-                Assistant.Engine.MainWindow.RestockStop.PerformClick();
+			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
 
-            // Stop filtri
-            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
-                Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
-            
+			if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+				Assistant.Engine.MainWindow.RestockStop.PerformClick();
+
+			// Stop filtri
+			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+
 			PlayerData.ExternalZ = false;
 			World.Player = null;
 			PlayerData.FastWalkKey = 0;
@@ -885,11 +884,11 @@ namespace Assistant
 			StealthSteps.Unhide();
 			if (Engine.MainWindow.MapWindow != null)
 				Engine.MainWindow.MapWindow.Close();
-            if (Engine.MainWindow.ToolBarWindows != null)
-                Engine.MainWindow.ToolBarWindows.Close();
+			if (Engine.MainWindow.ToolBarWindows != null)
+				Engine.MainWindow.ToolBarWindows.Close();
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
-            PasswordMemory.Save();
+			PasswordMemory.Save();
 		}
 
 		//private static DateTime m_LastActivate;
@@ -974,11 +973,11 @@ namespace Assistant
 
 				// Hot Keys
 				case UONetMessage.Mouse:
-                    RazorEnhanced.HotKey.OnMouse((ushort)(lParam & 0xFFFF), (short)(lParam >> 16));
+					RazorEnhanced.HotKey.OnMouse((ushort)(lParam & 0xFFFF), (short)(lParam >> 16));
 					break;
 				case UONetMessage.KeyDown:
 					//retVal = HotKey.OnKeyDown(lParam);
-                    retVal = RazorEnhanced.HotKey.GameKeyDown((Keys)(lParam));
+					retVal = RazorEnhanced.HotKey.GameKeyDown((Keys)(lParam));
 					break;
 
 				// Activation Tracking

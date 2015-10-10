@@ -1,6 +1,6 @@
+using Assistant.Macros;
 using System;
 using System.Collections.Generic;
-using Assistant.Macros;
 
 namespace Assistant
 {
@@ -56,51 +56,51 @@ namespace Assistant
 
 		internal static bool HasTarget { get { return m_HasTarget; } }
 
-        internal static uint GetLastTarger { get { return m_LastTarget.Serial; } }
+		internal static uint GetLastTarger { get { return m_LastTarget.Serial; } }
 
-        public static void Initialize()
+		public static void Initialize()
 		{
 			PacketHandler.RegisterClientToServerViewer(0x6C, new PacketViewerCallback(TargetResponse));
 			PacketHandler.RegisterServerToClientViewer(0x6C, new PacketViewerCallback(NewTarget));
 			PacketHandler.RegisterServerToClientViewer(0xAA, new PacketViewerCallback(CombatantChange));
 
-	/*		HotKey.Add(HKCategory.Targets, LocString.LastTarget, new HotKeyCallback(LastTarget));
-			HotKey.Add(HKCategory.Targets, LocString.TargetSelf, new HotKeyCallback(TargetSelf));
-			HotKey.Add(HKCategory.Targets, LocString.ClearTargQueue, new HotKeyCallback(OnClearQueue));
-			HotKey.Add(HKCategory.Targets, LocString.SetLT, new HotKeyCallback(TargetSetLastTarget));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandRed, new HotKeyCallback(TargetRandRed));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandNFriend, new HotKeyCallback(TargetRandNonFriendly));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandFriend, new HotKeyCallback(TargetRandFriendly));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandBlue, new HotKeyCallback(TargetRandInnocent));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandGrey, new HotKeyCallback(TargetRandGrey));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandEnemy, new HotKeyCallback(TargetRandEnemy));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandCriminal, new HotKeyCallback(TargetRandCriminal));
+			/*		HotKey.Add(HKCategory.Targets, LocString.LastTarget, new HotKeyCallback(LastTarget));
+					HotKey.Add(HKCategory.Targets, LocString.TargetSelf, new HotKeyCallback(TargetSelf));
+					HotKey.Add(HKCategory.Targets, LocString.ClearTargQueue, new HotKeyCallback(OnClearQueue));
+					HotKey.Add(HKCategory.Targets, LocString.SetLT, new HotKeyCallback(TargetSetLastTarget));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandRed, new HotKeyCallback(TargetRandRed));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandNFriend, new HotKeyCallback(TargetRandNonFriendly));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandFriend, new HotKeyCallback(TargetRandFriendly));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandBlue, new HotKeyCallback(TargetRandInnocent));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandGrey, new HotKeyCallback(TargetRandGrey));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandEnemy, new HotKeyCallback(TargetRandEnemy));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandCriminal, new HotKeyCallback(TargetRandCriminal));
 
-			HotKey.Add(HKCategory.Targets, LocString.TargRandEnemyHuman, new HotKeyCallback(TargetRandEnemyHumanoid));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandGreyHuman, new HotKeyCallback(TargetRandGreyHumanoid));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandInnocentHuman, new HotKeyCallback(TargetRandInnocentHumanoid));
-			HotKey.Add(HKCategory.Targets, LocString.TargRandCriminalHuman, new HotKeyCallback(TargetRandCriminalHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandEnemyHuman, new HotKeyCallback(TargetRandEnemyHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandGreyHuman, new HotKeyCallback(TargetRandGreyHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandInnocentHuman, new HotKeyCallback(TargetRandInnocentHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.TargRandCriminalHuman, new HotKeyCallback(TargetRandCriminalHumanoid));
 
-			HotKey.Add(HKCategory.Targets, LocString.AttackLastComb, new HotKeyCallback(AttackLastComb));
-			HotKey.Add(HKCategory.Targets, LocString.AttackLastTarg, new HotKeyCallback(AttackLastTarg));
-			HotKey.Add(HKCategory.Targets, LocString.CancelTarget, new HotKeyCallback(CancelTarget));
+					HotKey.Add(HKCategory.Targets, LocString.AttackLastComb, new HotKeyCallback(AttackLastComb));
+					HotKey.Add(HKCategory.Targets, LocString.AttackLastTarg, new HotKeyCallback(AttackLastTarg));
+					HotKey.Add(HKCategory.Targets, LocString.CancelTarget, new HotKeyCallback(CancelTarget));
 
-			HotKey.Add(HKCategory.Targets, LocString.NextTarget, new HotKeyCallback(NextTarget));
-			HotKey.Add(HKCategory.Targets, LocString.NextTargetHumanoid, new HotKeyCallback(NextTargetHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.NextTarget, new HotKeyCallback(NextTarget));
+					HotKey.Add(HKCategory.Targets, LocString.NextTargetHumanoid, new HotKeyCallback(NextTargetHumanoid));
 
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseRed, new HotKeyCallback(TargetCloseRed));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseNFriend, new HotKeyCallback(TargetCloseNonFriendly));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseFriend, new HotKeyCallback(TargetCloseFriendly));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseBlue, new HotKeyCallback(TargetCloseInnocent));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseGrey, new HotKeyCallback(TargetCloseGrey));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemy, new HotKeyCallback(TargetCloseEnemy));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminal, new HotKeyCallback(TargetCloseCriminal));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseRed, new HotKeyCallback(TargetCloseRed));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseNFriend, new HotKeyCallback(TargetCloseNonFriendly));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseFriend, new HotKeyCallback(TargetCloseFriendly));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseBlue, new HotKeyCallback(TargetCloseInnocent));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseGrey, new HotKeyCallback(TargetCloseGrey));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemy, new HotKeyCallback(TargetCloseEnemy));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminal, new HotKeyCallback(TargetCloseCriminal));
 
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemyHuman, new HotKeyCallback(TargetCloseEnemyHumanoid));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseGreyHuman, new HotKeyCallback(TargetCloseGreyHumanoid));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseInnocentHuman, new HotKeyCallback(TargetCloseInnocentHumanoid));
-			HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminalHuman, new HotKeyCallback(TargetCloseCriminalHumanoid));
-            */
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemyHuman, new HotKeyCallback(TargetCloseEnemyHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseGreyHuman, new HotKeyCallback(TargetCloseGreyHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseInnocentHuman, new HotKeyCallback(TargetCloseInnocentHumanoid));
+					HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminalHuman, new HotKeyCallback(TargetCloseCriminalHumanoid));
+					*/
 		}
 
 		private static void CombatantChange(PacketReader p, PacketHandlerEventArgs e)
@@ -246,7 +246,7 @@ namespace Assistant
 			{
 				bool oplchanged = false;
 
-                if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
+				if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 				{
 					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 					{
@@ -276,7 +276,7 @@ namespace Assistant
 		{
 			if (m_LastTarget != null)
 			{
-                bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
+				bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
 
 				if (m_OldLT.IsItem)
 				{
@@ -386,9 +386,9 @@ namespace Assistant
 			List<Mobile> list = new List<Mobile>();
 			foreach (Mobile m in World.MobilesInRange(12))
 			{
-                if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
+				if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
+					Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -421,9 +421,9 @@ namespace Assistant
 				if (m.Body != 0x0190 && m.Body != 0x0191 && m.Body != 0x025D && m.Body != 0x025E)
 					continue;
 
-                if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
+				if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
+					Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -514,9 +514,9 @@ namespace Assistant
 			List<Mobile> list = new List<Mobile>();
 			foreach (Mobile m in World.MobilesInRange(12))
 			{
-                if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
+				if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
+					Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -565,7 +565,7 @@ namespace Assistant
 
 				if ((!RazorEnhanced.Friend.IsFriend(m.Serial) || (noto.Length > 0 && noto[0] == 0)) &&
 					!m.Blessed && !m.IsGhost && m.Serial != World.Player.Serial &&
-                    Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
+					Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 				{
 					foreach (int n in noto)
 					{
@@ -636,10 +636,10 @@ namespace Assistant
 
 			bool wasSmart = RazorEnhanced.Settings.General.ReadBool("SmartLastTarget");
 			if (wasSmart)
-                RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", false);
+				RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", false);
 			LastTarget();
 			if (wasSmart)
-                RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", true);
+				RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", true);
 			LastTargetChanged();
 		}
 
@@ -668,7 +668,7 @@ namespace Assistant
 				if (!DoTargetSelf())
 					ResendTarget();
 			}
-            else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
+			else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 			{
 				if (!forceQ)
 					World.Player.OverheadMessage(LocString.QueuedTS);
@@ -724,7 +724,7 @@ namespace Assistant
 				if (!DoLastTarget())
 					ResendTarget();
 			}
-            else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
+			else if (forceQ || RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 			{
 				if (!forceQ)
 					World.Player.OverheadMessage(LocString.QueuedLT);
@@ -735,7 +735,7 @@ namespace Assistant
 		internal static bool DoLastTarget()
 		{
 			TargetInfo targ;
-            if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
+			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 			{
 				if (m_AllowGround && m_LastGroundTarg != null)
 					targ = m_LastGroundTarg;
@@ -807,9 +807,9 @@ namespace Assistant
 				}
 			}
 
-            if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT") && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, RazorEnhanced.Settings.General.ReadInt("LTRange"))))
+			if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT") && (pos == Point3D.Zero || !Utility.InRange(World.Player.Position, pos, RazorEnhanced.Settings.General.ReadInt("LTRange"))))
 			{
-                if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
+				if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 					m_QueueTarget = LastTargetAction;
 				World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
 				return false;
@@ -1001,7 +1001,7 @@ namespace Assistant
 
 		internal static void CheckTextFlags(Mobile m)
 		{
-            if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
+			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 			{
 				bool harm = m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial;
 				bool bene = m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial;
@@ -1019,7 +1019,7 @@ namespace Assistant
 		{
 			if (m != null)
 			{
-                if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
+				if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 				{
 					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 						return true;
@@ -1177,9 +1177,9 @@ namespace Assistant
 
 			if (m_HasTarget && m != null && m_LastTarget != null && m.Serial == m_LastTarget.Serial && m_QueueTarget == LastTargetAction)
 			{
-                if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT"))
+				if (RazorEnhanced.Settings.General.ReadBool("RangeCheckLT"))
 				{
-                    if (Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
+					if (Utility.InRange(World.Player.Position, m.Position, RazorEnhanced.Settings.General.ReadInt("LTRange")))
 					{
 						if (m_QueueTarget())
 							ClearQueue();
@@ -1320,7 +1320,7 @@ namespace Assistant
 					//if (hk != null)
 					//	MacroManager.Action(new HotKeyAction(hk));
 					//else
-						MacroManager.Action(new AbsoluteTargetAction(info));
+					MacroManager.Action(new AbsoluteTargetAction(info));
 				}
 			}
 
@@ -1337,7 +1337,7 @@ namespace Assistant
 			m_AllowGround = p.ReadBoolean(); // allow ground
 			m_CurrentID = p.ReadUInt32(); // target uid
 			m_CurFlags = p.ReadByte(); // flags
-			// the rest of the packet is 0s
+									   // the rest of the packet is 0s
 
 			// check for a server cancel command
 			if (!m_AllowGround && m_CurrentID == 0 && m_CurFlags == 3)

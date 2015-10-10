@@ -1,6 +1,5 @@
 ﻿#region Using Directives
 
-using System;
 using System.Collections.Generic;
 
 #endregion Using Directives
@@ -8,101 +7,101 @@ using System.Collections.Generic;
 
 namespace ScintillaNET
 {
-    public class SnippetLinkRange : ManagedRange
-    {
-        #region Fields
+	public class SnippetLinkRange : ManagedRange
+	{
+		#region Fields
 
-        private bool _active = false;
-        private string _key;
-        private List<SnippetLinkRange> _parent;
+		private bool _active = false;
+		private string _key;
+		private List<SnippetLinkRange> _parent;
 
-        #endregion Fields
-
-
-        #region Methods
-
-        public override void Dispose()
-        {
-            if (!IsDisposed)
-            {
-                _parent.Remove(this);
-                base.Dispose();
-            }
-        }
+		#endregion Fields
 
 
-        internal void Init()
-        {
-            Scintilla.ManagedRanges.Add(this);
-        }
+		#region Methods
 
-        #endregion Methods
-
-
-        #region Properties
-
-        public bool Active
-        {
-            get
-            {
-                return _active;
-            }
-            set
-            {
-                _active = value;
-
-                if (value)
-                {
-                    ClearIndicator(Scintilla.Snippets.InactiveSnippetIndicator);
-                    SetIndicator(Scintilla.Snippets.ActiveSnippetIndicator);
-                }
-                else
-                {
-                    SetIndicator(Scintilla.Snippets.InactiveSnippetIndicator);
-                    ClearIndicator(Scintilla.Snippets.ActiveSnippetIndicator);
-                }
-            }
-        }
+		public override void Dispose()
+		{
+			if (!IsDisposed)
+			{
+				_parent.Remove(this);
+				base.Dispose();
+			}
+		}
 
 
-        public string Key
-        {
-            get
-            {
-                return _key;
-            }
-            set
-            {
-                _key = value;
-            }
-        }
+		internal void Init()
+		{
+			Scintilla.ManagedRanges.Add(this);
+		}
+
+		#endregion Methods
 
 
-        public List<SnippetLinkRange> Parent
-        {
-            get
-            {
-                return _parent;
-            }
-            set
-            {
-                _parent = value;
-            }
-        }
+		#region Properties
 
-        #endregion Properties
+		public bool Active
+		{
+			get
+			{
+				return _active;
+			}
+			set
+			{
+				_active = value;
+
+				if (value)
+				{
+					ClearIndicator(Scintilla.Snippets.InactiveSnippetIndicator);
+					SetIndicator(Scintilla.Snippets.ActiveSnippetIndicator);
+				}
+				else
+				{
+					SetIndicator(Scintilla.Snippets.InactiveSnippetIndicator);
+					ClearIndicator(Scintilla.Snippets.ActiveSnippetIndicator);
+				}
+			}
+		}
 
 
-        #region Constructors
+		public string Key
+		{
+			get
+			{
+				return _key;
+			}
+			set
+			{
+				_key = value;
+			}
+		}
 
-        public SnippetLinkRange(int start, int end, Scintilla scintilla, string key) : base()
-        {
-            Scintilla = scintilla;
-            Start = start;
-            End = end;
-            _key = key;
-        }
 
-        #endregion Constructors
-    }
+		public List<SnippetLinkRange> Parent
+		{
+			get
+			{
+				return _parent;
+			}
+			set
+			{
+				_parent = value;
+			}
+		}
+
+		#endregion Properties
+
+
+		#region Constructors
+
+		public SnippetLinkRange(int start, int end, Scintilla scintilla, string key) : base()
+		{
+			Scintilla = scintilla;
+			Start = start;
+			End = end;
+			_key = key;
+		}
+
+		#endregion Constructors
+	}
 }

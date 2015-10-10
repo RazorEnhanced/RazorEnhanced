@@ -1,7 +1,6 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 namespace Assistant
 {
@@ -212,7 +211,7 @@ namespace Assistant
 		}
 
 		// grey, blue, green, 'canbeattacked'
-		private static uint[] m_NotoHues = new uint[8] 
+		private static uint[] m_NotoHues = new uint[8]
 		{ 
 			// hue color #30
 			0x000000, // black		unused 0
@@ -428,12 +427,12 @@ namespace Assistant
 
 		internal void OverheadMessage(string text)
 		{
-            OverheadMessage(RazorEnhanced.Settings.General.ReadInt("SysColor"), text);
+			OverheadMessage(RazorEnhanced.Settings.General.ReadInt("SysColor"), text);
 		}
 
 		internal void OverheadMessage(string format, params object[] args)
 		{
-            OverheadMessage(RazorEnhanced.Settings.General.ReadInt("SysColor"), String.Format(format, args));
+			OverheadMessage(RazorEnhanced.Settings.General.ReadInt("SysColor"), String.Format(format, args));
 		}
 
 		internal void OverheadMessage(int hue, string format, params object[] args)

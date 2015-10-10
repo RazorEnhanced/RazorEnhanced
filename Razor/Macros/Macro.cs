@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
-using System.Reflection;
 using System.IO;
+using System.Reflection;
 using System.Text;
-using Assistant;
+using System.Windows.Forms;
 
 namespace Assistant.Macros
 {
@@ -65,7 +64,7 @@ namespace Assistant.Macros
 			//return Path.GetFileNameWithoutExtension( m_Path );
 			StringBuilder sb = new StringBuilder(Path.GetFullPath(m_Path));
 			sb.Remove(sb.Length - 6, 6);
-            sb.Remove(0, Directory.GetCurrentDirectory().Length + 1);
+			sb.Remove(0, Directory.GetCurrentDirectory().Length + 1);
 			return sb.ToString();
 		}
 
@@ -374,8 +373,8 @@ namespace Assistant.Macros
 						if (!m_Wait.PerformWait())
 						{
 							m_Wait = null; // done waiting
-						//	if (Engine.MainWindow.WaitDisplay != null)
-							//	Engine.MainWindow.WaitDisplay.Text = "";
+										   //	if (Engine.MainWindow.WaitDisplay != null)
+										   //	Engine.MainWindow.WaitDisplay.Text = "";
 						}
 						else
 						{

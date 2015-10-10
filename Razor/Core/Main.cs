@@ -1,14 +1,14 @@
 using System;
-using System.Reflection;
-using System.Threading;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Linq;
-using System.Security.Principal;
+using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Assistant
 {
@@ -184,15 +184,15 @@ namespace Assistant
 		internal static bool Running { get { return m_Running; } }
 		internal static Form ActiveWindow { get { return m_ActiveWnd; } set { m_ActiveWnd = value; } }
 
-        // Blocco parametri salvataggio uscita
-        internal static int MainWindowX { get { return m_MainWindowX; } set { m_MainWindowX = value; } }
-        internal static int MainWindowY { get { return m_MainWindowY; } set { m_MainWindowY = value; } }
-        internal static int ToolBarX { get { return m_ToolBarX; } set { m_ToolBarX = value; } }
-        internal static int ToolBarY { get { return m_ToolBarY; } set { m_ToolBarY = value; } }
-        internal static int MapWindowX { get { return m_MapWindowX; } set { m_MapWindowX = value; } }
-        internal static int MapWindowY { get { return m_MapWindowY; } set { m_MapWindowY = value; } }
-        internal static int MapWindowW { get { return m_MapWindowW; } set { m_MapWindowW = value; } }
-        internal static int MapWindowH { get { return m_MapWindowH; } set { m_MapWindowH = value; } }
+		// Blocco parametri salvataggio uscita
+		internal static int MainWindowX { get { return m_MainWindowX; } set { m_MainWindowX = value; } }
+		internal static int MainWindowY { get { return m_MainWindowY; } set { m_MainWindowY = value; } }
+		internal static int ToolBarX { get { return m_ToolBarX; } set { m_ToolBarX = value; } }
+		internal static int ToolBarY { get { return m_ToolBarY; } set { m_ToolBarY = value; } }
+		internal static int MapWindowX { get { return m_MapWindowX; } set { m_MapWindowX = value; } }
+		internal static int MapWindowY { get { return m_MapWindowY; } set { m_MapWindowY = value; } }
+		internal static int MapWindowW { get { return m_MapWindowW; } set { m_MapWindowW = value; } }
+		internal static int MapWindowH { get { return m_MapWindowH; } set { m_MapWindowH = value; } }
 
 		internal static string Version
 		{
@@ -213,190 +213,190 @@ namespace Assistant
 		private static MainForm MainWnd;
 		private static Form m_ActiveWnd;
 		private static bool m_Running;
-        private static int m_ToolBarX;
-        private static int m_ToolBarY;
-        private static int m_MainWindowX;
-        private static int m_MainWindowY;
-        private static int m_MapWindowW;
-        private static int m_MapWindowH;
-        private static int m_MapWindowX;
-        private static int m_MapWindowY;
+		private static int m_ToolBarX;
+		private static int m_ToolBarY;
+		private static int m_MainWindowX;
+		private static int m_MainWindowY;
+		private static int m_MapWindowW;
+		private static int m_MapWindowH;
+		private static int m_MapWindowX;
+		private static int m_MapWindowY;
 
 		private static string m_Version;
 
-        [STAThread]
-        public static void Main(string[] Args)
-        {
-            m_Running = true;
-            Thread.CurrentThread.Name = "Razor Main Thread";
+		[STAThread]
+		public static void Main(string[] Args)
+		{
+			m_Running = true;
+			Thread.CurrentThread.Name = "Razor Main Thread";
 
-            if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
-                throw new InvalidOperationException("This Razor installation is corrupted.");
+			if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
+				throw new InvalidOperationException("This Razor installation is corrupted.");
 
-            // Profili
-            RazorEnhanced.Profiles.Load();
+			// Profili
+			RazorEnhanced.Profiles.Load();
 
-            // Shard Bookmarks
-            RazorEnhanced.Shard.Load();
+			// Shard Bookmarks
+			RazorEnhanced.Shard.Load();
 
-            // Parametri di razor
-            if (RazorEnhanced.Profiles.LastUsed() == "default")
-                RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
-            else
-                RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
+			// Parametri di razor
+			if (RazorEnhanced.Profiles.LastUsed() == "default")
+				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced.settings";
+			else
+				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + RazorEnhanced.Profiles.LastUsed() + ".settings";
 
-            RazorEnhanced.Settings.Load();
+			RazorEnhanced.Settings.Load();
 
-            RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
-            DialogResult laucherdialog = launcher.ShowDialog();
+			RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
+			DialogResult laucherdialog = launcher.ShowDialog();
 
-            if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
-            {
-                List<RazorEnhanced.Shard> shards;
-                RazorEnhanced.Shard.Read(out shards);
-                RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
+			if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
+			{
+				List<RazorEnhanced.Shard> shards;
+				RazorEnhanced.Shard.Read(out shards);
+				RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
 
-                if (selected == null)
-                {
-                    MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    ClientCommunication.ClientEncrypted = selected.PatchEnc;
-                    ClientCommunication.ServerEncrypted = selected.OSIEnc;
-                    string clientPath = selected.ClientPath;
-                    string dataDir = selected.ClientFolder;
-                    string addr = selected.Host;
-                    int port = selected.Port;
+				if (selected == null)
+				{
+					MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+				else
+				{
+					ClientCommunication.ClientEncrypted = selected.PatchEnc;
+					ClientCommunication.ServerEncrypted = selected.OSIEnc;
+					string clientPath = selected.ClientPath;
+					string dataDir = selected.ClientFolder;
+					string addr = selected.Host;
+					int port = selected.Port;
 
-                    if (!Language.Load("ENU"))
-                    {
-                        SplashScreen.End();
-                        MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+					if (!Language.Load("ENU"))
+					{
+						SplashScreen.End();
+						MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
 
-                    if (dataDir != null && Directory.Exists(dataDir))
-                    {
-                        Ultima.Files.SetMulPath(dataDir);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
+					if (dataDir != null && Directory.Exists(dataDir))
+					{
+						Ultima.Files.SetMulPath(dataDir);
+					}
+					else
+					{
+						MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						return;
+					}
 
-                    Language.LoadCliLoc();
-                    SplashScreen.Message = LocString.Initializing;
-                    Initialize(typeof(Assistant.Engine).Assembly);
+					Language.LoadCliLoc();
+					SplashScreen.Message = LocString.Initializing;
+					Initialize(typeof(Assistant.Engine).Assembly);
 
-                    SplashScreen.Message = LocString.LoadingLastProfile;
+					SplashScreen.Message = LocString.LoadingLastProfile;
 
-                    ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
-                    ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
+					ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
+					ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
 
-                    SplashScreen.Message = LocString.LoadingClient;
+					SplashScreen.Message = LocString.LoadingClient;
 
-                    if (clientPath != null && File.Exists(clientPath))
-                        result = ClientCommunication.LaunchClient(clientPath);
+					if (clientPath != null && File.Exists(clientPath))
+						result = ClientCommunication.LaunchClient(clientPath);
 
-                    if (result != ClientCommunication.Loader_Error.SUCCESS)
-                    {
-                        if (clientPath == null && File.Exists(clientPath))
-                            MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        else
-                            MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        SplashScreen.End();
-                        return;
-                    }
+					if (result != ClientCommunication.Loader_Error.SUCCESS)
+					{
+						if (clientPath == null && File.Exists(clientPath))
+							MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						else
+							MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						SplashScreen.End();
+						return;
+					}
 
-                    // if these are null then the registry entry does not exist (old razor version)
-                    IPAddress ip = Resolve(addr);
-                    if (ip == IPAddress.None || port == 0)
-                    {
-                        MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        SplashScreen.End();
-                        return;
-                    }
+					// if these are null then the registry entry does not exist (old razor version)
+					IPAddress ip = Resolve(addr);
+					if (ip == IPAddress.None || port == 0)
+					{
+						MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						SplashScreen.End();
+						return;
+					}
 
-                    SplashScreen.Start();
-                    m_ActiveWnd = SplashScreen.Instance;
+					SplashScreen.Start();
+					m_ActiveWnd = SplashScreen.Instance;
 
-                    ClientCommunication.SetConnectionInfo(ip, port);
-                    ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
+					ClientCommunication.SetConnectionInfo(ip, port);
+					ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
 
-                    Ultima.Multis.PostHSFormat = UsePostHSChanges;
+					Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
-                    SplashScreen.Message = LocString.WaitingForClient;
+					SplashScreen.Message = LocString.WaitingForClient;
 
-                    MainWnd = new MainForm();
-                    Application.Run(MainWnd);
+					MainWnd = new MainForm();
+					Application.Run(MainWnd);
 
-                    m_Running = false;
+					m_Running = false;
 
-                    RazorEnhanced.Settings.General.SaveExitData();
+					RazorEnhanced.Settings.General.SaveExitData();
 
-                    // Disconnetto mappa
-                    Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
-                    try
-                    {
-                        MapUO.MapNetwork.clientSocket.GetStream().Close();
-                    }
-                    catch { }
+					// Disconnetto mappa
+					Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
+					try
+					{
+						MapUO.MapNetwork.clientSocket.GetStream().Close();
+					}
+					catch { }
 
-                    try
-                    {
-                        MapUO.MapNetwork.clientSocket.Close();
-                    }
-                    catch { }
+					try
+					{
+						MapUO.MapNetwork.clientSocket.Close();
+					}
+					catch { }
 
-                    try
-                    {
-                        MapUO.MapNetwork.InThread.Abort();
-                    }
-                    catch { }
+					try
+					{
+						MapUO.MapNetwork.InThread.Abort();
+					}
+					catch { }
 
-                    try
-                    {
-                        MapUO.MapNetwork.OutThread.Abort();
-                    }
-                    catch { }
+					try
+					{
+						MapUO.MapNetwork.OutThread.Abort();
+					}
+					catch { }
 
-                    // Chiuto toolbar
-                    if (Engine.MainWindow.ToolBarWindows != null)
-                        Engine.MainWindow.ToolBarWindows.Close();
+					// Chiuto toolbar
+					if (Engine.MainWindow.ToolBarWindows != null)
+						Engine.MainWindow.ToolBarWindows.Close();
 
-                    // Stoppo tick timer agent
-                    RazorEnhanced.Scripts.m_Timer.Stop();
+					// Stoppo tick timer agent
+					RazorEnhanced.Scripts.m_Timer.Stop();
 
-                    // Stop forzato di tutti i thread agent 
-                    RazorEnhanced.AutoLoot.AutoMode = false;
-                    RazorEnhanced.Scavenger.AutoMode = false;
-                    RazorEnhanced.BandageHeal.AutoMode = false;
+					// Stop forzato di tutti i thread agent 
+					RazorEnhanced.AutoLoot.AutoMode = false;
+					RazorEnhanced.Scavenger.AutoMode = false;
+					RazorEnhanced.BandageHeal.AutoMode = false;
 
-                    if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-                        Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+					if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+						Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
 
-                    if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-                        Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+					if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+						Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
 
-                    if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                        Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+					if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+						Assistant.Engine.MainWindow.DressStopButton.PerformClick();
 
-                    if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-                        Assistant.Engine.MainWindow.RestockStop.PerformClick();
+					if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+						Assistant.Engine.MainWindow.RestockStop.PerformClick();
 
-                    // Stop filtri
-                    if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
-                        Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+					// Stop filtri
+					if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+						Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
 
-                    RazorEnhanced.UI.EnhancedScriptEditor.End();
-                    RazorEnhanced.Scripts.Auto = false;                  
+					RazorEnhanced.UI.EnhancedScriptEditor.End();
+					RazorEnhanced.Scripts.Auto = false;
 
-                    ClientCommunication.Close();
-                }
-            }
-        }
+					ClientCommunication.Close();
+				}
+			}
+		}
 
 		internal static void EnsureDirectory(string dir)
 		{

@@ -1,10 +1,8 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Linq;
 using Assistant;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
@@ -183,18 +181,18 @@ namespace RazorEnhanced
 			}
 		}
 
-	/*	public Item FindItemByID(ItemID id)
-		{
-			Assistant.Item assitantItem = m_AssistantMobile.FindItemByID((ushort)id.Value);
-			if (assitantItem == null)
-				return null;
-			else
+		/*	public Item FindItemByID(ItemID id)
 			{
-				RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assitantItem);
-				return enhancedItem;
+				Assistant.Item assitantItem = m_AssistantMobile.FindItemByID((ushort)id.Value);
+				if (assitantItem == null)
+					return null;
+				else
+				{
+					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assitantItem);
+					return enhancedItem;
+				}
 			}
-		}
-        */
+			*/
 		public List<Item> Contains
 		{
 			get
@@ -242,7 +240,7 @@ namespace RazorEnhanced
 			}
 		}
 
-        [Serializable]
+		[Serializable]
 		public class Filter
 		{
 			public bool Enabled = false;
@@ -253,13 +251,13 @@ namespace RazorEnhanced
 			public double RangeMin = -1;
 			public double RangeMax = -1;
 			public int Poisoned = -1;
-            public int Blessed = -1;
-            public int IsHuman = -1;
-            public int IsGhost = -1;
-            public int Female = -1;
-            public int Warmode = -1;
-            public int Friend = -1;
-            public int Paralized = -1;
+			public int Blessed = -1;
+			public int IsHuman = -1;
+			public int IsGhost = -1;
+			public int Female = -1;
+			public int Warmode = -1;
+			public int Friend = -1;
+			public int Paralized = -1;
 			public List<byte> Notorieties = new List<byte>();
 
 			public Filter()
@@ -308,7 +306,7 @@ namespace RazorEnhanced
 					if (filter.RangeMin != -1)
 					{
 						assistantMobiles = assistantMobiles.Where((m) =>
-                            Utility.DistanceSqrt
+							Utility.DistanceSqrt
 							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(m.Position.X, m.Position.Y)) >= filter.RangeMin
 						).ToList();
 					}
@@ -316,59 +314,59 @@ namespace RazorEnhanced
 					if (filter.RangeMax != -1)
 					{
 						assistantMobiles = assistantMobiles.Where((m) =>
-                            Utility.DistanceSqrt
+							Utility.DistanceSqrt
 							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(m.Position.X, m.Position.Y)) <= filter.RangeMax
 						).ToList();
 					}
 
-                    if (filter.Warmode != -1)
-                    {
-                        assistantMobiles = assistantMobiles.Where((m) => m.Warmode == Convert.ToBoolean(filter.Warmode)).ToList();
-                    }
+					if (filter.Warmode != -1)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => m.Warmode == Convert.ToBoolean(filter.Warmode)).ToList();
+					}
 
-                    if (filter.Poisoned != -1)
-                    {
-                        assistantMobiles = assistantMobiles.Where((m) => m.Poisoned == Convert.ToBoolean(filter.Poisoned)).ToList();
-                    }
+					if (filter.Poisoned != -1)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => m.Poisoned == Convert.ToBoolean(filter.Poisoned)).ToList();
+					}
 
-                    if (filter.Blessed != -1)
-                    {
-                        assistantMobiles = assistantMobiles.Where((m) => m.Blessed == Convert.ToBoolean(filter.Blessed)).ToList();
-                    }
+					if (filter.Blessed != -1)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => m.Blessed == Convert.ToBoolean(filter.Blessed)).ToList();
+					}
 
-                    if (filter.IsHuman != -1)
-                    {
-                        assistantMobiles = assistantMobiles.Where((m) => m.IsHuman == Convert.ToBoolean(filter.IsHuman)).ToList();
-                    }
+					if (filter.IsHuman != -1)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => m.IsHuman == Convert.ToBoolean(filter.IsHuman)).ToList();
+					}
 
-                    if (filter.IsGhost != -1)
-                    {
-                        assistantMobiles = assistantMobiles.Where((m) => m.IsGhost == Convert.ToBoolean(filter.IsGhost)).ToList();
-                    }
+					if (filter.IsGhost != -1)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => m.IsGhost == Convert.ToBoolean(filter.IsGhost)).ToList();
+					}
 
-                    if (filter.Female != -1)
-                    {
-                        assistantMobiles = assistantMobiles.Where((m) => m.Female == Convert.ToBoolean(filter.Female)).ToList();
-                    }
+					if (filter.Female != -1)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => m.Female == Convert.ToBoolean(filter.Female)).ToList();
+					}
 
-                    if (filter.Friend != -1)
-                    {
-                        assistantMobiles = assistantMobiles.Where((m) => RazorEnhanced.Friend.IsFriend(m.Serial) == Convert.ToBoolean(filter.Friend)).ToList();
-                    }
+					if (filter.Friend != -1)
+					{
+						assistantMobiles = assistantMobiles.Where((m) => RazorEnhanced.Friend.IsFriend(m.Serial) == Convert.ToBoolean(filter.Friend)).ToList();
+					}
 
-                    if (filter.Paralized != -1)
-                    {
-                        // TODO PARALIZED FLAG
-                        //assistantMobiles = assistantMobiles.Where((m) => m.Paralized == Convert.ToBoolean(filter.Paralized)).ToList();
-                    }
+					if (filter.Paralized != -1)
+					{
+						// TODO PARALIZED FLAG
+						//assistantMobiles = assistantMobiles.Where((m) => m.Paralized == Convert.ToBoolean(filter.Paralized)).ToList();
+					}
 
 					if (filter.Notorieties.Count > 0)
 					{
 						assistantMobiles = assistantMobiles.Where((m) => filter.Notorieties.Contains(m.Notoriety)).ToList();
 					}
 
-                    // Esclude Self dalla ricerca
-                    assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
+					// Esclude Self dalla ricerca
+					assistantMobiles = assistantMobiles.Where((m) => m.Serial != World.Player.Serial).ToList();
 				}
 			}
 
@@ -390,48 +388,48 @@ namespace RazorEnhanced
 				{
 					case "Random":
 						result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
-                        
-                        break;
+
+						break;
 					case "Nearest":
-                        Mobile closest = null;
-			            double closestDist = double.MaxValue;
+						Mobile closest = null;
+						double closestDist = double.MaxValue;
 
-                        foreach (Mobile m in mobiles)
-			            {
-                            if (m.Serial == World.Player.Serial)
-                                continue;
+						foreach (Mobile m in mobiles)
+						{
+							if (m.Serial == World.Player.Serial)
+								continue;
 
-				            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y) , World.Player.Position);
+							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
 
-				            if (dist < closestDist || closest == null)
-				            {
-					            closestDist = dist;
-					            closest = m;
-				            }
-			            }
-                        result = closest;
+							if (dist < closestDist || closest == null)
+							{
+								closestDist = dist;
+								closest = m;
+							}
+						}
+						result = closest;
 						break;
 					case "Farthest":
-                        Mobile farthest = null;
-                        double farthestDist = double.MinValue;
+						Mobile farthest = null;
+						double farthestDist = double.MinValue;
 
-                        foreach (Mobile m in mobiles)
-			            {
-                            if (m.Serial == World.Player.Serial)
-                                continue;
+						foreach (Mobile m in mobiles)
+						{
+							if (m.Serial == World.Player.Serial)
+								continue;
 
-				            double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y) , World.Player.Position);
+							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
 
-                            if (dist > farthestDist || farthest == null)
-				            {
-                                farthestDist = dist;
-                                farthest = m;
-				            }
-			            }
-                        result = farthest;
+							if (dist > farthestDist || farthest == null)
+							{
+								farthestDist = dist;
+								farthest = m;
+							}
+						}
+						result = farthest;
 						break;
-					case "Weakest":			
-                        Mobile weakest = mobiles[0] as Mobile;
+					case "Weakest":
+						Mobile weakest = mobiles[0] as Mobile;
 						if (weakest != null)
 						{
 							int minHits = weakest.Hits;
@@ -477,44 +475,44 @@ namespace RazorEnhanced
 
 			return result;
 		}
-        // USe
+		// USe
 
-        public static void UseMobile(Mobile mobile)
-        {
-            Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
-        }
-        public static void UseMobile(uint mobileserial)
-        {
-            Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
-            if (mobile == null)
-            {
-                Misc.SendMessage("Script Error: UseMobile: Invalid Serial");
-                return;
-            }
+		public static void UseMobile(Mobile mobile)
+		{
+			Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
+		}
+		public static void UseMobile(uint mobileserial)
+		{
+			Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
+			if (mobile == null)
+			{
+				Misc.SendMessage("Script Error: UseMobile: Invalid Serial");
+				return;
+			}
 
-            if (mobile.Serial.IsMobile)
-                Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
-            else
-                Misc.SendMessage("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
+			if (mobile.Serial.IsMobile)
+				Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
+			else
+				Misc.SendMessage("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
 
-        }
+		}
 
-        // Single Click
-        public static void SingleClick(Mobile mobile)
-        {
-            ClientCommunication.SendToServer(new SingleClick(mobile));
-        }
+		// Single Click
+		public static void SingleClick(Mobile mobile)
+		{
+			ClientCommunication.SendToServer(new SingleClick(mobile));
+		}
 
-        public static void SingleClick(int mobileserial)
-        {
-            Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
-            if (mobile == null)
-            {
-                Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
-                return;
-            }
-            ClientCommunication.SendToServer(new SingleClick(mobile));
-        }
+		public static void SingleClick(int mobileserial)
+		{
+			Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
+			if (mobile == null)
+			{
+				Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
+				return;
+			}
+			ClientCommunication.SendToServer(new SingleClick(mobile));
+		}
 
 		// Message
 		public static void Message(Mobile mobile, int hue, string message)

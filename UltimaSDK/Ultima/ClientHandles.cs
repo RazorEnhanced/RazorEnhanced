@@ -1,5 +1,5 @@
-using System;
 using Microsoft.Win32.SafeHandles;
+using System;
 
 namespace Ultima
 {

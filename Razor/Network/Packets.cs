@@ -123,7 +123,7 @@ namespace Assistant
 			else
 				Write((uint)0x7FFFFFFF);
 
-        	Write(item.Hue);
+			Write(item.Hue);
 		}
 	}
 
@@ -877,7 +877,7 @@ namespace Assistant
 			Write((int)m.Serial);
 			Write((short)m.Body);
 			Write((byte)0);
-            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 				Write((short)(ltHue | 0x8000));
 			else
@@ -897,7 +897,7 @@ namespace Assistant
 			: base(0x78)
 		{
 			int count = m.Contains.Count;
-            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			bool isLT;
 			if (ltHue != 0)
 				isLT = Targeting.IsLastTarget(m);
@@ -1723,60 +1723,60 @@ namespace Assistant
 		}
 	}
 
-    internal sealed class PartyInvite : Packet
-    {
-        internal PartyInvite()
-            : base(0xBF)
-        {
-            EnsureCapacity(6);
-            Write((ushort)0x06);   // Command  
-            Write((byte)0x01);       // Party command open target for new member
-        }
-    }
+	internal sealed class PartyInvite : Packet
+	{
+		internal PartyInvite()
+			: base(0xBF)
+		{
+			EnsureCapacity(6);
+			Write((ushort)0x06);   // Command  
+			Write((byte)0x01);       // Party command open target for new member
+		}
+	}
 
-    internal sealed class PartyRemoveMember : Packet
-    {
-        internal PartyRemoveMember(uint serial)
-            : base(0xBF)
-        {
-            EnsureCapacity(2 + 2 + 2 + 4);
-            Write((ushort)0x06);   // Command  
-            Write((byte)0x02);       // remove member
-            Write((uint)serial);
-        }
-    }
+	internal sealed class PartyRemoveMember : Packet
+	{
+		internal PartyRemoveMember(uint serial)
+			: base(0xBF)
+		{
+			EnsureCapacity(2 + 2 + 2 + 4);
+			Write((ushort)0x06);   // Command  
+			Write((byte)0x02);       // remove member
+			Write((uint)serial);
+		}
+	}
 
-    internal sealed class QuestButton : Packet
-    {
-        internal QuestButton(uint serial)
-            : base(0xD7)
-        {
-            EnsureCapacity(2 + 4 + 2 + 2);
-            Write((uint)serial);
-            Write((ushort)0x32);
-            Write((byte)0x0A); 
-        }
-    }
-    internal sealed class GuildButton : Packet
-    {
-        internal GuildButton(uint serial)
-            : base(0xD7)
-        {
-            EnsureCapacity(2 + 4 + 2 + 2);
-            Write((uint)serial);
-            Write((ushort)0x28);
-            Write((byte)0x0A);
-        }
-    }
+	internal sealed class QuestButton : Packet
+	{
+		internal QuestButton(uint serial)
+			: base(0xD7)
+		{
+			EnsureCapacity(2 + 4 + 2 + 2);
+			Write((uint)serial);
+			Write((ushort)0x32);
+			Write((byte)0x0A);
+		}
+	}
+	internal sealed class GuildButton : Packet
+	{
+		internal GuildButton(uint serial)
+			: base(0xD7)
+		{
+			EnsureCapacity(2 + 4 + 2 + 2);
+			Write((uint)serial);
+			Write((ushort)0x28);
+			Write((byte)0x0A);
+		}
+	}
 
-    internal sealed class Disconnect : Packet
-    {
-        internal Disconnect()
-            : base(0xD1)
-        {
-            EnsureCapacity(1);
-        }
-    }
+	internal sealed class Disconnect : Packet
+	{
+		internal Disconnect()
+			: base(0xD1)
+		{
+			EnsureCapacity(1);
+		}
+	}
 }
 
 

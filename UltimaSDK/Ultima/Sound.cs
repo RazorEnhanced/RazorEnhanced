@@ -91,7 +91,7 @@ namespace Ultima
 			int length, extra;
 			bool patched;
 			Stream stream = m_FileIndex.Seek(soundID, out length, out extra, out patched);
-			
+
 			if ((m_FileIndex.Index[soundID].lookup < 0) || (length <= 0))
 			{
 				if (!m_Translations.TryGetValue(soundID, out soundID))
@@ -180,7 +180,7 @@ namespace Ultima
 			}
 			if (stream == null)
 				return false;
-			
+
 			byte[] stringBuffer = new byte[32];
 			stream.Read(stringBuffer, 0, 32);
 			stream.Close();

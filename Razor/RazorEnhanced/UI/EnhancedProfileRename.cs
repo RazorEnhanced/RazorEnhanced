@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using System.IO;
+using System.Windows.Forms;
 
 
 namespace RazorEnhanced.UI
@@ -17,7 +9,7 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Profile Rename";
 
-        public EnhancedProfileRename()
+		public EnhancedProfileRename()
 		{
 			InitializeComponent();
 			MaximizeBox = false;
@@ -33,7 +25,7 @@ namespace RazorEnhanced.UI
 		private void profileadd_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-            string newprofile = "";
+			string newprofile = "";
 
 			if (profilename.Text == "")
 				fail = true;
@@ -48,23 +40,23 @@ namespace RazorEnhanced.UI
 			if (fail)
 			{
 				MessageBox.Show("Invalid profile name!",
-                "Enhanced Profiles",
+				"Enhanced Profiles",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1);
 			}
 			else
 			{
-                RazorEnhanced.Profiles.Rename(RazorEnhanced.Profiles.LastUsed(), newprofile);
-                RazorEnhanced.Profiles.Refresh();
+				RazorEnhanced.Profiles.Rename(RazorEnhanced.Profiles.LastUsed(), newprofile);
+				RazorEnhanced.Profiles.Refresh();
 
 				this.Close();
 			}
 		}
 
-        private void EnhancedProfileAdd_Load(object sender, EventArgs e)
-        {
-            oldNameLabel.Text = "Old Name: " + RazorEnhanced.Profiles.LastUsed();
-        }
+		private void EnhancedProfileAdd_Load(object sender, EventArgs e)
+		{
+			oldNameLabel.Text = "Old Name: " + RazorEnhanced.Profiles.LastUsed();
+		}
 	}
 }

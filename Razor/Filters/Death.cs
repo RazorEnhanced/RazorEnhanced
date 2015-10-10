@@ -1,6 +1,3 @@
-using System;
-using Assistant;
-
 namespace Assistant.Filters
 {
 	internal class DeathFilter : Filter

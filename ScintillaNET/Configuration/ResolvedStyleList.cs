@@ -8,32 +8,32 @@ using System.Collections.Generic;
 
 namespace ScintillaNET.Configuration
 {
-    public class ResolvedStyleList : Dictionary<int, StyleConfig>
-    {
-        #region Methods
+	public class ResolvedStyleList : Dictionary<int, StyleConfig>
+	{
+		#region Methods
 
-        public StyleConfig FindByName(string name)
-        {
+		public StyleConfig FindByName(string name)
+		{
 
-            foreach (StyleConfig item in this.Values)
-            {
-                if (item.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                    return item;
-            }
+			foreach (StyleConfig item in this.Values)
+			{
+				if (item.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+					return item;
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        #endregion Methods
+		#endregion Methods
 
 
-        #region Constructors
+		#region Constructors
 
-        public ResolvedStyleList()
-        {
+		public ResolvedStyleList()
+		{
 
-        }
+		}
 
-        #endregion Constructors
-    }
+		#endregion Constructors
+	}
 }

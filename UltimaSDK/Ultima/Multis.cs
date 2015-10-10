@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 
 namespace Ultima
 {
@@ -241,12 +240,12 @@ namespace Ultima
 				{
 					for (int i = 1; i < newtiles.Count; ++i) // do we have a better one?
 					{
-						if (newtiles[i].m_OffsetX == 0 && newtiles[i].m_OffsetY == 0 
-							&& newtiles[i].m_ItemID != 0x1 && newtiles[i].m_OffsetZ == 0 )
+						if (newtiles[i].m_OffsetX == 0 && newtiles[i].m_OffsetY == 0
+							&& newtiles[i].m_ItemID != 0x1 && newtiles[i].m_OffsetZ == 0)
 						{
 							MultiComponentList.MultiTileEntry centeritem = newtiles[i];
 							newtiles.RemoveAt(i); // jep so save it
-							for (int j = newtiles.Count-1; j >= 0; --j) // and remove all invis
+							for (int j = newtiles.Count - 1; j >= 0; --j) // and remove all invis
 							{
 								if (newtiles[j].m_ItemID == 0x1)
 									newtiles.RemoveAt(j);
@@ -255,7 +254,7 @@ namespace Ultima
 							return newtiles;
 						}
 					}
-					for (int j = newtiles.Count-1; j >= 1; --j) // nothing found so remove all invis exept the first
+					for (int j = newtiles.Count - 1; j >= 1; --j) // nothing found so remove all invis exept the first
 					{
 						if (newtiles[j].m_ItemID == 0x1)
 							newtiles.RemoveAt(j);
@@ -265,12 +264,12 @@ namespace Ultima
 			}
 			for (int i = 0; i < newtiles.Count; ++i) // is there a good one
 			{
-				if (newtiles[i].m_OffsetX == 0 && newtiles[i].m_OffsetY == 0 
+				if (newtiles[i].m_OffsetX == 0 && newtiles[i].m_OffsetY == 0
 					&& newtiles[i].m_ItemID != 0x1 && newtiles[i].m_OffsetZ == 0)
 				{
 					MultiComponentList.MultiTileEntry centeritem = newtiles[i];
 					newtiles.RemoveAt(i); // store it
-					for (int j = newtiles.Count-1; j >= 0; --j) // remove all invis
+					for (int j = newtiles.Count - 1; j >= 0; --j) // remove all invis
 					{
 						if (newtiles[j].m_ItemID == 0x1)
 							newtiles.RemoveAt(j);
@@ -279,7 +278,7 @@ namespace Ultima
 					return newtiles;
 				}
 			}
-			for (int j = newtiles.Count-1; j >= 0; --j) // nothing found so remove all invis
+			for (int j = newtiles.Count - 1; j >= 0; --j) // nothing found so remove all invis
 			{
 				if (newtiles[j].m_ItemID == 0x1)
 					newtiles.RemoveAt(j);

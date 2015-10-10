@@ -1,6 +1,5 @@
 #region Using Directives
 
-using System;
 using System.Collections.ObjectModel;
 
 #endregion Using Directives
@@ -8,15 +7,15 @@ using System.Collections.ObjectModel;
 
 namespace ScintillaNET.Configuration
 {
-    public class KeyWordConfigList : KeyedCollection<int, KeyWordConfig>
-    {
-        #region Methods
+	public class KeyWordConfigList : KeyedCollection<int, KeyWordConfig>
+	{
+		#region Methods
 
-        protected override int GetKeyForItem(KeyWordConfig item)
-        {
-            return item.List;
-        }
+		protected override int GetKeyForItem(KeyWordConfig item)
+		{
+			return item.List;
+		}
 
-        #endregion Methods
-    }
+		#endregion Methods
+	}
 }

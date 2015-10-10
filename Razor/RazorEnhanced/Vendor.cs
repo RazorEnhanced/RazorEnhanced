@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Assistant;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Assistant;
 using System.Windows.Forms;
-using System.Threading;
-using System.Text.RegularExpressions;
 
 namespace RazorEnhanced
 {
@@ -80,28 +77,28 @@ namespace RazorEnhanced
 				try
 				{
 					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.SellBagLabel.Text, 16);
-                }
-                catch
-                { }
+				}
+				catch
+				{ }
 
 				return serialBag;
 			}
 
 			set
 			{
-                Assistant.Engine.MainWindow.SellBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.SellBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
 		internal static void AddLog(string addlog)
 		{
-            if (Engine.Running)
-            {
-                Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Add(addlog)));
-                Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.SelectedIndex = Assistant.Engine.MainWindow.SellLogBox.Items.Count - 1));
-                if (Assistant.Engine.MainWindow.SellLogBox.Items.Count > 300)
-                    Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Clear()));
-            }
+			if (Engine.Running)
+			{
+				Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Add(addlog)));
+				Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.SelectedIndex = Assistant.Engine.MainWindow.SellLogBox.Items.Count - 1));
+				if (Assistant.Engine.MainWindow.SellLogBox.Items.Count > 300)
+					Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Clear()));
+			}
 		}
 
 		internal static void RefreshLists()
@@ -109,8 +106,8 @@ namespace RazorEnhanced
 			List<SellAgentList> lists;
 			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
-            if (lists.Count == 0)
-                Assistant.Engine.MainWindow.SellListView.Items.Clear();
+			if (lists.Count == 0)
+				Assistant.Engine.MainWindow.SellListView.Items.Clear();
 
 			SellAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.SellListSelect.Text)
@@ -245,9 +242,9 @@ namespace RazorEnhanced
 				return true;
 			else
 				if (colorDaLista == colorDaVendor)      // Match OK
-					return true;
-				else            // Match fallito
-					return false;
+				return true;
+			else            // Match fallito
+				return false;
 		}
 
 		private static void OnVendorSell(PacketReader pvSrc, PacketHandlerEventArgs args)
@@ -476,13 +473,13 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-            if (Engine.Running)
-            {
-                Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
-                Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.SelectedIndex = Assistant.Engine.MainWindow.BuyLogBox.Items.Count - 1));
-                if (Assistant.Engine.MainWindow.BuyLogBox.Items.Count > 300)
-                    Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Clear()));
-            }
+			if (Engine.Running)
+			{
+				Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
+				Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.SelectedIndex = Assistant.Engine.MainWindow.BuyLogBox.Items.Count - 1));
+				if (Assistant.Engine.MainWindow.BuyLogBox.Items.Count > 300)
+					Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Clear()));
+			}
 		}
 
 		internal static void RefreshLists()
@@ -490,8 +487,8 @@ namespace RazorEnhanced
 			List<BuyAgentList> lists;
 			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
 
-            if (lists.Count == 0)
-                Assistant.Engine.MainWindow.BuyListView.Items.Clear();
+			if (lists.Count == 0)
+				Assistant.Engine.MainWindow.BuyListView.Items.Clear();
 
 			BuyAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.BuyListSelect.Text)
@@ -624,9 +621,9 @@ namespace RazorEnhanced
 				return true;
 			else
 				if (colorDaLista == colorDaVendor) // Match OK
-					return true;
-				else  // Match fallito
-					return false;
+				return true;
+			else  // Match fallito
+				return false;
 		}
 
 		private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
@@ -702,7 +699,7 @@ namespace RazorEnhanced
 
 		public static void Disable()
 		{
-            if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == false)
+			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == false)
 				Misc.SendMessage("Script Error: Buy.Disable: Filter alredy disabled");
 			else
 				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));

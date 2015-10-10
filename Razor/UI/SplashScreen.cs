@@ -1,8 +1,4 @@
-using System;
 using System.Threading;
-using System.Drawing;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Forms;
 
 namespace Assistant
@@ -114,16 +110,14 @@ namespace Assistant
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SplashScreen));
 			this.SuspendLayout();
 			// 
 			// SplashScreen
 			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.White;
-			this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			this.ClientSize = new System.Drawing.Size(412, 338);
+			this.BackgroundImage = global::Assistant.Properties.Resources.razor_enhanced_splash;
+			this.ClientSize = new System.Drawing.Size(600, 333);
 			this.ControlBox = false;
 			this.DoubleBuffered = true;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Win32;
 
 namespace Ultima
 {
@@ -243,7 +243,8 @@ namespace Ultima
 		/// <returns>The absolute path to <paramref name="file" /> -or- <c>null</c> if <paramref name="file" /> was not found.</returns>
 		public static string GetFilePath(string file)
 		{
-			if (MulPath.Count > 0) {
+			if (MulPath.Count > 0)
+			{
 				string path = "";
 				if (MulPath.ContainsKey(file.ToLower()))
 					path = MulPath[file.ToLower()];
@@ -263,27 +264,27 @@ namespace Ultima
 			return GetFilePath(String.Format(format, args));
 		}
 
-		static readonly string[] knownRegkeys = new string[] { 
-			@"Origin Worlds Online\Ultima Online\1.0", 
+		static readonly string[] knownRegkeys = new string[] {
+			@"Origin Worlds Online\Ultima Online\1.0",
 			@"Origin Worlds Online\Ultima Online Third Dawn\1.0",
-			@"EA GAMES\Ultima Online Samurai Empire", 
-			@"EA GAMES\Ultima Online Samurai Empire\1.0", 
-			@"EA GAMES\Ultima Online Samurai Empire\1.00.0000", 
-			@"EA GAMES\Ultima Online: Samurai Empire\1.0", 
-			@"EA GAMES\Ultima Online: Samurai Empire\1.00.0000", 
-			@"EA Games\Ultima Online: Mondain's Legacy", 
-			@"EA Games\Ultima Online: Mondain's Legacy\1.0", 
-			@"EA Games\Ultima Online: Mondain's Legacy\1.00.0000", 
-			@"Origin Worlds Online\Ultima Online Samurai Empire BETA\2d\1.0", 
-			@"Origin Worlds Online\Ultima Online Samurai Empire BETA\3d\1.0", 
-			@"Origin Worlds Online\Ultima Online Samurai Empire\2d\1.0", 
+			@"EA GAMES\Ultima Online Samurai Empire",
+			@"EA GAMES\Ultima Online Samurai Empire\1.0",
+			@"EA GAMES\Ultima Online Samurai Empire\1.00.0000",
+			@"EA GAMES\Ultima Online: Samurai Empire\1.0",
+			@"EA GAMES\Ultima Online: Samurai Empire\1.00.0000",
+			@"EA Games\Ultima Online: Mondain's Legacy",
+			@"EA Games\Ultima Online: Mondain's Legacy\1.0",
+			@"EA Games\Ultima Online: Mondain's Legacy\1.00.0000",
+			@"Origin Worlds Online\Ultima Online Samurai Empire BETA\2d\1.0",
+			@"Origin Worlds Online\Ultima Online Samurai Empire BETA\3d\1.0",
+			@"Origin Worlds Online\Ultima Online Samurai Empire\2d\1.0",
 			@"Origin Worlds Online\Ultima Online Samurai Empire\3d\1.0",
 			@"Origin Worlds Online\Ultima Online\KR Legacy Beta",
 			@"Electronic Arts\EA Games\Ultima Online Stygian Abyss Classic",
 			@"Electronic Arts\EA Games\Ultima Online Classic",
 		};
 
-		static readonly string[] knownRegPathkeys = new string[] { 
+		static readonly string[] knownRegPathkeys = new string[] {
 			"ExePath",
 			"Install Dir",
 			"InstallDir"
@@ -404,7 +405,7 @@ namespace Ultima
 		/// </summary>
 		/// <param name="what"></param>
 		/// <returns></returns>
-		public static bool CompareHashFile(string what,string path)
+		public static bool CompareHashFile(string what, string path)
 		{
 			string FileName = Path.Combine(path, String.Format("UOFiddler{0}.hash", what));
 			if (File.Exists(FileName))
@@ -431,22 +432,22 @@ namespace Ultima
 		/// <summary>
 		/// Checks if map1.mul exists and sets <see cref="Ultima.Map"/>
 		/// </summary>
-        public static void CheckForNewMapSize()
-        {
-            if (Files.GetFilePath("map1.mul") != null)
-            {
-                if (Ultima.Map.Trammel.Width == 7168)
-                    Ultima.Map.Trammel = new Ultima.Map(1, 1, 7168, 4096);
-                else
-                    Ultima.Map.Trammel = new Ultima.Map(1, 1, 6144, 4096);
-            }
-            else
-            {
-                if (Ultima.Map.Trammel.Width == 7168)
-                    Ultima.Map.Trammel = new Ultima.Map(0, 1, 7168, 4096);
-                else
-                    Ultima.Map.Trammel = new Ultima.Map(0, 1, 6144, 4096);
-            }
-        }
+		public static void CheckForNewMapSize()
+		{
+			if (Files.GetFilePath("map1.mul") != null)
+			{
+				if (Ultima.Map.Trammel.Width == 7168)
+					Ultima.Map.Trammel = new Ultima.Map(1, 1, 7168, 4096);
+				else
+					Ultima.Map.Trammel = new Ultima.Map(1, 1, 6144, 4096);
+			}
+			else
+			{
+				if (Ultima.Map.Trammel.Width == 7168)
+					Ultima.Map.Trammel = new Ultima.Map(0, 1, 7168, 4096);
+				else
+					Ultima.Map.Trammel = new Ultima.Map(0, 1, 6144, 4096);
+			}
+		}
 	}
 }

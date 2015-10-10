@@ -1,6 +1,6 @@
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Assistant
 {
@@ -162,8 +162,8 @@ namespace Assistant
 			Add(number, String.Format(format, args));
 		}
 
-		private static int[] m_DefaultStringNums = new int[] 
-		{ 
+		private static int[] m_DefaultStringNums = new int[]
+		{
 			1042971, // ~1_NOTHING~
 			1070722, // ~1_NOTHING~
 			1063483, // ~1_MATERIAL~ ~2_ITEMNAME~

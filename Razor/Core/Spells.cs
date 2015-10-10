@@ -1,7 +1,6 @@
 using System;
-using System.IO;
-using System.Text;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Assistant
@@ -22,7 +21,7 @@ namespace Assistant
 		readonly internal string WordsOfPower;
 		readonly internal string[] Reagents;
 
-        internal Spell(char flag, int n, int c, string power, string[] reags)
+		internal Spell(char flag, int n, int c, string power, string[] reags)
 		{
 			Flag = (SpellFlag)flag;
 			Number = n;
@@ -69,16 +68,16 @@ namespace Assistant
 
 		internal int GetHue(int def)
 		{
-            if (RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
+			if (RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
 			{
 				switch (Flag)
 				{
 					case SpellFlag.Beneficial:
-                        return RazorEnhanced.Settings.General.ReadInt("BeneficialSpellHue");
+						return RazorEnhanced.Settings.General.ReadInt("BeneficialSpellHue");
 					case SpellFlag.Harmful:
-                        return RazorEnhanced.Settings.General.ReadInt("HarmfulSpellHue");
+						return RazorEnhanced.Settings.General.ReadInt("HarmfulSpellHue");
 					case SpellFlag.Neutral:
-                        return RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue");
+						return RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue");
 					default:
 						return def;
 				}
@@ -102,7 +101,7 @@ namespace Assistant
 
 		private void Cast()
 		{
-            if (RazorEnhanced.Settings.General.ReadBool("SpellUnequip"))
+			if (RazorEnhanced.Settings.General.ReadBool("SpellUnequip"))
 			{
 				Item pack = World.Player.Backpack;
 				if (pack != null)
@@ -149,7 +148,7 @@ namespace Assistant
 
 		static Spell()
 		{
-            string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "spells.def");
+			string filename = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "spells.def");
 			m_SpellsByPower = new Dictionary<string, Spell>(64 + 10 + 16);
 			m_SpellsByID = new Dictionary<int, Spell>(64 + 10 + 16);
 
@@ -241,23 +240,23 @@ namespace Assistant
 			}
 		}
 
-        internal static void HealOrCureSelfChiva()
-        {
-            Spell s = null;
+		internal static void HealOrCureSelfChiva()
+		{
+			Spell s = null;
 
-            if (World.Player.Poisoned)
-                s = Get(20, 1); // cure
-            else
-                s = Get(20, 2); // mini heal
+			if (World.Player.Poisoned)
+				s = Get(20, 1); // cure
+			else
+				s = Get(20, 2); // mini heal
 
-            if (s != null)
-            {
-                if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-                    Targeting.TargetSelf(true);
-                ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
-                s.Cast();
-            }
-        }
+			if (s != null)
+			{
+				if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+					Targeting.TargetSelf(true);
+				ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+				s.Cast();
+			}
+		}
 
 		internal static void Initialize()
 		{

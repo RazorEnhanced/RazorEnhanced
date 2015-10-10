@@ -1,6 +1,6 @@
 ﻿namespace RazorEnhanced.UI
 {
-    partial class EnhancedItemInspector
+	partial class EnhancedItemInspector
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -470,42 +470,42 @@
 
 		#endregion
 
-        private System.Windows.Forms.Button bNameCopy;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button bPositionCopy;
-        private System.Windows.Forms.Button bColorCopy;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button bItemIdCopy;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button bOwnedCopy;
-        private System.Windows.Forms.Button bLayerCopy;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button bAmountCopy;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button bRContainerCopy;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button bContainerCopy;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.ListBox listBoxAttributes;
-        private RazorButton razorButton1;
-        private System.Windows.Forms.Button bSerialCopy;
-        private System.Windows.Forms.Label lName;
-        private System.Windows.Forms.Label lSerial;
-        private System.Windows.Forms.Label lItemID;
-        private System.Windows.Forms.Label lColor;
-        private System.Windows.Forms.Label lPosition;
-        private System.Windows.Forms.Label lContainer;
-        private System.Windows.Forms.Label lOwned;
-        private System.Windows.Forms.Label lLayer;
-        private System.Windows.Forms.Label lAmount;
-        private System.Windows.Forms.Label lRootContainer;
+		private System.Windows.Forms.Button bNameCopy;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Button bPositionCopy;
+		private System.Windows.Forms.Button bColorCopy;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Button bItemIdCopy;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Button bOwnedCopy;
+		private System.Windows.Forms.Button bLayerCopy;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Button bAmountCopy;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.Button bRContainerCopy;
+		private System.Windows.Forms.Label label10;
+		private System.Windows.Forms.Button bContainerCopy;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private System.Windows.Forms.ListBox listBoxAttributes;
+		private RazorButton razorButton1;
+		private System.Windows.Forms.Button bSerialCopy;
+		private System.Windows.Forms.Label lName;
+		private System.Windows.Forms.Label lSerial;
+		private System.Windows.Forms.Label lItemID;
+		private System.Windows.Forms.Label lColor;
+		private System.Windows.Forms.Label lPosition;
+		private System.Windows.Forms.Label lContainer;
+		private System.Windows.Forms.Label lOwned;
+		private System.Windows.Forms.Label lLayer;
+		private System.Windows.Forms.Label lAmount;
+		private System.Windows.Forms.Label lRootContainer;
 
 
-    }
+	}
 }

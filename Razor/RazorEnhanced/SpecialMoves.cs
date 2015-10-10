@@ -112,7 +112,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID ),
 			new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID ),
 			new AbilityInfo( AOSAbility.CrushingBlow, VikingSwordID, AxeID, BroadswordID, ShepherdsCrookID, SmithsHammerID, MaulID, WarMaceID, ScepterID, SledgeHammerID ),
-			new AbilityInfo( AOSAbility.Disarm, FistsID ), 
+			new AbilityInfo( AOSAbility.Disarm, FistsID ),
 			new AbilityInfo( AOSAbility.Dismount, WandID, LanceID ),
 			new AbilityInfo( AOSAbility.DoubleStrike, PickaxeID, TwoHandedAxeID, DoubleAxeID, ScimitarID, KatanaID, CrescentBladeID, QuarterStaffID, DoubleBladedStaffID, RepeatingCrossbowID ),
 			new AbilityInfo( AOSAbility.InfectiousStrike, ButcherKnifeID, DaggerID ),
@@ -129,7 +129,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID ),
 			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID ),
 			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID ),
-			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID ), 
+			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID ),
 			new AbilityInfo( AOSAbility.Dismount, BardicheID, AxeID, BladedStaffID, ClubID, PitchforkID, HeavyCrossbowID ),
 			//new AbilityInfo( AOSAbility.DoubleStrike ), // secondary on none
 			new AbilityInfo( AOSAbility.InfectiousStrike, CleaverID, PikeID, KryssID, DoubleBladedStaffID ),
@@ -142,15 +142,15 @@ namespace Assistant
 
 		public static void Initialize()
 		{
-		/*	HotKey.Add(HKCategory.Misc, HKSubCat.None, LocString.ToggleWarPeace, new HotKeyCallback(ToggleWarPeace));
+			/*	HotKey.Add(HKCategory.Misc, HKSubCat.None, LocString.ToggleWarPeace, new HotKeyCallback(ToggleWarPeace));
 
-			HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ClearAbility, new HotKeyCallback(ClearAbilities));
+				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ClearAbility, new HotKeyCallback(ClearAbilities));
 
-			HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.SetPrimAb, new HotKeyCallback(SetPrimaryAbility));
-			HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.SetSecAb, new HotKeyCallback(SetSecondaryAbility));
+				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.SetPrimAb, new HotKeyCallback(SetPrimaryAbility));
+				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.SetSecAb, new HotKeyCallback(SetSecondaryAbility));
 
-			HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ToggleStun, new HotKeyCallback(OnStun));
-			HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ToggleDisarm, new HotKeyCallback(OnDisarm));*/
+				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ToggleStun, new HotKeyCallback(OnStun));
+				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ToggleDisarm, new HotKeyCallback(OnDisarm));*/
 		}
 
 		private static void ToggleWarPeace()

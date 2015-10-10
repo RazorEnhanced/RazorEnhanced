@@ -733,6 +733,7 @@
     <None Include="RazorEnhanced\Resources\map-paralized.gif" />
     <None Include="RazorEnhanced\Resources\map-deadIn.png" />
     <None Include="RazorEnhanced\Resources\map-deadOut.png" />
+    <Content Include="RazorEnhanced\Resources\razor-enhanced-splash.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />

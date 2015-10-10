@@ -217,4 +217,7 @@
   <data name="map_deadOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\map-deadOut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="razor_enhanced_splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\razor-enhanced-splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

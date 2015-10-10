@@ -9,242 +9,242 @@ using System.Windows.Forms;
 
 namespace ScintillaNET
 {
-    public partial class IncrementalSearcher : UserControl
-    {
-        #region Fields
+	public partial class IncrementalSearcher : UserControl
+	{
+		#region Fields
 
-        private Scintilla _scintilla;
-        private bool _toolItem = false;
-        private bool _autoPosition = true;
+		private Scintilla _scintilla;
+		private bool _toolItem = false;
+		private bool _autoPosition = true;
 
-        #endregion Fields
-
-
-        #region Methods
-
-        private void brnPrevious_Click(object sender, EventArgs e)
-        {
-            findPrevious();
-        }
+		#endregion Fields
 
 
-        private void btnClearHighlights_Click(object sender, EventArgs e)
-        {
-            if (Scintilla == null) 
-                return;
-            Scintilla.FindReplace.ClearAllHighlights();
-        }
+		#region Methods
+
+		private void brnPrevious_Click(object sender, EventArgs e)
+		{
+			findPrevious();
+		}
 
 
-        private void btnHighlightAll_Click(object sender, EventArgs e)
-        {
-            if (txtFind.Text == string.Empty)
-                return;
-            if (Scintilla == null)
-                return;
-            Scintilla.FindReplace.HighlightAll(Scintilla.FindReplace.FindAll(txtFind.Text));
-        }
+		private void btnClearHighlights_Click(object sender, EventArgs e)
+		{
+			if (Scintilla == null)
+				return;
+			Scintilla.FindReplace.ClearAllHighlights();
+		}
 
 
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            findNext();
-        }
+		private void btnHighlightAll_Click(object sender, EventArgs e)
+		{
+			if (txtFind.Text == string.Empty)
+				return;
+			if (Scintilla == null)
+				return;
+			Scintilla.FindReplace.HighlightAll(Scintilla.FindReplace.FindAll(txtFind.Text));
+		}
 
 
-        private void findNext()
-        {
-            if (txtFind.Text == string.Empty)
-                return;
-            if (Scintilla == null)
-                return;
-
-            Range r = Scintilla.FindReplace.FindNext(txtFind.Text, true, Scintilla.FindReplace.Window.GetSearchFlags());
-            if (r != null)
-                r.Select();
-
-            MoveFormAwayFromSelection();
-        }
+		private void btnNext_Click(object sender, EventArgs e)
+		{
+			findNext();
+		}
 
 
-        private void findPrevious()
-        {
-            if (txtFind.Text == string.Empty)
-                return;
-            if (Scintilla == null)
-                return;
+		private void findNext()
+		{
+			if (txtFind.Text == string.Empty)
+				return;
+			if (Scintilla == null)
+				return;
 
-            Range r = Scintilla.FindReplace.FindPrevious(txtFind.Text, true, Scintilla.FindReplace.Window.GetSearchFlags());
-            if (r != null)
-                r.Select();
+			Range r = Scintilla.FindReplace.FindNext(txtFind.Text, true, Scintilla.FindReplace.Window.GetSearchFlags());
+			if (r != null)
+				r.Select();
 
-            MoveFormAwayFromSelection();
-        }
-
-
-        public virtual void MoveFormAwayFromSelection()
-        {
-            if (!Visible || Scintilla == null)
-                return;
-
-            if (!AutoPosition)
-                return;
-
-            int pos = Scintilla.Caret.Position;
-            int x = Scintilla.PointXFromPosition(pos);
-            int y = Scintilla.PointYFromPosition(pos);
-
-            Point cursorPoint = new Point(x, y);
-
-            Rectangle r = new Rectangle(Location, Size);
-            if (r.Contains(cursorPoint))
-            {
-                Point newLocation;
-                if (cursorPoint.Y < (Screen.PrimaryScreen.Bounds.Height / 2))
-                {
-                    // Top half of the screen
-                    newLocation = new Point(Location.X, cursorPoint.Y + Scintilla.Lines.Current.Height * 2);
-                        
-                }
-                else
-                {
-                    // Bottom half of the screen
-                    newLocation = new Point(Location.X, cursorPoint.Y - Height - (Scintilla.Lines.Current.Height * 2));
-                }
-                
-                Location = newLocation;
-            }
-        }
+			MoveFormAwayFromSelection();
+		}
 
 
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-            MoveFormAwayFromSelection();
-            txtFind.Focus();
-        }
+		private void findPrevious()
+		{
+			if (txtFind.Text == string.Empty)
+				return;
+			if (Scintilla == null)
+				return;
+
+			Range r = Scintilla.FindReplace.FindPrevious(txtFind.Text, true, Scintilla.FindReplace.Window.GetSearchFlags());
+			if (r != null)
+				r.Select();
+
+			MoveFormAwayFromSelection();
+		}
 
 
-        protected override void OnLeave(EventArgs e)
-        {
-            base.OnLostFocus(e);
-            if(!_toolItem)
-            Hide();
-        }
+		public virtual void MoveFormAwayFromSelection()
+		{
+			if (!Visible || Scintilla == null)
+				return;
+
+			if (!AutoPosition)
+				return;
+
+			int pos = Scintilla.Caret.Position;
+			int x = Scintilla.PointXFromPosition(pos);
+			int y = Scintilla.PointYFromPosition(pos);
+
+			Point cursorPoint = new Point(x, y);
+
+			Rectangle r = new Rectangle(Location, Size);
+			if (r.Contains(cursorPoint))
+			{
+				Point newLocation;
+				if (cursorPoint.Y < (Screen.PrimaryScreen.Bounds.Height / 2))
+				{
+					// Top half of the screen
+					newLocation = new Point(Location.X, cursorPoint.Y + Scintilla.Lines.Current.Height * 2);
+
+				}
+				else
+				{
+					// Bottom half of the screen
+					newLocation = new Point(Location.X, cursorPoint.Y - Height - (Scintilla.Lines.Current.Height * 2));
+				}
+
+				Location = newLocation;
+			}
+		}
 
 
-        protected override void OnVisibleChanged(EventArgs e)
-        {
-            base.OnVisibleChanged(e);
-
-            txtFind.Text = string.Empty;
-            txtFind.BackColor = SystemColors.Window;
-
-            MoveFormAwayFromSelection();
-
-            if (Visible)
-                txtFind.Focus();
-            else if(Scintilla!=null)
-                Scintilla.Focus();
-        }
+		protected override void OnCreateControl()
+		{
+			base.OnCreateControl();
+			MoveFormAwayFromSelection();
+			txtFind.Focus();
+		}
 
 
-        private void txtFind_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Enter:
-                case Keys.Down:
-                    findNext();
-                    e.Handled = true;
-                    break;
-                case Keys.Up:
-                    findPrevious();
-                    e.Handled = true;
-                    break;
-                case Keys.Escape:
-                    if(!_toolItem)
-                    Hide();
-                    break;
-            }
-        }
+		protected override void OnLeave(EventArgs e)
+		{
+			base.OnLostFocus(e);
+			if (!_toolItem)
+				Hide();
+		}
 
 
-        private void txtFind_TextChanged(object sender, EventArgs e)
-        {
-            txtFind.BackColor = SystemColors.Window;
-            if (txtFind.Text == string.Empty)
-                return;
-            if (Scintilla == null)
-                return;
+		protected override void OnVisibleChanged(EventArgs e)
+		{
+			base.OnVisibleChanged(e);
 
-            int pos = Math.Min(Scintilla.Caret.Position, Scintilla.Caret.Anchor);
-            Range r = Scintilla.FindReplace.Find(pos, Scintilla.TextLength, txtFind.Text, Scintilla.FindReplace.Window.GetSearchFlags());
-            if (r == null)
-                r = Scintilla.FindReplace.Find(0, pos, txtFind.Text, Scintilla.FindReplace.Window.GetSearchFlags());
+			txtFind.Text = string.Empty;
+			txtFind.BackColor = SystemColors.Window;
 
-            if (r != null)
-                r.Select();
-            else
-                txtFind.BackColor = Color.Tomato;
+			MoveFormAwayFromSelection();
 
-            MoveFormAwayFromSelection();
-        }
-
-        #endregion Methods
+			if (Visible)
+				txtFind.Focus();
+			else if (Scintilla != null)
+				Scintilla.Focus();
+		}
 
 
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets whether the control should automatically move away from the current
-        /// selection to prevent obscuring it.
-        /// </summary>
-        /// <returns>true to automatically move away from the current selection; otherwise, false.</returns>
-        public bool AutoPosition
-        {
-            get
-            {
-                return _autoPosition;
-            }
-            set
-            {
-                _autoPosition = value;
-            }
-        }
-
-
-        public Scintilla Scintilla
-        {
-            get
-            {
-                return _scintilla;
-            }
-            set
-            {
-                _scintilla = value;
-            }
-        }
-
-        #endregion Properties
+		private void txtFind_KeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Enter:
+				case Keys.Down:
+					findNext();
+					e.Handled = true;
+					break;
+				case Keys.Up:
+					findPrevious();
+					e.Handled = true;
+					break;
+				case Keys.Escape:
+					if (!_toolItem)
+						Hide();
+					break;
+			}
+		}
 
 
-        #region Constructors
+		private void txtFind_TextChanged(object sender, EventArgs e)
+		{
+			txtFind.BackColor = SystemColors.Window;
+			if (txtFind.Text == string.Empty)
+				return;
+			if (Scintilla == null)
+				return;
 
-        public IncrementalSearcher()
-        {
-            InitializeComponent();
-        }
+			int pos = Math.Min(Scintilla.Caret.Position, Scintilla.Caret.Anchor);
+			Range r = Scintilla.FindReplace.Find(pos, Scintilla.TextLength, txtFind.Text, Scintilla.FindReplace.Window.GetSearchFlags());
+			if (r == null)
+				r = Scintilla.FindReplace.Find(0, pos, txtFind.Text, Scintilla.FindReplace.Window.GetSearchFlags());
+
+			if (r != null)
+				r.Select();
+			else
+				txtFind.BackColor = Color.Tomato;
+
+			MoveFormAwayFromSelection();
+		}
+
+		#endregion Methods
 
 
-        public IncrementalSearcher(bool toolItem)
-        {
-            InitializeComponent();
-            _toolItem = toolItem;
-            if (toolItem)
-                BackColor = Color.Transparent;
-        }
+		#region Properties
 
-        #endregion Constructors
-    }
+		/// <summary>
+		/// Gets or sets whether the control should automatically move away from the current
+		/// selection to prevent obscuring it.
+		/// </summary>
+		/// <returns>true to automatically move away from the current selection; otherwise, false.</returns>
+		public bool AutoPosition
+		{
+			get
+			{
+				return _autoPosition;
+			}
+			set
+			{
+				_autoPosition = value;
+			}
+		}
+
+
+		public Scintilla Scintilla
+		{
+			get
+			{
+				return _scintilla;
+			}
+			set
+			{
+				_scintilla = value;
+			}
+		}
+
+		#endregion Properties
+
+
+		#region Constructors
+
+		public IncrementalSearcher()
+		{
+			InitializeComponent();
+		}
+
+
+		public IncrementalSearcher(bool toolItem)
+		{
+			InitializeComponent();
+			_toolItem = toolItem;
+			if (toolItem)
+				BackColor = Color.Transparent;
+		}
+
+		#endregion Constructors
+	}
 }

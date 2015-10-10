@@ -1,7 +1,7 @@
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System;
 
 namespace Ultima
 {
@@ -139,7 +139,7 @@ namespace Ultima
 		public static unsafe Bitmap GetFacetImage(int id)
 		{
 			Bitmap bmp;
-			string path=Files.GetFilePath(String.Format("facet0{0}.mul", id));
+			string path = Files.GetFilePath(String.Format("facet0{0}.mul", id));
 			if (path != null)
 			{
 				using (BinaryReader reader = new BinaryReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read)))
@@ -218,7 +218,7 @@ namespace Ultima
 						colorsAtLine++;
 						colorsCount = 0;
 					}
-					long currpos=writer.BaseStream.Position;
+					long currpos = writer.BaseStream.Position;
 					writer.BaseStream.Seek(pos, SeekOrigin.Begin);
 					writer.Write(colorsAtLine * 3); //byte count
 					writer.BaseStream.Seek(currpos, SeekOrigin.Begin);

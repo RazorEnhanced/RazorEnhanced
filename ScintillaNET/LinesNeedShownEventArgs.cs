@@ -7,55 +7,55 @@ using System;
 
 namespace ScintillaNET
 {
-    /// <summary>
-    ///     Provides data for the LinesNeedShown event
-    /// </summary>
-    public class LinesNeedShownEventArgs : EventArgs
-    {
-        #region Fields
+	/// <summary>
+	///     Provides data for the LinesNeedShown event
+	/// </summary>
+	public class LinesNeedShownEventArgs : EventArgs
+	{
+		#region Fields
 
-        private int _firstLine;
-        private int _lastLine;
+		private int _firstLine;
+		private int _lastLine;
 
-        #endregion Fields
-
-
-        #region Properties
-
-        /// <summary>
-        ///     Returns the first (top) line that needs to be shown
-        /// </summary>
-        public int FirstLine
-        {
-            get { return _firstLine; }
-        }
+		#endregion Fields
 
 
-        /// <summary>
-        ///     Returns the last (bottom) line that needs to be shown
-        /// </summary>
-        public int LastLine
-        {
-            get { return _lastLine; }
-            set { _lastLine = value; }
-        }
+		#region Properties
 
-        #endregion Properties
+		/// <summary>
+		///     Returns the first (top) line that needs to be shown
+		/// </summary>
+		public int FirstLine
+		{
+			get { return _firstLine; }
+		}
 
 
-        #region Constructors
+		/// <summary>
+		///     Returns the last (bottom) line that needs to be shown
+		/// </summary>
+		public int LastLine
+		{
+			get { return _lastLine; }
+			set { _lastLine = value; }
+		}
 
-        /// <summary>
-        ///     Initializes a new instance of the LinesNeedShownEventArgs class.
-        /// </summary>
-        /// <param name="startLine">the first (top) line that needs to be shown</param>
-        /// <param name="endLine">the last (bottom) line that needs to be shown</param>
-        public LinesNeedShownEventArgs(int startLine, int endLine)
-        {
-            _firstLine = startLine;
-            _lastLine = endLine;
-        }
+		#endregion Properties
 
-        #endregion Constructors
-    }
+
+		#region Constructors
+
+		/// <summary>
+		///     Initializes a new instance of the LinesNeedShownEventArgs class.
+		/// </summary>
+		/// <param name="startLine">the first (top) line that needs to be shown</param>
+		/// <param name="endLine">the last (bottom) line that needs to be shown</param>
+		public LinesNeedShownEventArgs(int startLine, int endLine)
+		{
+			_firstLine = startLine;
+			_lastLine = endLine;
+		}
+
+		#endregion Constructors
+	}
 }

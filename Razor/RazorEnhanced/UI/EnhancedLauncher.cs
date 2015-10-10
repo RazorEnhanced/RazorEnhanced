@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
-using Assistant;
+using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
 {
@@ -42,10 +39,10 @@ namespace RazorEnhanced.UI
 			if (shardlistCombobox.SelectedIndex == -1)
 				groupBox2.Enabled = false;
 
-            if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
-                okay.Enabled = true;
-            else
-                okay.Enabled = false;
+			if (Directory.Exists(clientFolderLabel.Text) && File.Exists(clientPathLabel.Text))
+				okay.Enabled = true;
+			else
+				okay.Enabled = false;
 
 		}
 
@@ -76,52 +73,52 @@ namespace RazorEnhanced.UI
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			EnhancedLauncherAddShard AddShard = new EnhancedLauncherAddShard();
-            AddShard.FormClosed += new FormClosedEventHandler(addshard_refresh);
+			AddShard.FormClosed += new FormClosedEventHandler(addshard_refresh);
 			AddShard.TopMost = true;
 			AddShard.Show();
 		}
 
-        private void addshard_refresh(object sender, EventArgs e)
-        {
-            int port = 2593;
-            Int32.TryParse(portLabel.Text, out port);
+		private void addshard_refresh(object sender, EventArgs e)
+		{
+			int port = 2593;
+			Int32.TryParse(portLabel.Text, out port);
 
-            List<RazorEnhanced.Shard> shards;
-            RazorEnhanced.Shard.Read(out shards);
+			List<RazorEnhanced.Shard> shards;
+			RazorEnhanced.Shard.Read(out shards);
 
-            shardlistCombobox.Items.Clear();
-            foreach (Shard shard in shards)
-            {
-                shardlistCombobox.Items.Add(shard.Description);
-            }
+			shardlistCombobox.Items.Clear();
+			foreach (Shard shard in shards)
+			{
+				shardlistCombobox.Items.Add(shard.Description);
+			}
 
-            RefreshGUI();
-            groupBox2.Enabled = true;
-        }
+			RefreshGUI();
+			groupBox2.Enabled = true;
+		}
 
 		private void shardlistCombobox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            List<RazorEnhanced.Shard> shards;
-            RazorEnhanced.Shard.UpdateLast(shardlistCombobox.Text);
-            RazorEnhanced.Shard.Read(out shards);
+			List<RazorEnhanced.Shard> shards;
+			RazorEnhanced.Shard.UpdateLast(shardlistCombobox.Text);
+			RazorEnhanced.Shard.Read(out shards);
 
-            foreach (Shard shard in shards)
-            {
-                if (shard.Selected)
-                {
-                    shardlistCombobox.SelectedIndex = shardlistCombobox.Items.IndexOf(shard.Description);
-                    clientPathLabel.Text = shard.ClientPath;
-                    clientFolderLabel.Text = shard.ClientFolder;
-                    hostLabel.Text = shard.Host;
-                    portLabel.Text = shard.Port.ToString();
-                    patchEnc.Checked = shard.PatchEnc;
-                    osiEnc.Checked = shard.OSIEnc;
-                }
-            }
+			foreach (Shard shard in shards)
+			{
+				if (shard.Selected)
+				{
+					shardlistCombobox.SelectedIndex = shardlistCombobox.Items.IndexOf(shard.Description);
+					clientPathLabel.Text = shard.ClientPath;
+					clientFolderLabel.Text = shard.ClientFolder;
+					hostLabel.Text = shard.Host;
+					portLabel.Text = shard.Port.ToString();
+					patchEnc.Checked = shard.PatchEnc;
+					osiEnc.Checked = shard.OSIEnc;
+				}
+			}
 
-            if (shardlistCombobox.SelectedIndex == -1)
-                groupBox2.Enabled = false;
-            groupBox2.Enabled = true;
+			if (shardlistCombobox.SelectedIndex == -1)
+				groupBox2.Enabled = false;
+			groupBox2.Enabled = true;
 		}
 
 		private void patchEncy_CheckedChanged(object sender, EventArgs e)
@@ -160,7 +157,7 @@ namespace RazorEnhanced.UI
 
 		private void bNameCopy_Click(object sender, EventArgs e)
 		{
-            openclientlocation.RestoreDirectory = true;
+			openclientlocation.RestoreDirectory = true;
 			if (openclientlocation.ShowDialog(this) == DialogResult.OK)
 			{
 				clientPathLabel.Text = openclientlocation.FileName;
@@ -198,7 +195,7 @@ namespace RazorEnhanced.UI
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1);
-                this.Close();
+				this.Close();
 			}
 		}
 
@@ -213,7 +210,7 @@ namespace RazorEnhanced.UI
 			{
 				RazorEnhanced.Shard.Delete(shardlistCombobox.Text);
 			}
-            UpdateGUI();
+			UpdateGUI();
 		}
 	}
 }

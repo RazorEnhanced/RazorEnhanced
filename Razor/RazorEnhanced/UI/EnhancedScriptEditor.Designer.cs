@@ -67,22 +67,22 @@
 			// toolStrip1
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButtonOpen,
-            this.toolStripButtonSave,
-            this.toolStripButtonClose,
-            this.toolStripSeparator1,
-            this.toolStripButtonPlay,
-            this.toolStripButtonDebug,
-            this.toolStripNextCall,
-            this.toolStripButtonNextLine,
-            this.toolStripButtonNextReturn,
-            this.toolStripButtonStop,
-            this.toolStripSeparator2,
-            this.toolStripButtonAddBreakpoint,
-            this.toolStripButtonRemoveBreakpoints,
-            this.toolStripSeparator3,
-            this.toolStripButtonInspect,
-            this.toolStripButton1});
+			this.toolStripButtonOpen,
+			this.toolStripButtonSave,
+			this.toolStripButtonClose,
+			this.toolStripSeparator1,
+			this.toolStripButtonPlay,
+			this.toolStripButtonDebug,
+			this.toolStripNextCall,
+			this.toolStripButtonNextLine,
+			this.toolStripButtonNextReturn,
+			this.toolStripButtonStop,
+			this.toolStripSeparator2,
+			this.toolStripButtonAddBreakpoint,
+			this.toolStripButtonRemoveBreakpoints,
+			this.toolStripSeparator3,
+			this.toolStripButtonInspect,
+			this.toolStripButton1});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(976, 25);
@@ -224,7 +224,7 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelScript});
+			this.toolStripStatusLabelScript});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 443);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(976, 22);
@@ -355,7 +355,7 @@
 		private ScintillaNET.Scintilla scintillaEditor;
 		private System.Windows.Forms.TextBox textBoxDebug;
 		private System.Windows.Forms.ToolStripButton toolStripButtonDebug;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.SplitContainer splitContainer2;
 	}
 }

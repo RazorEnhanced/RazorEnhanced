@@ -1,9 +1,6 @@
-using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
 using RazorEnhanced.UI;
+using System;
+using System.Windows.Forms;
 
 namespace Assistant
 {
@@ -70,7 +67,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.message = new System.Windows.Forms.TextBox();
-            this.okay = new RazorButton();
+			this.okay = new RazorButton();
 			this.SuspendLayout();
 			// 
 			// message

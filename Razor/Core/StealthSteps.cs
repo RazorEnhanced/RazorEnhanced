@@ -1,5 +1,3 @@
-using System;
-
 namespace Assistant
 {
 	internal class StealthSteps
@@ -12,7 +10,7 @@ namespace Assistant
 
 		internal static void OnMove()
 		{
-            if (m_Hidden && RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
+			if (m_Hidden && RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
 			{
 				m_Count++;
 				World.Player.SendMessage(MsgLevel.Error, LocString.StealthSteps, m_Count);
@@ -25,7 +23,7 @@ namespace Assistant
 		{
 			m_Hidden = true;
 			m_Count = 0;
-            if (RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
+			if (RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
 				World.Player.SendMessage(MsgLevel.Error, LocString.StealthStart);
 		}
 

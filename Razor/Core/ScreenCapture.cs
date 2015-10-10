@@ -1,8 +1,8 @@
 using System;
-using System.IO;
-using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Assistant
 {
@@ -28,8 +28,8 @@ namespace Assistant
 			string filename;
 			string timestamp;
 			string name = "Unknown";
-            string path = RazorEnhanced.Settings.General.ReadString("CapPath");
-            string type = RazorEnhanced.Settings.General.ReadString("ImageFormat").ToLower();
+			string path = RazorEnhanced.Settings.General.ReadString("CapPath");
+			string type = RazorEnhanced.Settings.General.ReadString("ImageFormat").ToLower();
 
 			if (World.Player != null)
 				name = World.Player.Name;
@@ -50,8 +50,8 @@ namespace Assistant
 			{
 				try
 				{
-                    path = Path.GetDirectoryName(Application.ExecutablePath);
-                    RazorEnhanced.Settings.General.WriteString("CapPath", path);
+					path = Path.GetDirectoryName(Application.ExecutablePath);
+					RazorEnhanced.Settings.General.WriteString("CapPath", path);
 				}
 				catch
 				{
@@ -106,7 +106,7 @@ namespace Assistant
 
 		internal static void DisplayTo(ListBox list)
 		{
-            string path = RazorEnhanced.Settings.General.ReadString("CapPath");
+			string path = RazorEnhanced.Settings.General.ReadString("CapPath");
 			Engine.EnsureDirectory(path);
 
 			//list.BeginUpdate();

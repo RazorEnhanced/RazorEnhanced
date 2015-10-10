@@ -32,7 +32,7 @@ namespace Ultima
 		{
 			if (x < 0 || y < 0 || x >= BlockWidth || y >= BlockHeight)
 				return TileMatrix.InvalidLandBlock;
-			if (LandBlocks[x]==null)
+			if (LandBlocks[x] == null)
 				return TileMatrix.InvalidLandBlock;
 			return LandBlocks[x][y];
 		}
@@ -175,7 +175,7 @@ namespace Ultima
 				{
 					int count = Math.Min((int)(indexReader.BaseStream.Length / 4),
 										(int)(lookupReader.BaseStream.Length / 12));
-					
+
 					HuedTileList[][] lists = new HuedTileList[8][];
 
 					for (int x = 0; x < 8; ++x)

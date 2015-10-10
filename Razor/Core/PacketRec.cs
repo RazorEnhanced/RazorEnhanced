@@ -1,9 +1,8 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
 using System.Windows.Forms;
-using System.Text;
 
 namespace Assistant
 {

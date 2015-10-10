@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using Assistant;
 
 namespace RazorEnhanced.UI
 {

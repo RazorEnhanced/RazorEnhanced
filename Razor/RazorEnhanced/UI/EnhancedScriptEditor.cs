@@ -1,20 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Collections.Generic;
+﻿using Assistant;
+using IronPython.Hosting;
+using IronPython.Runtime;
+using IronPython.Runtime.Exceptions;
+using Microsoft.Scripting.Hosting;
+using ScintillaNET;
+using System;
 using System.Collections.Concurrent;
-using System.Data;
+using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
-
-using ScintillaNET;
-using Assistant;
-using RazorEnhanced;
-
-using IronPython.Hosting;
-using Microsoft.Scripting.Hosting;
-using IronPython.Runtime.Exceptions;
-using IronPython.Runtime;
 
 
 namespace RazorEnhanced.UI
@@ -388,7 +384,7 @@ namespace RazorEnhanced.UI
 		{
 			OpenFileDialog open = new OpenFileDialog();
 			open.Filter = "Script Files|*.py";
-            open.RestoreDirectory = true;
+			open.RestoreDirectory = true;
 
 			if (open.ShowDialog() == DialogResult.OK)
 			{
@@ -402,7 +398,7 @@ namespace RazorEnhanced.UI
 		{
 			SaveFileDialog save = new SaveFileDialog();
 			save.Filter = "Script Files|*.py";
-            save.RestoreDirectory = true;
+			save.RestoreDirectory = true;
 
 			if (save.ShowDialog() == DialogResult.OK)
 			{
@@ -441,11 +437,12 @@ namespace RazorEnhanced.UI
 			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
 			if (assistantItem != null && assistantItem.Serial.IsItem)
 			{
-				this.BeginInvoke((MethodInvoker)delegate { 
-                    EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem);
-				    inspector.TopMost = true;
-				    inspector.Show();
-                });
+				this.BeginInvoke((MethodInvoker)delegate
+				{
+					EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem);
+					inspector.TopMost = true;
+					inspector.Show();
+				});
 			}
 
 			else
@@ -453,11 +450,12 @@ namespace RazorEnhanced.UI
 				Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
 				if (assistantMobile != null && assistantMobile.Serial.IsMobile)
 				{
-                    this.BeginInvoke((MethodInvoker)delegate {
-					    EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile);
-					    inspector.TopMost = true;
-					    inspector.Show();
-                    });
+					this.BeginInvoke((MethodInvoker)delegate
+					{
+						EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile);
+						inspector.TopMost = true;
+						inspector.Show();
+					});
 				}
 			}
 		}

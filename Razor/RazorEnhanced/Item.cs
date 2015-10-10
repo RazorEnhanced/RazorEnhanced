@@ -1,10 +1,9 @@
+using Assistant;
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Threading;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Assistant;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -251,20 +250,20 @@ namespace RazorEnhanced
 	{
 		public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
-            if (!bag.Updated)
-            {
-                RazorEnhanced.Items.UseItem(bag);
-                int subdelay = delay;
+			if (!bag.Updated)
+			{
+				RazorEnhanced.Items.UseItem(bag);
+				int subdelay = delay;
 
-                if (bag.IsCorpse || bag.IsContainer)
-                    while (!bag.Updated)
-                    {
-                        Thread.Sleep(2);
-                        subdelay -= 2;
-                        if (subdelay <= 0)
-                            break;
-                    }
-            }
+				if (bag.IsCorpse || bag.IsContainer)
+					while (!bag.Updated)
+					{
+						Thread.Sleep(2);
+						subdelay -= 2;
+						if (subdelay <= 0)
+							break;
+					}
+			}
 		}
 
 		public class Filter
@@ -533,46 +532,46 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static void Lift(Item item, int amount)
-        {
-            if (item == null)
-            {
-                Misc.SendMessage("Script Error: Move: Source Item  not found");
-                return;
-            }
-            if (amount == 0)
-            {
-                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-            }
-            else
-            {
-                if (item.Amount < amount)
-                {
-                    amount = item.Amount;
-                }
-                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
-            }
-        }
+		public static void Lift(Item item, int amount)
+		{
+			if (item == null)
+			{
+				Misc.SendMessage("Script Error: Move: Source Item  not found");
+				return;
+			}
+			if (amount == 0)
+			{
+				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+			}
+			else
+			{
+				if (item.Amount < amount)
+				{
+					amount = item.Amount;
+				}
+				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+			}
+		}
 
-        public static void DropFromHand(Item item, Item bag)
-        {
-            if (item == null)
-            {
-                Misc.SendMessage("Script Error: Move: Source Item  not found");
-                return;
-            }
-            if (bag == null)
-            {
-                Misc.SendMessage("Script Error: Move: Destination Item not found");
-                return;
-            }
-            if (!bag.IsContainer)
-            {
-                Misc.SendMessage("Script Error: Move: Destination Item is not a container");
-                return;
-            }
-            Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
-        }
+		public static void DropFromHand(Item item, Item bag)
+		{
+			if (item == null)
+			{
+				Misc.SendMessage("Script Error: Move: Source Item  not found");
+				return;
+			}
+			if (bag == null)
+			{
+				Misc.SendMessage("Script Error: Move: Destination Item not found");
+				return;
+			}
+			if (!bag.IsContainer)
+			{
+				Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+				return;
+			}
+			Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+		}
 
 		public static void Move(Item item, Item bag, int amount)
 		{
@@ -607,40 +606,40 @@ namespace RazorEnhanced
 			}
 		}
 
-        public static void Move(int itemserial, int bagserial, int amount)
-        {
-            Assistant.Item bag = Assistant.World.FindItem(bagserial);
-            Assistant.Item item = Assistant.World.FindItem(itemserial);
-            if (item == null)
-            {
-                Misc.SendMessage("Script Error: Move: Source Item  not found");
-                return;
-            }
-            if (bag == null)
-            {
-                Misc.SendMessage("Script Error: Move: Destination Item not found");
-                return;
-            }
-            if (!bag.IsContainer)
-            {
-                Misc.SendMessage("Script Error: Move: Destination Item is not a container");
-                return;
-            }
-            if (amount == 0)
-            {
-                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
-            }
-            else
-            {
-                if (item.Amount < amount)
-                {
-                    amount = item.Amount;
-                }
-                Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
-                Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
-            }
-        }
+		public static void Move(int itemserial, int bagserial, int amount)
+		{
+			Assistant.Item bag = Assistant.World.FindItem(bagserial);
+			Assistant.Item item = Assistant.World.FindItem(itemserial);
+			if (item == null)
+			{
+				Misc.SendMessage("Script Error: Move: Source Item  not found");
+				return;
+			}
+			if (bag == null)
+			{
+				Misc.SendMessage("Script Error: Move: Destination Item not found");
+				return;
+			}
+			if (!bag.IsContainer)
+			{
+				Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+				return;
+			}
+			if (amount == 0)
+			{
+				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+			}
+			else
+			{
+				if (item.Amount < amount)
+				{
+					amount = item.Amount;
+				}
+				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+			}
+		}
 
 		public static void DropItemGroundSelf(Item item, int amount)
 		{
@@ -671,11 +670,11 @@ namespace RazorEnhanced
 		public static void UseItem(int itemserial)
 		{
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
-            if (item == null)
-            {
-                Misc.SendMessage("Script Error: UseItem: Invalid Serial");
-                return;
-            }
+			if (item == null)
+			{
+				Misc.SendMessage("Script Error: UseItem: Invalid Serial");
+				return;
+			}
 
 			if (item.Serial.IsItem)
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
@@ -684,46 +683,46 @@ namespace RazorEnhanced
 
 		}
 
-        public static void UseItemByID(int itemid, int color)
-        {
-            // Genero filtro item
-            Items.Filter itemFilter = new Items.Filter();
-            itemFilter.Enabled = true;
-            itemFilter.Graphics.Add(itemid);
-
-            if (color != -1)
-                itemFilter.Hues.Add(color);
-
-            List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
-
-            foreach (Item found in containeritem)
-            {
-                if (!found.IsInBank)
-                {
-                    RazorEnhanced.Items.UseItem(found);
-                    break;
-                }
-            }
-
-            return;
-        }
-
-        // Single Click
-        public static void SingleClick(Item item)
+		public static void UseItemByID(int itemid, int color)
 		{
-            ClientCommunication.SendToServer(new SingleClick(item));
+			// Genero filtro item
+			Items.Filter itemFilter = new Items.Filter();
+			itemFilter.Enabled = true;
+			itemFilter.Graphics.Add(itemid);
+
+			if (color != -1)
+				itemFilter.Hues.Add(color);
+
+			List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+
+			foreach (Item found in containeritem)
+			{
+				if (!found.IsInBank)
+				{
+					RazorEnhanced.Items.UseItem(found);
+					break;
+				}
+			}
+
+			return;
 		}
 
-        public static void SingleClick(int itemserial)
-        {
-            Assistant.Item item = Assistant.World.FindItem(itemserial);
-            if (item == null)
-            {
-                Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
-                return;
-            }
-            ClientCommunication.SendToServer(new SingleClick(item));
-        }
+		// Single Click
+		public static void SingleClick(Item item)
+		{
+			ClientCommunication.SendToServer(new SingleClick(item));
+		}
+
+		public static void SingleClick(int itemserial)
+		{
+			Assistant.Item item = Assistant.World.FindItem(itemserial);
+			if (item == null)
+			{
+				Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
+				return;
+			}
+			ClientCommunication.SendToServer(new SingleClick(item));
+		}
 
 		// Props
 		public static int GetPropByCliloc(RazorEnhanced.Item item, int code)
@@ -1178,64 +1177,64 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 
-        // Count
-        public static int ContainerCount(int serial, int itemid, int color)
-        {
-            Item container = FindBySerial(serial);
-            if (container != null)
-                return ContainerCount(container, itemid, color);
-            else
-            {
-                Misc.SendMessage("Script Error: ContainerCount: Invalid container");
-                return 0;
-            }
-        }
+		// Count
+		public static int ContainerCount(int serial, int itemid, int color)
+		{
+			Item container = FindBySerial(serial);
+			if (container != null)
+				return ContainerCount(container, itemid, color);
+			else
+			{
+				Misc.SendMessage("Script Error: ContainerCount: Invalid container");
+				return 0;
+			}
+		}
 
-        public static int ContainerCount(Item container, int itemid, int color)
-        {
-            int count = 0;
-            if (container.IsContainer && container != null)
-            {
-                foreach (RazorEnhanced.Item itemcontenuti in container.Contains)
-                {
-                    if (color == -1)
-                    {
-                        if (itemcontenuti.ItemID == itemid)
-                            count = count + itemcontenuti.Amount;
-                    }
-                    else
-                    {
-                        if (itemcontenuti.ItemID == itemid && itemcontenuti.Hue == color)
-                            count = count + itemcontenuti.Amount;
-                    }
-                }
-            }
-            else
-                Misc.SendMessage("Script Error: ContainerCount: Invalid container");
-            
-            return count;
-        }
+		public static int ContainerCount(Item container, int itemid, int color)
+		{
+			int count = 0;
+			if (container.IsContainer && container != null)
+			{
+				foreach (RazorEnhanced.Item itemcontenuti in container.Contains)
+				{
+					if (color == -1)
+					{
+						if (itemcontenuti.ItemID == itemid)
+							count = count + itemcontenuti.Amount;
+					}
+					else
+					{
+						if (itemcontenuti.ItemID == itemid && itemcontenuti.Hue == color)
+							count = count + itemcontenuti.Amount;
+					}
+				}
+			}
+			else
+				Misc.SendMessage("Script Error: ContainerCount: Invalid container");
 
-        public static int BackpackCount(int itemid, int color)
-        {
-            // Genero filtro item
-            Items.Filter itemFilter = new Items.Filter();
-            itemFilter.Enabled = true;
-            itemFilter.Graphics.Add(itemid);
+			return count;
+		}
 
-            if (color != -1)
-                itemFilter.Hues.Add(color);
+		public static int BackpackCount(int itemid, int color)
+		{
+			// Genero filtro item
+			Items.Filter itemFilter = new Items.Filter();
+			itemFilter.Enabled = true;
+			itemFilter.Graphics.Add(itemid);
 
-            List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+			if (color != -1)
+				itemFilter.Hues.Add(color);
 
-            int amount = 0;
-            foreach (Item found in containeritem)
-            {
-                if (!found.IsInBank && found.RootContainer == World.Player)
-                    amount = amount + found.Amount;
-            }
+			List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
 
-            return amount;
-        }
+			int amount = 0;
+			foreach (Item found in containeritem)
+			{
+				if (!found.IsInBank && found.RootContainer == World.Player)
+					amount = amount + found.Amount;
+			}
+
+			return amount;
+		}
 	}
 }

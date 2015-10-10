@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using Assistant;
 
 namespace RazorEnhanced.UI
 {
@@ -14,7 +7,7 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Friend Manual Add Player";
 
-        public EnhancedFriendAddPlayerManual()
+		public EnhancedFriendAddPlayerManual()
 		{
 			InitializeComponent();
 			MaximizeBox = false;
@@ -42,7 +35,7 @@ namespace RazorEnhanced.UI
 			if (tName.Text == null)
 			{
 				MessageBox.Show("Player name is not valid.",
-                "Player name Error",
+				"Player name Error",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1);
@@ -55,8 +48,8 @@ namespace RazorEnhanced.UI
 			}
 			catch
 			{
-                MessageBox.Show("Player Serial is not valid.",
-                "Player Serial Error",
+				MessageBox.Show("Player Serial is not valid.",
+				"Player Serial Error",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1);

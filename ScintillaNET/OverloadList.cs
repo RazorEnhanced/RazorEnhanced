@@ -1,6 +1,5 @@
 ﻿#region Using Directives
 
-using System;
 using System.Collections.Generic;
 
 #endregion Using Directives
@@ -8,71 +7,71 @@ using System.Collections.Generic;
 
 namespace ScintillaNET
 {
-    /// <summary>
-    ///     List of strings to be used with <see cref="CallTip"/>.
-    /// </summary>
-    public class OverloadList : List<string>
-    {
-        #region Fields
+	/// <summary>
+	///     List of strings to be used with <see cref="CallTip"/>.
+	/// </summary>
+	public class OverloadList : List<string>
+	{
+		#region Fields
 
-        private int _currentIndex;
+		private int _currentIndex;
 
-        #endregion Fields
-
-
-        #region Properties
-
-        /// <summary>
-        ///     Text of the overload to be displayed in the CallTip
-        /// </summary>
-        public string Current
-        {
-            get
-            {
-                return this[_currentIndex];
-            }
-            set
-            {
-                _currentIndex = this.IndexOf(value);
-            }
-        }
+		#endregion Fields
 
 
-        /// <summary>
-        ///     Index of the overload to be displayed in the CallTip
-        /// </summary>
-        public int CurrentIndex
-        {
-            get
-            {
-                return _currentIndex;
-            }
-            internal set
-            {
-                _currentIndex = value;
-            }
-        }
+		#region Properties
 
-        #endregion Properties
+		/// <summary>
+		///     Text of the overload to be displayed in the CallTip
+		/// </summary>
+		public string Current
+		{
+			get
+			{
+				return this[_currentIndex];
+			}
+			set
+			{
+				_currentIndex = this.IndexOf(value);
+			}
+		}
 
 
-        #region Constructors
+		/// <summary>
+		///     Index of the overload to be displayed in the CallTip
+		/// </summary>
+		public int CurrentIndex
+		{
+			get
+			{
+				return _currentIndex;
+			}
+			internal set
+			{
+				_currentIndex = value;
+			}
+		}
 
-        /// <summary>
-        ///     Creates a new instance of an OverLoadList
-        /// </summary>
-        public OverloadList() : base() { }
+		#endregion Properties
 
-        /// <summary>
-        ///     Creates a new instance of an OverLoadList. The list of overloads is supplied by collection
-        /// </summary>
-        public OverloadList(IEnumerable<string> collection) : base(collection) { }
 
-        /// <summary>
-        ///     Creates a new instance of an OverLoadList. The
-        /// </summary>
-        public OverloadList(int capacity) : base(capacity) { }
+		#region Constructors
 
-        #endregion Constructors
-    }
+		/// <summary>
+		///     Creates a new instance of an OverLoadList
+		/// </summary>
+		public OverloadList() : base() { }
+
+		/// <summary>
+		///     Creates a new instance of an OverLoadList. The list of overloads is supplied by collection
+		/// </summary>
+		public OverloadList(IEnumerable<string> collection) : base(collection) { }
+
+		/// <summary>
+		///     Creates a new instance of an OverLoadList. The
+		/// </summary>
+		public OverloadList(int capacity) : base(capacity) { }
+
+		#endregion Constructors
+	}
 }

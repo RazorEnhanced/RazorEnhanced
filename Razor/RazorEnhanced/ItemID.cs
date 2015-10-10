@@ -1,5 +1,3 @@
-using System;
-
 namespace RazorEnhanced
 {
 	public struct ItemID

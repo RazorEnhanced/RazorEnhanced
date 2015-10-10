@@ -1,6 +1,6 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Assistant
 {
@@ -316,8 +316,8 @@ namespace Assistant
 				else if (m_Parent is Item)
 					((Item)m_Parent).RemoveItem(this);
 
-			//	if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
-			//		Counter.Uncount(this);
+				//	if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
+				//		Counter.Uncount(this);
 
 				if (value is Mobile)
 					m_Parent = ((Mobile)value).Serial;
@@ -355,16 +355,16 @@ namespace Assistant
 
 			if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
 			{
-			//	bool exempt = SearchExemptionAgent.IsExempt(this);
-			//	if (!exempt)
-			//		Counter.Count(this);
+				//	bool exempt = SearchExemptionAgent.IsExempt(this);
+				//	if (!exempt)
+				//		Counter.Count(this);
 
 				if (m_IsNew)
 				{
 					if (m_AutoStack)
 						AutoStackResource();
 
-                    if (IsContainer && (!IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")) && RazorEnhanced.Settings.General.ReadBool("AutoSearch"))
+					if (IsContainer && (!IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")) && RazorEnhanced.Settings.General.ReadBool("AutoSearch"))
 					{
 						PacketHandlers.IgnoreGumps.Add(this);
 						PlayerData.DoubleClick(this);
@@ -372,7 +372,7 @@ namespace Assistant
 						for (int c = 0; c < Contains.Count; c++)
 						{
 							Item icheck = Contains[c];
-                            if (icheck.IsContainer  && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
+							if (icheck.IsContainer && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
 							{
 								PacketHandlers.IgnoreGumps.Add(icheck);
 								PlayerData.DoubleClick(icheck);
@@ -402,7 +402,7 @@ namespace Assistant
 		private static List<Serial> m_AutoStackCache = new List<Serial>();
 		internal void AutoStackResource()
 		{
-            if (!IsResource || !RazorEnhanced.Settings.General.ReadBool("AutoStack") || m_AutoStackCache.Contains(Serial))
+			if (!IsResource || !RazorEnhanced.Settings.General.ReadBool("AutoStack") || m_AutoStackCache.Contains(Serial))
 				return;
 
 			foreach (Item check in World.Items.Values)
@@ -691,7 +691,7 @@ namespace Assistant
 			{
 				ushort iid = m_ItemID.Value;
 				return (
-					// everything in layer 2 except shields is 2handed
+						// everything in layer 2 except shields is 2handed
 						Layer == Layer.LeftHand &&
 						!((iid >= 0x1b72 && iid <= 0x1b7b) || IsVirtueShield) // shields
 					) ||

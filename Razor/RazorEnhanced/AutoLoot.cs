@@ -1,18 +1,16 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
+﻿using Assistant;
+using System;
 using System.Collections.Concurrent;
-using Assistant;
-using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
-using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
-        private static Queue<int> m_IgnoreCorpseQueue = new Queue<int>();
+		private static Queue<int> m_IgnoreCorpseQueue = new Queue<int>();
 
 		[Serializable]
 		public class AutoLootItem
@@ -126,40 +124,40 @@ namespace RazorEnhanced
 			{
 				int serialBag = 0;
 
-                try
-                {
-                    serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
-                }
-                catch
-                { }
+				try
+				{
+					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
+				}
+				catch
+				{ }
 
 				return serialBag;
 			}
 
 			set
 			{
-                Assistant.Engine.MainWindow.AutoLootContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootContainerLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.AutoLootContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootContainerLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
 		internal static void AddLog(string addlog)
 		{
-            if (Assistant.Engine.Running)
-            {
-                Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
-                Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
-                if (Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count > 300)
-                    Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear()));
-            }
+			if (Assistant.Engine.Running)
+			{
+				Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Add(addlog)));
+				Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.SelectedIndex = Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count - 1));
+				if (Assistant.Engine.MainWindow.AutoLootLogBox.Items.Count > 300)
+					Assistant.Engine.MainWindow.AutoLootLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear()));
+			}
 		}
 
 		internal static void RefreshLists()
-        {
+		{
 			List<AutoLootList> lists;
 			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
 
-            if (lists.Count == 0)
-                Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+			if (lists.Count == 0)
+				Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
 
 			AutoLootList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
@@ -294,24 +292,24 @@ namespace RazorEnhanced
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
-            if (World.Player.IsGhost)
-            {
-                Thread.Sleep(2000);
-                ResetIgnore();
-                return 0;
-            }
+			if (World.Player.IsGhost)
+			{
+				Thread.Sleep(2000);
+				ResetIgnore();
+				return 0;
+			}
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
 				// Apertura forzata 1 solo volta (necessaria in caso di corpi uccisi precedentemente da altri fuori schermata, in quanto vengono flaggati come updated anche se non realmente)
 
-                if (!m_IgnoreCorpseQueue.Contains(corpo.Serial))
-                {
-                    m_IgnoreCorpseQueue.Enqueue(corpo.Serial);
-                    DragDropManager.AutoLootOpenAction.Enqueue(corpo.Serial);
-                }
-                else
-                    RazorEnhanced.Items.WaitForContents(corpo, 1000);
+				if (!m_IgnoreCorpseQueue.Contains(corpo.Serial))
+				{
+					m_IgnoreCorpseQueue.Enqueue(corpo.Serial);
+					DragDropManager.AutoLootOpenAction.Enqueue(corpo.Serial);
+				}
+				else
+					RazorEnhanced.Items.WaitForContents(corpo, 1000);
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
@@ -348,7 +346,7 @@ namespace RazorEnhanced
 						}
 					}
 					//fine Blocco shared
-                    
+
 					foreach (AutoLootItem autoLootItem in autoLootList)
 					{
 						if (!autoLootItem.Selected)
@@ -361,7 +359,7 @@ namespace RazorEnhanced
 								bool grabItem = true;
 								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
 									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-									grabItem = false;
+										grabItem = false;
 
 								if (grabItem)
 								{
@@ -376,7 +374,7 @@ namespace RazorEnhanced
 								bool grabItem = true;
 								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
 									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-									grabItem = false;
+										grabItem = false;
 
 								if (grabItem)
 								{
@@ -393,11 +391,11 @@ namespace RazorEnhanced
 
 		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, Item corpo, int mseconds)
 		{
-            if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
-                return;
+			if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
+				return;
 
-            if (DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
-                return;
+			if (DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
+				return;
 
 			if (autoLoootItem.Properties.Count > 0) // Item con props
 			{
@@ -420,8 +418,8 @@ namespace RazorEnhanced
 
 				if (propsOK) // Tutte le props match OK
 				{
-                            DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
-                }
+					DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+				}
 				else
 				{
 					RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
@@ -429,10 +427,10 @@ namespace RazorEnhanced
 			}
 			else // Item Senza props     
 			{
-                    DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+				DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
 			}
 		}
-       
+
 		internal static void Engine()
 		{
 			int exit = Int32.MinValue;
@@ -445,23 +443,23 @@ namespace RazorEnhanced
 			corpseFilter.OnGround = true;
 			corpseFilter.Enabled = true;
 
-            // Check bag
-            Assistant.Item bag = Assistant.World.FindItem(AutoLootBag);
-            if (bag != null)
-            {
-                if (bag.RootContainer != World.Player)
-                {
-                    Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
-                    AddLog("Invalid Bag, Switch to backpack");
-                    AutoLootBag = (int)World.Player.Backpack.Serial.Value;
-                }
-            }
-            else
-            {
-                Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
-                AddLog("Invalid Bag, Switch to backpack");
-                AutoLootBag = (int)World.Player.Backpack.Serial.Value;
-            }
+			// Check bag
+			Assistant.Item bag = Assistant.World.FindItem(AutoLootBag);
+			if (bag != null)
+			{
+				if (bag.RootContainer != World.Player)
+				{
+					Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+					AddLog("Invalid Bag, Switch to backpack");
+					AutoLootBag = (int)World.Player.Backpack.Serial.Value;
+				}
+			}
+			else
+			{
+				Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+				AddLog("Invalid Bag, Switch to backpack");
+				AutoLootBag = (int)World.Player.Backpack.Serial.Value;
+			}
 
 			List<AutoLoot.AutoLootItem> items;
 			string list = AutoLoot.AutoLootListName;
@@ -472,10 +470,10 @@ namespace RazorEnhanced
 		// Funzioni di controllo da script
 		public static void ResetIgnore()
 		{
-            m_IgnoreCorpseQueue.Clear();
-            DragDropManager.AutoLootOpenAction = new ConcurrentQueue<int>();
-            DragDropManager.AutoLootSerialToGrab = new ConcurrentQueue<int>();
-            Scavenger.ResetIgnore();
+			m_IgnoreCorpseQueue.Clear();
+			DragDropManager.AutoLootOpenAction = new ConcurrentQueue<int>();
+			DragDropManager.AutoLootSerialToGrab = new ConcurrentQueue<int>();
+			Scavenger.ResetIgnore();
 		}
 
 		public static int RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
@@ -517,7 +515,7 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-            if (!Assistant.Engine.MainWindow.AutoLootListSelect.Items.Contains(nomelista))
+			if (!Assistant.Engine.MainWindow.AutoLootListSelect.Items.Contains(nomelista))
 				Misc.SendMessage("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
 			else
 			{

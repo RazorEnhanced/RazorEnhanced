@@ -1,8 +1,7 @@
 using System;
-using System.IO;
-using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Assistant
 {
@@ -16,7 +15,7 @@ namespace Assistant
 			//Client -> Server handlers
 			PacketHandler.RegisterClientToServerViewer(0x00, new PacketViewerCallback(CreateCharacter));
 			PacketHandler.RegisterClientToServerViewer(0x02, new PacketViewerCallback(MovementRequest));
-            PacketHandler.RegisterClientToServerFilter(0x05, new PacketFilterCallback(AttackRequest));
+			PacketHandler.RegisterClientToServerFilter(0x05, new PacketFilterCallback(AttackRequest));
 			PacketHandler.RegisterClientToServerViewer(0x06, new PacketViewerCallback(ClientDoubleClick));
 			PacketHandler.RegisterClientToServerViewer(0x07, new PacketViewerCallback(LiftRequest));
 			PacketHandler.RegisterClientToServerViewer(0x08, new PacketViewerCallback(DropRequest));
@@ -57,7 +56,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientFilter(0x3C, new PacketFilterCallback(ContainerContent));
 			PacketHandler.RegisterServerToClientViewer(0x4E, new PacketViewerCallback(PersonalLight));
 			PacketHandler.RegisterServerToClientViewer(0x4F, new PacketViewerCallback(GlobalLight));
-            PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
+			PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
 			PacketHandler.RegisterServerToClientViewer(0x72, new PacketViewerCallback(ServerSetWarMode));
 			PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
 			PacketHandler.RegisterServerToClientViewer(0x76, new PacketViewerCallback(ServerChange));
@@ -92,7 +91,7 @@ namespace Assistant
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
-		
+
 		}
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
@@ -172,7 +171,7 @@ namespace Assistant
 		private static void ClientSingleClick(PacketReader p, PacketHandlerEventArgs args)
 		{
 			// if you modify this, don't forget to modify the allnames hotkey
-            if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
 			{
 				Mobile m = World.FindMobile(p.ReadUInt32());
 				if (m != null)
@@ -191,21 +190,21 @@ namespace Assistant
 					item.Updated = false;
 			}
 
-            if (RazorEnhanced.Settings.General.ReadBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
+			if (RazorEnhanced.Settings.General.ReadBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
 			{ // mount layer = 0x19
 				World.Player.SendMessage(LocString.DismountBlocked);
 				args.Block = true;
 				return;
 			}
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = !PlayerData.DoubleClick(ser, false);
 		}
 
 		private static void DeathAnimation(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial killed = p.ReadUInt32();
-            if (RazorEnhanced.Settings.General.ReadBool("AutoCap"))
+			if (RazorEnhanced.Settings.General.ReadBool("AutoCap"))
 			{
 				Mobile m = World.FindMobile(killed);
 				if (m != null && ((m.Body >= 0x0190 && m.Body <= 0x0193) || (m.Body >= 0x025D && m.Body <= 0x0260)) && Utility.Distance(World.Player.Position, m.Position) <= 12)
@@ -218,10 +217,10 @@ namespace Assistant
 			ushort ext = p.ReadUInt16();
 			switch (ext)
 			{
-                case 0x10: // query object properties
-                    {
-                        break;
-                    }
+				case 0x10: // query object properties
+					{
+						break;
+					}
 				case 0x15: // context menu response
 					{
 						UOEntity ent = null;
@@ -387,7 +386,7 @@ namespace Assistant
 			if (item != null)
 				iid = item.ItemID.Value;
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 			{
 				if (item == null)
 				{
@@ -421,7 +420,7 @@ namespace Assistant
 			if (m == null)
 				return;
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(item, m, layer);
 		}
 
@@ -445,7 +444,7 @@ namespace Assistant
 			if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
 				i.IsNew = true;
 
-            if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
+			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(i, dser, newPos);
 		}
 
@@ -473,11 +472,11 @@ namespace Assistant
 				World.Player.Notoriety = p.ReadByte();
 
 				args.Block |= !World.Player.MoveAck(seq);
-                // Enhanced Map move
-                if (MapUO.MapNetwork.Connected)
-                {
-                    MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
-                }
+				// Enhanced Map move
+				if (MapUO.MapNetwork.Connected)
+				{
+					MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+				}
 			}
 		}
 
@@ -547,8 +546,8 @@ namespace Assistant
 				Item.UpdateContainers();
 			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
 				// Update Contatori Item ToolBar
-                if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                    RazorEnhanced.ToolBar.UpdateCount();
+				if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+					RazorEnhanced.ToolBar.UpdateCount();
 
 			return new ContainerItem(i, Engine.UsePostKRPackets).Compile();
 		}
@@ -609,9 +608,9 @@ namespace Assistant
 			if (i.IsNew)
 				Item.UpdateContainers();
 			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
-                // Update Contatori Item ToolBar
-                if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                    RazorEnhanced.ToolBar.UpdateCount();
+				// Update Contatori Item ToolBar
+				if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+					RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		private static void BeginContainerContent(PacketReader p, PacketHandlerEventArgs args)
@@ -689,9 +688,9 @@ namespace Assistant
 
 				item.Container = cont; // must be done after hue is set (for counters)
 				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
-                    // Update Contatori Item ToolBar
-                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                        RazorEnhanced.ToolBar.UpdateCount();
+					// Update Contatori Item ToolBar
+					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+						RazorEnhanced.ToolBar.UpdateCount();
 
 				list.Add(item);
 			}
@@ -746,9 +745,9 @@ namespace Assistant
 
 				item.Container = cont; // must be done after hue is set (for counters)
 				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
-                    // Update Contatori Item ToolBar
-                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                        RazorEnhanced.ToolBar.UpdateCount();
+					// Update Contatori Item ToolBar
+					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+						RazorEnhanced.ToolBar.UpdateCount();
 			}
 
 			foreach (Item container in updated)
@@ -793,7 +792,7 @@ namespace Assistant
 
 			i.Container = ser;
 
-            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(i.Container as Mobile))
 			{
 				p.Seek(-2, SeekOrigin.Current);
@@ -910,7 +909,7 @@ namespace Assistant
 							skill.FixedCap = p.ReadUInt16();
 							Engine.MainWindow.UpdateSkill(skill);
 
-                            if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
+							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
 							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
 						}
@@ -934,7 +933,7 @@ namespace Assistant
 							skill.Lock = (LockType)p.ReadByte();
 							skill.FixedCap = 100;
 							Engine.MainWindow.UpdateSkill(skill);
-                            if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
+							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
 								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
 							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
 						}
@@ -988,22 +987,22 @@ namespace Assistant
 			Stream.Fill();
 			*/
 			ClientCommunication.BeginCalibratePosition();
-            
-            // Salvo password
-            PasswordMemory.Save();
 
-            // Carico profili se linkati
-            string profilename = RazorEnhanced.Profiles.IsLinked(serial);
-            if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)
-            {
-                RazorEnhanced.Profiles.SetLast(profilename);
-                RazorEnhanced.Profiles.ProfileChange(profilename);
-                RazorEnhanced.Profiles.Refresh();
-            }
+			// Salvo password
+			PasswordMemory.Save();
 
-            // Apertura automatica toolbar se abilitata
-            if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && Assistant.Engine.MainWindow.ToolBarWindows == null)
-                RazorEnhanced.ToolBar.Open();
+			// Carico profili se linkati
+			string profilename = RazorEnhanced.Profiles.IsLinked(serial);
+			if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)
+			{
+				RazorEnhanced.Profiles.SetLast(profilename);
+				RazorEnhanced.Profiles.ProfileChange(profilename);
+				RazorEnhanced.Profiles.Refresh();
+			}
+
+			// Apertura automatica toolbar se abilitata
+			if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && Assistant.Engine.MainWindow.ToolBarWindows == null)
+				RazorEnhanced.ToolBar.Open();
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
@@ -1014,21 +1013,21 @@ namespace Assistant
 			{
 				m.Body = p.ReadUInt16();
 
-                // Blocco filtro graph mobs
-                if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-                {
-                    List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
-                    foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
-                    {
-                        if (m.Body == graphdata.GraphReal)
-                        {
-                            p.Seek(-2, SeekOrigin.Current);
-                            p.Write((ushort)(graphdata.GraphNew));
-                            break;
-                        }
-                    }
+				// Blocco filtro graph mobs
+				if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
+				{
+					List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
+					foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+					{
+						if (m.Body == graphdata.GraphReal)
+						{
+							p.Seek(-2, SeekOrigin.Current);
+							p.Write((ushort)(graphdata.GraphNew));
+							break;
+						}
+					}
 
-                }
+				}
 
 				m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
@@ -1042,7 +1041,7 @@ namespace Assistant
 
 				m.Direction = (Direction)p.ReadByte();
 				m.Hue = p.ReadUInt16();
-                int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+				int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 				if (ltHue != 0 && Targeting.IsLastTarget(m))
 				{
 					p.Seek(-2, SeekOrigin.Current);
@@ -1076,34 +1075,34 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-                    // Update hits toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                        RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
+					// Update hits toolbar
+					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+						RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
-                    // Enhanced Map Stats Update
-                    if (MapUO.MapNetwork.Connected)
-                    {
-                        MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(m.Hits, World.Player.Stam, World.Player.Mana, m.HitsMax, World.Player.StamMax, World.Player.ManaMax));
+					// Enhanced Map Stats Update
+					if (MapUO.MapNetwork.Connected)
+					{
+						MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(m.Hits, World.Player.Stam, World.Player.Mana, m.HitsMax, World.Player.StamMax, World.Player.ManaMax));
 
-                        // Enhanced Map Flags dead
-                        if (m.Hits == 0)
-                        {
-                            MapUO.MapNetworkOut.LastDead = true;
-                            MapUO.MapNetworkOut.SendFlagQueue.Enqueue(4);
-                        }
+						// Enhanced Map Flags dead
+						if (m.Hits == 0)
+						{
+							MapUO.MapNetworkOut.LastDead = true;
+							MapUO.MapNetworkOut.SendFlagQueue.Enqueue(4);
+						}
 
-                        if (m.Hits > 0 && MapUO.MapNetworkOut.LastDead)
-                        {
-                            MapUO.MapNetworkOut.LastDead = false;
-                            MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
-                        }
-                    }
+						if (m.Hits > 0 && MapUO.MapNetworkOut.LastDead)
+						{
+							MapUO.MapNetworkOut.LastDead = false;
+							MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+						}
+					}
 
-                    ClientCommunication.PostHitsUpdate();
+					ClientCommunication.PostHitsUpdate();
 				}
-                
 
-                if (RazorEnhanced.Settings.General.ReadBool("ShowHealth"))
+
+				if (RazorEnhanced.Settings.General.ReadBool("ShowHealth"))
 				{
 					int percent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
 
@@ -1114,8 +1113,8 @@ namespace Assistant
 						{
 							m.OverheadMessageFrom(HealthHues[((percent + 5) / 10) % HealthHues.Length],
 								Language.Format(LocString.sStatsA1, m.Name),
-                                RazorEnhanced.Settings.General.ReadString("HealthFmt"), percent);
-                            RazorEnhanced.Filters.ProcessMessage(m);
+								RazorEnhanced.Settings.General.ReadString("HealthFmt"), percent);
+							RazorEnhanced.Filters.ProcessMessage(m);
 						}
 						catch
 						{
@@ -1137,19 +1136,19 @@ namespace Assistant
 				m.Stam = p.ReadUInt16();
 
 				if (m == World.Player)
-                {
-                    // Update Stam Toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                        RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
+				{
+					// Update Stam Toolbar
+					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+						RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
-                    // Enhanced Map Stats Update
-                    if (MapUO.MapNetwork.Connected)
-                        MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, m.Stam, World.Player.Mana, World.Player.HitsMax, m.StamMax, World.Player.ManaMax));
+					// Enhanced Map Stats Update
+					if (MapUO.MapNetwork.Connected)
+						MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, m.Stam, World.Player.Mana, World.Player.HitsMax, m.StamMax, World.Player.ManaMax));
 
 					ClientCommunication.PostStamUpdate();
 				}
 
-                if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
+				if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
 				{
 					int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 					int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
@@ -1184,18 +1183,18 @@ namespace Assistant
 
 				if (m == World.Player)
 				{
-                    // Update Mana toolbar
-                    if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                        RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
+					// Update Mana toolbar
+					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+						RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
-                    // Enhanced Map Stats Update
-                    if (MapUO.MapNetwork.Connected)
-                        MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, m.Mana, World.Player.HitsMax, World.Player.StamMax, m.ManaMax));
+					// Enhanced Map Stats Update
+					if (MapUO.MapNetwork.Connected)
+						MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, m.Mana, World.Player.HitsMax, World.Player.StamMax, m.ManaMax));
 
 					ClientCommunication.PostManaUpdate();
 				}
 
-                if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
+				if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowPartyStats"))
 				{
 					int stamPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 					int manaPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
@@ -1270,16 +1269,16 @@ namespace Assistant
 			{
 				bool wasPoisoned = m.Poisoned;
 				m.Poisoned = (flag != 0);
-                if (m == World.Player)
-                    if (MapUO.MapNetwork.Connected)
-                        MapUO.MapNetworkOut.SendFlagQueue.Enqueue(1);
+				if (m == World.Player)
+					if (MapUO.MapNetwork.Connected)
+						MapUO.MapNetworkOut.SendFlagQueue.Enqueue(1);
 			}
-            else
-            {
-                if (m == World.Player)
-                    if (MapUO.MapNetwork.Connected)
-                        MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
-            }
+			else
+			{
+				if (m == World.Player)
+					if (MapUO.MapNetwork.Connected)
+						MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+			}
 
 
 
@@ -1301,77 +1300,77 @@ namespace Assistant
 
 			byte type = p.ReadByte();
 
-            if (m == World.Player && type != 0x00)
-            {
-                PlayerData player = (PlayerData)m;
+			if (m == World.Player && type != 0x00)
+			{
+				PlayerData player = (PlayerData)m;
 
-                player.Female = p.ReadBoolean();
+				player.Female = p.ReadBoolean();
 
-                int oStr = player.Str, oDex = player.Dex, oInt = player.Int;
+				int oStr = player.Str, oDex = player.Dex, oInt = player.Int;
 
-                player.Str = p.ReadUInt16();
-                player.Dex = p.ReadUInt16();
-                player.Int = p.ReadUInt16();
+				player.Str = p.ReadUInt16();
+				player.Dex = p.ReadUInt16();
+				player.Int = p.ReadUInt16();
 
-                if (player.Str != oStr && oStr != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-                    World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
+				if (player.Str != oStr && oStr != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
+					World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
 
-                if (player.Dex != oDex && oDex != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-                    World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
+				if (player.Dex != oDex && oDex != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
+					World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
 
-                if (player.Int != oInt && oInt != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-                    World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
+				if (player.Int != oInt && oInt != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
+					World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
 
-                player.Stam = p.ReadUInt16();
-                player.StamMax = p.ReadUInt16();
-                player.Mana = p.ReadUInt16();
-                player.ManaMax = p.ReadUInt16();
+				player.Stam = p.ReadUInt16();
+				player.StamMax = p.ReadUInt16();
+				player.Mana = p.ReadUInt16();
+				player.ManaMax = p.ReadUInt16();
 
-                player.Gold = p.ReadUInt32();
-                player.AR = p.ReadUInt16(); // ar / physical resist
-                player.Weight = p.ReadUInt16();
+				player.Gold = p.ReadUInt32();
+				player.AR = p.ReadUInt16(); // ar / physical resist
+				player.Weight = p.ReadUInt16();
 
-                
-                if (type >= 0x03)
-                {
-                    if (type > 0x04)
-                    {
-                        player.MaxWeight = p.ReadUInt16();
 
-                        p.ReadByte(); // race?
-                    }
+				if (type >= 0x03)
+				{
+					if (type > 0x04)
+					{
+						player.MaxWeight = p.ReadUInt16();
 
-                    player.StatCap = p.ReadUInt16();
+						p.ReadByte(); // race?
+					}
 
-                    if (type > 0x03)
-                    {
-                        player.Followers = p.ReadByte();
-                        player.FollowersMax = p.ReadByte();
+					player.StatCap = p.ReadUInt16();
 
-                        player.FireResistance = p.ReadInt16();
-                        player.ColdResistance = p.ReadInt16();
-                        player.PoisonResistance = p.ReadInt16();
-                        player.EnergyResistance = p.ReadInt16();
+					if (type > 0x03)
+					{
+						player.Followers = p.ReadByte();
+						player.FollowersMax = p.ReadByte();
 
-                        player.Luck = p.ReadInt16();
+						player.FireResistance = p.ReadInt16();
+						player.ColdResistance = p.ReadInt16();
+						player.PoisonResistance = p.ReadInt16();
+						player.EnergyResistance = p.ReadInt16();
 
-                        player.DamageMin = p.ReadUInt16();
-                        player.DamageMax = p.ReadUInt16();
+						player.Luck = p.ReadInt16();
 
-                        player.Tithe = p.ReadInt32();
-                    }
-                }
+						player.DamageMin = p.ReadUInt16();
+						player.DamageMax = p.ReadUInt16();
 
-                // Update All toolbar
-                if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                    RazorEnhanced.ToolBar.UpdateAll();
+						player.Tithe = p.ReadInt32();
+					}
+				}
 
-                ClientCommunication.PostHitsUpdate();
-                ClientCommunication.PostStamUpdate();
-                ClientCommunication.PostManaUpdate();
+				// Update All toolbar
+				if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+					RazorEnhanced.ToolBar.UpdateAll();
 
-                Engine.MainWindow.UpdateTitle(); // update player name
-            }
+				ClientCommunication.PostHitsUpdate();
+				ClientCommunication.PostStamUpdate();
+				ClientCommunication.PostManaUpdate();
+
+				Engine.MainWindow.UpdateTitle(); // update player name
+			}
 		}
 
 		private static void MobileUpdate(Packet p, PacketHandlerEventArgs args)
@@ -1388,23 +1387,23 @@ namespace Assistant
 
 			m.Body = (ushort)(p.ReadUInt16() + p.ReadSByte());
 
-            // Blocco filtro graph mobs
-            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-            {
-                List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
-                foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
-                {
-                    if (m.Body == graphdata.GraphReal)
-                    {
-                        p.Seek(-2, SeekOrigin.Current);
-                        p.Write((ushort)(graphdata.GraphNew));
-                        break;
-                    }
-                }
-            }
+			// Blocco filtro graph mobs
+			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
+			{
+				List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
+				foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+				{
+					if (m.Body == graphdata.GraphReal)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((ushort)(graphdata.GraphNew));
+						break;
+					}
+				}
+			}
 
 			m.Hue = p.ReadUInt16();
-            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 			{
 				p.Seek(-2, SeekOrigin.Current);
@@ -1422,7 +1421,7 @@ namespace Assistant
 
 				if (!wasHidden && !m.Visible)
 				{
-                    if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
+					if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
 						StealthSteps.Hide();
 				}
 				else if (wasHidden && m.Visible)
@@ -1449,22 +1448,22 @@ namespace Assistant
 			Serial serial = p.ReadUInt32();
 			ushort body = p.ReadUInt16();
 
-            // Blocco filtro graph mobs
-            if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-            {
-                List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
-                foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
-                {
-                    if (body == graphdata.GraphReal)
-                    {
-                        p.Seek(-2, SeekOrigin.Current);
-                        p.Write((ushort)(graphdata.GraphNew));
-                        body = (ushort)graphdata.GraphNew;
-                        break;
-                    }
-                }
-                
-            }
+			// Blocco filtro graph mobs
+			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
+			{
+				List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
+				foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+				{
+					if (body == graphdata.GraphReal)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((ushort)(graphdata.GraphNew));
+						body = (ushort)graphdata.GraphNew;
+						break;
+					}
+				}
+
+			}
 
 			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
@@ -1477,12 +1476,12 @@ namespace Assistant
 
 			bool wasHidden = !m.Visible;
 
-            if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowMobNames"))
+			if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowMobNames"))
 				ClientCommunication.SendToServer(new SingleClick(m));
-            if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
+			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
 				Targeting.CheckTextFlags(m);
 
-            int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			bool isLT;
 			if (ltHue != 0)
 				isLT = Targeting.IsLastTarget(m);
@@ -1512,7 +1511,7 @@ namespace Assistant
 
 				if (!wasHidden && !m.Visible)
 				{
-                    if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
+					if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
 						StealthSteps.Hide();
 				}
 				else if (wasHidden && m.Visible)
@@ -1579,14 +1578,14 @@ namespace Assistant
 					}
 				}
 
-                if (item.Layer == Layer.Backpack && isNew && m == World.Player && m != null) //  && RazorEnhanced.Settings.General.ReadBool("AutoSearch")
+				if (item.Layer == Layer.Backpack && isNew && m == World.Player && m != null) //  && RazorEnhanced.Settings.General.ReadBool("AutoSearch")
 				{
 					m_IgnoreGumps.Add(item);
 					PlayerData.DoubleClick(item);
 				}
 			}
 			Item.UpdateContainers();
-            RazorEnhanced.Filters.ProcessMessage(m);
+			RazorEnhanced.Filters.ProcessMessage(m);
 		}
 
 		private static void RemoveObject(PacketReader p, PacketHandlerEventArgs args)
@@ -1616,9 +1615,9 @@ namespace Assistant
 					}
 				}
 			}
-            // Update Contatori Item ToolBar
-            if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                RazorEnhanced.ToolBar.UpdateCount();
+			// Update Contatori Item ToolBar
+			if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+				RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		private static void ServerChange(PacketReader p, PacketHandlerEventArgs args)
@@ -1647,9 +1646,9 @@ namespace Assistant
 				return;
 
 			item.Container = null;
-            // Update Contatori Item ToolBar
-            if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                RazorEnhanced.ToolBar.UpdateCount();
+			// Update Contatori Item ToolBar
+			if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+				RazorEnhanced.ToolBar.UpdateCount();
 
 
 			ushort itemID = p.ReadUInt16();
@@ -1690,10 +1689,10 @@ namespace Assistant
 			{
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
 				{
-                    if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
+					if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
 						ClientCommunication.SendToServer(new SingleClick(item));
-                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible && !Engine.MainWindow.AutolootCheckBox.Checked)
-                        RazorEnhanced.Items.UseItem(item.Serial);
+					if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible && !Engine.MainWindow.AutolootCheckBox.Checked)
+						RazorEnhanced.Items.UseItem(item.Serial);
 				}
 				else if (item.IsMulti)
 				{
@@ -1702,46 +1701,46 @@ namespace Assistant
 
 			}
 			Item.UpdateContainers();
-            // Filtro muri 
-            if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
-            {
-                if (item.ItemID == 0x0080)      // Wall of Stone
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x3B1;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
-                    return;
-                }
-                if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x0845;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
-                    return;
-                }
-                if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x016A;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
-                    return;
-                }
-                if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x0060;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
-                    return;
-                }
-            }
+			// Filtro muri 
+			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+			{
+				if (item.ItemID == 0x0080)      // Wall of Stone
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x3B1;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+					return;
+				}
+				if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x0845;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+					return;
+				}
+				if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x016A;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+					return;
+				}
+				if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x0060;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+					return;
+				}
+			}
 		}
 
 		private static void SAWorldItem(PacketReader p, PacketHandlerEventArgs args)
@@ -1815,9 +1814,9 @@ namespace Assistant
 
 			item.Container = null;
 
-            // Update Contatori Item ToolBar
-            if (Assistant.Engine.MainWindow.ToolBarWindows != null)
-                RazorEnhanced.ToolBar.UpdateCount(); 
+			// Update Contatori Item ToolBar
+			if (Assistant.Engine.MainWindow.ToolBarWindows != null)
+				RazorEnhanced.ToolBar.UpdateCount();
 
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
@@ -1850,59 +1849,59 @@ namespace Assistant
 			{
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
 				{
-                    if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
+					if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
 						ClientCommunication.SendToServer(new SingleClick(item));
-                    if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible && !Engine.MainWindow.AutolootCheckBox.Checked)
+					if (RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player != null && World.Player.Visible && !Engine.MainWindow.AutolootCheckBox.Checked)
 						RazorEnhanced.Items.UseItem(item.Serial);
 				}
 				else if (item.IsMulti)
 				{
 					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
 				}
-				
+
 			}
 
 			Item.UpdateContainers();
-            // Filtro muri 
-            if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
-            {
-                if (item.ItemID == 0x0080)      // Wall of Stone
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x3B1;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
-                    return;
-                }
-                if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x0845;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
-                    return;
-                }
-                if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x016A;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
-                    return;
-                }
-                if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
-                {
-                    args.Block = true;
-                    item.ItemID = 0x28A8;
-                    item.Hue = 0x0060;
-                    ClientCommunication.SendToClient(new WorldItem(item));
-                    RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
-                    return;
-                }
-            }
+			// Filtro muri 
+			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+			{
+				if (item.ItemID == 0x0080)      // Wall of Stone
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x3B1;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+					return;
+				}
+				if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x0845;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+					return;
+				}
+				if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x016A;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+					return;
+				}
+				if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
+				{
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x0060;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+					return;
+				}
+			}
 		}
 
 		internal static List<string> SysMessages = new List<string>(21);
@@ -1912,9 +1911,9 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-            World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name));          // Journal buffer
-            if (World.Player.Journal.Count > 100)
-                World.Player.Journal.Dequeue();
+			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name));          // Journal buffer
+			if (World.Player.Journal.Count > 100)
+				World.Player.Journal.Dequeue();
 
 			if (!ser.IsValid || ser == World.Player.Serial || ser.IsItem)
 			{
@@ -1930,7 +1929,7 @@ namespace Assistant
 				bool replaced = false;
 				if (s != null)
 				{
-                    System.Text.StringBuilder sb = new System.Text.StringBuilder(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
+					System.Text.StringBuilder sb = new System.Text.StringBuilder(RazorEnhanced.Settings.General.ReadString("SpellFormat"));
 					sb.Replace(@"{power}", s.WordsOfPower);
 					string spell = Language.GetString(s.Name);
 					sb.Replace(@"{spell}", spell);
@@ -1947,13 +1946,13 @@ namespace Assistant
 					}
 				}
 
-                if (!replaced && RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
+				if (!replaced && RazorEnhanced.Settings.General.ReadBool("ForceSpellHue"))
 				{
 					p.Seek(10, SeekOrigin.Begin);
 					if (s != null)
 						p.Write((ushort)s.GetHue(hue));
 					else
-                        p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue"));
+						p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue"));
 				}
 			}
 			else if (ser.IsMobile && type == MessageType.Label)
@@ -1971,7 +1970,7 @@ namespace Assistant
 			{
 				if (ser == Serial.MinusOne && name == "System")
 				{
-                    if (RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg") && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
+					if (RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg") && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
 					{
 						args.Block = true;
 						return;
@@ -1984,14 +1983,14 @@ namespace Assistant
 
 				if ((type == MessageType.Emote || type == MessageType.Regular || type == MessageType.Whisper || type == MessageType.Yell) && ser.IsMobile && ser != World.Player.Serial)
 				{
-                    if (RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue"))
+					if (RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue"))
 					{
 						p.Seek(10, SeekOrigin.Begin);
-                        p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("SpeechHue"));
+						p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("SpeechHue"));
 					}
 				}
 
-                if (RazorEnhanced.Settings.General.ReadBool("FilterSpam") && (ser == Serial.MinusOne || ser == Serial.Zero))
+				if (RazorEnhanced.Settings.General.ReadBool("FilterSpam") && (ser == Serial.MinusOne || ser == Serial.Zero))
 				{
 					if (!MessageQueue.Enqueue(ser, body, type, hue, font, lang, name, text))
 					{
@@ -2118,37 +2117,37 @@ namespace Assistant
 			World.Player.CurrentGumpS = p.ReadUInt32();
 			World.Player.CurrentGumpI = p.ReadUInt32();
 			World.Player.HasGump = true;
-            RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);	
+			RazorEnhanced.GumpInspector.NewGumpStandardAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI);
 		}
 
 		private static void ClientGumpResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
 				return;
-            
+
 
 			Serial ser = p.ReadUInt32();
 			uint tid = p.ReadUInt32();
 			int bid = p.ReadInt32();
-            List<int> switchesid = new List<int>();
-            List<string> texts = new List<string>();
+			List<int> switchesid = new List<int>();
+			List<string> texts = new List<string>();
 
-            RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, tid, bid);
+			RazorEnhanced.GumpInspector.GumpResponseAddLogMain(ser, tid, bid);
 
 			World.Player.HasGump = false;
-            World.Player.CurrentGumpI = 0;
-            World.Player.CurrentGumpStrings.Clear();
+			World.Player.CurrentGumpI = 0;
+			World.Player.CurrentGumpStrings.Clear();
 
 			int sc = p.ReadInt32();
 			if (sc < 0 || sc > 2000)
 				return;
 			int[] switches = new int[sc];
-            for (int i = 0; i < sc; i++)
-            {
-                switches[i] = p.ReadInt32();
-                switchesid.Add(switches[i]);
-            }
-            RazorEnhanced.GumpInspector.GumpResponseAddLogSwitchID(switchesid);
+			for (int i = 0; i < sc; i++)
+			{
+				switches[i] = p.ReadInt32();
+				switchesid.Add(switches[i]);
+			}
+			RazorEnhanced.GumpInspector.GumpResponseAddLogSwitchID(switchesid);
 			int ec = p.ReadInt32();
 			if (ec < 0 || ec > 2000)
 				return;
@@ -2161,10 +2160,10 @@ namespace Assistant
 					return;
 				string text = p.ReadUnicodeStringSafe(len);
 				entries[i] = new GumpTextEntry(id, text);
-                texts.Add(entries[i].Text);
+				texts.Add(entries[i].Text);
 			}
-            RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(texts);
-            RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
+			RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(texts);
+			RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
 		}
 
 		private static void ChangeSeason(PacketReader p, PacketHandlerEventArgs args)
@@ -2183,12 +2182,12 @@ namespace Assistant
 					{
 						// int serial, int tid
 						if (World.Player != null)
-                        {
+						{
 							World.Player.HasGump = false;
-                            World.Player.CurrentGumpI = 0;
-                            World.Player.CurrentGumpStrings.Clear();
-                            RazorEnhanced.GumpInspector.GumpCloseAddLog(p, args);
-                        }
+							World.Player.CurrentGumpI = 0;
+							World.Player.CurrentGumpStrings.Clear();
+							RazorEnhanced.GumpInspector.GumpCloseAddLog(p, args);
+						}
 						break;
 					}
 				case 0x06: // party messages
@@ -2198,13 +2197,13 @@ namespace Assistant
 					}
 				case 0x08: // map change
 					{
-                        if (World.Player != null)
-                        {
-                            World.Player.Map = p.ReadByte();
-                            // Enhanced Map move
-                            if (MapUO.MapNetwork.Connected)
-                                MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
-                        }
+						if (World.Player != null)
+						{
+							World.Player.Map = p.ReadByte();
+							// Enhanced Map move
+							if (MapUO.MapNetwork.Connected)
+								MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+						}
 						break;
 					}
 				case 0x14: // context menu
@@ -2398,37 +2397,37 @@ namespace Assistant
 					{
 						Serial from = p.ReadUInt32();
 						string text = p.ReadUnicodeStringSafe();
-                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null"));          // Journal buffer
-                        if (World.Player.Journal.Count > 100)
-                            World.Player.Journal.Dequeue();
+						World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null"));          // Journal buffer
+						if (World.Player.Journal.Count > 100)
+							World.Player.Journal.Dequeue();
 						break;
 					}
 				case 0x07: // party invite
 					{
 						//Serial leader = p.ReadUInt32();
 						PartyLeader = p.ReadUInt32();
-                        if (Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked)                           // AutoDecline Party
-                        {
-                            ClientCommunication.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
-                        }
+						if (Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked)                           // AutoDecline Party
+						{
+							ClientCommunication.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
+						}
 
-                        if (RazorEnhanced.Friend.AutoacceptParty && RazorEnhanced.Friend.IsFriend(PartyLeader))     // Autoaccept party from friend
-                        {
-                            if (PacketHandlers.PartyLeader != Serial.Zero)
-                            {
-                                Assistant.Mobile leader = World.FindMobile(PartyLeader);
-                                RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")" );
-                                RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
-                                ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
-                                PacketHandlers.PartyLeader = Serial.Zero;
-                            }
-                        }
-                        else
-                        { 
-						    if (m_PartyDeclineTimer == null)
-							    m_PartyDeclineTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(10.0), new TimerCallback(PartyAutoDecline));
-						    m_PartyDeclineTimer.Start();
-                        }
+						if (RazorEnhanced.Friend.AutoacceptParty && RazorEnhanced.Friend.IsFriend(PartyLeader))     // Autoaccept party from friend
+						{
+							if (PacketHandlers.PartyLeader != Serial.Zero)
+							{
+								Assistant.Mobile leader = World.FindMobile(PartyLeader);
+								RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+								RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+								ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
+								PacketHandlers.PartyLeader = Serial.Zero;
+							}
+						}
+						else
+						{
+							if (m_PartyDeclineTimer == null)
+								m_PartyDeclineTimer = Timer.DelayedCallback(TimeSpan.FromSeconds(10.0), new TimerCallback(PartyAutoDecline));
+							m_PartyDeclineTimer.Start();
+						}
 						break;
 					}
 			}
@@ -2476,7 +2475,7 @@ namespace Assistant
 			World.AccountName = p.ReadStringSafe(30);
 			string pass = p.ReadStringSafe(30);
 
-            if (pass == "" || pass == null)
+			if (pass == "" || pass == null)
 			{
 				pass = PasswordMemory.Find(World.AccountName, ClientCommunication.LastConnection);
 				if (pass != null && pass != "")
@@ -2499,7 +2498,7 @@ namespace Assistant
 			World.AccountName = p.ReadString(30);
 			string password = p.ReadString(30);
 
-            if (password == "" && m_LastPW != "" && RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
+			if (password == "" && m_LastPW != "" && RazorEnhanced.Settings.General.ReadBool("RememberPwds"))
 			{
 				p.Seek(35, SeekOrigin.Begin);
 				p.WriteAsciiFixed(m_LastPW, 30);
@@ -2622,41 +2621,41 @@ namespace Assistant
 
 		private static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
 		{
-            // X MAGNETO: Verificare la lettura dei testi da gump quest e statici.
+			// X MAGNETO: Verificare la lettura dei testi da gump quest e statici.
 
-            World.Player.HasGump = true;
+			World.Player.HasGump = true;
 			if (World.Player != null)
 			{
-                List<string> stringlist = new List<string>();
+				List<string> stringlist = new List<string>();
 				World.Player.CurrentGumpS = p.ReadUInt32();
 				World.Player.CurrentGumpI = p.ReadUInt32();
-                string tempstring = "";
-			    try
-			    {
-				    int x = p.ReadInt32(), y = p.ReadInt32();
+				string tempstring = "";
+				try
+				{
+					int x = p.ReadInt32(), y = p.ReadInt32();
 
-				    string layout = p.GetCompressedReader().ReadString();
+					string layout = p.GetCompressedReader().ReadString();
 
-				    int numStrings = p.ReadInt32();
-				    if ( numStrings < 0 || numStrings > 256 )
-					    numStrings = 0;
-				    ArrayList strings = new ArrayList( numStrings );
-				    PacketReader pComp = p.GetCompressedReader();
-				    int len = 0;
+					int numStrings = p.ReadInt32();
+					if (numStrings < 0 || numStrings > 256)
+						numStrings = 0;
+					ArrayList strings = new ArrayList(numStrings);
+					PacketReader pComp = p.GetCompressedReader();
+					int len = 0;
 
-                    World.Player.CurrentGumpStrings.Clear();
-                    while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
-                    {
-                        tempstring = pComp.ReadUnicodeString(len);
-                        stringlist.Add(tempstring);
-                        World.Player.CurrentGumpStrings.Add(tempstring);
-                    }
-			    }
-			    catch
-			    {
-			    }
-                RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
-            }
+					World.Player.CurrentGumpStrings.Clear();
+					while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
+					{
+						tempstring = pComp.ReadUnicodeString(len);
+						stringlist.Add(tempstring);
+						World.Player.CurrentGumpStrings.Add(tempstring);
+					}
+				}
+				catch
+				{
+				}
+				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+			}
 		}
 
 		private static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
@@ -2707,32 +2706,32 @@ namespace Assistant
 		since packet lengths are int16's
 		*/
 
-        private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
-        {
-            if (RazorEnhanced.Friend.PreventAttack)
-            {
-                uint serialbersaglio = p.ReadUInt32();
-                if (RazorEnhanced.Friend.IsFriend((int)serialbersaglio))
-                {
-                    Assistant.Mobile bersaglio = World.FindMobile(serialbersaglio);
-                    if (bersaglio != null)
-                    {
-                        RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
-                        RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
-                    }
-                    args.Block = true;
-                    return;
-                }
-            }
-        }
+		private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
+		{
+			if (RazorEnhanced.Friend.PreventAttack)
+			{
+				uint serialbersaglio = p.ReadUInt32();
+				if (RazorEnhanced.Friend.IsFriend((int)serialbersaglio))
+				{
+					Assistant.Mobile bersaglio = World.FindMobile(serialbersaglio);
+					if (bersaglio != null)
+					{
+						RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+						RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+					}
+					args.Block = true;
+					return;
+				}
+			}
+		}
 
-        private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args)
-        {
-            if (Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
-            {
-                args.Block = true;
-            }
-        }
+		private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args)
+		{
+			if (Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked)
+			{
+				args.Block = true;
+			}
+		}
 
 	}
 }

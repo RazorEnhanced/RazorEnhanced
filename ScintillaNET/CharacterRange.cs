@@ -1,6 +1,5 @@
 ﻿#region Using Directives
 
-using System;
 using System.Runtime.InteropServices;
 
 #endregion Using Directives
@@ -8,11 +7,11 @@ using System.Runtime.InteropServices;
 
 namespace ScintillaNET
 {
-    // TODO Make internal
-    [StructLayout(LayoutKind.Sequential)]
-    public struct CharacterRange
-    {
-        public int cpMin;
-        public int cpMax;
-    }
+	// TODO Make internal
+	[StructLayout(LayoutKind.Sequential)]
+	public struct CharacterRange
+	{
+		public int cpMin;
+		public int cpMax;
+	}
 }

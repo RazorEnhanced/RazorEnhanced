@@ -37,10 +37,10 @@ namespace Ultima
 							byte fstart;
 							sbyte[] fdata;
 							m_Header = new int[bin.BaseStream.Length / (4 + 8 * (64 + 4))];
-							while (h<m_Header.Length/*bin.BaseStream.Length != bin.BaseStream.Position*/)
+							while (h < m_Header.Length/*bin.BaseStream.Length != bin.BaseStream.Position*/)
 							{
 								m_Header[h++] = bin.ReadInt32(); // chunk header
-								// Read 8 tiles
+																 // Read 8 tiles
 								byte[] buffer = bin.ReadBytes(544);
 								fixed (byte* buf = buffer)
 								{
@@ -60,7 +60,7 @@ namespace Ultima
 								}
 							}
 							int remaining = (int)(bin.BaseStream.Length - bin.BaseStream.Position);
-							if (remaining>0)
+							if (remaining > 0)
 								m_Unknown = bin.ReadBytes(remaining);
 						}
 					}

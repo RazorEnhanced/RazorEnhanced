@@ -1,6 +1,5 @@
 ﻿#region Using Directives
 
-using System;
 using System.ComponentModel;
 
 #endregion Using Directives
@@ -8,44 +7,44 @@ using System.ComponentModel;
 
 namespace ScintillaNET
 {
-    /// <summary>
-    ///     Provides data for a DropMarkerCollect event
-    /// </summary>
-    public class DropMarkerCollectEventArgs : CancelEventArgs
-    {
-        #region Fields
+	/// <summary>
+	///     Provides data for a DropMarkerCollect event
+	/// </summary>
+	public class DropMarkerCollectEventArgs : CancelEventArgs
+	{
+		#region Fields
 
-        private DropMarker _dropMarker;
+		private DropMarker _dropMarker;
 
-        #endregion Fields
-
-
-        #region Properties
-
-        /// <summary>
-        ///     Returns the DropMarker that was collected
-        /// </summary>
-        public DropMarker DropMarker
-        {
-            get
-            {
-                return _dropMarker;
-            }
-        }
-
-        #endregion Properties
+		#endregion Fields
 
 
-        #region Constructors
+		#region Properties
 
-        /// <summary>
-        ///     Initializes a new instance of the DropMarkerCollectEventArgs class.
-        /// </summary>
-        public DropMarkerCollectEventArgs(DropMarker dropMarker)
-        {
-            _dropMarker = dropMarker;
-        }
+		/// <summary>
+		///     Returns the DropMarker that was collected
+		/// </summary>
+		public DropMarker DropMarker
+		{
+			get
+			{
+				return _dropMarker;
+			}
+		}
 
-        #endregion Constructors
-    } 
+		#endregion Properties
+
+
+		#region Constructors
+
+		/// <summary>
+		///     Initializes a new instance of the DropMarkerCollectEventArgs class.
+		/// </summary>
+		public DropMarkerCollectEventArgs(DropMarker dropMarker)
+		{
+			_dropMarker = dropMarker;
+		}
+
+		#endregion Constructors
+	}
 }

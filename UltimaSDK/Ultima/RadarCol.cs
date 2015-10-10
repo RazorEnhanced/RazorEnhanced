@@ -118,7 +118,7 @@ namespace Ultima
 						int id = ConvertStringToInt(split[0]);
 						int color = ConvertStringToInt(split[1]);
 						m_Colors[id] = (short)color;
-						
+
 					}
 					catch { }
 				}

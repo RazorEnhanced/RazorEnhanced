@@ -1,9 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Security.Cryptography;
-using System.Collections.Generic;
 
 namespace Ultima
 {
@@ -17,7 +17,7 @@ namespace Ultima
 
 		private static byte[] m_StreamBuffer;
 		private static byte[] Validbuffer;
-	   
+
 
 		struct CheckSums
 		{
@@ -51,7 +51,7 @@ namespace Ultima
 			return (GetIdxLength() == 0x13FDC);
 		}
 
-		public static ushort GetLegalItemID(int itemID, bool checkmaxid=true)
+		public static ushort GetLegalItemID(int itemID, bool checkmaxid = true)
 		{
 			if (itemID < 0)
 				return 0;
@@ -253,7 +253,7 @@ namespace Ultima
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns></returns>
-		public static Bitmap GetStatic(int index, bool checkmaxid=true)
+		public static Bitmap GetStatic(int index, bool checkmaxid = true)
 		{
 			bool patched;
 			return GetStatic(index, out patched, checkmaxid);
@@ -264,11 +264,11 @@ namespace Ultima
 		/// <param name="index"></param>
 		/// <param name="patched"></param>
 		/// <returns></returns>
-		public static Bitmap GetStatic(int index, out bool patched, bool checkmaxid=true)
+		public static Bitmap GetStatic(int index, out bool patched, bool checkmaxid = true)
 		{
 			index = GetLegalItemID(index, checkmaxid);
 			index += 0x4000;
-			
+
 			if (m_patched.Contains(index))
 				patched = (bool)m_patched[index];
 			else
@@ -296,7 +296,7 @@ namespace Ultima
 		{
 			index = GetLegalItemID(index);
 			index += 0x4000;
-			
+
 			int length, extra;
 			bool patched;
 			Stream stream = m_FileIndex.Seek(index, out length, out extra, out patched);
@@ -479,7 +479,7 @@ namespace Ultima
 		/// <param name="path"></param>
 		public static unsafe void Save(string path)
 		{
-			checksumsLand=new List<CheckSums>();
+			checksumsLand = new List<CheckSums>();
 			checksumsStatic = new List<CheckSums>();
 			string idx = Path.Combine(path, "artidx.mul");
 			string mul = Path.Combine(path, "art.mul");
@@ -502,7 +502,7 @@ namespace Ultima
 							if (index < 0x4000)
 								m_Cache[index] = GetLand(index);
 							else
-								m_Cache[index] = GetStatic(index - 0x4000,false);
+								m_Cache[index] = GetStatic(index - 0x4000, false);
 						}
 						Bitmap bmp = m_Cache[index];
 						if ((bmp == null) || (m_Removed[index]))
@@ -510,7 +510,7 @@ namespace Ultima
 							binidx.Write((int)-1); // lookup
 							binidx.Write((int)0); // length
 							binidx.Write((int)-1); // extra
-							//Tex.WriteLine(System.String.Format("0x{0:X4} : 0x{1:X4} 0x{2:X4}", index, (int)-1, (int)-1));
+												   //Tex.WriteLine(System.String.Format("0x{0:X4} : 0x{1:X4} 0x{2:X4}", index, (int)-1, (int)-1));
 						}
 						else if (index < 0x4000)
 						{
@@ -559,7 +559,7 @@ namespace Ultima
 							binidx.Write(length);
 							binidx.Write((int)0);
 							bmp.UnlockBits(bd);
-							CheckSums s = new CheckSums() { pos = start, length = length, checksum = checksum, index=index };
+							CheckSums s = new CheckSums() { pos = start, length = length, checksum = checksum, index = index };
 							//Tex.WriteLine(System.String.Format("0x{0:X4} : 0x{1:X4} 0x{2:X4}", index, start, length));
 							checksumsLand.Add(s);
 						}
@@ -569,7 +569,7 @@ namespace Ultima
 							bmp.Save(ms, ImageFormat.Bmp);
 							byte[] checksum = sha.ComputeHash(ms.ToArray());
 							CheckSums sum;
-							if (compareSaveImagesStatic(checksum,out sum))
+							if (compareSaveImagesStatic(checksum, out sum))
 							{
 								binidx.Write((int)sum.pos); //lookup
 								binidx.Write((int)sum.length);
@@ -639,7 +639,7 @@ namespace Ultima
 							binidx.Write(length);
 							binidx.Write((int)0);
 							bmp.UnlockBits(bd);
-							CheckSums s = new CheckSums() { pos = start, length = length, checksum = checksum, index=index };
+							CheckSums s = new CheckSums() { pos = start, length = length, checksum = checksum, index = index };
 							//Tex.WriteLine(System.String.Format("0x{0:X4} : 0x{1:X4} 0x{2:X4}", index, start, length));
 							checksumsStatic.Add(s);
 						}

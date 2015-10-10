@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Forms;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
 {

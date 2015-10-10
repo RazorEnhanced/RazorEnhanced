@@ -25,7 +25,8 @@
     </UpgradeBackupLocation>
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>ScintillaNET.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
@@ -316,7 +317,6 @@
     <None Include="Resources\GoToNextMessage.png" />
     <None Include="Resources\LineColorHS.png" />
     <None Include="Resources\DeleteHS.png" />
-    <None Include="ScintillaNET.snk" />
     <EmbeddedResource Include="Configuration\Builtin\html.xml" />
     <EmbeddedResource Include="Configuration\Builtin\LexerKeywordListNames\cpp.txt" />
     <EmbeddedResource Include="Configuration\Builtin\LexerStyleNames\hypertext.txt" />

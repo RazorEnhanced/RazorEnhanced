@@ -1,5 +1,4 @@
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 //
@@ -14,7 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Enhanced Razor")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]	
+[assembly: AssemblyCulture("")]
 
 //
 // Version information for an assembly consists of the following four values:

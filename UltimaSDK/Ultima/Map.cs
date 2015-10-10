@@ -7,8 +7,8 @@ namespace Ultima
 {
 	public sealed class Map
 	{
-                              
-        public TileMatrix m_Tiles;
+
+		public TileMatrix m_Tiles;
 		private int m_FileIndex, m_MapID;
 		private int m_Width, m_Height;
 		private string m_path;
@@ -17,30 +17,30 @@ namespace Ultima
 
 		public static bool UseDiff { get { return m_UseDiff; } set { m_UseDiff = value; Reload(); } }
 
-        public static Map Felucca, Trammel, Ilshenar, Malas, Tokuno, TerMur, Custom;
-     
-        public static Map InitializeMap(string _Map, int x = 0, int y = 0, int w = 0, int h = 0) 
-        {
-            switch (_Map)
-            {
-                case "Felucca":
-                  return Felucca = new Map(0, 0, 7168, 4096); // 6144
-                case "Trammel":
-                  return Trammel = new Map(0, 1, 7168, 4096);
-                case "Ilshenar":
-                  return Ilshenar = new Map(2, 2, 2304, 1600);                  
-                case "Malas":
-                  return Malas = new Map(3, 3, 2560, 2048);                 
-                case "Tokuno":
-                  return Tokuno = new Map(4, 4, 1448, 1448);                
-                case "TerMur":
-                  return TerMur = new Map(5, 5, 1280, 4096);                  
-                case "Custom":
-                  return Custom = new Map(x, y, w, h);
-                default:
-                  return null;
-            }
-       }
+		public static Map Felucca, Trammel, Ilshenar, Malas, Tokuno, TerMur, Custom;
+
+		public static Map InitializeMap(string _Map, int x = 0, int y = 0, int w = 0, int h = 0)
+		{
+			switch (_Map)
+			{
+				case "Felucca":
+					return Felucca = new Map(0, 0, 7168, 4096); // 6144
+				case "Trammel":
+					return Trammel = new Map(0, 1, 7168, 4096);
+				case "Ilshenar":
+					return Ilshenar = new Map(2, 2, 2304, 1600);
+				case "Malas":
+					return Malas = new Map(3, 3, 2560, 2048);
+				case "Tokuno":
+					return Tokuno = new Map(4, 4, 1448, 1448);
+				case "TerMur":
+					return TerMur = new Map(5, 5, 1280, 4096);
+				case "Custom":
+					return Custom = new Map(x, y, w, h);
+				default:
+					return null;
+			}
+		}
 
 		public static void StartUpSetDiff(bool value)
 		{
@@ -70,71 +70,71 @@ namespace Ultima
 		/// </summary>
 		public static void Reload()
 		{
-            if (Felucca != null)
-            {
-                Felucca.Tiles.Dispose();
-                Felucca.Tiles.StaticIndexInit = false;
-                Felucca.m_Cache = null;
-                Felucca.m_Tiles = null;
-                Felucca.m_Cache_NoStatics = null;
-                Felucca.m_Cache_NoPatch = null;
-                Felucca.m_Cache_NoStatics_NoPatch = null;
-            }
+			if (Felucca != null)
+			{
+				Felucca.Tiles.Dispose();
+				Felucca.Tiles.StaticIndexInit = false;
+				Felucca.m_Cache = null;
+				Felucca.m_Tiles = null;
+				Felucca.m_Cache_NoStatics = null;
+				Felucca.m_Cache_NoPatch = null;
+				Felucca.m_Cache_NoStatics_NoPatch = null;
+			}
 
-            if (Trammel != null)
-            {
-                Trammel.Tiles.Dispose();
-                Trammel.Tiles.StaticIndexInit = false;
-                Trammel.m_Cache = null;
-                Trammel.m_Tiles = null;
-                Trammel.m_Cache_NoStatics = null;
-                Trammel.m_Cache_NoPatch = null;
-                Trammel.m_Cache_NoStatics_NoPatch = null;
-            }
+			if (Trammel != null)
+			{
+				Trammel.Tiles.Dispose();
+				Trammel.Tiles.StaticIndexInit = false;
+				Trammel.m_Cache = null;
+				Trammel.m_Tiles = null;
+				Trammel.m_Cache_NoStatics = null;
+				Trammel.m_Cache_NoPatch = null;
+				Trammel.m_Cache_NoStatics_NoPatch = null;
+			}
 
-            if (Ilshenar != null)
-            {
-                Ilshenar.Tiles.Dispose();
-                Ilshenar.Tiles.StaticIndexInit = false;
-                Ilshenar.m_Cache = null;
-                Ilshenar.m_Tiles = null;
-                 Ilshenar.m_Cache_NoStatics = null;
-                Ilshenar.m_Cache_NoPatch = null;
-                Ilshenar.m_Cache_NoStatics_NoPatch = null;
-            }
+			if (Ilshenar != null)
+			{
+				Ilshenar.Tiles.Dispose();
+				Ilshenar.Tiles.StaticIndexInit = false;
+				Ilshenar.m_Cache = null;
+				Ilshenar.m_Tiles = null;
+				Ilshenar.m_Cache_NoStatics = null;
+				Ilshenar.m_Cache_NoPatch = null;
+				Ilshenar.m_Cache_NoStatics_NoPatch = null;
+			}
 
-            if (Malas != null)
-            {
-                Malas.Tiles.Dispose();
-                Malas.Tiles.StaticIndexInit = false;
-                Malas.m_Cache = null;
-                Malas.m_Tiles = null;
-                Malas.m_Cache_NoStatics = null;
-                Malas.m_Cache_NoPatch = null;
-                Malas.m_Cache_NoStatics_NoPatch = null;              
-            }
+			if (Malas != null)
+			{
+				Malas.Tiles.Dispose();
+				Malas.Tiles.StaticIndexInit = false;
+				Malas.m_Cache = null;
+				Malas.m_Tiles = null;
+				Malas.m_Cache_NoStatics = null;
+				Malas.m_Cache_NoPatch = null;
+				Malas.m_Cache_NoStatics_NoPatch = null;
+			}
 
-            if (Tokuno != null)
-            {
-                Tokuno.Tiles.Dispose();
-                Tokuno.Tiles.StaticIndexInit = false;
-                Tokuno.m_Cache = null;
-                Tokuno.m_Tiles = null;
-                Tokuno.m_Cache_NoStatics = null;
-                Tokuno.m_Cache_NoPatch = null;
-                Tokuno.m_Cache_NoStatics_NoPatch = null;
-            }
+			if (Tokuno != null)
+			{
+				Tokuno.Tiles.Dispose();
+				Tokuno.Tiles.StaticIndexInit = false;
+				Tokuno.m_Cache = null;
+				Tokuno.m_Tiles = null;
+				Tokuno.m_Cache_NoStatics = null;
+				Tokuno.m_Cache_NoPatch = null;
+				Tokuno.m_Cache_NoStatics_NoPatch = null;
+			}
 
-            if (TerMur != null)
-            {
-                TerMur.Tiles.Dispose();
-                TerMur.Tiles.StaticIndexInit = false;
-                TerMur.m_Cache = null;
-                TerMur.m_Tiles = null;
-                TerMur.m_Cache_NoStatics = null;
-                TerMur.m_Cache_NoPatch = null;
-                TerMur.m_Cache_NoStatics_NoPatch = null;    
-            }			         
+			if (TerMur != null)
+			{
+				TerMur.Tiles.Dispose();
+				TerMur.Tiles.StaticIndexInit = false;
+				TerMur.m_Cache = null;
+				TerMur.m_Tiles = null;
+				TerMur.m_Cache_NoStatics = null;
+				TerMur.m_Cache_NoPatch = null;
+				TerMur.m_Cache_NoStatics_NoPatch = null;
+			}
 		}
 
 		public void ResetCache()
@@ -162,7 +162,7 @@ namespace Ultima
 			get
 			{
 				if (m_Tiles == null)
-                	m_Tiles = new TileMatrix(m_FileIndex, m_MapID, m_Width, m_Height, m_path);
+					m_Tiles = new TileMatrix(m_FileIndex, m_MapID, m_Width, m_Height, m_path);
 
 				return m_Tiles;
 			}
@@ -218,10 +218,10 @@ namespace Ultima
 		private bool IsCached_NoStatics_NoPatch;
 
 		public short[][][] m_Cache;
-        public short[][][] m_Cache_NoStatics;
-        public short[][][] m_Cache_NoPatch;
-        public short[][][] m_Cache_NoStatics_NoPatch;
-        public short[] m_Black;
+		public short[][][] m_Cache_NoStatics;
+		public short[][][] m_Cache_NoPatch;
+		public short[][][] m_Cache_NoStatics_NoPatch;
+		public short[] m_Black;
 
 		public bool IsCached(bool statics)
 		{

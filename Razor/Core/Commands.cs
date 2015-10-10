@@ -1,7 +1,6 @@
 using System;
-using System.Text;
 using System.Collections.Generic;
-using Assistant.Macros;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Assistant
@@ -9,7 +8,7 @@ namespace Assistant
 	internal class Commands
 	{
 		public static void Initialize()
-		{	
+		{
 			Command.Register("Where", new CommandCallback(Where));
 			Command.Register("Ping", new CommandCallback(Ping));
 			Command.Register("ReduceCPU", new CommandCallback(ReNice));
@@ -17,51 +16,53 @@ namespace Assistant
 			Command.Register("ListCommand", new CommandCallback(Command.ListCommands));
 			Command.Register("Echo", new CommandCallback(Echo));
 			Command.Register("GetSerial", new CommandCallback(GetSerial));
-            Command.Register("Inspect", new CommandCallback(GetInfo));
+			Command.Register("Inspect", new CommandCallback(GetInfo));
 		}
 
 		private static void GetSerial(string[] param)
 		{
 			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to get their serial number."));
-            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(GetSerialTarget_Callback));     
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(GetSerialTarget_Callback));
 		}
 
-        private static void GetSerialTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-        {
-            ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Serial: 0x" + serial.Value.ToString("X8")));
-        }
+		private static void GetSerialTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Serial: 0x" + serial.Value.ToString("X8")));
+		}
 
-        private static void GetInfo(string[] param)
-        {
-            ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
-            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(GetInfoTarget_Callback));
-        }
+		private static void GetInfo(string[] param)
+		{
+			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a player or item to open object inspect."));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(GetInfoTarget_Callback));
+		}
 
-        private static void GetInfoTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-        {
+		private static void GetInfoTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
 
-            Assistant.Item assistantItem = Assistant.World.FindItem(serial);
-            if (assistantItem != null && assistantItem.Serial.IsItem)
-            {
-                Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate { 
-                    RazorEnhanced.UI.EnhancedItemInspector inspector = new RazorEnhanced.UI.EnhancedItemInspector(assistantItem);
-                    inspector.TopMost = true;
-                    inspector.Show();
-                });
-            }
-            else
-            {
-                Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
-                if (assistantMobile != null && assistantMobile.Serial.IsMobile)
-                {
-                    Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate { 
-                        RazorEnhanced.UI.EnhancedMobileInspector inspector = new RazorEnhanced.UI.EnhancedMobileInspector(assistantMobile);
-                        inspector.TopMost = true;
-                        inspector.Show();
-                    });
-                }
-            }
-        }
+			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
+			if (assistantItem != null && assistantItem.Serial.IsItem)
+			{
+				Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
+				{
+					RazorEnhanced.UI.EnhancedItemInspector inspector = new RazorEnhanced.UI.EnhancedItemInspector(assistantItem);
+					inspector.TopMost = true;
+					inspector.Show();
+				});
+			}
+			else
+			{
+				Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);
+				if (assistantMobile != null && assistantMobile.Serial.IsMobile)
+				{
+					Assistant.Engine.MainWindow.BeginInvoke((MethodInvoker)delegate
+					{
+						RazorEnhanced.UI.EnhancedMobileInspector inspector = new RazorEnhanced.UI.EnhancedMobileInspector(assistantMobile);
+						inspector.TopMost = true;
+						inspector.Show();
+					});
+				}
+			}
+		}
 
 		private static void Echo(string[] param)
 		{
@@ -110,9 +111,9 @@ namespace Assistant
 				case 4:
 					mapStr = "Tokuno";
 					break;
-                case 5:
-                    mapStr = "Ter Mur";
-                    break;
+				case 5:
+					mapStr = "Ter Mur";
+					break;
 				case 0x7F:
 					mapStr = "Internal";
 					break;
@@ -145,11 +146,11 @@ namespace Assistant
 
 		internal static void ListCommands(string[] param)
 		{
-            RazorEnhanced.Misc.SendMessage("Command List:");
-            foreach (string cmd in m_List.Keys)
-            {
-                RazorEnhanced.Misc.SendMessage("-" + cmd);
-            }
+			RazorEnhanced.Misc.SendMessage("Command List:");
+			foreach (string cmd in m_List.Keys)
+			{
+				RazorEnhanced.Misc.SendMessage("-" + cmd);
+			}
 		}
 
 		internal static void Register(string cmd, CommandCallback callback)
@@ -202,12 +203,12 @@ namespace Assistant
 						keys.Add(pvSrc.ReadByte());
 					}
 				}
-                /*
+				/*
                                 foreach (ushort dd in keys)
                                 {
                                     RazorEnhanced.Misc.SendMessage(dd.ToString());
                                 }*/
-                txtOffset = pvSrc.Position;
+				txtOffset = pvSrc.Position;
 				text = pvSrc.ReadUTF8StringSafe();
 				type &= ~MessageType.Encoded;
 			}
@@ -221,33 +222,33 @@ namespace Assistant
 
 			if (text.Length > 0)
 			{
-                // Enanched Map Chat
-                if (MapUO.MapNetwork.Connected)
-                    if (text.StartsWith(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox")))
-                    {
-                        string message = text.Replace(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox"), "");
-                        MapUO.MapNetworkOut.SendChatMessageQueue.Enqueue(new MapUO.MapNetworkOut.SendChatMessage(message.Length, RazorEnhanced.Settings.General.ReadInt("MapChatColor"), message));
-                        args.Block = true;
-                    }
+				// Enanched Map Chat
+				if (MapUO.MapNetwork.Connected)
+					if (text.StartsWith(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox")))
+					{
+						string message = text.Replace(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox"), "");
+						MapUO.MapNetworkOut.SendChatMessageQueue.Enqueue(new MapUO.MapNetworkOut.SendChatMessage(message.Length, RazorEnhanced.Settings.General.ReadInt("MapChatColor"), message));
+						args.Block = true;
+					}
 
 				if (text[0] == '-')
 				{
 
 					text = text.Substring(1);
 					string[] split = text.Split(' ', '\t');
-                    if (m_List.ContainsKey(split[0]))
-                    {
-                        CommandCallback call = (CommandCallback)m_List[split[0]];
-                        if (call != null)
-                        {
-                            string[] param = new String[split.Length - 1];
-                            for (int i = 0; i < param.Length; i++)
-                                param[i] = split[i + 1];
-                            call(param);
+					if (m_List.ContainsKey(split[0]))
+					{
+						CommandCallback call = (CommandCallback)m_List[split[0]];
+						if (call != null)
+						{
+							string[] param = new String[split.Length - 1];
+							for (int i = 0; i < param.Length; i++)
+								param[i] = split[i + 1];
+							call(param);
 
-                            args.Block = true;
-                        }
-                    }    
+							args.Block = true;
+						}
+					}
 				}
 			}
 		}

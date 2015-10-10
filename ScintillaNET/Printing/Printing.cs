@@ -1,6 +1,5 @@
 #region Using Directives
 
-using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 
@@ -9,153 +8,153 @@ using System.Windows.Forms;
 
 namespace ScintillaNET
 {
-    [TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
-    public class Printing : TopLevelHelper
-    {
-        #region Fields
+	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
+	public class Printing : TopLevelHelper
+	{
+		#region Fields
 
-        private PrintDocument _printDocument;
+		private PrintDocument _printDocument;
 
-        #endregion Fields
-
-
-        #region Methods
-
-        public bool Print()
-        {
-            return Print(true);
-        }
+		#endregion Fields
 
 
-        public bool Print(bool showPrintDialog)
-        {
-            if (showPrintDialog)
-            {
-                PrintDialog pd = new PrintDialog();
-                pd.Document = _printDocument;
-                pd.UseEXDialog = true;
-                pd.AllowCurrentPage = true;
-                pd.AllowSelection = true;
-                pd.AllowSomePages = true;
-                pd.PrinterSettings = PageSettings.PrinterSettings;
+		#region Methods
 
-                if (pd.ShowDialog(Scintilla) == DialogResult.OK)
-                {
-                    _printDocument.PrinterSettings = pd.PrinterSettings;
-                    _printDocument.Print();
-                    return true;
-                }
-
-                return false;
-            }
-
-            _printDocument.Print();
-            return true;
-        }
+		public bool Print()
+		{
+			return Print(true);
+		}
 
 
-        public DialogResult PrintPreview()
-        {
-            PrintPreviewDialog ppd = new PrintPreviewDialog();
-            ppd.WindowState = FormWindowState.Maximized;
+		public bool Print(bool showPrintDialog)
+		{
+			if (showPrintDialog)
+			{
+				PrintDialog pd = new PrintDialog();
+				pd.Document = _printDocument;
+				pd.UseEXDialog = true;
+				pd.AllowCurrentPage = true;
+				pd.AllowSelection = true;
+				pd.AllowSomePages = true;
+				pd.PrinterSettings = PageSettings.PrinterSettings;
 
-            ppd.Document = _printDocument;
-            return ppd.ShowDialog();
-        }
+				if (pd.ShowDialog(Scintilla) == DialogResult.OK)
+				{
+					_printDocument.PrinterSettings = pd.PrinterSettings;
+					_printDocument.Print();
+					return true;
+				}
 
+				return false;
+			}
 
-        public DialogResult PrintPreview(IWin32Window owner)
-        {
-            PrintPreviewDialog ppd = new PrintPreviewDialog();
-            ppd.WindowState = FormWindowState.Maximized;
-
-            if (owner is Form)
-                ppd.Icon = ((Form)owner).Icon;
-
-            ppd.Document = _printDocument;
-            return ppd.ShowDialog(owner);
-        }
-
-
-        internal bool ShouldSerialize()
-        {
-            return ShouldSerializePageSettings() || ShouldSerializePrintDocument();
-        }
+			_printDocument.Print();
+			return true;
+		}
 
 
-        private bool ShouldSerializePageSettings()
-        {
-            return PageSettings.ShouldSerialize();
-        }
+		public DialogResult PrintPreview()
+		{
+			PrintPreviewDialog ppd = new PrintPreviewDialog();
+			ppd.WindowState = FormWindowState.Maximized;
+
+			ppd.Document = _printDocument;
+			return ppd.ShowDialog();
+		}
 
 
-        private bool ShouldSerializePrintDocument()
-        {
-            return _printDocument.ShouldSerialize();
-        }
+		public DialogResult PrintPreview(IWin32Window owner)
+		{
+			PrintPreviewDialog ppd = new PrintPreviewDialog();
+			ppd.WindowState = FormWindowState.Maximized;
+
+			if (owner is Form)
+				ppd.Icon = ((Form)owner).Icon;
+
+			ppd.Document = _printDocument;
+			return ppd.ShowDialog(owner);
+		}
 
 
-        public DialogResult ShowPageSetupDialog()
-        {
-            PageSetupDialog psd = new PageSetupDialog();
-            psd.PageSettings = PageSettings;
-            psd.PrinterSettings = PageSettings.PrinterSettings;
-            return psd.ShowDialog();
-        }
+		internal bool ShouldSerialize()
+		{
+			return ShouldSerializePageSettings() || ShouldSerializePrintDocument();
+		}
 
 
-        public DialogResult ShowPageSetupDialog(IWin32Window owner)
-        {
-            PageSetupDialog psd = new PageSetupDialog();
-            psd.AllowPrinter = true;
-            psd.PageSettings = PageSettings;
-            psd.PrinterSettings = PageSettings.PrinterSettings;
-
-            return psd.ShowDialog(owner);
-        }
-
-        #endregion Methods
+		private bool ShouldSerializePageSettings()
+		{
+			return PageSettings.ShouldSerialize();
+		}
 
 
-        #region Properties
-
-        [Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PageSettings PageSettings
-        {
-            get
-            {
-                return _printDocument.DefaultPageSettings as PageSettings;
-            }
-            set
-            {
-                _printDocument.DefaultPageSettings = value;
-            }
-        }
+		private bool ShouldSerializePrintDocument()
+		{
+			return _printDocument.ShouldSerialize();
+		}
 
 
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public PrintDocument PrintDocument
-        {
-            get
-            {
-                return _printDocument;
-            }
-            set
-            {
-                _printDocument = value;
-            }
-        }
-
-        #endregion Properties
+		public DialogResult ShowPageSetupDialog()
+		{
+			PageSetupDialog psd = new PageSetupDialog();
+			psd.PageSettings = PageSettings;
+			psd.PrinterSettings = PageSettings.PrinterSettings;
+			return psd.ShowDialog();
+		}
 
 
-        #region Constructors
+		public DialogResult ShowPageSetupDialog(IWin32Window owner)
+		{
+			PageSetupDialog psd = new PageSetupDialog();
+			psd.AllowPrinter = true;
+			psd.PageSettings = PageSettings;
+			psd.PrinterSettings = PageSettings.PrinterSettings;
 
-        internal Printing(Scintilla scintilla) : base(scintilla)
-        {
-            _printDocument = new PrintDocument(scintilla);
-        }
+			return psd.ShowDialog(owner);
+		}
 
-        #endregion Constructors
-    }
+		#endregion Methods
+
+
+		#region Properties
+
+		[Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public PageSettings PageSettings
+		{
+			get
+			{
+				return _printDocument.DefaultPageSettings as PageSettings;
+			}
+			set
+			{
+				_printDocument.DefaultPageSettings = value;
+			}
+		}
+
+
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+		public PrintDocument PrintDocument
+		{
+			get
+			{
+				return _printDocument;
+			}
+			set
+			{
+				_printDocument = value;
+			}
+		}
+
+		#endregion Properties
+
+
+		#region Constructors
+
+		internal Printing(Scintilla scintilla) : base(scintilla)
+		{
+			_printDocument = new PrintDocument(scintilla);
+		}
+
+		#endregion Constructors
+	}
 }

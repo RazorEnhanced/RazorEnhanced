@@ -1,6 +1,6 @@
 ﻿namespace RazorEnhanced.UI
 {
-    partial class EnhancedScavengerEditItemProps
+	partial class EnhancedScavengerEditItemProps
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -151,9 +151,9 @@
 			// listViewProps
 			// 
 			this.listViewProps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader17,
-            this.columnHeader18,
-            this.columnHeader19});
+			this.columnHeader17,
+			this.columnHeader18,
+			this.columnHeader19});
 			this.listViewProps.Location = new System.Drawing.Point(6, 19);
 			this.listViewProps.Name = "listViewProps";
 			this.listViewProps.Size = new System.Drawing.Size(596, 153);
@@ -314,9 +314,9 @@
 			// 
 			// tMax
 			// 
-			this.tMax.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tMax.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tMax.BackColor = System.Drawing.Color.White;
 			this.tMax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tMax.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -337,9 +337,9 @@
 			// 
 			// tMin
 			// 
-			this.tMin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.tMin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.tMin.BackColor = System.Drawing.Color.White;
 			this.tMin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tMin.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -404,40 +404,40 @@
 
 		#endregion
 
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
-        private System.Windows.Forms.ColumnHeader columnHeader7;
-        private System.Windows.Forms.ColumnHeader columnHeader9;
-        private System.Windows.Forms.ColumnHeader columnHeader10;
-        private System.Windows.Forms.ColumnHeader columnHeader11;
-        private System.Windows.Forms.ColumnHeader columnHeader13;
-        private System.Windows.Forms.ColumnHeader columnHeader14;
-        private System.Windows.Forms.ColumnHeader columnHeader15;
-        private System.Windows.Forms.ListView listViewProps;
-        public System.Windows.Forms.ColumnHeader columnHeader17;
-        public System.Windows.Forms.ColumnHeader columnHeader18;
+		private System.Windows.Forms.ColumnHeader columnHeader4;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ColumnHeader columnHeader5;
+		private System.Windows.Forms.ColumnHeader columnHeader6;
+		private System.Windows.Forms.ColumnHeader columnHeader7;
+		private System.Windows.Forms.ColumnHeader columnHeader9;
+		private System.Windows.Forms.ColumnHeader columnHeader10;
+		private System.Windows.Forms.ColumnHeader columnHeader11;
+		private System.Windows.Forms.ColumnHeader columnHeader13;
+		private System.Windows.Forms.ColumnHeader columnHeader14;
+		private System.Windows.Forms.ColumnHeader columnHeader15;
+		private System.Windows.Forms.ListView listViewProps;
+		public System.Windows.Forms.ColumnHeader columnHeader17;
+		public System.Windows.Forms.ColumnHeader columnHeader18;
 		private System.Windows.Forms.ColumnHeader columnHeader19;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private RazorButton razorButton1;
-        private RazorButton bRemoveProp;
-        private RazorButton bAddProp;
-        private RazorTextBox tMax;
-        private System.Windows.Forms.Label label5;
-        private RazorTextBox tMin;
-        private System.Windows.Forms.Label label4;
-        private RazorComboBox comboboxProp;
-        private System.Windows.Forms.Label lColor;
-        private System.Windows.Forms.Label lGraphics;
-        private System.Windows.Forms.Label lName;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.GroupBox groupBox3;
+		private RazorButton razorButton1;
+		private RazorButton bRemoveProp;
+		private RazorButton bAddProp;
+		private RazorTextBox tMax;
+		private System.Windows.Forms.Label label5;
+		private RazorTextBox tMin;
+		private System.Windows.Forms.Label label4;
+		private RazorComboBox comboboxProp;
+		private System.Windows.Forms.Label lColor;
+		private System.Windows.Forms.Label lGraphics;
+		private System.Windows.Forms.Label lName;
 
 
-    }
+	}
 }

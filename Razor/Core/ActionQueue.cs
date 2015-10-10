@@ -574,7 +574,7 @@ namespace Assistant
 			{
 				if (m_Timer.Running)
 				{
-                    double time = RazorEnhanced.Settings.General.ReadInt("ObjectDelay") / 1000.0;
+					double time = RazorEnhanced.Settings.General.ReadInt("ObjectDelay") / 1000.0;
 					double init = 0;
 					if (m_Timer.LastTick != DateTime.MinValue)
 						init = time - (DateTime.Now - m_Timer.LastTick).TotalSeconds;
@@ -622,7 +622,7 @@ namespace Assistant
 
 				if (m_Queue != null && m_Queue.Count > 0)
 				{
-                    this.Interval = TimeSpan.FromMilliseconds(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+					this.Interval = TimeSpan.FromMilliseconds(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
 
 					while (m_Queue.Count > 0)
 					{

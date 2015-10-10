@@ -1,6 +1,5 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Assistant
 {
@@ -17,21 +16,21 @@ namespace Assistant
 
 		internal virtual void SaveState(BinaryWriter writer)
 		{
-			writer.Write( (uint)m_Serial );
-			writer.Write( (int)m_Pos.X );
-			writer.Write( (int)m_Pos.Y );
-			writer.Write( (int)m_Pos.Z );
-			writer.Write( (ushort)m_Hue );
+			writer.Write((uint)m_Serial);
+			writer.Write((int)m_Pos.X);
+			writer.Write((int)m_Pos.Y);
+			writer.Write((int)m_Pos.Z);
+			writer.Write((ushort)m_Hue);
 		}
 
 		internal UOEntity(BinaryReader reader, int version)
 		{
 			m_Serial = reader.ReadUInt32();
-			m_Pos = new Point3D( reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32() );
+			m_Pos = new Point3D(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
 			m_Hue = reader.ReadUInt16();
 			m_Deleted = false;
 
-			m_ObjPropList = new ObjectPropertyList( this );
+			m_ObjPropList = new ObjectPropertyList(this);
 		}
 
 		internal virtual void AfterLoad()
@@ -40,7 +39,7 @@ namespace Assistant
 
 		internal UOEntity(Serial ser)
 		{
-			m_ObjPropList = new ObjectPropertyList( this );
+			m_ObjPropList = new ObjectPropertyList(this);
 
 			m_Serial = ser;
 			m_Deleted = false;
@@ -49,14 +48,14 @@ namespace Assistant
 		internal Serial Serial { get { return m_Serial; } }
 
 		internal virtual Point3D Position
-		{ 
-			get{ return m_Pos; }
+		{
+			get { return m_Pos; }
 			set
-			{ 
-				if ( value != m_Pos )
+			{
+				if (value != m_Pos)
 				{
-					OnPositionChanging( value );
-					m_Pos = value; 
+					OnPositionChanging(value);
+					m_Pos = value;
 				}
 			}
 		}
@@ -76,8 +75,8 @@ namespace Assistant
 
 		internal virtual ushort Hue
 		{
-			get{ return m_Hue; }
-			set{ m_Hue = value; }
+			get { return m_Hue; }
+			set { m_Hue = value; }
 		}
 
 		internal virtual void Remove()
@@ -95,17 +94,17 @@ namespace Assistant
 		}
 
 		internal int OPLHash
-		{ 
+		{
 			get
 			{
-				if ( m_ObjPropList != null )
+				if (m_ObjPropList != null)
 					return m_ObjPropList.Hash;
 				else
 					return 0;
 			}
 			set
 			{
-				if ( m_ObjPropList != null )
+				if (m_ObjPropList != null)
 					m_ObjPropList.Hash = value;
 			}
 		}
@@ -114,7 +113,7 @@ namespace Assistant
 
 		internal void ReadPropertyList(PacketReader p)
 		{
-			m_ObjPropList.Read( p );
+			m_ObjPropList.Read(p);
 		}
 
 		/*public Packet BuildOPLPacket()
@@ -125,7 +124,7 @@ namespace Assistant
 		internal void OPLChanged()
 		{
 			//ClientCommunication.SendToClient( m_ObjPropList.BuildPacket() );
-			ClientCommunication.SendToClient( new OPLInfo( Serial, OPLHash ) );
+			ClientCommunication.SendToClient(new OPLInfo(Serial, OPLHash));
 		}
 	}
 }

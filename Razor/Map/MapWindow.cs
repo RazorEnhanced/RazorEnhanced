@@ -1,10 +1,7 @@
 using System;
 using System.Drawing;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Threading;
+using System.Windows.Forms;
 
 namespace Assistant.MapUO
 {
@@ -16,9 +13,9 @@ namespace Assistant.MapUO
 		internal const int WM_NCLBUTTONDOWN = 0xA1;
 		internal const int HT_CAPTION = 0x2;
 		private UOMapControl uoMapControl1;
-        internal static UOMapControl uoMapControlstatic;
-        internal static MapWindow UoMapWindowStatic;
-        internal static ContextMenuStrip UoMenuStatic;
+		internal static UOMapControl uoMapControlstatic;
+		internal static MapWindow UoMapWindowStatic;
+		internal static ContextMenuStrip UoMenuStatic;
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
@@ -30,41 +27,41 @@ namespace Assistant.MapUO
 		/// </summary>
 		private System.ComponentModel.Container components = null;
 
-        internal MapWindow()
-        {
-            //
-            // Required for Windows Form Designer support
-            //
+		internal MapWindow()
+		{
+			//
+			// Required for Windows Form Designer support
+			//
 
-            InitializeComponent();
-            this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("MapX"), RazorEnhanced.Settings.General.ReadInt("MapY"));
-            this.ClientSize = new Size(RazorEnhanced.Settings.General.ReadInt("MapW"), RazorEnhanced.Settings.General.ReadInt("MapH"));
-            Assistant.Engine.MapWindowX = RazorEnhanced.Settings.General.ReadInt("MapX");
-            Assistant.Engine.MapWindowY = RazorEnhanced.Settings.General.ReadInt("MapY");
-            Assistant.Engine.MapWindowH = RazorEnhanced.Settings.General.ReadInt("MapH");
-            Assistant.Engine.MapWindowW = RazorEnhanced.Settings.General.ReadInt("MapW");
+			InitializeComponent();
+			this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("MapX"), RazorEnhanced.Settings.General.ReadInt("MapY"));
+			this.ClientSize = new Size(RazorEnhanced.Settings.General.ReadInt("MapW"), RazorEnhanced.Settings.General.ReadInt("MapH"));
+			Assistant.Engine.MapWindowX = RazorEnhanced.Settings.General.ReadInt("MapX");
+			Assistant.Engine.MapWindowY = RazorEnhanced.Settings.General.ReadInt("MapY");
+			Assistant.Engine.MapWindowH = RazorEnhanced.Settings.General.ReadInt("MapH");
+			Assistant.Engine.MapWindowW = RazorEnhanced.Settings.General.ReadInt("MapW");
 
-            if (this.Location.X < -10 || this.Location.Y < -10)
-                this.Location = Point.Empty;
+			if (this.Location.X < -10 || this.Location.Y < -10)
+				this.Location = Point.Empty;
 
-            if (this.Width < 50)
-                this.Width = 50;
-            if (this.Height < 50)
-                this.Height = 50;
+			if (this.Width < 50)
+				this.Width = 50;
+			if (this.Height < 50)
+				this.Height = 50;
 
-            //
-            // TODO: Add any constructor code after InitializeComponent call
-            //
+			//
+			// TODO: Add any constructor code after InitializeComponent call
+			//
 
-            this.uoMapControl1.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseWheel);
-            this.uoMapControl1.DoubleClick += new System.EventHandler(this.uoMapControl1.picturebox1_DoubleClick);
-            this.uoMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseClick);
-            this.uoMapControl1.FullUpdate();
-            ClientCommunication.SetMapWndHandle(this);
-            uoMapControlstatic = this.uoMapControl1;
-            UoMapWindowStatic = this;
-            UoMenuStatic = this.contextMenuStrip;
-        }
+			this.uoMapControl1.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseWheel);
+			this.uoMapControl1.DoubleClick += new System.EventHandler(this.uoMapControl1.picturebox1_DoubleClick);
+			this.uoMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseClick);
+			this.uoMapControl1.FullUpdate();
+			ClientCommunication.SetMapWndHandle(this);
+			uoMapControlstatic = this.uoMapControl1;
+			UoMapWindowStatic = this;
+			UoMenuStatic = this.contextMenuStrip;
+		}
 
 		internal class MapMenuItem : MenuItem
 		{
@@ -145,9 +142,10 @@ namespace Assistant.MapUO
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
-		{   this.components = new System.ComponentModel.Container();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.FreeViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		{
+			this.components = new System.ComponentModel.Container();
+			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.FreeViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.SuspendLayout();
 			// 
 			// uoMapControl1
@@ -178,27 +176,27 @@ namespace Assistant.MapUO
 			this.Move += new System.EventHandler(this.MapWindow_Move);
 			this.Resize += new System.EventHandler(this.MapWindow_Resize);
 			this.ResumeLayout(false);
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FreeViewMenuItem});
-            this.contextMenuStrip.Name = "contextMenuStrip1";
-            this.contextMenuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.contextMenuStrip.Size = new System.Drawing.Size(87, 26);
-            this.contextMenuStrip.Text = "Menu";
-            // 
-            // aaToolStripMenuItem
-            // 
-            this.FreeViewMenuItem.Name = "FreeView";
-            this.FreeViewMenuItem.Size = new System.Drawing.Size(86, 22);
-            this.FreeViewMenuItem.Text = "Free View";
-            //this.aaToolStripMenuItem.Click += new System.EventHandler(this.aaToolStripMenuItem_Click);
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.FreeViewMenuItem});
+			this.contextMenuStrip.Name = "contextMenuStrip1";
+			this.contextMenuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+			this.contextMenuStrip.Size = new System.Drawing.Size(87, 26);
+			this.contextMenuStrip.Text = "Menu";
+			// 
+			// aaToolStripMenuItem
+			// 
+			this.FreeViewMenuItem.Name = "FreeView";
+			this.FreeViewMenuItem.Size = new System.Drawing.Size(86, 22);
+			this.FreeViewMenuItem.Text = "Free View";
+			//this.aaToolStripMenuItem.Click += new System.EventHandler(this.aaToolStripMenuItem_Click);
 
 		}
 		#endregion
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem FreeViewMenuItem;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+		private System.Windows.Forms.ToolStripMenuItem FreeViewMenuItem;
 
 		internal void CheckLocalUpdate(Mobile mob)
 		{
@@ -309,15 +307,15 @@ namespace Assistant.MapUO
 
 			this.Refresh();
 
-            Assistant.Engine.MapWindowH = this.Height;
-            Assistant.Engine.MapWindowW = this.Width;
+			Assistant.Engine.MapWindowH = this.Height;
+			Assistant.Engine.MapWindowW = this.Width;
 		}
 
 		private void MapWindow_Move(object sender, System.EventArgs e)
 		{
-            this.uoMapControl1.Location = this.Location;
-            Assistant.Engine.MapWindowX = this.Location.X;
-            Assistant.Engine.MapWindowY = this.Location.Y;
+			this.uoMapControl1.Location = this.Location;
+			Assistant.Engine.MapWindowX = this.Location.X;
+			Assistant.Engine.MapWindowY = this.Location.Y;
 		}
 
 		private void MapWindow_Deactivate(object sender, System.EventArgs e)

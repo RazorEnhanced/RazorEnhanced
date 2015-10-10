@@ -523,13 +523,13 @@ namespace Assistant.Macros
 
 		private void EditAmount(object[] args)
 		{
-		/*	if (InputBox.Show(Engine.MainWindow, Language.GetString(LocString.EnterAmount), Language.GetString(LocString.InputReq), m_Amount.ToString()))
-			{
-				m_Amount = (ushort)InputBox.GetInt(m_Amount);
+			/*	if (InputBox.Show(Engine.MainWindow, Language.GetString(LocString.EnterAmount), Language.GetString(LocString.InputReq), m_Amount.ToString()))
+				{
+					m_Amount = (ushort)InputBox.GetInt(m_Amount);
 
-				if (m_Parent != null)
-					m_Parent.Update();
-			}*/
+					if (m_Parent != null)
+						m_Parent.Update();
+				}*/
 		}
 
 		public override string ToString()
@@ -705,7 +705,7 @@ namespace Assistant.Macros
 			ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
 			ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, World.Player.CurrentGumpI, m_ButtonID, m_Switches, m_TextEntries));
 			World.Player.HasGump = false;
-            World.Player.CurrentGumpI = 0;
+			World.Player.CurrentGumpI = 0;
 			return true;
 		}
 
@@ -1645,7 +1645,7 @@ namespace Assistant.Macros
 
 		private void Edit(object[] args)
 		{
-		//	new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
+			//	new MacroInsertWait(this).ShowDialog(Engine.MainWindow);
 		}
 	}
 
@@ -2151,28 +2151,28 @@ namespace Assistant.Macros
 						return World.Player.GetItemOnLayer(Layer.LeftHand) == null;
 					}
 
-			/*	case IfVarType.Counter:
-					{
-						if (m_CountObj == null)
+				/*	case IfVarType.Counter:
 						{
-							foreach (Assistant.Counter c in Assistant.Counter.List)
+							if (m_CountObj == null)
 							{
-								if (c.Name == m_Counter)
+								foreach (Assistant.Counter c in Assistant.Counter.List)
 								{
-									m_CountObj = c;
-									break;
+									if (c.Name == m_Counter)
+									{
+										m_CountObj = c;
+										break;
+									}
 								}
 							}
-						}
 
-						if (m_CountObj == null || !m_CountObj.Enabled)
-							return false;
+							if (m_CountObj == null || !m_CountObj.Enabled)
+								return false;
 
-						if (m_Direction > 0)
-							return m_CountObj.Amount >= (int)m_Value;
-						else
-							return m_CountObj.Amount <= (int)m_Value;
-					}*/
+							if (m_Direction > 0)
+								return m_CountObj.Amount >= (int)m_Value;
+							else
+								return m_CountObj.Amount <= (int)m_Value;
+						}*/
 
 				default:
 					return false;

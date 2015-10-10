@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Assistant;
+using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Assistant;
-using System.Windows.Forms;
 using System.Threading;
-using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -122,33 +120,33 @@ namespace RazorEnhanced
 		{
 			get
 			{
-                int serialBag = 0;
+				int serialBag = 0;
 
-                try
-                {
-                    serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
-                }
-                catch
-                { }
+				try
+				{
+					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
+				}
+				catch
+				{ }
 
-                return serialBag;
+				return serialBag;
 			}
 
 			set
 			{
-                Assistant.Engine.MainWindow.ScavengerContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerContainerLabel.Text = "0x" + value.ToString("X8")));
+				Assistant.Engine.MainWindow.ScavengerContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerContainerLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
 		internal static void AddLog(string addlog)
 		{
-            if (Assistant.Engine.Running)
-            {
-                Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.Items.Add(addlog)));
-                Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.SelectedIndex = Assistant.Engine.MainWindow.ScavengerLogBox.Items.Count - 1));
-                if (Assistant.Engine.MainWindow.ScavengerLogBox.Items.Count > 300)
-                    Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.Items.Clear()));
-            }
+			if (Assistant.Engine.Running)
+			{
+				Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.Items.Add(addlog)));
+				Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.SelectedIndex = Assistant.Engine.MainWindow.ScavengerLogBox.Items.Count - 1));
+				if (Assistant.Engine.MainWindow.ScavengerLogBox.Items.Count > 300)
+					Assistant.Engine.MainWindow.ScavengerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerLogBox.Items.Clear()));
+			}
 		}
 
 		internal static void RefreshLists()
@@ -156,8 +154,8 @@ namespace RazorEnhanced
 			List<ScavengerList> lists;
 			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
 
-            if (lists.Count == 0)
-                Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
+			if (lists.Count == 0)
+				Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
 
 			ScavengerList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.ScavengerListSelect.Text)
@@ -294,14 +292,14 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item itemGround in itemsOnGround)
 			{
-                if (World.Player.IsGhost)
-                {
-                    ResetIgnore();
-                    Thread.Sleep(2000);
-                    return 0;
-                }
+				if (World.Player.IsGhost)
+				{
+					ResetIgnore();
+					Thread.Sleep(2000);
+					return 0;
+				}
 
-                foreach (ScavengerItem scavengerItem in scavengerItemList)
+				foreach (ScavengerItem scavengerItem in scavengerItemList)
 				{
 					if (!scavengerItem.Selected)
 						continue;
@@ -329,56 +327,56 @@ namespace RazorEnhanced
 
 		internal static void GrabItem(ScavengerItem scavengerItem, Item itemGround, int mseconds)
 		{
-            if (!itemGround.Movable || !itemGround.Visible)
-                return;
+			if (!itemGround.Movable || !itemGround.Visible)
+				return;
 
-            if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
-                return;
+			if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
+				return;
 
-      
-				if (scavengerItem.Properties.Count > 0) // Item con props
+
+			if (scavengerItem.Properties.Count > 0) // Item con props
+			{
+				RazorEnhanced.Scavenger.AddLog("- Item Match found scan props");
+
+				bool propsOK = false;
+				foreach (ScavengerItem.Property props in scavengerItem.Properties) // Scansione e verifica props
 				{
-					RazorEnhanced.Scavenger.AddLog("- Item Match found scan props");
-
-					bool propsOK = false;
-					foreach (ScavengerItem.Property props in scavengerItem.Properties) // Scansione e verifica props
+					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(itemGround, props.Name);
+					if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
 					{
-						int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(itemGround, props.Name);
-						if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
-						{
-							propsOK = true;
-						}
-						else
-						{
-							propsOK = false;
-							break; // alla prima fallita esce non ha senso controllare le altre
-						}
-					}
-
-					if (propsOK) // Tutte le props match OK
-					{
-                            DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
+						propsOK = true;
 					}
 					else
 					{
-						RazorEnhanced.Scavenger.AddLog("- Props Match fail!");
+						propsOK = false;
+						break; // alla prima fallita esce non ha senso controllare le altre
 					}
 				}
-				else // Item Senza props     
+
+				if (propsOK) // Tutte le props match OK
 				{
-                        DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
+					DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
 				}
-			
+				else
+				{
+					RazorEnhanced.Scavenger.AddLog("- Props Match fail!");
+				}
+			}
+			else // Item Senza props     
+			{
+				DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
+			}
+
 		}
 
-        public static void ResetIgnore()
-        {
-            DragDropManager.ScavengerSerialToGrab = new ConcurrentQueue<int>();
-        }
+		public static void ResetIgnore()
+		{
+			DragDropManager.ScavengerSerialToGrab = new ConcurrentQueue<int>();
+		}
 
 		internal static void Engine()
 		{
-            int exit = Int32.MinValue;
+			int exit = Int32.MinValue;
 
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter();
@@ -387,23 +385,23 @@ namespace RazorEnhanced
 			itemFilter.OnGround = true;
 			itemFilter.Enabled = true;
 
-            // Check bag
-            Assistant.Item bag = Assistant.World.FindItem(ScavengerBag);
-            if (bag != null)
-            {
-                if (bag.RootContainer != World.Player)
-                {
-                    Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
-                    AddLog("Invalid Bag, Switch to backpack");
-                    ScavengerBag = (int)World.Player.Backpack.Serial.Value;
-                }
-            }
-            else
-            {
-                Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
-                AddLog("Invalid Bag, Switch to backpack");
-                ScavengerBag = (int)World.Player.Backpack.Serial.Value;
-            }
+			// Check bag
+			Assistant.Item bag = Assistant.World.FindItem(ScavengerBag);
+			if (bag != null)
+			{
+				if (bag.RootContainer != World.Player)
+				{
+					Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
+					AddLog("Invalid Bag, Switch to backpack");
+					ScavengerBag = (int)World.Player.Backpack.Serial.Value;
+				}
+			}
+			else
+			{
+				Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
+				AddLog("Invalid Bag, Switch to backpack");
+				ScavengerBag = (int)World.Player.Backpack.Serial.Value;
+			}
 
 			List<Scavenger.ScavengerItem> items;
 			string list = Scavenger.ScavengerListName;
@@ -452,7 +450,7 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-            if (!Assistant.Engine.MainWindow.ScavengerListSelect.Items.Contains(nomelista))
+			if (!Assistant.Engine.MainWindow.ScavengerListSelect.Items.Contains(nomelista))
 				Misc.SendMessage("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
 			else
 			{

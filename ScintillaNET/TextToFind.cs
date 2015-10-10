@@ -8,12 +8,12 @@ using System.Runtime.InteropServices;
 
 namespace ScintillaNET
 {
-    // TODO Make internal
-    [StructLayout(LayoutKind.Sequential)]
-    public struct TextToFind
-    {
-        public CharacterRange chrg;         // range to search
-        public IntPtr lpstrText;            // the search pattern (zero terminated)
-        public CharacterRange chrgText;     // returned as position of matching text
-    }
+	// TODO Make internal
+	[StructLayout(LayoutKind.Sequential)]
+	public struct TextToFind
+	{
+		public CharacterRange chrg;         // range to search
+		public IntPtr lpstrText;            // the search pattern (zero terminated)
+		public CharacterRange chrgText;     // returned as position of matching text
+	}
 }

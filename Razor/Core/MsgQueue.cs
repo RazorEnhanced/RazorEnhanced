@@ -71,10 +71,10 @@ namespace Assistant
 
 		internal static bool Enqueue(Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
-            MsgInfo m = null;
-            if (m_Table.ContainsKey(text))
-                m = m_Table[text] as MsgInfo;
-           
+			MsgInfo m = null;
+			if (m_Table.ContainsKey(text))
+				m = m_Table[text] as MsgInfo;
+
 			if (m == null)
 			{
 				m_Table[text] = m = new MsgInfo(ser, body, type, hue, font, lang, name);

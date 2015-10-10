@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace RazorEnhanced
+﻿namespace RazorEnhanced
 {
 	public class Maps
 	{

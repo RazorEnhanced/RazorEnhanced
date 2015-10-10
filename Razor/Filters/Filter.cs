@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Xml;
 
 namespace Assistant.Filters
 {
@@ -18,12 +16,12 @@ namespace Assistant.Filters
 		internal static void Load()
 		{
 			DisableAll();
-            for (int i = 0; i < m_Filters.Count; i++)
-            {
-                Filter f = m_Filters[i];
-                if (RazorEnhanced.Settings.General.ReadBool(((int)f.Name).ToString()))
-                   f.OnEnable();
-            }
+			for (int i = 0; i < m_Filters.Count; i++)
+			{
+				Filter f = m_Filters[i];
+				if (RazorEnhanced.Settings.General.ReadBool(((int)f.Name).ToString()))
+					f.OnEnable();
+			}
 		}
 
 		internal static void DisableAll()
@@ -39,7 +37,7 @@ namespace Assistant.Filters
 				Filter f = m_Filters[i];
 				if (f.Enabled)
 				{
-                    RazorEnhanced.Settings.General.WriteBool(((int)f.Name).ToString(), f.Enabled);
+					RazorEnhanced.Settings.General.WriteBool(((int)f.Name).ToString(), f.Enabled);
 				}
 			}
 		}
@@ -93,16 +91,16 @@ namespace Assistant.Filters
 
 		internal void OnCheckChanged(CheckState newValue)
 		{
-            if (Enabled && newValue == CheckState.Unchecked)
-            {
-                OnDisable();
-                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), false);
-            }
-            else if (!Enabled && newValue == CheckState.Checked)
-            {
-                OnEnable();
-                RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), true);
-            }           
+			if (Enabled && newValue == CheckState.Unchecked)
+			{
+				OnDisable();
+				RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), false);
+			}
+			else if (!Enabled && newValue == CheckState.Checked)
+			{
+				OnEnable();
+				RazorEnhanced.Settings.General.WriteBool(((int)this.Name).ToString().ToString(), true);
+			}
 		}
 	}
 }

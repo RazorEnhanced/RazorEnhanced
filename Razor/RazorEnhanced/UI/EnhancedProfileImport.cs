@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Text.RegularExpressions;
 using System.IO;
+using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 
 namespace RazorEnhanced.UI
@@ -17,7 +10,7 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Profile Import";
 
-        public EnhancedProfileImport()
+		public EnhancedProfileImport()
 		{
 			InitializeComponent();
 			MaximizeBox = false;
@@ -33,7 +26,7 @@ namespace RazorEnhanced.UI
 		private void profileadd_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-            string newprofile = "";
+			string newprofile = "";
 
 			if (profilename.Text == "")
 				fail = true;
@@ -45,35 +38,35 @@ namespace RazorEnhanced.UI
 			if (RazorEnhanced.Profiles.Exist(newprofile))
 				fail = true;
 
-            if (!File.Exists(profilefilepathTextBox.Text))
-                fail = true;
+			if (!File.Exists(profilefilepathTextBox.Text))
+				fail = true;
 
 			if (fail)
 			{
 				MessageBox.Show("Invalid file or profile name",
-                "Enhanced Profiles",
+				"Enhanced Profiles",
 				MessageBoxButtons.OK,
 				MessageBoxIcon.Exclamation,
 				MessageBoxDefaultButton.Button1);
 			}
 			else
 			{
-                RazorEnhanced.ImportExport.ImportProfiles(newprofile, profilefilepathTextBox.Text);
-                this.Close();
+				RazorEnhanced.ImportExport.ImportProfiles(newprofile, profilefilepathTextBox.Text);
+				this.Close();
 			}
 		}
 
-        private void chosefileButton_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog od = new OpenFileDialog();
-            od.Filter = "Enhanced Razor Export|*.raz";
-            od.Title = "Import Profiles";
-            od.RestoreDirectory = true;
+		private void chosefileButton_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog od = new OpenFileDialog();
+			od.Filter = "Enhanced Razor Export|*.raz";
+			od.Title = "Import Profiles";
+			od.RestoreDirectory = true;
 
-            if (od.ShowDialog() == DialogResult.OK)
-            {
-                profilefilepathTextBox.Text = od.FileName;
-            }
-        }
+			if (od.ShowDialog() == DialogResult.OK)
+			{
+				profilefilepathTextBox.Text = od.FileName;
+			}
+		}
 	}
 }

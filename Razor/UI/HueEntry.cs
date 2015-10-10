@@ -1,9 +1,6 @@
-using System;
-using System.Drawing;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
 using RazorEnhanced.UI;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace Assistant
 {

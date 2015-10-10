@@ -1,8 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.Serialization;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
 
 namespace RazorEnhanced
 {
@@ -12,9 +11,11 @@ namespace RazorEnhanced
 		public NoServerFoundException(string message) : base(message) { }
 		public NoServerFoundException(string message,
 				System.Exception inner)
-			: base(message, inner) { }
+			: base(message, inner)
+		{ }
 		protected NoServerFoundException(SerializationInfo info,
-			System.Runtime.Serialization.StreamingContext context) { }
+			System.Runtime.Serialization.StreamingContext context)
+		{ }
 	}
 
 	class NetworkTime
@@ -31,17 +32,17 @@ namespace RazorEnhanced
 
 		//NIST Servers
 		public static string[] srvs = {
-        "time.nist.gov",
-        "pool.ntp.org",
-        "europe.pool.ntp.org",
-        "asia.pool.ntp.org",
-        "oceania.pool.ntp.org",
-        "north-america.pool.ntp.org",
-        "south-america.pool.ntp.org",
-        "africa.pool.ntp.org",
-        "ntp1.inrim.it",
-        "ntp2.inrim.it"
-    };
+		"time.nist.gov",
+		"pool.ntp.org",
+		"europe.pool.ntp.org",
+		"asia.pool.ntp.org",
+		"oceania.pool.ntp.org",
+		"north-america.pool.ntp.org",
+		"south-america.pool.ntp.org",
+		"africa.pool.ntp.org",
+		"ntp1.inrim.it",
+		"ntp2.inrim.it"
+	};
 
 		public NetworkTime()
 		{

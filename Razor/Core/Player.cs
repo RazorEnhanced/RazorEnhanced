@@ -1,9 +1,7 @@
 using System;
-using System.IO;
-using System.Reflection;
-using System.Collections.Generic;
 using System.Collections.Concurrent;
-using Ultima;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Assistant
 {
@@ -203,7 +201,7 @@ namespace Assistant
 
 		internal List<BuffIcon> m_Buffs = new List<BuffIcon>();
 		internal List<BuffIcon> Buffs { get { return m_Buffs; } }
- 
+
 		internal override void SaveState(BinaryWriter writer)
 		{
 			base.SaveState(writer);
@@ -559,7 +557,7 @@ namespace Assistant
 
 			e.Position = Position;
 
-            if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors"))
+			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors"))
 			{
 				int x = Position.X, y = Position.Y;
 				Utility.Offset(e.Dir, ref x, ref y);
@@ -685,7 +683,7 @@ namespace Assistant
 						Targeting.CheckLastTargetRange(m);
 				}
 			}
-         
+
 
 			List<Item> items = new List<Item>(World.Items.Values);
 			foreach (Item item in items)
@@ -720,7 +718,7 @@ namespace Assistant
 				item.Contains.Clear();
 			}
 
-            if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
+			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
 
 			ClientCommunication.PostMapChange(cur);
@@ -826,18 +824,18 @@ namespace Assistant
 
 		internal void SendMessage(MsgLevel lvl, string text)
 		{
-            if (lvl >= (MsgLevel)RazorEnhanced.Settings.General.ReadInt("MessageLevel") && text.Length > 0)
+			if (lvl >= (MsgLevel)RazorEnhanced.Settings.General.ReadInt("MessageLevel") && text.Length > 0)
 			{
 				int hue;
 				switch (lvl)
 				{
 					case MsgLevel.Error:
 					case MsgLevel.Warning:
-                        hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
+						hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
 						break;
 
 					default:
-                        hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
+						hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
 						break;
 				}
 
@@ -852,8 +850,8 @@ namespace Assistant
 
 		internal uint CurrentGumpS, CurrentGumpI;
 		internal bool HasGump;
-        internal List<string> CurrentGumpStrings = new List<string>();
-        internal Queue<RazorEnhanced.Journal.JournalEntry> Journal = new Queue<RazorEnhanced.Journal.JournalEntry>();
+		internal List<string> CurrentGumpStrings = new List<string>();
+		internal Queue<RazorEnhanced.Journal.JournalEntry> Journal = new Queue<RazorEnhanced.Journal.JournalEntry>();
 		internal uint CurrentMenuS;
 		internal ushort CurrentMenuI;
 		internal bool HasMenu;
@@ -899,7 +897,7 @@ namespace Assistant
 			if (s != Serial.Zero)
 			{
 				Item free = null, pack = World.Player.Backpack;
-                if (s.IsItem && pack != null && RazorEnhanced.Settings.General.ReadBool("PotionEquip"))
+				if (s.IsItem && pack != null && RazorEnhanced.Settings.General.ReadBool("PotionEquip"))
 				{
 					Item i = World.FindItem(s);
 					if (i != null && i.IsPotion && i.ItemID != 3853) // dont unequip for exploison potions

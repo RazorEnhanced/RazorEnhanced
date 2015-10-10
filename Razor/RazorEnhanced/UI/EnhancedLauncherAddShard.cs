@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Text.RegularExpressions;
-using System.IO;
+using System.Windows.Forms;
 
 
 namespace RazorEnhanced.UI
@@ -18,7 +10,7 @@ namespace RazorEnhanced.UI
 		private const string m_Title = "Enhanced Launcher Add Shard";
 
 
-        public EnhancedLauncherAddShard()
+		public EnhancedLauncherAddShard()
 		{
 			InitializeComponent();
 			MaximizeBox = false;
@@ -42,7 +34,7 @@ namespace RazorEnhanced.UI
 				fail = true;
 
 			newList = shardAdd.Text.ToLower();
-            if (RazorEnhanced.Shard.Exists(newList))
+			if (RazorEnhanced.Shard.Exists(newList))
 				fail = true;
 
 			if (fail)
@@ -56,8 +48,8 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-                RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);            
-                this.Close();
+				RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);
+				this.Close();
 			}
 		}
 	}

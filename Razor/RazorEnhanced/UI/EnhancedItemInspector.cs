@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
 
 namespace RazorEnhanced.UI
 {
@@ -22,7 +14,7 @@ namespace RazorEnhanced.UI
 			// general
 			lSerial.Text = "0x" + itemTarg.Serial.Value.ToString("X8");
 			lItemID.Text = "0x" + itemTarg.ItemID.Value.ToString("X4");
-            lColor.Text = "0x" + itemTarg.Hue.ToString("X4");
+			lColor.Text = "0x" + itemTarg.Hue.ToString("X4");
 			lPosition.Text = itemTarg.Position.ToString();
 			// Details
 			Assistant.PlayerData tempdata;
@@ -57,25 +49,25 @@ namespace RazorEnhanced.UI
 			lLayer.Text = itemTarg.Layer.ToString();
 
 			// Attributes
-            if (itemTarg.ObjPropList.Content.Count > 0)
-            {
-                for (int i = 0; i < itemTarg.ObjPropList.Content.Count; i++)
-                {
-                    Assistant.ObjectPropertyList.OPLEntry ent = itemTarg.ObjPropList.Content[i];
-                    if (i == 0)
-                        if (ent.ToString() == null)
-                            lName.Text = itemTarg.Name.ToString();
-                        else
-                            lName.Text = ent.ToString();
-                    string content = ent.ToString();
-                    listBoxAttributes.Items.Add(content);
-                }
-            }
-            else
-            {
-                lName.Text = itemTarg.Name.ToString();
-                listBoxAttributes.Items.Add("No Props Readed!");
-            }           
+			if (itemTarg.ObjPropList.Content.Count > 0)
+			{
+				for (int i = 0; i < itemTarg.ObjPropList.Content.Count; i++)
+				{
+					Assistant.ObjectPropertyList.OPLEntry ent = itemTarg.ObjPropList.Content[i];
+					if (i == 0)
+						if (ent.ToString() == null)
+							lName.Text = itemTarg.Name.ToString();
+						else
+							lName.Text = ent.ToString();
+					string content = ent.ToString();
+					listBoxAttributes.Items.Add(content);
+				}
+			}
+			else
+			{
+				lName.Text = itemTarg.Name.ToString();
+				listBoxAttributes.Items.Add("No Props Readed!");
+			}
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)

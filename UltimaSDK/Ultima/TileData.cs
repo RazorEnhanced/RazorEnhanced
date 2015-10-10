@@ -460,7 +460,7 @@ namespace Ultima
 			m_Unk1 = System.Convert.ToInt32(split[10]);
 			m_Unk2 = System.Convert.ToByte(split[11]);
 			m_Unk3 = System.Convert.ToByte(split[12]);
-			
+
 			m_Flags = 0;
 			int temp = System.Convert.ToByte(split[13]);
 			if (temp != 0)
@@ -811,7 +811,7 @@ namespace Ultima
 								}
 							}
 						}
-						
+
 						long remaining = buffer.Length - currpos;
 						int structsize = useNeWTileDataFormat ? sizeof(NewItemTileDataMul) : sizeof(OldItemTileDataMul);
 						itemheader = new int[(remaining / ((structsize * 32) + 4))];
@@ -872,7 +872,7 @@ namespace Ultima
 							bin.Write(landheader[j++]); //header
 
 						bin.Write((int)m_LandData[i].Flags);
-						if(useNewTileDataFormat)
+						if (useNewTileDataFormat)
 							bin.Write((int)m_LandData[i].Unk1);
 
 						bin.Write(m_LandData[i].TextureID);
@@ -893,9 +893,9 @@ namespace Ultima
 							bin.Write(itemheader[j++]); // header
 
 						bin.Write((int)m_ItemData[i].Flags);
-						if(useNewTileDataFormat)
+						if (useNewTileDataFormat)
 							bin.Write((int)m_ItemData[i].Unk1);
-						   
+
 						bin.Write(m_ItemData[i].Weight);
 						bin.Write(m_ItemData[i].Quality);
 						bin.Write(m_ItemData[i].MiscData);

@@ -1,6 +1,5 @@
 ﻿#region Using Directives
 
-using System;
 using System.Collections.ObjectModel;
 
 #endregion Using Directives
@@ -8,39 +7,39 @@ using System.Collections.ObjectModel;
 
 namespace ScintillaNET.Configuration
 {
-    public class IndicatorConfigList : KeyedCollection<int, IndicatorConfig>
-    {
-        #region Fields
+	public class IndicatorConfigList : KeyedCollection<int, IndicatorConfig>
+	{
+		#region Fields
 
-        private bool? _inherit;
+		private bool? _inherit;
 
-        #endregion Fields
-
-
-        #region Methods
-
-        protected override int GetKeyForItem(IndicatorConfig item)
-        {
-            return item.Index;
-        }
-
-        #endregion Methods
+		#endregion Fields
 
 
-        #region Properties
+		#region Methods
 
-        public bool? Inherit
-        {
-            get
-            {
-                return _inherit;
-            }
-            set
-            {
-                _inherit = value;
-            }
-        }
+		protected override int GetKeyForItem(IndicatorConfig item)
+		{
+			return item.Index;
+		}
 
-        #endregion Properties
-    }
+		#endregion Methods
+
+
+		#region Properties
+
+		public bool? Inherit
+		{
+			get
+			{
+				return _inherit;
+			}
+			set
+			{
+				_inherit = value;
+			}
+		}
+
+		#endregion Properties
+	}
 }
