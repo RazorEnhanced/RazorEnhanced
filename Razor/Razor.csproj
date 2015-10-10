@@ -742,6 +742,7 @@
     <Content Include="RazorEnhanced\Resources\red.png" />
     <None Include="RazorEnhanced\Resources\RoundButton.png" />
     <None Include="RazorEnhanced\Resources\uod_logo.png" />
+    <None Include="RazorEnhanced\Resources\toolbar.png" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />

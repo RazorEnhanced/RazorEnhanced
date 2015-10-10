@@ -143,7 +143,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel1.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel1.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel1.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel1.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel1count.Text = "";
 			}
@@ -158,7 +158,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel2.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel2.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel2.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel2.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel2count.Text = "";
 			}
@@ -173,7 +173,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel3.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel3.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel3.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel3.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel3count.Text = "";
 			}
@@ -188,7 +188,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel4.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel4.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel4.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel4.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel4count.Text = "";
 			}
@@ -203,7 +203,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel5.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel5.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel5.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel5.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel5count.Text = "";
 			}
@@ -218,7 +218,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel6.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel6.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel6.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel6.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel6count.Text = "";
 			}
@@ -233,7 +233,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel7.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel7.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel7.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel7.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel7count.Text = "";
 			}
@@ -248,7 +248,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel8.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel8.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel8.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel8.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel8count.Text = "";
 			}
@@ -263,7 +263,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel9.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel9.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel9.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel9.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel9count.Text = "";
 			}
@@ -278,7 +278,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel10.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel10.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel10.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel10.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel10count.Text = "";
 			}
@@ -293,7 +293,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel11.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel11.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel11.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel11.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel11count.Text = "";
 			}
@@ -308,7 +308,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel12.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel12.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel12.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel12.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel12count.Text = "";
 			}
@@ -323,7 +323,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel13.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel13.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel13.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel13.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel13count.Text = "";
 			}
@@ -338,7 +338,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Engine.MainWindow.ToolBarWindows.panel14.BackgroundImage = null;
-				Assistant.Engine.MainWindow.ToolBarWindows.panel14.BackColor = Color.DarkGray;
+				Assistant.Engine.MainWindow.ToolBarWindows.panel14.BackColor = Color.Transparent;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel14.Enabled = false;
 				Assistant.Engine.MainWindow.ToolBarWindows.panel14count.Text = "";
 			}
