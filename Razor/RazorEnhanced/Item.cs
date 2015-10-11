@@ -683,7 +683,7 @@ namespace RazorEnhanced
 
 		}
 
-		public static void UseItemByID(int itemid, int color)
+		public static bool UseItemByID(int itemid, int color)
 		{
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter();
@@ -700,11 +700,11 @@ namespace RazorEnhanced
 				if (!found.IsInBank && found.RootContainer == World.Player)
 				{
 					RazorEnhanced.Items.UseItem(found);
-					break;
+                    return true;
 				}
 			}
 
-			return;
+			return false;
 		}
 
 		// Single Click

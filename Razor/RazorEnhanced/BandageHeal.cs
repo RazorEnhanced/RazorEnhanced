@@ -283,21 +283,41 @@ namespace RazorEnhanced
 						return 0;
 				}
 
-				int serialbende = FindBandage();
-				if (serialbende != 0)        // Cerca le bende
-				{
-					if (Targeting.HasTarget)
-					{
-						Target.Cancel();
-						Thread.Sleep(100);
-					}
+                if (Targeting.HasTarget)
+                {
+                    Target.Cancel();
+                    Thread.Sleep(100);
+                }
 
-					Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)serialbende));
+                bool bandagefound = false;
+                int bandageamount = 0;
+                if (RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox"))         // Se cerco bende custom
+                {
+                    bandagefound = RazorEnhanced.Items.UseItemByID(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
+                    bandageamount = RazorEnhanced.Items.BackpackCount(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
+                    if (bandageamount < 11)
+                    {
+                        Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+                        AddLog("Warning: Low bandage: " + bandageamount + " left");
+                    }
+                }
+                else
+                {
+                    bandagefound = RazorEnhanced.Items.UseItemByID(0x0E21, -1);
+                    bandageamount = RazorEnhanced.Items.BackpackCount(0x0E21, -1);
+                    if (bandageamount < 11)
+                    {
+                        Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+                        AddLog("Warning: Low bandage: " + bandageamount + " left");
+                    }
+                }
+
+				if (bandagefound)        // Cerca le bende
+				{
 					AddLog("Using bandage!");
 					Target.WaitForTarget(1000);
 					AddLog("Targetting: " + target.Serial.ToString());
 					Assistant.Targeting.Target(target);
-
 
 					if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
 					{
@@ -360,41 +380,6 @@ namespace RazorEnhanced
 					Player.HeadMessage(10, "Bandage not found");
 					AddLog("Bandage not found");
 					Thread.Sleep(5000);
-				}
-			}
-			return 0;
-		}
-
-		internal static int FindBandage()
-		{
-			if (RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox"))         // Se cerco bende custom
-			{
-				foreach (Assistant.Item iteminzaino in Assistant.World.Player.Backpack.Contains)
-				{
-					if (iteminzaino.ItemID == RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox") && iteminzaino.Hue == RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"))
-					{
-						if (iteminzaino.Amount < 11)
-						{
-							Player.HeadMessage(10, "Warning: Low bandage: " + iteminzaino.Amount + " left");
-							AddLog("Warning: Low bandage: " + iteminzaino.Amount + " left");
-						}
-						return iteminzaino.Serial;
-					}
-				}
-			}
-			else
-			{
-				foreach (Assistant.Item iteminzaino in Assistant.World.Player.Backpack.Contains)
-				{
-					if (iteminzaino.ItemID == 0x0E21)
-					{
-						if (iteminzaino.Amount < 11)
-						{
-							Player.HeadMessage(10, "Warning: Low bandage: " + iteminzaino.Amount + " left");
-							AddLog("Warning: Low bandage: " + iteminzaino.Amount + " left");
-						}
-						return iteminzaino.Serial;
-					}
 				}
 			}
 			return 0;
