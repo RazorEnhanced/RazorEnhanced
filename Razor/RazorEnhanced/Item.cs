@@ -697,7 +697,7 @@ namespace RazorEnhanced
 
 			foreach (Item found in containeritem)
 			{
-				if (!found.IsInBank)
+				if (!found.IsInBank && found.RootContainer == World.Player)
 				{
 					RazorEnhanced.Items.UseItem(found);
 					break;
