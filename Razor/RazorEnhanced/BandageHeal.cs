@@ -295,7 +295,12 @@ namespace RazorEnhanced
                 {
                     bandagefound = RazorEnhanced.Items.UseItemByID(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
                     bandageamount = RazorEnhanced.Items.BackpackCount(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
-                    if (bandageamount < 11)
+                    if (bandageamount == 0)
+                    {
+                        Player.HeadMessage(10, "Bandage not found");
+                        AddLog("Bandage not found");
+                    }
+                    else if (bandageamount < 11 && bandageamount > 0)
                     {
                         Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
                         AddLog("Warning: Low bandage: " + bandageamount + " left");
@@ -305,7 +310,12 @@ namespace RazorEnhanced
                 {
                     bandagefound = RazorEnhanced.Items.UseItemByID(0x0E21, -1);
                     bandageamount = RazorEnhanced.Items.BackpackCount(0x0E21, -1);
-                    if (bandageamount < 11)
+                    if (bandageamount == 0)
+                    {
+                        Player.HeadMessage(10, "Bandage not found");
+                        AddLog("Bandage not found");
+                    }
+                    else if (bandageamount < 11 && bandageamount > 0)
                     {
                         Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
                         AddLog("Warning: Low bandage: " + bandageamount + " left");
@@ -377,8 +387,6 @@ namespace RazorEnhanced
 				}
 				else        // Fine bende
 				{
-					Player.HeadMessage(10, "Bandage not found");
-					AddLog("Bandage not found");
 					Thread.Sleep(5000);
 				}
 			}
