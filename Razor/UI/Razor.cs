@@ -9130,8 +9130,9 @@ namespace Assistant
 		// ------------------ SELL AGENT --------------------------
 		private void sellListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.SellAgent.SellBag = RazorEnhanced.Settings.SellAgent.BagRead(sellListSelect.Text);
-			RazorEnhanced.SellAgent.RefreshItems();
+            RazorEnhanced.SellAgent.SellBag = RazorEnhanced.Settings.SellAgent.BagRead(sellListSelect.Text);
+            RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
+            RazorEnhanced.SellAgent.RefreshItems();
 			if (sellListSelect.Text != "")
 				RazorEnhanced.SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
 		}
