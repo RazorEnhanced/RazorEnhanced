@@ -859,7 +859,16 @@ namespace Assistant
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
 
-			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+            if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+                Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+
+            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
 
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
