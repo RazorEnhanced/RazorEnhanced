@@ -296,9 +296,6 @@ namespace RazorEnhanced
 			RazorEnhanced.Restock.AddLog("- Refresh Source Container");
 			Items.UseItem(sourceBag);
 			Thread.Sleep(mseconds);
-			RazorEnhanced.Restock.AddLog("- Refresh Destination Container");
-			Items.UseItem(destinationBag);
-			Thread.Sleep(mseconds);
 
 			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
 			{

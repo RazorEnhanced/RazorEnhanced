@@ -303,10 +303,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
 			Items.UseItem(sourceBag);
 			Thread.Sleep(mseconds);
-			RazorEnhanced.Organizer.AddLog("- Refresh Destination Container");
-			Items.UseItem(destinationBag);
-			Thread.Sleep(mseconds);
-
+            
 			// Inizia scansione 
 			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
 			{
