@@ -2206,7 +2206,56 @@ namespace Assistant
 						}
 						break;
 					}
-				case 0x14: // context menu
+                case 0x10: // Equip Info
+                    {
+                        uint attrib = 0;
+                        if (World.Player != null)
+                        {
+                            uint serial = p.ReadUInt32();
+                            uint info = p.ReadUInt32();
+                            uint owner = p.ReadUInt32();
+                            if (owner == 0xFFFFFFFD)
+                            {
+                                ushort nameLengh = p.ReadUInt16();
+                                string ownername = p.ReadString(nameLengh);
+                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name));          // Journal buffer
+                                if (World.Player.Journal.Count > 100)
+                                    World.Player.Journal.Dequeue();
+
+                                attrib = p.ReadUInt32();
+                            }
+                            else
+                                attrib = owner;
+
+                            if (attrib != 0xFFFFFFFC)
+                            {
+                                while (attrib != 0xFFFFFFFF)
+                                {
+                                    try
+                                    {
+                                        ushort charge = p.ReadUInt16();
+                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name));          // Journal buffer
+                                        if (World.Player.Journal.Count > 100)
+                                            World.Player.Journal.Dequeue();
+
+                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name));          // Journal buffer
+                                        if (World.Player.Journal.Count > 100)
+                                            World.Player.Journal.Dequeue();
+                                        attrib = p.ReadUInt32();
+                                    }
+                                    catch { }
+                                }
+                            }
+                            else
+                            {
+                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name));          // Journal buffer
+                                if (World.Player.Journal.Count > 100)
+                                    World.Player.Journal.Dequeue();
+                            }
+                        }
+                        break;
+                    }
+                case 0x14: // context menu
 					{
 						p.ReadInt16(); // 0x01
 						UOEntity ent = null;
