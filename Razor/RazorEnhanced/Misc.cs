@@ -48,7 +48,12 @@ namespace RazorEnhanced
 			if (Assistant.World.Player != null)
 				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
 		}
-		public static void Beep()
+        public static void SendMessage(double msg)
+        {
+            if (Assistant.World.Player != null)
+                Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
+        }
+        public static void Beep()
 		{
 			SystemSounds.Beep.Play();
 		}
