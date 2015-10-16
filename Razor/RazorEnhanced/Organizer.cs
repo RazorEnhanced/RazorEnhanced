@@ -408,7 +408,7 @@ namespace RazorEnhanced
 		public static void FStart()
 		{
 			if (Assistant.Engine.MainWindow.OrganizerExecute.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerExecute.PerformClick()));
+				Assistant.Engine.MainWindow.OrganizerStartExec();
 			else
 				Misc.SendMessage("Script Error: Organizer.FStart: Organizer already running");
 		}
@@ -416,8 +416,8 @@ namespace RazorEnhanced
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-				Assistant.Engine.MainWindow.OrganizerStop.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerStop.PerformClick()));
-			else
+                Assistant.Engine.MainWindow.OrganizerStopExec();
+            else
 				Misc.SendMessage("Script Error: Organizer.FStart: Organizer not running");
 		}
 

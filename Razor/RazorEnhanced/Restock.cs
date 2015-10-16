@@ -395,16 +395,16 @@ namespace RazorEnhanced
 		public static void FStart()
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
-				Assistant.Engine.MainWindow.RestockExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockExecute.PerformClick()));
-			else
+				Assistant.Engine.MainWindow.RestockStartExec();
+            else
 				Misc.SendMessage("Script Error: Restock.FStart: Restock already running");
 		}
 
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
-				Assistant.Engine.MainWindow.RestockExecute.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockExecute.PerformClick()));
-			else
+                Assistant.Engine.MainWindow.RestockStopExec();
+            else
 				Misc.SendMessage("Script Error: Restock.FStart: Restock not running");
 		}
 

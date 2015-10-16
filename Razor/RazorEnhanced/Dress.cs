@@ -961,32 +961,33 @@ namespace RazorEnhanced
 
 		public static void DressFStart()
 		{
-			if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressExecuteButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressExecuteButton.PerformClick()));
-			else
-				Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
+            if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStart();
+            else
+                Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
 		}
 		public static void UnDressFStart()
 		{
-			if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
-				Assistant.Engine.MainWindow.UnDressExecuteButton.Invoke(new Action(() => Assistant.Engine.MainWindow.UnDressExecuteButton.PerformClick()));
-			else
-				Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
+
+            if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
+                Assistant.Engine.MainWindow.UndressStart();
+            else
+                Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
 		}
 		public static void DressFStop()
 		{
 			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStopButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressStopButton.PerformClick()));
-			else
+                Assistant.Engine.MainWindow.DressStop();
+            else
 				Misc.SendMessage("Script Error: Dress.DressFStop: Dress not running");
 		}
 
 		public static void UnDressFStop()
 		{
-			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-				Assistant.Engine.MainWindow.DressStopButton.Invoke(new Action(() => Assistant.Engine.MainWindow.DressStopButton.PerformClick()));
-			else
-				Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
+            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+                Assistant.Engine.MainWindow.DressStop();
+            else
+                Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
 		}
 
 		public static void ChangeList(string nomelista)
