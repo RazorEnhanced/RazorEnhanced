@@ -510,7 +510,16 @@ namespace Assistant
 		private Label label45;
 
 		private bool m_CanClose = true;
-		private System.Drawing.Point windowspt;
+        private GroupBox groupBox32;
+        private RazorTextBox remountedelay;
+        private RazorTextBox remountdelay;
+        private Label label48;
+        private Label label40;
+        private Label remountseriallabel;
+        private Label label47;
+        private RazorButton remountsetbutton;
+        private RazorCheckBox remountcheckbox;
+        private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
 		private static extern IntPtr GetSystemMenu(IntPtr wnd, bool reset);
@@ -630,9 +639,13 @@ namespace Assistant
 		internal Label AutoCarverBladeLabel { get { return autocarverbladeLabel; } }
 		internal Label BoneBladeLabel { get { return bonebladeLabel; } }
 		internal ListView MobFilterlistView { get { return mobfilterlistView; } }
+        internal RazorTextBox RemountDelay { get { return remountdelay; } }
+        internal RazorTextBox RemountEDelay { get { return remountedelay; } }
+        internal Label RemountSerialLabel { get { return remountseriallabel; } }
+        internal RazorCheckBox RemountCheckbox { get { return remountcheckbox; } }
 
-		// GumpInspector Flag
-		internal bool GumpInspectorEnable = false;
+        // GumpInspector Flag
+        internal bool GumpInspectorEnable = false;
 
 		// Hotkey 
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -786,6 +799,15 @@ namespace Assistant
             this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
             this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
             this.enhancedFilterTab = new System.Windows.Forms.TabPage();
+            this.groupBox32 = new System.Windows.Forms.GroupBox();
+            this.remountedelay = new RazorEnhanced.UI.RazorTextBox();
+            this.remountdelay = new RazorEnhanced.UI.RazorTextBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.remountseriallabel = new System.Windows.Forms.Label();
+            this.label47 = new System.Windows.Forms.Label();
+            this.remountsetbutton = new RazorEnhanced.UI.RazorButton();
+            this.remountcheckbox = new RazorEnhanced.UI.RazorCheckBox();
             this.groupBox24 = new System.Windows.Forms.GroupBox();
             this.blockpartyinviteCheckBox = new RazorEnhanced.UI.RazorCheckBox();
             this.blocktraderequestCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1193,6 +1215,7 @@ namespace Assistant
             this.groupBox1.SuspendLayout();
             this.moreOptTab.SuspendLayout();
             this.enhancedFilterTab.SuspendLayout();
+            this.groupBox32.SuspendLayout();
             this.groupBox24.SuspendLayout();
             this.groupBox23.SuspendLayout();
             this.groupBox10.SuspendLayout();
@@ -2184,6 +2207,7 @@ namespace Assistant
             // 
             // enhancedFilterTab
             // 
+            this.enhancedFilterTab.Controls.Add(this.groupBox32);
             this.enhancedFilterTab.Controls.Add(this.groupBox24);
             this.enhancedFilterTab.Controls.Add(this.groupBox23);
             this.enhancedFilterTab.Controls.Add(this.groupBox10);
@@ -2194,6 +2218,109 @@ namespace Assistant
             this.enhancedFilterTab.TabIndex = 10;
             this.enhancedFilterTab.Text = "Enhanced Filters";
             // 
+            // groupBox32
+            // 
+            this.groupBox32.Controls.Add(this.remountedelay);
+            this.groupBox32.Controls.Add(this.remountdelay);
+            this.groupBox32.Controls.Add(this.label48);
+            this.groupBox32.Controls.Add(this.label40);
+            this.groupBox32.Controls.Add(this.remountseriallabel);
+            this.groupBox32.Controls.Add(this.label47);
+            this.groupBox32.Controls.Add(this.remountsetbutton);
+            this.groupBox32.Controls.Add(this.remountcheckbox);
+            this.groupBox32.Location = new System.Drawing.Point(8, 159);
+            this.groupBox32.Name = "groupBox32";
+            this.groupBox32.Size = new System.Drawing.Size(165, 118);
+            this.groupBox32.TabIndex = 68;
+            this.groupBox32.TabStop = false;
+            this.groupBox32.Text = "Auto Remount";
+            // 
+            // remountedelay
+            // 
+            this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.remountedelay.BackColor = System.Drawing.Color.White;
+            this.remountedelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.remountedelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.remountedelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.remountedelay.Location = new System.Drawing.Point(93, 89);
+            this.remountedelay.Name = "remountedelay";
+            this.remountedelay.Size = new System.Drawing.Size(58, 20);
+            this.remountedelay.TabIndex = 68;
+            this.remountedelay.TextChanged += new System.EventHandler(this.remountedelay_TextChanged);
+            // 
+            // remountdelay
+            // 
+            this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.remountdelay.BackColor = System.Drawing.Color.White;
+            this.remountdelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.remountdelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+            this.remountdelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+            this.remountdelay.Location = new System.Drawing.Point(93, 64);
+            this.remountdelay.Name = "remountdelay";
+            this.remountdelay.Size = new System.Drawing.Size(58, 20);
+            this.remountdelay.TabIndex = 67;
+            this.remountdelay.TextChanged += new System.EventHandler(this.remountdelay_TextChanged);
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.Location = new System.Drawing.Point(6, 91);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(79, 13);
+            this.label48.TabIndex = 66;
+            this.label48.Text = "Ethereal Delay:";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(6, 70);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(70, 13);
+            this.label40.TabIndex = 65;
+            this.label40.Text = "Mount Delay:";
+            // 
+            // remountseriallabel
+            // 
+            this.remountseriallabel.AutoSize = true;
+            this.remountseriallabel.Location = new System.Drawing.Point(90, 48);
+            this.remountseriallabel.Name = "remountseriallabel";
+            this.remountseriallabel.Size = new System.Drawing.Size(66, 13);
+            this.remountseriallabel.TabIndex = 64;
+            this.remountseriallabel.Text = "0x00000000";
+            // 
+            // label47
+            // 
+            this.label47.AutoSize = true;
+            this.label47.Location = new System.Drawing.Point(6, 48);
+            this.label47.Name = "label47";
+            this.label47.Size = new System.Drawing.Size(69, 13);
+            this.label47.TabIndex = 63;
+            this.label47.Text = "Mount Serial:";
+            // 
+            // remountsetbutton
+            // 
+            this.remountsetbutton.ColorTable = office2010BlueTheme1;
+            this.remountsetbutton.Location = new System.Drawing.Point(81, 19);
+            this.remountsetbutton.Name = "remountsetbutton";
+            this.remountsetbutton.Size = new System.Drawing.Size(70, 19);
+            this.remountsetbutton.TabIndex = 62;
+            this.remountsetbutton.Text = "Set Mount";
+            this.remountsetbutton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+            this.remountsetbutton.UseVisualStyleBackColor = true;
+            // 
+            // remountcheckbox
+            // 
+            this.remountcheckbox.Location = new System.Drawing.Point(6, 19);
+            this.remountcheckbox.Name = "remountcheckbox";
+            this.remountcheckbox.Size = new System.Drawing.Size(62, 22);
+            this.remountcheckbox.TabIndex = 61;
+            this.remountcheckbox.Text = "Enable";
+            this.remountcheckbox.CheckedChanged += new System.EventHandler(this.remountcheckbox_CheckedChanged);
+            // 
             // groupBox24
             // 
             this.groupBox24.Controls.Add(this.blockpartyinviteCheckBox);
@@ -2203,7 +2330,7 @@ namespace Assistant
             this.groupBox24.Controls.Add(this.showstaticfieldCheckBox);
             this.groupBox24.Location = new System.Drawing.Point(8, 14);
             this.groupBox24.Name = "groupBox24";
-            this.groupBox24.Size = new System.Drawing.Size(153, 139);
+            this.groupBox24.Size = new System.Drawing.Size(165, 139);
             this.groupBox24.TabIndex = 67;
             this.groupBox24.TabStop = false;
             this.groupBox24.Text = "Misc";
@@ -2371,7 +2498,7 @@ namespace Assistant
             this.autocarverrazorButton.ColorTable = office2010BlueTheme1;
             this.autocarverrazorButton.Location = new System.Drawing.Point(74, 18);
             this.autocarverrazorButton.Name = "autocarverrazorButton";
-            this.autocarverrazorButton.Size = new System.Drawing.Size(75, 23);
+            this.autocarverrazorButton.Size = new System.Drawing.Size(75, 19);
             this.autocarverrazorButton.TabIndex = 62;
             this.autocarverrazorButton.Text = "Set Blade";
             this.autocarverrazorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -2421,9 +2548,9 @@ namespace Assistant
             // boneCutterrazorButton
             // 
             this.boneCutterrazorButton.ColorTable = office2010BlueTheme1;
-            this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 18);
+            this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 19);
             this.boneCutterrazorButton.Name = "boneCutterrazorButton";
-            this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 23);
+            this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 19);
             this.boneCutterrazorButton.TabIndex = 62;
             this.boneCutterrazorButton.Text = "Set Blade";
             this.boneCutterrazorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -6465,6 +6592,8 @@ namespace Assistant
             this.moreOptTab.ResumeLayout(false);
             this.moreOptTab.PerformLayout();
             this.enhancedFilterTab.ResumeLayout(false);
+            this.groupBox32.ResumeLayout(false);
+            this.groupBox32.PerformLayout();
             this.groupBox24.ResumeLayout(false);
             this.groupBox23.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
@@ -6642,8 +6771,8 @@ namespace Assistant
 			// ------------------ ENHANCED FILTERS --------------------
 			RazorEnhanced.Filters.LoadSettings();
 
-			// ------------------ ENHANCED TOOLBAR --------------------
-			RazorEnhanced.ToolBar.LoadSettings();
+            // ------------------ ENHANCED TOOLBAR --------------------
+            RazorEnhanced.ToolBar.LoadSettings();
 
 			// ------------------ TARGETS --------------------
 			RazorEnhanced.TargetGUI.RefreshTarget();
@@ -6749,7 +6878,7 @@ namespace Assistant
 			txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
 			msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
 
-
+            
 			// ------------------ ENHANCED MAP  --------------------
 			MapUO.MapNetwork.Init();
 			mapOpenOnLoginCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapOpenOnLoginCheckBox");
@@ -11077,5 +11206,32 @@ namespace Assistant
 			Assistant.MapUO.MapNetwork.Disconnect();
 		}
 
+        private void remountdelay_TextChanged(object sender, EventArgs e)
+        {
+            if (remountdelay.Focused)
+            {
+                int delay = 100;
+                Int32.TryParse(Assistant.Engine.MainWindow.remountdelay.Text, out delay);
+                RazorEnhanced.Filters.AutoRemountDelay = delay;
+                RazorEnhanced.Settings.General.WriteInt("MountDelay", delay);
+            }
+        }
+
+        private void remountedelay_TextChanged(object sender, EventArgs e)
+        {
+            if (remountedelay.Focused)
+            {
+                int delay = 100;
+                Int32.TryParse(Assistant.Engine.MainWindow.remountedelay.Text, out delay);
+                RazorEnhanced.Filters.AutoRemountEDelay = delay;
+                RazorEnhanced.Settings.General.WriteInt("EMountDelay", delay);
+            }
+        }
+
+        private void remountcheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (remountcheckbox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("RemountCheckbox", remountcheckbox.Checked);
+        }
     }
 }

@@ -211,10 +211,65 @@ namespace RazorEnhanced
 			exit = AutoCarverEngine(corpseFilter);
 		}
 
-		//////////////// AUTOCARVER STOP ////////////////
+        //////////////// AUTOCARVER STOP ////////////////
 
-		//////////////// Load settings ////////////////
-		internal static void LoadSettings()
+        //////////////// AUTOREMOUNT START ////////////////
+
+        internal static int AutoRemountDelay
+        {
+            get
+            {
+                int delay = 100;
+                Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out delay)));
+                return delay;
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountDelay.Text = value.ToString()));
+            }
+        }
+
+        internal static int AutoRemountEDelay
+        {
+            get
+            {
+                int delay = 100;
+                Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out delay)));
+                return delay;
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountEDelay.Text = value.ToString()));
+            }
+        }
+
+        internal static int AutoRemountSerial
+        {
+            get
+            {
+                int serial = 0;
+                try
+                {
+                    serial = Convert.ToInt32(Assistant.Engine.MainWindow.RemountSerialLabel.Text, 16);
+                }
+                catch
+                { }
+                return serial;
+            }
+
+            set
+            {
+                Assistant.Engine.MainWindow.RemountSerialLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountSerialLabel.Text = "0x" + value.ToString("X8")));
+            }
+        }
+
+        //////////////// AUTOREMOUNT STOP ////////////////
+
+
+        //////////////// Load settings ////////////////
+        internal static void LoadSettings()
 		{
 			Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox");
 			Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("FlagsHighlightCheckBox");
@@ -226,8 +281,12 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BoneCutterCheckBox");
 			Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("AutoCarverBladeLabel").ToString("X8");
 			Assistant.Engine.MainWindow.BoneBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("BoneBladeLabel").ToString("X8");
-
-			RefreshLists();
+            Assistant.Engine.MainWindow.RemountCheckbox.Checked = RazorEnhanced.Settings.General.ReadBool("RemountCheckbox");
+            AutoRemountDelay = RazorEnhanced.Settings.General.ReadInt("MountDelay");
+            AutoRemountEDelay = RazorEnhanced.Settings.General.ReadInt("EMountDelay");
+            AutoRemountSerial = RazorEnhanced.Settings.General.ReadInt("MountSerial");
+            
+            RefreshLists();
 		}
 	}
 }

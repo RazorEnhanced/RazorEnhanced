@@ -12,7 +12,7 @@ namespace RazorEnhanced
 {
 	internal class Settings
 	{
-		private static int SettingVersion = 2;     // Versione progressiva della struttura dei salvataggi per successive modifiche
+		private static int SettingVersion = 4;     // Versione progressiva della struttura dei salvataggi per successive modifiche
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
 		private static DataSet m_Dataset;
@@ -333,7 +333,15 @@ namespace RazorEnhanced
 				hotkeyrow.ItemArray = new object[] { "Pet Commands", "All Stop", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
-				hotkeyrow = hotkey.NewRow();
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Mount", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "Pet Commands", "Dismount", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Agents", "Autoloot ON/OFF", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
@@ -725,7 +733,11 @@ namespace RazorEnhanced
 				hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Curse", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
-				hotkeyrow = hotkey.NewRow();
+                hotkeyrow = hotkey.NewRow();
+                hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Fire Field", Keys.None, true };
+                hotkey.Rows.Add(hotkeyrow);
+
+                hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "SpellsMagery", "Greater Heal", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
@@ -1351,9 +1363,15 @@ namespace RazorEnhanced
 				// Setting Version
 				general.Columns.Add("SettingVersion", typeof(int));
 
+                // Parametri AutoRemount
+                general.Columns.Add("MountSerial", typeof(int));
+                general.Columns.Add("MountDelay", typeof(int));
+                general.Columns.Add("EMountDelay", typeof(int));
+                general.Columns.Add("RemountCheckbox", typeof(bool));
 
-				// Composizione Parematri base primo avvio
-				object[] generalstartparam = new object[] { 
+
+                // Composizione Parematri base primo avvio
+                object[] generalstartparam = new object[] { 
                     // Parametri primo avvio per tab agent Bandage heal
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false,
 
@@ -1394,8 +1412,11 @@ namespace RazorEnhanced
                      false, false, true, false, false, true, true, true, true, true, false, "--", false, 0, "0.0.0.0", "0", "", "",
                      
                      // Versione Corrente
-                     SettingVersion
-				};
+                     SettingVersion,
+
+                     // Versione Corrente
+                     0, 1000, 1000, false
+                };
 
 				DataRow generalsettings = general.NewRow();
 				generalsettings.ItemArray = generalstartparam;
@@ -2271,7 +2292,8 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
-		}
+
+        }
 		// ------------- SELL AGENT END-----------------
 
 
@@ -3898,6 +3920,8 @@ namespace RazorEnhanced
 			}
 		}
 
+        // Funzione per cambiare la struttura dei save in caso di modifiche senza dover cancellare e rifare da 0
+
 		internal static void UpdateVersion(int version)
 		{
 			if (version == 1)  // Passaggi dalla version 1 alle 2
@@ -4018,6 +4042,51 @@ namespace RazorEnhanced
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
 				General.WriteInt("SettingVersion", 2);
 			}
-		}
+
+            if (version == 2)
+            {
+                DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "SpellsMagery";
+                newRow["Name"] = "Fire Field";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+                Save();
+
+                m_Dataset.Tables["GENERAL"].Columns.Add("MountSerial", typeof(int));
+                m_Dataset.Tables["GENERAL"].Columns.Add("MountDelay", typeof(int));
+                m_Dataset.Tables["GENERAL"].Columns.Add("EMountDelay", typeof(int));
+                General.WriteInt("MountSerial", 0);
+                General.WriteInt("MountDelay", 1000);
+                General.WriteInt("EMountDelay", 1000);
+
+                General.WriteInt("SettingVersion", 3);
+            }
+
+            if (version == 3)
+            {
+                DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "Pet Commands";
+                newRow["Name"] = "Mount";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+                Save();
+
+                newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+                newRow["Group"] = "Pet Commands";
+                newRow["Name"] = "Dismount";
+                newRow["Key"] = Keys.None;
+                newRow["Pass"] = true;
+                m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+                Save();
+
+                m_Dataset.Tables["GENERAL"].Columns.Add("RemountCheckbox", typeof(bool));
+                General.WriteBool("RemountCheckbox", false);
+
+                General.WriteInt("SettingVersion", 4);
+            }
+        }
+
 	}
 }

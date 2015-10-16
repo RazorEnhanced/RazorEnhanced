@@ -147,8 +147,8 @@ namespace RazorEnhanced
 						ProcessShowName(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 					case "Pet Commands":
-						RazorEnhanced.Pets.Command(RazorEnhanced.Settings.HotKey.FindString(k));
-						break;
+                        ProcessPet(RazorEnhanced.Settings.HotKey.FindString(k));
+                        break;
 					case "Agents":
 						ProcessAgents(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
@@ -366,7 +366,24 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static void ProcessAgents(string function)
+        private static void ProcessPet(string function)
+        {
+            if (function == "Mount")
+            {
+                if (Filters.AutoRemountSerial!=0)
+                    Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
+            }
+            else if (function == "Dismount")
+            {
+                Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
+            }
+            else
+            {
+                RazorEnhanced.Pets.Command(function);
+            }     
+        }
+
+        private static void ProcessAgents(string function)
 		{
 			switch (function)
 			{
