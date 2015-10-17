@@ -989,7 +989,7 @@ namespace Assistant.Macros
 			short z = (short)World.Player.Position.Z;
 			try
 			{
-				Ultima.HuedTile tile = Map.GetTileNear(World.Player.Map, x, y, z);
+				Ultima.HuedTile tile = Facet.GetTileNear(World.Player.Map, x, y, z);
 				Targeting.Target(new Point3D(x, y, tile.Z), (ushort)tile.ID);
 			}
 			catch (Exception e)

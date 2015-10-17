@@ -2,152 +2,153 @@ using System;
 using System.Linq;
 using System.Text;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	internal class MapNetworkIn
 	{
-		public class UserData
+		internal class UserData
 		{
-			private string m_nome;
-			public string Nome
+			private string m_Name;
+			public string Name
 			{
-				get { return m_nome; }
-				set { m_nome = value; }
+				get { return m_Name; }
+				set { m_Name = value; }
 			}
 
-			private short m_x;
+			private short m_X;
 			public short X
 			{
-				get { return m_x; }
-				set { m_x = value; }
+				get { return m_X; }
+				set { m_X = value; }
 			}
 
-			private short m_y;
+			private short m_Y;
 			public short Y
 			{
-				get { return m_y; }
-				set { m_y = value; }
+				get { return m_Y; }
+				set { m_Y = value; }
 			}
 
-			private short m_facet;
+			private short m_Facet;
 			public short Facet
 			{
-				get { return m_facet; }
-				set { m_facet = value; }
+				get { return m_Facet; }
+				set { m_Facet = value; }
 			}
 
-			private short m_deathPointX;
+			private short m_DeathPointX;
 			public short DeathPointX
 			{
-				get { return m_deathPointX; }
-				set { m_deathPointX = value; }
+				get { return m_DeathPointX; }
+				set { m_DeathPointX = value; }
 			}
 
-			private short m_deathPointY;
+			private short m_DeathPointY;
 			public short DeathPointY
 			{
-				get { return m_deathPointY; }
-				set { m_deathPointY = value; }
+				get { return m_DeathPointY; }
+				set { m_DeathPointY = value; }
 			}
 
-			private short m_deathPointFacet;
+			private short m_DeathPointFacet;
 			public short DeathPointFacet
 			{
-				get { return m_deathPointFacet; }
-				set { m_deathPointFacet = value; }
+				get { return m_DeathPointFacet; }
+				set { m_DeathPointFacet = value; }
 			}
 
-			private short m_panicPointX;
+			private short m_PanicPointX;
 			public short PanicPointX
 			{
-				get { return m_panicPointX; }
-				set { m_panicPointX = value; }
+				get { return m_PanicPointX; }
+				set { m_PanicPointX = value; }
 			}
 
-			private short m_panicPointY;
+			private short m_PanicPointY;
 			public short PanicPointY
 			{
-				get { return m_panicPointY; }
-				set { m_panicPointY = value; }
+				get { return m_PanicPointY; }
+				set { m_PanicPointY = value; }
 			}
 
-			private short m_panicPointFacet;
+			private short m_PanicPointFacet;
 			public short PanicPointFacet
 			{
-				get { return m_panicPointFacet; }
-				set { m_panicPointFacet = value; }
+				get { return m_PanicPointFacet; }
+				set { m_PanicPointFacet = value; }
 			}
 
-			private short m_hits;
+			private short m_Hits;
 			public short Hits
 			{
-				get { return m_hits; }
-				set { m_hits = value; }
+				get { return m_Hits; }
+				set { m_Hits = value; }
 			}
 
-			private short m_hitsmax;
+			private short m_Hitsmax;
 			public short HitsMax
 			{
-				get { return m_hitsmax; }
-				set { m_hitsmax = value; }
+				get { return m_Hitsmax; }
+				set { m_Hitsmax = value; }
 			}
 
-			private short m_stamina;
+			private short m_Stamina;
 			public short Stamina
 			{
-				get { return m_stamina; }
-				set { m_stamina = value; }
+				get { return m_Stamina; }
+				set { m_Stamina = value; }
 			}
 
-			private short m_staminamax;
+			private short m_Staminamax;
 			public short StaminaMax
 			{
-				get { return m_staminamax; }
-				set { m_staminamax = value; }
+				get { return m_Staminamax; }
+				set { m_Staminamax = value; }
 			}
 
-			private short m_mana;
+			private short m_Mana;
 			public short Mana
 			{
-				get { return m_mana; }
-				set { m_mana = value; }
+				get { return m_Mana; }
+				set { m_Mana = value; }
 			}
 
-			private short m_manamax;
+			private short m_ManaMax;
 			public short ManaMax
 			{
-				get { return m_manamax; }
-				set { m_manamax = value; }
+				get { return m_ManaMax; }
+				set { m_ManaMax = value; }
 			}
 
-			private short m_flag;
+			private short m_Flags;
 			public short Flag
 			{
-				get { return m_flag; }
-				set { m_flag = value; }
-			}
-			public UserData(string nome, short x, short y, short facet, short deathpointx, short deathpointy, short deathpointfacet, short panicpointx, short panicpointy, short panicpointfacet, short hits, short hitsmax, short stamina, short staminamax, short mana, short manamax, short flag)
-			{
-				m_nome = nome;
-				m_x = x;
-				m_y = y;
-				m_facet = facet;
-				m_deathPointX = deathpointx;
-				m_deathPointY = deathpointy;
-				m_deathPointFacet = deathpointfacet;
-				m_panicPointX = panicpointx;
-				m_panicPointY = panicpointy;
-				m_panicPointFacet = panicpointfacet;
-				m_hits = hits;
-				m_hitsmax = hitsmax;
-				m_stamina = stamina;
-				m_staminamax = staminamax;
-				m_mana = mana;
-				m_manamax = manamax;
-				m_flag = flag;
+				get { return m_Flags; }
+				set { m_Flags = value; }
 			}
 
+			public UserData(string name, short x, short y, short facet, short deathpointx, short deathpointy, short deathpointfacet, short panicpointx, short panicpointy, short panicpointfacet, short hits, short hitsmax, short stamina, short staminamax, short mana, short manamax, short flag)
+			{
+				m_Name = name;
+				m_X = x;
+				m_Y = y;
+				m_Facet = facet;
+				m_DeathPointX = deathpointx;
+				m_DeathPointY = deathpointy;
+				m_DeathPointFacet = deathpointfacet;
+				m_PanicPointX = panicpointx;
+				m_PanicPointY = panicpointy;
+				m_PanicPointFacet = panicpointfacet;
+				m_Hits = hits;
+				m_Hitsmax = hitsmax;
+				m_Stamina = stamina;
+				m_Staminamax = staminamax;
+				m_Mana = mana;
+				m_ManaMax = manamax;
+				m_Flags = flag;
+			}
 		}
+
 		internal static void InThreadExec()
 		{
 			while (MapNetwork.InThreadFlag)
@@ -163,12 +164,14 @@ namespace Assistant.MapUO
 					short packedID = BitConverter.ToInt16(PacketIDByte, 0);
 					switch (packedID)
 					{
-						case 3:         // Ricevuta risposta da send
+						// Ricevuta risposta da send
+						case 3:       
 							{
 								MapNetwork.serverStream.Flush();
 								break;
 							}
-						case 4:     // Coords update
+						// Coords update
+						case 4:    
 							{
 								byte[] XByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] YByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -181,14 +184,15 @@ namespace Assistant.MapUO
 
 								UpdateUserCoords(x, y, map, username);
 
-								if (MapWindow.uoMapControlstatic != null)
-									MapWindow.uoMapControlstatic.Invoke(new Action(() => MapWindow.uoMapControlstatic.FullUpdate()));
+								if (MapWindow.MapControl != null)
+									MapWindow.MapControl.Invoke(new Action(() => MapWindow.MapControl.FullUpdate()));
 
 								MapNetwork.AddLog("DEBUG: coords: " + x + " - " + y + " - " + map);
 
 								break;
 							}
-						case 6:         // stats update
+						// stats update
+						case 6:        
 							{
 								byte[] hitsByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] staminaByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -208,14 +212,15 @@ namespace Assistant.MapUO
 
 								UpdateUserHits(hits, stamina, mana, hitsmax, staminamax, manamax, username);
 
-								if (MapWindow.uoMapControlstatic != null)
-									MapWindow.uoMapControlstatic.Invoke(new Action(() => MapWindow.uoMapControlstatic.FullUpdate()));
+								if (MapWindow.MapControl != null)
+									MapWindow.MapControl.Invoke(new Action(() => MapWindow.MapControl.FullUpdate()));
 
 								MapNetwork.AddLog("DEBUG: stats: " + hits + " - " + stamina + " - " + mana);
 
 								break;
 							}
-						case 8:         // Flags update
+						// Flags update
+						case 8:         
 							{
 								short flag = bytesFrom[2];
 								short userlenght = bytesFrom[3];
@@ -228,7 +233,8 @@ namespace Assistant.MapUO
 
 								break;
 							}
-						case 10:            // Death point
+						// Death point
+						case 10:           
 							{
 								byte[] XByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] YByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -247,7 +253,8 @@ namespace Assistant.MapUO
 
 								break;
 							}
-						case 12:            // Panic point
+						// Panic point
+						case 12:            
 							{
 								byte[] XByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] YByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -264,7 +271,8 @@ namespace Assistant.MapUO
 
 								break;
 							}
-						case 14:        // Chat message
+						// Chat message
+						case 14:        
 							{
 								byte[] msg_lenghtByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] msg_colorByte = new byte[4] { bytesFrom[4], bytesFrom[5], bytesFrom[6], bytesFrom[7] };
@@ -282,7 +290,8 @@ namespace Assistant.MapUO
 
 								break;
 							}
-						case 16:        // another user logger
+						// another user logger
+						case 16:        
 							{
 								short userlenght = bytesFrom[2];
 								string username = Encoding.Default.GetString(bytesFrom, 3, userlenght);
@@ -296,7 +305,8 @@ namespace Assistant.MapUO
 
 								break;
 							}
-						case 18:        // another user logoff
+						// another user logoff
+						case 18:        
 							{
 								short userlenght = bytesFrom[2];
 								string username = Encoding.Default.GetString(bytesFrom, 3, userlenght);
@@ -310,18 +320,18 @@ namespace Assistant.MapUO
 								break;
 							}
 					}
-
 				}
-				catch
+				catch (Exception ex)
 				{
 					MapNetwork.Disconnect();
 				}
 			}
 			MapNetwork.AddLog("Read Thread Exit");
 		}
+
 		private static void UpdateUserCoords(short x, short y, short map, string username)
 		{
-			var obj = MapNetwork.UData.FirstOrDefault(List => List.Nome == username);
+			var obj = MapNetwork.UData.FirstOrDefault(List => List.Name == username);
 			if (obj != null)
 			{
 				obj.X = x;
@@ -331,9 +341,10 @@ namespace Assistant.MapUO
 			else
 				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, x, y, map, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 		}
+
 		private static void UpdateUserHits(short hits, short stamina, short mana, short hitsmax, short staminamax, short manamax, string username)
 		{
-			var obj = MapNetwork.UData.FirstOrDefault(List => List.Nome == username);
+			var obj = MapNetwork.UData.FirstOrDefault(List => List.Name == username);
 			if (obj != null)
 			{
 				obj.Hits = hits;
@@ -346,9 +357,10 @@ namespace Assistant.MapUO
 			else
 				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, hits, stamina, mana, hitsmax, staminamax, manamax, 0));
 		}
+
 		private static void UpdateUserFlag(short flag, string username)
 		{
-			var obj = MapNetwork.UData.FirstOrDefault(List => List.Nome == username);
+			var obj = MapNetwork.UData.FirstOrDefault(List => List.Name == username);
 			if (obj != null)
 			{
 				obj.Flag = flag;
@@ -359,7 +371,7 @@ namespace Assistant.MapUO
 
 		private static void UpdateUserDeathPoint(short x, short y, short map, string username)
 		{
-			var obj = MapNetwork.UData.FirstOrDefault(List => List.Nome == username);
+			var obj = MapNetwork.UData.FirstOrDefault(List => List.Name == username);
 			if (obj != null)
 			{
 				obj.DeathPointX = x;
@@ -372,7 +384,7 @@ namespace Assistant.MapUO
 
 		private static void UpdateUserPanicPoint(short x, short y, short map, string username)
 		{
-			var obj = MapNetwork.UData.FirstOrDefault(List => List.Nome == username);
+			var obj = MapNetwork.UData.FirstOrDefault(List => List.Name == username);
 			if (obj != null)
 			{
 				obj.PanicPointX = x;
@@ -388,7 +400,7 @@ namespace Assistant.MapUO
 			bool found = false;
 			foreach (MapNetworkIn.UserData data in MapNetwork.UData)
 			{
-				if (data.Nome == username)
+				if (data.Name == username)
 				{
 					found = true;
 					break;
@@ -405,7 +417,7 @@ namespace Assistant.MapUO
 			bool found = false;
 			foreach (MapNetworkIn.UserData data in MapNetwork.UData)
 			{
-				if (data.Nome == username)
+				if (data.Name == username)
 				{
 					found = true;
 					break;

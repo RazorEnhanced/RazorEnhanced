@@ -473,9 +473,9 @@ namespace Assistant
 
 				args.Block |= !World.Player.MoveAck(seq);
 				// Enhanced Map move
-				if (MapUO.MapNetwork.Connected)
+				if (Map.MapNetwork.Connected)
 				{
-					MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+					Map.MapNetworkOut.SendCoordQueue.Enqueue(new Map.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
 				}
 			}
 		}
@@ -1080,21 +1080,21 @@ namespace Assistant
 						RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
 					// Enhanced Map Stats Update
-					if (MapUO.MapNetwork.Connected)
+					if (Map.MapNetwork.Connected)
 					{
-						MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(m.Hits, World.Player.Stam, World.Player.Mana, m.HitsMax, World.Player.StamMax, World.Player.ManaMax));
+						Map.MapNetworkOut.SendStatQueue.Enqueue(new Map.MapNetworkOut.SendStat(m.Hits, World.Player.Stam, World.Player.Mana, m.HitsMax, World.Player.StamMax, World.Player.ManaMax));
 
 						// Enhanced Map Flags dead
 						if (m.Hits == 0)
 						{
-							MapUO.MapNetworkOut.LastDead = true;
-							MapUO.MapNetworkOut.SendFlagQueue.Enqueue(4);
+							Map.MapNetworkOut.LastDead = true;
+							Map.MapNetworkOut.SendFlagQueue.Enqueue(4);
 						}
 
-						if (m.Hits > 0 && MapUO.MapNetworkOut.LastDead)
+						if (m.Hits > 0 && Map.MapNetworkOut.LastDead)
 						{
-							MapUO.MapNetworkOut.LastDead = false;
-							MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+							Map.MapNetworkOut.LastDead = false;
+							Map.MapNetworkOut.SendFlagQueue.Enqueue(0);
 						}
 					}
 
@@ -1142,8 +1142,8 @@ namespace Assistant
 						RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
 					// Enhanced Map Stats Update
-					if (MapUO.MapNetwork.Connected)
-						MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, m.Stam, World.Player.Mana, World.Player.HitsMax, m.StamMax, World.Player.ManaMax));
+					if (Map.MapNetwork.Connected)
+						Map.MapNetworkOut.SendStatQueue.Enqueue(new Map.MapNetworkOut.SendStat(World.Player.Hits, m.Stam, World.Player.Mana, World.Player.HitsMax, m.StamMax, World.Player.ManaMax));
 
 					ClientCommunication.PostStamUpdate();
 				}
@@ -1188,8 +1188,8 @@ namespace Assistant
 						RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
 					// Enhanced Map Stats Update
-					if (MapUO.MapNetwork.Connected)
-						MapUO.MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, m.Mana, World.Player.HitsMax, World.Player.StamMax, m.ManaMax));
+					if (Map.MapNetwork.Connected)
+						Map.MapNetworkOut.SendStatQueue.Enqueue(new Map.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, m.Mana, World.Player.HitsMax, World.Player.StamMax, m.ManaMax));
 
 					ClientCommunication.PostManaUpdate();
 				}
@@ -1270,14 +1270,14 @@ namespace Assistant
 				bool wasPoisoned = m.Poisoned;
 				m.Poisoned = (flag != 0);
 				if (m == World.Player)
-					if (MapUO.MapNetwork.Connected)
-						MapUO.MapNetworkOut.SendFlagQueue.Enqueue(1);
+					if (Map.MapNetwork.Connected)
+						Map.MapNetworkOut.SendFlagQueue.Enqueue(1);
 			}
 			else
 			{
 				if (m == World.Player)
-					if (MapUO.MapNetwork.Connected)
-						MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+					if (Map.MapNetwork.Connected)
+						Map.MapNetworkOut.SendFlagQueue.Enqueue(0);
 			}
 
 
@@ -2201,8 +2201,8 @@ namespace Assistant
 						{
 							World.Player.Map = p.ReadByte();
 							// Enhanced Map move
-							if (MapUO.MapNetwork.Connected)
-								MapUO.MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+							if (Map.MapNetwork.Connected)
+								Map.MapNetworkOut.SendCoordQueue.Enqueue(new Map.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
 						}
 						break;
 					}

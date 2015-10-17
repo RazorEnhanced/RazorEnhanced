@@ -11,7 +11,7 @@ namespace Assistant
 		internal short m_OffsetZ = 0;
 	}
 
-	internal class Map
+	internal class Facet
 	{
 		internal static Ultima.Map GetMap(int mapNum)
 		{

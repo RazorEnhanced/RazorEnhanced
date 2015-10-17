@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	[Serializable]
 	internal class UOMapRuneButton

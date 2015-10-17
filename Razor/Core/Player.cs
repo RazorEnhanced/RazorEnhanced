@@ -590,7 +590,7 @@ namespace Assistant
 				Utility.Offset(dir & Direction.Mask, ref x, ref y);
 
 				int newZ = Position.Z;
-				try { newZ = Assistant.Map.ZTop(Map, x, y, newZ); }
+				try { newZ = Assistant.Facet.ZTop(Map, x, y, newZ); }
 				catch { }
 				Position = new Point3D(x, y, newZ);
 			}
@@ -639,7 +639,7 @@ namespace Assistant
 			get
 			{
 				if (!m_ExternZ || !ClientCommunication.IsCalibrated())
-					return Assistant.Map.ZTop(Map, Position.X, Position.Y, Position.Z);
+					return Assistant.Facet.ZTop(Map, Position.X, Position.Y, Position.Z);
 				else
 					return Position.Z;
 			}

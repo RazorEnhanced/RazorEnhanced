@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	internal class MapIcon
 	{

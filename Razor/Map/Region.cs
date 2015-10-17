@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	internal class Region
 	{

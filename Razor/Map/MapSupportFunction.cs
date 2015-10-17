@@ -2,7 +2,7 @@
 using System.Linq;
 using Ultima;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	internal class MultiTileEntry
 	{
@@ -212,16 +212,16 @@ namespace Assistant.MapUO
 			bool found = false;
 			foreach (MapNetworkIn.UserData user in MapNetwork.UData)
 			{
-				if (user.Nome == World.Player.Name)
+				if (user.Name == World.Player.Name)
 				{
 					found = true;
-					UpdateUserProperties(user.Nome, "coordinates", (short)World.Player.Position.X, (short)World.Player.Position.Y, World.Player.Map, (short)World.Player.Hits, (short)World.Player.Stam, (short)World.Player.Mana,
+					UpdateUserProperties(user.Name, "coordinates", (short)World.Player.Position.X, (short)World.Player.Position.Y, World.Player.Map, (short)World.Player.Hits, (short)World.Player.Stam, (short)World.Player.Mana,
 					(short)World.Player.HitsMax, (short)World.Player.StamMax, (short)World.Player.ManaMax, flag, RazorEnhanced.Settings.General.ReadInt("MapChatColor"));
 
-					UpdateUserProperties(user.Nome, "stats", 0, 0, 0, (short)World.Player.Hits, (short)World.Player.Stam, (short)World.Player.Mana, (short)World.Player.HitsMax, (short)World.Player.StamMax,
+					UpdateUserProperties(user.Name, "stats", 0, 0, 0, (short)World.Player.Hits, (short)World.Player.Stam, (short)World.Player.Mana, (short)World.Player.HitsMax, (short)World.Player.StamMax,
 					(short)World.Player.ManaMax, 0, RazorEnhanced.Settings.General.ReadInt("MapChatColor"));
 
-					UpdateUserProperties(user.Nome, "flags", (short)World.Player.Position.X, (short)World.Player.Position.Y, World.Player.Map, 0, 0, 0, 0, 0,
+					UpdateUserProperties(user.Name, "flags", (short)World.Player.Position.X, (short)World.Player.Position.Y, World.Player.Map, 0, 0, 0, 0, 0,
 					0, flag, RazorEnhanced.Settings.General.ReadInt("MapChatColor"));
 					return;
 				}
@@ -240,7 +240,7 @@ namespace Assistant.MapUO
 		internal static void UpdateUserProperties(string user, string type, short X, short Y, short Mappa, short hp, short stam, short mana, short maxhp, short maxstam,
 		short maxmana, short flag, int col)
 		{
-			MapNetworkIn.UserData obj = MapNetwork.UData.FirstOrDefault(abc => abc.Nome == user);
+			MapNetworkIn.UserData obj = MapNetwork.UData.FirstOrDefault(abc => abc.Name == user);
 			if (obj != null)
 			{
 				switch (type)
@@ -299,11 +299,11 @@ namespace Assistant.MapUO
 			int index = 0;
 			foreach (MapNetworkIn.UserData user in MapNetwork.UData)
 			{
-				if (user.Nome == fakeuser)
+				if (user.Name == fakeuser)
 				{
 					MapNetwork.UData.RemoveAt(index);
 					if (fakeuser == "_DEATH_")
-						MapUO.UOMapControl.m_booldeathpoint = false;
+						Map.UOMapControl.m_BoolDeathPoint = false;
 					break;
 				}
 				index += 1;
@@ -315,7 +315,7 @@ namespace Assistant.MapUO
 			0, 0, 0, 0, 0, 0, 0));
 			if (nome == "_DEATH_")
 			{
-				MapUO.UOMapControl.m_timeafterdeath = DateTime.Now;
+				Map.UOMapControl.m_TimeAfterDeath = DateTime.Now;
 			}
 		}
 

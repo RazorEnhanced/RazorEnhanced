@@ -782,7 +782,7 @@ namespace Assistant
 					return z;
 			}
 
-			return Map.ZTop(World.Player.Map, x, y, z);
+			return Facet.ZTop(World.Player.Map, x, y, z);
 		}
 
 		private static void CalibrateNow()

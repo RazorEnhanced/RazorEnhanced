@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	internal class MapNetwork
 	{
@@ -239,8 +239,9 @@ namespace Assistant.MapUO
 			MapIcon.IconcommonList.Clear();
 			MapIcon.IconAtlasList.Clear();
 			MapIcon.AllListOfBuilds.Clear();
-			Assistant.MapUO.Region.RegionLists.Clear();
+			Region.RegionLists.Clear();
 		}
+
 		internal static void Init()
 		{
 			ClearAll();
@@ -270,7 +271,7 @@ namespace Assistant.MapUO
 			MapIcon.AllListOfBuilds.Add(MapIcon.IconTreasureList);
 			MapIcon.AllListOfBuilds.Add(MapIcon.IconTreasurePFList);
 
-			Assistant.MapUO.Region.Load("guardlines.def");
+			Region.Load("guardlines.def");
 		}
 
 		internal static void Disconnect()
@@ -316,6 +317,7 @@ namespace Assistant.MapUO
 				Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = false));
 			}
 		}
+
 		internal static void UnLockItem()
 		{
 			if (Engine.Running)

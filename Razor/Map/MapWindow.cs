@@ -1,39 +1,32 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
-	/// <summary>
-	/// Summary description for MapWindow.
-	/// </summary>
-	internal class MapWindow : System.Windows.Forms.Form
+	internal partial class MapWindow : Form
 	{
 		internal const int WM_NCLBUTTONDOWN = 0xA1;
 		internal const int HT_CAPTION = 0x2;
-		private UOMapControl uoMapControl1;
-		internal static UOMapControl uoMapControlstatic;
-		internal static MapWindow UoMapWindowStatic;
-		internal static ContextMenuStrip UoMenuStatic;
+
+		internal static UOMapControl MapControl;
+		internal static MapWindow MapWindowForm;
+		internal static ContextMenuStrip MapContextMenu;
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 		[DllImport("user32.dll")]
 		internal static extern bool ReleaseCapture();
 
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.Container components = null;
-
-		internal MapWindow()
+		public MapWindow()
 		{
-			//
-			// Required for Windows Form Designer support
-			//
-
 			InitializeComponent();
+
+			MapControl = this.uoMapControl;
+			MapWindowForm = this;
+			MapContextMenu = this.contextMenuStrip;
+
 			this.Location = new Point(RazorEnhanced.Settings.General.ReadInt("MapX"), RazorEnhanced.Settings.General.ReadInt("MapY"));
 			this.ClientSize = new Size(RazorEnhanced.Settings.General.ReadInt("MapW"), RazorEnhanced.Settings.General.ReadInt("MapH"));
 			Assistant.Engine.MapWindowX = RazorEnhanced.Settings.General.ReadInt("MapX");
@@ -49,18 +42,7 @@ namespace Assistant.MapUO
 			if (this.Height < 50)
 				this.Height = 50;
 
-			//
-			// TODO: Add any constructor code after InitializeComponent call
-			//
-
-			this.uoMapControl1.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseWheel);
-			this.uoMapControl1.DoubleClick += new System.EventHandler(this.uoMapControl1.picturebox1_DoubleClick);
-			this.uoMapControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.uoMapControl1.PictureBox1_MouseClick);
-			this.uoMapControl1.FullUpdate();
-			ClientCommunication.SetMapWndHandle(this);
-			uoMapControlstatic = this.uoMapControl1;
-			UoMapWindowStatic = this;
-			UoMenuStatic = this.contextMenuStrip;
+			ClientCommunication.SetMapWndHandle(this);	
 		}
 
 		internal class MapMenuItem : MenuItem
@@ -82,8 +64,8 @@ namespace Assistant.MapUO
 				{
 					Serial s = (Serial)mItem.Tag;
 					Mobile m = World.FindMobile(s);
-					this.uoMapControl1.FocusMobile = m;
-					this.uoMapControl1.FullUpdate();
+					MapControl.FocusMobile = m;
+					MapControl.FullUpdate();
 				}
 			}
 		}
@@ -98,7 +80,7 @@ namespace Assistant.MapUO
 			{
 				if (Engine.MainWindow.MapWindow == null)
 				{
-					Engine.MainWindow.MapWindow = new Assistant.MapUO.MapWindow();
+					Engine.MainWindow.MapWindow = new Assistant.Map.MapWindow();
 					Engine.MainWindow.MapWindow.Show();
 					Engine.MainWindow.MapWindow.BringToFront();
 				}
@@ -121,87 +103,10 @@ namespace Assistant.MapUO
 			}
 		}
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				if (components != null)
-				{
-					components.Dispose();
-				}
-			}
-			base.Dispose(disposing);
-		}
-
-		#region Windows Form Designer generated code
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
-			this.components = new System.ComponentModel.Container();
-			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.FreeViewMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.SuspendLayout();
-			// 
-			// uoMapControl1
-			// 
-			this.uoMapControl1 = new UOMapControl();
-			this.uoMapControl1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.uoMapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.uoMapControl1.Location = new System.Drawing.Point(0, 0);
-			this.uoMapControl1.Name = "uoMapControl1";
-			this.uoMapControl1.Size = new System.Drawing.Size(292, 266);
-			this.uoMapControl1.TabIndex = 0;
-			// 
-			// MapWindow
-			// 
-			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
-			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(292, 266);
-			this.Controls.Add(this.uoMapControl1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-			this.MaximizeBox = false;
-			this.Name = "MapWindow";
-			this.ShowInTaskbar = false;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "UO Positioning System";
-			this.TopMost = true;
-			this.Closing += new System.ComponentModel.CancelEventHandler(this.MapWindow_Closing);
-			this.Deactivate += new System.EventHandler(this.MapWindow_Deactivate);
-			this.Move += new System.EventHandler(this.MapWindow_Move);
-			this.Resize += new System.EventHandler(this.MapWindow_Resize);
-			this.ResumeLayout(false);
-			// 
-			// contextMenuStrip1
-			// 
-			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.FreeViewMenuItem});
-			this.contextMenuStrip.Name = "contextMenuStrip1";
-			this.contextMenuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-			this.contextMenuStrip.Size = new System.Drawing.Size(87, 26);
-			this.contextMenuStrip.Text = "Menu";
-			// 
-			// aaToolStripMenuItem
-			// 
-			this.FreeViewMenuItem.Name = "FreeView";
-			this.FreeViewMenuItem.Size = new System.Drawing.Size(86, 22);
-			this.FreeViewMenuItem.Text = "Free View";
-			//this.aaToolStripMenuItem.Click += new System.EventHandler(this.aaToolStripMenuItem_Click);
-
-		}
-		#endregion
-		private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-		private System.Windows.Forms.ToolStripMenuItem FreeViewMenuItem;
-
 		internal void CheckLocalUpdate(Mobile mob)
 		{
 			if (mob.InParty)
-				this.uoMapControl1.FullUpdate();
+				MapControl.FullUpdate();
 		}
 
 		private class ReqPartyLocTimer : Timer
@@ -275,30 +180,19 @@ namespace Assistant.MapUO
 		internal void UpdateMap()
 		{
 			ClientCommunication.SetMapWndHandle(this);
-			this.uoMapControl1.UpdateMap();
-		}
-
-		private void MapWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-		{
-			if (Assistant.Engine.Running)
-			{
-				e.Cancel = true;
-				this.Hide();
-				Engine.MainWindow.BringToFront();
-				ClientCommunication.BringToFront(ClientCommunication.FindUOWindow());
-			}
+			MapControl.UpdateMap();
 		}
 
 		internal void PlayerMoved()
 		{
-			if (this.Visible && this.uoMapControl1 != null)
-				this.uoMapControl1.FullUpdate();
+			if (this.Visible && MapControl != null)
+				MapControl.FullUpdate();
 		}
 
 		private void MapWindow_Resize(object sender, System.EventArgs e)
 		{
-			this.uoMapControl1.Height = this.Height;
-			this.uoMapControl1.Width = this.Width;
+			MapControl.Height = this.Height;
+			MapControl.Width = this.Width;
 
 			if (this.Width < 50)
 				this.Width = 50;
@@ -313,7 +207,7 @@ namespace Assistant.MapUO
 
 		private void MapWindow_Move(object sender, System.EventArgs e)
 		{
-			this.uoMapControl1.Location = this.Location;
+			MapControl.Location = this.Location;
 			Assistant.Engine.MapWindowX = this.Location.X;
 			Assistant.Engine.MapWindowY = this.Location.Y;
 		}
@@ -322,6 +216,17 @@ namespace Assistant.MapUO
 		{
 			if (this.TopMost)
 				this.TopMost = false;
+		}
+
+		private void MapWindow_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Assistant.Engine.Running)
+			{
+				e.Cancel = true;
+				this.Hide();
+				Engine.MainWindow.BringToFront();
+				ClientCommunication.BringToFront(ClientCommunication.FindUOWindow());
+			}
 		}
 	}
 }

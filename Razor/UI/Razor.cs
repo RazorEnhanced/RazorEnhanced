@@ -6880,7 +6880,7 @@ namespace Assistant
 
             
 			// ------------------ ENHANCED MAP  --------------------
-			MapUO.MapNetwork.Init();
+			Map.MapNetwork.Init();
 			mapOpenOnLoginCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapOpenOnLoginCheckBox");
 			mapAutoconnectCheckBox1.Checked = RazorEnhanced.Settings.General.ReadBool("MapAutoConnectCheckBox");
 			mapHpBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox");
@@ -8055,7 +8055,7 @@ namespace Assistant
 			MessageBox.Show(this, Language.GetString(LocString.FeatureDisabledText), Language.GetString(LocString.FeatureDisabled), MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
 
-		internal Assistant.MapUO.MapWindow MapWindow;
+		internal Assistant.Map.MapWindow MapWindow;
 
 		[System.Runtime.InteropServices.DllImport("user32.dll")]
 		private static extern IntPtr SetParent(IntPtr child, IntPtr newParent);
@@ -8065,7 +8065,7 @@ namespace Assistant
 			if (World.Player != null)
 			{
 				if (MapWindow == null)
-					MapWindow = new Assistant.MapUO.MapWindow();
+					MapWindow = new Assistant.Map.MapWindow();
 				//SetParent( MapWindow.Handle, ClientCommunication.FindUOWindow() );
 				//MapWindow.Owner = (Form)Form.FromHandle( ClientCommunication.FindUOWindow() );
 				MapWindow.Show();
@@ -11198,12 +11198,12 @@ namespace Assistant
 
 		private void mapConnectButton_Click(object sender, EventArgs e)
 		{
-			Assistant.MapUO.MapNetwork.TryConnect();
+			Assistant.Map.MapNetwork.TryConnect();
 		}
 
 		private void mapDisconnectButton_Click(object sender, EventArgs e)
 		{
-			Assistant.MapUO.MapNetwork.Disconnect();
+			Assistant.Map.MapNetwork.Disconnect();
 		}
 
         private void remountdelay_TextChanged(object sender, EventArgs e)

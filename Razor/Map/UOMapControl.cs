@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	internal class UOMapControl : Panel
 	{
@@ -17,38 +17,35 @@ namespace Assistant.MapUO
 		private Bitmap m_Background;
 		private DateTime LastRefresh;
 
-
-		private Point TempPosDeath = default(Point);
-		private Ultima.Map map__1 = default(Ultima.Map);
-		private int CurrentFacet = 9;
-		private int VarZoom = 0;
-		private float OffsetZoom = 0;
-		internal static float zoom = 1.5F;
-		private Point drawPoint = new Point();
-		private Font m_Font = new Font("Arial", 8 / zoom);
-		private Color m_usercolor = Color.Blue;
-		private int m_userfacettemp = 1;
-		private bool m_track_friend = false;
-		private bool m_tiltmap = true;
-		private bool m_removeuser = false;
-		internal static DateTime m_timeafterdeath;
-		internal static bool m_booldeathpoint;
-		private Point m_offsetbuild;
-		private bool m_freeview = false;
-		private bool m_gotolocs = false;
-		private Point m_pos_temp;
-		private Point m_offset;
-		private Point m_effettivo;
-		private Point m_gotoloc_position;
-		private string m_usernametemp;
-		private bool m_guardlines = true;
-		private bool m_builds = true;
-		private string m_labeldescbuild;
-		private bool m_showlabelbuild = true;
-		private Rectangle m_labelrectbuild;
-		private bool m_coordinates = true;
-		private float m_zoomvalue;
-		private Single m_zoom;
+		private Ultima.Map m_Map = default(Ultima.Map);
+		private int m_CurrentFacet = 9;
+		private int m_VarZoom = 0;
+		private float m_OffsetZoom = 0;
+		internal static float Zoom = 1.5F;
+		private Point m_DrawPoint = new Point();
+		private Font m_Font = new Font("Arial", 8 / Zoom);
+		private Color m_UserColor = Color.Blue;
+		private int m_UserFacetTemp = 1;
+		private bool m_TrackFriend = false;
+		private bool m_TiltMap = true;
+		private bool m_RemoveUser = false;
+		internal static DateTime m_TimeAfterDeath;
+		internal static bool m_BoolDeathPoint;
+		private Point m_OffsetBuild;
+		private bool m_FreeView = false;
+		private bool m_GoToLocs = false;
+		private Point m_PosTemp;
+		private Point m_Offset;
+		private Point m_Actual;
+		private Point m_GoToLocPosition;
+		private string m_UsernameTemp;
+		private bool m_Guardlines = true;
+		private bool m_Builds = true;
+		private string m_LabelDescBuild;
+		private bool m_ShowLabelBuild = true;
+		private Rectangle m_LabelRectBuild;
+		private bool m_Coordinates = true;
+		private float m_ZoomValue;
 
 		private static Font m_BoldFont = new Font("Courier New", 8, FontStyle.Bold);
 		private static Font m_SmallFont = new Font("Arial", 6);
@@ -70,14 +67,13 @@ namespace Assistant.MapUO
 			set { m_Focus = value; }
 		}
 
-		internal UOMapControl()
+		public UOMapControl()
 		{
 			m_Active = true;
 			this.DoubleBuffered = true;
 			this.prevPoint = new Point(0, 0);
 			this.BorderStyle = BorderStyle.Fixed3D;
 		}
-
 
 		public override void Refresh()
 		{
@@ -133,55 +129,63 @@ namespace Assistant.MapUO
 		public void NameAndBar(Graphics gfx, Point pntPlayer)
 		{
 			PointF StringPointF = RotatePoint(pntPlayer, new Point(pntPlayer.X, pntPlayer.Y));
-			string Nome = World.Player.Name;
-			Font Font = new Font("Arial", 9 / zoom);
-			Brush TextCol = new SolidBrush(m_usercolor);
+
+			string name = "";
+			if (World.Player != null)
+				name = World.Player.Name;
+
+			Font Font = new Font("Arial", 9 / Zoom);
+			Brush TextCol = new SolidBrush(m_UserColor);
 			int offsetbarre = 14;
 
-			gfx.DrawString(Nome, Font, Brushes.Black, ((StringPointF.X - 2.8f) / zoom), ((StringPointF.Y / 1) + 2.5f) / zoom);
-			gfx.DrawString(Nome, Font, TextCol, ((StringPointF.X - 2.8f) / zoom), ((StringPointF.Y / 1) + 1f) / zoom);
+			gfx.DrawString(name, Font, Brushes.Black, ((StringPointF.X - 2.8f) / Zoom), ((StringPointF.Y / 1) + 2.5f) / Zoom);
+			gfx.DrawString(name, Font, TextCol, ((StringPointF.X - 2.8f) / Zoom), ((StringPointF.Y / 1) + 1f) / Zoom);
 
 			if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
 			{
 				Brush status = default(Brush);
-				if (World.Player.Poisoned)
+				if (World.Player != null)
 				{
-					status = Brushes.LimeGreen;
+					if (World.Player.Poisoned)
+					{
+						status = Brushes.LimeGreen;
+					}
+					/*       else if (World.Player.YellowHits)
+						   {
+							   status = Brushes.Yellow;
+						   }
+						   else if (World.Player.Paralyzed)
+						   {
+							   status = Brushes.AliceBlue;
+						   }*/
+					else
+					{
+						status = Brushes.SteelBlue;
+					}
 				}
-				/*       else if (World.Player.YellowHits)
-					   {
-						   status = Brushes.Yellow;
-					   }
-					   else if (World.Player.Paralyzed)
-					   {
-						   status = Brushes.AliceBlue;
-					   }*/
-				else
-				{
-					status = Brushes.SteelBlue;
-				}
-				gfx.FillRectangle(Brushes.Red, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, 35 / zoom, 3 / zoom);
+
+				gfx.FillRectangle(Brushes.Red, (StringPointF.X - 1) / Zoom, (StringPointF.Y + offsetbarre) / Zoom, 35 / Zoom, 3 / Zoom);
 				int percent = Convert.ToInt32(World.Player.Hits * 100 / (World.Player.HitsMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(World.Player.HitsMax)));
-				float imagepercent = (35 / zoom) * (percent / 100);
-				gfx.FillRectangle(status, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, imagepercent, 3 / zoom);
+				float imagepercent = (35 / Zoom) * (percent / 100);
+				gfx.FillRectangle(status, (StringPointF.X - 1) / Zoom, (StringPointF.Y + offsetbarre) / Zoom, imagepercent, 3 / Zoom);
 				offsetbarre += 4;
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
 			{
-				gfx.FillRectangle(Brushes.Blue, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, 35 / zoom, 3 / zoom);
+				gfx.FillRectangle(Brushes.Blue, (StringPointF.X - 1) / Zoom, (StringPointF.Y + offsetbarre) / Zoom, 35 / Zoom, 3 / Zoom);
 				int percent = Convert.ToInt32(World.Player.Mana * 100 / (World.Player.ManaMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(World.Player.ManaMax)));
-				float imagepercent = (35 / zoom) * (percent / 100);
-				gfx.FillRectangle(Brushes.Blue, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, imagepercent, 3 / zoom);
+				float imagepercent = (35 / Zoom) * (percent / 100);
+				gfx.FillRectangle(Brushes.Blue, (StringPointF.X - 1) / Zoom, (StringPointF.Y + offsetbarre) / Zoom, imagepercent, 3 / Zoom);
 				offsetbarre += 4;
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
 			{
-				gfx.FillRectangle(Brushes.Orange, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, 35 / zoom, 3 / zoom);
+				gfx.FillRectangle(Brushes.Orange, (StringPointF.X - 1) / Zoom, (StringPointF.Y + offsetbarre) / Zoom, 35 / Zoom, 3 / Zoom);
 				int percent = Convert.ToInt32(World.Player.Stam * 100 / (World.Player.StamMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(World.Player.StamMax)));
-				float imagepercent = (35 / zoom) * (percent / 100);
-				gfx.FillRectangle(Brushes.Orange, (StringPointF.X - 1) / zoom, (StringPointF.Y + offsetbarre) / zoom, imagepercent, 3 / zoom);
+				float imagepercent = (35 / Zoom) * (percent / 100);
+				gfx.FillRectangle(Brushes.Orange, (StringPointF.X - 1) / Zoom, (StringPointF.Y + offsetbarre) / Zoom, imagepercent, 3 / Zoom);
 				offsetbarre += 4;
 			}
 
@@ -193,7 +197,11 @@ namespace Assistant.MapUO
 		public void Buildings(Graphics gfx, Point pntPlayer, Point mapOrigin, Point offset, Rectangle rect)
 		{
 			// Dim x As Stopwatch = Stopwatch.StartNew
-			int Facet = World.Player.Map;
+
+			int facet = 0x7F; // internal
+			if (World.Player != null)
+				facet = World.Player.Map;
+
 			GraphicsState TransState = gfx.Save();
 
 			int index = 0;
@@ -203,24 +211,24 @@ namespace Assistant.MapUO
 				//{
 				foreach (MapIcon.MapIconData build in CurrentList)
 				{
-					if (build.Facet == Facet | (build.Facet == 7 & (Facet == 1 | Facet == 0)))
+					if (build.Facet == facet | (build.Facet == 7 & (facet == 1 | facet == 0)))
 					{
 						Point BuildPoint = new Point((build.X) - (mapOrigin.X << 3) - offset.X, (build.Y) - (mapOrigin.Y << 3) - offset.Y);
 						//Calcolo Posizione Edificio
 						PointF BuildPointF = RotatePoint(pntPlayer, BuildPoint);
 
 						//Se sta nel riquadro della mappa
-						if (!(BuildPointF.X <= -m_offsetbuild.X | BuildPointF.X > rect.Width + m_offsetbuild.X | BuildPointF.Y <= -m_offsetbuild.Y | BuildPointF.Y > rect.Height + m_offsetbuild.Y))
+						if (!(BuildPointF.X <= -m_OffsetBuild.X | BuildPointF.X > rect.Width + m_OffsetBuild.X | BuildPointF.Y <= -m_OffsetBuild.Y | BuildPointF.Y > rect.Height + m_OffsetBuild.Y))
 						{
 
 							GraphicsState transState2 = gfx.Save();
 							gfx.TranslateTransform(BuildPoint.X, BuildPoint.Y);
 							//traslo sul punto dell'edificio
-							if (m_tiltmap)
+							if (m_TiltMap)
 								gfx.RotateTransform(-45);
 							Image Icon = MapIcon.IconImage[build.Icon];
 
-							gfx.DrawImage(Icon, (-Icon.Width / 2) / zoom, (-Icon.Height / 2) / zoom, Icon.Width / zoom, Icon.Height / zoom);
+							gfx.DrawImage(Icon, (-Icon.Width / 2) / Zoom, (-Icon.Height / 2) / Zoom, Icon.Width / Zoom, Icon.Height / Zoom);
 							//disegno
 							gfx.Restore(transState2);
 						}
@@ -232,8 +240,7 @@ namespace Assistant.MapUO
 			gfx.Restore(TransState);
 		}
 
-
-		public void PgOutRange(Graphics gfx, Point pntPlayer, Point drawPoint, Rectangle rect, MapNetworkIn.UserData user, PointF drawPointF, string nome)
+		internal void PgOutRange(Graphics gfx, Point pntPlayer, Point drawPoint, Rectangle rect, MapNetworkIn.UserData user, PointF drawPointF, string name)
 		{
 			gfx.ResetTransform();
 
@@ -241,80 +248,88 @@ namespace Assistant.MapUO
 
 			foreach (Point pt in intersections)
 			{
-				SizeF stringsize = gfx.MeasureString(nome, m_Font);
+				SizeF stringsize = gfx.MeasureString(name, m_Font);
 				Point p_ = new Point(pt.X, pt.Y);
 
 				if (drawPointF.X < 0)
 				{
 					p_.X = pt.X;
 				}
+
 				if (drawPointF.X > rect.Width)
 				{
 					p_.X = pt.X - (int)stringsize.Width;
 				}
+
 				if (drawPointF.Y < 0)
 				{
 					p_.Y = pt.Y;
 				}
+
 				if (drawPointF.Y > rect.Height)
 				{
 					p_.Y = pt.Y - (int)stringsize.Height;
 				}
 
-				if (nome == "_DEATH_")
+				if (name == "_DEATH_")
 				{
 					gfx.DrawLine(new Pen(Brushes.White, 0), pntPlayer, p_);
 					gfx.DrawImage(Properties.Resources.map_deadOut, p_.X, p_.Y, 14, 15);
 				}
-				else if (nome == "_MARKER_")
+				else if (name == "_MARKER_")
 				{
 					gfx.DrawLine(Pens.White, pntPlayer, p_);
 				}
 				else
 				{
-					int Facet = 0;
-					if (m_track_friend == false)
+					int facet = 0x7F; // internal
+
+					if (World.Player != null)
 					{
-						Facet = World.Player.Map;
-					}
-					else
-					{
-						Facet = m_userfacettemp;
-					}
-					SolidBrush stato = default(SolidBrush);
-					if (user.Facet != Facet)
-					{
-						stato = new SolidBrush(Color.DarkGray);
-					}
-					else
-					{
-						stato = new SolidBrush(m_usercolor);
+						if (m_TrackFriend == false)
+						{
+							facet = World.Player.Map;
+						}
+						else
+						{
+							facet = m_UserFacetTemp;
+						}
 					}
 
-					gfx.FillRectangle(new SolidBrush(stato.Color), Geometry2.GetRectangleAt(pt, 1));
-					gfx.DrawString(nome, m_Font, new SolidBrush(Color.Black), p_.X, p_.Y + 2.5f);
-					gfx.DrawString(nome, m_Font, new SolidBrush(m_usercolor), p_.X, p_.Y + 1f);
+					SolidBrush status = default(SolidBrush);
+					if (user.Facet != facet)
+					{
+						status = new SolidBrush(Color.DarkGray);
+					}
+					else
+					{
+						status = new SolidBrush(m_UserColor);
+					}
+
+					gfx.FillRectangle(new SolidBrush(status.Color), Geometry2.GetRectangleAt(pt, 1));
+					gfx.DrawString(name, m_Font, new SolidBrush(Color.Black), p_.X, p_.Y + 2.5f);
+					gfx.DrawString(name, m_Font, new SolidBrush(m_UserColor), p_.X, p_.Y + 1f);
 				}
 			}
 		}
 
 
-		public void PgInRange(Graphics gfx, Point drawPoint, PointF drawPointF, MapNetworkIn.UserData user, string nome, Point pntPlayer)
+		public void PgInRange(Graphics gfx, Point drawPoint, PointF drawPointF, MapNetworkIn.UserData user, string name, Point pntPlayer)
 		{
-			if (nome == "_MARKER_")
+			if (name == "_MARKER_")
 			{
-				Pen pen_ = new Pen(Brushes.White, 1.2f / zoom);
+				Pen pen_ = new Pen(Brushes.White, 1.2f / Zoom);
 				pen_.DashStyle = DashStyle.Dot;
 				gfx.DrawLine(pen_, pntPlayer, drawPoint);
-				gfx.FillEllipse(Brushes.White, drawPoint.X - 2.5f / zoom, drawPoint.Y - 2.5f / zoom, 5 / zoom, 5 / zoom);
+				gfx.FillEllipse(Brushes.White, drawPoint.X - 2.5f / Zoom, drawPoint.Y - 2.5f / Zoom, 5 / Zoom, 5 / Zoom);
 			}
-			else if (nome == "_DEATH_")
+			else if (name == "_DEATH_")
 			{
-				if (((DateTime.Now - m_timeafterdeath).TotalMinutes >= 5 & World.Player.Hits > 0) | World.Player.IsGhost)
+				if (((DateTime.Now - m_TimeAfterDeath).TotalMinutes >= 5 & World.Player.Hits > 0) | World.Player.IsGhost)
 				{
-					if (user.Nome == "_DEATH_")
+					if (user.Name == "_DEATH_")
 					{
-						m_removeuser = true;
+						m_RemoveUser = true;
 						//  ImDead = false;
 						// RemoveDeathPointToolStripMenuItem.Enabled = false;
 					}
@@ -323,24 +338,24 @@ namespace Assistant.MapUO
 				{
 					gfx.DrawLine(new Pen(Brushes.White, 0), pntPlayer, new Point(drawPoint.X + 3, drawPoint.Y + 5));
 					gfx.TranslateTransform(drawPoint.X, drawPoint.Y);
-					if (m_tiltmap)
+					if (m_TiltMap)
 						gfx.RotateTransform(-45);
-					gfx.DrawImage(Properties.Resources.map_deadIn, -6 / zoom, 0, 14 / zoom, 15 / zoom);
+					gfx.DrawImage(Properties.Resources.map_deadIn, -6 / Zoom, 0, 14 / Zoom, 15 / Zoom);
 				}
 			}
 			else
 			{
-				Font Font = new Font("Arial", 9 / zoom);
-				Brush TextCol = new SolidBrush(m_usercolor);
-				gfx.FillRectangle(TextCol, drawPoint.X - 1 / zoom, drawPoint.Y - 1 / zoom, 2f / zoom, 2f / zoom);
+				Font font = new Font("Arial", 9 / Zoom);
+				Brush textCol = new SolidBrush(m_UserColor);
+				gfx.FillRectangle(textCol, drawPoint.X - 1 / Zoom, drawPoint.Y - 1 / Zoom, 2f / Zoom, 2f / Zoom);
 				gfx.TranslateTransform(drawPoint.X, drawPoint.Y);
-				if (m_tiltmap)
+				if (m_TiltMap)
 					gfx.RotateTransform(-45);
 
-				gfx.DrawString(nome, Font, Brushes.Black, -1f / zoom, 2f / zoom);
-				gfx.DrawString(nome, Font, TextCol, -1f / zoom, 0.5f / zoom);
-				Font.Dispose();
-				TextCol.Dispose();
+				gfx.DrawString(name, font, Brushes.Black, -1f / Zoom, 2f / Zoom);
+				gfx.DrawString(name, font, textCol, -1f / Zoom, 0.5f / Zoom);
+				font.Dispose();
+				textCol.Dispose();
 				int offsetbarre = 14;
 
 				if (RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox"))
@@ -369,34 +384,33 @@ namespace Assistant.MapUO
 					}
 
 
-					gfx.FillRectangle(Brushes.Red, -1 / zoom, offsetbarre / zoom, 35 / zoom, 3 / zoom);
+					gfx.FillRectangle(Brushes.Red, -1 / Zoom, offsetbarre / Zoom, 35 / Zoom, 3 / Zoom);
 					int percent = Convert.ToInt32(user.Hits * 100 / (user.HitsMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(user.HitsMax)));
-					float imagepercent = (35 / zoom) * (percent / 100);
-					gfx.FillRectangle(status, -1 / zoom, offsetbarre / zoom, imagepercent, 3 / zoom);
+					float imagepercent = (35 / Zoom) * (percent / 100);
+					gfx.FillRectangle(status, -1 / Zoom, offsetbarre / Zoom, imagepercent, 3 / Zoom);
 					offsetbarre += 4;
 				}
 				if (RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox"))
 				{
-					gfx.FillRectangle(Brushes.Blue, -1 / zoom, offsetbarre / zoom, 35 / zoom, 3 / zoom);
+					gfx.FillRectangle(Brushes.Blue, -1 / Zoom, offsetbarre / Zoom, 35 / Zoom, 3 / Zoom);
 					int percent = Convert.ToInt32(user.Mana * 100 / (user.ManaMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(user.ManaMax)));
-					float imagepercent = (35 / zoom) * (percent / 100);
-					gfx.FillRectangle(Brushes.Blue, -1 / zoom, offsetbarre / zoom, imagepercent, 3 / zoom);
+					float imagepercent = (35 / Zoom) * (percent / 100);
+					gfx.FillRectangle(Brushes.Blue, -1 / Zoom, offsetbarre / Zoom, imagepercent, 3 / Zoom);
 					offsetbarre += 4;
 				}
 
 				if (RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox"))
 				{
-					gfx.FillRectangle(Brushes.Orange, -1 / zoom, offsetbarre / zoom, 35 / zoom, 3 / zoom);
+					gfx.FillRectangle(Brushes.Orange, -1 / Zoom, offsetbarre / Zoom, 35 / Zoom, 3 / Zoom);
 					int percent = Convert.ToInt32(user.Stamina * 100 / (user.StaminaMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(user.StaminaMax)));
-					float imagepercent = (35 / zoom) * (percent / 100);
-					gfx.FillRectangle(Brushes.Orange, -1 / zoom, offsetbarre / zoom, imagepercent, 3 / zoom);
+					float imagepercent = (35 / Zoom) * (percent / 100);
+					gfx.FillRectangle(Brushes.Orange, -1 / Zoom, offsetbarre / Zoom, imagepercent, 3 / Zoom);
 					offsetbarre += 4;
 				}
 			}
 		}
 
-
-		public void Coordinates(Graphics gfx, Point Focus, Ultima.Map map__1)
+		public void Coordinates(Graphics gfx, Point focus, Ultima.Map map)
 		{
 			int xLong = 0;
 			int yLat = 0;
@@ -406,26 +420,33 @@ namespace Assistant.MapUO
 			bool ySouth = false;
 			string locString = null;
 
-			locString = String.Format("{0}°{1}'{2} {3}°{4}'{5} | (X: {6}, Y: {7})", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W", Focus.X, Focus.Y);
+			locString = String.Format("{0}°{1}'{2} {3}°{4}'{5} | (X: {6}, Y: {7})", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W", focus.X, focus.Y);
 
+			string name = " -- ";
+			if (World.Player != null)
+				name = World.Player.Name;
 
-			this.Text = "UOAM2 - " + World.Player.Name + " - [" + locString + "]";
+			this.Text = "UOAM2 - " + name + " - [" + locString + "]";
 		}
-
 
 		public void Guardlines(Graphics gfx, Point mapOrigin, Point offset, Rectangle rect)
 		{
-			int Facet = World.Player.Map;
+			int Facet = 0x7F; // internal
+			if (World.Player != null)
+				Facet = World.Player.Map;
+
 			Pen pen = new Pen(Brushes.Green, 0);
 			Rectangle RegionPoint = default(Rectangle);
-			foreach (Assistant.MapUO.Region region in Assistant.MapUO.Region.RegionLists)
+
+			foreach (Region region in Map.Region.RegionLists)
 			{
 				RegionPoint = new Rectangle((region.X) - (mapOrigin.X << 3) - offset.X, (region.Y) - (mapOrigin.Y << 3) - offset.Y, region.Width, region.Height);
-				if (!(RegionPoint.X <= -m_offsetbuild.X | RegionPoint.X > rect.Width + m_offsetbuild.X | RegionPoint.Y <= -m_offsetbuild.Y | RegionPoint.Y > rect.Height + m_offsetbuild.Y) & region.Facet == Facet)
+				if (!(RegionPoint.X <= -m_OffsetBuild.X | RegionPoint.X > rect.Width + m_OffsetBuild.X | RegionPoint.Y <= -m_OffsetBuild.Y | RegionPoint.Y > rect.Height + m_OffsetBuild.Y) & region.Facet == Facet)
 				{
 					gfx.DrawRectangle(pen, RegionPoint.X, RegionPoint.Y, region.Width, region.Height);
 				}
 			}
+
 			pen.Dispose();
 		}
 
@@ -445,20 +466,20 @@ namespace Assistant.MapUO
 			{
 				if (e.Delta <= 0)
 				{
-					if (zoom > 0.5f)
+					if (Zoom > 0.5f)
 					{
-						zoom = zoom - 0.5f;
+						Zoom = Zoom - 0.5f;
 					}
 				}
 				else
 				{
-					if (zoom < 4f)
+					if (Zoom < 4f)
 					{
-						zoom = zoom + 0.5f;
+						Zoom = Zoom + 0.5f;
 					}
 				}
 				ZoomLevel();
-				m_zoomvalue = zoom;
+				m_ZoomValue = Zoom;
 				FullUpdate(true);
 			}
 		}
@@ -469,64 +490,64 @@ namespace Assistant.MapUO
 			Size PicDim = new Size(this.Width, this.Height);
 
 
-			if (zoom == 0.5f)
+			if (Zoom == 0.5f)
 			{
-				VarZoom = 720;
-				OffsetZoom = 180;
+				m_VarZoom = 720;
+				m_OffsetZoom = 180;
 			}
-			else if (zoom == 1f)
+			else if (Zoom == 1f)
 			{
-				VarZoom = 400;
-				OffsetZoom = 80;
+				m_VarZoom = 400;
+				m_OffsetZoom = 80;
 			}
-			else if (zoom == 1.5f)
+			else if (Zoom == 1.5f)
 			{
-				VarZoom = 200;
-				OffsetZoom = 40;
+				m_VarZoom = 200;
+				m_OffsetZoom = 40;
 			}
-			else if (zoom == 2f)
+			else if (Zoom == 2f)
 			{
-				VarZoom = 120;
-				OffsetZoom = 30;
+				m_VarZoom = 120;
+				m_OffsetZoom = 30;
 			}
-			else if (zoom == 2.5f)
+			else if (Zoom == 2.5f)
 			{
-				VarZoom = 80;
-				OffsetZoom = 15;
+				m_VarZoom = 80;
+				m_OffsetZoom = 15;
 			}
-			else if (zoom == 3f)
+			else if (Zoom == 3f)
 			{
-				VarZoom = 40;
-				OffsetZoom = 7.5f;
+				m_VarZoom = 40;
+				m_OffsetZoom = 7.5f;
 			}
-			else if (zoom == 3.5f)
+			else if (Zoom == 3.5f)
 			{
-				VarZoom = 40;
-				OffsetZoom = 7.5f;
+				m_VarZoom = 40;
+				m_OffsetZoom = 7.5f;
 			}
-			else if (zoom == 4f)
+			else if (Zoom == 4f)
 			{
-				VarZoom = 0;
-				OffsetZoom = 0;
+				m_VarZoom = 0;
+				m_OffsetZoom = 0;
 			}
 
-			m_offsetbuild = new Point(PicDim.Width * 2 / 350, PicDim.Height * 2 / 350);
+			m_OffsetBuild = new Point(PicDim.Width * 2 / 350, PicDim.Height * 2 / 350);
 
-			if (map__1 != null)
-				SupportFunc.ClearCache(map__1);
+			if (m_Map != null)
+				SupportFunc.ClearCache(m_Map);
 		}
 
 		internal void picturebox1_DoubleClick(object sender, EventArgs e)
 		{
-			if (MapUO.MapWindow.UoMapWindowStatic.FormBorderStyle == FormBorderStyle.None)
+			if (MapWindow.MapWindowForm.FormBorderStyle == FormBorderStyle.None)
 			{
-				MapUO.MapWindow.UoMapWindowStatic.FormBorderStyle = FormBorderStyle.Sizable;
-				MapUO.MapWindow.UoMapWindowStatic.TopMost = false;
+				MapWindow.MapWindowForm.FormBorderStyle = FormBorderStyle.Sizable;
+				MapWindow.MapWindowForm.TopMost = false;
 			}
 			else
 			{
-				MapUO.MapWindow.UoMapWindowStatic.FormBorderStyle = FormBorderStyle.None;
-				MapUO.MapWindow.UoMapWindowStatic.TopMost = true;
+				MapWindow.MapWindowForm.FormBorderStyle = FormBorderStyle.None;
+				MapWindow.MapWindowForm.TopMost = true;
 
 			}
 			FullUpdate(true);
@@ -536,8 +557,8 @@ namespace Assistant.MapUO
 		{
 			if (e.Button == MouseButtons.Right)
 			{
-				MapUO.MapWindow.UoMenuStatic.Visible = true;
-				MapUO.MapWindow.UoMenuStatic.Location = Cursor.Position;
+				MapWindow.MapContextMenu.Visible = true;
+				MapWindow.MapContextMenu.Location = Cursor.Position;
 			}
 		}
 
@@ -560,33 +581,33 @@ namespace Assistant.MapUO
 			int ytrans = this.Height / 2;
 			Point PositionPg = default(Point);
 
-			PositionPg = new Point(World.Player.Position.X, World.Player.Position.Y);
-
+			if (World.Player != null)
+				PositionPg = new Point(World.Player.Position.X, World.Player.Position.Y);
 
 			Point focus = default(Point);
-			if (m_freeview == false & m_track_friend == false & m_gotolocs == false)
+			if (m_FreeView == false & m_TrackFriend == false & m_GoToLocs == false)
 			{
 				focus = new Point(PositionPg.X, PositionPg.Y);
 			}
 			else
 			{
 				//   FreeView
-				if (m_freeview)
+				if (m_FreeView)
 				{
-					if (m_track_friend)
-						m_track_friend = false;
+					if (m_TrackFriend)
+						m_TrackFriend = false;
 					if (MapNetwork.UData != null)
 					{
-						if (m_pos_temp.X == PositionPg.X & m_pos_temp.Y == PositionPg.Y)
+						if (m_PosTemp.X == PositionPg.X & m_PosTemp.Y == PositionPg.Y)
 						{
-							focus = new Point(PositionPg.X + m_effettivo.X, PositionPg.Y + m_effettivo.Y);
+							focus = new Point(PositionPg.X + m_Actual.X, PositionPg.Y + m_Actual.Y);
 						}
 						else
 						{
-							focus = new Point(m_pos_temp.X + m_effettivo.X, m_pos_temp.Y + m_effettivo.Y);
+							focus = new Point(m_PosTemp.X + m_Actual.X, m_PosTemp.Y + m_Actual.Y);
 						}
-						m_pos_temp = focus;
-						m_effettivo.X = m_effettivo.Y = 0;
+						m_PosTemp = focus;
+						m_Actual.X = m_Actual.Y = 0;
 						if (World.Player.Poisoned)
 							SupportFunc.AddMyUser(1);
 						else
@@ -596,7 +617,7 @@ namespace Assistant.MapUO
 				}
 
 				//   Tracking
-				if (m_track_friend)
+				if (m_TrackFriend)
 				{
 					//if (FreeViewToolStripMenuItem.Enabled == true)
 					//   FreeViewToolStripMenuItem.Enabled = false;
@@ -605,12 +626,12 @@ namespace Assistant.MapUO
 					{
 						foreach (MapNetworkIn.UserData user in MapNetwork.UData)
 						{
-							if (user.Nome == m_usernametemp)
+							if (user.Name == m_UsernameTemp)
 							{
-								m_pos_temp = new Point(user.X, user.Y);
+								m_PosTemp = new Point(user.X, user.Y);
 							}
 						}
-						focus = m_pos_temp;
+						focus = m_PosTemp;
 						//Pos_temp = New Point(focus.X, focus.Y)
 						if (World.Player.Poisoned)
 							SupportFunc.AddMyUser(1);
@@ -621,12 +642,12 @@ namespace Assistant.MapUO
 			}
 
 			//   GotoLoc
-			if (m_gotolocs)
+			if (m_GoToLocs)
 			{
 				if (MapNetwork.UData != null)
 				{
-					m_pos_temp = m_gotoloc_position;
-					focus = new Point(m_pos_temp.X, m_pos_temp.Y);
+					m_PosTemp = m_GoToLocPosition;
+					focus = new Point(m_PosTemp.X, m_PosTemp.Y);
 					if (World.Player.Poisoned)
 						SupportFunc.AddMyUser(1);
 					else
@@ -640,15 +661,15 @@ namespace Assistant.MapUO
 			Point pntPlayer = new Point((focus.X) - (mapOrigin.X << 3) - offset.X, (focus.Y) - (mapOrigin.Y << 3) - offset.Y);
 
 			int Facet = 0;
-			if (World.Player.HitsMax != 0)
+			if (World.Player != null && World.Player.HitsMax != 0)
 			{
-				if (m_track_friend == false)
+				if (m_TrackFriend == false)
 				{
 					Facet = World.Player.Map;
 				}
 				else
 				{
-					Facet = m_userfacettemp;
+					Facet = m_UserFacetTemp;
 				}
 			}
 			else
@@ -656,15 +677,15 @@ namespace Assistant.MapUO
 				Facet = 10;
 			}
 
-			if (Facet != CurrentFacet)
+			if (Facet != m_CurrentFacet)
 			{
 				// map__1 = Nothing
-				if (map__1 != null)
-					SupportFunc.ClearCache(map__1);
-				map__1 = SupportFunc.GetMap(Facet);
-				if (map__1 == null)
-					map__1 = Ultima.Map.InitializeMap("Felucca");
-				CurrentFacet = Facet;
+				if (m_Map != null)
+					SupportFunc.ClearCache(m_Map);
+				m_Map = SupportFunc.GetMap(Facet);
+				if (m_Map == null)
+					m_Map = Ultima.Map.InitializeMap("Felucca");
+				m_CurrentFacet = Facet;
 			}
 
 			m_Background = new Bitmap(this.Width, this.Height, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
@@ -674,7 +695,7 @@ namespace Assistant.MapUO
 				gfx.SmoothingMode = SmoothingMode.AntiAlias;
 				gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 				gfx.TranslateTransform(-pntPlayer.X, -pntPlayer.Y, MatrixOrder.Append);
-				if (zoom >= 1f)
+				if (Zoom >= 1f)
 				{
 					gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 				}
@@ -683,41 +704,41 @@ namespace Assistant.MapUO
 					gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
 				}
 				gfx.PageUnit = GraphicsUnit.Pixel;
-				gfx.ScaleTransform(zoom, zoom, MatrixOrder.Append);
-				if (m_tiltmap)
+				gfx.ScaleTransform(Zoom, Zoom, MatrixOrder.Append);
+				if (m_TiltMap)
 					gfx.RotateTransform(45, MatrixOrder.Append);
 				gfx.TranslateTransform(pntPlayer.X, pntPlayer.Y, MatrixOrder.Append);
 
 				//   Disegna mappa
-				gfx.DrawImage(map__1.GetImage(mapOrigin.X - (VarZoom >> 3), mapOrigin.Y - (VarZoom >> 3), (int)(w + offset.X + OffsetZoom), (int)(h + offset.Y + OffsetZoom), true), -offset.X - VarZoom, -offset.Y - VarZoom);
+				gfx.DrawImage(m_Map.GetImage(mapOrigin.X - (m_VarZoom >> 3), mapOrigin.Y - (m_VarZoom >> 3), (int)(w + offset.X + m_OffsetZoom), (int)(h + offset.Y + m_OffsetZoom), true), -offset.X - m_VarZoom, -offset.Y - m_VarZoom);
 				//  Opzioni.log("Map:" + x.ElapsedMilliseconds.ToString)
 				gfx.ScaleTransform(1f, 1f, MatrixOrder.Append);
 
 				//   Disegna guardie
-				if (m_guardlines)
+				if (m_Guardlines)
 					Guardlines(gfx, mapOrigin, offset, rect);
 
 				//   Disegno punti interesse
-				if (m_builds & zoom >= 1f)
+				if (m_Builds & Zoom >= 1f)
 					Buildings(gfx, pntPlayer, mapOrigin, offset, rect);
 
-				if (m_showlabelbuild)
+				if (m_ShowLabelBuild)
 				{
 					GraphicsState TransState = gfx.Save();
 
-					Font string_font = new Font("Arial", 9 / zoom, FontStyle.Regular);
-					SizeF stringsize = gfx.MeasureString(m_labeldescbuild, string_font);
+					Font string_font = new Font("Arial", 9 / Zoom, FontStyle.Regular);
+					SizeF stringsize = gfx.MeasureString(m_LabelDescBuild, string_font);
 
 
-					Point rectbuild = new Point((m_labelrectbuild.X) - (mapOrigin.X << 3) - offset.X, (m_labelrectbuild.Y) - (mapOrigin.Y << 3) - offset.Y);
+					Point rectbuild = new Point((m_LabelRectBuild.X) - (mapOrigin.X << 3) - offset.X, (m_LabelRectBuild.Y) - (mapOrigin.Y << 3) - offset.Y);
 
 					gfx.TranslateTransform(rectbuild.X, rectbuild.Y);
-					if (m_tiltmap == true)
+					if (m_TiltMap == true)
 						gfx.RotateTransform(-45);
 
-					Rectangle rett = new Rectangle((int)((-stringsize.Width / 2) - 1 / zoom), (int)((-stringsize.Height / 2) + 4.5f / zoom), (int)(stringsize.Width + 1 / zoom), (int)(stringsize.Height + 1 / zoom));
+					Rectangle rett = new Rectangle((int)((-stringsize.Width / 2) - 1 / Zoom), (int)((-stringsize.Height / 2) + 4.5f / Zoom), (int)(stringsize.Width + 1 / Zoom), (int)(stringsize.Height + 1 / Zoom));
 					gfx.FillRectangle(new SolidBrush(Color.FromArgb(128, Color.DarkGray)), rett);
-					gfx.DrawString(m_labeldescbuild, string_font, Brushes.Gold, (-stringsize.Width / 2) - 1 / zoom, -1 / zoom);
+					gfx.DrawString(m_LabelDescBuild, string_font, Brushes.Gold, (-stringsize.Width / 2) - 1 / Zoom, -1 / Zoom);
 					string_font.Dispose();
 
 					gfx.Restore(TransState);
@@ -726,33 +747,33 @@ namespace Assistant.MapUO
 				}
 
 				//   Diesgna mio punto
-				if (m_track_friend == false & m_freeview == false & m_gotolocs == false)
+				if (m_TrackFriend == false & m_FreeView == false & m_GoToLocs == false)
 				{
-					Brush fontPunto = new SolidBrush(m_usercolor);
-					gfx.FillRectangle(fontPunto, (pntPlayer.X - 1f / zoom), (pntPlayer.Y - 1f / zoom), (2 / zoom), (2 / zoom));
+					Brush fontPunto = new SolidBrush(m_UserColor);
+					gfx.FillRectangle(fontPunto, (pntPlayer.X - 1f / Zoom), (pntPlayer.Y - 1f / Zoom), (2 / Zoom), (2 / Zoom));
 					fontPunto.Dispose();
 
 					gfx.ResetTransform();
-					gfx.ScaleTransform(zoom, zoom);
+					gfx.ScaleTransform(Zoom, Zoom);
 
 					NameAndBar(gfx, pntPlayer);
 				}
-				else if (m_freeview & m_gotolocs)
+				else if (m_FreeView & m_GoToLocs)
 				{
-					Pen _pen = new Pen(Brushes.Silver, 1.2f / zoom);
-					gfx.DrawLine(_pen, (pntPlayer.X - 5f / zoom), (pntPlayer.Y - 5f / zoom), (pntPlayer.X + 5f / zoom), (pntPlayer.Y + 5f / zoom));
-					gfx.DrawLine(_pen, (pntPlayer.X + 5f / zoom), (pntPlayer.Y - 5f / zoom), (pntPlayer.X - 5f / zoom), (pntPlayer.Y + 5f / zoom));
+					Pen _pen = new Pen(Brushes.Silver, 1.2f / Zoom);
+					gfx.DrawLine(_pen, (pntPlayer.X - 5f / Zoom), (pntPlayer.Y - 5f / Zoom), (pntPlayer.X + 5f / Zoom), (pntPlayer.Y + 5f / Zoom));
+					gfx.DrawLine(_pen, (pntPlayer.X + 5f / Zoom), (pntPlayer.Y - 5f / Zoom), (pntPlayer.X - 5f / Zoom), (pntPlayer.Y + 5f / Zoom));
 
 					gfx.ResetTransform();
-					gfx.ScaleTransform(zoom, zoom);
+					gfx.ScaleTransform(Zoom, Zoom);
 
 					PointF StringPointF = RotatePoint(pntPlayer, new Point(pntPlayer.X, pntPlayer.Y - 1));
-					Font Font = new Font("Arial", 9 / zoom);
-					gfx.DrawString(m_pos_temp.ToString(), Font, Brushes.Gold, ((StringPointF.X - 1) / zoom), (StringPointF.Y / zoom) + 10f / zoom);
+					Font Font = new Font("Arial", 9 / Zoom);
+					gfx.DrawString(m_PosTemp.ToString(), Font, Brushes.Gold, ((StringPointF.X - 1) / Zoom), (StringPointF.Y / Zoom) + 10f / Zoom);
 				}
 				//   Disegna coordinate
-				if (m_coordinates)
-					Coordinates(gfx, focus, map__1);
+				if (m_Coordinates)
+					Coordinates(gfx, focus, m_Map);
 
 				gfx.ResetTransform();
 
@@ -773,7 +794,7 @@ namespace Assistant.MapUO
 			Rectangle rect = new Rectangle(0, 0, this.Width, this.Height);
 			gfx.DrawImageUnscaledAndClipped(m_Background, rect);
 
-			if (MapUO.MapNetwork.Connected & MapNetwork.UData != null)
+			if (MapNetwork.Connected & MapNetwork.UData != null)
 			{
 				//  If Connected = True Or (Player.HP = 0 And Player.Shard <> "") Or DropOrPickupMakerToolStripMenuItem.Checked = True Then
 				int w = (this.Width) >> 3;
@@ -781,13 +802,13 @@ namespace Assistant.MapUO
 				int xtrans = this.Width / 2;
 				int ytrans = this.Height / 2;
 				Point Focus = default(Point);
-				if (m_track_friend == false & m_freeview == false & m_gotolocs == false)
+				if (m_TrackFriend == false & m_FreeView == false & m_GoToLocs == false)
 				{
 					Focus = new Point(World.Player.Position.X, World.Player.Position.Y);
 				}
 				else
 				{
-					Focus = m_pos_temp;
+					Focus = m_PosTemp;
 				}
 
 				Point offset = new Point(Focus.X & 7, Focus.Y & 7);
@@ -797,8 +818,8 @@ namespace Assistant.MapUO
 				gfx.TranslateTransform(-pntPlayer.X, -pntPlayer.Y, MatrixOrder.Append);
 				gfx.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 				gfx.PageUnit = GraphicsUnit.Pixel;
-				gfx.ScaleTransform(zoom, zoom, MatrixOrder.Append);
-				if (m_tiltmap)
+				gfx.ScaleTransform(Zoom, Zoom, MatrixOrder.Append);
+				if (m_TiltMap)
 					gfx.RotateTransform(45, MatrixOrder.Append);
 				gfx.TranslateTransform(pntPlayer.X, pntPlayer.Y, MatrixOrder.Append);
 				gfx.ScaleTransform(1f, 1f, MatrixOrder.Append);
@@ -809,7 +830,7 @@ namespace Assistant.MapUO
 				foreach (MapNetworkIn.UserData user in MapNetwork.UData)
 				{
 					GraphicsState transState = gfx.Save();
-					string nome = user.Nome;
+					string nome = user.Name;
 					if (nome == null | nome.Length < 1)
 						nome = "(Not Seen)";
 					if (nome != null & nome.Length > 8)
@@ -818,9 +839,9 @@ namespace Assistant.MapUO
 					PointF drawPointF = RotatePoint(pntPlayer, drawPoint);
 					//   Disegno PG
 
-					if (drawPointF.X <= -m_offsetbuild.X | drawPointF.X > rect.Width + m_offsetbuild.X | drawPointF.Y <= -m_offsetbuild.Y | drawPointF.Y > rect.Height + m_offsetbuild.Y)
+					if (drawPointF.X <= -m_OffsetBuild.X | drawPointF.X > rect.Width + m_OffsetBuild.X | drawPointF.Y <= -m_OffsetBuild.Y | drawPointF.Y > rect.Height + m_OffsetBuild.Y)
 					{
-						if (nome == "_MARKER_" & m_freeview == true)
+						if (nome == "_MARKER_" & m_FreeView == true)
 						{
 							pntPlayer = new Point((World.Player.Position.X) - (mapOrigin.X << 3) - offset.X, (World.Player.Position.Y) - (mapOrigin.Y << 3) - offset.Y);
 						}
@@ -828,7 +849,7 @@ namespace Assistant.MapUO
 					}
 					else
 					{
-						if (nome == "_MARKER_" & m_freeview == true)
+						if (nome == "_MARKER_" & m_FreeView == true)
 						{
 							pntPlayer = new Point((World.Player.Position.X) - (mapOrigin.X << 3) - offset.X, (World.Player.Position.Y) - (mapOrigin.Y << 3) - offset.Y);
 						}
@@ -845,10 +866,10 @@ namespace Assistant.MapUO
 				}
 			}
 
-			if (m_removeuser)
+			if (m_RemoveUser)
 			{
 				SupportFunc.RemoveFakeUser("_DEATH_");
-				m_removeuser = false;
+				m_RemoveUser = false;
 			}
 
 			gfx.ResetTransform();
@@ -856,7 +877,7 @@ namespace Assistant.MapUO
 			//   Disegna Zoom
 			Font font = new Font("Arial", 9, FontStyle.Bold);
 
-			gfx.DrawString(zoom.ToString() + "x", font, Brushes.Gold, new Point(rect.Width - 35, rect.Height - 20));
+			gfx.DrawString(Zoom.ToString() + "x", font, Brushes.Gold, new Point(rect.Width - 35, rect.Height - 20));
 		}
 
 		private Point MousePointToMapPoint(Point p)

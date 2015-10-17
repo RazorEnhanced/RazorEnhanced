@@ -166,6 +166,12 @@
     <Compile Include="Map\MapSupportFunction.cs" />
     <Compile Include="Map\MapGeometry.cs" />
     <Compile Include="Map\MapIcon.cs" />
+    <Compile Include="Map\MapWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Map\MapWindow.Designer.cs">
+      <DependentUpon>MapWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Map\NetworkLinkOut.cs" />
     <Compile Include="Map\NetworkLinkIn.cs" />
     <Compile Include="Map\NetworkLink.cs" />
@@ -193,11 +199,8 @@
     <Compile Include="Core\Main.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Map.cs">
+    <Compile Include="Core\Facet.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Map\MapWindow.cs">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Map\Region.cs">
       <SubType>Code</SubType>
@@ -574,6 +577,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Map\UOMapControl.resx">
       <DependentUpon>UOMapControl.cs</DependentUpon>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UOMapControl.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

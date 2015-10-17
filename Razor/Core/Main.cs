@@ -340,25 +340,25 @@ namespace Assistant
 					Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
 					try
 					{
-						MapUO.MapNetwork.clientSocket.GetStream().Close();
+						Map.MapNetwork.clientSocket.GetStream().Close();
 					}
 					catch { }
 
 					try
 					{
-						MapUO.MapNetwork.clientSocket.Close();
+						Map.MapNetwork.clientSocket.Close();
 					}
 					catch { }
 
 					try
 					{
-						MapUO.MapNetwork.InThread.Abort();
+						Map.MapNetwork.InThread.Abort();
 					}
 					catch { }
 
 					try
 					{
-						MapUO.MapNetwork.OutThread.Abort();
+						Map.MapNetwork.OutThread.Abort();
 					}
 					catch { }
 

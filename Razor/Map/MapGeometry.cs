@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	public class Geometry2
 	{

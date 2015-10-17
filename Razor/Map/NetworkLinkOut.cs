@@ -3,108 +3,113 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Assistant.MapUO
+namespace Assistant.Map
 {
 	internal class MapNetworkOut
 	{
-		public class SendCoord
+		internal class SendCoord
 		{
-			private int m_x;
-			public int X { get { return m_x; } }
+			private int m_X;
+			public int X { get { return m_X; } }
 
-			private int m_y;
-			public int Y { get { return m_y; } }
+			private int m_Y;
+			public int Y { get { return m_Y; } }
 
-			private int m_map;
-			public int Map { get { return m_map; } }
+			private int m_Map;
+			public int Map { get { return m_Map; } }
 			public SendCoord(int x, int y, int map)
 			{
-				m_x = x;
-				m_y = y;
-				m_map = map;
+				m_X = x;
+				m_Y = y;
+				m_Map = map;
 			}
 		}
 
-		public class SendStat
+		internal class SendStat
 		{
-			private int m_hits;
-			public int Hits { get { return m_hits; } }
+			private int m_Hits;
+			public int Hits { get { return m_Hits; } }
 
-			private int m_stamina;
-			public int Stamina { get { return m_stamina; } }
+			private int m_Stamina;
+			public int Stamina { get { return m_Stamina; } }
 
-			private int m_mana;
-			public int Mana { get { return m_mana; } }
+			private int m_Mana;
+			public int Mana { get { return m_Mana; } }
 
-			private int m_hitsmax;
-			public int HitsMax { get { return m_hitsmax; } }
+			private int m_HitsMax;
+			public int HitsMax { get { return m_HitsMax; } }
 
-			private int m_staminamax;
-			public int StaminaMax { get { return m_staminamax; } }
+			private int m_StaminaMax;
+			public int StaminaMax { get { return m_StaminaMax; } }
 
-			private int m_manamax;
-			public int ManaMax { get { return m_manamax; } }
+			private int m_ManaMax;
+			public int ManaMax { get { return m_ManaMax; } }
+
 			public SendStat(int hits, int stamina, int mana, int hitsmax, int staminamax, int manamax)
 			{
-				m_hits = hits;
-				m_stamina = stamina;
-				m_mana = mana;
-				m_hitsmax = hitsmax;
-				m_staminamax = staminamax;
-				m_manamax = manamax;
+				m_Hits = hits;
+				m_Stamina = stamina;
+				m_Mana = mana;
+				m_HitsMax = hitsmax;
+				m_StaminaMax = staminamax;
+				m_ManaMax = manamax;
 			}
 		}
-		public class SendDeathPoint
+
+		internal class SendDeathPoint
 		{
-			private int m_x;
-			public int X { get { return m_x; } }
+			private int m_X;
+			public int X { get { return m_X; } }
 
-			private int m_y;
-			public int Y { get { return m_y; } }
+			private int m_Y;
+			public int Y { get { return m_Y; } }
 
-			private int m_map;
-			public int Map { get { return m_map; } }
+			private int m_Map;
+			public int Map { get { return m_Map; } }
+
 			public SendDeathPoint(int x, int y, int map)
 			{
-				m_x = x;
-				m_y = y;
-				m_map = map;
+				m_X = x;
+				m_Y = y;
+				m_Map = map;
 			}
 		}
 
-		public class SendPanic
+		internal class SendPanic
 		{
-			private int m_x;
-			public int X { get { return m_x; } }
+			private int m_X;
+			public int X { get { return m_X; } }
 
-			private int m_y;
-			public int Y { get { return m_y; } }
+			private int m_Y;
+			public int Y { get { return m_Y; } }
 
-			private int m_map;
-			public int Map { get { return m_map; } }
+			private int m_Map;
+			public int Map { get { return m_Map; } }
+
 			public SendPanic(int x, int y, int map)
 			{
-				m_x = x;
-				m_y = y;
-				m_map = map;
+				m_X = x;
+				m_Y = y;
+				m_Map = map;
 			}
 		}
 
-		public class SendChatMessage
+		internal class SendChatMessage
 		{
-			private int m_msg_lenght;
-			public int Lenght { get { return m_msg_lenght; } }
+			private int m_Lenght;
+			public int Lenght { get { return m_Lenght; } }
 
-			private int m_color;
-			public int Color { get { return m_color; } }
+			private int m_Color;
+			public int Color { get { return m_Color; } }
 
-			private string m_msg;
-			public string Msg { get { return m_msg; } }
-			public SendChatMessage(int msg_lenght, int color, string msg)
+			private string m_Msg;
+			public string Msg { get { return m_Msg; } }
+
+			public SendChatMessage(int lenght, int color, string msg)
 			{
-				m_msg_lenght = msg_lenght;
-				m_color = color;
-				m_msg = msg;
+				m_Lenght = lenght;
+				m_Color = color;
+				m_Msg = msg;
 			}
 		}
 
@@ -136,14 +141,14 @@ namespace Assistant.MapUO
 			// Invio stato alla connessione effettuata
 			if (World.Player != null)
 			{
-				MapNetworkOut.SendCoordQueue.Enqueue(new MapUO.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
-				MapNetworkOut.SendStatQueue.Enqueue(new MapUO.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, World.Player.Mana, World.Player.HitsMax, World.Player.StamMax, World.Player.ManaMax));
+				MapNetworkOut.SendCoordQueue.Enqueue(new MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
+				MapNetworkOut.SendStatQueue.Enqueue(new MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, World.Player.Mana, World.Player.HitsMax, World.Player.StamMax, World.Player.ManaMax));
 				if (World.Player.Hits == 0)
 					MapNetworkOut.SendFlagQueue.Enqueue(4);
 				else if (World.Player.Poisoned)
-					MapUO.MapNetworkOut.SendFlagQueue.Enqueue(1);
+					MapNetworkOut.SendFlagQueue.Enqueue(1);
 				else
-					MapUO.MapNetworkOut.SendFlagQueue.Enqueue(0);
+					MapNetworkOut.SendFlagQueue.Enqueue(0);
 			}
 
 			while (MapNetwork.OutThreadFlag)
