@@ -172,9 +172,9 @@
     <Compile Include="Map\MapWindow.Designer.cs">
       <DependentUpon>MapWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Map\NetworkLinkOut.cs" />
-    <Compile Include="Map\NetworkLinkIn.cs" />
-    <Compile Include="Map\NetworkLink.cs" />
+    <Compile Include="Map\MapNetworkOut.cs" />
+    <Compile Include="Map\MapNetworkIn.cs" />
+    <Compile Include="Map\MapNetwork.cs" />
     <Compile Include="RazorEnhanced\DragDropManager.cs" />
     <Compile Include="RazorEnhanced\Pets.cs" />
     <Compile Include="RazorEnhanced\Profiles.cs" />

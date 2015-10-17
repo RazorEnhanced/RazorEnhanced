@@ -13,6 +13,45 @@ namespace Assistant.Map
 {
 	internal class MapNetwork
 	{
+		internal enum Direction
+		{
+			North = 0,
+			Right = 1,
+			East = 2,
+			Down = 3,
+			South = 4,
+			Left = 5,
+			West = 6,
+			Up = 7,
+			Mask = Up
+		}
+
+		internal class MapName
+		{
+			public const string Felucca = "Felucca";
+			public const string Trammel = "Trammel";
+			public const string Ilshenar = "Ilshenar";
+			public const string Malas = "Malas";
+			public const string Tokuno = "Tokuno";
+			public const string TerMur = "TerMur";
+			public const string Custom = "Custom";
+			public const string FelTram = "Fel/Tram";
+		}
+
+		internal class PlayerFlag
+		{
+			public const string Poison = "C";
+			public const string MortalStrike = "D";
+			public const string Paralyze = "A";
+			public const string Death = "K"; // invented;
+		}
+
+		internal class PointN
+		{
+			public const string Death = "_DEATH_";
+			public const string Marker = "_MARKER_";
+		}
+
 		internal static bool Connected = false;
 		internal static TcpClient clientSocket = new TcpClient();
 		internal static NetworkStream serverStream;

@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -127,7 +128,14 @@ namespace Assistant.Map
 				set { m_Flags = value; }
 			}
 
-			public UserData(string name, short x, short y, short facet, short deathpointx, short deathpointy, short deathpointfacet, short panicpointx, short panicpointy, short panicpointfacet, short hits, short hitsmax, short stamina, short staminamax, short mana, short manamax, short flag)
+			private Color m_Color;
+			public Color Color
+			{
+				get { return m_Color; }
+				set { m_Color = value; }
+			}
+
+			public UserData(string name, short x, short y, short facet, short deathpointx, short deathpointy, short deathpointfacet, short panicpointx, short panicpointy, short panicpointfacet, short hits, short hitsmax, short stamina, short staminamax, short mana, short manamax, short flag, Color color)
 			{
 				m_Name = name;
 				m_X = x;
@@ -146,6 +154,7 @@ namespace Assistant.Map
 				m_Mana = mana;
 				m_ManaMax = manamax;
 				m_Flags = flag;
+				m_Color = color;
 			}
 		}
 
@@ -165,13 +174,13 @@ namespace Assistant.Map
 					switch (packedID)
 					{
 						// Ricevuta risposta da send
-						case 3:       
+						case 3:
 							{
 								MapNetwork.serverStream.Flush();
 								break;
 							}
 						// Coords update
-						case 4:    
+						case 4:
 							{
 								byte[] XByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] YByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -192,7 +201,7 @@ namespace Assistant.Map
 								break;
 							}
 						// stats update
-						case 6:        
+						case 6:
 							{
 								byte[] hitsByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] staminaByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -220,7 +229,7 @@ namespace Assistant.Map
 								break;
 							}
 						// Flags update
-						case 8:         
+						case 8:
 							{
 								short flag = bytesFrom[2];
 								short userlenght = bytesFrom[3];
@@ -234,7 +243,7 @@ namespace Assistant.Map
 								break;
 							}
 						// Death point
-						case 10:           
+						case 10:
 							{
 								byte[] XByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] YByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -254,7 +263,7 @@ namespace Assistant.Map
 								break;
 							}
 						// Panic point
-						case 12:            
+						case 12:
 							{
 								byte[] XByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] YByte = new byte[2] { bytesFrom[4], bytesFrom[5] };
@@ -272,7 +281,7 @@ namespace Assistant.Map
 								break;
 							}
 						// Chat message
-						case 14:        
+						case 14:
 							{
 								byte[] msg_lenghtByte = new byte[2] { bytesFrom[2], bytesFrom[3] };
 								byte[] msg_colorByte = new byte[4] { bytesFrom[4], bytesFrom[5], bytesFrom[6], bytesFrom[7] };
@@ -291,7 +300,7 @@ namespace Assistant.Map
 								break;
 							}
 						// another user logger
-						case 16:        
+						case 16:
 							{
 								short userlenght = bytesFrom[2];
 								string username = Encoding.Default.GetString(bytesFrom, 3, userlenght);
@@ -306,7 +315,7 @@ namespace Assistant.Map
 								break;
 							}
 						// another user logoff
-						case 18:        
+						case 18:
 							{
 								short userlenght = bytesFrom[2];
 								string username = Encoding.Default.GetString(bytesFrom, 3, userlenght);
@@ -319,6 +328,31 @@ namespace Assistant.Map
 								MapNetwork.AddLog("User: " + username + " Logged Out!");
 								break;
 							}
+						// user request colot
+						case 20:
+							{
+								int userlenght = bytesFrom[2];
+								string username = Encoding.UTF8.GetString(bytesFrom, 3, userlenght);
+								MapNetwork.serverStream.Flush();
+								MapNetworkOut.SendRequestColorQueue.Enqueue(username);
+								MapNetwork.AddLog(username + " richiede il mio colore");
+								break;
+							}
+						// user send color
+						case 22:
+							{
+								int userlenght = bytesFrom[2];
+								string username = Encoding.UTF8.GetString(bytesFrom, 3, userlenght);
+								int startByteCol = userlenght + 3;
+								byte[] mex_color = new byte[4] { bytesFrom[startByteCol], bytesFrom[startByteCol + 1], bytesFrom[startByteCol + 2], bytesFrom[startByteCol + 3] };
+								string mex_color_trad = "#" + BitConverter.ToString(mex_color).Replace("-", "");
+								Color finalColor = ColorTranslator.FromHtml(mex_color_trad);
+								MapNetwork.serverStream.Flush();
+								UpdateUserColor(finalColor, username);
+								MapNetwork.AddLog(username + " ha inviato il suo colore");
+								break;
+							}
+
 					}
 				}
 				catch (Exception ex)
@@ -339,7 +373,7 @@ namespace Assistant.Map
 				obj.Facet = map;
 			}
 			else
-				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, x, y, map, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, x, y, map, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Color.White));
 		}
 
 		private static void UpdateUserHits(short hits, short stamina, short mana, short hitsmax, short staminamax, short manamax, string username)
@@ -355,7 +389,7 @@ namespace Assistant.Map
 				obj.ManaMax = manamax;
 			}
 			else
-				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, hits, stamina, mana, hitsmax, staminamax, manamax, 0));
+				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, hits, stamina, mana, hitsmax, staminamax, manamax, 0, Color.White));
 		}
 
 		private static void UpdateUserFlag(short flag, string username)
@@ -366,7 +400,7 @@ namespace Assistant.Map
 				obj.Flag = flag;
 			}
 			else
-				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, flag));
+				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, flag, Color.White));
 		}
 
 		private static void UpdateUserDeathPoint(short x, short y, short map, string username)
@@ -379,7 +413,7 @@ namespace Assistant.Map
 				obj.DeathPointFacet = map;
 			}
 			else
-				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, x, y, map, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, x, y, map, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Color.White));
 		}
 
 		private static void UpdateUserPanicPoint(short x, short y, short map, string username)
@@ -392,8 +426,23 @@ namespace Assistant.Map
 				obj.PanicPointFacet = map;
 			}
 			else
-				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, x, y, map, 0, 0, 0, 0, 0, 0, 0));
+				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, x, y, map, 0, 0, 0, 0, 0, 0, 0, Color.White));
 		}
+
+		private static void UpdateUserColor(Color col, string username)
+		{
+			MapNetworkIn.UserData obj = MapNetwork.UData.FirstOrDefault(u => u.Name == username);
+
+			if (obj != null)
+				obj.Color = col;
+			else
+				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, col));
+
+			if (username != RazorEnhanced.Settings.General.ReadString("MapLinkUsernameTextBox") && username != MapNetwork.PointN.Death && username != MapNetwork.PointN.Marker)
+			{
+				// if (Finder.finderControlstatic IsNot Nothing Then Finder.finderControlstatic.Invoke(New Action(Sub() Finder.ListViewPlayers.FindItemWithText(username).SubItems(7).Text = obj.Color.ToString))
+	     	}
+        }
 
 		private static void UpdateAddUser(string username)
 		{
@@ -408,7 +457,7 @@ namespace Assistant.Map
 			}
 
 			if (!found)
-				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+				MapNetwork.UData.Add(new MapNetworkIn.UserData(username, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Color.White));
 		}
 
 		private static void UpdateRemoveUser(string username)

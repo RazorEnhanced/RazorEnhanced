@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using Ultima;
 
@@ -232,7 +233,7 @@ namespace Assistant.Map
 					0, 0, 0,
 					0, 0, 0,
 					(short)World.Player.Hits, (short)World.Player.HitsMax, (short)World.Player.Stam, (short)World.Player.StamMax,
-					(short)World.Player.HitsMax, (short)World.Player.StamMax, (short)World.Player.ManaMax, flag));
+					(short)World.Player.HitsMax, (short)World.Player.StamMax, (short)World.Player.ManaMax, flag, Color.White));
 		}
 
 
@@ -302,7 +303,7 @@ namespace Assistant.Map
 				if (user.Name == fakeuser)
 				{
 					MapNetwork.UData.RemoveAt(index);
-					if (fakeuser == "_DEATH_")
+					if (fakeuser == MapNetwork.PointN.Death)
 						Map.UOMapControl.m_BoolDeathPoint = false;
 					break;
 				}
@@ -311,14 +312,11 @@ namespace Assistant.Map
 		}
 		public void AddFakeUser(string nome, int x, int y, int facet)
 		{
-			MapNetwork.UData.Add(new MapNetworkIn.UserData(nome, (short)x, (short)y, (short)facet, 0, 0, 0, 0, 0, 0,
-			0, 0, 0, 0, 0, 0, 0));
-			if (nome == "_DEATH_")
+			MapNetwork.UData.Add(new MapNetworkIn.UserData(nome, (short)x, (short)y, (short)facet, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Color.White));
+			if (nome == MapNetwork.PointN.Death)
 			{
 				Map.UOMapControl.m_TimeAfterDeath = DateTime.Now;
 			}
 		}
-
-
 	}
 }

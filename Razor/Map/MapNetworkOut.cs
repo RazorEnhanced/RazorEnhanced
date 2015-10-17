@@ -117,6 +117,8 @@ namespace Assistant.Map
 		internal static ConcurrentQueue<SendStat> SendStatQueue = new ConcurrentQueue<SendStat>();
 		internal static ConcurrentQueue<short> SendFlagQueue = new ConcurrentQueue<short>();
 		internal static ConcurrentQueue<SendChatMessage> SendChatMessageQueue = new ConcurrentQueue<SendChatMessage>();
+		internal static ConcurrentQueue<string> SendReplyColorQueue = new ConcurrentQueue<string>();
+		internal static ConcurrentQueue<string> SendRequestColorQueue = new ConcurrentQueue<string>();
 
 		internal static bool SendPanicFlag = false;
 		internal static bool SendDeathPointFlag = false;
@@ -279,7 +281,7 @@ namespace Assistant.Map
 					}
 
 				}
-				catch
+				catch (Exception ex)
 				{
 					MapNetwork.OutThreadFlag = false;
 					MapNetwork.Disconnect();
