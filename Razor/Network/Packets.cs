@@ -1803,6 +1803,16 @@ namespace Assistant
                 WriteLittleUniNull(text);        
         }
     }
+
+    internal sealed class RenameRequest : Packet
+    {
+        internal RenameRequest(uint serial, string name)
+            : base(0x75, 65)
+        {
+            Write((uint)serial);
+            WriteAsciiFixed(name, 30);
+        }
+    }
 }
 
 
