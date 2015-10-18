@@ -265,6 +265,46 @@ namespace RazorEnhanced
             }
         }
 
+
+        private static bool m_AutoModeRemount;
+        internal static bool AutoModeRemount
+        {
+            get { return m_AutoModeRemount; }
+            set { m_AutoModeRemount = value; }
+        }
+
+        internal static void AutoRemountEngine()
+        {
+            if (World.Player == null)
+                return;
+
+            if (AutoRemountSerial == 0)
+                return;
+
+            if (World.Player.IsGhost)
+                return;
+
+            if (World.Player.GetItemOnLayer(Layer.Mount) != null)   // Gia su mount
+                return;
+
+            Assistant.Item etheralMount = Assistant.World.FindItem(AutoRemountSerial);
+            if (etheralMount != null && etheralMount.Serial.IsItem)
+            {
+                RazorEnhanced.Items.UseItem(AutoRemountSerial);
+                Thread.Sleep(AutoRemountEDelay);
+            }
+            else
+            {
+                Assistant.Mobile mount = Assistant.World.FindMobile(AutoRemountSerial);
+                if (mount != null && mount.Serial.IsMobile)
+                {
+                    RazorEnhanced.Mobiles.UseMobile(AutoRemountSerial);
+                    Thread.Sleep(AutoRemountDelay);
+                }
+            }
+
+        }
+
         //////////////// AUTOREMOUNT STOP ////////////////
 
 

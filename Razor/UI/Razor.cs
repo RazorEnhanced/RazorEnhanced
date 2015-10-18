@@ -2311,6 +2311,7 @@ namespace Assistant
             this.remountsetbutton.Text = "Set Mount";
             this.remountsetbutton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
             this.remountsetbutton.UseVisualStyleBackColor = true;
+            this.remountsetbutton.Click += new System.EventHandler(this.remountsetbutton_Click);
             // 
             // remountcheckbox
             // 
@@ -10782,9 +10783,57 @@ namespace Assistant
 		{
 			RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
 		}
-		// ---------------- FILTERS END ----------------
 
-		private void timerupdatestatus_Tick(object sender, EventArgs e)
+        private void remountdelay_TextChanged(object sender, EventArgs e)
+        {
+            if (remountdelay.Focused)
+            {
+                int delay = 100;
+                Int32.TryParse(Assistant.Engine.MainWindow.remountdelay.Text, out delay);
+                RazorEnhanced.Filters.AutoRemountDelay = delay;
+                RazorEnhanced.Settings.General.WriteInt("MountDelay", delay);
+            }
+        }
+
+        private void remountedelay_TextChanged(object sender, EventArgs e)
+        {
+            if (remountedelay.Focused)
+            {
+                int delay = 100;
+                Int32.TryParse(Assistant.Engine.MainWindow.remountedelay.Text, out delay);
+                RazorEnhanced.Filters.AutoRemountEDelay = delay;
+                RazorEnhanced.Settings.General.WriteInt("EMountDelay", delay);
+            }
+        }
+
+        private void remountcheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (remountcheckbox.Checked)
+                RazorEnhanced.Filters.AutoModeRemount = true;
+            else
+                RazorEnhanced.Filters.AutoModeRemount = false;
+
+            if (remountcheckbox.Focused)
+                RazorEnhanced.Settings.General.WriteBool("RemountCheckbox", remountcheckbox.Checked);
+        }
+
+        private void remountsetbutton_Click(object sender, EventArgs e)
+        {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(remountSetMountTarget_Callback));
+        }
+
+        private void remountSetMountTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        {
+            if (serial != 0)
+            {
+                RazorEnhanced.Filters.AutoRemountSerial = serial;
+                RazorEnhanced.Settings.General.WriteInt("MountSerial", serial);
+            }
+        }
+
+        // ---------------- FILTERS END ----------------
+
+        private void timerupdatestatus_Tick(object sender, EventArgs e)
 		{
 			UpdateRazorStatus();
 		}
@@ -11205,33 +11254,5 @@ namespace Assistant
 		{
 			Assistant.Map.MapNetwork.Disconnect();
 		}
-
-        private void remountdelay_TextChanged(object sender, EventArgs e)
-        {
-            if (remountdelay.Focused)
-            {
-                int delay = 100;
-                Int32.TryParse(Assistant.Engine.MainWindow.remountdelay.Text, out delay);
-                RazorEnhanced.Filters.AutoRemountDelay = delay;
-                RazorEnhanced.Settings.General.WriteInt("MountDelay", delay);
-            }
-        }
-
-        private void remountedelay_TextChanged(object sender, EventArgs e)
-        {
-            if (remountedelay.Focused)
-            {
-                int delay = 100;
-                Int32.TryParse(Assistant.Engine.MainWindow.remountedelay.Text, out delay);
-                RazorEnhanced.Filters.AutoRemountEDelay = delay;
-                RazorEnhanced.Settings.General.WriteInt("EMountDelay", delay);
-            }
-        }
-
-        private void remountcheckbox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (remountcheckbox.Focused)
-                RazorEnhanced.Settings.General.WriteBool("RemountCheckbox", remountcheckbox.Checked);
-        }
     }
 }

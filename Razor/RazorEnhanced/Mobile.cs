@@ -481,7 +481,8 @@ namespace RazorEnhanced
 		{
 			Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
 		}
-		public static void UseMobile(uint mobileserial)
+
+		public static void UseMobile(int mobileserial)
 		{
 			Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
 			if (mobile == null)
