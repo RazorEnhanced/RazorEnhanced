@@ -850,7 +850,11 @@ namespace Assistant
 
 		internal uint CurrentGumpS, CurrentGumpI;
 		internal bool HasGump;
-		internal List<string> CurrentGumpStrings = new List<string>();
+        internal bool HasPrompt;
+        internal uint PromptSenderSerial;
+        internal uint PromptID;
+        internal uint PromptType;
+        internal List<string> CurrentGumpStrings = new List<string>();
 		internal Queue<RazorEnhanced.Journal.JournalEntry> Journal = new Queue<RazorEnhanced.Journal.JournalEntry>();
 		internal uint CurrentMenuS;
 		internal ushort CurrentMenuI;

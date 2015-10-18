@@ -1777,6 +1777,32 @@ namespace Assistant
 			EnsureCapacity(1);
 		}
 	}
+
+    internal sealed class PromptResponse : Packet
+    {
+        internal PromptResponse(uint serial, uint promptid, uint operation, string lang, string text)
+            : base(0xC2)
+        {
+            if (text != "")
+                EnsureCapacity(2 + 4 + 4 + 4 + 4 + (text.Length * 2));
+            else
+            {
+                EnsureCapacity(18);
+            }
+
+            Write((uint)serial);
+            Write((uint)promptid);
+            Write((uint)operation);
+
+            if (lang == null || lang == "")
+                lang = "ENU";
+
+            WriteAsciiFixed(lang.ToUpper(), 4);
+
+            if (text != "")
+                WriteLittleUniNull(text);        
+        }
+    }
 }
 
 
