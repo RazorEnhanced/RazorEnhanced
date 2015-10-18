@@ -209,8 +209,6 @@ namespace RazorEnhanced
                         {
                             m_AutoRemountThread = new Thread(Filters.AutoRemountEngine);
                             m_AutoRemountThread.Start();
-                            AutoLoot.AddLog("call");
-                            Thread.Sleep(1000);
                         }
                         catch
                         {
