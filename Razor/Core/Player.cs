@@ -873,7 +873,7 @@ namespace Assistant
 		internal int LastSkill { get { return m_LastSkill; } set { m_LastSkill = value; } }
 
 		private Serial m_LastObj = Serial.Zero;
-		internal Serial LastObject { get { return m_LastObj; } }
+		internal Serial LastObject { get { return m_LastObj; } set { m_LastObj = value; } }
 
 		private int m_LastSpell = -1;
 		internal int LastSpell { get { return m_LastSpell; } set { m_LastSpell = value; } }

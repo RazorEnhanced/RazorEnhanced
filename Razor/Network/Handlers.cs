@@ -190,8 +190,11 @@ namespace Assistant
 			if (ser.IsItem)
 			{
 				Item item = World.FindItem(ser);
-				if (item != null)
-					item.Updated = false;
+                if (item != null)
+                {
+                    item.Updated = false;
+                    World.Player.LastObject = ser;
+                }
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
