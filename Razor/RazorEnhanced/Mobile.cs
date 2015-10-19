@@ -181,18 +181,6 @@ namespace RazorEnhanced
 			}
 		}
 
-		/*	public Item FindItemByID(ItemID id)
-			{
-				Assistant.Item assitantItem = m_AssistantMobile.FindItemByID((ushort)id.Value);
-				if (assitantItem == null)
-					return null;
-				else
-				{
-					RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assitantItem);
-					return enhancedItem;
-				}
-			}
-			*/
 		public List<Item> Contains
 		{
 			get
@@ -527,7 +515,63 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
-	}
+        // Props
+        public static int GetPropValue(int serial, string name)
+        {
+            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+
+            foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+            {
+                if (prop.ToString().ToLower().Contains(name.ToLower()))
+                {
+                    if (prop.Args == null)  // Props esiste ma non ha valore
+                        return 1;
+
+                    string propstring = prop.Args;
+                    bool subprops = false;
+                    int i = 0;
+
+                    if (propstring.Length > 7)
+                        subprops = true;
+
+
+                    try  // Etraggo il valore
+                    {
+                        string number = string.Empty;
+                        foreach (char str in propstring)
+                        {
+                            if (subprops)
+                            {
+                                if (i > 7)
+                                    if (char.IsDigit(str))
+                                        number += str.ToString();
+                            }
+                            else
+                            {
+                                if (char.IsDigit(str))
+                                    number += str.ToString();
+                            }
+
+                            i++;
+                        }
+                        return (Convert.ToInt32(number));
+                    }
+                    catch
+                    {
+                        return 0;  // errore di conversione
+                    }
+                }
+            }
+            return 0;  // Non esiste
+        }
+
+        public static int GetPropValue(Mobile mob, string name)
+        {
+            return GetPropValue(mob.Serial, name);
+        }
+
+    }
 }
 
 

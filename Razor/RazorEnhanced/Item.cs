@@ -734,7 +734,6 @@ namespace RazorEnhanced
             {
                 if (prop.ToString().ToLower().Contains(name.ToLower()))
                 {
-                    RazorEnhanced.Misc.SendMessage("S-" + prop.Args + "-s");
                     if (prop.Args == null)  // Props esiste ma non ha valore
                         return 1;
 
