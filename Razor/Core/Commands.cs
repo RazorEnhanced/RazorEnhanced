@@ -9,14 +9,14 @@ namespace Assistant
 	{
 		public static void Initialize()
 		{
-			Command.Register("Where", new CommandCallback(Where));
-			Command.Register("Ping", new CommandCallback(Ping));
-			Command.Register("ReduceCPU", new CommandCallback(ReNice));
-			Command.Register("ReNice", new CommandCallback(ReNice));
-			Command.Register("ListCommand", new CommandCallback(Command.ListCommands));
-			Command.Register("Echo", new CommandCallback(Echo));
-			Command.Register("GetSerial", new CommandCallback(GetSerial));
-			Command.Register("Inspect", new CommandCallback(GetInfo));
+			Command.Register("where", new CommandCallback(Where));
+			Command.Register("ping", new CommandCallback(Ping));
+			Command.Register("reducecpu", new CommandCallback(ReNice));
+			Command.Register("renice", new CommandCallback(ReNice));
+			Command.Register("listcommand", new CommandCallback(Command.ListCommands));
+			Command.Register("echo", new CommandCallback(Echo));
+			Command.Register("getserial", new CommandCallback(GetSerial));
+			Command.Register("inspect", new CommandCallback(GetInfo));
 		}
 
 		private static void GetSerial(string[] param)
@@ -203,11 +203,7 @@ namespace Assistant
 						keys.Add(pvSrc.ReadByte());
 					}
 				}
-				/*
-                                foreach (ushort dd in keys)
-                                {
-                                    RazorEnhanced.Misc.SendMessage(dd.ToString());
-                                }*/
+
 				txtOffset = pvSrc.Position;
 				text = pvSrc.ReadUTF8StringSafe();
 				type &= ~MessageType.Encoded;
@@ -233,8 +229,8 @@ namespace Assistant
 
 				if (text[0] == '-')
 				{
-
-					text = text.Substring(1);
+					text = text.Substring(1).ToLower();
+                    RazorEnhanced.Misc.SendMessage(text);
 					string[] split = text.Split(' ', '\t');
 					if (m_List.ContainsKey(split[0]))
 					{
