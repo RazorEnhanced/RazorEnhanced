@@ -733,7 +733,25 @@ namespace RazorEnhanced
             foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
             {
                 if (prop.ToString().ToLower().Contains(name.ToLower()))
-                    RazorEnhanced.Misc.SendMessage(prop.Args);
+                {
+                    if (prop.Args == null)  // Props esiste ma non ha valore
+                        return 1;
+
+                    try  // Etraggo il valore
+                    {
+                        string number = string.Empty;
+                        foreach (char str in prop.Args)
+                        {
+                            if (char.IsDigit(str))
+                                number += str.ToString();
+                        }
+                        return (Convert.ToInt32(number));
+                    }
+                    catch
+                    {
+                        return 0;  // errore di conversione
+                    }
+                }
             }
             return 0;  // Non esiste
         }
