@@ -341,7 +341,7 @@ namespace RazorEnhanced
 				bool propsOK = false;
 				foreach (ScavengerItem.Property props in scavengerItem.Properties) // Scansione e verifica props
 				{
-					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(itemGround, props.Name);
+					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropValue(itemGround, props.Name);
 					if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
 					{
 						propsOK = true;
