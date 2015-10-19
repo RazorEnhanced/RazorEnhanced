@@ -768,7 +768,7 @@ namespace RazorEnhanced
                     }
                     catch
                     {
-                        return 0;  // errore di conversione
+                        return 1;  // errore di conversione ma esiste
                     }
                 }
             }

@@ -523,11 +523,12 @@ namespace RazorEnhanced
 
             foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
             {
+                RazorEnhanced.Misc.SendMessage(prop.Args);
                 if (prop.ToString().ToLower().Contains(name.ToLower()))
                 {
                     if (prop.Args == null)  // Props esiste ma non ha valore
                         return 1;
-
+        
                     string propstring = prop.Args;
                     bool subprops = false;
                     int i = 0;
@@ -559,7 +560,7 @@ namespace RazorEnhanced
                     }
                     catch
                     {
-                        return 0;  // errore di conversione
+                        return 1;  // errore di conversione ma esiste
                     }
                 }
             }
