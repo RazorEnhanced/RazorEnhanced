@@ -179,7 +179,25 @@ namespace RazorEnhanced
 					}
 				}
 
-				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
+                if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
+                {
+                    if (m_DragDropThread == null ||
+                           (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
+                           m_DragDropThread.ThreadState != ThreadState.Unstarted &&
+                           m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
+                       )
+                    {
+                        try
+                        {
+                            m_DragDropThread = new Thread(DragDropManager.Engine);
+                            m_DragDropThread.Start();
+                        }
+                        catch
+                        { }
+                    }
+                }
+
+                if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
 				{
 					if (m_AutoCarverThread == null ||
 						(m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
