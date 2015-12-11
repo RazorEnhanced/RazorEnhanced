@@ -1251,6 +1251,18 @@ namespace Assistant
 		}
 	}
 
+	internal sealed class NewMobileAnimation : Packet
+	{
+		internal NewMobileAnimation(Mobile m, int action, int frameCount, int delay)
+			: base(0xE2, 10)
+		{
+			Write((int)m.Serial);
+			Write((short)action);
+			Write((short)frameCount);
+			Write((byte)delay);
+		}
+	}
+
 	internal sealed class SetWarMode : Packet
 	{
 		internal SetWarMode(bool mode)
