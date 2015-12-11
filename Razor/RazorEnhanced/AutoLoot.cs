@@ -404,7 +404,7 @@ namespace RazorEnhanced
 				bool propsOK = false;
 				foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
 				{
-					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropByString(oggettoContenuto, props.Name);
+					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropValue(oggettoContenuto, props.Name);
 					if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
 					{
 						propsOK = true;

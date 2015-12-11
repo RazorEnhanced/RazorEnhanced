@@ -1,6 +1,7 @@
 ﻿using Assistant;
 using System;
 using System.Media;
+using System.Threading;
 
 
 namespace RazorEnhanced
@@ -62,6 +63,7 @@ namespace RazorEnhanced
 		{
 			Assistant.ClientCommunication.SendToServer(new Disconnect());
 		}
+
 		// Context Menu
 		public static void ContextReply(int serial, int idx)
 		{
@@ -78,7 +80,41 @@ namespace RazorEnhanced
 			ClientCommunication.SendToServer(new ContextMenuRequest(item.Serial));
 			ClientCommunication.SendToServer(new ContextMenuResponse(item.Serial, (ushort)idx));
 		}
-		public static void NoOperation()
+
+        // Prompt Message Stuff
+        public static void ResetPrompt()
+        {
+            World.Player.HasPrompt = false;
+        }
+
+        public static bool HasPrompt()
+        {
+            return World.Player.HasPrompt;
+        }
+
+        public static void WaitForPrompt(int delay) // Delay in MS
+        {
+            int subdelay = delay;
+            while (!World.Player.HasPrompt && subdelay > 0)
+            {
+                Thread.Sleep(2);
+                subdelay -= 2;
+            }
+        }
+
+        public static void CancelPrompt() 
+        {
+            ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
+            World.Player.HasPrompt = false;
+        }
+
+        public static void ResponsePrompt(string text)
+        {
+            ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1 , Language.CliLocName, text));
+            World.Player.HasPrompt = false;
+        }
+
+        public static void NoOperation()
 		{
 			return;
 		}

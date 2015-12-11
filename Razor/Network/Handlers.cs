@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Assistant
 {
@@ -33,8 +34,9 @@ namespace Assistant
 			PacketHandler.RegisterClientToServerViewer(0xA0, new PacketViewerCallback(PlayServer));
 			PacketHandler.RegisterClientToServerViewer(0xB1, new PacketViewerCallback(ClientGumpResponse));
 			PacketHandler.RegisterClientToServerFilter(0xBF, new PacketFilterCallback(ExtendedClientCommand));
-			//PacketHandler.RegisterClientToServerViewer( 0xD6, new PacketViewerCallback( BatchQueryProperties ) );
-			PacketHandler.RegisterClientToServerViewer(0xD7, new PacketViewerCallback(ClientEncodedPacket));
+            //PacketHandler.RegisterClientToServerViewer( 0xD6, new PacketViewerCallback( BatchQueryProperties ) );
+            PacketHandler.RegisterClientToServerViewer(0xC2, new PacketViewerCallback(UnicodePromptSend));
+            PacketHandler.RegisterClientToServerViewer(0xD7, new PacketViewerCallback(ClientEncodedPacket));
 			PacketHandler.RegisterClientToServerViewer(0xF8, new PacketViewerCallback(CreateCharacter));
 
 			//Server -> Client handlers
@@ -65,7 +67,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x7C, new PacketViewerCallback(SendMenu));
 			PacketHandler.RegisterServerToClientFilter(0x8C, new PacketFilterCallback(ServerAddress));
 			PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
-			PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
+            PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
+            PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA3, new PacketViewerCallback(StamUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA8, new PacketViewerCallback(ServerList));
@@ -77,7 +80,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0xBC, new PacketViewerCallback(ChangeSeason));
 			PacketHandler.RegisterServerToClientViewer(0xBF, new PacketViewerCallback(ExtendedPacket));
 			PacketHandler.RegisterServerToClientFilter(0xC1, new PacketFilterCallback(OnLocalizedMessage));
-			PacketHandler.RegisterServerToClientFilter(0xC8, new PacketFilterCallback(SetUpdateRange));
+            PacketHandler.RegisterServerToClientViewer(0xC2, new PacketViewerCallback(UnicodePromptRecevied));
+            PacketHandler.RegisterServerToClientFilter(0xC8, new PacketFilterCallback(SetUpdateRange));
 			PacketHandler.RegisterServerToClientFilter(0xCC, new PacketFilterCallback(OnLocalizedMessageAffix));
 			PacketHandler.RegisterServerToClientViewer(0xD6, new PacketViewerCallback(EncodedPacket));//0xD6 "encoded" packets
 			PacketHandler.RegisterServerToClientViewer(0xD8, new PacketViewerCallback(CustomHouseInfo));
@@ -186,8 +190,11 @@ namespace Assistant
 			if (ser.IsItem)
 			{
 				Item item = World.FindItem(ser);
-				if (item != null)
-					item.Updated = false;
+                if (item != null)
+                {
+                    item.Updated = false;
+                    World.Player.LastObject = ser;
+                }
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
@@ -1060,7 +1067,54 @@ namespace Assistant
 			}
 		}
 
-		private static readonly int[] HealthHues = new int[] { 428, 333, 37, 44, 49, 53, 158, 263, 368, 473, 578 };
+        private static void AsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
+        {
+            //int serial = (int)p.ReadUInt32();
+            //int id = (int)p.ReadUInt32();
+            //int type = (int)p.ReadUInt32();
+            //string message = p.ReadString();
+
+            if (World.Player != null)
+                World.Player.HasPrompt = false;
+        }
+
+        private static void UnicodePromptSend(PacketReader p, PacketHandlerEventArgs args)
+        {
+            uint serial = p.ReadUInt32();
+            uint id = p.ReadUInt32();
+            uint type = p.ReadUInt32();
+
+            if (World.Player != null)
+            {
+                World.Player.HasPrompt = false;
+                World.Player.PromptSenderSerial = serial;
+                World.Player.PromptID = id;
+                World.Player.PromptType = type;
+            }
+
+            //string lang = p.ReadStringSafe(4);
+            //string message = p.ReadUnicodeStringSafe();          
+        }
+
+        private static void UnicodePromptRecevied(PacketReader p, PacketHandlerEventArgs args)
+        {
+            uint serial = p.ReadUInt32();
+            uint id = p.ReadUInt32();
+            uint type = p.ReadUInt32();
+
+            if (World.Player != null)
+            {
+                World.Player.HasPrompt = false;
+                World.Player.PromptSenderSerial = serial;
+                World.Player.PromptID = id;
+                World.Player.PromptType = type;
+            }
+
+            //string lang = p.ReadStringSafe(4);
+            //string message = p.ReadUnicodeStringSafe();
+        }
+
+        private static readonly int[] HealthHues = new int[] { 428, 333, 37, 44, 49, 53, 158, 263, 368, 473, 578 };
 
 		private static void HitsUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{

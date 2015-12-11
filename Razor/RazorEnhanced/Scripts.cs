@@ -100,8 +100,9 @@ namespace RazorEnhanced
 			private Thread m_BandageHealThread;
 			private Thread m_AutoCarverThread;
 			private Thread m_DragDropThread;
+            private Thread m_AutoRemountThread;
 
-			internal ScriptTimer()
+            internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
 			{
 			}
@@ -116,8 +117,9 @@ namespace RazorEnhanced
 					}
 				}
 
+                Thread.Sleep(5);
 
-				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
+                if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
 					if (m_AutoLootThread == null ||
 						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
@@ -135,7 +137,6 @@ namespace RazorEnhanced
 							AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
 						}
 					}
-					Thread.Sleep(5);
 				}
 
 				if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running)
@@ -156,7 +157,6 @@ namespace RazorEnhanced
 							Scavenger.AddLog("Error in Scaveger Thread, Restart");
 						}
 					}
-					Thread.Sleep(5);
 				}
 
 				if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running)
@@ -177,10 +177,27 @@ namespace RazorEnhanced
 							BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
 						}
 					}
-					Thread.Sleep(5);
 				}
 
-				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
+                if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
+                {
+                    if (m_DragDropThread == null ||
+                           (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
+                           m_DragDropThread.ThreadState != ThreadState.Unstarted &&
+                           m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
+                       )
+                    {
+                        try
+                        {
+                            m_DragDropThread = new Thread(DragDropManager.Engine);
+                            m_DragDropThread.Start();
+                        }
+                        catch
+                        { }
+                    }
+                }
+
+                if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
 				{
 					if (m_AutoCarverThread == null ||
 						(m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
@@ -196,28 +213,29 @@ namespace RazorEnhanced
 						catch
 						{ }
 					}
-					Thread.Sleep(5);
 				}
 
-				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
-				{
-					if (m_DragDropThread == null ||
-						   (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
-						   m_DragDropThread.ThreadState != ThreadState.Unstarted &&
-						   m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
-					   )
-					{
-						try
-						{
-							m_DragDropThread = new Thread(DragDropManager.Engine);
-							m_DragDropThread.Start();
-						}
-						catch
-						{ }
-					}
-				}
-			}
-		}
+                if(Filters.AutoModeRemount && World.Player != null && Assistant.Engine.Running)
+                {
+                    if (m_AutoRemountThread == null ||
+                        (m_AutoRemountThread != null && m_AutoRemountThread.ThreadState != ThreadState.Running &&
+                        m_AutoRemountThread.ThreadState != ThreadState.Unstarted &&
+                        m_AutoRemountThread.ThreadState != ThreadState.WaitSleepJoin)
+                    )
+                    {
+                        try
+                        {
+                            m_AutoRemountThread = new Thread(Filters.AutoRemountEngine);
+                            m_AutoRemountThread.Start();
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+
+            }
+        }
 
 		internal static TimeSpan m_TimerDelay = TimeSpan.FromMilliseconds(100);
 

@@ -850,7 +850,11 @@ namespace Assistant
 
 		internal uint CurrentGumpS, CurrentGumpI;
 		internal bool HasGump;
-		internal List<string> CurrentGumpStrings = new List<string>();
+        internal bool HasPrompt;
+        internal uint PromptSenderSerial;
+        internal uint PromptID;
+        internal uint PromptType;
+        internal List<string> CurrentGumpStrings = new List<string>();
 		internal Queue<RazorEnhanced.Journal.JournalEntry> Journal = new Queue<RazorEnhanced.Journal.JournalEntry>();
 		internal uint CurrentMenuS;
 		internal ushort CurrentMenuI;
@@ -869,7 +873,7 @@ namespace Assistant
 		internal int LastSkill { get { return m_LastSkill; } set { m_LastSkill = value; } }
 
 		private Serial m_LastObj = Serial.Zero;
-		internal Serial LastObject { get { return m_LastObj; } }
+		internal Serial LastObject { get { return m_LastObj; } set { m_LastObj = value; } }
 
 		private int m_LastSpell = -1;
 		internal int LastSpell { get { return m_LastSpell; } set { m_LastSpell = value; } }
