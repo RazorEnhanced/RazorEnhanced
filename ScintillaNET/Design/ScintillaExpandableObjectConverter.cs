@@ -8,7 +8,6 @@ using System.Text;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Design
 {
 	// A custom ExpandableObjectConverter that provides a nicer string representation

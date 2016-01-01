@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Specifies the display mode of whitespace characters.

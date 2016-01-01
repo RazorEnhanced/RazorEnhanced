@@ -8,7 +8,6 @@ using System.Text;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -23,14 +22,12 @@ namespace ScintillaNET
 
 		#endregion Constants
 
-
 		#region Fields
 
 		private Scintilla _scintilla;
 		private int _lineIndex;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -42,7 +39,6 @@ namespace ScintillaNET
 				throw new InvalidOperationException(Resources.Exception_InvalidAnnotation);
 		}
 
-
 		/// <summary>
 		///     Removes all text and styles associated with the annotation.
 		/// </summary>
@@ -53,7 +49,6 @@ namespace ScintillaNET
 			// Remove the annotation
 			_scintilla.DirectMessage(NativeMethods.SCI_ANNOTATIONSETTEXT, new IntPtr(_lineIndex), IntPtr.Zero);
 		}
-
 
 		/// <summary>
 		///     Overridden. Determines whether the specified <see cref="Object" /> is equal to the current <see cref="Object" />.
@@ -76,7 +71,6 @@ namespace ScintillaNET
 
 			return false;
 		}
-
 
 		/// <summary>
 		///     Determines whether the specified <see cref="Annotation" /> is equal to the current <see cref="Annotation" />.
@@ -101,7 +95,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		/// <summary>
 		///     Overridden. Serves as a hash function for a particular type.
 		/// </summary>
@@ -110,7 +103,6 @@ namespace ScintillaNET
 		{
 			return _scintilla.GetHashCode() ^ _lineIndex;
 		}
-
 
 		/// <summary>
 		///     Returns a <see cref="StyleRun" /> enumerable representing the individual character styling of the annotation text.
@@ -178,7 +170,6 @@ namespace ScintillaNET
 			return styles.ToArray();
 		}
 
-
 		/*
         private void ScintillaTextChangedHandler(object sender, EventArgs e)
         {
@@ -190,7 +181,6 @@ namespace ScintillaNET
             _lineIndex = -1;
         }
         */
-
 
 		/// <summary>
 		///     Uses the enumerable <see cref="StyleRun" /> specified to individually style characters in the annotation text.
@@ -272,7 +262,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -287,7 +276,6 @@ namespace ScintillaNET
 				return _scintilla.DirectMessage(NativeMethods.SCI_ANNOTATIONGETLINES, new IntPtr(_lineIndex), IntPtr.Zero).ToInt32();
 			}
 		}
-
 
 		/// <summary>
 		///     Gets the index of the document line containing the annotation.
@@ -304,7 +292,6 @@ namespace ScintillaNET
 				return _lineIndex;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the index of the style used to style the annotation text.
@@ -333,7 +320,6 @@ namespace ScintillaNET
 				_scintilla.DirectMessage(NativeMethods.SCI_ANNOTATIONSETSTYLE, new IntPtr(_lineIndex), new IntPtr(value)).ToInt32();
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the text of the annotation.
@@ -393,7 +379,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Operators
 
 		/// <summary>
@@ -406,7 +391,6 @@ namespace ScintillaNET
 		{
 			return !(left == right);
 		}
-
 
 		/// <summary>
 		///     Tests whether two <see cref="Annotation" /> objects have equal location and content.
@@ -428,7 +412,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Operators
-
 
 		#region Constructors
 

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class ResolvedStyleList : Dictionary<int, StyleConfig>
@@ -14,7 +13,6 @@ namespace ScintillaNET.Configuration
 
 		public StyleConfig FindByName(string name)
 		{
-
 			foreach (StyleConfig item in this.Values)
 			{
 				if (item.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
@@ -26,12 +24,10 @@ namespace ScintillaNET.Configuration
 
 		#endregion Methods
 
-
 		#region Constructors
 
 		public ResolvedStyleList()
 		{
-
 		}
 
 		#endregion Constructors

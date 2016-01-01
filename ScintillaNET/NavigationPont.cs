@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Represents a point in the document used for navigation.
@@ -25,7 +19,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Constructors
 

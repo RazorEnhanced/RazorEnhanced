@@ -140,6 +140,7 @@ namespace Ultima
 			else
 				return bin.ReadString();
 		}
+
 		public static List<Object[]> LoadFromDesigner(string FileName)
 		{
 			List<Object[]> multilist = new List<Object[]>();
@@ -207,11 +208,9 @@ namespace Ultima
 									tempitem.m_OffsetZ = (short)z;
 									tempitem.m_Unk1 = 0;
 									arr.Add(tempitem);
-
 								}
 								data[1] = new MultiComponentList(arr);
 								break;
-
 						}
 						multilist.Add(data);
 					}
@@ -333,7 +332,6 @@ namespace Ultima
 								binmul.Write((int)tiles[i].m_Flags);
 								if (isUOAHS)
 									binmul.Write((int)tiles[i].m_Unk1);
-
 							}
 						}
 					}
@@ -360,7 +358,6 @@ namespace Ultima
 		public int maxHeight { get { return m_maxHeight; } }
 		public MultiTileEntry[] SortedTiles { get { return m_SortedTiles; } }
 		public int Surface { get { return m_Surface; } }
-
 
 		public struct MultiTileEntry
 		{
@@ -441,7 +438,6 @@ namespace Ultima
 
 					for (int i = 0; i < tiles.Length; ++i)
 					{
-
 						Bitmap bmp = Art.GetStatic(tiles[i].ID);
 
 						if (bmp == null)
@@ -587,6 +583,7 @@ namespace Ultima
 						}
 					}
 					break;
+
 				case Multis.ImportType.UOA:
 					itemcount = 0;
 
@@ -667,6 +664,7 @@ namespace Ultima
 					}
 
 					break;
+
 				case Multis.ImportType.UOAB:
 					using (FileStream fs = new FileStream(FileName, FileMode.Open, FileAccess.Read, FileShare.Read))
 					using (BinaryReader reader = new BinaryReader(fs))
@@ -806,7 +804,6 @@ namespace Ultima
 								tempitem.m_OffsetZ = Convert.ToInt16(line);
 								if (tempitem.m_OffsetZ > m_maxHeight)
 									m_maxHeight = tempitem.m_OffsetZ;
-
 							}
 						}
 						if (tempitem.m_ItemID != 0xFFFF)
@@ -922,7 +919,6 @@ namespace Ultima
 				++itemcount;
 				if (itemcount == count)
 					break;
-
 			}
 			int centerx = m_Max.X - (int)(Math.Round((m_Max.X - m_Min.X) / 2.0));
 			int centery = m_Max.Y - (int)(Math.Round((m_Max.Y - m_Min.Y) / 2.0));
@@ -1067,7 +1063,6 @@ namespace Ultima
 					Tex.WriteLine(String.Format("\tZ\t{0}", m_SortedTiles[i].m_OffsetZ));
 					Tex.WriteLine("\tColor\t0");
 					Tex.WriteLine("}");
-
 				}
 			}
 		}

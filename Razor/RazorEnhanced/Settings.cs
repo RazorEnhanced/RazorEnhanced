@@ -81,8 +81,6 @@ namespace RazorEnhanced
 				scripting.Columns.Add("HotKeyPass", typeof(bool));
 				m_Dataset.Tables.Add(scripting);
 
-
-
 				// -------- AUTOLOOT ------------
 				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
 				autoloot_lists.Columns.Add("Description", typeof(string));
@@ -96,8 +94,6 @@ namespace RazorEnhanced
 				autoloot_items.Columns.Add("Item", typeof(RazorEnhanced.AutoLoot.AutoLootItem));
 				m_Dataset.Tables.Add(autoloot_items);
 
-
-
 				// ----------- SCAVENGER ----------
 				DataTable scavenger_lists = new DataTable("SCAVENGER_LISTS");
 				scavenger_lists.Columns.Add("Description", typeof(string));
@@ -110,7 +106,6 @@ namespace RazorEnhanced
 				scavenger_items.Columns.Add("List", typeof(string));
 				scavenger_items.Columns.Add("Item", typeof(RazorEnhanced.Scavenger.ScavengerItem));
 				m_Dataset.Tables.Add(scavenger_items);
-
 
 				// ----------- ORGANIZER ----------
 				DataTable organizer_lists = new DataTable("ORGANIZER_LISTS");
@@ -126,7 +121,6 @@ namespace RazorEnhanced
 				organizer_items.Columns.Add("Item", typeof(RazorEnhanced.Organizer.OrganizerItem));
 				m_Dataset.Tables.Add(organizer_items);
 
-
 				// ----------- SELL AGENT ----------
 				DataTable sell_lists = new DataTable("SELL_LISTS");
 				sell_lists.Columns.Add("Description", typeof(string));
@@ -139,8 +133,6 @@ namespace RazorEnhanced
 				sell_items.Columns.Add("Item", typeof(RazorEnhanced.SellAgent.SellAgentItem));
 				m_Dataset.Tables.Add(sell_items);
 
-
-
 				// ----------- BUY AGENT ----------
 				DataTable buy_lists = new DataTable("BUY_LISTS");
 				buy_lists.Columns.Add("Description", typeof(string));
@@ -151,7 +143,6 @@ namespace RazorEnhanced
 				buy_items.Columns.Add("List", typeof(string));
 				buy_items.Columns.Add("Item", typeof(RazorEnhanced.BuyAgent.BuyAgentItem));
 				m_Dataset.Tables.Add(buy_items);
-
 
 				// ----------- DRESS ----------
 				DataTable dress_lists = new DataTable("DRESS_LISTS");
@@ -167,7 +158,6 @@ namespace RazorEnhanced
 				dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItem));
 				m_Dataset.Tables.Add(dress_items);
 
-
 				// ----------- FRIEND ----------
 				DataTable friend_lists = new DataTable("FRIEND_LISTS");
 				friend_lists.Columns.Add("Description", typeof(string));
@@ -181,7 +171,6 @@ namespace RazorEnhanced
 				friend_player.Columns.Add("List", typeof(string));
 				friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
 				m_Dataset.Tables.Add(friend_player);
-
 
 				// ----------- RESTOCK ----------
 				DataTable restock_lists = new DataTable("RESTOCK_LISTS");
@@ -197,8 +186,7 @@ namespace RazorEnhanced
 				restock_items.Columns.Add("Item", typeof(RazorEnhanced.Restock.RestockItem));
 				m_Dataset.Tables.Add(restock_items);
 
-
-				// ----------- TARGET ----------             
+				// ----------- TARGET ----------
 				DataTable targets = new DataTable("TARGETS");
 				targets.Columns.Add("Name", typeof(string));
 				targets.Columns.Add("TargetGUIObject", typeof(RazorEnhanced.TargetGUI.TargetGUIObject));
@@ -210,7 +198,6 @@ namespace RazorEnhanced
 				DataTable filter_graph = new DataTable("FILTER_GRAPH");
 				filter_graph.Columns.Add("Graph", typeof(RazorEnhanced.Filters.GraphChangeData));
 				m_Dataset.Tables.Add(filter_graph);
-
 
 				// ----------- TOOLBAR ITEM ----------
 				DataTable toolbar_items = new DataTable("TOOLBAR_ITEMS");
@@ -231,7 +218,6 @@ namespace RazorEnhanced
 				password.Columns.Add("User", typeof(string));
 				password.Columns.Add("Password", typeof(string));
 				m_Dataset.Tables.Add(password);
-
 
 				// ----------- HOTKEYS ----------
 				DataTable hotkey = new DataTable("HOTKEYS");
@@ -1201,7 +1187,6 @@ namespace RazorEnhanced
 				hotkeyrow.ItemArray = new object[] { "Script", "Stop All", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
-
 				m_Dataset.Tables.Add(hotkey);
 
 				// ----------- GENERAL SETTINGS ----------
@@ -1369,21 +1354,20 @@ namespace RazorEnhanced
 				general.Columns.Add("EMountDelay", typeof(int));
 				general.Columns.Add("RemountCheckbox", typeof(bool));
 
-
 				// Composizione Parematri base primo avvio
-				object[] generalstartparam = new object[] { 
+				object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false,
 
                     // Parametri primo avvio per tab Enhanced Filters
                     false, false, false, false, false, false, false, false, 0, 0,
-                    
+
                     // Parametri primo avvio per tab Enhanced ToolBar
                     false, false, 10, 10,
 
                     // Parametri primo avvio per tab screenshot
                     Path.GetDirectoryName(Application.ExecutablePath), "jpg", false, false, false,
-                    
+
                     // Parametri primo avvio per vecchi filtri
                     false, false, false, false, false, false, false, false, false, false, false, false, false,
 
@@ -1392,7 +1376,7 @@ namespace RazorEnhanced
 
                     // Parametri primo avvio tab skill
                     false, false, -1,
-                    
+
                     // Parametri primo avvio tab Options
                     false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false, false, false, @"{power} [{spell}]", 0,
 
@@ -1410,7 +1394,7 @@ namespace RazorEnhanced
 
                      // Parametri primo avvio enchanced map
                      false, false, true, false, false, true, true, true, true, true, false, "--", false, 0, "0.0.0.0", "0", "", "",
-                     
+
                      // Versione Corrente
                      SettingVersion,
 
@@ -1458,10 +1442,8 @@ namespace RazorEnhanced
 				Save();
 			}
 
-
 			internal static void ListUpdate(string description, int delay, int bag, bool selected)
 			{
-
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
@@ -1528,7 +1510,6 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
-
 					string description = (string)row["Description"];
 					int delay = (int)row["Delay"];
 					int bag = (int)row["Bag"];
@@ -1606,6 +1587,7 @@ namespace RazorEnhanced
 
 				Save();
 			}
+
 			internal static void ItemsRead(string list, out List<RazorEnhanced.AutoLoot.AutoLootItem> items)
 			{
 				List<RazorEnhanced.AutoLoot.AutoLootItem> itemsOut = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
@@ -1623,6 +1605,7 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
+
 			internal static void ListDetailsRead(string listname, out int bag, out int delay)
 			{
 				int bagOut = 0;
@@ -1641,9 +1624,6 @@ namespace RazorEnhanced
 		}
 
 		// ------------- AUTOLOOT END-----------------
-
-
-
 
 		// ------------- SCAVENGER -----------------
 		internal class Scavenger
@@ -1744,7 +1724,6 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
-
 					string description = (string)row["Description"];
 					int delay = (int)row["Delay"];
 					int bag = (int)row["Bag"];
@@ -1789,7 +1768,6 @@ namespace RazorEnhanced
 				}
 				Save();
 			}
-
 
 			internal static void ItemReplace(string list, int index, RazorEnhanced.Scavenger.ScavengerItem item)
 			{
@@ -1858,10 +1836,8 @@ namespace RazorEnhanced
 				delay = delayOut;
 			}
 		}
+
 		// ------------- SCAVENGER END-----------------
-
-
-
 
 		// ------------- ORGANIZER -----------------
 
@@ -1898,7 +1874,6 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int source, int destination, bool selected)
 			{
-
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
 				{
@@ -1966,7 +1941,6 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
 				{
-
 					string description = (string)row["Description"];
 					int delay = (int)row["Delay"];
 					int source = (int)row["Source"];
@@ -2083,9 +2057,8 @@ namespace RazorEnhanced
 				delay = delayOut;
 			}
 		}
+
 		// ------------- ORGANIZER END-----------------
-
-
 
 		// ------------- SELL AGENT ----------------
 
@@ -2120,7 +2093,6 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int bag, bool selected)
 			{
-
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
 				{
@@ -2207,6 +2179,7 @@ namespace RazorEnhanced
 
 				return false;
 			}
+
 			internal static int BagRead(string listname)
 			{
 				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
@@ -2292,11 +2265,9 @@ namespace RazorEnhanced
 
 				items = itemsOut;
 			}
-
 		}
+
 		// ------------- SELL AGENT END-----------------
-
-
 
 		// ------------- BUY AGENT ----------------
 
@@ -2330,7 +2301,6 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, bool selected)
 			{
-
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
 				{
@@ -2489,6 +2459,7 @@ namespace RazorEnhanced
 				items = itemsOut;
 			}
 		}
+
 		// ------------- BUY AGENT END-----------------
 
 		// ------------- DRESS ----------------
@@ -2526,7 +2497,6 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int bag, bool conflict, bool selected)
 			{
-
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
 				{
@@ -2642,7 +2612,6 @@ namespace RazorEnhanced
 				bag = bagOut;
 				delay = delayOut;
 				conflict = conflictOut;
-
 			}
 
 			internal static void ItemClear(string list)
@@ -2657,6 +2626,7 @@ namespace RazorEnhanced
 				}
 				Save();
 			}
+
 			internal static void ItemInsert(string list, RazorEnhanced.Dress.DressItem item)
 			{
 				DataRow row = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
@@ -2693,6 +2663,7 @@ namespace RazorEnhanced
 
 				Save();
 			}
+
 			internal static void ItemReplace(string list, int index, RazorEnhanced.Dress.DressItem item)
 			{
 				int count = -1;
@@ -2753,7 +2724,6 @@ namespace RazorEnhanced
 				return false;
 			}
 
-
 			internal static void ListInsert(string description, bool includeparty, bool preventattack, bool autoacceptparty)
 			{
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
@@ -2774,7 +2744,6 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, bool includeparty, bool preventattack, bool autoacceptparty, bool selected)
 			{
-
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
 				{
@@ -2853,8 +2822,6 @@ namespace RazorEnhanced
 				}
 				lists = listsOut;
 			}
-
-
 
 			internal static bool PlayerExists(string list, RazorEnhanced.Friend.FriendPlayer player)
 			{
@@ -2961,8 +2928,8 @@ namespace RazorEnhanced
 				autoacceptparty = autoacceptpartyOut;
 			}
 		}
-		// ------------- FRIEND END-----------------
 
+		// ------------- FRIEND END-----------------
 
 		// ------------- RESTOCK  -----------------
 
@@ -2999,7 +2966,6 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int source, int destination, bool selected)
 			{
-
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
 				{
@@ -3067,7 +3033,6 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
 				{
-
 					string description = (string)row["Description"];
 					int delay = (int)row["Delay"];
 					int source = (int)row["Source"];
@@ -3184,8 +3149,8 @@ namespace RazorEnhanced
 				delay = delayOut;
 			}
 		}
-		// ------------- RESTOCK END-----------------
 
+		// ------------- RESTOCK END-----------------
 
 		// ------------- GRAPH FILTER  -----------------
 
@@ -3259,10 +3224,9 @@ namespace RazorEnhanced
 
 				Save();
 			}
-
 		}
-		// ------------- GRAPH FILTER END-----------------
 
+		// ------------- GRAPH FILTER END-----------------
 
 		// ------------- TARGET SETTINGS START -----------------
 		internal class Target
@@ -3321,7 +3285,6 @@ namespace RazorEnhanced
 				Save();
 			}
 
-
 			internal static void TargetDelete(string targetid)
 			{
 				if (TargetExist(targetid))
@@ -3337,6 +3300,7 @@ namespace RazorEnhanced
 				}
 				Save();
 			}
+
 			internal static TargetGUI.TargetGUIObject TargetRead(string targetid)
 			{
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
@@ -3347,7 +3311,6 @@ namespace RazorEnhanced
 				return null;
 			}
 		}
-
 
 		// ------------- TARGET SETTINGS END -----------------
 
@@ -3497,7 +3460,6 @@ namespace RazorEnhanced
 
 			internal static void UpdateKey(string name, Keys key, bool passkey)
 			{
-
 				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
 				{
 					if ((string)row["Name"] == name)
@@ -3506,7 +3468,6 @@ namespace RazorEnhanced
 						row["Pass"] = passkey;
 						break;
 					}
-
 				}
 
 				Save();
@@ -3514,7 +3475,6 @@ namespace RazorEnhanced
 
 			internal static void UpdateTargetKey(string name, Keys key, bool passkey)
 			{
-
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
 					if ((string)row["Name"] == name)
@@ -3530,7 +3490,6 @@ namespace RazorEnhanced
 
 			internal static void UpdateScriptKey(string name, Keys key, bool passkey)
 			{
-
 				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
 				{
 					if ((string)row["Filename"] == name)
@@ -3642,7 +3601,6 @@ namespace RazorEnhanced
 							break;
 						}
 					}
-
 
 				if (!found)
 					foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
@@ -3758,8 +3716,8 @@ namespace RazorEnhanced
 				outgroup = group;
 				outpass = pass;
 			}
-
 		}
+
 		// ------------- HOTKEYS END -----------------
 
 		// ------------- GENERAL SETTINGS START -----------------
@@ -3829,6 +3787,7 @@ namespace RazorEnhanced
 					Save();
 				}
 			}
+
 			internal static int ReadInt(string name)
 			{
 				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
@@ -4091,6 +4050,5 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", 4);
 			}
 		}
-
 	}
 }

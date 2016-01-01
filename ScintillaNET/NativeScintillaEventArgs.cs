@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -15,8 +14,8 @@ namespace ScintillaNET
 	///     All events fired from the INativeScintilla Interface uses
 	///     NativeScintillaEventArgs. Msg is a copy
 	///     of the Notification Message sent to Scintilla's Parent WndProc
-	///     and SCNotification is the SCNotification Struct pointed to by 
-	///     Msg's lParam. 
+	///     and SCNotification is the SCNotification Struct pointed to by
+	///     Msg's lParam.
 	/// </remarks>
 	[Obsolete("This type will not be public in future versions.")]
 	public class NativeScintillaEventArgs : EventArgs
@@ -27,7 +26,6 @@ namespace ScintillaNET
 		private SCNotification _notification;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -42,7 +40,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     SCNotification structure sent from Scintilla that contains the event data
 		/// </summary>
@@ -55,7 +52,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

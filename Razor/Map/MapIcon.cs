@@ -10,24 +10,28 @@ namespace Assistant.Map
 		public class MapIconData
 		{
 			private string m_icon;
+
 			public string Icon
 			{
 				get { return m_icon; }
 			}
 
 			private short m_x;
+
 			public short X
 			{
 				get { return m_x; }
 			}
 
 			private short m_y;
+
 			public short Y
 			{
 				get { return m_y; }
 			}
 
 			private short m_facet;
+
 			public short Facet
 			{
 				get { return m_facet; }
@@ -35,6 +39,7 @@ namespace Assistant.Map
 			}
 
 			private string m_desc;
+
 			public string Desc
 			{
 				get { return m_desc; }
@@ -65,6 +70,7 @@ namespace Assistant.Map
 		internal static List<MapIconData> IconcommonList = new List<MapIconData>();
 		internal static List<MapIconData> IconAtlasList = new List<MapIconData>();
 		internal static List<List<MapIcon.MapIconData>> AllListOfBuilds = new List<List<MapIcon.MapIconData>>();
+
 		internal static void ParseImageFile()
 		{
 			IconImage.Clear();
@@ -74,7 +80,6 @@ namespace Assistant.Map
 				string[] fileEntries = Directory.GetFiles("Icon\\");
 				foreach (string fileName in fileEntries)
 				{
-
 					if (fileName.EndsWith(".png", StringComparison.Ordinal))
 					{
 						string nameex = fileName.Substring(fileName.LastIndexOf('\\') + 1);
@@ -87,8 +92,8 @@ namespace Assistant.Map
 			{
 				MapNetwork.AddLog("- Fail to parse Icon File");
 			}
-
 		}
+
 		internal static List<MapIconData> ParseDataFile(string filename)
 		{
 			bool sintaxerror = false;

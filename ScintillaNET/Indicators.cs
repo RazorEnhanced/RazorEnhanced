@@ -9,7 +9,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -31,13 +30,11 @@ namespace ScintillaNET
 
 		#endregion Constants
 
-
 		#region Fields
 
 		private Scintilla _scintilla;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -51,7 +48,6 @@ namespace ScintillaNET
 			return new Indicator(_scintilla, index);
 		}
 
-
 		/// <summary>
 		///     Returns an enumerator that iterates through the <see cref="Indicators" />.
 		/// </summary>
@@ -63,12 +59,10 @@ namespace ScintillaNET
 				yield return this[index++];
 		}
 
-
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
 		}
-
 
 		public void Reset()
 		{
@@ -77,7 +71,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Indexers
 
@@ -101,7 +94,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Indexers
-
 
 		#region Constructors
 

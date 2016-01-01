@@ -11,7 +11,6 @@ namespace RazorEnhanced
 		[Serializable]
 		public class OrganizerItem
 		{
-
 			private string m_Name;
 			public string Name { get { return m_Name; } }
 
@@ -303,8 +302,8 @@ namespace RazorEnhanced
 			RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
 			Items.UseItem(sourceBag);
 			Thread.Sleep(mseconds);
-            
-			// Inizia scansione 
+
+			// Inizia scansione
 			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
 			{
 				foreach (OrganizerItem oggettoDaLista in organizerItemList)
@@ -324,7 +323,7 @@ namespace RazorEnhanced
 						}
 						else   // Caso con limite quantita'
 						{
-							if (oggettoContenuto.Amount <= oggettoDaLista.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti 
+							if (oggettoContenuto.Amount <= oggettoDaLista.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti
 							{
 								RazorEnhanced.Organizer.AddLog("n");
 
@@ -393,7 +392,6 @@ namespace RazorEnhanced
 				m_OrganizerThread = new Thread(Organizer.Engine);
 				m_OrganizerThread.Start();
 			}
-
 		}
 
 		internal static void ForceStop()
@@ -403,6 +401,7 @@ namespace RazorEnhanced
 				m_OrganizerThread.Abort();
 			}
 		}
+
 		// Funzioni da script
 
 		public static void FStart()
@@ -416,8 +415,8 @@ namespace RazorEnhanced
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-                Assistant.Engine.MainWindow.OrganizerStopExec();
-            else
+				Assistant.Engine.MainWindow.OrganizerStopExec();
+			else
 				Misc.SendMessage("Script Error: Organizer.FStart: Organizer not running");
 		}
 
@@ -428,6 +427,7 @@ namespace RazorEnhanced
 			else
 				return false;
 		}
+
 		public static void ChangeList(string nomelista)
 		{
 			bool ListaOK = false;

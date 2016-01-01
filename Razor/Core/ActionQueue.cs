@@ -61,7 +61,6 @@ namespace Assistant
 			{
 				return String.Format("{2}({0},{1},{3},{4})", Serial, Amount, Id, FromClient, DoLast);
 			}
-
 		}
 
 		private class DropReq

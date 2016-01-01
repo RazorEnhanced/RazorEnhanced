@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -17,14 +16,12 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public bool Print()
 		{
 			return Print(true);
 		}
-
 
 		public bool Print(bool showPrintDialog)
 		{
@@ -52,7 +49,6 @@ namespace ScintillaNET
 			return true;
 		}
 
-
 		public DialogResult PrintPreview()
 		{
 			PrintPreviewDialog ppd = new PrintPreviewDialog();
@@ -61,7 +57,6 @@ namespace ScintillaNET
 			ppd.Document = _printDocument;
 			return ppd.ShowDialog();
 		}
-
 
 		public DialogResult PrintPreview(IWin32Window owner)
 		{
@@ -75,24 +70,20 @@ namespace ScintillaNET
 			return ppd.ShowDialog(owner);
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return ShouldSerializePageSettings() || ShouldSerializePrintDocument();
 		}
-
 
 		private bool ShouldSerializePageSettings()
 		{
 			return PageSettings.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializePrintDocument()
 		{
 			return _printDocument.ShouldSerialize();
 		}
-
 
 		public DialogResult ShowPageSetupDialog()
 		{
@@ -101,7 +92,6 @@ namespace ScintillaNET
 			psd.PrinterSettings = PageSettings.PrinterSettings;
 			return psd.ShowDialog();
 		}
-
 
 		public DialogResult ShowPageSetupDialog(IWin32Window owner)
 		{
@@ -114,7 +104,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -131,7 +120,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public PrintDocument PrintDocument
 		{
@@ -146,7 +134,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

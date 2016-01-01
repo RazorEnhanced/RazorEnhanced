@@ -72,6 +72,7 @@ namespace Assistant
 		private byte m_GridNum;
 
 		private bool m_Updated = true;
+
 		internal bool Updated
 		{
 			get { return m_Updated; }
@@ -387,6 +388,7 @@ namespace Assistant
 		}
 
 		private static List<Item> m_NeedContUpdate = new List<Item>();
+
 		internal static void UpdateContainers()
 		{
 			int i = 0;
@@ -400,6 +402,7 @@ namespace Assistant
 		}
 
 		private static List<Serial> m_AutoStackCache = new List<Serial>();
+
 		internal void AutoStackResource()
 		{
 			if (!IsResource || !RazorEnhanced.Settings.General.ReadBool("AutoStack") || m_AutoStackCache.Contains(Serial))
@@ -583,6 +586,7 @@ namespace Assistant
 		}
 
 		internal bool OnGround { get { return Container == null; } }
+
 		internal bool IsContainer
 		{
 			get
@@ -756,7 +760,7 @@ namespace Assistant
 				using (StreamReader reader = new StreamReader(new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
 				{
 					string line;
-					reader.ReadLine(); // ver 
+					reader.ReadLine(); // ver
 					int skip = 0;
 					int count = 0;
 					while ((line = reader.ReadLine()) != null)

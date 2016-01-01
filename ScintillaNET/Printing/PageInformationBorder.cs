@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Type of border to print for a Page Information section

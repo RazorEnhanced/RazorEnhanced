@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -18,7 +17,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		private void ResetActiveBackColor()
@@ -26,36 +24,30 @@ namespace ScintillaNET
 			ActiveBackColor = SystemColors.Window;
 		}
 
-
 		private void ResetActiveForeColor()
 		{
 			ActiveForeColor = SystemColors.HotTrack;
 		}
-
 
 		private void ResetActiveUnderline()
 		{
 			ActiveUnderline = true;
 		}
 
-
 		private void ResetSingleLine()
 		{
 			SingleLine = true;
 		}
-
 
 		private void ResetUseActiveBackColor()
 		{
 			UseActiveBackColor = true;
 		}
 
-
 		private void ResetUseActiveForeColor()
 		{
 			UseActiveForeColor = true;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -67,36 +59,30 @@ namespace ScintillaNET
 				ShouldSerializeUseActiveForeColor();
 		}
 
-
 		private bool ShouldSerializeActiveBackColor()
 		{
 			return ActiveBackColor != SystemColors.Window;
 		}
-
 
 		private bool ShouldSerializeActiveForeColor()
 		{
 			return ActiveForeColor != SystemColors.HotTrack;
 		}
 
-
 		private bool ShouldSerializeActiveUnderline()
 		{
 			return !ActiveUnderline;
 		}
-
 
 		private bool ShouldSerializeSingleLine()
 		{
 			return !SingleLine;
 		}
 
-
 		private bool ShouldSerializeUseActiveBackColor()
 		{
 			return !UseActiveBackColor;
 		}
-
 
 		private bool ShouldSerializeUseActiveForeColor()
 		{
@@ -104,7 +90,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -128,7 +113,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Color ActiveForeColor
 		{
 			get
@@ -149,7 +133,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool ActiveUnderline
 		{
 			get
@@ -161,7 +144,6 @@ namespace ScintillaNET
 				NativeScintilla.SetHotspotActiveUnderline(value);
 			}
 		}
-
 
 		public bool SingleLine
 		{
@@ -175,7 +157,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool UseActiveBackColor
 		{
 			get
@@ -187,7 +168,6 @@ namespace ScintillaNET
 				_useActiveBackColor = value;
 			}
 		}
-
 
 		public bool UseActiveForeColor
 		{
@@ -202,7 +182,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+
 //using System.Windows.Media.Imaging;
 
 namespace Ultima
@@ -19,6 +20,7 @@ namespace Ultima
 		private static AnimIdx[] animcache3;
 		private static AnimIdx[] animcache4;
 		private static AnimIdx[] animcache5;
+
 		static AnimationEdit()
 		{
 			if (m_FileIndex.IdxLength > 0)
@@ -32,6 +34,7 @@ namespace Ultima
 			if (m_FileIndex5.IdxLength > 0)
 				animcache5 = new AnimIdx[m_FileIndex5.IdxLength / 12];
 		}
+
 		/// <summary>
 		/// Rereads AnimX files
 		/// </summary>
@@ -68,6 +71,7 @@ namespace Ultima
 					else
 						index = 35000 + ((body - 400) * 175);
 					break;
+
 				case 2:
 					fileIndex = m_FileIndex2;
 					if (body < 200)
@@ -75,6 +79,7 @@ namespace Ultima
 					else
 						index = 22000 + ((body - 200) * 65);
 					break;
+
 				case 3:
 					fileIndex = m_FileIndex3;
 					if (body < 300)
@@ -84,6 +89,7 @@ namespace Ultima
 					else
 						index = 35000 + ((body - 400) * 175);
 					break;
+
 				case 4:
 					fileIndex = m_FileIndex4;
 					if (body < 200)
@@ -93,6 +99,7 @@ namespace Ultima
 					else
 						index = 35000 + ((body - 400) * 175);
 					break;
+
 				case 5:
 					fileIndex = m_FileIndex5;
 					if ((body < 200) && (body != 34)) // looks strange, though it works.
@@ -118,14 +125,19 @@ namespace Ultima
 			{
 				case 1:
 					return animcache;
+
 				case 2:
 					return animcache2;
+
 				case 3:
 					return animcache3;
+
 				case 4:
 					return animcache4;
+
 				case 5:
 					return animcache5;
+
 				default:
 					return animcache;
 			}
@@ -453,7 +465,6 @@ namespace Ultima
 					i = 0;
 					while (i < 0x100)//&& i < pal.Colors.Count)
 					{
-
 						int Red = pal.Colors[i].R / 8;
 						int Green = pal.Colors[i].G / 8;
 						int Blue = pal.Colors[i].B / 8;
@@ -548,18 +559,23 @@ namespace Ultima
 					case 1:
 						contaFinal = (((0x400 * RedTemp) + (0x20 * GreenTemp)) + BlueTemp) + 0x8000;
 						break;
+
 					case 2:
 						contaFinal = (((0x400 * RedTemp) + (0x20 * BlueTemp)) + GreenTemp) + 0x8000;
 						break;
+
 					case 3:
 						contaFinal = (((0x400 * GreenTemp) + (0x20 * RedTemp)) + BlueTemp) + 0x8000;
 						break;
+
 					case 4:
 						contaFinal = (((0x400 * GreenTemp) + (0x20 * BlueTemp)) + RedTemp) + 0x8000;
 						break;
+
 					case 5:
 						contaFinal = (((0x400 * BlueTemp) + (0x20 * GreenTemp)) + RedTemp) + 0x8000;
 						break;
+
 					case 6:
 						contaFinal = (((0x400 * BlueTemp) + (0x20 * RedTemp)) + GreenTemp) + 0x8000;
 						break;
@@ -617,8 +633,8 @@ namespace Ultima
 					this.Palette[i] = 0x8000;
 			}
 		}
-		//End of Soulblighter Modification
 
+		//End of Soulblighter Modification
 
 		public unsafe void ExportPalette(string filename, int type)
 		{
@@ -633,6 +649,7 @@ namespace Ultima
 						}
 					}
 					break;
+
 				case 1:
 					{
 						Bitmap bmp = new Bitmap(0x100, 20, PixelFormat.Format16bppArgb1555);
@@ -759,6 +776,7 @@ namespace Ultima
 	public sealed class FrameEdit
 	{
 		private const int DoubleXor = (0x200 << 22) | (0x200 << 12);
+
 		public struct Raw
 		{
 			public int run;
@@ -766,6 +784,7 @@ namespace Ultima
 			public int offy;
 			public byte[] data;
 		}
+
 		public Raw[] RawData { get; private set; }
 		public Point Center { get; set; }
 		public int width;

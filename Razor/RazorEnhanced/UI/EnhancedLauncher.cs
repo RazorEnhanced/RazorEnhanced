@@ -43,7 +43,6 @@ namespace RazorEnhanced.UI
 				okay.Enabled = true;
 			else
 				okay.Enabled = false;
-
 		}
 
 		internal void UpdateGUI()

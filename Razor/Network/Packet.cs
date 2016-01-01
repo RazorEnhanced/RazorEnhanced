@@ -17,6 +17,7 @@ namespace Assistant
 	internal class Packet
 	{
 		private static bool m_Logging = false;
+
 		internal static bool Logging
 		{
 			get
@@ -140,7 +141,7 @@ namespace Assistant
 
 			while ( m_Stream.Length - m_Stream.Position >= 4 )
 				code ^= ReadInt32();
-			
+
 			code ^= ReadByte() | (ReadByte() << 8) | (ReadByte() << 16) | (ReadByte() << 24);
 
 			m_Stream.Position = oldPos;
@@ -194,18 +195,23 @@ namespace Assistant
 						case PacketPath.ClientToServer:
 							pathStr = "Client -> Server";
 							break;
+
 						case PacketPath.RazorToServer:
 							pathStr = "Razor -> Server";
 							break;
+
 						case PacketPath.ServerToClient:
 							pathStr = "Server -> Client";
 							break;
+
 						case PacketPath.RazorToClient:
 							pathStr = "Razor -> Client";
 							break;
+
 						case PacketPath.PacketVideo:
 							pathStr = "PacketVideo -> Client";
 							break;
+
 						default:
 							pathStr = "Unknown -> Unknown";
 							break;
@@ -534,8 +540,6 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-
-
 		/////////////////////////////////////////////
 		///Packet Writer/////////////////////////////
 		/////////////////////////////////////////////
@@ -831,9 +835,11 @@ namespace Assistant
 				case SeekOrigin.End:
 					m_Pos = m_Length - offset;
 					break;
+
 				case SeekOrigin.Current:
 					m_Pos += offset;
 					break;
+
 				case SeekOrigin.Begin:
 					m_Pos = offset;
 					break;
@@ -847,6 +853,7 @@ namespace Assistant
 
 		// ZIPPY REV 80		internal byte *Data { get { return m_Data; } }
 		internal int Length { get { return m_Length; } }
+
 		internal bool DynamicLength { get { return m_Dyn; } }
 
 		internal byte[] CopyBytes(int offset, int count)

@@ -12,6 +12,7 @@ namespace Assistant
 		private static extern IntPtr DeleteObject(IntPtr hGdiObj);
 
 		private static TimerCallback m_DoCaptureCall = new TimerCallback(CaptureNow);
+
 		public static void Initialize()
 		{
 			//HotKey.Add(HKCategory.Misc, LocString.TakeSS, new HotKeyCallback(CaptureNow));
@@ -63,7 +64,7 @@ namespace Assistant
 			do
 			{
 				filename = Path.Combine(path, String.Format("{0}{1}.{2}", name, count != 0 ? count.ToString() : "", type));
-				count--; // cause a - to be put in front of the number 
+				count--; // cause a - to be put in front of the number
 			}
 			while (File.Exists(filename));
 
@@ -136,4 +137,3 @@ namespace Assistant
 		}
 	}
 }
-

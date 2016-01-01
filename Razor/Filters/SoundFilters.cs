@@ -53,4 +53,3 @@ namespace Assistant.Filters
 		}
 	}
 }
-

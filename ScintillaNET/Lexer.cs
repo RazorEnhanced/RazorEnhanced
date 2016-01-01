@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Built in lexers supported by Scintilla

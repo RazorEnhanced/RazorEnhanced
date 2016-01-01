@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Threading;
 
-
 namespace RazorEnhanced
 {
 	public class DragDropManager
@@ -10,6 +9,7 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> AutoLootSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> AutoLootOpenAction = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
+
 		internal static void Engine()
 		{
 			/* if (AutoLootOpenAction.Count > 100)
@@ -43,7 +43,6 @@ namespace RazorEnhanced
 					AutoLootOpenAction.TryDequeue(out itemserial);
 					AutoLootOpenAction.Enqueue(itemserial);
 				}
-
 			}
 
 			if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
@@ -83,7 +82,6 @@ namespace RazorEnhanced
 					AutoLootSerialToGrab.TryDequeue(out itemserial);
 					AutoLootSerialToGrab.Enqueue(itemserial);
 				}
-
 			}
 
 			if (ScavengerSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.ScavengerCheckBox.Checked)
@@ -122,10 +120,9 @@ namespace RazorEnhanced
 					ScavengerSerialToGrab.TryDequeue(out itemserial);
 					ScavengerSerialToGrab.Enqueue(itemserial);
 				}
-
 			}
-
 		}
+
 		private static bool CheckZLevel(int x, int y)
 		{
 			int diff = x - y;
@@ -136,6 +133,4 @@ namespace RazorEnhanced
 				return true;
 		}
 	}
-
-
 }

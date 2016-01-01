@@ -4,7 +4,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class IndicatorConfig
@@ -20,7 +19,6 @@ namespace ScintillaNET.Configuration
 		private IndicatorStyle? _style;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -48,7 +46,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Inherit
 		{
 			get
@@ -60,7 +57,6 @@ namespace ScintillaNET.Configuration
 				_inherit = value;
 			}
 		}
-
 
 		public IndicatorDrawMode? DrawMode
 		{
@@ -74,7 +70,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int Index
 		{
 			get
@@ -87,7 +82,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public byte? OutlineAlpha
 		{
 			get
@@ -99,7 +93,6 @@ namespace ScintillaNET.Configuration
 				_outlineAlpha = value;
 			}
 		}
-
 
 		public IndicatorStyle? Style
 		{

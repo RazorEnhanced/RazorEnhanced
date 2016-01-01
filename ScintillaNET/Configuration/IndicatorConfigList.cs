@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class IndicatorConfigList : KeyedCollection<int, IndicatorConfig>
@@ -15,7 +14,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Fields
 
-
 		#region Methods
 
 		protected override int GetKeyForItem(IndicatorConfig item)
@@ -24,7 +22,6 @@ namespace ScintillaNET.Configuration
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 

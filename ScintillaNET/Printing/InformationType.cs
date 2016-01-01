@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Type of data to display at one of the positions in a Page Information section

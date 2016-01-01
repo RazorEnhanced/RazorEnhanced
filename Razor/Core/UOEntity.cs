@@ -117,7 +117,7 @@ namespace Assistant
 		}
 
 		/*public Packet BuildOPLPacket()
-		{ 
+		{
 			return m_ObjPropList.BuildPacket();
 		}*/
 

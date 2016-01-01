@@ -7,7 +7,6 @@ namespace Ultima
 {
 	public sealed class Map
 	{
-
 		public TileMatrix m_Tiles;
 		private int m_FileIndex, m_MapID;
 		private int m_Width, m_Height;
@@ -27,16 +26,22 @@ namespace Ultima
 					return Felucca = new Map(0, 0, 7168, 4096); // 6144
 				case "Trammel":
 					return Trammel = new Map(0, 1, 7168, 4096);
+
 				case "Ilshenar":
 					return Ilshenar = new Map(2, 2, 2304, 1600);
+
 				case "Malas":
 					return Malas = new Map(3, 3, 2560, 2048);
+
 				case "Tokuno":
 					return Tokuno = new Map(4, 4, 1448, 1448);
+
 				case "TerMur":
 					return TerMur = new Map(5, 5, 1280, 4096);
+
 				case "Custom":
 					return Custom = new Map(x, y, w, h);
+
 				default:
 					return null;
 			}
@@ -472,7 +477,7 @@ namespace Ultima
 		}
 
 		/// <summary>
-		/// Draws in given Bitmap with Statics 
+		/// Draws in given Bitmap with Statics
 		/// </summary>
 		/// <param name="x">8x8 Block</param>
 		/// <param name="y">8x8 Block</param>
@@ -503,7 +508,6 @@ namespace Ultima
 
 			for (int oy = 0, by = y; oy < height; ++oy, ++by, pStart += blockStride)
 			{
-
 				int* pRow0 = (int*)(pStart + (0 * stride));
 				int* pRow1 = (int*)(pStart + (1 * stride));
 				int* pRow2 = (int*)(pStart + (2 * stride));
@@ -592,7 +596,6 @@ namespace Ultima
 			}
 			else
 				return;
-
 
 			int blockx = width >> 3;
 			int blocky = height >> 3;

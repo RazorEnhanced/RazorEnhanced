@@ -22,7 +22,6 @@ using System.Windows.Forms.VisualStyles;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -125,6 +124,7 @@ namespace ScintillaNET
 		///     Enables the brace matching from current position.
 		/// </summary>
 		private bool _isBraceMatching = false;
+
 		private bool _isCustomPaintingEnabled = true;
 		private bool _isInitializing = false;
 		private List<ManagedRange> _managedRanges = new List<ManagedRange>();
@@ -137,10 +137,10 @@ namespace ScintillaNET
 
 		// This has to be set *early* because CreateParams is called before our constructor
 		private BorderStyle _borderStyle = BorderStyle.Fixed3D;
+
 		private VisualStyleRenderer _renderer;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -164,7 +164,6 @@ namespace ScintillaNET
 				AppendText(eolMarker);
 		}
 
-
 		/// <summary>
 		///     Appends a copy of the specified string to the _end of this instance.
 		/// </summary>
@@ -177,18 +176,15 @@ namespace ScintillaNET
 			return GetRange(oldLength, TextLength);
 		}
 
-
 		public void BeginInit()
 		{
 			_isInitializing = true;
 		}
 
-
 		public char CharAt(int position)
 		{
 			return _ns.GetCharAt(position);
 		}
-
 
 		/// <summary>
 		///     Creates and returns a new <see cref="AnnotationCollection" /> object.
@@ -200,7 +196,6 @@ namespace ScintillaNET
 			return new AnnotationCollection(this);
 		}
 
-
 		/// <summary>
 		///     Creates and returns a new <see cref="FindReplace" /> object.
 		/// </summary>
@@ -210,7 +205,6 @@ namespace ScintillaNET
 		{
 			return new FindReplace(this);
 		}
-
 
 		/// <summary>
 		///     Overridden. See <see cref="Control.CreateHandle" />.
@@ -224,7 +218,6 @@ namespace ScintillaNET
 			base.CreateHandle();
 		}
 
-
 		/// <summary>
 		///     Creates and returns a new <see cref="Indicators" /> object.
 		/// </summary>
@@ -234,7 +227,6 @@ namespace ScintillaNET
 		{
 			return new Indicators(this);
 		}
-
 
 		/// <summary>
 		///     Creates and returns a new <see cref="LineWrapping" /> object.
@@ -246,7 +238,6 @@ namespace ScintillaNET
 			return new LineWrapping(this);
 		}
 
-
 		/// <summary>
 		///     Creates and returns a new <see cref="Scrolling"/> object.
 		/// </summary>
@@ -256,7 +247,6 @@ namespace ScintillaNET
 		{
 			return new Scrolling(this);
 		}
-
 
 		/// <summary>
 		///     Sends the specified message directly to the native Scintilla window,
@@ -278,7 +268,6 @@ namespace ScintillaNET
 			// Scintilla's equivalent of 'SendMessage'
 			return _sciFunction(Pointer, msg, wParam, lParam);
 		}
-
 
 		/// <summary>
 		///     Overridden. Releases the unmanaged resources used by the <see cref="Control" /> and
@@ -307,7 +296,6 @@ namespace ScintillaNET
 			base.Dispose(disposing);
 		}
 
-
 		public void EndInit()
 		{
 			_isInitializing = false;
@@ -316,7 +304,6 @@ namespace ScintillaNET
 				helper.Initialize();
 			}
 		}
-
 
 		/// <summary>
 		///     Exports a HTML representation of the current document.
@@ -331,7 +318,6 @@ namespace ScintillaNET
 
 			return sb.ToString();
 		}
-
 
 		/// <summary>
 		///     Exports a HTML representation of the current document.
@@ -483,12 +469,10 @@ namespace ScintillaNET
 			writer.WriteLine("</html>");
 		}
 
-
 		public int FindColumn(int line, int column)
 		{
 			return _ns.FindColumn(line, column);
 		}
-
 
 		internal void FireCallTipClick(int arrow)
 		{
@@ -541,12 +525,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		internal void FireKeyDown(KeyEventArgs e)
 		{
 			OnKeyDown(e);
 		}
-
 
 		internal void FireMarginClick(SCNotification n)
 		{
@@ -565,12 +547,10 @@ namespace ScintillaNET
 			OnMarginClick(new MarginClickEventArgs(k, n.position, Lines.FromPosition(n.position), m, m.AutoToggleMarkerNumber, m.IsFoldMargin));
 		}
 
-
 		public int GetColumn(int position)
 		{
 			return _ns.GetColumn(position);
 		}
-
 
 		/// <summary>
 		///     Gets the text of the line containing the caret.
@@ -581,7 +561,6 @@ namespace ScintillaNET
 			int tmp;
 			return GetCurrentLine(out tmp);
 		}
-
 
 		/// <summary>
 		///     Gets the text of the line containing the caret and the current caret position within that line.
@@ -598,24 +577,20 @@ namespace ScintillaNET
 			return Encoding.GetString(buffer, 0, length - 1);
 		}
 
-
 		public Range GetRange()
 		{
 			return new Range(0, _ns.GetTextLength(), this);
 		}
-
 
 		public Range GetRange(int position)
 		{
 			return new Range(position, position + 1, this);
 		}
 
-
 		public Range GetRange(int startPosition, int endPosition)
 		{
 			return new Range(startPosition, endPosition, this);
 		}
-
 
 		/// <summary>
 		///     Gets a word from the specified position
@@ -637,7 +612,6 @@ namespace ScintillaNET
 			return GetRange(startPosition, endPosition).Text;
 		}
 
-
 		/// <summary>
 		///     Inserts text at the current cursor position
 		/// </summary>
@@ -648,7 +622,6 @@ namespace ScintillaNET
 			NativeInterface.AddText(Encoding.GetByteCount(text), text);
 			return GetRange(_caret.Position, Encoding.GetByteCount(text));
 		}
-
 
 		/// <summary>
 		///     Inserts text at the given position
@@ -662,7 +635,6 @@ namespace ScintillaNET
 			return GetRange(position, Encoding.GetByteCount(text));
 		}
 
-
 		/// <summary>
 		///     Overridden. See <see cref="Control.IsInputKey"/>.
 		/// </summary>
@@ -675,8 +647,10 @@ namespace ScintillaNET
 			{
 				case Keys.Tab:
 					return _state[_acceptsTabState];
+
 				case Keys.Enter:
 					return _state[_acceptsReturnState];
+
 				case Keys.Up:
 				case Keys.Down:
 				case Keys.Left:
@@ -688,7 +662,6 @@ namespace ScintillaNET
 
 			return base.IsInputKey(keyData);
 		}
-
 
 		private void LoadModule()
 		{
@@ -744,7 +717,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private List<ManagedRange> ManagedRangesInRange(int firstPos, int lastPos)
 		{
 			// TODO: look into optimizing this so that it isn't a linear
@@ -758,7 +730,6 @@ namespace ScintillaNET
 			return ret;
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="AnnotationChanged" /> event.
 		/// </summary>
@@ -769,7 +740,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="AutoCompleteAccepted"/> event.
@@ -785,7 +755,6 @@ namespace ScintillaNET
 				AutoComplete.Cancel();
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="BackColorChanged"/> event.
 		/// </summary>
@@ -795,7 +764,6 @@ namespace ScintillaNET
 			ResetStyles();
 			base.OnBackColorChanged(e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="BeforeTextDelete"/> event.
@@ -809,12 +777,10 @@ namespace ScintillaNET
 			List<ManagedRange> deletedRanges = new List<ManagedRange>();
 			foreach (ManagedRange mr in _managedRanges)
 			{
-
 				//	These ranges lie within the deleted range so
 				//	the ranges themselves need to be deleted
 				if (mr.Start >= firstPos && mr.End <= lastPos)
 				{
-
 					//	If the entire range is being delete and NOT a superset of the range,
 					//	don't delete it, only collapse it.
 					if (!mr.IsPoint && e.Position == mr.Start && (e.Position + e.Length == mr.End))
@@ -828,7 +794,6 @@ namespace ScintillaNET
 
 						//	Mark for deletion after this foreach:
 						deletedRanges.Add(mr);
-
 					}
 				}
 				else if (mr.Start >= lastPos)
@@ -850,7 +815,6 @@ namespace ScintillaNET
 				{
 					mr.Change(mr.Start, firstPos);
 				}
-
 			}
 
 			foreach (ManagedRange mr in deletedRanges)
@@ -860,7 +824,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="BeforeTextInsert"/> event.
@@ -905,14 +868,12 @@ namespace ScintillaNET
 						mr.Change(mr.Start, mr.End + e.Length);
 					}
 				}
-
 			}
 
 			EventHandler<TextModifiedEventArgs> handler = Events[_beforeTextInsertEventKey] as EventHandler<TextModifiedEventArgs>;
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="BorderStyleChanged" /> event.
@@ -925,7 +886,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="CallTipClick"/> event.
 		/// </summary>
@@ -936,7 +896,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="CharAdded"/> event.
@@ -952,7 +911,6 @@ namespace ScintillaNET
 				_indentation.CheckSmartIndent(e.Ch);
 		}
 
-
 		/// <summary>
 		///     Overridden. See <see cref="Control.OnCreateControl"/>.
 		/// </summary>
@@ -961,7 +919,6 @@ namespace ScintillaNET
 			base.OnCreateControl();
 			OnLoad(EventArgs.Empty);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="DocumentChange"/> event.
@@ -973,7 +930,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Provides the support for code block selection
@@ -1007,7 +963,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="DropMarkerCollect"/> event.
 		/// </summary>
@@ -1018,7 +973,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="DwellEnd"/> event.
@@ -1031,7 +985,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="DwellStart"/> event.
 		/// </summary>
@@ -1042,7 +995,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="FoldChanged"/> event.
@@ -1055,7 +1007,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="FontChanged"/> event.
 		/// </summary>
@@ -1066,7 +1017,6 @@ namespace ScintillaNET
 			base.OnFontChanged(e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="ForeColorChanged"/> event.
 		/// </summary>
@@ -1076,7 +1026,6 @@ namespace ScintillaNET
 			ResetStyles();
 			base.OnForeColorChanged(e);
 		}
-
 
 		/// <summary>
 		///     Overridden. See <see cref="Control.OnGotFocus"/>.
@@ -1091,7 +1040,6 @@ namespace ScintillaNET
 
 			base.OnGotFocus(e);
 		}
-
 
 		/// <summary>
 		///     Overridden. Raises the <see cref="Control.HandleCreated"/> event.
@@ -1108,7 +1056,6 @@ namespace ScintillaNET
 			base.OnHandleCreated(e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="HotspotClick"/> event.
 		/// </summary>
@@ -1119,7 +1066,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="HotspotDoubleClick"/> event.
@@ -1132,7 +1078,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="HotspotReleaseClick"/> event.
 		/// </summary>
@@ -1143,7 +1088,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="IndicatorClick"/> event.
@@ -1156,7 +1100,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Overridden. See <see cref="Control.OnKeyDown"/>.
 		/// </summary>
@@ -1166,7 +1109,6 @@ namespace ScintillaNET
 			if (!e.Handled)
 				e.SuppressKeyPress = _commands.ProcessKey(e);
 		}
-
 
 		/// <summary>
 		///     Overridden. See <see cref="Control.OnKeyPress"/>.
@@ -1192,7 +1134,6 @@ namespace ScintillaNET
 			base.OnKeyPress(e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="LinesNeedShown"/> event.
 		/// </summary>
@@ -1204,7 +1145,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="Load"/> event.
 		/// </summary>
@@ -1215,7 +1155,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Overridden. See <see cref="Control.OnLostFocus"/>.
@@ -1231,7 +1170,6 @@ namespace ScintillaNET
 			base.OnLostFocus(e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="MacroRecord"/> event.
 		/// </summary>
@@ -1242,7 +1180,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="MarginClick"/> event.
@@ -1267,7 +1204,6 @@ namespace ScintillaNET
 				e.Line.ToggleFoldExpanded();
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="MarkerChanged"/> event.
 		/// </summary>
@@ -1278,7 +1214,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="ModifiedChanged"/> event.
@@ -1291,7 +1226,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Overridden. See <see cref="Control.OnPaint"/>.
 		/// </summary>
@@ -1301,7 +1235,6 @@ namespace ScintillaNET
 
 			paintRanges(e.Graphics);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="ReadOnlyModifyAttempt"/> event.
@@ -1314,14 +1247,12 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		private void OnSCNotification(SCNotificationEventArgs e)
 		{
 			EventHandler<SCNotificationEventArgs> handler = Events[_scNotificationEventKey] as EventHandler<SCNotificationEventArgs>;
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="Scroll"/> event.
@@ -1333,7 +1264,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="SelectionChanged"/> event.
@@ -1377,6 +1307,7 @@ namespace ScintillaNET
 							}
 						}
 						break;
+
 					default:
 						position = CurrentPos;
 						character = (char)CharAt(position); //this is not being used anywhere... --Cory
@@ -1385,7 +1316,6 @@ namespace ScintillaNET
 				}
 			}
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="StyleNeeded"/> event.
@@ -1398,7 +1328,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="TextDeleted"/> event.
 		/// </summary>
@@ -1409,7 +1338,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		/// <summary>
 		///     Raises the <see cref="TextInserted"/> event.
@@ -1422,7 +1350,6 @@ namespace ScintillaNET
 				handler(this, e);
 		}
 
-
 		/// <summary>
 		///     Raises the <see cref="ZoomFactorChanged"/> event.
 		/// </summary>
@@ -1433,7 +1360,6 @@ namespace ScintillaNET
 			if (handler != null)
 				handler(this, e);
 		}
-
 
 		private void paintRanges(Graphics g)
 		{
@@ -1451,7 +1377,6 @@ namespace ScintillaNET
 
 			List<ManagedRange> mrs = ManagedRangesInRange(firstPos, lastPos);
 
-
 			g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 			foreach (ManagedRange mr in mrs)
 			{
@@ -1459,30 +1384,25 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int PointXFromPosition(int position)
 		{
 			return _ns.PointXFromPosition(position);
 		}
-
 
 		public int PointYFromPosition(int position)
 		{
 			return _ns.PointYFromPosition(position);
 		}
 
-
 		public int PositionFromPoint(int x, int y)
 		{
 			return _ns.PositionFromPoint(x, y);
 		}
 
-
 		public int PositionFromPointClose(int x, int y)
 		{
 			return _ns.PositionFromPointClose(x, y);
 		}
-
 
 		/// <summary>
 		///     Checks that if the specified position is on comment.
@@ -1492,7 +1412,6 @@ namespace ScintillaNET
 			//this.Colorize(0, -1);
 			return PositionIsOnComment(position, _lexing.Lexer);
 		}
-
 
 		/// <summary>
 		///     Checks that if the specified position is on comment.
@@ -1649,7 +1568,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		/// <summary>
 		///     Overridden. See <see cref="Control.ProcessKeyMessage"/>.
 		/// </summary>
@@ -1667,18 +1585,15 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private void ResetCaption()
 		{
 			Caption = GetType().FullName;
 		}
 
-
 		private void ResetMargins()
 		{
 			_margins.Reset();
 		}
-
 
 		private void ResetStyles()
 		{
@@ -1693,7 +1608,6 @@ namespace ScintillaNET
 			Styles[0].BackColor = BackColor;
 			Styles.Default.BackColor = BackColor;
 		}
-
 
 		/// <summary>
 		///     Custom way to find the matching brace when BraceMatch() does not work
@@ -1766,7 +1680,6 @@ namespace ScintillaNET
 			return -1;
 		}
 
-
 		private void ScnModified(ref NativeMethods.SCNotification scn)
 		{
 			// The Scintilla documentation would suggest that the SCEN_CHANGE notification is identical to the
@@ -1787,12 +1700,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private void ScnZoom(ref NativeMethods.SCNotification scn)
 		{
 			OnZoomFactorChanged(EventArgs.Empty);
 		}
-
 
 		/// <summary>
 		///     Sets the application-wide default module name of the native Scintilla library.
@@ -1818,7 +1729,6 @@ namespace ScintillaNET
 			_moduleName = moduleName;
 		}
 
-
 		private bool SetRenderer(VisualStyleElement element)
 		{
 			if (!Application.RenderWithVisualStyles)
@@ -1835,156 +1745,130 @@ namespace ScintillaNET
 			return true;
 		}
 
-
 		private bool ShouldSerializeAnnotations()
 		{
 			return _annotations != null && _annotations.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeAutoComplete()
 		{
 			return _autoComplete.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeCallTip()
 		{
 			return _callTip.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeCaption()
 		{
 			return Caption != GetType().FullName;
 		}
 
-
 		private bool ShouldSerializeCaret()
 		{
 			return _caret.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeClipboard()
 		{
 			return _clipboard.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeCommands()
 		{
 			return _commands.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeConfigurationManager()
 		{
 			return _configurationManager.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeDocumentNavigation()
 		{
 			return _documentNavigation.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeDropMarkers()
 		{
 			return _dropMarkers.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeEndOfLine()
 		{
 			return _endOfLine.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeFindReplace()
 		{
 			return _findReplace.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeFolding()
 		{
 			return _folding.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeHotspotStyle()
 		{
 			return _hotspotStyle.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeIndentation()
 		{
 			return _indentation.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeLexing()
 		{
 			return _lexing.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeLineWrapping()
 		{
 			return LineWrapping.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeLongLines()
 		{
 			return _longLines.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeMargins()
 		{
 			return _margins.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeMarkers()
 		{
 			return _markers.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializePrinting()
 		{
 			return _printing.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeSelection()
 		{
 			return _selection.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeSnippets()
 		{
 			return _snippets.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeStyles()
 		{
 			return _styles.ShouldSerialize();
 		}
 
-
 		public bool ShouldSerializeUndoRedo()
 		{
 			return _undoRedo.ShouldSerialize();
 		}
-
 
 		private void WmNcPaint(ref Message m)
 		{
@@ -2049,7 +1933,6 @@ namespace ScintillaNET
 			DefWndProc(ref m);
 			m.Result = IntPtr.Zero;
 		}
-
 
 		private void WmReflectNotify(ref Message m)
 		{
@@ -2166,7 +2049,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private void WmScroll(ref Message m)
 		{
 			ScrollOrientation so = ScrollOrientation.VerticalScroll;
@@ -2191,7 +2073,6 @@ namespace ScintillaNET
 
 			OnScroll(new ScrollEventArgs(set, oldScroll, newScroll, so));
 		}
-
 
 		/// <summary>
 		///     Overridden. Processes Windows messages.
@@ -2285,7 +2166,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Increases the <see cref="ZoomFactor"/> property by 1 point to a maximum of 20;
 		/// </summary>
@@ -2306,7 +2186,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -2325,7 +2204,6 @@ namespace ScintillaNET
 			set { _state[_acceptsReturnState] = value; }
 		}
 
-
 		/// <summary>
 		///     Gets or sets a value indicating whether pressing the TAB key types a TAB character in the control
 		///     instead of moving the focus to the next control in the tab order.
@@ -2341,7 +2219,6 @@ namespace ScintillaNET
 			get { return _state[_acceptsTabState]; }
 			set { _state[_acceptsTabState] = value; }
 		}
-
 
 		/// <summary>
 		///     Gets a collection containing all annotations in the control.
@@ -2363,7 +2240,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Controls autocompletion behavior.
 		/// </summary>
@@ -2375,7 +2251,6 @@ namespace ScintillaNET
 				return _autoComplete;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the background color for the control.
@@ -2392,7 +2267,6 @@ namespace ScintillaNET
 			set { base.BackColor = value; }
 		}
 
-
 		/// <summary>
 		///     This property is not relevant for this class.
 		/// </summary>
@@ -2403,7 +2277,6 @@ namespace ScintillaNET
 			set { base.BackgroundImage = value; }
 		}
 
-
 		/// <summary>
 		///     This property is not relevant for this class.
 		/// </summary>
@@ -2413,7 +2286,6 @@ namespace ScintillaNET
 			get { return base.BackgroundImageLayout; }
 			set { base.BackgroundImageLayout = value; }
 		}
-
 
 		/// <summary>
 		///     Gets or sets the border style of the control.
@@ -2450,7 +2322,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Manages CallTip (Visual Studio-like code Tooltip) behaviors
 		/// </summary>
@@ -2466,7 +2337,6 @@ namespace ScintillaNET
 				_callTip = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the Win32 Window Caption. Defaults to Type's FullName
@@ -2485,10 +2355,8 @@ namespace ScintillaNET
 					//	Triggers a new WM_GETTEXT query
 					base.Text = value;
 				}
-
 			}
 		}
-
 
 		/// <summary>
 		///     Controls Caret Behavior
@@ -2501,7 +2369,6 @@ namespace ScintillaNET
 				return _caret;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets Clipboard access for the control.
@@ -2518,9 +2385,7 @@ namespace ScintillaNET
 			}
 		}
 
-
 		internal Dictionary<string, Color> ColorBag { get { return _colorBag; } }
-
 
 		/// <summary>
 		///     Controls behavior of keyboard bound commands.
@@ -2538,7 +2403,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Controls behavior of loading/managing ScintillaNET configurations.
 		/// </summary>
@@ -2554,7 +2418,6 @@ namespace ScintillaNET
 				_configurationManager = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Overridden. See <see cref="Control.CreateParams"/>.
@@ -2576,6 +2439,7 @@ namespace ScintillaNET
 					case BorderStyle.Fixed3D:
 						cp.ExStyle |= NativeMethods.WS_EX_CLIENTEDGE;
 						break;
+
 					case BorderStyle.FixedSingle:
 						cp.Style |= NativeMethods.WS_BORDER;
 						break;
@@ -2584,7 +2448,6 @@ namespace ScintillaNET
 				return cp;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the character index of the current caret position.
@@ -2603,7 +2466,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>Gets or sets the default cursor for the control.</summary>
 		/// <returns>An object of type <see cref="T:System.Windows.Forms.Cursor"></see> representing the current default cursor.</returns>
 		protected override Cursor DefaultCursor
@@ -2613,7 +2475,6 @@ namespace ScintillaNET
 				return Cursors.IBeam;
 			}
 		}
-
 
 		/// <summary>
 		///     Overridden. See <see cref="Control.DefaultSize"/>.
@@ -2625,7 +2486,6 @@ namespace ScintillaNET
 				return new Size(200, 100);
 			}
 		}
-
 
 		/// <summary>
 		///     Controls behavior of Documents
@@ -2643,7 +2503,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Controls behavior of automatic document navigation
 		/// </summary>
@@ -2660,7 +2519,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Controls behavior of Drop Markers
 		/// </summary>
@@ -2672,7 +2530,6 @@ namespace ScintillaNET
 				return _dropMarkers;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the type of text encoding the <see cref="Scintilla" /> control uses internally.
@@ -2727,7 +2584,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Controls End Of Line Behavior
 		/// </summary>
@@ -2744,7 +2600,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Category("Behavior")]
 		public FindReplace FindReplace
 		{
@@ -2757,7 +2612,6 @@ namespace ScintillaNET
 				_findReplace = value;
 			}
 		}
-
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Behavior")]
 		public Folding Folding
@@ -2772,7 +2626,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the font of the text displayed by the control.
 		/// </summary>
@@ -2786,7 +2639,6 @@ namespace ScintillaNET
 			get { return base.Font; }
 			set { base.Font = value; }
 		}
-
 
 		/// <summary>
 		///     Gets or sets the foreground color of the control.
@@ -2803,7 +2655,6 @@ namespace ScintillaNET
 			set { base.ForeColor = value; }
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public GoTo GoTo
 		{
@@ -2817,7 +2668,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		protected internal List<TopLevelHelper> Helpers
 		{
 			get
@@ -2829,7 +2679,6 @@ namespace ScintillaNET
 				_helpers = value;
 			}
 		}
-
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Appearance")]
 		public HotspotStyle HotspotStyle
@@ -2844,7 +2693,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Behavior")]
 		public Indentation Indentation
 		{
@@ -2857,7 +2705,6 @@ namespace ScintillaNET
 				_indentation = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets an object used by the <see cref="Scintilla" /> control to manage indicators.
@@ -2880,14 +2727,12 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DefaultValue(false), Category("Behavior")]
 		public bool IsBraceMatching
 		{
 			get { return _isBraceMatching; }
 			set { _isBraceMatching = value; }
 		}
-
 
 		[DefaultValue(true), Category("Behavior")]
 		public bool IsCustomPaintingEnabled
@@ -2902,7 +2747,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		internal bool IsDesignMode
 		{
 			get
@@ -2910,7 +2754,6 @@ namespace ScintillaNET
 				return DesignMode;
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		internal bool IsInitializing
@@ -2925,21 +2768,18 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DefaultValue(false), Category("Behavior")]
 		public bool IsReadOnly
 		{
 			get
 			{
 				return _ns.GetReadOnly();
-
 			}
 			set
 			{
 				_ns.SetReadOnly(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the line layout caching strategy in a <see cref="Scintilla" /> control.
@@ -2970,7 +2810,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Behavior")]
 		public Lexing Lexing
 		{
@@ -2984,17 +2823,14 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public LineCollection Lines
 		{
 			get
 			{
-
 				return _lines;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets an object that controls line wrapping options in the <see cref="Scintilla"/> control.
@@ -3014,7 +2850,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Behavior")]
 		public LongLines LongLines
 		{
@@ -3028,13 +2863,11 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public List<ManagedRange> ManagedRanges
 		{
 			get { return _managedRanges; }
 		}
-
 
 		[Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Appearance")]
 		public MarginCollection Margins
@@ -3044,7 +2877,6 @@ namespace ScintillaNET
 				return _margins;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets a collection representing the marker objects and options within the control.
@@ -3063,7 +2895,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DefaultValue(true), Category("Behavior")]
 		public bool MatchBraces
 		{
@@ -3080,7 +2911,6 @@ namespace ScintillaNET
 					_ns.BraceHighlight(-1, -1);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets a value that indicates that the control has been modified by the user since
@@ -3108,7 +2938,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DefaultValue(true), Category("Behavior")]
 		public bool MouseDownCaptures
 		{
@@ -3122,7 +2951,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public INativeScintilla NativeInterface
 		{
@@ -3131,7 +2959,6 @@ namespace ScintillaNET
 				return this as INativeScintilla;
 			}
 		}
-
 
 		[DefaultValue(false), Category("Behavior")]
 		public bool OverType
@@ -3145,7 +2972,6 @@ namespace ScintillaNET
 				_ns.SetOvertype(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets the Scintilla direct object pointer that this control represents.
@@ -3181,7 +3007,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the position cache size used to layout short runs of text in a <see cref="Scintilla" /> control.
 		/// </summary>
@@ -3203,7 +3028,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Layout")]
 		public Printing Printing
 		{
@@ -3217,9 +3041,7 @@ namespace ScintillaNET
 			}
 		}
 
-
 		internal Hashtable PropertyBag { get { return _propertyBag; } }
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		unsafe public byte[] RawText
@@ -3270,7 +3092,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets an object that manages scrolling options in a <see cref="Scintilla" /> control.
 		/// </summary>
@@ -3289,7 +3110,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DefaultValue(SearchFlags.Empty), Category("Behavior")]
 		[Editor(typeof(Design.FlagEnumUIEditor), typeof(System.Drawing.Design.UITypeEditor))]
 		public SearchFlags SearchFlags
@@ -3304,7 +3124,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Appearance")]
 		public Selection Selection
 		{
@@ -3314,7 +3133,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Behavior")]
 		public SnippetManager Snippets
 		{
@@ -3323,7 +3141,6 @@ namespace ScintillaNET
 				return _snippets;
 			}
 		}
-
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Appearance")]
 		public StyleCollection Styles
@@ -3337,7 +3154,6 @@ namespace ScintillaNET
 				_styles = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets a value indicating whether characters not considered alphanumeric (ASCII values 0 through 31)
@@ -3359,7 +3175,6 @@ namespace ScintillaNET
 				_supressControlCharacters = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the current text in the <see cref="Scintilla" /> control.
@@ -3384,7 +3199,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the _length of text in the control.
 		/// </summary>
@@ -3398,7 +3212,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content), Category("Behavior")]
 		public UndoRedo UndoRedo
 		{
@@ -3407,7 +3220,6 @@ namespace ScintillaNET
 				return _undoRedo;
 			}
 		}
-
 
 		public new bool UseWaitCursor
 		{
@@ -3426,7 +3238,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the <see cref="Whitespace"/> display mode and style behavior associated with the <see cref="Scintilla"/> control.
 		/// </summary>
@@ -3437,7 +3248,6 @@ namespace ScintillaNET
 		{
 			get { return _whitespace; }
 		}
-
 
 		/// <summary>
 		///     Gets or sets the current number of points added to or subtracted from the
@@ -3469,7 +3279,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Events
 
 		/// <summary>
@@ -3489,7 +3298,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Occurs when the user makes a selection from the auto-complete list.
 		/// </summary>
@@ -3499,7 +3307,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_autoCompleteAcceptedEventKey, value); }
 			remove { Events.RemoveHandler(_autoCompleteAcceptedEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when text is about to be removed from the document.
@@ -3511,7 +3318,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_beforeTextDeleteEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when text is about to be inserted into the document.
 		/// </summary>
@@ -3521,7 +3327,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_beforeTextInsertEventKey, value); }
 			remove { Events.RemoveHandler(_beforeTextInsertEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when the value of the <see cref="BorderStyle" /> property has changed.
@@ -3540,7 +3345,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Occurs when a user clicks on a call tip.
 		/// </summary>
@@ -3550,7 +3354,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_callTipClickEventKey, value); }
 			remove { Events.RemoveHandler(_callTipClickEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when the user types an ordinary text character (as opposed to a command character) into the text.
@@ -3562,7 +3365,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_charAddedEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when the text or styling of the document changes or is about to change.
 		/// </summary>
@@ -3572,7 +3374,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_documentChangeEventKey, value); }
 			remove { Events.RemoveHandler(_documentChangeEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when a <see cref="DropMarker"/> is about to be collected.
@@ -3584,7 +3385,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_dropMarkerCollectEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when a user actions such as a mouse move or key press ends a dwell (hover) activity.
 		/// </summary>
@@ -3594,7 +3394,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_dwellEndEventKey, value); }
 			remove { Events.RemoveHandler(_dwellEndEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when the user hovers the mouse (dwells) in one position for the dwell period.
@@ -3606,7 +3405,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_dwellStartEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when a folding change has occurred.
 		/// </summary>
@@ -3616,7 +3414,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_foldChangedEventKey, value); }
 			remove { Events.RemoveHandler(_foldChangedEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when a user clicks on text that is in a style with the hotspot attribute set.
@@ -3635,7 +3432,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Occurs when a user double-clicks on text that is in a style with the hotspot attribute set.
 		/// </summary>
@@ -3652,7 +3448,6 @@ namespace ScintillaNET
 				Events.RemoveHandler(_hotspotDoubleClickEventKey, value);
 			}
 		}
-
 
 		/// <summary>
 		///     Occurs when a user releases a click on text that is in a style with the hotspot attribute set.
@@ -3671,7 +3466,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Occurs when the a clicks or releases the mouse on text that has an indicator.
 		/// </summary>
@@ -3681,7 +3475,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_indicatorClickEventKey, value); }
 			remove { Events.RemoveHandler(_indicatorClickEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when a range of lines that is currently invisible should be made visible.
@@ -3693,7 +3486,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_linesNeedShownEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when the control is first loaded.
 		/// </summary>
@@ -3703,7 +3495,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_loadEventKey, value); }
 			remove { Events.RemoveHandler(_loadEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs each time a recordable change occurs.
@@ -3715,7 +3506,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_macroRecordEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when the mouse was clicked inside a margin that was marked as sensitive.
 		/// </summary>
@@ -3725,7 +3515,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_marginClickEventKey, value); }
 			remove { Events.RemoveHandler(_marginClickEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when one or more markers has changed in a line of text.
@@ -3737,7 +3526,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_markerChangedEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when the value of the <see cref="Modified"> property has changed.
 		/// </summary>
@@ -3747,7 +3535,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_modifiedChangedEventKey, value); }
 			remove { Events.RemoveHandler(_modifiedChangedEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when a user tries to modify text when in read-only mode.
@@ -3759,13 +3546,11 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_readOnlyModifyAttemptEventKey, value); }
 		}
 
-
 		internal event EventHandler<SCNotificationEventArgs> SCNotification
 		{
 			add { Events.AddHandler(_scNotificationEventKey, value); }
 			remove { Events.RemoveHandler(_scNotificationEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when the control is scrolled.
@@ -3777,7 +3562,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_scrollEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when the selection has changed.
 		/// </summary>
@@ -3787,7 +3571,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_selectionChangedEventKey, value); }
 			remove { Events.RemoveHandler(_selectionChangedEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when the control is about to display or print text that requires styling.
@@ -3799,7 +3582,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_styleNeededEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when text has been removed from the document.
 		/// </summary>
@@ -3810,7 +3592,6 @@ namespace ScintillaNET
 			remove { Events.RemoveHandler(_textDeletedEventKey, value); }
 		}
 
-
 		/// <summary>
 		///     Occurs when text has been inserted into the document.
 		/// </summary>
@@ -3820,7 +3601,6 @@ namespace ScintillaNET
 			add { Events.AddHandler(_textInsertedEventKey, value); }
 			remove { Events.RemoveHandler(_textInsertedEventKey, value); }
 		}
-
 
 		/// <summary>
 		///     Occurs when the value of the <see cref="ZoomFactor"/> property changes.
@@ -3839,9 +3619,7 @@ namespace ScintillaNET
 			}
 		}
 
-
 		#endregion Events
-
 
 		#region Constructors
 
@@ -3908,7 +3686,6 @@ namespace ScintillaNET
 			_documentNavigation = new DocumentNavigation(this);
 			_goto = new GoTo(this);
 
-
 			_helpers.AddRange(new TopLevelHelper[]
 			{
 				_caret,
@@ -3937,7 +3714,6 @@ namespace ScintillaNET
 				_documentNavigation,
 				_goto
 			});
-
 
 			// Change from Scintilla's default black on white to
 			// platform defaults for edit controls.

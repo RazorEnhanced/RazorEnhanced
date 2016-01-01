@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Manages the Native Scintilla's Document features.
@@ -28,7 +22,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -48,10 +41,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		internal DocumentHandler(Scintilla scintilla) : base(scintilla) { }
+		internal DocumentHandler(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

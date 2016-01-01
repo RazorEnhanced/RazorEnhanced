@@ -144,7 +144,6 @@ namespace Assistant.Map
 				byte[] bytesFrom = new byte[clientSocket.ReceiveBufferSize];
 				serverStream.Read(bytesFrom, 0, (clientSocket.ReceiveBufferSize));
 
-
 				byte[] PacketIDByte = new byte[2] { bytesFrom[0], bytesFrom[1] };
 				if (BitConverter.IsLittleEndian)
 					Array.Reverse(PacketIDByte);

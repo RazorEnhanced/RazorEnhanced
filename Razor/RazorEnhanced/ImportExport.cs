@@ -78,8 +78,8 @@ namespace RazorEnhanced
 			{
 				AutoLoot.AddLog("Import list cancelled.");
 			}
-
 		}
+
 		internal static void ExportAutoloot(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -125,13 +125,13 @@ namespace RazorEnhanced
 					AutoLoot.AddLog("Export list fail");
 					AutoLoot.AddLog(ex.ToString());
 				}
-
 			}
 			else
 			{
 				AutoLoot.AddLog("Export list cancelled.");
 			}
 		}
+
 		////////////// AUTOLOOT END //////////////
 
 		////////////// SCAVENGER START //////////////
@@ -204,6 +204,7 @@ namespace RazorEnhanced
 				Scavenger.AddLog("Import list cancelled.");
 			}
 		}
+
 		internal static void ExportScavenger(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -254,8 +255,8 @@ namespace RazorEnhanced
 			{
 				Scavenger.AddLog("Export list cancelled.");
 			}
-
 		}
+
 		////////////// SCAVENGER END //////////////
 
 		////////////// ORGANIZER START //////////////
@@ -327,8 +328,8 @@ namespace RazorEnhanced
 			{
 				Organizer.AddLog("Import list cancelled.");
 			}
-
 		}
+
 		internal static void ExportOrganizer(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -380,6 +381,7 @@ namespace RazorEnhanced
 				Organizer.AddLog("Export list cancelled.");
 			}
 		}
+
 		////////////// ORGANIZER END //////////////
 
 		////////////// SELL AGENT START //////////////
@@ -452,6 +454,7 @@ namespace RazorEnhanced
 				SellAgent.AddLog("Import list cancelled.");
 			}
 		}
+
 		internal static void ExportSell(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -503,6 +506,7 @@ namespace RazorEnhanced
 				SellAgent.AddLog("Export list cancelled.");
 			}
 		}
+
 		////////////// SELL AGENT END //////////////
 
 		////////////// BUY AGENT START //////////////
@@ -574,6 +578,7 @@ namespace RazorEnhanced
 				BuyAgent.AddLog("Import list cancelled.");
 			}
 		}
+
 		internal static void ExportBuy(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -624,8 +629,8 @@ namespace RazorEnhanced
 			{
 				BuyAgent.AddLog("Export list cancelled.");
 			}
-
 		}
+
 		////////////// BUY AGENT END //////////////
 
 		////////////// DRESS START //////////////
@@ -697,6 +702,7 @@ namespace RazorEnhanced
 				Dress.AddLog("Import list cancelled.");
 			}
 		}
+
 		internal static void ExportDress(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -747,8 +753,8 @@ namespace RazorEnhanced
 			{
 				Dress.AddLog("Export list cancelled.");
 			}
-
 		}
+
 		////////////// BUY AGENT END //////////////
 
 		////////////// FRIENDS START //////////////
@@ -819,8 +825,8 @@ namespace RazorEnhanced
 			{
 				Friend.AddLog("Import list cancelled.");
 			}
-
 		}
+
 		internal static void ExportFriends(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -866,15 +872,14 @@ namespace RazorEnhanced
 					Friend.AddLog("Export list fail");
 					Friend.AddLog(ex.ToString());
 				}
-
 			}
 			else
 			{
 				Friend.AddLog("Export list cancelled.");
 			}
 		}
-		////////////// FRIENDS END //////////////
 
+		////////////// FRIENDS END //////////////
 
 		////////////// RESTOCK START //////////////
 		internal static void ImportRestock()
@@ -944,8 +949,8 @@ namespace RazorEnhanced
 			{
 				Restock.AddLog("Import list cancelled.");
 			}
-
 		}
+
 		internal static void ExportRestock(string listname)
 		{
 			SaveFileDialog sd = new SaveFileDialog();
@@ -991,13 +996,13 @@ namespace RazorEnhanced
 					Restock.AddLog("Export list fail");
 					Restock.AddLog(ex.ToString());
 				}
-
 			}
 			else
 			{
 				Restock.AddLog("Export list cancelled.");
 			}
 		}
+
 		////////////// RESTOCK END //////////////
 
 		////////////// PROFILES START //////////////
@@ -1063,7 +1068,6 @@ namespace RazorEnhanced
 				RazorEnhanced.Profiles.Add(newprofilename);
 				RazorEnhanced.Profiles.Refresh();
 			}
-
 		}
 
 		////////////// PROFILES END //////////////

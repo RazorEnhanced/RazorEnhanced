@@ -7,7 +7,6 @@ using System.Security.Permissions;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -26,7 +25,6 @@ namespace ScintillaNET
 		{
 			Copy(false);
 		}
-
 
 		/// <summary>
 		///     Copies the current selection, or the current line if there is no selection, to the Clipboard.
@@ -47,7 +45,6 @@ namespace ScintillaNET
 				Scintilla.DirectMessage(NativeMethods.SCI_COPY, IntPtr.Zero, IntPtr.Zero);
 		}
 
-
 		/// <summary>
 		///     Copies the specified range of text (bytes) in the document to the Clipboard.
 		/// </summary>
@@ -59,7 +56,6 @@ namespace ScintillaNET
 			Scintilla.DirectMessage(NativeMethods.SCI_COPYRANGE, new IntPtr(startPosition), new IntPtr(endPosition));
 		}
 
-
 		/// <summary>
 		///     Moves the current document selection to the Clipboard.
 		/// </summary>
@@ -68,7 +64,6 @@ namespace ScintillaNET
 		{
 			Scintilla.DirectMessage(NativeMethods.SCI_CUT, IntPtr.Zero, IntPtr.Zero);
 		}
-
 
 		/// <summary>
 		///     Replaces the current document selection with the contents of the Clipboard.
@@ -79,14 +74,12 @@ namespace ScintillaNET
 			Scintilla.DirectMessage(NativeMethods.SCI_PASTE, IntPtr.Zero, IntPtr.Zero);
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return !ConvertLineBreaksOnPaste;
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -106,7 +99,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets a value indicating whether text (bytes) can be cut given the current selection.
 		/// </summary>
@@ -124,7 +116,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets a value indicating whether the document can accept text currently stored in the Clipboard.
 		/// </summary>
@@ -139,7 +130,6 @@ namespace ScintillaNET
 				return (Scintilla.DirectMessage(NativeMethods.SCI_CANPASTE, IntPtr.Zero, IntPtr.Zero) != IntPtr.Zero);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets whether pasted line break characters are converted to match the document's end-of-line mode.
@@ -164,10 +154,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		internal Clipboard(Scintilla scintilla) : base(scintilla) { }
+		internal Clipboard(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

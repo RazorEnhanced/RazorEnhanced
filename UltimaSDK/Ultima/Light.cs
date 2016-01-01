@@ -105,6 +105,7 @@ namespace Ultima
 			stream.Close();
 			return buffer;
 		}
+
 		/// <summary>
 		/// Returns Bitmap of given index
 		/// </summary>

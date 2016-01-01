@@ -20,10 +20,12 @@ namespace RazorEnhanced
 			World.Player.CurrentGumpStrings.Clear();
 			World.Player.CurrentGumpI = 0;
 		}
+
 		public static uint CurrentGump()
 		{
 			return World.Player.CurrentGumpI;
 		}
+
 		public static bool HasGump()
 		{
 			return World.Player.HasGump;
@@ -38,6 +40,7 @@ namespace RazorEnhanced
 				subdelay -= 2;
 			}
 		}
+
 		public static void SendAction(uint gumpid, int buttonid)
 		{
 			int[] nullswitch = new int[0];
@@ -48,6 +51,7 @@ namespace RazorEnhanced
 			World.Player.CurrentGumpStrings.Clear();
 			World.Player.CurrentGumpI = 0;
 		}
+
 		/*  public static void SendAdvancedAction(uint gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
 		  {
 			  ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
@@ -55,6 +59,7 @@ namespace RazorEnhanced
 			  World.Player.HasGump = false;
 			  World.Player.CurrentGumpStrings.Clear();
 		  }*/
+
 		public static string LastGumpGetLine(int line)
 		{
 			if (line > World.Player.CurrentGumpStrings.Count)
@@ -67,10 +72,12 @@ namespace RazorEnhanced
 				return World.Player.CurrentGumpStrings[line];
 			}
 		}
+
 		public static List<string> LastGumpGetLineList()
 		{
 			return World.Player.CurrentGumpStrings;
 		}
+
 		public static bool LastGumpTextExist(string text)
 		{
 			foreach (string stext in World.Player.CurrentGumpStrings)

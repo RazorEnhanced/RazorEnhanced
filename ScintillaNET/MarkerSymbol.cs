@@ -4,7 +4,6 @@ using ScintillaNET.Internal;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -183,7 +182,6 @@ namespace ScintillaNET
 		///     the color specified by the <see cref="Marker.ForeColor" /> property.
 		/// </summary>
 		Underline = NativeMethods.SC_MARK_UNDERLINE,
-
 
 		//SC_MARK_RGBAIMAGE = 30,
 		//SC_MARK_CHARACTER = 10000;

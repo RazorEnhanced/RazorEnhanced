@@ -3,8 +3,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-#endregion Using Directive
-
+#endregion Using Directives
 
 namespace ScintillaNET
 {
@@ -21,7 +20,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -33,7 +31,6 @@ namespace ScintillaNET
 			return _stringBuilder;
 		}
 
-
 		/// <summary>
 		///     Returns a <see cref="StyleRun" /> enumerable built by the <see cref="StyleRunWriter" /> thus far.
 		/// </summary>
@@ -42,7 +39,6 @@ namespace ScintillaNET
 		{
 			return _styleRuns.ToArray();
 		}
-
 
 		//public IEnumerable<StyleRun> GetStyles(Encoding encoding = null)
 		//{
@@ -72,7 +68,6 @@ namespace ScintillaNET
 		//    return byteRuns;
 		//}
 
-
 		/// <summary>
 		///     Writes a run of the specified string length in the specified style.
 		/// </summary>
@@ -92,7 +87,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Constructors
 

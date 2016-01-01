@@ -4,7 +4,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -17,42 +16,35 @@ namespace ScintillaNET
 			NativeScintilla.BeginUndoAction();
 		}
 
-
 		public void EmptyUndoBuffer()
 		{
 			NativeScintilla.EmptyUndoBuffer();
 		}
-
 
 		public void EndUndoAction()
 		{
 			NativeScintilla.EndUndoAction();
 		}
 
-
 		public void Redo()
 		{
 			NativeScintilla.Redo();
 		}
-
 
 		private void ResetIsUndoEnabled()
 		{
 			IsUndoEnabled = true;
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return ShouldSerializeIsUndoEnabled();
 		}
 
-
 		private bool ShouldSerializeIsUndoEnabled()
 		{
 			return !IsUndoEnabled;
 		}
-
 
 		public void Undo()
 		{
@@ -60,7 +52,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -73,7 +64,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool CanUndo
 		{
@@ -82,7 +72,6 @@ namespace ScintillaNET
 				return NativeScintilla.CanUndo();
 			}
 		}
-
 
 		public bool IsUndoEnabled
 		{
@@ -97,7 +86,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

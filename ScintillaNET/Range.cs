@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -20,7 +19,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public void ClearIndicator(int indicator)
@@ -29,13 +27,11 @@ namespace ScintillaNET
 			NativeScintilla.IndicatorClearRange(_start, Length);
 		}
 
-
 		public void ClearIndicator(Indicator indicator)
 		{
 			NativeScintilla.SetIndicatorCurrent(indicator.Index);
 			NativeScintilla.IndicatorClearRange(_start, Length);
 		}
-
 
 		/// <summary>
 		///     Collapses all folds
@@ -50,12 +46,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public void Colorize()
 		{
 			NativeScintilla.Colourise(_start, _end);
 		}
-
 
 		public int CompareTo(object otherObj)
 		{
@@ -79,12 +73,10 @@ namespace ScintillaNET
 			return 0;
 		}
 
-
 		public void Copy()
 		{
 			Copy(CopyFormat.Text);
 		}
-
 
 		public void Copy(CopyFormat format)
 		{
@@ -98,10 +90,8 @@ namespace ScintillaNET
 			}
 			else
 			{
-
 			}
 		}
-
 
 		public override bool Equals(object obj)
 		{
@@ -111,7 +101,6 @@ namespace ScintillaNET
 
 			return r._start == _start && r._end == _end;
 		}
-
 
 		/// <summary>
 		///     Expands all folds
@@ -125,48 +114,40 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
-
 
 		public void GotoEnd()
 		{
 			NativeScintilla.GotoPos(_end);
 		}
 
-
 		public void GotoStart()
 		{
 			NativeScintilla.GotoPos(_start);
 		}
-
 
 		public void HideLines()
 		{
 			NativeScintilla.HideLines(startingLine, endingLine);
 		}
 
-
 		public bool IntersectsWith(Range otherRange)
 		{
 			return otherRange.PositionInRange(_start) | otherRange.PositionInRange(_end) | PositionInRange(otherRange.Start) | PositionInRange(otherRange.End);
 		}
-
 
 		public bool PositionInRange(int position)
 		{
 			return position >= _start && position <= _end;
 		}
 
-
 		public void Select()
 		{
 			NativeScintilla.SetSel(_start, _end);
 		}
-
 
 		// Chris Rickard 7/10/2007
 		// Woo hoo! Modern Indicator support. We won't even
@@ -178,9 +159,8 @@ namespace ScintillaNET
 			NativeScintilla.IndicatorFillRange(_start, Length);
 		}
 
-
 		// Now the Scintilla documentation is a little unclear to me,
-		// but it seems as though the whole indicator value doesn't 
+		// but it seems as though the whole indicator value doesn't
 		// really do anything yet, but may in the future.
 		public void SetIndicator(int indicator, int value)
 		{
@@ -189,24 +169,20 @@ namespace ScintillaNET
 			NativeScintilla.IndicatorFillRange(_start, Length);
 		}
 
-
 		public void SetStyle(string styleName)
 		{
 			SetStyle(Scintilla.Lexing.StyleNameMap[styleName]);
 		}
-
 
 		public void SetStyle(int style)
 		{
 			SetStyle(0xff, style);
 		}
 
-
 		public void SetStyle(byte styleMask, string styleName)
 		{
 			SetStyle(styleMask, Scintilla.Lexing.StyleNameMap[styleName]);
 		}
-
 
 		public void SetStyle(byte styleMask, int style)
 		{
@@ -214,12 +190,10 @@ namespace ScintillaNET
 			NativeScintilla.SetStyling(Length, style);
 		}
 
-
 		public void ShowLines()
 		{
 			NativeScintilla.ShowLines(startingLine, endingLine);
 		}
-
 
 		/// <summary>
 		///     Removes trailing spaces from each line
@@ -258,15 +232,12 @@ namespace ScintillaNET
 			NativeScintilla.EndUndoAction();
 		}
 
-
 		public override string ToString()
 		{
-
 			return "{Start=" + _start + ", End=" + _end + ", Length=" + Length + "}";
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -274,7 +245,6 @@ namespace ScintillaNET
 		{
 			get { return _start == _end; }
 		}
-
 
 		public virtual int End
 		{
@@ -288,7 +258,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private int endingLine
 		{
 			get
@@ -296,7 +265,6 @@ namespace ScintillaNET
 				return NativeScintilla.LineFromPosition(_end);
 			}
 		}
-
 
 		public Line EndingLine
 		{
@@ -306,7 +274,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsMultiLine
 		{
 			get
@@ -315,7 +282,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int Length
 		{
 			get
@@ -323,7 +289,6 @@ namespace ScintillaNET
 				return _end - _start;
 			}
 		}
-
 
 		public virtual int Start
 		{
@@ -337,7 +302,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private int startingLine
 		{
 			get
@@ -346,7 +310,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line StartingLine
 		{
 			get
@@ -354,7 +317,6 @@ namespace ScintillaNET
 				return new Line(Scintilla, startingLine);
 			}
 		}
-
 
 		public byte[] StyledText
 		{
@@ -378,7 +340,6 @@ namespace ScintillaNET
 				return ret;
 			}
 		}
-
 
 		public string Text
 		{
@@ -413,11 +374,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		protected internal Range() : base(null) { }
-
+		protected internal Range() : base(null)
+		{
+		}
 
 		public Range(int start, int end, Scintilla scintilla) : base(scintilla)
 		{

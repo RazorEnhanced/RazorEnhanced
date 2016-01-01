@@ -10,7 +10,6 @@ namespace RazorEnhanced
 {
 	internal class Shard
 	{
-
 		private static string m_Save = "RazorEnhanced.shards                              ";
 
 		private static DataSet m_Dataset;
@@ -44,8 +43,6 @@ namespace RazorEnhanced
 			}
 			else
 			{
-
-
 				// ----------- SHARDS ----------
 				DataTable shards = new DataTable("SHARDS");
 				shards.Columns.Add("Description", typeof(string)); // Key
@@ -65,7 +62,6 @@ namespace RazorEnhanced
 				m_Dataset.AcceptChanges();
 			}
 		}
-
 
 		private string m_Description;
 		internal string Description { get { return m_Description; } }
@@ -102,7 +98,6 @@ namespace RazorEnhanced
 			m_OSIEnc = osienc;
 			m_Selected = selected;
 		}
-
 
 		internal static bool Exists(string description)
 		{
@@ -261,6 +256,5 @@ namespace RazorEnhanced
 				MessageBox.Show("Error writing " + m_Save + ": " + ex);
 			}
 		}
-
 	}
 }

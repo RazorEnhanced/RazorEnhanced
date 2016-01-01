@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -18,7 +17,6 @@ namespace ScintillaNET
 		private Message _recordedMessage;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -35,7 +33,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		/// <summary>
@@ -46,7 +43,6 @@ namespace ScintillaNET
 		{
 			_recordedMessage = recordedMessage;
 		}
-
 
 		/// <summary>
 		///     Initializes a new instance of the MacroRecordEventArgs class.

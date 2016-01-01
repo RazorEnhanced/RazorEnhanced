@@ -17,6 +17,7 @@ namespace Assistant.Map
 
 			private int m_Map;
 			public int Map { get { return m_Map; } }
+
 			public SendCoord(int x, int y, int map)
 			{
 				m_X = x;
@@ -217,7 +218,7 @@ namespace Assistant.Map
 						data.Clear();
 					}
 
-					// Processo send DeathPoint 
+					// Processo send DeathPoint
 					if (SendDeathPointFlag)
 					{
 						if (SendDeathPointData != null)
@@ -238,7 +239,7 @@ namespace Assistant.Map
 						}
 					}
 
-					// Processo send Panic 
+					// Processo send Panic
 					if (SendPanicFlag)
 					{
 						if (SendPanicData != null)
@@ -259,7 +260,7 @@ namespace Assistant.Map
 						}
 					}
 
-					// Processo send Chat 
+					// Processo send Chat
 					if (SendChatMessageQueue.Count > 0)
 					{
 						SendChatMessage msgtosend;
@@ -279,14 +280,12 @@ namespace Assistant.Map
 							data.Clear();
 						}
 					}
-
 				}
 				catch (Exception ex)
 				{
 					MapNetwork.OutThreadFlag = false;
 					MapNetwork.Disconnect();
 				}
-
 			}
 			MapNetwork.AddLog("Write Thread Exit");
 		}

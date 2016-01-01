@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class LexerPropertiesConfig : Dictionary<string, string>
@@ -14,7 +13,6 @@ namespace ScintillaNET.Configuration
 		private bool? _inherit;
 
 		#endregion Fields
-
 
 		#region Properties
 

@@ -8,7 +8,7 @@ namespace Assistant.Map
 {
 	internal class UOMapControl : Panel
 	{
-		delegate void UpdateMapCallback();
+		private delegate void UpdateMapCallback();
 
 		private bool m_Active;
 		private Point prevPoint;
@@ -106,14 +106,15 @@ namespace Assistant.Map
 
 			return def;
 		}
+
 		internal double Distance(PointF center, PointF pos)
 		{
-
 			PointF newp = new PointF(center.X - pos.X, center.Y - pos.Y);
 			double distX = Math.Pow(newp.X, 2);
 			double distY = Math.Pow(newp.Y, 2);
 			return Math.Sqrt(distX + distY);
 		}
+
 		private PointF RotatePoint(PointF center, PointF pos)
 		{
 			PointF newp = new PointF(center.X - pos.X, center.Y - pos.Y);
@@ -193,7 +194,6 @@ namespace Assistant.Map
 			TextCol.Dispose();
 		}
 
-
 		public void Buildings(Graphics gfx, Point pntPlayer, Point mapOrigin, Point offset, Rectangle rect)
 		{
 			// Dim x As Stopwatch = Stopwatch.StartNew
@@ -220,7 +220,6 @@ namespace Assistant.Map
 						//Se sta nel riquadro della mappa
 						if (!(BuildPointF.X <= -m_OffsetBuild.X | BuildPointF.X > rect.Width + m_OffsetBuild.X | BuildPointF.Y <= -m_OffsetBuild.Y | BuildPointF.Y > rect.Height + m_OffsetBuild.Y))
 						{
-
 							GraphicsState transState2 = gfx.Save();
 							gfx.TranslateTransform(BuildPoint.X, BuildPoint.Y);
 							//traslo sul punto dell'edificio
@@ -313,7 +312,6 @@ namespace Assistant.Map
 			}
 		}
 
-
 		public void PgInRange(Graphics gfx, Point drawPoint, PointF drawPointF, MapNetworkIn.UserData user, string name, Point pntPlayer)
 		{
 			if (name == "_MARKER_")
@@ -383,7 +381,6 @@ namespace Assistant.Map
 						status = Brushes.SteelBlue;
 					}
 
-
 					gfx.FillRectangle(Brushes.Red, -1 / Zoom, offsetbarre / Zoom, 35 / Zoom, 3 / Zoom);
 					int percent = Convert.ToInt32(user.Hits * 100 / (user.HitsMax == 0 ? Convert.ToUInt16(1) : Convert.ToUInt16(user.HitsMax)));
 					float imagepercent = (35 / Zoom) * (percent / 100);
@@ -450,11 +447,9 @@ namespace Assistant.Map
 			pen.Dispose();
 		}
 
-
 		/////////////////////////////////////////////////////////////////////
 		////////////////// FINE FUNZIONI DISEGNO ELEMENTI ///////////////////
 		/////////////////////////////////////////////////////////////////////
-
 
 		//////////////////////////////////////////////////////////////////
 		////////////////////////// FUNZIONI EVENTI ///////////////////////
@@ -484,11 +479,9 @@ namespace Assistant.Map
 			}
 		}
 
-
 		public void ZoomLevel()
 		{
 			Size PicDim = new Size(this.Width, this.Height);
-
 
 			if (Zoom == 0.5f)
 			{
@@ -548,7 +541,6 @@ namespace Assistant.Map
 			{
 				MapWindow.MapWindowForm.FormBorderStyle = FormBorderStyle.None;
 				MapWindow.MapWindowForm.TopMost = true;
-
 			}
 			FullUpdate(true);
 		}
@@ -613,7 +605,6 @@ namespace Assistant.Map
 						else
 							SupportFunc.AddMyUser(0);
 					}
-
 				}
 
 				//   Tracking
@@ -654,7 +645,6 @@ namespace Assistant.Map
 						SupportFunc.AddMyUser(0);
 				}
 			}
-
 
 			Point offset = new Point(focus.X & 7, focus.Y & 7);
 			Point mapOrigin = new Point((focus.X >> 3) - (w / 2), (focus.Y >> 3) - (h / 2));
@@ -729,7 +719,6 @@ namespace Assistant.Map
 					Font string_font = new Font("Arial", 9 / Zoom, FontStyle.Regular);
 					SizeF stringsize = gfx.MeasureString(m_LabelDescBuild, string_font);
 
-
 					Point rectbuild = new Point((m_LabelRectBuild.X) - (mapOrigin.X << 3) - offset.X, (m_LabelRectBuild.Y) - (mapOrigin.Y << 3) - offset.Y);
 
 					gfx.TranslateTransform(rectbuild.X, rectbuild.Y);
@@ -784,9 +773,7 @@ namespace Assistant.Map
 
 			// LastRefresh_2 = DateTime.Now;
 			this.Refresh();
-
 		}
-
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
@@ -826,7 +813,7 @@ namespace Assistant.Map
 				gfx.SmoothingMode = SmoothingMode.AntiAlias;
 				gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
 
-				//   Calcolo e disegno 
+				//   Calcolo e disegno
 				foreach (MapNetworkIn.UserData user in MapNetwork.UData)
 				{
 					GraphicsState transState = gfx.Save();

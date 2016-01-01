@@ -7,17 +7,15 @@ using System.Text;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class SnippetList : KeyedCollection<string, Snippet>
 	{
 		#region Fields
 
-		SnippetManager _manager;
+		private SnippetManager _manager;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -26,18 +24,15 @@ namespace ScintillaNET
 			return Add(shortcut, code, _manager.DefaultDelimeter);
 		}
 
-
 		public Snippet Add(string shortcut, string code, bool isSurroundsWith)
 		{
 			return Add(shortcut, code, _manager.DefaultDelimeter, isSurroundsWith);
 		}
 
-
 		public Snippet Add(string shortcut, string code, char delimeter)
 		{
 			return Add(shortcut, code, delimeter, false);
 		}
-
 
 		public Snippet Add(string shortcut, string code, char delimeter, bool isSurroundsWith)
 		{
@@ -46,23 +41,19 @@ namespace ScintillaNET
 			return s;
 		}
 
-
 		public void AddRange(IEnumerable<Snippet> snippets)
 		{
 			foreach (Snippet s in snippets)
 				Add(s);
 		}
 
-
 		protected override string GetKeyForItem(Snippet item)
 		{
 			return item.Shortcut;
 		}
 
-
 		public void Sort()
 		{
-
 			Snippet[] a = new Snippet[Count];
 			CopyTo(a, 0);
 			Array.Sort<Snippet>(a);
@@ -70,7 +61,6 @@ namespace ScintillaNET
 			Clear();
 			AddRange(a);
 		}
-
 
 		public override string ToString()
 		{
@@ -82,7 +72,6 @@ namespace ScintillaNET
 				sb.Remove(sb.Length - 1, 1);
 			return sb.ToString();
 		}
-
 
 		public bool TryGetValue(string key, out Snippet snippet)
 		{
@@ -99,7 +88,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Constructors
 

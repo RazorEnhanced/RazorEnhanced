@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -28,7 +27,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -41,7 +39,6 @@ namespace ScintillaNET
 			AddBinding(Utilities.GetKeys(shortcut), Keys.None, command);
 		}
 
-
 		/// <summary>
 		///     Adds a key combination to a Command
 		/// </summary>
@@ -53,7 +50,6 @@ namespace ScintillaNET
 			AddBinding(Utilities.GetKeys(shortcut), modifiers, command);
 		}
 
-
 		/// <summary>
 		///     Adds a key combination to a Command
 		/// </summary>
@@ -63,7 +59,6 @@ namespace ScintillaNET
 		{
 			AddBinding(shortcut, Keys.None, command);
 		}
-
 
 		/// <summary>
 		///     Adds a key combination to a Command
@@ -81,7 +76,6 @@ namespace ScintillaNET
 			if (_allowDuplicateBindings || !l.Contains(command))
 				l.Add(command);
 		}
-
 
 		/// <summary>
 		///     Executes a Command
@@ -195,7 +189,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		/// <summary>
 		///     Returns a list of Commands bound to a keyboard shortcut
 		/// </summary>
@@ -205,7 +198,6 @@ namespace ScintillaNET
 		{
 			return GetCommands(Utilities.GetKeys(shortcut), Keys.None);
 		}
-
 
 		/// <summary>
 		///     Returns a list of Commands bound to a keyboard shortcut
@@ -218,7 +210,6 @@ namespace ScintillaNET
 			return GetCommands(Utilities.GetKeys(shortcut), modifiers);
 		}
 
-
 		/// <summary>
 		///     Returns a list of Commands bound to a keyboard shortcut
 		/// </summary>
@@ -228,7 +219,6 @@ namespace ScintillaNET
 		{
 			return GetCommands(shortcut, Keys.None);
 		}
-
 
 		/// <summary>
 		///     Returns a list of Commands bound to a keyboard shortcut
@@ -244,7 +234,6 @@ namespace ScintillaNET
 
 			return _boundCommands[kb];
 		}
-
 
 		/// <summary>
 		///     Returns a list of KeyBindings bound to a given command
@@ -262,7 +251,6 @@ namespace ScintillaNET
 
 			return ret;
 		}
-
 
 		internal bool ProcessKey(KeyEventArgs e)
 		{
@@ -290,7 +278,6 @@ namespace ScintillaNET
 			return ret;
 		}
 
-
 		/// <summary>
 		///     Removes all key command bindings
 		/// </summary>
@@ -303,7 +290,6 @@ namespace ScintillaNET
 			_boundCommands.Clear();
 		}
 
-
 		/// <summary>
 		///     Removes all commands bound to a  keyboard shortcut
 		/// </summary>
@@ -312,7 +298,6 @@ namespace ScintillaNET
 		{
 			RemoveBinding(Utilities.GetKeys(shortcut), Keys.None);
 		}
-
 
 		/// <summary>
 		///     Removes a keyboard shortcut / command combination
@@ -324,7 +309,6 @@ namespace ScintillaNET
 			RemoveBinding(Utilities.GetKeys(shortcut), Keys.None, command);
 		}
 
-
 		/// <summary>
 		///     Removes all commands bound to a  keyboard shortcut
 		/// </summary>
@@ -334,7 +318,6 @@ namespace ScintillaNET
 		{
 			RemoveBinding(Utilities.GetKeys(shortcut), modifiers);
 		}
-
 
 		/// <summary>
 		///     Removes a keyboard shortcut / command combination
@@ -347,7 +330,6 @@ namespace ScintillaNET
 			RemoveBinding(Utilities.GetKeys(shortcut), modifiers, command);
 		}
 
-
 		/// <summary>
 		///     Removes all commands bound to a  keyboard shortcut
 		/// </summary>
@@ -356,7 +338,6 @@ namespace ScintillaNET
 		{
 			RemoveBinding(shortcut, Keys.None);
 		}
-
 
 		/// <summary>
 		///     Removes a keyboard shortcut / command combination
@@ -368,7 +349,6 @@ namespace ScintillaNET
 			RemoveBinding(shortcut, Keys.None, command);
 		}
 
-
 		/// <summary>
 		///     Removes all commands bound to a  keyboard shortcut
 		/// </summary>
@@ -378,7 +358,6 @@ namespace ScintillaNET
 		{
 			_boundCommands.Remove(new KeyBinding(shortcut, modifiers));
 		}
-
 
 		/// <summary>
 		///     Removes a keyboard shortcut / command combination
@@ -395,18 +374,15 @@ namespace ScintillaNET
 			_boundCommands[kb].Remove(command);
 		}
 
-
 		private void ResetAllowDuplicateBindings()
 		{
 			_allowDuplicateBindings = true;
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return ShouldSerializeAllowDuplicateBindings();
 		}
-
 
 		private bool ShouldSerializeAllowDuplicateBindings()
 		{
@@ -415,7 +391,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -423,7 +398,7 @@ namespace ScintillaNET
 		/// </summary>
 		/// <remarks>
 		///     When set to false only the first command bound to a key combination is kept.
-		///     Subsequent requests are ignored. 
+		///     Subsequent requests are ignored.
 		/// </remarks>
 		public bool AllowDuplicateBindings
 		{
@@ -439,12 +414,10 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		internal Commands(Scintilla scintilla) : base(scintilla)
 		{
-
 			//	Ha Ha Ha Ha all your commands are belong to us!
 			NativeScintilla.ClearAllCmdKeys();
 
@@ -455,19 +428,19 @@ namespace ScintillaNET
 
 			//	#2 Scintilla's built in support for commands binding only allows 1
 			//	command per key combination. Our key handling allows for any number
-			//	of commands to be bound to a keyboard combination. 
+			//	of commands to be bound to a keyboard combination.
 
 			//	Other future enhancements that I want to do in the future are:
 			//	Visual Studioesque Key/Chord commands like Ctrl+D, w
 
 			//	Binding contexts. This is another CodeRush inspired idea where
 			//	commands can only execute if a given context is satisfied (or not).
-			//	Some examples are "At beginning of line", "In comment", 
+			//	Some examples are "At beginning of line", "In comment",
 			//	"Autocomplete window active", "In Snippet Range".
 
-			//	OK in order for these commands to play nice with each other some of them 
+			//	OK in order for these commands to play nice with each other some of them
 			//	have to have knowledge of each other AND they have to execute in a certain
-			//	order. 
+			//	order.
 
 			//	Since all the native Scintilla Commands already know how to work together
 			//	properly they all have the same order. But our commands have to execute first
@@ -594,7 +567,6 @@ namespace ScintillaNET
 
 		#endregion Constructors
 
-
 		#region Types
 
 		private class CommandComparer : IComparer<BindableCommand>
@@ -605,14 +577,12 @@ namespace ScintillaNET
 
 			#endregion Fields
 
-
 			#region Methods
 
 			public int Compare(BindableCommand x, BindableCommand y)
 			{
 				return GetCommandOrder(y).CompareTo(GetCommandOrder(x));
 			}
-
 
 			private int GetCommandOrder(BindableCommand cmd)
 			{
@@ -622,7 +592,6 @@ namespace ScintillaNET
 			}
 
 			#endregion Methods
-
 
 			#region Properties
 

@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET.Internal
+﻿namespace ScintillaNET.Internal
 {
 	//
 	// The data object that we store for each line of text in a Scintilla control.

@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -36,7 +35,6 @@ namespace ScintillaNET
 		public int Bottom;
 
 		#endregion Fields
-
 
 		#region Constructors
 

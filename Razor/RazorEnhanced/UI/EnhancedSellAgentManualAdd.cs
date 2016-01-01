@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedSellAgentManualAdd : Form
@@ -15,7 +14,6 @@ namespace RazorEnhanced.UI
 			MaximizeBox = false;
 			this.Text = m_Title;
 		}
-
 
 		private void EnhancedSellManualAdd_Load(object sender, EventArgs e)
 		{
@@ -62,7 +60,6 @@ namespace RazorEnhanced.UI
 
 			try
 			{
-
 				amount = Convert.ToInt32(tAmount.Text);
 			}
 			catch
@@ -81,7 +78,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					hue = Convert.ToInt32(tHue.Text, 16);
 				}
 				catch
@@ -95,13 +91,11 @@ namespace RazorEnhanced.UI
 				}
 			}
 
-
 			if (!fail)
 			{
 				RazorEnhanced.SellAgent.AddItemToList(tName.Text, graphics, amount, hue);
 				this.Close();
 			}
-
 		}
 	}
 }

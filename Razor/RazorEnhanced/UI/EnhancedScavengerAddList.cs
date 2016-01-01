@@ -2,13 +2,11 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScavengerAddList : Form
 	{
 		private const string m_Title = "Enhanced Scavenger Add Item List";
-
 
 		public EnhancedScavengerAddList()
 		{

@@ -141,6 +141,7 @@ namespace Assistant
 	}
 
 	internal delegate void TimerCallback();
+
 	internal delegate void TimerCallbackState(object state);
 
 	internal abstract class Timer : IComparable

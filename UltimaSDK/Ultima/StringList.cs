@@ -27,6 +27,7 @@ namespace Ultima
 			Language = language;
 			LoadEntry(Files.GetFilePath(String.Format("cliloc.{0}", language)));
 		}
+
 		/// <summary>
 		/// Initialize <see cref="StringList"/> of Language from path
 		/// </summary>
@@ -184,6 +185,7 @@ namespace Ultima
 					return String.Compare(objA.Text, objB.Text);
 			}
 		}
-		#endregion
+
+		#endregion SortComparer
 	}
 }

@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -18,7 +17,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Properties
 
 		/// <summary>
@@ -30,7 +28,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

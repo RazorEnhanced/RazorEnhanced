@@ -20,6 +20,7 @@ namespace Assistant
 		internal const uint LocalTargID = 0x7FFFFFFF; // uid for target sent from razor
 
 		internal delegate void TargetResponseCallback(bool location, Serial serial, Point3D p, ushort gfxid);
+
 		internal delegate void CancelTargetCallback();
 
 		private static CancelTargetCallback m_OnCancel;
@@ -44,10 +45,10 @@ namespace Assistant
 		private static Serial m_LastCombatant;
 
 		private delegate bool QueueTarget();
+
 		private static QueueTarget TargetSelfAction = new QueueTarget(DoTargetSelf);
 		private static QueueTarget LastTargetAction = new QueueTarget(DoLastTarget);
 		private static QueueTarget m_QueueTarget;
-
 
 		private static uint m_SpellTargID = 0;
 		internal static uint SpellTargetID { get { return m_SpellTargID; } set { m_SpellTargID = value; } }
@@ -179,6 +180,7 @@ namespace Assistant
 		}
 
 		private static bool m_LTWasSet;
+
 		internal static void TargetSetLastTarget()
 		{
 			if (World.Player != null)
@@ -444,7 +446,6 @@ namespace Assistant
 			else
 				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 		}
-
 
 		internal static void TargetCloseNonFriendly()
 		{
@@ -1036,7 +1037,6 @@ namespace Assistant
 
 		private static int m_NextTargIdx = 0;
 
-
 		internal static void NextTarget()
 		{
 			List<Mobile> list = World.MobilesInRange(12);
@@ -1100,6 +1100,7 @@ namespace Assistant
 		}
 
 		private static int m_NextTargHumanoidIdx = 0;
+
 		internal static void NextTargetHumanoid()
 		{
 			List<Mobile> mobiles = World.MobilesInRange(12);

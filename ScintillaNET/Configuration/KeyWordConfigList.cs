@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class KeyWordConfigList : KeyedCollection<int, KeyWordConfig>

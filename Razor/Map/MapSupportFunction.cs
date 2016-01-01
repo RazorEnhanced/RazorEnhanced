@@ -21,18 +21,25 @@ namespace Assistant.Map
 			{
 				case 0:
 					return Ultima.Map.InitializeMap("Felucca");
+
 				case 1:
 					return Ultima.Map.InitializeMap("Trammel");
+
 				case 2:
 					return Ultima.Map.InitializeMap("Ilshenar");
+
 				case 3:
 					return Ultima.Map.InitializeMap("Malas");
+
 				case 4:
 					return Ultima.Map.InitializeMap("Tokuno");
+
 				case 5:
 					return Ultima.Map.InitializeMap("TerMur");
+
 				case 6:
 					return Ultima.Map.InitializeMap("Custom");
+
 				default:
 					return Ultima.Map.InitializeMap("Felucca");
 			}
@@ -49,18 +56,25 @@ namespace Assistant.Map
 			{
 				case "felucca":
 					return 0;
+
 				case "trammel":
 					return 1;
+
 				case "ilshenar":
 					return 2;
+
 				case "malas":
 					return 3;
+
 				case "tokuno":
 					return 4;
+
 				case "terMur":
 					return 5;
+
 				case "custom":
 					return 6;
+
 				default:
 					return 0;
 			}
@@ -72,18 +86,25 @@ namespace Assistant.Map
 			{
 				case 0:
 					return "Felucca";
+
 				case 1:
 					return "Trammel";
+
 				case 2:
 					return "Ilshenar";
+
 				case 3:
 					return "Malas";
+
 				case 4:
 					return "Tokuno";
+
 				case 5:
 					return "TerMur";
+
 				case 6:
 					return "Custom";
+
 				default:
 					return "Felucca";
 			}
@@ -203,13 +224,8 @@ namespace Assistant.Map
 			}
 		}
 
-
-
-
-
 		internal static void AddMyUser(short flag)
 		{
-
 			bool found = false;
 			foreach (MapNetworkIn.UserData user in MapNetwork.UData)
 			{
@@ -236,8 +252,6 @@ namespace Assistant.Map
 					(short)World.Player.HitsMax, (short)World.Player.StamMax, (short)World.Player.ManaMax, flag, Color.White));
 		}
 
-
-
 		internal static void UpdateUserProperties(string user, string type, short X, short Y, short Mappa, short hp, short stam, short mana, short maxhp, short maxstam,
 		short maxmana, short flag, int col)
 		{
@@ -251,6 +265,7 @@ namespace Assistant.Map
 						obj.Y = Y;
 						obj.Facet = Mappa;
 						break;
+
 					case "stats":
 						obj.Hits = hp;
 						obj.Stamina = stam;
@@ -259,14 +274,17 @@ namespace Assistant.Map
 						obj.ManaMax = maxstam;
 						obj.StaminaMax = maxmana;
 						break;
+
 					case "flags":
 						obj.Flag = flag;
 						break;
+
 					case "panic":
 						obj.PanicPointX = X;
 						obj.PanicPointY = Y;
 						obj.PanicPointFacet = Mappa;
 						break;
+
 					case "death":
 						obj.DeathPointX = X;
 						obj.DeathPointY = Y;
@@ -275,6 +293,7 @@ namespace Assistant.Map
 				}
 			}
 		}
+
 		public static void ClearCache(Ultima.Map Map)
 		{
 			if (Map.Tiles != null)
@@ -310,6 +329,7 @@ namespace Assistant.Map
 				index += 1;
 			}
 		}
+
 		public void AddFakeUser(string nome, int x, int y, int facet)
 		{
 			MapNetwork.UData.Add(new MapNetworkIn.UserData(nome, (short)x, (short)y, (short)facet, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, Color.White));

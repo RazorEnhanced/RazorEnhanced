@@ -4,7 +4,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class StyleConfig
@@ -30,7 +29,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public override string ToString()
@@ -39,7 +37,6 @@ namespace ScintillaNET.Configuration
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -55,7 +52,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Bold
 		{
 			get
@@ -67,7 +63,6 @@ namespace ScintillaNET.Configuration
 				_bold = value;
 			}
 		}
-
 
 		public StyleCase? Case
 		{
@@ -81,7 +76,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public CharacterSet? CharacterSet
 		{
 			get
@@ -93,7 +87,6 @@ namespace ScintillaNET.Configuration
 				_characterSet = value;
 			}
 		}
-
 
 		public string FontName
 		{
@@ -107,7 +100,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color ForeColor
 		{
 			get
@@ -119,7 +111,6 @@ namespace ScintillaNET.Configuration
 				_foreColor = value;
 			}
 		}
-
 
 		public bool? Inherit
 		{
@@ -133,7 +124,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? IsChangeable
 		{
 			get
@@ -145,7 +135,6 @@ namespace ScintillaNET.Configuration
 				_isChangeable = value;
 			}
 		}
-
 
 		public bool? IsHotspot
 		{
@@ -159,7 +148,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? IsSelectionEolFilled
 		{
 			get
@@ -171,7 +159,6 @@ namespace ScintillaNET.Configuration
 				_isSelectionEolFilled = value;
 			}
 		}
-
 
 		public bool? IsVisible
 		{
@@ -185,7 +172,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Italic
 		{
 			get
@@ -197,7 +183,6 @@ namespace ScintillaNET.Configuration
 				_italic = value;
 			}
 		}
-
 
 		public string Name
 		{
@@ -211,7 +196,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Number
 		{
 			get
@@ -224,7 +208,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Size
 		{
 			get
@@ -236,7 +219,6 @@ namespace ScintillaNET.Configuration
 				_size = value;
 			}
 		}
-
 
 		public bool? Underline
 		{

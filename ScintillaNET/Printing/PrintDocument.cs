@@ -7,7 +7,6 @@ using System.Drawing.Printing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -24,7 +23,6 @@ namespace ScintillaNET
 		private Scintilla _oScintillaControl;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -45,9 +43,7 @@ namespace ScintillaNET
 			oRangeToFormat.chrg.cpMax = _iPrintEnd;
 
 			_iPosition = _oScintillaControl.NativeInterface.FormatRange(true, ref oRangeToFormat);
-
 		}
-
 
 		private Rectangle DrawFooter(Graphics oGraphics, Rectangle oBounds, PageInformation oFooter)
 		{
@@ -69,7 +65,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private Rectangle DrawHeader(Graphics oGraphics, Rectangle oBounds, PageInformation oHeader)
 		{
 			if (oHeader.Display)
@@ -89,7 +84,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Method called after the Print method is called and before the first page of the document prints
 		/// </summary>
@@ -103,7 +97,6 @@ namespace ScintillaNET
 			_iCurrentPage = 1;
 		}
 
-
 		/// <summary>
 		///     Method called when the last page of the document has printed
 		/// </summary>
@@ -112,7 +105,6 @@ namespace ScintillaNET
 		{
 			base.OnEndPrint(e);
 		}
-
 
 		/// <summary>
 		///     Method called when printing a page
@@ -162,30 +154,25 @@ namespace ScintillaNET
 			e.HasMorePages = (_iPosition < _iPrintEnd);
 		}
 
-
 		private void ResetDocumentName()
 		{
 			DocumentName = "document";
 		}
-
 
 		private void ResetOriginAtMargins()
 		{
 			OriginAtMargins = false;
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return base.DocumentName != "document" || OriginAtMargins;
 		}
 
-
 		private bool ShouldSerializeDocumentName()
 		{
 			return DocumentName != "document";
 		}
-
 
 		private bool ShouldSerializeOriginAtMargins()
 		{
@@ -193,7 +180,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -209,7 +195,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public new bool OriginAtMargins
 		{
 			get
@@ -223,7 +208,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

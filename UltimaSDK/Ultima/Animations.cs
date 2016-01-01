@@ -278,6 +278,7 @@ namespace Ultima
 				default:
 				case 1:
 					return index;
+
 				case 2:
 					if (Table1 != null && index >= 0)
 					{
@@ -288,6 +289,7 @@ namespace Ultima
 						}
 					}
 					break;
+
 				case 3:
 					if (Table2 != null && index >= 0)
 					{
@@ -298,6 +300,7 @@ namespace Ultima
 						}
 					}
 					break;
+
 				case 4:
 					if (Table3 != null && index >= 0)
 					{
@@ -308,6 +311,7 @@ namespace Ultima
 						}
 					}
 					break;
+
 				case 5:
 					if (Table4 != null && index >= 0)
 					{
@@ -318,7 +322,6 @@ namespace Ultima
 						}
 					}
 					break;
-
 			}
 			return -1;
 		}
@@ -458,7 +461,6 @@ namespace Ultima
 
 			if (stream == null)
 				return null;
-
 
 			bool flip = direction > 4;
 
@@ -621,15 +623,19 @@ namespace Ultima
 				case 1:
 					count = 400 + (int)(m_FileIndex.IdxLength - 35000 * 12) / (12 * 175);
 					break;
+
 				case 2:
 					count = 200 + (int)(m_FileIndex2.IdxLength - 22000 * 12) / (12 * 65);
 					break;
+
 				case 3:
 					count = 400 + (int)(m_FileIndex3.IdxLength - 35000 * 12) / (12 * 175);
 					break;
+
 				case 4:
 					count = 400 + (int)(m_FileIndex4.IdxLength - 35000 * 12) / (12 * 175);
 					break;
+
 				case 5:
 					count = 400 + (int)(m_FileIndex5.IdxLength - 35000 * 12) / (12 * 175);
 					break;
@@ -657,12 +663,14 @@ namespace Ultima
 					else
 						length = 35; //people
 					break;
+
 				case 2:
 					if (body < 200)
 						length = 22; //high
 					else
 						length = 13; //low
 					break;
+
 				case 3:
 					if (body < 300)
 						length = 13;
@@ -671,6 +679,7 @@ namespace Ultima
 					else
 						length = 35;
 					break;
+
 				case 4:
 					if (body < 200)
 						length = 22;
@@ -679,6 +688,7 @@ namespace Ultima
 					else
 						length = 35;
 					break;
+
 				case 5:
 					if (body < 200)
 						length = 22;
@@ -715,6 +725,7 @@ namespace Ultima
 						index = 35000 + ((body - 400) * 175);
 
 					break;
+
 				case 2:
 					fileIndex = m_FileIndex2;
 					if (body < 200)
@@ -723,6 +734,7 @@ namespace Ultima
 						index = 22000 + ((body - 200) * 65);
 
 					break;
+
 				case 3:
 					fileIndex = m_FileIndex3;
 					if (body < 300)
@@ -733,6 +745,7 @@ namespace Ultima
 						index = 35000 + ((body - 400) * 175);
 
 					break;
+
 				case 4:
 					fileIndex = m_FileIndex4;
 					if (body < 200)
@@ -743,6 +756,7 @@ namespace Ultima
 						index = 35000 + ((body - 400) * 175);
 
 					break;
+
 				case 5:
 					fileIndex = m_FileIndex5;
 					if ((body < 200) && (body != 34)) // looks strange, though it works.
@@ -860,6 +874,7 @@ namespace Ultima
 		public int OldID { get; set; }
 		public int NewID { get; set; }
 		public int NewHue { get; set; }
+
 		public BodyTableEntry(int oldID, int newID, int newHue)
 		{
 			OldID = oldID;

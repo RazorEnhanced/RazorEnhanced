@@ -1697,6 +1697,7 @@ namespace Assistant
 			Write( (short) totalLength ); // Buffer length*/
 		}
 	}
+
 	// Nuovi pacchetti Enhanced
 
 	internal sealed class InvokeVirtue : Packet
@@ -1717,7 +1718,7 @@ namespace Assistant
 			: base(0xBF)
 		{
 			EnsureCapacity(2 + 2 + 2 + Message.Length + 1);
-			Write((ushort)0x06);   // Command  
+			Write((ushort)0x06);   // Command
 			Write((byte)0x04);       // Party command
 			WriteAsciiNull(Message);
 		}
@@ -1729,7 +1730,7 @@ namespace Assistant
 			: base(0xBF)
 		{
 			EnsureCapacity(1 + 2 + 2 + 2 + 2 + 1);
-			Write((ushort)0x06);   // Command  
+			Write((ushort)0x06);   // Command
 			Write((byte)0x06);       // Party command
 			Write((byte)canloot);
 		}
@@ -1741,7 +1742,7 @@ namespace Assistant
 			: base(0xBF)
 		{
 			EnsureCapacity(6);
-			Write((ushort)0x06);   // Command  
+			Write((ushort)0x06);   // Command
 			Write((byte)0x01);       // Party command open target for new member
 		}
 	}
@@ -1752,7 +1753,7 @@ namespace Assistant
 			: base(0xBF)
 		{
 			EnsureCapacity(2 + 2 + 2 + 4);
-			Write((ushort)0x06);   // Command  
+			Write((ushort)0x06);   // Command
 			Write((byte)0x02);       // remove member
 			Write((uint)serial);
 		}
@@ -1769,6 +1770,7 @@ namespace Assistant
 			Write((byte)0x0A);
 		}
 	}
+
 	internal sealed class GuildButton : Packet
 	{
 		internal GuildButton(uint serial)
@@ -1790,41 +1792,39 @@ namespace Assistant
 		}
 	}
 
-    internal sealed class PromptResponse : Packet
-    {
-        internal PromptResponse(uint serial, uint promptid, uint operation, string lang, string text)
-            : base(0xC2)
-        {
-            if (text != "")
-                EnsureCapacity(2 + 4 + 4 + 4 + 4 + (text.Length * 2));
-            else
-            {
-                EnsureCapacity(18);
-            }
+	internal sealed class PromptResponse : Packet
+	{
+		internal PromptResponse(uint serial, uint promptid, uint operation, string lang, string text)
+			: base(0xC2)
+		{
+			if (text != "")
+				EnsureCapacity(2 + 4 + 4 + 4 + 4 + (text.Length * 2));
+			else
+			{
+				EnsureCapacity(18);
+			}
 
-            Write((uint)serial);
-            Write((uint)promptid);
-            Write((uint)operation);
+			Write((uint)serial);
+			Write((uint)promptid);
+			Write((uint)operation);
 
-            if (lang == null || lang == "")
-                lang = "ENU";
+			if (lang == null || lang == "")
+				lang = "ENU";
 
-            WriteAsciiFixed(lang.ToUpper(), 4);
+			WriteAsciiFixed(lang.ToUpper(), 4);
 
-            if (text != "")
-                WriteLittleUniNull(text);        
-        }
-    }
+			if (text != "")
+				WriteLittleUniNull(text);
+		}
+	}
 
-    internal sealed class RenameRequest : Packet
-    {
-        internal RenameRequest(uint serial, string name)
-            : base(0x75, 65)
-        {
-            Write((uint)serial);
-            WriteAsciiFixed(name, 30);
-        }
-    }
+	internal sealed class RenameRequest : Packet
+	{
+		internal RenameRequest(uint serial, string name)
+			: base(0x75, 65)
+		{
+			Write((uint)serial);
+			WriteAsciiFixed(name, 30);
+		}
+	}
 }
-
-

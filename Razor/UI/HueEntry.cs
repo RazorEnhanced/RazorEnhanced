@@ -15,13 +15,16 @@ namespace Assistant
 		private System.Windows.Forms.Label preview;
 		private RazorButton okay;
 		private RazorButton cancel;
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
+
 		private int m_Hue;
 
 		internal delegate void HueEntryCallback(int hue);
+
 		internal static HueEntryCallback Callback = null;
 
 		internal int Hue { get { return m_Hue; } }
@@ -60,6 +63,7 @@ namespace Assistant
 		}
 
 		#region Windows Form Designer generated code
+
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -76,26 +80,26 @@ namespace Assistant
 			this.okay = new RazorButton();
 			this.cancel = new RazorButton();
 			this.SuspendLayout();
-			// 
+			//
 			// label1
-			// 
+			//
 			this.label1.Location = new System.Drawing.Point(10, 7);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(86, 19);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Hue Number:";
-			// 
+			//
 			// hueNum
-			// 
+			//
 			this.hueNum.Location = new System.Drawing.Point(91, 5);
 			this.hueNum.Name = "hueNum";
 			this.hueNum.Padding = new System.Windows.Forms.Padding(1);
 			this.hueNum.Size = new System.Drawing.Size(60, 22);
 			this.hueNum.TabIndex = 1;
 			this.hueNum.TextChanged += new System.EventHandler(this.hueNum_TextChanged);
-			// 
+			//
 			// inGame
-			// 
+			//
 			colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
 			colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
@@ -121,9 +125,9 @@ namespace Assistant
 			this.inGame.Text = "Select in Game";
 			this.inGame.Theme = Theme.MSOffice2010_BLUE;
 			this.inGame.Click += new System.EventHandler(this.inGame_Click);
-			// 
+			//
 			// preview
-			// 
+			//
 			this.preview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.preview.Location = new System.Drawing.Point(5, 60);
 			this.preview.Name = "preview";
@@ -131,9 +135,9 @@ namespace Assistant
 			this.preview.TabIndex = 3;
 			this.preview.Text = "Preview";
 			this.preview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
+			//
 			// okay
-			// 
+			//
 			colortable2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			colortable2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
 			colortable2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
@@ -159,9 +163,9 @@ namespace Assistant
 			this.okay.Text = "&Okay";
 			this.okay.Theme = Theme.MSOffice2010_BLUE;
 			this.okay.Click += new System.EventHandler(this.okay_Click);
-			// 
+			//
 			// cancel
-			// 
+			//
 			colortable3.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			colortable3.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
 			colortable3.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
@@ -188,9 +192,9 @@ namespace Assistant
 			this.cancel.Text = "Cancel";
 			this.cancel.Theme = Theme.MSOffice2010_BLUE;
 			this.cancel.Click += new System.EventHandler(this.cancel_Click);
-			// 
+			//
 			// HueEntry
-			// 
+			//
 			this.AcceptButton = this.okay;
 			this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
 			this.CancelButton = this.cancel;
@@ -211,9 +215,9 @@ namespace Assistant
 			this.Text = "Select a Hue";
 			this.Load += new System.EventHandler(this.HueEntry_Load);
 			this.ResumeLayout(false);
-
 		}
-		#endregion
+
+		#endregion Windows Form Designer generated code
 
 		private void hueNum_TextChanged(object sender, System.EventArgs e)
 		{
@@ -221,6 +225,7 @@ namespace Assistant
 		}
 
 		internal const int TextHueIDX = 30;
+
 		private void SetPreview(int hue)
 		{
 			if (hue > 0 && hue < 3000)

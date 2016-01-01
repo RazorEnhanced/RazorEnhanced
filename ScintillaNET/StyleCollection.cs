@@ -7,7 +7,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -20,24 +19,20 @@ namespace ScintillaNET
 			NativeScintilla.StyleClearAll();
 		}
 
-
 		public void ClearDocumentStyle()
 		{
 			NativeScintilla.ClearDocumentStyle();
 		}
-
 
 		public int GetEndStyled()
 		{
 			return NativeScintilla.GetEndStyled();
 		}
 
-
 		public byte GetStyleAt(int position)
 		{
 			return NativeScintilla.GetStyleAt(position);
 		}
-
 
 		public string GetStyleNameAt(int position)
 		{
@@ -49,13 +44,11 @@ namespace ScintillaNET
 			return null;
 		}
 
-
 		public void Reset()
 		{
 			for (int i = 0; i < 32; i++)
 				this[i].Reset();
 		}
-
 
 		private void ResetBits()
 		{
@@ -64,12 +57,10 @@ namespace ScintillaNET
 #pragma warning restore 618
 		}
 
-
 		public void ResetDefault()
 		{
 			NativeScintilla.StyleResetDefault();
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -85,63 +76,52 @@ namespace ScintillaNET
 				ShouldSerializeMax();
 		}
 
-
 		private bool ShouldSerializeBits()
 		{
 #pragma warning disable 618
 			return Bits != 7;
 #pragma warning restore 618
-
 		}
-
 
 		private bool ShouldSerializeBraceBad()
 		{
 			return BraceBad.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeBraceLight()
 		{
 			return BraceLight.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeCallTip()
 		{
 			return CallTip.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeControlChar()
 		{
 			return ControlChar.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeDefault()
 		{
 			return BraceBad.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeIndentGuide()
 		{
 			return IndentGuide.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeLastPredefined()
 		{
 			return LastPredefined.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeLineNumber()
 		{
 			return LineNumber.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeMax()
 		{
@@ -149,7 +129,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -166,7 +145,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style BraceBad
 		{
@@ -175,7 +153,6 @@ namespace ScintillaNET
 				return this[StylesCommon.BraceBad];
 			}
 		}
-
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style BraceLight
@@ -186,7 +163,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style CallTip
 		{
@@ -195,7 +171,6 @@ namespace ScintillaNET
 				return this[StylesCommon.CallTip];
 			}
 		}
-
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style ControlChar
@@ -206,7 +181,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style Default
 		{
@@ -215,7 +189,6 @@ namespace ScintillaNET
 				return this[StylesCommon.Default];
 			}
 		}
-
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style IndentGuide
@@ -226,7 +199,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style LastPredefined
 		{
@@ -236,7 +208,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style LineNumber
 		{
@@ -245,7 +216,6 @@ namespace ScintillaNET
 				return this[StylesCommon.LineNumber];
 			}
 		}
-
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Style Max
@@ -258,7 +228,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Indexers
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -270,7 +239,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Style this[StylesCommon index]
 		{
@@ -279,7 +247,6 @@ namespace ScintillaNET
 				return new Style((int)index, Scintilla);
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Style this[string styleName]
@@ -291,7 +258,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Indexers
-
 
 		#region Constructors
 

@@ -235,7 +235,7 @@ const unsigned short StaticPacketTable[] =
 	0x8000, // dd
 	0x8000, // de
 	0x8000, // df
-	0x8000, // e0 
+	0x8000, // e0
 	0x8000,
 	0x8000,
 	0x8000,
@@ -267,4 +267,3 @@ const unsigned short StaticPacketTable[] =
 	0x8000,
 	0x8000, // ff
 };
-

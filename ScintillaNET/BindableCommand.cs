@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	// NOTE: The Scintilla.WndProc function needs to specifically allow the custom BindableCommand values that we've
 	// created (above 10000). Any additions here need to be kept in sync with the range supported by that function.

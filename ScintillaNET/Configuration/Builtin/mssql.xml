@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ScintillaNET>
 	<Language Name="mssql">
-		<Lexer LineCommentPrefix="--" StreamCommentPrefix="/* " StreamCommentSuffix=" /*" >
+		<Lexer LineCommentPrefix="--" StreamCommentPrefix="/* " StreamCommentSuffix=" /*">
 			<Properties>
 				<Property Name="fold.comment" Value="1" />
 			</Properties>
 
 			<Keywords List="0">
-				action add all alter any as asc authorization backup begin 
+				action add all alter any as asc authorization backup begin
 				break browse bulk by cascade case check checkpoint close clustered
 				coalesce collate column commit committed compute confirm constraint
 				contains containstable continue controlrow convert create cross current
@@ -31,7 +31,7 @@
 				update updatetext use user values varying view waitfor when where while
 				with work writetext
 			</Keywords>
-			
+
 			<Keywords List="1">
 				bigint binary bit char character datetime dec decimal float image int
 				integer money nchar ntext numeric nvarchar real smalldatetime smallint
@@ -317,7 +317,7 @@
 			</Keywords>
 		</Lexer>
 		<Styles>
-			<Style Name="DOCUMENT_DEFAULT"  />
+			<Style Name="DOCUMENT_DEFAULT" />
 			<Style Name="STATEMENT" ForeColor="Blue" />
 			<Style Name="DATATYPE"	ForeColor="teal" />
 			<Style Name="SYSTABLE"	ForeColor="#00aa00" />
@@ -334,4 +334,3 @@ $end$</Snippet>
 		</Snippets>
 	</Language>
 </ScintillaNET>
-

@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class WhitespaceStringConverter : TypeConverter
@@ -18,7 +17,6 @@ namespace ScintillaNET
 		private static readonly Regex rr = new Regex("\\{0x([0123456789abcdef]{1,4})\\}", RegexOptions.IgnoreCase);
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -30,7 +28,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
 		{
 			if (destinationType == typeof(char) || destinationType == typeof(string))
@@ -38,7 +35,6 @@ namespace ScintillaNET
 
 			return false;
 		}
-
 
 		private string ConvertFrom(string value)
 		{
@@ -54,18 +50,15 @@ namespace ScintillaNET
 			return value;
 		}
 
-
 		public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
 		{
 			string val = ConvertFrom(value.ToString());
-
 
 			if (context.PropertyDescriptor.ComponentType == typeof(char))
 				return val[0];
 
 			return val;
 		}
-
 
 		private string ConvertTo(string nativeString)
 		{
@@ -83,15 +76,19 @@ namespace ScintillaNET
 					case 9:
 						sb.Append("{TAB}");
 						break;
+
 					case 10:
 						sb.Append("{LF}");
 						break;
+
 					case 13:
 						sb.Append("{CR}");
 						break;
+
 					case 32:
 						sb.Append("{SPACE}");
 						break;
+
 					default:
 						sb.Append("{0x" + ((int)c).ToString("x4") + "}");
 						break;
@@ -99,7 +96,6 @@ namespace ScintillaNET
 			}
 			return sb.ToString();
 		}
-
 
 		public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
 		{
@@ -110,7 +106,6 @@ namespace ScintillaNET
 
 			return val;
 		}
-
 
 		public override bool IsValid(ITypeDescriptorContext context, object value)
 		{

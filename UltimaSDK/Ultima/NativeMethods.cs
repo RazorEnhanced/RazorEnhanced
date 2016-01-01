@@ -53,6 +53,7 @@ namespace Ultima
 		}
 
 		private static byte[] m_StringBuffer;
+
 		public unsafe static string ReadNameString(byte* buffer, int len)
 		{
 			if ((m_StringBuffer == null) || (m_StringBuffer.Length < len))
@@ -63,6 +64,7 @@ namespace Ultima
 
 			return System.Text.Encoding.Default.GetString(m_StringBuffer, 0, count);
 		}
+
 		public unsafe static string ReadNameString(byte[] buffer, int len)
 		{
 			int count;

@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET.Configuration
+﻿namespace ScintillaNET.Configuration
 {
 	public class KeyWordConfig
 	{
@@ -15,7 +9,6 @@ namespace ScintillaNET.Configuration
 		private string _value;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -31,7 +24,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int List
 		{
 			get
@@ -43,7 +35,6 @@ namespace ScintillaNET.Configuration
 				_list = value;
 			}
 		}
-
 
 		public string Value
 		{
@@ -58,7 +49,6 @@ namespace ScintillaNET.Configuration
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

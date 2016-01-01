@@ -10,7 +10,6 @@ using System.IO;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -28,7 +27,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public void Colorize()
@@ -36,12 +34,10 @@ namespace ScintillaNET
 			Colorize(0, -1);
 		}
 
-
 		public void Colorize(int startPos, int endPos)
 		{
 			NativeScintilla.Colourise(startPos, endPos);
 		}
-
 
 		private int FindFirstNonWhitespaceChar(string s)
 		{
@@ -54,7 +50,6 @@ namespace ScintillaNET
 
 			return -1;
 		}
-
 
 		internal char[] GetClassificationChars(CharClassification classification)
 		{
@@ -91,14 +86,12 @@ namespace ScintillaNET
 			return chars;
 		}
 
-
 		public string GetProperty(string name)
 		{
 			string s;
 			NativeScintilla.GetProperty(name, out s);
 			return s;
 		}
-
 
 		public string GetPropertyExpanded(string name)
 		{
@@ -107,18 +100,15 @@ namespace ScintillaNET
 			return s;
 		}
 
-
 		public int GetPropertyInt(string name)
 		{
 			return GetPropertyInt(name, 0);
 		}
 
-
 		public int GetPropertyInt(string name, int defaultValue)
 		{
 			return NativeScintilla.GetPropertyInt(name, defaultValue);
 		}
-
 
 		public void LineComment()
 		{
@@ -157,7 +147,6 @@ namespace ScintillaNET
 			selRange.Select();
 		}
 
-
 		public void LineUncomment()
 		{
 			if (string.IsNullOrEmpty(_lineCommentPrefix))
@@ -191,12 +180,10 @@ namespace ScintillaNET
 			NativeScintilla.EndUndoAction();
 		}
 
-
 		public void LoadLexerLibrary(string path)
 		{
 			NativeScintilla.LoadLexerLibrary(path);
 		}
-
 
 		private void loadStyleMap()
 		{
@@ -236,9 +223,7 @@ namespace ScintillaNET
 					}
 				}
 			}
-
 		}
-
 
 		/// <summary>
 		///     Updates the classification of the characters specified.
@@ -299,33 +284,27 @@ namespace ScintillaNET
 				fixed (byte* bp = bytes.ToArray())
 					Scintilla.DirectMessage(msg, IntPtr.Zero, (IntPtr)bp);
 			}
-
 		}
-
 
 		private void ResetLexer()
 		{
 			Lexer = Lexer.Container;
 		}
 
-
 		private void ResetLexerName()
 		{
 			LexerName = "container";
 		}
-
 
 		public void SetKeywords(int keywordSet, string list)
 		{
 			NativeScintilla.SetKeywords(keywordSet, list);
 		}
 
-
 		public void SetProperty(string name, string value)
 		{
 			NativeScintilla.SetProperty(name, value);
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -333,18 +312,15 @@ namespace ScintillaNET
 				ShouldSerializeLexer();
 		}
 
-
 		private bool ShouldSerializeLexer()
 		{
 			return Lexer != Lexer.Container;
 		}
 
-
 		private bool ShouldSerializeLexerName()
 		{
 			return LexerName != "container";
 		}
-
 
 		public void StreamComment()
 		{
@@ -361,7 +337,6 @@ namespace ScintillaNET
 
 			NativeScintilla.EndUndoAction();
 		}
-
 
 		public void ToggleLineComment()
 		{
@@ -403,7 +378,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -414,7 +388,6 @@ namespace ScintillaNET
 				return _keywords;
 			}
 		}
-
 
 		public Lexer Lexer
 		{
@@ -440,7 +413,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Dictionary<string, string> LexerLanguageMap
 		{
@@ -449,7 +421,6 @@ namespace ScintillaNET
 				return _lexerLanguageMap;
 			}
 		}
-
 
 		public string LexerName
 		{
@@ -477,7 +448,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public string LineCommentPrefix
 		{
 			get
@@ -492,7 +462,6 @@ namespace ScintillaNET
 				_lineCommentPrefix = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets a list of characters the <see cref="Scintilla" /> control defines as punctuation characters
@@ -510,7 +479,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public string StreamCommentPrefix
 		{
 			get
@@ -525,7 +493,6 @@ namespace ScintillaNET
 				_streamCommentPrefix = value;
 			}
 		}
-
 
 		public string StreamCommentSufix
 		{
@@ -542,7 +509,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Dictionary<string, int> StyleNameMap
 		{
@@ -551,7 +517,6 @@ namespace ScintillaNET
 				return _styleNameMap;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets a list of characters the <see cref="Scintilla" /> control defines as whitespace characters
@@ -568,7 +533,6 @@ namespace ScintillaNET
 				return GetClassificationChars(CharClassification.Whitespace);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets a list of characters the <see cref="Scintilla" /> control defines as word characters
@@ -588,7 +552,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		internal Lexing(Scintilla scintilla) : base(scintilla)
@@ -596,7 +559,7 @@ namespace ScintillaNET
 			_keywords = new KeywordCollection(scintilla);
 
 			// Language names are a superset lexer names. For instance the c and cs (c#)
-			// langauges both use the cpp lexer (by default). Languages are kind of a 
+			// langauges both use the cpp lexer (by default). Languages are kind of a
 			// SCite concept, while Scintilla only cares about Lexers. However we don't
 			// need to explicetly map a language to a lexer if they are the same name
 			// like cpp.

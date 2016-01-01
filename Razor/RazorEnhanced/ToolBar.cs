@@ -58,6 +58,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.ToolBarWindows.labelBarStamina.BackColor = GetColor(percent);
 			});
 		}
+
 		internal static void UpdateMana(int maxmana, int mana)
 		{
 			int percent = (int)(mana * 100 / (maxmana == 0 ? (ushort)1 : maxmana));
@@ -355,7 +356,6 @@ namespace RazorEnhanced
 			}
 
 			UpdateCount();
-
 		}
 
 		internal static void UpdateCount()
@@ -702,7 +702,6 @@ namespace RazorEnhanced
 				}
 			}
 		}
-
 
 		//////////////// Load settings ////////////////
 		internal static void LoadSettings()

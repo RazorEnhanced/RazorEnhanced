@@ -5,7 +5,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public abstract class ScintillaHelperBase : IDisposable
@@ -18,7 +17,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		private void scintilla_Load(object sender, EventArgs e)
@@ -26,21 +24,19 @@ namespace ScintillaNET
 			Initialize();
 		}
 
-
 		public virtual void Dispose()
 		{
 			_isDisposed = true;
 		}
 
-
 		//	[workitem:24911] 2000-10-04 Chris Rickard
 		//	This was put in specifically for Markers but it actually makes a lot of sense for all
-		//	ScintillaHelpers. 
+		//	ScintillaHelpers.
 		//	Original Code by fxa. I changed the implementation slightly so that I can make Equals
 		//	abstract, forcing all Helpers to implement their own.
 		/// <summary>
 		///     Abstract Equals Override. All Helpers must implement this. Use IsSameHelperFamily to
-		///     determine if the types are compatible and they have the same Scintilla. For most top 
+		///     determine if the types are compatible and they have the same Scintilla. For most top
 		///     level helpers like Caret and Lexing this should be enough. Helpers like Marker and
 		///     Line also need to take other variables into consideration.
 		/// </summary>
@@ -48,16 +44,15 @@ namespace ScintillaNET
 		/// <returns></returns>
 		public abstract override bool Equals(object obj);
 
-
 		//	Supress warning
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
-
-		protected internal virtual void Initialize() { }
-
+		protected internal virtual void Initialize()
+		{
+		}
 
 		/// <summary>
 		///     Determines if obj belongs to the same Scintilla and is of compatible type
@@ -79,7 +74,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -95,12 +89,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		protected internal INativeScintilla NativeScintilla
 		{
 			get { return _nativeScintilla; }
 		}
-
 
 		protected internal Scintilla Scintilla
 		{
@@ -113,7 +105,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

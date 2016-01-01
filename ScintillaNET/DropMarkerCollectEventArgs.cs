@@ -4,7 +4,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -17,7 +16,6 @@ namespace ScintillaNET
 		private DropMarker _dropMarker;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -33,7 +31,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

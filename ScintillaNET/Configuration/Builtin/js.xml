@@ -12,9 +12,8 @@
 		</AutoComplete>
 
 		<Indentation TabWidth="4" SmartIndentType="cpp" />
-			
-		
-		<Lexer LexerName="cpp" LineCommentPrefix="//" StreamCommentPrefix="/* " StreamCommentSuffix=" */" >	
+
+		<Lexer LexerName="cpp" LineCommentPrefix="//" StreamCommentPrefix="/* " StreamCommentSuffix=" */">
 			<Keywords List="0" Inherit="False">
 				abstract boolean break byte case catch char class const continue debugger default delete do double
 				else enum export extends false final finally float for function goto if implements import in
@@ -38,7 +37,6 @@
 }$DropMarker$
 </Snippet>
 
-
 <Snippet Shortcut="do" IsSurroundsWith="true">do
 {
 	$end$$selected$
@@ -51,8 +49,8 @@ $DropMarker$</Snippet>
 }$end$
 </Snippet>
 
-<Snippet Shortcut="t" IsSurroundsWith="true">try 
-{	        
+<Snippet Shortcut="t" IsSurroundsWith="true">try
+{
 	$selected$
 }
 catch ($expression$)
@@ -62,7 +60,7 @@ catch ($expression$)
 }
 </Snippet>
 
-<Snippet Shortcut="tf" IsSurroundsWith="true">try 
+<Snippet Shortcut="tf" IsSurroundsWith="true">try
 {
 	$selected$
 }
@@ -102,4 +100,4 @@ finally
 </Snippet>
 		</Snippets>
 	</Language>
-</ScintillaNET> 
+</ScintillaNET>

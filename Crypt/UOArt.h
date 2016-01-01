@@ -35,4 +35,3 @@ struct ArtHeader
 	short Height;
 	//followed by short LookupTable
 };
-

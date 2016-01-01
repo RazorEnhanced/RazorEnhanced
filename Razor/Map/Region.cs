@@ -12,6 +12,7 @@ namespace Assistant.Map
 		private int m_Z;
 
 		private int m_Facet;
+
 		internal Region(string line)
 		{
 			string[] textArray1 = line.Split('\t');
@@ -33,8 +34,8 @@ namespace Assistant.Map
 			this.m_Facet = facet;
 		}
 
-
 		static internal List<Region> RegionLists = new List<Region>();
+
 		static internal void Load(string path)
 		{
 			try
@@ -67,6 +68,7 @@ namespace Assistant.Map
 			get { return m_Y; }
 			set { m_Y = value; }
 		}
+
 		internal int z
 		{
 			get { return m_Z; }
@@ -85,18 +87,16 @@ namespace Assistant.Map
 			set { m_Width = value; }
 		}
 
-
 		internal int Facet
 		{
 			get { return m_Facet; }
 			set { m_Facet = value; }
 		}
+
 		private static T InlineAssignHelper<T>(ref T target, T value)
 		{
 			target = value;
 			return value;
 		}
-
 	}
 }
-

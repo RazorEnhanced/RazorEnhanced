@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -18,7 +17,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public override bool Equals(object obj)
@@ -29,7 +27,6 @@ namespace ScintillaNET
 			return this.Number == ((Margin)obj).Number;
 		}
 
-
 		public Rectangle GetClientRectangle()
 		{
 			int left = 0;
@@ -39,12 +36,10 @@ namespace ScintillaNET
 			return new Rectangle(left, 0, Width, Scintilla.ClientSize.Height);
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
-
 
 		public void Reset()
 		{
@@ -56,12 +51,10 @@ namespace ScintillaNET
 			ResetWidth();
 		}
 
-
 		private void ResetAutoToggleMarkerNumber()
 		{
 			_autoToggleMarkerNumber = -1;
 		}
-
 
 		internal void ResetIsClickable()
 		{
@@ -71,7 +64,6 @@ namespace ScintillaNET
 				IsClickable = false;
 		}
 
-
 		internal void ResetIsFoldMargin()
 		{
 			if (_number == 2)
@@ -79,7 +71,6 @@ namespace ScintillaNET
 			else
 				IsFoldMargin = false;
 		}
-
 
 		internal void ResetIsMarkerMargin()
 		{
@@ -89,7 +80,6 @@ namespace ScintillaNET
 				IsMarkerMargin = false;
 		}
 
-
 		internal void ResetType()
 		{
 			if (_number == 0)
@@ -98,7 +88,6 @@ namespace ScintillaNET
 				Type = MarginType.Symbol;
 		}
 
-
 		internal void ResetWidth()
 		{
 			if (_number == 1)
@@ -106,7 +95,6 @@ namespace ScintillaNET
 			else
 				Width = 0;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -118,12 +106,10 @@ namespace ScintillaNET
 				ShouldSerializeIsMarkerMargin();
 		}
 
-
 		private bool ShouldSerializeAutoToggleMarkerNumber()
 		{
 			return _autoToggleMarkerNumber != -1;
 		}
-
 
 		private bool ShouldSerializeIsClickable()
 		{
@@ -133,7 +119,6 @@ namespace ScintillaNET
 			return IsClickable;
 		}
 
-
 		private bool ShouldSerializeIsFoldMargin()
 		{
 			if (_number == 2)
@@ -142,7 +127,6 @@ namespace ScintillaNET
 			return IsFoldMargin;
 		}
 
-
 		private bool ShouldSerializeIsMarkerMargin()
 		{
 			if (_number == 1)
@@ -150,7 +134,6 @@ namespace ScintillaNET
 			else
 				return IsMarkerMargin;
 		}
-
 
 		private bool ShouldSerializeType()
 		{
@@ -162,7 +145,6 @@ namespace ScintillaNET
 			return Type != MarginType.Symbol;
 		}
 
-
 		private bool ShouldSerializeWidth()
 		{
 			// Margin 1 defaults to 16, all the rest
@@ -172,7 +154,6 @@ namespace ScintillaNET
 
 			return Width != 0;
 		}
-
 
 		public override string ToString()
 		{
@@ -188,7 +169,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		public int AutoToggleMarkerNumber
@@ -203,7 +183,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsClickable
 		{
 			get
@@ -215,7 +194,6 @@ namespace ScintillaNET
 				NativeScintilla.SetMarginSensitiveN(_number, value);
 			}
 		}
-
 
 		public bool IsFoldMargin
 		{
@@ -231,7 +209,6 @@ namespace ScintillaNET
 					Mask &= ~Constants.SC_MASK_FOLDERS;
 			}
 		}
-
 
 		public bool IsMarkerMargin
 		{
@@ -252,7 +229,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int Mask
 		{
@@ -266,7 +242,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int Number
 		{
@@ -275,7 +250,6 @@ namespace ScintillaNET
 				return _number;
 			}
 		}
-
 
 		public MarginType Type
 		{
@@ -288,7 +262,6 @@ namespace ScintillaNET
 				NativeScintilla.SetMarginTypeN(_number, (int)value);
 			}
 		}
-
 
 		public int Width
 		{
@@ -303,7 +276,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

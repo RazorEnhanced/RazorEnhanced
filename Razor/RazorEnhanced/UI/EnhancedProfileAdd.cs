@@ -2,7 +2,6 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedProfileAdd : Form
@@ -15,7 +14,6 @@ namespace RazorEnhanced.UI
 			MaximizeBox = false;
 			this.Text = m_Title;
 		}
-
 
 		private void close_Click(object sender, EventArgs e)
 		{
@@ -57,7 +55,6 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedProfileAdd_Load(object sender, EventArgs e)
 		{
-
 		}
 	}
 }

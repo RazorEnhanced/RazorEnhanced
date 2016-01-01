@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class SnippetLinkCollection : IDictionary<string, SnippetLink>, IList<SnippetLink>
@@ -16,10 +15,9 @@ namespace ScintillaNET
 		private SnippetLinkRange _activeRange = null;
 		private SnippetLinkEnd _endPoint = null;
 		private bool _isActive = false;
-		List<SnippetLink> _snippetLinks = new List<SnippetLink>();
+		private List<SnippetLink> _snippetLinks = new List<SnippetLink>();
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -27,7 +25,6 @@ namespace ScintillaNET
 		{
 			Add(item.Key, item);
 		}
-
 
 		public void Add(string key, SnippetLink value)
 		{
@@ -39,12 +36,10 @@ namespace ScintillaNET
 			_snippetLinks.Add(value);
 		}
 
-
 		public void Add(KeyValuePair<string, SnippetLink> item)
 		{
 			Add(item.Key, item.Value);
 		}
-
 
 		public void Clear()
 		{
@@ -65,18 +60,15 @@ namespace ScintillaNET
 				mr.Dispose();
 		}
 
-
 		public bool Contains(SnippetLink item)
 		{
 			return _snippetLinks.Contains(item);
 		}
 
-
 		public bool Contains(KeyValuePair<string, SnippetLink> item)
 		{
 			return ContainsKey(item.Key);
 		}
-
 
 		public bool ContainsKey(string key)
 		{
@@ -87,42 +79,35 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		public void CopyTo(SnippetLink[] array, int arrayIndex)
 		{
 			_snippetLinks.CopyTo(array, arrayIndex);
 		}
-
 
 		public void CopyTo(KeyValuePair<string, SnippetLink>[] array, int arrayIndex)
 		{
 			throw new Exception("The method or operation is not implemented.");
 		}
 
-
 		public IEnumerator<KeyValuePair<string, SnippetLink>> GetEnumerator()
 		{
 			throw new Exception("The method or operation is not implemented.");
 		}
-
 
 		IEnumerator<SnippetLink> IEnumerable<SnippetLink>.GetEnumerator()
 		{
 			return _snippetLinks.GetEnumerator();
 		}
 
-
 		public int IndexOf(SnippetLink item)
 		{
 			return _snippetLinks.IndexOf(item);
 		}
 
-
 		public void Insert(int index, SnippetLink item)
 		{
 			_snippetLinks.Insert(index, item);
 		}
-
 
 		public bool Remove(string key)
 		{
@@ -138,30 +123,25 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		public bool Remove(SnippetLink item)
 		{
 			return _snippetLinks.Remove(item);
 		}
-
 
 		public bool Remove(KeyValuePair<string, SnippetLink> item)
 		{
 			return Remove(item.Key);
 		}
 
-
 		public void RemoveAt(int index)
 		{
 			_snippetLinks.RemoveAt(index);
 		}
 
-
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			return _snippetLinks.GetEnumerator();
 		}
-
 
 		public bool TryGetValue(string key, out SnippetLink value)
 		{
@@ -179,7 +159,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		public SnippetLinkRange ActiveRange
@@ -193,7 +172,6 @@ namespace ScintillaNET
 				_activeRange = value;
 			}
 		}
-
 
 		public SnippetLink ActiveSnippetLink
 		{
@@ -215,12 +193,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int Count
 		{
 			get { return _snippetLinks.Count; }
 		}
-
 
 		public SnippetLinkEnd EndPoint
 		{
@@ -234,7 +210,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsActive
 		{
 			get
@@ -247,12 +222,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsReadOnly
 		{
 			get { return false; }
 		}
-
 
 		public ICollection<string> Keys
 		{
@@ -266,7 +239,6 @@ namespace ScintillaNET
 				return keys;
 			}
 		}
-
 
 		public SnippetLink NextActiveSnippetLink
 		{
@@ -282,7 +254,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public SnippetLink PreviousActiveSnippetLink
 		{
 			get
@@ -296,7 +267,6 @@ namespace ScintillaNET
 				return _snippetLinks[newIndex];
 			}
 		}
-
 
 		public ICollection<SnippetLink> Values
 		{
@@ -312,7 +282,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Indexers
 
@@ -344,7 +313,6 @@ namespace ScintillaNET
 				_snippetLinks.Add(value);
 			}
 		}
-
 
 		public SnippetLink this[int index]
 		{

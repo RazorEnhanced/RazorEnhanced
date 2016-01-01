@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedGraphFilterAdd : Form
@@ -18,19 +17,15 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedOrganizerManualAdd_Load(object sender, EventArgs e)
 		{
-
 			tGraphicsNew.Text = "0x0000";
 			tGraphicsReal.Text = "0x0000";
 		}
-
-
 
 		private void bClose_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.Filters.RefreshLists();
 			this.Close();
 		}
-
 
 		private void bAddItem_Click(object sender, EventArgs e)
 		{
@@ -73,9 +68,6 @@ namespace RazorEnhanced.UI
 			}
 			RazorEnhanced.Filters.RefreshLists();
 			this.Close();
-
 		}
-
-
 	}
 }

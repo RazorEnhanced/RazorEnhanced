@@ -6,7 +6,6 @@ using ScintillaNET.Internal;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>

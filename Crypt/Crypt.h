@@ -58,7 +58,7 @@ enum UONET_MESSAGE
 	SMART_CPU = 21,
 	NEGOTIATE = 22,
 	SET_MAP_HWND = 23,
-// ZIPPY REV 80	SET_FWD_HWND = 24,
+	// ZIPPY REV 80	SET_FWD_HWND = 24,
 };
 
 //#define SHARED_BUFF_SIZE 0x80000 // Client's buffers are 500k
@@ -99,12 +99,12 @@ struct SharedMemory
 class PatchInfo
 {
 public:
-	PatchInfo( DWORD addr, int len )
+	PatchInfo(DWORD addr, int len)
 	{
 		Address = addr;
 		Length = len;
 		Data = new char[Length];
-		memcpy( Data, (const void*)Address, Length );
+		memcpy(Data, (const void*)Address, Length);
 	}
 
 	~PatchInfo()
@@ -133,26 +133,26 @@ extern HINSTANCE hInstance;
 extern SharedMemory *pShared;
 extern HANDLE CommMutex;
 
-DLLFUNCTION int InstallLibrary( HWND PostWindow, DWORD pId );
-DLLFUNCTION void Shutdown( bool closeClient );
+DLLFUNCTION int InstallLibrary(HWND PostWindow, DWORD pId);
+DLLFUNCTION void Shutdown(bool closeClient);
 DLLFUNCTION HWND FindUOWindow();
 DLLFUNCTION void *GetSharedAddress();
-DLLFUNCTION int GetPacketLength( unsigned char *data, int len );
-DLLFUNCTION bool IsDynLength( unsigned char packet );
+DLLFUNCTION int GetPacketLength(unsigned char *data, int len);
+DLLFUNCTION bool IsDynLength(unsigned char packet);
 DLLFUNCTION int GetUOProcId();
-DLLFUNCTION DWORD InitializeLibrary( const char * );
+DLLFUNCTION DWORD InitializeLibrary(const char *);
 DLLFUNCTION HANDLE GetCommMutex();
 
-LRESULT CALLBACK UOAWndProc( HWND, UINT, WPARAM, LPARAM );
-void Log( const char *format, ... );
-void MemoryPatch( unsigned long, unsigned long );
-void MemoryPatch( unsigned long, int, int );
-void MemoryPatch( unsigned long, const void *, int );
-void RedrawTitleBar( HWND, bool );
+LRESULT CALLBACK UOAWndProc(HWND, UINT, WPARAM, LPARAM);
+void Log(const char *format, ...);
+void MemoryPatch(unsigned long, unsigned long);
+void MemoryPatch(unsigned long, int, int);
+void MemoryPatch(unsigned long, const void *, int);
+void RedrawTitleBar(HWND, bool);
 void CheckTitlebarAttr(HWND);
 void FreeArt();
 //void InitThemes();
-bool PatchStatusBar( BOOL preAOS );
+bool PatchStatusBar(BOOL preAOS);
 
 //#define PACKET_TBL_STR "Got Logout OK packet!\0\0\0"
 //#define PACKET_TS_LEN 24
@@ -223,7 +223,7 @@ key2 ^= 0xA31D527F;
 .text:0041C5C4 83 C5 01                          add     ebp, 1
 .text:0041C5C7 85 DB                             test    ebx, ebx
 */
-// E8 C1 E7 1F 0B C7 33 05 memoryloc_2 
+// E8 C1 E7 1F 0B C7 33 05 memoryloc_2
 #define CRYPT_KEY_STR_MORE_NEW "\xE8\xC1\xE7\x1F\x0B\xC7\x33\x05"
 #define CRYPT_KEY_MORE_NEW_LEN 8
 
@@ -289,30 +289,30 @@ key2 ^= 0xA31D527F;
 };*/
 
 /*  var animAddress = MemoryTools.FindPattern(animPattern, Process.GetCurrentProcess().MainModule);
-    var speedhackAddress = MemoryTools.FindPattern(speedhackPattern, Process.GetCurrentProcess().MainModule);
-    if (speedhackAddress == IntPtr.Zero || animAddress == IntPtr.Zero)
-    {
-        Trace.WriteLine("Smooth movement offsets not found", "Patch manager");
-        return;
-    }
- 
-    using (new TemporaryVirtualProtect(animAddress, (uint)animPattern.Length, 0x0040))
-    {
-        MemoryManager.Write((void*)(animAddress.ToInt32() + 11), new byte[] {
-            0x33, 0xc0, 0x90, 0x90, 0x90    // xor eax, eax
-        });
-        MemoryManager.Write((void*)(animAddress.ToInt32() + 35), new byte[] {
-            0x08                            // mov [eax-1], 8
-        });
-        MemoryManager.Write((void*)(animAddress.ToInt32() + 38), new byte[] {
-            0x04                            // mov [eax], 2
-        });
-    }
-    using (new TemporaryVirtualProtect(speedhackAddress, (uint)speedhackPattern.Length, 0x0040))
-    {
-        MemoryManager.Write((void*)(speedhackAddress.ToInt32() + 10), new byte[] {
-            0x26,                           // cmp edi, 0x26
-        });
-    }
- 
+	var speedhackAddress = MemoryTools.FindPattern(speedhackPattern, Process.GetCurrentProcess().MainModule);
+	if (speedhackAddress == IntPtr.Zero || animAddress == IntPtr.Zero)
+	{
+		Trace.WriteLine("Smooth movement offsets not found", "Patch manager");
+		return;
+	}
+
+	using (new TemporaryVirtualProtect(animAddress, (uint)animPattern.Length, 0x0040))
+	{
+		MemoryManager.Write((void*)(animAddress.ToInt32() + 11), new byte[] {
+			0x33, 0xc0, 0x90, 0x90, 0x90    // xor eax, eax
+		});
+		MemoryManager.Write((void*)(animAddress.ToInt32() + 35), new byte[] {
+			0x08                            // mov [eax-1], 8
+		});
+		MemoryManager.Write((void*)(animAddress.ToInt32() + 38), new byte[] {
+			0x04                            // mov [eax], 2
+		});
+	}
+	using (new TemporaryVirtualProtect(speedhackAddress, (uint)speedhackPattern.Length, 0x0040))
+	{
+		MemoryManager.Write((void*)(speedhackAddress.ToInt32() + 10), new byte[] {
+			0x26,                           // cmp edi, 0x26
+		});
+	}
+
  Trace.WriteLine("Smooth movement applied", "Patch manager");*/

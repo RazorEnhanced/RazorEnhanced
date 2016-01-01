@@ -17,10 +17,8 @@ namespace RazorEnhanced.UI
 			this.Text = m_Title; ;
 		}
 
-
 		private void EnhancedrgetAdd_Load(object sender, EventArgs e)
 		{
-
 			tAddBody.Text = "0x0000";
 			tAddHue.Text = "0x0000";
 			tRangeMax.Text = "-1";
@@ -261,6 +259,5 @@ namespace RazorEnhanced.UI
 		{
 			this.Close();
 		}
-
 	}
 }

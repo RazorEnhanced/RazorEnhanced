@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -34,7 +33,6 @@ namespace ScintillaNET.Configuration
 		private bool _useXmlReader = true;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -188,7 +186,6 @@ namespace ScintillaNET.Configuration
 
 				if (customLang != null && customLang.HasData)
 					configList.Add(customLang);
-
 			}
 			else if (_loadOrder == ConfigurationLoadOrder.UserCustomBuiltIn)
 			{
@@ -214,12 +211,10 @@ namespace ScintillaNET.Configuration
 			Configure(configList);
 		}
 
-
 		public void Configure(Configuration config)
 		{
 			Configure(new List<Configuration>(new Configuration[] { config }));
 		}
-
 
 		internal void Configure(List<Configuration> configList)
 		{
@@ -293,7 +288,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.AutoComplete_IsCaseSensitive.HasValue)
 					b = c.AutoComplete_IsCaseSensitive;
-
 			}
 			if (b.HasValue)
 				Scintilla.AutoComplete.IsCaseSensitive = b.Value;
@@ -303,7 +297,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.AutoComplete_ListSeperator.HasValue)
 					ch = c.AutoComplete_ListSeperator;
-
 			}
 			if (ch.HasValue)
 				Scintilla.AutoComplete.ListSeparator = ch.Value;
@@ -332,7 +325,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.AutoComplete_MaxHeight.HasValue)
 					i = c.AutoComplete_MaxHeight;
-
 			}
 			if (i.HasValue)
 				Scintilla.AutoComplete.MaxHeight = i.Value;
@@ -346,13 +338,11 @@ namespace ScintillaNET.Configuration
 			if (i.HasValue)
 				Scintilla.AutoComplete.MaxWidth = i.Value;
 
-
 			b = null;
 			foreach (Configuration c in configList)
 			{
 				if (c.AutoComplete_SingleLineAccept.HasValue)
 					b = c.AutoComplete_SingleLineAccept;
-
 			}
 			if (b.HasValue)
 				Scintilla.AutoComplete.SingleLineAccept = b.Value;
@@ -366,13 +356,11 @@ namespace ScintillaNET.Configuration
 			if (s != null)
 				Scintilla.AutoComplete.StopCharacters = s;
 
-
 			co = Color.Empty;
 			foreach (Configuration c in configList)
 			{
 				if (c.CallTip_BackColor != Color.Empty)
 					co = c.CallTip_BackColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.CallTip.BackColor = co;
@@ -382,7 +370,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.CallTip_ForeColor != Color.Empty)
 					co = c.CallTip_ForeColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.CallTip.ForeColor = co;
@@ -392,7 +379,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.CallTip_HighlightTextColor != Color.Empty)
 					co = c.CallTip_HighlightTextColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.CallTip.HighlightTextColor = co;
@@ -411,7 +397,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Caret_Color != Color.Empty)
 					co = c.Caret_Color;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Caret.Color = co;
@@ -430,7 +415,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Caret_CurrentLineBackgroundColor != Color.Empty)
 					co = c.Caret_CurrentLineBackgroundColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Caret.CurrentLineBackgroundColor = co;
@@ -440,7 +424,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Caret_HighlightCurrentLine.HasValue)
 					b = c.Caret_HighlightCurrentLine;
-
 			}
 			if (b.HasValue)
 				Scintilla.Caret.HighlightCurrentLine = b.Value;
@@ -450,11 +433,9 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Caret_IsSticky.HasValue)
 					b = c.Caret_IsSticky;
-
 			}
 			if (b.HasValue)
 				Scintilla.Caret.IsSticky = b.Value;
-
 
 			CaretStyle? caretStyle = null;
 			foreach (Configuration c in configList)
@@ -579,7 +560,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Hotspot_ActiveBackColor != Color.Empty)
 					co = c.Hotspot_ActiveBackColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.HotspotStyle.ActiveBackColor = co;
@@ -589,7 +569,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Hotspot_ActiveForeColor != Color.Empty)
 					co = c.Hotspot_ActiveForeColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.HotspotStyle.ActiveForeColor = co;
@@ -611,7 +590,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (b.HasValue)
 				Scintilla.HotspotStyle.SingleLine = b.Value;
-
 
 			b = null;
 			foreach (Configuration c in configList)
@@ -640,7 +618,6 @@ namespace ScintillaNET.Configuration
 			if (b.HasValue)
 				Scintilla.Indentation.BackspaceUnindents = b.Value;
 
-
 			i = null;
 			foreach (Configuration c in configList)
 			{
@@ -649,7 +626,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (i.HasValue)
 				Scintilla.Indentation.IndentWidth = i.Value;
-
 
 			b = null;
 			foreach (Configuration c in configList)
@@ -668,7 +644,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (b.HasValue)
 				Scintilla.Indentation.TabIndents = b.Value;
-
 
 			i = null;
 			foreach (Configuration c in configList)
@@ -743,7 +718,7 @@ namespace ScintillaNET.Configuration
 
 			//	Hrm... unfortunately there's no way to clear
 			//	Scintilla's Lexing Properties. Guess we'll just
-			//	have to live with adding to the existing list 
+			//	have to live with adding to the existing list
 			//	and/or just overriding with new values. This
 			//	means that the "Inherit" attribute is really
 			//	meaningless. Nevertheless I'm leaving it in
@@ -879,11 +854,9 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.LongLines_EdgeColor != Color.Empty)
 					co = c.LongLines_EdgeColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.LongLines.EdgeColor = co;
-
 
 			i = null;
 			foreach (Configuration c in configList)
@@ -894,17 +867,14 @@ namespace ScintillaNET.Configuration
 			if (i.HasValue)
 				Scintilla.LongLines.EdgeColumn = i.Value;
 
-
 			EdgeMode? em = null;
 			foreach (Configuration c in configList)
 			{
 				if (c.LongLines_EdgeMode.HasValue)
 					em = c.LongLines_EdgeMode;
-
 			}
 			if (em.HasValue)
 				Scintilla.LongLines.EdgeMode = em.Value;
-
 
 			if (_clearMargins)
 				Scintilla.Margins.Reset();
@@ -917,7 +887,6 @@ namespace ScintillaNET.Configuration
 
 				foreach (MarginConfig mc in c.Margin_List)
 				{
-
 					if (!margins.ContainsKey(mc.Number) || (mc.Inherit.HasValue && !mc.Inherit.Value))
 					{
 						margins.Remove(mc.Number);
@@ -1034,7 +1003,6 @@ namespace ScintillaNET.Configuration
 			if (fms.HasValue)
 				Scintilla.Folding.MarkerScheme = fms.Value;
 
-
 			b = null;
 			foreach (Configuration c in configList)
 			{
@@ -1080,24 +1048,20 @@ namespace ScintillaNET.Configuration
 			if (i.HasValue)
 				Scintilla.Scrolling.HorizontalScrollOffset = i.Value;
 
-
 			co = Color.Empty;
 			foreach (Configuration c in configList)
 			{
 				if (c.Selection_BackColor != Color.Empty)
 					co = c.Selection_BackColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Selection.BackColor = co;
-
 
 			co = Color.Empty;
 			foreach (Configuration c in configList)
 			{
 				if (c.Selection_BackColorUnfocused != Color.Empty)
 					co = c.Selection_BackColorUnfocused;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Selection.BackColorUnfocused = co;
@@ -1107,7 +1071,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Selection_ForeColor != Color.Empty)
 					co = c.Selection_ForeColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Selection.ForeColor = co;
@@ -1117,11 +1080,9 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Selection_ForeColorUnfocused != Color.Empty)
 					co = c.Selection_ForeColorUnfocused;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Selection.ForeColorUnfocused = co;
-
 
 			b = null;
 			foreach (Configuration c in configList)
@@ -1131,7 +1092,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (b.HasValue)
 				Scintilla.Selection.Hidden = b.Value;
-
 
 			b = null;
 			foreach (Configuration c in configList)
@@ -1150,7 +1110,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (selectionMode.HasValue)
 				Scintilla.Selection.Mode = selectionMode.Value;
-
 
 			if (_clearSnippets)
 				Scintilla.Snippets.List.Clear();
@@ -1178,7 +1137,6 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.SnippetsConfigList.DefaultDelimeter.HasValue)
 					defaultDelimeter = c.SnippetsConfigList.DefaultDelimeter;
-
 			}
 			if (!ch.HasValue)
 				Scintilla.Snippets.DefaultDelimeter = '$';
@@ -1225,7 +1183,6 @@ namespace ScintillaNET.Configuration
 			if (co != Color.Empty)
 				Scintilla.Snippets.ActiveSnippetColor = co;
 
-
 			IndicatorStyle? indicatorStyle = null;
 			foreach (Configuration c in configList)
 			{
@@ -1234,7 +1191,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (indicatorStyle.HasValue)
 				Scintilla.Snippets.ActiveSnippetIndicatorStyle = indicatorStyle.Value;
-
 
 			i = null;
 			foreach (Configuration c in configList)
@@ -1245,17 +1201,14 @@ namespace ScintillaNET.Configuration
 			if (i.HasValue)
 				Scintilla.Snippets.ActiveSnippetIndicator = i.Value;
 
-
 			co = Color.Empty;
 			foreach (Configuration c in configList)
 			{
 				if (c.SnippetsConfigList.InactiveSnippetColor != Color.Empty)
 					co = c.SnippetsConfigList.InactiveSnippetColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Snippets.InactiveSnippetColor = co;
-
 
 			i = null;
 			foreach (Configuration c in configList)
@@ -1265,7 +1218,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (i.HasValue)
 				Scintilla.Snippets.InactiveSnippetIndicator = i.Value;
-
 
 			IndicatorStyle? ics = null;
 			foreach (Configuration c in configList)
@@ -1299,11 +1251,9 @@ namespace ScintillaNET.Configuration
 			{
 				if (c.Whitespace_BackColor != Color.Empty)
 					co = c.Whitespace_BackColor;
-
 			}
 			if (co != Color.Empty)
 				Scintilla.Whitespace.BackColor = co;
-
 
 			co = Color.Empty;
 			foreach (Configuration c in configList)
@@ -1322,7 +1272,6 @@ namespace ScintillaNET.Configuration
 			}
 			if (wsm.HasValue)
 				Scintilla.Whitespace.Mode = wsm.Value;
-
 
 			//	OK so we saved the best for last instead of going in
 			//	strict lexical order. Styles! This is really the section
@@ -1460,12 +1409,10 @@ namespace ScintillaNET.Configuration
 					else if (baseStyleConfig != null && baseStyleConfig.Underline.HasValue)
 						rs.Underline = baseStyleConfig.Underline.Value;
 				}
-
-
 			}
 			//	If a Default styles exist we want them at the top of the list because
 			//	it needs to be applied first, then StyleClearAll() called so that all
-			//	other styles will "inherit" this style. Then the other styles will 
+			//	other styles will "inherit" this style. Then the other styles will
 			//	override the default with any defined properties.
 			StyleConfig[] arr = new StyleConfig[resolvedStyles.Count];
 			resolvedStyles.Values.CopyTo(arr, 0);
@@ -1481,7 +1428,6 @@ namespace ScintillaNET.Configuration
 
 				return 0;
 			}));
-
 
 			foreach (StyleConfig sc in arr)
 			{
@@ -1534,7 +1480,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		private string GetCustomConfigPath(string language)
 		{
 			string langPath = language;
@@ -1568,79 +1513,66 @@ namespace ScintillaNET.Configuration
 			return langPath;
 		}
 
-
 		protected internal override void Initialize()
 		{
 			if (_language != null)
 				Configure();
 		}
 
-
 		private void ResetClearIndicators()
 		{
 			_clearIndicators = false;
 		}
-
 
 		private void ResetClearKeyBindings()
 		{
 			_clearKeyBindings = false;
 		}
 
-
 		private void ResetClearMargins()
 		{
 			_clearMargins = true;
 		}
-
 
 		private void ResetClearMarkers()
 		{
 			_clearMarkers = false;
 		}
 
-
 		private void ResetClearSnippets()
 		{
 			_clearSnippets = false;
 		}
-
 
 		private void ResetClearStyles()
 		{
 			_clearStyles = false;
 		}
 
-
 		private void ResetCustomLocation()
 		{
 			_customLocation = string.Empty;
 		}
-
 
 		private void ResetIsBuiltInEnabled()
 		{
 			_isBuiltInEnabled = true;
 		}
 
-
 		private void ResetIsUserEnabled()
 		{
 			_isUserEnabled = true;
 		}
-
 
 		private void ResetLanguage()
 		{
 			_language = null;
 		}
 
-
 		private void ResetLoadOrder()
 		{
 			_loadOrder = ConfigurationLoadOrder.BuiltInCustomUser;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -1655,66 +1587,55 @@ namespace ScintillaNET.Configuration
 				ShouldSerializeLoadOrder();
 		}
 
-
 		private bool ShouldSerializeClearIndicators()
 		{
 			return _clearIndicators;
 		}
-
 
 		private bool ShouldSerializeClearKeyBindings()
 		{
 			return _clearKeyBindings;
 		}
 
-
 		private bool ShouldSerializeClearMargins()
 		{
 			return _clearMargins;
 		}
-
 
 		private bool ShouldSerializeClearMarkers()
 		{
 			return _clearMarkers;
 		}
 
-
 		private bool ShouldSerializeClearSnippets()
 		{
 			return _clearSnippets;
 		}
-
 
 		private bool ShouldSerializeClearStyles()
 		{
 			return _clearStyles;
 		}
 
-
 		private bool ShouldSerializeCustomLocation()
 		{
 			return !string.IsNullOrEmpty(_customLocation);
 		}
-
 
 		private bool ShouldSerializeIsBuiltInEnabled()
 		{
 			return !_isBuiltInEnabled;
 		}
 
-
 		private bool ShouldSerializeIsUserEnabled()
 		{
 			return !_isUserEnabled;
 		}
 
-
 		private bool ShouldSerializeLanguage()
 		{
 			return !string.IsNullOrEmpty(_language);
 		}
-
 
 		private bool ShouldSerializeLoadOrder()
 		{
@@ -1722,7 +1643,6 @@ namespace ScintillaNET.Configuration
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -1738,7 +1658,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool ClearKeyBindings
 		{
 			get
@@ -1750,7 +1669,6 @@ namespace ScintillaNET.Configuration
 				_clearKeyBindings = value;
 			}
 		}
-
 
 		public bool ClearMargins
 		{
@@ -1764,7 +1682,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool ClearMarkers
 		{
 			get
@@ -1776,7 +1693,6 @@ namespace ScintillaNET.Configuration
 				_clearMarkers = value;
 			}
 		}
-
 
 		public bool ClearSnippets
 		{
@@ -1790,7 +1706,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool ClearStyles
 		{
 			get
@@ -1802,7 +1717,6 @@ namespace ScintillaNET.Configuration
 				_clearStyles = value;
 			}
 		}
-
 
 		public string CustomLocation
 		{
@@ -1816,7 +1730,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool IsBuiltInEnabled
 		{
 			get
@@ -1829,7 +1742,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool IsUserEnabled
 		{
 			get
@@ -1841,7 +1753,6 @@ namespace ScintillaNET.Configuration
 				_isUserEnabled = value;
 			}
 		}
-
 
 		public string Language
 		{
@@ -1858,7 +1769,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public ConfigurationLoadOrder LoadOrder
 		{
 			get
@@ -1870,7 +1780,6 @@ namespace ScintillaNET.Configuration
 				_loadOrder = value;
 			}
 		}
-
 
 		private string UserFolder
 		{
@@ -1890,7 +1799,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		[DefaultValue(true)]
 		public bool UseXmlReader
 		{
@@ -1903,7 +1811,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		internal ConfigurationManager(Scintilla scintilla) : base(scintilla)
@@ -1913,4 +1820,3 @@ namespace ScintillaNET.Configuration
 		#endregion Constructors
 	}
 }
-

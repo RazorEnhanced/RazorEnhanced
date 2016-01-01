@@ -1,9 +1,3 @@
-#region Using Directives
-
-
-#endregion Using Directives
-
-
 namespace ScintillaNET.Configuration
 {
 	public struct CommandBindingConfig
@@ -15,7 +9,6 @@ namespace ScintillaNET.Configuration
 		public BindableCommand BindableCommand;
 
 		#endregion Fields
-
 
 		#region Constructors
 

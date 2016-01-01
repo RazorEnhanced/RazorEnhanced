@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Defines a run of styled text in a <see cref="Scintilla" /> control
@@ -22,7 +16,6 @@ namespace ScintillaNET
 		private int _style;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -42,7 +35,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the style index of this <see cref="StyleRun" />.
 		/// </summary>
@@ -60,7 +52,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

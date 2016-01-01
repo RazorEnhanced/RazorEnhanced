@@ -38,7 +38,6 @@ namespace Assistant
 
 		private static void GetInfoTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-
 			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
 			if (assistantItem != null && assistantItem.Serial.IsItem)
 			{
@@ -99,24 +98,31 @@ namespace Assistant
 				case 0:
 					mapStr = "Felucca";
 					break;
+
 				case 1:
 					mapStr = "Trammel";
 					break;
+
 				case 2:
 					mapStr = "Ilshenar";
 					break;
+
 				case 3:
 					mapStr = "Malas";
 					break;
+
 				case 4:
 					mapStr = "Tokuno";
 					break;
+
 				case 5:
 					mapStr = "Ter Mur";
 					break;
+
 				case 0x7F:
 					mapStr = "Internal";
 					break;
+
 				default:
 					mapStr = String.Format("Unknown (#{0})", World.Player.Map);
 					break;
@@ -138,6 +144,7 @@ namespace Assistant
 	internal class Command
 	{
 		private static Dictionary<string, CommandCallback> m_List;
+
 		static Command()
 		{
 			m_List = new Dictionary<string, CommandCallback>();
@@ -230,7 +237,7 @@ namespace Assistant
 				if (text[0] == '-')
 				{
 					text = text.Substring(1).ToLower();
-                    RazorEnhanced.Misc.SendMessage(text);
+					RazorEnhanced.Misc.SendMessage(text);
 					string[] split = text.Split(' ', '\t');
 					if (m_List.ContainsKey(split[0]))
 					{
@@ -250,4 +257,3 @@ namespace Assistant
 		}
 	}
 }
-

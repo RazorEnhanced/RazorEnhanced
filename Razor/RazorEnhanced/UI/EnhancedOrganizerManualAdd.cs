@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedOrganizerManualAdd : Form
@@ -24,14 +23,11 @@ namespace RazorEnhanced.UI
 			tAmount.Text = "-1";
 		}
 
-
-
 		private void bClose_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.Organizer.RefreshItems();
 			this.Close();
 		}
-
 
 		private void bAddItem_Click(object sender, EventArgs e)
 		{
@@ -80,7 +76,6 @@ namespace RazorEnhanced.UI
 
 			try
 			{
-
 				color = Convert.ToInt32(tColor.Text, 16);
 			}
 			catch
@@ -98,7 +93,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.Organizer.AddItemToList(tName.Text, graphics, amount, color);
 				this.Close();
 			}
-
 		}
 	}
 }

@@ -1,9 +1,3 @@
-#region Using Directives
-
-
-#endregion Using Directives
-
-
 namespace ScintillaNET.Configuration
 {
 	public class SnippetsConfig
@@ -14,13 +8,13 @@ namespace ScintillaNET.Configuration
 		private char? _delimeter;
 
 		// Really all snippets can be used as SurroundsWith. The only
-		// thing this really controls is whether or not the snippet 
+		// thing this really controls is whether or not the snippet
 		// appears in the Surrounds With List. Really.
 		private bool? _isSurroundsWith;
+
 		private string _shortcut;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -36,7 +30,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public char? Delimeter
 		{
 			get
@@ -49,7 +42,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? IsSurroundsWith
 		{
 			get
@@ -61,7 +53,6 @@ namespace ScintillaNET.Configuration
 				_isSurroundsWith = value;
 			}
 		}
-
 
 		public string Shortcut
 		{

@@ -178,28 +178,35 @@ namespace RazorEnhanced
 				// Selector
 				listitem.SubItems.Add(target.TargetObject.Selector);
 
-
 				Assistant.Engine.MainWindow.TargetListView.Items.Add(listitem);
 			}
 		}
+
 		internal static byte GetNotoByte(string notoname)
 		{
 			switch (notoname)
 			{
 				case "Innocent":
 					return 0x01;
+
 				case "Ally":
 					return 0x02;
+
 				case "Can be attacked":
 					return 0x03;
+
 				case "Criminal":
 					return 0x04;
+
 				case "Enemy":
 					return 0x05;
+
 				case "Murderer":
 					return 0x06;
+
 				case "Invulnerable":
 					return 0x07;
+
 				default:
 					return 0x00;
 			}
@@ -211,22 +218,28 @@ namespace RazorEnhanced
 			{
 				case 0x01:
 					return "Innocent";
+
 				case 0x02:
 					return "Ally";
+
 				case 0x03:
 					return "Can be attacked";
+
 				case 0x04:
 					return "Criminal";
+
 				case 0x05:
 					return "Enemy";
+
 				case 0x06:
 					return "Murderer";
+
 				case 0x07:
 					return "Invulnerable";
+
 				default:
 					return "Null";
 			}
 		}
-
 	}
 }

@@ -9,8 +9,15 @@ namespace Assistant
 	{
 		private class Entry
 		{
-			internal Entry() { }
-			internal Entry(string u, string p, IPAddress a) { User = u; Pass = p; Address = a; }
+			internal Entry()
+			{
+			}
+
+			internal Entry(string u, string p, IPAddress a)
+			{
+				User = u; Pass = p; Address = a;
+			}
+
 			internal string User;
 			internal string Pass;
 			internal IPAddress Address;
@@ -160,7 +167,6 @@ namespace Assistant
 			user = user.ToLower();
 			for (int i = 0; i < m_List.Count; i++)
 			{
-
 				Entry e = m_List[i];
 				if (e.User == user && e.Address.Equals(addr))
 					return Decrypt(e.Pass);
@@ -170,4 +176,3 @@ namespace Assistant
 		}
 	}
 }
-

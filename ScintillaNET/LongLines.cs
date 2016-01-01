@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -18,18 +17,15 @@ namespace ScintillaNET
 			EdgeColor = Color.Silver;
 		}
 
-
 		private void ResetEdgeColumn()
 		{
 			EdgeColumn = 0;
 		}
 
-
 		private void ResetEdgeMode()
 		{
 			EdgeMode = EdgeMode.None;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -38,18 +34,15 @@ namespace ScintillaNET
 				ShouldSerializeEdgeMode();
 		}
 
-
 		private bool ShouldSerializeEdgeColor()
 		{
 			return EdgeColor != Color.Silver;
 		}
 
-
 		private bool ShouldSerializeEdgeColumn()
 		{
 			return EdgeColumn != 0;
 		}
-
 
 		private bool ShouldSerializeEdgeMode()
 		{
@@ -57,7 +50,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -80,7 +72,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int EdgeColumn
 		{
 			get
@@ -92,7 +83,6 @@ namespace ScintillaNET
 				NativeScintilla.SetEdgeColumn(value);
 			}
 		}
-
 
 		public EdgeMode EdgeMode
 		{
@@ -108,10 +98,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		internal LongLines(Scintilla scintilla) : base(scintilla) { }
+		internal LongLines(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

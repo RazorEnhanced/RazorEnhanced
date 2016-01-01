@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Internal
 {
 	//
@@ -18,7 +17,6 @@ namespace ScintillaNET.Internal
 
 		#endregion Fields
 
-
 		#region Propeties
 
 		public NativeMethods.SCNotification Notification
@@ -29,8 +27,7 @@ namespace ScintillaNET.Internal
 			}
 		}
 
-		#endregion Properties
-
+		#endregion Propeties
 
 		#region Constructors
 

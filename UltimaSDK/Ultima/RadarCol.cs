@@ -20,6 +20,7 @@ namespace Ultima
 				return m_Colors[index + 0x4000];
 			return 0;
 		}
+
 		public static short GetLandColor(int index)
 		{
 			if (index < m_Colors.Length)
@@ -31,6 +32,7 @@ namespace Ultima
 		{
 			m_Colors[index + 0x4000] = value;
 		}
+
 		public static void SetLandColor(int index, short value)
 		{
 			m_Colors[index] = value;
@@ -118,7 +120,6 @@ namespace Ultima
 						int id = ConvertStringToInt(split[0]);
 						int color = ConvertStringToInt(split[1]);
 						m_Colors[id] = (short)color;
-
 					}
 					catch { }
 				}

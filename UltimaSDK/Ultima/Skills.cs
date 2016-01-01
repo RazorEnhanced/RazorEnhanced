@@ -9,6 +9,7 @@ namespace Ultima
 		private static FileIndex m_FileIndex = new FileIndex("skills.idx", "skills.mul", 16);
 
 		private static List<SkillInfo> m_SkillEntries;
+
 		public static List<SkillInfo> SkillEntries
 		{
 			get
@@ -31,7 +32,6 @@ namespace Ultima
 
 		public Skills()
 		{
-
 		}
 
 		/// <summary>
@@ -75,6 +75,7 @@ namespace Ultima
 		}
 
 		private static byte[] m_StringBuffer = new byte[1024];
+
 		private static string ReadNameString(BinaryReader bin, int length)
 		{
 			bin.Read(m_StringBuffer, 0, length);
@@ -129,6 +130,7 @@ namespace Ultima
 
 		public int Index { get; set; }
 		public bool IsAction { get; set; }
+
 		public string Name
 		{
 			get { return m_Name; }
@@ -140,8 +142,8 @@ namespace Ultima
 					m_Name = value;
 			}
 		}
-		public int Extra { get; private set; }
 
+		public int Extra { get; private set; }
 
 		public SkillInfo(int nr, string name, bool action, int extra)
 		{

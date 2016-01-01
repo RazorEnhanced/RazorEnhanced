@@ -16,6 +16,7 @@ namespace Assistant.Map
 
 		[DllImport("user32.dll")]
 		private static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+
 		[DllImport("user32.dll")]
 		internal static extern bool ReleaseCapture();
 
@@ -42,7 +43,7 @@ namespace Assistant.Map
 			if (this.Height < 50)
 				this.Height = 50;
 
-			ClientCommunication.SetMapWndHandle(this);	
+			ClientCommunication.SetMapWndHandle(this);
 		}
 
 		internal class MapMenuItem : MenuItem
@@ -69,6 +70,7 @@ namespace Assistant.Map
 				}
 			}
 		}
+
 		public static void Initialize()
 		{
 			new ReqPartyLocTimer().Start();

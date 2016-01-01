@@ -7,18 +7,25 @@ namespace RazorEnhanced
 {
 	public class NoServerFoundException : System.Exception
 	{
-		public NoServerFoundException() : base() { }
-		public NoServerFoundException(string message) : base(message) { }
+		public NoServerFoundException() : base()
+		{
+		}
+
+		public NoServerFoundException(string message) : base(message)
+		{
+		}
+
 		public NoServerFoundException(string message,
 				System.Exception inner)
 			: base(message, inner)
 		{ }
+
 		protected NoServerFoundException(SerializationInfo info,
 			System.Runtime.Serialization.StreamingContext context)
 		{ }
 	}
 
-	class NetworkTime
+	internal class NetworkTime
 	{
 		/* For more info, see:
 		 *  NTP (RFC-2030)
@@ -59,7 +66,11 @@ namespace RazorEnhanced
 			return address[0];
 		}
 
-		public DateTime GetDateTime() { return GetDateTime(false); }
+		public DateTime GetDateTime()
+		{
+			return GetDateTime(false);
+		}
+
 		public DateTime GetDateTime(bool utc)
 		{
 			//Examine all servers until we find a server that responds
@@ -112,7 +123,6 @@ namespace RazorEnhanced
 					date += TimeSpan.FromTicks(ms * TimeSpan.TicksPerMillisecond);
 
 					return utc ? date : date.ToLocalTime();
-
 				}
 				catch { }
 			}

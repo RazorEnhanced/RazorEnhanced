@@ -9,7 +9,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -28,6 +27,7 @@ namespace ScintillaNET
 
 		//	Yeah I know this is a bit unwieldly but I can't come up with a better name
 		private bool _isOneKeySelectionEmbedEnabled = false;
+
 		private SnippetList _list;
 		private bool _pendingUndo = false;
 		private SnippetChooser _snipperChooser;
@@ -36,7 +36,6 @@ namespace ScintillaNET
 		private readonly Regex snippetRegex1 = new Regex(string.Format(@"(?<dm>{0}DropMarker(?<dmi>\[[0-9]*\])?{0})|(?<c>{0}caret{0})|(?<a>{0}anchor{0})|(?<e>{0}end{0})|(?<s>{0}selected{0})|(?<l>{0}.+?(?<li>\[[0-9]*\])?{0})", Snippet.RealDelimeter), RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -76,7 +75,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		private SnippetLinkRange addSnippetLink(SnippetLinkRange range)
 		{
 			string key = range.Key;
@@ -101,7 +99,6 @@ namespace ScintillaNET
 			return range;
 		}
 
-
 		public bool CancelActiveSnippets()
 		{
 			if (_snippetLinks.IsActive && !Scintilla.AutoComplete.IsActive)
@@ -114,7 +111,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		private void cascadeSnippetLinkRangeChange(SnippetLink oldActiveSnippetLink, SnippetLinkRange oldActiveRange)
 		{
 			Scintilla.ManagedRanges.Sort();
@@ -122,7 +118,6 @@ namespace ScintillaNET
 			int offset = 0;
 
 			string newText = oldActiveRange.Text;
-
 
 			Scintilla.NativeInterface.SetModEventMask(0);
 			foreach (ManagedRange mr in Scintilla.ManagedRanges)
@@ -143,7 +138,6 @@ namespace ScintillaNET
 			Scintilla.NativeInterface.SetModEventMask(Constants.SC_MODEVENTMASKALL);
 		}
 
-
 		public bool DoSnippetCheck()
 		{
 			if (!_isEnabled || _snippetLinks.IsActive || Scintilla.AutoComplete.IsActive || Scintilla.Selection.Length > 0)
@@ -155,14 +149,14 @@ namespace ScintillaNET
 			//	current position needs to meet these conditions:
 			//	Can't be at the very beginning of the document. Why? becuase
 			//	then obviously there can't be a preceding keyword then can it?
-			//	The preceding character can't be whitespace (same reason) 
+			//	The preceding character can't be whitespace (same reason)
 			//
 			//	I decided I like expanding a template in the middle of a word
 			char[] whitespaceChars = Scintilla.Lexing.GetClassificationChars(CharClassification.Whitespace);
 			if (pos <= 0 || Scintilla.NativeInterface.GetCharAt(pos - 1).ToString().IndexOfAny(whitespaceChars) >= 0)
 				return false;
 
-			//	We also don't want a template expand if we're in a Comment or 
+			//	We also don't want a template expand if we're in a Comment or
 			//	String. Be sure and mask out any indicator style that may be applied
 			int currentStyle = Scintilla.NativeInterface.GetStyleAt(pos - 1) & 0x1f;
 			if (currentStyle == 1 || currentStyle == 2 || currentStyle == 4)
@@ -187,7 +181,6 @@ namespace ScintillaNET
 			return true;
 		}
 
-
 		public void InsertSnippet(string shortcut)
 		{
 			Snippet snip;
@@ -200,12 +193,10 @@ namespace ScintillaNET
 			InsertSnippet(snip, Math.Min(NativeScintilla.GetCurrentPos(), NativeScintilla.GetAnchor()));
 		}
 
-
 		public void InsertSnippet(Snippet snip)
 		{
 			InsertSnippet(snip, Math.Min(NativeScintilla.GetCurrentPos(), NativeScintilla.GetAnchor()));
 		}
-
 
 		internal void InsertSnippet(Snippet snip, int startPos)
 		{
@@ -246,7 +237,7 @@ namespace ScintillaNET
 				//	but the target Eol Marker should match the Document's.
 				snippet = snippet.Replace(Environment.NewLine, Scintilla.EndOfLine.EolString + indent);
 
-				//	Same deal with the selected text if any				
+				//	Same deal with the selected text if any
 				selText = selText.Replace(Environment.NewLine, Scintilla.EndOfLine.EolString + indent);
 			}
 
@@ -282,7 +273,7 @@ namespace ScintillaNET
 				}
 				else if (m.Groups["c"].Success)
 				{
-					//	We matched the $Caret$ Token. Since there can be 
+					//	We matched the $Caret$ Token. Since there can be
 					//	only 1 we set the caretPos. If this is specified
 					//	more than once the last one wins
 					caretPos = m.Groups["c"].Index;
@@ -292,7 +283,7 @@ namespace ScintillaNET
 				}
 				else if (m.Groups["a"].Success)
 				{
-					//	We matched the $Anchor$ Token. Since there can be 
+					//	We matched the $Anchor$ Token. Since there can be
 					//	only 1 we set the anchorPos. If this is specified
 					//	more than once the last one wins
 					anchorPos = m.Groups["a"].Index;
@@ -302,7 +293,7 @@ namespace ScintillaNET
 				}
 				else if (m.Groups["e"].Success)
 				{
-					//	We matched the $End$ Token. Since there can be 
+					//	We matched the $End$ Token. Since there can be
 					//	only 1 we set the endPos. If this is specified
 					//	more than once the last one wins
 					endPos = m.Groups["e"].Index;
@@ -324,7 +315,7 @@ namespace ScintillaNET
 				{
 					//	Finally match for Snippet Link Ranges. This is at the bottom of the if/else
 					//	because we want the more specific regex groups to match first so that this
-					//	generic expression group doesn't create a SnippetLinkRange for say the 
+					//	generic expression group doesn't create a SnippetLinkRange for say the
 					//	$Caret$ Token.
 					Group g = m.Groups["l"];
 
@@ -354,7 +345,7 @@ namespace ScintillaNET
 						//	one wins. Replaced tokens won't get a range
 						indexedRangesToActivate[rangeIndex] = new SnippetLinkRange(start, end, Scintilla, groupKey); ;
 
-						//	And remove all the token info including the subindex from the snippet text 
+						//	And remove all the token info including the subindex from the snippet text
 						//	leaving only the key
 						snippet = snippet.Remove(g.Index, 1).Remove(g.Index - 2 + g.Length - sg.Length, sg.Length + 1);
 					}
@@ -373,7 +364,7 @@ namespace ScintillaNET
 						//	Now create the range object
 						unindexedRangesToActivate.Add(new SnippetLinkRange(start, end, Scintilla, groupKey));
 
-						//	And remove all the token info from the snippet text 
+						//	And remove all the token info from the snippet text
 						//	leaving only the key
 						snippet = snippet.Remove(g.Index, 1).Remove(g.Index + g.Length - 2, 1);
 					}
@@ -467,7 +458,6 @@ namespace ScintillaNET
 			NativeScintilla.EndUndoAction();
 		}
 
-
 		public bool NextSnippetRange()
 		{
 			//	This would be a whole lot easier if I had the Command Contexts set
@@ -511,7 +501,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		public bool PreviousSnippetRange()
 		{
 			//	Same as NextSnippetRange but going in the opposite direction
@@ -540,60 +529,50 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		private void ResetActiveSnippetColor()
 		{
 			_activeSnippetColor = Color.Lime;
 		}
-
 
 		private void ResetActiveSnippetIndicator()
 		{
 			_activeSnippetIndicator = 15;
 		}
 
-
 		private void ResetActiveSnippetIndicatorStyle()
 		{
 			_activeSnippetIndicatorStyle = IndicatorStyle.RoundBox;
 		}
-
 
 		private void ResetDefaultDelimeter()
 		{
 			_defaultDelimeter = '$';
 		}
 
-
 		private void ResetInactiveSnippetColor()
 		{
 			_inactiveSnippetColor = Color.Lime;
 		}
-
 
 		private void ResetInactiveSnippetIndicator()
 		{
 			_inactiveSnippetIndicator = 16;
 		}
 
-
 		private void ResetInactiveSnippetIndicatorStyle()
 		{
 			_inactiveSnippetIndicatorStyle = IndicatorStyle.Box;
 		}
-
 
 		private void ResetIsEnabled()
 		{
 			_isEnabled = true;
 		}
 
-
 		private void ResetIsOneKeySelectionEmbedEnabled()
 		{
 			_isOneKeySelectionEmbedEnabled = false;
 		}
-
 
 		private void Scintilla_BeforeTextDelete(object sender, TextModifiedEventArgs e)
 		{
@@ -664,7 +643,6 @@ namespace ScintillaNET
 				IsActive = false;
 		}
 
-
 		private void Scintilla_BeforeTextInsert(object sender, TextModifiedEventArgs e)
 		{
 			if (_snippetLinks.IsActive && !_pendingUndo && !(e.UndoRedoFlags.IsUndo || e.UndoRedoFlags.IsRedo))
@@ -674,7 +652,6 @@ namespace ScintillaNET
 				_snippetLinkTimer.Enabled = true;
 			}
 		}
-
 
 		private void Scintilla_SelectionChanged(object sender, EventArgs e)
 		{
@@ -690,7 +667,6 @@ namespace ScintillaNET
 
 				for (int i = 0; i < _snippetLinks.Count; i++)
 				{
-
 					SnippetLink sl = _snippetLinks[i];
 
 					foreach (SnippetLinkRange r in sl.Ranges)
@@ -723,7 +699,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private void Scintilla_TextInserted(object sender, TextModifiedEventArgs e)
 		{
 			//	I'm going to have to look into making this a little less "sledge hammer to
@@ -731,7 +706,6 @@ namespace ScintillaNET
 			if (_snippetLinks.IsActive && (e.UndoRedoFlags.IsUndo || e.UndoRedoFlags.IsRedo))
 				Scintilla.NativeInterface.Colourise(0, -1);
 		}
-
 
 		internal void SetIndicators()
 		{
@@ -741,7 +715,6 @@ namespace ScintillaNET
 			Scintilla.Indicators[_inactiveSnippetIndicator].Style = _inactiveSnippetIndicatorStyle;
 			Scintilla.Indicators[_inactiveSnippetIndicator].Color = _inactiveSnippetColor;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -756,60 +729,50 @@ namespace ScintillaNET
 				ShouldSerializeDefaultDelimeter();
 		}
 
-
 		private bool ShouldSerializeActiveSnippetColor()
 		{
 			return _activeSnippetColor != Color.Lime;
 		}
-
 
 		private bool ShouldSerializeActiveSnippetIndicator()
 		{
 			return _activeSnippetIndicator != 15;
 		}
 
-
 		private bool ShouldSerializeActiveSnippetIndicatorStyle()
 		{
 			return _activeSnippetIndicatorStyle != IndicatorStyle.RoundBox;
 		}
-
 
 		private bool ShouldSerializeDefaultDelimeter()
 		{
 			return _defaultDelimeter != '$';
 		}
 
-
 		private bool ShouldSerializeInactiveSnippetColor()
 		{
 			return _inactiveSnippetColor != Color.Lime;
 		}
-
 
 		private bool ShouldSerializeInactiveSnippetIndicator()
 		{
 			return _inactiveSnippetIndicator != 16;
 		}
 
-
 		private bool ShouldSerializeInactiveSnippetIndicatorStyle()
 		{
 			return _inactiveSnippetIndicatorStyle != IndicatorStyle.Box;
 		}
-
 
 		private bool ShouldSerializeIsEnabled()
 		{
 			return !_isEnabled;
 		}
 
-
 		private bool ShouldSerializeIsOneKeySelectionEmbedEnabled()
 		{
 			return _isOneKeySelectionEmbedEnabled;
 		}
-
 
 		public void ShowSnippetList()
 		{
@@ -826,7 +789,6 @@ namespace ScintillaNET
 			_snipperChooser.SnippetList = _list.ToString();
 			_snipperChooser.Show();
 		}
-
 
 		public void ShowSurroundWithList()
 		{
@@ -850,7 +812,6 @@ namespace ScintillaNET
 			_snipperChooser.SnippetList = sl.ToString();
 			_snipperChooser.Show();
 		}
-
 
 		private void snippetLinkTimer_Tick(object sender, EventArgs e)
 		{
@@ -881,7 +842,6 @@ namespace ScintillaNET
 									r.SetIndicator(Scintilla.Snippets.InactiveSnippetIndicator);
 									r.ClearIndicator(Scintilla.Snippets.ActiveSnippetIndicator);
 								}
-
 							}
 
 						if (_pendingUndo)
@@ -898,7 +858,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		public Color ActiveSnippetColor
@@ -913,7 +872,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int ActiveSnippetIndicator
 		{
 			get
@@ -925,7 +883,6 @@ namespace ScintillaNET
 				_activeSnippetIndicator = value;
 			}
 		}
-
 
 		public IndicatorStyle ActiveSnippetIndicatorStyle
 		{
@@ -939,7 +896,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public char DefaultDelimeter
 		{
 			get
@@ -951,7 +907,6 @@ namespace ScintillaNET
 				_defaultDelimeter = value;
 			}
 		}
-
 
 		public Color InactiveSnippetColor
 		{
@@ -965,7 +920,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int InactiveSnippetIndicator
 		{
 			get
@@ -978,7 +932,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public IndicatorStyle InactiveSnippetIndicatorStyle
 		{
 			get
@@ -990,7 +943,6 @@ namespace ScintillaNET
 				_inactiveSnippetIndicatorStyle = value;
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public bool IsActive
@@ -1031,7 +983,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public bool IsEnabled
 		{
@@ -1060,7 +1011,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsOneKeySelectionEmbedEnabled
 		{
 			get
@@ -1072,7 +1022,6 @@ namespace ScintillaNET
 				_isOneKeySelectionEmbedEnabled = value;
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public SnippetList List
@@ -1088,7 +1037,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

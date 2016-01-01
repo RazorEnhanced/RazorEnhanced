@@ -11,7 +11,6 @@ namespace RazorEnhanced.UI
 		private Organizer.OrganizerItem m_Item;
 		private int m_Index;
 
-
 		public EnhancedOrganizerEditItem(string list, int index, Organizer.OrganizerItem item)
 		{
 			InitializeComponent();
@@ -26,7 +25,6 @@ namespace RazorEnhanced.UI
 
 		private void label1_Click(object sender, EventArgs e)
 		{
-
 		}
 
 		private void EnhancedOrganizerManualAdd_Load(object sender, EventArgs e)
@@ -44,7 +42,6 @@ namespace RazorEnhanced.UI
 		{
 			this.Close();
 		}
-
 
 		private void bAddItem_Click(object sender, EventArgs e)
 		{
@@ -96,7 +93,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					color = Convert.ToInt32(tColor.Text, 16);
 				}
 				catch
@@ -115,7 +111,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.Organizer.RefreshItems();
 				this.Close();
 			}
-
 		}
 	}
 }

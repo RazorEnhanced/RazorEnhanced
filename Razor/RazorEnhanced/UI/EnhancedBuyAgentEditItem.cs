@@ -68,7 +68,6 @@ namespace RazorEnhanced.UI
 
 			try
 			{
-
 				amount = Convert.ToInt32(tAmount.Text);
 			}
 			catch
@@ -87,7 +86,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					hue = Convert.ToInt32(tHue.Text, 16);
 				}
 				catch
@@ -107,7 +105,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.BuyAgent.RefreshItems();
 				this.Close();
 			}
-
 		}
 	}
 }

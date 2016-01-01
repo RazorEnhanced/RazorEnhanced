@@ -62,7 +62,6 @@ namespace Ultima
 
 		public UnicodeChar()
 		{
-
 		}
 
 		/// <summary>
@@ -154,6 +153,7 @@ namespace Ultima
 			"unifont11.mul",
 			"unifont12.mul"
 		};
+
 		public static UnicodeFont[] Fonts = new UnicodeFont[13];
 
 		static UnicodeFonts()

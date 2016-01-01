@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class ToolStripIncrementalSearcher : ToolStripControlHost
@@ -17,14 +16,12 @@ namespace ScintillaNET
 			set { Searcher.Scintilla = value; }
 		}
 
-
 		public IncrementalSearcher Searcher
 		{
 			get { return Control as IncrementalSearcher; }
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

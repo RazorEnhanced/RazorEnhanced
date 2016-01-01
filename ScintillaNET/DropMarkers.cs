@@ -5,7 +5,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -22,7 +21,6 @@ namespace ScintillaNET
 		private string _sharedStackName = string.Empty;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -59,7 +57,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Drops a DropMarker at the current document position
 		/// </summary>
@@ -72,7 +69,6 @@ namespace ScintillaNET
 		{
 			return Drop(NativeScintilla.GetCurrentPos());
 		}
-
 
 		/// <summary>
 		///     Drops a DropMarker at the specified document position
@@ -95,24 +91,20 @@ namespace ScintillaNET
 			return dm;
 		}
 
-
 		private int GetCurrentTopOffset()
 		{
 			return -1;
 		}
-
 
 		private void ResetSharedStackName()
 		{
 			_sharedStackName = string.Empty;
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return ShouldSerializeSharedStackName();
 		}
-
 
 		private bool ShouldSerializeSharedStackName()
 		{
@@ -120,7 +112,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -140,13 +131,12 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
-		///     Gets/Sets the Stack of DropMarkers 
+		///     Gets/Sets the Stack of DropMarkers
 		/// </summary>
 		/// <remarks>
 		///     You can manually set this to implement your own shared DropMarker stack
-		///     between Scintilla Controls. 
+		///     between Scintilla Controls.
 		/// </remarks>
 		/// <seealso cref="SharedStackName"/>
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -160,7 +150,7 @@ namespace ScintillaNET
 			//  That's right kids you can actually provide your own MarkerStack. This
 			//  is really useful for MDI applications where you want a single master
 			//  MarkerStack that will automatically switch documents (a la CodeRush).
-			//  Of course you can let the control do this for you automatically by 
+			//  Of course you can let the control do this for you automatically by
 			//  setting the SharedStackName property of multiple instances.
 			set
 			{
@@ -168,9 +158,8 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
-		///     Gets/Sets a shared name associated with other Scintilla controls. 
+		///     Gets/Sets a shared name associated with other Scintilla controls.
 		/// </summary>
 		/// <remarks>
 		///     All Scintilla controls with the same SharedStackName share a common
@@ -191,7 +180,6 @@ namespace ScintillaNET
 				if (_sharedStackName == value)
 					return;
 
-
 				if (value == string.Empty)
 				{
 					// If we had a shared stack name but are now clearing it
@@ -205,7 +193,7 @@ namespace ScintillaNET
 				}
 				else
 				{
-					// We're using one of the shared stacks. Of course if it hasn't 
+					// We're using one of the shared stacks. Of course if it hasn't
 					// already been registered with the list we need to create it.
 					if (!_sharedStack.ContainsKey(_sharedStackName))
 						_sharedStack[_sharedStackName] = new Stack<DropMarker>();
@@ -219,10 +207,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		internal DropMarkers(Scintilla scintilla) : base(scintilla) { }
+		internal DropMarkers(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

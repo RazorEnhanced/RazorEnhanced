@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Provides data for the FoldChanged event
@@ -18,7 +12,6 @@ namespace ScintillaNET
 		private int _previousFoldLevel;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -37,7 +30,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the new Fold Level of the line
 		/// </summary>
@@ -49,7 +41,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the previous Fold Level of the line
 		/// </summary>
@@ -59,11 +50,9 @@ namespace ScintillaNET
 			{
 				return _previousFoldLevel;
 			}
-
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

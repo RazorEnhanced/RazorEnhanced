@@ -7,6 +7,7 @@ namespace Assistant
 	internal class FindData
 	{
 #if STUFF
+
 		public static void Initialize()
 		{
 			Command.Register("ResetFind", new CommandCallback(ResetFind));
@@ -104,7 +105,9 @@ namespace Assistant
 				World.Player.SendMessage(MsgLevel.Force, "Usage: Find <hex value> [size = 4]");
 			}
 		}
+
 #endif
+
 		internal static void Message(uint c, int a)
 		{
 			if (World.Player != null)
@@ -118,6 +121,7 @@ namespace Assistant
 	}
 
 #if STUFF
+
 	public class Stuff
 	{
 		public static void Initialize()
@@ -212,5 +216,6 @@ namespace Assistant
 			}
 		}
 	}
+
 #endif // STUFFs
 }

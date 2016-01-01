@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class GoTo : TopLevelHelper
@@ -16,12 +15,10 @@ namespace ScintillaNET
 			NativeScintilla.GotoLine(number);
 		}
 
-
 		public void Position(int pos)
 		{
 			NativeScintilla.GotoPos(pos);
 		}
-
 
 		public void ShowGoToDialog()
 		{
@@ -39,10 +36,11 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Constructors
 
-		internal GoTo(Scintilla scintilla) : base(scintilla) { }
+		internal GoTo(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

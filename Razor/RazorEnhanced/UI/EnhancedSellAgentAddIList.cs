@@ -2,13 +2,11 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedSellAgentAddList : Form
 	{
 		private const string m_Title = "Enhanced Sell Add Item List";
-
 
 		public EnhancedSellAgentAddList()
 		{
@@ -17,7 +15,6 @@ namespace RazorEnhanced.UI
 			MaximizeBox = false;
 			this.Text = m_Title;
 		}
-
 
 		private void sellcloseItemList_Click(object sender, EventArgs e)
 		{
@@ -57,7 +54,6 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedSellAgentAddItemList_Load(object sender, EventArgs e)
 		{
-
 		}
 	}
 }

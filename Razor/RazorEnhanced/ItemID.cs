@@ -22,6 +22,5 @@ namespace RazorEnhanced
 		}
 
 		public Ultima.ItemData ItemData { get { return m_AssistantItemID.ItemData; } }
-
 	}
 }

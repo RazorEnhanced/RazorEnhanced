@@ -11,7 +11,6 @@ namespace RazorEnhanced.UI
 		private Restock.RestockItem m_Item;
 		private int m_Index;
 
-
 		public EnhancedRestockEditItem(string list, int index, Restock.RestockItem item)
 		{
 			InitializeComponent();
@@ -23,7 +22,6 @@ namespace RazorEnhanced.UI
 			m_Index = index;
 			m_Item = item;
 		}
-
 
 		private void EnhancedRestockManualAdd_Load(object sender, EventArgs e)
 		{
@@ -40,7 +38,6 @@ namespace RazorEnhanced.UI
 		{
 			this.Close();
 		}
-
 
 		private void bAddItem_Click(object sender, EventArgs e)
 		{
@@ -92,7 +89,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					color = Convert.ToInt32(tColor.Text, 16);
 				}
 				catch
@@ -111,7 +107,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.Restock.RefreshItems();
 				this.Close();
 			}
-
 		}
 	}
 }

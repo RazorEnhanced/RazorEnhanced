@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -34,17 +33,15 @@ namespace ScintillaNET
 			NativeScintilla.MoveCaretInsideView();
 		}
 
-
 		/// <summary>
-		///     Scintilla remembers the x value of the last position horizontally moved to explicitly by the user and this value is then 
-		///     used when moving vertically such as by using the up and down keys. This method sets the current x position of the caret as 
+		///     Scintilla remembers the x value of the last position horizontally moved to explicitly by the user and this value is then
+		///     used when moving vertically such as by using the up and down keys. This method sets the current x position of the caret as
 		///     the remembered value.
 		/// </summary>
 		public void ChooseCaretX()
 		{
 			NativeScintilla.ChooseCaretX();
 		}
-
 
 		/// <summary>
 		///     Scrolls the Scintilla window so that the Caret is visible.
@@ -53,7 +50,6 @@ namespace ScintillaNET
 		{
 			Scintilla.Scrolling.ScrollToCaret();
 		}
-
 
 		/// <summary>
 		///     Places the caret at the specified document position
@@ -64,54 +60,45 @@ namespace ScintillaNET
 			NativeScintilla.GotoPos(position);
 		}
 
-
 		private void ResetBlinkRate()
 		{
 			BlinkRate = SystemInformation.CaretBlinkTime;
 		}
-
 
 		private void ResetColor()
 		{
 			Color = Color.Black;
 		}
 
-
 		private void ResetCurrentLineBackgroundAlpha()
 		{
 			CurrentLineBackgroundAlpha = 256;
 		}
-
 
 		private void ResetCurrentLineBackgroundColor()
 		{
 			CurrentLineBackgroundColor = Color.Yellow;
 		}
 
-
 		private void ResetHighlightCurrentLine()
 		{
 			HighlightCurrentLine = false;
 		}
-
 
 		private void ResetIsSticky()
 		{
 			IsSticky = false;
 		}
 
-
 		private void ResetStyle()
 		{
 			Style = CaretStyle.Line;
 		}
 
-
 		private void ResetWidth()
 		{
 			Width = SystemInformation.CaretWidth;
 		}
-
 
 		protected internal bool ShouldSerialize()
 		{
@@ -125,54 +112,45 @@ namespace ScintillaNET
 					ShouldSerializeIsSticky();
 		}
 
-
 		private bool ShouldSerializeBlinkRate()
 		{
 			return BlinkRate != SystemInformation.CaretBlinkTime;
 		}
-
 
 		private bool ShouldSerializeColor()
 		{
 			return Color != Color.Black;
 		}
 
-
 		private bool ShouldSerializeCurrentLineBackgroundAlpha()
 		{
 			return CurrentLineBackgroundAlpha != 256;
 		}
-
 
 		private bool ShouldSerializeCurrentLineBackgroundColor()
 		{
 			return CurrentLineBackgroundColor != Color.Yellow;
 		}
 
-
 		private bool ShouldSerializeHighlightCurrentLine()
 		{
 			return HighlightCurrentLine;
 		}
-
 
 		private bool ShouldSerializeIsSticky()
 		{
 			return IsSticky;
 		}
 
-
 		private bool ShouldSerializeStyle()
 		{
 			return Style != CaretStyle.Line;
 		}
 
-
 		private bool ShouldSerializeWidth()
 		{
 			return Width != SystemInformation.CaretWidth;
 		}
-
 
 		public override string ToString()
 		{
@@ -180,7 +158,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -204,7 +181,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets the time interval in milliseconds that the caret should blink.
 		/// </summary>
@@ -222,7 +198,6 @@ namespace ScintillaNET
 				NativeScintilla.SetCaretPeriod(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the color of the Caret.
@@ -259,7 +234,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets the transparency alpha of the CurrentLine Background highlight
 		/// </summary>
@@ -277,7 +251,6 @@ namespace ScintillaNET
 				NativeScintilla.SetCaretLineBackAlpha(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the color of the document line where the caret currently resides
@@ -302,8 +275,6 @@ namespace ScintillaNET
 			}
 			set
 			{
-
-
 				if (value == Color)
 					return;
 
@@ -319,12 +290,11 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets if the current document line where the caret resides is highlighted.
 		/// </summary>
 		/// <remarks>
-		///     <see cref="CurrentLineBackgroundColor"/> determines the color. 
+		///     <see cref="CurrentLineBackgroundColor"/> determines the color.
 		/// </remarks>
 		public bool HighlightCurrentLine
 		{
@@ -337,7 +307,6 @@ namespace ScintillaNET
 				NativeScintilla.SetCaretLineVisible(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Controls when the last position of the caret on the line is saved. When set to true, the position is not saved when you type a character, a tab, paste the clipboard content or press backspace
@@ -357,7 +326,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets the current Line Number that the caret resides.
 		/// </summary>
@@ -373,7 +341,6 @@ namespace ScintillaNET
 				NativeScintilla.GotoLine(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the current document position where the caret resides
@@ -391,7 +358,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets the <see cref="CaretStyle"/> displayed.
 		/// </summary>
@@ -406,7 +372,6 @@ namespace ScintillaNET
 				NativeScintilla.SetCaretStyle((int)value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the width in pixels of the Caret
@@ -427,7 +392,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

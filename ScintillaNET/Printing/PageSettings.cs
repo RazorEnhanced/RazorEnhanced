@@ -6,11 +6,10 @@ using System.Drawing.Printing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
-	///     ScintillaNET derived class for handling printed page settings.  It holds information 
+	///     ScintillaNET derived class for handling printed page settings.  It holds information
 	///     on how and what to print in the header and footer of pages.
 	/// </summary>
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -37,7 +36,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		private void ResetColor()
@@ -45,30 +43,25 @@ namespace ScintillaNET
 			Color = _baseColor;
 		}
 
-
 		private void ResetColorMode()
 		{
 			_eColorMode = PrintColorMode.Normal;
 		}
-
 
 		private void ResetFontMagnification()
 		{
 			_sFontMagnification = 0;
 		}
 
-
 		private void ResetLandscape()
 		{
 			Landscape = false;
 		}
 
-
 		private void ResetMargins()
 		{
 			Margins = new Margins(50, 50, 50, 50);
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -81,42 +74,35 @@ namespace ScintillaNET
 				ShouldSerializeMargins();
 		}
 
-
 		private bool ShouldSerializeColor()
 		{
 			return Color != _baseColor;
 		}
-
 
 		private bool ShouldSerializeColorMode()
 		{
 			return _eColorMode != PrintColorMode.Normal;
 		}
 
-
 		private bool ShouldSerializeFontMagnification()
 		{
 			return _sFontMagnification != 0;
 		}
-
 
 		private bool ShouldSerializeFooter()
 		{
 			return _oFooter.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeHeader()
 		{
 			return _oHeader.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeLandscape()
 		{
 			return Landscape;
 		}
-
 
 		private bool ShouldSerializeMargins()
 		{
@@ -124,7 +110,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -140,7 +125,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public new bool Color
 		{
 			get
@@ -153,7 +137,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Method used to render colored text on a printer
 		/// </summary>
@@ -163,7 +146,6 @@ namespace ScintillaNET
 			set { _eColorMode = value; }
 		}
 
-
 		/// <summary>
 		///     Number of points to add or subtract to the size of each screen font during printing
 		/// </summary>
@@ -172,7 +154,6 @@ namespace ScintillaNET
 			get { return _sFontMagnification; }
 			set { _sFontMagnification = value; }
 		}
-
 
 		/// <summary>
 		///     Page Information printed in the footer of the page
@@ -184,7 +165,6 @@ namespace ScintillaNET
 			set { _oFooter = value; }
 		}
 
-
 		[Browsable(false)]
 		public new float HardMarginX
 		{
@@ -193,7 +173,6 @@ namespace ScintillaNET
 				return base.HardMarginX;
 			}
 		}
-
 
 		[Browsable(false)]
 		public new float HardMarginY
@@ -204,7 +183,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Page Information printed in header of the page
 		/// </summary>
@@ -214,7 +192,6 @@ namespace ScintillaNET
 			get { return _oHeader; }
 			set { _oHeader = value; }
 		}
-
 
 		public new bool Landscape
 		{
@@ -228,7 +205,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public new Margins Margins
 		{
 			get
@@ -240,7 +216,6 @@ namespace ScintillaNET
 				base.Margins = value;
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new PaperSize PaperSize
@@ -255,7 +230,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new PaperSource PaperSource
 		{
@@ -269,7 +243,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new RectangleF PrintableArea
 		{
@@ -278,7 +251,6 @@ namespace ScintillaNET
 				return base.PrintableArea;
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new PrinterResolution PrinterResolution
@@ -292,7 +264,6 @@ namespace ScintillaNET
 				base.PrinterResolution = value;
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public new PrinterSettings PrinterSettings
@@ -309,7 +280,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		/// <summary>
@@ -320,7 +290,6 @@ namespace ScintillaNET
 			// Keep track of the base color for designer serialization. This is a workaround that should
 			// last until the PageSettings can be redesigned.
 			_baseColor = base.Color;
-
 
 			_oHeader = new HeaderInformation(PageInformationBorder.Bottom, InformationType.DocumentName, InformationType.Nothing, InformationType.PageNumber);
 			_oFooter = new FooterInformation(PageInformationBorder.Top, InformationType.Nothing, InformationType.Nothing, InformationType.Nothing);

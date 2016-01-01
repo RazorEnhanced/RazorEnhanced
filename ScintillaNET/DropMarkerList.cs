@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>

@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[Obsolete("This type will not be public in future versions.")]
@@ -13,9 +12,11 @@ namespace ScintillaNET
 	public struct SCNotification
 	{
 		public NotifyHeader nmhdr;
-		public int position;            // SCN_STYLENEEDED, SCN_MODIFIED, SCN_DWELLSTART, SCN_DWELLEND, 
+		public int position;            // SCN_STYLENEEDED, SCN_MODIFIED, SCN_DWELLSTART, SCN_DWELLEND,
+
 										// SCN_CALLTIPCLICK, SCN_HOTSPOTCLICK, SCN_HOTSPOTDOUBLECLICK
 		public char ch;                 // SCN_CHARADDED, SCN_KEY
+
 		public int modifiers;           // SCN_KEY
 		public int modificationType;    // SCN_MODIFIED
 		public IntPtr text;             // SCN_MODIFIED

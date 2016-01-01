@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -18,7 +17,6 @@ namespace ScintillaNET
 		private int _lineCountDelta;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -37,7 +35,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the index of the document line containing the changed annotation.
 		/// </summary>
@@ -52,7 +49,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Consructors
 
 		/// <summary>
@@ -66,6 +62,6 @@ namespace ScintillaNET
 			_lineCountDelta = lineCountDelta;
 		}
 
-		#endregion Constructors
+		#endregion Consructors
 	}
 }

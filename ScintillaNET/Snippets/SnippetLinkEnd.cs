@@ -4,7 +4,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class SnippetLinkEnd : ManagedRange
@@ -19,7 +18,6 @@ namespace ScintillaNET
 			base.Change(newStart, newEnd);
 		}
 
-
 		public override void Dispose()
 		{
 			if (!IsDisposed)
@@ -28,7 +26,6 @@ namespace ScintillaNET
 				base.Dispose();
 			}
 		}
-
 
 		public void Invalidate()
 		{
@@ -42,7 +39,6 @@ namespace ScintillaNET
 				Scintilla.Invalidate(new Rectangle(x - 2, y, 5, 5));
 			}
 		}
-
 
 		protected internal override void Paint(Graphics g)
 		{
@@ -63,7 +59,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		// Drop Markers are points, not a spanned range.
@@ -76,7 +71,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

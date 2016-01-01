@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -18,7 +17,6 @@ namespace ScintillaNET
 		private int _position;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -35,7 +33,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

@@ -15,13 +15,15 @@ namespace Ultima
 		private static Hashtable m_patched = new Hashtable();
 
 		private static byte[] m_StreamBuffer;
-		struct CheckSums
+
+		private struct CheckSums
 		{
 			public byte[] checksum;
 			public int pos;
 			public int length;
 			public int index;
 		}
+
 		private static List<CheckSums> checksums;
 
 		/// <summary>
@@ -91,6 +93,7 @@ namespace Ultima
 			bool patched;
 			return GetTexture(index, out patched);
 		}
+
 		/// <summary>
 		/// Returns Bitmap of Texture with verdata bool
 		/// </summary>

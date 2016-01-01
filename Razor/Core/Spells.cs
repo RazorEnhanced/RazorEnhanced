@@ -74,10 +74,13 @@ namespace Assistant
 				{
 					case SpellFlag.Beneficial:
 						return RazorEnhanced.Settings.General.ReadInt("BeneficialSpellHue");
+
 					case SpellFlag.Harmful:
 						return RazorEnhanced.Settings.General.ReadInt("HarmfulSpellHue");
+
 					case SpellFlag.Neutral:
 						return RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue");
+
 					default:
 						return def;
 				}
@@ -87,6 +90,7 @@ namespace Assistant
 				return def;
 			}
 		}
+
 		internal void OnCast(PacketReader p)
 		{
 			Cast();
@@ -196,7 +200,7 @@ namespace Assistant
 
 			if (World.Player.Poisoned)
 			{
-				s = Get(2, 3); // cure 
+				s = Get(2, 3); // cure
 			}
 			else if (World.Player.Hits + 2 < World.Player.HitsMax)
 			{

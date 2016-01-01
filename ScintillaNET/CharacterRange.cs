@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	// TODO Make internal

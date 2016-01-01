@@ -6,7 +6,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -20,7 +19,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public void Clear()
@@ -28,72 +26,60 @@ namespace ScintillaNET
 			NativeScintilla.Clear();
 		}
 
-
 		private void ResetBackColor()
 		{
 			BackColor = SystemColors.Highlight;
 		}
-
 
 		private void ResetBackColorUnfocused()
 		{
 			BackColorUnfocused = Color.LightGray;
 		}
 
-
 		private void ResetEnd()
 		{
 			End = 0;
 		}
-
 
 		private void ResetForeColor()
 		{
 			ForeColor = SystemColors.HighlightText;
 		}
 
-
 		private void ResetForeColorUnfocused()
 		{
 			ForeColorUnfocused = SystemColors.HighlightText;
 		}
-
 
 		private void ResetHidden()
 		{
 			Hidden = false;
 		}
 
-
 		private void ResetHideSelection()
 		{
 			_hideSelection = false;
 		}
-
 
 		private void ResetMode()
 		{
 			Mode = SelectionMode.Stream;
 		}
 
-
 		private void ResetStart()
 		{
 			Start = 0;
 		}
-
 
 		public void SelectAll()
 		{
 			NativeScintilla.SelectAll();
 		}
 
-
 		public void SelectNone()
 		{
 			NativeScintilla.SetSel(-1, -1);
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -106,54 +92,45 @@ namespace ScintillaNET
 				ShouldSerializeMode();
 		}
 
-
 		private bool ShouldSerializeBackColor()
 		{
 			return BackColor != SystemColors.Highlight;
 		}
-
 
 		private bool ShouldSerializeBackColorUnfocused()
 		{
 			return BackColorUnfocused != Color.LightGray;
 		}
 
-
 		private bool ShouldSerializeEnd()
 		{
 			return End != 0;
 		}
-
 
 		private bool ShouldSerializeForeColor()
 		{
 			return ForeColor != SystemColors.HighlightText;
 		}
 
-
 		private bool ShouldSerializeForeColorUnfocused()
 		{
 			return ForeColorUnfocused != SystemColors.HighlightText;
 		}
-
 
 		private bool ShouldSerializeHidden()
 		{
 			return _hidden;
 		}
 
-
 		private bool ShouldSerializeHideSelection()
 		{
 			return _hideSelection;
 		}
 
-
 		private bool ShouldSerializeMode()
 		{
 			return Mode != SelectionMode.Stream;
 		}
-
 
 		private bool ShouldSerializeStart()
 		{
@@ -161,7 +138,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -189,7 +165,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Color BackColorUnfocused
 		{
 			get
@@ -214,7 +189,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int End
 		{
 			get
@@ -226,7 +200,6 @@ namespace ScintillaNET
 				NativeScintilla.SetSelectionEnd(value);
 			}
 		}
-
 
 		public Color ForeColor
 		{
@@ -248,7 +221,6 @@ namespace ScintillaNET
 					NativeScintilla.SetSelFore(value != Color.Transparent, Utilities.ColorToRgb(value));
 			}
 		}
-
 
 		public Color ForeColorUnfocused
 		{
@@ -274,7 +246,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool Hidden
 		{
 			get
@@ -287,7 +258,6 @@ namespace ScintillaNET
 				NativeScintilla.HideSelection(value);
 			}
 		}
-
 
 		public bool HideSelection
 		{
@@ -304,7 +274,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false)]
 		public bool IsRectangle
 		{
@@ -313,7 +282,6 @@ namespace ScintillaNET
 				return NativeScintilla.SelectionIsRectangle();
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int Length
@@ -329,7 +297,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public SelectionMode Mode
 		{
 			get
@@ -341,7 +308,6 @@ namespace ScintillaNET
 				NativeScintilla.SetSelectionMode((int)value);
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Range Range
@@ -356,7 +322,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int Start
 		{
 			get
@@ -368,7 +333,6 @@ namespace ScintillaNET
 				NativeScintilla.SetSelectionStart(value);
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public string Text
@@ -389,7 +353,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

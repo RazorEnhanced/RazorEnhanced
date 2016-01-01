@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -22,7 +21,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public MarkerInstance AddInstanceTo(int line)
@@ -30,12 +28,10 @@ namespace ScintillaNET
 			return new MarkerInstance(Scintilla, this, NativeScintilla.MarkerAdd(line, _number));
 		}
 
-
 		public MarkerInstance AddInstanceTo(Line line)
 		{
 			return AddInstanceTo(line.Number);
 		}
-
 
 		public override bool Equals(object obj)
 		{
@@ -43,15 +39,12 @@ namespace ScintillaNET
 				return false;
 
 			return ((Marker)obj).Number == this.Number;
-
 		}
-
 
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
-
 
 		public void Reset()
 		{
@@ -61,30 +54,25 @@ namespace ScintillaNET
 			ResetSymbol();
 		}
 
-
 		private void ResetAlpha()
 		{
 			Alpha = 0xff;
 		}
-
 
 		private void ResetBackColor()
 		{
 			BackColor = Color.White;
 		}
 
-
 		private void ResetForeColor()
 		{
 			ForeColor = Color.Black;
 		}
 
-
 		private void ResetSymbol()
 		{
 			Symbol = MarkerSymbol.Circle;
 		}
-
 
 		internal void SetBackColorInternal(Color value)
 		{
@@ -92,38 +80,32 @@ namespace ScintillaNET
 			NativeScintilla.MarkerSetBack(_number, Utilities.ColorToRgb(value));
 		}
 
-
 		internal void SetForeColorInternal(Color value)
 		{
 			Scintilla.ColorBag[ToString() + ".ForeColor"] = value;
 			NativeScintilla.MarkerSetFore(_number, Utilities.ColorToRgb(value));
 		}
 
-
 		public void SetImage(string xpmImage)
 		{
 			NativeScintilla.MarkerDefinePixmap(_number, xpmImage);
 		}
-
 
 		public void SetImage(Bitmap image)
 		{
 			NativeScintilla.MarkerDefinePixmap(_number, XpmConverter.ConvertToXPM(image));
 		}
 
-
 		public void SetImage(Bitmap image, Color transparentColor)
 		{
 			NativeScintilla.MarkerDefinePixmap(_number, XpmConverter.ConvertToXPM(image, Utilities.ColorToHtml(transparentColor)));
 		}
-
 
 		internal void SetSymbolInternal(MarkerSymbol value)
 		{
 			Scintilla.PropertyBag[ToString() + ".Symbol"] = value;
 			NativeScintilla.MarkerDefine(_number, (int)value);
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -133,12 +115,10 @@ namespace ScintillaNET
 				ShouldSerializeSymbol();
 		}
 
-
 		private bool ShouldSerializeAlpha()
 		{
 			return Alpha != 0xff;
 		}
-
 
 		private bool ShouldSerializeBackColor()
 		{
@@ -148,7 +128,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		private bool ShouldSerializeForeColor()
 		{
 			if (Scintilla.Folding.MarkerScheme == FoldMarkerScheme.Custom)
@@ -156,7 +135,6 @@ namespace ScintillaNET
 
 			return false;
 		}
-
 
 		private bool ShouldSerializeSymbol()
 		{
@@ -166,7 +144,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		public override string ToString()
 		{
 			return "MarkerNumber" + _number;
@@ -174,14 +151,12 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		public int Alpha
 		{
 			get
 			{
-
 				try
 				{
 					if (Scintilla.PropertyBag.ContainsKey(ToString() + ".Alpha"))
@@ -202,7 +177,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Color BackColor
 		{
 			get
@@ -218,7 +192,6 @@ namespace ScintillaNET
 				Scintilla.Folding.MarkerScheme = FoldMarkerScheme.Custom;
 			}
 		}
-
 
 		public Color ForeColor
 		{
@@ -236,7 +209,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public uint Mask
 		{
 			get
@@ -245,7 +217,6 @@ namespace ScintillaNET
 				return result;
 			}
 		}
-
 
 		public int Number
 		{
@@ -258,7 +229,6 @@ namespace ScintillaNET
 				_number = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the marker symbol.
@@ -290,7 +260,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

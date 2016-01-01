@@ -18,14 +18,14 @@ namespace Ultima
 		private static byte[] m_StreamBuffer;
 		private static byte[] Validbuffer;
 
-
-		struct CheckSums
+		private struct CheckSums
 		{
 			public byte[] checksum;
 			public int pos;
 			public int length;
 			public int index;
 		}
+
 		private static List<CheckSums> checksumsLand;
 		private static List<CheckSums> checksumsStatic;
 
@@ -69,6 +69,7 @@ namespace Ultima
 		{
 			return (int)(m_FileIndex.IdxLength / 12);
 		}
+
 		/// <summary>
 		/// ReReads Art.mul
 		/// </summary>
@@ -201,6 +202,7 @@ namespace Ultima
 			bool patched;
 			return GetLand(index, out patched);
 		}
+
 		/// <summary>
 		/// Returns Bitmap of LandTile (with Cache) and verdata bool
 		/// </summary>
@@ -258,6 +260,7 @@ namespace Ultima
 			bool patched;
 			return GetStatic(index, out patched, checkmaxid);
 		}
+
 		/// <summary>
 		/// Returns Bitmap of Static (with Cache) and verdata bool
 		/// </summary>
@@ -399,10 +402,8 @@ namespace Ultima
 				bmp = new Bitmap(width, height, PixelFormat.Format16bppArgb1555);
 				BitmapData bd = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format16bppArgb1555);
 
-
 				ushort* line = (ushort*)bd.Scan0;
 				int delta = bd.Stride >> 1;
-
 
 				for (int y = 0; y < height; ++y, line += delta)
 				{
@@ -471,7 +472,6 @@ namespace Ultima
 			bmp.UnlockBits(bd);
 			return bmp;
 		}
-
 
 		/// <summary>
 		/// Saves mul
@@ -678,6 +678,7 @@ namespace Ultima
 			}
 			return false;
 		}
+
 		private static bool compareSaveImagesStatic(byte[] newchecksum, out CheckSums sum)
 		{
 			sum = new CheckSums();

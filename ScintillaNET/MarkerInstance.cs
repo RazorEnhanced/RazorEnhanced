@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	public class MarkerInstance : ScintillaHelperBase
 	{
@@ -15,14 +9,12 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public void Delete()
 		{
 			NativeScintilla.MarkerDeleteHandle(_handle);
 		}
-
 
 		public override bool Equals(object obj)
 		{
@@ -32,14 +24,12 @@ namespace ScintillaNET
 			return ((MarkerInstance)obj).Handle == this.Handle;
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -51,7 +41,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line Line
 		{
 			get
@@ -61,10 +50,8 @@ namespace ScintillaNET
 					return null;
 
 				return new Line(Scintilla, lineNo);
-
 			}
 		}
-
 
 		public Marker Marker
 		{
@@ -75,7 +62,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

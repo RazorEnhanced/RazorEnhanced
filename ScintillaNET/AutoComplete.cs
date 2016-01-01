@@ -8,7 +8,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -17,7 +16,7 @@ namespace ScintillaNET
 	/// </summary>
 	/// <remarks>
 	///     Autocomplete is typically used in IDEs to automatically complete some kind
-	///     of identifier or keyword based on a partial name. 
+	///     of identifier or keyword based on a partial name.
 	/// </remarks>
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
 	public class AutoComplete : TopLevelHelper
@@ -30,7 +29,6 @@ namespace ScintillaNET
 		private string _fillUpCharacters = string.Empty;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -46,18 +44,16 @@ namespace ScintillaNET
 			NativeScintilla.AutoCComplete();
 		}
 
-
 		/// <summary>
 		///     Cancels the autocomplete window
 		/// </summary>
 		/// <remarks>
-		///     If the AutoComplete window is displayed calling Cancel() will close the window. 
+		///     If the AutoComplete window is displayed calling Cancel() will close the window.
 		/// </remarks>
 		public void Cancel()
 		{
 			NativeScintilla.AutoCCancel();
 		}
-
 
 		/// <summary>
 		///     Deletes all registered images.
@@ -67,7 +63,6 @@ namespace ScintillaNET
 			NativeScintilla.ClearRegisteredImages();
 		}
 
-
 		private int GetLengthEntered()
 		{
 			if (!_automaticLengthEntered)
@@ -76,7 +71,6 @@ namespace ScintillaNET
 			int pos = NativeScintilla.GetCurrentPos();
 			return pos - NativeScintilla.WordStartPosition(pos, true);
 		}
-
 
 		private string GetListString(IEnumerable<string> list)
 		{
@@ -91,7 +85,6 @@ namespace ScintillaNET
 			return listString.ToString().Trim();
 		}
 
-
 		/// <summary>
 		///     Registers an image with index to be displayed in the AutoComplete window.
 		/// </summary>
@@ -101,7 +94,6 @@ namespace ScintillaNET
 		{
 			NativeScintilla.RegisterImage(type, XpmConverter.ConvertToXPM(image));
 		}
-
 
 		/// <summary>
 		///     Registers an image with index to be displayed in the AutoComplete window.
@@ -114,7 +106,6 @@ namespace ScintillaNET
 			NativeScintilla.RegisterImage(type, XpmConverter.ConvertToXPM(image, Utilities.ColorToHtml(transparentColor)));
 		}
 
-
 		/// <summary>
 		///     Registers an image with index to be displayed in the AutoComplete window.
 		/// </summary>
@@ -124,7 +115,6 @@ namespace ScintillaNET
 		{
 			NativeScintilla.RegisterImage(type, xpmImage);
 		}
-
 
 		/// <summary>
 		///     Registers a list of images to be displayed in the AutoComplete window.
@@ -136,7 +126,6 @@ namespace ScintillaNET
 			for (int i = 0; i < images.Count; i++)
 				RegisterImage(i, images[i]);
 		}
-
 
 		/// <summary>
 		///     Registers a list of images to be displayed in the AutoComplete window.
@@ -150,7 +139,6 @@ namespace ScintillaNET
 				RegisterImage(i, images[i], transparentColor);
 		}
 
-
 		/// <summary>
 		///     Registers a list of images to be displayed in the AutoComplete window.
 		/// </summary>
@@ -162,7 +150,6 @@ namespace ScintillaNET
 				NativeScintilla.RegisterImage(i, xpmImages[i]);
 		}
 
-
 		/// <summary>
 		///     Registers a list of images to be displayed in the AutoComplete window.
 		/// </summary>
@@ -172,7 +159,6 @@ namespace ScintillaNET
 		{
 			RegisterImages(XpmConverter.ConvertToXPM(images));
 		}
-
 
 		/// <summary>
 		///     Registers a list of images to be displayed in the AutoComplete window.
@@ -185,78 +171,65 @@ namespace ScintillaNET
 			RegisterImages(XpmConverter.ConvertToXPM(images, Utilities.ColorToHtml(transparentColor)));
 		}
 
-
 		private void ResetAutoHide()
 		{
 			AutoHide = true;
 		}
-
 
 		private void ResetAutomaticLengthEntered()
 		{
 			AutomaticLengthEntered = true;
 		}
 
-
 		private void ResetCancelAtStart()
 		{
 			CancelAtStart = true;
 		}
-
 
 		private void ResetDropRestOfWord()
 		{
 			DropRestOfWord = false;
 		}
 
-
 		private void ResetFillUpCharacters()
 		{
 			_fillUpCharacters = string.Empty;
 		}
-
 
 		private void ResetImageSeparator()
 		{
 			ImageSeparator = '?';
 		}
 
-
 		private void ResetIsCaseSensitive()
 		{
 			IsCaseSensitive = true;
 		}
-
 
 		private void ResetListSeparator()
 		{
 			ListSeparator = ' ';
 		}
 
-
 		private void ResetMaxHeight()
 		{
 			MaxHeight = 5;
 		}
-
 
 		private void ResetMaxWidth()
 		{
 			MaxWidth = 0;
 		}
 
-
 		private void ResetSingleLineAccept()
 		{
 			SingleLineAccept = false;
 		}
 
-
 		private void ResetStopCharacters()
 		{
 			_stopCharacters = string.Empty;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -273,78 +246,65 @@ namespace ScintillaNET
 				ShouldSerializeStopCharacters();
 		}
 
-
 		private bool ShouldSerializeAutoHide()
 		{
 			return !AutoHide;
 		}
-
 
 		private bool ShouldSerializeAutomaticLengthEntered()
 		{
 			return !AutomaticLengthEntered;
 		}
 
-
 		private bool ShouldSerializeCancelAtStart()
 		{
 			return !CancelAtStart;
 		}
-
 
 		private bool ShouldSerializeDropRestOfWord()
 		{
 			return DropRestOfWord;
 		}
 
-
 		private bool ShouldSerializeFillUpCharacters()
 		{
 			return _fillUpCharacters != string.Empty;
 		}
-
 
 		private bool ShouldSerializeImageSeparator()
 		{
 			return ImageSeparator != '?';
 		}
 
-
 		private bool ShouldSerializeIsCaseSensitive()
 		{
 			return !IsCaseSensitive;
 		}
-
 
 		private bool ShouldSerializeListSeparator()
 		{
 			return ListSeparator != ' ';
 		}
 
-
 		private bool ShouldSerializeMaxHeight()
 		{
 			return MaxHeight != 5;
 		}
-
 
 		private bool ShouldSerializeMaxWidth()
 		{
 			return MaxWidth != 0;
 		}
 
-
 		private bool ShouldSerializeSingleLineAccept()
 		{
 			return SingleLineAccept;
 		}
 
-
 		private bool ShouldSerializeStopCharacters()
 		{
 			return _stopCharacters != string.Empty;
 		}
-
 
 		/// <summary>
 		///     Shows the autocomplete window.
@@ -358,12 +318,11 @@ namespace ScintillaNET
 			Show(-1, GetListString(_list), false);
 		}
 
-
 		/// <summary>
 		///     Shows the autocomplete window
 		/// </summary>
 		/// <param name="list">
-		///     Sets the <see cref="List"/> property. 
+		///     Sets the <see cref="List"/> property.
 		///     In this overload the lengthEntered is automatically detected by the editor.
 		/// </param>
 		public void Show(IEnumerable<string> list)
@@ -371,7 +330,6 @@ namespace ScintillaNET
 			_list = new List<string>(list);
 			Show(-1);
 		}
-
 
 		/// <summary>
 		///     Shows the autocomplete window
@@ -385,7 +343,6 @@ namespace ScintillaNET
 			Show(lengthEntered, GetListString(_list), false);
 		}
 
-
 		/// <summary>
 		///     Shows the autocomplete window
 		/// </summary>
@@ -396,7 +353,6 @@ namespace ScintillaNET
 			_list = new List<string>(list);
 			Show(-1);
 		}
-
 
 		/// <summary>
 		///     Shows the autocomplete window.
@@ -411,7 +367,6 @@ namespace ScintillaNET
 				_list = new List<string>(list.Split(ListSeparator));
 			Show(lengthEntered, list, true);
 		}
-
 
 		internal void Show(int lengthEntered, string list, bool dontSplit)
 		{
@@ -430,7 +385,6 @@ namespace ScintillaNET
 				NativeScintilla.AutoCShow(0, list);
 		}
 
-
 		/// <summary>
 		///     Shows the autocomplete window.
 		/// </summary>
@@ -442,7 +396,6 @@ namespace ScintillaNET
 		{
 			Show(-1, list);
 		}
-
 
 		/// <summary>
 		///     Shows a UserList window
@@ -456,7 +409,6 @@ namespace ScintillaNET
 		{
 			Show(listType, GetListString(list), true);
 		}
-
 
 		/// <summary>
 		///     Shows a UserList window
@@ -473,12 +425,11 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
-		///     By default, the list is cancelled if there are no viable matches (the user has typed characters that no longer match a list entry). 
-		///     If you want to keep displaying the original list, set AutoHide to false. 
+		///     By default, the list is cancelled if there are no viable matches (the user has typed characters that no longer match a list entry).
+		///     If you want to keep displaying the original list, set AutoHide to false.
 		/// </summary>
 		public bool AutoHide
 		{
@@ -491,7 +442,6 @@ namespace ScintillaNET
 				NativeScintilla.AutoCSetAutoHide(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or Sets the last automatically calculated LengthEntered used whith <see cref="Show" />.
@@ -508,9 +458,8 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
-		///     The default behavior is for the list to be cancelled if the caret moves before the location it was at when the list was displayed. 
+		///     The default behavior is for the list to be cancelled if the caret moves before the location it was at when the list was displayed.
 		///     By setting this property to false, the list is not cancelled until the caret moves before the first character of the word being completed.
 		/// </summary>
 		public bool CancelAtStart
@@ -524,7 +473,6 @@ namespace ScintillaNET
 				NativeScintilla.AutoCSetCancelAtStart(value);
 			}
 		}
-
 
 		/// <summary>
 		///     When an item is selected, any word characters following the caret are first erased if dropRestOfWord is set to true.
@@ -541,7 +489,6 @@ namespace ScintillaNET
 				NativeScintilla.AutoCSetDropRestOfWord(value);
 			}
 		}
-
 
 		/// <summary>
 		///     List of characters (no separated) that causes the AutoComplete window to accept the current
@@ -560,11 +507,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
-		///     Autocompletion list items may display an image as well as text. Each image is first registered with an integer type. 
-		///     Then this integer is included in the text of the list separated by a '?' from the text. For example, "fclose?2 fopen" 
-		///     displays image 2 before the string "fclose" and no image before "fopen". 
+		///     Autocompletion list items may display an image as well as text. Each image is first registered with an integer type.
+		///     Then this integer is included in the text of the list separated by a '?' from the text. For example, "fclose?2 fopen"
+		///     displays image 2 before the string "fclose" and no image before "fopen".
 		/// </summary>
 		public char ImageSeparator
 		{
@@ -578,7 +524,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns wether or not the AutoComplete window is currently displayed
 		/// </summary>
@@ -590,7 +535,6 @@ namespace ScintillaNET
 				return NativeScintilla.AutoCActive();
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or Sets if the comparison of words to the AutoComplete <see cref="List"/> are case sensitive.
@@ -608,7 +552,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the document posision when the AutoComplete window was last invoked
 		/// </summary>
@@ -620,7 +563,6 @@ namespace ScintillaNET
 				return NativeScintilla.AutoCPosStart();
 			}
 		}
-
 
 		/// <summary>
 		///     List if words to display in the AutoComplete window when invoked.
@@ -641,7 +583,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Character used to split <see cref="ListString"/> to convert to a List.
 		/// </summary>
@@ -657,7 +598,6 @@ namespace ScintillaNET
 				NativeScintilla.AutoCSetSeparator(value);
 			}
 		}
-
 
 		/// <summary>
 		///     List of words to display in the AutoComplete window.
@@ -678,7 +618,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Get or set the maximum number of rows that will be visible in an autocompletion list. If there are more rows in the list, then a vertical scrollbar is shown
 		/// </summary>
@@ -695,12 +634,11 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
-		///     Get or set the maximum width of an autocompletion list expressed as the number of characters in the longest item that will be totally visible. 
+		///     Get or set the maximum width of an autocompletion list expressed as the number of characters in the longest item that will be totally visible.
 		/// </summary>
 		/// <remarks>
-		///     If zero (the default) then the list's width is calculated to fit the item with the most characters. Any items that cannot be fully displayed 
+		///     If zero (the default) then the list's width is calculated to fit the item with the most characters. Any items that cannot be fully displayed
 		///     within the available width are indicated by the presence of ellipsis.
 		/// </remarks>
 		public int MaxWidth
@@ -714,7 +652,6 @@ namespace ScintillaNET
 				NativeScintilla.AutoCSetMaxWidth(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or Sets the index of the currently selected item in the AutoComplete <see cref="List"/>
@@ -731,7 +668,6 @@ namespace ScintillaNET
 				SelectedText = _list[value];
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or Sets the Text of the currently selected AutoComplete item.
@@ -754,7 +690,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     If you set this value to true and a list has only one item, it is automatically added and no list is displayed.
 		///     The default is to display the list even if there is only a single item.
@@ -770,7 +705,6 @@ namespace ScintillaNET
 				NativeScintilla.AutoCSetChooseSingle(value);
 			}
 		}
-
 
 		/// <summary>
 		///     List of characters (no separator) that causes the AutoComplete window to cancel.
@@ -789,7 +723,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

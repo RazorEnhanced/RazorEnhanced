@@ -48,7 +48,6 @@ namespace RazorEnhanced
 			AddLog("----------- Response Recevied END -----------");
 		}
 
-
 		internal static void GumpCloseAddLog(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (!Assistant.Engine.MainWindow.GumpInspectorEnable)
@@ -90,6 +89,7 @@ namespace RazorEnhanced
 
 			AddLog("----------- New Recevied END -----------");
 		}
+
 		internal static void AddLog(string addlog)
 		{
 			RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Invoke(new Action(() => RazorEnhanced.UI.EnhancedGumpInspector.EnhancedGumpInspectorListBox.Items.Add(addlog)));

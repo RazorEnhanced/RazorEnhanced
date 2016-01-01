@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -18,36 +17,30 @@ namespace ScintillaNET
 			Border = PageInformationBorder.Top;
 		}
 
-
 		private void ResetCenter()
 		{
 			Center = InformationType.Nothing;
 		}
-
 
 		private void ResetFont()
 		{
 			Font = DefaultFont;
 		}
 
-
 		private void ResetLeft()
 		{
 			Left = InformationType.Nothing;
 		}
-
 
 		private void ResetMargin()
 		{
 			Margin = 3;
 		}
 
-
 		private void ResetRight()
 		{
 			Right = InformationType.Nothing;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -59,36 +52,30 @@ namespace ScintillaNET
 				ShouldSerializeRight();
 		}
 
-
 		private bool ShouldSerializeBorder()
 		{
 			return Border != PageInformationBorder.Top;
 		}
-
 
 		private bool ShouldSerializeCenter()
 		{
 			return Center != InformationType.Nothing;
 		}
 
-
 		private bool ShouldSerializeFont()
 		{
 			return !DefaultFont.Equals(Font);
 		}
-
 
 		private bool ShouldSerializeLeft()
 		{
 			return Left != InformationType.Nothing;
 		}
 
-
 		private bool ShouldSerializeMargin()
 		{
 			return Margin != 3;
 		}
-
 
 		private bool ShouldSerializeRight()
 		{
@@ -96,7 +83,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -112,7 +98,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public override InformationType Center
 		{
 			get
@@ -124,7 +109,6 @@ namespace ScintillaNET
 				base.Center = value;
 			}
 		}
-
 
 		public override Font Font
 		{
@@ -138,7 +122,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public override InformationType Left
 		{
 			get
@@ -151,7 +134,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public override int Margin
 		{
 			get
@@ -163,7 +145,6 @@ namespace ScintillaNET
 				base.Margin = value;
 			}
 		}
-
 
 		public override InformationType Right
 		{
@@ -179,7 +160,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		/// <summary>
@@ -188,7 +168,6 @@ namespace ScintillaNET
 		public FooterInformation() : base(PageInformationBorder.None, InformationType.Nothing, InformationType.Nothing, InformationType.Nothing)
 		{
 		}
-
 
 		/// <summary>
 		///     Full Constructor
@@ -202,7 +181,6 @@ namespace ScintillaNET
 		public FooterInformation(int iMargin, Font oFont, PageInformationBorder eBorder, InformationType eLeft, InformationType eCenter, InformationType eRight) : base(iMargin, oFont, eBorder, eLeft, eCenter, eRight)
 		{
 		}
-
 
 		/// <summary>
 		///     Normal Use Constructor

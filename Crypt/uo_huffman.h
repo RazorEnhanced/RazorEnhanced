@@ -3,8 +3,8 @@
 class Compression
 {
 public:
-	static int Compress( char *out, const char *in, int inlen );
-	static int Decompress( char *out, const char *in, int inlen );
+	static int Compress(char *out, const char *in, int inlen);
+	static int Decompress(char *out, const char *in, int inlen);
 
 	static void Reset();
 
@@ -15,4 +15,3 @@ protected:
 	static int CompressionTable[];
 	static int DecompressionTree[];
 };
-

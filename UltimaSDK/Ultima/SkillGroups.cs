@@ -20,6 +20,7 @@ namespace Ultima
 		public static List<SkillGroup> List { get; private set; }
 		public static List<int> SkillList { get; private set; }
 		private static bool unicode = false;
+
 		static SkillGroups()
 		{
 			Initialize();

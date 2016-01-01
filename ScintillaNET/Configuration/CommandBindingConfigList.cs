@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class CommandBindingConfigList : List<CommandBindingConfig>
@@ -15,7 +14,6 @@ namespace ScintillaNET.Configuration
 		private bool? _inherit;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -30,7 +28,6 @@ namespace ScintillaNET.Configuration
 				_allowDuplicateBindings = value;
 			}
 		}
-
 
 		public bool? Inherit
 		{

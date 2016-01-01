@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ScintillaNET>
 	<Language Name="html">
-		<!--  
+		<!--
 			I'm adding the HTML and JavaScript Keywords into the Default AutoComplete list
 			becuase these are by FAR the most common.
 		-->
@@ -12,12 +12,12 @@
 			</List>
 		</AutoComplete>
 
-		<!-- 
-			This is a bit of a hack that I picked up from SciTE, We keep the Stream 
+		<!--
+			This is a bit of a hack that I picked up from SciTE, We keep the Stream
 			Comments as HTML Style and the Line Comments JavaScript Style. The better
 			way to do it would be to change the comment strings whenever the selection
 			changes based on if the current style is HTML or JavaScript (or VBScript,
-			PHP, etc)			
+			PHP, etc)
 		 -->
 		<Lexer LineCommentPrefix="//" StreamCommentPrefix="&lt;!-- " StreamCommentSuffix=" --&gt;">
 			<Keywords List="0" Name="HTML">!doctype a abbr accept-charset accept accesskey acronym action address align alink alt applet archive area axis b background base basefont bdo bgcolor big blockquote body border br button caption cellpadding cellspacing center char charoff charset checkbox checked cite class classid clear code codebase codetype col colgroup color cols colspan compact content coords data datafld dataformatas datapagesize datasrc datetime dd declare defer del dfn dir disabled div dl dt em enctype event face fieldset file font for form frame frameborder frameset h1 h2 h3 h4 h5 h6 head headers height hidden hr href hreflang hspace html http-equiv i id iframe image img input ins isindex ismap kbd label lang language leftmargin legend li link longdesc map marginwidth marginheight maxlength media menu meta method multiple name noframes nohref noresize noscript noshade nowrap object ol onblur onchange onclick ondblclick onfocus onkeydown onkeypress onkeyup onload onmousedown onmousemove onmouseover onmouseout onmouseup optgroup option onreset onselect onsubmit onunload p param password profile pre prompt public q radio readonly rel reset rev rows rowspan rules s samp scheme scope script select selected shape size small span src standby start strike strong style sub submit summary sup tabindex table target tbody td text textarea tfoot th thead title topmargin tr tt type u ul usemap valign value valuetype var version vlink vspace width xml xmlns</Keywords>
@@ -27,25 +27,25 @@
 			<Keywords List="4" Name="PHP">and or xor __file__ __line__ array as break case cfunction class const continue declare default die do echo else elseif empty enddeclare endfor endforeach endif endswitch endwhile eval exit extends for foreach function global if include include_once isset list new old_function print require require_once return static switch unset use var while __function__ __class__ php_version php_os default_include_path pear_install_dir pear_extension_dir php_extension_dir php_bindir php_libdir php_datadir php_sysconfdir php_localstatedir php_config_file_path php_output_handler_start php_output_handler_cont php_output_handler_end e_error e_warning e_parse e_notice e_core_error e_core_warning e_compile_error e_compile_warning e_user_error e_user_warning e_user_notice e_all true false bool boolean int integer float double real string array object resource null class extends parent stdclass directory __sleep __wakeup interface implements abstract public protected private</Keywords>
 		</Lexer>
 
-		<!-- 
+		<!--
 			Additionally the HTML comment scheme lends itself better to having CTRL+Q toggle
 			Line comments and CTRL+SHIFT+Q add Stream comments rather than having VS style
-			comments.			
+			comments.
 		-->
 		<Commands Inherit="True">
-			<Binding Key="Q" Modifier="Control" Command="ToggleLineComment" ReplaceCurrent="True"/>
-			<Binding Key="Q" Modifier="Shift Control" Command="StreamComment" ReplaceCurrent="True"/>
+			<Binding Key="Q" Modifier="Control" Command="ToggleLineComment" ReplaceCurrent="True" />
+			<Binding Key="Q" Modifier="Shift Control" Command="StreamComment" ReplaceCurrent="True" />
 		</Commands>
 
-		<!-- 
+		<!--
 			I saved the best for last. Styles, yeck. This is why the HTML config
 			is so damned complicated.
-			
+
 			In order for any of the SubLangage Styles to inherit from the default config
 			they have to be declared here even if they don't have any values set.
 		-->
 		<Styles>
-		
+
 			<!--
 				As sort of a neat side-effect of how the SubLanguage inheritance works
 				any styles declared here will be inherited by the sublanguage styles.
@@ -55,8 +55,7 @@
 
 			<Style Name="DOUBLESTRING" ForeColor="Orchid" />
 			<Style Name="SINGLESTRING" ForeColor="Orchid" />
-			
-			
+
 			<SubLanguage Name="HTML">
 				<Style Name="DEFAULT" />
 				<Style Name="TAG" />
@@ -64,8 +63,8 @@
 				<Style Name="ATTRIBUTE" />
 				<Style Name="ATTRIBUTEUNKNOWN" />
 				<Style Name="NUMBER" />
-				<Style Name="DOUBLESTRING"  />
-				<Style Name="SINGLESTRING"  />
+				<Style Name="DOUBLESTRING" />
+				<Style Name="SINGLESTRING" />
 				<Style Name="OTHER" />
 				<Style Name="COMMENT" />
 				<Style Name="ENTITY" />
@@ -94,7 +93,6 @@
 				<Style Name="1ST_PARAM_COMMENT" />
 				<Style Name="BLOCK_DEFAULT" />
 			</SubLanguage>
-
 
 			<SubLanguage Name="JavaScript">
 				<Style Name="START" />
@@ -138,7 +136,7 @@
 				<Style Name="IDENTIFIER" />
 				<Style Name="STRINGEOL" />
 			</SubLanguage>
-			
+
 			<SubLanguage Name="ASP VBScript">
 				<Style Name="START" />
 				<Style Name="DEFAULT" />
@@ -165,7 +163,6 @@
 				<Style Name="OPERATOR" />
 				<Style Name="IDENTIFIER" />
 			</SubLanguage>
-
 
 			<SubLanguage Name="ASP Python">
 				<Style Name="START" />
@@ -194,7 +191,7 @@
 				<Style Name="COMMENT" />
 				<Style Name="COMMENTLINE" />
 				<Style Name="HSTRING_VARIABLE" />
-				<Style Name="OPERATOR"/>
+				<Style Name="OPERATOR" />
 			</SubLanguage>
 		</Styles>
 	</Language>

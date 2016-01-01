@@ -216,6 +216,7 @@ namespace Assistant.Macros
 		}
 
 		private static Type[] ctorArgs = new Type[1] { typeof(string[]) };
+
 		internal void Load()
 		{
 			m_Actions.Clear();
@@ -338,6 +339,7 @@ namespace Assistant.Macros
 		}
 
 		private static MacroWaitAction PauseB4Loop = new PauseAction(TimeSpan.FromSeconds(0.1));
+
 		//return true to continue the macro, false to stop (macro's over)
 		internal bool ExecNext()
 		{
@@ -577,4 +579,3 @@ namespace Assistant.Macros
 		}
 	}
 }
-

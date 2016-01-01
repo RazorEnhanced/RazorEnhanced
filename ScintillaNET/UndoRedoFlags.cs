@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	//  Used by TextModifiedEventArgs, StyeChangedEventArgs and FoldChangedEventArgs
 	//  this provides a friendly wrapper around the SCNotification's modificationType
@@ -19,7 +13,6 @@ namespace ScintillaNET
 		private const string STRING_FORMAT = "IsUndo\t\t\t\t:{0}\r\nIsRedo\t\t\t\t:{1}\r\nIsMultiStep\t\t\t:{2}\r\nIsLastStep\t\t\t:{3}\r\nIsMultiLine\t\t\t:{4}";
 
 		#endregion Constants
-
 
 		#region Fields
 
@@ -50,7 +43,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -62,7 +54,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Constructors
 

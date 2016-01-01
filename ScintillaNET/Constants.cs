@@ -1,9 +1,3 @@
-#region Using Directives
-
-
-#endregion Using Directives
-
-
 namespace ScintillaNET
 {
 	// NOTE: This class will be deprecated and it's members made part of the internal NativeMethods

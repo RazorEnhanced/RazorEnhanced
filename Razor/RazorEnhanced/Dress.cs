@@ -31,8 +31,8 @@ namespace RazorEnhanced
 				m_serial = serial;
 				m_Selected = selected;
 			}
-
 		}
+
 		internal class DressList
 		{
 			private string m_Description;
@@ -105,6 +105,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.DressBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.DressBagLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
+
 		internal static bool DressConflict
 		{
 			get
@@ -116,6 +117,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.DressCheckBox.Checked = value;
 			}
 		}
+
 		internal static string DressListName
 		{
 			get
@@ -372,6 +374,7 @@ namespace RazorEnhanced
 			}
 			RazorEnhanced.Dress.RefreshItems();
 		}
+
 		internal static void AddItemByTarger(Assistant.Item dressItem)
 		{
 			int layertoinsert = LayerLayerToInt(dressItem.Layer);
@@ -386,190 +389,271 @@ namespace RazorEnhanced
 				Misc.SendMessage("This item not have valid layer: " + layertoinsert);
 			}
 		}
+
 		private static Assistant.Layer LayerNumberToLayer(int layer)
 		{
 			switch (layer)
 			{
 				case 0:
 					return Assistant.Layer.RightHand;
+
 				case 1:
 					return Assistant.Layer.LeftHand;
+
 				case 2:
 					return Assistant.Layer.Shoes;
+
 				case 3:
 					return Assistant.Layer.Pants;
+
 				case 4:
 					return Assistant.Layer.Shirt;
+
 				case 5:
 					return Assistant.Layer.Head;
+
 				case 6:
 					return Assistant.Layer.Gloves;
+
 				case 7:
 					return Assistant.Layer.Ring;
+
 				case 8:
 					return Assistant.Layer.Neck;
+
 				case 9:
 					return Assistant.Layer.Waist;
+
 				case 10:
 					return Assistant.Layer.InnerTorso;
+
 				case 11:
 					return Assistant.Layer.Bracelet;
+
 				case 12:
 					return Assistant.Layer.MiddleTorso;
+
 				case 13:
 					return Assistant.Layer.Earrings;
+
 				case 14:
 					return Assistant.Layer.Arms;
+
 				case 15:
 					return Assistant.Layer.Cloak;
+
 				case 16:
 					return Assistant.Layer.OuterTorso;
+
 				case 17:
 					return Assistant.Layer.OuterLegs;
+
 				case 18:
 					return Assistant.Layer.InnerLegs;
+
 				case 19:
 					return Assistant.Layer.Unused_x9;
 			}
 			return 0;
 		}
+
 		private static string LayerIntToLayerString(int layer)
 		{
 			switch (layer)
 			{
 				case 0:
 					return "RightHand";
+
 				case 1:
 					return "LeftHand";
+
 				case 2:
 					return "Shoes";
+
 				case 3:
 					return "Pants";
+
 				case 4:
 					return "Shirt";
+
 				case 5:
 					return "Head";
+
 				case 6:
 					return "Gloves";
+
 				case 7:
 					return "Ring";
+
 				case 8:
 					return "Neck";
+
 				case 9:
 					return "Waist";
+
 				case 10:
 					return "InnerTorso";
+
 				case 11:
 					return "Bracelet";
+
 				case 12:
 					return "MiddleTorso";
+
 				case 13:
 					return "Earrings";
+
 				case 14:
 					return "Arms";
+
 				case 15:
 					return "Cloak";
+
 				case 16:
 					return "OuterTorso";
+
 				case 17:
 					return "OuterLegs";
+
 				case 18:
 					return "InnerLegs";
+
 				case 19:
 					return "UpperRight";
 			}
 			return null;
 		}
+
 		private static int LayerLayerToInt(Assistant.Layer layer)
 		{
 			switch (layer)
 			{
 				case Assistant.Layer.RightHand:
 					return 0;
+
 				case Assistant.Layer.LeftHand:
 					return 1;
+
 				case Assistant.Layer.Shoes:
 					return 2;
+
 				case Assistant.Layer.Pants:
 					return 3;
+
 				case Assistant.Layer.Shirt:
 					return 4;
+
 				case Assistant.Layer.Head:
 					return 5;
+
 				case Assistant.Layer.Gloves:
 					return 6;
+
 				case Assistant.Layer.Ring:
 					return 7;
+
 				case Assistant.Layer.Neck:
 					return 8;
+
 				case Assistant.Layer.Waist:
 					return 9;
+
 				case Assistant.Layer.InnerTorso:
 					return 10;
+
 				case Assistant.Layer.Bracelet:
 					return 11;
+
 				case Assistant.Layer.MiddleTorso:
 					return 12;
+
 				case Assistant.Layer.Earrings:
 					return 13;
+
 				case Assistant.Layer.Arms:
 					return 14;
+
 				case Assistant.Layer.Cloak:
 					return 15;
+
 				case Assistant.Layer.OuterTorso:
 					return 16;
+
 				case Assistant.Layer.OuterLegs:
 					return 17;
+
 				case Assistant.Layer.InnerLegs:
 					return 18;
+
 				case Assistant.Layer.Unused_x9:
 					return 19;
+
 				default:
 					return -1;
 			}
 		}
+
 		internal static int LayerStringToInt(string layer)
 		{
 			switch (layer)
 			{
 				case "RightHand":
 					return 0;
+
 				case "LeftHand":
 					return 1;
+
 				case "Shoes":
 					return 2;
+
 				case "Pants":
 					return 3;
+
 				case "Shirt":
 					return 4;
+
 				case "Head":
 					return 5;
+
 				case "Gloves":
 					return 6;
+
 				case "Ring":
 					return 7;
+
 				case "Neck":
 					return 8;
+
 				case "Waist":
 					return 9;
+
 				case "InnerTorso":
 					return 10;
+
 				case "Bracelet":
 					return 11;
+
 				case "MiddleTorso":
 					return 12;
+
 				case "Earrings":
 					return 13;
+
 				case "Arms":
 					return 14;
+
 				case "Cloak":
 					return 15;
+
 				case "OuterTorso":
 					return 16;
+
 				case "OuterLegs":
 					return 17;
+
 				case "InnerLegs":
 					return 18;
+
 				case "UpperRight":
 					return 19;
 			}
@@ -784,7 +868,6 @@ namespace RazorEnhanced
 				m_UndressThread = new Thread(Dress.UndressEngine);
 				m_UndressThread.Start();
 			}
-
 		}
 
 		// Dress
@@ -927,8 +1010,8 @@ namespace RazorEnhanced
 				m_DressThread = new Thread(Dress.DressEngine);
 				m_DressThread.Start();
 			}
-
 		}
+
 		internal static void ForceStop()
 		{
 			if (m_DressThread != null && m_DressThread.ThreadState != ThreadState.Stopped)
@@ -961,33 +1044,34 @@ namespace RazorEnhanced
 
 		public static void DressFStart()
 		{
-            if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
-                Assistant.Engine.MainWindow.DressStart();
-            else
-                Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
+			if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
+				Assistant.Engine.MainWindow.DressStart();
+			else
+				Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
 		}
+
 		public static void UnDressFStart()
 		{
-
-            if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
-                Assistant.Engine.MainWindow.UndressStart();
-            else
-                Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
+			if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
+				Assistant.Engine.MainWindow.UndressStart();
+			else
+				Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
 		}
+
 		public static void DressFStop()
 		{
 			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                Assistant.Engine.MainWindow.DressStop();
-            else
+				Assistant.Engine.MainWindow.DressStop();
+			else
 				Misc.SendMessage("Script Error: Dress.DressFStop: Dress not running");
 		}
 
 		public static void UnDressFStop()
 		{
-            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                Assistant.Engine.MainWindow.DressStop();
-            else
-                Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
+			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+				Assistant.Engine.MainWindow.DressStop();
+			else
+				Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
 		}
 
 		public static void ChangeList(string nomelista)

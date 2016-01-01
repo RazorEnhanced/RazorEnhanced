@@ -12,7 +12,6 @@ namespace Ultima
 		public Bitmap[] Characters { get; set; }
 		public int Height { get; set; }
 
-
 		public ASCIIFont(byte header)
 		{
 			Header = header;

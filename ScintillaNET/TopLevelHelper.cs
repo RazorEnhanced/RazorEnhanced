@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Top level ScintillaHelpers Like Style and Folding inherit from this class so they don't have
@@ -19,7 +13,6 @@ namespace ScintillaNET
 			return IsSameHelperFamily(obj);
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
@@ -27,10 +20,11 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Constructors
 
-		internal TopLevelHelper(Scintilla scintilla) : base(scintilla) { }
+		internal TopLevelHelper(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

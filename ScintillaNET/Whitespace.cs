@@ -9,7 +9,6 @@ using System.Text;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -29,7 +28,6 @@ namespace ScintillaNET
 		private const string ALPHA_EXCEPTION = "Transparent colors are not supported."; // TODO Move into resource file.
 
 		#endregion Constants
-
 
 		#region Properties
 
@@ -79,7 +77,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the whitespace foreground color.
 		/// </summary>
@@ -126,7 +123,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the whitespace display mode.
 		/// </summary>
@@ -151,7 +147,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		internal Whitespace(Scintilla scintilla) : base(scintilla)
@@ -159,7 +154,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Constructors
-
 
 		#region Types
 

@@ -131,7 +131,7 @@ namespace RazorEnhanced
 					string args = property.Args;
 					if (number == 1072788)
 					{
-						return 1;       // Peso 1 se cliloc è 1072788 
+						return 1;       // Peso 1 se cliloc è 1072788
 					}
 					if (number == 1072789)
 						try
@@ -185,10 +185,9 @@ namespace RazorEnhanced
 						}
 						catch
 						{
-							return 0;  // errore di conversione torna 0 
+							return 0;  // errore di conversione torna 0
 						}
 					}
-
 				}
 				return 0; // item senza Dur
 			}
@@ -235,15 +234,13 @@ namespace RazorEnhanced
 						}
 						catch
 						{
-							return 0;  // errore di conversione torna 0 
+							return 0;  // errore di conversione torna 0
 						}
 					}
-
 				}
 				return 0; // item senza maxdur
 			}
 		}
-
 	}
 
 	public class Items
@@ -384,6 +381,7 @@ namespace RazorEnhanced
 					case "Random":
 						result = items[Utility.Random(items.Count)] as Item;
 						break;
+
 					case "Nearest":
 						Item nearest = items[0] as Item;
 						if (nearest != null)
@@ -405,6 +403,7 @@ namespace RazorEnhanced
 							result = nearest;
 						}
 						break;
+
 					case "Farthest":
 						Item farthest = items[0] as Item;
 						if (farthest != null)
@@ -426,6 +425,7 @@ namespace RazorEnhanced
 							result = farthest;
 						}
 						break;
+
 					case "Less":
 						Item least = items[0] as Item;
 						if (least != null)
@@ -447,6 +447,7 @@ namespace RazorEnhanced
 							result = least;
 						}
 						break;
+
 					case "Most":
 						Item most = items[0] as Item;
 						if (most != null)
@@ -468,6 +469,7 @@ namespace RazorEnhanced
 							result = most;
 						}
 						break;
+
 					case "Weakest":
 						Item weakest = items[0] as Item;
 						if (weakest != null)
@@ -489,6 +491,7 @@ namespace RazorEnhanced
 							result = weakest;
 						}
 						break;
+
 					case "Strongest":
 						Item strongest = items[0] as Item;
 						if (strongest != null)
@@ -518,7 +521,6 @@ namespace RazorEnhanced
 
 		public static Item FindBySerial(int serial)
 		{
-
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
@@ -663,10 +665,12 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.Zero));
 			}
 		}
+
 		public static void UseItem(Item item)
 		{
 			Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)item.Serial));
 		}
+
 		public static void UseItem(int itemserial)
 		{
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
@@ -680,7 +684,6 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 			else
 				Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
-
 		}
 
 		public static bool UseItemByID(int itemid, int color)
@@ -700,7 +703,7 @@ namespace RazorEnhanced
 				if (!found.IsInBank && found.RootContainer == World.Player)
 				{
 					RazorEnhanced.Items.UseItem(found);
-                    return true;
+					return true;
 				}
 			}
 
@@ -724,62 +727,61 @@ namespace RazorEnhanced
 			ClientCommunication.SendToServer(new SingleClick(item));
 		}
 
-        // Props
-        public static int GetPropValue(int serial, string name)
-        {
-            Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
-            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+		// Props
+		public static int GetPropValue(int serial, string name)
+		{
+			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
 
-            foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-            {
-                if (prop.ToString().ToLower().Contains(name.ToLower()))
-                {
-                    if (prop.Args == null)  // Props esiste ma non ha valore
-                        return 1;
+			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+			{
+				if (prop.ToString().ToLower().Contains(name.ToLower()))
+				{
+					if (prop.Args == null)  // Props esiste ma non ha valore
+						return 1;
 
-                    string propstring = prop.Args;
-                    bool subprops = false;
-                    int i = 0;
+					string propstring = prop.Args;
+					bool subprops = false;
+					int i = 0;
 
-                    if (propstring.Length > 7)
-                        subprops = true;
-                    
+					if (propstring.Length > 7)
+						subprops = true;
 
-                    try  // Etraggo il valore
-                    {
-                        string number = string.Empty;
-                        foreach (char str in propstring)
-                        {
-                            if (subprops)
-                            {
-                                if (i > 7)
-                                    if (char.IsDigit(str))
-                                        number += str.ToString();
-                            }
-                            else
-                            {
-                                if (char.IsDigit(str))
-                                    number += str.ToString();
-                            }
+					try  // Etraggo il valore
+					{
+						string number = string.Empty;
+						foreach (char str in propstring)
+						{
+							if (subprops)
+							{
+								if (i > 7)
+									if (char.IsDigit(str))
+										number += str.ToString();
+							}
+							else
+							{
+								if (char.IsDigit(str))
+									number += str.ToString();
+							}
 
-                            i++;
-                        }
-                        return (Convert.ToInt32(number));
-                    }
-                    catch
-                    {
-                        return 1;  // errore di conversione ma esiste
-                    }
-                }
-            }
-            return 0;  // Non esiste
-        }
+							i++;
+						}
+						return (Convert.ToInt32(number));
+					}
+					catch
+					{
+						return 1;  // errore di conversione ma esiste
+					}
+				}
+			}
+			return 0;  // Non esiste
+		}
 
-        public static int GetPropValue(Item item, string name)
-        {
-            return GetPropValue(item.Serial, name);
-        }
-        
+		public static int GetPropValue(Item item, string name)
+		{
+			return GetPropValue(item.Serial, name);
+		}
+
 		// Message
 
 		public static void Message(Item item, int hue, string message)

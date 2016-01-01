@@ -9,7 +9,6 @@ using System.Windows.Forms.Design;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Design
 {
 	// Provides additional design-time support for the Scintilla control
@@ -20,7 +19,6 @@ namespace ScintillaNET.Design
 		private Scintilla _scintilla;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -33,14 +31,12 @@ namespace ScintillaNET.Design
 			return attrs.ToArray();
 		}
 
-
 		public override void Initialize(IComponent component)
 		{
 			_scintilla = (Scintilla)component;
 
 			base.Initialize(component);
 		}
-
 
 		public override void InitializeNewComponent(IDictionary defaultValues)
 		{
@@ -50,7 +46,6 @@ namespace ScintillaNET.Design
 			// name instead of the default value... which is what we'll do here.
 			_scintilla.Text = null;
 		}
-
 
 		protected override void PostFilterProperties(IDictionary properties)
 		{
@@ -71,7 +66,6 @@ namespace ScintillaNET.Design
 
 			base.PostFilterProperties(properties);
 		}
-
 
 		private static void Reset(object value)
 		{
@@ -104,12 +98,10 @@ namespace ScintillaNET.Design
 			}
 		}
 
-
 		private void ResetScrolling()
 		{
 			Reset(Scrolling);
 		}
-
 
 		private static bool ShouldSerialize(object value)
 		{
@@ -148,14 +140,12 @@ namespace ScintillaNET.Design
 			return false;
 		}
 
-
 		private bool ShouldSerializeScrolling()
 		{
 			return ShouldSerialize(Scrolling);
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 

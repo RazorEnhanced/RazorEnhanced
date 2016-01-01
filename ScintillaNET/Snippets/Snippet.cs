@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class Snippet : IComparable<Snippet>
@@ -15,7 +14,6 @@ namespace ScintillaNET
 		internal const char RealDelimeter = '\x1';
 
 		#endregion Constants
-
 
 		#region Fields
 
@@ -29,7 +27,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public int CompareTo(Snippet other)
@@ -38,7 +35,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -55,7 +51,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public char Delimeter
 		{
 			get
@@ -67,7 +62,6 @@ namespace ScintillaNET
 				_delimeter = value;
 			}
 		}
-
 
 		public bool IsSurroundsWith
 		{
@@ -81,7 +75,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public List<string> Languages
 		{
 			get
@@ -94,7 +87,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		internal string RealCode
 		{
 			get
@@ -106,7 +98,6 @@ namespace ScintillaNET
 				_realCode = value;
 			}
 		}
-
 
 		public string Shortcut
 		{
@@ -122,13 +113,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		public Snippet(string shortcut, string code) : this(shortcut, code, '$', false)
 		{
 		}
-
 
 		public Snippet(string shortcut, string code, char delimeter, bool isSurroundsWith)
 		{

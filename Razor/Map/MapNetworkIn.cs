@@ -10,6 +10,7 @@ namespace Assistant.Map
 		internal class UserData
 		{
 			private string m_Name;
+
 			public string Name
 			{
 				get { return m_Name; }
@@ -17,6 +18,7 @@ namespace Assistant.Map
 			}
 
 			private short m_X;
+
 			public short X
 			{
 				get { return m_X; }
@@ -24,6 +26,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Y;
+
 			public short Y
 			{
 				get { return m_Y; }
@@ -31,6 +34,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Facet;
+
 			public short Facet
 			{
 				get { return m_Facet; }
@@ -38,6 +42,7 @@ namespace Assistant.Map
 			}
 
 			private short m_DeathPointX;
+
 			public short DeathPointX
 			{
 				get { return m_DeathPointX; }
@@ -45,6 +50,7 @@ namespace Assistant.Map
 			}
 
 			private short m_DeathPointY;
+
 			public short DeathPointY
 			{
 				get { return m_DeathPointY; }
@@ -52,6 +58,7 @@ namespace Assistant.Map
 			}
 
 			private short m_DeathPointFacet;
+
 			public short DeathPointFacet
 			{
 				get { return m_DeathPointFacet; }
@@ -59,6 +66,7 @@ namespace Assistant.Map
 			}
 
 			private short m_PanicPointX;
+
 			public short PanicPointX
 			{
 				get { return m_PanicPointX; }
@@ -66,6 +74,7 @@ namespace Assistant.Map
 			}
 
 			private short m_PanicPointY;
+
 			public short PanicPointY
 			{
 				get { return m_PanicPointY; }
@@ -73,6 +82,7 @@ namespace Assistant.Map
 			}
 
 			private short m_PanicPointFacet;
+
 			public short PanicPointFacet
 			{
 				get { return m_PanicPointFacet; }
@@ -80,6 +90,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Hits;
+
 			public short Hits
 			{
 				get { return m_Hits; }
@@ -87,6 +98,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Hitsmax;
+
 			public short HitsMax
 			{
 				get { return m_Hitsmax; }
@@ -94,6 +106,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Stamina;
+
 			public short Stamina
 			{
 				get { return m_Stamina; }
@@ -101,6 +114,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Staminamax;
+
 			public short StaminaMax
 			{
 				get { return m_Staminamax; }
@@ -108,6 +122,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Mana;
+
 			public short Mana
 			{
 				get { return m_Mana; }
@@ -115,6 +130,7 @@ namespace Assistant.Map
 			}
 
 			private short m_ManaMax;
+
 			public short ManaMax
 			{
 				get { return m_ManaMax; }
@@ -122,6 +138,7 @@ namespace Assistant.Map
 			}
 
 			private short m_Flags;
+
 			public short Flag
 			{
 				get { return m_Flags; }
@@ -129,6 +146,7 @@ namespace Assistant.Map
 			}
 
 			private Color m_Color;
+
 			public Color Color
 			{
 				get { return m_Color; }
@@ -352,7 +370,6 @@ namespace Assistant.Map
 								MapNetwork.AddLog(username + " ha inviato il suo colore");
 								break;
 							}
-
 					}
 				}
 				catch (Exception ex)
@@ -441,8 +458,8 @@ namespace Assistant.Map
 			if (username != RazorEnhanced.Settings.General.ReadString("MapLinkUsernameTextBox") && username != MapNetwork.PointN.Death && username != MapNetwork.PointN.Marker)
 			{
 				// if (Finder.finderControlstatic IsNot Nothing Then Finder.finderControlstatic.Invoke(New Action(Sub() Finder.ListViewPlayers.FindItemWithText(username).SubItems(7).Text = obj.Color.ToString))
-	     	}
-        }
+			}
+		}
 
 		private static void UpdateAddUser(string username)
 		{

@@ -2,7 +2,6 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedFriendAddList : Form

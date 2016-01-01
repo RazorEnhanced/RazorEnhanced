@@ -17,7 +17,6 @@ namespace RazorEnhanced.UI
 
 		private void label1_Click(object sender, EventArgs e)
 		{
-
 		}
 
 		private void EnhancedAutolootManualAdd_Load(object sender, EventArgs e)
@@ -68,7 +67,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					color = Convert.ToInt32(tColor.Text, 16);
 				}
 				catch
@@ -87,7 +85,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.AutoLoot.AddItemToList(tName.Text, graphics, color);
 				this.Close();
 			}
-
 		}
 	}
 }

@@ -10,10 +10,12 @@ namespace Assistant
 	internal class MessageDialog : System.Windows.Forms.Form
 	{
 		private System.Windows.Forms.Button okay;
+
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
 		private System.ComponentModel.Container components = null;
+
 		private string m_Title;
 		private string m_Message;
 		private System.Windows.Forms.TextBox message;
@@ -60,6 +62,7 @@ namespace Assistant
 		}
 
 		#region Windows Form Designer generated code
+
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -69,9 +72,9 @@ namespace Assistant
 			this.message = new System.Windows.Forms.TextBox();
 			this.okay = new RazorButton();
 			this.SuspendLayout();
-			// 
+			//
 			// message
-			// 
+			//
 			this.message.Location = new System.Drawing.Point(10, 9);
 			this.message.Multiline = true;
 			this.message.Name = "message";
@@ -79,9 +82,9 @@ namespace Assistant
 			this.message.ScrollBars = System.Windows.Forms.ScrollBars.Both;
 			this.message.Size = new System.Drawing.Size(662, 369);
 			this.message.TabIndex = 0;
-			// 
+			//
 			// okay
-			// 
+			//
 			this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.okay.Location = new System.Drawing.Point(10, 388);
 			this.okay.Name = "okay";
@@ -89,9 +92,9 @@ namespace Assistant
 			this.okay.TabIndex = 1;
 			this.okay.Text = "&Okay";
 			this.okay.Click += new System.EventHandler(this.okay_Click);
-			// 
+			//
 			// MessageDialog
-			// 
+			//
 			this.AcceptButton = this.okay;
 			this.AutoScaleBaseSize = new System.Drawing.Size(6, 15);
 			this.ClientSize = new System.Drawing.Size(684, 424);
@@ -106,9 +109,9 @@ namespace Assistant
 			this.Load += new System.EventHandler(this.MessageDialog_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
-
 		}
-		#endregion
+
+		#endregion Windows Form Designer generated code
 
 		private void MessageDialog_Load(object sender, System.EventArgs e)
 		{

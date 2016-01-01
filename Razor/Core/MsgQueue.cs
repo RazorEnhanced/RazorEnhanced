@@ -18,6 +18,7 @@ namespace Assistant
 
 			//ser, body, type, hue, font, lang, name
 			internal Serial Serial;
+
 			internal ushort Body, Hue, Font;
 			internal MessageType Type;
 			internal string Lang, Name;
@@ -94,7 +95,5 @@ namespace Assistant
 				return false;
 			}
 		}
-
-
 	}
 }

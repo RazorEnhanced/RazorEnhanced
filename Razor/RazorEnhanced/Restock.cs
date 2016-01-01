@@ -11,7 +11,6 @@ namespace RazorEnhanced
 		[Serializable]
 		public class RestockItem
 		{
-
 			private string m_Name;
 			public string Name { get { return m_Name; } }
 
@@ -63,6 +62,7 @@ namespace RazorEnhanced
 				m_Selected = selected;
 			}
 		}
+
 		internal static string RestockListName
 		{
 			get
@@ -90,6 +90,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.RestockDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockDragDelay.Text = value.ToString()));
 			}
 		}
+
 		internal static int RestockSource
 		{
 			get
@@ -133,6 +134,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.RestockDestinationLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockDestinationLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
+
 		internal static void AddLog(string addlog)
 		{
 			if (Assistant.Engine.Running)
@@ -197,7 +199,6 @@ namespace RazorEnhanced
 							listitem.SubItems.Add("All");
 						else
 							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-
 
 						listitem.SubItems.Add(item.AmountLimit.ToString());
 
@@ -379,7 +380,6 @@ namespace RazorEnhanced
 				m_RestockThread = new Thread(Restock.Engine);
 				m_RestockThread.Start();
 			}
-
 		}
 
 		internal static void ForceStop()
@@ -396,15 +396,15 @@ namespace RazorEnhanced
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
 				Assistant.Engine.MainWindow.RestockStartExec();
-            else
+			else
 				Misc.SendMessage("Script Error: Restock.FStart: Restock already running");
 		}
 
 		public static void FStop()
 		{
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
-                Assistant.Engine.MainWindow.RestockStopExec();
-            else
+				Assistant.Engine.MainWindow.RestockStopExec();
+			else
 				Misc.SendMessage("Script Error: Restock.FStart: Restock not running");
 		}
 
@@ -415,6 +415,7 @@ namespace RazorEnhanced
 			else
 				return false;
 		}
+
 		public static void ChangeList(string nomelista)
 		{
 			bool ListaOK = false;

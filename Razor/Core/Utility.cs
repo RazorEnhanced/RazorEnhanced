@@ -256,6 +256,7 @@ namespace Assistant
 		}
 
 		private static char[] pathChars = new char[] { '\\', '/' };
+
 		internal static string PathDisplayStr(string path, int maxLen)
 		{
 			if (path == null || path.Length <= maxLen || path.Length < 5)

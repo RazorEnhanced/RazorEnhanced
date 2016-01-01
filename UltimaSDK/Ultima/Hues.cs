@@ -257,6 +257,7 @@ namespace Ultima
 
 		private static byte[] m_StringBuffer = new byte[20];
 		private static byte[] m_Buffer = new byte[88];
+
 		public Hue(int index, BinaryReader bin)
 		{
 			Index = index;
@@ -407,13 +408,16 @@ namespace Ultima
 			}
 		}
 	}
+
 	[StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 1)]
 	public unsafe struct HueDataMul
 	{
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
 		public ushort[] colors;
+
 		public ushort tablestart;
 		public ushort tableend;
+
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 20)]
 		public byte[] name;
 	}

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ScintillaNET>
 	<Language Name="pgsql">
-		<Lexer LexerName="sql" LineCommentPrefix="--" StreamCommentPrefix="/* " StreamCommentSuffix=" /*" >
+		<Lexer LexerName="sql" LineCommentPrefix="--" StreamCommentPrefix="/* " StreamCommentSuffix=" /*">
 			<Properties>
 				<Property Name="fold.comment" Value="1" />
 			</Properties>
@@ -65,7 +65,6 @@
 			</Keywords>
 
 			<Keywords List="2">
-
 			</Keywords>
 
 			<!--Keyword list 3 Postgresql Exceptions (Style SQLPLUS) -->
@@ -131,20 +130,17 @@
 				current_timestamp localtime localtimestamp session_user user
 			</Keywords>
 
-
 			<!--Keyword list 6  (Style USER3)-->
 			<Keywords List="6">
-
 			</Keywords>
 
 			<!--Keyword list 7  (Style USER4)-->
 			<Keywords List="7">
-
 			</Keywords>
 		</Lexer>
 		<Styles>
 
-			<Style Name="DOCUMENT_DEFAULT"/>
+			<Style Name="DOCUMENT_DEFAULT" />
 
 			<!--Keyword list 0 PostgreSQL Keywords  -->
 			<Style Name="WORD"	ForeColor="black" bold="true" />
@@ -157,7 +153,7 @@
 
 			<!--Keyword list 4 Postgresql System tables  -->
 
-			<Style Name="USER1"	ForeColor="#FFA36B" bold="true"/>
+			<Style Name="USER1"	ForeColor="#FFA36B" bold="true" />
 
 			<!--Keyword list 5  PostgreSQL Functions-->
 			<Style Name="USER2"	ForeColor="purple" bold ="true" />
@@ -176,8 +172,6 @@
 			<Style Name="COMMENTLINE"	ForeColor="green" bold="true" italic="true" />
 			<Style Name="COMMENTDOC"	ForeColor="green" bold="true" italic="true" />
 			<Style Name="COMMENT"	ForeColor="green" bold="true" italic="true" />
-
 		</Styles>
 	</Language>
 </ScintillaNET>
-

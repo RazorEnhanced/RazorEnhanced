@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public partial class SnippetChooser : UserControl
@@ -17,7 +16,6 @@ namespace ScintillaNET
 		private string _snippetList = string.Empty;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -30,14 +28,12 @@ namespace ScintillaNET
 			txtSnippet.AutoComplete.Show(0, _snippetList);
 		}
 
-
 		protected override void OnLeave(EventArgs e)
 		{
 			base.OnLostFocus(e);
 
 			Hide();
 		}
-
 
 		protected override void OnVisibleChanged(EventArgs e)
 		{
@@ -55,7 +51,6 @@ namespace ScintillaNET
 				Scintilla.Focus();
 		}
 
-
 		public void SetPosition()
 		{
 			if (!Visible)
@@ -67,7 +62,6 @@ namespace ScintillaNET
 
 			this.Location = new Point(x, y);
 		}
-
 
 		private void SnippetChooser_Load(object sender, EventArgs e)
 		{
@@ -88,9 +82,7 @@ namespace ScintillaNET
 
 			txtSnippet.Commands.AddBinding(Keys.Down, Keys.None, BindableCommand.LineDown);
 			txtSnippet.Commands.AddBinding(Keys.Up, Keys.None, BindableCommand.LineUp);
-
 		}
-
 
 		private void txtSnippet_AutoCompleteAccepted(object sender, AutoCompleteAcceptedEventArgs e)
 		{
@@ -98,7 +90,6 @@ namespace ScintillaNET
 			Hide();
 			Scintilla.Snippets.InsertSnippet(shortcut);
 		}
-
 
 		private void txtSnippet_DocumentChange(object sender, NativeScintillaEventArgs e)
 		{
@@ -113,7 +104,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private void txtSnippet_KeyDown(object sender, KeyEventArgs e)
 		{
 			//	The built in Scintilla Command Bindings for left and right
@@ -125,14 +115,17 @@ namespace ScintillaNET
 				case Keys.Right:
 					txtSnippet.Caret.Goto(txtSnippet.Caret.Position + 1);
 					break;
+
 				case Keys.Left:
 					txtSnippet.Caret.Goto(txtSnippet.Caret.Position - 1);
 					break;
+
 				case Keys.Enter:
 				case Keys.Tab:
 					if (txtSnippet.AutoComplete.SelectedIndex >= 0)
 						txtSnippet.AutoComplete.Accept();
 					break;
+
 				case Keys.Escape:
 					Hide();
 					break;
@@ -140,7 +133,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -156,7 +148,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public string SnippetList
 		{
 			get
@@ -170,7 +161,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Assistant
 {
@@ -34,9 +33,9 @@ namespace Assistant
 			PacketHandler.RegisterClientToServerViewer(0xA0, new PacketViewerCallback(PlayServer));
 			PacketHandler.RegisterClientToServerViewer(0xB1, new PacketViewerCallback(ClientGumpResponse));
 			PacketHandler.RegisterClientToServerFilter(0xBF, new PacketFilterCallback(ExtendedClientCommand));
-            //PacketHandler.RegisterClientToServerViewer( 0xD6, new PacketViewerCallback( BatchQueryProperties ) );
-            PacketHandler.RegisterClientToServerViewer(0xC2, new PacketViewerCallback(UnicodePromptSend));
-            PacketHandler.RegisterClientToServerViewer(0xD7, new PacketViewerCallback(ClientEncodedPacket));
+			//PacketHandler.RegisterClientToServerViewer( 0xD6, new PacketViewerCallback( BatchQueryProperties ) );
+			PacketHandler.RegisterClientToServerViewer(0xC2, new PacketViewerCallback(UnicodePromptSend));
+			PacketHandler.RegisterClientToServerViewer(0xD7, new PacketViewerCallback(ClientEncodedPacket));
 			PacketHandler.RegisterClientToServerViewer(0xF8, new PacketViewerCallback(CreateCharacter));
 
 			//Server -> Client handlers
@@ -67,8 +66,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x7C, new PacketViewerCallback(SendMenu));
 			PacketHandler.RegisterServerToClientFilter(0x8C, new PacketFilterCallback(ServerAddress));
 			PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
-            PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
-            PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
+			PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
+			PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA3, new PacketViewerCallback(StamUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA8, new PacketViewerCallback(ServerList));
@@ -80,8 +79,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0xBC, new PacketViewerCallback(ChangeSeason));
 			PacketHandler.RegisterServerToClientViewer(0xBF, new PacketViewerCallback(ExtendedPacket));
 			PacketHandler.RegisterServerToClientFilter(0xC1, new PacketFilterCallback(OnLocalizedMessage));
-            PacketHandler.RegisterServerToClientViewer(0xC2, new PacketViewerCallback(UnicodePromptRecevied));
-            PacketHandler.RegisterServerToClientFilter(0xC8, new PacketFilterCallback(SetUpdateRange));
+			PacketHandler.RegisterServerToClientViewer(0xC2, new PacketViewerCallback(UnicodePromptRecevied));
+			PacketHandler.RegisterServerToClientFilter(0xC8, new PacketFilterCallback(SetUpdateRange));
 			PacketHandler.RegisterServerToClientFilter(0xCC, new PacketFilterCallback(OnLocalizedMessageAffix));
 			PacketHandler.RegisterServerToClientViewer(0xD6, new PacketViewerCallback(EncodedPacket));//0xD6 "encoded" packets
 			PacketHandler.RegisterServerToClientViewer(0xD8, new PacketViewerCallback(CustomHouseInfo));
@@ -95,7 +94,6 @@ namespace Assistant
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
-
 		}
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
@@ -190,11 +188,11 @@ namespace Assistant
 			if (ser.IsItem)
 			{
 				Item item = World.FindItem(ser);
-                if (item != null)
-                {
-                    item.Updated = false;
-                    World.Player.LastObject = ser;
-                }
+				if (item != null)
+				{
+					item.Updated = false;
+					World.Player.LastObject = ser;
+				}
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
@@ -347,7 +345,6 @@ namespace Assistant
 			World.OrigPlayerName = p.ReadStringSafe(30);
 
 			PlayCharTime = DateTime.Now;
-
 		}
 
 		private static void PlayCharacter(PacketReader p, PacketHandlerEventArgs args)
@@ -1033,7 +1030,6 @@ namespace Assistant
 							break;
 						}
 					}
-
 				}
 
 				m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
@@ -1067,54 +1063,54 @@ namespace Assistant
 			}
 		}
 
-        private static void AsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
-        {
-            //int serial = (int)p.ReadUInt32();
-            //int id = (int)p.ReadUInt32();
-            //int type = (int)p.ReadUInt32();
-            //string message = p.ReadString();
+		private static void AsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
+		{
+			//int serial = (int)p.ReadUInt32();
+			//int id = (int)p.ReadUInt32();
+			//int type = (int)p.ReadUInt32();
+			//string message = p.ReadString();
 
-            if (World.Player != null)
-                World.Player.HasPrompt = false;
-        }
+			if (World.Player != null)
+				World.Player.HasPrompt = false;
+		}
 
-        private static void UnicodePromptSend(PacketReader p, PacketHandlerEventArgs args)
-        {
-            uint serial = p.ReadUInt32();
-            uint id = p.ReadUInt32();
-            uint type = p.ReadUInt32();
+		private static void UnicodePromptSend(PacketReader p, PacketHandlerEventArgs args)
+		{
+			uint serial = p.ReadUInt32();
+			uint id = p.ReadUInt32();
+			uint type = p.ReadUInt32();
 
-            if (World.Player != null)
-            {
-                World.Player.HasPrompt = false;
-                World.Player.PromptSenderSerial = serial;
-                World.Player.PromptID = id;
-                World.Player.PromptType = type;
-            }
+			if (World.Player != null)
+			{
+				World.Player.HasPrompt = false;
+				World.Player.PromptSenderSerial = serial;
+				World.Player.PromptID = id;
+				World.Player.PromptType = type;
+			}
 
-            //string lang = p.ReadStringSafe(4);
-            //string message = p.ReadUnicodeStringSafe();          
-        }
+			//string lang = p.ReadStringSafe(4);
+			//string message = p.ReadUnicodeStringSafe();
+		}
 
-        private static void UnicodePromptRecevied(PacketReader p, PacketHandlerEventArgs args)
-        {
-            uint serial = p.ReadUInt32();
-            uint id = p.ReadUInt32();
-            uint type = p.ReadUInt32();
+		private static void UnicodePromptRecevied(PacketReader p, PacketHandlerEventArgs args)
+		{
+			uint serial = p.ReadUInt32();
+			uint id = p.ReadUInt32();
+			uint type = p.ReadUInt32();
 
-            if (World.Player != null)
-            {
-                World.Player.HasPrompt = false;
-                World.Player.PromptSenderSerial = serial;
-                World.Player.PromptID = id;
-                World.Player.PromptType = type;
-            }
+			if (World.Player != null)
+			{
+				World.Player.HasPrompt = false;
+				World.Player.PromptSenderSerial = serial;
+				World.Player.PromptID = id;
+				World.Player.PromptType = type;
+			}
 
-            //string lang = p.ReadStringSafe(4);
-            //string message = p.ReadUnicodeStringSafe();
-        }
+			//string lang = p.ReadStringSafe(4);
+			//string message = p.ReadUnicodeStringSafe();
+		}
 
-        private static readonly int[] HealthHues = new int[] { 428, 333, 37, 44, 49, 53, 158, 263, 368, 473, 578 };
+		private static readonly int[] HealthHues = new int[] { 428, 333, 37, 44, 49, 53, 158, 263, 368, 473, 578 };
 
 		private static void HitsUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -1154,7 +1150,6 @@ namespace Assistant
 
 					ClientCommunication.PostHitsUpdate();
 				}
-
 
 				if (RazorEnhanced.Settings.General.ReadBool("ShowHealth"))
 				{
@@ -1333,9 +1328,6 @@ namespace Assistant
 					if (Map.MapNetwork.Connected)
 						Map.MapNetworkOut.SendFlagQueue.Enqueue(0);
 			}
-
-
-
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1383,7 +1375,6 @@ namespace Assistant
 				player.Gold = p.ReadUInt32();
 				player.AR = p.ReadUInt16(); // ar / physical resist
 				player.Weight = p.ReadUInt16();
-
 
 				if (type >= 0x03)
 				{
@@ -1490,8 +1481,6 @@ namespace Assistant
 			m.Direction = (Direction)p.ReadByte();
 			m.Position = new Point3D(x, y, p.ReadSByte());
 			Item.UpdateContainers();
-
-
 		}
 
 		private static void MobileIncoming(Packet p, PacketHandlerEventArgs args)
@@ -1516,7 +1505,6 @@ namespace Assistant
 						break;
 					}
 				}
-
 			}
 
 			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
@@ -1704,7 +1692,6 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.ToolBarWindows != null)
 				RazorEnhanced.ToolBar.UpdateCount();
 
-
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(itemID & 0x7FFF);
 
@@ -1752,10 +1739,9 @@ namespace Assistant
 				{
 					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
 				}
-
 			}
 			Item.UpdateContainers();
-			// Filtro muri 
+			// Filtro muri
 			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
 			{
 				if (item.ItemID == 0x0080)      // Wall of Stone
@@ -1912,11 +1898,10 @@ namespace Assistant
 				{
 					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
 				}
-
 			}
 
 			Item.UpdateContainers();
-			// Filtro muri 
+			// Filtro muri
 			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
 			{
 				if (item.ItemID == 0x0080)      // Wall of Stone
@@ -2078,7 +2063,6 @@ namespace Assistant
 			else
 			{
 				HandleSpeech(p, args, serial, body, type, hue, font, "A", name, text);
-
 			}
 		}
 
@@ -2179,7 +2163,6 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-
 			Serial ser = p.ReadUInt32();
 			uint tid = p.ReadUInt32();
 			int bid = p.ReadInt32();
@@ -2260,56 +2243,56 @@ namespace Assistant
 						}
 						break;
 					}
-                case 0x10: // Equip Info
-                    {
-                        uint attrib = 0;
-                        if (World.Player != null)
-                        {
-                            uint serial = p.ReadUInt32();
-                            uint info = p.ReadUInt32();
-                            uint owner = p.ReadUInt32();
-                            if (owner == 0xFFFFFFFD)
-                            {
-                                ushort nameLengh = p.ReadUInt16();
-                                string ownername = p.ReadString(nameLengh);
-                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name));          // Journal buffer
-                                if (World.Player.Journal.Count > 100)
-                                    World.Player.Journal.Dequeue();
+				case 0x10: // Equip Info
+					{
+						uint attrib = 0;
+						if (World.Player != null)
+						{
+							uint serial = p.ReadUInt32();
+							uint info = p.ReadUInt32();
+							uint owner = p.ReadUInt32();
+							if (owner == 0xFFFFFFFD)
+							{
+								ushort nameLengh = p.ReadUInt16();
+								string ownername = p.ReadString(nameLengh);
+								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name));          // Journal buffer
+								if (World.Player.Journal.Count > 100)
+									World.Player.Journal.Dequeue();
 
-                                attrib = p.ReadUInt32();
-                            }
-                            else
-                                attrib = owner;
+								attrib = p.ReadUInt32();
+							}
+							else
+								attrib = owner;
 
-                            if (attrib != 0xFFFFFFFC)
-                            {
-                                while (attrib != 0xFFFFFFFF)
-                                {
-                                    try
-                                    {
-                                        ushort charge = p.ReadUInt16();
-                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name));          // Journal buffer
-                                        if (World.Player.Journal.Count > 100)
-                                            World.Player.Journal.Dequeue();
+							if (attrib != 0xFFFFFFFC)
+							{
+								while (attrib != 0xFFFFFFFF)
+								{
+									try
+									{
+										ushort charge = p.ReadUInt16();
+										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name));          // Journal buffer
+										if (World.Player.Journal.Count > 100)
+											World.Player.Journal.Dequeue();
 
-                                        World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name));          // Journal buffer
-                                        if (World.Player.Journal.Count > 100)
-                                            World.Player.Journal.Dequeue();
-                                        attrib = p.ReadUInt32();
-                                    }
-                                    catch { }
-                                }
-                            }
-                            else
-                            {
-                                World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name));          // Journal buffer
-                                if (World.Player.Journal.Count > 100)
-                                    World.Player.Journal.Dequeue();
-                            }
-                        }
-                        break;
-                    }
-                case 0x14: // context menu
+										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name));          // Journal buffer
+										if (World.Player.Journal.Count > 100)
+											World.Player.Journal.Dequeue();
+										attrib = p.ReadUInt32();
+									}
+									catch { }
+								}
+							}
+							else
+							{
+								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name));          // Journal buffer
+								if (World.Player.Journal.Count > 100)
+									World.Player.Journal.Dequeue();
+							}
+						}
+						break;
+					}
+				case 0x14: // context menu
 					{
 						p.ReadInt16(); // 0x01
 						UOEntity ent = null;
@@ -2534,7 +2517,6 @@ namespace Assistant
 						break;
 					}
 			}
-
 
 			if (Engine.MainWindow.MapWindow != null)
 				Engine.MainWindow.MapWindow.UpdateMap();
@@ -2778,6 +2760,7 @@ namespace Assistant
 							World.Player.Buffs.Add(buff);
 						}
 						break;
+
 					case 0x0: // remove
 						if (World.Player != null && World.Player.Buffs.Contains(buff))
 						{
@@ -2835,6 +2818,5 @@ namespace Assistant
 				args.Block = true;
 			}
 		}
-
 	}
 }

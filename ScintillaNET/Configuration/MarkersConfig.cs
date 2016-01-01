@@ -20,7 +20,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Fields
 
-
 		#region Properties
 
 		public int? Alpha
@@ -35,7 +34,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color BackColor
 		{
 			get
@@ -47,7 +45,6 @@ namespace ScintillaNET.Configuration
 				_backColor = value;
 			}
 		}
-
 
 		public Color ForeColor
 		{
@@ -61,7 +58,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Inherit
 		{
 			get
@@ -73,7 +69,6 @@ namespace ScintillaNET.Configuration
 				_inherit = value;
 			}
 		}
-
 
 		public string Name
 		{
@@ -87,7 +82,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Number
 		{
 			get
@@ -99,7 +93,6 @@ namespace ScintillaNET.Configuration
 				_number = value;
 			}
 		}
-
 
 		public MarkerSymbol? Symbol
 		{

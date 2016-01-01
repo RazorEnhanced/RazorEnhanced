@@ -38,6 +38,5 @@ namespace Assistant.Filters
 				ClientCommunication.SendToClient(new PersonalLightLevel(World.Player));
 			}
 		}
-
 	}
 }

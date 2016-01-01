@@ -9,7 +9,6 @@ using System.Xml;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class Configuration
@@ -107,7 +106,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Fields
 
-
 		#region Methods
 
 		private bool? getBool(string s)
@@ -122,6 +120,7 @@ namespace ScintillaNET.Configuration
 				case "y":
 				case "yes":
 					return true;
+
 				case "false":
 				case "f":
 				case "0":
@@ -133,7 +132,6 @@ namespace ScintillaNET.Configuration
 			return null;
 		}
 
-
 		private char? getChar(string s)
 		{
 			if (string.IsNullOrEmpty(s))
@@ -142,12 +140,10 @@ namespace ScintillaNET.Configuration
 			return s[0];
 		}
 
-
 		private Color getColor(string s)
 		{
 			return (Color)new ColorConverter().ConvertFromString(s);
 		}
-
 
 		private int? getInt(string s)
 		{
@@ -158,7 +154,6 @@ namespace ScintillaNET.Configuration
 			return null;
 		}
 
-
 		private string getString(XmlAttribute a)
 		{
 			if (a == null)
@@ -166,7 +161,6 @@ namespace ScintillaNET.Configuration
 
 			return a.Value;
 		}
-
 
 		private StyleConfig getStyleConfigFromElement(XmlReader reader)
 		{
@@ -181,48 +175,63 @@ namespace ScintillaNET.Configuration
 						case "name":
 							sc.Name = reader.Value;
 							break;
+
 						case "number":
 							sc.Number = getInt(reader.Value);
 							break;
+
 						case "backcolor":
 							sc.BackColor = getColor(reader.Value);
 							break;
+
 						case "bold":
 							sc.Bold = getBool(reader.Value);
 							break;
+
 						case "case":
 							sc.Case = (StyleCase)Enum.Parse(typeof(StyleCase), reader.Value, true);
 							break;
+
 						case "characterset":
 							sc.CharacterSet = (CharacterSet)Enum.Parse(typeof(CharacterSet), reader.Value, true);
 							break;
+
 						case "fontname":
 							sc.FontName = reader.Value;
 							break;
+
 						case "forecolor":
 							sc.ForeColor = getColor(reader.Value);
 							break;
+
 						case "ischangeable":
 							sc.IsChangeable = getBool(reader.Value);
 							break;
+
 						case "ishotspot":
 							sc.IsHotspot = getBool(reader.Value);
 							break;
+
 						case "isselectioneolfilled":
 							sc.IsSelectionEolFilled = getBool(reader.Value);
 							break;
+
 						case "isvisible":
 							sc.IsVisible = getBool(reader.Value);
 							break;
+
 						case "italic":
 							sc.Italic = getBool(reader.Value);
 							break;
+
 						case "size":
 							sc.Size = getInt(reader.Value);
 							break;
+
 						case "underline":
 							sc.Underline = getBool(reader.Value);
 							break;
+
 						case "inherit":
 							sc.Inherit = getBool(reader.Value);
 							break;
@@ -234,7 +243,6 @@ namespace ScintillaNET.Configuration
 			return sc;
 		}
 
-
 		public void Load(TextReader txtReader)
 		{
 			XmlDocument configDocument = new XmlDocument();
@@ -243,11 +251,9 @@ namespace ScintillaNET.Configuration
 			Load(configDocument);
 		}
 
-
 		public void Load(XmlReader reader)
 		{
 			reader.ReadStartElement();
-
 
 			while (!reader.EOF)
 			{
@@ -271,13 +277,11 @@ namespace ScintillaNET.Configuration
 					continue;
 				}
 
-
 				reader.Read();
 			}
 
 			reader.Close();
 		}
-
 
 		public void Load(XmlDocument configDocument)
 		{
@@ -306,7 +310,6 @@ namespace ScintillaNET.Configuration
 				{
 					_autoComplete_ListInherit = getBool(listNode.GetAttribute("Inherit"));
 					_autoComplete_List = new Regex("\\s+").Replace(listNode.InnerText, " ").Trim();
-
 				}
 			}
 			autoCNode = null;
@@ -442,7 +445,6 @@ namespace ScintillaNET.Configuration
 					_indentation_SmartIndentType = (SmartIndent)Enum.Parse(typeof(SmartIndent), indentationNode.GetAttribute("SmartIndentType"), true);
 				}
 				catch (ArgumentException) { }
-
 			}
 			indentationNode = null;
 
@@ -494,7 +496,6 @@ namespace ScintillaNET.Configuration
 
 				foreach (XmlElement el in lexerNode.SelectNodes("Keywords"))
 					_lexing_Keywords.Add(new KeyWordConfig(getInt(el.GetAttribute("List")).Value, el.InnerText.Trim(), getBool(el.GetAttribute("Inherit"))));
-
 			}
 			lexerNode = null;
 
@@ -625,7 +626,6 @@ namespace ScintillaNET.Configuration
 			}
 			scrollingNode = null;
 
-
 			XmlElement selectionNode = langNode.SelectSingleNode("Selection") as XmlElement;
 			if (selectionNode != null)
 			{
@@ -721,11 +721,11 @@ namespace ScintillaNET.Configuration
 				//	This is a nifty added on hack made specifically for HTML.
 				//	Normally the style config elements are quite managable as there
 				//	are typically less than 10 when you don't count common styles.
-				//	
-				//	However HTML uses 9 different Sub languages that combined make 
+				//
+				//	However HTML uses 9 different Sub languages that combined make
 				//	use of all 128 styles (well there are some small gaps). In order
 				//	to make this more managable I did added a SubLanguage element that
-				//	basically just prepends the Language's name and "." to the Style 
+				//	basically just prepends the Language's name and "." to the Style
 				//	Name definition.
 				//
 				//	So for example if you had the following
@@ -786,7 +786,6 @@ namespace ScintillaNET.Configuration
 			}
 			undoRedoNode = null;
 
-
 			XmlElement whitespaceNode = langNode.SelectSingleNode("Whitespace") as XmlElement;
 			if (whitespaceNode != null)
 			{
@@ -798,7 +797,6 @@ namespace ScintillaNET.Configuration
 
 			configDocument = null;
 		}
-
 
 		public void Load(string fileName, bool useXmlReader)
 		{
@@ -820,7 +818,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public void Load(Stream inStream, bool useXmlReader)
 		{
 			if (useXmlReader)
@@ -840,7 +837,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		private void ReadAutoComplete(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -854,36 +850,47 @@ namespace ScintillaNET.Configuration
 						case "autohide":
 							_autoComplete_AutoHide = getBool(reader.Value);
 							break;
+
 						case "automaticlengthentered":
 							_autoComplete_AutomaticLengthEntered = getBool(reader.Value);
 							break;
+
 						case "cancelatstart":
 							_autoComplete_cancelAtStart = getBool(reader.Value);
 							break;
+
 						case "droprestofword":
 							_autoComplete_DropRestOfWord = getBool(reader.Value);
 							break;
+
 						case "fillupcharacters":
 							_autoComplete_fillUpCharacters = reader.Value;
 							break;
+
 						case "imageseperator":
 							_autoComplete_ImageSeperator = getChar(reader.Value);
 							break;
+
 						case "iscasesensitive":
 							_autoComplete_IsCaseSensitive = getBool(reader.Value);
 							break;
+
 						case "listseperator":
 							_autoComplete_ListSeperator = getChar(reader.Value);
 							break;
+
 						case "maxheight":
 							_autoComplete_MaxHeight = getInt(reader.Value);
 							break;
+
 						case "maxwidth":
 							_autoComplete_MaxWidth = getInt(reader.Value);
 							break;
+
 						case "singlelineaccept":
 							_autoComplete_singleLineAccept = getBool(reader.Value);
 							break;
+
 						case "stopcharacters":
 							_autoComplete_StopCharacters = reader.Value;
 							break;
@@ -915,7 +922,6 @@ namespace ScintillaNET.Configuration
 			reader.Read();
 		}
 
-
 		private void ReadCallTip(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -928,9 +934,11 @@ namespace ScintillaNET.Configuration
 						case "backcolor":
 							_callTip_BackColor = getColor(reader.Value);
 							break;
+
 						case "forecolor":
 							_callTip_ForeColor = getColor(reader.Value);
 							break;
+
 						case "highlighttextcolor":
 							_callTip_HighlightTextColor = getColor(reader.Value);
 							break;
@@ -942,7 +950,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadCaret(XmlReader reader)
 		{
@@ -962,24 +969,31 @@ namespace ScintillaNET.Configuration
 							else
 								_caret_BlinkRate = getInt(blinkRate);
 							break;
+
 						case "color":
 							_caret_Color = getColor(reader.Value);
 							break;
+
 						case "currentlinebackgroundalpha":
 							_caret_CurrentLineBackgroundAlpha = getInt(reader.Value);
 							break;
+
 						case "currentlinebackgroundcolor":
 							_caret_CurrentLineBackgroundColor = getColor(reader.Value);
 							break;
+
 						case "highlightcurrentline":
 							_caret_HighlightCurrentLine = getBool(reader.Value);
 							break;
+
 						case "issticky":
 							_caret_IsSticky = getBool(reader.Value);
 							break;
+
 						case "style":
 							_caret_Style = (CaretStyle)Enum.Parse(typeof(CaretStyle), reader.Value, true);
 							break;
+
 						case "width":
 							_caret_Width = getInt(reader.Value);
 							break;
@@ -989,7 +1003,6 @@ namespace ScintillaNET.Configuration
 			}
 			reader.Skip();
 		}
-
 
 		private void ReadClipboard(XmlReader reader)
 		{
@@ -1010,7 +1023,6 @@ namespace ScintillaNET.Configuration
 			reader.Skip();
 		}
 
-
 		private void ReadCommands(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -1023,6 +1035,7 @@ namespace ScintillaNET.Configuration
 						case "Inherit":
 							_commands_KeyBindingList.Inherit = getBool(reader.Value);
 							break;
+
 						case "AllowDuplicateBindings":
 							_commands_KeyBindingList.AllowDuplicateBindings = getBool(reader.Value);
 							break;
@@ -1053,6 +1066,7 @@ namespace ScintillaNET.Configuration
 									case "key":
 										kb.KeyCode = Utilities.GetKeys(reader.Value);
 										break;
+
 									case "modifier":
 										if (reader.Value != string.Empty)
 										{
@@ -1060,9 +1074,11 @@ namespace ScintillaNET.Configuration
 												kb.Modifiers |= (Keys)Enum.Parse(typeof(Keys), modifier.Trim(), true);
 										}
 										break;
+
 									case "command":
 										cmd = (BindableCommand)Enum.Parse(typeof(BindableCommand), reader.Value, true);
 										break;
+
 									case "replacecurrent":
 										replaceCurrent = getBool(reader.Value);
 										break;
@@ -1079,7 +1095,6 @@ namespace ScintillaNET.Configuration
 			reader.Read();
 		}
 
-
 		private void ReadEndOfLine(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -1092,6 +1107,7 @@ namespace ScintillaNET.Configuration
 						case "isvisible":
 							_endOfLine_IsVisisble = getBool(reader.Value);
 							break;
+
 						case "mode":
 							_endOfLine_Mode = (EndOfLineMode)Enum.Parse(typeof(EndOfLineMode), reader.Value, true);
 							break;
@@ -1103,7 +1119,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadFolding(XmlReader reader)
 		{
@@ -1126,9 +1141,11 @@ namespace ScintillaNET.Configuration
 									_folding_Flags = ff;
 							}
 							break;
+
 						case "IsEnabled":
 							_folding_MarkerScheme = (FoldMarkerScheme)Enum.Parse(typeof(FoldMarkerScheme), reader.Value, true);
 							break;
+
 						case "usecompactfolding":
 							_folding_UseCompactFolding = getBool(reader.Value);
 							break;
@@ -1140,7 +1157,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadHotspot(XmlReader reader)
 		{
@@ -1154,18 +1170,23 @@ namespace ScintillaNET.Configuration
 						case "activebackcolor":
 							_hotspot_ActiveBackColor = getColor(reader.Value);
 							break;
+
 						case "activeforecolor":
 							_hotspot_ActiveForeColor = getColor(reader.Value);
 							break;
+
 						case "activeunderline":
 							_hotspot_ActiveUnderline = getBool(reader.Value);
 							break;
+
 						case "singleline":
 							_hotspot_SingleLine = getBool(reader.Value);
 							break;
+
 						case "useactivebackcolor":
 							_hotspot_UseActiveBackColor = getBool(reader.Value);
 							break;
+
 						case "useactiveforecolor":
 							_hotspot_UseActiveForeColor = getBool(reader.Value);
 							break;
@@ -1177,7 +1198,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadIndentation(XmlReader reader)
 		{
@@ -1191,21 +1211,27 @@ namespace ScintillaNET.Configuration
 						case "backspaceunindents":
 							_indentation_BackspaceUnindents = getBool(reader.Value);
 							break;
+
 						case "indentwidth":
 							_indentation_IndentWidth = getInt(reader.Value);
 							break;
+
 						case "showguides":
 							_indentation_ShowGuides = getBool(reader.Value);
 							break;
+
 						case "tabindents":
 							_indentation_TabIndents = getBool(reader.Value);
 							break;
+
 						case "tabwidth":
 							_indentation_TabWidth = getInt(reader.Value);
 							break;
+
 						case "usetabs":
 							_indentation_UseTabs = getBool(reader.Value);
 							break;
+
 						case "smartindenttype":
 							_indentation_SmartIndentType = (SmartIndent)Enum.Parse(typeof(SmartIndent), reader.Value, true);
 							break;
@@ -1217,7 +1243,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadIndicators(XmlReader reader)
 		{
@@ -1254,21 +1279,27 @@ namespace ScintillaNET.Configuration
 									case "index":
 										ic.Index = int.Parse(reader.Value);
 										break;
+
 									case "alpha":
 										ic.Alpha = byte.Parse(reader.Value);
 										break;
+
 									case "outlinealpha":
 										ic.OutlineAlpha = byte.Parse(reader.Value);
 										break;
+
 									case "color":
 										ic.Color = getColor(reader.Value);
 										break;
+
 									case "inherit":
 										ic.Inherit = getBool(reader.Value);
 										break;
+
 									case "drawmode":
 										ic.DrawMode = (IndicatorDrawMode)Enum.Parse(typeof(IndicatorDrawMode), reader.Value, true);
 										break;
+
 									case "style":
 										ic.Style = (IndicatorStyle)Enum.Parse(typeof(IndicatorStyle), reader.Value, true);
 										break;
@@ -1282,7 +1313,6 @@ namespace ScintillaNET.Configuration
 			}
 			reader.Read();
 		}
-
 
 		private void ReadLanguage(XmlReader reader)
 		{
@@ -1303,74 +1333,93 @@ namespace ScintillaNET.Configuration
 					case "autocomplete":
 						ReadAutoComplete(reader);
 						break;
+
 					case "calltip":
 						ReadCallTip(reader);
 						break;
+
 					case "caret":
 						ReadCaret(reader);
 						break;
+
 					case "clipboard":
 						ReadClipboard(reader);
 						break;
+
 					case "commands":
 						ReadCommands(reader);
 						break;
+
 					case "endofline":
 						ReadEndOfLine(reader);
 						break;
+
 					case "folding":
 						ReadFolding(reader);
 						break;
+
 					case "hotspot":
 						ReadHotspot(reader);
 						break;
+
 					case "indentation":
 						ReadIndentation(reader);
 						break;
+
 					case "indicators":
 						ReadIndicators(reader);
 						break;
+
 					case "lexer":
 						ReadLexer(reader);
 						break;
+
 					case "linewrapping":
 						ReadLineWrapping(reader);
 						break;
+
 					case "longlines":
 						ReadLongLines(reader);
 						break;
+
 					case "margins":
 						ReadMargins(reader);
 						break;
+
 					case "markers":
 						ReadMarkers(reader);
 						break;
+
 					case "scrolling":
 						ReadScrolling(reader);
 						break;
+
 					case "selection":
 						ReadSelection(reader);
 						break;
+
 					case "snippets":
 						ReadSnippets(reader);
 						break;
+
 					case "styles":
 						ReadStyles(reader);
 						break;
+
 					case "undoredo":
 						ReadUndoRedo(reader);
 						break;
+
 					case "whitespace":
 						ReadWhitespace(reader);
 						break;
+
 					default:
 						reader.Skip();
 						break;
 				}
-
 			}
 		}
-
 
 		private void ReadLexer(XmlReader reader)
 		{
@@ -1384,12 +1433,15 @@ namespace ScintillaNET.Configuration
 						case "lexername":
 							_lexing_Language = reader.Value;
 							break;
+
 						case "linecommentprefix":
 							_lexing_LineCommentPrefix = reader.Value;
 							break;
+
 						case "streamcommentprefix":
 							_lexing_StreamCommentPrefix = reader.Value;
 							break;
+
 						case "streamcommentsuffix":
 							_lexing_StreamCommentSuffix = reader.Value;
 							break;
@@ -1415,7 +1467,6 @@ namespace ScintillaNET.Configuration
 			reader.Read();
 		}
 
-
 		private void ReadLexerKeywords(XmlReader reader)
 		{
 			bool? inherit = null;
@@ -1432,6 +1483,7 @@ namespace ScintillaNET.Configuration
 						case "inherit":
 							inherit = getBool(reader.Value);
 							break;
+
 						case "list":
 							list = getInt(reader.Value);
 							break;
@@ -1448,7 +1500,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Read();
 		}
-
 
 		private void ReadLexerProperties(XmlReader reader)
 		{
@@ -1480,6 +1531,7 @@ namespace ScintillaNET.Configuration
 									case "name":
 										name = reader.Value;
 										break;
+
 									case "value":
 										value = reader.Value;
 										break;
@@ -1495,7 +1547,6 @@ namespace ScintillaNET.Configuration
 			reader.Read();
 		}
 
-
 		private void ReadLineWrapping(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -1508,12 +1559,15 @@ namespace ScintillaNET.Configuration
 						case "mode":
 							_lineWrapping_Mode = (LineWrappingMode)Enum.Parse(typeof(LineWrappingMode), reader.Value, true);
 							break;
+
 						case "indentsize":
 							_lineWrapping_IndentSize = getInt(reader.Value);
 							break;
+
 						case "indentmode":
 							_lineWrapping_IndentMode = (LineWrappingIndentMode)Enum.Parse(typeof(LineWrappingIndentMode), reader.Value, true);
 							break;
+
 						case "visualflags":
 							string flags = reader.Value.Trim();
 							if (flags != string.Empty)
@@ -1526,6 +1580,7 @@ namespace ScintillaNET.Configuration
 									_lineWrapping_VisualFlags = wvf;
 							}
 							break;
+
 						case "visualflagslocations":
 							_lineWrapping_VisualFlagsLocations = (LineWrappingVisualFlagsLocations)Enum.Parse(typeof(LineWrappingVisualFlagsLocations), reader.Value, true);
 							break;
@@ -1536,7 +1591,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadLongLines(XmlReader reader)
 		{
@@ -1550,9 +1604,11 @@ namespace ScintillaNET.Configuration
 						case "edgecolor":
 							_longLines_EdgeColor = getColor(reader.Value);
 							break;
+
 						case "edgecolumn":
 							_longLines_EdgeColumn = getInt(reader.Value);
 							break;
+
 						case "edgemode":
 							_longLines_EdgeMode = (EdgeMode)Enum.Parse(typeof(EdgeMode), reader.Value, true);
 							break;
@@ -1562,7 +1618,6 @@ namespace ScintillaNET.Configuration
 			}
 			reader.Skip();
 		}
-
 
 		private void ReadMargins(XmlReader reader)
 		{
@@ -1576,15 +1631,19 @@ namespace ScintillaNET.Configuration
 						case "foldmargincolor":
 							_margin_List.FoldMarginColor = getColor(reader.Value);
 							break;
+
 						case "foldmarginhighlightcolor":
 							_margin_List.FoldMarginHighlightColor = getColor(reader.Value);
 							break;
+
 						case "left":
 							_margin_List.Left = getInt(reader.Value);
 							break;
+
 						case "right":
 							_margin_List.Right = getInt(reader.Value);
 							break;
+
 						case "inherit":
 							_margin_List.Inherit = getBool(reader.Value);
 							break;
@@ -1592,7 +1651,6 @@ namespace ScintillaNET.Configuration
 				}
 				reader.MoveToElement();
 			}
-
 
 			if (!reader.IsEmptyElement)
 			{
@@ -1612,24 +1670,31 @@ namespace ScintillaNET.Configuration
 									case "number":
 										mc.Number = int.Parse(reader.Value);
 										break;
+
 									case "inherit":
 										mc.Inherit = getBool(reader.Value);
 										break;
+
 									case "autotogglemarkernumber":
 										mc.AutoToggleMarkerNumber = getInt(reader.Value);
 										break;
+
 									case "isclickable":
 										mc.IsClickable = getBool(reader.Value);
 										break;
+
 									case "isfoldmargin":
 										mc.IsFoldMargin = getBool(reader.Value);
 										break;
+
 									case "ismarkermargin":
 										mc.IsMarkerMargin = getBool(reader.Value);
 										break;
+
 									case "type":
 										mc.Type = (MarginType)Enum.Parse(typeof(MarginType), reader.Value, true);
 										break;
+
 									case "width":
 										mc.Width = getInt(reader.Value);
 										break;
@@ -1644,7 +1709,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Read();
 		}
-
 
 		private void ReadMarkers(XmlReader reader)
 		{
@@ -1675,21 +1739,27 @@ namespace ScintillaNET.Configuration
 									case "alpha":
 										mc.Alpha = getInt(reader.Value);
 										break;
+
 									case "backcolor":
 										mc.BackColor = getColor(reader.Value);
 										break;
+
 									case "forecolor":
 										mc.ForeColor = getColor(reader.Value);
 										break;
+
 									case "name":
 										mc.Name = reader.Value;
 										break;
+
 									case "number":
 										mc.Number = getInt(reader.Value);
 										break;
+
 									case "inherit":
 										mc.Inherit = getBool(reader.Value);
 										break;
+
 									case "symbol":
 										mc.Symbol = (MarkerSymbol)Enum.Parse(typeof(MarkerSymbol), reader.Value, true);
 										break;
@@ -1705,7 +1775,6 @@ namespace ScintillaNET.Configuration
 			reader.Read();
 		}
 
-
 		private void ReadScrolling(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -1718,12 +1787,15 @@ namespace ScintillaNET.Configuration
 						case "scrollpastend":
 							_scrolling_ScrollPastEnd = getBool(reader.Value);
 							break;
+
 						case "horizontalscrollwidth":
 							_scrolling_HorizontalScrollWidth = getInt(reader.Value);
 							break;
+
 						case "horizontalscrolltracking":
 							_scrolling_HorizontalScrollTracking = getBool(reader.Value);
 							break;
+
 						case "scrollbars":
 							string flags = reader.Value.Trim();
 							if (flags != string.Empty)
@@ -1736,6 +1808,7 @@ namespace ScintillaNET.Configuration
 									_scrolling_ScrollBars = sb;
 							}
 							break;
+
 						case "horizontalscrolloffset":
 							_scrolling_HorizontalScrollOffset = getInt(reader.Value);
 							break;
@@ -1746,7 +1819,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadSelection(XmlReader reader)
 		{
@@ -1760,21 +1832,27 @@ namespace ScintillaNET.Configuration
 						case "backcolor":
 							_selection_BackColor = getColor(reader.Value);
 							break;
+
 						case "backcolorunfocused":
 							_selection_BackColorUnfocused = getColor(reader.Value);
 							break;
+
 						case "forecolor":
 							_selection_ForeColor = getColor(reader.Value);
 							break;
+
 						case "forecolorunfocused":
 							_selection_ForeColorUnfocused = getColor(reader.Value);
 							break;
+
 						case "hidden":
 							_selection_Hidden = getBool(reader.Value);
 							break;
+
 						case "hideselection":
 							_selection_HideSelection = getBool(reader.Value);
 							break;
+
 						case "mode":
 							_selection_Mode = (SelectionMode)Enum.Parse(typeof(SelectionMode), reader.Value, true);
 							break;
@@ -1785,7 +1863,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Skip();
 		}
-
 
 		private void ReadSnippets(XmlReader reader)
 		{
@@ -1799,27 +1876,35 @@ namespace ScintillaNET.Configuration
 						case "activesnippetcolor":
 							_snippetsConfigList.ActiveSnippetColor = getColor(reader.Value);
 							break;
+
 						case "activesnippetindicator":
 							_snippetsConfigList.ActiveSnippetIndicator = getInt(reader.Value);
 							break;
+
 						case "inactivesnippetcolor":
 							_snippetsConfigList.InactiveSnippetColor = getColor(reader.Value);
 							break;
+
 						case "inactivesnippetindicator":
 							_snippetsConfigList.InactiveSnippetIndicator = getInt(reader.Value);
 							break;
+
 						case "activesnippetindicatorstyle":
 							_snippetsConfigList.ActiveSnippetIndicatorStyle = (IndicatorStyle)Enum.Parse(typeof(IndicatorStyle), reader.Value, true);
 							break;
+
 						case "inactivesnippetindicatorstyle":
 							_snippetsConfigList.InactiveSnippetIndicatorStyle = (IndicatorStyle)Enum.Parse(typeof(IndicatorStyle), reader.Value, true);
 							break;
+
 						case "defaultdelimeter":
 							_snippetsConfigList.DefaultDelimeter = getChar(reader.Value);
 							break;
+
 						case "isenabled":
 							_snippetsConfigList.IsEnabled = getBool(reader.Value);
 							break;
+
 						case "isonekeyselectionembedenabled":
 							_snippetsConfigList.IsOneKeySelectionEmbedEnabled = getBool(reader.Value);
 							break;
@@ -1846,13 +1931,14 @@ namespace ScintillaNET.Configuration
 									string attrName = reader.Name.ToLower();
 									switch (attrName)
 									{
-
 										case "shortcut":
 											sc.Shortcut = reader.Value;
 											break;
+
 										case "delimeter":
 											sc.Delimeter = getChar(reader.Value);
 											break;
+
 										case "issurroundswith":
 											sc.IsSurroundsWith = getBool(reader.Value);
 											break;
@@ -1869,7 +1955,6 @@ namespace ScintillaNET.Configuration
 
 			reader.Read();
 		}
-
 
 		private void ReadStyles(XmlReader reader)
 		{
@@ -1901,17 +1986,16 @@ namespace ScintillaNET.Configuration
 			reader.Read();
 		}
 
-
 		private void ReadSubLanguage(XmlReader reader)
 		{
 			//	This is a nifty added on hack made specifically for HTML.
 			//	Normally the style config elements are quite managable as there
 			//	are typically less than 10 when you don't count common styles.
-			//	
-			//	However HTML uses 9 different Sub languages that combined make 
+			//
+			//	However HTML uses 9 different Sub languages that combined make
 			//	use of all 128 styles (well there are some small gaps). In order
 			//	to make this more managable I did added a SubLanguage element that
-			//	basically just prepends the Language's name and "." to the Style 
+			//	basically just prepends the Language's name and "." to the Style
 			//	Name definition.
 			//
 			//	So for example if you had the following
@@ -1950,7 +2034,6 @@ namespace ScintillaNET.Configuration
 			reader.Read();
 		}
 
-
 		private void ReadUndoRedo(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -1964,7 +2047,6 @@ namespace ScintillaNET.Configuration
 			reader.Skip();
 		}
 
-
 		private void ReadWhitespace(XmlReader reader)
 		{
 			if (reader.HasAttributes)
@@ -1977,9 +2059,11 @@ namespace ScintillaNET.Configuration
 						case "backcolor":
 							_whitespace_BackColor = getColor(reader.Value);
 							break;
+
 						case "forecolor":
 							_whitespace_ForeColor = getColor(reader.Value);
 							break;
+
 						case "mode":
 							_whitespace_Mode = (WhitespaceMode)Enum.Parse(typeof(WhitespaceMode), reader.Value, true);
 							break;
@@ -1990,7 +2074,6 @@ namespace ScintillaNET.Configuration
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -2006,7 +2089,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? AutoComplete_AutomaticLengthEntered
 		{
 			get
@@ -2018,7 +2100,6 @@ namespace ScintillaNET.Configuration
 				_autoComplete_AutomaticLengthEntered = value;
 			}
 		}
-
 
 		public bool? AutoComplete_CancelAtStart
 		{
@@ -2032,7 +2113,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? AutoComplete_DropRestOfWord
 		{
 			get
@@ -2044,7 +2124,6 @@ namespace ScintillaNET.Configuration
 				_autoComplete_DropRestOfWord = value;
 			}
 		}
-
 
 		public string AutoComplete_FillUpCharacters
 		{
@@ -2058,7 +2137,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public char? AutoComplete_ImageSeperator
 		{
 			get
@@ -2070,7 +2148,6 @@ namespace ScintillaNET.Configuration
 				_autoComplete_ImageSeperator = value;
 			}
 		}
-
 
 		public bool? AutoComplete_IsCaseSensitive
 		{
@@ -2084,7 +2161,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public string AutoComplete_List
 		{
 			get
@@ -2096,7 +2172,6 @@ namespace ScintillaNET.Configuration
 				_autoComplete_List = value;
 			}
 		}
-
 
 		public bool? AutoComplete_ListInherits
 		{
@@ -2110,7 +2185,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public char? AutoComplete_ListSeperator
 		{
 			get
@@ -2122,7 +2196,6 @@ namespace ScintillaNET.Configuration
 				_autoComplete_ListSeperator = value;
 			}
 		}
-
 
 		public int? AutoComplete_MaxHeight
 		{
@@ -2136,7 +2209,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? AutoComplete_MaxWidth
 		{
 			get
@@ -2148,7 +2220,6 @@ namespace ScintillaNET.Configuration
 				_autoComplete_MaxWidth = value;
 			}
 		}
-
 
 		public bool? AutoComplete_SingleLineAccept
 		{
@@ -2162,7 +2233,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public string AutoComplete_StopCharacters
 		{
 			get
@@ -2174,7 +2244,6 @@ namespace ScintillaNET.Configuration
 				_autoComplete_StopCharacters = value;
 			}
 		}
-
 
 		public Color CallTip_BackColor
 		{
@@ -2188,7 +2257,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color CallTip_ForeColor
 		{
 			get
@@ -2200,7 +2268,6 @@ namespace ScintillaNET.Configuration
 				_callTip_ForeColor = value;
 			}
 		}
-
 
 		public Color CallTip_HighlightTextColor
 		{
@@ -2214,7 +2281,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Caret_BlinkRate
 		{
 			get
@@ -2226,7 +2292,6 @@ namespace ScintillaNET.Configuration
 				_caret_BlinkRate = value;
 			}
 		}
-
 
 		public Color Caret_Color
 		{
@@ -2240,7 +2305,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Caret_CurrentLineBackgroundAlpha
 		{
 			get
@@ -2252,7 +2316,6 @@ namespace ScintillaNET.Configuration
 				_caret_CurrentLineBackgroundAlpha = value;
 			}
 		}
-
 
 		public Color Caret_CurrentLineBackgroundColor
 		{
@@ -2266,7 +2329,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Caret_HighlightCurrentLine
 		{
 			get
@@ -2278,7 +2340,6 @@ namespace ScintillaNET.Configuration
 				_caret_HighlightCurrentLine = value;
 			}
 		}
-
 
 		public bool? Caret_IsSticky
 		{
@@ -2292,7 +2353,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public CaretStyle? Caret_Style
 		{
 			get
@@ -2304,7 +2364,6 @@ namespace ScintillaNET.Configuration
 				_caret_Style = value;
 			}
 		}
-
 
 		public int? Caret_Width
 		{
@@ -2318,7 +2377,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Clipboard_ConvertLineBreaksOnPaste
 		{
 			get
@@ -2330,7 +2388,6 @@ namespace ScintillaNET.Configuration
 				_clipboard_ConvertLineBreaksOnPaste = value;
 			}
 		}
-
 
 		public CommandBindingConfigList Commands_KeyBindingList
 		{
@@ -2344,7 +2401,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public string DropMarkers_SharedStackName
 		{
 			get
@@ -2356,7 +2412,6 @@ namespace ScintillaNET.Configuration
 				_dropMarkers_SharedStackName = value;
 			}
 		}
-
 
 		public bool? EndOfLine_IsVisisble
 		{
@@ -2370,7 +2425,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public EndOfLineMode? EndOfLine_Mode
 		{
 			get
@@ -2382,7 +2436,6 @@ namespace ScintillaNET.Configuration
 				_endOfLine_Mode = value;
 			}
 		}
-
 
 		public FoldFlag? Folding_Flags
 		{
@@ -2396,7 +2449,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Folding_IsEnabled
 		{
 			get
@@ -2408,7 +2460,6 @@ namespace ScintillaNET.Configuration
 				_folding_IsEnabled = value;
 			}
 		}
-
 
 		public FoldMarkerScheme? Folding_MarkerScheme
 		{
@@ -2422,7 +2473,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Folding_UseCompactFolding
 		{
 			get
@@ -2435,7 +2485,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool HasData
 		{
 			get { return _hasData; }
@@ -2444,7 +2493,6 @@ namespace ScintillaNET.Configuration
 				_hasData = value;
 			}
 		}
-
 
 		public Color Hotspot_ActiveBackColor
 		{
@@ -2458,7 +2506,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color Hotspot_ActiveForeColor
 		{
 			get
@@ -2470,7 +2517,6 @@ namespace ScintillaNET.Configuration
 				_hotspot_ActiveForeColor = value;
 			}
 		}
-
 
 		public bool? Hotspot_ActiveUnderline
 		{
@@ -2484,7 +2530,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Hotspot_SingleLine
 		{
 			get
@@ -2496,7 +2541,6 @@ namespace ScintillaNET.Configuration
 				_hotspot_SingleLine = value;
 			}
 		}
-
 
 		public bool? Hotspot_UseActiveBackColor
 		{
@@ -2510,7 +2554,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Hotspot_UseActiveForeColor
 		{
 			get
@@ -2522,7 +2565,6 @@ namespace ScintillaNET.Configuration
 				_hotspot_UseActiveForeColor = value;
 			}
 		}
-
 
 		public bool? Indentation_BackspaceUnindents
 		{
@@ -2536,7 +2578,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Indentation_IndentWidth
 		{
 			get
@@ -2548,7 +2589,6 @@ namespace ScintillaNET.Configuration
 				_indentation_IndentWidth = value;
 			}
 		}
-
 
 		public bool? Indentation_ShowGuides
 		{
@@ -2562,7 +2602,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public SmartIndent? Indentation_SmartIndentType
 		{
 			get
@@ -2574,7 +2613,6 @@ namespace ScintillaNET.Configuration
 				_indentation_SmartIndentType = value;
 			}
 		}
-
 
 		public bool? Indentation_TabIndents
 		{
@@ -2588,7 +2626,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Indentation_TabWidth
 		{
 			get
@@ -2600,7 +2637,6 @@ namespace ScintillaNET.Configuration
 				_indentation_TabWidth = value;
 			}
 		}
-
 
 		public bool? Indentation_UseTabs
 		{
@@ -2614,7 +2650,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public IndicatorConfigList Indicator_List
 		{
 			get
@@ -2626,7 +2661,6 @@ namespace ScintillaNET.Configuration
 				_indicator_List = value;
 			}
 		}
-
 
 		public string Language
 		{
@@ -2640,7 +2674,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public KeyWordConfigList Lexing_Keywords
 		{
 			get
@@ -2652,7 +2685,6 @@ namespace ScintillaNET.Configuration
 				_lexing_Keywords = value;
 			}
 		}
-
 
 		public string Lexing_Language
 		{
@@ -2666,7 +2698,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public string Lexing_LineCommentPrefix
 		{
 			get
@@ -2678,7 +2709,6 @@ namespace ScintillaNET.Configuration
 				_lexing_LineCommentPrefix = value;
 			}
 		}
-
 
 		public LexerPropertiesConfig Lexing_Properties
 		{
@@ -2692,7 +2722,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public string Lexing_StreamCommentPrefix
 		{
 			get
@@ -2704,7 +2733,6 @@ namespace ScintillaNET.Configuration
 				_lexing_StreamCommentPrefix = value;
 			}
 		}
-
 
 		public string Lexing_StreamCommentSuffix
 		{
@@ -2718,7 +2746,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public LineWrappingIndentMode? LineWrapping_IndentMode
 		{
 			get
@@ -2730,7 +2757,6 @@ namespace ScintillaNET.Configuration
 				_lineWrapping_IndentMode = value;
 			}
 		}
-
 
 		public int? LineWrapping_IndentSize
 		{
@@ -2744,7 +2770,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public LineWrappingMode? LineWrapping_Mode
 		{
 			get
@@ -2756,7 +2781,6 @@ namespace ScintillaNET.Configuration
 				_lineWrapping_Mode = value;
 			}
 		}
-
 
 		public LineWrappingVisualFlags? LineWrapping_VisualFlags
 		{
@@ -2770,7 +2794,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public LineWrappingVisualFlagsLocations? LineWrapping_VisualFlagsLocations
 		{
 			get
@@ -2782,7 +2805,6 @@ namespace ScintillaNET.Configuration
 				_lineWrapping_VisualFlagsLocations = value;
 			}
 		}
-
 
 		public Color LongLines_EdgeColor
 		{
@@ -2796,7 +2818,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? LongLines_EdgeColumn
 		{
 			get
@@ -2808,7 +2829,6 @@ namespace ScintillaNET.Configuration
 				_longLines_EdgeColumn = value;
 			}
 		}
-
 
 		public EdgeMode? LongLines_EdgeMode
 		{
@@ -2822,7 +2842,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public MarginConfigList Margin_List
 		{
 			get
@@ -2834,7 +2853,6 @@ namespace ScintillaNET.Configuration
 				_margin_List = value;
 			}
 		}
-
 
 		public MarkersConfigList Markers_List
 		{
@@ -2848,7 +2866,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Scrolling_HorizontalScrollOffset
 		{
 			get
@@ -2860,7 +2877,6 @@ namespace ScintillaNET.Configuration
 				_scrolling_HorizontalScrollOffset = value;
 			}
 		}
-
 
 		public bool? Scrolling_HorizontalScrollTracking
 		{
@@ -2874,7 +2890,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Scrolling_HorizontalScrollWidth
 		{
 			get
@@ -2886,7 +2901,6 @@ namespace ScintillaNET.Configuration
 				_scrolling_HorizontalScrollWidth = value;
 			}
 		}
-
 
 		public ScrollBars? Scrolling_ScrollBars
 		{
@@ -2900,7 +2914,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Scrolling_ScrollPastEnd
 		{
 			get
@@ -2912,7 +2925,6 @@ namespace ScintillaNET.Configuration
 				_scrolling_ScrollPastEnd = value;
 			}
 		}
-
 
 		public Color Selection_BackColor
 		{
@@ -2926,7 +2938,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color Selection_BackColorUnfocused
 		{
 			get
@@ -2938,7 +2949,6 @@ namespace ScintillaNET.Configuration
 				_selection_BackColorUnfocused = value;
 			}
 		}
-
 
 		public Color Selection_ForeColor
 		{
@@ -2952,7 +2962,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color Selection_ForeColorUnfocused
 		{
 			get
@@ -2964,7 +2973,6 @@ namespace ScintillaNET.Configuration
 				_selection_ForeColorUnfocused = value;
 			}
 		}
-
 
 		public bool? Selection_Hidden
 		{
@@ -2978,7 +2986,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Selection_HideSelection
 		{
 			get
@@ -2990,7 +2997,6 @@ namespace ScintillaNET.Configuration
 				_selection_HideSelection = value;
 			}
 		}
-
 
 		public SelectionMode? Selection_Mode
 		{
@@ -3004,7 +3010,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public SnippetsConfigList SnippetsConfigList
 		{
 			get
@@ -3016,7 +3021,6 @@ namespace ScintillaNET.Configuration
 				_snippetsConfigList = value;
 			}
 		}
-
 
 		public StyleConfigList Styles
 		{
@@ -3030,7 +3034,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? UndoRedoIsUndoEnabled
 		{
 			get
@@ -3042,7 +3045,6 @@ namespace ScintillaNET.Configuration
 				_undoRedoIsUndoEnabled = value;
 			}
 		}
-
 
 		public Color Whitespace_BackColor
 		{
@@ -3056,7 +3058,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color Whitespace_ForeColor
 		{
 			get
@@ -3068,7 +3069,6 @@ namespace ScintillaNET.Configuration
 				_whitespace_ForeColor = value;
 			}
 		}
-
 
 		public WhitespaceMode? Whitespace_Mode
 		{
@@ -3084,7 +3084,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		public Configuration(string language)
@@ -3092,13 +3091,11 @@ namespace ScintillaNET.Configuration
 			_language = language;
 		}
 
-
 		public Configuration(XmlDocument configDocument, string language)
 		{
 			_language = language;
 			Load(configDocument);
 		}
-
 
 		public Configuration(TextReader txtReader, string language)
 		{
@@ -3106,20 +3103,17 @@ namespace ScintillaNET.Configuration
 			Load(txtReader);
 		}
 
-
 		public Configuration(XmlReader reader, string language)
 		{
 			_language = language;
 			Load(reader);
 		}
 
-
 		public Configuration(string fileName, string language, bool useXmlReader)
 		{
 			_language = language;
 			Load(fileName, useXmlReader);
 		}
-
 
 		public Configuration(Stream inStream, string language, bool useXmlReader)
 		{
@@ -3130,4 +3124,3 @@ namespace ScintillaNET.Configuration
 		#endregion Constructors
 	}
 }
-

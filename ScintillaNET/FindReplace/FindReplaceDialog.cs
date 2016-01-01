@@ -8,7 +8,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public partial class FindReplaceDialog : Form
@@ -26,7 +25,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		private void AddFindMru()
@@ -43,7 +41,6 @@ namespace ScintillaNET
 			cboFindR.SelectedIndex = 0;
 			cboFindF.SelectedIndex = 0;
 		}
-
 
 		private void AddReplacMru()
 		{
@@ -73,13 +70,11 @@ namespace ScintillaNET
 			cboReplace.SelectedIndex = 0;
 		}
 
-
 		private void btnClear_Click(object sender, EventArgs e)
 		{
 			Scintilla.Markers.DeleteAll(Scintilla.FindReplace.Marker);
 			Scintilla.FindReplace.ClearAllHighlights();
 		}
-
 
 		private void btnFindAll_Click(object sender, EventArgs e)
 		{
@@ -146,18 +141,15 @@ namespace ScintillaNET
 				Scintilla.FindReplace.HighlightAll(foundRanges);
 		}
 
-
 		private void btnFindNext_Click(object sender, EventArgs e)
 		{
 			FindNext();
 		}
 
-
 		private void btnFindPrevious_Click(object sender, EventArgs e)
 		{
 			FindPrevious();
 		}
-
 
 		private void btnReplaceAll_Click(object sender, EventArgs e)
 		{
@@ -215,12 +207,10 @@ namespace ScintillaNET
 			lblStatus.Text = "Total Replaced: " + foundRanges.Count.ToString();
 		}
 
-
 		private void btnReplaceNext_Click(object sender, EventArgs e)
 		{
 			ReplaceNext();
 		}
-
 
 		private void btnReplacePrevious_Click(object sender, EventArgs e)
 		{
@@ -241,7 +231,6 @@ namespace ScintillaNET
 				return;
 			}
 
-
 			if (nextRange == null)
 			{
 				lblStatus.Text = "Match could not be found";
@@ -260,7 +249,6 @@ namespace ScintillaNET
 				MoveFormAwayFromSelection();
 			}
 		}
-
 
 		private void chkEcmaScript_CheckedChanged(object sender, EventArgs e)
 		{
@@ -295,7 +283,6 @@ namespace ScintillaNET
 				chkSinglelineR.Enabled = true;
 			}
 		}
-
 
 		public void FindNext()
 		{
@@ -335,7 +322,6 @@ namespace ScintillaNET
 				MoveFormAwayFromSelection();
 			}
 		}
-
 
 		private Range FindNextF(bool searchUp)
 		{
@@ -388,11 +374,9 @@ namespace ScintillaNET
 			return foundRange;
 		}
 
-
 		private Range FindNextR(bool searchUp, ref Regex rr)
 		{
 			Range foundRange;
-
 
 			if (rdoRegexR.Checked)
 			{
@@ -442,7 +426,6 @@ namespace ScintillaNET
 			return foundRange;
 		}
 
-
 		public void FindPrevious()
 		{
 			if (cboFindF.Text == string.Empty)
@@ -480,7 +463,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private void FindReplaceDialog_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			if (e.CloseReason == CloseReason.UserClosing)
@@ -489,7 +471,6 @@ namespace ScintillaNET
 				Hide();
 			}
 		}
-
 
 		public RegexOptions GetRegexOptions()
 		{
@@ -557,7 +538,6 @@ namespace ScintillaNET
 			return ro;
 		}
 
-
 		public SearchFlags GetSearchFlags()
 		{
 			SearchFlags sf = SearchFlags.Empty;
@@ -587,7 +567,6 @@ namespace ScintillaNET
 
 			return sf;
 		}
-
 
 		public virtual void MoveFormAwayFromSelection()
 		{
@@ -626,7 +605,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		protected override void OnActivated(EventArgs e)
 		{
 			if (Scintilla.Selection.Length > 0)
@@ -652,7 +630,6 @@ namespace ScintillaNET
 
 			base.OnActivated(e);
 		}
-
 
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
@@ -680,7 +657,6 @@ namespace ScintillaNET
 			base.OnKeyDown(e);
 		}
 
-
 		private void rdoStandardF_CheckedChanged(object sender, EventArgs e)
 		{
 			if (rdoStandardF.Checked)
@@ -689,7 +665,6 @@ namespace ScintillaNET
 				pnlRegexpOptionsF.BringToFront();
 		}
 
-
 		private void rdoStandardR_CheckedChanged(object sender, EventArgs e)
 		{
 			if (rdoStandardR.Checked)
@@ -697,7 +672,6 @@ namespace ScintillaNET
 			else
 				pnlRegexpOptionsR.BringToFront();
 		}
-
 
 		public void ReplaceNext()
 		{
@@ -736,7 +710,6 @@ namespace ScintillaNET
 				MoveFormAwayFromSelection();
 			}
 		}
-
 
 		private Range ReplaceNext(bool searchUp)
 		{
@@ -780,7 +753,6 @@ namespace ScintillaNET
 			}
 			return FindNextR(searchUp, ref rr);
 		}
-
 
 		private void tabAll_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -840,7 +812,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -860,7 +831,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public List<string> MruFind
 		{
 			get
@@ -874,13 +844,11 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int MruMaxCount
 		{
 			get { return _mruMaxCount; }
 			set { _mruMaxCount = value; }
 		}
-
 
 		public List<string> MruReplace
 		{
@@ -895,7 +863,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Scintilla Scintilla
 		{
 			get
@@ -909,7 +876,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

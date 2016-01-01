@@ -8,7 +8,9 @@ namespace Ultima
 	public sealed class Files
 	{
 		public delegate void FileSaveHandler();
+
 		public static event FileSaveHandler FileSaveEvent;
+
 		public static void FireFileSaveEvent()
 		{
 			if (FileSaveEvent != null)
@@ -25,18 +27,22 @@ namespace Ultima
 		/// Should loaded Data be cached
 		/// </summary>
 		public static bool CacheData { get { return m_CacheData; } set { m_CacheData = value; } }
+
 		/// <summary>
 		/// Should a Hashfile be used to speed up loading
 		/// </summary>
 		public static bool UseHashFile { get { return m_UseHashFile; } set { m_UseHashFile = value; } }
+
 		/// <summary>
 		/// Contains the path infos
 		/// </summary>
 		public static Dictionary<string, string> MulPath { get { return m_MulPath; } set { m_MulPath = value; } }
+
 		/// <summary>
 		/// Gets a list of paths to the Client's data files.
 		/// </summary>
 		public static string Directory { get { return m_Directory; } }
+
 		/// <summary>
 		/// Contains the rootDir (so relative values are possible for <see cref="MulPath"/>
 		/// </summary>
@@ -264,7 +270,7 @@ namespace Ultima
 			return GetFilePath(String.Format(format, args));
 		}
 
-		static readonly string[] knownRegkeys = new string[] {
+		private static readonly string[] knownRegkeys = new string[] {
 			@"Origin Worlds Online\Ultima Online\1.0",
 			@"Origin Worlds Online\Ultima Online Third Dawn\1.0",
 			@"EA GAMES\Ultima Online Samurai Empire",
@@ -284,7 +290,7 @@ namespace Ultima
 			@"Electronic Arts\EA Games\Ultima Online Classic",
 		};
 
-		static readonly string[] knownRegPathkeys = new string[] {
+		private static readonly string[] knownRegPathkeys = new string[] {
 			"ExePath",
 			"Install Dir",
 			"InstallDir"

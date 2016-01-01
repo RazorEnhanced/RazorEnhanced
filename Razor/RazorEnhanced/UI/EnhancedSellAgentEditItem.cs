@@ -23,7 +23,6 @@ namespace RazorEnhanced.UI
 			m_Item = item;
 		}
 
-
 		private void EnhancedSellManualAdd_Load(object sender, EventArgs e)
 		{
 			tName.Text = m_Item.Name;
@@ -69,7 +68,6 @@ namespace RazorEnhanced.UI
 
 			try
 			{
-
 				amount = Convert.ToInt32(tAmount.Text);
 			}
 			catch
@@ -88,7 +86,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					hue = Convert.ToInt32(tHue.Text, 16);
 				}
 				catch
@@ -108,7 +105,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.SellAgent.RefreshItems();
 				this.Close();
 			}
-
 		}
 	}
 }

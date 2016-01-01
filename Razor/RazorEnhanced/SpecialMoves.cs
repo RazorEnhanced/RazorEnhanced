@@ -27,6 +27,7 @@ namespace Assistant
 		{
 			private AOSAbility m_Ability;
 			private int[][] m_Items;
+
 			internal AbilityInfo(AOSAbility ab, params int[][] items)
 			{
 				m_Ability = (AOSAbility)ab;
@@ -241,4 +242,3 @@ namespace Assistant
 		}
 	}
 }
-

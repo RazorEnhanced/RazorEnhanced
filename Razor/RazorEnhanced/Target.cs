@@ -7,10 +7,12 @@ namespace RazorEnhanced
 	public class Target
 	{
 		private int m_ptarget;
+
 		public static bool HasTarget()
 		{
 			return Assistant.Targeting.HasTarget;
 		}
+
 		public static void WaitForTarget(int delay) // Delay in MS
 		{
 			int subdelay = delay;
@@ -22,6 +24,7 @@ namespace RazorEnhanced
 					break;
 			}
 		}
+
 		public static void TargetExecute(int serial)
 		{
 			Assistant.Targeting.Target(serial);
@@ -31,6 +34,7 @@ namespace RazorEnhanced
 		{
 			Assistant.Targeting.Target(item);
 		}
+
 		public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
 			Assistant.Targeting.Target(mobile);
@@ -40,6 +44,7 @@ namespace RazorEnhanced
 		{
 			Assistant.Targeting.Target(location);
 		}
+
 		public static void TargetExecute(int x, int y, int z)
 		{
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
@@ -65,11 +70,13 @@ namespace RazorEnhanced
 		{
 			return (int)Assistant.Targeting.GetLastTarger;
 		}
+
 		public static void SetLast(RazorEnhanced.Mobile mob)
 		{
 			Assistant.Mobile mobile = World.FindMobile(mob.Serial);
 			Assistant.Targeting.SetLastTargetTo(mobile);
 		}
+
 		public static void SetLast(int serial)
 		{
 			Assistant.Mobile mobile = World.FindMobile(serial);

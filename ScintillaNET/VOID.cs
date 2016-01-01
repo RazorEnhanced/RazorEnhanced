@@ -1,9 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Used internally to signify an ignored parameter by overloads of SendMessageDirect

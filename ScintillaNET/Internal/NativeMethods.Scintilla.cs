@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Internal
 {
 	partial class NativeMethods
@@ -218,7 +217,6 @@ namespace ScintillaNET.Internal
 
 		#endregion Constants
 
-
 		#region Callbacks
 
 		public delegate IntPtr Scintilla_DirectFunction(
@@ -228,7 +226,6 @@ namespace ScintillaNET.Internal
 			IntPtr lParam);
 
 		#endregion Callbacks
-
 
 		#region Structures
 

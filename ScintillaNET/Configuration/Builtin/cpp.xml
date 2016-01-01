@@ -13,8 +13,7 @@
 
     <Indentation TabWidth="4" SmartIndentType="cpp" />
 
-
-    <Lexer LineCommentPrefix="//" StreamCommentPrefix="/* " StreamCommentSuffix=" */" >
+    <Lexer LineCommentPrefix="//" StreamCommentPrefix="/* " StreamCommentSuffix=" */">
       <Keywords List="0" Inherit="False">
         abstract as base break case catch checked continue default delegate do else event explicit extern
         false finally fixed for foreach goto if implicit in interface internal is lock namespace new null

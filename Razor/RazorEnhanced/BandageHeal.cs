@@ -9,11 +9,13 @@ namespace RazorEnhanced
 	public class BandageHeal
 	{
 		private static bool m_AutoMode;
+
 		internal static bool AutoMode
 		{
 			get { return m_AutoMode; }
 			set { m_AutoMode = value; }
 		}
+
 		internal static void AddLog(string addlog)
 		{
 			if (Assistant.Engine.Running)
@@ -24,6 +26,7 @@ namespace RazorEnhanced
 					Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.Items.Clear()));
 			}
 		}
+
 		internal static string TargetType
 		{
 			get
@@ -56,6 +59,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealtargetLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
+
 		internal static bool CustomCheckBox
 		{
 			get
@@ -88,6 +92,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4")));
 			}
 		}
+
 		internal static int CustomColor
 		{
 			get
@@ -107,6 +112,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4")));
 			}
 		}
+
 		internal static int CustomDelay
 		{
 			get
@@ -162,6 +168,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Checked = value));
 			}
 		}
+
 		internal static bool MortalBlock
 		{
 			get
@@ -174,6 +181,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Checked = value));
 			}
 		}
+
 		internal static bool HiddenBlock
 		{
 			get
@@ -267,7 +275,7 @@ namespace RazorEnhanced
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
 				{
-					if (!World.Player.Visible)  // Esce se attivo blocco hidded 
+					if (!World.Player.Visible)  // Esce se attivo blocco hidded
 						return 0;
 				}
 
@@ -277,50 +285,50 @@ namespace RazorEnhanced
 						return 0;
 				}
 
-				if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal 
+				if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
 				{
 					if (Player.BuffsExist("Mortal Strike"))
 						return 0;
 				}
 
-                if (Targeting.HasTarget)
-                {
-                    Target.Cancel();
-                    Thread.Sleep(100);
-                }
+				if (Targeting.HasTarget)
+				{
+					Target.Cancel();
+					Thread.Sleep(100);
+				}
 
-                bool bandagefound = false;
-                int bandageamount = 0;
-                if (RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox"))         // Se cerco bende custom
-                {
-                    bandagefound = RazorEnhanced.Items.UseItemByID(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
-                    bandageamount = RazorEnhanced.Items.BackpackCount(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
-                    if (bandageamount == 0)
-                    {
-                        Player.HeadMessage(10, "Bandage not found");
-                        AddLog("Bandage not found");
-                    }
-                    else if (bandageamount < 11 && bandageamount > 0)
-                    {
-                        Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-                        AddLog("Warning: Low bandage: " + bandageamount + " left");
-                    }
-                }
-                else
-                {
-                    bandagefound = RazorEnhanced.Items.UseItemByID(0x0E21, -1);
-                    bandageamount = RazorEnhanced.Items.BackpackCount(0x0E21, -1);
-                    if (bandageamount == 0)
-                    {
-                        Player.HeadMessage(10, "Bandage not found");
-                        AddLog("Bandage not found");
-                    }
-                    else if (bandageamount < 11 && bandageamount > 0)
-                    {
-                        Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
-                        AddLog("Warning: Low bandage: " + bandageamount + " left");
-                    }
-                }
+				bool bandagefound = false;
+				int bandageamount = 0;
+				if (RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox"))         // Se cerco bende custom
+				{
+					bandagefound = RazorEnhanced.Items.UseItemByID(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
+					bandageamount = RazorEnhanced.Items.BackpackCount(RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox"), RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox"));
+					if (bandageamount == 0)
+					{
+						Player.HeadMessage(10, "Bandage not found");
+						AddLog("Bandage not found");
+					}
+					else if (bandageamount < 11 && bandageamount > 0)
+					{
+						Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+						AddLog("Warning: Low bandage: " + bandageamount + " left");
+					}
+				}
+				else
+				{
+					bandagefound = RazorEnhanced.Items.UseItemByID(0x0E21, -1);
+					bandageamount = RazorEnhanced.Items.BackpackCount(0x0E21, -1);
+					if (bandageamount == 0)
+					{
+						Player.HeadMessage(10, "Bandage not found");
+						AddLog("Bandage not found");
+					}
+					else if (bandageamount < 11 && bandageamount > 0)
+					{
+						Player.HeadMessage(10, "Warning: Low bandage: " + bandageamount + " left");
+						AddLog("Warning: Low bandage: " + bandageamount + " left");
+					}
+				}
 
 				if (bandagefound)        // Cerca le bende
 				{
@@ -360,7 +368,6 @@ namespace RazorEnhanced
 						double delay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
 						if (RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox"))          // Se deve mostrare il cooldown
 						{
-
 							double subdelay = delay / 1000;
 
 							int second = 0;

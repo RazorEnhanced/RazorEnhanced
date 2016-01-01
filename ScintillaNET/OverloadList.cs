@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -17,7 +16,6 @@ namespace ScintillaNET
 		private int _currentIndex;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -36,7 +34,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Index of the overload to be displayed in the CallTip
 		/// </summary>
@@ -53,7 +50,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

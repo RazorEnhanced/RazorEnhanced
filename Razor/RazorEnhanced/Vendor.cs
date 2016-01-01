@@ -124,7 +124,6 @@ namespace RazorEnhanced
 					SellBag = l.Bag;
 				}
 			}
-
 		}
 
 		internal static void RefreshItems()
@@ -288,12 +287,12 @@ namespace RazorEnhanced
 				List<SellAgent.SellAgentItem> items;
 				RazorEnhanced.Settings.SellAgent.ItemsRead(SellListName, out items);
 
-				foreach (SellAgentItem sellItem in items) // Scansione item presenti in lista agent item 
+				foreach (SellAgentItem sellItem in items) // Scansione item presenti in lista agent item
 				{
 					if (!sellItem.Selected)
 						continue;
 
-					if (gfx == sellItem.Graphics && (item != null && item != bag && item.IsChildOf(bag)) && RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue)) // match sulla grafica fra lista agent e lista vendor e hotbag              
+					if (gfx == sellItem.Graphics && (item != null && item != bag && item.IsChildOf(bag)) && RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue)) // match sulla grafica fra lista agent e lista vendor e hotbag
 					{
 						int amountLeft = 60000;
 						int index = 0;
@@ -326,7 +325,7 @@ namespace RazorEnhanced
 									total += amount * price;
 									sold += amount;
 								}
-								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante 
+								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante
 								{
 									list.Add(new SellListItem(ser, Convert.ToUInt16(amountLeft)));  // Lista processo vendita
 									templist.RemoveAt(index);
@@ -345,7 +344,7 @@ namespace RazorEnhanced
 									total += amount * price;
 									sold += amount;
 								}
-								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante 
+								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante
 								{
 									list.Add(new SellListItem(ser, Convert.ToUInt16(sellItem.Amount)));  // Lista processo vendita
 									templist.Add(new SellAgentItem(sellItem.Name, gfx, 0, sellItem.Color, sellItem.Selected));
@@ -366,6 +365,7 @@ namespace RazorEnhanced
 				args.Block = true;
 			}
 		}
+
 		// Funzioni da script
 		public static void Enable()
 		{
@@ -387,6 +387,7 @@ namespace RazorEnhanced
 		{
 			return Assistant.Engine.MainWindow.SellCheckBox.Checked;
 		}
+
 		public static void ChangeList(string nomelista)
 		{
 			bool ListaOK = false;
@@ -655,7 +656,7 @@ namespace RazorEnhanced
 				List<BuyAgent.BuyAgentItem> items;
 				RazorEnhanced.Settings.BuyAgent.ItemsRead(BuyListName, out items);
 
-				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item 
+				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item
 				{
 					if (!buyItem.Selected)
 						continue;
@@ -688,6 +689,7 @@ namespace RazorEnhanced
 				World.Player.SendMessage("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 			}
 		}
+
 		// Funzioni da script
 		public static void Enable()
 		{
@@ -709,6 +711,7 @@ namespace RazorEnhanced
 		{
 			return Assistant.Engine.MainWindow.BuyCheckBox.Checked;
 		}
+
 		public static void ChangeList(string nomelista)
 		{
 			bool ListaOK = false;
@@ -734,5 +737,4 @@ namespace RazorEnhanced
 			}
 		}
 	}
-
 }

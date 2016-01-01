@@ -5,6 +5,7 @@ namespace Ultima
 	public sealed class HuedTileList
 	{
 		private List<HuedTile> m_Tiles;
+
 		public HuedTileList()
 		{
 			m_Tiles = new List<HuedTile>();
@@ -44,6 +45,7 @@ namespace Ultima
 		{
 			m_Tiles.Add(new Tile(id, z));
 		}
+
 		public void Add(ushort id, sbyte z, sbyte flag)
 		{
 			m_Tiles.Add(new Tile(id, z, flag));
@@ -80,10 +82,12 @@ namespace Ultima
 		{
 			m_Tiles.Add(new MTile(id, z));
 		}
+
 		public void Add(ushort id, sbyte z, sbyte flag)
 		{
 			m_Tiles.Add(new MTile(id, z, flag));
 		}
+
 		public void Add(ushort id, sbyte z, sbyte flag, int unk1)
 		{
 			m_Tiles.Add(new MTile(id, z, flag, unk1));
@@ -122,6 +126,7 @@ namespace Ultima
 			if (i < Count)
 				m_Tiles[i].Set(id, z, flag, unk1);
 		}
+
 		public void Remove(int i)
 		{
 			if (i < Count)

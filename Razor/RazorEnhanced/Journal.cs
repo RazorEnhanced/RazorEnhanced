@@ -27,11 +27,13 @@ namespace RazorEnhanced
 				m_Name = name;
 			}
 		}
+
 		public static void Clear()
 		{
 			World.Player.Journal.Clear();
 			//Misc.SendMessage("Journal Cleared");
 		}
+
 		public static bool Search(string text)
 		{
 			foreach (JournalEntry entrys in World.Player.Journal)
@@ -41,6 +43,7 @@ namespace RazorEnhanced
 			}
 			return false;
 		}
+
 		public static bool SearchByName(string text, string name)
 		{
 			foreach (JournalEntry entrys in World.Player.Journal)
@@ -51,6 +54,7 @@ namespace RazorEnhanced
 			}
 			return false;
 		}
+
 		public static bool SearchByColor(string text, int color)
 		{
 			foreach (JournalEntry entrys in World.Player.Journal)
@@ -61,6 +65,7 @@ namespace RazorEnhanced
 			}
 			return false;
 		}
+
 		public static bool SearchByType(string text, string type)
 		{
 			foreach (JournalEntry entrys in World.Player.Journal)

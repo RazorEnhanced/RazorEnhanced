@@ -11,6 +11,7 @@ using Ultima;
 namespace Assistant
 {
 	#region Localization enum
+
 	//1044060 = Alchemy in UO cliloc
 	internal enum LocString : int
 	{
@@ -229,6 +230,7 @@ namespace Assistant
 
 		// 1210 - 1248 reserved for hotkey categories
 		HKSubOffset = 1249,
+
 		// 1252 - 1300 reserved for hotkey sub-categories
 
 		Sell = 1301,
@@ -283,6 +285,7 @@ namespace Assistant
 
 		// 1350 to 1359 reserved for PacketPlayer stop messages
 		PacketPlayerStop = 1350,
+
 		PacketPlayerStopLast = 1359,
 
 		TargFriendAdd,
@@ -325,8 +328,10 @@ namespace Assistant
 		NoHold,
 		NotAllowed,
 		Allowed,
+
 		// 1400 to 1465 reserved for negotiation features
 		NegotiateTitle = 1400,
+
 		AllFeaturesEnabled,
 		FeatureDescBase,
 
@@ -402,7 +407,8 @@ namespace Assistant
 
 		__End = 1800
 	}
-	#endregion
+
+	#endregion Localization enum
 
 	internal class Language
 	{
@@ -814,4 +820,3 @@ namespace Assistant
 #endif
 	}
 }
-

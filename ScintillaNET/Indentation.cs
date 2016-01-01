@@ -5,7 +5,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -25,7 +24,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -39,6 +37,7 @@ namespace ScintillaNET
 			{
 				case SmartIndent.None:
 					return;
+
 				case SmartIndent.Simple:
 					if (ch == newline)
 					{
@@ -47,6 +46,7 @@ namespace ScintillaNET
 						Scintilla.CurrentPos = curLine.IndentPosition;
 					}
 					break;
+
 				case SmartIndent.CPP:
 				case SmartIndent.CPP2:
 					if (ch == newline)
@@ -90,7 +90,6 @@ namespace ScintillaNET
 					break;
 			}
 		}
-
 
 		/// <summary>
 		///     Smart Indenting helper method
@@ -148,48 +147,40 @@ namespace ScintillaNET
 			Scintilla.Selection.End = selEnd;
 		}
 
-
 		private void ResetBackspaceUnindents()
 		{
 			BackspaceUnindents = false;
 		}
-
 
 		private void ResetIndentWidth()
 		{
 			IndentWidth = 0;
 		}
 
-
 		private void ResetShowGuides()
 		{
 			ShowGuides = false;
 		}
-
 
 		private void ResetSmartIndentType()
 		{
 			_smartIndentType = SmartIndent.None;
 		}
 
-
 		private void ResetTabIndents()
 		{
 			TabIndents = false;
 		}
-
 
 		private void ResetTabWidth()
 		{
 			TabWidth = 8;
 		}
 
-
 		private void ResetUseTabs()
 		{
 			UseTabs = true;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -201,43 +192,35 @@ namespace ScintillaNET
 				ShouldSerializeUseTabs();
 		}
 
-
 		private bool ShouldSerializeBackspaceUnindents()
 		{
 			return BackspaceUnindents;
-
 		}
-
 
 		private bool ShouldSerializeIndentWidth()
 		{
 			return IndentWidth != 0;
 		}
 
-
 		private bool ShouldSerializeShowGuides()
 		{
 			return ShowGuides;
 		}
-
 
 		private bool ShouldSerializeSmartIndentType()
 		{
 			return _smartIndentType != SmartIndent.None;
 		}
 
-
 		private bool ShouldSerializeTabIndents()
 		{
 			return !TabIndents;
 		}
 
-
 		private bool ShouldSerializeTabWidth()
 		{
 			return TabWidth != 8;
 		}
-
 
 		private bool ShouldSerializeUseTabs()
 		{
@@ -245,7 +228,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -261,7 +243,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int IndentWidth
 		{
 			get
@@ -273,7 +254,6 @@ namespace ScintillaNET
 				NativeScintilla.SetIndent(value);
 			}
 		}
-
 
 		public bool ShowGuides
 		{
@@ -287,7 +267,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public SmartIndent SmartIndentType
 		{
 			get { return _smartIndentType; }
@@ -296,7 +275,6 @@ namespace ScintillaNET
 				_smartIndentType = value;
 			}
 		}
-
 
 		public bool TabIndents
 		{
@@ -310,7 +288,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int TabWidth
 		{
 			get
@@ -322,7 +299,6 @@ namespace ScintillaNET
 				NativeScintilla.SetTabWidth(value);
 			}
 		}
-
 
 		public bool UseTabs
 		{
@@ -338,10 +314,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		internal Indentation(Scintilla scintilla) : base(scintilla) { }
+		internal Indentation(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

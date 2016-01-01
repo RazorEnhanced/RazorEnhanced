@@ -496,7 +496,6 @@ namespace Ultima
 
 			return ((ulong)esi << 32) | eax;
 		}
-
 	}
 
 	[StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 1)]

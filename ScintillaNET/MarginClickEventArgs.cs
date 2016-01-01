@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -24,7 +23,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Properties
 
 		/// <summary>
@@ -38,7 +36,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns the Margin where the click occured
 		/// </summary>
@@ -49,7 +46,6 @@ namespace ScintillaNET
 				return _margin;
 			}
 		}
-
 
 		/// <summary>
 		///     Returns any Modifier keys (shift, alt, ctrl) that were in use at the
@@ -63,7 +59,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns the Document position of the line where the click occured
 		/// </summary>
@@ -74,7 +69,6 @@ namespace ScintillaNET
 				return _position;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets whether the fold at the current line should be toggled
@@ -90,7 +84,6 @@ namespace ScintillaNET
 				_toggleFold = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the marker number that should be toggled in result of the click
@@ -108,7 +101,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

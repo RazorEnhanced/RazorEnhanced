@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScavengerEditItemProps : Form
@@ -22,7 +21,6 @@ namespace RazorEnhanced.UI
 			this.m_List = list;
 			this.m_Index = index;
 			this.m_Item = item;
-
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)

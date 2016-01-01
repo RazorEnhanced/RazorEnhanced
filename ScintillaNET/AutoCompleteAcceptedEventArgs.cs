@@ -5,7 +5,6 @@ using System.Text;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -20,7 +19,6 @@ namespace ScintillaNET
 		private bool _cancel = false;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -39,7 +37,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Text of the selected autocomplete entry selected
 		/// </summary>
@@ -47,7 +44,6 @@ namespace ScintillaNET
 		{
 			get { return _text; }
 		}
-
 
 		/// <summary>
 		///     Returns the _start position of the current word in the document.
@@ -66,7 +62,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		internal AutoCompleteAcceptedEventArgs(SCNotification eventSource, Encoding encoding)
@@ -74,7 +69,6 @@ namespace ScintillaNET
 			_wordStartPosition = (int)eventSource.lParam;
 			_text = Utilities.IntPtrToString(encoding, eventSource.text);
 		}
-
 
 		/// <summary>
 		///     Initializes a new instance of the AutoCompleteAcceptedEventArgs class.

@@ -65,6 +65,7 @@ namespace RazorEnhanced
 					Assistant.Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendLogBox.Items.Clear()));
 			}
 		}
+
 		internal static bool IncludeParty
 		{
 			get
@@ -76,6 +77,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked = value));
 			}
 		}
+
 		internal static bool PreventAttack
 		{
 			get
@@ -87,6 +89,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.FriendAttackCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked = value));
 			}
 		}
+
 		internal static bool AutoacceptParty
 		{
 			get
@@ -190,6 +193,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Friend.RefreshLists();
 			RazorEnhanced.Friend.RefreshPlayers();
 		}
+
 		internal static void AddPlayerToList(string name, int serial)
 		{
 			string selection = Assistant.Engine.MainWindow.FriendListSelect.Text;
@@ -202,6 +206,7 @@ namespace RazorEnhanced
 			}
 			RazorEnhanced.Friend.RefreshPlayers();
 		}
+
 		internal static void UpdateSelectedPlayer(int i)
 		{
 			List<FriendPlayer> players;

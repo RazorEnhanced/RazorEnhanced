@@ -10,7 +10,6 @@ using System.Globalization;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -24,7 +23,6 @@ namespace ScintillaNET
 		private Scintilla _scintilla;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -48,7 +46,6 @@ namespace ScintillaNET
 			return _scintilla.DirectMessage(NativeMethods.SCI_WRAPCOUNT, new IntPtr(lineIndex), IntPtr.Zero).ToInt32();
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return
@@ -58,7 +55,6 @@ namespace ScintillaNET
 				VisualFlags != LineWrappingVisualFlags.None ||
 				VisualFlagsLocations != LineWrappingVisualFlagsLocations.Default;
 		}
-
 
 		/// <summary>
 		///     Forces the line range specified to wrap at the given pixel width. This operates independently
@@ -98,7 +94,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -129,7 +124,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the size that wrapped lines are indented when <see cref="IndentMode" /> is <see cref="LineWrappingIndentMode.Fixed" />.
 		/// </summary>
@@ -159,7 +153,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets how and whether line wrapping is performed.
 		/// </summary>
@@ -188,7 +181,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the visual glyphs displayed on wrapped lines.
 		/// </summary>
@@ -211,7 +203,6 @@ namespace ScintillaNET
 				_scintilla.DirectMessage(NativeMethods.SCI_SETWRAPVISUALFLAGS, new IntPtr((int)value), IntPtr.Zero);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the location of visual glyphs displayed on wrapped lines.
@@ -237,7 +228,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

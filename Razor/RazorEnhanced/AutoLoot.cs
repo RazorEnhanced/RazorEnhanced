@@ -84,6 +84,7 @@ namespace RazorEnhanced
 		}
 
 		private static bool m_AutoMode;
+
 		internal static bool AutoMode
 		{
 			get { return m_AutoMode; }
@@ -321,7 +322,6 @@ namespace RazorEnhanced
 							RazorEnhanced.Items.WaitForContents(oggettoContenuto, 1500);
 							foreach (RazorEnhanced.Item oggettoContenutoShard in oggettoContenuto.Contains)
 							{
-
 								foreach (AutoLootItem autoLootItem in autoLootList)
 								{
 									if (!autoLootItem.Selected)
@@ -425,7 +425,7 @@ namespace RazorEnhanced
 					RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
 				}
 			}
-			else // Item Senza props     
+			else // Item Senza props
 			{
 				DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
 			}

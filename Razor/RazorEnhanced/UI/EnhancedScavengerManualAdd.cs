@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScavengerManualAdd : Form
@@ -67,7 +66,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					color = Convert.ToInt32(tColor.Text, 16);
 				}
 				catch
@@ -86,7 +84,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.Scavenger.AddItemToList(tName.Text, graphics, color);
 				this.Close();
 			}
-
 		}
 	}
 }

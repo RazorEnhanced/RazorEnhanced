@@ -4,7 +4,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -24,40 +23,34 @@ namespace ScintillaNET
 			NativeScintilla.ConvertEols((int)toMode);
 		}
 
-
 		private void ResetIsVisible()
 		{
 			IsVisible = false;
 		}
-
 
 		private void ResetMode()
 		{
 			Mode = EndOfLineMode.Crlf;
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return ShouldSerializeIsVisible() || ShouldSerializeMode();
 		}
-
 
 		private bool ShouldSerializeIsVisible()
 		{
 			return IsVisible;
 		}
 
-
 		private bool ShouldSerializeMode()
 		{
-			// Yeah I'm assuming Windows, if this does ever make it to another platform 
+			// Yeah I'm assuming Windows, if this does ever make it to another platform
 			// a check should be made to make it platform specific
 			return Mode != EndOfLineMode.Crlf;
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -74,15 +67,16 @@ namespace ScintillaNET
 				{
 					case EndOfLineMode.CR:
 						return "\r";
+
 					case EndOfLineMode.LF:
 						return "\n";
+
 					case EndOfLineMode.Crlf:
 						return "\r\n";
 				}
 				return "";
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets if End of line markers are visible in the Scintilla control.
@@ -98,7 +92,6 @@ namespace ScintillaNET
 				NativeScintilla.SetViewEol(value);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the <see cref="EndOfLineMode"/> for the document. Default is CrLf.
@@ -121,10 +114,11 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		internal EndOfLine(Scintilla scintilla) : base(scintilla) { }
+		internal EndOfLine(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
 	}

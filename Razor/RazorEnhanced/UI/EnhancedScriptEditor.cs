@@ -12,15 +12,17 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	internal partial class EnhancedScriptEditor : Form
 	{
-		delegate void SetHighlightLineDelegate(bool highlight, int linenum, Color color);
-		delegate void SetStatusLabelDelegate(string text);
-		delegate string GetScintillaTextDelegate();
-		delegate void SetTracebackDelegate(string text);
+		private delegate void SetHighlightLineDelegate(bool highlight, int linenum, Color color);
+
+		private delegate void SetStatusLabelDelegate(string text);
+
+		private delegate string GetScintillaTextDelegate();
+
+		private delegate void SetTracebackDelegate(string text);
 
 		private enum Command
 		{
@@ -264,7 +266,6 @@ namespace RazorEnhanced.UI
 
 		private string GetScintillaText()
 		{
-
 			if (this.scintillaEditor.InvokeRequired)
 			{
 				GetScintillaTextDelegate d = new GetScintillaTextDelegate(GetScintillaText);
@@ -433,7 +434,6 @@ namespace RazorEnhanced.UI
 
 		private void InspectItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-
 			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
 			if (assistantItem != null && assistantItem.Serial.IsItem)
 			{
@@ -444,7 +444,6 @@ namespace RazorEnhanced.UI
 					inspector.Show();
 				});
 			}
-
 			else
 			{
 				Assistant.Mobile assistantMobile = Assistant.World.FindMobile(serial);

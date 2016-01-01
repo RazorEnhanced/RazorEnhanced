@@ -14,9 +14,11 @@ namespace Ultima
 			Custom = 0x1,
 			Modified = 0x2
 		}
+
 		private string m_Text;
 
 		public int Number { get; private set; }
+
 		public string Text
 		{
 			get { return m_Text; }
@@ -28,6 +30,7 @@ namespace Ultima
 					m_Text = value;
 			}
 		}
+
 		public CliLocFlag Flag { get; set; }
 
 		public StringEntry(int number, string text, byte flag)
@@ -46,6 +49,7 @@ namespace Ultima
 
 		// Razor
 		private static Regex m_RegEx = new Regex(@"~(\d+)[_\w]+~", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.CultureInvariant);
+
 		private string m_FmtTxt;
 		private static object[] m_Args = new object[] { "", "", "", "", "", "", "", "", "", "", "" };
 

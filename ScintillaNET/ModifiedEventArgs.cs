@@ -4,16 +4,15 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
 	///     Base class for modified events
 	/// </summary>
 	/// <remarks>
-	///     ModifiedEventArgs is the base class for all events that are fired 
-	///     in response to an SCN_MODIFY notification message. They all have 
-	///     the Undo/Redo flags in common and I'm also including the raw 
+	///     ModifiedEventArgs is the base class for all events that are fired
+	///     in response to an SCN_MODIFY notification message. They all have
+	///     the Undo/Redo flags in common and I'm also including the raw
 	///     modificationType integer value for convenience purposes.
 	/// </remarks>
 	public abstract class ModifiedEventArgs : EventArgs
@@ -24,7 +23,6 @@ namespace ScintillaNET
 		private UndoRedoFlags _undoRedoFlags;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -40,7 +38,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public UndoRedoFlags UndoRedoFlags
 		{
 			get
@@ -54,7 +51,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

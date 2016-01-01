@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class ManagedRange : Range, IDisposable
@@ -16,7 +15,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public virtual void Change(int newStart, int newEnd)
@@ -24,7 +22,6 @@ namespace ScintillaNET
 			base.Start = newStart;
 			base.End = newEnd;
 		}
-
 
 		public override void Dispose()
 		{
@@ -36,7 +33,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
@@ -44,11 +40,9 @@ namespace ScintillaNET
 
 		protected internal virtual void Paint(Graphics g)
 		{
-
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -64,11 +58,9 @@ namespace ScintillaNET
 			}
 		}
 
-
-		// This is important for determining how to treat 
+		// This is important for determining how to treat
 		// managed ranges during insert and delete events.
 		public virtual bool IsPoint { get { return false; } }
-
 
 		public override int Start
 		{
@@ -84,20 +76,18 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		protected internal ManagedRange() { }
+		protected internal ManagedRange()
+		{
+		}
 
 		public ManagedRange(int start, int end, Scintilla scintilla) : base(start, end, scintilla)
 		{
-
 		}
-
 
 		protected internal ManagedRange(Range range) : this(range.Start, range.End, range.Scintilla)
 		{
-
 		}
 
 		#endregion Constructors

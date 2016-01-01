@@ -8,6 +8,7 @@ namespace RazorEnhanced.UI
 	{
 		private const string m_Title = "Enhanced Target Edit";
 		internal string targetid;
+
 		public EnhancedTargetEdit(string targetidp)
 		{
 			targetid = targetidp;
@@ -133,7 +134,6 @@ namespace RazorEnhanced.UI
 					paralizedOn.Checked = true;
 				else
 					paralizedOff.Checked = true;
-
 			}
 			else
 			{
@@ -224,7 +224,6 @@ namespace RazorEnhanced.UI
 
 		private void razorButton2_Click(object sender, EventArgs e)
 		{
-
 			List<int> bodylist = new List<int>();
 			List<int> huelist = new List<int>();
 			List<byte> notolist = new List<byte>();
@@ -335,14 +334,11 @@ namespace RazorEnhanced.UI
 			RazorEnhanced.HotKey.Init();
 
 			this.Close();
-
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
-
-
 	}
 }

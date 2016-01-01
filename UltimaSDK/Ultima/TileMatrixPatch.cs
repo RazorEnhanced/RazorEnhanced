@@ -28,6 +28,7 @@ namespace Ultima
 				return false;
 			return true;
 		}
+
 		public Tile[] GetLandBlock(int x, int y)
 		{
 			if (x < 0 || y < 0 || x >= BlockWidth || y >= BlockHeight)

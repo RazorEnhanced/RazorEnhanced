@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class KeywordCollection : TopLevelHelper
@@ -19,7 +18,6 @@ namespace ScintillaNET
 		private Dictionary<string, Dictionary<string, int>> _lexerStyleMap;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -39,7 +37,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Indexers
 
 		public string this[int keywordSet]
@@ -55,7 +52,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public string this[string keywordSetName]
 		{
 			get
@@ -69,7 +65,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Indexers
-
 
 		#region Constructors
 
@@ -92,15 +87,12 @@ namespace ScintillaNET
 			_lexerAliasMap.Add("clarion", Lexer.Clw);
 			_lexerAliasMap.Add("clarionnocase", Lexer.ClwNoCase);
 
-
 			//_lexerKeywordListMap = new Dictionary<string,string[]>(StringComparer.OrdinalIgnoreCase);
-
 
 			//_lexerKeywordListMap.Add("xml", new string[] { "HTML elements and attributes", "JavaScript keywords", "VBScript keywords", "Python keywords", "PHP keywords", "SGML and DTD keywords" });
 			//_lexerKeywordListMap.Add("yaml", new string[] { "Keywords" });
 			// baan, kix, ave, scriptol, diff, props, makefile, errorlist, latex, null, lot, haskell
 			// lexers don't have keyword list names
-
 		}
 
 		#endregion Constructors

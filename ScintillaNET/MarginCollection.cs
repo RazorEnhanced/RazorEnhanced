@@ -8,7 +8,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -24,7 +23,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public void Add(Margin item)
@@ -32,36 +30,30 @@ namespace ScintillaNET
 			throw new Exception("The method or operation is not implemented.");
 		}
 
-
 		public void Clear()
 		{
 			throw new Exception("The method or operation is not implemented.");
 		}
-
 
 		public bool Contains(Margin item)
 		{
 			return true;
 		}
 
-
 		public void CopyTo(Margin[] array, int arrayIndex)
 		{
 			Array.Copy(ToArray(), 0, array, arrayIndex, 5);
 		}
-
 
 		public IEnumerator<Margin> GetEnumerator()
 		{
 			return new List<Margin>(ToArray()).GetEnumerator();
 		}
 
-
 		public bool Remove(Margin item)
 		{
 			throw new Exception("The method or operation is not implemented.");
 		}
-
 
 		public void Reset()
 		{
@@ -72,60 +64,50 @@ namespace ScintillaNET
 			ResetMargin4();
 		}
 
-
 		private void ResetFoldMarginColor()
 		{
 			FoldMarginColor = Color.Transparent;
 		}
-
 
 		private void ResetFoldMarginHighlightColor()
 		{
 			FoldMarginHighlightColor = Color.Transparent;
 		}
 
-
 		private void ResetLeft()
 		{
 			Left = 1;
 		}
-
 
 		private void ResetMargin0()
 		{
 			_margin0.Reset();
 		}
 
-
 		private void ResetMargin1()
 		{
 			_margin1.Reset();
 		}
-
 
 		private void ResetMargin2()
 		{
 			_margin2.Reset();
 		}
 
-
 		private void ResetMargin3()
 		{
 			_margin3.Reset();
 		}
-
 
 		private void ResetMargin4()
 		{
 			_margin4.Reset();
 		}
 
-
 		private void ResetRight()
 		{
 			Right = 1;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -140,66 +122,55 @@ namespace ScintillaNET
 				ShouldSerializeMargin4();
 		}
 
-
 		private bool ShouldSerializeFoldMarginColor()
 		{
 			return FoldMarginColor != Color.Transparent;
 		}
-
 
 		private bool ShouldSerializeFoldMarginHighlightColor()
 		{
 			return FoldMarginHighlightColor != Color.Transparent;
 		}
 
-
 		private bool ShouldSerializeLeft()
 		{
 			return Left != 1;
 		}
-
 
 		private bool ShouldSerializeMargin0()
 		{
 			return _margin0.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeMargin1()
 		{
 			return _margin1.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeMargin2()
 		{
 			return _margin2.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeMargin3()
 		{
 			return _margin3.ShouldSerialize();
 		}
-
 
 		private bool ShouldSerializeMargin4()
 		{
 			return _margin4.ShouldSerialize();
 		}
 
-
 		private bool ShouldSerializeRight()
 		{
 			return Right != 1;
 		}
 
-
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			return new List<Margin>(ToArray()).GetEnumerator();
 		}
-
 
 		public Margin[] ToArray()
 		{
@@ -215,7 +186,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		[Browsable(false)]
@@ -223,7 +193,6 @@ namespace ScintillaNET
 		{
 			get { return 5; }
 		}
-
 
 		public Color FoldMarginColor
 		{
@@ -241,12 +210,9 @@ namespace ScintillaNET
 				else
 					Scintilla.ColorBag["Margins.FoldMarginColor"] = value;
 
-
 				NativeScintilla.SetFoldMarginColour(true, Utilities.ColorToRgb(value));
-
 			}
 		}
-
 
 		public Color FoldMarginHighlightColor
 		{
@@ -264,19 +230,15 @@ namespace ScintillaNET
 				else
 					Scintilla.ColorBag["Margins.FoldMarginHighlightColor"] = value;
 
-
 				NativeScintilla.SetFoldMarginHiColour(true, Utilities.ColorToRgb(value));
-
 			}
 		}
-
 
 		[Browsable(false)]
 		public bool IsReadOnly
 		{
 			get { return true; }
 		}
-
 
 		public int Left
 		{
@@ -290,7 +252,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Margin Margin0
 		{
@@ -299,7 +260,6 @@ namespace ScintillaNET
 				return _margin0;
 			}
 		}
-
 
 		[Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Margin Margin1
@@ -310,7 +270,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Margin Margin2
 		{
@@ -319,7 +278,6 @@ namespace ScintillaNET
 				return _margin2;
 			}
 		}
-
 
 		[Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Margin Margin3
@@ -330,7 +288,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(true), DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public Margin Margin4
 		{
@@ -339,7 +296,6 @@ namespace ScintillaNET
 				return _margin4;
 			}
 		}
-
 
 		public int Right
 		{
@@ -353,7 +309,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Margin this[int number]
 		{
 			get
@@ -365,12 +320,16 @@ namespace ScintillaNET
 				{
 					case 0:
 						return _margin0;
+
 					case 1:
 						return _margin1;
+
 					case 2:
 						return _margin2;
+
 					case 3:
 						return _margin3;
+
 					case 4:
 						return _margin4;
 				}
@@ -380,7 +339,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

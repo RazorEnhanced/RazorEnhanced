@@ -1,14 +1,8 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	// TODO: SHOULD HAVE [Flags] here ?, with Base and NumberMask extracted out?
 	/// <summary>
-	///     The flags that are stored along with the fold level. 
+	///     The flags that are stored along with the fold level.
 	/// </summary>
 	public enum FoldLevel
 	{

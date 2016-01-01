@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -18,7 +17,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		private void ResetFlags()
@@ -26,24 +24,20 @@ namespace ScintillaNET
 			Flags = (FoldFlag)0;
 		}
 
-
 		private void ResetIsEnabled()
 		{
 			IsEnabled = true;
 		}
-
 
 		private void ResetMarkerScheme()
 		{
 			MarkerScheme = FoldMarkerScheme.BoxPlusMinus;
 		}
 
-
 		private void ResetUseCompactFolding()
 		{
 			UseCompactFolding = false;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -53,24 +47,20 @@ namespace ScintillaNET
 				ShouldSerializeUseCompactFolding();
 		}
 
-
 		private bool ShouldSerializeFlags()
 		{
 			return (int)Flags != 0;
 		}
-
 
 		private bool ShouldSerializeIsEnabled()
 		{
 			return !IsEnabled;
 		}
 
-
 		private bool ShouldSerializeMarkerScheme()
 		{
 			return _markerScheme != FoldMarkerScheme.BoxPlusMinus;
 		}
-
 
 		private bool ShouldSerializeUseCompactFolding()
 		{
@@ -78,7 +68,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -99,7 +88,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsEnabled
 		{
 			get
@@ -119,11 +107,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Read or change the Fold Marker Scheme. This changes the way Scintilla displays folds
 		///     in the control. The default is BoxPlusMinus and the value Custom can be used to disable
-		///     ScintillaNET changing selections made directly using MarkerCollection.FolderXX methods. 
+		///     ScintillaNET changing selections made directly using MarkerCollection.FolderXX methods.
 		/// </summary>
 		public FoldMarkerScheme MarkerScheme
 		{
@@ -167,6 +154,7 @@ namespace ScintillaNET
 						mc.FolderSub.SetSymbolInternal(MarkerSymbol.Empty);
 						mc.FolderTail.SetSymbolInternal(MarkerSymbol.Empty);
 						break;
+
 					case FoldMarkerScheme.BoxPlusMinus:
 						mc.Folder.SetSymbolInternal(MarkerSymbol.BoxPlus);
 						mc.FolderEnd.SetSymbolInternal(MarkerSymbol.BoxPlusConnected);
@@ -176,6 +164,7 @@ namespace ScintillaNET
 						mc.FolderSub.SetSymbolInternal(MarkerSymbol.VLine);
 						mc.FolderTail.SetSymbolInternal(MarkerSymbol.LCorner);
 						break;
+
 					case FoldMarkerScheme.CirclePlusMinus:
 						mc.Folder.SetSymbolInternal(MarkerSymbol.CirclePlus);
 						mc.FolderEnd.SetSymbolInternal(MarkerSymbol.CirclePlusConnected);
@@ -185,6 +174,7 @@ namespace ScintillaNET
 						mc.FolderSub.SetSymbolInternal(MarkerSymbol.VLine);
 						mc.FolderTail.SetSymbolInternal(MarkerSymbol.LCornerCurve);
 						break;
+
 					case FoldMarkerScheme.PlusMinus:
 						mc.Folder.SetSymbolInternal(MarkerSymbol.Plus);
 						mc.FolderEnd.SetSymbolInternal(MarkerSymbol.Empty);
@@ -197,7 +187,6 @@ namespace ScintillaNET
 				}
 			}
 		}
-
 
 		/// <summary>
 		///     Read or change the value controlling whether to use compact folding from the lexer.
@@ -222,7 +211,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		internal Folding(Scintilla scintilla) : base(scintilla)
@@ -234,5 +222,4 @@ namespace ScintillaNET
 
 		#endregion Constructors
 	}
-
 }

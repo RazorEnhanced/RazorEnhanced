@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Internal
 {
 	internal static partial class NativeMethods
@@ -43,13 +42,11 @@ namespace ScintillaNET.Internal
 
 		#endregion Constants
 
-
 		#region Fields
 
 		internal static readonly IntPtr HWND_MESSAGE = new IntPtr(-3);
 
 		#endregion Fields
-
 
 		#region Structures
 
@@ -63,7 +60,6 @@ namespace ScintillaNET.Internal
 		}
 
 		#endregion Structures
-
 
 		#region Functions
 

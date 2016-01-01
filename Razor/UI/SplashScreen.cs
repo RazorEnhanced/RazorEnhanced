@@ -7,6 +7,7 @@ namespace Assistant
 	{
 		private static SplashScreen m_Screen;
 		internal static SplashScreen Instance { get { return m_Screen; } }
+
 		internal static void Start()
 		{
 			if (m_Screen == null)
@@ -22,6 +23,7 @@ namespace Assistant
 		}
 
 		private delegate void CloseDelegate();
+
 		internal static void End()
 		{
 			if (m_Screen != null)
@@ -34,6 +36,7 @@ namespace Assistant
 		}
 
 		private delegate void SetMsgDelegate(SplashScreen screen, string arg);
+
 		private static void SetMessage(SplashScreen screen, string msg)
 		{
 			//screen.message.Text = msg;
@@ -75,6 +78,7 @@ namespace Assistant
 			{
 			}
 		}
+
 		private System.ComponentModel.Container components = null;
 
 		internal SplashScreen()
@@ -104,6 +108,7 @@ namespace Assistant
 		}
 
 		#region Windows Form Designer generated code
+
 		/// <summary>
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
@@ -111,9 +116,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.SuspendLayout();
-			// 
+			//
 			// SplashScreen
-			// 
+			//
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.White;
 			this.BackgroundImage = global::Assistant.Properties.Resources.razor_enhanced_splash;
@@ -130,9 +135,9 @@ namespace Assistant
 			this.TransparencyKey = System.Drawing.Color.White;
 			this.Load += new System.EventHandler(this.SplashScreen_Load);
 			this.ResumeLayout(false);
-
 		}
-		#endregion
+
+		#endregion Windows Form Designer generated code
 
 		private void SplashScreen_Load(object sender, System.EventArgs e)
 		{

@@ -140,6 +140,7 @@ namespace Ultima
 		}
 
 		#region SortComparer
+
 		public class IDComparer : IComparer<SpeechEntry>
 		{
 			private bool m_desc;
@@ -189,8 +190,7 @@ namespace Ultima
 			}
 		}
 
-		#endregion
-
+		#endregion SortComparer
 	}
 
 	public sealed class SpeechEntry

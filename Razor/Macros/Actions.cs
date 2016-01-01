@@ -6,6 +6,7 @@ using System.Windows.Forms;
 namespace Assistant.Macros
 {
 	internal delegate void MacroMenuCallback(object[] Args);
+
 	internal class MacroMenuItem : MenuItem
 	{
 		private MacroMenuCallback m_Call;
@@ -72,6 +73,7 @@ namespace Assistant.Macros
 		}
 
 		internal abstract bool PerformWait();
+
 		internal TimeSpan Timeout { get { return m_Timeout; } }
 		internal DateTime StartTime { get { return m_Start; } set { m_Start = value; } }
 
@@ -130,6 +132,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -195,6 +198,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -325,6 +329,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -412,6 +417,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -462,6 +468,7 @@ namespace Assistant.Macros
 		}
 
 		private int m_Id;
+
 		internal override bool Perform()
 		{
 			Item item = World.Player.Backpack != null ? World.Player.Backpack.FindItemByID(m_Gfx) : null;
@@ -508,6 +515,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -606,6 +614,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_To.IsValid)
@@ -813,6 +822,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -927,6 +937,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -1010,6 +1021,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -1193,12 +1205,15 @@ namespace Assistant.Macros
 				case MessageType.Emote:
 					sb.Append("Emote: ");
 					break;
+
 				case MessageType.Whisper:
 					sb.Append("Whisper: ");
 					break;
+
 				case MessageType.Yell:
 					sb.Append("Yell: ");
 					break;
+
 				case MessageType.Regular:
 				default:
 					sb.Append("Say: ");
@@ -1512,6 +1527,7 @@ namespace Assistant.Macros
 		}
 	}
 */
+
 	internal class WalkAction : MacroWaitAction
 	{
 		private Direction m_Dir;
@@ -1530,6 +1546,7 @@ namespace Assistant.Macros
 		}
 
 		private static int m_LastSeq = -1;
+
 		internal override bool Perform()
 		{
 			return !PerformWait();
@@ -1629,6 +1646,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -1722,6 +1740,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -1796,6 +1815,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -1860,6 +1880,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -1933,8 +1954,10 @@ namespace Assistant.Macros
 				{
 					case IfAction.IfVarType.Hits:
 						return World.Player.Hits < m_Value;
+
 					case IfAction.IfVarType.Mana:
 						return World.Player.Mana < m_Value;
+
 					case IfAction.IfVarType.Stamina:
 						return World.Player.Stam < m_Value;
 				}
@@ -1946,8 +1969,10 @@ namespace Assistant.Macros
 				{
 					case IfAction.IfVarType.Hits:
 						return World.Player.Hits > m_Value;
+
 					case IfAction.IfVarType.Mana:
 						return World.Player.Mana > m_Value;
+
 					case IfAction.IfVarType.Stamina:
 						return World.Player.Stam > m_Value;
 				}
@@ -1962,6 +1987,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -2086,10 +2112,13 @@ namespace Assistant.Macros
 							{
 								case IfVarType.Hits:
 									return World.Player.Hits >= val;
+
 								case IfVarType.Mana:
 									return World.Player.Mana >= val;
+
 								case IfVarType.Stamina:
 									return World.Player.Stam >= val;
+
 								case IfVarType.Weight:
 									return World.Player.Weight >= val;
 							}
@@ -2101,10 +2130,13 @@ namespace Assistant.Macros
 							{
 								case IfVarType.Hits:
 									return World.Player.Hits <= val;
+
 								case IfVarType.Mana:
 									return World.Player.Mana <= val;
+
 								case IfVarType.Stamina:
 									return World.Player.Stam <= val;
+
 								case IfVarType.Weight:
 									return World.Player.Weight <= val;
 							}
@@ -2188,8 +2220,10 @@ namespace Assistant.Macros
 				case IfVarType.Stamina:
 				case IfVarType.Weight:
 					return String.Format("If ( {0} {1} {2} )", m_Var, m_Direction > 0 ? ">=" : "<=", m_Value);
+
 				case IfVarType.Poisoned:
 					return "If ( Poisoned )";
+
 				case IfVarType.SysMessage:
 					{
 						string str = (string)m_Value;
@@ -2199,18 +2233,23 @@ namespace Assistant.Macros
 					}
 				case IfVarType.Mounted:
 					return "If ( Mounted )";
+
 				case IfVarType.RHandEmpty:
 					return "If ( R-Hand Empty )";
+
 				case IfVarType.LHandEmpty:
 					return "If ( L-Hand Empty )";
+
 				case IfVarType.Counter:
 					return String.Format("If ( \"{0} count\" {1} {2} )", m_Counter, m_Direction > 0 ? ">=" : "<=", m_Value);
+
 				default:
 					return "If ( ??? )";
 			}
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -2343,6 +2382,7 @@ namespace Assistant.Macros
 		}
 
 		private MenuItem[] m_MenuItems;
+
 		internal override MenuItem[] GetContextMenuItems()
 		{
 			if (m_MenuItems == null)
@@ -2441,4 +2481,3 @@ namespace Assistant.Macros
 		}
 	}
 }
-

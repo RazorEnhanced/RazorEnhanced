@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -19,7 +18,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Properties
 
 		/// <summary>
@@ -29,7 +27,6 @@ namespace ScintillaNET
 		{
 			get { return _firstLine; }
 		}
-
 
 		/// <summary>
 		///     Returns the last (bottom) line that needs to be shown
@@ -41,7 +38,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

@@ -157,9 +157,11 @@ namespace Assistant
 		{
 			//public byte Seq;
 			internal Direction Dir;
+
 			//public int x;
 			//public int y;
 			internal Point3D Position;
+
 			internal bool IsStep;
 
 			internal bool FilterAck;
@@ -190,9 +192,11 @@ namespace Assistant
 		private int[] m_MapPatches = new int[10];
 
 		private bool m_SkillsSent;
+
 		//private Item m_Holding;
 		//private ushort m_HoldAmt;
 		private ConcurrentDictionary<byte, MoveEntry> m_MoveInfo;
+
 		private Timer m_CriminalTime;
 		private DateTime m_CriminalStart = DateTime.MinValue;
 		private byte m_WalkSeq;
@@ -529,6 +533,7 @@ namespace Assistant
 		}
 
 		private static Timer m_OpenDoorReq = Timer.DelayedCallback(TimeSpan.FromSeconds(0.005), new TimerCallback(OpenDoor));
+
 		private static void OpenDoor()
 		{
 			if (World.Player != null)
@@ -684,7 +689,6 @@ namespace Assistant
 				}
 			}
 
-
 			List<Item> items = new List<Item>(World.Items.Values);
 			foreach (Item item in items)
 			{
@@ -734,7 +738,7 @@ namespace Assistant
 			Counter.Reset();
 
 			Contains.Clear();
-			
+
 			World.AddMobile( this );
 
 			ClientCommunication.PostMapChange( cur );
@@ -771,6 +775,7 @@ namespace Assistant
 		private class CriminalTimer : Timer
 		{
 			private PlayerData m_Player;
+
 			internal CriminalTimer(PlayerData player)
 				: base(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1))
 			{
@@ -850,11 +855,11 @@ namespace Assistant
 
 		internal uint CurrentGumpS, CurrentGumpI;
 		internal bool HasGump;
-        internal bool HasPrompt;
-        internal uint PromptSenderSerial;
-        internal uint PromptID;
-        internal uint PromptType;
-        internal List<string> CurrentGumpStrings = new List<string>();
+		internal bool HasPrompt;
+		internal uint PromptSenderSerial;
+		internal uint PromptID;
+		internal uint PromptType;
+		internal List<string> CurrentGumpStrings = new List<string>();
 		internal Queue<RazorEnhanced.Journal.JournalEntry> Journal = new Queue<RazorEnhanced.Journal.JournalEntry>();
 		internal uint CurrentMenuS;
 		internal ushort CurrentMenuI;

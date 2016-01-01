@@ -8,11 +8,10 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
-	///     Represents the scrolling options of a <see cref="Scintilla"/> control. 
+	///     Represents the scrolling options of a <see cref="Scintilla"/> control.
 	/// </summary>
 	[TypeConverterAttribute(typeof(ScintillaExpandableObjectConverter))]
 	public class Scrolling
@@ -22,7 +21,6 @@ namespace ScintillaNET
 		private Scintilla _scintilla;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -37,7 +35,6 @@ namespace ScintillaNET
 			_scintilla.DirectMessage(NativeMethods.SCI_LINESCROLL, new IntPtr(columns), new IntPtr(lines));
 		}
 
-
 		/// <summary>
 		///     Scrolls the contents of the control to the current caret position.
 		/// </summary>
@@ -45,7 +42,6 @@ namespace ScintillaNET
 		{
 			_scintilla.DirectMessage(NativeMethods.SCI_SCROLLCARET, IntPtr.Zero, IntPtr.Zero);
 		}
-
 
 		/// <summary>
 		///     Scrolls the contents of the control to the line index specified.
@@ -62,7 +58,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -88,7 +83,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets whether the <see cref="Scintilla" /> control automatically increases the horizontal
 		///     scroll width based on the text width.
@@ -113,7 +107,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the number of pixels by which the <see cref="Scintilla" /> control can scroll horizontally.
 		/// </summary>
@@ -136,7 +129,6 @@ namespace ScintillaNET
 					_scintilla.DirectMessage(NativeMethods.SCI_SETSCROLLWIDTH, (IntPtr)value, IntPtr.Zero);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets which scroll bars should appear in a <see cref="Scintilla" /> control.
@@ -184,7 +176,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets whether vertical scrolling is allowed past the last line of text
 		///     in a <see cref="Scintilla" /> control
@@ -210,7 +201,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

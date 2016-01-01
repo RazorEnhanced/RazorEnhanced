@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Provides data for the MarkerChanged event
@@ -16,7 +10,6 @@ namespace ScintillaNET
 		private int _line;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -36,7 +29,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

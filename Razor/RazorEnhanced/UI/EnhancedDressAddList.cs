@@ -2,7 +2,6 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedDressAddList : Form
@@ -15,7 +14,6 @@ namespace RazorEnhanced.UI
 			MaximizeBox = false;
 			this.Text = m_Title;
 		}
-
 
 		private void dresscloseItemList_Click(object sender, EventArgs e)
 		{

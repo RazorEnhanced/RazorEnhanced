@@ -12,7 +12,6 @@ using System.Globalization;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -29,7 +28,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -43,7 +41,6 @@ namespace ScintillaNET
 
 			return false;
 		}
-
 
 		/// <summary>
 		///     Determines whether the specified indicator is equal to the current indicator.
@@ -61,7 +58,6 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		private Color GetDefaultColor()
 		{
 			if (_index == 0)
@@ -74,7 +70,6 @@ namespace ScintillaNET
 				return Color.FromArgb(0, 0, 0);
 		}
 
-
 		private IndicatorStyle GetDefaultStyle()
 		{
 			if (_index == 0)
@@ -85,7 +80,6 @@ namespace ScintillaNET
 				return IndicatorStyle.Plain;
 		}
 
-
 		/// <summary>
 		///     Overridden. See <see cref="Object.GetHashCode" />.
 		/// </summary>
@@ -93,7 +87,6 @@ namespace ScintillaNET
 		{
 			return _scintilla.GetHashCode() ^ _index;
 		}
-
 
 		/// <summary>
 		///     Resets all indicator display properties to their respective defaults.
@@ -107,12 +100,10 @@ namespace ScintillaNET
 			Style = GetDefaultStyle();
 		}
 
-
 		public Range Search()
 		{
 			return Search(_scintilla.GetRange());
 		}
-
 
 		public Range Search(Range searchRange)
 		{
@@ -121,10 +112,8 @@ namespace ScintillaNET
 			if (foundStart < 0 || foundStart > searchRange.End || foundStart == foundEnd)
 				return null;
 
-
 			return new Range(foundStart, foundEnd, _scintilla);
 		}
-
 
 		public Range Search(Range searchRange, Range startingAfterRange)
 		{
@@ -140,12 +129,10 @@ namespace ScintillaNET
 			return new Range(foundStart, foundEnd, _scintilla);
 		}
 
-
 		public List<Range> SearchAll()
 		{
 			return SearchAll(_scintilla.GetRange());
 		}
-
 
 		public List<Range> SearchAll(Range searchRange)
 		{
@@ -162,7 +149,6 @@ namespace ScintillaNET
 			return ret;
 		}
 
-
 		/// <summary>
 		///     Overridden. See <see cref="Object.ToString" />.
 		/// </summary>
@@ -175,7 +161,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -207,7 +192,6 @@ namespace ScintillaNET
 				}
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the color of the indicator.
@@ -261,7 +245,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the draw mode for applying indicators to text.
 		/// </summary>
@@ -296,7 +279,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the index this indicator represents in a <see cref="Scintlla" /> control.
 		/// </summary>
@@ -311,7 +293,6 @@ namespace ScintillaNET
 				return _index;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the alpha transparency value used for drawing the outline color of the
@@ -341,7 +322,6 @@ namespace ScintillaNET
 				}
 			}
 		}
-
 
 		/// <summary>
 		///     Gets or sets the display style of the indicator.
@@ -380,7 +360,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

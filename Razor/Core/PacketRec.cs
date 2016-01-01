@@ -91,7 +91,7 @@ namespace Assistant
 			}
 			else if (Playing)
 			{
-				//ClientCommunication.SetDeathMsg( Language.GetString( LocString.PacketPlayerStop + Utility.Random( 10 ) ) ); 
+				//ClientCommunication.SetDeathMsg( Language.GetString( LocString.PacketPlayerStop + Utility.Random( 10 ) ) );
 				ClientCommunication.ForceSendToClient(new DeathStatus(true));
 
 				RemoveAll();
@@ -150,7 +150,7 @@ namespace Assistant
 			do
 			{
 				filename = Path.Combine(path, String.Format("{0}{1}.rpv", name, count != 0 ? count.ToString() : ""));
-				count--; // cause a - to be put in front of the number 
+				count--; // cause a - to be put in front of the number
 			}
 			while (File.Exists(filename));
 
@@ -233,7 +233,6 @@ namespace Assistant
 			{
 				if (World.Player == null)
 					return true;
-
 
 				switch (p.PacketID)
 				{
@@ -980,6 +979,7 @@ namespace Assistant
 		private class ScrollTimer : Timer
 		{
 			private DateTime m_LastPing;
+
 			internal ScrollTimer()
 				: base(TimeSpan.Zero, TimeSpan.FromSeconds(1))
 			{

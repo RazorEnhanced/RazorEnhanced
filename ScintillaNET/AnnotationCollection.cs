@@ -8,7 +8,6 @@ using System.ComponentModel;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -27,7 +26,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -38,7 +36,6 @@ namespace ScintillaNET
 		{
 			_scintilla.DirectMessage(NativeMethods.SCI_ANNOTATIONCLEARALL, IntPtr.Zero, IntPtr.Zero);
 		}
-
 
 		/*
         /// <summary>
@@ -73,7 +70,6 @@ namespace ScintillaNET
         }
         */
 
-
 		/// <summary>
 		///     Creates and returns a new <see cref="Annotation" /> object.
 		/// </summary>
@@ -84,7 +80,6 @@ namespace ScintillaNET
 			return new Annotation(_scintilla, lineIndex);
 		}
 
-
 		/// <summary>
 		///     Returns an enumerator for the <see cref="AnnotationCollection" />.
 		/// </summary>
@@ -94,14 +89,12 @@ namespace ScintillaNET
 			return new AnnotationCollectionEnumerator(this);
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return Visibility != AnnotationsVisibility.Hidden;
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -122,7 +115,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/*
         bool ICollection.IsSynchronized
         {
@@ -140,7 +132,6 @@ namespace ScintillaNET
             }
         }
         */
-
 
 		/// <summary>
 		///     Gets or sets the offset applied to style indexes used in annotations.
@@ -171,7 +162,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets or sets the visibility style for all annotations.
 		/// </summary>
@@ -201,7 +191,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Indexers
 
 		/// <summary>
@@ -227,7 +216,6 @@ namespace ScintillaNET
 
 		#endregion Indexers
 
-
 		#region Constructors
 
 		/// <summary>
@@ -240,7 +228,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Constructors
-
 
 		#region Types
 
@@ -260,12 +247,10 @@ namespace ScintillaNET
 				return true;
 			}
 
-
 			public void Reset()
 			{
 				_index = -1;
 			}
-
 
 			public object Current
 			{
@@ -284,7 +269,6 @@ namespace ScintillaNET
 					}
 				}
 			}
-
 
 			public AnnotationCollectionEnumerator(AnnotationCollection collection)
 			{

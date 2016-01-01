@@ -6,7 +6,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -32,7 +31,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -54,13 +52,16 @@ namespace ScintillaNET
 				case PageInformationBorder.Top:
 					oGraphics.DrawLine(oPen, oBounds.Left, oBounds.Top, oBounds.Right, oBounds.Top);
 					break;
+
 				case PageInformationBorder.Bottom:
 					oGraphics.DrawLine(oPen, oBounds.Left, oBounds.Bottom, oBounds.Right, oBounds.Bottom);
 					break;
+
 				case PageInformationBorder.Box:
 					oGraphics.DrawRectangle(oPen, oBounds);
 					oBounds = new Rectangle(oBounds.Left + _iBorderSpace, oBounds.Top, oBounds.Width - (2 * _iBorderSpace), oBounds.Height);
 					break;
+
 				case PageInformationBorder.None:
 				default:
 					break;
@@ -76,9 +77,11 @@ namespace ScintillaNET
 				case InformationType.DocumentName:
 					oGraphics.DrawString(strDocumentName, _oFont, oBrush, oBounds, oFormat);
 					break;
+
 				case InformationType.PageNumber:
 					oGraphics.DrawString("Page " + iPageNumber, _oFont, oBrush, oBounds, oFormat);
 					break;
+
 				case InformationType.Nothing:
 				default:
 					break;
@@ -91,9 +94,11 @@ namespace ScintillaNET
 				case InformationType.DocumentName:
 					oGraphics.DrawString(strDocumentName, _oFont, oBrush, oBounds, oFormat);
 					break;
+
 				case InformationType.PageNumber:
 					oGraphics.DrawString("Page " + iPageNumber, _oFont, oBrush, oBounds, oFormat);
 					break;
+
 				case InformationType.Nothing:
 				default:
 					break;
@@ -106,9 +111,11 @@ namespace ScintillaNET
 				case InformationType.DocumentName:
 					oGraphics.DrawString(strDocumentName, _oFont, oBrush, oBounds, oFormat);
 					break;
+
 				case InformationType.PageNumber:
 					oGraphics.DrawString("Page " + iPageNumber, _oFont, oBrush, oBounds, oFormat);
 					break;
+
 				case InformationType.Nothing:
 				default:
 					break;
@@ -116,7 +123,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -129,7 +135,6 @@ namespace ScintillaNET
 			set { _eBorder = value; }
 		}
 
-
 		/// <summary>
 		///     Information printed in the center of the Page Information section
 		/// </summary>
@@ -138,7 +143,6 @@ namespace ScintillaNET
 			get { return _eCenter; }
 			set { _eCenter = value; }
 		}
-
 
 		/// <summary>
 		///     Whether there is a need to display this item, true if left, center, or right are not nothing.
@@ -154,7 +158,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Font used in printing the Page Information section
 		/// </summary>
@@ -163,7 +166,6 @@ namespace ScintillaNET
 			get { return _oFont; }
 			set { _oFont = value; }
 		}
-
 
 		/// <summary>
 		///     Height required to draw the Page Information section based on the options selected.
@@ -195,7 +197,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Information printed on the left side of the Page Information section
 		/// </summary>
@@ -205,7 +206,6 @@ namespace ScintillaNET
 			set { _eLeft = value; }
 		}
 
-
 		/// <summary>
 		///     Space between the Page Information section and the rest of the page
 		/// </summary>
@@ -214,7 +214,6 @@ namespace ScintillaNET
 			get { return _iMargin; }
 			set { _iMargin = value; }
 		}
-
 
 		/// <summary>
 		///     Information printed on the right side of the Page Information section
@@ -227,7 +226,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		/// <summary>
@@ -236,7 +234,6 @@ namespace ScintillaNET
 		public PageInformation() : this(PageInformationBorder.None, InformationType.Nothing, InformationType.Nothing, InformationType.Nothing)
 		{
 		}
-
 
 		/// <summary>
 		///     Full Constructor
@@ -256,7 +253,6 @@ namespace ScintillaNET
 			_eCenter = eCenter;
 			_eRight = eRight;
 		}
-
 
 		/// <summary>
 		///     Normal Use Constructor

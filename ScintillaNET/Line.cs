@@ -10,7 +10,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public MarkerInstance AddMarker(int markerNumber)
@@ -18,12 +17,10 @@ namespace ScintillaNET
 			return new MarkerInstance(Scintilla, new Marker(Scintilla, markerNumber), NativeScintilla.MarkerAdd(_number, markerNumber));
 		}
 
-
 		public MarkerInstance AddMarker(Marker marker)
 		{
 			return new MarkerInstance(Scintilla, marker, NativeScintilla.MarkerAdd(_number, marker.Number));
 		}
-
 
 		public Line AddMarkerSet(uint markerMask)
 		{
@@ -31,13 +28,11 @@ namespace ScintillaNET
 			return this;
 		}
 
-
 		public Line AddMarkerSet(IEnumerable<Marker> markers)
 		{
 			AddMarkerSet(Utilities.GetMarkerMask(markers));
 			return this;
 		}
-
 
 		public Line AddMarkerSet(IEnumerable<int> markers)
 		{
@@ -45,13 +40,11 @@ namespace ScintillaNET
 			return this;
 		}
 
-
 		public Line DeleteAllMarkers()
 		{
 			DeleteMarker(-1);
 			return this;
 		}
-
 
 		public Line DeleteMarker(int markerNumber)
 		{
@@ -59,13 +52,11 @@ namespace ScintillaNET
 			return this;
 		}
 
-
 		public Line DeleteMarker(Marker marker)
 		{
 			NativeScintilla.MarkerDelete(_number, marker.Number);
 			return this;
 		}
-
 
 		public Line DeleteMarkerSet(IEnumerable<int> markerNumbers)
 		{
@@ -75,7 +66,6 @@ namespace ScintillaNET
 			return this;
 		}
 
-
 		public Line DeleteMarkerSet(IEnumerable<Marker> markers)
 		{
 			foreach (Marker m in markers)
@@ -84,12 +74,10 @@ namespace ScintillaNET
 			return this;
 		}
 
-
 		public void EnsureVisible()
 		{
 			NativeScintilla.EnsureVisible(_number);
 		}
-
 
 		public override bool Equals(object obj)
 		{
@@ -100,12 +88,10 @@ namespace ScintillaNET
 			return l.Scintilla == Scintilla && l._number == _number;
 		}
 
-
 		public Line FindNextMarker(Marker marker)
 		{
 			return FindNextMarker(marker.Mask);
 		}
-
 
 		public Line FindNextMarker(uint markerMask)
 		{
@@ -116,24 +102,20 @@ namespace ScintillaNET
 			return Scintilla.Lines[foundLine];
 		}
 
-
 		public Line FindNextMarker(IEnumerable<int> markers)
 		{
 			return FindNextMarker(Utilities.GetMarkerMask(markers));
 		}
-
 
 		public Line FindNextMarker(IEnumerable<Marker> markers)
 		{
 			return FindNextMarker(Utilities.GetMarkerMask(markers));
 		}
 
-
 		public Line FindPreviousMarker(Marker marker)
 		{
 			return FindPreviousMarker(marker.Mask);
 		}
-
 
 		public Line FindPreviousMarker(uint markerMask)
 		{
@@ -144,30 +126,25 @@ namespace ScintillaNET
 			return Scintilla.Lines[foundLine];
 		}
 
-
 		public Line FindPreviousMarker(IEnumerable<int> markers)
 		{
 			return FindPreviousMarker(Utilities.GetMarkerMask(markers));
 		}
-
 
 		public Line FindPreviousMarker(IEnumerable<Marker> markers)
 		{
 			return FindPreviousMarker(Utilities.GetMarkerMask(markers));
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
-
 		public Line GetLastFoldChild()
 		{
 			return GetLastFoldChild(-1);
 		}
-
 
 		public Line GetLastFoldChild(int level)
 		{
@@ -178,12 +155,10 @@ namespace ScintillaNET
 			return new Line(Scintilla, num);
 		}
 
-
 		public int GetMarkerMask()
 		{
 			return NativeScintilla.MarkerGet(_number);
 		}
-
 
 		public List<Marker> GetMarkers()
 		{
@@ -200,24 +175,20 @@ namespace ScintillaNET
 			return ret;
 		}
 
-
 		public void Goto()
 		{
 			NativeScintilla.GotoLine(_number);
 		}
-
 
 		public void Select()
 		{
 			NativeScintilla.SetSel(StartPosition, EndPosition);
 		}
 
-
 		public void ToggleFoldExpanded()
 		{
 			NativeScintilla.ToggleFold(_number);
 		}
-
 
 		public override string ToString()
 		{
@@ -225,7 +196,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -236,7 +206,6 @@ namespace ScintillaNET
 				return NativeScintilla.GetLineEndPosition(_number);
 			}
 		}
-
 
 		public bool FoldExpanded
 		{
@@ -249,7 +218,6 @@ namespace ScintillaNET
 				NativeScintilla.SetFoldExpanded(_number, value);
 			}
 		}
-
 
 		public int FoldLevel
 		{
@@ -264,7 +232,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line FoldParent
 		{
 			get
@@ -277,7 +244,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int Height
 		{
 			get
@@ -285,7 +251,6 @@ namespace ScintillaNET
 				return NativeScintilla.TextHeight(_number);
 			}
 		}
-
 
 		public int Indentation
 		{
@@ -299,7 +264,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int IndentPosition
 		{
 			get
@@ -307,7 +271,6 @@ namespace ScintillaNET
 				return NativeScintilla.GetLineIndentPosition(_number);
 			}
 		}
-
 
 		public bool IsFoldPoint
 		{
@@ -324,7 +287,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsFoldWhitespace
 		{
 			get
@@ -339,7 +301,6 @@ namespace ScintillaNET
 					NativeScintilla.SetFoldLevel(_number, NativeScintilla.GetFoldLevel(_number) & ~Constants.SC_FOLDLEVELWHITEFLAG);
 			}
 		}
-
 
 		public bool IsVisible
 		{
@@ -356,7 +317,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int Length
 		{
 			get
@@ -364,7 +324,6 @@ namespace ScintillaNET
 				return NativeScintilla.LineLength(_number);
 			}
 		}
-
 
 		public int LineState
 		{
@@ -378,7 +337,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line Next
 		{
 			get
@@ -386,7 +344,6 @@ namespace ScintillaNET
 				return new Line(Scintilla, _number + 1);
 			}
 		}
-
 
 		public int Number
 		{
@@ -400,7 +357,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line Previous
 		{
 			get
@@ -408,7 +364,6 @@ namespace ScintillaNET
 				return new Line(Scintilla, _number - 1);
 			}
 		}
-
 
 		public Range Range
 		{
@@ -418,7 +373,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int SelectionEndPosition
 		{
 			get
@@ -426,7 +380,6 @@ namespace ScintillaNET
 				return NativeScintilla.GetLineSelEndPosition(_number);
 			}
 		}
-
 
 		public int SelectionStartPosition
 		{
@@ -436,7 +389,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int StartPosition
 		{
 			get
@@ -444,7 +396,6 @@ namespace ScintillaNET
 				return NativeScintilla.PositionFromLine(_number);
 			}
 		}
-
 
 		public string Text
 		{
@@ -462,7 +413,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int VisibleLineNumber
 		{
 			get
@@ -472,7 +422,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

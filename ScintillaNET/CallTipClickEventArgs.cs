@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -24,7 +23,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Properties
 
 		/// <summary>
@@ -37,7 +35,6 @@ namespace ScintillaNET
 				return _callTipArrow;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets if the CallTip should be hidden
@@ -54,7 +51,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets the current index of the CallTip's overload list
 		/// </summary>
@@ -65,7 +61,6 @@ namespace ScintillaNET
 				return _currentIndex;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the _end position of the CallTip's highlighted portion of text
@@ -82,7 +77,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets the _start position of the CallTip's highlighted portion of text
 		/// </summary>
@@ -97,7 +91,6 @@ namespace ScintillaNET
 				_highlightStart = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the new index of the CallTip's overload list
@@ -114,7 +107,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns the OverLoad list of the CallTip
 		/// </summary>
@@ -127,7 +119,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

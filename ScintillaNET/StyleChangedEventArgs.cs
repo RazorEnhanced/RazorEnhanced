@@ -1,16 +1,10 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET
+﻿namespace ScintillaNET
 {
 	/// <summary>
 	///     Provides data for the StyleChanged event
 	/// </summary>
 	/// <remarks>
-	///     StyleChangedEventHandler is used for the StyleChanged Event which is also used as 
+	///     StyleChangedEventHandler is used for the StyleChanged Event which is also used as
 	///     a more specific abstraction around the SCN_MODIFIED notification message.
 	/// </remarks>
 	public class StyleChangedEventArgs : ModifiedEventArgs
@@ -21,7 +15,6 @@ namespace ScintillaNET
 		private int _position;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -36,7 +29,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns the starting document position where the style has been changed
 		/// </summary>
@@ -49,7 +41,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

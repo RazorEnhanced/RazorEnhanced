@@ -1,9 +1,3 @@
-#region Using Directives
-
-
-#endregion Using Directives
-
-
 namespace ScintillaNET.Configuration
 {
 	public class MarginConfig
@@ -21,7 +15,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Fields
 
-
 		#region Properties
 
 		public int? AutoToggleMarkerNumber
@@ -36,7 +29,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Inherit
 		{
 			get
@@ -48,7 +40,6 @@ namespace ScintillaNET.Configuration
 				_inherit = value;
 			}
 		}
-
 
 		public bool? IsClickable
 		{
@@ -62,7 +53,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? IsFoldMargin
 		{
 			get
@@ -74,7 +64,6 @@ namespace ScintillaNET.Configuration
 				_isFoldMargin = value;
 			}
 		}
-
 
 		public bool? IsMarkerMargin
 		{
@@ -88,7 +77,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int Number
 		{
 			get
@@ -101,7 +89,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public MarginType? Type
 		{
 			get
@@ -113,7 +100,6 @@ namespace ScintillaNET.Configuration
 				_type = value;
 			}
 		}
-
 
 		public int? Width
 		{

@@ -6,47 +6,47 @@
 
 OSIEncryption::OSIEncryption()
 {
-	memset( &m_Key, 0, sizeof(m_Key) );
-	memset( &m_Cipher, 0, sizeof(m_Cipher) );
-	memset( m_TFTable, 0, 256 );
-	memset( m_XORTable, 0, 16 );
+	memset(&m_Key, 0, sizeof(m_Key));
+	memset(&m_Cipher, 0, sizeof(m_Cipher));
+	memset(m_TFTable, 0, 256);
+	memset(m_XORTable, 0, 16);
 
-	Log( "XT: %X", m_XORTable );
+	Log("XT: %X", m_XORTable);
 
 	m_XORPos = m_TFPos = 0;
 }
 
-void OSIEncryption::Initialize( DWORD Seed )
+void OSIEncryption::Initialize(DWORD Seed)
 {
-	memset( &m_Key, 0, sizeof(m_Key) );
-	memset( &m_Cipher, 0, sizeof(m_Cipher) );
-	memset( m_TFTable, 0, 256 );
+	memset(&m_Key, 0, sizeof(m_Key));
+	memset(&m_Cipher, 0, sizeof(m_Cipher));
+	memset(m_TFTable, 0, 256);
 
-	makeKey( &m_Key, DIR_DECRYPT, 0x80, NULL );
+	makeKey(&m_Key, DIR_DECRYPT, 0x80, NULL);
 	m_Key.key32[0] = m_Key.key32[1] = m_Key.key32[2] = m_Key.key32[3] = Seed;
-	reKey( &m_Key );
-	cipherInit( &m_Cipher, MODE_ECB, NULL );
-	for(int i=0;i<256;i++)
+	reKey(&m_Key);
+	cipherInit(&m_Cipher, MODE_ECB, NULL);
+	for (int i = 0; i < 256; i++)
 		m_TFTable[i] = i;
 	ReinitTFTable();
 
-	MD5( m_TFTable, 256, m_XORTable );
+	MD5(m_TFTable, 256, m_XORTable);
 	m_XORPos = 0;
 }
 
 void OSIEncryption::ReinitTFTable()
 {
 	unsigned char tmpBuff[256];
-	blockEncrypt( &m_Cipher, &m_Key, m_TFTable, 256*8, tmpBuff );
-	memcpy( m_TFTable, tmpBuff, 256 );
+	blockEncrypt(&m_Cipher, &m_Key, m_TFTable, 256 * 8, tmpBuff);
+	memcpy(m_TFTable, tmpBuff, 256);
 	m_TFPos = 0;
 }
 
-void OSIEncryption::Hash( BYTE *field, const BYTE *param )
+void OSIEncryption::Hash(BYTE *field, const BYTE *param)
 {
-	unsigned int a = *((unsigned int *)(field +  0));
-	unsigned int b = *((unsigned int *)(field +  4));
-	unsigned int c = *((unsigned int *)(field +  8));
+	unsigned int a = *((unsigned int *)(field + 0));
+	unsigned int b = *((unsigned int *)(field + 4));
+	unsigned int c = *((unsigned int *)(field + 8));
 	unsigned int d = *((unsigned int *)(field + 12));
 
 	a = ((b & c) | (~b & d)) + *((unsigned int *)(param + 0x00)) + a - 0x28955B88;
@@ -148,46 +148,46 @@ void OSIEncryption::Hash( BYTE *field, const BYTE *param )
 	b = (c ^ d ^ a) + *((unsigned int *)(param + 0x08)) + b - 0x3B53A99B;
 	b = ((b << 0x17) | (b >> 0x09)) + c;
 
-	a = ((~d | b) ^ c)  + *((unsigned int *)(param + 0x00)) + a - 0x0BD6DDBC;
-	a = ((a << 0x06) | (a >> 0x1a)) + b; 
-	d = ((~c | a) ^ b)  + *((unsigned int *)(param + 0x1c)) + d + 0x432AFF97;
-	d = ((d << 0x0a) | (d >> 0x16)) + a; 
-	c = ((~b | d) ^ a)  + *((unsigned int *)(param + 0x38)) + c - 0x546BDC59;
-	c = ((c << 0x0f) | (c >> 0x11)) + d; 
-	b = ((~a | c) ^ d)  + *((unsigned int *)(param + 0x14)) + b - 0x036C5FC7;
-	b = ((b << 0x15) | (b >> 0x0b)) + c; 
-	a = ((~d | b) ^ c)  + *((unsigned int *)(param + 0x30)) + a + 0x655B59C3;
-	a = ((a << 0x06) | (a >> 0x1a)) + b; 
-	d = ((~c | a) ^ b)  + *((unsigned int *)(param + 0x0C)) + d - 0x70F3336E;
-	d = ((d << 0x0a) | (d >> 0x16)) + a; 
-	c = ((~b | d) ^ a)  + *((unsigned int *)(param + 0x28)) + c - 0x00100B83;
-	c = ((c << 0x0f) | (c >> 0x11)) + d; 
-	b = ((~a | c) ^ d)  + *((unsigned int *)(param + 0x04)) + b - 0x7A7BA22F;
-	b = ((b << 0x15) | (b >> 0x0b)) + c; 
-	a = ((~d | b) ^ c)  + *((unsigned int *)(param + 0x20)) + a + 0x6FA87E4F;
-	a = ((a << 0x06) | (a >> 0x1a)) + b; 
-	d = ((~c | a) ^ b)  + *((unsigned int *)(param + 0x3c)) + d - 0x01D31920;
-	d = ((d << 0x0a) | (d >> 0x16)) + a; 
-	c = ((~b | d) ^ a)  + *((unsigned int *)(param + 0x18)) + c - 0x5CFEBCEC;
-	c = ((c << 0x0f) | (c >> 0x11)) + d; 
-	b = ((~a | c) ^ d)  + *((unsigned int *)(param + 0x34)) + b + 0x4E0811A1;
-	b = ((b << 0x15) | (b >> 0x0b)) + c; 
-	a = ((~d | b) ^ c)  + *((unsigned int *)(param + 0x10)) + a - 0x08AC817E;
-	a = ((a << 0x06) | (a >> 0x1a)) + b; 
-	d = ((~c | a) ^ b)  + *((unsigned int *)(param + 0x2c)) + d - 0x42C50DCB;
-	d = ((d << 0x0a) | (d >> 0x16)) + a; 
-	c = ((~b | d) ^ a)  + *((unsigned int *)(param + 0x08)) + c + 0x2AD7D2BB;
-	c = ((c << 0x0f) | (c >> 0x11)) + d; 
-	b = ((~a | c) ^ d)  + *((unsigned int *)(param + 0x24)) + b - 0x14792C6F;
+	a = ((~d | b) ^ c) + *((unsigned int *)(param + 0x00)) + a - 0x0BD6DDBC;
+	a = ((a << 0x06) | (a >> 0x1a)) + b;
+	d = ((~c | a) ^ b) + *((unsigned int *)(param + 0x1c)) + d + 0x432AFF97;
+	d = ((d << 0x0a) | (d >> 0x16)) + a;
+	c = ((~b | d) ^ a) + *((unsigned int *)(param + 0x38)) + c - 0x546BDC59;
+	c = ((c << 0x0f) | (c >> 0x11)) + d;
+	b = ((~a | c) ^ d) + *((unsigned int *)(param + 0x14)) + b - 0x036C5FC7;
+	b = ((b << 0x15) | (b >> 0x0b)) + c;
+	a = ((~d | b) ^ c) + *((unsigned int *)(param + 0x30)) + a + 0x655B59C3;
+	a = ((a << 0x06) | (a >> 0x1a)) + b;
+	d = ((~c | a) ^ b) + *((unsigned int *)(param + 0x0C)) + d - 0x70F3336E;
+	d = ((d << 0x0a) | (d >> 0x16)) + a;
+	c = ((~b | d) ^ a) + *((unsigned int *)(param + 0x28)) + c - 0x00100B83;
+	c = ((c << 0x0f) | (c >> 0x11)) + d;
+	b = ((~a | c) ^ d) + *((unsigned int *)(param + 0x04)) + b - 0x7A7BA22F;
+	b = ((b << 0x15) | (b >> 0x0b)) + c;
+	a = ((~d | b) ^ c) + *((unsigned int *)(param + 0x20)) + a + 0x6FA87E4F;
+	a = ((a << 0x06) | (a >> 0x1a)) + b;
+	d = ((~c | a) ^ b) + *((unsigned int *)(param + 0x3c)) + d - 0x01D31920;
+	d = ((d << 0x0a) | (d >> 0x16)) + a;
+	c = ((~b | d) ^ a) + *((unsigned int *)(param + 0x18)) + c - 0x5CFEBCEC;
+	c = ((c << 0x0f) | (c >> 0x11)) + d;
+	b = ((~a | c) ^ d) + *((unsigned int *)(param + 0x34)) + b + 0x4E0811A1;
+	b = ((b << 0x15) | (b >> 0x0b)) + c;
+	a = ((~d | b) ^ c) + *((unsigned int *)(param + 0x10)) + a - 0x08AC817E;
+	a = ((a << 0x06) | (a >> 0x1a)) + b;
+	d = ((~c | a) ^ b) + *((unsigned int *)(param + 0x2c)) + d - 0x42C50DCB;
+	d = ((d << 0x0a) | (d >> 0x16)) + a;
+	c = ((~b | d) ^ a) + *((unsigned int *)(param + 0x08)) + c + 0x2AD7D2BB;
+	c = ((c << 0x0f) | (c >> 0x11)) + d;
+	b = ((~a | c) ^ d) + *((unsigned int *)(param + 0x24)) + b - 0x14792C6F;
 	b = ((b << 0x15) | (b >> 0x0b)) + c;
 
-	*((unsigned int *)(field +  0)) += a;
-	*((unsigned int *)(field +  4)) += b;
-	*((unsigned int *)(field +  8)) += c;
+	*((unsigned int *)(field + 0)) += a;
+	*((unsigned int *)(field + 4)) += b;
+	*((unsigned int *)(field + 8)) += c;
 	*((unsigned int *)(field + 12)) += d;
 }
 
-void OSIEncryption::CallHash( BYTE *key, const BYTE *challenge, unsigned int len )
+void OSIEncryption::CallHash(BYTE *key, const BYTE *challenge, unsigned int len)
 {
 	unsigned int *ptr1, *ptr2;
 	unsigned int a, b, c;
@@ -200,7 +200,7 @@ void OSIEncryption::CallHash( BYTE *key, const BYTE *challenge, unsigned int len
 	a += len * 8;
 	*ptr1 = a;
 
-	if ( a < (len << 3) )
+	if (a < (len << 3))
 		ptr2 += 4;
 
 	*ptr2 = *ptr2 + (len >> 0x1d);
@@ -208,17 +208,17 @@ void OSIEncryption::CallHash( BYTE *key, const BYTE *challenge, unsigned int len
 	a = 64 - b;
 	c = 0;
 
-	if ( a <= len )
+	if (a <= len)
 	{
-		memcpy( key + b + 24, challenge, a );
-		Hash( key, key + 24 );
+		memcpy(key + b + 24, challenge, a);
+		Hash(key, key + 24);
 
 		c = a;
 		a += 0x3F;
 
-		while ( a < len )
+		while (a < len)
 		{
-			Hash( key, challenge + a - 0x3f );
+			Hash(key, challenge + a - 0x3f);
 			a += 64;
 			c += 64;
 		}
@@ -226,39 +226,39 @@ void OSIEncryption::CallHash( BYTE *key, const BYTE *challenge, unsigned int len
 		b = 0;
 	}
 
-	memcpy( key + b + 24, challenge + c, len - c );
+	memcpy(key + b + 24, challenge + c, len - c);
 }
 
-void OSIEncryption::CalcResponse( BYTE *result, BYTE *field )
+void OSIEncryption::CalcResponse(BYTE *result, BYTE *field)
 {
 	BYTE buf1[0x80];
 	BYTE buf2[0x80];
 	int i;
 
-	memset( buf1, 0, 0x80 );
+	memset(buf1, 0, 0x80);
 
 	*buf1 = 0x80;
 
-	memcpy( buf2, field + 16, 8 );
+	memcpy(buf2, field + 16, 8);
 
-	i = ( int(*((unsigned int *)(buf2))) >> 3 ) & 0x3f;
+	i = (int(*((unsigned int *)(buf2))) >> 3) & 0x3f;
 
-	if ( i < 56 )
+	if (i < 56)
 		i = 56 - i;
 	else
 		i = 120 - i;
 
-	CallHash( field, buf1, i );
-	CallHash( field, buf2, 8 );
+	CallHash(field, buf1, i);
+	CallHash(field, buf2, 8);
 
-	memcpy( result, field, 16 );
+	memcpy(result, field, 16);
 }
 
-void OSIEncryption::MD5( const BYTE *input, int inLen, BYTE *output )
+void OSIEncryption::MD5(const BYTE *input, int inLen, BYTE *output)
 {
 	BYTE field[0x80];
 
-	memset( field, 0, 0x80 );
+	memset(field, 0, 0x80);
 
 	field[0x0] = 0x01;
 	field[0x1] = 0x23;
@@ -277,53 +277,51 @@ void OSIEncryption::MD5( const BYTE *input, int inLen, BYTE *output )
 	field[0xE] = 0x32;
 	field[0xF] = 0x10;
 
-	CallHash( field, input, inLen );
-	CalcResponse( output, field );
+	CallHash(field, input, inLen);
+	CalcResponse(output, field);
 }
 
 //going TO the client uses rotating XOR, going FROM the client uses TwoFish
 
-void OSIEncryption::XORCrypt( const BYTE *in, BYTE *out, int len )
+void OSIEncryption::XORCrypt(const BYTE *in, BYTE *out, int len)
 {
-	for (int i=0;i<len;i++)
+	for (int i = 0; i < len; i++)
 	{
-		out[i] = in[i] ^ m_XORTable[m_XORPos%16];
+		out[i] = in[i] ^ m_XORTable[m_XORPos % 16];
 		m_XORPos++;
 	}
 }
 
-void OSIEncryption::TwoFishCrypt( const BYTE *in, BYTE *out, int len )
+void OSIEncryption::TwoFishCrypt(const BYTE *in, BYTE *out, int len)
 {
-	for(int i=0;i<len;i++)
+	for (int i = 0; i < len; i++)
 	{
-		if( m_TFPos >= 256 )
+		if (m_TFPos >= 256)
 			ReinitTFTable();
 		out[i] = in[i] ^ m_TFTable[m_TFPos++];
 	}
 }
 
 //server -> us
-void OSIEncryption::DecryptFromServer( const BYTE *in, BYTE *out, int len )
+void OSIEncryption::DecryptFromServer(const BYTE *in, BYTE *out, int len)
 {
-	XORCrypt( in, out, len );
+	XORCrypt(in, out, len);
 }
 
 //us -> client
-void OSIEncryption::EncryptForClient( const BYTE *in, BYTE *out, int len )
+void OSIEncryption::EncryptForClient(const BYTE *in, BYTE *out, int len)
 {
-	XORCrypt( in, out, len );
+	XORCrypt(in, out, len);
 }
 
 //us -> server
-void OSIEncryption::EncryptForServer( const BYTE *in, BYTE *out, int len )
+void OSIEncryption::EncryptForServer(const BYTE *in, BYTE *out, int len)
 {
-	TwoFishCrypt( in, out, len );
+	TwoFishCrypt(in, out, len);
 }
 
 //client -> us
-void OSIEncryption::DecryptFromClient( const BYTE *in, BYTE *out, int len )
+void OSIEncryption::DecryptFromClient(const BYTE *in, BYTE *out, int len)
 {
-	TwoFishCrypt( in, out, len );
+	TwoFishCrypt(in, out, len);
 }
-
-

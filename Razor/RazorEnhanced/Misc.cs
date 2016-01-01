@@ -3,7 +3,6 @@ using System;
 using System.Media;
 using System.Threading;
 
-
 namespace RazorEnhanced
 {
 	public class Misc
@@ -49,15 +48,18 @@ namespace RazorEnhanced
 			if (Assistant.World.Player != null)
 				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
 		}
-        public static void SendMessage(double msg)
-        {
-            if (Assistant.World.Player != null)
-                Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
-        }
-        public static void Beep()
+
+		public static void SendMessage(double msg)
+		{
+			if (Assistant.World.Player != null)
+				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
+		}
+
+		public static void Beep()
 		{
 			SystemSounds.Beep.Play();
 		}
+
 		// Login and logout
 		public static void Disconnect()
 		{
@@ -70,54 +72,55 @@ namespace RazorEnhanced
 			ClientCommunication.SendToServer(new ContextMenuRequest(serial));
 			ClientCommunication.SendToServer(new ContextMenuResponse(serial, (ushort)idx));
 		}
+
 		public static void ContextReply(Mobile mob, int idx)
 		{
 			ClientCommunication.SendToServer(new ContextMenuRequest(mob.Serial));
 			ClientCommunication.SendToServer(new ContextMenuResponse(mob.Serial, (ushort)idx));
 		}
+
 		public static void ContextReply(Item item, int idx)
 		{
 			ClientCommunication.SendToServer(new ContextMenuRequest(item.Serial));
 			ClientCommunication.SendToServer(new ContextMenuResponse(item.Serial, (ushort)idx));
 		}
 
-        // Prompt Message Stuff
-        public static void ResetPrompt()
-        {
-            World.Player.HasPrompt = false;
-        }
+		// Prompt Message Stuff
+		public static void ResetPrompt()
+		{
+			World.Player.HasPrompt = false;
+		}
 
-        public static bool HasPrompt()
-        {
-            return World.Player.HasPrompt;
-        }
+		public static bool HasPrompt()
+		{
+			return World.Player.HasPrompt;
+		}
 
-        public static void WaitForPrompt(int delay) // Delay in MS
-        {
-            int subdelay = delay;
-            while (!World.Player.HasPrompt && subdelay > 0)
-            {
-                Thread.Sleep(2);
-                subdelay -= 2;
-            }
-        }
+		public static void WaitForPrompt(int delay) // Delay in MS
+		{
+			int subdelay = delay;
+			while (!World.Player.HasPrompt && subdelay > 0)
+			{
+				Thread.Sleep(2);
+				subdelay -= 2;
+			}
+		}
 
-        public static void CancelPrompt() 
-        {
-            ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
-            World.Player.HasPrompt = false;
-        }
+		public static void CancelPrompt()
+		{
+			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
+			World.Player.HasPrompt = false;
+		}
 
-        public static void ResponsePrompt(string text)
-        {
-            ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1 , Language.CliLocName, text));
-            World.Player.HasPrompt = false;
-        }
+		public static void ResponsePrompt(string text)
+		{
+			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
+			World.Player.HasPrompt = false;
+		}
 
-        public static void NoOperation()
+		public static void NoOperation()
 		{
 			return;
 		}
-
 	}
 }

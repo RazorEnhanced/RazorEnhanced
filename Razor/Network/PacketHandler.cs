@@ -4,11 +4,13 @@ using System.Collections.Generic;
 namespace Assistant
 {
 	internal delegate void PacketViewerCallback(PacketReader p, PacketHandlerEventArgs args);
+
 	internal delegate void PacketFilterCallback(Packet p, PacketHandlerEventArgs args);
 
 	internal class PacketHandlerEventArgs
 	{
 		private bool m_Block;
+
 		internal bool Block
 		{
 			get { return m_Block; }
@@ -192,6 +194,7 @@ namespace Assistant
 		}
 
 		private static PacketHandlerEventArgs m_Args = new PacketHandlerEventArgs();
+
 		private static bool ProcessViewers(List<PacketViewerCallback> list, PacketReader p)
 		{
 			m_Args.Reinit();

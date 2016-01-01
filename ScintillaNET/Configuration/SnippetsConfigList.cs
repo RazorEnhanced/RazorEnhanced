@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class SnippetsConfigList : List<SnippetsConfig>
@@ -25,7 +24,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Fields
 
-
 		#region Properties
 
 		public Color ActiveSnippetColor
@@ -40,7 +38,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? ActiveSnippetIndicator
 		{
 			get
@@ -52,7 +49,6 @@ namespace ScintillaNET.Configuration
 				_activeSnippetIndicator = value;
 			}
 		}
-
 
 		public IndicatorStyle? ActiveSnippetIndicatorStyle
 		{
@@ -66,7 +62,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public char? DefaultDelimeter
 		{
 			get
@@ -78,7 +73,6 @@ namespace ScintillaNET.Configuration
 				_defaultDelimeter = value;
 			}
 		}
-
 
 		public Color InactiveSnippetColor
 		{
@@ -92,7 +86,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? InactiveSnippetIndicator
 		{
 			get
@@ -104,7 +97,6 @@ namespace ScintillaNET.Configuration
 				_inactiveSnippetIndicator = value;
 			}
 		}
-
 
 		public IndicatorStyle? InactiveSnippetIndicatorStyle
 		{
@@ -118,7 +110,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? Inherit
 		{
 			get
@@ -131,7 +122,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public bool? IsEnabled
 		{
 			get
@@ -143,7 +133,6 @@ namespace ScintillaNET.Configuration
 				_isEnabled = value;
 			}
 		}
-
 
 		public bool? IsOneKeySelectionEmbedEnabled
 		{

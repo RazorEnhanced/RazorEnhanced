@@ -8,7 +8,6 @@ using System.Text;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -20,7 +19,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public void Apply(int length)
@@ -28,19 +26,16 @@ namespace ScintillaNET
 			Apply(NativeScintilla.GetCurrentPos(), length);
 		}
 
-
 		public void Apply(int position, int length)
 		{
 			NativeScintilla.StartStyling(position, 0xff);
 			NativeScintilla.SetStyling(length, _index);
 		}
 
-
 		internal bool BackColorNotSet()
 		{
 			return !Scintilla.ColorBag.ContainsKey(ToString() + ".BackColor");
 		}
-
 
 		public void CopyTo(Style target)
 		{
@@ -59,7 +54,6 @@ namespace ScintillaNET
 			target.Underline = Underline;
 		}
 
-
 		public override bool Equals(object obj)
 		{
 			if (!IsSameHelperFamily(obj))
@@ -68,18 +62,15 @@ namespace ScintillaNET
 			return ((Style)obj).Index == this.Index;
 		}
 
-
 		internal bool FontNotSet()
 		{
 			return !Scintilla.PropertyBag.ContainsKey(ToString() + ".FontSet");
 		}
 
-
 		internal bool ForeColorNotSet()
 		{
 			return !Scintilla.ColorBag.ContainsKey(ToString() + ".ForeColor");
 		}
-
 
 		private Color getDefaultBackColor()
 		{
@@ -91,12 +82,10 @@ namespace ScintillaNET
 			return Color.FromArgb(0xff, 0xff, 0xff);
 		}
 
-
 		private CharacterSet getDefaultCharacterSet()
 		{
 			return (CharacterSet)getDefaultFont().GdiCharSet;
 		}
-
 
 		private Font getDefaultFont()
 		{
@@ -106,7 +95,6 @@ namespace ScintillaNET
 			return new Font("Verdana", 8F);
 		}
 
-
 		private Color getDefaultForeColor()
 		{
 			if (_index == (int)StylesCommon.CallTip)
@@ -115,18 +103,15 @@ namespace ScintillaNET
 			return Color.FromArgb(0, 0, 0);
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
 
-
 		public int GetTextWidth(string text)
 		{
 			return NativeScintilla.TextWidth(_index, text);
 		}
-
 
 		public void Reset()
 		{
@@ -145,30 +130,25 @@ namespace ScintillaNET
 			ResetUnderline();
 		}
 
-
 		private void ResetBackColor()
 		{
 			BackColor = getDefaultBackColor();
 		}
-
 
 		private void ResetBold()
 		{
 			Bold = getDefaultFont().Bold;
 		}
 
-
 		private void ResetCase()
 		{
 			Case = StyleCase.Mixed;
 		}
 
-
 		private void ResetCharacterSet()
 		{
 			CharacterSet = getDefaultCharacterSet();
 		}
-
 
 		internal void ResetFont()
 		{
@@ -176,60 +156,50 @@ namespace ScintillaNET
 			Scintilla.PropertyBag.Remove(ToString() + ".FontSet");
 		}
 
-
 		private void ResetFontName()
 		{
 			FontName = getDefaultFont().Name;
 		}
-
 
 		private void ResetForeColor()
 		{
 			ForeColor = getDefaultForeColor();
 		}
 
-
 		private void ResetIsChangeable()
 		{
 			IsChangeable = true;
 		}
-
 
 		private void ResetIsHotspot()
 		{
 			IsHotspot = false;
 		}
 
-
 		private void ResetIsSelectionEolFilled()
 		{
 			IsSelectionEolFilled = false;
 		}
-
 
 		private void ResetIsVisible()
 		{
 			IsVisible = true;
 		}
 
-
 		private void ResetItalic()
 		{
 			Italic = getDefaultFont().Italic;
 		}
-
 
 		private void ResetSize()
 		{
 			Size = getDefaultFont().SizeInPoints;
 		}
 
-
 		private void ResetUnderline()
 		{
 			Underline = getDefaultFont().Underline;
 		}
-
 
 		internal void SetBackColorInternal(Color value)
 		{
@@ -240,7 +210,6 @@ namespace ScintillaNET
 				NativeScintilla.CallTipSetBack(Utilities.ColorToRgb(value));
 		}
 
-
 		internal void SetForeColorInternal(Color value)
 		{
 			Scintilla.ColorBag[ToString() + ".ForeColor"] = value;
@@ -249,7 +218,6 @@ namespace ScintillaNET
 			if (_index == (int)StylesCommon.CallTip)
 				NativeScintilla.CallTipSetFore(Utilities.ColorToRgb(value));
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -268,30 +236,25 @@ namespace ScintillaNET
 				ShouldSerializeUnderline();
 		}
 
-
 		private bool ShouldSerializeBackColor()
 		{
 			return BackColor != getDefaultBackColor();
 		}
-
 
 		private bool ShouldSerializeBold()
 		{
 			return Bold != getDefaultFont().Bold;
 		}
 
-
 		private bool ShouldSerializeCase()
 		{
 			return Case != StyleCase.Mixed;
 		}
 
-
 		private bool ShouldSerializeCharacterSet()
 		{
 			return CharacterSet != getDefaultCharacterSet();
 		}
-
 
 		private bool ShouldSerializeFont()
 		{
@@ -300,60 +263,50 @@ namespace ScintillaNET
 			return false;
 		}
 
-
 		private bool ShouldSerializeFontName()
 		{
 			return FontName != getDefaultFont().Name;
 		}
-
 
 		private bool ShouldSerializeForeColor()
 		{
 			return ForeColor != getDefaultForeColor();
 		}
 
-
 		private bool ShouldSerializeIsChangeable()
 		{
 			return !IsChangeable;
 		}
-
 
 		private bool ShouldSerializeIsHotspot()
 		{
 			return IsHotspot;
 		}
 
-
 		private bool ShouldSerializeIsSelectionEolFilled()
 		{
 			return IsSelectionEolFilled;
 		}
-
 
 		private bool ShouldSerializeIsVisible()
 		{
 			return !IsVisible;
 		}
 
-
 		private bool ShouldSerializeItalic()
 		{
 			return Italic != getDefaultFont().Italic;
 		}
-
 
 		private bool ShouldSerializeSize()
 		{
 			return Size != getDefaultFont().SizeInPoints;
 		}
 
-
 		private bool ShouldSerializeUnderline()
 		{
 			return Underline != getDefaultFont().Underline;
 		}
-
 
 		public override string ToString()
 		{
@@ -361,7 +314,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -383,7 +335,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool Bold
 		{
 			get { return NativeScintilla.StyleGetBold(_index); }
@@ -393,7 +344,6 @@ namespace ScintillaNET
 				Scintilla.PropertyBag[ToString() + ".FontSet"] = true;
 			}
 		}
-
 
 		public StyleCase Case
 		{
@@ -407,7 +357,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public CharacterSet CharacterSet
 		{
 			get { return (CharacterSet)NativeScintilla.StyleGetCharacterSet(_index); }
@@ -417,7 +366,6 @@ namespace ScintillaNET
 				Scintilla.PropertyBag[ToString() + ".FontSet"] = true;
 			}
 		}
-
 
 		public Font Font
 		{
@@ -440,7 +388,6 @@ namespace ScintillaNET
 				Underline = value.Underline;
 			}
 		}
-
 
 		public string FontName
 		{
@@ -482,7 +429,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Color ForeColor
 		{
 			get
@@ -501,7 +447,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public int Index
 		{
@@ -510,7 +455,6 @@ namespace ScintillaNET
 				return _index;
 			}
 		}
-
 
 		public bool IsChangeable
 		{
@@ -524,7 +468,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsHotspot
 		{
 			get
@@ -536,7 +479,6 @@ namespace ScintillaNET
 				NativeScintilla.StyleSetHotspot(_index, value);
 			}
 		}
-
 
 		public bool IsSelectionEolFilled
 		{
@@ -550,7 +492,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsVisible
 		{
 			get
@@ -563,7 +504,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool Italic
 		{
 			get { return NativeScintilla.StyleGetItalic(_index); }
@@ -573,7 +513,6 @@ namespace ScintillaNET
 				Scintilla.PropertyBag[ToString() + ".FontSet"] = true;
 			}
 		}
-
 
 		//	There are 2 problems with Font Sizes, first Scintilla seems to
 		//	accept them just fine, but always returns 8. Also it only supports
@@ -597,7 +536,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool Underline
 		{
 			get { return NativeScintilla.StyleGetUnderline(_index); }
@@ -609,7 +547,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

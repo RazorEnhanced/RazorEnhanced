@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -19,7 +18,6 @@ namespace ScintillaNET
 		private Guid _key = Guid.NewGuid();
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -36,7 +34,6 @@ namespace ScintillaNET
 			base.Change(newStart, newEnd);
 		}
 
-
 		/// <summary>
 		///     Collects the DropMarker and causes it to be removed from all
 		///     lists it belongs ti.
@@ -45,7 +42,6 @@ namespace ScintillaNET
 		{
 			return Collect(true);
 		}
-
 
 		internal bool Collect(bool dispose)
 		{
@@ -63,7 +59,6 @@ namespace ScintillaNET
 			return true;
 		}
 
-
 		/// <summary>
 		///     Overridden.
 		/// </summary>
@@ -77,7 +72,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public override bool Equals(object obj)
 		{
 			if (!IsSameHelperFamily(obj))
@@ -85,7 +79,6 @@ namespace ScintillaNET
 
 			return ((DropMarker)obj).Key == this.Key;
 		}
-
 
 		/// <summary>
 		///     Gets the Client Rectangle in pixels of the DropMarker's visual indicator.
@@ -99,12 +92,10 @@ namespace ScintillaNET
 			return new Rectangle(x - 2, y, 5, 5);
 		}
 
-
 		public override int GetHashCode()
 		{
 			return base.GetHashCode();
 		}
-
 
 		/// <summary>
 		///     Forces a repaint of the DropMarker
@@ -117,7 +108,6 @@ namespace ScintillaNET
 				Scintilla.Invalidate(GetClientRectangle());
 			}
 		}
-
 
 		protected internal override void Paint(Graphics g)
 		{
@@ -136,7 +126,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -149,7 +138,6 @@ namespace ScintillaNET
 				return Start == End;
 			}
 		}
-
 
 		/// <summary>
 		///     Uniquely identifies the DropMarker
@@ -165,7 +153,6 @@ namespace ScintillaNET
 				_key = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Not currently used, the offset in pixels from the document view's top.
@@ -183,7 +170,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

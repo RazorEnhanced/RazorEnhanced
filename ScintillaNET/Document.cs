@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -18,7 +17,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -30,9 +28,8 @@ namespace ScintillaNET
 			NativeScintilla.AddRefDocument(_handle);
 		}
 
-
 		/// <summary>
-		///     Overridden. 
+		///     Overridden.
 		/// </summary>
 		/// <param name="obj">Another Document Object</param>
 		/// <returns>True if both Documents have the same Handle</returns>
@@ -46,7 +43,6 @@ namespace ScintillaNET
 			return _handle.Equals(d._handle);
 		}
 
-
 		/// <summary>
 		///     Overridden
 		/// </summary>
@@ -55,7 +51,6 @@ namespace ScintillaNET
 		{
 			return _handle.GetHashCode();
 		}
-
 
 		/// <summary>
 		///     Decreases the document's reference count
@@ -69,7 +64,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -89,7 +83,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

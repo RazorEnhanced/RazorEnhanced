@@ -15,7 +15,6 @@ namespace RazorEnhanced.UI
 			this.Text = m_Title; ;
 		}
 
-
 		private void EnhancedFriendManualAdd_Load(object sender, EventArgs e)
 		{
 			tName.Text = "New Player";
@@ -61,7 +60,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.Friend.AddPlayerToList(tName.Text, serial);
 				this.Close();
 			}
-
 		}
 	}
 }

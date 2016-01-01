@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -13,9 +12,9 @@ namespace ScintillaNET
 	/// <remarks>
 	///     TextModifiedEventHandler is used as an abstracted subset of the
 	///     SCN_MODIFIED notification message. It's used whenever the SCNotification's
-	///     modificationType flags are SC_MOD_INSERTTEXT ,SC_MOD_DELETETEXT, 
-	///     SC_MOD_BEFOREINSERT and SC_MOD_BEFORE_DELETE. They all use a 
-	///     TextModifiedEventArgs which corresponds to a subset of the 
+	///     modificationType flags are SC_MOD_INSERTTEXT ,SC_MOD_DELETETEXT,
+	///     SC_MOD_BEFOREINSERT and SC_MOD_BEFORE_DELETE. They all use a
+	///     TextModifiedEventArgs which corresponds to a subset of the
 	///     SCNotification struct having to do with these modification types.
 	/// </remarks>
 	public class TextModifiedEventArgs : ModifiedEventArgs
@@ -25,7 +24,6 @@ namespace ScintillaNET
 		private const string STRING_FORMAT = "ModificationTypeFlags\t:{0}\r\nPosition\t\t\t:{1}\r\nLength\t\t\t\t:{2}\r\nLinesAddedCount\t\t:{3}\r\nText\t\t\t\t:{4}\r\nIsUserChange\t\t\t:{5}\r\nMarkerChangeLine\t\t:{6}";
 
 		#endregion Constants
-
 
 		#region Fields
 
@@ -38,7 +36,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -50,7 +47,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -65,7 +61,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns the length of the change occured.
 		/// </summary>
@@ -76,7 +71,6 @@ namespace ScintillaNET
 				return _length;
 			}
 		}
-
 
 		/// <summary>
 		///     Returns the # of lines added or removed as a result of the change
@@ -89,7 +83,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns the line # of where the marker change occured (if applicable)
 		/// </summary>
@@ -101,7 +94,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns the document position where the change occured
 		/// </summary>
@@ -112,7 +104,6 @@ namespace ScintillaNET
 				return _position;
 			}
 		}
-
 
 		/// <summary>
 		///     The affected text of the change
@@ -126,7 +117,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

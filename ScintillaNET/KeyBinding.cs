@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -18,7 +17,6 @@ namespace ScintillaNET
 		private Keys _modifiers;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -46,7 +44,6 @@ namespace ScintillaNET
 			return ToString().GetHashCode();
 		}
 
-
 		/// <summary>
 		///     Overridden. Returns string representation of the Keyboard shortcut
 		/// </summary>
@@ -57,7 +54,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -76,7 +72,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets sets key modifiers to the Keyboard shortcut
 		/// </summary>
@@ -93,7 +88,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

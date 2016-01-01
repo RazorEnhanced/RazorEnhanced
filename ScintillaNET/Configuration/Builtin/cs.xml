@@ -12,9 +12,8 @@
 		</AutoComplete>
 
 		<Indentation TabWidth="4" SmartIndentType="cpp" />
-			
-		
-		<Lexer LineCommentPrefix="//" StreamCommentPrefix="/* " StreamCommentSuffix=" */" >
+
+		<Lexer LineCommentPrefix="//" StreamCommentPrefix="/* " StreamCommentSuffix=" */">
 			<Keywords List="0" Inherit="False">
 				abstract as base break case catch checked continue default delegate do else event explicit extern
 				false finally fixed for foreach goto if implicit in interface internal is lock namespace new null
@@ -22,7 +21,7 @@
 				stackalloc switch this throw true try typeof unchecked unsafe using virtual while
 			</Keywords>
 			<Keywords List="1" Inherit="False">
-				bool byte char class const decimal double enum float int long sbyte 
+				bool byte char class const decimal double enum float int long sbyte
 				short static string struct uint ulong ushort void
 			</Keywords>
 		</Lexer>
@@ -123,8 +122,8 @@ $end$
 }$end$
 </Snippet>
 
-<Snippet Shortcut="t" IsSurroundsWith="true">try 
-{	        
+<Snippet Shortcut="t" IsSurroundsWith="true">try
+{
 	$selected$
 }
 catch ($expression$)
@@ -134,7 +133,7 @@ catch ($expression$)
 }
 </Snippet>
 
-<Snippet Shortcut="tf" IsSurroundsWith="true">try 
+<Snippet Shortcut="tf" IsSurroundsWith="true">try
 {
 	$selected$
 }
@@ -187,21 +186,21 @@ finally
 <Snippet Shortcut="equals" IsSurroundsWith="false">//	override object.Equals
 public override bool Equals (object obj)
 {
-	//       
+	//
 	//	See the full list of guidelines at
-	//		http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconequals.asp    
+	//		http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconequals.asp
 	//	and also the guidance for operator== at
 	//		http://msdn.microsoft.com/library/default.asp?url=/library/en-us/cpgenref/html/cpconimplementingequalsoperator.asp
 	//
 
-	if (obj == null || GetType() != obj.GetType()) 
+	if (obj == null || GetType() != obj.GetType())
 	{
 		return false;
 	}
-	
+
 	//	TODO: write your implementation of Equals() here.
 	$end$throw new NotImplementedException("The method or operation is not implemented.");
-	return base.Equals (obj); 
+	return base.Equals (obj);
 }
 
 //	override object.GetHashCode
@@ -242,4 +241,4 @@ public override int GetHashCode()
 </Snippet>
 		</Snippets>
 	</Language>
-</ScintillaNET> 
+</ScintillaNET>

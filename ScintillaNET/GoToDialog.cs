@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public partial class GoToDialog : Form
@@ -19,7 +18,6 @@ namespace ScintillaNET
 		private int _gotoLineNumber;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -40,7 +38,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		private void GoToDialog_Load(object sender, EventArgs e)
 		{
 			string displayLine = (_currentLineNumber + 1).ToString();
@@ -52,11 +49,10 @@ namespace ScintillaNET
 			txtGotoLine.Select();
 		}
 
-
 		// This was taken from FindReplaceDialog. Obviously some refactoring is called for
 		// since we have common code. However I'm holding off on this because I'm coming
 		// up with some other ideas for the FindReplaceDialog. Right now every scintilla
-		// gets its own FindReplaceDialog, but they really need to be sharable across 
+		// gets its own FindReplaceDialog, but they really need to be sharable across
 		// multiple scintillas much like how DropMarkers work.
 
 		private void MoveFormAwayFromSelection()
@@ -93,7 +89,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		protected override void OnActivated(EventArgs e)
 		{
 			base.OnActivated(e);
@@ -101,7 +96,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -114,7 +108,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int GotoLineNumber
 		{
 			get { return _gotoLineNumber; }
@@ -123,7 +116,6 @@ namespace ScintillaNET
 				_gotoLineNumber = value;
 			}
 		}
-
 
 		public int MaximumLineNumber
 		{
@@ -134,7 +126,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Scintilla Scintilla
 		{
 			get { return _scintilla; }
@@ -142,7 +133,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

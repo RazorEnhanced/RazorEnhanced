@@ -113,12 +113,12 @@ namespace Assistant
 				return (Serial)Convert.ToUInt32(s);
 		}
 
-		public static implicit operator uint (Serial a)
+		public static implicit operator uint(Serial a)
 		{
 			return a.m_Serial;
 		}
 
-		public static implicit operator int (Serial a)
+		public static implicit operator int(Serial a)
 		{
 			return (int)a.m_Serial;
 		}
@@ -134,4 +134,3 @@ namespace Assistant
 		}
 	}
 }
-

@@ -186,6 +186,7 @@ namespace Assistant
 
 		// Blocco parametri salvataggio uscita
 		internal static int MainWindowX { get { return m_MainWindowX; } set { m_MainWindowX = value; } }
+
 		internal static int MainWindowY { get { return m_MainWindowY; } set { m_MainWindowY = value; } }
 		internal static int ToolBarX { get { return m_ToolBarX; } set { m_ToolBarX = value; } }
 		internal static int ToolBarY { get { return m_ToolBarY; } set { m_ToolBarY = value; } }
@@ -369,7 +370,7 @@ namespace Assistant
 					// Stoppo tick timer agent
 					RazorEnhanced.Scripts.m_Timer.Stop();
 
-					// Stop forzato di tutti i thread agent 
+					// Stop forzato di tutti i thread agent
 					RazorEnhanced.AutoLoot.AutoMode = false;
 					RazorEnhanced.Scavenger.AutoMode = false;
 					RazorEnhanced.BandageHeal.AutoMode = false;
@@ -454,4 +455,3 @@ namespace Assistant
 		}
 	}
 }
-

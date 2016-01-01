@@ -17,6 +17,7 @@ namespace Ultima
 		private static byte[] m_PixelBuffer;
 		private static byte[] m_StreamBuffer;
 		private static byte[] m_ColorTable;
+
 		static Gumps()
 		{
 			if (m_FileIndex != null)
@@ -30,6 +31,7 @@ namespace Ultima
 				m_Removed = new bool[0xFFFF];
 			}
 		}
+
 		/// <summary>
 		/// ReReads gumpart
 		/// </summary>
@@ -70,7 +72,6 @@ namespace Ultima
 			m_Removed[index] = false;
 			if (m_patched.Contains(index))
 				m_patched.Remove(index);
-
 		}
 
 		/// <summary>

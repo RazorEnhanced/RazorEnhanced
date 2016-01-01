@@ -82,6 +82,7 @@ namespace RazorEnhanced
 		}
 
 		private static bool m_AutoMode;
+
 		internal static bool AutoMode
 		{
 			get { return m_AutoMode; }
@@ -319,7 +320,6 @@ namespace RazorEnhanced
 						}
 					}
 				}
-
 			}
 
 			return 0;
@@ -332,7 +332,6 @@ namespace RazorEnhanced
 
 			if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
 				return;
-
 
 			if (scavengerItem.Properties.Count > 0) // Item con props
 			{
@@ -362,11 +361,10 @@ namespace RazorEnhanced
 					RazorEnhanced.Scavenger.AddLog("- Props Match fail!");
 				}
 			}
-			else // Item Senza props     
+			else // Item Senza props
 			{
 				DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
 			}
-
 		}
 
 		public static void ResetIgnore()

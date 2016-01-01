@@ -5,7 +5,6 @@ using System.Diagnostics;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Internal
 {
 	//
@@ -28,14 +27,12 @@ namespace ScintillaNET.Internal
 
 		#endregion Constants
 
-
 		#region Fields
 
 		private Scintilla _scintilla;
 		private LineStorage _lineStorage;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -52,7 +49,6 @@ namespace ScintillaNET.Internal
 				lineIndex++;
 			}
 		}
-
 
 		private void scintilla_SCNotification(object sender, SCNotificationEventArgs e)
 		{
@@ -72,7 +68,6 @@ namespace ScintillaNET.Internal
 			}
 		}
 
-
 		private void SetCachedLength(int lineIndex, int cachedLength)
 		{
 			LineStorageData lsd = _lineStorage.GetData(lineIndex);
@@ -82,7 +77,6 @@ namespace ScintillaNET.Internal
 		}
 
 		#endregion Methods
-
 
 		#region Constructors
 

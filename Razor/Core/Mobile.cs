@@ -79,8 +79,6 @@ namespace Assistant
 			m_Serials = new List<Serial>();
 			for (int i = 0; i < count; i++)
 				m_Serials.Add((Serial)reader.ReadUInt32());
-
-
 		}
 
 		internal override void AfterLoad()
@@ -212,10 +210,10 @@ namespace Assistant
 
 		// grey, blue, green, 'canbeattacked'
 		private static uint[] m_NotoHues = new uint[8]
-		{ 
+		{
 			// hue color #30
 			0x000000, // black		unused 0
-			0x30d0e0, // blue		0x0059 1 
+			0x30d0e0, // blue		0x0059 1
 			0x60e000, // green		0x003F 2
 			0x9090b2, // greyish	0x03b2 3
 			0x909090, // grey		   "   4
@@ -275,7 +273,6 @@ namespace Assistant
 			get { return m_ManaMax; }
 			set { m_ManaMax = value; }
 		}
-
 
 		internal byte Map
 		{
@@ -456,6 +453,7 @@ namespace Assistant
 		}
 
 		private Point2D m_ButtonPoint = Point2D.Zero;
+
 		internal Point2D ButtonPoint
 		{
 			get { return m_ButtonPoint; }
@@ -463,5 +461,3 @@ namespace Assistant
 		}
 	}
 }
-
-

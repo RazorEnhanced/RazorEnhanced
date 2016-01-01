@@ -124,6 +124,5 @@ namespace RazorEnhanced.UI
 		{
 			Clipboard.SetText(lOwned.Text);
 		}
-
 	}
 }

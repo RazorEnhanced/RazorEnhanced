@@ -9,6 +9,7 @@ namespace Ultima
 		private static byte[] m_Unknown;
 
 		public static Hashtable AnimData { get; set; }
+
 		static Animdata()
 		{
 			Initialize();
@@ -67,6 +68,7 @@ namespace Ultima
 				}
 			}
 		}
+
 		/// <summary>
 		/// Gets Animation <see cref="Data"/>
 		/// </summary>

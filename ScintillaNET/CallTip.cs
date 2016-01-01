@@ -7,7 +7,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -34,7 +33,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		/// <summary>
@@ -48,7 +46,6 @@ namespace ScintillaNET
 			NativeScintilla.CallTipCancel();
 		}
 
-
 		/// <summary>
 		/// Hides the calltip
 		/// </summary>
@@ -60,36 +57,30 @@ namespace ScintillaNET
 			NativeScintilla.CallTipCancel();
 		}
 
-
 		private void ResetBackColor()
 		{
 			BackColor = SystemColors.Info;
 		}
-
 
 		private void ResetForeColor()
 		{
 			ForeColor = SystemColors.InfoText;
 		}
 
-
 		private void ResetHighlightEnd()
 		{
 			_highlightEnd = -1;
 		}
-
 
 		private void ResetHighlightStart()
 		{
 			_highlightStart = -1;
 		}
 
-
 		private void ResetHighlightTextColor()
 		{
 			HighlightTextColor = SystemColors.Highlight;
 		}
-
 
 		internal void SetBackColorInternal(Color value)
 		{
@@ -101,7 +92,6 @@ namespace ScintillaNET
 			NativeScintilla.CallTipSetBack(Utilities.ColorToRgb(value));
 		}
 
-
 		internal void SetForeColorInternal(Color value)
 		{
 			if (value == SystemColors.InfoText)
@@ -112,7 +102,6 @@ namespace ScintillaNET
 			NativeScintilla.CallTipSetFore(Utilities.ColorToRgb(value));
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return ShouldSerializeBackColor() ||
@@ -122,36 +111,30 @@ namespace ScintillaNET
 				ShouldSerializeHighlightTextColor();
 		}
 
-
 		private bool ShouldSerializeBackColor()
 		{
 			return BackColor != SystemColors.Info;
 		}
-
 
 		private bool ShouldSerializeForeColor()
 		{
 			return ForeColor != SystemColors.InfoText;
 		}
 
-
 		private bool ShouldSerializeHighlightEnd()
 		{
 			return _highlightEnd >= 0;
 		}
-
 
 		private bool ShouldSerializeHighlightStart()
 		{
 			return _highlightStart >= 0;
 		}
 
-
 		private bool ShouldSerializeHighlightTextColor()
 		{
 			return HighlightTextColor != SystemColors.Highlight;
 		}
-
 
 		/// <summary>
 		///     Displays a calltip without overloads
@@ -164,7 +147,6 @@ namespace ScintillaNET
 		{
 			Show(_message, -1, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Displays a calltip without overloads
@@ -179,7 +161,6 @@ namespace ScintillaNET
 			Show(_message, -1, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Displays a calltip without overloads
 		/// </summary>
@@ -191,7 +172,6 @@ namespace ScintillaNET
 		{
 			Show(_message, position, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Displays a calltip without overloads
@@ -207,7 +187,6 @@ namespace ScintillaNET
 			Show(_message, position, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Displays a calltip without overloads
 		/// </summary>
@@ -219,7 +198,6 @@ namespace ScintillaNET
 		{
 			Show(message, -1, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Displays a calltip without overloads
@@ -235,7 +213,6 @@ namespace ScintillaNET
 			Show(message, -1, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Displays a calltip without overloads
 		/// </summary>
@@ -248,7 +225,6 @@ namespace ScintillaNET
 		{
 			Show(message, position, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Displays a calltip without overloads
@@ -270,7 +246,6 @@ namespace ScintillaNET
 			HighlightEnd = highlightEnd;
 		}
 
-
 		/// <summary>
 		///     Shows the calltip with overloads
 		/// </summary>
@@ -284,7 +259,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(_overloadList, -1, 0, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -302,7 +276,6 @@ namespace ScintillaNET
 			ShowOverload(_overloadList, -1, 0, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Shows the calltip with overloads
 		/// </summary>
@@ -317,7 +290,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(_overloadList, position, 0, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -335,7 +307,6 @@ namespace ScintillaNET
 			ShowOverload(_overloadList, position, 0, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Shows the calltip with overloads
 		/// </summary>
@@ -351,7 +322,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(_overloadList, position, startIndex, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -370,7 +340,6 @@ namespace ScintillaNET
 			ShowOverload(_overloadList, position, startIndex, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Shows the calltip with overloads
 		/// </summary>
@@ -384,7 +353,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(overloadList, -1, 0, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -402,7 +370,6 @@ namespace ScintillaNET
 			ShowOverload(overloadList, -1, 0, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Shows the calltip with overloads
 		/// </summary>
@@ -417,7 +384,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(overloadList, position, 0, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -435,7 +401,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(overloadList, position, 0, highlightStart, highlightEnd);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -462,7 +427,6 @@ namespace ScintillaNET
 			ShowOverloadInternal();
 		}
 
-
 		/// <summary>
 		///     Shows the calltip with overloads
 		/// </summary>
@@ -477,7 +441,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(overloadList, -1, startIndex, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -496,7 +459,6 @@ namespace ScintillaNET
 			ShowOverload(overloadList, -1, startIndex, highlightStart, highlightEnd);
 		}
 
-
 		/// <summary>
 		///     Shows the calltip with overloads
 		/// </summary>
@@ -511,7 +473,6 @@ namespace ScintillaNET
 		{
 			ShowOverload(_overloadList, -1, startIndex, -1, -1);
 		}
-
 
 		/// <summary>
 		///     Shows the calltip with overloads
@@ -530,7 +491,6 @@ namespace ScintillaNET
 			ShowOverload(_overloadList, -1, startIndex, highlightStart, highlightEnd);
 		}
 
-
 		internal void ShowOverloadInternal()
 		{
 			int pos = _lastPos;
@@ -547,7 +507,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -571,7 +530,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets Text color of all CallTips
 		/// </summary>
@@ -592,7 +550,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     End position of the text to be highlighted in the CalTip
 		/// </summary>
@@ -609,7 +566,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Start position of the text to be highlighted in the CalTip
 		/// </summary>
@@ -625,7 +581,6 @@ namespace ScintillaNET
 				NativeScintilla.CallTipSetHlt(_highlightStart, _highlightEnd);
 			}
 		}
-
 
 		/// <summary>
 		///     Gets/Sets the Text Color of the portion of the CallTip that is highlighted
@@ -654,7 +609,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns true if a CallTip is currently displayed
 		/// </summary>
@@ -665,7 +619,6 @@ namespace ScintillaNET
 				return NativeScintilla.CallTipActive();
 			}
 		}
-
 
 		/// <summary>
 		///     The message displayed in the calltip
@@ -682,7 +635,6 @@ namespace ScintillaNET
 				_message = value;
 			}
 		}
-
 
 		/// <summary>
 		///     List of method overloads to display in the calltip
@@ -705,7 +657,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedGumpInspector : Form
@@ -46,8 +45,5 @@ namespace RazorEnhanced.UI
 			string selected = EnhancedGumpInspectorListBox.SelectedItem.ToString();
 			Clipboard.SetText(selected.Substring(selected.IndexOf(':') + 1));
 		}
-
-
 	}
-
 }

@@ -116,7 +116,6 @@ namespace Ultima
 			Patch = new TileMatrixPatch(this, mapID, path);
 		}
 
-
 		public void SetStaticBlock(int x, int y, HuedTile[][][] value)
 		{
 			if (x < 0 || y < 0 || x >= BlockWidth || y >= BlockHeight)
@@ -132,6 +131,7 @@ namespace Ultima
 		{
 			return GetStaticBlock(x, y, true);
 		}
+
 		public HuedTile[][][] GetStaticBlock(int x, int y, bool patch)
 		{
 			if (x < 0 || y < 0 || x >= BlockWidth || y >= BlockHeight)
@@ -158,10 +158,12 @@ namespace Ultima
 			}
 			return tiles;
 		}
+
 		public HuedTile[] GetStaticTiles(int x, int y, bool patch)
 		{
 			return GetStaticBlock(x >> 3, y >> 3, patch)[x & 0x7][y & 0x7];
 		}
+
 		public HuedTile[] GetStaticTiles(int x, int y)
 		{
 			return GetStaticBlock(x >> 3, y >> 3)[x & 0x7][y & 0x7];
@@ -182,6 +184,7 @@ namespace Ultima
 		{
 			return GetLandBlock(x, y, true);
 		}
+
 		public Tile[] GetLandBlock(int x, int y, bool patch)
 		{
 			if (x < 0 || y < 0 || x >= BlockWidth || y >= BlockHeight)
@@ -208,6 +211,7 @@ namespace Ultima
 			}
 			return tiles;
 		}
+
 		public Tile GetLandTile(int x, int y, bool patch)
 		{
 			return GetLandBlock(x >> 3, y >> 3, patch)[((y & 0x7) << 3) + (x & 0x7)];
@@ -217,7 +221,6 @@ namespace Ultima
 		{
 			return GetLandBlock(x >> 3, y >> 3)[((y & 0x7) << 3) + (x & 0x7)];
 		}
-
 
 		private unsafe void InitStatics()
 		{
@@ -241,10 +244,11 @@ namespace Ultima
 				}
 				StaticIndexInit = true;
 			}
-
 		}
+
 		private static HuedTileList[][] m_Lists;
 		private static byte[] m_Buffer;
+
 		private unsafe HuedTile[][][] ReadStaticBlock(int x, int y)
 		{
 			try
@@ -331,7 +335,9 @@ namespace Ultima
 		 * It's not possible if some entry has unknown hash. Throwed exception
 		 * means that EA changed maps UOPs again.
 		 */
+
 		#region UOP
+
 		public bool IsUOPFormat { get; set; }
 		public bool IsUOPAlreadyRead { get; set; }
 
@@ -432,7 +438,8 @@ namespace Ultima
 
 			return UOPLength;
 		}
-		#endregion
+
+		#endregion UOP
 
 		private unsafe Tile[] ReadLandBlock(int x, int y)
 		{
@@ -685,6 +692,7 @@ namespace Ultima
 			return res;
 		}
 	}
+
 	[System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential, Pack = 1)]
 	public struct Tile : IComparable
 	{

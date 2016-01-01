@@ -71,6 +71,7 @@ namespace RazorEnhanced
 				}
 				return result;
 			}
+
 			private string m_Filename;
 			internal string Filename { get { return m_Filename; } }
 
@@ -100,9 +101,9 @@ namespace RazorEnhanced
 			private Thread m_BandageHealThread;
 			private Thread m_AutoCarverThread;
 			private Thread m_DragDropThread;
-            private Thread m_AutoRemountThread;
+			private Thread m_AutoRemountThread;
 
-            internal ScriptTimer()
+			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
 			{
 			}
@@ -117,9 +118,9 @@ namespace RazorEnhanced
 					}
 				}
 
-                Thread.Sleep(5);
+				Thread.Sleep(5);
 
-                if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
+				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
 				{
 					if (m_AutoLootThread == null ||
 						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
@@ -179,25 +180,25 @@ namespace RazorEnhanced
 					}
 				}
 
-                if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
-                {
-                    if (m_DragDropThread == null ||
-                           (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
-                           m_DragDropThread.ThreadState != ThreadState.Unstarted &&
-                           m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
-                       )
-                    {
-                        try
-                        {
-                            m_DragDropThread = new Thread(DragDropManager.Engine);
-                            m_DragDropThread.Start();
-                        }
-                        catch
-                        { }
-                    }
-                }
+				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
+				{
+					if (m_DragDropThread == null ||
+						   (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
+						   m_DragDropThread.ThreadState != ThreadState.Unstarted &&
+						   m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
+					   )
+					{
+						try
+						{
+							m_DragDropThread = new Thread(DragDropManager.Engine);
+							m_DragDropThread.Start();
+						}
+						catch
+						{ }
+					}
+				}
 
-                if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
+				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
 				{
 					if (m_AutoCarverThread == null ||
 						(m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
@@ -215,27 +216,26 @@ namespace RazorEnhanced
 					}
 				}
 
-                if(Filters.AutoModeRemount && World.Player != null && Assistant.Engine.Running)
-                {
-                    if (m_AutoRemountThread == null ||
-                        (m_AutoRemountThread != null && m_AutoRemountThread.ThreadState != ThreadState.Running &&
-                        m_AutoRemountThread.ThreadState != ThreadState.Unstarted &&
-                        m_AutoRemountThread.ThreadState != ThreadState.WaitSleepJoin)
-                    )
-                    {
-                        try
-                        {
-                            m_AutoRemountThread = new Thread(Filters.AutoRemountEngine);
-                            m_AutoRemountThread.Start();
-                        }
-                        catch
-                        {
-                        }
-                    }
-                }
-
-            }
-        }
+				if (Filters.AutoModeRemount && World.Player != null && Assistant.Engine.Running)
+				{
+					if (m_AutoRemountThread == null ||
+						(m_AutoRemountThread != null && m_AutoRemountThread.ThreadState != ThreadState.Running &&
+						m_AutoRemountThread.ThreadState != ThreadState.Unstarted &&
+						m_AutoRemountThread.ThreadState != ThreadState.WaitSleepJoin)
+					)
+					{
+						try
+						{
+							m_AutoRemountThread = new Thread(Filters.AutoRemountEngine);
+							m_AutoRemountThread.Start();
+						}
+						catch
+						{
+						}
+					}
+				}
+			}
+		}
 
 		internal static TimeSpan m_TimerDelay = TimeSpan.FromMilliseconds(100);
 
@@ -250,6 +250,7 @@ namespace RazorEnhanced
 		}
 
 		private static bool m_Auto = false;
+
 		internal static bool Auto
 		{
 			get { return m_Auto; }
@@ -339,6 +340,7 @@ namespace RazorEnhanced
 	internal class RunningThreads
 	{
 		private string m_Filename;
+
 		internal string Filename
 		{
 			get { return m_Filename; }
@@ -346,6 +348,7 @@ namespace RazorEnhanced
 		}
 
 		private Thread m_Thread;
+
 		internal Thread Thread
 		{
 			get { return m_Thread; }
@@ -357,13 +360,11 @@ namespace RazorEnhanced
 			m_Filename = filename;
 			m_Thread = thread;
 		}
-
 	}
 
 	internal class EnhancedScriptHotKey
 	{
 		internal static List<RunningThreads> RunningThreadsList = new List<RunningThreads>();
-
 
 		internal static void HotKeyStart(string filename)
 		{
@@ -397,7 +398,6 @@ namespace RazorEnhanced
 					RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
 				}
 			}
-
 		}
 
 		private static void HotKeyStartThread(object parameter)
@@ -415,6 +415,7 @@ namespace RazorEnhanced
 			}
 			catch { }
 		}
+
 		private static void HotKeyScriptDone(string filename)
 		{
 			int i = 0;

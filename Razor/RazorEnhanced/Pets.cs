@@ -1,22 +1,21 @@
 ﻿using Assistant;
 using System.Collections.Generic;
 
-
 namespace RazorEnhanced
 {
 	public class Pets
 	{
-        public static void Rename(int serial, string name)
-        {
-            ClientCommunication.SendToServer(new RenameRequest((uint)serial, name));
-        }
+		public static void Rename(int serial, string name)
+		{
+			ClientCommunication.SendToServer(new RenameRequest((uint)serial, name));
+		}
 
-        public static void Rename(RazorEnhanced.Mobile mob, string name)
-        {
-            ClientCommunication.SendToServer(new RenameRequest((uint)mob.Serial, name));
-        }
+		public static void Rename(RazorEnhanced.Mobile mob, string name)
+		{
+			ClientCommunication.SendToServer(new RenameRequest((uint)mob.Serial, name));
+		}
 
-        public static void Stable(string text)
+		public static void Stable(string text)
 		{
 			List<ushort> kw = new List<ushort> { 16, 8 };
 			ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
@@ -82,6 +81,7 @@ namespace RazorEnhanced
 						ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, "all stop"));
 					}
 					break;
+
 				default:
 					break;
 			}

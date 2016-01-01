@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public static class Utilities
@@ -26,12 +25,10 @@ namespace ScintillaNET
 			return "#" + c.R.ToString("X2", null) + c.G.ToString("X2", null) + c.B.ToString("X2", null);
 		}
 
-
 		public static int ColorToRgb(Color c)
 		{
 			return c.R + (c.G << 8) + (c.B << 16);
 		}
-
 
 		public static Keys GetKeys(char c)
 		{
@@ -39,22 +36,25 @@ namespace ScintillaNET
 			{
 				case '/':
 					return Keys.Oem2;
+
 				case '`':
 					return Keys.Oem3;
+
 				case '[':
 					return Keys.Oem4;
+
 				case '\\':
 					return Keys.Oem5;
+
 				case ']':
 					return Keys.Oem6;
+
 				case '-':
 					return (Keys)189;
-
 			}
 
 			return (Keys)Enum.Parse(typeof(Keys), c.ToString(), true);
 		}
-
 
 		public static Keys GetKeys(string s)
 		{
@@ -62,21 +62,25 @@ namespace ScintillaNET
 			{
 				case "/":
 					return Keys.Oem2;
+
 				case "`":
 					return Keys.Oem3;
+
 				case "[":
 					return Keys.Oem4;
+
 				case "\\":
 					return Keys.Oem5;
+
 				case "]":
 					return Keys.Oem6;
+
 				case "-":
 					return (Keys)189;
 			}
 
 			return (Keys)Enum.Parse(typeof(Keys), s, true);
 		}
-
 
 		public static uint GetMarkerMask(IEnumerable<int> markers)
 		{
@@ -86,7 +90,6 @@ namespace ScintillaNET
 			return mask;
 		}
 
-
 		public static uint GetMarkerMask(IEnumerable<Marker> markers)
 		{
 			uint mask = 0;
@@ -94,7 +97,6 @@ namespace ScintillaNET
 				mask |= m.Mask;
 			return mask;
 		}
-
 
 		public static byte[] GetZeroTerminatedBytes(string text, Encoding encoding)
 		{
@@ -121,7 +123,6 @@ namespace ScintillaNET
 			return buffer;
 		}
 
-
 		public static unsafe string IntPtrToString(Encoding encoding, IntPtr ptr)
 		{
 			if (ptr == IntPtr.Zero)
@@ -134,8 +135,6 @@ namespace ScintillaNET
 
 			return IntPtrToString(encoding, ptr, length);
 		}
-
-
 
 		/// <summary>
 		///     Marshals an IntPtr pointing to un unmanaged byte[] to a .NET String using the given Encoding.
@@ -165,18 +164,15 @@ namespace ScintillaNET
 			return encoding.GetString(buff, 0, length);
 		}
 
-
 		public static Color RgbToColor(int color)
 		{
 			return Color.FromArgb(color & 0x0000ff, (color & 0x00ff00) >> 8, (color & 0xff0000) >> 16);
 		}
 
-
 		public static int SignedHiWord(IntPtr hiWord)
 		{
 			return (short)(((int)(long)hiWord >> 0x10) & 0xffff);
 		}
-
 
 		public static int SignedLoWord(IntPtr loWord)
 		{

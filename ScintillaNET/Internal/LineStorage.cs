@@ -6,7 +6,6 @@ using System.Diagnostics;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Internal
 {
 	//
@@ -31,7 +30,6 @@ namespace ScintillaNET.Internal
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public LineStorageData GetData(int lineIndex)
@@ -41,7 +39,6 @@ namespace ScintillaNET.Internal
 
 			return _lineData[lineIndex];
 		}
-
 
 		private void scintilla_SCNotification(object sender, SCNotificationEventArgs e)
 		{
@@ -62,7 +59,6 @@ namespace ScintillaNET.Internal
 			Debug.Assert(_lineData.Count == _scintilla.Lines.Count);
 		}
 
-
 		public void SetData(int lineIndex, LineStorageData data)
 		{
 			Debug.Assert(lineIndex >= 0);
@@ -72,7 +68,6 @@ namespace ScintillaNET.Internal
 		}
 
 		#endregion Methods
-
 
 		#region Constructors
 

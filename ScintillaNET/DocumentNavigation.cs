@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -27,7 +26,6 @@ namespace ScintillaNET
 		private bool _isEnabled = true;
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -59,7 +57,6 @@ namespace ScintillaNET
 			_supressNext = true;
 		}
 
-
 		/// <summary>
 		///     After 1 or more backwards navigations this command navigates to the previous
 		///     backwards navigation point.
@@ -76,14 +73,12 @@ namespace ScintillaNET
 			_supressNext = true;
 		}
 
-
 		private NavigationPont NewRange(int pos)
 		{
 			NavigationPont mr = new NavigationPont(pos, Scintilla);
 			Scintilla.ManagedRanges.Add(mr);
 			return mr;
 		}
-
 
 		public void Reset()
 		{
@@ -93,24 +88,20 @@ namespace ScintillaNET
 			ResetMaxHistorySize();
 		}
 
-
 		private void ResetIsEnabled()
 		{
 			_isEnabled = true;
 		}
-
 
 		private void ResetMaxHistorySize()
 		{
 			_maxHistorySize = 50;
 		}
 
-
 		private void ResetNavigationPointTimeout()
 		{
 			_navigationPointTimeout = 200;
 		}
-
 
 		private void scintilla_SelectionChanged(object sender, EventArgs e)
 		{
@@ -128,30 +119,25 @@ namespace ScintillaNET
 			}
 		}
 
-
 		internal bool ShouldSerialize()
 		{
 			return ShouldSerializeIsEnabled() || ShouldSerializeMaxHistorySize();
 		}
-
 
 		private bool ShouldSerializeIsEnabled()
 		{
 			return !_isEnabled;
 		}
 
-
 		private bool ShouldSerializeMaxHistorySize()
 		{
 			return _maxHistorySize != 50;
 		}
 
-
 		private bool ShouldSerializeNavigationPointTimeout()
 		{
 			return _navigationPointTimeout != 200;
 		}
-
 
 		private void t_Tick(object sender, EventArgs e)
 		{
@@ -162,7 +148,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -188,7 +173,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns true if ScintillaNET can perform a successful backward navigation.
 		/// </summary>
@@ -204,7 +188,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Returns true if ScintillaNET can perform a successful forward navigation.
 		/// </summary>
@@ -216,7 +199,6 @@ namespace ScintillaNET
 				return _forewardStack.Count > 0;
 			}
 		}
-
 
 		/// <summary>
 		///     List of entries that allow you to navigate forwards.
@@ -240,7 +222,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Gets/Sets whether Document Navigation is tracked. Defaults to true.
 		/// </summary>
@@ -255,7 +236,6 @@ namespace ScintillaNET
 				_isEnabled = value;
 			}
 		}
-
 
 		/// <summary>
 		///     Maximum number of places the document navigation remembers. Defaults to 50.
@@ -277,13 +257,12 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		///     Time in milliseconds to wait before a Navigation Point is set. Default is 200
 		/// </summary>
 		/// <remarks>
 		///     In text editing, the current caret position is constantly changing. Rather than capture every
-		///     change in position, ScintillaNET captures the current position [NavigationPointTimeout]ms after a 
+		///     change in position, ScintillaNET captures the current position [NavigationPointTimeout]ms after a
 		///     position changes, only then is it eligable for another snapshot
 		/// </remarks>
 		public int NavigationPointTimeout
@@ -299,7 +278,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

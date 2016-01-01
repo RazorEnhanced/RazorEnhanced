@@ -25,7 +25,6 @@ namespace Assistant.Map
 
 		internal static List<UOMapRuneButton> Load(string path)
 		{
-
 			List<UOMapRuneButton> buttonlist = new List<UOMapRuneButton>();
 			//if (!File.Exists(path))
 			// {
@@ -44,11 +43,11 @@ namespace Assistant.Map
 				case MouseButtons.Left:
 					//recall
 					break;
+
 				case MouseButtons.Right:
 					//gate
 					break;
 			}
-
 		}
 
 		internal int X
@@ -80,6 +79,5 @@ namespace Assistant.Map
 			get { return m_Icon; }
 			set { m_Icon = value; }
 		}
-
 	}
 }

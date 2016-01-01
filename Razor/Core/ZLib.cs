@@ -30,17 +30,20 @@ namespace Assistant
 	{
 		[DllImport("zlib")]
 		internal static extern string zlibVersion();
+
 		[DllImport("zlib")]
 		internal static extern ZLibError compress(byte[] dest, ref int destLength, byte[] source, int sourceLength);
+
 		[DllImport("zlib")]
 		internal static extern ZLibError compress2(byte[] dest, ref int destLength, byte[] source, int sourceLength, ZLibCompressionLevel level);
+
 		[DllImport("zlib")]
 		internal static extern ZLibError uncompress(byte[] dest, ref int destLen, byte[] source, int sourceLen);
 	}
 
 	// Be careful when writing raw data, as it may confuse the GZBlockIn if not accounted for when reading.
 	// Seeking in the compressed stream is HIGHLY unrecommended
-	// If you need to seek, use BufferAll to keep all data in the buffer, seek as much as you want, then 
+	// If you need to seek, use BufferAll to keep all data in the buffer, seek as much as you want, then
 	// turn off BufferAll and flush the data to disk.
 	// Once the data is flushed, you CANNOT seek back to it!
 	internal class GZBlockOut : Stream
@@ -106,6 +109,7 @@ namespace Assistant
 		}
 
 		private static byte[] m_CompBuff = null;
+
 		internal void FlushBuffer()
 		{
 			if (!m_IsCompressed || m_BufferAll || m_Buffer.Position <= 0)
@@ -172,10 +176,10 @@ namespace Assistant
 	}
 
 	// Represents a block compressed stream written by GZBlockOut
-	// If there is uncompressed data in the stream, you may seek to 
+	// If there is uncompressed data in the stream, you may seek to
 	// it and read from is as you wish using Raw/RawStream.  If you have
-	// not yet started reading compressed data, you must position rawstream 
-	// at the begining of the compressed data.  If you've already read 
+	// not yet started reading compressed data, you must position rawstream
+	// at the begining of the compressed data.  If you've already read
 	// compressed data, you must reposition the file pointer back to its previous
 	// position in the stream.  This is really important.
 	//
@@ -220,6 +224,7 @@ namespace Assistant
 
 		private static byte[] m_ReadBuff = null;
 		private static byte[] m_CompBuff = null;
+
 		public override long Seek(long offset, SeekOrigin origin)
 		{
 			if (m_Compressed)

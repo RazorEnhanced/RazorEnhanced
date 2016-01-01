@@ -12,7 +12,6 @@ namespace RazorEnhanced
 			m_AssistantPoint2D = point2D;
 		}
 
-
 		public int X { get { return m_AssistantPoint2D.X; } }
 		public int Y { get { return m_AssistantPoint2D.Y; } }
 
@@ -33,8 +32,6 @@ namespace RazorEnhanced
 		{
 			m_AssistantPoint3D = point3D;
 		}
-
-
 
 		public int X { get { return m_AssistantPoint3D.X; } }
 		public int Y { get { return m_AssistantPoint3D.Y; } }

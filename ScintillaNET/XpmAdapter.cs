@@ -7,13 +7,12 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
 	///     Converts Bitmap images to XPM data for use with ScintillaNET.
 	///     Warning: images with more than (around) 50 colors will generate incorrect XPM
-	///     The XpmConverter class was based on code from flashdevelop. 
+	///     The XpmConverter class was based on code from flashdevelop.
 	/// </summary>
 	internal static class XpmConverter
 	{
@@ -25,7 +24,6 @@ namespace ScintillaNET
 		public static readonly string DefaultTransparentColor = "#FF00FF";
 
 		#endregion Fields
-
 
 		#region Methods
 
@@ -39,7 +37,6 @@ namespace ScintillaNET
 		{
 			return ConvertToXPM(bmp, DefaultTransparentColor);
 		}
-
 
 		/// <summary>
 		///     Converts Bitmap images to XPM data for use with ScintillaNET.
@@ -90,7 +87,6 @@ namespace ScintillaNET
 			return finalColor;
 		}
 
-
 		/// <summary>
 		///     Cicles an image list object to convert contained images into xpm
 		///     at the same time we add converted images into an arraylist that lets us to retrieve images later.
@@ -102,10 +98,9 @@ namespace ScintillaNET
 			return ConvertToXPM(ImageList, DefaultTransparentColor);
 		}
 
-
 		/// <summary>
 		///     Cicles an image list object to convert contained images into xpm
-		///     at the same time we add converted images into an arraylist that lets us to retrieve images later	
+		///     at the same time we add converted images into an arraylist that lets us to retrieve images later
 		/// </summary>
 		/// <param name="imageList">The image list to transform.</param>
 		/// <param name="transparentColor">The overriding transparent Color</param>

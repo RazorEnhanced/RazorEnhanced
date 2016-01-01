@@ -4,8 +4,10 @@
 	{
 		DismountPrevention = 0x3E9,
 		NoRearm = 0x3EA,
+
 		//Currently, no 0x3EB or 0x3EC
 		NightSight = 0x3ED,
+
 		DeathStrike,
 		EvilOmen,
 		UnknownStandingSwirl,
@@ -124,5 +126,4 @@
 		WraithForm = 1124,
 		CityTradeDeal = 1126
 	}
-
 }

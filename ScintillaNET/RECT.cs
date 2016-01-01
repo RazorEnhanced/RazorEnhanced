@@ -6,7 +6,6 @@ using System.Runtime.InteropServices;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[Serializable, StructLayout(LayoutKind.Sequential)]
@@ -21,7 +20,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Properties
 
 		public int Height { get { return Bottom - Top; } }
@@ -31,7 +29,6 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Methods
 
 		public static RECT FromRectangle(Rectangle rectangle)
@@ -39,14 +36,12 @@ namespace ScintillaNET
 			return new RECT(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
 		}
 
-
 		public override int GetHashCode()
 		{
 			return Left ^ ((Top << 13) | (Top >> 0x13))
 			  ^ ((Width << 0x1a) | (Width >> 6))
 			  ^ ((Height << 7) | (Height >> 0x19));
 		}
-
 
 		// Handy method for converting to a System.Drawing.Rectangle
 		public Rectangle ToRectangle()
@@ -56,7 +51,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Operators
 
 		public static implicit operator RECT(Rectangle rect)
@@ -64,14 +58,12 @@ namespace ScintillaNET
 			return FromRectangle(rect);
 		}
 
-
 		public static implicit operator Rectangle(RECT rect)
 		{
 			return rect.ToRectangle();
 		}
 
 		#endregion Operators
-
 
 		#region Constructors
 

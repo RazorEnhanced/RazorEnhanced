@@ -1,10 +1,4 @@
-﻿#region Using Directives
-
-
-#endregion Using Directives
-
-
-namespace ScintillaNET.Configuration
+﻿namespace ScintillaNET.Configuration
 {
 	public class MarkersConfigList : System.Collections.ObjectModel.KeyedCollection<int, MarkersConfig>
 	{
@@ -14,7 +8,6 @@ namespace ScintillaNET.Configuration
 
 		#endregion Fields
 
-
 		#region Methods
 
 		protected override int GetKeyForItem(MarkersConfig item)
@@ -23,7 +16,6 @@ namespace ScintillaNET.Configuration
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 

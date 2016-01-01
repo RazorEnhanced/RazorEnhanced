@@ -6,7 +6,6 @@ using System.Collections;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class LineCollection : TopLevelHelper, ICollection
@@ -32,24 +31,20 @@ namespace ScintillaNET
 				array.SetValue(this[i], i);
 		}
 
-
 		public Line FromPosition(int position)
 		{
 			return this[NativeScintilla.LineFromPosition(position)];
 		}
-
 
 		public Line FromVisibleLineNumber(int displayLine)
 		{
 			return new Line(Scintilla, NativeScintilla.DocLineFromVisible(displayLine));
 		}
 
-
 		public IEnumerator GetEnumerator()
 		{
 			return new LinesEnumerator(this);
 		}
-
 
 		public Line GetMaxLineWithState()
 		{
@@ -60,12 +55,10 @@ namespace ScintillaNET
 			return this[line];
 		}
 
-
 		public void Hide(int startLine, int endLine)
 		{
 			NativeScintilla.HideLines(startLine, endLine);
 		}
-
 
 		public void Join(int startLine, int endLine)
 		{
@@ -74,14 +67,12 @@ namespace ScintillaNET
 			Scintilla.DirectMessage(NativeMethods.SCI_LINESJOIN, IntPtr.Zero, IntPtr.Zero);
 		}
 
-
 		public void Show(int startLine, int endLine)
 		{
 			NativeScintilla.ShowLines(startLine, endLine);
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -93,7 +84,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line Current
 		{
 			get
@@ -102,7 +92,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line FirstVisible
 		{
 			get
@@ -110,8 +99,6 @@ namespace ScintillaNET
 				return this[FirstVisibleIndex];
 			}
 		}
-
-
 
 		// TODO I'm not totally happy with the name of this property
 		/// <summary>
@@ -131,18 +118,15 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public bool IsSynchronized
 		{
 			get { return false; }
 		}
 
-
 		public object SyncRoot
 		{
 			get { throw new Exception("The method or operation is not implemented."); }
 		}
-
 
 		public Line this[int index]
 		{
@@ -152,7 +136,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public int VisibleCount
 		{
 			get
@@ -161,15 +144,14 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Line[] VisibleLines
 		{
 			get
 			{
 				// [workitem:21678] 2009-10-14 Chris Rickard
 				// This whole thing was fubard. mjpa fixed part of it but another issue arose
-				// that VisibleCount returns how many *possible* lines are visible, not 
-				// taking into account that there may not be that many lines defined in 
+				// that VisibleCount returns how many *possible* lines are visible, not
+				// taking into account that there may not be that many lines defined in
 				// the document.
 				int min = FirstVisibleIndex;
 				int max = min + VisibleCount + 1;
@@ -187,13 +169,13 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
-		protected internal LineCollection(Scintilla scintilla) : base(scintilla) { }
+		protected internal LineCollection(Scintilla scintilla) : base(scintilla)
+		{
+		}
 
 		#endregion Constructors
-
 
 		#region Types
 
@@ -207,7 +189,6 @@ namespace ScintillaNET
 
 			#endregion Fields
 
-
 			#region Methods
 
 			public bool MoveNext()
@@ -218,14 +199,12 @@ namespace ScintillaNET
 				return true;
 			}
 
-
 			public void Reset()
 			{
 				_index = -1;
 			}
 
 			#endregion Methods
-
 
 			#region Properties
 
@@ -235,7 +214,6 @@ namespace ScintillaNET
 			}
 
 			#endregion Properties
-
 
 			#region Constructors
 

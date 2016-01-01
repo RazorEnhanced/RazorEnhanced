@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -21,7 +20,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public NavigationPont Pop()
@@ -30,7 +28,6 @@ namespace ScintillaNET
 			RemoveAt(Count - 1);
 			return ret;
 		}
-
 
 		public void Push(NavigationPont value)
 		{
@@ -41,7 +38,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		public NavigationPont Current
@@ -51,7 +47,6 @@ namespace ScintillaNET
 				return this[Count - 1];
 			}
 		}
-
 
 		public int MaxCount
 		{

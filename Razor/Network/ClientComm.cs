@@ -70,12 +70,14 @@ namespace Assistant
 		}
 
 		internal const int WM_USER = 0x400;
+
 		internal enum UOAMessage
 		{
 			First = REGISTER,
 
 			//in comming:
 			REGISTER = WM_USER + 200,
+
 			COUNT_RESOURCES,
 			GET_COORDS,
 			GET_SKILL,
@@ -95,6 +97,7 @@ namespace Assistant
 
 			//out going:
 			RES_COUNT_DONE = WM_USER + 301,
+
 			CAST_SPELL,
 			LOGIN,
 			MAGERY_LEVEL,
@@ -120,8 +123,10 @@ namespace Assistant
 				hWnd = handle;
 				Command.Register(cmd, new CommandCallback(MyCallback));
 			}
+
 			private uint Msg;
 			private IntPtr hWnd;
+
 			private void MyCallback(string[] args)
 			{
 				StringBuilder sb = new StringBuilder();
@@ -447,60 +452,86 @@ namespace Assistant
 		{
 			[FieldOffset(0)]
 			internal int Length;
+
 			[FieldOffset(4)]
 			internal int Start;
+
 			[FieldOffset(8)]
 			internal byte Buff0;
 		}
 
 		[DllImport("Crypt.dll")]
 		private static unsafe extern int InstallLibrary(IntPtr thisWnd, int procid, int features);
+
 		[DllImport("Crypt.dll")]
 		private static unsafe extern void Shutdown(bool closeClient);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern IntPtr FindUOWindow();
+
 		[DllImport("Crypt.dll")]
 		private static unsafe extern IntPtr GetSharedAddress();
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern int GetPacketLength(byte* data, int bufLen);//GetPacketLength( [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)] byte[] data, int bufLen );
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern bool IsDynLength(byte packetId);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern int GetUOProcId();
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern int InitializeLibrary(string version);
+
 		[DllImport("Crypt.dll")]
 		private static unsafe extern IntPtr GetCommMutex();
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern uint TotalIn();
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern uint TotalOut();
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern IntPtr CaptureScreen(bool isFullScreen, string msgStr);
+
 		[DllImport("Crypt.dll")]
 		private static unsafe extern void WaitForWindow(int pid);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern void SetDataPath(string path);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern void SetDeathMsg(string msg);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern void CalibratePosition(int x, int y, int z);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern bool IsCalibrated();
+
 		[DllImport("Crypt.dll")]
 		private static unsafe extern bool GetPosition(int* x, int* y, int* z);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern void BringToFront(IntPtr hWnd);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern void DoFeatures(int features);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern bool AllowBit(uint bit);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern void SetAllowDisconn(bool allowed);
+
 		[DllImport("Crypt.dll")]
 		private static unsafe extern void SetServer(uint ip, ushort port);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern bool HandleNegotiate(ulong word);
+
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern IntPtr GetUOVersion();
 
@@ -529,26 +560,30 @@ namespace Assistant
 
 		[DllImport("user32.dll")]
 		internal static extern uint PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
 		[DllImport("user32.dll")]
 		internal static extern bool SetForegroundWindow(IntPtr hWnd);
 
 		[DllImport("kernel32.dll")]
 		private static extern ushort GlobalAddAtom(string str);
+
 		[DllImport("kernel32.dll")]
 		private static extern ushort GlobalDeleteAtom(ushort atom);
+
 		[DllImport("kernel32.dll")]
 		private static extern uint GlobalGetAtomName(ushort atom, StringBuilder buff, int bufLen);
 
 		[DllImport("kernel32.dll")]
 		private static extern IntPtr LoadLibrary(string path);
+
 		[DllImport("kernel32.dll")]
 		private static extern bool FreeLibrary(IntPtr hModule);
+
 		[DllImport("kernel32.dll")]
 		private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
 
 		[DllImport("Advapi32.dll")]
 		private static extern int GetUserNameA(StringBuilder buff, int* len);
-
 
 		internal static string GetWindowsUserName()
 		{
@@ -568,13 +603,16 @@ namespace Assistant
 
 		// ZIPPY REV 80		private static Buffer *m_OutFwd;
 		private static Buffer* m_InRecv;
+
 		private static Buffer* m_OutRecv;
 		private static Buffer* m_InSend;
 		private static Buffer* m_OutSend;
 		private static IntPtr m_TitleStr;
 		private static Mutex CommMutex;
+
 		// ZIPPY REV 80		private static Mutex FwdMutex;
 		private static Process ClientProc;
+
 		// ZIPPY REV 80		private static IntPtr m_FwdWnd;
 
 		// ZIPPY REV 80		public static IntPtr FwdWnd { get { return m_FwdWnd; } }
@@ -845,27 +883,24 @@ namespace Assistant
 			{
 				PacketHandlers.Party.Clear();
 
-
 				Engine.MainWindow.UpdateTitle();
 				for (int i = 0; i < m_WndReg.Count; i++)
 					PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnStart = DateTime.MinValue;
-
 			}
 
-
-			// Stop forzato di tutti i thread agent 
+			// Stop forzato di tutti i thread agent
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
 
-            if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
+			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
 
-            if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
+			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
+				Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
 
-            if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
 
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
@@ -877,14 +912,14 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
 				Assistant.Engine.MainWindow.RestockStop.PerformClick();
 
-            if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
+			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+				Assistant.Engine.MainWindow.SellCheckBox.Checked = false;
 
-            if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
-                Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
+			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
+				Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
 
-            // Stop filtri
-            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+			// Stop filtri
+			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
 				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
 
 			PlayerData.ExternalZ = false;
@@ -960,9 +995,11 @@ namespace Assistant
 				case UONetMessage.Recv:
 					OnRecv();
 					break;
+
 				case UONetMessage.Send:
 					OnSend();
 					break;
+
 				case UONetMessage.Connect:
 					m_ConnStart = DateTime.Now;
 					try
@@ -973,9 +1010,11 @@ namespace Assistant
 					{
 					}
 					break;
+
 				case UONetMessage.Disconnect:
 					OnLogout(false);
 					break;
+
 				case UONetMessage.Close:
 					OnLogout();
 					ClientProc = null;
@@ -987,6 +1026,7 @@ namespace Assistant
 				case UONetMessage.Mouse:
 					RazorEnhanced.HotKey.OnMouse((ushort)(lParam & 0xFFFF), (short)(lParam >> 16));
 					break;
+
 				case UONetMessage.KeyDown:
 					//retVal = HotKey.OnKeyDown(lParam);
 					retVal = RazorEnhanced.HotKey.GameKeyDown((Keys)(lParam));
@@ -1196,6 +1236,7 @@ namespace Assistant
 					}
 				}
 		*/
+
 		internal static Packet MakePacketFrom(PacketReader pr)
 		{
 			byte[] data = pr.CopyBytes(0, pr.Length);
@@ -1225,6 +1266,7 @@ namespace Assistant
 						viewer = PacketHandler.HasClientViewer(buff[0]);
 						filter = PacketHandler.HasClientFilter(buff[0]);
 						break;
+
 					case PacketPath.ServerToClient:
 						viewer = PacketHandler.HasServerViewer(buff[0]);
 						filter = PacketHandler.HasServerFilter(buff[0]);
@@ -1331,6 +1373,7 @@ namespace Assistant
 								case PacketPath.ClientToServer:
 									PacketPlayer.ClientPacket(p);
 									break;
+
 								case PacketPath.ServerToClient:
 									PacketPlayer.ServerPacket(p);
 									break;
@@ -1456,4 +1499,3 @@ namespace Assistant
 		}
 	}
 }
-

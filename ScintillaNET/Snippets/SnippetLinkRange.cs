@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public class SnippetLinkRange : ManagedRange
@@ -17,7 +16,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public override void Dispose()
@@ -29,14 +27,12 @@ namespace ScintillaNET
 			}
 		}
 
-
 		internal void Init()
 		{
 			Scintilla.ManagedRanges.Add(this);
 		}
 
 		#endregion Methods
-
 
 		#region Properties
 
@@ -63,7 +59,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public string Key
 		{
 			get
@@ -75,7 +70,6 @@ namespace ScintillaNET
 				_key = value;
 			}
 		}
-
 
 		public List<SnippetLinkRange> Parent
 		{
@@ -90,7 +84,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

@@ -67,7 +67,6 @@ namespace RazorEnhanced.UI
 			this.SetStyle(ControlStyles.UserPaint, true);
 		}
 
-
 		protected override void OnDrawItem(DrawItemEventArgs e)
 		{
 			e.DrawBackground();
@@ -162,7 +161,7 @@ namespace RazorEnhanced.UI
 
 		private MouseState MState = MouseState.None;
 
-		#endregion
+		#endregion Fields
 
 		#region Constructor
 
@@ -179,7 +178,7 @@ namespace RazorEnhanced.UI
 			this.colorTable = new Colortable();
 		}
 
-		#endregion
+		#endregion Constructor
 
 		#region Events
 
@@ -195,13 +194,13 @@ namespace RazorEnhanced.UI
 
 				PaintEventArgs e = new PaintEventArgs(g, clipRect);
 
-				// save the graphics state so that if anything goes wrong 
+				// save the graphics state so that if anything goes wrong
 				// we're not fubar
 				GraphicsState state = g.Save();
 
 				try
 				{
-					// move the graphics object so that we are drawing in 
+					// move the graphics object so that we are drawing in
 					// the correct place
 					g.TranslateTransform((float)-this.Location.X, (float)-this.Location.Y);
 
@@ -224,7 +223,7 @@ namespace RazorEnhanced.UI
 			g.FillRectangle(SystemBrushes.Control, clipRect);
 		}
 
-		#endregion
+		#endregion Paint Transparent Background
 
 		#region Mouse Events
 
@@ -252,7 +251,7 @@ namespace RazorEnhanced.UI
 			Invalidate();
 		}
 
-		#endregion
+		#endregion Mouse Events
 
 		#region Path
 
@@ -276,7 +275,7 @@ namespace RazorEnhanced.UI
 			return gp;
 		}
 
-		#endregion
+		#endregion Path
 
 		#region Paint
 
@@ -292,7 +291,7 @@ namespace RazorEnhanced.UI
 			g.SmoothingMode = SmoothingMode.AntiAlias;
 			g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
-			#endregion
+			#endregion Painting
 
 			#region Color
 
@@ -301,7 +300,6 @@ namespace RazorEnhanced.UI
 			Color tBottomColorBegin = this.colorTable.ButtonNormalColor3;
 			Color tBottomColorEnd = this.colorTable.ButtonNormalColor4;
 			Color Textcol = this.colorTable.TextColor;
-
 
 			if (!this.Enabled)
 			{
@@ -340,8 +338,7 @@ namespace RazorEnhanced.UI
 				}
 			}
 
-
-			#endregion
+			#endregion Color
 
 			#region Theme 2010
 
@@ -352,10 +349,10 @@ namespace RazorEnhanced.UI
 				TEXTandIMAGE(e.ClipRectangle, g, Textcol);
 			}
 
-			#endregion
+			#endregion Theme 2010
 		}
 
-		#endregion
+		#endregion Paint
 
 		#region Paint 2010 Background
 
@@ -435,7 +432,7 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		#endregion
+		#endregion Paint 2010 Background
 
 		#region Paint TEXT AND IMAGE
 
@@ -464,7 +461,7 @@ namespace RazorEnhanced.UI
 				sf.Alignment = StringAlignment.Far;
 			}
 
-			#endregion
+			#endregion Top
 
 			#region Middle
 
@@ -484,7 +481,7 @@ namespace RazorEnhanced.UI
 				sf.Alignment = StringAlignment.Far;
 			}
 
-			#endregion
+			#endregion Middle
 
 			#region Bottom
 
@@ -504,7 +501,7 @@ namespace RazorEnhanced.UI
 				sf.Alignment = StringAlignment.Far;
 			}
 
-			#endregion
+			#endregion Bottom
 
 			if (this.ShowKeyboardCues)
 				sf.HotkeyPrefix = System.Drawing.Text.HotkeyPrefix.Show;
@@ -513,15 +510,15 @@ namespace RazorEnhanced.UI
 			g.DrawString(this.Text, this.Font, new SolidBrush(textColor), Rec, sf);
 		}
 
-		#endregion
+		#endregion Paint TEXT AND IMAGE
 
-		#endregion
+		#endregion Events
 
 		#region Properties
 
 		#region ColorTable
 
-		Colortable colorTable = null;
+		private Colortable colorTable = null;
 
 		[DefaultValue(typeof(Colortable), "office2010Blue")]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -536,14 +533,12 @@ namespace RazorEnhanced.UI
 			}
 			set
 			{
-
 				if (value == null)
 					value = Colortable.office2010Blue;
 
 				colorTable = (Colortable)value;
 
 				this.Invalidate();
-
 			}
 		}
 
@@ -614,7 +609,7 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		#endregion
+		#endregion ColorTable
 
 		#region Background Image
 
@@ -644,9 +639,9 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		#endregion
+		#endregion Background Image
 
-		#endregion
+		#endregion Properties
 	}
 
 	#region ENUM
@@ -662,7 +657,7 @@ namespace RazorEnhanced.UI
 		MSOffice2010_Publisher = 7
 	}
 
-	#endregion
+	#endregion ENUM
 
 	#region COLOR TABLE
 
@@ -671,7 +666,7 @@ namespace RazorEnhanced.UI
 	{
 		#region Static Color Tables
 
-		static Office2010BlueTheme office2010blu = new Office2010BlueTheme();
+		private static Office2010BlueTheme office2010blu = new Office2010BlueTheme();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable office2010Blue
@@ -679,7 +674,7 @@ namespace RazorEnhanced.UI
 			get { return office2010blu; }
 		}
 
-		static Office2010Green office2010gr = new Office2010Green();
+		private static Office2010Green office2010gr = new Office2010Green();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable Office2010Green
@@ -687,7 +682,7 @@ namespace RazorEnhanced.UI
 			get { return office2010gr; }
 		}
 
-		static Office2010Red office2010rd = new Office2010Red();
+		private static Office2010Red office2010rd = new Office2010Red();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable Office2010Red
@@ -695,7 +690,7 @@ namespace RazorEnhanced.UI
 			get { return office2010rd; }
 		}
 
-		static Office2010Pink office2010pk = new Office2010Pink();
+		private static Office2010Pink office2010pk = new Office2010Pink();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable Office2010Pink
@@ -703,7 +698,7 @@ namespace RazorEnhanced.UI
 			get { return office2010pk; }
 		}
 
-		static Office2010Yellow office2010yl = new Office2010Yellow();
+		private static Office2010Yellow office2010yl = new Office2010Yellow();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable Office2010Yellow
@@ -711,7 +706,7 @@ namespace RazorEnhanced.UI
 			get { return office2010yl; }
 		}
 
-		static Office2010White office2010wt = new Office2010White();
+		private static Office2010White office2010wt = new Office2010White();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable Office2010White
@@ -719,8 +714,7 @@ namespace RazorEnhanced.UI
 			get { return office2010wt; }
 		}
 
-
-		static Office2010Publisher office2010pb = new Office2010Publisher();
+		private static Office2010Publisher office2010pb = new Office2010Publisher();
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 		public static Colortable Office2010Publisher
@@ -728,16 +722,15 @@ namespace RazorEnhanced.UI
 			get { return office2010pb; }
 		}
 
-
-		#endregion
+		#endregion Static Color Tables
 
 		#region Custom Properties
 
-		Color textColor = Color.White;
-		Color selectedTextColor = Color.FromArgb(30, 57, 91);
-		Color OverTextColor = Color.FromArgb(30, 57, 91);
-		Color borderColor = Color.FromArgb(31, 72, 161);
-		Color innerborderColor = Color.FromArgb(68, 135, 228);
+		private Color textColor = Color.White;
+		private Color selectedTextColor = Color.FromArgb(30, 57, 91);
+		private Color OverTextColor = Color.FromArgb(30, 57, 91);
+		private Color borderColor = Color.FromArgb(31, 72, 161);
+		private Color innerborderColor = Color.FromArgb(68, 135, 228);
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public virtual Color TextColor
@@ -774,14 +767,14 @@ namespace RazorEnhanced.UI
 			set { innerborderColor = value; }
 		}
 
-		#endregion
+		#endregion Custom Properties
 
 		#region Button Normal
 
-		Color buttonNormalBegin = Color.FromArgb(31, 72, 161);
-		Color buttonNormalMiddleBegin = Color.FromArgb(68, 135, 228);
-		Color buttonNormalMiddleEnd = Color.FromArgb(41, 97, 181);
-		Color buttonNormalEnd = Color.FromArgb(62, 125, 219);
+		private Color buttonNormalBegin = Color.FromArgb(31, 72, 161);
+		private Color buttonNormalMiddleBegin = Color.FromArgb(68, 135, 228);
+		private Color buttonNormalMiddleEnd = Color.FromArgb(41, 97, 181);
+		private Color buttonNormalEnd = Color.FromArgb(62, 125, 219);
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public virtual Color ButtonNormalColor1
@@ -811,14 +804,14 @@ namespace RazorEnhanced.UI
 			set { buttonNormalEnd = value; }
 		}
 
-		#endregion
+		#endregion Button Normal
 
 		#region Button Selected
 
-		Color buttonSelectedBegin = Color.FromArgb(236, 199, 87);
-		Color buttonSelectedMiddleBegin = Color.FromArgb(252, 243, 215);
-		Color buttonSelectedMiddleEnd = Color.FromArgb(255, 229, 117);
-		Color buttonSelectedEnd = Color.FromArgb(255, 216, 107);
+		private Color buttonSelectedBegin = Color.FromArgb(236, 199, 87);
+		private Color buttonSelectedMiddleBegin = Color.FromArgb(252, 243, 215);
+		private Color buttonSelectedMiddleEnd = Color.FromArgb(255, 229, 117);
+		private Color buttonSelectedEnd = Color.FromArgb(255, 216, 107);
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public virtual Color ButtonSelectedColor1
@@ -848,14 +841,14 @@ namespace RazorEnhanced.UI
 			set { buttonSelectedEnd = value; }
 		}
 
-		#endregion
+		#endregion Button Selected
 
 		#region Button Mouse Over
 
-		Color buttonMouseOverBegin = Color.FromArgb(236, 199, 87);
-		Color buttonMouseOverMiddleBegin = Color.FromArgb(252, 243, 215);
-		Color buttonMouseOverMiddleEnd = Color.FromArgb(249, 225, 137);
-		Color buttonMouseOverEnd = Color.FromArgb(251, 249, 224);
+		private Color buttonMouseOverBegin = Color.FromArgb(236, 199, 87);
+		private Color buttonMouseOverMiddleBegin = Color.FromArgb(252, 243, 215);
+		private Color buttonMouseOverMiddleEnd = Color.FromArgb(249, 225, 137);
+		private Color buttonMouseOverEnd = Color.FromArgb(251, 249, 224);
 
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public virtual Color ButtonMouseOverColor1
@@ -885,7 +878,7 @@ namespace RazorEnhanced.UI
 			set { buttonMouseOverEnd = value; }
 		}
 
-		#endregion
+		#endregion Button Mouse Over
 	}
 
 	#region Office 2010 Blue
@@ -933,7 +926,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	#endregion
+	#endregion Office 2010 Blue
 
 	#region Office 2010 GREEN
 
@@ -980,7 +973,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	#endregion
+	#endregion Office 2010 GREEN
 
 	#region Office 2010 Red
 
@@ -1027,7 +1020,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	#endregion
+	#endregion Office 2010 Red
 
 	#region Office 2010 Pink
 
@@ -1074,7 +1067,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	#endregion
+	#endregion Office 2010 Pink
 
 	#region Office 2010 White
 
@@ -1121,7 +1114,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	#endregion
+	#endregion Office 2010 White
 
 	#region Office 2010 Yellow
 
@@ -1168,7 +1161,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	#endregion
+	#endregion Office 2010 Yellow
 
 	#region Office 2010 Publisher
 
@@ -1215,6 +1208,7 @@ namespace RazorEnhanced.UI
 		}
 	}
 
-	#endregion
-	#endregion
+	#endregion Office 2010 Publisher
+
+	#endregion COLOR TABLE
 }

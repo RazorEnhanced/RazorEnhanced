@@ -8,6 +8,7 @@ namespace Ultima
 	public sealed class MultiMap
 	{
 		private static byte[] m_StreamBuffer;
+
 		static MultiMap()
 		{
 		}

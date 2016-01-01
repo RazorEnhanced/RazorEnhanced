@@ -5,7 +5,6 @@ using System.Drawing;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET.Configuration
 {
 	public class MarginConfigList : List<MarginConfig>
@@ -19,7 +18,6 @@ namespace ScintillaNET.Configuration
 		private int? _right;
 
 		#endregion Fields
-
 
 		#region Properties
 
@@ -35,7 +33,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public Color FoldMarginHighlightColor
 		{
 			get
@@ -47,7 +44,6 @@ namespace ScintillaNET.Configuration
 				_foldMarginHighlightColor = value;
 			}
 		}
-
 
 		public bool? Inherit
 		{
@@ -61,7 +57,6 @@ namespace ScintillaNET.Configuration
 			}
 		}
 
-
 		public int? Left
 		{
 			get
@@ -73,7 +68,6 @@ namespace ScintillaNET.Configuration
 				_left = value;
 			}
 		}
-
 
 		public int? Right
 		{

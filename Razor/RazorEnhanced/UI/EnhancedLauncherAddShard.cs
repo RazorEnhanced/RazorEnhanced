@@ -2,13 +2,11 @@
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedLauncherAddShard : Form
 	{
 		private const string m_Title = "Enhanced Launcher Add Shard";
-
 
 		public EnhancedLauncherAddShard()
 		{

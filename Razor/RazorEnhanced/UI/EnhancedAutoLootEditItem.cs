@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedAutolootEditItem : Form
@@ -78,7 +77,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					color = Convert.ToInt32(tColor.Text, 16);
 				}
 				catch

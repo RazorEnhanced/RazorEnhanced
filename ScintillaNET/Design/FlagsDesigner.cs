@@ -3,12 +3,12 @@
  * Modified the Namespace just because it was too generic.
  * Added DesignTimeVisible(false) to hide it from the toolbox.
  */
+
 using System;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
-
 
 namespace ScintillaNET.Design
 {
@@ -23,7 +23,6 @@ namespace ScintillaNET.Design
 			InitializeComponent();
 
 			// TODO: Add any initialization after the InitForm call
-
 		}
 
 		protected override void Dispose(bool disposing)
@@ -37,15 +36,16 @@ namespace ScintillaNET.Design
 		}
 
 		#region Component Designer generated code
+
 		private void InitializeComponent()
 		{
-			// 
+			//
 			// FlaggedCheckedListBox
-			// 
+			//
 			this.CheckOnClick = true;
-
 		}
-		#endregion
+
+		#endregion Component Designer generated code
 
 		// Adds an integer value and its associated description
 		public FlagCheckedListBoxItem Add(int v, string c)
@@ -77,7 +77,6 @@ namespace ScintillaNET.Design
 		// Checks/Unchecks items depending on the give bitvalue
 		protected void UpdateCheckedItems(int value)
 		{
-
 			isUpdatingCheckStates = true;
 
 			// Iterate over all items
@@ -91,7 +90,6 @@ namespace ScintillaNET.Design
 				}
 				else
 				{
-
 					// If the bit for the current item is on in the bitvalue, check it
 					if ((item.value & value) == item.value && item.value != 0)
 						SetItemChecked(i, true);
@@ -102,7 +100,6 @@ namespace ScintillaNET.Design
 			}
 
 			isUpdatingCheckStates = false;
-
 		}
 
 		// Updates items in the checklistbox
@@ -110,11 +107,9 @@ namespace ScintillaNET.Design
 		// cs = The check state of that item
 		protected void UpdateCheckedItems(FlagCheckedListBoxItem composite, CheckState cs)
 		{
-
 			// If the value of the item is 0, call directly.
 			if (composite.value == 0)
 				UpdateCheckedItems(0);
-
 
 			// Get the total value of all checked items
 			int sum = 0;
@@ -136,7 +131,6 @@ namespace ScintillaNET.Design
 
 			// Update all items in the checklistbox based on the final bit value
 			UpdateCheckedItems(sum);
-
 		}
 
 		private bool isUpdatingCheckStates = false;
@@ -157,8 +151,8 @@ namespace ScintillaNET.Design
 			return sum;
 		}
 
-		Type enumType;
-		Enum enumValue;
+		private Type enumType;
+		private Enum enumValue;
 
 		// Adds items to the checklistbox based on the members of the enum
 		private void FillEnumMembers()
@@ -177,7 +171,6 @@ namespace ScintillaNET.Design
 		{
 			int intVal = (int)Convert.ChangeType(enumValue, typeof(int));
 			UpdateCheckedItems(intVal);
-
 		}
 
 		[DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)]
@@ -190,17 +183,13 @@ namespace ScintillaNET.Design
 			}
 			set
 			{
-
 				Items.Clear();
 				enumValue = value; // Store the current enum value
 				enumType = value.GetType(); // Store enum type
 				FillEnumMembers(); // Add items for enum members
 				ApplyEnumValue(); // Check/uncheck items depending on enum value
-
 			}
 		}
-
-
 	}
 
 	// Represents an item in the checklistbox
@@ -236,7 +225,6 @@ namespace ScintillaNET.Design
 		public string caption;
 	}
 
-
 	// UITypeEditor for flag enums
 	public class FlagEnumUIEditor : UITypeEditor
 	{
@@ -255,17 +243,14 @@ namespace ScintillaNET.Design
 				&& context.Instance != null
 				&& provider != null)
 			{
-
 				IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
 
 				if (edSvc != null)
 				{
-
 					Enum e = (Enum)Convert.ChangeType(value, context.PropertyDescriptor.PropertyType);
 					flagEnumCB.EnumValue = e;
 					edSvc.DropDownControl(flagEnumCB);
 					return flagEnumCB.EnumValue;
-
 				}
 			}
 			return null;
@@ -275,8 +260,5 @@ namespace ScintillaNET.Design
 		{
 			return UITypeEditorEditStyle.DropDown;
 		}
-
-
 	}
-
 }

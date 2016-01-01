@@ -6,7 +6,6 @@ using System.Windows.Forms;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	public partial class IncrementalSearcher : UserControl
@@ -19,7 +18,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		private void brnPrevious_Click(object sender, EventArgs e)
@@ -27,14 +25,12 @@ namespace ScintillaNET
 			findPrevious();
 		}
 
-
 		private void btnClearHighlights_Click(object sender, EventArgs e)
 		{
 			if (Scintilla == null)
 				return;
 			Scintilla.FindReplace.ClearAllHighlights();
 		}
-
 
 		private void btnHighlightAll_Click(object sender, EventArgs e)
 		{
@@ -45,12 +41,10 @@ namespace ScintillaNET
 			Scintilla.FindReplace.HighlightAll(Scintilla.FindReplace.FindAll(txtFind.Text));
 		}
 
-
 		private void btnNext_Click(object sender, EventArgs e)
 		{
 			findNext();
 		}
-
 
 		private void findNext()
 		{
@@ -66,7 +60,6 @@ namespace ScintillaNET
 			MoveFormAwayFromSelection();
 		}
 
-
 		private void findPrevious()
 		{
 			if (txtFind.Text == string.Empty)
@@ -80,7 +73,6 @@ namespace ScintillaNET
 
 			MoveFormAwayFromSelection();
 		}
-
 
 		public virtual void MoveFormAwayFromSelection()
 		{
@@ -104,7 +96,6 @@ namespace ScintillaNET
 				{
 					// Top half of the screen
 					newLocation = new Point(Location.X, cursorPoint.Y + Scintilla.Lines.Current.Height * 2);
-
 				}
 				else
 				{
@@ -116,7 +107,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		protected override void OnCreateControl()
 		{
 			base.OnCreateControl();
@@ -124,14 +114,12 @@ namespace ScintillaNET
 			txtFind.Focus();
 		}
 
-
 		protected override void OnLeave(EventArgs e)
 		{
 			base.OnLostFocus(e);
 			if (!_toolItem)
 				Hide();
 		}
-
 
 		protected override void OnVisibleChanged(EventArgs e)
 		{
@@ -148,7 +136,6 @@ namespace ScintillaNET
 				Scintilla.Focus();
 		}
 
-
 		private void txtFind_KeyDown(object sender, KeyEventArgs e)
 		{
 			switch (e.KeyCode)
@@ -158,17 +145,18 @@ namespace ScintillaNET
 					findNext();
 					e.Handled = true;
 					break;
+
 				case Keys.Up:
 					findPrevious();
 					e.Handled = true;
 					break;
+
 				case Keys.Escape:
 					if (!_toolItem)
 						Hide();
 					break;
 			}
 		}
-
 
 		private void txtFind_TextChanged(object sender, EventArgs e)
 		{
@@ -193,7 +181,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		/// <summary>
@@ -213,7 +200,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Scintilla Scintilla
 		{
 			get
@@ -228,14 +214,12 @@ namespace ScintillaNET
 
 		#endregion Properties
 
-
 		#region Constructors
 
 		public IncrementalSearcher()
 		{
 			InitializeComponent();
 		}
-
 
 		public IncrementalSearcher(bool toolItem)
 		{

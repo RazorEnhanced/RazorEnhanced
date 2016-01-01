@@ -104,8 +104,8 @@ namespace RazorEnhanced
 				if (Targeting.IsLastTarget(m))
 					RazorEnhanced.Mobiles.Message(m.Serial, 10, "*[Target]*");
 			}
-
 		}
+
 		//////////////// GRAPH FILTER ///////////////////////
 
 		internal static void RefreshLists()
@@ -168,7 +168,6 @@ namespace RazorEnhanced
 			if (AutoCarverBlade == 0)       // Esce in caso di errore lettura blade
 				return 0;
 
-
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
 			foreach (RazorEnhanced.Item corpo in corpi)
@@ -195,7 +194,6 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-
 		internal static void AutoCarverEngine()
 		{
 			int exit = Int32.MinValue;
@@ -211,105 +209,103 @@ namespace RazorEnhanced
 			exit = AutoCarverEngine(corpseFilter);
 		}
 
-        //////////////// AUTOCARVER STOP ////////////////
+		//////////////// AUTOCARVER STOP ////////////////
 
-        //////////////// AUTOREMOUNT START ////////////////
+		//////////////// AUTOREMOUNT START ////////////////
 
-        internal static int AutoRemountDelay
-        {
-            get
-            {
-                int delay = 100;
-                Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out delay)));
-                return delay;
-            }
+		internal static int AutoRemountDelay
+		{
+			get
+			{
+				int delay = 100;
+				Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out delay)));
+				return delay;
+			}
 
-            set
-            {
-                Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountDelay.Text = value.ToString()));
-            }
-        }
+			set
+			{
+				Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountDelay.Text = value.ToString()));
+			}
+		}
 
-        internal static int AutoRemountEDelay
-        {
-            get
-            {
-                int delay = 100;
-                Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out delay)));
-                return delay;
-            }
+		internal static int AutoRemountEDelay
+		{
+			get
+			{
+				int delay = 100;
+				Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out delay)));
+				return delay;
+			}
 
-            set
-            {
-                Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountEDelay.Text = value.ToString()));
-            }
-        }
+			set
+			{
+				Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountEDelay.Text = value.ToString()));
+			}
+		}
 
-        internal static int AutoRemountSerial
-        {
-            get
-            {
-                int serial = 0;
-                try
-                {
-                    serial = Convert.ToInt32(Assistant.Engine.MainWindow.RemountSerialLabel.Text, 16);
-                }
-                catch
-                { }
-                return serial;
-            }
+		internal static int AutoRemountSerial
+		{
+			get
+			{
+				int serial = 0;
+				try
+				{
+					serial = Convert.ToInt32(Assistant.Engine.MainWindow.RemountSerialLabel.Text, 16);
+				}
+				catch
+				{ }
+				return serial;
+			}
 
-            set
-            {
-                Assistant.Engine.MainWindow.RemountSerialLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountSerialLabel.Text = "0x" + value.ToString("X8")));
-            }
-        }
+			set
+			{
+				Assistant.Engine.MainWindow.RemountSerialLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountSerialLabel.Text = "0x" + value.ToString("X8")));
+			}
+		}
 
+		private static bool m_AutoModeRemount;
 
-        private static bool m_AutoModeRemount;
-        internal static bool AutoModeRemount
-        {
-            get { return m_AutoModeRemount; }
-            set { m_AutoModeRemount = value; }
-        }
+		internal static bool AutoModeRemount
+		{
+			get { return m_AutoModeRemount; }
+			set { m_AutoModeRemount = value; }
+		}
 
-        internal static void AutoRemountEngine()
-        {
-            if (World.Player == null)
-                return;
+		internal static void AutoRemountEngine()
+		{
+			if (World.Player == null)
+				return;
 
-            if (AutoRemountSerial == 0)
-                return;
+			if (AutoRemountSerial == 0)
+				return;
 
-            if (World.Player.IsGhost)
-                return;
+			if (World.Player.IsGhost)
+				return;
 
-            if (World.Player.GetItemOnLayer(Layer.Mount) != null)   // Gia su mount
-                return;
+			if (World.Player.GetItemOnLayer(Layer.Mount) != null)   // Gia su mount
+				return;
 
-            Assistant.Item etheralMount = Assistant.World.FindItem(AutoRemountSerial);
-            if (etheralMount != null && etheralMount.Serial.IsItem)
-            {
-                RazorEnhanced.Items.UseItem(AutoRemountSerial);
-                Thread.Sleep(AutoRemountEDelay);
-            }
-            else
-            {
-                Assistant.Mobile mount = Assistant.World.FindMobile(AutoRemountSerial);
-                if (mount != null && mount.Serial.IsMobile)
-                {
-                    RazorEnhanced.Mobiles.UseMobile(AutoRemountSerial);
-                    Thread.Sleep(AutoRemountDelay);
-                }
-            }
+			Assistant.Item etheralMount = Assistant.World.FindItem(AutoRemountSerial);
+			if (etheralMount != null && etheralMount.Serial.IsItem)
+			{
+				RazorEnhanced.Items.UseItem(AutoRemountSerial);
+				Thread.Sleep(AutoRemountEDelay);
+			}
+			else
+			{
+				Assistant.Mobile mount = Assistant.World.FindMobile(AutoRemountSerial);
+				if (mount != null && mount.Serial.IsMobile)
+				{
+					RazorEnhanced.Mobiles.UseMobile(AutoRemountSerial);
+					Thread.Sleep(AutoRemountDelay);
+				}
+			}
+		}
 
-        }
+		//////////////// AUTOREMOUNT STOP ////////////////
 
-        //////////////// AUTOREMOUNT STOP ////////////////
-
-
-        //////////////// Load settings ////////////////
-        internal static void LoadSettings()
+		//////////////// Load settings ////////////////
+		internal static void LoadSettings()
 		{
 			Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox");
 			Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("FlagsHighlightCheckBox");
@@ -321,12 +317,12 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BoneCutterCheckBox");
 			Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("AutoCarverBladeLabel").ToString("X8");
 			Assistant.Engine.MainWindow.BoneBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("BoneBladeLabel").ToString("X8");
-            Assistant.Engine.MainWindow.RemountCheckbox.Checked = RazorEnhanced.Settings.General.ReadBool("RemountCheckbox");
-            AutoRemountDelay = RazorEnhanced.Settings.General.ReadInt("MountDelay");
-            AutoRemountEDelay = RazorEnhanced.Settings.General.ReadInt("EMountDelay");
-            AutoRemountSerial = RazorEnhanced.Settings.General.ReadInt("MountSerial");
-            
-            RefreshLists();
+			Assistant.Engine.MainWindow.RemountCheckbox.Checked = RazorEnhanced.Settings.General.ReadBool("RemountCheckbox");
+			AutoRemountDelay = RazorEnhanced.Settings.General.ReadInt("MountDelay");
+			AutoRemountEDelay = RazorEnhanced.Settings.General.ReadInt("EMountDelay");
+			AutoRemountSerial = RazorEnhanced.Settings.General.ReadInt("MountSerial");
+
+			RefreshLists();
 		}
 	}
 }

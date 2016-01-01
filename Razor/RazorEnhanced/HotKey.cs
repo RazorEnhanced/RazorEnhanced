@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced
 {
-
 	internal class HotKey
 	{
 		public class HotKeyData
@@ -45,15 +43,16 @@ namespace RazorEnhanced
 				case 1:
 					KeyDown((Keys)500);
 					break;
+
 				case 2:
 					KeyDown((Keys)503);
 					break;
+
 				case 3:
 					KeyDown((Keys)504);
 					break;
 			}
 		}
-
 
 		internal static bool GameKeyDown(Keys k)
 		{
@@ -64,7 +63,7 @@ namespace RazorEnhanced
 		{
 			if (!Engine.MainWindow.HotKeyTextBox.Focused && !Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)
 			{
-				if (k == RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"))         // Pressione master key abilita o disabilita 
+				if (k == RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"))         // Pressione master key abilita o disabilita
 				{
 					if (RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
 					{
@@ -115,19 +114,24 @@ namespace RazorEnhanced
 			{
 				case (Keys)500:
 					return "Wheel Click";
+
 				case (Keys)501:
 					return "Wheel Down";
+
 				case (Keys)502:
 					return "Wheel Up";
+
 				case (Keys)503:
 					return "X Button 1";
+
 				case (Keys)504:
 					return "X Button 2";
+
 				default:
 					return k.ToString();
 			}
-
 		}
+
 		private static void ProcessGroup(string group, Keys k)
 		{
 			if (group != "")
@@ -137,84 +141,111 @@ namespace RazorEnhanced
 					case "General":
 						ProcessGeneral(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Actions":
 						ProcessActions(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Use":
 						ProcessUse(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Show Names":
 						ProcessShowName(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Pet Commands":
-                        ProcessPet(RazorEnhanced.Settings.HotKey.FindString(k));
-                        break;
+						ProcessPet(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
 					case "Agents":
 						ProcessAgents(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Abilities":
 						ProcessAbilities(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Attack":
 						ProcessAttack(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Bandage":
 						ProcessBandage(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Potions":
 						ProcessPotions(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Other":
 						ProcessOther(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Hands":
 						ProcessHands(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Equip Wands":
 						ProcessEquipWands(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Skills":
 						ProcessSkills(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsAgent":
 						ProcessSpellsAgent(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsMagery":
 						RazorEnhanced.Spells.CastMagery(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsNecro":
 						RazorEnhanced.Spells.CastNecro(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsBushido":
 						RazorEnhanced.Spells.CastBushido(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsNinjitsu":
 						RazorEnhanced.Spells.CastNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsSpellweaving":
 						RazorEnhanced.Spells.CastSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsMysticism":
 						RazorEnhanced.Spells.CastMysticism(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "SpellsChivalry":
 						RazorEnhanced.Spells.CastChivalry(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "Target":
 						ProcessTarget(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					case "TList":
 						RazorEnhanced.Target.PerformTargetFromList(RazorEnhanced.Settings.HotKey.FindTargetString(k));
 						break;
+
 					case "Script":
 						RazorEnhanced.EnhancedScriptHotKey.HotKeyStopAll();
 						break;
+
 					case "SList":
 						RazorEnhanced.EnhancedScriptHotKey.HotKeyStart(RazorEnhanced.Settings.HotKey.FindScriptString(k));
 						break;
+
 					case "UseVirtue":
 						RazorEnhanced.Player.InvokeVirtue(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
+
 					default:
 						break;
 				}
@@ -228,12 +259,15 @@ namespace RazorEnhanced
 				case "Resync":
 					RazorEnhanced.Misc.Resync();
 					break;
+
 				case "Take Screen Shot":
 					ScreenCapManager.CaptureNow();
 					break;
+
 				case "Ping Server":
 					Assistant.Ping.StartPing(4);
 					break;
+
 				case "Accept Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
@@ -241,6 +275,7 @@ namespace RazorEnhanced
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
 					break;
+
 				case "Decline Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
@@ -248,6 +283,7 @@ namespace RazorEnhanced
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
 					break;
+
 				default:
 					break;
 			}
@@ -263,14 +299,17 @@ namespace RazorEnhanced
 					else
 						World.Player.SendMessage("You are not mounted.");
 					break;
+
 				case "Grab Item":
 					RazorEnhanced.Misc.SendMessage("Target item to Grab.");
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(grabitemTarget_Callback));
 					break;
+
 				case "Drop Item":
 					RazorEnhanced.Misc.SendMessage("Target item to Drop at feet.");
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(dropitemTarget_Callback));
 					break;
+
 				default:
 					break;
 			}
@@ -295,6 +334,7 @@ namespace RazorEnhanced
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
 		}
+
 		private static void ProcessUse(string function)
 		{
 			Assistant.Item item;
@@ -304,16 +344,19 @@ namespace RazorEnhanced
 					if (World.Player.LastObject != Assistant.Serial.Zero)
 						RazorEnhanced.Items.UseItem(World.Player.LastObject);
 					break;
+
 				case "Left Hand":
 					item = World.Player.GetItemOnLayer(Layer.LeftHand);
 					if (item != null)
 						RazorEnhanced.Items.UseItem(item.Serial);
 					break;
+
 				case "Right Hand":
 					item = World.Player.GetItemOnLayer(Layer.RightHand);
 					if (item != null)
 						RazorEnhanced.Items.UseItem(item.Serial);
 					break;
+
 				default:
 					break;
 			}
@@ -338,6 +381,7 @@ namespace RazorEnhanced
 							ClientCommunication.SendToServer(new SingleClick(i));
 					}
 					break;
+
 				case "Corpses":
 					foreach (Assistant.Item i in World.Items.Values)
 					{
@@ -345,6 +389,7 @@ namespace RazorEnhanced
 							ClientCommunication.SendToServer(new SingleClick(i));
 					}
 					break;
+
 				case "Mobiles":
 					foreach (Assistant.Mobile m in World.MobilesInRange())
 					{
@@ -355,35 +400,37 @@ namespace RazorEnhanced
 							Targeting.CheckTextFlags(m);
 					}
 					break;
+
 				case "Items":
 					foreach (Assistant.Item i in World.Items.Values)
 					{
 						ClientCommunication.SendToServer(new SingleClick(i));
 					}
 					break;
+
 				default:
 					break;
 			}
 		}
 
-        private static void ProcessPet(string function)
-        {
-            if (function == "Mount")
-            {
-                if (Filters.AutoRemountSerial!=0)
-                    Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
-            }
-            else if (function == "Dismount")
-            {
-                Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
-            }
-            else
-            {
-                RazorEnhanced.Pets.Command(function);
-            }     
-        }
+		private static void ProcessPet(string function)
+		{
+			if (function == "Mount")
+			{
+				if (Filters.AutoRemountSerial != 0)
+					Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
+			}
+			else if (function == "Dismount")
+			{
+				Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
+			}
+			else
+			{
+				RazorEnhanced.Pets.Command(function);
+			}
+		}
 
-        private static void ProcessAgents(string function)
+		private static void ProcessAgents(string function)
 		{
 			switch (function)
 			{
@@ -393,55 +440,68 @@ namespace RazorEnhanced
 					else
 						RazorEnhanced.AutoLoot.Start();
 					break;
+
 				case "Scavenger ON/OFF":
 					if (RazorEnhanced.Scavenger.Status())
 						RazorEnhanced.Scavenger.Stop();
 					else
 						RazorEnhanced.Scavenger.Start();
 					break;
+
 				case "Organizer Start":
 					RazorEnhanced.Organizer.FStop();
 					break;
+
 				case "Organizer Stop":
 					RazorEnhanced.Organizer.FStart();
 					break;
+
 				case "Sell Agent ON/OFF":
 					if (RazorEnhanced.SellAgent.Status())
 						RazorEnhanced.SellAgent.Disable();
 					else
 						RazorEnhanced.SellAgent.Enable();
 					break;
+
 				case "Buy Agent ON/OFF":
 					if (RazorEnhanced.BuyAgent.Status())
 						RazorEnhanced.BuyAgent.Disable();
 					else
 						RazorEnhanced.BuyAgent.Enable();
 					break;
+
 				case "Dress Start":
 					RazorEnhanced.Dress.DressFStart();
 					break;
+
 				case "Dress Stop":
 					RazorEnhanced.Dress.DressFStop();
 					break;
+
 				case "Undress":
 					RazorEnhanced.Dress.UnDressFStart();
 					break;
+
 				case "Restock Start":
 					RazorEnhanced.Restock.FStart();
 					break;
+
 				case "Restock Stop":
 					RazorEnhanced.Restock.FStop();
 					break;
+
 				case "Bandage Heal ON/OFF":
 					if (RazorEnhanced.BandageHeal.Status())
 						RazorEnhanced.BandageHeal.Stop();
 					else
 						RazorEnhanced.BandageHeal.Start();
 					break;
+
 				default:
 					break;
 			}
 		}
+
 		private static void ProcessAbilities(string function)
 		{
 			switch (function)
@@ -451,6 +511,7 @@ namespace RazorEnhanced
 					break;
 			}
 		}
+
 		private static void ProcessAttack(string function)
 		{
 			switch (function)
@@ -461,6 +522,7 @@ namespace RazorEnhanced
 					break;
 			}
 		}
+
 		private static void ProcessBandage(string function)
 		{
 			Assistant.Item pack = World.Player.Backpack;
@@ -480,6 +542,7 @@ namespace RazorEnhanced
 						}
 					}
 					break;
+
 				case "Last":
 					if (pack != null)
 					{
@@ -494,6 +557,7 @@ namespace RazorEnhanced
 						}
 					}
 					break;
+
 				case "Use Only":
 					if (pack != null)
 					{
@@ -501,10 +565,12 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 					}
 					break;
+
 				default:
 					break;
 			}
 		}
+
 		private static void ProcessPotions(string function)
 		{
 			Assistant.Item pack = World.Player.Backpack;
@@ -517,6 +583,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
+
 				case "Cure":
 					if (pack != null)
 					{
@@ -524,6 +591,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
+
 				case "Explosion":
 					if (pack != null)
 					{
@@ -531,6 +599,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
+
 				case "Heal":
 					if (pack != null)
 					{
@@ -538,6 +607,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
+
 				case "Refresh":
 					if (pack != null)
 					{
@@ -545,6 +615,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
+
 				case "Strenght":
 					if (pack != null)
 					{
@@ -552,6 +623,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
+
 				case "Nightsight":
 					if (pack != null)
 					{
@@ -559,10 +631,12 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
+
 				default:
 					break;
 			}
 		}
+
 		private static void ProcessOther(string function)
 		{
 			Assistant.Item pack = World.Player.Backpack;
@@ -575,6 +649,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
+
 				case "Orange Petals":
 					if (pack != null)
 					{
@@ -583,6 +658,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
+
 				case "Wrath Grapes":
 					if (pack != null)
 					{
@@ -591,6 +667,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
+
 				case "Rose Of Trinsic":
 					if (pack != null)
 					{
@@ -599,6 +676,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
+
 				case "Smoke Bomb":
 					if (pack != null)
 					{
@@ -607,6 +685,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
+
 				case "Spell Stone":
 					if (pack != null)
 					{
@@ -615,6 +694,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
+
 				case "Healing Stone":
 					if (pack != null)
 					{
@@ -623,6 +703,7 @@ namespace RazorEnhanced
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
+
 				default:
 					break;
 			}
@@ -635,13 +716,16 @@ namespace RazorEnhanced
 				case "Clear Left":
 					RazorEnhanced.Player.UnEquipItemByLayer("LeftHand");
 					break;
+
 				case "Clear Right":
 					RazorEnhanced.Player.UnEquipItemByLayer("RightHand");
 					break;
+
 				default:
 					break;
 			}
 		}
+
 		private static void ProcessEquipWands(string function)
 		{
 			switch (function)
@@ -650,6 +734,7 @@ namespace RazorEnhanced
 					break;
 			}
 		}
+
 		private static void ProcessSkills(string function)
 		{
 			if (function == "Last Used")
@@ -670,12 +755,15 @@ namespace RazorEnhanced
 				case "Mini Heal":
 					Assistant.Spell.MiniHealOrCureSelf();
 					break;
+
 				case "Big Heal":
 					Assistant.Spell.HealOrCureSelf();
 					break;
+
 				case "Chivarly Heal":
 					Assistant.Spell.HealOrCureSelfChiva();
 					break;
+
 				default:
 					break;
 			}
@@ -688,12 +776,15 @@ namespace RazorEnhanced
 				case "Target Self":
 					RazorEnhanced.Target.Self();
 					break;
+
 				case "Target Last":
 					Assistant.Targeting.LastTarget();
 					break;
+
 				case "Target Cancel":
 					RazorEnhanced.Target.Cancel();
 					break;
+
 				default:
 					break;
 			}
@@ -708,7 +799,6 @@ namespace RazorEnhanced
 				Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enabled";
 			else
 				Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disabled";
-
 
 			// Parametri lista
 			Engine.MainWindow.HotKeyTreeView.Nodes.Clear();
@@ -936,7 +1026,6 @@ namespace RazorEnhanced
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[8].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
 			}
 
-
 			Engine.MainWindow.HotKeyTreeView.ExpandAll();
 		}
 
@@ -952,6 +1041,7 @@ namespace RazorEnhanced
 				UpdateOldTreeView(node.Nodes, k);
 			}
 		}
+
 		internal static void UpdateKey(TreeNode node, bool passkey)
 		{
 			string name = node.Name;
@@ -1071,6 +1161,7 @@ namespace RazorEnhanced
 			}
 			return false;
 		}
+
 		private static bool UseItemByIdHue(Assistant.Item cont, ushort find, ushort hue)
 		{
 			for (int i = 0; i < cont.Contains.Count; i++)

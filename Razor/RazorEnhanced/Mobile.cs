@@ -63,66 +63,87 @@ namespace RazorEnhanced
 				case "RightHand":
 					result = Assistant.Layer.RightHand;
 					break;
+
 				case "LeftHand":
 					result = Assistant.Layer.LeftHand;
 					break;
+
 				case "Shoes":
 					result = Assistant.Layer.Shoes;
 					break;
+
 				case "Pants":
 					result = Assistant.Layer.Pants;
 					break;
+
 				case "Shirt":
 					result = Assistant.Layer.Shirt;
 					break;
+
 				case "Head":
 					result = Assistant.Layer.Head;
 					break;
+
 				case "Gloves":
 					result = Assistant.Layer.Gloves;
 					break;
+
 				case "Ring":
 					result = Assistant.Layer.Ring;
 					break;
+
 				case "Neck":
 					result = Assistant.Layer.Neck;
 					break;
+
 				case "Hair":
 					result = Assistant.Layer.Hair;
 					break;
+
 				case "Waist":
 					result = Assistant.Layer.Waist;
 					break;
+
 				case "InnerTorso":
 					result = Assistant.Layer.InnerTorso;
 					break;
+
 				case "Bracelet":
 					result = Assistant.Layer.Bracelet;
 					break;
+
 				case "FacialHair":
 					result = Assistant.Layer.FacialHair;
 					break;
+
 				case "MiddleTorso":
 					result = Assistant.Layer.MiddleTorso;
 					break;
+
 				case "Earrings":
 					result = Assistant.Layer.Earrings;
 					break;
+
 				case "Arms":
 					result = Assistant.Layer.Arms;
 					break;
+
 				case "Cloak":
 					result = Assistant.Layer.Cloak;
 					break;
+
 				case "OuterTorso":
 					result = Assistant.Layer.OuterTorso;
 					break;
+
 				case "OuterLegs":
 					result = Assistant.Layer.OuterLegs;
 					break;
+
 				case "InnerLegs":
 					result = Assistant.Layer.InnerLegs;
 					break;
+
 				default:
 					result = Assistant.Layer.Invalid;
 					break;
@@ -214,7 +235,6 @@ namespace RazorEnhanced
 	{
 		public static Mobile FindBySerial(int serial)
 		{
-
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
 			if (assistantMobile == null)
 			{
@@ -378,6 +398,7 @@ namespace RazorEnhanced
 						result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
 
 						break;
+
 					case "Nearest":
 						Mobile closest = null;
 						double closestDist = double.MaxValue;
@@ -397,6 +418,7 @@ namespace RazorEnhanced
 						}
 						result = closest;
 						break;
+
 					case "Farthest":
 						Mobile farthest = null;
 						double farthestDist = double.MinValue;
@@ -416,6 +438,7 @@ namespace RazorEnhanced
 						}
 						result = farthest;
 						break;
+
 					case "Weakest":
 						Mobile weakest = mobiles[0] as Mobile;
 						if (weakest != null)
@@ -437,6 +460,7 @@ namespace RazorEnhanced
 							result = weakest;
 						}
 						break;
+
 					case "Strongest":
 						Mobile strongest = mobiles[0] as Mobile;
 						if (strongest != null)
@@ -463,6 +487,7 @@ namespace RazorEnhanced
 
 			return result;
 		}
+
 		// USe
 
 		public static void UseMobile(Mobile mobile)
@@ -483,7 +508,6 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
 			else
 				Misc.SendMessage("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
-
 		}
 
 		// Single Click
@@ -515,64 +539,60 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
-        // Props
-        public static int GetPropValue(int serial, string name)
-        {
-            Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
-            List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+		// Props
+		public static int GetPropValue(int serial, string name)
+		{
+			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
 
-            foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-            {
-                RazorEnhanced.Misc.SendMessage(prop.Args);
-                if (prop.ToString().ToLower().Contains(name.ToLower()))
-                {
-                    if (prop.Args == null)  // Props esiste ma non ha valore
-                        return 1;
-        
-                    string propstring = prop.Args;
-                    bool subprops = false;
-                    int i = 0;
+			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+			{
+				RazorEnhanced.Misc.SendMessage(prop.Args);
+				if (prop.ToString().ToLower().Contains(name.ToLower()))
+				{
+					if (prop.Args == null)  // Props esiste ma non ha valore
+						return 1;
 
-                    if (propstring.Length > 7)
-                        subprops = true;
+					string propstring = prop.Args;
+					bool subprops = false;
+					int i = 0;
 
+					if (propstring.Length > 7)
+						subprops = true;
 
-                    try  // Etraggo il valore
-                    {
-                        string number = string.Empty;
-                        foreach (char str in propstring)
-                        {
-                            if (subprops)
-                            {
-                                if (i > 7)
-                                    if (char.IsDigit(str))
-                                        number += str.ToString();
-                            }
-                            else
-                            {
-                                if (char.IsDigit(str))
-                                    number += str.ToString();
-                            }
+					try  // Etraggo il valore
+					{
+						string number = string.Empty;
+						foreach (char str in propstring)
+						{
+							if (subprops)
+							{
+								if (i > 7)
+									if (char.IsDigit(str))
+										number += str.ToString();
+							}
+							else
+							{
+								if (char.IsDigit(str))
+									number += str.ToString();
+							}
 
-                            i++;
-                        }
-                        return (Convert.ToInt32(number));
-                    }
-                    catch
-                    {
-                        return 1;  // errore di conversione ma esiste
-                    }
-                }
-            }
-            return 0;  // Non esiste
-        }
+							i++;
+						}
+						return (Convert.ToInt32(number));
+					}
+					catch
+					{
+						return 1;  // errore di conversione ma esiste
+					}
+				}
+			}
+			return 0;  // Non esiste
+		}
 
-        public static int GetPropValue(Mobile mob, string name)
-        {
-            return GetPropValue(mob.Serial, name);
-        }
-
-    }
+		public static int GetPropValue(Mobile mob, string name)
+		{
+			return GetPropValue(mob.Serial, name);
+		}
+	}
 }
-
-

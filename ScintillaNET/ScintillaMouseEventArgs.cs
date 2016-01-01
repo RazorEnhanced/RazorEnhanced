@@ -4,7 +4,6 @@ using System;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	/// <summary>
@@ -20,7 +19,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Properties
 
 		/// <summary>
@@ -32,7 +30,6 @@ namespace ScintillaNET
 			set { _position = value; }
 		}
 
-
 		/// <summary>
 		///     Returns the X (left) position of mouse in pixels
 		/// </summary>
@@ -41,7 +38,6 @@ namespace ScintillaNET
 			get { return _x; }
 			set { _x = value; }
 		}
-
 
 		/// <summary>
 		///     Returns the Y (top) position of mouse in pixels
@@ -53,7 +49,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 

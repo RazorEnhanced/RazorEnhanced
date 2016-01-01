@@ -15,7 +15,6 @@ namespace RazorEnhanced.UI
 			this.Text = m_Title; ;
 		}
 
-
 		private void bClose_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.Dress.RefreshItems();

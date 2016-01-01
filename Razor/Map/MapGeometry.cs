@@ -9,18 +9,21 @@ namespace Assistant.Map
 		public enum SegmentIntersection
 		{
 			None = 0,
+
 			// The segments are parallel and will never intersect
 			Point = 1,
+
 			// The segments physically intersect in one point
 			ExtrapolatedPoint = 2,
+
 			// The segments would physically intersect in one point if one or both segments were extended
 			Overlapping = 3
+
 			// The segments are parallel and overlap in a point or segment
 		}
 
 		public static SegmentIntersection SegmentIntersect(Point A, Point B, Point C, Point D, Point E, Point F)
 		{
-
 			// If one or both of the segments passed in is actually a point then just do a PointToSegmentDistance() calculation:
 			if (A.Equals(B) || C.Equals(D))
 			{
@@ -215,9 +218,9 @@ namespace Assistant.Map
 				q = ((Px - Ax) * (Bx - Ax) + (Py - Ay) * (By - Ay)) / ((Bx - Ax) * (Bx - Ax) + (By - Ay) * (By - Ay));
 
 				//   Limit q to 0 <= q <= 1
-				//  If q is outside this range then the Point is somewhere past the 
-				// endpoints of our segment.  By setting q = 0 or q = 1 we are 
-				// measuring the actual distacne from the point to one of the 
+				//  If q is outside this range then the Point is somewhere past the
+				// endpoints of our segment.  By setting q = 0 or q = 1 we are
+				// measuring the actual distacne from the point to one of the
 				// endpoints(instead)
 				if (q < 0)
 					q = 0;
@@ -231,7 +234,7 @@ namespace Assistant.Map
 
 		public static bool SegmentContainsPoint(Point A, Point B, Point C)
 		{
-			//Two Segments AB and CD have already been determined to have the 
+			//Two Segments AB and CD have already been determined to have the
 			//same slope and that they overlap.
 			//AB is the segment, and C is the point in question.
 			//If AB contains C then return true, otherwise return false
@@ -268,6 +271,7 @@ namespace Assistant.Map
 				}
 			}
 		}
+
 		internal static Rectangle GetRectangleAt(Point CenterPoint, int ExpandBy)
 		{
 			Rectangle rc = new Rectangle(CenterPoint, new Size(1, 1));
@@ -318,6 +322,5 @@ namespace Assistant.Map
 
 			return pts;
 		}
-
 	}
 }

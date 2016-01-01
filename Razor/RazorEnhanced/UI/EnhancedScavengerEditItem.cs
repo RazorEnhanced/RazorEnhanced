@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
 
-
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScavengerEditItem : Form
@@ -34,13 +33,10 @@ namespace RazorEnhanced.UI
 				tColor.Text = "0x" + m_Item.Color.ToString("X4");
 		}
 
-
-
 		private void bClose_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
-
 
 		private void bAddItem_Click(object sender, EventArgs e)
 		{
@@ -77,7 +73,6 @@ namespace RazorEnhanced.UI
 			{
 				try
 				{
-
 					color = Convert.ToInt32(tColor.Text, 16);
 				}
 				catch
@@ -96,7 +91,6 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.Scavenger.RefreshItems();
 				this.Close();
 			}
-
 		}
 	}
 }

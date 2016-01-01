@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 
 #endregion Using Directives
 
-
 namespace ScintillaNET
 {
 	[TypeConverterAttribute(typeof(System.ComponentModel.ExpandableObjectConverter))]
@@ -28,7 +27,6 @@ namespace ScintillaNET
 
 		#endregion Fields
 
-
 		#region Methods
 
 		public void ClearAllHighlights()
@@ -40,7 +38,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		/// <summary>
 		/// Creates and returns a new <see cref="IncrementalSearcher" /> object.
 		/// </summary>
@@ -50,7 +47,6 @@ namespace ScintillaNET
 		{
 			return new IncrementalSearcher();
 		}
-
 
 		/// <summary>
 		/// Creates and returns a new <see cref="FindReplaceDialog" /> object.
@@ -62,18 +58,15 @@ namespace ScintillaNET
 			return new FindReplaceDialog();
 		}
 
-
 		public Range Find(int startPos, int endPos, Regex findExpression)
 		{
 			return Find(new Range(startPos, endPos, Scintilla), findExpression, false);
 		}
 
-
 		public Range Find(int startPos, int endPos, Regex findExpression, bool searchUp)
 		{
 			return Find(new Range(startPos, endPos, Scintilla), findExpression, searchUp);
 		}
-
 
 		public unsafe Range Find(int startPos, int endPos, string searchString, SearchFlags flags)
 		{
@@ -97,12 +90,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Range Find(Range r, Regex findExpression)
 		{
 			return Find(r, findExpression, false);
 		}
-
 
 		public Range Find(Range r, Regex findExpression, bool searchUp)
 		{
@@ -145,12 +136,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Range Find(Range rangeToSearch, string searchString)
 		{
 			return Find(rangeToSearch.Start, rangeToSearch.End, searchString, _flags);
 		}
-
 
 		public Range Find(Range rangeToSearch, string searchString, bool searchUp)
 		{
@@ -160,12 +149,10 @@ namespace ScintillaNET
 				return Find(rangeToSearch.Start, rangeToSearch.End, searchString, _flags);
 		}
 
-
 		public Range Find(Range rangeToSearch, string searchString, SearchFlags searchflags)
 		{
 			return Find(rangeToSearch.Start, rangeToSearch.End, searchString, searchflags);
 		}
-
 
 		public Range Find(Range rangeToSearch, string searchString, SearchFlags searchflags, bool searchUp)
 		{
@@ -175,24 +162,20 @@ namespace ScintillaNET
 				return Find(rangeToSearch.Start, rangeToSearch.End, searchString, searchflags);
 		}
 
-
 		public Range Find(Regex findExpression)
 		{
 			return Find(new Range(0, NativeScintilla.GetTextLength(), Scintilla), findExpression, false);
 		}
-
 
 		public Range Find(Regex findExpression, bool searchUp)
 		{
 			return Find(new Range(0, NativeScintilla.GetTextLength(), Scintilla), findExpression, searchUp);
 		}
 
-
 		public Range Find(string searchString)
 		{
 			return Find(0, NativeScintilla.GetTextLength(), searchString, _flags);
 		}
-
 
 		public Range Find(string searchString, bool searchUp)
 		{
@@ -202,12 +185,10 @@ namespace ScintillaNET
 				return Find(0, NativeScintilla.GetTextLength(), searchString, _flags);
 		}
 
-
 		public Range Find(string searchString, SearchFlags searchflags)
 		{
 			return Find(0, NativeScintilla.GetTextLength(), searchString, searchflags);
 		}
-
 
 		public Range Find(string searchString, SearchFlags searchflags, bool searchUp)
 		{
@@ -217,12 +198,10 @@ namespace ScintillaNET
 				return Find(0, NativeScintilla.GetTextLength(), searchString, searchflags);
 		}
 
-
 		public List<Range> FindAll(int startPos, int endPos, Regex findExpression)
 		{
 			return FindAll(new Range(startPos, endPos, Scintilla), findExpression);
 		}
-
 
 		public List<Range> FindAll(int startPos, int endPos, string searchString, SearchFlags flags)
 		{
@@ -244,7 +223,6 @@ namespace ScintillaNET
 			return res;
 		}
 
-
 		public List<Range> FindAll(Range rangeToSearch, Regex findExpression)
 		{
 			List<Range> res = new List<Range>();
@@ -265,42 +243,35 @@ namespace ScintillaNET
 			return res;
 		}
 
-
 		public List<Range> FindAll(Range rangeToSearch, string searchString)
 		{
 			return FindAll(rangeToSearch.Start, rangeToSearch.End, searchString, _flags);
 		}
-
 
 		public List<Range> FindAll(Range rangeToSearch, string searchString, SearchFlags flags)
 		{
 			return FindAll(rangeToSearch.Start, rangeToSearch.End, searchString, _flags);
 		}
 
-
 		public List<Range> FindAll(Regex findExpression)
 		{
 			return FindAll(0, NativeScintilla.GetTextLength(), findExpression);
 		}
-
 
 		public List<Range> FindAll(string searchString)
 		{
 			return FindAll(searchString, _flags);
 		}
 
-
 		public List<Range> FindAll(string searchString, SearchFlags flags)
 		{
 			return FindAll(0, NativeScintilla.GetTextLength(), searchString, flags);
 		}
 
-
 		public Range FindNext(Regex findExpression)
 		{
 			return FindNext(findExpression, false);
 		}
-
 
 		public Range FindNext(Regex findExpression, bool wrap)
 		{
@@ -312,7 +283,6 @@ namespace ScintillaNET
 			else
 				return null;
 		}
-
 
 		public Range FindNext(Regex findExpression, bool wrap, Range searchRange)
 		{
@@ -329,18 +299,15 @@ namespace ScintillaNET
 				return null;
 		}
 
-
 		public Range FindNext(string searchString)
 		{
 			return FindNext(searchString, true, _flags);
 		}
 
-
 		public Range FindNext(string searchString, bool wrap)
 		{
 			return FindNext(searchString, wrap, _flags);
 		}
-
 
 		public Range FindNext(string searchString, bool wrap, SearchFlags flags)
 		{
@@ -352,7 +319,6 @@ namespace ScintillaNET
 			else
 				return null;
 		}
-
 
 		public Range FindNext(string searchString, bool wrap, SearchFlags flags, Range searchRange)
 		{
@@ -369,18 +335,15 @@ namespace ScintillaNET
 				return null;
 		}
 
-
 		public Range FindNext(string searchString, SearchFlags flags)
 		{
 			return FindNext(searchString, true, flags);
 		}
 
-
 		public Range FindPrevious(Regex findExpression)
 		{
 			return FindPrevious(findExpression, false);
 		}
-
 
 		public Range FindPrevious(Regex findExpression, bool wrap)
 		{
@@ -391,9 +354,7 @@ namespace ScintillaNET
 				return Find(NativeScintilla.GetCurrentPos(), NativeScintilla.GetTextLength(), findExpression, true);
 			else
 				return null;
-
 		}
-
 
 		public Range FindPrevious(Regex findExpression, bool wrap, Range searchRange)
 		{
@@ -414,18 +375,15 @@ namespace ScintillaNET
 				return null;
 		}
 
-
 		public Range FindPrevious(string searchString)
 		{
 			return FindPrevious(searchString, true, _flags);
 		}
 
-
 		public Range FindPrevious(string searchString, bool wrap)
 		{
 			return FindPrevious(searchString, wrap, _flags);
 		}
-
 
 		public Range FindPrevious(string searchString, bool wrap, SearchFlags flags)
 		{
@@ -437,7 +395,6 @@ namespace ScintillaNET
 			else
 				return null;
 		}
-
 
 		public Range FindPrevious(string searchString, bool wrap, SearchFlags flags, Range searchRange)
 		{
@@ -458,12 +415,10 @@ namespace ScintillaNET
 				return null;
 		}
 
-
 		public Range FindPrevious(string searchString, SearchFlags flags)
 		{
 			return FindPrevious(searchString, true, flags);
 		}
-
 
 		public void HighlightAll(IList<Range> foundRanges)
 		{
@@ -473,12 +428,10 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public void IncrementalSearch()
 		{
 			_incrementalSearcher.Show();
 		}
-
 
 		public List<MarkerInstance> MarkAll(IList<Range> foundRanges)
 		{
@@ -498,12 +451,10 @@ namespace ScintillaNET
 			return ret;
 		}
 
-
 		public List<Range> ReplaceAll(int startPos, int endPos, Regex findExpression, string replaceString)
 		{
 			return ReplaceAll(new Range(startPos, endPos, Scintilla), findExpression, replaceString);
 		}
-
 
 		public List<Range> ReplaceAll(int startPos, int endPos, string searchString, string replaceString, SearchFlags flags)
 		{
@@ -533,7 +484,6 @@ namespace ScintillaNET
 			return ret;
 		}
 
-
 		public List<Range> ReplaceAll(Range rangeToSearch, Regex findExpression, string replaceString)
 		{
 			Scintilla.UndoRedo.BeginUndoAction();
@@ -559,36 +509,30 @@ namespace ScintillaNET
 			return ret;
 		}
 
-
 		public List<Range> ReplaceAll(Range rangeToSearch, string searchString, string replaceString)
 		{
 			return ReplaceAll(rangeToSearch.Start, rangeToSearch.End, searchString, replaceString, _flags);
 		}
-
 
 		public List<Range> ReplaceAll(Range rangeToSearch, string searchString, string replaceString, SearchFlags flags)
 		{
 			return ReplaceAll(rangeToSearch.Start, rangeToSearch.End, searchString, replaceString, _flags);
 		}
 
-
 		public List<Range> ReplaceAll(Regex findExpression, string replaceString)
 		{
 			return ReplaceAll(0, NativeScintilla.GetTextLength(), findExpression, replaceString);
 		}
-
 
 		public List<Range> ReplaceAll(string searchString, string replaceString)
 		{
 			return ReplaceAll(searchString, replaceString, _flags);
 		}
 
-
 		public List<Range> ReplaceAll(string searchString, string replaceString, SearchFlags flags)
 		{
 			return ReplaceAll(0, NativeScintilla.GetTextLength(), searchString, replaceString, flags);
 		}
-
 
 		private string ReplaceAllEvaluator(Match m)
 		{
@@ -611,18 +555,15 @@ namespace ScintillaNET
 			return replacement;
 		}
 
-
 		public Range ReplaceNext(string searchString, string replaceString)
 		{
 			return ReplaceNext(searchString, replaceString, true, _flags);
 		}
 
-
 		public Range ReplaceNext(string searchString, string replaceString, bool wrap)
 		{
 			return ReplaceNext(searchString, replaceString, wrap, _flags);
 		}
-
 
 		public Range ReplaceNext(string searchString, string replaceString, bool wrap, SearchFlags flags)
 		{
@@ -637,24 +578,20 @@ namespace ScintillaNET
 			return r;
 		}
 
-
 		public Range ReplaceNext(string searchString, string replaceString, SearchFlags flags)
 		{
 			return ReplaceNext(searchString, replaceString, true, flags);
 		}
-
 
 		public Range ReplacePrevious(string searchString, string replaceString)
 		{
 			return ReplacePrevious(searchString, replaceString, true, _flags);
 		}
 
-
 		public Range ReplacePrevious(string searchString, string replaceString, bool wrap)
 		{
 			return ReplacePrevious(searchString, replaceString, wrap, _flags);
 		}
-
 
 		public Range ReplacePrevious(string searchString, string replaceString, bool wrap, SearchFlags flags)
 		{
@@ -669,31 +606,26 @@ namespace ScintillaNET
 			return r;
 		}
 
-
 		public Range ReplacePrevious(string searchString, string replaceString, SearchFlags flags)
 		{
 			return ReplacePrevious(searchString, replaceString, true, flags);
 		}
-
 
 		private void ResetFlags()
 		{
 			_flags = SearchFlags.Empty;
 		}
 
-
 		private void ResetIndicator()
 		{
 			_indicator.Reset();
 		}
-
 
 		private void ResetMarker()
 		{
 			_marker.Reset();
 			_marker.Number = 10;
 		}
-
 
 		internal bool ShouldSerialize()
 		{
@@ -702,24 +634,20 @@ namespace ScintillaNET
 				ShouldSerializeMarker();
 		}
 
-
 		private bool ShouldSerializeFlags()
 		{
 			return _flags != SearchFlags.Empty;
 		}
-
 
 		private bool ShouldSerializeIndicator()
 		{
 			return _indicator.Index != 16 || _indicator.Color != Color.Purple || _indicator.DrawMode != IndicatorDrawMode.Overlay;
 		}
 
-
 		private bool ShouldSerializeMarker()
 		{
 			return _marker.Number != 10 || _marker.ForeColor != Color.White || _marker.BackColor != Color.Black || _marker.Symbol != MarkerSymbol.Arrows;
 		}
-
 
 		public void ShowFind()
 		{
@@ -740,9 +668,7 @@ namespace ScintillaNET
 
 			_window.cboFindF.Select();
 			_window.cboFindF.SelectAll();
-
 		}
-
 
 		public void ShowReplace()
 		{
@@ -767,7 +693,6 @@ namespace ScintillaNET
 
 		#endregion Methods
 
-
 		#region Properties
 
 		[Editor(typeof(ScintillaNET.Design.FlagEnumUIEditor), typeof(System.Drawing.Design.UITypeEditor))]
@@ -783,7 +708,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public IncrementalSearcher IncrementalSearcher
 		{
@@ -797,7 +721,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Indicator Indicator
 		{
 			get
@@ -810,7 +733,6 @@ namespace ScintillaNET
 			}
 		}
 
-
 		public Marker Marker
 		{
 			get
@@ -822,7 +744,6 @@ namespace ScintillaNET
 				_marker = value;
 			}
 		}
-
 
 		[Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public FindReplaceDialog Window
@@ -838,7 +759,6 @@ namespace ScintillaNET
 		}
 
 		#endregion Properties
-
 
 		#region Constructors
 
@@ -862,4 +782,3 @@ namespace ScintillaNET
 		#endregion Constructors
 	}
 }
-

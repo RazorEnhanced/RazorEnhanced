@@ -57,6 +57,7 @@ namespace Assistant.Filters
 		}
 
 		internal abstract void OnFilter(PacketReader p, PacketHandlerEventArgs args);
+
 		internal abstract byte[] PacketIDs { get; }
 		internal abstract LocString Name { get; }
 
@@ -104,4 +105,3 @@ namespace Assistant.Filters
 		}
 	}
 }
-

@@ -220,8 +220,6 @@ namespace RazorEnhanced
 			Save();
 		}
 
-
-
 		// Funzioni richiamate dalla gui
 
 		internal static void Refresh()
@@ -234,18 +232,17 @@ namespace RazorEnhanced
 			}
 
 			Assistant.Engine.MainWindow.ProfilesComboBox.SelectedIndex = Assistant.Engine.MainWindow.ProfilesComboBox.Items.IndexOf(LastUsed());
-
 		}
 
 		internal static void ProfileChange(string name)
 		{
-			// Salvo password memory 
+			// Salvo password memory
 			PasswordMemory.Save();
 
-			// Stop forzato di tutti gli script 
+			// Stop forzato di tutti gli script
 			// TODO X Magneto (Funzione STOP DI SCRIPT IN ESECUZIONE)
 
-			// Stop forzato di tutti i thread agent 
+			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
 
@@ -267,12 +264,11 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false;
 
-            if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-                Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
 
-
-            // Stop filtri
-            if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+			// Stop filtri
+			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
 				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
 
 			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
@@ -337,7 +333,6 @@ namespace RazorEnhanced
 			// Riapro toollbar se le condizioni lo permettono
 			RazorEnhanced.ToolBar.Open();
 		}
-
 
 		internal static void Save()
 		{
