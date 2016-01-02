@@ -218,9 +218,13 @@ namespace RazorEnhanced.UI
 					SyntaxErrorException se = ex as SyntaxErrorException;
 					MessageBox.Show("LINE: " + se.Line + "\nCOLUMN: " + se.Column + "\nSEVERITY: " + se.Severity + "\nMESSAGE: " + ex.Message, "Syntax Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 				}
+				else
+				{
+					MessageBox.Show("MESSAGE: " + ex.Message, "Exception!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				}
 
 				if (m_Thread != null)
-					m_Thread.Abort();				
+					m_Thread.Abort();
 			}
 		}
 
