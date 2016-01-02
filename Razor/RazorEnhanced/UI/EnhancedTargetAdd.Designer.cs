@@ -28,8 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedTargetAdd));
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -150,24 +149,24 @@
 			// 
 			// razorButton1
 			// 
-			office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-			this.razorButton1.ColorTable = office2010BlueTheme2;
+			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.TextColor = System.Drawing.Color.White;
+			this.razorButton1.ColorTable = office2010BlueTheme;
 			this.razorButton1.Location = new System.Drawing.Point(366, 424);
 			this.razorButton1.Margin = new System.Windows.Forms.Padding(2);
 			this.razorButton1.Name = "razorButton1";
@@ -215,7 +214,7 @@
 			// 
 			// razorButton2
 			// 
-			this.razorButton2.ColorTable = office2010BlueTheme1;
+			this.razorButton2.ColorTable = office2010BlueTheme;
 			this.razorButton2.Location = new System.Drawing.Point(268, 424);
 			this.razorButton2.Margin = new System.Windows.Forms.Padding(2);
 			this.razorButton2.Name = "razorButton2";
@@ -270,7 +269,7 @@
 			// 
 			// notoremoveButton
 			// 
-			this.notoremoveButton.ColorTable = office2010BlueTheme1;
+			this.notoremoveButton.ColorTable = office2010BlueTheme;
 			this.notoremoveButton.Location = new System.Drawing.Point(104, 95);
 			this.notoremoveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.notoremoveButton.Name = "notoremoveButton";
@@ -283,7 +282,7 @@
 			// 
 			// notoaddButton
 			// 
-			this.notoaddButton.ColorTable = office2010BlueTheme1;
+			this.notoaddButton.ColorTable = office2010BlueTheme;
 			this.notoaddButton.Location = new System.Drawing.Point(104, 57);
 			this.notoaddButton.Margin = new System.Windows.Forms.Padding(2);
 			this.notoaddButton.Name = "notoaddButton";
@@ -641,7 +640,7 @@
 			// 
 			// hueremoveButton
 			// 
-			this.hueremoveButton.ColorTable = office2010BlueTheme1;
+			this.hueremoveButton.ColorTable = office2010BlueTheme;
 			this.hueremoveButton.Location = new System.Drawing.Point(104, 95);
 			this.hueremoveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.hueremoveButton.Name = "hueremoveButton";
@@ -669,7 +668,7 @@
 			// 
 			// hueaddButton
 			// 
-			this.hueaddButton.ColorTable = office2010BlueTheme1;
+			this.hueaddButton.ColorTable = office2010BlueTheme;
 			this.hueaddButton.Location = new System.Drawing.Point(104, 57);
 			this.hueaddButton.Margin = new System.Windows.Forms.Padding(2);
 			this.hueaddButton.Name = "hueaddButton";
@@ -782,7 +781,7 @@
 			// 
 			// bodyremoveButton
 			// 
-			this.bodyremoveButton.ColorTable = office2010BlueTheme1;
+			this.bodyremoveButton.ColorTable = office2010BlueTheme;
 			this.bodyremoveButton.Location = new System.Drawing.Point(104, 95);
 			this.bodyremoveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.bodyremoveButton.Name = "bodyremoveButton";
@@ -810,7 +809,7 @@
 			// 
 			// bodyaddButton
 			// 
-			this.bodyaddButton.ColorTable = office2010BlueTheme1;
+			this.bodyaddButton.ColorTable = office2010BlueTheme;
 			this.bodyaddButton.Location = new System.Drawing.Point(104, 57);
 			this.bodyaddButton.Margin = new System.Windows.Forms.Padding(2);
 			this.bodyaddButton.Name = "bodyaddButton";

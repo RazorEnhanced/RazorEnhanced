@@ -2,6 +2,7 @@
 using IronPython.Hosting;
 using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
+using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using ScintillaNET;
 using System;
@@ -210,10 +211,16 @@ namespace RazorEnhanced.UI
 				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 				m_Source.Execute(m_Scope);
 			}
-			catch
+			catch (Exception ex)
 			{
+				if (ex is SyntaxErrorException)
+				{
+					SyntaxErrorException se = ex as SyntaxErrorException;
+					MessageBox.Show("LINE: " + se.Line + "\nCOLUMN: " + se.Column + "\nSEVERITY: " + se.Severity + "\nMESSAGE: " + ex.Message, "Syntax Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+				}
+
 				if (m_Thread != null)
-					m_Thread.Abort();
+					m_Thread.Abort();				
 			}
 		}
 

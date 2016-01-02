@@ -3,9 +3,11 @@ using IronPython.Hosting;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -39,7 +41,7 @@ namespace RazorEnhanced
 					}
 					catch
 					{
-						Scripts.Auto = false;
+						Scripts.AutoMode = false;
 						Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
 					}
 				}
@@ -103,6 +105,8 @@ namespace RazorEnhanced
 			private Thread m_DragDropThread;
 			private Thread m_AutoRemountThread;
 
+			private EnhancedScript m_KeyScript;
+
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
 			{
@@ -110,11 +114,28 @@ namespace RazorEnhanced
 
 			protected override void OnTick()
 			{
-				if (Scripts.Auto)
+				if (m_KeyScript != null)
+				{
+					m_KeyScript.Stop();
+					m_KeyScript = null;
+				}
+
+				Keys k = Keys.None;
+				m_Keys.TryDequeue(out k);
+				if (k != Keys.None)
+				{
+					string filename = RazorEnhanced.Settings.HotKey.FindScript(k);
+					m_KeyScript = RunFromFile(filename, TimeSpan.FromMilliseconds(25));
+				}
+
+				Thread.Sleep(5);
+
+				if (Scripts.AutoMode)
 				{
 					foreach (EnhancedScript script in m_EnhancedScripts)
 					{
-						script.Start();
+						if (m_KeyScript == null || script.Filename != m_KeyScript.Filename)
+							script.Start();
 					}
 				}
 
@@ -237,36 +258,54 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static TimeSpan m_TimerDelay = TimeSpan.FromMilliseconds(100);
+		private static TimeSpan m_TimerDelay = TimeSpan.FromMilliseconds(100);
 
-		internal static ScriptTimer m_Timer = new ScriptTimer();
+		internal static TimeSpan TimerDelay
+		{
+			get { return m_TimerDelay; }
+			set
+			{
+				if (value != m_TimerDelay)
+				{
+					if (m_Timer != null)
+						m_Timer.Stop();
+
+					m_TimerDelay = value;
+
+					m_Timer = new ScriptTimer();
+					m_Timer.Start();
+				}
+			}
+		}
+
+		private static ScriptTimer m_Timer = new ScriptTimer();
+		internal static ScriptTimer Timer { get { return m_Timer; } }
 
 		private static List<EnhancedScript> m_EnhancedScripts = new List<EnhancedScript>();
 		internal static List<EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
+
+		private static ConcurrentQueue<Keys> m_Keys = new ConcurrentQueue<Keys>();
 
 		public static void Initialize()
 		{
 			m_Timer.Start();
 		}
 
-		private static bool m_Auto = false;
+		private static bool m_AutoMode = false;
 
-		internal static bool Auto
+		internal static bool AutoMode
 		{
-			get { return m_Auto; }
+			get { return m_AutoMode; }
 			set
 			{
-				if (m_Auto == value)
+				if (m_AutoMode == value)
 					return;
 
-				m_Auto = value;
+				m_AutoMode = value;
 
-				if (!m_Auto)
+				if (!m_AutoMode)
 				{
-					foreach (EnhancedScript script in m_EnhancedScripts)
-					{
-						script.Stop();
-					}
+					StopAll();
 				}
 			}
 		}
@@ -304,6 +343,14 @@ namespace RazorEnhanced
 			m_EnhancedScripts.Clear();
 		}
 
+		internal static void StopAll()
+		{
+			foreach (EnhancedScript script in m_EnhancedScripts)
+			{
+				script.Stop();
+			}
+		}
+
 		internal static EnhancedScript Search(string filename)
 		{
 			foreach (EnhancedScript script in m_EnhancedScripts)
@@ -334,116 +381,30 @@ namespace RazorEnhanced
 
 			return status;
 		}
-	}
 
-	// Blocco HotKey
-	internal class RunningThreads
-	{
-		private string m_Filename;
-
-		internal string Filename
+		internal static EnhancedScript RunFromFile(string filename, TimeSpan delay)
 		{
-			get { return m_Filename; }
-			set { m_Filename = value; }
+			string classname = Path.GetFileNameWithoutExtension(filename);
+			string text = File.ReadAllText(filename);
+
+			EnhancedScript script = new EnhancedScript(filename, text, delay);
+			string result = script.Create(null);
+
+			if (result == "Created")
+			{
+				script.Start();
+				return script;
+			}
+
+			return null;
 		}
 
-		private Thread m_Thread;
-
-		internal Thread Thread
+		internal static void EnqueueKey(Keys k)
 		{
-			get { return m_Thread; }
-			set { m_Thread = value; }
-		}
-
-		internal RunningThreads(string filename, Thread thread)
-		{
-			m_Filename = filename;
-			m_Thread = thread;
-		}
-	}
-
-	internal class EnhancedScriptHotKey
-	{
-		internal static List<RunningThreads> RunningThreadsList = new List<RunningThreads>();
-
-		internal static void HotKeyStart(string filename)
-		{
-			Thread m_Thread;
-			bool m_run = true;
-			Thread m_oldthread = null;
-			foreach (RunningThreads t in RunningThreadsList)
+			if (m_Keys != null)
 			{
-				if (t.Filename == filename)
-				{
-					m_run = false;
-					m_oldthread = t.Thread;
-					break;
-				}
+				m_Keys.Enqueue(k);
 			}
-
-			if (m_run)
-			{
-				m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
-				m_Thread.Start(filename);
-				RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
-			}
-			else
-			{
-				if (m_oldthread != null && m_oldthread.ThreadState != ThreadState.Stopped)
-				{
-					m_oldthread.Abort();
-					HotKeyScriptDone(filename);
-					m_Thread = new Thread(new ParameterizedThreadStart(HotKeyStartThread));
-					m_Thread.Start(filename);
-					RunningThreadsList.Add(new RunningThreads(filename, m_Thread));
-				}
-			}
-		}
-
-		private static void HotKeyStartThread(object parameter)
-		{
-			ScriptEngine m_Engine;
-			ScriptScope m_Scope;
-			ScriptSource m_Source;
-			try
-			{
-				m_Engine = Python.CreateEngine();
-				m_Source = m_Engine.CreateScriptSourceFromString(File.ReadAllText((string)parameter));
-				m_Scope = Scripts.GetRazorScope(m_Engine);
-				m_Source.Execute(m_Scope);
-				HotKeyScriptDone((string)parameter);
-			}
-			catch { }
-		}
-
-		private static void HotKeyScriptDone(string filename)
-		{
-			int i = 0;
-			foreach (RunningThreads t in RunningThreadsList)
-			{
-				if (t.Filename == filename)
-				{
-					break;
-				}
-				i++;
-			}
-			try
-			{
-				RunningThreadsList.RemoveAt(i);
-			}
-			catch { }
-		}
-
-		internal static void HotKeyStopAll()
-		{
-			foreach (RunningThreads t in RunningThreadsList)
-			{
-				if (t.Thread != null && t.Thread.ThreadState != ThreadState.Stopped)
-				{
-					t.Thread.Abort();
-				}
-			}
-			RunningThreadsList.Clear();
 		}
 	}
 }

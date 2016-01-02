@@ -520,6 +520,10 @@ namespace Assistant
 		private Label label47;
 		private RazorButton remountsetbutton;
 		private RazorCheckBox remountcheckbox;
+		private Button buttonPlayScript;
+		private Button buttonStopScript;
+		private Label labelDelay;
+		private TextBox textBoxDelay;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -729,8 +733,8 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
 			this.groupBox29 = new System.Windows.Forms.GroupBox();
@@ -964,6 +968,10 @@ namespace Assistant
 			this.razorButtonCreateUODAccount = new RazorEnhanced.UI.RazorButton();
 			this.razorButtonVisitUOD = new RazorEnhanced.UI.RazorButton();
 			this.scriptingTab = new System.Windows.Forms.TabPage();
+			this.labelDelay = new System.Windows.Forms.Label();
+			this.textBoxDelay = new System.Windows.Forms.TextBox();
+			this.buttonStopScript = new System.Windows.Forms.Button();
+			this.buttonPlayScript = new System.Windows.Forms.Button();
 			this.razorButtonEdit = new RazorEnhanced.UI.RazorButton();
 			this.razorCheckBoxAuto = new RazorEnhanced.UI.RazorCheckBox();
 			this.razorButtonUp = new RazorEnhanced.UI.RazorButton();
@@ -1284,9 +1292,9 @@ namespace Assistant
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
 			this.SuspendLayout();
-			//
+			// 
 			// tabs
-			//
+			// 
 			this.tabs.Controls.Add(this.generalTab);
 			this.tabs.Controls.Add(this.moreOptTab);
 			this.tabs.Controls.Add(this.enhancedFilterTab);
@@ -1308,9 +1316,9 @@ namespace Assistant
 			this.tabs.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
 			this.tabs.TabIndex = 0;
 			this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_IndexChanged);
-			//
+			// 
 			// generalTab
-			//
+			// 
 			this.generalTab.Controls.Add(this.groupBox29);
 			this.generalTab.Controls.Add(this.forceSizeY);
 			this.generalTab.Controls.Add(this.forceSizeX);
@@ -1332,9 +1340,9 @@ namespace Assistant
 			this.generalTab.Size = new System.Drawing.Size(666, 366);
 			this.generalTab.TabIndex = 0;
 			this.generalTab.Text = "General";
-			//
+			// 
 			// groupBox29
-			//
+			// 
 			this.groupBox29.Controls.Add(this.profilesExportButton);
 			this.groupBox29.Controls.Add(this.profilesCloneButton);
 			this.groupBox29.Controls.Add(this.profilesRenameButton);
@@ -1351,27 +1359,10 @@ namespace Assistant
 			this.groupBox29.TabIndex = 66;
 			this.groupBox29.TabStop = false;
 			this.groupBox29.Text = "Profiles";
-			//
+			// 
 			// profilesExportButton
-			//
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.profilesExportButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesExportButton.ColorTable = office2010BlueTheme;
 			this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
 			this.profilesExportButton.Name = "profilesExportButton";
 			this.profilesExportButton.Size = new System.Drawing.Size(63, 20);
@@ -1379,10 +1370,10 @@ namespace Assistant
 			this.profilesExportButton.Text = "Export";
 			this.profilesExportButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesExportButton.Click += new System.EventHandler(this.profilesExportButton_Click);
-			//
+			// 
 			// profilesCloneButton
-			//
-			this.profilesCloneButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesCloneButton.ColorTable = office2010BlueTheme;
 			this.profilesCloneButton.Location = new System.Drawing.Point(321, 44);
 			this.profilesCloneButton.Name = "profilesCloneButton";
 			this.profilesCloneButton.Size = new System.Drawing.Size(63, 20);
@@ -1390,10 +1381,10 @@ namespace Assistant
 			this.profilesCloneButton.Text = "Clone";
 			this.profilesCloneButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesCloneButton.Click += new System.EventHandler(this.profilesCloneButton_Click);
-			//
+			// 
 			// profilesRenameButton
-			//
-			this.profilesRenameButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesRenameButton.ColorTable = office2010BlueTheme;
 			this.profilesRenameButton.Location = new System.Drawing.Point(252, 44);
 			this.profilesRenameButton.Name = "profilesRenameButton";
 			this.profilesRenameButton.Size = new System.Drawing.Size(63, 20);
@@ -1401,10 +1392,10 @@ namespace Assistant
 			this.profilesRenameButton.Text = "Raname";
 			this.profilesRenameButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesRenameButton.Click += new System.EventHandler(this.profilesRenameButton_Click);
-			//
+			// 
 			// profilesImportButton
-			//
-			this.profilesImportButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesImportButton.ColorTable = office2010BlueTheme;
 			this.profilesImportButton.Location = new System.Drawing.Point(252, 70);
 			this.profilesImportButton.Name = "profilesImportButton";
 			this.profilesImportButton.Size = new System.Drawing.Size(63, 20);
@@ -1412,10 +1403,10 @@ namespace Assistant
 			this.profilesImportButton.Text = "Import";
 			this.profilesImportButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesImportButton.Click += new System.EventHandler(this.profilesImportButton_Click);
-			//
+			// 
 			// profilesUnlinkButton
-			//
-			this.profilesUnlinkButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesUnlinkButton.ColorTable = office2010BlueTheme;
 			this.profilesUnlinkButton.Location = new System.Drawing.Point(75, 70);
 			this.profilesUnlinkButton.Name = "profilesUnlinkButton";
 			this.profilesUnlinkButton.Size = new System.Drawing.Size(63, 20);
@@ -1423,10 +1414,10 @@ namespace Assistant
 			this.profilesUnlinkButton.Text = "UnLink";
 			this.profilesUnlinkButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesUnlinkButton.Click += new System.EventHandler(this.profilesUnlinkButton_Click);
-			//
+			// 
 			// profilesLinkButton
-			//
-			this.profilesLinkButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesLinkButton.ColorTable = office2010BlueTheme;
 			this.profilesLinkButton.Location = new System.Drawing.Point(6, 70);
 			this.profilesLinkButton.Name = "profilesLinkButton";
 			this.profilesLinkButton.Size = new System.Drawing.Size(63, 20);
@@ -1434,19 +1425,19 @@ namespace Assistant
 			this.profilesLinkButton.Text = "Link";
 			this.profilesLinkButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesLinkButton.Click += new System.EventHandler(this.profilesLinkButton_Click);
-			//
+			// 
 			// profilelinklabel
-			//
+			// 
 			this.profilelinklabel.AutoSize = true;
 			this.profilelinklabel.Location = new System.Drawing.Point(7, 50);
 			this.profilelinklabel.Name = "profilelinklabel";
 			this.profilelinklabel.Size = new System.Drawing.Size(83, 13);
 			this.profilelinklabel.TabIndex = 5;
 			this.profilelinklabel.Text = "Linked to: None";
-			//
+			// 
 			// profilesDeleteButton
-			//
-			this.profilesDeleteButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesDeleteButton.ColorTable = office2010BlueTheme;
 			this.profilesDeleteButton.Location = new System.Drawing.Point(321, 18);
 			this.profilesDeleteButton.Name = "profilesDeleteButton";
 			this.profilesDeleteButton.Size = new System.Drawing.Size(63, 20);
@@ -1454,10 +1445,10 @@ namespace Assistant
 			this.profilesDeleteButton.Text = "Delete";
 			this.profilesDeleteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesDeleteButton.Click += new System.EventHandler(this.profilesDeleteButton_Click);
-			//
+			// 
 			// profilesAddButton
-			//
-			this.profilesAddButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.profilesAddButton.ColorTable = office2010BlueTheme;
 			this.profilesAddButton.Location = new System.Drawing.Point(252, 18);
 			this.profilesAddButton.Name = "profilesAddButton";
 			this.profilesAddButton.Size = new System.Drawing.Size(63, 20);
@@ -1465,9 +1456,9 @@ namespace Assistant
 			this.profilesAddButton.Text = "Add";
 			this.profilesAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesAddButton.Click += new System.EventHandler(this.profilesAddButton_Click);
-			//
+			// 
 			// profilesComboBox
-			//
+			// 
 			this.profilesComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.profilesComboBox.FormattingEnabled = true;
 			this.profilesComboBox.Location = new System.Drawing.Point(6, 19);
@@ -1475,12 +1466,12 @@ namespace Assistant
 			this.profilesComboBox.Size = new System.Drawing.Size(240, 24);
 			this.profilesComboBox.TabIndex = 0;
 			this.profilesComboBox.SelectedIndexChanged += new System.EventHandler(this.profilesComboBox_SelectedIndexChanged);
-			//
+			// 
 			// forceSizeY
-			//
-			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeY.BackColor = System.Drawing.Color.White;
 			this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1490,12 +1481,12 @@ namespace Assistant
 			this.forceSizeY.Size = new System.Drawing.Size(30, 20);
 			this.forceSizeY.TabIndex = 64;
 			this.forceSizeY.TextChanged += new System.EventHandler(this.forceSizeY_TextChanged);
-			//
+			// 
 			// forceSizeX
-			//
-			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeX.BackColor = System.Drawing.Color.White;
 			this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1505,45 +1496,45 @@ namespace Assistant
 			this.forceSizeX.Size = new System.Drawing.Size(30, 20);
 			this.forceSizeX.TabIndex = 63;
 			this.forceSizeX.TextChanged += new System.EventHandler(this.forceSizeX_TextChanged);
-			//
+			// 
 			// gameSize
-			//
+			// 
 			this.gameSize.Location = new System.Drawing.Point(253, 99);
 			this.gameSize.Name = "gameSize";
 			this.gameSize.Size = new System.Drawing.Size(114, 22);
 			this.gameSize.TabIndex = 65;
 			this.gameSize.Text = "Force Game Size:";
 			this.gameSize.CheckedChanged += new System.EventHandler(this.gameSize_CheckedChanged);
-			//
+			// 
 			// rememberPwds
-			//
+			// 
 			this.rememberPwds.Location = new System.Drawing.Point(253, 74);
 			this.rememberPwds.Name = "rememberPwds";
 			this.rememberPwds.Size = new System.Drawing.Size(190, 22);
 			this.rememberPwds.TabIndex = 54;
 			this.rememberPwds.Text = "Remember passwords ";
 			this.rememberPwds.CheckedChanged += new System.EventHandler(this.rememberPwds_CheckedChanged);
-			//
+			// 
 			// clientPrio
-			//
+			// 
 			this.clientPrio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.clientPrio.Items.AddRange(new object[] {
-			"Idle",
-			"BelowNormal",
-			"Normal",
-			"AboveNormal",
-			"High",
-			"Realtime"});
+            "Idle",
+            "BelowNormal",
+            "Normal",
+            "AboveNormal",
+            "High",
+            "Realtime"});
 			this.clientPrio.Location = new System.Drawing.Point(363, 175);
 			this.clientPrio.Name = "clientPrio";
 			this.clientPrio.Size = new System.Drawing.Size(88, 22);
 			this.clientPrio.TabIndex = 60;
 			this.clientPrio.SelectedIndexChanged += new System.EventHandler(this.clientPrio_SelectedIndexChanged);
-			//
+			// 
 			// lockBox
-			//
+			// 
 			this.lockBox.Cursor = System.Windows.Forms.Cursors.Help;
 			this.lockBox.Image = ((System.Drawing.Image)(resources.GetObject("lockBox.Image")));
 			this.lockBox.Location = new System.Drawing.Point(211, 336);
@@ -1554,44 +1545,44 @@ namespace Assistant
 			this.lockBox.TabStop = false;
 			this.lockBox.Visible = false;
 			this.lockBox.Click += new System.EventHandler(this.lockBox_Click);
-			//
+			// 
 			// systray
-			//
+			// 
 			this.systray.Location = new System.Drawing.Point(363, 142);
 			this.systray.Name = "systray";
 			this.systray.Size = new System.Drawing.Size(99, 20);
 			this.systray.TabIndex = 35;
 			this.systray.Text = "System Tray";
 			this.systray.CheckedChanged += new System.EventHandler(this.systray_CheckedChanged);
-			//
+			// 
 			// taskbar
-			//
+			// 
 			this.taskbar.Location = new System.Drawing.Point(301, 143);
 			this.taskbar.Name = "taskbar";
 			this.taskbar.Size = new System.Drawing.Size(63, 20);
 			this.taskbar.TabIndex = 34;
 			this.taskbar.Text = "Taskbar";
 			this.taskbar.CheckedChanged += new System.EventHandler(this.taskbar_CheckedChanged);
-			//
+			// 
 			// smartCPU
-			//
+			// 
 			this.smartCPU.Location = new System.Drawing.Point(253, 24);
 			this.smartCPU.Name = "smartCPU";
 			this.smartCPU.Size = new System.Drawing.Size(241, 22);
 			this.smartCPU.TabIndex = 53;
 			this.smartCPU.Text = "Use smart CPU usage reduction";
 			this.smartCPU.CheckedChanged += new System.EventHandler(this.smartCPU_CheckedChanged);
-			//
+			// 
 			// label11
-			//
+			// 
 			this.label11.Location = new System.Drawing.Point(251, 145);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(50, 15);
 			this.label11.TabIndex = 33;
 			this.label11.Text = "Show in:";
-			//
+			// 
 			// opacity
-			//
+			// 
 			this.opacity.AutoSize = false;
 			this.opacity.Cursor = System.Windows.Forms.Cursors.SizeWE;
 			this.opacity.Location = new System.Drawing.Point(331, 323);
@@ -1604,18 +1595,18 @@ namespace Assistant
 			this.opacity.TickStyle = System.Windows.Forms.TickStyle.None;
 			this.opacity.Value = 100;
 			this.opacity.Scroll += new System.EventHandler(this.opacity_Scroll);
-			//
+			// 
 			// alwaysTop
-			//
+			// 
 			this.alwaysTop.Location = new System.Drawing.Point(253, 49);
 			this.alwaysTop.Name = "alwaysTop";
 			this.alwaysTop.Size = new System.Drawing.Size(241, 22);
 			this.alwaysTop.TabIndex = 3;
 			this.alwaysTop.Text = "Use Smart Always on Top";
 			this.alwaysTop.CheckedChanged += new System.EventHandler(this.alwaysTop_CheckedChanged);
-			//
+			// 
 			// groupBox1
-			//
+			// 
 			this.groupBox1.Controls.Add(this.filters);
 			this.groupBox1.Location = new System.Drawing.Point(3, 8);
 			this.groupBox1.Name = "groupBox1";
@@ -1623,9 +1614,9 @@ namespace Assistant
 			this.groupBox1.TabIndex = 0;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Filters";
-			//
+			// 
 			// filters
-			//
+			// 
 			this.filters.CheckOnClick = true;
 			this.filters.IntegralHeight = false;
 			this.filters.Location = new System.Drawing.Point(6, 16);
@@ -1633,25 +1624,25 @@ namespace Assistant
 			this.filters.Size = new System.Drawing.Size(190, 328);
 			this.filters.TabIndex = 0;
 			this.filters.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.OnFilterCheck);
-			//
+			// 
 			// opacityLabel
-			//
+			// 
 			this.opacityLabel.Location = new System.Drawing.Point(253, 323);
 			this.opacityLabel.Name = "opacityLabel";
 			this.opacityLabel.Size = new System.Drawing.Size(78, 16);
 			this.opacityLabel.TabIndex = 23;
 			this.opacityLabel.Text = "Opacity: 100%";
-			//
+			// 
 			// label9
-			//
+			// 
 			this.label9.Location = new System.Drawing.Point(251, 178);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(114, 19);
 			this.label9.TabIndex = 59;
 			this.label9.Text = "Default Client Priority:";
-			//
+			// 
 			// moreOptTab
-			//
+			// 
 			this.moreOptTab.Controls.Add(this.chkPartyOverhead);
 			this.moreOptTab.Controls.Add(this.label10);
 			this.moreOptTab.Controls.Add(this.label8);
@@ -1709,125 +1700,125 @@ namespace Assistant
 			this.moreOptTab.Size = new System.Drawing.Size(666, 366);
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
-			//
+			// 
 			// chkPartyOverhead
-			//
+			// 
 			this.chkPartyOverhead.Location = new System.Drawing.Point(437, 203);
 			this.chkPartyOverhead.Name = "chkPartyOverhead";
 			this.chkPartyOverhead.Size = new System.Drawing.Size(226, 22);
 			this.chkPartyOverhead.TabIndex = 72;
 			this.chkPartyOverhead.Text = "Show mana/stam above party members";
 			this.chkPartyOverhead.CheckedChanged += new System.EventHandler(this.chkPartyOverhead_CheckedChanged);
-			//
+			// 
 			// label10
-			//
+			// 
 			this.label10.Location = new System.Drawing.Point(453, 184);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(80, 17);
 			this.label10.TabIndex = 73;
 			this.label10.Text = "Health Format:";
-			//
+			// 
 			// label8
-			//
+			// 
 			this.label8.Location = new System.Drawing.Point(457, 121);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(37, 18);
 			this.label8.TabIndex = 72;
 			this.label8.Text = "Tiles:";
-			//
+			// 
 			// label5
-			//
+			// 
 			this.label5.Location = new System.Drawing.Point(453, 60);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(71, 18);
 			this.label5.TabIndex = 70;
 			this.label5.Text = "Object delay:";
-			//
+			// 
 			// label6
-			//
+			// 
 			this.label6.Location = new System.Drawing.Point(568, 59);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(30, 18);
 			this.label6.TabIndex = 71;
 			this.label6.Text = "ms";
-			//
+			// 
 			// label17
-			//
+			// 
 			this.label17.Location = new System.Drawing.Point(7, 250);
 			this.label17.Name = "label17";
 			this.label17.Size = new System.Drawing.Size(92, 18);
 			this.label17.TabIndex = 68;
 			this.label17.Text = "Razor messages:";
-			//
+			// 
 			// lblHarmHue
-			//
+			// 
 			this.lblHarmHue.Location = new System.Drawing.Point(77, 167);
 			this.lblHarmHue.Name = "lblHarmHue";
 			this.lblHarmHue.Size = new System.Drawing.Size(45, 14);
 			this.lblHarmHue.TabIndex = 46;
 			this.lblHarmHue.Text = "Harmful";
-			//
+			// 
 			// lblNeuHue
-			//
+			// 
 			this.lblNeuHue.Location = new System.Drawing.Point(135, 167);
 			this.lblNeuHue.Name = "lblNeuHue";
 			this.lblNeuHue.Size = new System.Drawing.Size(42, 14);
 			this.lblNeuHue.TabIndex = 45;
 			this.lblNeuHue.Text = "Neutral";
-			//
+			// 
 			// lblBeneHue
-			//
+			// 
 			this.lblBeneHue.Location = new System.Drawing.Point(17, 167);
 			this.lblBeneHue.Name = "lblBeneHue";
 			this.lblBeneHue.Size = new System.Drawing.Size(55, 14);
 			this.lblBeneHue.TabIndex = 44;
 			this.lblBeneHue.Text = "Beneficial";
-			//
+			// 
 			// label4
-			//
+			// 
 			this.label4.Location = new System.Drawing.Point(384, 102);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(36, 16);
 			this.label4.TabIndex = 24;
 			this.label4.Text = "tiles";
-			//
+			// 
 			// lblWarnHue
-			//
+			// 
 			this.lblWarnHue.Location = new System.Drawing.Point(7, 69);
 			this.lblWarnHue.Name = "lblWarnHue";
 			this.lblWarnHue.Size = new System.Drawing.Size(139, 16);
 			this.lblWarnHue.TabIndex = 16;
 			this.lblWarnHue.Text = "Warning Message Hue";
-			//
+			// 
 			// lblMsgHue
-			//
+			// 
 			this.lblMsgHue.Location = new System.Drawing.Point(7, 44);
 			this.lblMsgHue.Name = "lblMsgHue";
 			this.lblMsgHue.Size = new System.Drawing.Size(139, 17);
 			this.lblMsgHue.TabIndex = 15;
 			this.lblMsgHue.Text = "Razor Message Hue";
-			//
+			// 
 			// lblExHue
-			//
+			// 
 			this.lblExHue.Location = new System.Drawing.Point(7, 20);
 			this.lblExHue.Name = "lblExHue";
 			this.lblExHue.Size = new System.Drawing.Size(139, 16);
 			this.lblExHue.TabIndex = 14;
 			this.lblExHue.Text = "Search Exemption Hue";
-			//
+			// 
 			// label3
-			//
+			// 
 			this.label3.Location = new System.Drawing.Point(7, 220);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(86, 16);
 			this.label3.TabIndex = 4;
 			this.label3.Text = "Spell Format:";
-			//
+			// 
 			// healthFmt
-			//
-			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.healthFmt.BackColor = System.Drawing.Color.White;
 			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1837,30 +1828,30 @@ namespace Assistant
 			this.healthFmt.Size = new System.Drawing.Size(46, 20);
 			this.healthFmt.TabIndex = 71;
 			this.healthFmt.TextChanged += new System.EventHandler(this.healthFmt_TextChanged);
-			//
+			// 
 			// showHealthOH
-			//
+			// 
 			this.showHealthOH.Location = new System.Drawing.Point(437, 162);
 			this.showHealthOH.Name = "showHealthOH";
 			this.showHealthOH.Size = new System.Drawing.Size(222, 22);
 			this.showHealthOH.TabIndex = 69;
 			this.showHealthOH.Text = "Show health above people/creatures";
 			this.showHealthOH.CheckedChanged += new System.EventHandler(this.showHealthOH_CheckedChanged);
-			//
+			// 
 			// showtargtext
-			//
+			// 
 			this.showtargtext.Location = new System.Drawing.Point(437, 140);
 			this.showtargtext.Name = "showtargtext";
 			this.showtargtext.Size = new System.Drawing.Size(190, 22);
 			this.showtargtext.TabIndex = 53;
 			this.showtargtext.Text = "Show target flag on single click";
 			this.showtargtext.CheckedChanged += new System.EventHandler(this.showtargtext_CheckedChanged);
-			//
+			// 
 			// ltRange
-			//
-			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.ltRange.BackColor = System.Drawing.Color.White;
 			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1870,30 +1861,30 @@ namespace Assistant
 			this.ltRange.Size = new System.Drawing.Size(32, 20);
 			this.ltRange.TabIndex = 41;
 			this.ltRange.TextChanged += new System.EventHandler(this.ltRange_TextChanged);
-			//
+			// 
 			// rangeCheckLT
-			//
+			// 
 			this.rangeCheckLT.Location = new System.Drawing.Point(437, 99);
 			this.rangeCheckLT.Name = "rangeCheckLT";
 			this.rangeCheckLT.Size = new System.Drawing.Size(185, 22);
 			this.rangeCheckLT.TabIndex = 40;
 			this.rangeCheckLT.Text = "Range check Last Target:";
 			this.rangeCheckLT.CheckedChanged += new System.EventHandler(this.rangeCheckLT_CheckedChanged);
-			//
+			// 
 			// smartLT
-			//
+			// 
 			this.smartLT.Location = new System.Drawing.Point(437, 77);
 			this.smartLT.Name = "smartLT";
 			this.smartLT.Size = new System.Drawing.Size(185, 22);
 			this.smartLT.TabIndex = 52;
 			this.smartLT.Text = "Use smart last target";
 			this.smartLT.CheckedChanged += new System.EventHandler(this.smartLT_CheckedChanged);
-			//
+			// 
 			// txtObjDelay
-			//
-			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtObjDelay.BackColor = System.Drawing.Color.White;
 			this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1903,107 +1894,107 @@ namespace Assistant
 			this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
 			this.txtObjDelay.TabIndex = 37;
 			this.txtObjDelay.TextChanged += new System.EventHandler(this.txtObjDelay_TextChanged);
-			//
+			// 
 			// QueueActions
-			//
+			// 
 			this.QueueActions.Location = new System.Drawing.Point(437, 36);
 			this.QueueActions.Name = "QueueActions";
 			this.QueueActions.Size = new System.Drawing.Size(222, 22);
 			this.QueueActions.TabIndex = 34;
 			this.QueueActions.Text = "Auto-Queue Object Delay actions ";
 			this.QueueActions.CheckedChanged += new System.EventHandler(this.QueueActions_CheckedChanged);
-			//
+			// 
 			// actionStatusMsg
-			//
+			// 
 			this.actionStatusMsg.Location = new System.Drawing.Point(437, 14);
 			this.actionStatusMsg.Name = "actionStatusMsg";
 			this.actionStatusMsg.Size = new System.Drawing.Size(222, 22);
 			this.actionStatusMsg.TabIndex = 38;
 			this.actionStatusMsg.Text = "Show Action-Queue status messages";
 			this.actionStatusMsg.CheckedChanged += new System.EventHandler(this.actionStatusMsg_CheckedChanged);
-			//
+			// 
 			// msglvl
-			//
+			// 
 			this.msglvl.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.msglvl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.msglvl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.msglvl.Items.AddRange(new object[] {
-			"Show All",
-			"Warnings & Errors",
-			"Errors Only",
-			"None"});
+            "Show All",
+            "Warnings & Errors",
+            "Errors Only",
+            "None"});
 			this.msglvl.Location = new System.Drawing.Point(106, 246);
 			this.msglvl.Name = "msglvl";
 			this.msglvl.Size = new System.Drawing.Size(88, 22);
 			this.msglvl.TabIndex = 69;
 			this.msglvl.SelectedIndexChanged += new System.EventHandler(this.msglvl_SelectedIndexChanged);
-			//
+			// 
 			// potionEquip
-			//
+			// 
 			this.potionEquip.Location = new System.Drawing.Point(204, 318);
 			this.potionEquip.Name = "potionEquip";
 			this.potionEquip.Size = new System.Drawing.Size(214, 22);
 			this.potionEquip.TabIndex = 67;
 			this.potionEquip.Text = "Auto Un/Re-equip hands for potions";
 			this.potionEquip.CheckedChanged += new System.EventHandler(this.potionEquip_CheckedChanged);
-			//
+			// 
 			// spellUnequip
-			//
+			// 
 			this.spellUnequip.Location = new System.Drawing.Point(204, 296);
 			this.spellUnequip.Name = "spellUnequip";
 			this.spellUnequip.Size = new System.Drawing.Size(214, 22);
 			this.spellUnequip.TabIndex = 39;
 			this.spellUnequip.Text = "Auto Unequip hands before casting";
 			this.spellUnequip.CheckedChanged += new System.EventHandler(this.spellUnequip_CheckedChanged);
-			//
+			// 
 			// autoOpenDoors
-			//
+			// 
 			this.autoOpenDoors.Location = new System.Drawing.Point(204, 274);
 			this.autoOpenDoors.Name = "autoOpenDoors";
 			this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.autoOpenDoors.TabIndex = 59;
 			this.autoOpenDoors.Text = "Automatically open doors";
 			this.autoOpenDoors.CheckedChanged += new System.EventHandler(this.autoOpenDoors_CheckedChanged);
-			//
+			// 
 			// alwaysStealth
-			//
+			// 
 			this.alwaysStealth.Location = new System.Drawing.Point(204, 252);
 			this.alwaysStealth.Name = "alwaysStealth";
 			this.alwaysStealth.Size = new System.Drawing.Size(190, 22);
 			this.alwaysStealth.TabIndex = 57;
 			this.alwaysStealth.Text = "Always show stealth steps ";
 			this.alwaysStealth.CheckedChanged += new System.EventHandler(this.alwaysStealth_CheckedChanged);
-			//
+			// 
 			// chkStealth
-			//
+			// 
 			this.chkStealth.Location = new System.Drawing.Point(204, 230);
 			this.chkStealth.Name = "chkStealth";
 			this.chkStealth.Size = new System.Drawing.Size(190, 22);
 			this.chkStealth.TabIndex = 12;
 			this.chkStealth.Text = "Count stealth steps";
 			this.chkStealth.CheckedChanged += new System.EventHandler(this.chkStealth_CheckedChanged);
-			//
+			// 
 			// preAOSstatbar
-			//
+			// 
 			this.preAOSstatbar.Location = new System.Drawing.Point(204, 13);
 			this.preAOSstatbar.Name = "preAOSstatbar";
 			this.preAOSstatbar.Size = new System.Drawing.Size(190, 22);
 			this.preAOSstatbar.TabIndex = 57;
 			this.preAOSstatbar.Text = "Use Pre-AOS status window";
 			this.preAOSstatbar.CheckedChanged += new System.EventHandler(this.preAOSstatbar_CheckedChanged);
-			//
+			// 
 			// negotiate
-			//
+			// 
 			this.negotiate.Location = new System.Drawing.Point(204, 186);
 			this.negotiate.Name = "negotiate";
 			this.negotiate.Size = new System.Drawing.Size(224, 22);
 			this.negotiate.TabIndex = 56;
 			this.negotiate.Text = "Negotiate features with server";
 			this.negotiate.CheckedChanged += new System.EventHandler(this.negotiate_CheckedChanged);
-			//
+			// 
 			// setLTHilight
-			//
-			this.setLTHilight.ColorTable = office2010BlueTheme1;
+			// 
+			this.setLTHilight.ColorTable = office2010BlueTheme;
 			this.setLTHilight.Location = new System.Drawing.Point(152, 115);
 			this.setLTHilight.Name = "setLTHilight";
 			this.setLTHilight.Size = new System.Drawing.Size(32, 20);
@@ -2011,30 +2002,30 @@ namespace Assistant
 			this.setLTHilight.Text = "Set";
 			this.setLTHilight.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setLTHilight.Click += new System.EventHandler(this.setLTHilight_Click);
-			//
+			// 
 			// lthilight
-			//
+			// 
 			this.lthilight.Location = new System.Drawing.Point(7, 118);
 			this.lthilight.Name = "lthilight";
 			this.lthilight.Size = new System.Drawing.Size(139, 22);
 			this.lthilight.TabIndex = 50;
 			this.lthilight.Text = "Last Target Highlight:";
 			this.lthilight.CheckedChanged += new System.EventHandler(this.lthilight_CheckedChanged);
-			//
+			// 
 			// filterSnoop
-			//
+			// 
 			this.filterSnoop.Location = new System.Drawing.Point(204, 143);
 			this.filterSnoop.Name = "filterSnoop";
 			this.filterSnoop.Size = new System.Drawing.Size(230, 22);
 			this.filterSnoop.TabIndex = 49;
 			this.filterSnoop.Text = "Filter Snooping Messages";
 			this.filterSnoop.CheckedChanged += new System.EventHandler(this.filterSnoop_CheckedChanged);
-			//
+			// 
 			// corpseRange
-			//
-			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.corpseRange.BackColor = System.Drawing.Color.White;
 			this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.corpseRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2044,28 +2035,28 @@ namespace Assistant
 			this.corpseRange.Size = new System.Drawing.Size(24, 20);
 			this.corpseRange.TabIndex = 23;
 			this.corpseRange.TextChanged += new System.EventHandler(this.corpseRange_TextChanged);
-			//
+			// 
 			// incomingCorpse
-			//
+			// 
 			this.incomingCorpse.Location = new System.Drawing.Point(204, 208);
 			this.incomingCorpse.Name = "incomingCorpse";
 			this.incomingCorpse.Size = new System.Drawing.Size(226, 22);
 			this.incomingCorpse.TabIndex = 48;
 			this.incomingCorpse.Text = "Show Names of New/Incoming Corpses";
 			this.incomingCorpse.CheckedChanged += new System.EventHandler(this.incomingCorpse_CheckedChanged);
-			//
+			// 
 			// incomingMob
-			//
+			// 
 			this.incomingMob.Location = new System.Drawing.Point(204, 165);
 			this.incomingMob.Name = "incomingMob";
 			this.incomingMob.Size = new System.Drawing.Size(244, 22);
 			this.incomingMob.TabIndex = 47;
 			this.incomingMob.Text = "Show Names of Incoming People/Creatures";
 			this.incomingMob.CheckedChanged += new System.EventHandler(this.incomingMob_CheckedChanged);
-			//
+			// 
 			// setHarmHue
-			//
-			this.setHarmHue.ColorTable = office2010BlueTheme1;
+			// 
+			this.setHarmHue.ColorTable = office2010BlueTheme;
 			this.setHarmHue.Enabled = false;
 			this.setHarmHue.Location = new System.Drawing.Point(83, 184);
 			this.setHarmHue.Name = "setHarmHue";
@@ -2074,10 +2065,10 @@ namespace Assistant
 			this.setHarmHue.Text = "Set";
 			this.setHarmHue.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setHarmHue.Click += new System.EventHandler(this.setHarmHue_Click);
-			//
+			// 
 			// setNeuHue
-			//
-			this.setNeuHue.ColorTable = office2010BlueTheme1;
+			// 
+			this.setNeuHue.ColorTable = office2010BlueTheme;
 			this.setNeuHue.Enabled = false;
 			this.setNeuHue.Location = new System.Drawing.Point(140, 184);
 			this.setNeuHue.Name = "setNeuHue";
@@ -2086,10 +2077,10 @@ namespace Assistant
 			this.setNeuHue.Text = "Set";
 			this.setNeuHue.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setNeuHue.Click += new System.EventHandler(this.setNeuHue_Click);
-			//
+			// 
 			// setBeneHue
-			//
-			this.setBeneHue.ColorTable = office2010BlueTheme1;
+			// 
+			this.setBeneHue.ColorTable = office2010BlueTheme;
 			this.setBeneHue.Location = new System.Drawing.Point(28, 184);
 			this.setBeneHue.Name = "setBeneHue";
 			this.setBeneHue.Size = new System.Drawing.Size(33, 20);
@@ -2097,10 +2088,10 @@ namespace Assistant
 			this.setBeneHue.Text = "Set";
 			this.setBeneHue.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setBeneHue.Click += new System.EventHandler(this.setBeneHue_Click);
-			//
+			// 
 			// setSpeechHue
-			//
-			this.setSpeechHue.ColorTable = office2010BlueTheme1;
+			// 
+			this.setSpeechHue.ColorTable = office2010BlueTheme;
 			this.setSpeechHue.Location = new System.Drawing.Point(152, 91);
 			this.setSpeechHue.Name = "setSpeechHue";
 			this.setSpeechHue.Size = new System.Drawing.Size(32, 20);
@@ -2108,10 +2099,10 @@ namespace Assistant
 			this.setSpeechHue.Text = "Set";
 			this.setSpeechHue.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setSpeechHue.Click += new System.EventHandler(this.setSpeechHue_Click);
-			//
+			// 
 			// setWarnHue
-			//
-			this.setWarnHue.ColorTable = office2010BlueTheme1;
+			// 
+			this.setWarnHue.ColorTable = office2010BlueTheme;
 			this.setWarnHue.Location = new System.Drawing.Point(152, 67);
 			this.setWarnHue.Name = "setWarnHue";
 			this.setWarnHue.Size = new System.Drawing.Size(32, 20);
@@ -2119,10 +2110,10 @@ namespace Assistant
 			this.setWarnHue.Text = "Set";
 			this.setWarnHue.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setWarnHue.Click += new System.EventHandler(this.setWarnHue_Click);
-			//
+			// 
 			// setMsgHue
-			//
-			this.setMsgHue.ColorTable = office2010BlueTheme1;
+			// 
+			this.setMsgHue.ColorTable = office2010BlueTheme;
 			this.setMsgHue.Location = new System.Drawing.Point(152, 43);
 			this.setMsgHue.Name = "setMsgHue";
 			this.setMsgHue.Size = new System.Drawing.Size(32, 19);
@@ -2130,10 +2121,10 @@ namespace Assistant
 			this.setMsgHue.Text = "Set";
 			this.setMsgHue.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setMsgHue.Click += new System.EventHandler(this.setMsgHue_Click);
-			//
+			// 
 			// setExHue
-			//
-			this.setExHue.ColorTable = office2010BlueTheme1;
+			// 
+			this.setExHue.ColorTable = office2010BlueTheme;
 			this.setExHue.Location = new System.Drawing.Point(152, 18);
 			this.setExHue.Name = "setExHue";
 			this.setExHue.Size = new System.Drawing.Size(32, 20);
@@ -2141,57 +2132,57 @@ namespace Assistant
 			this.setExHue.Text = "Set";
 			this.setExHue.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setExHue.Click += new System.EventHandler(this.setExHue_Click);
-			//
+			// 
 			// autoStackRes
-			//
+			// 
 			this.autoStackRes.Location = new System.Drawing.Point(204, 78);
 			this.autoStackRes.Name = "autoStackRes";
 			this.autoStackRes.Size = new System.Drawing.Size(228, 22);
 			this.autoStackRes.TabIndex = 35;
 			this.autoStackRes.Text = "Auto-Stack Ore/Fish/Logs at Feet";
 			this.autoStackRes.CheckedChanged += new System.EventHandler(this.autoStackRes_CheckedChanged);
-			//
+			// 
 			// queueTargets
-			//
+			// 
 			this.queueTargets.Location = new System.Drawing.Point(204, 35);
 			this.queueTargets.Name = "queueTargets";
 			this.queueTargets.Size = new System.Drawing.Size(228, 22);
 			this.queueTargets.TabIndex = 34;
 			this.queueTargets.Text = "Queue LastTarget and TargetSelf";
 			this.queueTargets.CheckedChanged += new System.EventHandler(this.queueTargets_CheckedChanged);
-			//
+			// 
 			// spamFilter
-			//
+			// 
 			this.spamFilter.Location = new System.Drawing.Point(204, 121);
 			this.spamFilter.Name = "spamFilter";
 			this.spamFilter.Size = new System.Drawing.Size(228, 22);
 			this.spamFilter.TabIndex = 26;
 			this.spamFilter.Text = "Filter repeating system messages";
 			this.spamFilter.CheckedChanged += new System.EventHandler(this.spamFilter_CheckedChanged);
-			//
+			// 
 			// openCorpses
-			//
+			// 
 			this.openCorpses.Location = new System.Drawing.Point(204, 100);
 			this.openCorpses.Name = "openCorpses";
 			this.openCorpses.Size = new System.Drawing.Size(156, 22);
 			this.openCorpses.TabIndex = 22;
 			this.openCorpses.Text = "Open new corpses within";
 			this.openCorpses.CheckedChanged += new System.EventHandler(this.openCorpses_CheckedChanged);
-			//
+			// 
 			// blockDis
-			//
+			// 
 			this.blockDis.Location = new System.Drawing.Point(204, 56);
 			this.blockDis.Name = "blockDis";
 			this.blockDis.Size = new System.Drawing.Size(184, 22);
 			this.blockDis.TabIndex = 55;
 			this.blockDis.Text = "Block dismount in war mode";
 			this.blockDis.CheckedChanged += new System.EventHandler(this.blockDis_CheckedChanged);
-			//
+			// 
 			// txtSpellFormat
-			//
-			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSpellFormat.BackColor = System.Drawing.Color.White;
 			this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2201,27 +2192,27 @@ namespace Assistant
 			this.txtSpellFormat.Size = new System.Drawing.Size(87, 20);
 			this.txtSpellFormat.TabIndex = 5;
 			this.txtSpellFormat.TextChanged += new System.EventHandler(this.txtSpellFormat_TextChanged);
-			//
+			// 
 			// chkForceSpellHue
-			//
+			// 
 			this.chkForceSpellHue.Location = new System.Drawing.Point(7, 142);
 			this.chkForceSpellHue.Name = "chkForceSpellHue";
 			this.chkForceSpellHue.Size = new System.Drawing.Size(139, 22);
 			this.chkForceSpellHue.TabIndex = 2;
 			this.chkForceSpellHue.Text = "Override Spell Hues:";
 			this.chkForceSpellHue.CheckedChanged += new System.EventHandler(this.chkForceSpellHue_CheckedChanged);
-			//
+			// 
 			// chkForceSpeechHue
-			//
+			// 
 			this.chkForceSpeechHue.Location = new System.Drawing.Point(7, 94);
 			this.chkForceSpeechHue.Name = "chkForceSpeechHue";
 			this.chkForceSpeechHue.Size = new System.Drawing.Size(139, 22);
 			this.chkForceSpeechHue.TabIndex = 0;
 			this.chkForceSpeechHue.Text = "Override Speech Hue";
 			this.chkForceSpeechHue.CheckedChanged += new System.EventHandler(this.chkForceSpeechHue_CheckedChanged);
-			//
+			// 
 			// enhancedFilterTab
-			//
+			// 
 			this.enhancedFilterTab.Controls.Add(this.groupBox32);
 			this.enhancedFilterTab.Controls.Add(this.groupBox24);
 			this.enhancedFilterTab.Controls.Add(this.groupBox23);
@@ -2232,9 +2223,9 @@ namespace Assistant
 			this.enhancedFilterTab.Size = new System.Drawing.Size(666, 366);
 			this.enhancedFilterTab.TabIndex = 10;
 			this.enhancedFilterTab.Text = "Enhanced Filters";
-			//
+			// 
 			// groupBox32
-			//
+			// 
 			this.groupBox32.Controls.Add(this.remountedelay);
 			this.groupBox32.Controls.Add(this.remountdelay);
 			this.groupBox32.Controls.Add(this.label48);
@@ -2249,12 +2240,12 @@ namespace Assistant
 			this.groupBox32.TabIndex = 68;
 			this.groupBox32.TabStop = false;
 			this.groupBox32.Text = "Auto Remount";
-			//
+			// 
 			// remountedelay
-			//
-			this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.remountedelay.BackColor = System.Drawing.Color.White;
 			this.remountedelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.remountedelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2264,12 +2255,12 @@ namespace Assistant
 			this.remountedelay.Size = new System.Drawing.Size(58, 20);
 			this.remountedelay.TabIndex = 68;
 			this.remountedelay.TextChanged += new System.EventHandler(this.remountedelay_TextChanged);
-			//
+			// 
 			// remountdelay
-			//
-			this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.remountdelay.BackColor = System.Drawing.Color.White;
 			this.remountdelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.remountdelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2279,46 +2270,46 @@ namespace Assistant
 			this.remountdelay.Size = new System.Drawing.Size(58, 20);
 			this.remountdelay.TabIndex = 67;
 			this.remountdelay.TextChanged += new System.EventHandler(this.remountdelay_TextChanged);
-			//
+			// 
 			// label48
-			//
+			// 
 			this.label48.AutoSize = true;
 			this.label48.Location = new System.Drawing.Point(6, 91);
 			this.label48.Name = "label48";
 			this.label48.Size = new System.Drawing.Size(79, 13);
 			this.label48.TabIndex = 66;
 			this.label48.Text = "Ethereal Delay:";
-			//
+			// 
 			// label40
-			//
+			// 
 			this.label40.AutoSize = true;
 			this.label40.Location = new System.Drawing.Point(6, 70);
 			this.label40.Name = "label40";
 			this.label40.Size = new System.Drawing.Size(70, 13);
 			this.label40.TabIndex = 65;
 			this.label40.Text = "Mount Delay:";
-			//
+			// 
 			// remountseriallabel
-			//
+			// 
 			this.remountseriallabel.AutoSize = true;
 			this.remountseriallabel.Location = new System.Drawing.Point(90, 48);
 			this.remountseriallabel.Name = "remountseriallabel";
 			this.remountseriallabel.Size = new System.Drawing.Size(66, 13);
 			this.remountseriallabel.TabIndex = 64;
 			this.remountseriallabel.Text = "0x00000000";
-			//
+			// 
 			// label47
-			//
+			// 
 			this.label47.AutoSize = true;
 			this.label47.Location = new System.Drawing.Point(6, 48);
 			this.label47.Name = "label47";
 			this.label47.Size = new System.Drawing.Size(69, 13);
 			this.label47.TabIndex = 63;
 			this.label47.Text = "Mount Serial:";
-			//
+			// 
 			// remountsetbutton
-			//
-			this.remountsetbutton.ColorTable = office2010BlueTheme1;
+			// 
+			this.remountsetbutton.ColorTable = office2010BlueTheme;
 			this.remountsetbutton.Location = new System.Drawing.Point(81, 19);
 			this.remountsetbutton.Name = "remountsetbutton";
 			this.remountsetbutton.Size = new System.Drawing.Size(70, 19);
@@ -2327,18 +2318,18 @@ namespace Assistant
 			this.remountsetbutton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.remountsetbutton.UseVisualStyleBackColor = true;
 			this.remountsetbutton.Click += new System.EventHandler(this.remountsetbutton_Click);
-			//
+			// 
 			// remountcheckbox
-			//
+			// 
 			this.remountcheckbox.Location = new System.Drawing.Point(6, 19);
 			this.remountcheckbox.Name = "remountcheckbox";
 			this.remountcheckbox.Size = new System.Drawing.Size(62, 22);
 			this.remountcheckbox.TabIndex = 61;
 			this.remountcheckbox.Text = "Enable";
 			this.remountcheckbox.CheckedChanged += new System.EventHandler(this.remountcheckbox_CheckedChanged);
-			//
+			// 
 			// groupBox24
-			//
+			// 
 			this.groupBox24.Controls.Add(this.blockpartyinviteCheckBox);
 			this.groupBox24.Controls.Add(this.blocktraderequestCheckBox);
 			this.groupBox24.Controls.Add(this.highlighttargetCheckBox);
@@ -2350,54 +2341,54 @@ namespace Assistant
 			this.groupBox24.TabIndex = 67;
 			this.groupBox24.TabStop = false;
 			this.groupBox24.Text = "Misc";
-			//
+			// 
 			// blockpartyinviteCheckBox
-			//
+			// 
 			this.blockpartyinviteCheckBox.Location = new System.Drawing.Point(6, 107);
 			this.blockpartyinviteCheckBox.Name = "blockpartyinviteCheckBox";
 			this.blockpartyinviteCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.blockpartyinviteCheckBox.TabIndex = 62;
 			this.blockpartyinviteCheckBox.Text = "Block Party Invite";
 			this.blockpartyinviteCheckBox.CheckedChanged += new System.EventHandler(this.blockpartyinviteCheckBox_CheckedChanged);
-			//
+			// 
 			// blocktraderequestCheckBox
-			//
+			// 
 			this.blocktraderequestCheckBox.Location = new System.Drawing.Point(6, 85);
 			this.blocktraderequestCheckBox.Name = "blocktraderequestCheckBox";
 			this.blocktraderequestCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.blocktraderequestCheckBox.TabIndex = 61;
 			this.blocktraderequestCheckBox.Text = "Block Trade Request";
 			this.blocktraderequestCheckBox.CheckedChanged += new System.EventHandler(this.blocktraderequestCheckBox_CheckedChanged);
-			//
+			// 
 			// highlighttargetCheckBox
-			//
+			// 
 			this.highlighttargetCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.highlighttargetCheckBox.Name = "highlighttargetCheckBox";
 			this.highlighttargetCheckBox.Size = new System.Drawing.Size(145, 22);
 			this.highlighttargetCheckBox.TabIndex = 58;
 			this.highlighttargetCheckBox.Text = "Highlight current target";
 			this.highlighttargetCheckBox.CheckedChanged += new System.EventHandler(this.highlighttargetCheckBox_CheckedChanged);
-			//
+			// 
 			// flagsHighlightCheckBox
-			//
+			// 
 			this.flagsHighlightCheckBox.Location = new System.Drawing.Point(6, 41);
 			this.flagsHighlightCheckBox.Name = "flagsHighlightCheckBox";
 			this.flagsHighlightCheckBox.Size = new System.Drawing.Size(132, 22);
 			this.flagsHighlightCheckBox.TabIndex = 59;
 			this.flagsHighlightCheckBox.Text = "Flags Highlight";
 			this.flagsHighlightCheckBox.CheckedChanged += new System.EventHandler(this.flagsHighlightCheckBox_CheckedChanged);
-			//
+			// 
 			// showstaticfieldCheckBox
-			//
+			// 
 			this.showstaticfieldCheckBox.Location = new System.Drawing.Point(6, 63);
 			this.showstaticfieldCheckBox.Name = "showstaticfieldCheckBox";
 			this.showstaticfieldCheckBox.Size = new System.Drawing.Size(118, 22);
 			this.showstaticfieldCheckBox.TabIndex = 60;
 			this.showstaticfieldCheckBox.Text = "Show Static Field";
 			this.showstaticfieldCheckBox.CheckedChanged += new System.EventHandler(this.showstaticfieldCheckBox_CheckedChanged);
-			//
+			// 
 			// groupBox23
-			//
+			// 
 			this.groupBox23.Controls.Add(this.mobfilterRemoveButton);
 			this.groupBox23.Controls.Add(this.mobfilterAddButton);
 			this.groupBox23.Controls.Add(this.mobfilterlistView);
@@ -2408,10 +2399,10 @@ namespace Assistant
 			this.groupBox23.TabIndex = 66;
 			this.groupBox23.TabStop = false;
 			this.groupBox23.Text = "Mobile Graphics Change Filter";
-			//
+			// 
 			// mobfilterRemoveButton
-			//
-			this.mobfilterRemoveButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.mobfilterRemoveButton.ColorTable = office2010BlueTheme;
 			this.mobfilterRemoveButton.Location = new System.Drawing.Point(202, 76);
 			this.mobfilterRemoveButton.Name = "mobfilterRemoveButton";
 			this.mobfilterRemoveButton.Size = new System.Drawing.Size(75, 23);
@@ -2420,10 +2411,10 @@ namespace Assistant
 			this.mobfilterRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.mobfilterRemoveButton.UseVisualStyleBackColor = true;
 			this.mobfilterRemoveButton.Click += new System.EventHandler(this.mobfilterRemoveButton_Click);
-			//
+			// 
 			// mobfilterAddButton
-			//
-			this.mobfilterAddButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.mobfilterAddButton.ColorTable = office2010BlueTheme;
 			this.mobfilterAddButton.Location = new System.Drawing.Point(202, 47);
 			this.mobfilterAddButton.Name = "mobfilterAddButton";
 			this.mobfilterAddButton.Size = new System.Drawing.Size(75, 23);
@@ -2432,14 +2423,14 @@ namespace Assistant
 			this.mobfilterAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.mobfilterAddButton.UseVisualStyleBackColor = true;
 			this.mobfilterAddButton.Click += new System.EventHandler(this.mobfilterAddButton_Click);
-			//
+			// 
 			// mobfilterlistView
-			//
+			// 
 			this.mobfilterlistView.CheckBoxes = true;
 			this.mobfilterlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader52,
-			this.columnHeader53,
-			this.columnHeader54});
+            this.columnHeader52,
+            this.columnHeader53,
+            this.columnHeader54});
 			this.mobfilterlistView.FullRowSelect = true;
 			this.mobfilterlistView.GridLines = true;
 			this.mobfilterlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2453,33 +2444,33 @@ namespace Assistant
 			this.mobfilterlistView.UseCompatibleStateImageBehavior = false;
 			this.mobfilterlistView.View = System.Windows.Forms.View.Details;
 			this.mobfilterlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.mobfilterlistView_ItemChecked);
-			//
+			// 
 			// columnHeader52
-			//
+			// 
 			this.columnHeader52.Text = "X";
 			this.columnHeader52.Width = 22;
-			//
+			// 
 			// columnHeader53
-			//
+			// 
 			this.columnHeader53.Text = "Old Graphics";
 			this.columnHeader53.Width = 80;
-			//
+			// 
 			// columnHeader54
-			//
+			// 
 			this.columnHeader54.Text = "New Graphics";
 			this.columnHeader54.Width = 80;
-			//
+			// 
 			// mobfilterCheckBox
-			//
+			// 
 			this.mobfilterCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.mobfilterCheckBox.Name = "mobfilterCheckBox";
 			this.mobfilterCheckBox.Size = new System.Drawing.Size(79, 22);
 			this.mobfilterCheckBox.TabIndex = 61;
 			this.mobfilterCheckBox.Text = "Enable";
 			this.mobfilterCheckBox.CheckedChanged += new System.EventHandler(this.mobfilterCheckBox_CheckedChanged);
-			//
+			// 
 			// groupBox10
-			//
+			// 
 			this.groupBox10.Controls.Add(this.autocarverbladeLabel);
 			this.groupBox10.Controls.Add(this.label34);
 			this.groupBox10.Controls.Add(this.autocarverrazorButton);
@@ -2490,28 +2481,28 @@ namespace Assistant
 			this.groupBox10.TabIndex = 65;
 			this.groupBox10.TabStop = false;
 			this.groupBox10.Text = "Auto Carver";
-			//
+			// 
 			// autocarverbladeLabel
-			//
+			// 
 			this.autocarverbladeLabel.AutoSize = true;
 			this.autocarverbladeLabel.Location = new System.Drawing.Point(78, 48);
 			this.autocarverbladeLabel.Name = "autocarverbladeLabel";
 			this.autocarverbladeLabel.Size = new System.Drawing.Size(66, 13);
 			this.autocarverbladeLabel.TabIndex = 64;
 			this.autocarverbladeLabel.Text = "0x00000000";
-			//
+			// 
 			// label34
-			//
+			// 
 			this.label34.AutoSize = true;
 			this.label34.Location = new System.Drawing.Point(6, 48);
 			this.label34.Name = "label34";
 			this.label34.Size = new System.Drawing.Size(66, 13);
 			this.label34.TabIndex = 63;
 			this.label34.Text = "Blade Serial:";
-			//
+			// 
 			// autocarverrazorButton
-			//
-			this.autocarverrazorButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.autocarverrazorButton.ColorTable = office2010BlueTheme;
 			this.autocarverrazorButton.Location = new System.Drawing.Point(74, 18);
 			this.autocarverrazorButton.Name = "autocarverrazorButton";
 			this.autocarverrazorButton.Size = new System.Drawing.Size(75, 19);
@@ -2520,18 +2511,18 @@ namespace Assistant
 			this.autocarverrazorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autocarverrazorButton.UseVisualStyleBackColor = true;
 			this.autocarverrazorButton.Click += new System.EventHandler(this.autocarverrazorButton_Click);
-			//
+			// 
 			// autocarverCheckBox
-			//
+			// 
 			this.autocarverCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.autocarverCheckBox.Name = "autocarverCheckBox";
 			this.autocarverCheckBox.Size = new System.Drawing.Size(79, 22);
 			this.autocarverCheckBox.TabIndex = 61;
 			this.autocarverCheckBox.Text = "Enable";
 			this.autocarverCheckBox.CheckedChanged += new System.EventHandler(this.autocarverCheckBox_CheckedChanged);
-			//
+			// 
 			// groupBox9
-			//
+			// 
 			this.groupBox9.Controls.Add(this.bonebladeLabel);
 			this.groupBox9.Controls.Add(this.label16);
 			this.groupBox9.Controls.Add(this.boneCutterrazorButton);
@@ -2542,28 +2533,28 @@ namespace Assistant
 			this.groupBox9.TabIndex = 62;
 			this.groupBox9.TabStop = false;
 			this.groupBox9.Text = "Bone Cutter";
-			//
+			// 
 			// bonebladeLabel
-			//
+			// 
 			this.bonebladeLabel.AutoSize = true;
 			this.bonebladeLabel.Location = new System.Drawing.Point(78, 48);
 			this.bonebladeLabel.Name = "bonebladeLabel";
 			this.bonebladeLabel.Size = new System.Drawing.Size(66, 13);
 			this.bonebladeLabel.TabIndex = 64;
 			this.bonebladeLabel.Text = "0x00000000";
-			//
+			// 
 			// label16
-			//
+			// 
 			this.label16.AutoSize = true;
 			this.label16.Location = new System.Drawing.Point(6, 48);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(66, 13);
 			this.label16.TabIndex = 63;
 			this.label16.Text = "Blade Serial:";
-			//
+			// 
 			// boneCutterrazorButton
-			//
-			this.boneCutterrazorButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.boneCutterrazorButton.ColorTable = office2010BlueTheme;
 			this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 19);
 			this.boneCutterrazorButton.Name = "boneCutterrazorButton";
 			this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 19);
@@ -2572,18 +2563,18 @@ namespace Assistant
 			this.boneCutterrazorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.boneCutterrazorButton.UseVisualStyleBackColor = true;
 			this.boneCutterrazorButton.Click += new System.EventHandler(this.boneCutterrazorButton_Click);
-			//
+			// 
 			// bonecutterCheckBox
-			//
+			// 
 			this.bonecutterCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.bonecutterCheckBox.Name = "bonecutterCheckBox";
 			this.bonecutterCheckBox.Size = new System.Drawing.Size(79, 22);
 			this.bonecutterCheckBox.TabIndex = 61;
 			this.bonecutterCheckBox.Text = "Enable";
 			this.bonecutterCheckBox.CheckedChanged += new System.EventHandler(this.bonecutterCheckBox_CheckedChanged);
-			//
+			// 
 			// toolbarTab
-			//
+			// 
 			this.toolbarTab.Controls.Add(this.groupBox26);
 			this.toolbarTab.Controls.Add(this.groupBox25);
 			this.toolbarTab.Location = new System.Drawing.Point(4, 40);
@@ -2591,9 +2582,9 @@ namespace Assistant
 			this.toolbarTab.Size = new System.Drawing.Size(666, 366);
 			this.toolbarTab.TabIndex = 1;
 			this.toolbarTab.Text = "Enhanced Toolbar";
-			//
+			// 
 			// groupBox26
-			//
+			// 
 			this.groupBox26.Controls.Add(this.label38);
 			this.groupBox26.Controls.Add(this.toolboxcountNameTextBox);
 			this.groupBox26.Controls.Add(this.label37);
@@ -2613,21 +2604,21 @@ namespace Assistant
 			this.groupBox26.TabIndex = 60;
 			this.groupBox26.TabStop = false;
 			this.groupBox26.Text = "Item Count";
-			//
+			// 
 			// label38
-			//
+			// 
 			this.label38.AutoSize = true;
 			this.label38.Location = new System.Drawing.Point(131, 102);
 			this.label38.Name = "label38";
 			this.label38.Size = new System.Drawing.Size(44, 13);
 			this.label38.TabIndex = 70;
 			this.label38.Text = "-1 for all";
-			//
+			// 
 			// toolboxcountNameTextBox
-			//
-			this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountNameTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountNameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2637,19 +2628,19 @@ namespace Assistant
 			this.toolboxcountNameTextBox.Size = new System.Drawing.Size(144, 20);
 			this.toolboxcountNameTextBox.TabIndex = 69;
 			this.toolboxcountNameTextBox.TextChanged += new System.EventHandler(this.toolboxcountNameTextBox_TextChanged);
-			//
+			// 
 			// label37
-			//
+			// 
 			this.label37.AutoSize = true;
 			this.label37.Location = new System.Drawing.Point(6, 52);
 			this.label37.Name = "label37";
 			this.label37.Size = new System.Drawing.Size(38, 13);
 			this.label37.TabIndex = 68;
 			this.label37.Text = "Name:";
-			//
+			// 
 			// toolboxcountClearButton
-			//
-			this.toolboxcountClearButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.toolboxcountClearButton.ColorTable = office2010BlueTheme;
 			this.toolboxcountClearButton.Location = new System.Drawing.Point(131, 177);
 			this.toolboxcountClearButton.Name = "toolboxcountClearButton";
 			this.toolboxcountClearButton.Size = new System.Drawing.Size(77, 20);
@@ -2657,10 +2648,10 @@ namespace Assistant
 			this.toolboxcountClearButton.Text = "Clear Slot";
 			this.toolboxcountClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.toolboxcountClearButton.Click += new System.EventHandler(this.toolboxcountClearButton_Click);
-			//
+			// 
 			// toolboxcountTargetButton
-			//
-			this.toolboxcountTargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.toolboxcountTargetButton.ColorTable = office2010BlueTheme;
 			this.toolboxcountTargetButton.Location = new System.Drawing.Point(9, 177);
 			this.toolboxcountTargetButton.Name = "toolboxcountTargetButton";
 			this.toolboxcountTargetButton.Size = new System.Drawing.Size(77, 20);
@@ -2668,12 +2659,12 @@ namespace Assistant
 			this.toolboxcountTargetButton.Text = "Get Data";
 			this.toolboxcountTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.toolboxcountTargetButton.Click += new System.EventHandler(this.toolboxcountTargetButton_Click);
-			//
+			// 
 			// toolboxcountWarningTextBox
-			//
-			this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountWarningTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2683,30 +2674,30 @@ namespace Assistant
 			this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
 			this.toolboxcountWarningTextBox.TabIndex = 66;
 			this.toolboxcountWarningTextBox.TextChanged += new System.EventHandler(this.toolboxcountWarningTextBox_TextChanged);
-			//
+			// 
 			// label36
-			//
+			// 
 			this.label36.AutoSize = true;
 			this.label36.Location = new System.Drawing.Point(6, 151);
 			this.label36.Name = "label36";
 			this.label36.Size = new System.Drawing.Size(50, 13);
 			this.label36.TabIndex = 65;
 			this.label36.Text = "Warning:";
-			//
+			// 
 			// toolboxcountHueWarningCheckBox
-			//
+			// 
 			this.toolboxcountHueWarningCheckBox.Location = new System.Drawing.Point(9, 125);
 			this.toolboxcountHueWarningCheckBox.Name = "toolboxcountHueWarningCheckBox";
 			this.toolboxcountHueWarningCheckBox.Size = new System.Drawing.Size(99, 22);
 			this.toolboxcountHueWarningCheckBox.TabIndex = 64;
 			this.toolboxcountHueWarningCheckBox.Text = "Show Warning";
 			this.toolboxcountHueWarningCheckBox.CheckedChanged += new System.EventHandler(this.toolboxcountHueWarningCheckBox_CheckedChanged);
-			//
+			// 
 			// toolboxcountHueTextBox
-			//
-			this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountHueTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountHueTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountHueTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2716,21 +2707,21 @@ namespace Assistant
 			this.toolboxcountHueTextBox.Size = new System.Drawing.Size(61, 20);
 			this.toolboxcountHueTextBox.TabIndex = 4;
 			this.toolboxcountHueTextBox.TextChanged += new System.EventHandler(this.toolboxcountHueTextBox_TextChanged);
-			//
+			// 
 			// label35
-			//
+			// 
 			this.label35.AutoSize = true;
 			this.label35.Location = new System.Drawing.Point(6, 102);
 			this.label35.Name = "label35";
 			this.label35.Size = new System.Drawing.Size(34, 13);
 			this.label35.TabIndex = 3;
 			this.label35.Text = "Color:";
-			//
+			// 
 			// toolboxcountGraphTextBox
-			//
-			this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountGraphTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2740,18 +2731,18 @@ namespace Assistant
 			this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
 			this.toolboxcountGraphTextBox.TabIndex = 2;
 			this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountGraphTextBox_TextChanged);
-			//
+			// 
 			// label18
-			//
+			// 
 			this.label18.AutoSize = true;
 			this.label18.Location = new System.Drawing.Point(6, 76);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(52, 13);
 			this.label18.TabIndex = 1;
 			this.label18.Text = "Graphics:";
-			//
+			// 
 			// toolboxcountComboBox
-			//
+			// 
 			this.toolboxcountComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.toolboxcountComboBox.FormattingEnabled = true;
 			this.toolboxcountComboBox.Location = new System.Drawing.Point(6, 19);
@@ -2759,9 +2750,9 @@ namespace Assistant
 			this.toolboxcountComboBox.Size = new System.Drawing.Size(202, 24);
 			this.toolboxcountComboBox.TabIndex = 0;
 			this.toolboxcountComboBox.SelectedIndexChanged += new System.EventHandler(this.toolboxcountComboBox_SelectedIndexChanged);
-			//
+			// 
 			// groupBox25
-			//
+			// 
 			this.groupBox25.Controls.Add(this.lockToolBarCheckBox);
 			this.groupBox25.Controls.Add(this.autoopenToolBarCheckBox);
 			this.groupBox25.Controls.Add(this.locationToolBarLabel);
@@ -2773,37 +2764,37 @@ namespace Assistant
 			this.groupBox25.TabIndex = 59;
 			this.groupBox25.TabStop = false;
 			this.groupBox25.Text = "General";
-			//
+			// 
 			// lockToolBarCheckBox
-			//
+			// 
 			this.lockToolBarCheckBox.Location = new System.Drawing.Point(6, 71);
 			this.lockToolBarCheckBox.Name = "lockToolBarCheckBox";
 			this.lockToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
 			this.lockToolBarCheckBox.TabIndex = 63;
 			this.lockToolBarCheckBox.Text = "Lock ToolBar";
 			this.lockToolBarCheckBox.CheckedChanged += new System.EventHandler(this.lockToolBarCheckBox_CheckedChanged);
-			//
+			// 
 			// autoopenToolBarCheckBox
-			//
+			// 
 			this.autoopenToolBarCheckBox.Location = new System.Drawing.Point(6, 93);
 			this.autoopenToolBarCheckBox.Name = "autoopenToolBarCheckBox";
 			this.autoopenToolBarCheckBox.Size = new System.Drawing.Size(112, 22);
 			this.autoopenToolBarCheckBox.TabIndex = 62;
 			this.autoopenToolBarCheckBox.Text = "Open On Login";
 			this.autoopenToolBarCheckBox.CheckedChanged += new System.EventHandler(this.autoopenToolBarCheckBox_CheckedChanged);
-			//
+			// 
 			// locationToolBarLabel
-			//
+			// 
 			this.locationToolBarLabel.AutoSize = true;
 			this.locationToolBarLabel.Location = new System.Drawing.Point(6, 118);
 			this.locationToolBarLabel.Name = "locationToolBarLabel";
 			this.locationToolBarLabel.Size = new System.Drawing.Size(42, 13);
 			this.locationToolBarLabel.TabIndex = 61;
 			this.locationToolBarLabel.Text = "X:0 Y:0";
-			//
+			// 
 			// closeToolBarButton
-			//
-			this.closeToolBarButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.closeToolBarButton.ColorTable = office2010BlueTheme;
 			this.closeToolBarButton.Location = new System.Drawing.Point(6, 45);
 			this.closeToolBarButton.Name = "closeToolBarButton";
 			this.closeToolBarButton.Size = new System.Drawing.Size(90, 20);
@@ -2811,10 +2802,10 @@ namespace Assistant
 			this.closeToolBarButton.Text = "Close";
 			this.closeToolBarButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.closeToolBarButton.Click += new System.EventHandler(this.closeToolBarButton_Click);
-			//
+			// 
 			// openToolBarButton
-			//
-			this.openToolBarButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.openToolBarButton.ColorTable = office2010BlueTheme;
 			this.openToolBarButton.Location = new System.Drawing.Point(6, 19);
 			this.openToolBarButton.Name = "openToolBarButton";
 			this.openToolBarButton.Size = new System.Drawing.Size(90, 20);
@@ -2822,9 +2813,9 @@ namespace Assistant
 			this.openToolBarButton.Text = "Open";
 			this.openToolBarButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.openToolBarButton.Click += new System.EventHandler(this.openToolBarButton_Click);
-			//
+			// 
 			// emptyTab
-			//
+			// 
 			this.emptyTab.Controls.Add(this.groupBox7);
 			this.emptyTab.Controls.Add(this.targetlistView);
 			this.emptyTab.Location = new System.Drawing.Point(4, 40);
@@ -2832,9 +2823,9 @@ namespace Assistant
 			this.emptyTab.Size = new System.Drawing.Size(666, 366);
 			this.emptyTab.TabIndex = 3;
 			this.emptyTab.Text = "Enhanced Targetting";
-			//
+			// 
 			// groupBox7
-			//
+			// 
 			this.groupBox7.Controls.Add(this.performTargetButton);
 			this.groupBox7.Controls.Add(this.editTargetButton);
 			this.groupBox7.Controls.Add(this.removeTargetButton);
@@ -2845,10 +2836,10 @@ namespace Assistant
 			this.groupBox7.TabIndex = 49;
 			this.groupBox7.TabStop = false;
 			this.groupBox7.Text = "Manage Targets";
-			//
+			// 
 			// performTargetButton
-			//
-			this.performTargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.performTargetButton.ColorTable = office2010BlueTheme;
 			this.performTargetButton.Location = new System.Drawing.Point(495, 23);
 			this.performTargetButton.Name = "performTargetButton";
 			this.performTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -2857,10 +2848,10 @@ namespace Assistant
 			this.performTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.performTargetButton.UseVisualStyleBackColor = true;
 			this.performTargetButton.Click += new System.EventHandler(this.performTargetButton_Click);
-			//
+			// 
 			// editTargetButton
-			//
-			this.editTargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.editTargetButton.ColorTable = office2010BlueTheme;
 			this.editTargetButton.Location = new System.Drawing.Point(338, 23);
 			this.editTargetButton.Name = "editTargetButton";
 			this.editTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -2869,10 +2860,10 @@ namespace Assistant
 			this.editTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.editTargetButton.UseVisualStyleBackColor = true;
 			this.editTargetButton.Click += new System.EventHandler(this.editTargetButton_Click);
-			//
+			// 
 			// removeTargetButton
-			//
-			this.removeTargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.removeTargetButton.ColorTable = office2010BlueTheme;
 			this.removeTargetButton.Location = new System.Drawing.Point(177, 23);
 			this.removeTargetButton.Name = "removeTargetButton";
 			this.removeTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -2881,10 +2872,10 @@ namespace Assistant
 			this.removeTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.removeTargetButton.UseVisualStyleBackColor = true;
 			this.removeTargetButton.Click += new System.EventHandler(this.removeTargetButton_Click);
-			//
+			// 
 			// addTargetButton
-			//
-			this.addTargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.addTargetButton.ColorTable = office2010BlueTheme;
 			this.addTargetButton.Location = new System.Drawing.Point(16, 23);
 			this.addTargetButton.Name = "addTargetButton";
 			this.addTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -2893,27 +2884,27 @@ namespace Assistant
 			this.addTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.addTargetButton.UseVisualStyleBackColor = true;
 			this.addTargetButton.Click += new System.EventHandler(this.addTargetButton_Click);
-			//
+			// 
 			// targetlistView
-			//
+			// 
 			this.targetlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader51,
-			this.columnHeader36,
-			this.columnHeader37,
-			this.columnHeader38,
-			this.columnHeader39,
-			this.columnHeader40,
-			this.columnHeader41,
-			this.columnHeader42,
-			this.columnHeader43,
-			this.columnHeader44,
-			this.columnHeader45,
-			this.columnHeader46,
-			this.columnHeader47,
-			this.columnHeader48,
-			this.columnHeader55,
-			this.columnHeader49,
-			this.columnHeader50});
+            this.columnHeader51,
+            this.columnHeader36,
+            this.columnHeader37,
+            this.columnHeader38,
+            this.columnHeader39,
+            this.columnHeader40,
+            this.columnHeader41,
+            this.columnHeader42,
+            this.columnHeader43,
+            this.columnHeader44,
+            this.columnHeader45,
+            this.columnHeader46,
+            this.columnHeader47,
+            this.columnHeader48,
+            this.columnHeader55,
+            this.columnHeader49,
+            this.columnHeader50});
 			this.targetlistView.FullRowSelect = true;
 			this.targetlistView.GridLines = true;
 			this.targetlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2926,105 +2917,105 @@ namespace Assistant
 			this.targetlistView.TabIndex = 48;
 			this.targetlistView.UseCompatibleStateImageBehavior = false;
 			this.targetlistView.View = System.Windows.Forms.View.Details;
-			//
+			// 
 			// columnHeader51
-			//
+			// 
 			this.columnHeader51.Text = "";
 			this.columnHeader51.Width = 1;
-			//
+			// 
 			// columnHeader36
-			//
+			// 
 			this.columnHeader36.Text = "Target ID";
-			//
+			// 
 			// columnHeader37
-			//
+			// 
 			this.columnHeader37.Text = "Body List";
 			this.columnHeader37.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader37.Width = 80;
-			//
+			// 
 			// columnHeader38
-			//
+			// 
 			this.columnHeader38.Text = "Name";
 			this.columnHeader38.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			//
+			// 
 			// columnHeader39
-			//
+			// 
 			this.columnHeader39.Text = "Hue List";
 			this.columnHeader39.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader39.Width = 80;
-			//
+			// 
 			// columnHeader40
-			//
+			// 
 			this.columnHeader40.Text = "Min";
 			this.columnHeader40.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader40.Width = 32;
-			//
+			// 
 			// columnHeader41
-			//
+			// 
 			this.columnHeader41.Text = "Max";
 			this.columnHeader41.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader41.Width = 32;
-			//
+			// 
 			// columnHeader42
-			//
+			// 
 			this.columnHeader42.Text = "P";
 			this.columnHeader42.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader42.Width = 25;
-			//
+			// 
 			// columnHeader43
-			//
+			// 
 			this.columnHeader43.Text = "B";
 			this.columnHeader43.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader43.Width = 25;
-			//
+			// 
 			// columnHeader44
-			//
+			// 
 			this.columnHeader44.Text = "H";
 			this.columnHeader44.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader44.Width = 25;
-			//
+			// 
 			// columnHeader45
-			//
+			// 
 			this.columnHeader45.Text = "G";
 			this.columnHeader45.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader45.Width = 25;
-			//
+			// 
 			// columnHeader46
-			//
+			// 
 			this.columnHeader46.Text = "S";
 			this.columnHeader46.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader46.Width = 25;
-			//
+			// 
 			// columnHeader47
-			//
+			// 
 			this.columnHeader47.Text = "W";
 			this.columnHeader47.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader47.Width = 25;
-			//
+			// 
 			// columnHeader48
-			//
+			// 
 			this.columnHeader48.Text = "F";
 			this.columnHeader48.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader48.Width = 25;
-			//
+			// 
 			// columnHeader55
-			//
+			// 
 			this.columnHeader55.Text = "Pa";
 			this.columnHeader55.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.columnHeader55.Width = 25;
-			//
+			// 
 			// columnHeader49
-			//
+			// 
 			this.columnHeader49.Text = "Notorietie";
 			this.columnHeader49.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			//
+			// 
 			// columnHeader50
-			//
+			// 
 			this.columnHeader50.Text = "Selector";
 			this.columnHeader50.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			//
+			// 
 			// skillsTab
-			//
+			// 
 			this.skillsTab.Controls.Add(this.dispDelta);
 			this.skillsTab.Controls.Add(this.skillCopyAll);
 			this.skillsTab.Controls.Add(this.skillCopySel);
@@ -3039,19 +3030,19 @@ namespace Assistant
 			this.skillsTab.Size = new System.Drawing.Size(666, 366);
 			this.skillsTab.TabIndex = 2;
 			this.skillsTab.Text = "Skills";
-			//
+			// 
 			// dispDelta
-			//
+			// 
 			this.dispDelta.Location = new System.Drawing.Point(527, 144);
 			this.dispDelta.Name = "dispDelta";
 			this.dispDelta.Size = new System.Drawing.Size(113, 22);
 			this.dispDelta.TabIndex = 11;
 			this.dispDelta.Text = "Display Changes";
 			this.dispDelta.CheckedChanged += new System.EventHandler(this.dispDelta_CheckedChanged);
-			//
+			// 
 			// skillCopyAll
-			//
-			this.skillCopyAll.ColorTable = office2010BlueTheme1;
+			// 
+			this.skillCopyAll.ColorTable = office2010BlueTheme;
 			this.skillCopyAll.Location = new System.Drawing.Point(527, 109);
 			this.skillCopyAll.Name = "skillCopyAll";
 			this.skillCopyAll.Size = new System.Drawing.Size(115, 20);
@@ -3059,10 +3050,10 @@ namespace Assistant
 			this.skillCopyAll.Text = "Copy All";
 			this.skillCopyAll.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.skillCopyAll.Click += new System.EventHandler(this.skillCopyAll_Click);
-			//
+			// 
 			// skillCopySel
-			//
-			this.skillCopySel.ColorTable = office2010BlueTheme1;
+			// 
+			this.skillCopySel.ColorTable = office2010BlueTheme;
 			this.skillCopySel.Location = new System.Drawing.Point(527, 81);
 			this.skillCopySel.Name = "skillCopySel";
 			this.skillCopySel.Size = new System.Drawing.Size(115, 21);
@@ -3070,40 +3061,40 @@ namespace Assistant
 			this.skillCopySel.Text = "Copy Selected";
 			this.skillCopySel.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.skillCopySel.Click += new System.EventHandler(this.skillCopySel_Click);
-			//
+			// 
 			// baseTotal
-			//
+			// 
 			this.baseTotal.Location = new System.Drawing.Point(596, 174);
 			this.baseTotal.Name = "baseTotal";
 			this.baseTotal.ReadOnly = true;
 			this.baseTotal.Size = new System.Drawing.Size(44, 20);
 			this.baseTotal.TabIndex = 7;
-			//
+			// 
 			// label1
-			//
+			// 
 			this.label1.Location = new System.Drawing.Point(526, 179);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(65, 15);
 			this.label1.TabIndex = 6;
 			this.label1.Text = "Base Total:";
-			//
+			// 
 			// locks
-			//
+			// 
 			this.locks.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.locks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.locks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.locks.Items.AddRange(new object[] {
-			"Up",
-			"Down",
-			"Locked"});
+            "Up",
+            "Down",
+            "Locked"});
 			this.locks.Location = new System.Drawing.Point(608, 45);
 			this.locks.Name = "locks";
 			this.locks.Size = new System.Drawing.Size(37, 22);
 			this.locks.TabIndex = 5;
-			//
+			// 
 			// setlocks
-			//
-			this.setlocks.ColorTable = office2010BlueTheme1;
+			// 
+			this.setlocks.ColorTable = office2010BlueTheme;
 			this.setlocks.Location = new System.Drawing.Point(527, 46);
 			this.setlocks.Name = "setlocks";
 			this.setlocks.Size = new System.Drawing.Size(76, 20);
@@ -3111,10 +3102,10 @@ namespace Assistant
 			this.setlocks.Text = "Set all locks:";
 			this.setlocks.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setlocks.Click += new System.EventHandler(this.OnSetSkillLocks);
-			//
+			// 
 			// resetDelta
-			//
-			this.resetDelta.ColorTable = office2010BlueTheme1;
+			// 
+			this.resetDelta.ColorTable = office2010BlueTheme;
 			this.resetDelta.Location = new System.Drawing.Point(527, 13);
 			this.resetDelta.Name = "resetDelta";
 			this.resetDelta.Size = new System.Drawing.Size(115, 20);
@@ -3122,17 +3113,17 @@ namespace Assistant
 			this.resetDelta.Text = "Reset  +/-";
 			this.resetDelta.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.resetDelta.Click += new System.EventHandler(this.OnResetSkillDelta);
-			//
+			// 
 			// skillList
-			//
+			// 
 			this.skillList.AutoArrange = false;
 			this.skillList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.skillHDRName,
-			this.skillHDRvalue,
-			this.skillHDRbase,
-			this.skillHDRdelta,
-			this.skillHDRcap,
-			this.skillHDRlock});
+            this.skillHDRName,
+            this.skillHDRvalue,
+            this.skillHDRbase,
+            this.skillHDRdelta,
+            this.skillHDRcap,
+            this.skillHDRlock});
 			this.skillList.FullRowSelect = true;
 			this.skillList.Location = new System.Drawing.Point(7, 13);
 			this.skillList.Name = "skillList";
@@ -3142,38 +3133,38 @@ namespace Assistant
 			this.skillList.View = System.Windows.Forms.View.Details;
 			this.skillList.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.OnSkillColClick);
 			this.skillList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.skillList_MouseDown);
-			//
+			// 
 			// skillHDRName
-			//
+			// 
 			this.skillHDRName.Text = "Skill Name";
 			this.skillHDRName.Width = 180;
-			//
+			// 
 			// skillHDRvalue
-			//
+			// 
 			this.skillHDRvalue.Text = "Value";
-			//
+			// 
 			// skillHDRbase
-			//
+			// 
 			this.skillHDRbase.Text = "Base";
 			this.skillHDRbase.Width = 50;
-			//
+			// 
 			// skillHDRdelta
-			//
+			// 
 			this.skillHDRdelta.Text = "+/-";
 			this.skillHDRdelta.Width = 40;
-			//
+			// 
 			// skillHDRcap
-			//
+			// 
 			this.skillHDRcap.Text = "Cap";
 			this.skillHDRcap.Width = 40;
-			//
+			// 
 			// skillHDRlock
-			//
+			// 
 			this.skillHDRlock.Text = "Lock";
 			this.skillHDRlock.Width = 55;
-			//
+			// 
 			// mapsTab
-			//
+			// 
 			this.mapsTab.Controls.Add(this.groupBox31);
 			this.mapsTab.Controls.Add(this.groupBox30);
 			this.mapsTab.Controls.Add(this.groupBox4);
@@ -3183,9 +3174,9 @@ namespace Assistant
 			this.mapsTab.Size = new System.Drawing.Size(666, 366);
 			this.mapsTab.TabIndex = 6;
 			this.mapsTab.Text = "Enhanced Map";
-			//
+			// 
 			// groupBox31
-			//
+			// 
 			this.groupBox31.Controls.Add(this.mapLoglistBox);
 			this.groupBox31.Location = new System.Drawing.Point(188, 118);
 			this.groupBox31.Name = "groupBox31";
@@ -3193,17 +3184,17 @@ namespace Assistant
 			this.groupBox31.TabIndex = 62;
 			this.groupBox31.TabStop = false;
 			this.groupBox31.Text = "Map Log";
-			//
+			// 
 			// mapLoglistBox
-			//
+			// 
 			this.mapLoglistBox.FormattingEnabled = true;
 			this.mapLoglistBox.Location = new System.Drawing.Point(9, 19);
 			this.mapLoglistBox.Name = "mapLoglistBox";
 			this.mapLoglistBox.Size = new System.Drawing.Size(455, 212);
 			this.mapLoglistBox.TabIndex = 1;
-			//
+			// 
 			// groupBox30
-			//
+			// 
 			this.groupBox30.Controls.Add(this.mapLinkPasswordTextBox);
 			this.groupBox30.Controls.Add(this.label46);
 			this.groupBox30.Controls.Add(this.mapLinkUsernameTextBox);
@@ -3222,12 +3213,12 @@ namespace Assistant
 			this.groupBox30.TabIndex = 61;
 			this.groupBox30.TabStop = false;
 			this.groupBox30.Text = "Server Link";
-			//
+			// 
 			// mapLinkPasswordTextBox
-			//
-			this.mapLinkPasswordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.mapLinkPasswordTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.mapLinkPasswordTextBox.BackColor = System.Drawing.Color.White;
 			this.mapLinkPasswordTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.mapLinkPasswordTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3237,21 +3228,21 @@ namespace Assistant
 			this.mapLinkPasswordTextBox.Size = new System.Drawing.Size(129, 20);
 			this.mapLinkPasswordTextBox.TabIndex = 65;
 			this.mapLinkPasswordTextBox.TextChanged += new System.EventHandler(this.mapLinkPasswordTextBox_TextChanged);
-			//
+			// 
 			// label46
-			//
+			// 
 			this.label46.AutoSize = true;
 			this.label46.Location = new System.Drawing.Point(266, 75);
 			this.label46.Name = "label46";
 			this.label46.Size = new System.Drawing.Size(56, 13);
 			this.label46.TabIndex = 64;
 			this.label46.Text = "Password:";
-			//
+			// 
 			// mapLinkUsernameTextBox
-			//
-			this.mapLinkUsernameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.mapLinkUsernameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.mapLinkUsernameTextBox.BackColor = System.Drawing.Color.White;
 			this.mapLinkUsernameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.mapLinkUsernameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3261,19 +3252,19 @@ namespace Assistant
 			this.mapLinkUsernameTextBox.Size = new System.Drawing.Size(159, 20);
 			this.mapLinkUsernameTextBox.TabIndex = 63;
 			this.mapLinkUsernameTextBox.TextChanged += new System.EventHandler(this.mapLinkUsernameTextBox_TextChanged);
-			//
+			// 
 			// label45
-			//
+			// 
 			this.label45.AutoSize = true;
 			this.label45.Location = new System.Drawing.Point(6, 75);
 			this.label45.Name = "label45";
 			this.label45.Size = new System.Drawing.Size(58, 13);
 			this.label45.TabIndex = 62;
 			this.label45.Text = "Username:";
-			//
+			// 
 			// mapDisconnectButton
-			//
-			this.mapDisconnectButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.mapDisconnectButton.ColorTable = office2010BlueTheme;
 			this.mapDisconnectButton.Location = new System.Drawing.Point(369, 15);
 			this.mapDisconnectButton.Name = "mapDisconnectButton";
 			this.mapDisconnectButton.Size = new System.Drawing.Size(90, 20);
@@ -3281,10 +3272,10 @@ namespace Assistant
 			this.mapDisconnectButton.Text = "Disconnect";
 			this.mapDisconnectButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.mapDisconnectButton.Click += new System.EventHandler(this.mapDisconnectButton_Click);
-			//
+			// 
 			// mapConnectButton
-			//
-			this.mapConnectButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.mapConnectButton.ColorTable = office2010BlueTheme;
 			this.mapConnectButton.Location = new System.Drawing.Point(263, 15);
 			this.mapConnectButton.Name = "mapConnectButton";
 			this.mapConnectButton.Size = new System.Drawing.Size(90, 20);
@@ -3292,12 +3283,12 @@ namespace Assistant
 			this.mapConnectButton.Text = "Connect";
 			this.mapConnectButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.mapConnectButton.Click += new System.EventHandler(this.mapConnectButton_Click);
-			//
+			// 
 			// mapserverportTextBox
-			//
-			this.mapserverportTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.mapserverportTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.mapserverportTextBox.BackColor = System.Drawing.Color.White;
 			this.mapserverportTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.mapserverportTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3307,21 +3298,21 @@ namespace Assistant
 			this.mapserverportTextBox.Size = new System.Drawing.Size(50, 20);
 			this.mapserverportTextBox.TabIndex = 5;
 			this.mapserverportTextBox.TextChanged += new System.EventHandler(this.mapserverportTextBox_TextChanged);
-			//
+			// 
 			// label43
-			//
+			// 
 			this.label43.AutoSize = true;
 			this.label43.Location = new System.Drawing.Point(266, 49);
 			this.label43.Name = "label43";
 			this.label43.Size = new System.Drawing.Size(63, 13);
 			this.label43.TabIndex = 4;
 			this.label43.Text = "Server Port:";
-			//
+			// 
 			// mapserveraddressTextBox
-			//
-			this.mapserveraddressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.mapserveraddressTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.mapserveraddressTextBox.BackColor = System.Drawing.Color.White;
 			this.mapserveraddressTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.mapserveraddressTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3331,18 +3322,18 @@ namespace Assistant
 			this.mapserveraddressTextBox.Size = new System.Drawing.Size(159, 20);
 			this.mapserveraddressTextBox.TabIndex = 3;
 			this.mapserveraddressTextBox.TextChanged += new System.EventHandler(this.mapserveraddressTextBox_TextChanged);
-			//
+			// 
 			// label41
-			//
+			// 
 			this.label41.AutoSize = true;
 			this.label41.Location = new System.Drawing.Point(6, 49);
 			this.label41.Name = "label41";
 			this.label41.Size = new System.Drawing.Size(82, 13);
 			this.label41.TabIndex = 2;
 			this.label41.Text = "Server Address:";
-			//
+			// 
 			// mapLinkStatusLabel
-			//
+			// 
 			this.mapLinkStatusLabel.AutoSize = true;
 			this.mapLinkStatusLabel.ForeColor = System.Drawing.Color.Red;
 			this.mapLinkStatusLabel.Location = new System.Drawing.Point(78, 19);
@@ -3350,18 +3341,18 @@ namespace Assistant
 			this.mapLinkStatusLabel.Size = new System.Drawing.Size(51, 13);
 			this.mapLinkStatusLabel.TabIndex = 1;
 			this.mapLinkStatusLabel.Text = "OFFLINE";
-			//
+			// 
 			// label2
-			//
+			// 
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(6, 19);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(66, 13);
 			this.label2.TabIndex = 0;
 			this.label2.Text = "Link Status: ";
-			//
+			// 
 			// groupBox4
-			//
+			// 
 			this.groupBox4.Controls.Add(this.mapAutoOpenChatCheckBox);
 			this.groupBox4.Controls.Add(this.mapSetChatColorButton);
 			this.groupBox4.Controls.Add(this.mapChatColorlabel);
@@ -3384,19 +3375,19 @@ namespace Assistant
 			this.groupBox4.TabIndex = 60;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Options";
-			//
+			// 
 			// mapAutoOpenChatCheckBox
-			//
+			// 
 			this.mapAutoOpenChatCheckBox.Location = new System.Drawing.Point(6, 304);
 			this.mapAutoOpenChatCheckBox.Name = "mapAutoOpenChatCheckBox";
 			this.mapAutoOpenChatCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapAutoOpenChatCheckBox.TabIndex = 64;
 			this.mapAutoOpenChatCheckBox.Text = "AutoOpen Chat Window";
 			this.mapAutoOpenChatCheckBox.CheckedChanged += new System.EventHandler(this.mapAutoOpenChatCheckBox_CheckedChanged);
-			//
+			// 
 			// mapSetChatColorButton
-			//
-			this.mapSetChatColorButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.mapSetChatColorButton.ColorTable = office2010BlueTheme;
 			this.mapSetChatColorButton.Location = new System.Drawing.Point(92, 284);
 			this.mapSetChatColorButton.Name = "mapSetChatColorButton";
 			this.mapSetChatColorButton.Size = new System.Drawing.Size(76, 20);
@@ -3404,21 +3395,21 @@ namespace Assistant
 			this.mapSetChatColorButton.Text = "Set";
 			this.mapSetChatColorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.mapSetChatColorButton.Click += new System.EventHandler(this.mapSetChatColorButton_Click);
-			//
+			// 
 			// mapChatColorlabel
-			//
+			// 
 			this.mapChatColorlabel.AutoSize = true;
 			this.mapChatColorlabel.Location = new System.Drawing.Point(6, 288);
 			this.mapChatColorlabel.Name = "mapChatColorlabel";
 			this.mapChatColorlabel.Size = new System.Drawing.Size(80, 13);
 			this.mapChatColorlabel.TabIndex = 63;
 			this.mapChatColorlabel.Text = "Chat Text Color";
-			//
+			// 
 			// mapChatPrefixTextBox
-			//
-			this.mapChatPrefixTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.mapChatPrefixTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.mapChatPrefixTextBox.BackColor = System.Drawing.Color.White;
 			this.mapChatPrefixTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.mapChatPrefixTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3428,118 +3419,118 @@ namespace Assistant
 			this.mapChatPrefixTextBox.Size = new System.Drawing.Size(45, 20);
 			this.mapChatPrefixTextBox.TabIndex = 62;
 			this.mapChatPrefixTextBox.TextChanged += new System.EventHandler(this.mapChatPrefixTextBox_TextChanged);
-			//
+			// 
 			// label44
-			//
+			// 
 			this.label44.AutoSize = true;
 			this.label44.Location = new System.Drawing.Point(6, 264);
 			this.label44.Name = "label44";
 			this.label44.Size = new System.Drawing.Size(111, 13);
 			this.label44.TabIndex = 60;
 			this.label44.Text = "Chat Command Prefix:";
-			//
+			// 
 			// mapChatCheckBox
-			//
+			// 
 			this.mapChatCheckBox.Location = new System.Drawing.Point(6, 239);
 			this.mapChatCheckBox.Name = "mapChatCheckBox";
 			this.mapChatCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapChatCheckBox.TabIndex = 59;
 			this.mapChatCheckBox.Text = "Enable Chat";
 			this.mapChatCheckBox.CheckedChanged += new System.EventHandler(this.mapChatCheckBox_CheckedChanged);
-			//
+			// 
 			// mapserverCheckBox
-			//
+			// 
 			this.mapserverCheckBox.Location = new System.Drawing.Point(6, 217);
 			this.mapserverCheckBox.Name = "mapserverCheckBox";
 			this.mapserverCheckBox.Size = new System.Drawing.Size(162, 22);
 			this.mapserverCheckBox.TabIndex = 58;
 			this.mapserverCheckBox.Text = "Show Server Link Member";
 			this.mapserverCheckBox.CheckedChanged += new System.EventHandler(this.mapserverCheckBox_CheckedChanged);
-			//
+			// 
 			// mapGuildCheckBox
-			//
+			// 
 			this.mapGuildCheckBox.Location = new System.Drawing.Point(6, 195);
 			this.mapGuildCheckBox.Name = "mapGuildCheckBox";
 			this.mapGuildCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapGuildCheckBox.TabIndex = 57;
 			this.mapGuildCheckBox.Text = "Show Guild Member";
 			this.mapGuildCheckBox.CheckedChanged += new System.EventHandler(this.mapGuildCheckBox_CheckedChanged);
-			//
+			// 
 			// mapPartyMemberCheckBox
-			//
+			// 
 			this.mapPartyMemberCheckBox.Location = new System.Drawing.Point(6, 173);
 			this.mapPartyMemberCheckBox.Name = "mapPartyMemberCheckBox";
 			this.mapPartyMemberCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapPartyMemberCheckBox.TabIndex = 56;
 			this.mapPartyMemberCheckBox.Text = "Show Party Member";
 			this.mapPartyMemberCheckBox.CheckedChanged += new System.EventHandler(this.mapPartyMemberCheckBox_CheckedChanged);
-			//
+			// 
 			// mapPanicCheckBox
-			//
+			// 
 			this.mapPanicCheckBox.Location = new System.Drawing.Point(6, 151);
 			this.mapPanicCheckBox.Name = "mapPanicCheckBox";
 			this.mapPanicCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapPanicCheckBox.TabIndex = 55;
 			this.mapPanicCheckBox.Text = "Enable Panic";
 			this.mapPanicCheckBox.CheckedChanged += new System.EventHandler(this.mapPanicCheckBox_CheckedChanged);
-			//
+			// 
 			// mapdeathpointCheckBox
-			//
+			// 
 			this.mapdeathpointCheckBox.Location = new System.Drawing.Point(6, 129);
 			this.mapdeathpointCheckBox.Name = "mapdeathpointCheckBox";
 			this.mapdeathpointCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapdeathpointCheckBox.TabIndex = 54;
 			this.mapdeathpointCheckBox.Text = "Show Death Point";
 			this.mapdeathpointCheckBox.CheckedChanged += new System.EventHandler(this.mapdeathpointCheckBox_CheckedChanged);
-			//
+			// 
 			// mapManaBarCheckBox
-			//
+			// 
 			this.mapManaBarCheckBox.Location = new System.Drawing.Point(6, 107);
 			this.mapManaBarCheckBox.Name = "mapManaBarCheckBox";
 			this.mapManaBarCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapManaBarCheckBox.TabIndex = 53;
 			this.mapManaBarCheckBox.Text = "Show Mana Bar";
 			this.mapManaBarCheckBox.CheckedChanged += new System.EventHandler(this.mapManaBarCheckBox_CheckedChanged);
-			//
+			// 
 			// mapStaminaBarCheckBox
-			//
+			// 
 			this.mapStaminaBarCheckBox.Location = new System.Drawing.Point(6, 85);
 			this.mapStaminaBarCheckBox.Name = "mapStaminaBarCheckBox";
 			this.mapStaminaBarCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapStaminaBarCheckBox.TabIndex = 52;
 			this.mapStaminaBarCheckBox.Text = "Show Stamina Bar";
 			this.mapStaminaBarCheckBox.CheckedChanged += new System.EventHandler(this.mapStaminaBarCheckBox_CheckedChanged);
-			//
+			// 
 			// mapHpBarCheckBox
-			//
+			// 
 			this.mapHpBarCheckBox.Location = new System.Drawing.Point(6, 63);
 			this.mapHpBarCheckBox.Name = "mapHpBarCheckBox";
 			this.mapHpBarCheckBox.Size = new System.Drawing.Size(149, 22);
 			this.mapHpBarCheckBox.TabIndex = 51;
 			this.mapHpBarCheckBox.Text = "Show HP Bar";
 			this.mapHpBarCheckBox.CheckedChanged += new System.EventHandler(this.mapHpBarCheckBox_CheckedChanged);
-			//
+			// 
 			// mapAutoconnectCheckBox1
-			//
+			// 
 			this.mapAutoconnectCheckBox1.Location = new System.Drawing.Point(6, 41);
 			this.mapAutoconnectCheckBox1.Name = "mapAutoconnectCheckBox1";
 			this.mapAutoconnectCheckBox1.Size = new System.Drawing.Size(149, 22);
 			this.mapAutoconnectCheckBox1.TabIndex = 50;
 			this.mapAutoconnectCheckBox1.Text = "Autoconnect On Login";
 			this.mapAutoconnectCheckBox1.CheckedChanged += new System.EventHandler(this.mapAutoconnectCheckBox1_CheckedChanged);
-			//
+			// 
 			// mapOpenOnLoginCheckBox
-			//
+			// 
 			this.mapOpenOnLoginCheckBox.Location = new System.Drawing.Point(6, 19);
 			this.mapOpenOnLoginCheckBox.Name = "mapOpenOnLoginCheckBox";
 			this.mapOpenOnLoginCheckBox.Size = new System.Drawing.Size(103, 22);
 			this.mapOpenOnLoginCheckBox.TabIndex = 49;
 			this.mapOpenOnLoginCheckBox.Text = "Open On Login";
 			this.mapOpenOnLoginCheckBox.CheckedChanged += new System.EventHandler(this.mapOpenOnLoginCheckBox_CheckedChanged);
-			//
+			// 
 			// btnMap
-			//
-			this.btnMap.ColorTable = office2010BlueTheme1;
+			// 
+			this.btnMap.ColorTable = office2010BlueTheme;
 			this.btnMap.Location = new System.Drawing.Point(8, 339);
 			this.btnMap.Name = "btnMap";
 			this.btnMap.Size = new System.Drawing.Size(174, 19);
@@ -3547,9 +3538,9 @@ namespace Assistant
 			this.btnMap.Text = "Open Map";
 			this.btnMap.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.btnMap.Click += new System.EventHandler(this.btnMap_Click);
-			//
+			// 
 			// screenshotTab
-			//
+			// 
 			this.screenshotTab.Controls.Add(this.imgFmt);
 			this.screenshotTab.Controls.Add(this.label12);
 			this.screenshotTab.Controls.Add(this.capNow);
@@ -3566,38 +3557,38 @@ namespace Assistant
 			this.screenshotTab.Size = new System.Drawing.Size(666, 366);
 			this.screenshotTab.TabIndex = 8;
 			this.screenshotTab.Text = "Screen Shots";
-			//
+			// 
 			// imgFmt
-			//
+			// 
 			this.imgFmt.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.imgFmt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.imgFmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.imgFmt.Items.AddRange(new object[] {
-			"jpg",
-			"png",
-			"bmp",
-			"gif",
-			"tif",
-			"wmf",
-			"exif",
-			"emf"});
+            "jpg",
+            "png",
+            "bmp",
+            "gif",
+            "tif",
+            "wmf",
+            "exif",
+            "emf"});
 			this.imgFmt.Location = new System.Drawing.Point(94, 202);
 			this.imgFmt.Name = "imgFmt";
 			this.imgFmt.Size = new System.Drawing.Size(71, 22);
 			this.imgFmt.TabIndex = 11;
 			this.imgFmt.SelectedIndexChanged += new System.EventHandler(this.imgFmt_SelectedIndexChanged);
-			//
+			// 
 			// label12
-			//
+			// 
 			this.label12.Location = new System.Drawing.Point(8, 205);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(80, 20);
 			this.label12.TabIndex = 10;
 			this.label12.Text = "Image Format:";
-			//
+			// 
 			// capNow
-			//
-			this.capNow.ColorTable = office2010BlueTheme1;
+			// 
+			this.capNow.ColorTable = office2010BlueTheme;
 			this.capNow.Location = new System.Drawing.Point(314, 14);
 			this.capNow.Name = "capNow";
 			this.capNow.Size = new System.Drawing.Size(285, 20);
@@ -3605,12 +3596,12 @@ namespace Assistant
 			this.capNow.Text = "Take Screen Shot Now";
 			this.capNow.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.capNow.Click += new System.EventHandler(this.capNow_Click);
-			//
+			// 
 			// screenPath
-			//
-			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.screenPath.BackColor = System.Drawing.Color.White;
 			this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.screenPath.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3620,37 +3611,37 @@ namespace Assistant
 			this.screenPath.Size = new System.Drawing.Size(196, 20);
 			this.screenPath.TabIndex = 7;
 			this.screenPath.TextChanged += new System.EventHandler(this.screenPath_TextChanged);
-			//
+			// 
 			// radioUO
-			//
+			// 
 			this.radioUO.Location = new System.Drawing.Point(11, 228);
 			this.radioUO.Name = "radioUO";
 			this.radioUO.Size = new System.Drawing.Size(87, 20);
 			this.radioUO.TabIndex = 6;
 			this.radioUO.Text = "UO Only";
 			this.radioUO.CheckedChanged += new System.EventHandler(this.radioUO_CheckedChanged);
-			//
+			// 
 			// radioFull
-			//
+			// 
 			this.radioFull.Location = new System.Drawing.Point(102, 228);
 			this.radioFull.Name = "radioFull";
 			this.radioFull.Size = new System.Drawing.Size(89, 20);
 			this.radioFull.TabIndex = 5;
 			this.radioFull.Text = "Full Screen";
 			this.radioFull.CheckedChanged += new System.EventHandler(this.radioFull_CheckedChanged);
-			//
+			// 
 			// screenAutoCap
-			//
+			// 
 			this.screenAutoCap.Location = new System.Drawing.Point(11, 284);
 			this.screenAutoCap.Name = "screenAutoCap";
 			this.screenAutoCap.Size = new System.Drawing.Size(180, 22);
 			this.screenAutoCap.TabIndex = 4;
 			this.screenAutoCap.Text = "Auto Death Screen Capture";
 			this.screenAutoCap.CheckedChanged += new System.EventHandler(this.screenAutoCap_CheckedChanged);
-			//
+			// 
 			// setScnPath
-			//
-			this.setScnPath.ColorTable = office2010BlueTheme1;
+			// 
+			this.setScnPath.ColorTable = office2010BlueTheme;
 			this.setScnPath.Location = new System.Drawing.Point(208, 16);
 			this.setScnPath.Name = "setScnPath";
 			this.setScnPath.Size = new System.Drawing.Size(22, 17);
@@ -3658,9 +3649,9 @@ namespace Assistant
 			this.setScnPath.Text = "...";
 			this.setScnPath.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.setScnPath.Click += new System.EventHandler(this.setScnPath_Click);
-			//
+			// 
 			// screensList
-			//
+			// 
 			this.screensList.IntegralHeight = false;
 			this.screensList.Location = new System.Drawing.Point(7, 40);
 			this.screensList.Name = "screensList";
@@ -3669,9 +3660,9 @@ namespace Assistant
 			this.screensList.TabIndex = 1;
 			this.screensList.SelectedIndexChanged += new System.EventHandler(this.screensList_SelectedIndexChanged);
 			this.screensList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.screensList_MouseDown);
-			//
+			// 
 			// screenPrev
-			//
+			// 
 			this.screenPrev.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.screenPrev.Location = new System.Drawing.Point(246, 36);
 			this.screenPrev.Name = "screenPrev";
@@ -3680,18 +3671,18 @@ namespace Assistant
 			this.screenPrev.TabIndex = 0;
 			this.screenPrev.TabStop = false;
 			this.screenPrev.Click += new System.EventHandler(this.screenPrev_Click);
-			//
+			// 
 			// dispTime
-			//
+			// 
 			this.dispTime.Location = new System.Drawing.Point(11, 256);
 			this.dispTime.Name = "dispTime";
 			this.dispTime.Size = new System.Drawing.Size(180, 22);
 			this.dispTime.TabIndex = 9;
 			this.dispTime.Text = "Include Timestamp on images";
 			this.dispTime.CheckedChanged += new System.EventHandler(this.dispTime_CheckedChanged);
-			//
+			// 
 			// statusTab
-			//
+			// 
 			this.statusTab.Controls.Add(this.panelLogo);
 			this.statusTab.Controls.Add(this.labelUOD);
 			this.statusTab.Controls.Add(this.panelUODlogo);
@@ -3705,53 +3696,53 @@ namespace Assistant
 			this.statusTab.Size = new System.Drawing.Size(666, 366);
 			this.statusTab.TabIndex = 9;
 			this.statusTab.Text = "Help / Status";
-			//
+			// 
 			// panelLogo
-			//
+			// 
 			this.panelLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelLogo.BackgroundImage")));
 			this.panelLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.panelLogo.Location = new System.Drawing.Point(250, 155);
 			this.panelLogo.Name = "panelLogo";
 			this.panelLogo.Size = new System.Drawing.Size(48, 49);
 			this.panelLogo.TabIndex = 7;
-			//
+			// 
 			// labelUOD
-			//
+			// 
 			this.labelUOD.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.labelUOD.Location = new System.Drawing.Point(5, 175);
 			this.labelUOD.Name = "labelUOD";
 			this.labelUOD.Size = new System.Drawing.Size(213, 64);
 			this.labelUOD.TabIndex = 4;
 			this.labelUOD.Text = "To support the development of the Razor Enhanced project,  you can visit UODreams" +
-	" shard and stay with us! You are welcome!";
+    " shard and stay with us! You are welcome!";
 			this.labelUOD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			//
+			// 
 			// panelUODlogo
-			//
+			// 
 			this.panelUODlogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelUODlogo.BackgroundImage")));
 			this.panelUODlogo.Location = new System.Drawing.Point(8, 9);
 			this.panelUODlogo.Name = "panelUODlogo";
 			this.panelUODlogo.Size = new System.Drawing.Size(213, 163);
 			this.panelUODlogo.TabIndex = 2;
-			//
+			// 
 			// labelStatus
-			//
+			// 
 			this.labelStatus.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
 			this.labelStatus.Location = new System.Drawing.Point(483, 9);
 			this.labelStatus.Name = "labelStatus";
 			this.labelStatus.Size = new System.Drawing.Size(175, 268);
 			this.labelStatus.TabIndex = 1;
-			//
+			// 
 			// labelFeatures
-			//
+			// 
 			this.labelFeatures.Location = new System.Drawing.Point(8, 291);
 			this.labelFeatures.Name = "labelFeatures";
 			this.labelFeatures.Size = new System.Drawing.Size(650, 70);
 			this.labelFeatures.TabIndex = 0;
-			//
+			// 
 			// razorButtonWiki
-			//
-			this.razorButtonWiki.ColorTable = office2010BlueTheme1;
+			// 
+			this.razorButtonWiki.ColorTable = office2010BlueTheme;
 			this.razorButtonWiki.Location = new System.Drawing.Point(304, 164);
 			this.razorButtonWiki.Name = "razorButtonWiki";
 			this.razorButtonWiki.Size = new System.Drawing.Size(145, 28);
@@ -3760,10 +3751,10 @@ namespace Assistant
 			this.razorButtonWiki.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButtonWiki.UseVisualStyleBackColor = true;
 			this.razorButtonWiki.Click += new System.EventHandler(this.razorButtonWiki_Click);
-			//
+			// 
 			// razorButtonCreateUODAccount
-			//
-			this.razorButtonCreateUODAccount.ColorTable = office2010BlueTheme1;
+			// 
+			this.razorButtonCreateUODAccount.ColorTable = office2010BlueTheme;
 			this.razorButtonCreateUODAccount.Location = new System.Drawing.Point(250, 60);
 			this.razorButtonCreateUODAccount.Name = "razorButtonCreateUODAccount";
 			this.razorButtonCreateUODAccount.Size = new System.Drawing.Size(199, 28);
@@ -3772,10 +3763,10 @@ namespace Assistant
 			this.razorButtonCreateUODAccount.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButtonCreateUODAccount.UseVisualStyleBackColor = true;
 			this.razorButtonCreateUODAccount.Click += new System.EventHandler(this.razorButtonCreateUODAccount_Click);
-			//
+			// 
 			// razorButtonVisitUOD
-			//
-			this.razorButtonVisitUOD.ColorTable = office2010BlueTheme1;
+			// 
+			this.razorButtonVisitUOD.ColorTable = office2010BlueTheme;
 			this.razorButtonVisitUOD.Location = new System.Drawing.Point(250, 26);
 			this.razorButtonVisitUOD.Name = "razorButtonVisitUOD";
 			this.razorButtonVisitUOD.Size = new System.Drawing.Size(199, 28);
@@ -3784,10 +3775,14 @@ namespace Assistant
 			this.razorButtonVisitUOD.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButtonVisitUOD.UseVisualStyleBackColor = true;
 			this.razorButtonVisitUOD.Click += new System.EventHandler(this.razorButtonVisitUOD_Click);
-			//
+			// 
 			// scriptingTab
-			//
+			// 
 			this.scriptingTab.BackColor = System.Drawing.SystemColors.Control;
+			this.scriptingTab.Controls.Add(this.labelDelay);
+			this.scriptingTab.Controls.Add(this.textBoxDelay);
+			this.scriptingTab.Controls.Add(this.buttonStopScript);
+			this.scriptingTab.Controls.Add(this.buttonPlayScript);
 			this.scriptingTab.Controls.Add(this.razorButtonEdit);
 			this.scriptingTab.Controls.Add(this.razorCheckBoxAuto);
 			this.scriptingTab.Controls.Add(this.razorButtonUp);
@@ -3801,11 +3796,66 @@ namespace Assistant
 			this.scriptingTab.Size = new System.Drawing.Size(666, 366);
 			this.scriptingTab.TabIndex = 12;
 			this.scriptingTab.Text = "Enhanced Scripting";
-			//
+			// 
+			// labelDelay
+			// 
+			this.labelDelay.AutoSize = true;
+			this.labelDelay.Location = new System.Drawing.Point(542, 341);
+			this.labelDelay.Name = "labelDelay";
+			this.labelDelay.Size = new System.Drawing.Size(56, 13);
+			this.labelDelay.TabIndex = 24;
+			this.labelDelay.Text = "Delay (ms)";
+			// 
+			// textBoxDelay
+			// 
+			this.textBoxDelay.Location = new System.Drawing.Point(612, 338);
+			this.textBoxDelay.Name = "textBoxDelay";
+			this.textBoxDelay.Size = new System.Drawing.Size(46, 20);
+			this.textBoxDelay.TabIndex = 23;
+			this.textBoxDelay.Text = "100";
+			this.textBoxDelay.TextChanged += new System.EventHandler(this.textBoxDelay_TextChanged);
+			// 
+			// buttonStopScript
+			// 
+			this.buttonStopScript.Image = global::Assistant.Properties.Resources.media_playback_stop_3;
+			this.buttonStopScript.Location = new System.Drawing.Point(446, 334);
+			this.buttonStopScript.Name = "buttonStopScript";
+			this.buttonStopScript.Size = new System.Drawing.Size(30, 27);
+			this.buttonStopScript.TabIndex = 22;
+			this.buttonStopScript.UseVisualStyleBackColor = true;
+			this.buttonStopScript.Click += new System.EventHandler(this.buttonStopScript_Click);
+			// 
+			// buttonPlayScript
+			// 
+			this.buttonPlayScript.Image = global::Assistant.Properties.Resources.media_playback_start_3;
+			this.buttonPlayScript.Location = new System.Drawing.Point(410, 334);
+			this.buttonPlayScript.Name = "buttonPlayScript";
+			this.buttonPlayScript.Size = new System.Drawing.Size(30, 27);
+			this.buttonPlayScript.TabIndex = 21;
+			this.buttonPlayScript.UseVisualStyleBackColor = true;
+			this.buttonPlayScript.Click += new System.EventHandler(this.buttonPlayScript_Click);
+			// 
 			// razorButtonEdit
-			//
-			this.razorButtonEdit.ColorTable = office2010BlueTheme1;
-			this.razorButtonEdit.Location = new System.Drawing.Point(442, 338);
+			// 
+			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.TextColor = System.Drawing.Color.White;
+			this.razorButtonEdit.ColorTable = office2010BlueTheme;
+			this.razorButtonEdit.Location = new System.Drawing.Point(352, 337);
 			this.razorButtonEdit.Name = "razorButtonEdit";
 			this.razorButtonEdit.Size = new System.Drawing.Size(52, 20);
 			this.razorButtonEdit.TabIndex = 20;
@@ -3813,21 +3863,21 @@ namespace Assistant
 			this.razorButtonEdit.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButtonEdit.UseVisualStyleBackColor = true;
 			this.razorButtonEdit.Click += new System.EventHandler(this.razorButtonEdit_Click);
-			//
+			// 
 			// razorCheckBoxAuto
-			//
-			this.razorCheckBoxAuto.Location = new System.Drawing.Point(500, 338);
+			// 
+			this.razorCheckBoxAuto.Location = new System.Drawing.Point(482, 338);
 			this.razorCheckBoxAuto.Name = "razorCheckBoxAuto";
-			this.razorCheckBoxAuto.Size = new System.Drawing.Size(78, 20);
+			this.razorCheckBoxAuto.Size = new System.Drawing.Size(54, 20);
 			this.razorCheckBoxAuto.TabIndex = 19;
-			this.razorCheckBoxAuto.Text = "Auto Mode";
+			this.razorCheckBoxAuto.Text = "Auto";
 			this.razorCheckBoxAuto.UseVisualStyleBackColor = true;
 			this.razorCheckBoxAuto.CheckedChanged += new System.EventHandler(this.razorCheckBoxAuto_CheckedChanged);
-			//
+			// 
 			// razorButtonUp
-			//
-			this.razorButtonUp.ColorTable = office2010BlueTheme1;
-			this.razorButtonUp.Location = new System.Drawing.Point(361, 338);
+			// 
+			this.razorButtonUp.ColorTable = office2010BlueTheme;
+			this.razorButtonUp.Location = new System.Drawing.Point(271, 337);
 			this.razorButtonUp.Name = "razorButtonUp";
 			this.razorButtonUp.Size = new System.Drawing.Size(75, 20);
 			this.razorButtonUp.TabIndex = 18;
@@ -3835,55 +3885,56 @@ namespace Assistant
 			this.razorButtonUp.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButtonUp.UseVisualStyleBackColor = true;
 			this.razorButtonUp.Click += new System.EventHandler(this.razorButtonUp_Click);
-			//
+			// 
 			// razorButtonDown
-			//
-			this.razorButtonDown.ColorTable = office2010BlueTheme1;
-			this.razorButtonDown.Location = new System.Drawing.Point(274, 338);
+			// 
+			this.razorButtonDown.ColorTable = office2010BlueTheme;
+			this.razorButtonDown.Location = new System.Drawing.Point(184, 337);
 			this.razorButtonDown.Name = "razorButtonDown";
-			this.razorButtonDown.Size = new System.Drawing.Size(81, 19);
+			this.razorButtonDown.Size = new System.Drawing.Size(81, 20);
 			this.razorButtonDown.TabIndex = 17;
 			this.razorButtonDown.Text = "Move Down";
 			this.razorButtonDown.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButtonDown.UseVisualStyleBackColor = true;
 			this.razorButtonDown.Click += new System.EventHandler(this.razorButtonDown_Click);
-			//
+			// 
 			// dataGridViewScripting
-			//
+			// 
 			this.dataGridViewScripting.AllowUserToAddRows = false;
 			this.dataGridViewScripting.AllowUserToDeleteRows = false;
 			this.dataGridViewScripting.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.dataGridViewScripting.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dataGridViewScripting.Location = new System.Drawing.Point(8, 6);
 			this.dataGridViewScripting.Name = "dataGridViewScripting";
+			this.dataGridViewScripting.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.dataGridViewScripting.Size = new System.Drawing.Size(650, 326);
 			this.dataGridViewScripting.TabIndex = 16;
 			this.dataGridViewScripting.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewScripting_CellContentClick);
-			//
+			// 
 			// xButton3
-			//
-			this.xButton3.ColorTable = office2010BlueTheme1;
-			this.xButton3.Location = new System.Drawing.Point(161, 338);
+			// 
+			this.xButton3.ColorTable = office2010BlueTheme;
+			this.xButton3.Location = new System.Drawing.Point(99, 337);
 			this.xButton3.Name = "xButton3";
-			this.xButton3.Size = new System.Drawing.Size(107, 20);
+			this.xButton3.Size = new System.Drawing.Size(79, 20);
 			this.xButton3.TabIndex = 15;
-			this.xButton3.Text = "Remove Selected";
+			this.xButton3.Text = "Remove";
 			this.xButton3.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.xButton3.Click += new System.EventHandler(this.xButton3_Click);
-			//
+			// 
 			// xButton2
-			//
-			this.xButton2.ColorTable = office2010BlueTheme1;
-			this.xButton2.Location = new System.Drawing.Point(70, 338);
+			// 
+			this.xButton2.ColorTable = office2010BlueTheme;
+			this.xButton2.Location = new System.Drawing.Point(8, 337);
 			this.xButton2.Name = "xButton2";
 			this.xButton2.Size = new System.Drawing.Size(85, 20);
 			this.xButton2.TabIndex = 14;
 			this.xButton2.Text = "Open Script";
 			this.xButton2.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.xButton2.Click += new System.EventHandler(this.xButton2_Click);
-			//
+			// 
 			// EnhancedAgent
-			//
+			// 
 			this.EnhancedAgent.Controls.Add(this.tabControl1);
 			this.EnhancedAgent.Location = new System.Drawing.Point(4, 40);
 			this.EnhancedAgent.Name = "EnhancedAgent";
@@ -3892,9 +3943,9 @@ namespace Assistant
 			this.EnhancedAgent.TabIndex = 14;
 			this.EnhancedAgent.Text = "Enhanced Agents";
 			this.EnhancedAgent.UseVisualStyleBackColor = true;
-			//
+			// 
 			// tabControl1
-			//
+			// 
 			this.tabControl1.Controls.Add(this.eautoloot);
 			this.tabControl1.Controls.Add(this.escavenger);
 			this.tabControl1.Controls.Add(this.Organizer);
@@ -3909,9 +3960,9 @@ namespace Assistant
 			this.tabControl1.SelectedIndex = 0;
 			this.tabControl1.Size = new System.Drawing.Size(667, 367);
 			this.tabControl1.TabIndex = 0;
-			//
+			// 
 			// eautoloot
-			//
+			// 
 			this.eautoloot.Controls.Add(this.razorButtonResetIgnore);
 			this.eautoloot.Controls.Add(this.label21);
 			this.eautoloot.Controls.Add(this.autoLootTextBoxDelay);
@@ -3934,10 +3985,10 @@ namespace Assistant
 			this.eautoloot.TabIndex = 0;
 			this.eautoloot.Text = "Autoloot";
 			this.eautoloot.UseVisualStyleBackColor = true;
-			//
+			// 
 			// razorButtonResetIgnore
-			//
-			this.razorButtonResetIgnore.ColorTable = office2010BlueTheme1;
+			// 
+			this.razorButtonResetIgnore.ColorTable = office2010BlueTheme;
 			this.razorButtonResetIgnore.Location = new System.Drawing.Point(558, 310);
 			this.razorButtonResetIgnore.Name = "razorButtonResetIgnore";
 			this.razorButtonResetIgnore.Size = new System.Drawing.Size(90, 20);
@@ -3945,21 +3996,21 @@ namespace Assistant
 			this.razorButtonResetIgnore.Text = "Reset Ignore";
 			this.razorButtonResetIgnore.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButtonResetIgnore.Click += new System.EventHandler(this.razorButtonResetIgnore_Click);
-			//
+			// 
 			// label21
-			//
+			// 
 			this.label21.AutoSize = true;
 			this.label21.Location = new System.Drawing.Point(436, 59);
 			this.label21.Name = "label21";
 			this.label21.Size = new System.Drawing.Size(80, 13);
 			this.label21.TabIndex = 59;
 			this.label21.Text = "Loot Delay (ms)";
-			//
+			// 
 			// autoLootTextBoxDelay
-			//
-			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
 			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.autoLootTextBoxDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3969,10 +4020,10 @@ namespace Assistant
 			this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
 			this.autoLootTextBoxDelay.TabIndex = 58;
 			this.autoLootTextBoxDelay.TextChanged += new System.EventHandler(this.autoLootTextBoxDelay_TextChanged);
-			//
+			// 
 			// autoLootButtonRemoveList
-			//
-			this.autoLootButtonRemoveList.ColorTable = office2010BlueTheme1;
+			// 
+			this.autoLootButtonRemoveList.ColorTable = office2010BlueTheme;
 			this.autoLootButtonRemoveList.Location = new System.Drawing.Point(366, 14);
 			this.autoLootButtonRemoveList.Name = "autoLootButtonRemoveList";
 			this.autoLootButtonRemoveList.Size = new System.Drawing.Size(90, 20);
@@ -3980,10 +4031,10 @@ namespace Assistant
 			this.autoLootButtonRemoveList.Text = "Remove";
 			this.autoLootButtonRemoveList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autoLootButtonRemoveList.Click += new System.EventHandler(this.autoLootButtonRemoveList_Click);
-			//
+			// 
 			// autolootButtonAddList
-			//
-			this.autolootButtonAddList.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootButtonAddList.ColorTable = office2010BlueTheme;
 			this.autolootButtonAddList.Location = new System.Drawing.Point(270, 14);
 			this.autolootButtonAddList.Name = "autolootButtonAddList";
 			this.autolootButtonAddList.Size = new System.Drawing.Size(90, 20);
@@ -3991,10 +4042,10 @@ namespace Assistant
 			this.autolootButtonAddList.Text = "Add";
 			this.autolootButtonAddList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootButtonAddList.Click += new System.EventHandler(this.autoLootButtonAddList_Click);
-			//
+			// 
 			// autoLootButtonListImport
-			//
-			this.autoLootButtonListImport.ColorTable = office2010BlueTheme1;
+			// 
+			this.autoLootButtonListImport.ColorTable = office2010BlueTheme;
 			this.autoLootButtonListImport.Location = new System.Drawing.Point(462, 14);
 			this.autoLootButtonListImport.Name = "autoLootButtonListImport";
 			this.autoLootButtonListImport.Size = new System.Drawing.Size(90, 20);
@@ -4002,9 +4053,9 @@ namespace Assistant
 			this.autoLootButtonListImport.Text = "Import";
 			this.autoLootButtonListImport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autoLootButtonListImport.Click += new System.EventHandler(this.autoLootImport_Click);
-			//
+			// 
 			// autolootListSelect
-			//
+			// 
 			this.autolootListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.autolootListSelect.FormattingEnabled = true;
 			this.autolootListSelect.Location = new System.Drawing.Point(78, 12);
@@ -4012,10 +4063,10 @@ namespace Assistant
 			this.autolootListSelect.Size = new System.Drawing.Size(183, 24);
 			this.autolootListSelect.TabIndex = 55;
 			this.autolootListSelect.SelectedIndexChanged += new System.EventHandler(this.autoLootListSelect_SelectedIndexChanged);
-			//
+			// 
 			// autoLootButtonListExport
-			//
-			this.autoLootButtonListExport.ColorTable = office2010BlueTheme1;
+			// 
+			this.autoLootButtonListExport.ColorTable = office2010BlueTheme;
 			this.autoLootButtonListExport.Location = new System.Drawing.Point(558, 14);
 			this.autoLootButtonListExport.Name = "autoLootButtonListExport";
 			this.autoLootButtonListExport.Size = new System.Drawing.Size(90, 20);
@@ -4023,18 +4074,18 @@ namespace Assistant
 			this.autoLootButtonListExport.Text = "Export";
 			this.autoLootButtonListExport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autoLootButtonListExport.Click += new System.EventHandler(this.autoLootButtonListExport_Click);
-			//
+			// 
 			// label20
-			//
+			// 
 			this.label20.AutoSize = true;
 			this.label20.Location = new System.Drawing.Point(6, 18);
 			this.label20.Name = "label20";
 			this.label20.Size = new System.Drawing.Size(68, 13);
 			this.label20.TabIndex = 54;
 			this.label20.Text = "Autoloot List:";
-			//
+			// 
 			// groupBox13
-			//
+			// 
 			this.groupBox13.Controls.Add(this.autolootLogBox);
 			this.groupBox13.Location = new System.Drawing.Point(267, 84);
 			this.groupBox13.Name = "groupBox13";
@@ -4042,25 +4093,25 @@ namespace Assistant
 			this.groupBox13.TabIndex = 53;
 			this.groupBox13.TabStop = false;
 			this.groupBox13.Text = "Autoloot Log";
-			//
+			// 
 			// autolootLogBox
-			//
+			// 
 			this.autolootLogBox.FormattingEnabled = true;
 			this.autolootLogBox.Location = new System.Drawing.Point(7, 18);
 			this.autolootLogBox.Name = "autolootLogBox";
 			this.autolootLogBox.Size = new System.Drawing.Size(265, 225);
 			this.autolootLogBox.TabIndex = 0;
-			//
+			// 
 			// autolootContainerLabel
-			//
+			// 
 			this.autolootContainerLabel.Location = new System.Drawing.Point(569, 84);
 			this.autolootContainerLabel.Name = "autolootContainerLabel";
 			this.autolootContainerLabel.Size = new System.Drawing.Size(82, 19);
 			this.autolootContainerLabel.TabIndex = 50;
 			this.autolootContainerLabel.Text = "0x00000000";
-			//
+			// 
 			// groupBox11
-			//
+			// 
 			this.groupBox11.Controls.Add(this.autolootMoveDownButton);
 			this.groupBox11.Controls.Add(this.autolootMoveUpButton);
 			this.groupBox11.Controls.Add(this.autolootItemPropsB);
@@ -4074,10 +4125,10 @@ namespace Assistant
 			this.groupBox11.TabIndex = 51;
 			this.groupBox11.TabStop = false;
 			this.groupBox11.Text = "Loot List";
-			//
+			// 
 			// autolootMoveDownButton
-			//
-			this.autolootMoveDownButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootMoveDownButton.ColorTable = office2010BlueTheme;
 			this.autolootMoveDownButton.Location = new System.Drawing.Point(6, 171);
 			this.autolootMoveDownButton.Name = "autolootMoveDownButton";
 			this.autolootMoveDownButton.Size = new System.Drawing.Size(90, 20);
@@ -4085,10 +4136,10 @@ namespace Assistant
 			this.autolootMoveDownButton.Text = "Move Down";
 			this.autolootMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootMoveDownButton.Click += new System.EventHandler(this.autolootMoveDownButton_Click);
-			//
+			// 
 			// autolootMoveUpButton
-			//
-			this.autolootMoveUpButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootMoveUpButton.ColorTable = office2010BlueTheme;
 			this.autolootMoveUpButton.Location = new System.Drawing.Point(5, 145);
 			this.autolootMoveUpButton.Name = "autolootMoveUpButton";
 			this.autolootMoveUpButton.Size = new System.Drawing.Size(90, 20);
@@ -4096,10 +4147,10 @@ namespace Assistant
 			this.autolootMoveUpButton.Text = "Move Up";
 			this.autolootMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootMoveUpButton.Click += new System.EventHandler(this.autolootMoveUpButton_Click);
-			//
+			// 
 			// autolootItemPropsB
-			//
-			this.autolootItemPropsB.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootItemPropsB.ColorTable = office2010BlueTheme;
 			this.autolootItemPropsB.Location = new System.Drawing.Point(5, 94);
 			this.autolootItemPropsB.Name = "autolootItemPropsB";
 			this.autolootItemPropsB.Size = new System.Drawing.Size(90, 20);
@@ -4107,10 +4158,10 @@ namespace Assistant
 			this.autolootItemPropsB.Text = "Edit Props";
 			this.autolootItemPropsB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootItemPropsB.Click += new System.EventHandler(this.autoLootItemProps_Click);
-			//
+			// 
 			// autolootItemEditB
-			//
-			this.autolootItemEditB.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootItemEditB.ColorTable = office2010BlueTheme;
 			this.autolootItemEditB.Location = new System.Drawing.Point(5, 68);
 			this.autolootItemEditB.Name = "autolootItemEditB";
 			this.autolootItemEditB.Size = new System.Drawing.Size(90, 20);
@@ -4118,10 +4169,10 @@ namespace Assistant
 			this.autolootItemEditB.Text = "Edit";
 			this.autolootItemEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootItemEditB.Click += new System.EventHandler(this.autoLootItemEdit_Click);
-			//
+			// 
 			// autolootAddItemBTarget
-			//
-			this.autolootAddItemBTarget.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootAddItemBTarget.ColorTable = office2010BlueTheme;
 			this.autolootAddItemBTarget.Location = new System.Drawing.Point(5, 43);
 			this.autolootAddItemBTarget.Name = "autolootAddItemBTarget";
 			this.autolootAddItemBTarget.Size = new System.Drawing.Size(90, 20);
@@ -4129,10 +4180,10 @@ namespace Assistant
 			this.autolootAddItemBTarget.Text = "Add Target";
 			this.autolootAddItemBTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootAddItemBTarget.Click += new System.EventHandler(this.autoLootAddItemTarget_Click);
-			//
+			// 
 			// autolootRemoveItemB
-			//
-			this.autolootRemoveItemB.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootRemoveItemB.ColorTable = office2010BlueTheme;
 			this.autolootRemoveItemB.Location = new System.Drawing.Point(5, 119);
 			this.autolootRemoveItemB.Name = "autolootRemoveItemB";
 			this.autolootRemoveItemB.Size = new System.Drawing.Size(90, 20);
@@ -4140,10 +4191,10 @@ namespace Assistant
 			this.autolootRemoveItemB.Text = "Remove";
 			this.autolootRemoveItemB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootRemoveItemB.Click += new System.EventHandler(this.autoLootRemoveItem_Click);
-			//
+			// 
 			// autolootAddItemBManual
-			//
-			this.autolootAddItemBManual.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootAddItemBManual.ColorTable = office2010BlueTheme;
 			this.autolootAddItemBManual.Location = new System.Drawing.Point(5, 18);
 			this.autolootAddItemBManual.Name = "autolootAddItemBManual";
 			this.autolootAddItemBManual.Size = new System.Drawing.Size(90, 20);
@@ -4151,10 +4202,10 @@ namespace Assistant
 			this.autolootAddItemBManual.Text = "Add Manual";
 			this.autolootAddItemBManual.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootAddItemBManual.Click += new System.EventHandler(this.autoLootAddItemManual_Click);
-			//
+			// 
 			// autolootContainerButton
-			//
-			this.autolootContainerButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.autolootContainerButton.ColorTable = office2010BlueTheme;
 			this.autolootContainerButton.Location = new System.Drawing.Point(545, 58);
 			this.autolootContainerButton.Name = "autolootContainerButton";
 			this.autolootContainerButton.Size = new System.Drawing.Size(103, 20);
@@ -4162,24 +4213,24 @@ namespace Assistant
 			this.autolootContainerButton.Text = "Target Container";
 			this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click);
-			//
+			// 
 			// autoLootCheckBox
-			//
+			// 
 			this.autoLootCheckBox.Location = new System.Drawing.Point(275, 56);
 			this.autoLootCheckBox.Name = "autoLootCheckBox";
 			this.autoLootCheckBox.Size = new System.Drawing.Size(103, 22);
 			this.autoLootCheckBox.TabIndex = 48;
 			this.autoLootCheckBox.Text = "Enable autoloot";
 			this.autoLootCheckBox.CheckedChanged += new System.EventHandler(this.autoLootEnable_CheckedChanged);
-			//
+			// 
 			// autolootlistView
-			//
+			// 
 			this.autolootlistView.CheckBoxes = true;
 			this.autolootlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader4,
-			this.columnHeader1,
-			this.columnHeader2,
-			this.ColumnHeader3});
+            this.columnHeader4,
+            this.columnHeader1,
+            this.columnHeader2,
+            this.ColumnHeader3});
 			this.autolootlistView.FullRowSelect = true;
 			this.autolootlistView.GridLines = true;
 			this.autolootlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4193,27 +4244,27 @@ namespace Assistant
 			this.autolootlistView.UseCompatibleStateImageBehavior = false;
 			this.autolootlistView.View = System.Windows.Forms.View.Details;
 			this.autolootlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.autolootlistView_ItemChecked);
-			//
+			// 
 			// columnHeader4
-			//
+			// 
 			this.columnHeader4.Text = "X";
 			this.columnHeader4.Width = 22;
-			//
+			// 
 			// columnHeader1
-			//
+			// 
 			this.columnHeader1.Text = "Item Name";
 			this.columnHeader1.Width = 105;
-			//
+			// 
 			// columnHeader2
-			//
+			// 
 			this.columnHeader2.Text = "Graphics";
-			//
+			// 
 			// ColumnHeader3
-			//
+			// 
 			this.ColumnHeader3.Text = "Color";
-			//
+			// 
 			// escavenger
-			//
+			// 
 			this.escavenger.Controls.Add(this.groupBox14);
 			this.escavenger.Controls.Add(this.groupBox12);
 			this.escavenger.Controls.Add(this.label23);
@@ -4235,9 +4286,9 @@ namespace Assistant
 			this.escavenger.TabIndex = 1;
 			this.escavenger.Text = "Scavenger";
 			this.escavenger.UseVisualStyleBackColor = true;
-			//
+			// 
 			// groupBox14
-			//
+			// 
 			this.groupBox14.Controls.Add(this.scavengerMoveDownButton);
 			this.groupBox14.Controls.Add(this.scavengerMoveUpButton);
 			this.groupBox14.Controls.Add(this.scavengerButtonEditProps);
@@ -4251,10 +4302,10 @@ namespace Assistant
 			this.groupBox14.TabIndex = 71;
 			this.groupBox14.TabStop = false;
 			this.groupBox14.Text = "Item List";
-			//
+			// 
 			// scavengerMoveDownButton
-			//
-			this.scavengerMoveDownButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerMoveDownButton.ColorTable = office2010BlueTheme;
 			this.scavengerMoveDownButton.Location = new System.Drawing.Point(5, 171);
 			this.scavengerMoveDownButton.Name = "scavengerMoveDownButton";
 			this.scavengerMoveDownButton.Size = new System.Drawing.Size(90, 20);
@@ -4262,10 +4313,10 @@ namespace Assistant
 			this.scavengerMoveDownButton.Text = "Move Down";
 			this.scavengerMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerMoveDownButton.Click += new System.EventHandler(this.scavengerMoveDownButton_Click);
-			//
+			// 
 			// scavengerMoveUpButton
-			//
-			this.scavengerMoveUpButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerMoveUpButton.ColorTable = office2010BlueTheme;
 			this.scavengerMoveUpButton.Location = new System.Drawing.Point(5, 145);
 			this.scavengerMoveUpButton.Name = "scavengerMoveUpButton";
 			this.scavengerMoveUpButton.Size = new System.Drawing.Size(90, 20);
@@ -4273,10 +4324,10 @@ namespace Assistant
 			this.scavengerMoveUpButton.Text = "Move Up";
 			this.scavengerMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerMoveUpButton.Click += new System.EventHandler(this.scavengerMoveUpButton_Click);
-			//
+			// 
 			// scavengerButtonEditProps
-			//
-			this.scavengerButtonEditProps.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonEditProps.ColorTable = office2010BlueTheme;
 			this.scavengerButtonEditProps.Location = new System.Drawing.Point(5, 94);
 			this.scavengerButtonEditProps.Name = "scavengerButtonEditProps";
 			this.scavengerButtonEditProps.Size = new System.Drawing.Size(90, 20);
@@ -4284,10 +4335,10 @@ namespace Assistant
 			this.scavengerButtonEditProps.Text = "Edit Props";
 			this.scavengerButtonEditProps.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonEditProps.Click += new System.EventHandler(this.scavengerEditProps_Click);
-			//
+			// 
 			// scavengerButtonEditItem
-			//
-			this.scavengerButtonEditItem.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonEditItem.ColorTable = office2010BlueTheme;
 			this.scavengerButtonEditItem.Location = new System.Drawing.Point(5, 68);
 			this.scavengerButtonEditItem.Name = "scavengerButtonEditItem";
 			this.scavengerButtonEditItem.Size = new System.Drawing.Size(90, 20);
@@ -4295,10 +4346,10 @@ namespace Assistant
 			this.scavengerButtonEditItem.Text = "Edit";
 			this.scavengerButtonEditItem.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonEditItem.Click += new System.EventHandler(this.scavengerEditItem_Click);
-			//
+			// 
 			// scavengerButtonAddTarget
-			//
-			this.scavengerButtonAddTarget.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonAddTarget.ColorTable = office2010BlueTheme;
 			this.scavengerButtonAddTarget.Location = new System.Drawing.Point(5, 43);
 			this.scavengerButtonAddTarget.Name = "scavengerButtonAddTarget";
 			this.scavengerButtonAddTarget.Size = new System.Drawing.Size(90, 20);
@@ -4306,10 +4357,10 @@ namespace Assistant
 			this.scavengerButtonAddTarget.Text = "Add Target";
 			this.scavengerButtonAddTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonAddTarget.Click += new System.EventHandler(this.scavengerAddItemTarget_Click);
-			//
+			// 
 			// scavengerButtonRemoveItem
-			//
-			this.scavengerButtonRemoveItem.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonRemoveItem.ColorTable = office2010BlueTheme;
 			this.scavengerButtonRemoveItem.Location = new System.Drawing.Point(5, 119);
 			this.scavengerButtonRemoveItem.Name = "scavengerButtonRemoveItem";
 			this.scavengerButtonRemoveItem.Size = new System.Drawing.Size(90, 20);
@@ -4317,10 +4368,10 @@ namespace Assistant
 			this.scavengerButtonRemoveItem.Text = "Remove";
 			this.scavengerButtonRemoveItem.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonRemoveItem.Click += new System.EventHandler(this.scavengerRemoveItem_Click);
-			//
+			// 
 			// scavengerButtonAddManual
-			//
-			this.scavengerButtonAddManual.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonAddManual.ColorTable = office2010BlueTheme;
 			this.scavengerButtonAddManual.Location = new System.Drawing.Point(5, 18);
 			this.scavengerButtonAddManual.Name = "scavengerButtonAddManual";
 			this.scavengerButtonAddManual.Size = new System.Drawing.Size(90, 20);
@@ -4328,9 +4379,9 @@ namespace Assistant
 			this.scavengerButtonAddManual.Text = "Add Manual";
 			this.scavengerButtonAddManual.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonAddManual.Click += new System.EventHandler(this.scavengerAdItemdManual_Click);
-			//
+			// 
 			// groupBox12
-			//
+			// 
 			this.groupBox12.Controls.Add(this.scavengerLogBox);
 			this.groupBox12.Location = new System.Drawing.Point(267, 84);
 			this.groupBox12.Name = "groupBox12";
@@ -4338,37 +4389,37 @@ namespace Assistant
 			this.groupBox12.TabIndex = 70;
 			this.groupBox12.TabStop = false;
 			this.groupBox12.Text = "Scavenger Log";
-			//
+			// 
 			// scavengerLogBox
-			//
+			// 
 			this.scavengerLogBox.FormattingEnabled = true;
 			this.scavengerLogBox.Location = new System.Drawing.Point(7, 18);
 			this.scavengerLogBox.Name = "scavengerLogBox";
 			this.scavengerLogBox.Size = new System.Drawing.Size(265, 225);
 			this.scavengerLogBox.TabIndex = 0;
-			//
+			// 
 			// label23
-			//
+			// 
 			this.label23.AutoSize = true;
 			this.label23.Location = new System.Drawing.Point(446, 59);
 			this.label23.Name = "label23";
 			this.label23.Size = new System.Drawing.Size(82, 13);
 			this.label23.TabIndex = 69;
 			this.label23.Text = "Drag Delay (ms)";
-			//
+			// 
 			// scavengerContainerLabel
-			//
+			// 
 			this.scavengerContainerLabel.Location = new System.Drawing.Point(572, 82);
 			this.scavengerContainerLabel.Name = "scavengerContainerLabel";
 			this.scavengerContainerLabel.Size = new System.Drawing.Size(82, 19);
 			this.scavengerContainerLabel.TabIndex = 67;
 			this.scavengerContainerLabel.Text = "0x00000000";
-			//
+			// 
 			// scavengerDragDelay
-			//
-			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
 			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.scavengerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4378,10 +4429,10 @@ namespace Assistant
 			this.scavengerDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.scavengerDragDelay.TabIndex = 68;
 			this.scavengerDragDelay.TextChanged += new System.EventHandler(this.scavengerDragDelay_TextChanged);
-			//
+			// 
 			// scavengerButtonSetContainer
-			//
-			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme;
 			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(552, 56);
 			this.scavengerButtonSetContainer.Name = "scavengerButtonSetContainer";
 			this.scavengerButtonSetContainer.Size = new System.Drawing.Size(96, 20);
@@ -4389,9 +4440,9 @@ namespace Assistant
 			this.scavengerButtonSetContainer.Text = "Target Container";
 			this.scavengerButtonSetContainer.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonSetContainer.Click += new System.EventHandler(this.scavengerSetContainer_Click);
-			//
+			// 
 			// scavengerCheckBox
-			//
+			// 
 			this.scavengerCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.scavengerCheckBox.Location = new System.Drawing.Point(275, 56);
 			this.scavengerCheckBox.Name = "scavengerCheckBox";
@@ -4399,15 +4450,15 @@ namespace Assistant
 			this.scavengerCheckBox.TabIndex = 65;
 			this.scavengerCheckBox.Text = "Enable scavenger";
 			this.scavengerCheckBox.CheckedChanged += new System.EventHandler(this.scavengerEnableCheck_CheckedChanged);
-			//
+			// 
 			// scavengerListView
-			//
+			// 
 			this.scavengerListView.CheckBoxes = true;
 			this.scavengerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader5,
-			this.columnHeader6,
-			this.columnHeader7,
-			this.columnHeader8});
+            this.columnHeader5,
+            this.columnHeader6,
+            this.columnHeader7,
+            this.columnHeader8});
 			this.scavengerListView.FullRowSelect = true;
 			this.scavengerListView.GridLines = true;
 			this.scavengerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4421,37 +4472,37 @@ namespace Assistant
 			this.scavengerListView.UseCompatibleStateImageBehavior = false;
 			this.scavengerListView.View = System.Windows.Forms.View.Details;
 			this.scavengerListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.scavengerListView_ItemChecked);
-			//
+			// 
 			// columnHeader5
-			//
+			// 
 			this.columnHeader5.Text = "X";
 			this.columnHeader5.Width = 22;
-			//
+			// 
 			// columnHeader6
-			//
+			// 
 			this.columnHeader6.Text = "Item Name";
 			this.columnHeader6.Width = 105;
-			//
+			// 
 			// columnHeader7
-			//
+			// 
 			this.columnHeader7.Text = "Graphics";
-			//
+			// 
 			// columnHeader8
-			//
+			// 
 			this.columnHeader8.Text = "Color";
-			//
+			// 
 			// label22
-			//
+			// 
 			this.label22.AutoSize = true;
 			this.label22.Location = new System.Drawing.Point(6, 18);
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(81, 13);
 			this.label22.TabIndex = 60;
 			this.label22.Text = "Scavenger List:";
-			//
+			// 
 			// scavengerButtonRemoveList
-			//
-			this.scavengerButtonRemoveList.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonRemoveList.ColorTable = office2010BlueTheme;
 			this.scavengerButtonRemoveList.Location = new System.Drawing.Point(371, 14);
 			this.scavengerButtonRemoveList.Name = "scavengerButtonRemoveList";
 			this.scavengerButtonRemoveList.Size = new System.Drawing.Size(90, 20);
@@ -4459,10 +4510,10 @@ namespace Assistant
 			this.scavengerButtonRemoveList.Text = "Remove";
 			this.scavengerButtonRemoveList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonRemoveList.Click += new System.EventHandler(this.scavengerRemoveList_Click);
-			//
+			// 
 			// scavengerButtonAddList
-			//
-			this.scavengerButtonAddList.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonAddList.ColorTable = office2010BlueTheme;
 			this.scavengerButtonAddList.Location = new System.Drawing.Point(275, 14);
 			this.scavengerButtonAddList.Name = "scavengerButtonAddList";
 			this.scavengerButtonAddList.Size = new System.Drawing.Size(90, 20);
@@ -4470,10 +4521,10 @@ namespace Assistant
 			this.scavengerButtonAddList.Text = "Add";
 			this.scavengerButtonAddList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonAddList.Click += new System.EventHandler(this.scavengerAddList_Click);
-			//
+			// 
 			// scavengerButtonImport
-			//
-			this.scavengerButtonImport.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonImport.ColorTable = office2010BlueTheme;
 			this.scavengerButtonImport.Location = new System.Drawing.Point(467, 14);
 			this.scavengerButtonImport.Name = "scavengerButtonImport";
 			this.scavengerButtonImport.Size = new System.Drawing.Size(90, 20);
@@ -4481,9 +4532,9 @@ namespace Assistant
 			this.scavengerButtonImport.Text = "Import";
 			this.scavengerButtonImport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonImport.Click += new System.EventHandler(this.scavengerButtonImport_Click);
-			//
+			// 
 			// scavengerListSelect
-			//
+			// 
 			this.scavengerListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.scavengerListSelect.FormattingEnabled = true;
 			this.scavengerListSelect.Location = new System.Drawing.Point(91, 12);
@@ -4491,10 +4542,10 @@ namespace Assistant
 			this.scavengerListSelect.Size = new System.Drawing.Size(175, 24);
 			this.scavengerListSelect.TabIndex = 61;
 			this.scavengerListSelect.SelectedIndexChanged += new System.EventHandler(this.scavengertListSelect_SelectedIndexChanged);
-			//
+			// 
 			// scavengerButtonExport
-			//
-			this.scavengerButtonExport.ColorTable = office2010BlueTheme1;
+			// 
+			this.scavengerButtonExport.ColorTable = office2010BlueTheme;
 			this.scavengerButtonExport.Location = new System.Drawing.Point(563, 14);
 			this.scavengerButtonExport.Name = "scavengerButtonExport";
 			this.scavengerButtonExport.Size = new System.Drawing.Size(90, 20);
@@ -4502,9 +4553,9 @@ namespace Assistant
 			this.scavengerButtonExport.Text = "Export";
 			this.scavengerButtonExport.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonExport.Click += new System.EventHandler(this.scavengerButtonExport_Click);
-			//
+			// 
 			// Organizer
-			//
+			// 
 			this.Organizer.Controls.Add(this.organizerStopButton);
 			this.Organizer.Controls.Add(this.organizerExecuteButton);
 			this.Organizer.Controls.Add(this.groupBox16);
@@ -4529,10 +4580,10 @@ namespace Assistant
 			this.Organizer.TabIndex = 2;
 			this.Organizer.Text = "Organizer";
 			this.Organizer.UseVisualStyleBackColor = true;
-			//
+			// 
 			// organizerStopButton
-			//
-			this.organizerStopButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerStopButton.ColorTable = office2010BlueTheme;
 			this.organizerStopButton.Location = new System.Drawing.Point(334, 58);
 			this.organizerStopButton.Name = "organizerStopButton";
 			this.organizerStopButton.Size = new System.Drawing.Size(61, 20);
@@ -4540,10 +4591,10 @@ namespace Assistant
 			this.organizerStopButton.Text = "Stop";
 			this.organizerStopButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerStopButton.Click += new System.EventHandler(this.organizerStop_Click);
-			//
+			// 
 			// organizerExecuteButton
-			//
-			this.organizerExecuteButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerExecuteButton.ColorTable = office2010BlueTheme;
 			this.organizerExecuteButton.Location = new System.Drawing.Point(268, 58);
 			this.organizerExecuteButton.Name = "organizerExecuteButton";
 			this.organizerExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -4551,9 +4602,9 @@ namespace Assistant
 			this.organizerExecuteButton.Text = "Execute";
 			this.organizerExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerExecuteButton.Click += new System.EventHandler(this.organizerExecute_Click);
-			//
+			// 
 			// groupBox16
-			//
+			// 
 			this.groupBox16.Controls.Add(this.organizerLogBox);
 			this.groupBox16.Location = new System.Drawing.Point(267, 84);
 			this.groupBox16.Name = "groupBox16";
@@ -4561,42 +4612,42 @@ namespace Assistant
 			this.groupBox16.TabIndex = 73;
 			this.groupBox16.TabStop = false;
 			this.groupBox16.Text = "Organizer Log";
-			//
+			// 
 			// organizerLogBox
-			//
+			// 
 			this.organizerLogBox.FormattingEnabled = true;
 			this.organizerLogBox.Location = new System.Drawing.Point(7, 18);
 			this.organizerLogBox.Name = "organizerLogBox";
 			this.organizerLogBox.Size = new System.Drawing.Size(265, 225);
 			this.organizerLogBox.TabIndex = 0;
-			//
+			// 
 			// label27
-			//
+			// 
 			this.label27.AutoSize = true;
 			this.label27.Location = new System.Drawing.Point(446, 61);
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(105, 13);
 			this.label27.TabIndex = 72;
 			this.label27.Text = "Drag Item Delay (ms)";
-			//
+			// 
 			// organizerDestinationLabel
-			//
+			// 
 			this.organizerDestinationLabel.Location = new System.Drawing.Point(564, 126);
 			this.organizerDestinationLabel.Name = "organizerDestinationLabel";
 			this.organizerDestinationLabel.Size = new System.Drawing.Size(82, 19);
 			this.organizerDestinationLabel.TabIndex = 70;
 			this.organizerDestinationLabel.Text = "0x00000000";
-			//
+			// 
 			// organizerSourceLabel
-			//
+			// 
 			this.organizerSourceLabel.Location = new System.Drawing.Point(564, 82);
 			this.organizerSourceLabel.Name = "organizerSourceLabel";
 			this.organizerSourceLabel.Size = new System.Drawing.Size(82, 19);
 			this.organizerSourceLabel.TabIndex = 67;
 			this.organizerSourceLabel.Text = "0x00000000";
-			//
+			// 
 			// groupBox15
-			//
+			// 
 			this.groupBox15.Controls.Add(this.organizerEditB);
 			this.groupBox15.Controls.Add(this.organizerAddTargetB);
 			this.groupBox15.Controls.Add(this.organizerRemoveB);
@@ -4607,10 +4658,10 @@ namespace Assistant
 			this.groupBox15.TabIndex = 68;
 			this.groupBox15.TabStop = false;
 			this.groupBox15.Text = "Item List";
-			//
+			// 
 			// organizerEditB
-			//
-			this.organizerEditB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerEditB.ColorTable = office2010BlueTheme;
 			this.organizerEditB.Location = new System.Drawing.Point(5, 68);
 			this.organizerEditB.Name = "organizerEditB";
 			this.organizerEditB.Size = new System.Drawing.Size(90, 20);
@@ -4618,10 +4669,10 @@ namespace Assistant
 			this.organizerEditB.Text = "Edit";
 			this.organizerEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerEditB.Click += new System.EventHandler(this.organizerEdit_Click);
-			//
+			// 
 			// organizerAddTargetB
-			//
-			this.organizerAddTargetB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerAddTargetB.ColorTable = office2010BlueTheme;
 			this.organizerAddTargetB.Location = new System.Drawing.Point(5, 43);
 			this.organizerAddTargetB.Name = "organizerAddTargetB";
 			this.organizerAddTargetB.Size = new System.Drawing.Size(90, 20);
@@ -4629,10 +4680,10 @@ namespace Assistant
 			this.organizerAddTargetB.Text = "Add Target";
 			this.organizerAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTarget_Click);
-			//
+			// 
 			// organizerRemoveB
-			//
-			this.organizerRemoveB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerRemoveB.ColorTable = office2010BlueTheme;
 			this.organizerRemoveB.Location = new System.Drawing.Point(5, 94);
 			this.organizerRemoveB.Name = "organizerRemoveB";
 			this.organizerRemoveB.Size = new System.Drawing.Size(90, 20);
@@ -4640,10 +4691,10 @@ namespace Assistant
 			this.organizerRemoveB.Text = "Remove";
 			this.organizerRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerRemoveB.Click += new System.EventHandler(this.organizerRemoveItem_Click);
-			//
+			// 
 			// organizerAddManualB
-			//
-			this.organizerAddManualB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerAddManualB.ColorTable = office2010BlueTheme;
 			this.organizerAddManualB.Location = new System.Drawing.Point(5, 18);
 			this.organizerAddManualB.Name = "organizerAddManualB";
 			this.organizerAddManualB.Size = new System.Drawing.Size(90, 20);
@@ -4651,12 +4702,12 @@ namespace Assistant
 			this.organizerAddManualB.Text = "Add Manual";
 			this.organizerAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerAddManualB.Click += new System.EventHandler(this.organizerAddManual_Click);
-			//
+			// 
 			// organizerDragDelay
-			//
-			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.organizerDragDelay.BackColor = System.Drawing.Color.White;
 			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.organizerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4666,10 +4717,10 @@ namespace Assistant
 			this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.organizerDragDelay.TabIndex = 71;
 			this.organizerDragDelay.TextChanged += new System.EventHandler(this.organizerDragDelay_TextChanged);
-			//
+			// 
 			// organizerSetDestinationB
-			//
-			this.organizerSetDestinationB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerSetDestinationB.ColorTable = office2010BlueTheme;
 			this.organizerSetDestinationB.Location = new System.Drawing.Point(558, 104);
 			this.organizerSetDestinationB.Name = "organizerSetDestinationB";
 			this.organizerSetDestinationB.Size = new System.Drawing.Size(90, 20);
@@ -4677,10 +4728,10 @@ namespace Assistant
 			this.organizerSetDestinationB.Text = "Destination Cont";
 			this.organizerSetDestinationB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestination_Click);
-			//
+			// 
 			// organizerSetSourceB
-			//
-			this.organizerSetSourceB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerSetSourceB.ColorTable = office2010BlueTheme;
 			this.organizerSetSourceB.Location = new System.Drawing.Point(558, 60);
 			this.organizerSetSourceB.Name = "organizerSetSourceB";
 			this.organizerSetSourceB.Size = new System.Drawing.Size(90, 20);
@@ -4688,16 +4739,16 @@ namespace Assistant
 			this.organizerSetSourceB.Text = "Source Cont";
 			this.organizerSetSourceB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSource_Click);
-			//
+			// 
 			// organizerListView
-			//
+			// 
 			this.organizerListView.CheckBoxes = true;
 			this.organizerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader9,
-			this.columnHeader10,
-			this.columnHeader11,
-			this.columnHeader12,
-			this.columnHeader13});
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11,
+            this.columnHeader12,
+            this.columnHeader13});
 			this.organizerListView.FullRowSelect = true;
 			this.organizerListView.GridLines = true;
 			this.organizerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4711,44 +4762,44 @@ namespace Assistant
 			this.organizerListView.UseCompatibleStateImageBehavior = false;
 			this.organizerListView.View = System.Windows.Forms.View.Details;
 			this.organizerListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.organizerListView_ItemChecked);
-			//
+			// 
 			// columnHeader9
-			//
+			// 
 			this.columnHeader9.Text = "X";
 			this.columnHeader9.Width = 22;
-			//
+			// 
 			// columnHeader10
-			//
+			// 
 			this.columnHeader10.Text = "Item Name";
 			this.columnHeader10.Width = 73;
-			//
+			// 
 			// columnHeader11
-			//
+			// 
 			this.columnHeader11.Text = "Graphics";
 			this.columnHeader11.Width = 55;
-			//
+			// 
 			// columnHeader12
-			//
+			// 
 			this.columnHeader12.Text = "Color";
 			this.columnHeader12.Width = 44;
-			//
+			// 
 			// columnHeader13
-			//
+			// 
 			this.columnHeader13.Text = "Amount";
 			this.columnHeader13.Width = 55;
-			//
+			// 
 			// label24
-			//
+			// 
 			this.label24.AutoSize = true;
 			this.label24.Location = new System.Drawing.Point(6, 18);
 			this.label24.Name = "label24";
 			this.label24.Size = new System.Drawing.Size(74, 13);
 			this.label24.TabIndex = 60;
 			this.label24.Text = "Organizer List:";
-			//
+			// 
 			// organizerRemoveListB
-			//
-			this.organizerRemoveListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerRemoveListB.ColorTable = office2010BlueTheme;
 			this.organizerRemoveListB.Location = new System.Drawing.Point(369, 14);
 			this.organizerRemoveListB.Name = "organizerRemoveListB";
 			this.organizerRemoveListB.Size = new System.Drawing.Size(90, 20);
@@ -4756,10 +4807,10 @@ namespace Assistant
 			this.organizerRemoveListB.Text = "Remove";
 			this.organizerRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerRemoveListB.Click += new System.EventHandler(this.organizerRemoveList_Click);
-			//
+			// 
 			// organizerAddListB
-			//
-			this.organizerAddListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerAddListB.ColorTable = office2010BlueTheme;
 			this.organizerAddListB.Location = new System.Drawing.Point(273, 14);
 			this.organizerAddListB.Name = "organizerAddListB";
 			this.organizerAddListB.Size = new System.Drawing.Size(90, 20);
@@ -4767,10 +4818,10 @@ namespace Assistant
 			this.organizerAddListB.Text = "Add";
 			this.organizerAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerAddListB.Click += new System.EventHandler(this.organizerAddList_Click);
-			//
+			// 
 			// organizerImportListB
-			//
-			this.organizerImportListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerImportListB.ColorTable = office2010BlueTheme;
 			this.organizerImportListB.Location = new System.Drawing.Point(465, 14);
 			this.organizerImportListB.Name = "organizerImportListB";
 			this.organizerImportListB.Size = new System.Drawing.Size(90, 20);
@@ -4778,9 +4829,9 @@ namespace Assistant
 			this.organizerImportListB.Text = "Import";
 			this.organizerImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerImportListB.Click += new System.EventHandler(this.organizerImportListB_Click);
-			//
+			// 
 			// organizerListSelect
-			//
+			// 
 			this.organizerListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.organizerListSelect.FormattingEnabled = true;
 			this.organizerListSelect.Location = new System.Drawing.Point(89, 12);
@@ -4788,10 +4839,10 @@ namespace Assistant
 			this.organizerListSelect.Size = new System.Drawing.Size(172, 24);
 			this.organizerListSelect.TabIndex = 61;
 			this.organizerListSelect.SelectedIndexChanged += new System.EventHandler(this.organizerListSelect_SelectedIndexChanged);
-			//
+			// 
 			// organizerExportListB
-			//
-			this.organizerExportListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.organizerExportListB.ColorTable = office2010BlueTheme;
 			this.organizerExportListB.Location = new System.Drawing.Point(561, 14);
 			this.organizerExportListB.Name = "organizerExportListB";
 			this.organizerExportListB.Size = new System.Drawing.Size(90, 20);
@@ -4799,9 +4850,9 @@ namespace Assistant
 			this.organizerExportListB.Text = "Export";
 			this.organizerExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerExportListB.Click += new System.EventHandler(this.organizerExportListB_Click);
-			//
+			// 
 			// VendorBuy
-			//
+			// 
 			this.VendorBuy.Controls.Add(this.groupBox17);
 			this.VendorBuy.Controls.Add(this.groupBox18);
 			this.VendorBuy.Controls.Add(this.buyEnableCheckBox);
@@ -4819,9 +4870,9 @@ namespace Assistant
 			this.VendorBuy.TabIndex = 3;
 			this.VendorBuy.Text = "Vendor Buy";
 			this.VendorBuy.UseVisualStyleBackColor = true;
-			//
+			// 
 			// groupBox17
-			//
+			// 
 			this.groupBox17.Controls.Add(this.buyEditB);
 			this.groupBox17.Controls.Add(this.buyAddTargetB);
 			this.groupBox17.Controls.Add(this.buyRemoveB);
@@ -4832,10 +4883,10 @@ namespace Assistant
 			this.groupBox17.TabIndex = 74;
 			this.groupBox17.TabStop = false;
 			this.groupBox17.Text = "Item List";
-			//
+			// 
 			// buyEditB
-			//
-			this.buyEditB.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyEditB.ColorTable = office2010BlueTheme;
 			this.buyEditB.Location = new System.Drawing.Point(5, 68);
 			this.buyEditB.Name = "buyEditB";
 			this.buyEditB.Size = new System.Drawing.Size(90, 20);
@@ -4843,10 +4894,10 @@ namespace Assistant
 			this.buyEditB.Text = "Edit";
 			this.buyEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyEditB.Click += new System.EventHandler(this.buyEdit_Click);
-			//
+			// 
 			// buyAddTargetB
-			//
-			this.buyAddTargetB.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyAddTargetB.ColorTable = office2010BlueTheme;
 			this.buyAddTargetB.Location = new System.Drawing.Point(5, 43);
 			this.buyAddTargetB.Name = "buyAddTargetB";
 			this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
@@ -4854,10 +4905,10 @@ namespace Assistant
 			this.buyAddTargetB.Text = "Add Target";
 			this.buyAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyAddTargetB.Click += new System.EventHandler(this.buyAddTarget_Click);
-			//
+			// 
 			// buyRemoveB
-			//
-			this.buyRemoveB.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyRemoveB.ColorTable = office2010BlueTheme;
 			this.buyRemoveB.Location = new System.Drawing.Point(5, 94);
 			this.buyRemoveB.Name = "buyRemoveB";
 			this.buyRemoveB.Size = new System.Drawing.Size(90, 20);
@@ -4865,10 +4916,10 @@ namespace Assistant
 			this.buyRemoveB.Text = "Remove";
 			this.buyRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyRemoveB.Click += new System.EventHandler(this.buyRemoveItem_Click);
-			//
+			// 
 			// buyAddManualB
-			//
-			this.buyAddManualB.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyAddManualB.ColorTable = office2010BlueTheme;
 			this.buyAddManualB.Location = new System.Drawing.Point(5, 18);
 			this.buyAddManualB.Name = "buyAddManualB";
 			this.buyAddManualB.Size = new System.Drawing.Size(90, 20);
@@ -4876,9 +4927,9 @@ namespace Assistant
 			this.buyAddManualB.Text = "Add Manual";
 			this.buyAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyAddManualB.Click += new System.EventHandler(this.buyAddManual_Click);
-			//
+			// 
 			// groupBox18
-			//
+			// 
 			this.groupBox18.Controls.Add(this.buyLogBox);
 			this.groupBox18.Location = new System.Drawing.Point(267, 84);
 			this.groupBox18.Name = "groupBox18";
@@ -4886,17 +4937,17 @@ namespace Assistant
 			this.groupBox18.TabIndex = 73;
 			this.groupBox18.TabStop = false;
 			this.groupBox18.Text = "Buy Log";
-			//
+			// 
 			// buyLogBox
-			//
+			// 
 			this.buyLogBox.FormattingEnabled = true;
 			this.buyLogBox.Location = new System.Drawing.Point(7, 18);
 			this.buyLogBox.Name = "buyLogBox";
 			this.buyLogBox.Size = new System.Drawing.Size(265, 225);
 			this.buyLogBox.TabIndex = 0;
-			//
+			// 
 			// buyEnableCheckBox
-			//
+			// 
 			this.buyEnableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.buyEnableCheckBox.Location = new System.Drawing.Point(274, 58);
 			this.buyEnableCheckBox.Name = "buyEnableCheckBox";
@@ -4904,16 +4955,16 @@ namespace Assistant
 			this.buyEnableCheckBox.TabIndex = 72;
 			this.buyEnableCheckBox.Text = "Enable Buy List";
 			this.buyEnableCheckBox.CheckedChanged += new System.EventHandler(this.buyEnableCheckB_CheckedChanged);
-			//
+			// 
 			// buyListView
-			//
+			// 
 			this.buyListView.CheckBoxes = true;
 			this.buyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader14,
-			this.columnHeader15,
-			this.columnHeader16,
-			this.columnHeader17,
-			this.columnHeader23});
+            this.columnHeader14,
+            this.columnHeader15,
+            this.columnHeader16,
+            this.columnHeader17,
+            this.columnHeader23});
 			this.buyListView.FullRowSelect = true;
 			this.buyListView.GridLines = true;
 			this.buyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4927,44 +4978,44 @@ namespace Assistant
 			this.buyListView.UseCompatibleStateImageBehavior = false;
 			this.buyListView.View = System.Windows.Forms.View.Details;
 			this.buyListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.buyagentListView_ItemChecked);
-			//
+			// 
 			// columnHeader14
-			//
+			// 
 			this.columnHeader14.Text = "X";
 			this.columnHeader14.Width = 21;
-			//
+			// 
 			// columnHeader15
-			//
+			// 
 			this.columnHeader15.Text = "Item Name";
 			this.columnHeader15.Width = 75;
-			//
+			// 
 			// columnHeader16
-			//
+			// 
 			this.columnHeader16.Text = "Graphics";
 			this.columnHeader16.Width = 54;
-			//
+			// 
 			// columnHeader17
-			//
+			// 
 			this.columnHeader17.Text = "Amount";
 			this.columnHeader17.Width = 49;
-			//
+			// 
 			// columnHeader23
-			//
+			// 
 			this.columnHeader23.Text = "Color";
 			this.columnHeader23.Width = 50;
-			//
+			// 
 			// label25
-			//
+			// 
 			this.label25.AutoSize = true;
 			this.label25.Location = new System.Drawing.Point(3, 18);
 			this.label25.Name = "label25";
 			this.label25.Size = new System.Drawing.Size(65, 13);
 			this.label25.TabIndex = 66;
 			this.label25.Text = "Vendor Buy:";
-			//
+			// 
 			// buyRemoveListButton
-			//
-			this.buyRemoveListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyRemoveListButton.ColorTable = office2010BlueTheme;
 			this.buyRemoveListButton.Location = new System.Drawing.Point(369, 14);
 			this.buyRemoveListButton.Name = "buyRemoveListButton";
 			this.buyRemoveListButton.Size = new System.Drawing.Size(90, 20);
@@ -4972,10 +5023,10 @@ namespace Assistant
 			this.buyRemoveListButton.Text = "Remove";
 			this.buyRemoveListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyRemoveListButton.Click += new System.EventHandler(this.buyRemoveList_Click);
-			//
+			// 
 			// buyAddListButton
-			//
-			this.buyAddListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyAddListButton.ColorTable = office2010BlueTheme;
 			this.buyAddListButton.Location = new System.Drawing.Point(273, 14);
 			this.buyAddListButton.Name = "buyAddListButton";
 			this.buyAddListButton.Size = new System.Drawing.Size(90, 20);
@@ -4983,10 +5034,10 @@ namespace Assistant
 			this.buyAddListButton.Text = "Add";
 			this.buyAddListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyAddListButton.Click += new System.EventHandler(this.buyAddList_Click);
-			//
+			// 
 			// buyImportListButton
-			//
-			this.buyImportListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyImportListButton.ColorTable = office2010BlueTheme;
 			this.buyImportListButton.Location = new System.Drawing.Point(465, 14);
 			this.buyImportListButton.Name = "buyImportListButton";
 			this.buyImportListButton.Size = new System.Drawing.Size(90, 20);
@@ -4994,9 +5045,9 @@ namespace Assistant
 			this.buyImportListButton.Text = "Import";
 			this.buyImportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyImportListButton.Click += new System.EventHandler(this.buyImportListButton_Click);
-			//
+			// 
 			// buyListSelect
-			//
+			// 
 			this.buyListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.buyListSelect.FormattingEnabled = true;
 			this.buyListSelect.Location = new System.Drawing.Point(78, 12);
@@ -5004,10 +5055,10 @@ namespace Assistant
 			this.buyListSelect.Size = new System.Drawing.Size(183, 24);
 			this.buyListSelect.TabIndex = 67;
 			this.buyListSelect.SelectedIndexChanged += new System.EventHandler(this.buyListSelect_SelectedIndexChanged);
-			//
+			// 
 			// buyExportListButton
-			//
-			this.buyExportListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.buyExportListButton.ColorTable = office2010BlueTheme;
 			this.buyExportListButton.Location = new System.Drawing.Point(561, 14);
 			this.buyExportListButton.Name = "buyExportListButton";
 			this.buyExportListButton.Size = new System.Drawing.Size(90, 20);
@@ -5015,9 +5066,9 @@ namespace Assistant
 			this.buyExportListButton.Text = "Export";
 			this.buyExportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.buyExportListButton.Click += new System.EventHandler(this.buyExportListButton_Click);
-			//
+			// 
 			// VendorSell
-			//
+			// 
 			this.VendorSell.Controls.Add(this.razorButton1);
 			this.VendorSell.Controls.Add(this.sellBagLabel);
 			this.VendorSell.Controls.Add(this.groupBox19);
@@ -5038,10 +5089,10 @@ namespace Assistant
 			this.VendorSell.TabIndex = 4;
 			this.VendorSell.Text = "Vendor Sell";
 			this.VendorSell.UseVisualStyleBackColor = true;
-			//
+			// 
 			// razorButton1
-			//
-			this.razorButton1.ColorTable = office2010BlueTheme1;
+			// 
+			this.razorButton1.ColorTable = office2010BlueTheme;
 			this.razorButton1.Location = new System.Drawing.Point(553, 102);
 			this.razorButton1.Name = "razorButton1";
 			this.razorButton1.Size = new System.Drawing.Size(95, 20);
@@ -5049,17 +5100,17 @@ namespace Assistant
 			this.razorButton1.Text = "Clear Container";
 			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButton1.Click += new System.EventHandler(this.resetSellBag_Click);
-			//
+			// 
 			// sellBagLabel
-			//
+			// 
 			this.sellBagLabel.Location = new System.Drawing.Point(567, 81);
 			this.sellBagLabel.Name = "sellBagLabel";
 			this.sellBagLabel.Size = new System.Drawing.Size(72, 19);
 			this.sellBagLabel.TabIndex = 86;
 			this.sellBagLabel.Text = "0x00000000";
-			//
+			// 
 			// groupBox19
-			//
+			// 
 			this.groupBox19.Controls.Add(this.sellEditButton);
 			this.groupBox19.Controls.Add(this.sellAddTargerButton);
 			this.groupBox19.Controls.Add(this.sellRemoveButton);
@@ -5070,10 +5121,10 @@ namespace Assistant
 			this.groupBox19.TabIndex = 84;
 			this.groupBox19.TabStop = false;
 			this.groupBox19.Text = "Item List";
-			//
+			// 
 			// sellEditButton
-			//
-			this.sellEditButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellEditButton.ColorTable = office2010BlueTheme;
 			this.sellEditButton.Location = new System.Drawing.Point(5, 68);
 			this.sellEditButton.Name = "sellEditButton";
 			this.sellEditButton.Size = new System.Drawing.Size(90, 20);
@@ -5081,10 +5132,10 @@ namespace Assistant
 			this.sellEditButton.Text = "Edit";
 			this.sellEditButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellEditButton.Click += new System.EventHandler(this.sellEdit_Click);
-			//
+			// 
 			// sellAddTargerButton
-			//
-			this.sellAddTargerButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellAddTargerButton.ColorTable = office2010BlueTheme;
 			this.sellAddTargerButton.Location = new System.Drawing.Point(5, 43);
 			this.sellAddTargerButton.Name = "sellAddTargerButton";
 			this.sellAddTargerButton.Size = new System.Drawing.Size(90, 20);
@@ -5092,10 +5143,10 @@ namespace Assistant
 			this.sellAddTargerButton.Text = "Add Target";
 			this.sellAddTargerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellAddTargerButton.Click += new System.EventHandler(this.sellAddTarget_Click);
-			//
+			// 
 			// sellRemoveButton
-			//
-			this.sellRemoveButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellRemoveButton.ColorTable = office2010BlueTheme;
 			this.sellRemoveButton.Location = new System.Drawing.Point(5, 94);
 			this.sellRemoveButton.Name = "sellRemoveButton";
 			this.sellRemoveButton.Size = new System.Drawing.Size(90, 20);
@@ -5103,10 +5154,10 @@ namespace Assistant
 			this.sellRemoveButton.Text = "Remove";
 			this.sellRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellRemoveButton.Click += new System.EventHandler(this.sellRemove_Click);
-			//
+			// 
 			// sellAddManualButton
-			//
-			this.sellAddManualButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellAddManualButton.ColorTable = office2010BlueTheme;
 			this.sellAddManualButton.Location = new System.Drawing.Point(5, 18);
 			this.sellAddManualButton.Name = "sellAddManualButton";
 			this.sellAddManualButton.Size = new System.Drawing.Size(90, 20);
@@ -5114,9 +5165,9 @@ namespace Assistant
 			this.sellAddManualButton.Text = "Add Manual";
 			this.sellAddManualButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellAddManualButton.Click += new System.EventHandler(this.sellAddManual_Click);
-			//
+			// 
 			// groupBox20
-			//
+			// 
 			this.groupBox20.Controls.Add(this.sellLogBox);
 			this.groupBox20.Location = new System.Drawing.Point(267, 84);
 			this.groupBox20.Name = "groupBox20";
@@ -5124,18 +5175,18 @@ namespace Assistant
 			this.groupBox20.TabIndex = 83;
 			this.groupBox20.TabStop = false;
 			this.groupBox20.Text = "Sell Log";
-			//
+			// 
 			// sellLogBox
-			//
+			// 
 			this.sellLogBox.FormattingEnabled = true;
 			this.sellLogBox.Location = new System.Drawing.Point(7, 18);
 			this.sellLogBox.Name = "sellLogBox";
 			this.sellLogBox.Size = new System.Drawing.Size(265, 225);
 			this.sellLogBox.TabIndex = 0;
-			//
+			// 
 			// sellSetBagButton
-			//
-			this.sellSetBagButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellSetBagButton.ColorTable = office2010BlueTheme;
 			this.sellSetBagButton.Location = new System.Drawing.Point(551, 58);
 			this.sellSetBagButton.Name = "sellSetBagButton";
 			this.sellSetBagButton.Size = new System.Drawing.Size(100, 20);
@@ -5143,25 +5194,25 @@ namespace Assistant
 			this.sellSetBagButton.Text = "Target Container";
 			this.sellSetBagButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellSetBagButton.Click += new System.EventHandler(this.sellSetBag_Click);
-			//
+			// 
 			// sellEnableCheckBox
-			//
+			// 
 			this.sellEnableCheckBox.Location = new System.Drawing.Point(274, 58);
 			this.sellEnableCheckBox.Name = "sellEnableCheckBox";
 			this.sellEnableCheckBox.Size = new System.Drawing.Size(105, 22);
 			this.sellEnableCheckBox.TabIndex = 82;
 			this.sellEnableCheckBox.Text = "Enable Sell List";
 			this.sellEnableCheckBox.CheckedChanged += new System.EventHandler(this.sellEnableCheck_CheckedChanged);
-			//
+			// 
 			// sellListView
-			//
+			// 
 			this.sellListView.CheckBoxes = true;
 			this.sellListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader18,
-			this.columnHeader19,
-			this.columnHeader20,
-			this.columnHeader21,
-			this.columnHeader22});
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20,
+            this.columnHeader21,
+            this.columnHeader22});
 			this.sellListView.FullRowSelect = true;
 			this.sellListView.GridLines = true;
 			this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5175,44 +5226,44 @@ namespace Assistant
 			this.sellListView.UseCompatibleStateImageBehavior = false;
 			this.sellListView.View = System.Windows.Forms.View.Details;
 			this.sellListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.sellagentListView_ItemChecked);
-			//
+			// 
 			// columnHeader18
-			//
+			// 
 			this.columnHeader18.Text = "X";
 			this.columnHeader18.Width = 22;
-			//
+			// 
 			// columnHeader19
-			//
+			// 
 			this.columnHeader19.Text = "Item Name";
 			this.columnHeader19.Width = 78;
-			//
+			// 
 			// columnHeader20
-			//
+			// 
 			this.columnHeader20.Text = "Graphics";
 			this.columnHeader20.Width = 54;
-			//
+			// 
 			// columnHeader21
-			//
+			// 
 			this.columnHeader21.Text = "Amount";
 			this.columnHeader21.Width = 50;
-			//
+			// 
 			// columnHeader22
-			//
+			// 
 			this.columnHeader22.Text = "Color";
 			this.columnHeader22.Width = 50;
-			//
+			// 
 			// label26
-			//
+			// 
 			this.label26.AutoSize = true;
 			this.label26.Location = new System.Drawing.Point(3, 18);
 			this.label26.Name = "label26";
 			this.label26.Size = new System.Drawing.Size(64, 13);
 			this.label26.TabIndex = 77;
 			this.label26.Text = "Vendor Sell:";
-			//
+			// 
 			// sellRemoveListButton
-			//
-			this.sellRemoveListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellRemoveListButton.ColorTable = office2010BlueTheme;
 			this.sellRemoveListButton.Location = new System.Drawing.Point(369, 14);
 			this.sellRemoveListButton.Name = "sellRemoveListButton";
 			this.sellRemoveListButton.Size = new System.Drawing.Size(90, 20);
@@ -5220,10 +5271,10 @@ namespace Assistant
 			this.sellRemoveListButton.Text = "Remove";
 			this.sellRemoveListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellRemoveListButton.Click += new System.EventHandler(this.sellRemoveList_Click);
-			//
+			// 
 			// sellAddListButton
-			//
-			this.sellAddListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellAddListButton.ColorTable = office2010BlueTheme;
 			this.sellAddListButton.Location = new System.Drawing.Point(273, 14);
 			this.sellAddListButton.Name = "sellAddListButton";
 			this.sellAddListButton.Size = new System.Drawing.Size(90, 20);
@@ -5231,10 +5282,10 @@ namespace Assistant
 			this.sellAddListButton.Text = "Add";
 			this.sellAddListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellAddListButton.Click += new System.EventHandler(this.sellAddList_Click);
-			//
+			// 
 			// sellImportListButton
-			//
-			this.sellImportListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellImportListButton.ColorTable = office2010BlueTheme;
 			this.sellImportListButton.Location = new System.Drawing.Point(465, 14);
 			this.sellImportListButton.Name = "sellImportListButton";
 			this.sellImportListButton.Size = new System.Drawing.Size(90, 20);
@@ -5242,9 +5293,9 @@ namespace Assistant
 			this.sellImportListButton.Text = "Import";
 			this.sellImportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellImportListButton.Click += new System.EventHandler(this.sellImportListButton_Click);
-			//
+			// 
 			// sellListSelect
-			//
+			// 
 			this.sellListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.sellListSelect.FormattingEnabled = true;
 			this.sellListSelect.Location = new System.Drawing.Point(78, 12);
@@ -5252,10 +5303,10 @@ namespace Assistant
 			this.sellListSelect.Size = new System.Drawing.Size(183, 24);
 			this.sellListSelect.TabIndex = 78;
 			this.sellListSelect.SelectedIndexChanged += new System.EventHandler(this.sellListSelect_SelectedIndexChanged);
-			//
+			// 
 			// sellExportListButton
-			//
-			this.sellExportListButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.sellExportListButton.ColorTable = office2010BlueTheme;
 			this.sellExportListButton.Location = new System.Drawing.Point(561, 14);
 			this.sellExportListButton.Name = "sellExportListButton";
 			this.sellExportListButton.Size = new System.Drawing.Size(90, 20);
@@ -5263,9 +5314,9 @@ namespace Assistant
 			this.sellExportListButton.Text = "Export";
 			this.sellExportListButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellExportListButton.Click += new System.EventHandler(this.sellExportListButton_Click);
-			//
+			// 
 			// Dress
-			//
+			// 
 			this.Dress.Controls.Add(this.dressStopButton);
 			this.Dress.Controls.Add(this.dressConflictCheckB);
 			this.Dress.Controls.Add(this.dressBagLabel);
@@ -5290,10 +5341,10 @@ namespace Assistant
 			this.Dress.TabIndex = 5;
 			this.Dress.Text = "Dress / Arm";
 			this.Dress.UseVisualStyleBackColor = true;
-			//
+			// 
 			// dressStopButton
-			//
-			this.dressStopButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressStopButton.ColorTable = office2010BlueTheme;
 			this.dressStopButton.Location = new System.Drawing.Point(407, 58);
 			this.dressStopButton.Name = "dressStopButton";
 			this.dressStopButton.Size = new System.Drawing.Size(61, 20);
@@ -5301,9 +5352,9 @@ namespace Assistant
 			this.dressStopButton.Text = "Stop";
 			this.dressStopButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressStopButton.Click += new System.EventHandler(this.dressStopButton_Click);
-			//
+			// 
 			// dressConflictCheckB
-			//
+			// 
 			this.dressConflictCheckB.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.dressConflictCheckB.Location = new System.Drawing.Point(274, 84);
 			this.dressConflictCheckB.Name = "dressConflictCheckB";
@@ -5311,17 +5362,17 @@ namespace Assistant
 			this.dressConflictCheckB.TabIndex = 90;
 			this.dressConflictCheckB.Text = "Remove Conflict Item";
 			this.dressConflictCheckB.CheckedChanged += new System.EventHandler(this.dressConflictCheckB_CheckedChanged);
-			//
+			// 
 			// dressBagLabel
-			//
+			// 
 			this.dressBagLabel.Location = new System.Drawing.Point(566, 154);
 			this.dressBagLabel.Name = "dressBagLabel";
 			this.dressBagLabel.Size = new System.Drawing.Size(82, 19);
 			this.dressBagLabel.TabIndex = 89;
 			this.dressBagLabel.Text = "0x00000000";
-			//
+			// 
 			// groupBox22
-			//
+			// 
 			this.groupBox22.Controls.Add(this.dressAddTargetB);
 			this.groupBox22.Controls.Add(this.dressAddManualB);
 			this.groupBox22.Controls.Add(this.dressRemoveB);
@@ -5332,10 +5383,10 @@ namespace Assistant
 			this.groupBox22.TabIndex = 85;
 			this.groupBox22.TabStop = false;
 			this.groupBox22.Text = "Item List";
-			//
+			// 
 			// dressAddTargetB
-			//
-			this.dressAddTargetB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressAddTargetB.ColorTable = office2010BlueTheme;
 			this.dressAddTargetB.Location = new System.Drawing.Point(5, 68);
 			this.dressAddTargetB.Name = "dressAddTargetB";
 			this.dressAddTargetB.Size = new System.Drawing.Size(90, 20);
@@ -5343,10 +5394,10 @@ namespace Assistant
 			this.dressAddTargetB.Text = "Add Target";
 			this.dressAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressAddTargetB.Click += new System.EventHandler(this.dressAddTargetB_Click);
-			//
+			// 
 			// dressAddManualB
-			//
-			this.dressAddManualB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressAddManualB.ColorTable = office2010BlueTheme;
 			this.dressAddManualB.Location = new System.Drawing.Point(5, 43);
 			this.dressAddManualB.Name = "dressAddManualB";
 			this.dressAddManualB.Size = new System.Drawing.Size(90, 20);
@@ -5354,10 +5405,10 @@ namespace Assistant
 			this.dressAddManualB.Text = "Add Clear Layer";
 			this.dressAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressAddManualB.Click += new System.EventHandler(this.dressAddManualB_Click);
-			//
+			// 
 			// dressRemoveB
-			//
-			this.dressRemoveB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressRemoveB.ColorTable = office2010BlueTheme;
 			this.dressRemoveB.Location = new System.Drawing.Point(5, 94);
 			this.dressRemoveB.Name = "dressRemoveB";
 			this.dressRemoveB.Size = new System.Drawing.Size(90, 20);
@@ -5365,10 +5416,10 @@ namespace Assistant
 			this.dressRemoveB.Text = "Remove";
 			this.dressRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressRemoveB.Click += new System.EventHandler(this.dressRemoveB_Click);
-			//
+			// 
 			// dressReadB
-			//
-			this.dressReadB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressReadB.ColorTable = office2010BlueTheme;
 			this.dressReadB.Location = new System.Drawing.Point(5, 18);
 			this.dressReadB.Name = "dressReadB";
 			this.dressReadB.Size = new System.Drawing.Size(90, 20);
@@ -5376,18 +5427,18 @@ namespace Assistant
 			this.dressReadB.Text = "Read Current";
 			this.dressReadB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressReadB.Click += new System.EventHandler(this.dressReadB_Click);
-			//
+			// 
 			// label29
-			//
+			// 
 			this.label29.AutoSize = true;
 			this.label29.Location = new System.Drawing.Point(521, 61);
 			this.label29.Name = "label29";
 			this.label29.Size = new System.Drawing.Size(105, 13);
 			this.label29.TabIndex = 76;
 			this.label29.Text = "Drag Item Delay (ms)";
-			//
+			// 
 			// groupBox21
-			//
+			// 
 			this.groupBox21.Controls.Add(this.dressLogBox);
 			this.groupBox21.Location = new System.Drawing.Point(267, 109);
 			this.groupBox21.Name = "groupBox21";
@@ -5395,18 +5446,18 @@ namespace Assistant
 			this.groupBox21.TabIndex = 74;
 			this.groupBox21.TabStop = false;
 			this.groupBox21.Text = "Organizer Log";
-			//
+			// 
 			// dressLogBox
-			//
+			// 
 			this.dressLogBox.FormattingEnabled = true;
 			this.dressLogBox.Location = new System.Drawing.Point(7, 18);
 			this.dressLogBox.Name = "dressLogBox";
 			this.dressLogBox.Size = new System.Drawing.Size(265, 199);
 			this.dressLogBox.TabIndex = 0;
-			//
+			// 
 			// dressSetBagB
-			//
-			this.dressSetBagB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressSetBagB.ColorTable = office2010BlueTheme;
 			this.dressSetBagB.Location = new System.Drawing.Point(558, 127);
 			this.dressSetBagB.Name = "dressSetBagB";
 			this.dressSetBagB.Size = new System.Drawing.Size(88, 20);
@@ -5414,10 +5465,10 @@ namespace Assistant
 			this.dressSetBagB.Text = "Undress Bag";
 			this.dressSetBagB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressSetBagB.Click += new System.EventHandler(this.dressSetBagB_Click);
-			//
+			// 
 			// undressExecuteButton
-			//
-			this.undressExecuteButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.undressExecuteButton.ColorTable = office2010BlueTheme;
 			this.undressExecuteButton.Location = new System.Drawing.Point(340, 58);
 			this.undressExecuteButton.Name = "undressExecuteButton";
 			this.undressExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -5425,10 +5476,10 @@ namespace Assistant
 			this.undressExecuteButton.Text = "Undres";
 			this.undressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.undressExecuteButton.Click += new System.EventHandler(this.razorButton10_Click);
-			//
+			// 
 			// dressExecuteButton
-			//
-			this.dressExecuteButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressExecuteButton.ColorTable = office2010BlueTheme;
 			this.dressExecuteButton.Location = new System.Drawing.Point(274, 58);
 			this.dressExecuteButton.Name = "dressExecuteButton";
 			this.dressExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -5436,12 +5487,12 @@ namespace Assistant
 			this.dressExecuteButton.Text = "Dress";
 			this.dressExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressExecuteButton.Click += new System.EventHandler(this.dressExecuteButton_Click);
-			//
+			// 
 			// dressDragDelay
-			//
-			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.dressDragDelay.BackColor = System.Drawing.Color.White;
 			this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.dressDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5451,15 +5502,15 @@ namespace Assistant
 			this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.dressDragDelay.TabIndex = 75;
 			this.dressDragDelay.TextChanged += new System.EventHandler(this.dressDragDelay_TextChanged);
-			//
+			// 
 			// dressListView
-			//
+			// 
 			this.dressListView.CheckBoxes = true;
 			this.dressListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader24,
-			this.columnHeader25,
-			this.columnHeader26,
-			this.columnHeader27});
+            this.columnHeader24,
+            this.columnHeader25,
+            this.columnHeader26,
+            this.columnHeader27});
 			this.dressListView.FullRowSelect = true;
 			this.dressListView.GridLines = true;
 			this.dressListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5473,38 +5524,38 @@ namespace Assistant
 			this.dressListView.UseCompatibleStateImageBehavior = false;
 			this.dressListView.View = System.Windows.Forms.View.Details;
 			this.dressListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.dresslistView_ItemChecked);
-			//
+			// 
 			// columnHeader24
-			//
+			// 
 			this.columnHeader24.Text = "X";
 			this.columnHeader24.Width = 22;
-			//
+			// 
 			// columnHeader25
-			//
+			// 
 			this.columnHeader25.Text = "Layer";
 			this.columnHeader25.Width = 90;
-			//
+			// 
 			// columnHeader26
-			//
+			// 
 			this.columnHeader26.Text = "Name";
-			//
+			// 
 			// columnHeader27
-			//
+			// 
 			this.columnHeader27.Text = "Serial";
 			this.columnHeader27.Width = 75;
-			//
+			// 
 			// label28
-			//
+			// 
 			this.label28.AutoSize = true;
 			this.label28.Location = new System.Drawing.Point(6, 18);
 			this.label28.Name = "label28";
 			this.label28.Size = new System.Drawing.Size(56, 13);
 			this.label28.TabIndex = 60;
 			this.label28.Text = "Dress List:";
-			//
+			// 
 			// dressRemoveListB
-			//
-			this.dressRemoveListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressRemoveListB.ColorTable = office2010BlueTheme;
 			this.dressRemoveListB.Location = new System.Drawing.Point(366, 14);
 			this.dressRemoveListB.Name = "dressRemoveListB";
 			this.dressRemoveListB.Size = new System.Drawing.Size(90, 20);
@@ -5512,10 +5563,10 @@ namespace Assistant
 			this.dressRemoveListB.Text = "Remove";
 			this.dressRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressRemoveListB.Click += new System.EventHandler(this.dressRemoveListB_Click);
-			//
+			// 
 			// dressAddListB
-			//
-			this.dressAddListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressAddListB.ColorTable = office2010BlueTheme;
 			this.dressAddListB.Location = new System.Drawing.Point(270, 14);
 			this.dressAddListB.Name = "dressAddListB";
 			this.dressAddListB.Size = new System.Drawing.Size(90, 20);
@@ -5523,10 +5574,10 @@ namespace Assistant
 			this.dressAddListB.Text = "Add";
 			this.dressAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressAddListB.Click += new System.EventHandler(this.dressAddListB_Click);
-			//
+			// 
 			// dressImportListB
-			//
-			this.dressImportListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressImportListB.ColorTable = office2010BlueTheme;
 			this.dressImportListB.Location = new System.Drawing.Point(462, 14);
 			this.dressImportListB.Name = "dressImportListB";
 			this.dressImportListB.Size = new System.Drawing.Size(90, 20);
@@ -5534,9 +5585,9 @@ namespace Assistant
 			this.dressImportListB.Text = "Import";
 			this.dressImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressImportListB.Click += new System.EventHandler(this.dressImportListB_Click);
-			//
+			// 
 			// dressListSelect
-			//
+			// 
 			this.dressListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.dressListSelect.FormattingEnabled = true;
 			this.dressListSelect.Location = new System.Drawing.Point(78, 12);
@@ -5544,10 +5595,10 @@ namespace Assistant
 			this.dressListSelect.Size = new System.Drawing.Size(183, 24);
 			this.dressListSelect.TabIndex = 61;
 			this.dressListSelect.SelectedIndexChanged += new System.EventHandler(this.dressListSelect_SelectedIndexChanged);
-			//
+			// 
 			// dressExportListB
-			//
-			this.dressExportListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.dressExportListB.ColorTable = office2010BlueTheme;
 			this.dressExportListB.Location = new System.Drawing.Point(558, 14);
 			this.dressExportListB.Name = "dressExportListB";
 			this.dressExportListB.Size = new System.Drawing.Size(90, 20);
@@ -5555,9 +5606,9 @@ namespace Assistant
 			this.dressExportListB.Text = "Export";
 			this.dressExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.dressExportListB.Click += new System.EventHandler(this.dressExportListB_Click);
-			//
+			// 
 			// friends
-			//
+			// 
 			this.friends.Controls.Add(this.friendGroupBox);
 			this.friends.Controls.Add(this.friendloggroupBox);
 			this.friends.Controls.Add(this.friendIncludePartyCheckBox);
@@ -5577,9 +5628,9 @@ namespace Assistant
 			this.friends.TabIndex = 6;
 			this.friends.Text = "Friends";
 			this.friends.UseVisualStyleBackColor = true;
-			//
+			// 
 			// friendGroupBox
-			//
+			// 
 			this.friendGroupBox.Controls.Add(this.friendAddTargetButton);
 			this.friendGroupBox.Controls.Add(this.friendRemoveButton);
 			this.friendGroupBox.Controls.Add(this.friendAddButton);
@@ -5589,10 +5640,10 @@ namespace Assistant
 			this.friendGroupBox.TabIndex = 76;
 			this.friendGroupBox.TabStop = false;
 			this.friendGroupBox.Text = "Friend Manage";
-			//
+			// 
 			// friendAddTargetButton
-			//
-			this.friendAddTargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.friendAddTargetButton.ColorTable = office2010BlueTheme;
 			this.friendAddTargetButton.Location = new System.Drawing.Point(6, 43);
 			this.friendAddTargetButton.Name = "friendAddTargetButton";
 			this.friendAddTargetButton.Size = new System.Drawing.Size(90, 20);
@@ -5600,10 +5651,10 @@ namespace Assistant
 			this.friendAddTargetButton.Text = "Add Target";
 			this.friendAddTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.friendAddTargetButton.Click += new System.EventHandler(this.friendAddTargetButton_Click);
-			//
+			// 
 			// friendRemoveButton
-			//
-			this.friendRemoveButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.friendRemoveButton.ColorTable = office2010BlueTheme;
 			this.friendRemoveButton.Location = new System.Drawing.Point(6, 69);
 			this.friendRemoveButton.Name = "friendRemoveButton";
 			this.friendRemoveButton.Size = new System.Drawing.Size(90, 20);
@@ -5611,10 +5662,10 @@ namespace Assistant
 			this.friendRemoveButton.Text = "Remove";
 			this.friendRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.friendRemoveButton.Click += new System.EventHandler(this.friendRemoveButton_Click);
-			//
+			// 
 			// friendAddButton
-			//
-			this.friendAddButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.friendAddButton.ColorTable = office2010BlueTheme;
 			this.friendAddButton.Location = new System.Drawing.Point(6, 18);
 			this.friendAddButton.Name = "friendAddButton";
 			this.friendAddButton.Size = new System.Drawing.Size(90, 20);
@@ -5622,9 +5673,9 @@ namespace Assistant
 			this.friendAddButton.Text = "Add Manual";
 			this.friendAddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.friendAddButton.Click += new System.EventHandler(this.friendAddButton_Click);
-			//
+			// 
 			// friendloggroupBox
-			//
+			// 
 			this.friendloggroupBox.Controls.Add(this.friendLogBox);
 			this.friendloggroupBox.Location = new System.Drawing.Point(270, 157);
 			this.friendloggroupBox.Name = "friendloggroupBox";
@@ -5632,49 +5683,49 @@ namespace Assistant
 			this.friendloggroupBox.TabIndex = 74;
 			this.friendloggroupBox.TabStop = false;
 			this.friendloggroupBox.Text = "Friend Log";
-			//
+			// 
 			// friendLogBox
-			//
+			// 
 			this.friendLogBox.FormattingEnabled = true;
 			this.friendLogBox.Location = new System.Drawing.Point(7, 18);
 			this.friendLogBox.Name = "friendLogBox";
 			this.friendLogBox.Size = new System.Drawing.Size(365, 160);
 			this.friendLogBox.TabIndex = 0;
-			//
+			// 
 			// friendIncludePartyCheckBox
-			//
+			// 
 			this.friendIncludePartyCheckBox.Location = new System.Drawing.Point(270, 107);
 			this.friendIncludePartyCheckBox.Name = "friendIncludePartyCheckBox";
 			this.friendIncludePartyCheckBox.Size = new System.Drawing.Size(234, 22);
 			this.friendIncludePartyCheckBox.TabIndex = 68;
 			this.friendIncludePartyCheckBox.Text = "Include party member in Friend List";
 			this.friendIncludePartyCheckBox.CheckedChanged += new System.EventHandler(this.friendIncludePartyCheckBox_CheckedChanged);
-			//
+			// 
 			// friendAttackCheckBox
-			//
+			// 
 			this.friendAttackCheckBox.Location = new System.Drawing.Point(270, 82);
 			this.friendAttackCheckBox.Name = "friendAttackCheckBox";
 			this.friendAttackCheckBox.Size = new System.Drawing.Size(252, 22);
 			this.friendAttackCheckBox.TabIndex = 67;
 			this.friendAttackCheckBox.Text = "Prevent attacking friends in warmode";
 			this.friendAttackCheckBox.CheckedChanged += new System.EventHandler(this.friendAttackCheckBox_CheckedChanged);
-			//
+			// 
 			// friendPartyCheckBox
-			//
+			// 
 			this.friendPartyCheckBox.Location = new System.Drawing.Point(270, 57);
 			this.friendPartyCheckBox.Name = "friendPartyCheckBox";
 			this.friendPartyCheckBox.Size = new System.Drawing.Size(241, 22);
 			this.friendPartyCheckBox.TabIndex = 66;
 			this.friendPartyCheckBox.Text = "Autoaccept party from Friends";
 			this.friendPartyCheckBox.CheckedChanged += new System.EventHandler(this.friendPartyCheckBox_CheckedChanged);
-			//
+			// 
 			// friendlistView
-			//
+			// 
 			this.friendlistView.CheckBoxes = true;
 			this.friendlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader28,
-			this.columnHeader29,
-			this.columnHeader30});
+            this.columnHeader28,
+            this.columnHeader29,
+            this.columnHeader30});
 			this.friendlistView.FullRowSelect = true;
 			this.friendlistView.GridLines = true;
 			this.friendlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5688,34 +5739,34 @@ namespace Assistant
 			this.friendlistView.UseCompatibleStateImageBehavior = false;
 			this.friendlistView.View = System.Windows.Forms.View.Details;
 			this.friendlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.friendlistView_PlayerChecked);
-			//
+			// 
 			// columnHeader28
-			//
+			// 
 			this.columnHeader28.Text = "X";
 			this.columnHeader28.Width = 22;
-			//
+			// 
 			// columnHeader29
-			//
+			// 
 			this.columnHeader29.Text = "Name";
 			this.columnHeader29.Width = 145;
-			//
+			// 
 			// columnHeader30
-			//
+			// 
 			this.columnHeader30.Text = "Serial";
 			this.columnHeader30.Width = 75;
-			//
+			// 
 			// labelfriend
-			//
+			// 
 			this.labelfriend.AutoSize = true;
 			this.labelfriend.Location = new System.Drawing.Point(6, 18);
 			this.labelfriend.Name = "labelfriend";
 			this.labelfriend.Size = new System.Drawing.Size(58, 13);
 			this.labelfriend.TabIndex = 60;
 			this.labelfriend.Text = "Friend List:";
-			//
+			// 
 			// friendButtonRemoveList
-			//
-			this.friendButtonRemoveList.ColorTable = office2010BlueTheme1;
+			// 
+			this.friendButtonRemoveList.ColorTable = office2010BlueTheme;
 			this.friendButtonRemoveList.Location = new System.Drawing.Point(366, 14);
 			this.friendButtonRemoveList.Name = "friendButtonRemoveList";
 			this.friendButtonRemoveList.Size = new System.Drawing.Size(90, 20);
@@ -5723,10 +5774,10 @@ namespace Assistant
 			this.friendButtonRemoveList.Text = "Remove";
 			this.friendButtonRemoveList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.friendButtonRemoveList.Click += new System.EventHandler(this.friendButtonRemoveList_Click);
-			//
+			// 
 			// friendButtonAddList
-			//
-			this.friendButtonAddList.ColorTable = office2010BlueTheme1;
+			// 
+			this.friendButtonAddList.ColorTable = office2010BlueTheme;
 			this.friendButtonAddList.Location = new System.Drawing.Point(270, 14);
 			this.friendButtonAddList.Name = "friendButtonAddList";
 			this.friendButtonAddList.Size = new System.Drawing.Size(90, 20);
@@ -5734,10 +5785,10 @@ namespace Assistant
 			this.friendButtonAddList.Text = "Add";
 			this.friendButtonAddList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.friendButtonAddList.Click += new System.EventHandler(this.friendButtonAddList_Click);
-			//
+			// 
 			// friendButtonImportList
-			//
-			this.friendButtonImportList.ColorTable = office2010BlueTheme1;
+			// 
+			this.friendButtonImportList.ColorTable = office2010BlueTheme;
 			this.friendButtonImportList.Location = new System.Drawing.Point(462, 14);
 			this.friendButtonImportList.Name = "friendButtonImportList";
 			this.friendButtonImportList.Size = new System.Drawing.Size(90, 20);
@@ -5745,9 +5796,9 @@ namespace Assistant
 			this.friendButtonImportList.Text = "Import";
 			this.friendButtonImportList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.friendButtonImportList.Click += new System.EventHandler(this.friendButtonImportList_Click);
-			//
+			// 
 			// friendListSelect
-			//
+			// 
 			this.friendListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.friendListSelect.FormattingEnabled = true;
 			this.friendListSelect.Location = new System.Drawing.Point(78, 12);
@@ -5755,10 +5806,10 @@ namespace Assistant
 			this.friendListSelect.Size = new System.Drawing.Size(183, 24);
 			this.friendListSelect.TabIndex = 61;
 			this.friendListSelect.SelectedIndexChanged += new System.EventHandler(this.friendListSelect_SelectedIndexChanged);
-			//
+			// 
 			// friendButtonExportList
-			//
-			this.friendButtonExportList.ColorTable = office2010BlueTheme1;
+			// 
+			this.friendButtonExportList.ColorTable = office2010BlueTheme;
 			this.friendButtonExportList.Location = new System.Drawing.Point(558, 14);
 			this.friendButtonExportList.Name = "friendButtonExportList";
 			this.friendButtonExportList.Size = new System.Drawing.Size(90, 20);
@@ -5766,9 +5817,9 @@ namespace Assistant
 			this.friendButtonExportList.Text = "Export";
 			this.friendButtonExportList.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.friendButtonExportList.Click += new System.EventHandler(this.friendButtonExportList_Click);
-			//
+			// 
 			// restock
-			//
+			// 
 			this.restock.Controls.Add(this.restockStopButton);
 			this.restock.Controls.Add(this.restockExecuteButton);
 			this.restock.Controls.Add(this.groupBox2);
@@ -5793,10 +5844,10 @@ namespace Assistant
 			this.restock.TabIndex = 7;
 			this.restock.Text = "Restock";
 			this.restock.UseVisualStyleBackColor = true;
-			//
+			// 
 			// restockStopButton
-			//
-			this.restockStopButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockStopButton.ColorTable = office2010BlueTheme;
 			this.restockStopButton.Location = new System.Drawing.Point(334, 58);
 			this.restockStopButton.Name = "restockStopButton";
 			this.restockStopButton.Size = new System.Drawing.Size(61, 20);
@@ -5804,10 +5855,10 @@ namespace Assistant
 			this.restockStopButton.Text = "Stop";
 			this.restockStopButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockStopButton.Click += new System.EventHandler(this.restockStopButton_Click);
-			//
+			// 
 			// restockExecuteButton
-			//
-			this.restockExecuteButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockExecuteButton.ColorTable = office2010BlueTheme;
 			this.restockExecuteButton.Location = new System.Drawing.Point(268, 58);
 			this.restockExecuteButton.Name = "restockExecuteButton";
 			this.restockExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -5815,9 +5866,9 @@ namespace Assistant
 			this.restockExecuteButton.Text = "Execute";
 			this.restockExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockExecuteButton.Click += new System.EventHandler(this.restockExecuteButton_Click);
-			//
+			// 
 			// groupBox2
-			//
+			// 
 			this.groupBox2.Controls.Add(this.restockLogBox);
 			this.groupBox2.Location = new System.Drawing.Point(267, 84);
 			this.groupBox2.Name = "groupBox2";
@@ -5825,42 +5876,42 @@ namespace Assistant
 			this.groupBox2.TabIndex = 83;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Restock Log";
-			//
+			// 
 			// restockLogBox
-			//
+			// 
 			this.restockLogBox.FormattingEnabled = true;
 			this.restockLogBox.Location = new System.Drawing.Point(7, 18);
 			this.restockLogBox.Name = "restockLogBox";
 			this.restockLogBox.Size = new System.Drawing.Size(265, 225);
 			this.restockLogBox.TabIndex = 0;
-			//
+			// 
 			// label13
-			//
+			// 
 			this.label13.AutoSize = true;
 			this.label13.Location = new System.Drawing.Point(446, 61);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(105, 13);
 			this.label13.TabIndex = 82;
 			this.label13.Text = "Drag Item Delay (ms)";
-			//
+			// 
 			// restockDestinationLabel
-			//
+			// 
 			this.restockDestinationLabel.Location = new System.Drawing.Point(564, 126);
 			this.restockDestinationLabel.Name = "restockDestinationLabel";
 			this.restockDestinationLabel.Size = new System.Drawing.Size(82, 19);
 			this.restockDestinationLabel.TabIndex = 80;
 			this.restockDestinationLabel.Text = "0x00000000";
-			//
+			// 
 			// restockSourceLabel
-			//
+			// 
 			this.restockSourceLabel.Location = new System.Drawing.Point(564, 82);
 			this.restockSourceLabel.Name = "restockSourceLabel";
 			this.restockSourceLabel.Size = new System.Drawing.Size(82, 19);
 			this.restockSourceLabel.TabIndex = 77;
 			this.restockSourceLabel.Text = "0x00000000";
-			//
+			// 
 			// groupBox3
-			//
+			// 
 			this.groupBox3.Controls.Add(this.restockEditButton);
 			this.groupBox3.Controls.Add(this.restockAddTargetButton);
 			this.groupBox3.Controls.Add(this.restockRemoveButton);
@@ -5871,10 +5922,10 @@ namespace Assistant
 			this.groupBox3.TabIndex = 78;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Item List";
-			//
+			// 
 			// restockEditButton
-			//
-			this.restockEditButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockEditButton.ColorTable = office2010BlueTheme;
 			this.restockEditButton.Location = new System.Drawing.Point(5, 68);
 			this.restockEditButton.Name = "restockEditButton";
 			this.restockEditButton.Size = new System.Drawing.Size(90, 20);
@@ -5882,10 +5933,10 @@ namespace Assistant
 			this.restockEditButton.Text = "Edit";
 			this.restockEditButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockEditButton.Click += new System.EventHandler(this.restockEditButton_Click);
-			//
+			// 
 			// restockAddTargetButton
-			//
-			this.restockAddTargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockAddTargetButton.ColorTable = office2010BlueTheme;
 			this.restockAddTargetButton.Location = new System.Drawing.Point(5, 43);
 			this.restockAddTargetButton.Name = "restockAddTargetButton";
 			this.restockAddTargetButton.Size = new System.Drawing.Size(90, 20);
@@ -5893,10 +5944,10 @@ namespace Assistant
 			this.restockAddTargetButton.Text = "Add Target";
 			this.restockAddTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockAddTargetButton.Click += new System.EventHandler(this.restockAddTargetButton_Click);
-			//
+			// 
 			// restockRemoveButton
-			//
-			this.restockRemoveButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockRemoveButton.ColorTable = office2010BlueTheme;
 			this.restockRemoveButton.Location = new System.Drawing.Point(5, 94);
 			this.restockRemoveButton.Name = "restockRemoveButton";
 			this.restockRemoveButton.Size = new System.Drawing.Size(90, 20);
@@ -5904,10 +5955,10 @@ namespace Assistant
 			this.restockRemoveButton.Text = "Remove";
 			this.restockRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockRemoveButton.Click += new System.EventHandler(this.restockRemoveButton_Click);
-			//
+			// 
 			// restockAddManualButton
-			//
-			this.restockAddManualButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockAddManualButton.ColorTable = office2010BlueTheme;
 			this.restockAddManualButton.Location = new System.Drawing.Point(5, 18);
 			this.restockAddManualButton.Name = "restockAddManualButton";
 			this.restockAddManualButton.Size = new System.Drawing.Size(90, 20);
@@ -5915,12 +5966,12 @@ namespace Assistant
 			this.restockAddManualButton.Text = "Add Manual";
 			this.restockAddManualButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockAddManualButton.Click += new System.EventHandler(this.restockAddManualButton_Click);
-			//
+			// 
 			// restockDragDelay
-			//
-			this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.restockDragDelay.BackColor = System.Drawing.Color.White;
 			this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.restockDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5930,10 +5981,10 @@ namespace Assistant
 			this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.restockDragDelay.TabIndex = 81;
 			this.restockDragDelay.TextChanged += new System.EventHandler(this.restockDragDelay_TextChanged);
-			//
+			// 
 			// restockSetDestinationButton
-			//
-			this.restockSetDestinationButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockSetDestinationButton.ColorTable = office2010BlueTheme;
 			this.restockSetDestinationButton.Location = new System.Drawing.Point(558, 104);
 			this.restockSetDestinationButton.Name = "restockSetDestinationButton";
 			this.restockSetDestinationButton.Size = new System.Drawing.Size(90, 20);
@@ -5941,10 +5992,10 @@ namespace Assistant
 			this.restockSetDestinationButton.Text = "Destination Cont";
 			this.restockSetDestinationButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockSetDestinationButton.Click += new System.EventHandler(this.restockSetDestinationButton_Click);
-			//
+			// 
 			// restockSetSourceButton
-			//
-			this.restockSetSourceButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockSetSourceButton.ColorTable = office2010BlueTheme;
 			this.restockSetSourceButton.Location = new System.Drawing.Point(558, 60);
 			this.restockSetSourceButton.Name = "restockSetSourceButton";
 			this.restockSetSourceButton.Size = new System.Drawing.Size(90, 20);
@@ -5952,16 +6003,16 @@ namespace Assistant
 			this.restockSetSourceButton.Text = "Source Cont";
 			this.restockSetSourceButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockSetSourceButton.Click += new System.EventHandler(this.restockSetSourceButton_Click);
-			//
+			// 
 			// restocklistView
-			//
+			// 
 			this.restocklistView.CheckBoxes = true;
 			this.restocklistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader31,
-			this.columnHeader32,
-			this.columnHeader33,
-			this.columnHeader34,
-			this.columnHeader35});
+            this.columnHeader31,
+            this.columnHeader32,
+            this.columnHeader33,
+            this.columnHeader34,
+            this.columnHeader35});
 			this.restocklistView.FullRowSelect = true;
 			this.restocklistView.GridLines = true;
 			this.restocklistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5975,44 +6026,44 @@ namespace Assistant
 			this.restocklistView.UseCompatibleStateImageBehavior = false;
 			this.restocklistView.View = System.Windows.Forms.View.Details;
 			this.restocklistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.restocklistView_ItemChecked);
-			//
+			// 
 			// columnHeader31
-			//
+			// 
 			this.columnHeader31.Text = "X";
 			this.columnHeader31.Width = 22;
-			//
+			// 
 			// columnHeader32
-			//
+			// 
 			this.columnHeader32.Text = "Item Name";
 			this.columnHeader32.Width = 85;
-			//
+			// 
 			// columnHeader33
-			//
+			// 
 			this.columnHeader33.Text = "Graphics";
 			this.columnHeader33.Width = 55;
-			//
+			// 
 			// columnHeader34
-			//
+			// 
 			this.columnHeader34.Text = "Color";
 			this.columnHeader34.Width = 44;
-			//
+			// 
 			// columnHeader35
-			//
+			// 
 			this.columnHeader35.Text = "Limit";
 			this.columnHeader35.Width = 43;
-			//
+			// 
 			// label7
-			//
+			// 
 			this.label7.AutoSize = true;
 			this.label7.Location = new System.Drawing.Point(6, 18);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(69, 13);
 			this.label7.TabIndex = 66;
 			this.label7.Text = "Restock List:";
-			//
+			// 
 			// restockRemoveListB
-			//
-			this.restockRemoveListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockRemoveListB.ColorTable = office2010BlueTheme;
 			this.restockRemoveListB.Location = new System.Drawing.Point(366, 14);
 			this.restockRemoveListB.Name = "restockRemoveListB";
 			this.restockRemoveListB.Size = new System.Drawing.Size(90, 20);
@@ -6020,10 +6071,10 @@ namespace Assistant
 			this.restockRemoveListB.Text = "Remove";
 			this.restockRemoveListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockRemoveListB.Click += new System.EventHandler(this.restockRemoveListB_Click);
-			//
+			// 
 			// restockAddListB
-			//
-			this.restockAddListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockAddListB.ColorTable = office2010BlueTheme;
 			this.restockAddListB.Location = new System.Drawing.Point(270, 14);
 			this.restockAddListB.Name = "restockAddListB";
 			this.restockAddListB.Size = new System.Drawing.Size(90, 20);
@@ -6031,10 +6082,10 @@ namespace Assistant
 			this.restockAddListB.Text = "Add";
 			this.restockAddListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockAddListB.Click += new System.EventHandler(this.restockAddListB_Click);
-			//
+			// 
 			// restockImportListB
-			//
-			this.restockImportListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockImportListB.ColorTable = office2010BlueTheme;
 			this.restockImportListB.Location = new System.Drawing.Point(462, 14);
 			this.restockImportListB.Name = "restockImportListB";
 			this.restockImportListB.Size = new System.Drawing.Size(90, 20);
@@ -6042,9 +6093,9 @@ namespace Assistant
 			this.restockImportListB.Text = "Import";
 			this.restockImportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockImportListB.Click += new System.EventHandler(this.restockImportB_Click);
-			//
+			// 
 			// restockListSelect
-			//
+			// 
 			this.restockListSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.restockListSelect.FormattingEnabled = true;
 			this.restockListSelect.Location = new System.Drawing.Point(78, 12);
@@ -6052,10 +6103,10 @@ namespace Assistant
 			this.restockListSelect.Size = new System.Drawing.Size(183, 24);
 			this.restockListSelect.TabIndex = 67;
 			this.restockListSelect.SelectedIndexChanged += new System.EventHandler(this.restockListSelect_SelectedIndexChanged);
-			//
+			// 
 			// restockExportListB
-			//
-			this.restockExportListB.ColorTable = office2010BlueTheme1;
+			// 
+			this.restockExportListB.ColorTable = office2010BlueTheme;
 			this.restockExportListB.Location = new System.Drawing.Point(558, 14);
 			this.restockExportListB.Name = "restockExportListB";
 			this.restockExportListB.Size = new System.Drawing.Size(90, 20);
@@ -6063,9 +6114,9 @@ namespace Assistant
 			this.restockExportListB.Text = "Export";
 			this.restockExportListB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockExportListB.Click += new System.EventHandler(this.restockExportListB_Click);
-			//
+			// 
 			// bandageheal
-			//
+			// 
 			this.bandageheal.Controls.Add(this.groupBox6);
 			this.bandageheal.Controls.Add(this.groupBox5);
 			this.bandageheal.Controls.Add(this.bandagehealenableCheckBox);
@@ -6076,9 +6127,9 @@ namespace Assistant
 			this.bandageheal.TabIndex = 8;
 			this.bandageheal.Text = "Bandage Heal";
 			this.bandageheal.UseVisualStyleBackColor = true;
-			//
+			// 
 			// groupBox6
-			//
+			// 
 			this.groupBox6.Controls.Add(this.bandagehealcountdownCheckBox);
 			this.groupBox6.Controls.Add(this.bandagehealhiddedCheckBox);
 			this.groupBox6.Controls.Add(this.bandagehealmortalCheckBox);
@@ -6105,9 +6156,9 @@ namespace Assistant
 			this.groupBox6.TabIndex = 74;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Settings";
-			//
+			// 
 			// bandagehealcountdownCheckBox
-			//
+			// 
 			this.bandagehealcountdownCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealcountdownCheckBox.Location = new System.Drawing.Point(10, 246);
 			this.bandagehealcountdownCheckBox.Name = "bandagehealcountdownCheckBox";
@@ -6115,9 +6166,9 @@ namespace Assistant
 			this.bandagehealcountdownCheckBox.TabIndex = 89;
 			this.bandagehealcountdownCheckBox.Text = "Show Heal Countdown";
 			this.bandagehealcountdownCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealcountdownCheckBox_CheckedChanged);
-			//
+			// 
 			// bandagehealhiddedCheckBox
-			//
+			// 
 			this.bandagehealhiddedCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealhiddedCheckBox.Location = new System.Drawing.Point(10, 218);
 			this.bandagehealhiddedCheckBox.Name = "bandagehealhiddedCheckBox";
@@ -6125,9 +6176,9 @@ namespace Assistant
 			this.bandagehealhiddedCheckBox.TabIndex = 88;
 			this.bandagehealhiddedCheckBox.Text = "Block heal if hidded";
 			this.bandagehealhiddedCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealhiddedCheckBox_CheckedChanged);
-			//
+			// 
 			// bandagehealmortalCheckBox
-			//
+			// 
 			this.bandagehealmortalCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealmortalCheckBox.Location = new System.Drawing.Point(10, 190);
 			this.bandagehealmortalCheckBox.Name = "bandagehealmortalCheckBox";
@@ -6135,9 +6186,9 @@ namespace Assistant
 			this.bandagehealmortalCheckBox.TabIndex = 87;
 			this.bandagehealmortalCheckBox.Text = "Block heal if mortalled";
 			this.bandagehealmortalCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealmortalCheckBox_CheckedChanged);
-			//
+			// 
 			// bandagehealpoisonCheckBox
-			//
+			// 
 			this.bandagehealpoisonCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealpoisonCheckBox.Location = new System.Drawing.Point(10, 162);
 			this.bandagehealpoisonCheckBox.Name = "bandagehealpoisonCheckBox";
@@ -6145,21 +6196,21 @@ namespace Assistant
 			this.bandagehealpoisonCheckBox.TabIndex = 86;
 			this.bandagehealpoisonCheckBox.Text = "Block heal if poisoned";
 			this.bandagehealpoisonCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealpoisonCheckBox_CheckedChanged);
-			//
+			// 
 			// label33
-			//
+			// 
 			this.label33.AutoSize = true;
 			this.label33.Location = new System.Drawing.Point(135, 139);
 			this.label33.Name = "label33";
 			this.label33.Size = new System.Drawing.Size(34, 13);
 			this.label33.TabIndex = 85;
 			this.label33.Text = "% hits";
-			//
+			// 
 			// bandagehealhpTextBox
-			//
-			this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealhpTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6169,21 +6220,21 @@ namespace Assistant
 			this.bandagehealhpTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealhpTextBox.TabIndex = 84;
 			this.bandagehealhpTextBox.TextChanged += new System.EventHandler(this.bandagehealhpTextBox_TextChanged);
-			//
+			// 
 			// label32
-			//
+			// 
 			this.label32.AutoSize = true;
 			this.label32.Location = new System.Drawing.Point(7, 138);
 			this.label32.Name = "label32";
 			this.label32.Size = new System.Drawing.Size(64, 13);
 			this.label32.TabIndex = 83;
 			this.label32.Text = "Start Below:";
-			//
+			// 
 			// bandagehealdelayTextBox
-			//
-			this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealdelayTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6193,18 +6244,18 @@ namespace Assistant
 			this.bandagehealdelayTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealdelayTextBox.TabIndex = 82;
 			this.bandagehealdelayTextBox.TextChanged += new System.EventHandler(this.bandagehealdelayTextBox_TextChanged);
-			//
+			// 
 			// label31
-			//
+			// 
 			this.label31.AutoSize = true;
 			this.label31.Location = new System.Drawing.Point(153, 106);
 			this.label31.Name = "label31";
 			this.label31.Size = new System.Drawing.Size(75, 13);
 			this.label31.TabIndex = 81;
 			this.label31.Text = "Custom Delay:";
-			//
+			// 
 			// bandagehealdexformulaCheckBox
-			//
+			// 
 			this.bandagehealdexformulaCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealdexformulaCheckBox.Location = new System.Drawing.Point(10, 102);
 			this.bandagehealdexformulaCheckBox.Name = "bandagehealdexformulaCheckBox";
@@ -6212,12 +6263,12 @@ namespace Assistant
 			this.bandagehealdexformulaCheckBox.TabIndex = 80;
 			this.bandagehealdexformulaCheckBox.Text = "Use DEX formula delay";
 			this.bandagehealdexformulaCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealdexformulaCheckBox_CheckedChanged);
-			//
+			// 
 			// bandagehealcustomcolorTextBox
-			//
-			this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealcustomcolorTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6227,21 +6278,21 @@ namespace Assistant
 			this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealcustomcolorTextBox.TabIndex = 79;
 			this.bandagehealcustomcolorTextBox.TextChanged += new System.EventHandler(this.bandagehealcustomcolorTextBox_TextChanged);
-			//
+			// 
 			// label30
-			//
+			// 
 			this.label30.AutoSize = true;
 			this.label30.Location = new System.Drawing.Point(246, 79);
 			this.label30.Name = "label30";
 			this.label30.Size = new System.Drawing.Size(34, 13);
 			this.label30.TabIndex = 78;
 			this.label30.Text = "Color:";
-			//
+			// 
 			// bandagehealcustomIDTextBox
-			//
-			this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealcustomIDTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6251,18 +6302,18 @@ namespace Assistant
 			this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealcustomIDTextBox.TabIndex = 77;
 			this.bandagehealcustomIDTextBox.TextChanged += new System.EventHandler(this.bandagehealcustomIDTextBox_TextChanged);
-			//
+			// 
 			// label19
-			//
+			// 
 			this.label19.AutoSize = true;
 			this.label19.Location = new System.Drawing.Point(153, 78);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(21, 13);
 			this.label19.TabIndex = 76;
 			this.label19.Text = "ID:";
-			//
+			// 
 			// bandagehealcustomCheckBox
-			//
+			// 
 			this.bandagehealcustomCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealcustomCheckBox.Location = new System.Drawing.Point(10, 74);
 			this.bandagehealcustomCheckBox.Name = "bandagehealcustomCheckBox";
@@ -6270,28 +6321,28 @@ namespace Assistant
 			this.bandagehealcustomCheckBox.TabIndex = 75;
 			this.bandagehealcustomCheckBox.Text = "Use Custom Bandage";
 			this.bandagehealcustomCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealcustomCheckBox_CheckedChanged);
-			//
+			// 
 			// bandagehealtargetLabel
-			//
+			// 
 			this.bandagehealtargetLabel.AutoSize = true;
 			this.bandagehealtargetLabel.Location = new System.Drawing.Point(73, 49);
 			this.bandagehealtargetLabel.Name = "bandagehealtargetLabel";
 			this.bandagehealtargetLabel.Size = new System.Drawing.Size(93, 13);
 			this.bandagehealtargetLabel.TabIndex = 4;
 			this.bandagehealtargetLabel.Text = "Null (0x00000000)";
-			//
+			// 
 			// label15
-			//
+			// 
 			this.label15.AutoSize = true;
 			this.label15.Location = new System.Drawing.Point(7, 49);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(41, 13);
 			this.label15.TabIndex = 3;
 			this.label15.Text = "Target:";
-			//
+			// 
 			// bandagehealsettargetButton
-			//
-			this.bandagehealsettargetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.bandagehealsettargetButton.ColorTable = office2010BlueTheme;
 			this.bandagehealsettargetButton.Location = new System.Drawing.Point(213, 16);
 			this.bandagehealsettargetButton.Name = "bandagehealsettargetButton";
 			this.bandagehealsettargetButton.Size = new System.Drawing.Size(75, 23);
@@ -6300,9 +6351,9 @@ namespace Assistant
 			this.bandagehealsettargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.bandagehealsettargetButton.UseVisualStyleBackColor = true;
 			this.bandagehealsettargetButton.Click += new System.EventHandler(this.bandagehealsettargetButton_Click);
-			//
+			// 
 			// bandagehealtargetComboBox
-			//
+			// 
 			this.bandagehealtargetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.bandagehealtargetComboBox.FormattingEnabled = true;
 			this.bandagehealtargetComboBox.Location = new System.Drawing.Point(76, 15);
@@ -6310,18 +6361,18 @@ namespace Assistant
 			this.bandagehealtargetComboBox.Size = new System.Drawing.Size(121, 24);
 			this.bandagehealtargetComboBox.TabIndex = 1;
 			this.bandagehealtargetComboBox.SelectedIndexChanged += new System.EventHandler(this.bandagehealtargetComboBox_SelectedIndexChanged);
-			//
+			// 
 			// label14
-			//
+			// 
 			this.label14.AutoSize = true;
 			this.label14.Location = new System.Drawing.Point(7, 20);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(66, 13);
 			this.label14.TabIndex = 0;
 			this.label14.Text = "Heal Target:";
-			//
+			// 
 			// groupBox5
-			//
+			// 
 			this.groupBox5.Controls.Add(this.bandagehealLogBox);
 			this.groupBox5.Location = new System.Drawing.Point(6, 6);
 			this.groupBox5.Name = "groupBox5";
@@ -6329,17 +6380,17 @@ namespace Assistant
 			this.groupBox5.TabIndex = 54;
 			this.groupBox5.TabStop = false;
 			this.groupBox5.Text = "Bandage Heal Log";
-			//
+			// 
 			// bandagehealLogBox
-			//
+			// 
 			this.bandagehealLogBox.FormattingEnabled = true;
 			this.bandagehealLogBox.Location = new System.Drawing.Point(7, 18);
 			this.bandagehealLogBox.Name = "bandagehealLogBox";
 			this.bandagehealLogBox.Size = new System.Drawing.Size(265, 303);
 			this.bandagehealLogBox.TabIndex = 0;
-			//
+			// 
 			// bandagehealenableCheckBox
-			//
+			// 
 			this.bandagehealenableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			this.bandagehealenableCheckBox.Location = new System.Drawing.Point(304, 15);
 			this.bandagehealenableCheckBox.Name = "bandagehealenableCheckBox";
@@ -6347,9 +6398,9 @@ namespace Assistant
 			this.bandagehealenableCheckBox.TabIndex = 73;
 			this.bandagehealenableCheckBox.Text = "Enable Bandage Heal";
 			this.bandagehealenableCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealenableCheckBox_CheckedChanged);
-			//
+			// 
 			// enhancedHotKeytabPage
-			//
+			// 
 			this.enhancedHotKeytabPage.Controls.Add(this.groupBox8);
 			this.enhancedHotKeytabPage.Controls.Add(this.groupBox28);
 			this.enhancedHotKeytabPage.Controls.Add(this.groupBox27);
@@ -6361,9 +6412,9 @@ namespace Assistant
 			this.enhancedHotKeytabPage.TabIndex = 15;
 			this.enhancedHotKeytabPage.Text = "Enhanced HotKey";
 			this.enhancedHotKeytabPage.UseVisualStyleBackColor = true;
-			//
+			// 
 			// groupBox8
-			//
+			// 
 			this.groupBox8.Controls.Add(this.hotkeyMasterClearButton);
 			this.groupBox8.Controls.Add(this.hotkeyKeyMasterTextBox);
 			this.groupBox8.Controls.Add(this.hotkeyMasterSetButton);
@@ -6374,10 +6425,10 @@ namespace Assistant
 			this.groupBox8.TabIndex = 4;
 			this.groupBox8.TabStop = false;
 			this.groupBox8.Text = "Master Key";
-			//
+			// 
 			// hotkeyMasterClearButton
-			//
-			this.hotkeyMasterClearButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.hotkeyMasterClearButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMasterClearButton.Location = new System.Drawing.Point(92, 50);
 			this.hotkeyMasterClearButton.Name = "hotkeyMasterClearButton";
 			this.hotkeyMasterClearButton.Size = new System.Drawing.Size(53, 23);
@@ -6386,12 +6437,12 @@ namespace Assistant
 			this.hotkeyMasterClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hotkeyMasterClearButton.UseVisualStyleBackColor = true;
 			this.hotkeyMasterClearButton.Click += new System.EventHandler(this.hotkeyMasterClearButton_Click);
-			//
+			// 
 			// hotkeyKeyMasterTextBox
-			//
-			this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
 			this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.hotkeyKeyMasterTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6403,10 +6454,10 @@ namespace Assistant
 			this.hotkeyKeyMasterTextBox.TabIndex = 5;
 			this.hotkeyKeyMasterTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
-			//
+			// 
 			// hotkeyMasterSetButton
-			//
-			this.hotkeyMasterSetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.hotkeyMasterSetButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMasterSetButton.Location = new System.Drawing.Point(10, 50);
 			this.hotkeyMasterSetButton.Name = "hotkeyMasterSetButton";
 			this.hotkeyMasterSetButton.Size = new System.Drawing.Size(53, 23);
@@ -6415,18 +6466,18 @@ namespace Assistant
 			this.hotkeyMasterSetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hotkeyMasterSetButton.UseVisualStyleBackColor = true;
 			this.hotkeyMasterSetButton.Click += new System.EventHandler(this.hotkeyMasterSetButton_Click);
-			//
+			// 
 			// label42
-			//
+			// 
 			this.label42.AutoSize = true;
 			this.label42.Location = new System.Drawing.Point(7, 22);
 			this.label42.Name = "label42";
 			this.label42.Size = new System.Drawing.Size(28, 13);
 			this.label42.TabIndex = 6;
 			this.label42.Text = "Key:";
-			//
+			// 
 			// groupBox28
-			//
+			// 
 			this.groupBox28.Controls.Add(this.hotkeyMDisableButton);
 			this.groupBox28.Controls.Add(this.hotkeyMEnableButton);
 			this.groupBox28.Controls.Add(this.hotkeyKeyMasterLabel);
@@ -6437,10 +6488,10 @@ namespace Assistant
 			this.groupBox28.TabIndex = 3;
 			this.groupBox28.TabStop = false;
 			this.groupBox28.Text = "General";
-			//
+			// 
 			// hotkeyMDisableButton
-			//
-			this.hotkeyMDisableButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.hotkeyMDisableButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMDisableButton.Location = new System.Drawing.Point(92, 58);
 			this.hotkeyMDisableButton.Name = "hotkeyMDisableButton";
 			this.hotkeyMDisableButton.Size = new System.Drawing.Size(53, 23);
@@ -6449,10 +6500,10 @@ namespace Assistant
 			this.hotkeyMDisableButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hotkeyMDisableButton.UseVisualStyleBackColor = true;
 			this.hotkeyMDisableButton.Click += new System.EventHandler(this.hotkeyDisableButton_Click);
-			//
+			// 
 			// hotkeyMEnableButton
-			//
-			this.hotkeyMEnableButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.hotkeyMEnableButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMEnableButton.Location = new System.Drawing.Point(10, 58);
 			this.hotkeyMEnableButton.Name = "hotkeyMEnableButton";
 			this.hotkeyMEnableButton.Size = new System.Drawing.Size(53, 23);
@@ -6461,27 +6512,27 @@ namespace Assistant
 			this.hotkeyMEnableButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hotkeyMEnableButton.UseVisualStyleBackColor = true;
 			this.hotkeyMEnableButton.Click += new System.EventHandler(this.hotkeyEnableButton_Click);
-			//
+			// 
 			// hotkeyKeyMasterLabel
-			//
+			// 
 			this.hotkeyKeyMasterLabel.AutoSize = true;
 			this.hotkeyKeyMasterLabel.Location = new System.Drawing.Point(7, 38);
 			this.hotkeyKeyMasterLabel.Name = "hotkeyKeyMasterLabel";
 			this.hotkeyKeyMasterLabel.Size = new System.Drawing.Size(101, 13);
 			this.hotkeyKeyMasterLabel.TabIndex = 4;
 			this.hotkeyKeyMasterLabel.Text = "ON/OFF Key: None";
-			//
+			// 
 			// hotkeyStatusLabel
-			//
+			// 
 			this.hotkeyStatusLabel.AutoSize = true;
 			this.hotkeyStatusLabel.Location = new System.Drawing.Point(7, 16);
 			this.hotkeyStatusLabel.Name = "hotkeyStatusLabel";
 			this.hotkeyStatusLabel.Size = new System.Drawing.Size(82, 13);
 			this.hotkeyStatusLabel.TabIndex = 3;
 			this.hotkeyStatusLabel.Text = "Status: Enabled";
-			//
+			// 
 			// groupBox27
-			//
+			// 
 			this.groupBox27.Controls.Add(this.hotkeypassCheckBox);
 			this.groupBox27.Controls.Add(this.hotkeyClearButton);
 			this.groupBox27.Controls.Add(this.hotkeySetButton);
@@ -6493,19 +6544,19 @@ namespace Assistant
 			this.groupBox27.TabIndex = 2;
 			this.groupBox27.TabStop = false;
 			this.groupBox27.Text = "Modify Key";
-			//
+			// 
 			// hotkeypassCheckBox
-			//
+			// 
 			this.hotkeypassCheckBox.Location = new System.Drawing.Point(10, 43);
 			this.hotkeypassCheckBox.Name = "hotkeypassCheckBox";
 			this.hotkeypassCheckBox.Size = new System.Drawing.Size(103, 22);
 			this.hotkeypassCheckBox.TabIndex = 49;
 			this.hotkeypassCheckBox.Text = "Pass Key to UO";
 			this.hotkeypassCheckBox.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			//
+			// 
 			// hotkeyClearButton
-			//
-			this.hotkeyClearButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.hotkeyClearButton.ColorTable = office2010BlueTheme;
 			this.hotkeyClearButton.Location = new System.Drawing.Point(92, 71);
 			this.hotkeyClearButton.Name = "hotkeyClearButton";
 			this.hotkeyClearButton.Size = new System.Drawing.Size(53, 23);
@@ -6514,10 +6565,10 @@ namespace Assistant
 			this.hotkeyClearButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hotkeyClearButton.UseVisualStyleBackColor = true;
 			this.hotkeyClearButton.Click += new System.EventHandler(this.hotkeyClearButton_Click);
-			//
+			// 
 			// hotkeySetButton
-			//
-			this.hotkeySetButton.ColorTable = office2010BlueTheme1;
+			// 
+			this.hotkeySetButton.ColorTable = office2010BlueTheme;
 			this.hotkeySetButton.Location = new System.Drawing.Point(10, 71);
 			this.hotkeySetButton.Name = "hotkeySetButton";
 			this.hotkeySetButton.Size = new System.Drawing.Size(53, 23);
@@ -6526,21 +6577,21 @@ namespace Assistant
 			this.hotkeySetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hotkeySetButton.UseVisualStyleBackColor = true;
 			this.hotkeySetButton.Click += new System.EventHandler(this.hotkeySetButton_Click);
-			//
+			// 
 			// label39
-			//
+			// 
 			this.label39.AutoSize = true;
 			this.label39.Location = new System.Drawing.Point(7, 20);
 			this.label39.Name = "label39";
 			this.label39.Size = new System.Drawing.Size(28, 13);
 			this.label39.TabIndex = 2;
 			this.label39.Text = "Key:";
-			//
+			// 
 			// hotkeytextbox
-			//
-			this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.hotkeytextbox.BackColor = System.Drawing.Color.White;
 			this.hotkeytextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.hotkeytextbox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6552,34 +6603,34 @@ namespace Assistant
 			this.hotkeytextbox.TabIndex = 1;
 			this.hotkeytextbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeytextbox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
-			//
+			// 
 			// hotkeytreeView
-			//
+			// 
 			this.hotkeytreeView.Location = new System.Drawing.Point(9, 7);
 			this.hotkeytreeView.Name = "hotkeytreeView";
 			this.hotkeytreeView.Size = new System.Drawing.Size(487, 353);
 			this.hotkeytreeView.TabIndex = 0;
 			this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
-			//
+			// 
 			// m_NotifyIcon
-			//
+			// 
 			this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
 			this.m_NotifyIcon.Text = "Razor Enhanced";
 			this.m_NotifyIcon.DoubleClick += new System.EventHandler(this.NotifyIcon_DoubleClick);
-			//
+			// 
 			// openFileDialogscript
-			//
+			// 
 			this.openFileDialogscript.Filter = "Script Files|*.py";
 			this.openFileDialogscript.RestoreDirectory = true;
-			//
+			// 
 			// timerupdatestatus
-			//
+			// 
 			this.timerupdatestatus.Enabled = true;
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
-			//
+			// 
 			// MainForm
-			//
+			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
 			this.ClientSize = new System.Drawing.Size(674, 410);
 			this.Controls.Add(this.tabs);
@@ -6636,6 +6687,7 @@ namespace Assistant
 			((System.ComponentModel.ISupportInitialize)(this.screenPrev)).EndInit();
 			this.statusTab.ResumeLayout(false);
 			this.scriptingTab.ResumeLayout(false);
+			this.scriptingTab.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridViewScripting)).EndInit();
 			this.EnhancedAgent.ResumeLayout(false);
 			this.tabControl1.ResumeLayout(false);
@@ -6683,6 +6735,7 @@ namespace Assistant
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
 			this.ResumeLayout(false);
+
 		}
 
 		#endregion Windows Form Designer generated code
@@ -8107,7 +8160,7 @@ namespace Assistant
 
 		private void LoadAndInitializeScripts()
 		{
-			RazorEnhanced.Scripts.Auto = false;
+			RazorEnhanced.Scripts.AutoMode = false;
 			RazorEnhanced.Scripts.Reset();
 
 			foreach (DataRow row in scriptTable.Rows)
@@ -8248,7 +8301,7 @@ namespace Assistant
 
 		private void razorCheckBoxAuto_CheckedChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Scripts.Auto = razorCheckBoxAuto.Checked;
+			RazorEnhanced.Scripts.AutoMode = razorCheckBoxAuto.Checked;
 		}
 
 		private void razorButtonEdit_Click(object sender, EventArgs e)
@@ -11256,6 +11309,34 @@ namespace Assistant
 		private void mapDisconnectButton_Click(object sender, EventArgs e)
 		{
 			Assistant.Map.MapNetwork.Disconnect();
+		}
+
+		private void buttonPlayScript_Click(object sender, EventArgs e)
+		{
+			LoadAndInitializeScripts();
+			if (scriptTable != null && scriptTable.Rows.Count > 0)
+			{
+				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+				string filename = (string)row["Filename"];
+				Scripts.EnhancedScript script = Scripts.Search(filename);
+				if (script != null)
+				{
+					script.Start();
+				}
+			}
+		}
+
+		private void buttonStopScript_Click(object sender, EventArgs e)
+		{
+			Scripts.StopAll();
+		}
+
+		private void textBoxDelay_TextChanged(object sender, EventArgs e)
+		{
+			int millliseconds = 100;
+			Int32.TryParse(textBoxDelay.Text, out millliseconds);
+			TimeSpan delay = TimeSpan.FromMilliseconds(millliseconds);
+			Scripts.TimerDelay = delay;
 		}
 	}
 }

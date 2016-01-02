@@ -260,16 +260,16 @@
 			this.scintillaEditor.Location = new System.Drawing.Point(0, 0);
 			this.scintillaEditor.Name = "scintillaEditor";
 			this.scintillaEditor.Size = new System.Drawing.Size(726, 418);
-			this.scintillaEditor.Styles.BraceBad.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaEditor.Styles.BraceLight.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaEditor.Styles.CallTip.FontName = "Segoe UI\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaEditor.Styles.ControlChar.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.BraceBad.FontName = "Verdana";
+			this.scintillaEditor.Styles.BraceLight.FontName = "Verdana";
+			this.scintillaEditor.Styles.CallTip.FontName = "Segoe UI";
+			this.scintillaEditor.Styles.ControlChar.FontName = "Verdana";
 			this.scintillaEditor.Styles.Default.BackColor = System.Drawing.SystemColors.Window;
-			this.scintillaEditor.Styles.Default.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaEditor.Styles.IndentGuide.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaEditor.Styles.LastPredefined.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaEditor.Styles.LineNumber.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
-			this.scintillaEditor.Styles.Max.FontName = "Verdana\0\0\0\0\0\0\0\0\0\0\0\0\0";
+			this.scintillaEditor.Styles.Default.FontName = "Verdana";
+			this.scintillaEditor.Styles.IndentGuide.FontName = "Verdana";
+			this.scintillaEditor.Styles.LastPredefined.FontName = "Verdana";
+			this.scintillaEditor.Styles.LineNumber.FontName = "Verdana";
+			this.scintillaEditor.Styles.Max.FontName = "Verdana";
 			this.scintillaEditor.TabIndex = 0;
 			this.scintillaEditor.TextChanged += new System.EventHandler(this.scintillaEditor_TextChanged);
 			// 

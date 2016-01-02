@@ -3660,7 +3660,7 @@ namespace RazorEnhanced
 				pass = passOut;
 			}
 
-			internal static string FindScriptString(Keys key)
+			internal static string FindScript(Keys key)
 			{
 				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
 				{

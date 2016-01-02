@@ -234,12 +234,8 @@ namespace RazorEnhanced
 						RazorEnhanced.Target.PerformTargetFromList(RazorEnhanced.Settings.HotKey.FindTargetString(k));
 						break;
 
-					case "Script":
-						RazorEnhanced.EnhancedScriptHotKey.HotKeyStopAll();
-						break;
-
 					case "SList":
-						RazorEnhanced.EnhancedScriptHotKey.HotKeyStart(RazorEnhanced.Settings.HotKey.FindScriptString(k));
+						RazorEnhanced.Scripts.EnqueueKey(k);
 						break;
 
 					case "UseVirtue":
