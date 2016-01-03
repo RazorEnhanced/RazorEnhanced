@@ -65,13 +65,13 @@ namespace Assistant.Map
 
 		internal static void AddLog(string addlog)
 		{
-			if (Engine.Running)
-			{
-				Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Add(addlog)));
-				Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.SelectedIndex = Assistant.Engine.MainWindow.MapLogListBox.Items.Count - 1));
-				if (Assistant.Engine.MainWindow.MapLogListBox.Items.Count > 300)
-					Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Clear()));
-			}
+			//if (Engine.Running)
+			//{
+			//	Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Add(addlog)));
+			//	Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.SelectedIndex = Assistant.Engine.MainWindow.MapLogListBox.Items.Count - 1));
+			//	if (Assistant.Engine.MainWindow.MapLogListBox.Items.Count > 300)
+			//		Assistant.Engine.MainWindow.MapLogListBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLogListBox.Items.Clear()));
+			//}
 		}
 
 		internal static void TryConnect()
@@ -124,8 +124,8 @@ namespace Assistant.Map
 				AddLog("- Try to Connect");
 				clientSocket.Connect(RazorEnhanced.Settings.General.ReadString("MapServerAddressTextBox"), port);
 				AddLog("- Connected");
-				Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.Text = "ONLINE"));
-				Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.ForeColor = Color.Green));
+				//Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.Text = "ONLINE"));
+				//Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.ForeColor = Color.Green));
 
 				// Invia dati login
 				List<byte> data = new List<byte>();
@@ -336,36 +336,36 @@ namespace Assistant.Map
 			}
 			catch { }
 
-			if (Engine.Running)
-			{
-				UnLockItem();
-				Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.Text = "OFFLINE"));
-				Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.ForeColor = Color.Red));
-			}
+			//if (Engine.Running)
+			//{
+			//	UnLockItem();
+			//	Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.Text = "OFFLINE"));
+			//	Assistant.Engine.MainWindow.MapLinkStatusLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkStatusLabel.ForeColor = Color.Red));
+			//}
 		}
 
 		internal static void LockItem()
 		{
-			if (Engine.Running)
-			{
-				Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = false));
-				Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = false));
-				Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = false));
-				Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = false));
-				Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = false));
-			}
+			//if (Engine.Running)
+			//{
+			//	Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = false));
+			//	Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = false));
+			//	Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = false));
+			//	Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = false));
+			//	Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = false));
+			//}
 		}
 
 		internal static void UnLockItem()
 		{
-			if (Engine.Running)
-			{
-				Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = true));
-				Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = true));
-				Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = true));
-				Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = true));
-				Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = true));
-			}
+			//if (Engine.Running)
+			//{
+			//	Assistant.Engine.MainWindow.MapConnectButton.Invoke(new Action(() => Assistant.Engine.MainWindow.MapConnectButton.Enabled = true));
+			//	Assistant.Engine.MainWindow.MapServerAddressTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerAddressTextBox.Enabled = true));
+			//	Assistant.Engine.MainWindow.MapServerPortTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapServerPortTextBox.Enabled = true));
+			//	Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkUsernameTextBox.Enabled = true));
+			//	Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.MapLinkPasswordTextBox.Enabled = true));
+			//}
 		}
 
 		private static IPAddress Resolve(string addr)

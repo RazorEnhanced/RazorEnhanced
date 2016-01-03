@@ -380,30 +380,30 @@ namespace Assistant
 					RazorEnhanced.Settings.General.SaveExitData();
 
 					// Disconnetto mappa
-					Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
-					try
-					{
-						Map.MapNetwork.clientSocket.GetStream().Close();
-					}
-					catch { }
+					//Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
+					//try
+					//{
+					//	Map.MapNetwork.clientSocket.GetStream().Close();
+					//}
+					//catch { }
 
-					try
-					{
-						Map.MapNetwork.clientSocket.Close();
-					}
-					catch { }
+					//try
+					//{
+					//	Map.MapNetwork.clientSocket.Close();
+					//}
+					//catch { }
 
-					try
-					{
-						Map.MapNetwork.InThread.Abort();
-					}
-					catch { }
+					//try
+					//{
+					//	Map.MapNetwork.InThread.Abort();
+					//}
+					//catch { }
 
-					try
-					{
-						Map.MapNetwork.OutThread.Abort();
-					}
-					catch { }
+					//try
+					//{
+					//	Map.MapNetwork.OutThread.Abort();
+					//}
+					//catch { }
 
 					// Chiuto toolbar
 					if (Engine.MainWindow.ToolBarWindows != null)
