@@ -20,6 +20,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v140_xp</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -44,7 +45,9 @@
     <PreBuildEventUseInBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</PreBuildEventUseInBuild>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
       <Message>Generating Checksum.h...</Message>
@@ -87,15 +90,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
       <Message>Generating Checksum.h...</Message>
-      <Command>xcopy /Q /Y "$(SolutionDir)Updater\bin\Release\Updater.exe" "$(SolutionDir)Release\"
-xcopy /Q /Y "$(SolutionDir)Razor\bin\Release\Razor.exe" "$(SolutionDir)Release\"
-xcopy /Q /Y "$(SolutionDir)UltimaSDK\bin\Release\Ultima.dll" "$(SolutionDir)Release\"
-signtool sign /a /n "Mark Sturgill" /tr http://time.certum.pl/ /d "Razor Updater" /du https://github.com/msturgill/razor  "$(SolutionDir)Release\Updater.exe"
-signtool sign /a /n "Mark Sturgill" /tr http://time.certum.pl/ /d "Razor Assistant" /du https://github.com/msturgill/razor  "$(SolutionDir)Release\Razor.exe"
-signtool sign /a /n "Mark Sturgill" /tr http://time.certum.pl/ /d "Ultima SDK" /du https://github.com/msturgill/razor  "$(SolutionDir)Release\Ultima.dll"
-
-del $(SolutionDir)Crypt\Checksum.h
-$(ProjectDir)GenerateRazorChecksumH.exe</Command>
+      <Command>$(ProjectDir)GenerateRazorChecksumH.exe</Command>
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Full</Optimization>
@@ -124,10 +119,14 @@ $(ProjectDir)GenerateRazorChecksumH.exe</Command>
       </EnableCOMDATFolding>
       <ImportLibrary>$(OutDir)Crypt.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
+      <OutputFile>../Output/Crypt.dll</OutputFile>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent>
-      <Command>signtool sign /a /n "Mark Sturgill" /tr http://time.certum.pl/ /d "Razor Crypt Assembly" /du https://github.com/msturgill/razor  "$(SolutionDir)Release\Crypt.dll"</Command>
+      <Command>
+      </Command>
+      <Message>
+      </Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
