@@ -6,6 +6,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -105,8 +106,6 @@ namespace RazorEnhanced
 			private Thread m_DragDropThread;
 			private Thread m_AutoRemountThread;
 
-			private EnhancedScript m_KeyScript;
-
 			internal ScriptTimer()
 				: base(m_TimerDelay, m_TimerDelay)
 			{
@@ -114,18 +113,28 @@ namespace RazorEnhanced
 
 			protected override void OnTick()
 			{
-				if (m_KeyScript != null)
-				{
-					m_KeyScript.Stop();
-					m_KeyScript = null;
-				}
-
 				Keys k = Keys.None;
 				m_Keys.TryDequeue(out k);
+
 				if (k != Keys.None)
 				{
 					string filename = RazorEnhanced.Settings.HotKey.FindScript(k);
-					m_KeyScript = RunFromFile(filename, TimeSpan.FromMilliseconds(25));
+					if (!m_EnhancedScripts.Any(s => s.Filename == filename))
+					{
+						string status = LoadFromFile(filename, TimeSpan.FromMilliseconds(100));
+						if (status != "Loaded")
+						{
+							MessageBox.Show("Script not loaded!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						}
+						else
+						{
+							EnhancedScript script = Search(filename);
+							if (script != null)
+							{
+								script.Start();
+							}
+						}
+					}
 				}
 
 				Thread.Sleep(5);
@@ -134,8 +143,7 @@ namespace RazorEnhanced
 				{
 					foreach (EnhancedScript script in m_EnhancedScripts)
 					{
-						if (m_KeyScript == null || script.Filename != m_KeyScript.Filename)
-							script.Start();
+						script.Start();
 					}
 				}
 
@@ -298,9 +306,6 @@ namespace RazorEnhanced
 			get { return m_AutoMode; }
 			set
 			{
-				if (m_AutoMode == value)
-					return;
-
 				m_AutoMode = value;
 
 				if (!m_AutoMode)
@@ -380,23 +385,6 @@ namespace RazorEnhanced
 			}
 
 			return status;
-		}
-
-		internal static EnhancedScript RunFromFile(string filename, TimeSpan delay)
-		{
-			string classname = Path.GetFileNameWithoutExtension(filename);
-			string text = File.ReadAllText(filename);
-
-			EnhancedScript script = new EnhancedScript(filename, text, delay);
-			string result = script.Create(null);
-
-			if (result == "Created")
-			{
-				script.Start();
-				return script;
-			}
-
-			return null;
 		}
 
 		internal static void EnqueueKey(Keys k)
