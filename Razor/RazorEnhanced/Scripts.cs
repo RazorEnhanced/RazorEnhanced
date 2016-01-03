@@ -85,6 +85,8 @@ namespace RazorEnhanced
 			internal TimeSpan Delay { get { return m_Delay; } }
 
 			private Thread m_Thread;
+			public Thread Thread { get { return m_Thread; } }
+
 			private ScriptEngine m_Engine;
 			private ScriptScope m_Scope;
 			private ScriptSource m_Source;
@@ -137,7 +139,7 @@ namespace RazorEnhanced
 					}
 				}
 
-				Thread.Sleep(5);
+				Thread.Sleep(10);
 
 				if (Scripts.AutoMode)
 				{
@@ -145,6 +147,20 @@ namespace RazorEnhanced
 					{
 						script.Start();
 					}
+				}
+
+				Thread.Sleep(10);
+
+				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
+				{
+					if (script.Thread != null && 
+						script.Thread.ThreadState != ThreadState.Running &&
+						script.Thread.ThreadState != ThreadState.Unstarted &&
+						script.Thread.ThreadState != ThreadState.WaitSleepJoin)
+					{
+						m_EnhancedScripts.Remove(script);
+					}
+				
 				}
 
 				Thread.Sleep(5);
