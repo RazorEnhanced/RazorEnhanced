@@ -5,6 +5,7 @@ using Microsoft.Scripting.Hosting;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -153,14 +154,17 @@ namespace RazorEnhanced
 
 				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
 				{
-					if (script.Thread != null && 
+					if (script.Thread != null &&
 						script.Thread.ThreadState != ThreadState.Running &&
 						script.Thread.ThreadState != ThreadState.Unstarted &&
 						script.Thread.ThreadState != ThreadState.WaitSleepJoin)
 					{
-						m_EnhancedScripts.Remove(script);
+						lock (m_Lock)
+						{
+							m_EnhancedScripts.Remove(script);
+						}
 					}
-				
+
 				}
 
 				Thread.Sleep(5);
@@ -310,6 +314,8 @@ namespace RazorEnhanced
 
 		private static ConcurrentQueue<Keys> m_Keys = new ConcurrentQueue<Keys>();
 
+		private static object m_Lock = new object();
+
 		public static void Initialize()
 		{
 			m_Timer.Start();
@@ -327,6 +333,10 @@ namespace RazorEnhanced
 				if (!m_AutoMode)
 				{
 					StopAll();
+				}
+				else
+				{
+					LoadAndInitializeScripts();
 				}
 			}
 		}
@@ -361,7 +371,10 @@ namespace RazorEnhanced
 
 		internal static void Reset()
 		{
-			m_EnhancedScripts.Clear();
+			lock (m_Lock)
+			{
+				m_EnhancedScripts.Clear();
+			}
 		}
 
 		internal static void StopAll()
@@ -374,12 +387,40 @@ namespace RazorEnhanced
 
 		internal static EnhancedScript Search(string filename)
 		{
-			foreach (EnhancedScript script in m_EnhancedScripts)
+			foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
 			{
 				if (script.Filename == filename)
 					return script;
 			}
 			return null;
+		}
+
+		internal static void LoadAndInitializeScripts()
+		{
+			RazorEnhanced.Scripts.Reset();
+
+			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
+			foreach (DataRow row in scriptTable.Rows)
+			{
+				if ((bool)row["Checked"])
+				{
+					string status = RazorEnhanced.Scripts.LoadFromFile((string)row["Filename"], TimeSpan.FromMilliseconds(100));
+					if (status == "Loaded")
+					{
+						row["Flag"] = Assistant.Properties.Resources.green;
+					}
+					else
+					{
+						row["Flag"] = Assistant.Properties.Resources.red;
+					}
+					row["Status"] = status;
+				}
+				else
+				{
+					row["Flag"] = Assistant.Properties.Resources.yellow;
+					row["Status"] = "Idle";
+				}
+			}
 		}
 
 		internal static string LoadFromFile(string filename, TimeSpan delay)
@@ -393,7 +434,10 @@ namespace RazorEnhanced
 
 			if (result == "Created")
 			{
-				m_EnhancedScripts.Add(script);
+				lock (m_Lock)
+				{
+					m_EnhancedScripts.Add(script);
+				}
 			}
 			else
 			{
