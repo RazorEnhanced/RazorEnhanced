@@ -116,7 +116,8 @@ namespace RazorEnhanced
 				Mobile mobtarget = Mobiles.Select(filterresult, selector);
 				if (mobtarget != null)
 				{
-					Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
+						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
 					RazorEnhanced.Target.SetLast(mobtarget);
 				}
 			}
@@ -140,7 +141,17 @@ namespace RazorEnhanced
 				Mobile mobtarget = Mobiles.Select(filterresult, selector);
 				if (mobtarget != null)
 				{
-					Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
+					{
+						if (Friend.IsFriend(mobtarget.Serial))
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
+						else
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 37, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
+					}
+
+					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
+						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+
 					RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
 					RazorEnhanced.Target.SetLast(mobtarget);
 				}
@@ -166,7 +177,8 @@ namespace RazorEnhanced
 				if (mobtarget != null)
 				{
 					RazorEnhanced.Player.Attack(mobtarget.Serial);
-					Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
+						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
 					RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
 					RazorEnhanced.Target.SetLast(mobtarget);
 				}

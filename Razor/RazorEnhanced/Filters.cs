@@ -318,6 +318,8 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("AutoCarverBladeLabel").ToString("X8");
 			Assistant.Engine.MainWindow.BoneBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("BoneBladeLabel").ToString("X8");
 			Assistant.Engine.MainWindow.RemountCheckbox.Checked = RazorEnhanced.Settings.General.ReadBool("RemountCheckbox");
+			Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox");
+
 			AutoRemountDelay = RazorEnhanced.Settings.General.ReadInt("MountDelay");
 			AutoRemountEDelay = RazorEnhanced.Settings.General.ReadInt("EMountDelay");
 			AutoRemountSerial = RazorEnhanced.Settings.General.ReadInt("MountSerial");

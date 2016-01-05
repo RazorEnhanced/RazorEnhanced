@@ -12,7 +12,7 @@ namespace RazorEnhanced
 {
 	internal class Settings
 	{
-		private static int SettingVersion = 5;     // Versione progressiva della struttura dei salvataggi per successive modifiche
+		private static int SettingVersion = 6;     // Versione progressiva della struttura dei salvataggi per successive modifiche
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
 		private static DataSet m_Dataset;
@@ -1217,6 +1217,7 @@ namespace RazorEnhanced
 				general.Columns.Add("BoneCutterCheckBox", typeof(bool));
 				general.Columns.Add("AutoCarverBladeLabel", typeof(int));
 				general.Columns.Add("BoneBladeLabel", typeof(int));
+				general.Columns.Add("ShowHeadTargetCheckBox", typeof(bool));
 
 				// Parametri Tab (Enhanced ToolBar)
 				general.Columns.Add("LockToolBarCheckBox", typeof(bool));
@@ -1360,7 +1361,7 @@ namespace RazorEnhanced
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false,
 
                     // Parametri primo avvio per tab Enhanced Filters
-                    false, false, false, false, false, false, false, false, 0, 0,
+                    false, false, false, false, false, false, false, false, 0, 0, false,
 
                     // Parametri primo avvio per tab Enhanced ToolBar
                     false, false, 10, 10,
@@ -4197,6 +4198,15 @@ namespace RazorEnhanced
 					}
 
 				General.WriteInt("SettingVersion", 5);
+			}
+
+			if (version == 5)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("ShowHeadTargetCheckBox", typeof(bool));
+				Save();
+				General.WriteBool("ShowHeadTargetCheckBox", false);
+
+				General.WriteInt("SettingVersion", 6);
 			}
 		}
 	}
