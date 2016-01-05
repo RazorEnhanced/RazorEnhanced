@@ -437,7 +437,9 @@ namespace Assistant
 						Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
 
 					RazorEnhanced.UI.EnhancedScriptEditor.End();
-					RazorEnhanced.Scripts.AutoMode = false;
+
+					if (RazorEnhanced.Scripts.Timer != null)
+						RazorEnhanced.Scripts.Timer.Close();
 
 					ClientCommunication.Close();
 				}

@@ -114,6 +114,75 @@ namespace RazorEnhanced
 			{
 			}
 
+			internal void Close()
+			{
+				AutoMode = false;
+
+				StopAll();
+
+				if (
+					m_AutoLootThread != null &&
+					(m_AutoLootThread.ThreadState == ThreadState.Running ||
+					m_AutoLootThread.ThreadState == ThreadState.Unstarted ||
+					m_AutoLootThread.ThreadState == ThreadState.WaitSleepJoin)
+				)
+				{
+					m_AutoLootThread.Abort();
+				}
+
+				if (
+					m_ScavengerThread != null &&
+					(m_ScavengerThread.ThreadState == ThreadState.Running ||
+					m_ScavengerThread.ThreadState == ThreadState.Unstarted ||
+					m_ScavengerThread.ThreadState == ThreadState.WaitSleepJoin)
+				)
+				{
+					m_ScavengerThread.Abort();
+				}
+
+				if (
+					m_BandageHealThread != null &&
+					(m_BandageHealThread.ThreadState == ThreadState.Running ||
+					m_BandageHealThread.ThreadState == ThreadState.Unstarted ||
+					m_BandageHealThread.ThreadState == ThreadState.WaitSleepJoin)
+				)
+				{
+					m_BandageHealThread.Abort();
+				}
+
+				if (
+					m_DragDropThread != null &&
+					(m_DragDropThread.ThreadState == ThreadState.Running ||
+					m_DragDropThread.ThreadState == ThreadState.Unstarted ||
+					m_DragDropThread.ThreadState == ThreadState.WaitSleepJoin)
+				)
+				{
+					m_DragDropThread.Abort();
+				}
+
+				if (
+					m_AutoCarverThread != null &&
+					(m_AutoCarverThread.ThreadState == ThreadState.Running ||
+					m_AutoCarverThread.ThreadState == ThreadState.Unstarted ||
+					m_AutoCarverThread.ThreadState == ThreadState.WaitSleepJoin)
+				)
+				{
+					m_AutoCarverThread.Abort();
+				}
+
+				if (
+					m_AutoRemountThread != null &&
+					(m_AutoRemountThread.ThreadState == ThreadState.Running ||
+					m_AutoRemountThread.ThreadState == ThreadState.Unstarted ||
+					m_AutoRemountThread.ThreadState == ThreadState.WaitSleepJoin)
+				)
+				{
+					m_AutoRemountThread.Abort();
+				}
+
+				this.Stop();
+			}
+
 			protected override void OnTick()
 			{
 				Keys k = Keys.None;
@@ -182,7 +251,7 @@ namespace RazorEnhanced
 							m_AutoLootThread = new Thread(AutoLoot.Engine);
 							m_AutoLootThread.Start();
 						}
-						catch
+						catch (Exception ex)
 						{
 							AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
 						}
@@ -202,7 +271,7 @@ namespace RazorEnhanced
 							m_ScavengerThread = new Thread(Scavenger.Engine);
 							m_ScavengerThread.Start();
 						}
-						catch
+						catch (Exception ex)
 						{
 							Scavenger.AddLog("Error in Scaveger Thread, Restart");
 						}
@@ -222,7 +291,7 @@ namespace RazorEnhanced
 							m_BandageHealThread = new Thread(BandageHeal.Engine);
 							m_BandageHealThread.Start();
 						}
-						catch
+						catch (Exception ex)
 						{
 							BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
 						}
@@ -242,8 +311,9 @@ namespace RazorEnhanced
 							m_DragDropThread = new Thread(DragDropManager.Engine);
 							m_DragDropThread.Start();
 						}
-						catch
-						{ }
+						catch (Exception ex)
+						{
+						}
 					}
 				}
 
@@ -260,8 +330,9 @@ namespace RazorEnhanced
 							m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
 							m_AutoCarverThread.Start();
 						}
-						catch
-						{ }
+						catch (Exception ex)
+						{
+						}
 					}
 				}
 
@@ -278,7 +349,7 @@ namespace RazorEnhanced
 							m_AutoRemountThread = new Thread(Filters.AutoRemountEngine);
 							m_AutoRemountThread.Start();
 						}
-						catch
+						catch (Exception ex)
 						{
 						}
 					}
