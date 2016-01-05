@@ -14,7 +14,7 @@ namespace ScintillaNET
 		public NotifyHeader nmhdr;
 		public int position;            // SCN_STYLENEEDED, SCN_MODIFIED, SCN_DWELLSTART, SCN_DWELLEND,
 
-										// SCN_CALLTIPCLICK, SCN_HOTSPOTCLICK, SCN_HOTSPOTDOUBLECLICK
+		// SCN_CALLTIPCLICK, SCN_HOTSPOTCLICK, SCN_HOTSPOTDOUBLECLICK
 		public char ch;                 // SCN_CHARADDED, SCN_KEY
 
 		public int modifiers;           // SCN_KEY

@@ -312,6 +312,8 @@ namespace Assistant
 					string addr = selected.Host;
 					int port = selected.Port;
 
+					Ultima.Files.Directory = selected.ClientFolder;
+
 					if (!Language.Load("ENU"))
 					{
 						SplashScreen.End();

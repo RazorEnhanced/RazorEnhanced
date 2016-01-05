@@ -41,7 +41,15 @@ namespace Ultima
 		/// <summary>
 		/// Gets a list of paths to the Client's data files.
 		/// </summary>
-		public static string Directory { get { return m_Directory; } }
+		public static string Directory
+		{
+			get { return m_Directory; }
+			set
+			{
+				m_Directory = value;
+				LoadMulPath();
+			}
+		}
 
 		/// <summary>
 		/// Contains the rootDir (so relative values are possible for <see cref="MulPath"/>
