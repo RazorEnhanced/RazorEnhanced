@@ -571,9 +571,9 @@ namespace RazorEnhanced
 			get
 			{
 				List<string> buffs = new List<string>();
-				foreach (ushort icon in Assistant.World.Player.Buffs)
+				foreach (BuffIcon icon in Assistant.World.Player.Buffs)
 				{
-					buffs.Add(icon.ToString());
+					buffs.Add(GetBuffDescription(icon));
 				}
 				return buffs;
 			}
@@ -581,9 +581,9 @@ namespace RazorEnhanced
 
 		public static bool BuffsExist(string buffname)
 		{
-			foreach (ushort icon in Assistant.World.Player.Buffs)
+			foreach (BuffIcon icon in Assistant.World.Player.Buffs)
 			{
-				if (icon.ToString() == buffname)
+				if (GetBuffDescription(icon) == buffname)
 					return true;
 			}
 			return false;
