@@ -2589,6 +2589,8 @@ namespace Assistant
 				p.WriteAsciiFixed(m_LastPW, 30);
 				m_LastPW = "";
 			}
+
+			RazorEnhanced.Scripts.Init();
 		}
 
 		private static void MenuResponse(PacketReader pvSrc, PacketHandlerEventArgs args)

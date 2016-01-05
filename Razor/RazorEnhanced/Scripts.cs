@@ -364,13 +364,8 @@ namespace RazorEnhanced
 			{
 				if (value != m_TimerDelay)
 				{
-					if (m_Timer != null)
-						m_Timer.Stop();
-
 					m_TimerDelay = value;
-
-					m_Timer = new ScriptTimer();
-					m_Timer.Start();
+					Init();
 				}
 			}
 		}
@@ -391,6 +386,15 @@ namespace RazorEnhanced
 		}
 
 		private static bool m_AutoMode = false;
+
+		internal static void Init()
+		{
+			if (m_Timer != null)
+				m_Timer.Stop();
+
+			m_Timer = new ScriptTimer();
+			m_Timer.Start();
+		}
 
 		internal static bool AutoMode
 		{
@@ -448,9 +452,12 @@ namespace RazorEnhanced
 
 		internal static void StopAll()
 		{
-			foreach (EnhancedScript script in m_EnhancedScripts)
+			lock (m_Lock)
 			{
-				script.Stop();
+				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
+				{
+					script.Stop();
+				}
 			}
 		}
 
@@ -496,7 +503,12 @@ namespace RazorEnhanced
 		{
 			string status = "Loaded";
 			string classname = Path.GetFileNameWithoutExtension(filename);
-			string text = File.ReadAllText(filename);
+			string text = null;
+
+			if (File.Exists(filename))
+				text = File.ReadAllText(filename);
+			else
+				return "ERROR: file not found";
 
 			EnhancedScript script = new EnhancedScript(filename, text, delay);
 			string result = script.Create(null);
