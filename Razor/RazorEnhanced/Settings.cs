@@ -12,7 +12,7 @@ namespace RazorEnhanced
 {
 	internal class Settings
 	{
-		private static int SettingVersion = 4;     // Versione progressiva della struttura dei salvataggi per successive modifiche
+		private static int SettingVersion = 5;     // Versione progressiva della struttura dei salvataggi per successive modifiche
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
 		private static DataSet m_Dataset;
@@ -408,31 +408,31 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Potions", "Agility", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Agility", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Potions", "Cure", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Cure", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Potions", "Explosion", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Explosion", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Potions", "Heal", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Heal", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Potions", "Refresh", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Refresh", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Potions", "Strenght", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Strenght", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Potions", "Nightsight", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Nightsight", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -472,47 +472,47 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Clumsy", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Clumsy", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Identidication", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Identidication", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Heal", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Heal", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Feebleming", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Feebleming", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Weakness", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Weakness", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Magic Arrow", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Magic Arrow", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Harm", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Harm", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Fireball", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Fireball", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Greater Heal", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Greater Heal", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Lightning", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Lightning", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Mana Drain", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "Equip Wands", "Wand Mana Drain", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -4048,6 +4048,155 @@ namespace RazorEnhanced
 				General.WriteBool("RemountCheckbox", false);
 
 				General.WriteInt("SettingVersion", 4);
+			}
+
+			if (version == 4)
+			{
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Clumsy")
+					{
+						row["Name"] = "Wand Clumsy";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Identidication")
+					{
+						row["Name"] = "Wand Identidication";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Heal")
+					{
+						row["Name"] = "Wand Heal";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Feebleming")
+					{
+						row["Name"] = "Wand Feebleming";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Weakness")
+					{
+						row["Name"] = "Wand Weakness";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Magic Arrow")
+					{
+						row["Name"] = "Wand Magic Arrow";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Harm")
+					{
+						row["Name"] = "Wand Harm";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Fireball")
+					{
+						row["Name"] = "Wand Fireball";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Greater Heal")
+					{
+						row["Name"] = "Wand Greater Heal";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Lightning")
+					{
+						row["Name"] = "Wand Lightning";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Mana Drain")
+					{
+						row["Name"] = "Wand Mana Drain";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Agility")
+					{
+						row["Name"] = "Potion Agility";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Cure")
+					{
+						row["Name"] = "Potion Cure";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Explosion")
+					{
+						row["Name"] = "Potion Explosion";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Heal")
+					{
+						row["Name"] = "Potion Heal";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Refresh")
+					{
+						row["Name"] = "Potion Refresh";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Nightsight")
+					{
+						row["Name"] = "Potion Nightsight";
+						Save();
+						break;
+					}
+
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Strenght")
+					{
+						row["Name"] = "Potion Strenght";
+						Save();
+						break;
+					}
+
+				General.WriteInt("SettingVersion", 5);
 			}
 		}
 	}

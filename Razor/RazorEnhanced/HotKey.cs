@@ -572,7 +572,7 @@ namespace RazorEnhanced
 			Assistant.Item pack = World.Player.Backpack;
 			switch (function)
 			{
-				case "Agility":
+				case "Potion Agility":
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3848))
@@ -580,7 +580,7 @@ namespace RazorEnhanced
 					}
 					break;
 
-				case "Cure":
+				case "Potion Cure":
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3847))
@@ -588,7 +588,7 @@ namespace RazorEnhanced
 					}
 					break;
 
-				case "Explosion":
+				case "Potion Explosion":
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3853))
@@ -596,7 +596,7 @@ namespace RazorEnhanced
 					}
 					break;
 
-				case "Heal":
+				case "Potion Heal":
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3852))
@@ -604,7 +604,7 @@ namespace RazorEnhanced
 					}
 					break;
 
-				case "Refresh":
+				case "Potion Refresh":
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3851))
@@ -612,7 +612,7 @@ namespace RazorEnhanced
 					}
 					break;
 
-				case "Strenght":
+				case "Potion Strenght":
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3849))
@@ -620,7 +620,7 @@ namespace RazorEnhanced
 					}
 					break;
 
-				case "Nightsight":
+				case "Potion Nightsight":
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3846))
@@ -727,6 +727,7 @@ namespace RazorEnhanced
 			switch (function)
 			{
 				default:
+					World.Player.SendMessage("Da implementare");
 					break;
 			}
 		}
