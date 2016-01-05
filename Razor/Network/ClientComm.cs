@@ -893,6 +893,11 @@ namespace Assistant
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
+			RazorEnhanced.Filters.AutoModeRemount = false;
+			RazorEnhanced.Filters.AutoCarver = false;
+
+			if (RazorEnhanced.Scripts.Timer != null)
+				RazorEnhanced.Scripts.Timer.Close();
 
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;

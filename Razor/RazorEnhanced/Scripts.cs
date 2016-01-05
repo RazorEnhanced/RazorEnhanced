@@ -118,8 +118,6 @@ namespace RazorEnhanced
 			{
 				AutoMode = false;
 
-				StopAll();
-
 				if (
 					m_AutoLootThread != null &&
 					(m_AutoLootThread.ThreadState == ThreadState.Running ||
