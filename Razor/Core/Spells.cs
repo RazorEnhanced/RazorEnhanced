@@ -200,7 +200,7 @@ namespace Assistant
 
 			if (World.Player.Poisoned)
 			{
-				s = Get(2, 3); // cure
+				s = Get(4, 1); // big cure
 			}
 			else if (World.Player.Hits + 2 < World.Player.HitsMax)
 			{
@@ -217,12 +217,15 @@ namespace Assistant
 					s = Get(1, 4); // mini heal
 			}
 
-			if (s != null)
+			if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
 			{
-				if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-					Targeting.TargetSelf(true);
-				ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
-				s.Cast();
+				if (s != null)
+				{
+					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+						Targeting.TargetSelf(true);
+					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+					s.Cast();
+				}
 			}
 		}
 
@@ -235,12 +238,16 @@ namespace Assistant
 			else
 				s = Get(1, 4); // mini heal
 
-			if (s != null)
+			if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
 			{
-				if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-					Targeting.TargetSelf(true);
-				ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
-				s.Cast();
+				if (s != null)
+				{
+					//RazorEnhanced.Misc.SendMessage();
+					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+						Targeting.TargetSelf(true);
+					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+					s.Cast();
+				}
 			}
 		}
 
@@ -253,12 +260,15 @@ namespace Assistant
 			else
 				s = Get(20, 2); // mini heal
 
-			if (s != null)
+			if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
 			{
-				if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
-					Targeting.TargetSelf(true);
-				ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
-				s.Cast();
+				if (s != null)
+				{
+					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+						Targeting.TargetSelf(true);
+					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+					s.Cast();
+				}
 			}
 		}
 
