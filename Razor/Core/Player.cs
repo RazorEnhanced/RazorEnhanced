@@ -23,7 +23,7 @@ namespace Assistant
 
 	internal class Skill
 	{
-		internal static int Count = 55;
+		internal static int Count = 58;
 
 		private LockType m_Lock;
 		private ushort m_Value;
@@ -149,6 +149,9 @@ namespace Assistant
 		Bushido = 52,
 		Ninjitsu = 53,
 		SpellWeaving = 54,
+		Mysticism = 55,
+		Imbuing = 56,
+		Throwing = 57
 	}
 
 	internal class PlayerData : Mobile
