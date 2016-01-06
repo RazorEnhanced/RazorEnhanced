@@ -3886,9 +3886,10 @@ namespace RazorEnhanced
 
 		// Funzione per cambiare la struttura dei save in caso di modifiche senza dover cancellare e rifare da 0
 
-		internal static void UpdateVersion(int version)
+		internal static void UpdateVersion(int versionp)
 		{
-			if (version == 1)  // Passaggi dalla version 1 alle 2
+			int realversion = versionp;
+            if (realversion == 1)  // Passaggi dalla version 1 alle 2
 			{
 				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
 					if ((string)row["Name"] == "Autoloot Start")
@@ -4005,9 +4006,10 @@ namespace RazorEnhanced
 				newRow["Pass"] = true;
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
 				General.WriteInt("SettingVersion", 2);
-			}
+				realversion = 2;
+            }
 
-			if (version == 2)
+			if (realversion == 2)
 			{
 				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
 				newRow["Group"] = "SpellsMagery";
@@ -4025,9 +4027,10 @@ namespace RazorEnhanced
 				General.WriteInt("EMountDelay", 1000);
 
 				General.WriteInt("SettingVersion", 3);
-			}
+				realversion = 3;
+            }
 
-			if (version == 3)
+			if (realversion == 3)
 			{
 				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
 				newRow["Group"] = "Pet Commands";
@@ -4049,9 +4052,10 @@ namespace RazorEnhanced
 				General.WriteBool("RemountCheckbox", false);
 
 				General.WriteInt("SettingVersion", 4);
-			}
+				realversion = 4;
+            }
 
-			if (version == 4)
+			if (realversion == 4)
 			{
 				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Clumsy")
@@ -4196,17 +4200,17 @@ namespace RazorEnhanced
 						Save();
 						break;
 					}
-
-				General.WriteInt("SettingVersion", 5);
+				realversion = 5;
+                General.WriteInt("SettingVersion", 5);
 			}
 
-			if (version == 5)
+			if (realversion == 5)
 			{
 				m_Dataset.Tables["GENERAL"].Columns.Add("ShowHeadTargetCheckBox", typeof(bool));
 				Save();
 				General.WriteBool("ShowHeadTargetCheckBox", false);
-
-				General.WriteInt("SettingVersion", 6);
+				realversion = 6;
+                General.WriteInt("SettingVersion", 6);
 			}
 		}
 	}
