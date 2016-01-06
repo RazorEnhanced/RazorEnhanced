@@ -98,6 +98,8 @@ namespace RazorEnhanced
 				m_Text = text;
 				m_Delay = delay;
 			}
+
+			internal static ConcurrentDictionary<string, object> SharedScriptData = new ConcurrentDictionary<string, object>();
 		}
 
 		internal class ScriptTimer : Assistant.Timer
