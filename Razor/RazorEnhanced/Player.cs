@@ -1590,5 +1590,50 @@ namespace RazorEnhanced
 			List<ushort> kw = new List<ushort> { 16, 2 };
 			ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
 		}
+
+		// Range
+		public static bool InRangeMobile(Mobile mob, int range)
+		{
+			if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range))
+				return true;
+			else
+				return false;
+		}
+
+		public static bool InRangeMobile(int mobserial, int range)
+		{
+			Assistant.Mobile mob = World.FindMobile(mobserial);
+			if (mob != null)
+			{
+				if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range))
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		}
+
+		public static bool InRangeItem(Item mob, int range)
+		{
+			if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range))
+				return true;
+			else
+				return false;
+		}
+
+		public static bool InRangeItem(int itemserial, int range)
+		{
+			Assistant.Item item = World.FindItem(itemserial);
+			if (item != null)
+			{
+				if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), range))
+					return true;
+				else
+					return false;
+			}
+			else
+				return false;
+		}
 	}
 }
