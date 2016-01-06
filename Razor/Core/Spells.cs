@@ -297,12 +297,16 @@ namespace Assistant
 
 		internal static Spell Get(string power)
 		{
-			return m_SpellsByPower[power];
+			Spell spell = null;
+			m_SpellsByPower.TryGetValue(power, out spell);
+			return spell;
 		}
 
 		internal static Spell Get(int num)
 		{
-			return m_SpellsByID[num];
+			Spell spell = null;
+			m_SpellsByID.TryGetValue(num, out spell);
+			return spell;
 		}
 
 		internal static Spell Get(int circle, int num)
