@@ -274,9 +274,9 @@ namespace RazorEnhanced
 			public double RangeMax = -1;
 			public bool Movable = true;
 			public List<string> Layers = new List<string>();
-			public bool OnGround = false;
-			public bool IsCorpse = false;
-			public bool IsContainer = false;
+			public int OnGround = -1;
+			public int IsCorpse = -1;
+			public int IsContainer = -1;
 
 			public Filter()
 			{
@@ -355,9 +355,20 @@ namespace RazorEnhanced
 						assistantItems = assistantItems.Where((i) => list.Contains(i.Layer)).ToList();
 					}
 
-					assistantItems = assistantItems.Where((i) => i.OnGround == filter.OnGround).ToList();
-					assistantItems = assistantItems.Where((i) => i.IsContainer == filter.IsContainer).ToList();
-					assistantItems = assistantItems.Where((i) => i.IsCorpse == filter.IsCorpse).ToList();
+					if (filter.OnGround != -1)
+					{
+						assistantItems = assistantItems.Where((i) => i.OnGround == Convert.ToBoolean(filter.OnGround)).ToList();
+					}
+
+					if (filter.IsContainer != -1)
+					{
+						assistantItems = assistantItems.Where((i) => i.IsContainer == Convert.ToBoolean(filter.IsContainer)).ToList();
+					}
+
+					if (filter.IsCorpse != -1)
+					{
+						assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
+					}					
 				}
 			}
 

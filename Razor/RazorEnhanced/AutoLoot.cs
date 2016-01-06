@@ -439,8 +439,8 @@ namespace RazorEnhanced
 			Items.Filter corpseFilter = new Items.Filter();
 			corpseFilter.RangeMax = 2;
 			corpseFilter.Movable = false;
-			corpseFilter.IsCorpse = true;
-			corpseFilter.OnGround = true;
+			corpseFilter.IsCorpse = 1;
+			corpseFilter.OnGround = 1;
 			corpseFilter.Enabled = true;
 
 			// Check bag

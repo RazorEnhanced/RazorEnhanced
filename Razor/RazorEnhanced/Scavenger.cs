@@ -380,7 +380,7 @@ namespace RazorEnhanced
 			Items.Filter itemFilter = new Items.Filter();
 			itemFilter.RangeMax = 2;
 			itemFilter.Movable = true;
-			itemFilter.OnGround = true;
+			itemFilter.OnGround = 1;
 			itemFilter.Enabled = true;
 
 			// Check bag
