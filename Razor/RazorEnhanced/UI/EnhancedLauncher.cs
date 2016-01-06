@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
@@ -210,6 +212,25 @@ namespace RazorEnhanced.UI
 				RazorEnhanced.Shard.Delete(shardlistCombobox.Text);
 			}
 			UpdateGUI();
+		}
+
+		private void checkupdatebutton_Click(object sender, EventArgs e)
+		{
+			WebClient client = new WebClient();
+			string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
+
+			if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
+			{
+				DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
+				}
+			}
+			else
+			{
+				DialogResult dialogResult = MessageBox.Show("You already have latest version of Razor Enhanced", "No New Update", MessageBoxButtons.OK);
+			}
 		}
 	}
 }

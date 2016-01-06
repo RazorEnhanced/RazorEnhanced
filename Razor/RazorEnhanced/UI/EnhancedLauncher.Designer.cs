@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedLauncher));
 			this.openclientlocation = new System.Windows.Forms.OpenFileDialog();
 			this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +51,7 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.quit = new RazorEnhanced.UI.RazorButton();
 			this.okay = new RazorEnhanced.UI.RazorButton();
+			this.checkupdatebutton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -87,24 +88,24 @@
 			// 
 			// removeShard
 			// 
-			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.TextColor = System.Drawing.Color.White;
-			this.removeShard.ColorTable = office2010BlueTheme;
+			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+			this.removeShard.ColorTable = office2010BlueTheme1;
 			this.removeShard.Location = new System.Drawing.Point(300, 19);
 			this.removeShard.Name = "removeShard";
 			this.removeShard.Size = new System.Drawing.Size(60, 23);
@@ -116,7 +117,7 @@
 			// 
 			// addShard
 			// 
-			this.addShard.ColorTable = office2010BlueTheme;
+			this.addShard.ColorTable = office2010BlueTheme1;
 			this.addShard.Location = new System.Drawing.Point(242, 19);
 			this.addShard.Name = "addShard";
 			this.addShard.Size = new System.Drawing.Size(52, 23);
@@ -179,9 +180,9 @@
 			// 
 			// portLabel
 			// 
-			this.portLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.portLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.portLabel.BackColor = System.Drawing.Color.White;
 			this.portLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.portLabel.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -204,9 +205,9 @@
 			// 
 			// hostLabel
 			// 
-			this.hostLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.hostLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.hostLabel.BackColor = System.Drawing.Color.White;
 			this.hostLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.hostLabel.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -286,11 +287,11 @@
 			// 
 			// quit
 			// 
-			this.quit.ColorTable = office2010BlueTheme;
+			this.quit.ColorTable = office2010BlueTheme1;
 			this.quit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.quit.Location = new System.Drawing.Point(266, 199);
+			this.quit.Location = new System.Drawing.Point(283, 199);
 			this.quit.Name = "quit";
-			this.quit.Size = new System.Drawing.Size(72, 20);
+			this.quit.Size = new System.Drawing.Size(84, 20);
 			this.quit.TabIndex = 9;
 			this.quit.Text = "Exit";
 			this.quit.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
@@ -298,21 +299,33 @@
 			// 
 			// okay
 			// 
-			this.okay.ColorTable = office2010BlueTheme;
+			this.okay.ColorTable = office2010BlueTheme1;
 			this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.okay.Location = new System.Drawing.Point(86, 199);
+			this.okay.Location = new System.Drawing.Point(30, 199);
 			this.okay.Name = "okay";
-			this.okay.Size = new System.Drawing.Size(72, 20);
+			this.okay.Size = new System.Drawing.Size(84, 20);
 			this.okay.TabIndex = 8;
 			this.okay.Text = "Launch";
 			this.okay.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.okay.Click += new System.EventHandler(this.okay_Click);
+			// 
+			// checkupdatebutton
+			// 
+			this.checkupdatebutton.ColorTable = office2010BlueTheme1;
+			this.checkupdatebutton.Location = new System.Drawing.Point(157, 199);
+			this.checkupdatebutton.Name = "checkupdatebutton";
+			this.checkupdatebutton.Size = new System.Drawing.Size(84, 20);
+			this.checkupdatebutton.TabIndex = 10;
+			this.checkupdatebutton.Text = "Check Update";
+			this.checkupdatebutton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.checkupdatebutton.Click += new System.EventHandler(this.checkupdatebutton_Click);
 			// 
 			// EnhancedLauncher
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(397, 231);
+			this.Controls.Add(this.checkupdatebutton);
 			this.Controls.Add(this.quit);
 			this.Controls.Add(this.okay);
 			this.Controls.Add(this.groupBox2);
@@ -353,8 +366,6 @@
 		private System.Windows.Forms.GroupBox groupBox2;
 		public RazorComboBox shardlistCombobox;
 		private System.Windows.Forms.OpenFileDialog openclientlocation;
-
-
-
+		private RazorButton checkupdatebutton;
 	}
 }
