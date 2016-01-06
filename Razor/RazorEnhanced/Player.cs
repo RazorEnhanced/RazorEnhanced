@@ -737,19 +737,12 @@ namespace RazorEnhanced
 		{
 			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
 
-			if (assistantLayer == Layer.Invalid)
-				return false;
+			Assistant.Item item = Assistant.World.Player.GetItemOnLayer(assistantLayer);
+
+			if (item != null)
+				return true;
 			else
-			{
-				Assistant.Item item = Assistant.World.Player.GetItemOnLayer(assistantLayer);
-				if (item != null)
-					return true;
-				else
-				{
-					Misc.SendMessage("Script Error: CheckLayer: Invalid layer name: " + layer);
-					return false;
-				}
-			}
+				return false;
 		}
 
 		public Item GetItemOnLayer(String layer)
