@@ -61,9 +61,19 @@ namespace RazorEnhanced
 			Assistant.Targeting.Target(World.Player);
 		}
 
+		public static void SelfQueued()
+		{
+			Assistant.Targeting.TargetSelf(true);
+		}
+
 		public static void Last()
 		{
 			Assistant.Targeting.LastTarget();
+		}
+
+		public static void LastQueued()
+		{
+			Assistant.Targeting.LastTarget(true);
 		}
 
 		public static int GetLast()
@@ -116,6 +126,14 @@ namespace RazorEnhanced
 				Mobile mobtarget = Mobiles.Select(filterresult, selector);
 				if (mobtarget != null)
 				{
+					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
+					{
+						if (Friend.IsFriend(mobtarget.Serial))
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
+						else
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 37, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
+					}
+
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
 						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
 					RazorEnhanced.Target.SetLast(mobtarget);

@@ -231,7 +231,7 @@ namespace RazorEnhanced
 						break;
 
 					case "TList":
-						RazorEnhanced.Target.PerformTargetFromList(RazorEnhanced.Settings.HotKey.FindTargetString(k));
+						RazorEnhanced.Target.SetLastTargetFromList(RazorEnhanced.Settings.HotKey.FindTargetString(k));
 						break;
 
 					case "SList":
@@ -778,6 +778,14 @@ namespace RazorEnhanced
 					Assistant.Targeting.LastTarget();
 					break;
 
+				case "Target Self Queued":
+					Assistant.Targeting.TargetSelf(true);
+					break;
+
+				case "Target Last Queued":
+					Assistant.Targeting.LastTarget(true);
+					break;
+
 				case "Target Cancel":
 					RazorEnhanced.Target.Cancel();
 					break;
@@ -1111,7 +1119,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[3].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[5].Nodes.Add(a);
 			}
 
 			// Script
