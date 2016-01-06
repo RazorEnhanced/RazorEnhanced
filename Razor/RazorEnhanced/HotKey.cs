@@ -806,7 +806,7 @@ namespace RazorEnhanced
 			List<HotKeyData> keylist = RazorEnhanced.Settings.HotKey.ReadGroup("General");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
 			}
 
 			// Actions
@@ -814,7 +814,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Actions");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add(a);
 			}
 
 			// Actions -> Use
@@ -822,7 +827,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Use");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[3].Nodes.Add(a);
 			}
 
 			// Actions -> Show Names
@@ -830,7 +840,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Show Names");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[4].Nodes.Add(a);
 			}
 
 			// Actions -> Per Commands
@@ -838,7 +853,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Pet Commands");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[5].Nodes.Add(a);
 			}
 
 			// Agents
@@ -846,7 +866,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Agents");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add(a);
 			}
 
 			// Combats
@@ -857,7 +882,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Abilities");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[0].Nodes.Add(a);
 			}
 
 			// Combat  --> Attack
@@ -865,7 +895,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Attack");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[1].Nodes.Add(a);
 			}
 
 			// Combat  --> Bandage
@@ -873,7 +908,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Bandage");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[2].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[2].Nodes.Add(a);
 			}
 
 			// Combat  --> Consumable
@@ -884,7 +924,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Potions");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[0].Nodes.Add(a);
 			}
 
 			// Combat --> Consumable --> Other
@@ -892,7 +937,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Other");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[1].Nodes.Add(a);
 			}
 
 			// Combat --> Hands
@@ -900,7 +950,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Hands");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[4].Nodes.Add(a);
 			}
 
 			// Combat --> Hands -> Equip Wands
@@ -908,7 +963,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Equip Wands");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[5].Nodes.Add(a);
 			}
 
 			// Skills
@@ -916,7 +976,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Skills");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[4].Nodes.Add(a);
 			}
 
 			// Spells
@@ -924,7 +989,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsAgent");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add(a);
 			}
 
 			// Spells -- > Magery
@@ -932,7 +1002,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMagery");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[3].Nodes.Add(a);
 			}
 
 			// Spells -- > Necro
@@ -940,7 +1015,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNecro");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(a);
 			}
 
 			// Spells -- > Bushido
@@ -948,7 +1028,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsBushido");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(a);
 			}
 
 			// Spells -- > Ninjitsu
@@ -956,7 +1041,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNinjitsu");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(a);
 			}
 
 			// Spells -- > Spellweaving
@@ -964,7 +1054,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsSpellweaving");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(a);
 			}
 
 			// Spells -- > Spellweaving
@@ -972,7 +1067,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMysticism");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(a);
 			}
 
 			// Spells -- > Chivalry
@@ -980,7 +1080,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsChivalry");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(a);
 			}
 
 			// Target
@@ -988,7 +1093,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Target");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add(a);
 			}
 
 			// Target -> List
@@ -996,7 +1106,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadTarget();
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[3].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[3].Nodes.Add(a);
 			}
 
 			// Script
@@ -1004,7 +1119,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Script");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add(a);
 			}
 
 			// Script -> List
@@ -1012,7 +1132,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadScript();
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes[1].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes[1].Nodes.Add(a);
 			}
 
 			// Virtue
@@ -1020,7 +1145,12 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("UseVirtue");
 			foreach (HotKeyData keydata in keylist)
 			{
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[8].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[8].Nodes.Add(a);
 			}
 
 			Engine.MainWindow.HotKeyTreeView.ExpandAll();
@@ -1033,6 +1163,7 @@ namespace RazorEnhanced
 				if (node.Text.Contains(node.Name + " ( " + KeyString(m_key) + " )"))
 				{
 					node.Text = node.Name + " ( " + KeyString(Keys.None) + " )";
+					node.ForeColor = System.Drawing.Color.Black;
 					break;
 				}
 				UpdateOldTreeView(node.Nodes, k);
@@ -1046,6 +1177,7 @@ namespace RazorEnhanced
 			{
 				RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key, passkey);
 				node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+				node.ForeColor = System.Drawing.Color.DarkGreen;
 			}
 			else
 			{
@@ -1056,6 +1188,7 @@ namespace RazorEnhanced
 					RazorEnhanced.Settings.HotKey.UpdateKey(name, m_key, passkey);
 					UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
 					node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+					node.ForeColor = System.Drawing.Color.DarkGreen;
 				}
 			}
 		}
@@ -1067,6 +1200,7 @@ namespace RazorEnhanced
 			{
 				RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key, passkey);
 				node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+				node.ForeColor = System.Drawing.Color.DarkGreen;
 			}
 			else
 			{
@@ -1077,6 +1211,7 @@ namespace RazorEnhanced
 					RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, m_key, passkey);
 					UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
 					node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+					node.ForeColor = System.Drawing.Color.DarkGreen;
 				}
 			}
 		}
@@ -1088,6 +1223,7 @@ namespace RazorEnhanced
 			{
 				RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
 				node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+				node.ForeColor = System.Drawing.Color.DarkGreen;
 			}
 			else
 			{
@@ -1098,6 +1234,7 @@ namespace RazorEnhanced
 					RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, m_key, passkey);
 					UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
 					node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+					node.ForeColor = System.Drawing.Color.DarkGreen;
 				}
 			}
 		}
@@ -1131,6 +1268,7 @@ namespace RazorEnhanced
 			else
 				RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None, true);
 			node.Text = node.Name + " ( " + KeyString(Keys.None) + " )";
+			node.ForeColor = System.Drawing.Color.Black;
 		}
 
 		internal static void ClearMasterKey()
