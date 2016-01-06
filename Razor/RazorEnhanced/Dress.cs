@@ -833,18 +833,9 @@ namespace RazorEnhanced
 		internal static void UndressEngine()
 		{
 			// Check bag
+			AddLog("DD: "+ DressBag.ToString("X8"));
 			Assistant.Item bag = Assistant.World.FindItem(DressBag);
-			if (bag != null)
-			{
-				if (bag.RootContainer != World.Player)
-				{
-					Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
-					AddLog("Invalid Bag, Switch to backpack");
-					DressBag = (int)World.Player.Backpack.Serial.Value;
-					RazorEnhanced.Settings.Dress.ListUpdate(DressListName, RazorEnhanced.Dress.DressDelay, (int)World.Player.Backpack.Serial.Value, DressConflict, true);
-				}
-			}
-			else
+			if (bag == null)
 			{
 				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
 				AddLog("Invalid Bag, Switch to backpack");
@@ -978,20 +969,11 @@ namespace RazorEnhanced
 
 			// Check bag
 			Assistant.Item bag = Assistant.World.FindItem(DressBag);
-			if (bag != null)
+			if (bag == null)
 			{
-				if (bag.RootContainer != World.Player)
-				{
 					Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
 					AddLog("Invalid Bag, Switch to backpack");
 					DressBag = (int)World.Player.Backpack.Serial.Value;
-				}
-			}
-			else
-			{
-				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
-				AddLog("Invalid Bag, Switch to backpack");
-				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
 			int exit = DressEngine(items, Dress.DressDelay, Dress.DressBag, Dress.DressConflict);
