@@ -502,8 +502,19 @@ namespace RazorEnhanced
 		{
 			switch (function)
 			{
+				case "Primary":
+					Assistant.SpecialMoves.SetPrimaryAbility();
+                    break;
+				case "Secondary":
+					Assistant.SpecialMoves.SetSecondaryAbility();
+					break;
+				case "Stun":
+					Assistant.SpecialMoves.OnStun();
+					break;
+				case "Disarm":
+					Assistant.SpecialMoves.OnDisarm();
+					break;
 				default:
-					World.Player.SendMessage("Da implementare");
 					break;
 			}
 		}

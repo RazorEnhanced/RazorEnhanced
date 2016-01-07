@@ -18,7 +18,23 @@ namespace Assistant
 		ParalyzingBlow,
 		ShadowStrike,
 		WhirlwindAttack,
-		Invalid
+		RidingSwipe,
+		FrenziedWhirlwind,
+		Block,
+		DefenseMastery,
+		NerveStrike,
+		TalonStrike,
+		Feint,
+		DualWield,
+		DoubleShot,
+		ArmorPeirce,
+		Bladeweave,
+		ForceArrow,
+		LightningArrow,
+		PsychicAttack,
+		SerpentArrow,
+		ForceOfNature,
+        Invalid
 	}
 
 	internal class SpecialMoves
@@ -107,59 +123,123 @@ namespace Assistant
 		private static int[] BlackStaffID = new int[] { 0xDF0, 0xDF1 };
 		private static int[] FistsID = new int[] { 0 };
 
+		// SA e ML e KR Weapon
+		private static int[] DualShortAxesID = new int[] { 0x08FD, 0x4068 };
+		private static int[] GargishBattleAxeID = new int[] { 0x48B0, 0x48B1 };
+		private static int[] GargishAxeID = new int[] { 0x48B2, 0x48B3 };
+		private static int[] OrnateAxeID = new int[] { 0x2D28, 0x2D34 };
+		private static int[] BokutoID = new int[] { 0x27A8, 0x27F3 };
+		private static int[] DaishoID = new int[] { 0x27A9, 0x27F4 };
+		private static int[] DreadSwordID = new int[] { 0x090B, 0x4074 };
+		private static int[] ElvenMacheteID = new int[] { 0x2D29, 0x2D35 };
+		private static int[] GargishBardicheID = new int[] { 0x48B4, 0x48B5 };
+		private static int[] GargishBoneHarvesterID = new int[] { 0x48C6, 0x48C7 };
+		private static int[] GargishButcherKnifeID = new int[] { 0x48B6, 0x48B7 };
+		private static int[] GargishCleaverID = new int[] { 0x48AE, 0x48AF };
+		private static int[] GargishDaishoID = new int[] { 0x48D0, 0x48D1 };
+		private static int[] GargishKatanaID = new int[] { 0x48BA, 0x48BB };
+		private static int[] GargishScytheID = new int[] { 0x48C4, 0x48C5 };
+		private static int[] GargishTalwarID = new int[] { 0x0908, 0x4075 };
+		private static int[] GlassSwordID = new int[] { 0x090C, 0x4073 };
+		private static int[] NoDachiID = new int[] { 0x27A2, 0x27ED };
+		private static int[] RadiantScimitarID = new int[] { 0x2D27, 0x2D33 };
+		private static int[] RuneBladeID = new int[] { 0x2D26, 0x2D32 };
+		private static int[] WakizashiID = new int[] { 0x27A4, 0x27EF };
+		private static int[] DiamondMaceID = new int[] { 0x2D24, 0x2D30 };
+		private static int[] DiscMaceID = new int[] { 0x0903, 0x406E };
+		private static int[] GargishGnarledStaffID = new int[] { 0x48B8, 0x48B9 };
+		private static int[] GargishMaulID = new int[] { 0x48C2, 0x48C3 };
+		private static int[] GargishTessenID = new int[] { 0x48CC, 0x48CD };
+		private static int[] GargishWarHammerID = new int[] { 0x48C0, 0x48C1 };
+		private static int[] GlassStaffID = new int[] { 0x0905, 0x4070 };
+		private static int[] NunchakuID = new int[] { 0x27AE, 0x27F9 };
+		private static int[] SerpentstoneStaffID = new int[] { 0x0906, 0x406F };
+		private static int[] TessenID = new int[] { 0x27A3, 0x27EE };
+		private static int[] TetsuboID = new int[] { 0x27A3, 0x27EE };
+		private static int[] ElvenCompositeLongbowID = new int[] { 0x2D1E, 0x2D2A };
+		private static int[] MagicalShortbowID = new int[] { 0x2D1F, 0x2D2B };
+		private static int[] YumiID = new int[] { 0x27A5, 0x27F0 };
+		private static int[] AssassinSpikeID = new int[] { 0x2D21, 0x2D2D };
+		private static int[] BloodbladeID = new int[] { 0x08FE, 0x4072 };
+		private static int[] DualPointedSpearID = new int[] { 0x0904, 0x406D };
+		private static int[] ElvenSpellbladeID = new int[] { 0x2D20, 0x2D2C };
+		private static int[] GargishDaggerID = new int[] { 0x0902, 0x406A };
+		private static int[] GargishKryssID = new int[] { 0x48BC, 0x48BD };
+		private static int[] GargishLanceID = new int[] { 0x48CA, 0x48CB };
+		private static int[] GargishPikeID = new int[] { 0x48C8, 0x48C9 };
+		private static int[] GargishTekagiID = new int[] { 0x48CE, 0x48CF };
+		private static int[] GargishWarForkID = new int[] { 0x48BE, 0x48BF };
+		private static int[] KamaID = new int[] { 0x27AD, 0x27F8 };
+		private static int[] LajatangID = new int[] { 0x27A7, 0x27F2 };
+		private static int[] LeafbladeID = new int[] { 0x2D22, 0x2D2E };
+		private static int[] SaiID = new int[] { 0x27AF, 0x27FA };
+		private static int[] ShortbladeID = new int[] { 0x0907, 0x4076 };
+		private static int[] TekagiID = new int[] { 0x27AB, 0x27F6 };
+		private static int[] WarCleaverID = new int[] { 0x2D23, 0x2D2F };
+		private static int[] BoomerangID = new int[] { 0x2D23, 0x2D2F };
+
+
 		private static AbilityInfo[] m_Primary = new AbilityInfo[]
 		{
-			new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID ),
-			new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID ),
-			new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID ),
-			new AbilityInfo( AOSAbility.CrushingBlow, VikingSwordID, AxeID, BroadswordID, ShepherdsCrookID, SmithsHammerID, MaulID, WarMaceID, ScepterID, SledgeHammerID ),
-			new AbilityInfo( AOSAbility.Disarm, FistsID ),
+			new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID, DiscMaceID, GargishKryssID, ShortbladeID ),
+			new AbilityInfo( AOSAbility.ArmorPeirce, YumiID ),
+            new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID ),
+			new AbilityInfo( AOSAbility.Block, NunchakuID ),
+            new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID, DiamondMaceID, GargishGnarledStaffID ),
+			new AbilityInfo( AOSAbility.CrushingBlow, VikingSwordID, AxeID, BroadswordID, ShepherdsCrookID, SmithsHammerID, MaulID, WarMaceID, ScepterID, SledgeHammerID, GargishAxeID, DreadSwordID, NoDachiID, SerpentstoneStaffID ),
+			new AbilityInfo( AOSAbility.DefenseMastery, ElvenMacheteID, LajatangID ),
+			new AbilityInfo( AOSAbility.Disarm, FistsID, OrnateAxeID, RuneBladeID, GargishLanceID, WarCleaverID ),
 			new AbilityInfo( AOSAbility.Dismount, WandID, LanceID ),
-			new AbilityInfo( AOSAbility.DoubleStrike, PickaxeID, TwoHandedAxeID, DoubleAxeID, ScimitarID, KatanaID, CrescentBladeID, QuarterStaffID, DoubleBladedStaffID, RepeatingCrossbowID ),
-			new AbilityInfo( AOSAbility.InfectiousStrike, ButcherKnifeID, DaggerID ),
+			new AbilityInfo( AOSAbility.DoubleStrike, PickaxeID, TwoHandedAxeID, DoubleAxeID, ScimitarID, KatanaID, CrescentBladeID, QuarterStaffID, DoubleBladedStaffID, RepeatingCrossbowID, DualShortAxesID, GargishKatanaID, GargishMaulID, GlassStaffID, NunchakuID, DualPointedSpearID ),
+			new AbilityInfo( AOSAbility.DualWield, GargishTekagiID, SaiID, TekagiID ),
+            new AbilityInfo( AOSAbility.InfectiousStrike, ButcherKnifeID, DaggerID, GargishButcherKnifeID, AssassinSpikeID ),
+			new AbilityInfo( AOSAbility.LightningArrow, MagicalShortbowID ),
+            new AbilityInfo( AOSAbility.Feint, BokutoID, DaishoID, GargishDaishoID, GargishTessenID, TessenID, LeafbladeID ),
+			new AbilityInfo( AOSAbility.FrenziedWhirlwind, WakizashiID ),
+			new AbilityInfo( AOSAbility.ForceArrow, ElvenCompositeLongbowID ),
 			//new AbilityInfo( AOSAbility.MortalStrike ), // not primary for anything
 			new AbilityInfo( AOSAbility.MovingShot, HeavyCrossbowID ),
-			new AbilityInfo( AOSAbility.ParalyzingBlow, BardicheID, BoneHarvesterID, PikeID, BowID ),
-			new AbilityInfo( AOSAbility.ShadowStrike, SkinningKnifeID, ClubID, ShortSpearID ),
-			new AbilityInfo( AOSAbility.WhirlwindAttack, LargeBattleAxeID, HalberdID, WarHammerID, BlackStaffID )
+			new AbilityInfo( AOSAbility.ParalyzingBlow, BardicheID, BoneHarvesterID, PikeID, BowID, GargishBardicheID, GargishBoneHarvesterID, GargishPikeID ),
+			new AbilityInfo( AOSAbility.PsychicAttack, ElvenSpellbladeID ),
+            new AbilityInfo( AOSAbility.ShadowStrike, SkinningKnifeID, ClubID, ShortSpearID, GargishDaggerID ),
+			new AbilityInfo( AOSAbility.WhirlwindAttack, LargeBattleAxeID, HalberdID, WarHammerID, BlackStaffID, GargishTalwarID, RadiantScimitarID, GargishWarHammerID, KamaID )   
 		};
 
 		private static AbilityInfo[] m_Secondary = new AbilityInfo[]
 		{
-			new AbilityInfo( AOSAbility.ArmorIgnore, LargeBattleAxeID, BroadswordID, KatanaID ),
-			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID ),
-			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID ),
-			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID ),
-			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID ),
-			new AbilityInfo( AOSAbility.Dismount, BardicheID, AxeID, BladedStaffID, ClubID, PitchforkID, HeavyCrossbowID ),
-			//new AbilityInfo( AOSAbility.DoubleStrike ), // secondary on none
-			new AbilityInfo( AOSAbility.InfectiousStrike, CleaverID, PikeID, KryssID, DoubleBladedStaffID ),
-			new AbilityInfo( AOSAbility.MortalStrike, ExecAxeID, BoneHarvesterID, CrescentBladeID, HammerPickID, ScepterID, ShortSpearID, CrossbowID, BowID ),
+			
+            new AbilityInfo( AOSAbility.ArmorPeirce, SaiID ),
+			new AbilityInfo( AOSAbility.ArmorIgnore, LargeBattleAxeID, BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
+			new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
+			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID, ElvenSpellbladeID ),
+			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID ),
+			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID ),
+            new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),
+			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID, GargishButcherKnifeID, DiscMaceID, DualPointedSpearID, GargishWarForkID ),
+			new AbilityInfo( AOSAbility.Dismount, BardicheID, AxeID, BladedStaffID, ClubID, PitchforkID, HeavyCrossbowID, GargishAxeID, GargishBardicheID, GargishTalwarID, SerpentstoneStaffID ),
+			new AbilityInfo( AOSAbility.DualWield, TessenID ),
+            new AbilityInfo( AOSAbility.DoubleStrike, DaishoID, GargishDaishoID, WakizashiID),
+			new AbilityInfo( AOSAbility.DoubleShot, YumiID ),
+			new AbilityInfo( AOSAbility.FrenziedWhirlwind, LajatangID ),
+            new AbilityInfo( AOSAbility.InfectiousStrike, CleaverID, PikeID, KryssID, DoubleBladedStaffID, DualShortAxesID, GargishCleaverID, GargishDaggerID, GargishKryssID, GargishPikeID ),
+			new AbilityInfo( AOSAbility.MortalStrike, ExecAxeID, BoneHarvesterID, CrescentBladeID, HammerPickID, ScepterID, ShortSpearID, CrossbowID, BowID, GargishBoneHarvesterID, GlassSwordID, GlassStaffID, ShortbladeID ),
 			new AbilityInfo( AOSAbility.MovingShot, CompositeBowID, RepeatingCrossbowID ),
-			new AbilityInfo( AOSAbility.ParalyzingBlow, VikingSwordID, ScimitarID, ScytheID, GnarledStaffID, BlackStaffID, SpearID, FistsID ),
-			new AbilityInfo( AOSAbility.ShadowStrike, TwoHandedAxeID, CutlassID, SmithsHammerID, DaggerID, SledgeHammerID ),
-			new AbilityInfo( AOSAbility.WhirlwindAttack, DoubleAxeID )
+			new AbilityInfo( AOSAbility.ParalyzingBlow, VikingSwordID, ScimitarID, ScytheID, GnarledStaffID, BlackStaffID, SpearID, FistsID, GargishScytheID, GargishGnarledStaffID, BloodbladeID ),
+			new AbilityInfo( AOSAbility.PsychicAttack, MagicalShortbowID ),
+			new AbilityInfo( AOSAbility.RidingSwipe, NoDachiID ),
+			new AbilityInfo( AOSAbility.SerpentArrow, ElvenCompositeLongbowID ),
+            new AbilityInfo( AOSAbility.ShadowStrike, TwoHandedAxeID, CutlassID, SmithsHammerID, DaggerID, SledgeHammerID, AssassinSpikeID ),
+			new AbilityInfo( AOSAbility.TalonStrike, GargishTekagiID, TekagiID ),
+            new AbilityInfo( AOSAbility.WhirlwindAttack, DoubleAxeID ),
+			new AbilityInfo( AOSAbility.NerveStrike, BokutoID )
 		};
-
-		public static void Initialize()
-		{
-			/*	HotKey.Add(HKCategory.Misc, HKSubCat.None, LocString.ToggleWarPeace, new HotKeyCallback(ToggleWarPeace));
-
-				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ClearAbility, new HotKeyCallback(ClearAbilities));
-
-				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.SetPrimAb, new HotKeyCallback(SetPrimaryAbility));
-				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.SetSecAb, new HotKeyCallback(SetSecondaryAbility));
-
-				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ToggleStun, new HotKeyCallback(OnStun));
-				HotKey.Add(HKCategory.Misc, HKSubCat.SpecialMoves, LocString.ToggleDisarm, new HotKeyCallback(OnDisarm));*/
-		}
 
 		private static void ToggleWarPeace()
 		{
 			ClientCommunication.SendToServer(new SetWarMode(!World.Player.Warmode));
 		}
 
-		private static void OnStun()
+		internal static void OnStun()
 		{
 			if (m_LastToggle + TimeSpan.FromSeconds(0.5) < DateTime.Now)
 			{
@@ -168,7 +248,7 @@ namespace Assistant
 			}
 		}
 
-		private static void OnDisarm()
+		internal static void OnDisarm()
 		{
 			if (m_LastToggle + TimeSpan.FromSeconds(0.5) < DateTime.Now)
 			{
