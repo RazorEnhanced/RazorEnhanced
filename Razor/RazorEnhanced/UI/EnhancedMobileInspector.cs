@@ -25,7 +25,19 @@ namespace RazorEnhanced.UI
 			lHits.Text = mobileTarg.Hits.ToString();
 			lMaxHits.Text = mobileTarg.Hits.ToString();
 			lNotoriety.Text = mobileTarg.Notoriety.ToString();
-			lDirection.Text = mobileTarg.Direction.ToString();
+
+			switch (mobileTarg.Direction & Assistant.Direction.Mask)
+			{
+				case Assistant.Direction.North: lDirection.Text = "North"; break;
+				case Assistant.Direction.South: lDirection.Text = "South"; break;
+				case Assistant.Direction.West: lDirection.Text = "West"; break;
+				case Assistant.Direction.East: lDirection.Text = "East"; break;
+				case Assistant.Direction.Right: lDirection.Text = "Right"; break;
+				case Assistant.Direction.Left: lDirection.Text = "Left"; break;
+				case Assistant.Direction.Down: lDirection.Text = "Down"; break;
+				case Assistant.Direction.Up: lDirection.Text = "Up"; break;
+				default: lDirection.Text = "Undefined"; break;
+			}
 
 			if (mobileTarg.Poisoned)
 				lFlagPoisoned.Text = "Yes";
