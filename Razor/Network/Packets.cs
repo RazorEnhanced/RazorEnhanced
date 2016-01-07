@@ -879,7 +879,7 @@ namespace Assistant
 			Write((byte)0);
 			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
-				Write((short)(ltHue | 0x8000));
+				Write((short)(ltHue));
 			else
 				Write((short)m.Hue);
 			Write((byte)m.GetPacketFlags());
@@ -911,7 +911,7 @@ namespace Assistant
 			Write((ushort)m.Position.Y);
 			Write((sbyte)m.Position.Z);
 			Write((byte)m.Direction);
-			Write((ushort)(isLT ? ltHue | 0x8000 : m.Hue));
+			Write((ushort)(isLT ? ltHue : m.Hue));
 			Write((byte)m.GetPacketFlags());
 			Write((byte)m.Notoriety);
 

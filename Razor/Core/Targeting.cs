@@ -290,8 +290,9 @@ namespace Assistant
 					if (m != null)
 					{
 						if (lth)
+						{
 							ClientCommunication.SendToClient(new MobileIncoming(m));
-
+						}
 						RemoveTextFlags(m);
 					}
 				}
@@ -605,6 +606,28 @@ namespace Assistant
 		internal static void SetLastTargetTo(Mobile m)
 		{
 			SetLastTargetTo(m, 0);
+		}
+
+		internal static void SetLastTarget(Mobile m)
+		{
+			TargetInfo targ = new TargetInfo();
+			m_LastGroundTarg = m_LastTarget = targ;
+
+			targ.Type = 0;
+			if (m_HasTarget)
+				targ.Flags = m_CurFlags;
+			else
+				targ.Flags = 0;
+
+			targ.Gfx = m.Body;
+			targ.Serial = m.Serial;
+			targ.X = m.Position.X;
+			targ.Y = m.Position.Y;
+			targ.Z = m.Position.Z;
+
+			m_LastCombatant = m.Serial;
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
+			LastTargetChanged();
 		}
 
 		internal static void SetLastTargetTo(Mobile m, byte flagType)
