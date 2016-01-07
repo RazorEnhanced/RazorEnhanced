@@ -19,9 +19,7 @@ namespace RazorEnhanced
 		public string Name { get { return m_AssistantMobile.Name; } }
 
 		public int Body { get { return m_AssistantMobile.Body; } }
-
-		public string Direction { get { return m_AssistantMobile.Direction.ToString(); } }
-
+		
 		public bool Visible { get { return m_AssistantMobile.Visible; } }
 
 		public bool Poisoned { get { return m_AssistantMobile.Poisoned; } }
@@ -53,6 +51,43 @@ namespace RazorEnhanced
 		public int Map { get { return m_AssistantMobile.Map; } }
 
 		public bool InParty { get { return Assistant.PacketHandlers.Party.Contains(m_AssistantMobile.Serial); } }
+
+		public Item Mount
+		{
+			get
+			{
+                Assistant.Item assistantMount = m_AssistantMobile.GetItemOnLayer(Assistant.Layer.Mount);
+				if (assistantMount == null)
+					return null;
+				else
+				{
+					RazorEnhanced.Item enhancedMount = new RazorEnhanced.Item(assistantMount);
+					return enhancedMount;
+				}
+			}
+		}
+
+		// Position
+		public Point3D Pos { get { return new Point3D(m_AssistantMobile.Position); } }
+
+		public string Direction
+		{
+			get
+			{
+				switch (m_AssistantMobile.Direction & Assistant.Direction.Mask)
+				{
+					case Assistant.Direction.North: return "North";
+					case Assistant.Direction.South: return "South";
+					case Assistant.Direction.West: return "West";
+					case Assistant.Direction.East: return "East";
+					case Assistant.Direction.Right: return "Right";
+					case Assistant.Direction.Left: return "Left";
+					case Assistant.Direction.Down: return "Down";
+					case Assistant.Direction.Up: return "Up";
+					default: return "Undefined";
+				}
+			}
+		}
 
 		private static Assistant.Layer GetAssistantLayer(string layer)
 		{
