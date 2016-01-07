@@ -38,19 +38,24 @@ namespace RazorEnhanced.UI
 				lFlagWar.Text = "No";
 
 			if (mobileTarg.Visible)
-				lFlagWar.Text = "No";
+				lFlagHidden.Text = "No";
 			else
-				lFlagWar.Text = "Yes";
+				lFlagHidden.Text = "Yes";
 
 			if (mobileTarg.IsGhost)
 				lFlagGhost.Text = "Yes";
 			else
 				lFlagGhost.Text = "No";
 
-			if (mobileTarg.Blessed)
+			if (mobileTarg.Blessed)		// Yellow Hits
 				lFlagBlessed.Text = "Yes";
 			else
 				lFlagBlessed.Text = "No";
+
+			if (mobileTarg.Paralized)     
+				lFlagParalized.Text = "Yes";
+			else
+				lFlagParalized.Text = "No";
 
 			for (int i = 0; i < mobileTarg.ObjPropList.Content.Count; i++)
 			{

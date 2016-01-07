@@ -33,8 +33,9 @@ namespace Assistant
 		private bool m_Visible;
 		private bool m_Female;
 		private bool m_Poisoned;
-		private bool m_Blessed;
-		private bool m_Warmode;
+		private bool m_Blessed; // Yellow Hits
+		private bool m_Warmode; 
+		private bool m_Paralized;
 
 		private ushort m_HitsMax, m_Hits;
 		protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
@@ -189,6 +190,12 @@ namespace Assistant
 		{
 			get { return m_Female; }
 			set { m_Female = value; }
+		}
+
+		internal bool Paralized
+		{
+			get { return m_Paralized; }
+			set { m_Paralized = value; }
 		}
 
 		internal byte Notoriety
@@ -381,6 +388,9 @@ namespace Assistant
 		{
 			int flags = 0x0;
 
+			if (m_Paralized)
+				flags |= 0x01;
+
 			if (m_Female)
 				flags |= 0x02;
 
@@ -402,12 +412,14 @@ namespace Assistant
 		internal void ProcessPacketFlags(byte flags)
 		{
 			if (!PacketHandlers.UseNewStatus)
+			{
 				m_Poisoned = (flags & 0x04) != 0;
-
-			m_Female = (flags & 0x02) != 0;
-			m_Blessed = (flags & 0x08) != 0;
+				m_Blessed = (flags & 0x08) != 0;
+			}
+			m_Female = (flags & 0x02) != 0;		
 			m_Warmode = (flags & 0x40) != 0;
 			m_Visible = (flags & 0x80) == 0;
+			m_Paralized = (flags & 0x01) != 0;
 		}
 
 		internal List<Item> Contains { get { return m_Items; } }

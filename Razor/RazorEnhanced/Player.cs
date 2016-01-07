@@ -31,9 +31,10 @@ namespace RazorEnhanced
 		public static bool IsGhost { get { return Assistant.World.Player.IsGhost; } }
 
 		public static bool Poisoned { get { return Assistant.World.Player.Poisoned; } }
-		public static bool Blessed { get { return Assistant.World.Player.Blessed; } }
+		public static bool YellowHits { get { return Assistant.World.Player.Blessed; } }
 		public static bool Visible { get { return Assistant.World.Player.Visible; } }
-		public static bool Warmode { get { return Assistant.World.Player.Warmode; } }
+		public static bool WarMode { get { return Assistant.World.Player.Warmode; } }
+		public static bool Paralized { get { return Assistant.World.Player.Paralized; } }
 
 		// Self
 		public static bool Female { get { return Assistant.World.Player.Female; } }

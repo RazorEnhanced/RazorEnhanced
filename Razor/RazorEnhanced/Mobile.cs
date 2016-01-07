@@ -24,7 +24,9 @@ namespace RazorEnhanced
 
 		public bool Poisoned { get { return m_AssistantMobile.Poisoned; } }
 
-		public bool Blessed { get { return m_AssistantMobile.Blessed; } }
+		public bool YellowHits { get { return m_AssistantMobile.Blessed; } }
+
+		public bool Paralized { get { return m_AssistantMobile.Paralized; } }
 
 		public bool IsHuman { get { return m_AssistantMobile.IsHuman; } }
 
@@ -399,8 +401,7 @@ namespace RazorEnhanced
 
 					if (filter.Paralized != -1)
 					{
-						// TODO PARALIZED FLAG
-						//assistantMobiles = assistantMobiles.Where((m) => m.Paralized == Convert.ToBoolean(filter.Paralized)).ToList();
+						assistantMobiles = assistantMobiles.Where((m) => m.Paralized == Convert.ToBoolean(filter.Paralized)).ToList();
 					}
 
 					if (filter.Notorieties.Count > 0)
