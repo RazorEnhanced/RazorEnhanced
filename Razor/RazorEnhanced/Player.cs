@@ -1650,5 +1650,31 @@ namespace RazorEnhanced
 			else
 				return false;
 		}
+
+		// Weapon SA
+		public static void WeaponPrimarySA()
+		{
+			Assistant.SpecialMoves.SetPrimaryAbility();
+        }
+
+		public static void WeaponSecondarySA()
+		{
+			Assistant.SpecialMoves.SetSecondaryAbility();
+		}
+
+		public static void WeaponClearSA()
+		{
+			Assistant.SpecialMoves.ClearAbilities();
+        }
+
+		public static void WeaponDisarmSA()
+		{
+			Assistant.SpecialMoves.OnDisarm();
+        }
+
+		public static void WeaponStunSA()
+		{
+			Assistant.SpecialMoves.OnStun();
+		}
 	}
 }
