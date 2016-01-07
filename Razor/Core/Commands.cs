@@ -225,19 +225,9 @@ namespace Assistant
 
 			if (text.Length > 0)
 			{
-				// Enanched Map Chat
-				if (Map.MapNetwork.Connected)
-					if (text.StartsWith(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox")))
-					{
-						string message = text.Replace(RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox"), "");
-						Map.MapNetworkOut.SendChatMessageQueue.Enqueue(new Map.MapNetworkOut.SendChatMessage(message.Length, RazorEnhanced.Settings.General.ReadInt("MapChatColor"), message));
-						args.Block = true;
-					}
-
 				if (text[0] == '-')
 				{
 					text = text.Substring(1).ToLower();
-					RazorEnhanced.Misc.SendMessage(text);
 					string[] split = text.Split(' ', '\t');
 					if (m_List.ContainsKey(split[0]))
 					{
