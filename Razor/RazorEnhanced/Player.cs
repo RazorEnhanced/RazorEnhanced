@@ -118,7 +118,22 @@ namespace RazorEnhanced
 
 		// Position
 		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
-
+		public static string Dir { get
+			{
+				switch (Assistant.World.Player.Direction & Direction.Mask)
+				{
+					case Direction.North: return "North";
+					case Direction.South: return "South";
+					case Direction.West: return "West";
+					case Direction.East: return "East";
+					case Direction.Right: return "Right";
+					case Direction.Left: return "Left";
+					case Direction.Down: return "Down";
+					case Direction.Up: return "Up";
+					default: return "Undefined";
+				}
+			} }
+		
 		internal static string GetBuffDescription(BuffIcon icon)
 		{
 			string description = "";
