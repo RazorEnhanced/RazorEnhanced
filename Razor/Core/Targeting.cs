@@ -57,51 +57,20 @@ namespace Assistant
 
 		internal static bool HasTarget { get { return m_HasTarget; } }
 
-		internal static uint GetLastTarger { get { return m_LastTarget.Serial; } }
+		internal static uint GetLastTarger { get
+			{
+				if (m_LastTarget != null)
+					return m_LastTarget.Serial;
+				else
+					return 0;
+			} }
 
 		public static void Initialize()
 		{
 			PacketHandler.RegisterClientToServerViewer(0x6C, new PacketViewerCallback(TargetResponse));
 			PacketHandler.RegisterServerToClientViewer(0x6C, new PacketViewerCallback(NewTarget));
 			PacketHandler.RegisterServerToClientViewer(0xAA, new PacketViewerCallback(CombatantChange));
-
-			/*		HotKey.Add(HKCategory.Targets, LocString.LastTarget, new HotKeyCallback(LastTarget));
-					HotKey.Add(HKCategory.Targets, LocString.TargetSelf, new HotKeyCallback(TargetSelf));
-					HotKey.Add(HKCategory.Targets, LocString.ClearTargQueue, new HotKeyCallback(OnClearQueue));
-					HotKey.Add(HKCategory.Targets, LocString.SetLT, new HotKeyCallback(TargetSetLastTarget));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandRed, new HotKeyCallback(TargetRandRed));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandNFriend, new HotKeyCallback(TargetRandNonFriendly));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandFriend, new HotKeyCallback(TargetRandFriendly));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandBlue, new HotKeyCallback(TargetRandInnocent));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandGrey, new HotKeyCallback(TargetRandGrey));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandEnemy, new HotKeyCallback(TargetRandEnemy));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandCriminal, new HotKeyCallback(TargetRandCriminal));
-
-					HotKey.Add(HKCategory.Targets, LocString.TargRandEnemyHuman, new HotKeyCallback(TargetRandEnemyHumanoid));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandGreyHuman, new HotKeyCallback(TargetRandGreyHumanoid));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandInnocentHuman, new HotKeyCallback(TargetRandInnocentHumanoid));
-					HotKey.Add(HKCategory.Targets, LocString.TargRandCriminalHuman, new HotKeyCallback(TargetRandCriminalHumanoid));
-
-					HotKey.Add(HKCategory.Targets, LocString.AttackLastComb, new HotKeyCallback(AttackLastComb));
-					HotKey.Add(HKCategory.Targets, LocString.AttackLastTarg, new HotKeyCallback(AttackLastTarg));
-					HotKey.Add(HKCategory.Targets, LocString.CancelTarget, new HotKeyCallback(CancelTarget));
-
-					HotKey.Add(HKCategory.Targets, LocString.NextTarget, new HotKeyCallback(NextTarget));
-					HotKey.Add(HKCategory.Targets, LocString.NextTargetHumanoid, new HotKeyCallback(NextTargetHumanoid));
-
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseRed, new HotKeyCallback(TargetCloseRed));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseNFriend, new HotKeyCallback(TargetCloseNonFriendly));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseFriend, new HotKeyCallback(TargetCloseFriendly));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseBlue, new HotKeyCallback(TargetCloseInnocent));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseGrey, new HotKeyCallback(TargetCloseGrey));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemy, new HotKeyCallback(TargetCloseEnemy));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminal, new HotKeyCallback(TargetCloseCriminal));
-
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseEnemyHuman, new HotKeyCallback(TargetCloseEnemyHumanoid));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseGreyHuman, new HotKeyCallback(TargetCloseGreyHumanoid));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseInnocentHuman, new HotKeyCallback(TargetCloseInnocentHumanoid));
-					HotKey.Add(HKCategory.Targets, LocString.TargCloseCriminalHuman, new HotKeyCallback(TargetCloseCriminalHumanoid));
-					*/
+		
 		}
 
 		private static void CombatantChange(PacketReader p, PacketHandlerEventArgs e)
@@ -641,6 +610,37 @@ namespace Assistant
 			LastTarget();
 			if (wasSmart)
 				RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", true);
+			LastTargetChanged();
+		}
+
+		internal static void SetLastTarget(Mobile m, byte flagType)
+		{
+			TargetInfo targ = new TargetInfo();
+			m_LastGroundTarg = m_LastTarget = targ;
+
+			if ((m_HasTarget && m_CurFlags == 1) || flagType == 1)
+				m_LastHarmTarg = targ;
+			else if ((m_HasTarget && m_CurFlags == 2) || flagType == 2)
+				m_LastBeneTarg = targ;
+			else if (flagType == 0)
+				m_LastHarmTarg = m_LastBeneTarg = targ;
+
+			targ.Type = 0;
+			if (m_HasTarget)
+				targ.Flags = m_CurFlags;
+			else
+				targ.Flags = flagType;
+
+			targ.Gfx = m.Body;
+			targ.Serial = m.Serial;
+			targ.X = m.Position.X;
+			targ.Y = m.Position.Y;
+			targ.Z = m.Position.Z;
+
+			ClientCommunication.SendToClient(new ChangeCombatant(m));
+			m_LastCombatant = m.Serial;
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
+
 			LastTargetChanged();
 		}
 
