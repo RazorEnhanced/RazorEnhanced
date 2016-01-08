@@ -790,10 +790,12 @@ namespace RazorEnhanced
 					break;
 
 				case "Target Self Queued":
+					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"self\" queued."));
 					Assistant.Targeting.TargetSelf(true);
 					break;
 
 				case "Target Last Queued":
+					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" queued."));
 					Assistant.Targeting.LastTarget(true);
 					break;
 
