@@ -1343,6 +1343,17 @@ namespace Assistant
 		}
 	}
 
+	internal sealed class QueryProperties : Packet
+	{
+		internal QueryProperties(Serial entity)
+			: base(0xBF)
+		{
+			EnsureCapacity(1 + 2 + 2 + 4);
+			Write((ushort)0x10);
+			Write((uint)entity);
+		}
+	}
+
 	internal sealed class ContextMenuResponse : Packet
 	{
 		internal ContextMenuResponse(Serial entity, ushort idx)

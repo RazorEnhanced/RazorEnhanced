@@ -116,7 +116,9 @@ namespace Assistant
 						{
 							Item item = World.FindItem(s);
 							if (item == null)
+							{
 								World.AddItem(item = new Item(s));
+							}
 
 							item.ReadPropertyList(p);
 							if (item.ModifiedOPL)
@@ -396,6 +398,7 @@ namespace Assistant
 				{
 					World.AddItem(item = new Item(serial));
 					item.Amount = amount;
+					ClientCommunication.SendToServer(new QueryProperties(serial));
 				}
 
 				DragDropManager.Drag(item, amount, true);
@@ -531,6 +534,7 @@ namespace Assistant
 					return p.Compile();
 
 				World.AddItem(i = new Item(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				i.IsNew = i.AutoStack = true;
 			}
 
@@ -584,6 +588,7 @@ namespace Assistant
 					return;
 
 				World.AddItem(i = new Item(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				i.IsNew = i.AutoStack = true;
 			}
 			else
@@ -629,6 +634,7 @@ namespace Assistant
 			else
 			{
 				World.AddItem(new Item(ser));
+				ClientCommunication.SendToServer(new QueryProperties(ser));
 				Item.UpdateContainers();
 			}
 		}
@@ -648,6 +654,7 @@ namespace Assistant
 				if (item == null)
 				{
 					World.AddItem(item = new Item(serial));
+					ClientCommunication.SendToServer(new QueryProperties(serial));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -712,6 +719,7 @@ namespace Assistant
 				if (item == null)
 				{
 					World.AddItem(item = new Item(serial));
+					ClientCommunication.SendToServer(new QueryProperties(serial));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -764,6 +772,7 @@ namespace Assistant
 			if (i == null)
 			{
 				World.AddItem(i = new Item(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 				Item.UpdateContainers();
 			}
@@ -1294,7 +1303,10 @@ namespace Assistant
 			Serial serial = p.ReadUInt32();
 			Mobile m = World.FindMobile(serial);
 			if (m == null)
+			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
+			}
 
 			m.Name = p.ReadString(30);
 
@@ -1385,7 +1397,10 @@ namespace Assistant
 			Serial serial = p.ReadUInt32();
 			Mobile m = World.FindMobile(serial);
 			if (m == null)
+			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
+			}
 
 			bool wasHidden = !m.Visible;
 
@@ -1473,7 +1488,10 @@ namespace Assistant
 
 			Mobile m = World.FindMobile(serial);
 			if (m == null)
+			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
+			}
 
 			bool wasHidden = !m.Visible;
 
@@ -1533,6 +1551,7 @@ namespace Assistant
 				{
 					isNew = true;
 					World.AddItem(item = new Item(serial));
+					ClientCommunication.SendToServer(new QueryProperties(serial));
 				}
 
 				if (!DragDropManager.EndHolding(serial))
@@ -1636,6 +1655,7 @@ namespace Assistant
 			if (item == null)
 			{
 				World.AddItem(item = new Item(serial & 0x7FFFFFFF));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 			}
 			else
@@ -1801,6 +1821,7 @@ namespace Assistant
 			if (item == null)
 			{
 				World.AddItem(item = new Item(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 			}
 			else
@@ -2357,6 +2378,7 @@ namespace Assistant
 							{
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
+								ClientCommunication.SendToServer(new QueryProperties(serial));
 							}
 
 							if (mobile.Name == null || mobile.Name.Length <= 0)
