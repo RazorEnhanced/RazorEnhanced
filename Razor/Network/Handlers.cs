@@ -476,11 +476,6 @@ namespace Assistant
 				World.Player.Notoriety = p.ReadByte();
 
 				args.Block |= !World.Player.MoveAck(seq);
-				// Enhanced Map move
-				if (Map.MapNetwork.Connected)
-				{
-					Map.MapNetworkOut.SendCoordQueue.Enqueue(new Map.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
-				}
 			}
 		}
 
@@ -1129,25 +1124,6 @@ namespace Assistant
 					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
 						RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
-					// Enhanced Map Stats Update
-					if (Map.MapNetwork.Connected)
-					{
-						Map.MapNetworkOut.SendStatQueue.Enqueue(new Map.MapNetworkOut.SendStat(m.Hits, World.Player.Stam, World.Player.Mana, m.HitsMax, World.Player.StamMax, World.Player.ManaMax));
-
-						// Enhanced Map Flags dead
-						if (m.Hits == 0)
-						{
-							Map.MapNetworkOut.LastDead = true;
-							Map.MapNetworkOut.SendFlagQueue.Enqueue(4);
-						}
-
-						if (m.Hits > 0 && Map.MapNetworkOut.LastDead)
-						{
-							Map.MapNetworkOut.LastDead = false;
-							Map.MapNetworkOut.SendFlagQueue.Enqueue(0);
-						}
-					}
-
 					ClientCommunication.PostHitsUpdate();
 				}
 
@@ -1190,10 +1166,6 @@ namespace Assistant
 					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
 						RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
-					// Enhanced Map Stats Update
-					if (Map.MapNetwork.Connected)
-						Map.MapNetworkOut.SendStatQueue.Enqueue(new Map.MapNetworkOut.SendStat(World.Player.Hits, m.Stam, World.Player.Mana, World.Player.HitsMax, m.StamMax, World.Player.ManaMax));
-
 					ClientCommunication.PostStamUpdate();
 				}
 
@@ -1235,10 +1207,6 @@ namespace Assistant
 					// Update Mana toolbar
 					if (Assistant.Engine.MainWindow.ToolBarWindows != null)
 						RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
-
-					// Enhanced Map Stats Update
-					if (Map.MapNetwork.Connected)
-						Map.MapNetworkOut.SendStatQueue.Enqueue(new Map.MapNetworkOut.SendStat(World.Player.Hits, World.Player.Stam, m.Mana, World.Player.HitsMax, World.Player.StamMax, m.ManaMax));
 
 					ClientCommunication.PostManaUpdate();
 				}
@@ -1315,19 +1283,10 @@ namespace Assistant
 			byte flag = p.ReadByte();
 
 			if (id == 1)
-			{
-				bool wasPoisoned = m.Poisoned;
 				m.Poisoned = (flag != 0);
-				if (m == World.Player)
-					if (Map.MapNetwork.Connected)
-						Map.MapNetworkOut.SendFlagQueue.Enqueue(1);
-			}
-			else
-			{
-				if (m == World.Player)
-					if (Map.MapNetwork.Connected)
-						Map.MapNetworkOut.SendFlagQueue.Enqueue(0);
-			}
+			else if (id == 2)
+				m.Blessed = (flag != 0);
+
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -2237,9 +2196,6 @@ namespace Assistant
 						if (World.Player != null)
 						{
 							World.Player.Map = p.ReadByte();
-							// Enhanced Map move
-							if (Map.MapNetwork.Connected)
-								Map.MapNetworkOut.SendCoordQueue.Enqueue(new Map.MapNetworkOut.SendCoord(World.Player.Position.X, World.Player.Position.Y, World.Player.Map));
 						}
 						break;
 					}
