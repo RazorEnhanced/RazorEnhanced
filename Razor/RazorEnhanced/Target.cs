@@ -84,14 +84,14 @@ namespace RazorEnhanced
 		public static void SetLast(RazorEnhanced.Mobile mob)
 		{
 			Assistant.Mobile mobile = World.FindMobile(mob.Serial);
-			Assistant.Targeting.SetLastTarget(mobile);
+			Assistant.Targeting.SetLastTargetTo(mobile);
 		}
 
 		public static void SetLast(int serial)
 		{
 			Assistant.Mobile mobile = World.FindMobile(serial);
 			if (mobile != null)
-				Assistant.Targeting.SetLastTarget(mobile);
+				Assistant.Targeting.SetLastTargetTo(mobile);
 		}
 
 		public int PromptTarget()
