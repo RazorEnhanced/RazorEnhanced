@@ -434,7 +434,11 @@ namespace RazorEnhanced
 						// Esclude Last dalla ricerca
 						mobiles = mobiles.Where((m) => m.Serial != Target.GetLast()).ToList();
 
-						result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
+						try
+						{
+							result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
+						}
+						catch { }
 
 						break;
 

@@ -8,6 +8,8 @@ namespace RazorEnhanced
 	{
 		private int m_ptarget;
 
+		internal static bool TargetMessage = false;
+
 		public static bool HasTarget()
 		{
 			return Assistant.Targeting.HasTarget;
@@ -112,37 +114,67 @@ namespace RazorEnhanced
 		}
 
 		// Funzioni target per richiamare i target della gui
-		public static void SetLastTargetFromList(string targetid)
+
+		private static string GetPlayerName(int s)
 		{
-			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
-			if (targetdata != null)
+			Assistant.Mobile mob = World.FindMobile(s);
+	
+			if (mob.ObjPropList.Content.Count > 0)
 			{
-				Mobiles.Filter filter = targetdata.Filter;
-				string selector = targetdata.Selector;
-
-				List<Mobile> filterresult;
-				filterresult = Mobiles.ApplyFilter(filter);
-
-				Mobile mobtarget = Mobiles.Select(filterresult, selector);
-				if (mobtarget != null)
-				{
-					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
-					{
-						if (Friend.IsFriend(mobtarget.Serial))
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
-						else
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 37, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
-					}
-
-					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
-					RazorEnhanced.Target.SetLast(mobtarget);
-				}
+				Assistant.ObjectPropertyList.OPLEntry ent = mob.ObjPropList.Content[0];
+				return ent.ToString();
 			}
 			else
-			{
-				Misc.SendMessage("Invalid target data!");
-			}
+				return mob.Name;
+		}
+
+		private static int[] m_NotoHues = new int[8]
+		{
+			1,
+			98,
+			268,
+			993,
+			993,
+			148,
+			38,
+			53
+		};
+
+		private static int GetPlayerColor(Mobile mob)
+		{
+			return m_NotoHues[mob.Notoriety];
+        }
+		public static void SetLastTargetFromList(string targetid)
+		{
+				TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+				if (targetdata != null)
+				{
+					Mobiles.Filter filter = targetdata.Filter;
+					string selector = targetdata.Selector;
+
+					List<Mobile> filterresult;
+					filterresult = Mobiles.ApplyFilter(filter);
+
+					Mobile mobtarget = Mobiles.Select(filterresult, selector);
+					if (mobtarget != null)
+					{
+						if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
+						{
+							if (Friend.IsFriend(mobtarget.Serial))
+								Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+							else
+								Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+						}
+
+					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
+							Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+						RazorEnhanced.Target.SetLast(mobtarget);
+					}
+				}
+				else
+				{
+					Misc.SendMessage("Invalid target data!");
+				}
 		}
 
 		public static void PerformTargetFromList(string targetid)
@@ -157,14 +189,14 @@ namespace RazorEnhanced
 				filterresult = Mobiles.ApplyFilter(filter);
 
 				Mobile mobtarget = Mobiles.Select(filterresult, selector);
-				if (mobtarget != null)
+                if (mobtarget != null)
 				{
 					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
 					{
 						if (Friend.IsFriend(mobtarget.Serial))
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
 						else
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 37, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + mobtarget.Name + "]"));
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
 					}
 
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
