@@ -55,6 +55,8 @@ namespace Assistant
 		private bool m_Visible;
 		private bool m_Movable;
 
+		private bool m_PropsUpdated;
+
 		private Layer m_Layer;
 		private string m_Name;
 		private object m_Parent;
@@ -187,6 +189,12 @@ namespace Assistant
 		{
 			get { return m_ItemID; }
 			set { m_ItemID = value; }
+		}
+
+		internal bool PropsUpdated
+		{
+			get { return m_PropsUpdated; }
+			set { m_PropsUpdated = value; }
 		}
 
 		internal ushort Amount

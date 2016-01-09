@@ -37,6 +37,8 @@ namespace RazorEnhanced
 
 		public object RootContainer { get { return m_AssistantItem.RootContainer; } }
 
+		public bool PropsUpdated { get { return m_AssistantItem.PropsUpdated; } }
+
 		public bool IsChildOf(object parent)
 		{
 			return m_AssistantItem.IsChildOf(parent);
@@ -739,6 +741,23 @@ namespace RazorEnhanced
 		}
 
 		// Props
+		public static void WaitForProps(Item i, int delay) // Delay in MS
+		{
+			if (!i.PropsUpdated)
+			{
+				ClientCommunication.SendToServer(new QueryProperties(i.Serial));
+				int subdelay = delay;
+
+				while (!i.PropsUpdated)
+				{
+					Thread.Sleep(2);
+					subdelay -= 2;
+					if (subdelay <= 0)
+						break;
+				}
+			}
+		}
+
 		public static int GetPropValue(int serial, string name)
 		{
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));

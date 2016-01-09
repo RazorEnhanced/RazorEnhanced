@@ -126,6 +126,8 @@ namespace Assistant
 								args.Block = true;
 								ClientCommunication.SendToClient(item.ObjPropList.BuildPacket());
 							}
+
+							item.PropsUpdated = true;
 						}
 						else if (s.IsMobile)
 						{
@@ -139,6 +141,8 @@ namespace Assistant
 								args.Block = true;
 								ClientCommunication.SendToClient(m.ObjPropList.BuildPacket());
 							}
+
+							m.PropsUpdated = true;
 						}
 						break;
 					}
@@ -398,7 +402,7 @@ namespace Assistant
 				{
 					World.AddItem(item = new Item(serial));
 					item.Amount = amount;
-					ClientCommunication.SendToServer(new QueryProperties(serial));
+					//ClientCommunication.SendToServer(new QueryProperties(serial));
 				}
 
 				DragDropManager.Drag(item, amount, true);
@@ -534,7 +538,7 @@ namespace Assistant
 					return p.Compile();
 
 				World.AddItem(i = new Item(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+				//ClientCommunication.SendToServer(new QueryProperties(serial));
 				i.IsNew = i.AutoStack = true;
 			}
 
@@ -588,7 +592,7 @@ namespace Assistant
 					return;
 
 				World.AddItem(i = new Item(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+				//ClientCommunication.SendToServer(new QueryProperties(serial));
 				i.IsNew = i.AutoStack = true;
 			}
 			else
@@ -634,7 +638,7 @@ namespace Assistant
 			else
 			{
 				World.AddItem(new Item(ser));
-				ClientCommunication.SendToServer(new QueryProperties(ser));
+				//ClientCommunication.SendToServer(new QueryProperties(ser));
 				Item.UpdateContainers();
 			}
 		}
@@ -654,7 +658,7 @@ namespace Assistant
 				if (item == null)
 				{
 					World.AddItem(item = new Item(serial));
-					ClientCommunication.SendToServer(new QueryProperties(serial));
+					//ClientCommunication.SendToServer(new QueryProperties(serial));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -719,7 +723,7 @@ namespace Assistant
 				if (item == null)
 				{
 					World.AddItem(item = new Item(serial));
-					ClientCommunication.SendToServer(new QueryProperties(serial));
+				//	ClientCommunication.SendToServer(new QueryProperties(serial));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -772,7 +776,7 @@ namespace Assistant
 			if (i == null)
 			{
 				World.AddItem(i = new Item(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+			//	ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 				Item.UpdateContainers();
 			}
@@ -1554,7 +1558,7 @@ namespace Assistant
 				{
 					isNew = true;
 					World.AddItem(item = new Item(serial));
-					ClientCommunication.SendToServer(new QueryProperties(serial));
+					//ClientCommunication.SendToServer(new QueryProperties(serial));
 				}
 
 				if (!DragDropManager.EndHolding(serial))
@@ -1658,7 +1662,7 @@ namespace Assistant
 			if (item == null)
 			{
 				World.AddItem(item = new Item(serial & 0x7FFFFFFF));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+				//ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 			}
 			else
@@ -1824,7 +1828,7 @@ namespace Assistant
 			if (item == null)
 			{
 				World.AddItem(item = new Item(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+			//	ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 			}
 			else

@@ -37,6 +37,8 @@ namespace Assistant
 		private bool m_Warmode; 
 		private bool m_Paralized;
 
+		private bool m_PropsUpdated;
+
 		private ushort m_HitsMax, m_Hits;
 		protected ushort m_StamMax, m_Stam, m_ManaMax, m_Mana;
 
@@ -129,6 +131,12 @@ namespace Assistant
 		{
 			get { return m_Body; }
 			set { m_Body = value; }
+		}
+
+		internal bool PropsUpdated
+		{
+			get { return m_PropsUpdated; }
+			set { m_PropsUpdated = value; }
 		}
 
 		internal Direction Direction

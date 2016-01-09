@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -19,7 +20,9 @@ namespace RazorEnhanced
 		public string Name { get { return m_AssistantMobile.Name; } }
 
 		public int Body { get { return m_AssistantMobile.Body; } }
-		
+
+		public bool PropsUpdated { get { return m_AssistantMobile.PropsUpdated; } }
+
 		public bool Visible { get { return m_AssistantMobile.Visible; } }
 
 		public bool Poisoned { get { return m_AssistantMobile.Poisoned; } }
@@ -583,6 +586,24 @@ namespace RazorEnhanced
 		}
 
 		// Props
+
+		public static void WaitForProps(Mobile m, int delay) // Delay in MS
+		{
+			if (!m.PropsUpdated)
+			{
+				ClientCommunication.SendToServer(new QueryProperties(m.Serial));
+				int subdelay = delay;
+
+				while (!m.PropsUpdated)
+				{
+					Thread.Sleep(2);
+					subdelay -= 2;
+					if (subdelay <= 0)
+						break;
+				}
+			}
+		}
+
 		public static int GetPropValue(int serial, string name)
 		{
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
