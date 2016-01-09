@@ -314,6 +314,7 @@ namespace RazorEnhanced
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
+					Items.WaitForProps(oggettoContenuto, 1000);
 					// Blocco shared
 					if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0) // Attende l'arrivo delle props
 					{
@@ -351,6 +352,8 @@ namespace RazorEnhanced
 					{
 						if (!autoLootItem.Selected)
 							continue;
+
+						Items.WaitForProps(oggettoContenuto, 1000);
 
 						if (autoLootItem.Color == -1)          // Colore ALL
 						{

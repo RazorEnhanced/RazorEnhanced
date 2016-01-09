@@ -293,6 +293,8 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item itemGround in itemsOnGround)
 			{
+				Items.WaitForProps(itemGround, 1000);
+
 				if (World.Player.IsGhost)
 				{
 					ResetIgnore();
@@ -302,6 +304,7 @@ namespace RazorEnhanced
 
 				foreach (ScavengerItem scavengerItem in scavengerItemList)
 				{
+
 					if (!scavengerItem.Selected)
 						continue;
 
