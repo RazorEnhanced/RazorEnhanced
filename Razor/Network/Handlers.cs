@@ -1306,6 +1306,7 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			m.Name = p.ReadString(30);
@@ -1400,6 +1401,7 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			bool wasHidden = !m.Visible;
@@ -1491,6 +1493,7 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			bool wasHidden = !m.Visible;
@@ -2379,6 +2382,7 @@ namespace Assistant
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
 								ClientCommunication.SendToServer(new QueryProperties(serial));
+                                ClientCommunication.SendToServer(new StatusQuery(serial));
 							}
 
 							if (mobile.Name == null || mobile.Name.Length <= 0)

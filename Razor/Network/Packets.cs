@@ -271,12 +271,12 @@ namespace Assistant
 
 	internal sealed class StatusQuery : Packet
 	{
-		internal StatusQuery(Mobile m)
+		internal StatusQuery(Serial s)
 			: base(0x34, 10)
 		{
 			Write((uint)0xEDEDEDED);
 			Write((byte)0x04);
-			Write(m.Serial);
+			Write(s);
 		}
 	}
 
