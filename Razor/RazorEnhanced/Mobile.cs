@@ -589,6 +589,16 @@ namespace RazorEnhanced
 
 		public static void WaitForProps(Mobile m, int delay) // Delay in MS
 		{
+			WaitForProps(m.Serial, delay);
+        }
+
+		public static void WaitForProps(int mobileserial, int delay) // Delay in MS
+		{
+			Assistant.Mobile m = Assistant.World.FindMobile((Assistant.Serial)((uint)mobileserial));
+
+			if (m == null)
+				return;
+
 			if (!m.PropsUpdated)
 			{
 				ClientCommunication.SendToServer(new QueryProperties(m.Serial));

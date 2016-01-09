@@ -741,8 +741,18 @@ namespace RazorEnhanced
 		}
 
 		// Props
-		public static void WaitForProps(Item i, int delay) // Delay in MS
+		public static void WaitForProps(Item i, int delay)
 		{
+			WaitForProps(i.Serial, delay);
+		}
+
+		public static void WaitForProps(int itemserial, int delay) // Delay in MS
+		{
+			Assistant.Item i = Assistant.World.FindItem((Assistant.Serial)((uint)itemserial));
+
+			if (i == null)
+				return;
+
 			if (!i.PropsUpdated)
 			{
 				ClientCommunication.SendToServer(new QueryProperties(i.Serial));
