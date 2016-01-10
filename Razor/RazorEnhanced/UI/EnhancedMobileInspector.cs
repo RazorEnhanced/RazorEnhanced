@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace RazorEnhanced.UI
 {
 	internal partial class EnhancedMobileInspector : Form
 	{
 		private const string m_Title = "Enhanced Mobile Inspect";
+		private Thread m_ProcessInfo;
+		private Assistant.Mobile m_mobile;
 
 		internal EnhancedMobileInspector(Assistant.Mobile mobileTarg)
 		{
 			InitializeComponent();
 			MaximizeBox = false;
+			m_mobile = mobileTarg;
 			// general
 			lName.Text = mobileTarg.Name.ToString();
 			lSerial.Text = "0x" + mobileTarg.Serial.Value.ToString("X8");
@@ -74,8 +78,11 @@ namespace RazorEnhanced.UI
 				Assistant.ObjectPropertyList.OPLEntry ent = mobileTarg.ObjPropList.Content[i];
 				if (i == 0)
 					lName.Text = ent.ToString();
-				string content = ent.ToString();
-				listBoxAttributes.Items.Add(content);
+				else
+				{
+					string content = ent.ToString();
+					listBoxAttributes.Items.Add(content);
+				}
 			}
 
 			if (mobileTarg.ObjPropList.Content.Count == 0)
@@ -194,10 +201,258 @@ namespace RazorEnhanced.UI
 					}
 				}
 			}
+			else
+			{
+				m_ProcessInfo = new Thread(ProcessInfoThread);
+				m_ProcessInfo.Start();
+            }
 	}
+
+		private void ProcessInfoThread()
+		{
+			AddAttributesToList("Fire Resist: " + GetAttribute("Fire Resist"));
+			AddAttributesToList("Cold Resist: " + GetAttribute("Cold Resist"));
+			AddAttributesToList("Poison Resist: " + GetAttribute(".Poison Resist"));
+			AddAttributesToList("Energy Resist: " + GetAttribute("Energy Resist"));
+			AddAttributesToList("Luck: " + GetAttribute("Luck"));
+
+			if (GetAttribute("Swing Speed Increase") > 0)
+				AddAttributesToList("Swing Speed Increase: " + GetAttribute("Swing Speed Increase"));
+
+			if (GetAttribute("Damage Chance Increase") > 0)
+				AddAttributesToList("Damage Chance Increase: " + GetAttribute("Damage Chance Increase"));
+
+			if (GetAttribute("Lower Reagent Cost") > 0)
+				AddAttributesToList("Lower Reagent Cost: " + GetAttribute("Lower Reagent Cost"));
+
+			if (GetAttribute("Hit Points Regeneration") > 0)
+				AddAttributesToList("Hit Points Regeneration: " + GetAttribute("Hit Points Regeneration"));
+
+			if (GetAttribute("Stamina Regeneration") > 0)
+				AddAttributesToList("Stamina Regeneration: " + GetAttribute("Stamina Regeneration"));
+
+			if (GetAttribute("Mana Regeneration") > 0)
+				AddAttributesToList("Mana Regeneration: " + GetAttribute("Mana Regeneration"));
+
+			if (GetAttribute("Reflect Physical Damage") > 0)
+				AddAttributesToList("Reflect Physical Damage: " + GetAttribute("Reflect Physical Damage"));
+
+			if (GetAttribute("Enhance Potions") > 0)
+				AddAttributesToList("Enhance Potions: " + GetAttribute("Enhance Potions"));
+
+			if (GetAttribute("Defense Chance Increase") > 0)
+				AddAttributesToList("Defense Chance Increase: " + GetAttribute("Defense Chance Increase"));
+
+			if (GetAttribute("Spell Damage Increase") > 0)
+				AddAttributesToList("Spell Damage Increase: " + GetAttribute("Spell Damage Increase"));
+
+			if (GetAttribute("Faster Cast Recovery") > 0)
+				AddAttributesToList("Faster Cast Recovery: " + GetAttribute("Faster Cast Recovery"));
+
+			if (GetAttribute("Faster Casting") > 0)
+				AddAttributesToList("Faster Casting: " + GetAttribute("Faster Casting"));
+
+			if (GetAttribute("Lower Mana Cost") > 0)
+				AddAttributesToList("Lower Mana Cost: " + GetAttribute("Lower Mana Cost"));
+
+			if (GetAttribute("Strength Increase") > 0)
+				AddAttributesToList("Strength Increase: " + GetAttribute("Strength Increase"));
+
+			if (GetAttribute("Dexterity Increase") > 0)
+				AddAttributesToList("Dexterity Increase: " + GetAttribute("Dexterity Increase"));
+
+			if (GetAttribute("Intelligence Increase") > 0)
+				AddAttributesToList("Intelligence Increase: " + GetAttribute("Intelligence Increase"));
+
+			if (GetAttribute("Hit Points Increase") > 0)
+				AddAttributesToList("Hit Points Increase: " + GetAttribute("Hit Points Increase"));
+
+			if (GetAttribute("Stamina Increase") > 0)
+				AddAttributesToList("Stamina Increase: " + GetAttribute("Stamina Increase"));
+
+			if (GetAttribute("Mana Increase") > 0)
+				AddAttributesToList("Mana Increase: " + GetAttribute("Mana Increase"));
+
+			if (GetAttribute("Maximum Hit Points Increase") > 0)
+				AddAttributesToList("Maximum Hit PointsIncrease: " + GetAttribute("Maximum HitPoints Increase"));
+
+			if (GetAttribute("Maximum Stamina Increase") > 0)
+				AddAttributesToList("Maximum Stamina Increase: " + GetAttribute("Maximum Stamina Increase"));
+
+			if (GetAttribute("Maximum Mana Increase") > 0)
+				AddAttributesToList("Maximum Mana Increase: " + GetAttribute("Maximum Mana Increase"));
+		}
+
+		private void AddAttributesToList(string value)
+		{
+			if (Assistant.Engine.Running)
+			{
+				listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(value)));
+			}
+		}
+
+		private int GetAttribute(string attributename)
+		{
+			int attributevalue = 0;
+
+			Assistant.Item itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Arms);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+            }
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Bracelet);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Cloak);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Earrings);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Gloves);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Head);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.InnerLegs);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.InnerTorso);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.LeftHand);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.MiddleTorso);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Neck);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.OuterLegs);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.OuterTorso);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Pants);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.RightHand);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Ring);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Shirt);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Shoes);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_x9);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_xF);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Waist);
+			if (itemtocheck != null)
+			{
+				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+			}
+
+			return attributevalue;
+        }
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
+			try
+			{
+				m_ProcessInfo.Abort();
+			}
+			catch { }
+
 			this.Close();
 		}
 
@@ -249,6 +504,15 @@ namespace RazorEnhanced.UI
 		private void bOwnedCopy_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(lDirection.Text);
+		}
+
+		private void EnhancedMobileInspector_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			try
+			{
+				m_ProcessInfo.Abort();
+			}
+			catch { }
 		}
 	}
 }

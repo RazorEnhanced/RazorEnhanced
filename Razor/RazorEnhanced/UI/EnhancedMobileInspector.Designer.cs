@@ -55,6 +55,8 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.bContainerCopy = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.lFlagParalized = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
 			this.lFlagBlessed = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
 			this.lFlagHidden = new System.Windows.Forms.Label();
@@ -68,8 +70,6 @@
 			this.lFlagGhost = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.listBoxAttributes = new System.Windows.Forms.ListBox();
-			this.lFlagParalized = new System.Windows.Forms.Label();
-			this.label17 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -434,6 +434,24 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Flags";
 			// 
+			// lFlagParalized
+			// 
+			this.lFlagParalized.AutoSize = true;
+			this.lFlagParalized.Location = new System.Drawing.Point(87, 183);
+			this.lFlagParalized.Name = "lFlagParalized";
+			this.lFlagParalized.Size = new System.Drawing.Size(13, 13);
+			this.lFlagParalized.TabIndex = 29;
+			this.lFlagParalized.Text = "0";
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(6, 183);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(53, 13);
+			this.label17.TabIndex = 28;
+			this.label17.Text = "Paralized:";
+			// 
 			// lFlagBlessed
 			// 
 			this.lFlagBlessed.AutoSize = true;
@@ -571,24 +589,6 @@
 			this.listBoxAttributes.Size = new System.Drawing.Size(289, 329);
 			this.listBoxAttributes.TabIndex = 0;
 			// 
-			// lFlagParalized
-			// 
-			this.lFlagParalized.AutoSize = true;
-			this.lFlagParalized.Location = new System.Drawing.Point(87, 183);
-			this.lFlagParalized.Name = "lFlagParalized";
-			this.lFlagParalized.Size = new System.Drawing.Size(13, 13);
-			this.lFlagParalized.TabIndex = 29;
-			this.lFlagParalized.Text = "0";
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.Location = new System.Drawing.Point(6, 183);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(53, 13);
-			this.label17.TabIndex = 28;
-			this.label17.Text = "Paralized:";
-			// 
 			// EnhancedMobileInspector
 			// 
 			this.ClientSize = new System.Drawing.Size(809, 423);
@@ -603,6 +603,7 @@
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "EnhancedMobileInspector";
 			this.Text = "Enhanced Mobile Inspector";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnhancedMobileInspector_FormClosing);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
