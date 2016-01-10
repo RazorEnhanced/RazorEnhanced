@@ -217,19 +217,26 @@ namespace RazorEnhanced.UI
 		private void checkupdatebutton_Click(object sender, EventArgs e)
 		{
 			WebClient client = new WebClient();
-			string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
-
-			if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
+			try // Try catch in caso che il server sia irraggiungibile
 			{
-				DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo);
-				if (dialogResult == DialogResult.Yes)
+				string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
+
+				if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
 				{
-					System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
+					DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo);
+					if (dialogResult == DialogResult.Yes)
+					{
+						System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
+					}
+				}
+				else
+				{
+					DialogResult dialogResult = MessageBox.Show("You already have latest version of Razor Enhanced", "No New Update", MessageBoxButtons.OK);
 				}
 			}
-			else
+			catch (Exception ex)
 			{
-				DialogResult dialogResult = MessageBox.Show("You already have latest version of Razor Enhanced", "No New Update", MessageBoxButtons.OK);
+				DialogResult dialogResult = MessageBox.Show("Connection on version check server has failed. " + ex, "Fail to connecto", MessageBoxButtons.OK);
 			}
 		}
 	}
