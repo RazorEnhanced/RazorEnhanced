@@ -29,7 +29,8 @@ namespace RazorEnhanced
 
 		public static void TargetExecute(int serial)
 		{
-			Assistant.Targeting.Target(serial);
+			if (!CheckHealPoisonTarg(serial))
+				Assistant.Targeting.Target(serial);
 		}
 
 		public static void TargetExecute(RazorEnhanced.Item item)
@@ -39,8 +40,9 @@ namespace RazorEnhanced
 
 		public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
-			Assistant.Targeting.Target(mobile);
-		}
+			if (!CheckHealPoisonTarg(mobile.Serial))
+				Assistant.Targeting.Target(mobile);
+        }
 
 		public static void TargetExecute(Point3D location)
 		{
@@ -60,7 +62,8 @@ namespace RazorEnhanced
 
 		public static void Self()
 		{
-			Assistant.Targeting.Target(World.Player);
+			if (!CheckHealPoisonTarg(World.Player.Serial))
+				Assistant.Targeting.TargetSelf();
 		}
 
 		public static void SelfQueued()
@@ -70,7 +73,8 @@ namespace RazorEnhanced
 
 		public static void Last()
 		{
-			Assistant.Targeting.LastTarget();
+			if (!CheckHealPoisonTarg(GetLast()))
+				Assistant.Targeting.LastTarget();
 		}
 
 		public static void LastQueued()
@@ -111,6 +115,32 @@ namespace RazorEnhanced
 		private void PromptTargetExex_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			m_ptarget = serial;
+		}
+
+		// Check Poison 
+		private static bool CheckHealPoisonTarg(Assistant.Serial ser)
+		{
+			if (World.Player == null)
+				return false;
+
+			if (ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
+			{
+				Assistant.Mobile m = World.FindMobile(ser);
+
+				if (m != null && m.Poisoned)
+				{
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is poisoned!");
+					return true;
+				}
+				else if (m != null && m.Blessed)
+				{
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is mortelled!");
+					return true;
+				}
+				return false;
+			}
+			else
+				return false;
 		}
 
 		// Funzioni target per richiamare i target della gui

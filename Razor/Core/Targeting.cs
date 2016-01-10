@@ -1194,13 +1194,18 @@ namespace Assistant
 			if (World.Player == null)
 				return false;
 
-			if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5)) && RazorEnhanced.Settings.General.ReadBool("BlockHealPoison") && ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
+			if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202 ))
 			{
 				Mobile m = World.FindMobile(ser);
 
 				if (m != null && m.Poisoned)
 				{
-					World.Player.SendMessage(MsgLevel.Warning, LocString.HealPoisonBlocked);
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is poisoned!");
+					return true;
+				}
+				else if (m != null && m.Blessed)
+				{
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is mortelled!");
 					return true;
 				}
 			}
