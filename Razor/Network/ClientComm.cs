@@ -927,6 +927,10 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
 				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
 
+			if (Assistant.Engine.MainWindow.RemountCheckbox.Enabled == true)
+				Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
+
+
 			PlayerData.ExternalZ = false;
 			World.Player = null;
 			PlayerData.FastWalkKey = 0;
@@ -941,6 +945,9 @@ namespace Assistant
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
 			PasswordMemory.Save();
+
+			// Stop controllo blocco connessione
+			RazorEnhanced.CheckConnection.Abort();
 		}
 
 		//private static DateTime m_LastActivate;

@@ -386,6 +386,9 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
 				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
 
+			if (Assistant.Engine.MainWindow.RemountCheckbox.Enabled == true)
+				Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
+
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 
 			// Stop forzato di tutti i thread agent
@@ -397,6 +400,9 @@ namespace Assistant
 
 			if (RazorEnhanced.Scripts.Timer != null)
 				RazorEnhanced.Scripts.Timer.Close();
+
+			// Stop controllo blocco connessione
+			RazorEnhanced.CheckConnection.Abort();
 
 			ClientCommunication.Close();
 		}

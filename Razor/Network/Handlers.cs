@@ -1324,6 +1324,8 @@ namespace Assistant
 
             if (m == World.Player && type != 0x00)
 			{
+				RazorEnhanced.CheckConnection.ConnectionSucccesfull = true;
+
 				PlayerData player = (PlayerData)m;
 
 				player.Female = p.ReadBoolean();
@@ -2587,6 +2589,8 @@ namespace Assistant
 			{
 				PasswordMemory.Add(World.AccountName, pass, ClientCommunication.LastConnection);
 			}
+
+			RazorEnhanced.CheckConnection.CheckStart();
 		}
 
 		private static void GameLogin(Packet p, PacketHandlerEventArgs args)

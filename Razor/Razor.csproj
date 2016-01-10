@@ -426,6 +426,7 @@
       <DependentUpon>EnhancedToolbar.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\Friend.cs" />
+    <Compile Include="RazorEnhanced\CheckConnection.cs" />
     <Compile Include="RazorEnhanced\Vendor.cs" />
     <Compile Include="RazorEnhanced\Organizer.cs" />
     <Compile Include="RazorEnhanced\Scavenger.cs" />
