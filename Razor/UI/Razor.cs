@@ -6,7 +6,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Threading;
 using System.IO;
+using System.Net;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -654,6 +657,9 @@ namespace Assistant
 		//internal Label MapLinkStatusLabel { get { return mapLinkStatusLabel; } }
 
 		private DataTable scriptTable;
+
+		// Version check
+		internal Thread VersionCheck;
 
 		internal MainForm()
 		{
@@ -6358,6 +6364,10 @@ namespace Assistant
 
 			m_Tip.Active = true;
 			SplashScreen.End();
+
+			// Avvio thread version check
+			VersionCheck = new Thread(VersionCheckWorker);
+			VersionCheck.Start();
 		}
 
 		internal void LoadSettings()
@@ -10947,6 +10957,27 @@ namespace Assistant
 			Int32.TryParse(textBoxDelay.Text, out millliseconds);
 			TimeSpan delay = TimeSpan.FromMilliseconds(millliseconds);
 			Scripts.TimerDelay = delay;
+		}
+
+		internal static void VersionCheckWorker()
+		{
+			WebClient client = new WebClient();
+			try // Try catch in caso che il server sia irraggiungibile
+			{
+				string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
+
+				if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
+				{
+					DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo);
+					if (dialogResult == DialogResult.Yes)
+					{
+						System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
+					}
+				}
+			}
+			catch
+			{
+			}
 		}
 
 	}
