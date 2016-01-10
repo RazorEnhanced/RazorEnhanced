@@ -494,6 +494,7 @@ namespace Assistant
 		private Label labelDelay;
 		private TextBox textBoxDelay;
 		private RazorCheckBox showheadtargetCheckBox;
+		private RazorCheckBox notshowlauncher;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -802,6 +803,7 @@ namespace Assistant
 			this.remountsetbutton = new RazorEnhanced.UI.RazorButton();
 			this.remountcheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox24 = new System.Windows.Forms.GroupBox();
+			this.showheadtargetCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.blockpartyinviteCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.blocktraderequestCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.highlighttargetCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1170,7 +1172,7 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-			this.showheadtargetCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1255,6 +1257,7 @@ namespace Assistant
 			// 
 			// generalTab
 			// 
+			this.generalTab.Controls.Add(this.notshowlauncher);
 			this.generalTab.Controls.Add(this.groupBox29);
 			this.generalTab.Controls.Add(this.forceSizeY);
 			this.generalTab.Controls.Add(this.forceSizeX);
@@ -1289,7 +1292,7 @@ namespace Assistant
 			this.groupBox29.Controls.Add(this.profilesDeleteButton);
 			this.groupBox29.Controls.Add(this.profilesAddButton);
 			this.groupBox29.Controls.Add(this.profilesComboBox);
-			this.groupBox29.Location = new System.Drawing.Point(253, 205);
+			this.groupBox29.Location = new System.Drawing.Point(253, 216);
 			this.groupBox29.Name = "groupBox29";
 			this.groupBox29.Size = new System.Drawing.Size(390, 98);
 			this.groupBox29.TabIndex = 66;
@@ -1480,7 +1483,7 @@ namespace Assistant
             "AboveNormal",
             "High",
             "Realtime"});
-			this.clientPrio.Location = new System.Drawing.Point(363, 175);
+			this.clientPrio.Location = new System.Drawing.Point(363, 186);
 			this.clientPrio.Name = "clientPrio";
 			this.clientPrio.Size = new System.Drawing.Size(88, 22);
 			this.clientPrio.TabIndex = 60;
@@ -1490,7 +1493,7 @@ namespace Assistant
 			// 
 			this.lockBox.Cursor = System.Windows.Forms.Cursors.Help;
 			this.lockBox.Image = ((System.Drawing.Image)(resources.GetObject("lockBox.Image")));
-			this.lockBox.Location = new System.Drawing.Point(211, 336);
+			this.lockBox.Location = new System.Drawing.Point(211, 334);
 			this.lockBox.Name = "lockBox";
 			this.lockBox.Size = new System.Drawing.Size(16, 16);
 			this.lockBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -1501,7 +1504,7 @@ namespace Assistant
 			// 
 			// systray
 			// 
-			this.systray.Location = new System.Drawing.Point(363, 142);
+			this.systray.Location = new System.Drawing.Point(363, 153);
 			this.systray.Name = "systray";
 			this.systray.Size = new System.Drawing.Size(99, 20);
 			this.systray.TabIndex = 35;
@@ -1510,7 +1513,7 @@ namespace Assistant
 			// 
 			// taskbar
 			// 
-			this.taskbar.Location = new System.Drawing.Point(301, 143);
+			this.taskbar.Location = new System.Drawing.Point(301, 154);
 			this.taskbar.Name = "taskbar";
 			this.taskbar.Size = new System.Drawing.Size(63, 20);
 			this.taskbar.TabIndex = 34;
@@ -1528,7 +1531,7 @@ namespace Assistant
 			// 
 			// label11
 			// 
-			this.label11.Location = new System.Drawing.Point(251, 145);
+			this.label11.Location = new System.Drawing.Point(251, 156);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(50, 15);
 			this.label11.TabIndex = 33;
@@ -1538,7 +1541,7 @@ namespace Assistant
 			// 
 			this.opacity.AutoSize = false;
 			this.opacity.Cursor = System.Windows.Forms.Cursors.SizeWE;
-			this.opacity.Location = new System.Drawing.Point(331, 323);
+			this.opacity.Location = new System.Drawing.Point(331, 334);
 			this.opacity.Maximum = 100;
 			this.opacity.Minimum = 10;
 			this.opacity.Name = "opacity";
@@ -1580,7 +1583,7 @@ namespace Assistant
 			// 
 			// opacityLabel
 			// 
-			this.opacityLabel.Location = new System.Drawing.Point(253, 323);
+			this.opacityLabel.Location = new System.Drawing.Point(253, 334);
 			this.opacityLabel.Name = "opacityLabel";
 			this.opacityLabel.Size = new System.Drawing.Size(78, 16);
 			this.opacityLabel.TabIndex = 23;
@@ -1588,7 +1591,7 @@ namespace Assistant
 			// 
 			// label9
 			// 
-			this.label9.Location = new System.Drawing.Point(251, 178);
+			this.label9.Location = new System.Drawing.Point(251, 189);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(114, 19);
 			this.label9.TabIndex = 59;
@@ -2295,6 +2298,15 @@ namespace Assistant
 			this.groupBox24.TabIndex = 67;
 			this.groupBox24.TabStop = false;
 			this.groupBox24.Text = "Misc";
+			// 
+			// showheadtargetCheckBox
+			// 
+			this.showheadtargetCheckBox.Location = new System.Drawing.Point(6, 130);
+			this.showheadtargetCheckBox.Name = "showheadtargetCheckBox";
+			this.showheadtargetCheckBox.Size = new System.Drawing.Size(141, 22);
+			this.showheadtargetCheckBox.TabIndex = 63;
+			this.showheadtargetCheckBox.Text = "Show Target on Head";
+			this.showheadtargetCheckBox.CheckedChanged += new System.EventHandler(this.showheadtargetCheckBox_CheckedChanged);
 			// 
 			// blockpartyinviteCheckBox
 			// 
@@ -6190,14 +6202,14 @@ namespace Assistant
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
 			// 
-			// showheadtargetCheckBox
+			// notshowlauncher
 			// 
-			this.showheadtargetCheckBox.Location = new System.Drawing.Point(6, 130);
-			this.showheadtargetCheckBox.Name = "showheadtargetCheckBox";
-			this.showheadtargetCheckBox.Size = new System.Drawing.Size(141, 22);
-			this.showheadtargetCheckBox.TabIndex = 63;
-			this.showheadtargetCheckBox.Text = "Show Target on Head";
-			this.showheadtargetCheckBox.CheckedChanged += new System.EventHandler(this.showheadtargetCheckBox_CheckedChanged);
+			this.notshowlauncher.Location = new System.Drawing.Point(253, 124);
+			this.notshowlauncher.Name = "notshowlauncher";
+			this.notshowlauncher.Size = new System.Drawing.Size(241, 22);
+			this.notshowlauncher.TabIndex = 67;
+			this.notshowlauncher.Text = "Don\'t Show Launcher Window";
+			this.notshowlauncher.CheckedChanged += new System.EventHandler(this.notshowlauncher_CheckedChanged);
 			// 
 			// MainForm
 			// 
@@ -6350,7 +6362,6 @@ namespace Assistant
 				return;
 			}
 
-			SplashScreen.Message = LocString.Welcome;
 			InitConfig();
 
 			this.Show();
@@ -6446,6 +6457,7 @@ namespace Assistant
 			forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
 			forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
 			gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
+			notshowlauncher.Checked = RazorEnhanced.Settings.General.ReadBool("NotShowLauncher");
 			forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
 			taskbar.Checked = !(systray.Checked = RazorEnhanced.Settings.General.ReadBool("Systray"));
 			clientPrio.SelectedItem = RazorEnhanced.Settings.General.ReadString("ClientPrio");
@@ -7661,6 +7673,12 @@ namespace Assistant
 					m_ResizeTimer.Start();
 				}
 			}
+		}
+
+		private void notshowlauncher_CheckedChanged(object sender, EventArgs e)
+		{
+			if (notshowlauncher.Focused)
+				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", notshowlauncher.Checked);
 		}
 
 		private void forceSizeY_TextChanged(object sender, System.EventArgs e)
@@ -10979,6 +10997,5 @@ namespace Assistant
 			{
 			}
 		}
-
 	}
 }

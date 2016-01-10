@@ -258,167 +258,147 @@ namespace Assistant
 
 			RazorEnhanced.Settings.Load();
 
-			RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
-			DialogResult laucherdialog = launcher.ShowDialog();
 
-			if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
+			List<RazorEnhanced.Shard> shards;
+			RazorEnhanced.Shard.Read(out shards);
+			RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
+
+			if (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null)
 			{
-				List<RazorEnhanced.Shard> shards;
-				RazorEnhanced.Shard.Read(out shards);
-				RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
+				Start(selected);
+			}
+			else
+			{
+				RazorEnhanced.UI.EnhancedLauncher launcher = new RazorEnhanced.UI.EnhancedLauncher();
+				DialogResult laucherdialog = launcher.ShowDialog();
 
-				if (selected == null)
+				if (laucherdialog != DialogResult.Cancel)                   // Avvia solo se premuto launch e non se exit
 				{
-					MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-				else
-				{
-					ClientCommunication.ClientEncrypted = selected.PatchEnc;
-					ClientCommunication.ServerEncrypted = selected.OSIEnc;
-					string clientPath = selected.ClientPath;
-					string dataDir = selected.ClientFolder;
-					string addr = selected.Host;
-					int port = selected.Port;
-
-					Ultima.Files.Directory = selected.ClientFolder;
-
-					if (!Language.Load("ENU"))
+					if (selected == null)
 					{
-						SplashScreen.End();
-						MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
-					}
-
-					if (dataDir != null && Directory.Exists(dataDir))
-					{
-						Ultima.Files.SetMulPath(dataDir);
+						MessageBox.Show("You must select a valid shard!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					}
 					else
 					{
-						MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						return;
+						Start(selected);
 					}
-
-					Language.LoadCliLoc();
-					SplashScreen.Message = LocString.Initializing;
-					Initialize(typeof(Assistant.Engine).Assembly);
-
-					SplashScreen.Message = LocString.LoadingLastProfile;
-
-					ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
-					ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
-
-					SplashScreen.Message = LocString.LoadingClient;
-
-					if (clientPath != null && File.Exists(clientPath))
-						result = ClientCommunication.LaunchClient(clientPath);
-
-					if (result != ClientCommunication.Loader_Error.SUCCESS)
-					{
-						if (clientPath == null && File.Exists(clientPath))
-							MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						else
-							MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						SplashScreen.End();
-						return;
-					}
-
-					// if these are null then the registry entry does not exist (old razor version)
-					IPAddress ip = Resolve(addr);
-					if (ip == IPAddress.None || port == 0)
-					{
-						MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						SplashScreen.End();
-						return;
-					}
-
-					SplashScreen.Start();
-					m_ActiveWnd = SplashScreen.Instance;
-
-					ClientCommunication.SetConnectionInfo(ip, port);
-					ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
-
-					Ultima.Multis.PostHSFormat = UsePostHSChanges;
-
-					SplashScreen.Message = LocString.WaitingForClient;
-
-					MainWnd = new MainForm();
-					Application.Run(MainWnd);
-
-					m_Running = false;
-
-					RazorEnhanced.Settings.General.SaveExitData();
-
-					// Disconnetto mappa
-					//Assistant.Engine.MainWindow.MapDisconnectButton.PerformClick();
-					//try
-					//{
-					//	Map.MapNetwork.clientSocket.GetStream().Close();
-					//}
-					//catch { }
-
-					//try
-					//{
-					//	Map.MapNetwork.clientSocket.Close();
-					//}
-					//catch { }
-
-					//try
-					//{
-					//	Map.MapNetwork.InThread.Abort();
-					//}
-					//catch { }
-
-					//try
-					//{
-					//	Map.MapNetwork.OutThread.Abort();
-					//}
-					//catch { }
-
-					// Chiuto toolbar
-					if (Engine.MainWindow.ToolBarWindows != null)
-						Engine.MainWindow.ToolBarWindows.Close();
-
-					// Stoppo tick timer agent
-					if (RazorEnhanced.Scripts.Timer != null)
-						RazorEnhanced.Scripts.Timer.Stop();
-
-					// Stop forzato di tutti i thread agent
-					RazorEnhanced.AutoLoot.AutoMode = false;
-					RazorEnhanced.Scavenger.AutoMode = false;
-					RazorEnhanced.BandageHeal.AutoMode = false;
-
-					if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-						Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
-
-					if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
-						Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
-
-					if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
-						Assistant.Engine.MainWindow.DressStopButton.PerformClick();
-
-					if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
-						Assistant.Engine.MainWindow.RestockStop.PerformClick();
-
-					// Stop filtri
-					if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
-						Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
-
-					RazorEnhanced.UI.EnhancedScriptEditor.End();
-
-					// Stop forzato di tutti i thread agent
-					RazorEnhanced.AutoLoot.AutoMode = false;
-					RazorEnhanced.Scavenger.AutoMode = false;
-					RazorEnhanced.BandageHeal.AutoMode = false;
-					RazorEnhanced.Filters.AutoModeRemount = false;
-					RazorEnhanced.Filters.AutoCarver = false;
-
-					if (RazorEnhanced.Scripts.Timer != null)
-						RazorEnhanced.Scripts.Timer.Close();
-
-					ClientCommunication.Close();
 				}
 			}
+		}
+
+		internal static void Start(RazorEnhanced.Shard selected)
+		{
+			ClientCommunication.ClientEncrypted = selected.PatchEnc;
+			ClientCommunication.ServerEncrypted = selected.OSIEnc;
+			string clientPath = selected.ClientPath;
+			string dataDir = selected.ClientFolder;
+			string addr = selected.Host;
+			int port = selected.Port;
+
+			Ultima.Files.Directory = selected.ClientFolder;
+
+			if (!Language.Load("ENU"))
+			{
+				SplashScreen.End();
+				MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			if (dataDir != null && Directory.Exists(dataDir))
+			{
+				Ultima.Files.SetMulPath(dataDir);
+			}
+			else
+			{
+				MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
+			Language.LoadCliLoc();
+			Initialize(typeof(Assistant.Engine).Assembly);
+
+			ClientCommunication.SetConnectionInfo(IPAddress.None, -1);
+			ClientCommunication.Loader_Error result = ClientCommunication.Loader_Error.UNKNOWN_ERROR;
+
+			if (clientPath != null && File.Exists(clientPath))
+				result = ClientCommunication.LaunchClient(clientPath);
+
+			if (result != ClientCommunication.Loader_Error.SUCCESS)
+			{
+				if (clientPath == null && File.Exists(clientPath))
+					MessageBox.Show(SplashScreen.Instance, "Unable to find the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				else
+					MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				SplashScreen.End();
+				return;
+			}
+
+			// if these are null then the registry entry does not exist (old razor version)
+			IPAddress ip = Resolve(addr);
+			if (ip == IPAddress.None || port == 0)
+			{
+				MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				SplashScreen.End();
+				return;
+			}
+
+			SplashScreen.Start();
+			m_ActiveWnd = SplashScreen.Instance;
+
+			ClientCommunication.SetConnectionInfo(ip, port);
+			ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
+
+			Ultima.Multis.PostHSFormat = UsePostHSChanges;
+
+			MainWnd = new MainForm();
+			Application.Run(MainWnd);
+
+			m_Running = false;
+
+			RazorEnhanced.Settings.General.SaveExitData();
+
+			// Chiuto toolbar
+			if (Engine.MainWindow.ToolBarWindows != null)
+				Engine.MainWindow.ToolBarWindows.Close();
+
+			// Stoppo tick timer agent
+			if (RazorEnhanced.Scripts.Timer != null)
+				RazorEnhanced.Scripts.Timer.Stop();
+
+			// Stop forzato di tutti i thread agent
+			RazorEnhanced.AutoLoot.AutoMode = false;
+			RazorEnhanced.Scavenger.AutoMode = false;
+			RazorEnhanced.BandageHeal.AutoMode = false;
+
+			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
+				Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
+
+			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
+				Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
+
+			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
+				Assistant.Engine.MainWindow.DressStopButton.PerformClick();
+
+			if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
+				Assistant.Engine.MainWindow.RestockStop.PerformClick();
+
+			// Stop filtri
+			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
+				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+
+			RazorEnhanced.UI.EnhancedScriptEditor.End();
+
+			// Stop forzato di tutti i thread agent
+			RazorEnhanced.AutoLoot.AutoMode = false;
+			RazorEnhanced.Scavenger.AutoMode = false;
+			RazorEnhanced.BandageHeal.AutoMode = false;
+			RazorEnhanced.Filters.AutoModeRemount = false;
+			RazorEnhanced.Filters.AutoCarver = false;
+
+			if (RazorEnhanced.Scripts.Timer != null)
+				RazorEnhanced.Scripts.Timer.Close();
+
+			ClientCommunication.Close();
 		}
 
 		internal static void EnsureDirectory(string dir)

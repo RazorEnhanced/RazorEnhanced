@@ -37,33 +37,6 @@ namespace Assistant
 
 		private delegate void SetMsgDelegate(SplashScreen screen, string arg);
 
-		private static void SetMessage(SplashScreen screen, string msg)
-		{
-			//screen.message.Text = msg;
-		}
-
-		internal static string MessageStr
-		{
-			set
-			{
-				try
-				{
-					if (m_Screen != null)
-					{
-						if (m_Screen.InvokeRequired)
-							m_Screen.Invoke(new SetMsgDelegate(SetMessage), m_Screen, value);
-						else
-							SetMessage(m_Screen, value);
-					}
-				}
-				catch
-				{
-				}
-			}
-		}
-
-		internal static LocString Message { set { MessageStr = Language.GetString(value); } }
-
 		private static void ThreadMain()
 		{
 			try

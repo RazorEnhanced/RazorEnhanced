@@ -12,7 +12,7 @@ namespace RazorEnhanced
 {
 	internal class Settings
 	{
-		private static int SettingVersion = 7;     // Versione progressiva della struttura dei salvataggi per successive modifiche
+		private static int SettingVersion = 8;     // Versione progressiva della struttura dei salvataggi per successive modifiche
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
 		private static DataSet m_Dataset;
@@ -1267,6 +1267,7 @@ namespace RazorEnhanced
 				general.Columns.Add("Opacity", typeof(int));
 				general.Columns.Add("WindowX", typeof(int));
 				general.Columns.Add("WindowY", typeof(int));
+				general.Columns.Add("NotShowLauncher", typeof(bool));
 
 				// Parametri Tab (Skill)
 				general.Columns.Add("DisplaySkillChanges", typeof(bool));
@@ -4243,7 +4244,14 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", 7);
 			}
 
-
+			if (realversion == 7)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("NotShowLauncher", typeof(bool));
+				Save();
+				General.WriteBool("NotShowLauncher", false);
+				realversion = 8;
+				General.WriteInt("SettingVersion", 8);
+			}
 		}
 	}
 }
