@@ -27,6 +27,30 @@ namespace RazorEnhanced
 		public static int EnergyResistance { get { return Assistant.World.Player.EnergyResistance; } }
 		public static int PoisonResistance { get { return Assistant.World.Player.PoisonResistance; } }
 
+		// KR Attribute
+		public static int SwingSpeedIncrease { get { return Assistant.World.Player.SwingSpeedIncrease; } }
+		public static int DamageChanceIncrease { get { return Assistant.World.Player.DamageChanceIncrease; } }
+		public static int LowerReagentCost { get { return Assistant.World.Player.LowerReagentCost; } }
+		public static int HitPointsRegeneration { get { return Assistant.World.Player.HitPointsRegeneration; } }
+		public static int StaminaRegeneration { get { return Assistant.World.Player.StaminaRegeneration; } }
+		public static int ManaRegeneration { get { return Assistant.World.Player.ManaRegeneration; } }
+		public static int ReflectPhysicalDamage { get { return Assistant.World.Player.ReflectPhysicalDamage; } }
+		public static int EnhancePotions { get { return Assistant.World.Player.EnhancePotions; } }
+		public static int DefenseChanceIncrease { get { return Assistant.World.Player.DefenseChanceIncrease; } }
+		public static int SpellDamageIncrease { get { return Assistant.World.Player.SpellDamageIncrease; } }
+		public static int FasterCastRecovery { get { return Assistant.World.Player.FasterCastRecovery; } }
+		public static int FasterCasting { get { return Assistant.World.Player.FasterCasting; } }
+		public static int LowerManaCost { get { return Assistant.World.Player.LowerManaCost; } }
+		public static int StrengthIncrease { get { return Assistant.World.Player.StrengthIncrease; } }
+		public static int DexterityIncrease { get { return Assistant.World.Player.DexterityIncrease; } }
+		public static int IntelligenceIncrease { get { return Assistant.World.Player.IntelligenceIncrease; } }
+		public static int HitPointsIncrease { get { return Assistant.World.Player.HitPointsIncrease; } }
+		public static int StaminaIncrease { get { return Assistant.World.Player.StaminaIncrease; } }
+		public static int ManaIncrease { get { return Assistant.World.Player.ManaIncrease; } }
+		public static int MaximumHitPointsIncrease { get { return Assistant.World.Player.MaximumHitPointsIncrease; } }
+		public static int MaximumStaminaIncrease { get { return Assistant.World.Player.MaximumStaminaIncrease; } }
+		public static int MaximumManaIncrease { get { return Assistant.World.Player.MaximumManaIncrease; } }
+
 		// Flags
 		public static bool IsGhost { get { return Assistant.World.Player.IsGhost; } }
 

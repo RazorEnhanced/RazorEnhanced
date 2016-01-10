@@ -175,8 +175,16 @@ namespace Assistant
 
 		private int m_MaxWeight = -1;
 
+		private byte m_Expansion;
+		private int m_Race;
+
 		private short m_FireResist, m_ColdResist, m_PoisonResist, m_EnergyResist, m_Luck;
 		private ushort m_DamageMin, m_DamageMax;
+
+		// KR Data
+		private short m_HitChanceIncrease, m_SwingSpeedIncrease, m_DamageChanceIncrease, m_LowerReagentCost, m_HitPointsRegeneration, m_StaminaRegeneration, m_ManaRegeneration, m_ReflectPhysicalDamage, m_EnhancePotions, m_DefenseChanceIncrease;
+		private short m_SpellDamageIncrease, m_FasterCastRecovery, m_FasterCasting, m_LowerManaCost, m_StrengthIncrease, m_DexterityIncrease, m_IntelligenceIncrease, m_HitPointsIncrease, m_StaminaIncrease, m_ManaIncrease, m_MaximumHitPointsIncrease;
+		private short m_MaximumStaminaIncrease, m_MaximumManaIncrease;
 
 		private ushort m_Str, m_Dex, m_Int;
 		private LockType m_StrLock, m_DexLock, m_IntLock;
@@ -394,6 +402,18 @@ namespace Assistant
 			}
 		}
 
+		internal byte Expansion
+		{
+			get { return m_Expansion; }
+			set { m_Expansion = value; }
+		}
+
+		internal int Race
+		{
+			get { return m_Race; }
+			set { m_Race = value; }
+		}
+
 		internal short FireResistance
 		{
 			get { return m_FireResist; }
@@ -482,6 +502,144 @@ namespace Assistant
 		{
 			get { return m_Tithe; }
 			set { m_Tithe = value; }
+		}
+
+		internal short HitChanceIncrease
+		{
+			get { return m_HitChanceIncrease; }
+			set { m_HitChanceIncrease = value; }
+		}
+
+		internal short SwingSpeedIncrease
+		{
+			get { return m_SwingSpeedIncrease; }
+			set { m_SwingSpeedIncrease = value; }
+		}
+
+		internal short DamageChanceIncrease
+		{
+			get { return m_DamageChanceIncrease; }
+			set { m_DamageChanceIncrease = value; }
+		}
+
+		internal short LowerReagentCost
+		{
+			get { return m_LowerReagentCost; }
+			set { m_LowerReagentCost = value; }
+		}
+
+		internal short HitPointsRegeneration
+		{
+			get { return m_HitPointsRegeneration; }
+			set { m_HitPointsRegeneration = value; }
+		}
+
+		internal short StaminaRegeneration
+		{
+			get { return m_StaminaRegeneration; }
+			set { m_StaminaRegeneration = value; }
+		}
+
+		internal short ManaRegeneration
+		{
+			get { return m_ManaRegeneration; }
+			set { m_ManaRegeneration = value; }
+		}
+
+		internal short ReflectPhysicalDamage
+		{
+			get { return m_ReflectPhysicalDamage; }
+			set { m_ReflectPhysicalDamage = value; }
+		}
+
+		internal short EnhancePotions
+		{
+			get { return m_EnhancePotions; }
+			set { m_EnhancePotions = value; }
+		}
+
+		internal short DefenseChanceIncrease
+		{
+			get { return m_DefenseChanceIncrease; }
+			set { m_DefenseChanceIncrease = value; }
+		}
+
+		internal short SpellDamageIncrease
+		{
+			get { return m_SpellDamageIncrease; }
+			set { m_SpellDamageIncrease = value; }
+		}
+
+		internal short FasterCastRecovery
+		{
+			get { return m_FasterCastRecovery; }
+			set { m_FasterCastRecovery = value; }
+		}
+
+		internal short FasterCasting
+		{
+			get { return m_FasterCasting; }
+			set { m_FasterCasting = value; }
+		}
+
+		internal short LowerManaCost
+		{
+			get { return m_LowerManaCost; }
+			set { m_LowerManaCost = value; }
+		}
+
+		internal short StrengthIncrease
+		{
+			get { return m_StrengthIncrease; }
+			set { m_StrengthIncrease = value; }
+		}
+
+		internal short DexterityIncrease
+		{
+			get { return m_DexterityIncrease; }
+			set { m_DexterityIncrease = value; }
+		}
+
+		internal short IntelligenceIncrease
+		{
+			get { return m_IntelligenceIncrease; }
+			set { m_IntelligenceIncrease = value; }
+		}
+
+		internal short HitPointsIncrease
+		{
+			get { return m_HitPointsIncrease; }
+			set { m_HitPointsIncrease = value; }
+		}
+
+		internal short StaminaIncrease
+		{
+			get { return m_StaminaIncrease; }
+			set { m_StaminaIncrease = value; }
+		}
+
+		internal short ManaIncrease
+		{
+			get { return m_ManaIncrease; }
+			set { m_ManaIncrease = value; }
+		}
+
+		internal short MaximumHitPointsIncrease
+		{
+			get { return m_MaximumHitPointsIncrease; }
+			set { m_MaximumHitPointsIncrease = value; }
+		}
+
+		internal short MaximumStaminaIncrease
+		{
+			get { return m_MaximumStaminaIncrease; }
+			set { m_MaximumStaminaIncrease = value; }
+		}
+
+		internal short MaximumManaIncrease
+		{
+			get { return m_MaximumManaIncrease; }
+			set { m_MaximumManaIncrease = value; }
 		}
 
 		internal Skill[] Skills { get { return m_Skills; } }

@@ -1322,11 +1322,12 @@ namespace Assistant
 
 			byte type = p.ReadByte();
 
-			if (m == World.Player && type != 0x00)
+            if (m == World.Player && type != 0x00)
 			{
 				PlayerData player = (PlayerData)m;
 
 				player.Female = p.ReadBoolean();
+				player.Expansion = type;
 
 				int oStr = player.Str, oDex = player.Dex, oInt = player.Int;
 
@@ -1357,8 +1358,7 @@ namespace Assistant
 					if (type > 0x04)
 					{
 						player.MaxWeight = p.ReadUInt16();
-
-						p.ReadByte(); // race?
+						player.Race = p.ReadByte();
 					}
 
 					player.StatCap = p.ReadUInt16();
@@ -1379,6 +1379,33 @@ namespace Assistant
 						player.DamageMax = p.ReadUInt16();
 
 						player.Tithe = p.ReadInt32();
+					}
+
+					if (type > 0x05)        // KR Data
+					{
+						player.HitChanceIncrease = p.ReadInt16();
+						player.SwingSpeedIncrease = p.ReadInt16();
+						player.DamageChanceIncrease = p.ReadInt16();
+						player.LowerReagentCost = p.ReadInt16();
+						player.HitPointsRegeneration = p.ReadInt16();
+						player.StaminaRegeneration = p.ReadInt16();
+						player.ManaRegeneration = p.ReadInt16();
+						player.ReflectPhysicalDamage = p.ReadInt16();
+						player.EnhancePotions = p.ReadInt16();
+						player.DefenseChanceIncrease = p.ReadInt16();
+						player.SpellDamageIncrease = p.ReadInt16();
+						player.FasterCastRecovery = p.ReadInt16();
+						player.FasterCasting = p.ReadInt16();
+						player.LowerManaCost = p.ReadInt16();
+						player.StrengthIncrease = p.ReadInt16();
+						player.DexterityIncrease = p.ReadInt16();
+						player.IntelligenceIncrease = p.ReadInt16();
+						player.HitPointsIncrease = p.ReadInt16();
+						player.StaminaIncrease = p.ReadInt16();
+						player.ManaIncrease = p.ReadInt16();
+						player.MaximumHitPointsIncrease = p.ReadInt16();
+						player.MaximumStaminaIncrease = p.ReadInt16();
+						player.MaximumManaIncrease = p.ReadInt16();
 					}
 				}
 
