@@ -1797,9 +1797,9 @@ namespace Assistant
 	internal sealed class Disconnect : Packet
 	{
 		internal Disconnect()
-			: base(0xD1)
+			: base(0xD1,2)
 		{
-			EnsureCapacity(1);
+			Write((byte)0x01);
 		}
 	}
 

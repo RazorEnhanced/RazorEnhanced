@@ -69,7 +69,7 @@ namespace RazorEnhanced
 		// Login and logout
 		public static void Disconnect()
 		{
-			Assistant.ClientCommunication.SendToServer(new Disconnect());
+			Assistant.ClientCommunication.SendToClient(new Disconnect());
 		}
 
 		// Context Menu
