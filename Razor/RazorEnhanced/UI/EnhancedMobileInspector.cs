@@ -103,11 +103,6 @@ namespace RazorEnhanced.UI
 
 					if (Assistant.World.Player.Expansion >= 4)
 					{
-						listBoxAttributes.Items.Add("Fire Resist: " + Assistant.World.Player.FireResistance);
-						listBoxAttributes.Items.Add("Cold Resist: " + Assistant.World.Player.ColdResistance);
-						listBoxAttributes.Items.Add("Poison Resist: " + Assistant.World.Player.PoisonResistance);
-						listBoxAttributes.Items.Add("Energy Resist: " + Assistant.World.Player.EnergyResistance);
-						listBoxAttributes.Items.Add("Luck: " + Assistant.World.Player.Luck);
 						listBoxAttributes.Items.Add("Damage Minimum: " + Assistant.World.Player.DamageMin);
 						listBoxAttributes.Items.Add("Damage Maximum: " + Assistant.World.Player.DamageMax);
 						listBoxAttributes.Items.Add("Tithing points: " + Assistant.World.Player.Tithe);
@@ -131,71 +126,8 @@ namespace RazorEnhanced.UI
 
 							if (Assistant.World.Player.Expansion >= 6)
 							{
-								if (Assistant.World.Player.SwingSpeedIncrease > 0)
-									listBoxAttributes.Items.Add("Swing Speed Increase: " + Assistant.World.Player.SwingSpeedIncrease);
-
-								if (Assistant.World.Player.DamageChanceIncrease > 0)
-									listBoxAttributes.Items.Add("Damage Chance Increase: " + Assistant.World.Player.DamageChanceIncrease);
-
-								if (Assistant.World.Player.LowerReagentCost > 0)
-									listBoxAttributes.Items.Add("Lower Reagent Cost: " + Assistant.World.Player.LowerReagentCost);
-
-								if (Assistant.World.Player.HitPointsRegeneration > 0)
-									listBoxAttributes.Items.Add("Hit Points Regeneration: " + Assistant.World.Player.HitPointsRegeneration);
-
-								if (Assistant.World.Player.StaminaRegeneration > 0)
-									listBoxAttributes.Items.Add("Stamina Regeneration: " + Assistant.World.Player.StaminaRegeneration);
-
-								if (Assistant.World.Player.ManaRegeneration > 0)
-									listBoxAttributes.Items.Add("Mana Regeneration: " + Assistant.World.Player.ManaRegeneration);
-
-								if (Assistant.World.Player.ReflectPhysicalDamage > 0)
-									listBoxAttributes.Items.Add("Reflect Physical Damage: " + Assistant.World.Player.ReflectPhysicalDamage);
-
-								if (Assistant.World.Player.EnhancePotions > 0)
-									listBoxAttributes.Items.Add("Enhance Potions: " + Assistant.World.Player.EnhancePotions);
-
-								if (Assistant.World.Player.DefenseChanceIncrease > 0)
-									listBoxAttributes.Items.Add("Defense Chance Increase: " + Assistant.World.Player.DefenseChanceIncrease);
-
-								if (Assistant.World.Player.SpellDamageIncrease > 0)
-									listBoxAttributes.Items.Add("Spell Damage Increase: " + Assistant.World.Player.SpellDamageIncrease);
-
-								if (Assistant.World.Player.FasterCastRecovery > 0)
-									listBoxAttributes.Items.Add("Faster Cast Recovery: " + Assistant.World.Player.FasterCastRecovery);
-
-								if (Assistant.World.Player.FasterCasting > 0)
-									listBoxAttributes.Items.Add("Faster Casting: " + Assistant.World.Player.FasterCasting);
-
-								if (Assistant.World.Player.LowerManaCost > 0)
-									listBoxAttributes.Items.Add("Lower Mana Cost: " + Assistant.World.Player.LowerManaCost);
-
-								if (Assistant.World.Player.StrengthIncrease > 0)
-									listBoxAttributes.Items.Add("Strength Increase: " + Assistant.World.Player.StrengthIncrease);
-
-								if (Assistant.World.Player.DexterityIncrease > 0)
-									listBoxAttributes.Items.Add("Dexterity Increase: " + Assistant.World.Player.DexterityIncrease);
-
-								if (Assistant.World.Player.IntelligenceIncrease > 0)
-									listBoxAttributes.Items.Add("Intelligence Increase: " + Assistant.World.Player.IntelligenceIncrease);
-
-								if (Assistant.World.Player.HitPointsIncrease > 0)
-									listBoxAttributes.Items.Add("Hit Points Increase: " + Assistant.World.Player.HitPointsIncrease);
-
-								if (Assistant.World.Player.StaminaIncrease > 0)
-									listBoxAttributes.Items.Add("Stamina Increase: " + Assistant.World.Player.StaminaIncrease);
-
-								if (Assistant.World.Player.ManaIncrease > 0)
-									listBoxAttributes.Items.Add("Mana Increase: " + Assistant.World.Player.ManaIncrease);
-
-								if (Assistant.World.Player.MaximumHitPointsIncrease > 0)
-									listBoxAttributes.Items.Add("Maximum Hit PointsIncrease: " + Assistant.World.Player.MaximumHitPointsIncrease);
-
-								if (Assistant.World.Player.MaximumStaminaIncrease > 0)
-									listBoxAttributes.Items.Add("Maximum Stamina Increase: " + Assistant.World.Player.MaximumStaminaIncrease);
-
-								if (Assistant.World.Player.MaximumManaIncrease > 0)
-									listBoxAttributes.Items.Add("Maximum Mana Increase: " + Assistant.World.Player.MaximumManaIncrease);
+								m_ProcessInfo = new Thread(ProcessInfoThread);
+								m_ProcessInfo.Start();
 							}
 						}
 					}
@@ -210,77 +142,158 @@ namespace RazorEnhanced.UI
 
 		private void ProcessInfoThread()
 		{
-			AddAttributesToList("Fire Resist: " + GetAttribute("Fire Resist"));
-			AddAttributesToList("Cold Resist: " + GetAttribute("Cold Resist"));
-			AddAttributesToList("Poison Resist: " + GetAttribute(".Poison Resist"));
-			AddAttributesToList("Energy Resist: " + GetAttribute("Energy Resist"));
-			AddAttributesToList("Luck: " + GetAttribute("Luck"));
+			int attrib = 0;
 
-			if (GetAttribute("Swing Speed Increase") > 0)
-				AddAttributesToList("Swing Speed Increase: " + GetAttribute("Swing Speed Increase"));
+			attrib = GetAttribute("Fire Resist");
+            if (attrib > 0)
+				AddAttributesToList("Fire Resist: " + attrib);
 
-			if (GetAttribute("Damage Chance Increase") > 0)
-				AddAttributesToList("Damage Chance Increase: " + GetAttribute("Damage Chance Increase"));
+			attrib = GetAttribute("Cold Resist");
+			if (attrib > 0)
+				AddAttributesToList("Cold Resist: " + attrib);
 
-			if (GetAttribute("Lower Reagent Cost") > 0)
-				AddAttributesToList("Lower Reagent Cost: " + GetAttribute("Lower Reagent Cost"));
+			attrib = GetAttribute("Poison Resist");
+			if (attrib > 0)
+				AddAttributesToList("Poison Resist: " + attrib);
 
-			if (GetAttribute("Hit Points Regeneration") > 0)
-				AddAttributesToList("Hit Points Regeneration: " + GetAttribute("Hit Points Regeneration"));
+			attrib = GetAttribute("Energy Resist");
+			if (attrib > 0)
+				AddAttributesToList("Energy Resist: " + attrib);
 
-			if (GetAttribute("Stamina Regeneration") > 0)
-				AddAttributesToList("Stamina Regeneration: " + GetAttribute("Stamina Regeneration"));
+			attrib = GetAttribute("Physical Resist");
+			if (attrib > 0)
+				AddAttributesToList("Physical Resist: " + attrib);
 
-			if (GetAttribute("Mana Regeneration") > 0)
-				AddAttributesToList("Mana Regeneration: " + GetAttribute("Mana Regeneration"));
+			attrib = GetAttribute("Swing Speed Increase");
+			if (attrib > 0)
+				AddAttributesToList("Luck: " + attrib);
 
-			if (GetAttribute("Reflect Physical Damage") > 0)
-				AddAttributesToList("Reflect Physical Damage: " + GetAttribute("Reflect Physical Damage"));
+			attrib = GetAttribute("Swing Speed Increase");
+			if (attrib > 0)
+				AddAttributesToList("Swing Speed Increase: " + attrib);
 
-			if (GetAttribute("Enhance Potions") > 0)
-				AddAttributesToList("Enhance Potions: " + GetAttribute("Enhance Potions"));
+			attrib = GetAttribute("Damage Chance Increase");
+			if (attrib > 0)
+				AddAttributesToList("Damage Chance Increase: " + attrib);
 
-			if (GetAttribute("Defense Chance Increase") > 0)
-				AddAttributesToList("Defense Chance Increase: " + GetAttribute("Defense Chance Increase"));
+			attrib = GetAttribute("Damage Increase");
+			if (attrib > 0)
+				AddAttributesToList("Damage Increase: " + attrib);
 
-			if (GetAttribute("Spell Damage Increase") > 0)
-				AddAttributesToList("Spell Damage Increase: " + GetAttribute("Spell Damage Increase"));
+			attrib = GetAttribute("Hit Fireball");
+			if (attrib > 0)
+				AddAttributesToList("Hit Fireball: " + attrib);
 
-			if (GetAttribute("Faster Cast Recovery") > 0)
-				AddAttributesToList("Faster Cast Recovery: " + GetAttribute("Faster Cast Recovery"));
+			attrib = GetAttribute("Hit Chance Increase");
+			if (attrib > 0)
+				AddAttributesToList("Hit Chance Increase: " + attrib);
 
-			if (GetAttribute("Faster Casting") > 0)
-				AddAttributesToList("Faster Casting: " + GetAttribute("Faster Casting"));
+			attrib = GetAttribute("Mage Armor");
+			if (attrib > 0)
+				AddAttributesToList("Mage Armor: " + attrib);
 
-			if (GetAttribute("Lower Mana Cost") > 0)
-				AddAttributesToList("Lower Mana Cost: " + GetAttribute("Lower Mana Cost"));
+			attrib = GetAttribute("Lower Reagent Cost");
+			if (attrib > 0)
+				AddAttributesToList("Lower Reagent Cost: " + attrib);
 
-			if (GetAttribute("Strength Increase") > 0)
-				AddAttributesToList("Strength Increase: " + GetAttribute("Strength Increase"));
+			attrib = GetAttribute("Hit Point Increase");
+			if (attrib > 0)
+				AddAttributesToList("Hit Point Increase: " + attrib);
 
-			if (GetAttribute("Dexterity Increase") > 0)
-				AddAttributesToList("Dexterity Increase: " + GetAttribute("Dexterity Increase"));
+			attrib = GetAttribute("Hit Points Regeneration");
+			if (attrib > 0)
+				AddAttributesToList("Hit Points Regeneration: " + attrib);
 
-			if (GetAttribute("Intelligence Increase") > 0)
-				AddAttributesToList("Intelligence Increase: " + GetAttribute("Intelligence Increase"));
+			attrib = GetAttribute("Stamina Regeneration");
+			AddAttributesToList("Stamina Regeneration: " + attrib);
 
-			if (GetAttribute("Hit Points Increase") > 0)
-				AddAttributesToList("Hit Points Increase: " + GetAttribute("Hit Points Increase"));
+			attrib = GetAttribute("Mana Regeneration");
+			if (attrib > 0)
+				AddAttributesToList("Mana Regeneration: " + attrib);
 
-			if (GetAttribute("Stamina Increase") > 0)
-				AddAttributesToList("Stamina Increase: " + GetAttribute("Stamina Increase"));
+			attrib = GetAttribute("Reflect Physical Damage");
+			if (attrib > 0)
+				AddAttributesToList("Reflect Physical Damage: " + attrib);
 
-			if (GetAttribute("Mana Increase") > 0)
-				AddAttributesToList("Mana Increase: " + GetAttribute("Mana Increase"));
+			attrib = GetAttribute("Enhance Potions");
+			if (attrib > 0)
+				AddAttributesToList("Enhance Potions: " + attrib);
 
-			if (GetAttribute("Maximum Hit Points Increase") > 0)
-				AddAttributesToList("Maximum Hit PointsIncrease: " + GetAttribute("Maximum HitPoints Increase"));
+			attrib = GetAttribute("Defense Chance Increase");
+			if (attrib > 0)
+				AddAttributesToList("Defense Chance Increase: " + attrib);
 
-			if (GetAttribute("Maximum Stamina Increase") > 0)
-				AddAttributesToList("Maximum Stamina Increase: " + GetAttribute("Maximum Stamina Increase"));
+			attrib = GetAttribute("Spell Damage Increase");
+			if (attrib > 0)
+				AddAttributesToList("Spell Damage Increase: " + attrib);
 
-			if (GetAttribute("Maximum Mana Increase") > 0)
-				AddAttributesToList("Maximum Mana Increase: " + GetAttribute("Maximum Mana Increase"));
+			attrib = GetAttribute("Faster Cast Recovery");
+			if (attrib > 0)
+				AddAttributesToList("Faster Cast Recovery: " + attrib);
+
+			attrib = GetAttribute("Faster Casting");
+			if (attrib > 0)
+				AddAttributesToList("Faster Casting: " + attrib);
+
+			attrib = GetAttribute("Lower Mana Cost");
+			if (attrib > 0)
+				AddAttributesToList("Lower Mana Cost: " + attrib);
+
+			attrib = GetAttribute("Strength Increase");
+			if (attrib > 0)
+				AddAttributesToList("Strength Increase: " + attrib);
+
+			attrib = GetAttribute("Dexterity Increase");
+			if (attrib > 0)
+				AddAttributesToList("Dexterity Increase: " + attrib);
+
+			attrib = GetAttribute("Dexterity Bonus");
+			if (attrib > 0)
+				AddAttributesToList("Dexterity Bonus: " + attrib);
+
+			attrib = GetAttribute("Intelligence Bonus");
+			if (attrib > 0)
+				AddAttributesToList("Intelligence Bonus: " + attrib);
+
+			attrib = GetAttribute("Strength Bonus");
+			if (attrib > 0)
+				AddAttributesToList("Strength Bonus: " + attrib);
+
+			attrib = GetAttribute("Intelligence Increase");
+			if (attrib > 0)
+				AddAttributesToList("Intelligence Increase: " + attrib);
+
+			attrib = GetAttribute("Hit Points Increase");
+			if (attrib > 0)
+				AddAttributesToList("Hit Points Increase: " + attrib);
+
+			attrib = GetAttribute("Stamina Increase");
+			if (attrib > 0)
+				AddAttributesToList("Stamina Increase: " + attrib);
+
+			attrib = GetAttribute("Mana Increase");
+			if (attrib > 0)
+				AddAttributesToList("Mana Increase: " + attrib);
+
+			attrib = GetAttribute("Maximum Hit Points Increase");
+			if (attrib > 0)
+				AddAttributesToList("Maximum Hit PointsIncrease: " + attrib);
+
+			attrib = GetAttribute("Maximum Stamina Increase");
+			if (attrib > 0)
+				AddAttributesToList("Maximum Stamina Increase: " + attrib);
+
+			attrib = GetAttribute("Maximum Mana Increase");
+			if (attrib > 0)
+				AddAttributesToList("Maximum Mana Increase: " + attrib);
+
+			attrib = GetAttribute("Self Repair");
+			if (attrib > 0)
+				AddAttributesToList("Self Repair: " + attrib);
+
+			attrib = GetAttribute("Insured");
+			if (attrib > 0)
+				AddAttributesToList("Insured: " + attrib);
 		}
 
 		private void AddAttributesToList(string value)
@@ -298,147 +311,233 @@ namespace RazorEnhanced.UI
 			Assistant.Item itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Arms);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+                }
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
             }
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Bracelet);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Cloak);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Earrings);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Gloves);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Head);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.InnerLegs);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.InnerTorso);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.LeftHand);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.MiddleTorso);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Neck);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+					
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.OuterLegs);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.OuterTorso);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Pants);
 			if (itemtocheck != null)
-			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+			{ 
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.RightHand);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Ring);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
+
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Shirt);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Shoes);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_x9);
 			if (itemtocheck != null)
 			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_xF);
 			if (itemtocheck != null)
-			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+			{ 
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);					
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Waist);
 			if (itemtocheck != null)
-			{
-				RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+				{
+				if (!itemtocheck.PropsUpdated)
+				{
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					Thread.Sleep(50);
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
