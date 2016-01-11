@@ -160,14 +160,14 @@ namespace RazorEnhanced
 
 		private static int[] m_NotoHues = new int[8]
 		{
-			1,
-			98,
-			268,
-			993,
-			993,
-			148,
-			38,
-			53
+			1, // black		unused 0
+			89, // blue		0x0059 1
+			63, // green		0x003F 2
+			946, // greyish	0x03b2 3
+			946, // grey		   "   4
+			114, // orange		0x0090 5
+			34, // red		0x0022 6
+			125, // yellow		0x0035 7
 		};
 
 		private static int GetPlayerColor(Mobile mob)
@@ -191,7 +191,7 @@ namespace RazorEnhanced
 						if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
 						{
 							if (Friend.IsFriend(mobtarget.Serial))
-								Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+								Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
 							else
 								Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
 						}
@@ -224,7 +224,7 @@ namespace RazorEnhanced
 					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
 					{
 						if (Friend.IsFriend(mobtarget.Serial))
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 68, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
 						else
 							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
 					}
