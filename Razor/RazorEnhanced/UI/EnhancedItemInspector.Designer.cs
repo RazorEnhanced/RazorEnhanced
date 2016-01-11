@@ -460,6 +460,7 @@
 			this.Name = "EnhancedItemInspector";
 			this.Text = "Enhanced Item Inspector";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnhancedItemInspector_FormClosing);
+			this.Load += new System.EventHandler(this.EnhancedItemInspector_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
