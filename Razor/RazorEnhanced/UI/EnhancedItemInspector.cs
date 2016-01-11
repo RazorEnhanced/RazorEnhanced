@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
@@ -6,11 +7,14 @@ namespace RazorEnhanced.UI
 	public partial class EnhancedItemInspector : Form
 	{
 		private const string m_Title = "Enhanced Item Inspect";
+		private Thread m_ProcessInfo;
+		private Assistant.Item m_itemTarg;
 
 		internal EnhancedItemInspector(Assistant.Item itemTarg)
 		{
 			InitializeComponent();
 			MaximizeBox = false;
+			m_itemTarg = itemTarg;
 			// general
 			lSerial.Text = "0x" + itemTarg.Serial.Value.ToString("X8");
 			lItemID.Text = "0x" + itemTarg.ItemID.Value.ToString("X4");
@@ -49,29 +53,45 @@ namespace RazorEnhanced.UI
 			lLayer.Text = itemTarg.Layer.ToString();
 
 			// Attributes
-			if (itemTarg.ObjPropList.Content.Count > 0)
-			{
-				for (int i = 0; i < itemTarg.ObjPropList.Content.Count; i++)
-				{
-					Assistant.ObjectPropertyList.OPLEntry ent = itemTarg.ObjPropList.Content[i];
-					if (i == 0)
-						if (ent.ToString() == null)
-							lName.Text = itemTarg.Name.ToString();
-						else
-							lName.Text = ent.ToString();
-					string content = ent.ToString();
-					listBoxAttributes.Items.Add(content);
-				}
-			}
-			else
-			{
-				lName.Text = itemTarg.Name.ToString();
-				listBoxAttributes.Items.Add("No Props Readed!");
-			}
+			m_ProcessInfo = new Thread(ProcessInfoThread);
+			m_ProcessInfo.Start();
 		}
 
-		private void razorButton1_Click(object sender, EventArgs e)
+		private void ProcessInfoThread()
 		{
+			if (m_itemTarg != null)
+			{
+				Items.WaitForProps(m_itemTarg.Serial, 1000);
+
+				if (m_itemTarg.ObjPropList.Content.Count > 0)
+				{
+					for (int i = 0; i < m_itemTarg.ObjPropList.Content.Count; i++)
+					{
+						Assistant.ObjectPropertyList.OPLEntry ent = m_itemTarg.ObjPropList.Content[i];
+						if (i == 0)
+							if (ent.ToString() == null)
+								lName.Invoke(new Action(() => lName.Text = m_itemTarg.Name.ToString()));
+							else
+								lName.Invoke(new Action(() => lName.Text = ent.ToString()));
+						string content = ent.ToString();
+						listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(content)));
+					}
+				}
+				else
+				{
+					lName.Invoke(new Action(() => lName.Text = m_itemTarg.Name.ToString()));
+					listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add("No Props Readed!")));
+				}
+			}
+		}
+        private void razorButton1_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				m_ProcessInfo.Abort();
+			}
+			catch { }
+
 			this.Close();
 		}
 
@@ -123,6 +143,15 @@ namespace RazorEnhanced.UI
 		private void bOwnedCopy_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(lOwned.Text);
+		}
+
+		private void EnhancedItemInspector_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			try
+			{
+				m_ProcessInfo.Abort();
+			}
+			catch { }
 		}
 	}
 }

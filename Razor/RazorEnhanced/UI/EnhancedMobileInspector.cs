@@ -205,7 +205,8 @@ namespace RazorEnhanced.UI
 				AddAttributesToList("Hit Points Regeneration: " + attrib);
 
 			attrib = GetAttribute("Stamina Regeneration");
-			AddAttributesToList("Stamina Regeneration: " + attrib);
+			if (attrib > 0)
+				AddAttributesToList("Stamina Regeneration: " + attrib);
 
 			attrib = GetAttribute("Mana Regeneration");
 			if (attrib > 0)
