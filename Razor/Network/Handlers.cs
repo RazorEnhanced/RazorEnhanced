@@ -980,8 +980,8 @@ namespace Assistant
 			m.Direction = (Direction)p.ReadByte();
 			m.Resync();
 
-			//ClientCommunication.SendToServer( new SkillsQuery( m ) );
-			//ClientCommunication.SendToServer( new StatusQuery( m ) );
+		//	ClientCommunication.SendToServer( new SkillsQuery( m ) );
+			ClientCommunication.SendToServer( new StatusQuery( m.Serial ) );
 
 			ClientCommunication.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
