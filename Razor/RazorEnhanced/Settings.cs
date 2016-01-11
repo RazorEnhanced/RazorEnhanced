@@ -1382,7 +1382,7 @@ namespace RazorEnhanced
                     false, false, false, false, false, false, false, false, false, false, false, false, false,
 
                     // Parametri primo avvio tab general
-                    false, false, false, false, false, 800, 600, "Normal", 100, 400, 400,
+                    false, false, false, false, false, 800, 600, "Normal", 100, 400, 400, false,
 
                     // Parametri primo avvio tab skill
                     false, false, -1,
