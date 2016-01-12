@@ -21,6 +21,8 @@ namespace RazorEnhanced
 
 		public int Body { get { return m_AssistantMobile.Body; } }
 
+		public int Color { get { return m_AssistantMobile.Hue; } }
+
 		public bool PropsUpdated { get { return m_AssistantMobile.PropsUpdated; } }
 
 		public bool Visible { get { return m_AssistantMobile.Visible; } }
