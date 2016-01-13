@@ -12,7 +12,7 @@ namespace RazorEnhanced
 {
 	internal class Settings
 	{
-		private static int SettingVersion = 8;     // Versione progressiva della struttura dei salvataggi per successive modifiche
+		private static int SettingVersion = 9;     // Versione progressiva della struttura dei salvataggi per successive modifiche
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
 		private static DataSet m_Dataset;

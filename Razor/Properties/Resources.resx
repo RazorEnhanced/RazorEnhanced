@@ -223,4 +223,52 @@
   <data name="toolbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\toolbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="BarraGrandeOrizzontaBordoDestro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaBordoDestro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaBordoDestro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoDestro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
