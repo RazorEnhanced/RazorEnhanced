@@ -57,20 +57,23 @@ namespace Assistant
 
 		internal static bool HasTarget { get { return m_HasTarget; } }
 
-		internal static uint GetLastTarger { get
+		internal static uint GetLastTarger
+		{
+			get
 			{
 				if (m_LastTarget != null)
 					return m_LastTarget.Serial;
 				else
 					return 0;
-			} }
+			}
+		}
 
 		public static void Initialize()
 		{
 			PacketHandler.RegisterClientToServerViewer(0x6C, new PacketViewerCallback(TargetResponse));
 			PacketHandler.RegisterServerToClientViewer(0x6C, new PacketViewerCallback(NewTarget));
 			PacketHandler.RegisterServerToClientViewer(0xAA, new PacketViewerCallback(CombatantChange));
-		
+
 		}
 
 		private static void CombatantChange(PacketReader p, PacketHandlerEventArgs e)
@@ -1194,7 +1197,7 @@ namespace Assistant
 			if (World.Player == null)
 				return false;
 
-			if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202 ))
+			if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
 			{
 				Mobile m = World.FindMobile(ser);
 

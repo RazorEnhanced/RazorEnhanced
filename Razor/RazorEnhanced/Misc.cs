@@ -98,7 +98,7 @@ namespace RazorEnhanced
 
 		}
 
-		
+
 
 		public static void Beep()
 		{
@@ -175,7 +175,7 @@ namespace RazorEnhanced
 			if (RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.ContainsKey(name))
 				RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.TryGetValue(name, out data);
 			return data;
-        }
+		}
 
 		public static void SetSharedValue(string name, object value)
 		{

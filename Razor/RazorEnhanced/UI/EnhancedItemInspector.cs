@@ -84,7 +84,7 @@ namespace RazorEnhanced.UI
 				}
 			}
 		}
-        private void razorButton1_Click(object sender, EventArgs e)
+		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			try
 			{

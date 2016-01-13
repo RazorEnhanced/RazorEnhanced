@@ -4,7 +4,6 @@ using IronPython.Runtime;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
-using ScintillaNET;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -17,11 +16,11 @@ namespace RazorEnhanced.UI
 {
 	internal partial class EnhancedScriptEditor : Form
 	{
-		private delegate void SetHighlightLineDelegate(bool highlight, int linenum, Color color);
+		private delegate void SetHighlightLineDelegate(int iline, Color color);
 
 		private delegate void SetStatusLabelDelegate(string text);
 
-		private delegate string GetScintillaTextDelegate();
+		private delegate string GetFastTextBoxTextDelegate();
 
 		private delegate void SetTracebackDelegate(string text);
 
@@ -51,7 +50,6 @@ namespace RazorEnhanced.UI
 		private string m_CurrentResult;
 		private object m_CurrentPayload;
 
-		private Marker m_Marker;
 		private List<int> m_Breakpoints = new List<int>();
 
 		private volatile bool m_Breaktrace = false;
@@ -91,6 +89,7 @@ namespace RazorEnhanced.UI
 				if (m_CurrentCommand == Command.None)
 				{
 					SetTraceback("");
+					m_DebugContinue.WaitOne();
 				}
 				else
 				{
@@ -124,7 +123,7 @@ namespace RazorEnhanced.UI
 		private void TracebackCall()
 		{
 			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Call {0}", m_CurrentCode.co_name));
-			SetHighlightLine(true, (int)m_CurrentFrame.f_lineno, Color.LightGreen);
+			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightGreen);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
 			ResetCurrentCommand();
@@ -133,7 +132,7 @@ namespace RazorEnhanced.UI
 		private void TracebackReturn()
 		{
 			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Return {0}", m_CurrentCode.co_name));
-			SetHighlightLine(true, m_CurrentCode.co_firstlineno, Color.LightBlue);
+			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightBlue);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
 			ResetCurrentCommand();
@@ -142,7 +141,7 @@ namespace RazorEnhanced.UI
 		private void TracebackLine()
 		{
 			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Line {0}", m_CurrentFrame.f_lineno));
-			SetHighlightLine(true, (int)m_CurrentFrame.f_lineno, Color.Yellow);
+			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.Yellow);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
 			ResetCurrentCommand();
@@ -205,7 +204,7 @@ namespace RazorEnhanced.UI
 			try
 			{
 				m_Breaktrace = debug;
-				string text = GetScintillaText();
+				string text = GetFastTextBoxText();
 				m_Source = m_Engine.CreateScriptSourceFromString(text);
 				m_Scope = RazorEnhanced.Scripts.GetRazorScope(m_Engine);
 				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
@@ -232,8 +231,14 @@ namespace RazorEnhanced.UI
 		{
 			m_Breaktrace = false;
 			m_DebugContinue.Set();
-			SetHighlightLine(false, 1, Color.White);
+
+			for (int iline = 0; iline < fastColoredTextBoxEditor.LinesCount; iline++)
+			{
+				fastColoredTextBoxEditor[iline].BackgroundBrush = new SolidBrush(Color.White);
+			}
+
 			SetStatusLabel("");
+			SetTraceback("");
 
 			if (m_Thread != null && m_Thread.ThreadState != ThreadState.Stopped)
 			{
@@ -242,23 +247,25 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		private void SetHighlightLine(bool highlight, int linenum, Color background)
+		private void SetHighlightLine(int iline, Color background)
 		{
-			if (this.scintillaEditor.InvokeRequired)
+			if (this.fastColoredTextBoxEditor.InvokeRequired)
 			{
 				SetHighlightLineDelegate d = new SetHighlightLineDelegate(SetHighlightLine);
-				this.Invoke(d, new object[] { highlight, linenum, background });
+				this.Invoke(d, new object[] { iline, background });
 			}
 			else
 			{
-				this.scintillaEditor.Caret.HighlightCurrentLine = highlight;
-
-				if (highlight)
+				for (int i = 0; i < fastColoredTextBoxEditor.LinesCount; i++)
 				{
-					this.scintillaEditor.GoTo.Line(linenum - 1);
-					this.scintillaEditor.Caret.CurrentLineBackgroundColor = background;
-					this.scintillaEditor.Focus();
+					if (m_Breakpoints.Contains(i))
+						fastColoredTextBoxEditor[i].BackgroundBrush = new SolidBrush(Color.Red);
+					else
+						fastColoredTextBoxEditor[i].BackgroundBrush = new SolidBrush(Color.White);
 				}
+
+				this.fastColoredTextBoxEditor[iline].BackgroundBrush = new SolidBrush(background);
+				this.fastColoredTextBoxEditor.Invalidate();
 			}
 		}
 
@@ -275,16 +282,16 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		private string GetScintillaText()
+		private string GetFastTextBoxText()
 		{
-			if (this.scintillaEditor.InvokeRequired)
+			if (this.fastColoredTextBoxEditor.InvokeRequired)
 			{
-				GetScintillaTextDelegate d = new GetScintillaTextDelegate(GetScintillaText);
+				GetFastTextBoxTextDelegate d = new GetFastTextBoxTextDelegate(GetFastTextBoxText);
 				return (string)this.Invoke(d, null);
 			}
 			else
 			{
-				return scintillaEditor.Text;
+				return fastColoredTextBoxEditor.Text;
 			}
 		}
 
@@ -299,7 +306,7 @@ namespace RazorEnhanced.UI
 				{
 					if (!(pair.Key.ToString().StartsWith("__") && pair.Key.ToString().EndsWith("__")))
 					{
-						string line = pair.Key.ToString() + ": " + (pair.Value != null ? pair.Value.ToString() : "") + "\n";
+						string line = pair.Key.ToString() + ": " + (pair.Value != null ? pair.Value.ToString() : "") + "\r\n";
 						result += line;
 					}
 				}
@@ -323,11 +330,6 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedScriptEditor_Load(object sender, EventArgs e)
 		{
-			scintillaEditor.Margins[0].Width = 20;
-
-			m_Marker = scintillaEditor.Markers[0];
-			m_Marker.Symbol = MarkerSymbol.Background;
-			m_Marker.BackColor = Color.Red;
 		}
 
 		private void scintillaEditor_TextChanged(object sender, EventArgs e)
@@ -372,23 +374,27 @@ namespace RazorEnhanced.UI
 
 		private void toolStripButtonAddBreakpoint_Click(object sender, EventArgs e)
 		{
-			int line = scintillaEditor.Caret.LineNumber;
+			int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
 
-			if (!m_Breakpoints.Contains(line))
+			if (!m_Breakpoints.Contains(iline))
 			{
-				m_Breakpoints.Add(line);
-				scintillaEditor.Lines[line].AddMarker(m_Marker);
+				m_Breakpoints.Add(iline);
+				FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
+				line.BackgroundBrush = new SolidBrush(Color.Red);
+				fastColoredTextBoxEditor.Invalidate();
 			}
 		}
 
 		private void toolStripButtonRemoveBreakpoints_Click(object sender, EventArgs e)
 		{
-			int line = scintillaEditor.Caret.LineNumber;
+			int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
 
-			if (m_Breakpoints.Contains(line))
+			if (m_Breakpoints.Contains(iline))
 			{
-				m_Breakpoints.Remove(line);
-				scintillaEditor.Lines[line].DeleteMarker(m_Marker);
+				m_Breakpoints.Remove(iline);
+				FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
+				line.BackgroundBrush = new SolidBrush(Color.White);
+				fastColoredTextBoxEditor.Invalidate();
 			}
 		}
 
@@ -402,7 +408,7 @@ namespace RazorEnhanced.UI
 			{
 				m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
 				this.Text = m_Title + " - " + m_Filename + ".cs";
-				scintillaEditor.Text = System.IO.File.ReadAllText(open.FileName);
+				fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
 			}
 		}
 
@@ -416,7 +422,7 @@ namespace RazorEnhanced.UI
 			{
 				m_Filename = Path.GetFileNameWithoutExtension(save.FileName);
 				this.Text = m_Title + " - " + m_Filename + ".cs";
-				System.IO.File.WriteAllText(save.FileName, scintillaEditor.Text);
+				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 			}
 		}
 
@@ -429,11 +435,11 @@ namespace RazorEnhanced.UI
 
 				if (save.ShowDialog() == DialogResult.OK)
 				{
-					System.IO.File.WriteAllText(save.FileName, scintillaEditor.Text);
+					File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 				}
 			}
 
-			scintillaEditor.Text = "";
+			fastColoredTextBoxEditor.Text = "";
 			m_Filename = "";
 			this.Text = m_Title;
 		}

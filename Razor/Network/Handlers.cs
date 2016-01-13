@@ -723,7 +723,7 @@ namespace Assistant
 				if (item == null)
 				{
 					World.AddItem(item = new Item(serial));
-				//	ClientCommunication.SendToServer(new QueryProperties(serial));
+					//	ClientCommunication.SendToServer(new QueryProperties(serial));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -776,7 +776,7 @@ namespace Assistant
 			if (i == null)
 			{
 				World.AddItem(i = new Item(serial));
-			//	ClientCommunication.SendToServer(new QueryProperties(serial));
+				//	ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 				Item.UpdateContainers();
 			}
@@ -980,8 +980,8 @@ namespace Assistant
 			m.Direction = (Direction)p.ReadByte();
 			m.Resync();
 
-		//	ClientCommunication.SendToServer( new SkillsQuery( m ) );
-			ClientCommunication.SendToServer( new StatusQuery( m.Serial ) );
+			//	ClientCommunication.SendToServer( new SkillsQuery( m ) );
+			ClientCommunication.SendToServer(new StatusQuery(m.Serial));
 
 			ClientCommunication.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
@@ -1322,7 +1322,7 @@ namespace Assistant
 
 			byte type = p.ReadByte();
 
-            if (m == World.Player && type != 0x00)
+			if (m == World.Player && type != 0x00)
 			{
 				RazorEnhanced.CheckConnection.ConnectionSucccesfull = true;
 
@@ -1857,7 +1857,7 @@ namespace Assistant
 			if (item == null)
 			{
 				World.AddItem(item = new Item(serial));
-			//	ClientCommunication.SendToServer(new QueryProperties(serial));
+				//	ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 			}
 			else
@@ -2415,7 +2415,7 @@ namespace Assistant
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
 								ClientCommunication.SendToServer(new QueryProperties(serial));
-                                ClientCommunication.SendToServer(new StatusQuery(serial));
+								ClientCommunication.SendToServer(new StatusQuery(serial));
 							}
 
 							if (mobile.Name == null || mobile.Name.Length <= 0)
@@ -2429,9 +2429,6 @@ namespace Assistant
 							else
 								mobile.Position = Point3D.Zero;
 						}
-
-						if (Engine.MainWindow.MapWindow != null)
-							Engine.MainWindow.MapWindow.UpdateMap();
 
 						break;
 					}
@@ -2532,9 +2529,6 @@ namespace Assistant
 						break;
 					}
 			}
-
-			if (Engine.MainWindow.MapWindow != null)
-				Engine.MainWindow.MapWindow.UpdateMap();
 		}
 
 		private static void PartyAutoDecline()

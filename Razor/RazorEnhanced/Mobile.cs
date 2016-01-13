@@ -61,7 +61,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-                Assistant.Item assistantMount = m_AssistantMobile.GetItemOnLayer(Assistant.Layer.Mount);
+				Assistant.Item assistantMount = m_AssistantMobile.GetItemOnLayer(Assistant.Layer.Mount);
 				if (assistantMount == null)
 					return null;
 				else
@@ -590,7 +590,7 @@ namespace RazorEnhanced
 		public static void WaitForProps(Mobile m, int delay) // Delay in MS
 		{
 			WaitForProps(m.Serial, delay);
-        }
+		}
 
 		public static void WaitForProps(int mobileserial, int delay) // Delay in MS
 		{

@@ -17,9 +17,9 @@ namespace RazorEnhanced
 				m_checkconnectionthread = new Thread(CheckConnectionWorker);
 				ConnectionStart = true;
 				m_checkconnectionthread.Start();
-            }
+			}
 
-        }
+		}
 
 		internal static void CheckConnectionWorker()
 		{

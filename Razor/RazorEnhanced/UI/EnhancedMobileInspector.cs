@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
 {
@@ -63,12 +63,12 @@ namespace RazorEnhanced.UI
 			else
 				lFlagGhost.Text = "No";
 
-			if (mobileTarg.Blessed)		// Yellow Hits
+			if (mobileTarg.Blessed)     // Yellow Hits
 				lFlagBlessed.Text = "Yes";
 			else
 				lFlagBlessed.Text = "No";
 
-			if (mobileTarg.Paralized)     
+			if (mobileTarg.Paralized)
 				lFlagParalized.Text = "Yes";
 			else
 				lFlagParalized.Text = "No";
@@ -137,15 +137,15 @@ namespace RazorEnhanced.UI
 			{
 				m_ProcessInfo = new Thread(ProcessInfoThread);
 				m_ProcessInfo.Start();
-            }
-	}
+			}
+		}
 
 		private void ProcessInfoThread()
 		{
 			int attrib = 0;
 
 			attrib = GetAttribute("Fire Resist");
-            if (attrib > 0)
+			if (attrib > 0)
 				AddAttributesToList("Fire Resist: " + attrib);
 
 			attrib = GetAttribute("Cold Resist");
@@ -316,9 +316,9 @@ namespace RazorEnhanced.UI
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
 					Thread.Sleep(50);
-                }
+				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-            }
+			}
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Bracelet);
 			if (itemtocheck != null)
@@ -426,7 +426,7 @@ namespace RazorEnhanced.UI
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
 					Thread.Sleep(50);
-					
+
 				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
@@ -455,7 +455,7 @@ namespace RazorEnhanced.UI
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Pants);
 			if (itemtocheck != null)
-			{ 
+			{
 				if (!itemtocheck.PropsUpdated)
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
@@ -522,10 +522,10 @@ namespace RazorEnhanced.UI
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_xF);
 			if (itemtocheck != null)
-			{ 
+			{
 				if (!itemtocheck.PropsUpdated)
 				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);					
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
 					Thread.Sleep(50);
 				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
@@ -533,7 +533,7 @@ namespace RazorEnhanced.UI
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Waist);
 			if (itemtocheck != null)
-				{
+			{
 				if (!itemtocheck.PropsUpdated)
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
@@ -543,7 +543,7 @@ namespace RazorEnhanced.UI
 			}
 
 			return attributevalue;
-        }
+		}
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{

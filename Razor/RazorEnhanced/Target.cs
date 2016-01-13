@@ -42,7 +42,7 @@ namespace RazorEnhanced
 		{
 			if (!CheckHealPoisonTarg(mobile.Serial))
 				Assistant.Targeting.Target(mobile);
-        }
+		}
 
 		public static void TargetExecute(Point3D location)
 		{
@@ -148,7 +148,7 @@ namespace RazorEnhanced
 		private static string GetPlayerName(int s)
 		{
 			Assistant.Mobile mob = World.FindMobile(s);
-	
+
 			if (mob.ObjPropList.Content.Count > 0)
 			{
 				Assistant.ObjectPropertyList.OPLEntry ent = mob.ObjPropList.Content[0];
@@ -173,38 +173,38 @@ namespace RazorEnhanced
 		private static int GetPlayerColor(Mobile mob)
 		{
 			return m_NotoHues[mob.Notoriety];
-        }
+		}
 		public static void SetLastTargetFromList(string targetid)
 		{
-				TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
-				if (targetdata != null)
+			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+			if (targetdata != null)
+			{
+				Mobiles.Filter filter = targetdata.Filter;
+				string selector = targetdata.Selector;
+
+				List<Mobile> filterresult;
+				filterresult = Mobiles.ApplyFilter(filter);
+
+				Mobile mobtarget = Mobiles.Select(filterresult, selector);
+				if (mobtarget != null)
 				{
-					Mobiles.Filter filter = targetdata.Filter;
-					string selector = targetdata.Selector;
-
-					List<Mobile> filterresult;
-					filterresult = Mobiles.ApplyFilter(filter);
-
-					Mobile mobtarget = Mobiles.Select(filterresult, selector);
-					if (mobtarget != null)
+					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
 					{
-						if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
-						{
-							if (Friend.IsFriend(mobtarget.Serial))
-								Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
-							else
-								Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
-						}
+						if (Friend.IsFriend(mobtarget.Serial))
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+						else
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+					}
 
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-							Mobiles.Message(mobtarget.Serial, 10, "* Target *");
-						RazorEnhanced.Target.SetLast(mobtarget);
-					}
+						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+					RazorEnhanced.Target.SetLast(mobtarget);
 				}
-				else
-				{
-					Misc.SendMessage("Invalid target data!");
-				}
+			}
+			else
+			{
+				Misc.SendMessage("Invalid target data!");
+			}
 		}
 
 		public static void PerformTargetFromList(string targetid)
@@ -219,7 +219,7 @@ namespace RazorEnhanced
 				filterresult = Mobiles.ApplyFilter(filter);
 
 				Mobile mobtarget = Mobiles.Select(filterresult, selector);
-                if (mobtarget != null)
+				if (mobtarget != null)
 				{
 					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
 					{

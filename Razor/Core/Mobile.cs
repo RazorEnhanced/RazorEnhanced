@@ -34,7 +34,7 @@ namespace Assistant
 		private bool m_Female;
 		private bool m_Poisoned;
 		private bool m_Blessed; // Yellow Hits
-		private bool m_Warmode; 
+		private bool m_Warmode;
 		private bool m_Paralized;
 
 		private bool m_PropsUpdated;
@@ -384,14 +384,6 @@ namespace Assistant
 			return null;
 		}
 
-		internal override void OnPositionChanging(Point3D newPos)
-		{
-			if (this != World.Player && Engine.MainWindow.MapWindow != null)
-				Engine.MainWindow.MapWindow.CheckLocalUpdate(this);
-
-			base.OnPositionChanging(newPos);
-		}
-
 		internal int GetPacketFlags()
 		{
 			int flags = 0x0;
@@ -424,7 +416,7 @@ namespace Assistant
 				m_Poisoned = (flags & 0x04) != 0;
 				m_Blessed = (flags & 0x08) != 0;
 			}
-			m_Female = (flags & 0x02) != 0;		
+			m_Female = (flags & 0x02) != 0;
 			m_Warmode = (flags & 0x40) != 0;
 			m_Visible = (flags & 0x80) == 0;
 			m_Paralized = (flags & 0x01) != 0;

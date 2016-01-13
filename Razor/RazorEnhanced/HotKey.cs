@@ -504,7 +504,7 @@ namespace RazorEnhanced
 			{
 				case "Primary":
 					Assistant.SpecialMoves.SetPrimaryAbility();
-                    break;
+					break;
 				case "Secondary":
 					Assistant.SpecialMoves.SetSecondaryAbility();
 					break;
@@ -827,7 +827,7 @@ namespace RazorEnhanced
 			List<HotKeyData> keylist = RazorEnhanced.Settings.HotKey.ReadGroup("General");
 			foreach (HotKeyData keydata in keylist)
 			{
-                Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[0].Nodes.Add(keydata.Name, keydata.Name + " ( " + KeyString(keydata.Key) + " )");
 			}
 
 			// Actions

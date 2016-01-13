@@ -938,10 +938,10 @@ namespace Assistant
 			World.Mobiles.Clear();
 			ActionQueue.Stop();
 			StealthSteps.Unhide();
-			if (Engine.MainWindow.MapWindow != null)
-				Engine.MainWindow.MapWindow.Close();
+
 			if (Engine.MainWindow.ToolBarWindows != null)
 				Engine.MainWindow.ToolBarWindows.Close();
+
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
 			PasswordMemory.Save();
@@ -1081,21 +1081,6 @@ namespace Assistant
 						{
 							razor.TopMost = false;
 							razor.SendToBack();
-						}
-					}
-
-					// always use smartness for the map window
-					if (razor.MapWindow != null && razor.MapWindow.Visible)
-					{
-						if (lParam != 0 && !razor.MapWindow.TopMost)
-						{
-							razor.MapWindow.TopMost = true;
-							SetForegroundWindow(FindUOWindow());
-						}
-						else if (lParam == 0 && razor.MapWindow.TopMost)
-						{
-							razor.MapWindow.TopMost = false;
-							razor.MapWindow.SendToBack();
 						}
 					}
 

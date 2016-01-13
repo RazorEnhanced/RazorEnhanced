@@ -3898,7 +3898,7 @@ namespace RazorEnhanced
 		internal static void UpdateVersion(int versionp)
 		{
 			int realversion = versionp;
-            if (realversion == 1)  // Passaggi dalla version 1 alle 2
+			if (realversion == 1)  // Passaggi dalla version 1 alle 2
 			{
 				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
 					if ((string)row["Name"] == "Autoloot Start")
@@ -4016,7 +4016,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
 				General.WriteInt("SettingVersion", 2);
 				realversion = 2;
-            }
+			}
 
 			if (realversion == 2)
 			{
@@ -4037,7 +4037,7 @@ namespace RazorEnhanced
 
 				General.WriteInt("SettingVersion", 3);
 				realversion = 3;
-            }
+			}
 
 			if (realversion == 3)
 			{
@@ -4062,7 +4062,7 @@ namespace RazorEnhanced
 
 				General.WriteInt("SettingVersion", 4);
 				realversion = 4;
-            }
+			}
 
 			if (realversion == 4)
 			{
@@ -4210,7 +4210,7 @@ namespace RazorEnhanced
 						break;
 					}
 				realversion = 5;
-                General.WriteInt("SettingVersion", 5);
+				General.WriteInt("SettingVersion", 5);
 			}
 
 			if (realversion == 5)
@@ -4219,7 +4219,7 @@ namespace RazorEnhanced
 				Save();
 				General.WriteBool("ShowHeadTargetCheckBox", false);
 				realversion = 6;
-                General.WriteInt("SettingVersion", 6);
+				General.WriteInt("SettingVersion", 6);
 			}
 
 			if (realversion == 6)

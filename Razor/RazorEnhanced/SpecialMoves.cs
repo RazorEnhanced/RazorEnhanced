@@ -34,7 +34,7 @@ namespace Assistant
 		PsychicAttack,
 		SerpentArrow,
 		ForceOfNature,
-        Invalid
+		Invalid
 	}
 
 	internal class SpecialMoves
@@ -183,54 +183,54 @@ namespace Assistant
 		{
 			new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID, DiscMaceID, GargishKryssID, ShortbladeID ),
 			new AbilityInfo( AOSAbility.ArmorPeirce, YumiID ),
-            new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID ),
+			new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID ),
 			new AbilityInfo( AOSAbility.Block, NunchakuID ),
-            new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID, DiamondMaceID, GargishGnarledStaffID ),
+			new AbilityInfo( AOSAbility.ConcussionBlow, MaceID, GnarledStaffID, CrossbowID, DiamondMaceID, GargishGnarledStaffID ),
 			new AbilityInfo( AOSAbility.CrushingBlow, VikingSwordID, AxeID, BroadswordID, ShepherdsCrookID, SmithsHammerID, MaulID, WarMaceID, ScepterID, SledgeHammerID, GargishAxeID, DreadSwordID, NoDachiID, SerpentstoneStaffID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, ElvenMacheteID, LajatangID ),
 			new AbilityInfo( AOSAbility.Disarm, FistsID, OrnateAxeID, RuneBladeID, GargishLanceID, WarCleaverID ),
 			new AbilityInfo( AOSAbility.Dismount, WandID, LanceID ),
 			new AbilityInfo( AOSAbility.DoubleStrike, PickaxeID, TwoHandedAxeID, DoubleAxeID, ScimitarID, KatanaID, CrescentBladeID, QuarterStaffID, DoubleBladedStaffID, RepeatingCrossbowID, DualShortAxesID, GargishKatanaID, GargishMaulID, GlassStaffID, NunchakuID, DualPointedSpearID ),
 			new AbilityInfo( AOSAbility.DualWield, GargishTekagiID, SaiID, TekagiID ),
-            new AbilityInfo( AOSAbility.InfectiousStrike, ButcherKnifeID, DaggerID, GargishButcherKnifeID, AssassinSpikeID ),
+			new AbilityInfo( AOSAbility.InfectiousStrike, ButcherKnifeID, DaggerID, GargishButcherKnifeID, AssassinSpikeID ),
 			new AbilityInfo( AOSAbility.LightningArrow, MagicalShortbowID ),
-            new AbilityInfo( AOSAbility.Feint, BokutoID, DaishoID, GargishDaishoID, GargishTessenID, TessenID, LeafbladeID ),
+			new AbilityInfo( AOSAbility.Feint, BokutoID, DaishoID, GargishDaishoID, GargishTessenID, TessenID, LeafbladeID ),
 			new AbilityInfo( AOSAbility.FrenziedWhirlwind, WakizashiID ),
 			new AbilityInfo( AOSAbility.ForceArrow, ElvenCompositeLongbowID ),
 			//new AbilityInfo( AOSAbility.MortalStrike ), // not primary for anything
 			new AbilityInfo( AOSAbility.MovingShot, HeavyCrossbowID ),
 			new AbilityInfo( AOSAbility.ParalyzingBlow, BardicheID, BoneHarvesterID, PikeID, BowID, GargishBardicheID, GargishBoneHarvesterID, GargishPikeID ),
 			new AbilityInfo( AOSAbility.PsychicAttack, ElvenSpellbladeID ),
-            new AbilityInfo( AOSAbility.ShadowStrike, SkinningKnifeID, ClubID, ShortSpearID, GargishDaggerID ),
-			new AbilityInfo( AOSAbility.WhirlwindAttack, LargeBattleAxeID, HalberdID, WarHammerID, BlackStaffID, GargishTalwarID, RadiantScimitarID, GargishWarHammerID, KamaID )   
+			new AbilityInfo( AOSAbility.ShadowStrike, SkinningKnifeID, ClubID, ShortSpearID, GargishDaggerID ),
+			new AbilityInfo( AOSAbility.WhirlwindAttack, LargeBattleAxeID, HalberdID, WarHammerID, BlackStaffID, GargishTalwarID, RadiantScimitarID, GargishWarHammerID, KamaID )
 		};
 
 		private static AbilityInfo[] m_Secondary = new AbilityInfo[]
 		{
-			
-            new AbilityInfo( AOSAbility.ArmorPeirce, SaiID ),
+
+			new AbilityInfo( AOSAbility.ArmorPeirce, SaiID ),
 			new AbilityInfo( AOSAbility.ArmorIgnore, LargeBattleAxeID, BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
 			new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
 			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID, ElvenSpellbladeID ),
 			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID ),
 			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID ),
-            new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),
+			new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),
 			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID, GargishButcherKnifeID, DiscMaceID, DualPointedSpearID, GargishWarForkID ),
 			new AbilityInfo( AOSAbility.Dismount, BardicheID, AxeID, BladedStaffID, ClubID, PitchforkID, HeavyCrossbowID, GargishAxeID, GargishBardicheID, GargishTalwarID, SerpentstoneStaffID ),
 			new AbilityInfo( AOSAbility.DualWield, TessenID ),
-            new AbilityInfo( AOSAbility.DoubleStrike, DaishoID, GargishDaishoID, WakizashiID),
+			new AbilityInfo( AOSAbility.DoubleStrike, DaishoID, GargishDaishoID, WakizashiID),
 			new AbilityInfo( AOSAbility.DoubleShot, YumiID ),
 			new AbilityInfo( AOSAbility.FrenziedWhirlwind, LajatangID ),
-            new AbilityInfo( AOSAbility.InfectiousStrike, CleaverID, PikeID, KryssID, DoubleBladedStaffID, DualShortAxesID, GargishCleaverID, GargishDaggerID, GargishKryssID, GargishPikeID ),
+			new AbilityInfo( AOSAbility.InfectiousStrike, CleaverID, PikeID, KryssID, DoubleBladedStaffID, DualShortAxesID, GargishCleaverID, GargishDaggerID, GargishKryssID, GargishPikeID ),
 			new AbilityInfo( AOSAbility.MortalStrike, ExecAxeID, BoneHarvesterID, CrescentBladeID, HammerPickID, ScepterID, ShortSpearID, CrossbowID, BowID, GargishBoneHarvesterID, GlassSwordID, GlassStaffID, ShortbladeID ),
 			new AbilityInfo( AOSAbility.MovingShot, CompositeBowID, RepeatingCrossbowID ),
 			new AbilityInfo( AOSAbility.ParalyzingBlow, VikingSwordID, ScimitarID, ScytheID, GnarledStaffID, BlackStaffID, SpearID, FistsID, GargishScytheID, GargishGnarledStaffID, BloodbladeID ),
 			new AbilityInfo( AOSAbility.PsychicAttack, MagicalShortbowID ),
 			new AbilityInfo( AOSAbility.RidingSwipe, NoDachiID ),
 			new AbilityInfo( AOSAbility.SerpentArrow, ElvenCompositeLongbowID ),
-            new AbilityInfo( AOSAbility.ShadowStrike, TwoHandedAxeID, CutlassID, SmithsHammerID, DaggerID, SledgeHammerID, AssassinSpikeID ),
+			new AbilityInfo( AOSAbility.ShadowStrike, TwoHandedAxeID, CutlassID, SmithsHammerID, DaggerID, SledgeHammerID, AssassinSpikeID ),
 			new AbilityInfo( AOSAbility.TalonStrike, GargishTekagiID, TekagiID ),
-            new AbilityInfo( AOSAbility.WhirlwindAttack, DoubleAxeID ),
+			new AbilityInfo( AOSAbility.WhirlwindAttack, DoubleAxeID ),
 			new AbilityInfo( AOSAbility.NerveStrike, BokutoID )
 		};
 

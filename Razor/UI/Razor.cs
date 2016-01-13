@@ -6,12 +6,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Threading;
 using System.IO;
 using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Assistant
@@ -1645,9 +1645,9 @@ namespace Assistant
 			// 
 			this.mobfilterlistView.CheckBoxes = true;
 			this.mobfilterlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader52,
-            this.columnHeader53,
-            this.columnHeader54});
+			this.columnHeader52,
+			this.columnHeader53,
+			this.columnHeader54});
 			this.mobfilterlistView.FullRowSelect = true;
 			this.mobfilterlistView.GridLines = true;
 			this.mobfilterlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -1865,23 +1865,23 @@ namespace Assistant
 			// targetlistView
 			// 
 			this.targetlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader51,
-            this.columnHeader36,
-            this.columnHeader37,
-            this.columnHeader38,
-            this.columnHeader39,
-            this.columnHeader40,
-            this.columnHeader41,
-            this.columnHeader42,
-            this.columnHeader43,
-            this.columnHeader44,
-            this.columnHeader45,
-            this.columnHeader46,
-            this.columnHeader47,
-            this.columnHeader48,
-            this.columnHeader55,
-            this.columnHeader49,
-            this.columnHeader50});
+			this.columnHeader51,
+			this.columnHeader36,
+			this.columnHeader37,
+			this.columnHeader38,
+			this.columnHeader39,
+			this.columnHeader40,
+			this.columnHeader41,
+			this.columnHeader42,
+			this.columnHeader43,
+			this.columnHeader44,
+			this.columnHeader45,
+			this.columnHeader46,
+			this.columnHeader47,
+			this.columnHeader48,
+			this.columnHeader55,
+			this.columnHeader49,
+			this.columnHeader50});
 			this.targetlistView.FullRowSelect = true;
 			this.targetlistView.GridLines = true;
 			this.targetlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2028,12 +2028,12 @@ namespace Assistant
 			// 
 			this.skillList.AutoArrange = false;
 			this.skillList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.skillHDRName,
-            this.skillHDRvalue,
-            this.skillHDRbase,
-            this.skillHDRdelta,
-            this.skillHDRcap,
-            this.skillHDRlock});
+			this.skillHDRName,
+			this.skillHDRvalue,
+			this.skillHDRbase,
+			this.skillHDRdelta,
+			this.skillHDRcap,
+			this.skillHDRlock});
 			this.skillList.FullRowSelect = true;
 			this.skillList.Location = new System.Drawing.Point(7, 13);
 			this.skillList.Name = "skillList";
@@ -2155,7 +2155,7 @@ namespace Assistant
 			this.labelUOD.Size = new System.Drawing.Size(213, 64);
 			this.labelUOD.TabIndex = 4;
 			this.labelUOD.Text = "To support the Razor Enhanced developers,  please visit UODreams shard and stay w" +
-    "ith us! You are welcome!";
+	"ith us! You are welcome!";
 			this.labelUOD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// panelUODlogo
@@ -2370,10 +2370,10 @@ namespace Assistant
 			// 
 			this.autolootlistView.CheckBoxes = true;
 			this.autolootlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader1,
-            this.columnHeader2,
-            this.ColumnHeader3});
+			this.columnHeader4,
+			this.columnHeader1,
+			this.columnHeader2,
+			this.ColumnHeader3});
 			this.autolootlistView.FullRowSelect = true;
 			this.autolootlistView.GridLines = true;
 			this.autolootlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2485,10 +2485,10 @@ namespace Assistant
 			// 
 			this.scavengerListView.CheckBoxes = true;
 			this.scavengerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8});
+			this.columnHeader5,
+			this.columnHeader6,
+			this.columnHeader7,
+			this.columnHeader8});
 			this.scavengerListView.FullRowSelect = true;
 			this.scavengerListView.GridLines = true;
 			this.scavengerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2617,11 +2617,11 @@ namespace Assistant
 			// 
 			this.organizerListView.CheckBoxes = true;
 			this.organizerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13});
+			this.columnHeader9,
+			this.columnHeader10,
+			this.columnHeader11,
+			this.columnHeader12,
+			this.columnHeader13});
 			this.organizerListView.FullRowSelect = true;
 			this.organizerListView.GridLines = true;
 			this.organizerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2725,11 +2725,11 @@ namespace Assistant
 			// 
 			this.buyListView.CheckBoxes = true;
 			this.buyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader23});
+			this.columnHeader14,
+			this.columnHeader15,
+			this.columnHeader16,
+			this.columnHeader17,
+			this.columnHeader23});
 			this.buyListView.FullRowSelect = true;
 			this.buyListView.GridLines = true;
 			this.buyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2844,11 +2844,11 @@ namespace Assistant
 			// 
 			this.sellListView.CheckBoxes = true;
 			this.sellListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader18,
-            this.columnHeader19,
-            this.columnHeader20,
-            this.columnHeader21,
-            this.columnHeader22});
+			this.columnHeader18,
+			this.columnHeader19,
+			this.columnHeader20,
+			this.columnHeader21,
+			this.columnHeader22});
 			this.sellListView.FullRowSelect = true;
 			this.sellListView.GridLines = true;
 			this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2976,10 +2976,10 @@ namespace Assistant
 			// 
 			this.dressListView.CheckBoxes = true;
 			this.dressListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader24,
-            this.columnHeader25,
-            this.columnHeader26,
-            this.columnHeader27});
+			this.columnHeader24,
+			this.columnHeader25,
+			this.columnHeader26,
+			this.columnHeader27});
 			this.dressListView.FullRowSelect = true;
 			this.dressListView.GridLines = true;
 			this.dressListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -3078,9 +3078,9 @@ namespace Assistant
 			// 
 			this.friendlistView.CheckBoxes = true;
 			this.friendlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader28,
-            this.columnHeader29,
-            this.columnHeader30});
+			this.columnHeader28,
+			this.columnHeader29,
+			this.columnHeader30});
 			this.friendlistView.FullRowSelect = true;
 			this.friendlistView.GridLines = true;
 			this.friendlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -3206,11 +3206,11 @@ namespace Assistant
 			// 
 			this.restocklistView.CheckBoxes = true;
 			this.restocklistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader31,
-            this.columnHeader32,
-            this.columnHeader33,
-            this.columnHeader34,
-            this.columnHeader35});
+			this.columnHeader31,
+			this.columnHeader32,
+			this.columnHeader33,
+			this.columnHeader34,
+			this.columnHeader35});
 			this.restocklistView.FullRowSelect = true;
 			this.restocklistView.GridLines = true;
 			this.restocklistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -3632,9 +3632,9 @@ namespace Assistant
 			// 
 			// forceSizeY
 			// 
-			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeY.BackColor = System.Drawing.Color.White;
 			this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3647,9 +3647,9 @@ namespace Assistant
 			// 
 			// forceSizeX
 			// 
-			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeX.BackColor = System.Drawing.Color.White;
 			this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3684,12 +3684,12 @@ namespace Assistant
 			this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.clientPrio.Items.AddRange(new object[] {
-            "Idle",
-            "BelowNormal",
-            "Normal",
-            "AboveNormal",
-            "High",
-            "Realtime"});
+			"Idle",
+			"BelowNormal",
+			"Normal",
+			"AboveNormal",
+			"High",
+			"Realtime"});
 			this.clientPrio.Location = new System.Drawing.Point(363, 186);
 			this.clientPrio.Name = "clientPrio";
 			this.clientPrio.Size = new System.Drawing.Size(88, 22);
@@ -3743,9 +3743,9 @@ namespace Assistant
 			// 
 			// healthFmt
 			// 
-			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.healthFmt.BackColor = System.Drawing.Color.White;
 			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3776,9 +3776,9 @@ namespace Assistant
 			// 
 			// ltRange
 			// 
-			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.ltRange.BackColor = System.Drawing.Color.White;
 			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3809,9 +3809,9 @@ namespace Assistant
 			// 
 			// txtObjDelay
 			// 
-			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtObjDelay.BackColor = System.Drawing.Color.White;
 			this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3846,10 +3846,10 @@ namespace Assistant
 			this.msglvl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.msglvl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.msglvl.Items.AddRange(new object[] {
-            "Show All",
-            "Warnings & Errors",
-            "Errors Only",
-            "None"});
+			"Show All",
+			"Warnings & Errors",
+			"Errors Only",
+			"None"});
 			this.msglvl.Location = new System.Drawing.Point(106, 246);
 			this.msglvl.Name = "msglvl";
 			this.msglvl.Size = new System.Drawing.Size(88, 22);
@@ -3950,9 +3950,9 @@ namespace Assistant
 			// 
 			// corpseRange
 			// 
-			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.corpseRange.BackColor = System.Drawing.Color.White;
 			this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.corpseRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4107,9 +4107,9 @@ namespace Assistant
 			// 
 			// txtSpellFormat
 			// 
-			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSpellFormat.BackColor = System.Drawing.Color.White;
 			this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4140,9 +4140,9 @@ namespace Assistant
 			// 
 			// remountedelay
 			// 
-			this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.remountedelay.BackColor = System.Drawing.Color.White;
 			this.remountedelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.remountedelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4155,9 +4155,9 @@ namespace Assistant
 			// 
 			// remountdelay
 			// 
-			this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.remountdelay.BackColor = System.Drawing.Color.White;
 			this.remountdelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.remountdelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4329,9 +4329,9 @@ namespace Assistant
 			// 
 			// toolboxcountNameTextBox
 			// 
-			this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountNameTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountNameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4366,9 +4366,9 @@ namespace Assistant
 			// 
 			// toolboxcountWarningTextBox
 			// 
-			this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountWarningTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4390,9 +4390,9 @@ namespace Assistant
 			// 
 			// toolboxcountHueTextBox
 			// 
-			this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountHueTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountHueTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountHueTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4405,9 +4405,9 @@ namespace Assistant
 			// 
 			// toolboxcountGraphTextBox
 			// 
-			this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountGraphTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4553,9 +4553,9 @@ namespace Assistant
 			this.locks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.locks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.locks.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "Locked"});
+			"Up",
+			"Down",
+			"Locked"});
 			this.locks.Location = new System.Drawing.Point(608, 45);
 			this.locks.Name = "locks";
 			this.locks.Size = new System.Drawing.Size(37, 22);
@@ -4589,14 +4589,14 @@ namespace Assistant
 			this.imgFmt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.imgFmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.imgFmt.Items.AddRange(new object[] {
-            "jpg",
-            "png",
-            "bmp",
-            "gif",
-            "tif",
-            "wmf",
-            "exif",
-            "emf"});
+			"jpg",
+			"png",
+			"bmp",
+			"gif",
+			"tif",
+			"wmf",
+			"exif",
+			"emf"});
 			this.imgFmt.Location = new System.Drawing.Point(94, 202);
 			this.imgFmt.Name = "imgFmt";
 			this.imgFmt.Size = new System.Drawing.Size(71, 22);
@@ -4616,9 +4616,9 @@ namespace Assistant
 			// 
 			// screenPath
 			// 
-			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.screenPath.BackColor = System.Drawing.Color.White;
 			this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.screenPath.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4793,9 +4793,9 @@ namespace Assistant
 			// 
 			// autoLootTextBoxDelay
 			// 
-			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
 			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.autoLootTextBoxDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5036,9 +5036,9 @@ namespace Assistant
 			// 
 			// scavengerDragDelay
 			// 
-			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
 			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.scavengerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5192,9 +5192,9 @@ namespace Assistant
 			// 
 			// organizerDragDelay
 			// 
-			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.organizerDragDelay.BackColor = System.Drawing.Color.White;
 			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.organizerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5618,9 +5618,9 @@ namespace Assistant
 			// 
 			// dressDragDelay
 			// 
-			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dressDragDelay.BackColor = System.Drawing.Color.White;
 			this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.dressDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5867,9 +5867,9 @@ namespace Assistant
 			// 
 			// restockDragDelay
 			// 
-			this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.restockDragDelay.BackColor = System.Drawing.Color.White;
 			this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.restockDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5998,9 +5998,9 @@ namespace Assistant
 			// 
 			// bandagehealhpTextBox
 			// 
-			this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealhpTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6013,9 +6013,9 @@ namespace Assistant
 			// 
 			// bandagehealdelayTextBox
 			// 
-			this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealdelayTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6038,9 +6038,9 @@ namespace Assistant
 			// 
 			// bandagehealcustomcolorTextBox
 			// 
-			this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealcustomcolorTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6053,9 +6053,9 @@ namespace Assistant
 			// 
 			// bandagehealcustomIDTextBox
 			// 
-			this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealcustomIDTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6122,9 +6122,9 @@ namespace Assistant
 			// 
 			// hotkeyKeyMasterTextBox
 			// 
-			this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
 			this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.hotkeyKeyMasterTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6208,9 +6208,9 @@ namespace Assistant
 			// 
 			// hotkeytextbox
 			// 
-			this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.hotkeytextbox.BackColor = System.Drawing.Color.White;
 			this.hotkeytextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.hotkeytextbox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -7730,23 +7730,8 @@ namespace Assistant
 			MessageBox.Show(this, Language.GetString(LocString.FeatureDisabledText), Language.GetString(LocString.FeatureDisabled), MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
 
-		internal Assistant.Map.MapWindow MapWindow;
-
 		[System.Runtime.InteropServices.DllImport("user32.dll")]
 		private static extern IntPtr SetParent(IntPtr child, IntPtr newParent);
-
-		private void btnMap_Click(object sender, System.EventArgs e)
-		{
-			if (World.Player != null)
-			{
-				if (MapWindow == null)
-					MapWindow = new Assistant.Map.MapWindow();
-				//SetParent( MapWindow.Handle, ClientCommunication.FindUOWindow() );
-				//MapWindow.Owner = (Form)Form.FromHandle( ClientCommunication.FindUOWindow() );
-				MapWindow.Show();
-				MapWindow.BringToFront();
-			}
-		}
 
 		private void showHealthOH_CheckedChanged(object sender, System.EventArgs e)
 		{
@@ -10835,136 +10820,6 @@ namespace Assistant
 		}
 
 		// ----------------- PROFILES END -------------------
-
-		//private void mapOpenOnLoginCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapOpenOnLoginCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapOpenOnLoginCheckBox", mapOpenOnLoginCheckBox.Checked);
-		//}
-
-		//private void mapAutoconnectCheckBox1_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapAutoconnectCheckBox1.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapAutoConnectCheckBox", mapAutoconnectCheckBox1.Checked);
-		//}
-
-		//private void mapHpBarCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapHpBarCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapHpBarCheckBox", mapHpBarCheckBox.Checked);
-		//}
-
-		//private void mapStaminaBarCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapStaminaBarCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapStaminaBarCheckBox", mapStaminaBarCheckBox.Checked);
-		//}
-
-		//private void mapManaBarCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapManaBarCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapManaBarCheckBox", mapManaBarCheckBox.Checked);
-		//}
-
-		//private void mapdeathpointCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapdeathpointCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapDeathPointCheckBox", mapdeathpointCheckBox.Checked);
-		//}
-
-		//private void mapPanicCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapPanicCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapPanicCheckBox", mapPanicCheckBox.Checked);
-		//}
-
-		//private void mapPartyMemberCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapPartyMemberCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapPartyMemberCheckBox", mapPartyMemberCheckBox.Checked);
-		//}
-
-		//private void mapGuildCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapGuildCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapGuildCheckBox", mapGuildCheckBox.Checked);
-		//}
-
-		//private void mapserverCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapserverCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapServerCheckBox", mapserverCheckBox.Checked);
-		//}
-
-		//private void mapChatCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapChatCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapChatCheckBox", mapChatCheckBox.Checked);
-
-		//	if (mapChatCheckBox.Checked)
-		//	{
-		//		mapChatPrefixTextBox.Enabled = true;
-		//		mapSetChatColorButton.Enabled = true;
-		//		mapAutoOpenChatCheckBox.Enabled = true;
-		//	}
-		//	else
-		//	{
-		//		mapChatPrefixTextBox.Enabled = false;
-		//		mapSetChatColorButton.Enabled = false;
-		//		mapAutoOpenChatCheckBox.Enabled = false;
-		//	}
-		//}
-
-		//private void mapChatPrefixTextBox_TextChanged(object sender, EventArgs e)
-		//{
-		//	if (mapChatPrefixTextBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteString("MapChatPrefixTextBox", mapChatPrefixTextBox.Text);
-		//}
-
-		//private void mapAutoOpenChatCheckBox_CheckedChanged(object sender, EventArgs e)
-		//{
-		//	if (mapAutoOpenChatCheckBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteBool("MapAutoOpenChatCheckBox", mapAutoOpenChatCheckBox.Checked);
-		//}
-
-		//private void mapSetChatColorButton_Click(object sender, EventArgs e)
-		//{
-		//	SetHue(mapChatColorlabel, "MapChatColor");
-		//}
-
-		//private void mapserveraddressTextBox_TextChanged(object sender, EventArgs e)
-		//{
-		//	if (mapserveraddressTextBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteString("MapServerAddressTextBox", mapserveraddressTextBox.Text);
-		//}
-
-		//private void mapserverportTextBox_TextChanged(object sender, EventArgs e)
-		//{
-		//	if (mapserverportTextBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteString("MapServerPortTextBox", mapserverportTextBox.Text);
-		//}
-
-		//private void mapLinkUsernameTextBox_TextChanged(object sender, EventArgs e)
-		//{
-		//	if (mapLinkUsernameTextBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteString("MapLinkUsernameTextBox", mapLinkUsernameTextBox.Text);
-		//}
-
-		//private void mapLinkPasswordTextBox_TextChanged(object sender, EventArgs e)
-		//{
-		//	if (mapLinkPasswordTextBox.Focused)
-		//		RazorEnhanced.Settings.General.WriteString("MapLinkPasswordTextBox", mapLinkPasswordTextBox.Text);
-		//}
-
-		private void mapConnectButton_Click(object sender, EventArgs e)
-		{
-			Assistant.Map.MapNetwork.TryConnect();
-		}
-
-		private void mapDisconnectButton_Click(object sender, EventArgs e)
-		{
-			Assistant.Map.MapNetwork.Disconnect();
-		}
 
 		private void buttonPlayScript_Click(object sender, EventArgs e)
 		{

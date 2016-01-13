@@ -275,7 +275,7 @@ namespace RazorEnhanced
 					Misc.SendMessage("Script Error: CastSpellMagery: Invalid spell name: " + SpellName);
 					break;
 			}
-			if (s!= null)
+			if (s != null)
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
 		}
 

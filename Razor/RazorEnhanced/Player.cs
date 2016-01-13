@@ -143,7 +143,9 @@ namespace RazorEnhanced
 
 		// Position
 		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
-		public static string Dir { get
+		public static string Dir
+		{
+			get
 			{
 				switch (Assistant.World.Player.Direction & Direction.Mask)
 				{
@@ -157,8 +159,9 @@ namespace RazorEnhanced
 					case Direction.Up: return "Up";
 					default: return "Undefined";
 				}
-			} }
-		
+			}
+		}
+
 		internal static string GetBuffDescription(BuffIcon icon)
 		{
 			string description = "";
@@ -1680,7 +1683,7 @@ namespace RazorEnhanced
 		public static void WeaponPrimarySA()
 		{
 			Assistant.SpecialMoves.SetPrimaryAbility();
-        }
+		}
 
 		public static void WeaponSecondarySA()
 		{
@@ -1690,12 +1693,12 @@ namespace RazorEnhanced
 		public static void WeaponClearSA()
 		{
 			Assistant.SpecialMoves.ClearAbilities();
-        }
+		}
 
 		public static void WeaponDisarmSA()
 		{
 			Assistant.SpecialMoves.OnDisarm();
-        }
+		}
 
 		public static void WeaponStunSA()
 		{

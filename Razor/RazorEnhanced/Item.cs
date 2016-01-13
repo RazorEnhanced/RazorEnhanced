@@ -370,7 +370,7 @@ namespace RazorEnhanced
 					if (filter.IsCorpse != -1)
 					{
 						assistantItems = assistantItems.Where((i) => i.IsCorpse == Convert.ToBoolean(filter.IsCorpse)).ToList();
-					}					
+					}
 				}
 			}
 

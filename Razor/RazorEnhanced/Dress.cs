@@ -833,7 +833,7 @@ namespace RazorEnhanced
 		internal static void UndressEngine()
 		{
 			// Check bag
-			AddLog("DD: "+ DressBag.ToString("X8"));
+			AddLog("DD: " + DressBag.ToString("X8"));
 			Assistant.Item bag = Assistant.World.FindItem(DressBag);
 			if (bag == null)
 			{
@@ -894,38 +894,38 @@ namespace RazorEnhanced
 								Assistant.Item lefth = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
 								Assistant.Item righth = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
 
-									if (Assistant.World.FindItem(oggettolista.Serial).IsTwoHanded)
+								if (Assistant.World.FindItem(oggettolista.Serial).IsTwoHanded)
+								{
+									if (lefth != null && lefth.Movable)
 									{
-										if (lefth != null && lefth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.LeftHand)) + " undressed!");
-											RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
-										if (righth != null && righth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.RightHand)) + " undressed!");
-											RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
+										RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.LeftHand)) + " undressed!");
+										RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
+										Thread.Sleep(mseconds);
 									}
-									else if ((lefth != null && lefth.IsTwoHanded) || (righth != null && righth.IsTwoHanded))
+									if (righth != null && righth.Movable)
 									{
-										if (lefth != null && lefth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.LeftHand)) + " undressed!");
-											RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
-										if (righth != null && righth.Movable)
-										{
-											RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.RightHand)) + " undressed!");
-											RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
-											Thread.Sleep(mseconds);
-										}
+										RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.RightHand)) + " undressed!");
+										RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
+										Thread.Sleep(mseconds);
 									}
+								}
+								else if ((lefth != null && lefth.IsTwoHanded) || (righth != null && righth.IsTwoHanded))
+								{
+									if (lefth != null && lefth.Movable)
+									{
+										RazorEnhanced.Dress.AddLog("Item 0x" + lefth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.LeftHand)) + " undressed!");
+										RazorEnhanced.Items.Move(lefth.Serial, undressbagserial, 0);
+										Thread.Sleep(mseconds);
+									}
+									if (righth != null && righth.Movable)
+									{
+										RazorEnhanced.Dress.AddLog("Item 0x" + righth.Serial.Value.ToString("X8") + " on Layer: " + LayerIntToLayerString(LayerLayerToInt(Layer.RightHand)) + " undressed!");
+										RazorEnhanced.Items.Move(righth.Serial, undressbagserial, 0);
+										Thread.Sleep(mseconds);
+									}
+								}
 							}
-	
+
 							Assistant.Item itemtomove = Assistant.World.Player.GetItemOnLayer(LayerNumberToLayer(oggettolista.Layer));
 							if (itemtomove != null)
 							{
@@ -978,9 +978,9 @@ namespace RazorEnhanced
 			Assistant.Item bag = Assistant.World.FindItem(DressBag);
 			if (bag == null)
 			{
-					Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
-					AddLog("Invalid Bag, Switch to backpack");
-					DressBag = (int)World.Player.Backpack.Serial.Value;
+				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
+				AddLog("Invalid Bag, Switch to backpack");
+				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
 			int exit = DressEngine(items, Dress.DressDelay, Dress.DressBag, Dress.DressConflict);

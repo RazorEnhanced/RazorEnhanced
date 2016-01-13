@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedScriptEditor));
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonOpen = new System.Windows.Forms.ToolStripButton();
@@ -49,16 +50,16 @@
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelScript = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-			this.scintillaEditor = new ScintillaNET.Scintilla();
-			this.textBoxDebug = new System.Windows.Forms.TextBox();
+			this.fastColoredTextBoxEditor = new FastColoredTextBoxNS.FastColoredTextBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+			this.textBoxDebug = new System.Windows.Forms.TextBox();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.scintillaEditor)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
 			this.splitContainer2.Panel1.SuspendLayout();
 			this.splitContainer2.SuspendLayout();
@@ -67,22 +68,22 @@
 			// toolStrip1
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripButtonOpen,
-			this.toolStripButtonSave,
-			this.toolStripButtonClose,
-			this.toolStripSeparator1,
-			this.toolStripButtonPlay,
-			this.toolStripButtonDebug,
-			this.toolStripNextCall,
-			this.toolStripButtonNextLine,
-			this.toolStripButtonNextReturn,
-			this.toolStripButtonStop,
-			this.toolStripSeparator2,
-			this.toolStripButtonAddBreakpoint,
-			this.toolStripButtonRemoveBreakpoints,
-			this.toolStripSeparator3,
-			this.toolStripButtonInspect,
-			this.toolStripButton1});
+            this.toolStripButtonOpen,
+            this.toolStripButtonSave,
+            this.toolStripButtonClose,
+            this.toolStripSeparator1,
+            this.toolStripButtonPlay,
+            this.toolStripButtonDebug,
+            this.toolStripNextCall,
+            this.toolStripButtonNextLine,
+            this.toolStripButtonNextReturn,
+            this.toolStripButtonStop,
+            this.toolStripSeparator2,
+            this.toolStripButtonAddBreakpoint,
+            this.toolStripButtonRemoveBreakpoints,
+            this.toolStripSeparator3,
+            this.toolStripButtonInspect,
+            this.toolStripButton1});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(976, 25);
@@ -224,7 +225,7 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.toolStripStatusLabelScript});
+            this.toolStripStatusLabelScript});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 443);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(976, 22);
@@ -244,7 +245,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
-			this.splitContainer1.Panel1.Controls.Add(this.scintillaEditor);
+			this.splitContainer1.Panel1.Controls.Add(this.fastColoredTextBoxEditor);
 			// 
 			// splitContainer1.Panel2
 			// 
@@ -253,36 +254,36 @@
 			this.splitContainer1.SplitterDistance = 726;
 			this.splitContainer1.TabIndex = 3;
 			// 
-			// scintillaEditor
+			// fastColoredTextBoxEditor
 			// 
-			this.scintillaEditor.ConfigurationManager.Language = "python";
-			this.scintillaEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.scintillaEditor.Location = new System.Drawing.Point(0, 0);
-			this.scintillaEditor.Name = "scintillaEditor";
-			this.scintillaEditor.Size = new System.Drawing.Size(726, 418);
-			this.scintillaEditor.Styles.BraceBad.FontName = "Verdana";
-			this.scintillaEditor.Styles.BraceLight.FontName = "Verdana";
-			this.scintillaEditor.Styles.CallTip.FontName = "Segoe UI";
-			this.scintillaEditor.Styles.ControlChar.FontName = "Verdana";
-			this.scintillaEditor.Styles.Default.BackColor = System.Drawing.SystemColors.Window;
-			this.scintillaEditor.Styles.Default.FontName = "Verdana";
-			this.scintillaEditor.Styles.IndentGuide.FontName = "Verdana";
-			this.scintillaEditor.Styles.LastPredefined.FontName = "Verdana";
-			this.scintillaEditor.Styles.LineNumber.FontName = "Verdana";
-			this.scintillaEditor.Styles.Max.FontName = "Verdana";
-			this.scintillaEditor.TabIndex = 0;
-			this.scintillaEditor.TextChanged += new System.EventHandler(this.scintillaEditor_TextChanged);
-			// 
-			// textBoxDebug
-			// 
-			this.textBoxDebug.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBoxDebug.Location = new System.Drawing.Point(0, 0);
-			this.textBoxDebug.Multiline = true;
-			this.textBoxDebug.Name = "textBoxDebug";
-			this.textBoxDebug.ReadOnly = true;
-			this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxDebug.Size = new System.Drawing.Size(246, 414);
-			this.textBoxDebug.TabIndex = 0;
+			this.fastColoredTextBoxEditor.AutoCompleteBracketsList = new char[] {
+        '(',
+        ')',
+        '{',
+        '}',
+        '[',
+        ']',
+        '\"',
+        '\"',
+        '\'',
+        '\''};
+			this.fastColoredTextBoxEditor.AutoScrollMinSize = new System.Drawing.Size(27, 14);
+			this.fastColoredTextBoxEditor.BackBrush = null;
+			this.fastColoredTextBoxEditor.CharHeight = 14;
+			this.fastColoredTextBoxEditor.CharWidth = 8;
+			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
+			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
+			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fastColoredTextBoxEditor.IsReplaceMode = false;
+			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
+			this.fastColoredTextBoxEditor.Location = new System.Drawing.Point(0, 0);
+			this.fastColoredTextBoxEditor.Name = "fastColoredTextBoxEditor";
+			this.fastColoredTextBoxEditor.Paddings = new System.Windows.Forms.Padding(0);
+			this.fastColoredTextBoxEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
+			this.fastColoredTextBoxEditor.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBoxEditor.ServiceColors")));
+			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(726, 418);
+			this.fastColoredTextBoxEditor.TabIndex = 0;
+			this.fastColoredTextBoxEditor.Zoom = 100;
 			// 
 			// splitContainer2
 			// 
@@ -298,8 +299,19 @@
 			this.splitContainer2.Panel1MinSize = 0;
 			this.splitContainer2.Panel2MinSize = 0;
 			this.splitContainer2.Size = new System.Drawing.Size(246, 418);
-			this.splitContainer2.SplitterDistance = 414;
+			this.splitContainer2.SplitterDistance = 389;
 			this.splitContainer2.TabIndex = 0;
+			// 
+			// textBoxDebug
+			// 
+			this.textBoxDebug.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.textBoxDebug.Location = new System.Drawing.Point(0, 0);
+			this.textBoxDebug.Multiline = true;
+			this.textBoxDebug.Name = "textBoxDebug";
+			this.textBoxDebug.ReadOnly = true;
+			this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.textBoxDebug.Size = new System.Drawing.Size(246, 389);
+			this.textBoxDebug.TabIndex = 0;
 			// 
 			// EnhancedScriptEditor
 			// 
@@ -322,7 +334,7 @@
 			this.splitContainer1.Panel2.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.scintillaEditor)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.fastColoredTextBoxEditor)).EndInit();
 			this.splitContainer2.Panel1.ResumeLayout(false);
 			this.splitContainer2.Panel1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
@@ -352,10 +364,10 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.ToolStripButton toolStripButtonInspect;
 		private System.Windows.Forms.SplitContainer splitContainer1;
-		private ScintillaNET.Scintilla scintillaEditor;
 		private System.Windows.Forms.TextBox textBoxDebug;
 		private System.Windows.Forms.ToolStripButton toolStripButtonDebug;
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.SplitContainer splitContainer2;
+		private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBoxEditor;
 	}
 }
