@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Threading;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace RazorEnhanced.UI
 {
@@ -9,135 +9,13 @@ namespace RazorEnhanced.UI
 		private const string m_Title = "Enhanced Mobile Inspect";
 		private Thread m_ProcessInfo;
 		private Assistant.Mobile m_mobile;
+		private Form m_inspectform;
 
 		internal EnhancedMobileInspector(Assistant.Mobile mobileTarg)
 		{
 			InitializeComponent();
-			MaximizeBox = false;
 			m_mobile = mobileTarg;
-			// general
-			lName.Text = mobileTarg.Name.ToString();
-			lSerial.Text = "0x" + mobileTarg.Serial.Value.ToString("X8");
-			lMobileID.Text = "0x" + mobileTarg.Body.ToString("X4");
-			lColor.Text = mobileTarg.Hue.ToString();
-			lPosition.Text = mobileTarg.Position.ToString();
-			// Details
-			if (mobileTarg.Female)
-				lSex.Text = "Female";
-			else
-				lSex.Text = "Male";
-			lHits.Text = mobileTarg.Hits.ToString();
-			lMaxHits.Text = mobileTarg.Hits.ToString();
-			lNotoriety.Text = mobileTarg.Notoriety.ToString();
-
-			switch (mobileTarg.Direction & Assistant.Direction.Mask)
-			{
-				case Assistant.Direction.North: lDirection.Text = "North"; break;
-				case Assistant.Direction.South: lDirection.Text = "South"; break;
-				case Assistant.Direction.West: lDirection.Text = "West"; break;
-				case Assistant.Direction.East: lDirection.Text = "East"; break;
-				case Assistant.Direction.Right: lDirection.Text = "Right"; break;
-				case Assistant.Direction.Left: lDirection.Text = "Left"; break;
-				case Assistant.Direction.Down: lDirection.Text = "Down"; break;
-				case Assistant.Direction.Up: lDirection.Text = "Up"; break;
-				default: lDirection.Text = "Undefined"; break;
-			}
-
-			if (mobileTarg.Poisoned)
-				lFlagPoisoned.Text = "Yes";
-			else
-				lFlagPoisoned.Text = "No";
-
-			if (mobileTarg.Warmode)
-				lFlagWar.Text = "Yes";
-			else
-				lFlagWar.Text = "No";
-
-			if (mobileTarg.Visible)
-				lFlagHidden.Text = "No";
-			else
-				lFlagHidden.Text = "Yes";
-
-			if (mobileTarg.IsGhost)
-				lFlagGhost.Text = "Yes";
-			else
-				lFlagGhost.Text = "No";
-
-			if (mobileTarg.Blessed)     // Yellow Hits
-				lFlagBlessed.Text = "Yes";
-			else
-				lFlagBlessed.Text = "No";
-
-			if (mobileTarg.Paralized)
-				lFlagParalized.Text = "Yes";
-			else
-				lFlagParalized.Text = "No";
-
-			for (int i = 0; i < mobileTarg.ObjPropList.Content.Count; i++)
-			{
-				Assistant.ObjectPropertyList.OPLEntry ent = mobileTarg.ObjPropList.Content[i];
-				if (i == 0)
-					lName.Text = ent.ToString();
-				else
-				{
-					string content = ent.ToString();
-					listBoxAttributes.Items.Add(content);
-				}
-			}
-
-			if (mobileTarg.ObjPropList.Content.Count == 0)
-			{
-				lName.Text = mobileTarg.Name.ToString();
-			}
-
-
-			if (mobileTarg == Assistant.World.Player)
-			{
-				listBoxAttributes.Items.Add("");
-				listBoxAttributes.Items.Add("Weight: " + Assistant.World.Player.Weight);
-				if (Assistant.World.Player.Expansion >= 3)
-				{
-					listBoxAttributes.Items.Add("Stat Cap: " + Assistant.World.Player.StatCap);
-					listBoxAttributes.Items.Add("Followers: " + Assistant.World.Player.Followers);
-					listBoxAttributes.Items.Add("Max Followers: " + Assistant.World.Player.FollowersMax);
-
-					if (Assistant.World.Player.Expansion >= 4)
-					{
-						listBoxAttributes.Items.Add("Damage Minimum: " + Assistant.World.Player.DamageMin);
-						listBoxAttributes.Items.Add("Damage Maximum: " + Assistant.World.Player.DamageMax);
-						listBoxAttributes.Items.Add("Tithing points: " + Assistant.World.Player.Tithe);
-
-						if (Assistant.World.Player.Expansion >= 5)
-						{
-							switch (Assistant.World.Player.Race)
-							{
-								case 1:
-									listBoxAttributes.Items.Add("Race: Human");
-									break;
-								case 2:
-									listBoxAttributes.Items.Add("Race: Elf");
-									break;
-								case 3:
-									listBoxAttributes.Items.Add("Race: Gargoyle");
-									break;
-							}
-
-							listBoxAttributes.Items.Add("Max Weight: " + Assistant.World.Player.MaxWeight);
-
-							if (Assistant.World.Player.Expansion >= 6)
-							{
-								m_ProcessInfo = new Thread(ProcessInfoThread);
-								m_ProcessInfo.Start();
-							}
-						}
-					}
-				}
-			}
-			else
-			{
-				m_ProcessInfo = new Thread(ProcessInfoThread);
-				m_ProcessInfo.Start();
-			}
+			MaximizeBox = false;
 		}
 
 		private void ProcessInfoThread()
@@ -145,7 +23,7 @@ namespace RazorEnhanced.UI
 			int attrib = 0;
 
 			attrib = GetAttribute("Fire Resist");
-			if (attrib > 0)
+            if (attrib > 0)
 				AddAttributesToList("Fire Resist: " + attrib);
 
 			attrib = GetAttribute("Cold Resist");
@@ -299,10 +177,17 @@ namespace RazorEnhanced.UI
 
 		private void AddAttributesToList(string value)
 		{
-			if (Assistant.Engine.Running)
+			try
 			{
-				listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(value)));
+				if (Assistant.Engine.Running)
+				{
+					listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(value)));
+				}
 			}
+			catch (Exception ex)
+			{ MessageBox.Show(ex.ToString()); }
+
+
 		}
 
 		private int GetAttribute(string attributename)
@@ -316,9 +201,9 @@ namespace RazorEnhanced.UI
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
 					Thread.Sleep(50);
-				}
+                }
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
+            }
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Bracelet);
 			if (itemtocheck != null)
@@ -426,7 +311,7 @@ namespace RazorEnhanced.UI
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
 					Thread.Sleep(50);
-
+					
 				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
@@ -455,7 +340,7 @@ namespace RazorEnhanced.UI
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Pants);
 			if (itemtocheck != null)
-			{
+			{ 
 				if (!itemtocheck.PropsUpdated)
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
@@ -522,10 +407,10 @@ namespace RazorEnhanced.UI
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_xF);
 			if (itemtocheck != null)
-			{
+			{ 
 				if (!itemtocheck.PropsUpdated)
 				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
+					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);					
 					Thread.Sleep(50);
 				}
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
@@ -533,7 +418,7 @@ namespace RazorEnhanced.UI
 
 			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Waist);
 			if (itemtocheck != null)
-			{
+				{
 				if (!itemtocheck.PropsUpdated)
 				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
@@ -543,7 +428,7 @@ namespace RazorEnhanced.UI
 			}
 
 			return attributevalue;
-		}
+        }
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
@@ -613,6 +498,133 @@ namespace RazorEnhanced.UI
 				m_ProcessInfo.Abort();
 			}
 			catch { }
+		}
+
+		private void EnhancedMobileInspector_Load(object sender, EventArgs e)
+		{
+			// general
+			lName.Text = m_mobile.Name.ToString();
+			lSerial.Text = "0x" + m_mobile.Serial.Value.ToString("X8");
+			lMobileID.Text = "0x" + m_mobile.Body.ToString("X4");
+			lColor.Text = m_mobile.Hue.ToString();
+			lPosition.Text = m_mobile.Position.ToString();
+			// Details
+			if (m_mobile.Female)
+				lSex.Text = "Female";
+			else
+				lSex.Text = "Male";
+			lHits.Text = m_mobile.Hits.ToString();
+			lMaxHits.Text = m_mobile.Hits.ToString();
+			lNotoriety.Text = m_mobile.Notoriety.ToString();
+
+			switch (m_mobile.Direction & Assistant.Direction.Mask)
+			{
+				case Assistant.Direction.North: lDirection.Text = "North"; break;
+				case Assistant.Direction.South: lDirection.Text = "South"; break;
+				case Assistant.Direction.West: lDirection.Text = "West"; break;
+				case Assistant.Direction.East: lDirection.Text = "East"; break;
+				case Assistant.Direction.Right: lDirection.Text = "Right"; break;
+				case Assistant.Direction.Left: lDirection.Text = "Left"; break;
+				case Assistant.Direction.Down: lDirection.Text = "Down"; break;
+				case Assistant.Direction.Up: lDirection.Text = "Up"; break;
+				default: lDirection.Text = "Undefined"; break;
+			}
+
+			if (m_mobile.Poisoned)
+				lFlagPoisoned.Text = "Yes";
+			else
+				lFlagPoisoned.Text = "No";
+
+			if (m_mobile.Warmode)
+				lFlagWar.Text = "Yes";
+			else
+				lFlagWar.Text = "No";
+
+			if (m_mobile.Visible)
+				lFlagHidden.Text = "No";
+			else
+				lFlagHidden.Text = "Yes";
+
+			if (m_mobile.IsGhost)
+				lFlagGhost.Text = "Yes";
+			else
+				lFlagGhost.Text = "No";
+
+			if (m_mobile.Blessed)     // Yellow Hits
+				lFlagBlessed.Text = "Yes";
+			else
+				lFlagBlessed.Text = "No";
+
+			if (m_mobile.Paralized)
+				lFlagParalized.Text = "Yes";
+			else
+				lFlagParalized.Text = "No";
+
+			for (int i = 0; i < m_mobile.ObjPropList.Content.Count; i++)
+			{
+				Assistant.ObjectPropertyList.OPLEntry ent = m_mobile.ObjPropList.Content[i];
+				if (i == 0)
+					lName.Text = ent.ToString();
+				else
+				{
+					string content = ent.ToString();
+					listBoxAttributes.Items.Add(content);
+				}
+			}
+
+			if (m_mobile.ObjPropList.Content.Count == 0)
+			{
+				lName.Text = m_mobile.Name.ToString();
+			}
+
+
+			if (m_mobile == Assistant.World.Player)
+			{
+				listBoxAttributes.Items.Add("");
+				listBoxAttributes.Items.Add("Weight: " + Assistant.World.Player.Weight);
+				if (Assistant.World.Player.Expansion >= 3)
+				{
+					listBoxAttributes.Items.Add("Stat Cap: " + Assistant.World.Player.StatCap);
+					listBoxAttributes.Items.Add("Followers: " + Assistant.World.Player.Followers);
+					listBoxAttributes.Items.Add("Max Followers: " + Assistant.World.Player.FollowersMax);
+
+					if (Assistant.World.Player.Expansion >= 4)
+					{
+						listBoxAttributes.Items.Add("Damage Minimum: " + Assistant.World.Player.DamageMin);
+						listBoxAttributes.Items.Add("Damage Maximum: " + Assistant.World.Player.DamageMax);
+						listBoxAttributes.Items.Add("Tithing points: " + Assistant.World.Player.Tithe);
+
+						if (Assistant.World.Player.Expansion >= 5)
+						{
+							switch (Assistant.World.Player.Race)
+							{
+								case 1:
+									listBoxAttributes.Items.Add("Race: Human");
+									break;
+								case 2:
+									listBoxAttributes.Items.Add("Race: Elf");
+									break;
+								case 3:
+									listBoxAttributes.Items.Add("Race: Gargoyle");
+									break;
+							}
+
+							listBoxAttributes.Items.Add("Max Weight: " + Assistant.World.Player.MaxWeight);
+
+							if (Assistant.World.Player.Expansion >= 6)
+							{
+								m_ProcessInfo = new Thread(ProcessInfoThread);
+								m_ProcessInfo.Start();
+							}
+						}
+					}
+				}
+			}
+			else
+			{
+				m_ProcessInfo = new Thread(ProcessInfoThread);
+				m_ProcessInfo.Start();
+			}
 		}
 	}
 }

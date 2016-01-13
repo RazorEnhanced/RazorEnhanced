@@ -279,6 +279,8 @@ namespace Assistant
 					}
 					else
 					{
+						RazorEnhanced.Shard.Read(out shards);
+						selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
 						Start(selected);
 					}
 				}

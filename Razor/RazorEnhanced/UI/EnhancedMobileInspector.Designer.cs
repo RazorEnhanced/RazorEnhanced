@@ -604,6 +604,7 @@
 			this.Name = "EnhancedMobileInspector";
 			this.Text = "Enhanced Mobile Inspector";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnhancedMobileInspector_FormClosing);
+			this.Load += new System.EventHandler(this.EnhancedMobileInspector_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);
