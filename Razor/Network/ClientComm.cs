@@ -939,8 +939,8 @@ namespace Assistant
 			ActionQueue.Stop();
 			StealthSteps.Unhide();
 
-			if (Engine.MainWindow.ToolBarWindows != null)
-				Engine.MainWindow.ToolBarWindows.Close();
+			if (RazorEnhanced.ToolBar.ToolBarForm != null)
+				RazorEnhanced.ToolBar.ToolBarForm.Close();
 
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();

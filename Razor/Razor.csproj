@@ -395,12 +395,6 @@
     <Compile Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.Designer.cs">
       <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedToolbar.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedToolbar.Designer.cs">
-      <DependentUpon>EnhancedToolbar.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\Friend.cs" />
     <Compile Include="RazorEnhanced\CheckConnection.cs" />
     <Compile Include="RazorEnhanced\Vendor.cs" />
@@ -661,9 +655,6 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedToolbar.resx">
-      <DependentUpon>EnhancedToolbar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\App.ico" />
     <EmbeddedResource Include="UI\HueEntry.resx">
       <DependentUpon>HueEntry.cs</DependentUpon>
@@ -688,6 +679,22 @@
     <None Include="RazorEnhanced\Resources\applications-utilities.ico" />
     <Content Include="razor-enhanced.ico" />
     <None Include="RazorEnhanced\Resources\bug.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaBordoDestro.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaBordoSinistro.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaleSlot.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaleSpazioStat.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleBordoSopra.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleBordoSotto.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleSlot.png" />
+    <None Include="RazorEnhanced\Resources\BarraGrandeVerticaleSpazioStat.png" />
+    <None Include="RazorEnhanced\Resources\BarraOrizzontaBordoDestro.png" />
+    <None Include="RazorEnhanced\Resources\BarraOrizzontaBordoSinistro.png" />
+    <None Include="RazorEnhanced\Resources\BarraOrizzontaleSlot.png" />
+    <None Include="RazorEnhanced\Resources\BarraOrizzontaleSpazioStat.png" />
+    <None Include="RazorEnhanced\Resources\BarraVerticaleBordoSopra.png" />
+    <None Include="RazorEnhanced\Resources\BarraVerticaleBordoSotto.png" />
+    <None Include="RazorEnhanced\Resources\BarraVerticaleSlot.png" />
+    <None Include="RazorEnhanced\Resources\BarraVerticaleSpazioStat.png" />
     <Content Include="RazorEnhanced\Resources\green.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start.png" />
     <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />
@@ -715,6 +722,22 @@
     <None Include="RazorEnhanced\Resources\uod_logo.png" />
     <None Include="RazorEnhanced\Resources\toolbar.png" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
+    <None Include="Resources\BarraGrandeOrizzontaBordoDestro.png" />
+    <None Include="Resources\BarraGrandeOrizzontaBordoSinistro.png" />
+    <None Include="Resources\BarraGrandeOrizzontaleSlot.png" />
+    <None Include="Resources\BarraGrandeOrizzontaleSpazioStat.png" />
+    <None Include="Resources\BarraGrandeVerticaleBordoSopra.png" />
+    <None Include="Resources\BarraGrandeVerticaleBordoSotto.png" />
+    <None Include="Resources\BarraGrandeVerticaleSlot.png" />
+    <None Include="Resources\BarraGrandeVerticaleSpazioStat.png" />
+    <None Include="Resources\BarraOrizzontaBordoDestro.png" />
+    <None Include="Resources\BarraOrizzontaBordoSinistro.png" />
+    <None Include="Resources\BarraOrizzontaleSlot.png" />
+    <None Include="Resources\BarraOrizzontaleSpazioStat.png" />
+    <None Include="Resources\BarraVerticaleBordoSopra.png" />
+    <None Include="Resources\BarraVerticaleBordoSotto.png" />
+    <None Include="Resources\BarraVerticaleSlot.png" />
+    <None Include="Resources\BarraVerticaleSpazioStat.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />
   </ItemGroup>

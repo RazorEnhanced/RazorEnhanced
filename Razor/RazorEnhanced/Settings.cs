@@ -203,7 +203,7 @@ namespace RazorEnhanced
 				DataTable toolbar_items = new DataTable("TOOLBAR_ITEMS");
 				toolbar_items.Columns.Add("Item", typeof(RazorEnhanced.ToolBar.ToolBarItem));
 
-				for (int i = 0; i < 14; i++)  // Popolo di slot vuoti al primo avvio
+				for (int i = 0; i < 60; i++)  // Popolo di slot vuoti al primo avvio
 				{
 					DataRow emptytoolbar = toolbar_items.NewRow();
 					RazorEnhanced.ToolBar.ToolBarItem emptyitem = new RazorEnhanced.ToolBar.ToolBarItem("Empty", 0x0000, 0x0000, false, 0);
@@ -1232,6 +1232,14 @@ namespace RazorEnhanced
 				general.Columns.Add("AutoopenToolBarCheckBox", typeof(bool));
 				general.Columns.Add("PosXToolBar", typeof(int));
 				general.Columns.Add("PosYToolBar", typeof(int));
+				general.Columns.Add("ToolBoxSlotsTextBox", typeof(int));
+				general.Columns.Add("ToolBoxSizeComboBox", typeof(string));
+				general.Columns.Add("ToolBoxStyleComboBox", typeof(string));
+				general.Columns.Add("ShowFollowerToolBarCheckBox", typeof(bool));
+				general.Columns.Add("ShowWeightToolBarCheckBox", typeof(bool));
+				general.Columns.Add("ShowManaToolBarCheckBox", typeof(bool));
+				general.Columns.Add("ShowStaminaToolBarCheckBox", typeof(bool));
+				general.Columns.Add("ShowHitsToolBarCheckBox", typeof(bool));
 
 				// Parametri Tab (Screenshot)
 				general.Columns.Add("CapPath", typeof(string));
@@ -1373,7 +1381,7 @@ namespace RazorEnhanced
                     false, false, false, false, false, false, false, false, 0, 0, false,
 
                     // Parametri primo avvio per tab Enhanced ToolBar
-                    false, false, 10, 10,
+                    false, false, 10, 10, 2, "Big", "Vertical", true, true, true, true, true,
 
                     // Parametri primo avvio per tab screenshot
                     Path.GetDirectoryName(Application.ExecutablePath), "jpg", false, false, false,
@@ -3733,29 +3741,6 @@ namespace RazorEnhanced
 		// ------------- GENERAL SETTINGS START -----------------
 		internal class General
 		{
-			// Enhanced Toolbar Tab
-			internal static void EnhancedToolBarLoadAll(out bool LockToolBarCheckBox, out bool AutoopenToolBarCheckBox, out int PosXToolBar, out int PosYToolBar)
-			{
-				bool LockToolBarCheckBoxOut = false;
-				bool AutoopenToolBarCheckOut = false;
-				int PosXToolBarOut = 10;
-				int PosYToolBarOut = 10;
-
-				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
-				{
-					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
-					LockToolBarCheckBoxOut = (bool)row["LockToolBarCheckBox"];
-					AutoopenToolBarCheckOut = (bool)row["AutoopenToolBarCheckBox"];
-					PosXToolBarOut = (int)row["PosXToolBar"];
-					PosYToolBarOut = (int)row["PosYToolBar"];
-				}
-
-				LockToolBarCheckBox = LockToolBarCheckBoxOut;
-				AutoopenToolBarCheckBox = AutoopenToolBarCheckOut;
-				PosXToolBar = PosXToolBarOut;
-				PosYToolBar = PosYToolBarOut;
-			}
-
 			internal static bool ReadBool(string name)
 			{
 				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
@@ -4251,6 +4236,46 @@ namespace RazorEnhanced
 				General.WriteBool("NotShowLauncher", false);
 				realversion = 8;
 				General.WriteInt("SettingVersion", 8);
+			}
+
+			if (realversion == 8)
+			{
+				for (int i = 14; i < 60; i++) 
+				{
+					RazorEnhanced.ToolBar.ToolBarItem emptyitem = new RazorEnhanced.ToolBar.ToolBarItem("Empty", 0x0000, 0x0000, false, 0);
+
+					DataRow row = m_Dataset.Tables["TOOLBAR_ITEMS"].NewRow();
+					row["Item"] = emptyitem;
+					m_Dataset.Tables["TOOLBAR_ITEMS"].Rows.Add(row);
+				}
+				Save();
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ShowFollowerToolBarCheckBox", typeof(bool));
+				General.WriteBool("ShowFollowerToolBarCheckBox", true);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ShowWeightToolBarCheckBox", typeof(bool));
+				General.WriteBool("ShowWeightToolBarCheckBox", true);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ShowManaToolBarCheckBox", typeof(bool));
+				General.WriteBool("ShowManaToolBarCheckBox", true);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ShowStaminaToolBarCheckBox", typeof(bool));
+				General.WriteBool("ShowStaminaToolBarCheckBox", true);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ShowHitsToolBarCheckBox", typeof(bool));
+				General.WriteBool("ShowHitsToolBarCheckBox", true);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ToolBoxStyleComboBox", typeof(string));
+				General.WriteString("ToolBoxStyleComboBox", "Vertical");
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ToolBoxSizeComboBox", typeof(string));
+				General.WriteString("ToolBoxSizeComboBox", "Big");
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("ToolBoxSlotsTextBox", typeof(int));
+				General.WriteInt("ToolBoxSlotsTextBox", 2);
+
+				realversion = 9;
+				General.WriteInt("SettingVersion", 9);
 			}
 		}
 	}

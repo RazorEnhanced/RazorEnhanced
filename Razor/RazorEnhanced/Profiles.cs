@@ -321,8 +321,8 @@ namespace RazorEnhanced
 			Assistant.Filters.Filter.DisableAll();
 
 			// Chiuto toolbar
-			if (Engine.MainWindow.ToolBarWindows != null)
-				Engine.MainWindow.ToolBarWindows.Close();
+			if (RazorEnhanced.ToolBar.ToolBarForm != null)
+				RazorEnhanced.ToolBar.ToolBarForm.Close();
 
 			// Carico save profilo
 			RazorEnhanced.Settings.Load();

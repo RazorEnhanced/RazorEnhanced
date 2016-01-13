@@ -359,8 +359,8 @@ namespace Assistant
 			RazorEnhanced.Settings.General.SaveExitData();
 
 			// Chiuto toolbar
-			if (Engine.MainWindow.ToolBarWindows != null)
-				Engine.MainWindow.ToolBarWindows.Close();
+			if (RazorEnhanced.ToolBar.ToolBarForm!= null)
+				RazorEnhanced.ToolBar.ToolBarForm.Close();
 
 			// Stoppo tick timer agent
 			if (RazorEnhanced.Scripts.Timer != null)
