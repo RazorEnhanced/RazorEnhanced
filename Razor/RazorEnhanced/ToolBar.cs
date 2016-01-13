@@ -496,33 +496,6 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
-			{
-				m_labelBarStaminaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarStaminaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarStaminaBHV.Name = "labelBarStamina";
-				m_labelBarStaminaBHV.Size = new System.Drawing.Size(100, 10);
-				m_labelBarStaminaBHV.TabIndex = 4;
-				m_labelBarStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
-				m_labelTextStaminaBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextStaminaBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextStaminaBHV.Name = "labelTextStamina";
-				m_labelTextStaminaBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextStaminaBHV.TabIndex = 5;
-				m_labelTextStaminaBHV.Text = "Stam: 150/150";
-				m_labelTextStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
-				m_form.Controls.Add(m_labelBarStaminaBHV);
-				m_form.Controls.Add(m_labelTextStaminaBHV);
-
-				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleSpazioStat);
-
-				height += 29;
-				offsetstat += 30;
-				paneloffset += 29;
-			}
-
 			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
 				m_labelBarManaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
@@ -542,6 +515,33 @@ namespace RazorEnhanced
 
 				m_form.Controls.Add(m_labelBarManaBHV);
 				m_form.Controls.Add(m_labelTextManaBHV);
+
+				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleSpazioStat);
+
+				height += 29;
+				offsetstat += 30;
+				paneloffset += 29;
+			}
+
+			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			{
+				m_labelBarStaminaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+				m_labelBarStaminaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
+				m_labelBarStaminaBHV.Name = "labelBarStamina";
+				m_labelBarStaminaBHV.Size = new System.Drawing.Size(100, 10);
+				m_labelBarStaminaBHV.TabIndex = 4;
+				m_labelBarStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+				m_labelTextStaminaBHV.BackColor = System.Drawing.Color.Transparent;
+				m_labelTextStaminaBHV.Location = new System.Drawing.Point(12, offsetstat);
+				m_labelTextStaminaBHV.Name = "labelTextStamina";
+				m_labelTextStaminaBHV.Size = new System.Drawing.Size(100, 16);
+				m_labelTextStaminaBHV.TabIndex = 5;
+				m_labelTextStaminaBHV.Text = "Stam: 150/150";
+				m_labelTextStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+				m_form.Controls.Add(m_labelBarStaminaBHV);
+				m_form.Controls.Add(m_labelTextStaminaBHV);
 
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleSpazioStat);
 
@@ -728,29 +728,6 @@ namespace RazorEnhanced
 				offsetstat += 23;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
-			{
-				m_labelBarStaminaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarStaminaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarStaminaBHV.Name = "labelBarStamina";
-				m_labelBarStaminaBHV.Size = new System.Drawing.Size(100, 5);
-				m_labelBarStaminaBHV.TabIndex = 0;
-				m_labelBarStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
-				m_labelTextStaminaBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextStaminaBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextStaminaBHV.Name = "labelTextStamina";
-				m_labelTextStaminaBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextStaminaBHV.TabIndex = 1;
-				m_labelTextStaminaBHV.Text = "Stam: 150/150";
-				m_labelTextStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
-				m_form.Controls.Add(m_labelBarStaminaBHV);
-				m_form.Controls.Add(m_labelTextStaminaBHV);
-
-				offsetstat += 23;
-			}
-
 			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
 				m_labelBarManaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
@@ -770,6 +747,29 @@ namespace RazorEnhanced
 
 				m_form.Controls.Add(m_labelBarManaBHV);
 				m_form.Controls.Add(m_labelTextManaBHV);
+
+				offsetstat += 23;
+			}
+
+			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			{
+				m_labelBarStaminaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+				m_labelBarStaminaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
+				m_labelBarStaminaBHV.Name = "labelBarStamina";
+				m_labelBarStaminaBHV.Size = new System.Drawing.Size(100, 5);
+				m_labelBarStaminaBHV.TabIndex = 0;
+				m_labelBarStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+				m_labelTextStaminaBHV.BackColor = System.Drawing.Color.Transparent;
+				m_labelTextStaminaBHV.Location = new System.Drawing.Point(12, offsetstat);
+				m_labelTextStaminaBHV.Name = "labelTextStamina";
+				m_labelTextStaminaBHV.Size = new System.Drawing.Size(100, 16);
+				m_labelTextStaminaBHV.TabIndex = 1;
+				m_labelTextStaminaBHV.Text = "Stam: 150/150";
+				m_labelTextStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+
+				m_form.Controls.Add(m_labelBarStaminaBHV);
+				m_form.Controls.Add(m_labelTextStaminaBHV);
 
 				offsetstat += 23;
 			}
@@ -944,34 +944,6 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
-			{
-				m_dexlabelSV.AutoSize = true;
-				m_dexlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_dexlabelSV.Location = new System.Drawing.Point(5, offsetstat);
-				m_dexlabelSV.Name = "label1";
-				m_dexlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_dexlabelSV.TabIndex = 0;
-				m_dexlabelSV.Text = "D: 999";
-
-				m_stamlabelSV.AutoSize = true;
-				m_stamlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_stamlabelSV.Location = new System.Drawing.Point(5, offsetstat + 13);
-				m_stamlabelSV.Name = "label1";
-				m_stamlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_stamlabelSV.TabIndex = 0;
-				m_stamlabelSV.Text = "S: 999";
-
-				m_form.Controls.Add(m_dexlabelSV);
-				m_form.Controls.Add(m_stamlabelSV);
-
-				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
-
-				height += 29;
-				offsetstat += 30;
-				paneloffset += 29;
-			}
-
 			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
 				m_intlabelSV.AutoSize = true;
@@ -1000,7 +972,35 @@ namespace RazorEnhanced
 				offsetstat += 30;
 				paneloffset += 29;
 			}
-			
+
+			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			{
+				m_dexlabelSV.AutoSize = true;
+				m_dexlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_dexlabelSV.Location = new System.Drawing.Point(5, offsetstat);
+				m_dexlabelSV.Name = "label1";
+				m_dexlabelSV.Size = new System.Drawing.Size(50, 12);
+				m_dexlabelSV.TabIndex = 0;
+				m_dexlabelSV.Text = "D: 999";
+
+				m_stamlabelSV.AutoSize = true;
+				m_stamlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_stamlabelSV.Location = new System.Drawing.Point(5, offsetstat + 13);
+				m_stamlabelSV.Name = "label1";
+				m_stamlabelSV.Size = new System.Drawing.Size(50, 12);
+				m_stamlabelSV.TabIndex = 0;
+				m_stamlabelSV.Text = "S: 999";
+
+				m_form.Controls.Add(m_dexlabelSV);
+				m_form.Controls.Add(m_stamlabelSV);
+
+				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
+
+				height += 29;
+				offsetstat += 30;
+				paneloffset += 29;
+			}
+
 			if (RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
 				m_weightlabelSV.AutoSize = true;
@@ -1146,25 +1146,7 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
-				offsetstat += 50;
-				paneloffset += 51;
-			}
-
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
-			{
-				m_staminalabelSH.AutoSize = true;
-				m_staminalabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_staminalabelSH.Location = new System.Drawing.Point(offsetstat, 14);
-				m_staminalabelSH.Name = "stamlabel";
-				m_staminalabelSH.Size = new System.Drawing.Size(49, 12);
-				m_staminalabelSH.TabIndex = 2;
-				m_staminalabelSH.Text = "S: 999/999";
-
-				m_form.Controls.Add(m_staminalabelSH);
-				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
-
-				width += 51;
-				offsetstat += 50;
+				offsetstat += 56;
 				paneloffset += 51;
 			}
 
@@ -1182,15 +1164,33 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
-				offsetstat += 50;
+				offsetstat += 56;
 				paneloffset += 51;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
+			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			{
+				m_staminalabelSH.AutoSize = true;
+				m_staminalabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_staminalabelSH.Location = new System.Drawing.Point(offsetstat, 14);
+				m_staminalabelSH.Name = "stamlabel";
+				m_staminalabelSH.Size = new System.Drawing.Size(49, 12);
+				m_staminalabelSH.TabIndex = 2;
+				m_staminalabelSH.Text = "S: 999/999";
+
+				m_form.Controls.Add(m_staminalabelSH);
+				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
+
+				width += 51;
+				offsetstat += 56;
+				paneloffset += 51;
+			}
+
+			if (RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
 				m_weightlabelSH.AutoSize = true;
 				m_weightlabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_weightlabelSH.Location = new System.Drawing.Point(offsetstat, 14);
+				m_weightlabelSH.Location = new System.Drawing.Point(offsetstat-5, 14);
 				m_weightlabelSH.Name = "weightlabel";
 				m_weightlabelSH.Size = new System.Drawing.Size(49, 12);
 				m_weightlabelSH.TabIndex = 2;
@@ -1200,7 +1200,7 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
-				offsetstat += 50;
+				offsetstat += 49;
 				paneloffset += 51;
 			}
 
@@ -1208,7 +1208,7 @@ namespace RazorEnhanced
 			{
 				m_followerlabelSH.AutoSize = true;
 				m_followerlabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_followerlabelSH.Location = new System.Drawing.Point(offsetstat + 10, 14);
+				m_followerlabelSH.Location = new System.Drawing.Point(offsetstat, 14);
 				m_followerlabelSH.Name = "followerlabel";
 				m_followerlabelSH.Size = new System.Drawing.Size(49, 12);
 				m_followerlabelSH.TabIndex = 2;
