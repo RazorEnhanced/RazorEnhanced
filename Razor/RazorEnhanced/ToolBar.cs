@@ -246,10 +246,13 @@ namespace RazorEnhanced
 
 		internal static void LockUnlock()
 		{
-			if (m_form.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-			else
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			if (m_form != null)
+			{
+				if (m_form.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+					m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+				else
+					m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+			}
 		}
 
 		internal static void Open()
@@ -659,6 +662,7 @@ namespace RazorEnhanced
 			m_form.ResumeLayout(false);
 			m_form.PerformLayout();
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
+			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
 			m_form.TopMost = true;
 			m_form.Show();
 		}
@@ -878,6 +882,7 @@ namespace RazorEnhanced
 			m_form.ResumeLayout(false);
 			m_form.PerformLayout();
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
+			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
 			m_form.TopMost = true;
 			m_form.Show();
 
@@ -1094,6 +1099,7 @@ namespace RazorEnhanced
 			m_form.ResumeLayout(false);
 			m_form.PerformLayout();
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
+			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
 			m_form.TopMost = true;
 			m_form.Show();
 
@@ -1270,6 +1276,7 @@ namespace RazorEnhanced
 
 			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaBordoDestro);
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
+			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
 			m_form.TopMost = true;
 			m_form.Show();
 		}
@@ -1279,6 +1286,21 @@ namespace RazorEnhanced
 			m_form = null;
 			m_slot = 0;
         }
+
+		private static void EnhancedToolbar_Move(object sender, System.EventArgs e)
+		{
+			if (m_form.Focused)
+			{
+					System.Drawing.Point pt = m_form.Location;
+					if (m_form.WindowState != FormWindowState.Minimized)
+					{
+						Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
+						Assistant.Engine.ToolBarX = pt.X;
+						Assistant.Engine.ToolBarY = pt.Y;
+					}
+				
+			}
+		}
 
 		private static Bitmap BackGroundAddVerticale(Image firstImage, Image secondImage)
 		{
