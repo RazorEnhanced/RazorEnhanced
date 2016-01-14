@@ -39,6 +39,8 @@ namespace RazorEnhanced
 
 		public bool PropsUpdated { get { return m_AssistantItem.PropsUpdated; } }
 
+		public bool ContainerUpdated { get { return m_AssistantItem.Updated; } }
+
 		public bool IsChildOf(object parent)
 		{
 			return m_AssistantItem.IsChildOf(parent);
@@ -249,12 +251,12 @@ namespace RazorEnhanced
 	{
 		public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
-			if (!bag.Updated)
+			if (bag.IsCorpse || bag.IsContainer)
 			{
-				RazorEnhanced.Items.UseItem(bag);
-				int subdelay = delay;
-
-				if (bag.IsCorpse || bag.IsContainer)
+				if (!bag.Updated)
+				{
+					RazorEnhanced.Items.UseItem(bag);
+					int subdelay = delay;
 					while (!bag.Updated)
 					{
 						Thread.Sleep(2);
@@ -262,7 +264,8 @@ namespace RazorEnhanced
 						if (subdelay <= 0)
 							break;
 					}
-			}
+				}
+			}		
 		}
 
 		public class Filter
