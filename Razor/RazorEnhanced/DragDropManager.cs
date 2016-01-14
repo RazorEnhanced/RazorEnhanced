@@ -10,7 +10,7 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> AutoLootOpenAction = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 
-		internal static void Engine()
+		internal static void AutoRun()
 		{
 			if (AutoLootOpenAction.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
 			{

@@ -15,15 +15,18 @@ namespace RazorEnhanced
 {
 	internal class Scripts
 	{
+		internal enum RunMode
+		{
+			None,
+			RunOnce,
+			Loop,
+		}
+
 		internal class EnhancedScript
 		{
 			internal void Start()
 			{
-				if (m_Thread == null ||
-					(m_Thread != null && m_Thread.ThreadState != ThreadState.Running &&
-					m_Thread.ThreadState != ThreadState.Unstarted &&
-					m_Thread.ThreadState != ThreadState.WaitSleepJoin)
-				)
+				if (!(this.State == ThreadState.Running || this.State == ThreadState.WaitSleepJoin))
 				{
 					m_Thread = new Thread(AsyncStart);
 					m_Thread.Start();
@@ -35,31 +38,33 @@ namespace RazorEnhanced
 
 			private void AsyncStart()
 			{
-				if (m_Source != null && m_Source != null)
+				if (m_Source != null)
 				{
 					try
 					{
 						m_Source.Execute(m_Scope);
 					}
-					catch
+					catch (Exception ex)
 					{
-						Scripts.AutoMode = false;
-						Assistant.Engine.MainWindow.SetCheckBoxAutoMode(false);
 					}
 				}
 			}
 
 			internal void Stop()
 			{
-				if (m_Thread != null && m_Thread.ThreadState != ThreadState.Stopped)
+				if (m_Thread.ThreadState != ThreadState.Stopped)
 				{
 					m_Thread.Abort();
 				}
+
+				m_Thread = new Thread(AsyncStart);
+				m_Run = false;
+				Engine.MainWindow.UpdateScriptGrid(m_Filename, false);
 			}
 
 			internal string Create(TracebackDelegate traceFunc)
 			{
-				string result = "Created";
+				string result = "";
 				try
 				{
 					m_Engine = Python.CreateEngine();
@@ -68,11 +73,14 @@ namespace RazorEnhanced
 
 					if (traceFunc != null)
 						m_Engine.SetTrace(traceFunc);
+
+					result = "Created";
 				}
 				catch (Exception ex)
 				{
 					result = ex.Message;
 				}
+
 				return result;
 			}
 
@@ -82,24 +90,52 @@ namespace RazorEnhanced
 			private string m_Text;
 			internal string Text { get { return m_Text; } }
 
-			private TimeSpan m_Delay;
-			internal TimeSpan Delay { get { return m_Delay; } }
-
 			private Thread m_Thread;
-			public Thread Thread { get { return m_Thread; } }
+
+			private volatile bool m_Wait;
+			internal bool Wait { get { return m_Wait; } }
+
+			private volatile bool m_Loop;
+			internal bool Loop
+			{
+				get { return m_Loop; }
+				set { m_Loop = value; }
+			}
+
+			private volatile bool m_Run;
+			internal bool Run
+			{
+				get { return m_Run; }
+				set { m_Run = value; }
+			}
+
+			private object m_Lock = new object();
+
+			internal ThreadState State
+			{
+				get
+				{
+					lock (m_Lock)
+					{
+						return m_Thread.ThreadState;
+					}
+				}
+			}
 
 			private ScriptEngine m_Engine;
 			private ScriptScope m_Scope;
 			private ScriptSource m_Source;
 
-			internal EnhancedScript(string filename, string text, TimeSpan delay)
+			internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run)
 			{
 				m_Filename = filename;
 				m_Text = text;
-				m_Delay = delay;
-			}
+				m_Wait = wait;
+				m_Loop = loop;
+				m_Run = run;
 
-			internal static ConcurrentDictionary<string, object> SharedScriptData = new ConcurrentDictionary<string, object>();
+				m_Thread = new Thread(AsyncStart);
+			}
 		}
 
 		internal class ScriptTimer : Assistant.Timer
@@ -116,66 +152,45 @@ namespace RazorEnhanced
 			{
 			}
 
+			private bool IsRunningThread(Thread thread)
+			{
+				if (thread == null)
+					return false;
+
+				if (thread != null && (thread.ThreadState == ThreadState.Running || thread.ThreadState == ThreadState.Unstarted || thread.ThreadState == ThreadState.WaitSleepJoin))
+					return true;
+				else
+					return true;
+			}
+
 			internal void Close()
 			{
-				AutoMode = false;
-
-				if (
-					m_AutoLootThread != null &&
-					(m_AutoLootThread.ThreadState == ThreadState.Running ||
-					m_AutoLootThread.ThreadState == ThreadState.Unstarted ||
-					m_AutoLootThread.ThreadState == ThreadState.WaitSleepJoin)
-				)
+				if (IsRunningThread(m_AutoLootThread))
 				{
 					m_AutoLootThread.Abort();
 				}
 
-				if (
-					m_ScavengerThread != null &&
-					(m_ScavengerThread.ThreadState == ThreadState.Running ||
-					m_ScavengerThread.ThreadState == ThreadState.Unstarted ||
-					m_ScavengerThread.ThreadState == ThreadState.WaitSleepJoin)
-				)
+				if (IsRunningThread(m_ScavengerThread))
 				{
 					m_ScavengerThread.Abort();
 				}
 
-				if (
-					m_BandageHealThread != null &&
-					(m_BandageHealThread.ThreadState == ThreadState.Running ||
-					m_BandageHealThread.ThreadState == ThreadState.Unstarted ||
-					m_BandageHealThread.ThreadState == ThreadState.WaitSleepJoin)
-				)
+				if (IsRunningThread(m_BandageHealThread))
 				{
 					m_BandageHealThread.Abort();
 				}
 
-				if (
-					m_DragDropThread != null &&
-					(m_DragDropThread.ThreadState == ThreadState.Running ||
-					m_DragDropThread.ThreadState == ThreadState.Unstarted ||
-					m_DragDropThread.ThreadState == ThreadState.WaitSleepJoin)
-				)
+				if (IsRunningThread(m_DragDropThread))
 				{
 					m_DragDropThread.Abort();
 				}
 
-				if (
-					m_AutoCarverThread != null &&
-					(m_AutoCarverThread.ThreadState == ThreadState.Running ||
-					m_AutoCarverThread.ThreadState == ThreadState.Unstarted ||
-					m_AutoCarverThread.ThreadState == ThreadState.WaitSleepJoin)
-				)
+				if (IsRunningThread(m_AutoCarverThread))
 				{
 					m_AutoCarverThread.Abort();
 				}
 
-				if (
-					m_AutoRemountThread != null &&
-					(m_AutoRemountThread.ThreadState == ThreadState.Running ||
-					m_AutoRemountThread.ThreadState == ThreadState.Unstarted ||
-					m_AutoRemountThread.ThreadState == ThreadState.WaitSleepJoin)
-				)
+				if (IsRunningThread(m_AutoRemountThread))
 				{
 					m_AutoRemountThread.Abort();
 				}
@@ -185,173 +200,111 @@ namespace RazorEnhanced
 
 			protected override void OnTick()
 			{
-				Keys k = Keys.None;
-				m_Keys.TryDequeue(out k);
-
-				if (k != Keys.None)
+				foreach (EnhancedScript script in m_EnhancedScripts)
 				{
-					string filename = RazorEnhanced.Settings.HotKey.FindScript(k);
-					if (!m_EnhancedScripts.Any(s => s.Filename == filename))
+					if (script.Run)
 					{
-						string status = LoadFromFile(filename, TimeSpan.FromMilliseconds(100));
-						if (status != "Loaded")
+						if (script.Loop)
 						{
-							MessageBox.Show("Script not loaded!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+							if (script.State == ThreadState.Stopped)
+							{
+								script.Start();
+							}
+							else if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin))
+							{
+								script.Start();
+							}
 						}
 						else
 						{
-							EnhancedScript script = Search(filename);
-							if (script != null)
+							if (script.State == ThreadState.Stopped)
+							{
+								script.Stop();
+							}
+							else if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin))
 							{
 								script.Start();
 							}
 						}
 					}
-				}
-
-				Thread.Sleep(10);
-
-				if (Scripts.AutoMode)
-				{
-					foreach (EnhancedScript script in m_EnhancedScripts)
+					else
 					{
-						script.Start();
+						script.Stop();
 					}
 				}
 
-				Thread.Sleep(10);
-
-				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
+				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoLootThread))
 				{
-					if (script.Thread != null &&
-						script.Thread.ThreadState != ThreadState.Running &&
-						script.Thread.ThreadState != ThreadState.Unstarted &&
-						script.Thread.ThreadState != ThreadState.WaitSleepJoin)
+					try
 					{
-						lock (m_Lock)
-						{
-							m_EnhancedScripts.Remove(script);
-						}
+						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
+						m_AutoLootThread.Start();
 					}
-
-				}
-
-				Thread.Sleep(5);
-
-				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running)
-				{
-					if (m_AutoLootThread == null ||
-						(m_AutoLootThread != null && m_AutoLootThread.ThreadState != ThreadState.Running &&
-						m_AutoLootThread.ThreadState != ThreadState.Unstarted &&
-						m_AutoLootThread.ThreadState != ThreadState.WaitSleepJoin)
-					)
+					catch (Exception ex)
 					{
-						try
-						{
-							m_AutoLootThread = new Thread(AutoLoot.Engine);
-							m_AutoLootThread.Start();
-						}
-						catch (Exception ex)
-						{
-							AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
-						}
+						AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
 					}
 				}
 
-				if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running)
+				if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_ScavengerThread))
 				{
-					if (m_ScavengerThread == null ||
-						(m_ScavengerThread != null && m_ScavengerThread.ThreadState != ThreadState.Running &&
-						m_ScavengerThread.ThreadState != ThreadState.Unstarted &&
-						m_ScavengerThread.ThreadState != ThreadState.WaitSleepJoin)
-					)
+					try
 					{
-						try
-						{
-							m_ScavengerThread = new Thread(Scavenger.Engine);
-							m_ScavengerThread.Start();
-						}
-						catch (Exception ex)
-						{
-							Scavenger.AddLog("Error in Scaveger Thread, Restart");
-						}
+						m_ScavengerThread = new Thread(Scavenger.AutoRun);
+						m_ScavengerThread.Start();
+					}
+					catch (Exception ex)
+					{
+						Scavenger.AddLog("Error in Scaveger Thread, Restart");
 					}
 				}
 
-				if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running)
+				if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_BandageHealThread))
 				{
-					if (m_BandageHealThread == null ||
-						(m_BandageHealThread != null && m_BandageHealThread.ThreadState != ThreadState.Running &&
-						m_BandageHealThread.ThreadState != ThreadState.Unstarted &&
-						m_BandageHealThread.ThreadState != ThreadState.WaitSleepJoin)
-					)
+					try
 					{
-						try
-						{
-							m_BandageHealThread = new Thread(BandageHeal.Engine);
-							m_BandageHealThread.Start();
-						}
-						catch (Exception ex)
-						{
-							BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
-						}
+						m_BandageHealThread = new Thread(BandageHeal.AutoRun);
+						m_BandageHealThread.Start();
+					}
+					catch (Exception ex)
+					{
+						BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
 					}
 				}
 
-				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running)
+				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running && !IsRunningThread(m_DragDropThread))
 				{
-					if (m_DragDropThread == null ||
-						   (m_DragDropThread != null && m_DragDropThread.ThreadState != ThreadState.Running &&
-						   m_DragDropThread.ThreadState != ThreadState.Unstarted &&
-						   m_DragDropThread.ThreadState != ThreadState.WaitSleepJoin)
-					   )
+					try
 					{
-						try
-						{
-							m_DragDropThread = new Thread(DragDropManager.Engine);
-							m_DragDropThread.Start();
-						}
-						catch (Exception ex)
-						{
-						}
+						m_DragDropThread = new Thread(DragDropManager.AutoRun);
+						m_DragDropThread.Start();
+					}
+					catch (Exception ex)
+					{
 					}
 				}
 
-				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running)
+				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoCarverThread))
 				{
-					if (m_AutoCarverThread == null ||
-						(m_AutoCarverThread != null && m_AutoCarverThread.ThreadState != ThreadState.Running &&
-						m_AutoCarverThread.ThreadState != ThreadState.Unstarted &&
-						m_AutoCarverThread.ThreadState != ThreadState.WaitSleepJoin)
-					)
+					try
 					{
-						try
-						{
-							m_AutoCarverThread = new Thread(Filters.AutoCarverEngine);
-							m_AutoCarverThread.Start();
-						}
-						catch (Exception ex)
-						{
-						}
+						m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
+						m_AutoCarverThread.Start();
+					}
+					catch (Exception ex)
+					{
 					}
 				}
 
-				if (Filters.AutoModeRemount && World.Player != null && Assistant.Engine.Running)
+				if (Filters.AutoModeRemount && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoRemountThread))
 				{
-					if (m_AutoRemountThread == null ||
-						(m_AutoRemountThread != null && m_AutoRemountThread.ThreadState != ThreadState.Running &&
-						m_AutoRemountThread.ThreadState != ThreadState.Unstarted &&
-						m_AutoRemountThread.ThreadState != ThreadState.WaitSleepJoin)
-					)
+					try
 					{
-						try
-						{
-							m_AutoRemountThread = new Thread(Filters.AutoRemountEngine);
-							m_AutoRemountThread.Start();
-						}
-						catch (Exception ex)
-						{
-						}
+						m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
+						m_AutoRemountThread.Start();
+					}
+					catch (Exception ex)
+					{
 					}
 				}
 			}
@@ -375,19 +328,13 @@ namespace RazorEnhanced
 		private static ScriptTimer m_Timer = new ScriptTimer();
 		internal static ScriptTimer Timer { get { return m_Timer; } }
 
-		private static List<EnhancedScript> m_EnhancedScripts = new List<EnhancedScript>();
-		internal static List<EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
-
-		private static ConcurrentQueue<Keys> m_Keys = new ConcurrentQueue<Keys>();
-
-		private static object m_Lock = new object();
+		private static ConcurrentStack<EnhancedScript> m_EnhancedScripts = new ConcurrentStack<EnhancedScript>();
+		internal static ConcurrentStack<EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
 
 		public static void Initialize()
 		{
 			m_Timer.Start();
 		}
-
-		private static bool m_AutoMode = false;
 
 		internal static void Init()
 		{
@@ -396,24 +343,6 @@ namespace RazorEnhanced
 
 			m_Timer = new ScriptTimer();
 			m_Timer.Start();
-		}
-
-		internal static bool AutoMode
-		{
-			get { return m_AutoMode; }
-			set
-			{
-				m_AutoMode = value;
-
-				if (!m_AutoMode)
-				{
-					StopAll();
-				}
-				else
-				{
-					LoadAndInitializeScripts();
-				}
-			}
 		}
 
 		internal static ScriptScope GetRazorScope(ScriptEngine engine)
@@ -444,98 +373,14 @@ namespace RazorEnhanced
 			return scope;
 		}
 
-		internal static void Reset()
-		{
-			lock (m_Lock)
-			{
-				m_EnhancedScripts.Clear();
-			}
-		}
-
-		internal static void StopAll()
-		{
-			lock (m_Lock)
-			{
-				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
-				{
-					script.Stop();
-				}
-			}
-		}
-
 		internal static EnhancedScript Search(string filename)
 		{
-			foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
+			foreach (EnhancedScript script in m_EnhancedScripts)
 			{
 				if (script.Filename == filename)
 					return script;
 			}
 			return null;
-		}
-
-		internal static void LoadAndInitializeScripts()
-		{
-			RazorEnhanced.Scripts.Reset();
-
-			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
-			foreach (DataRow row in scriptTable.Rows)
-			{
-				if ((bool)row["Checked"])
-				{
-					string status = RazorEnhanced.Scripts.LoadFromFile((string)row["Filename"], TimeSpan.FromMilliseconds(100));
-					if (status == "Loaded")
-					{
-						row["Flag"] = Assistant.Properties.Resources.green;
-					}
-					else
-					{
-						row["Flag"] = Assistant.Properties.Resources.red;
-					}
-					row["Status"] = status;
-				}
-				else
-				{
-					row["Flag"] = Assistant.Properties.Resources.yellow;
-					row["Status"] = "Idle";
-				}
-			}
-		}
-
-		internal static string LoadFromFile(string filename, TimeSpan delay)
-		{
-			string status = "Loaded";
-			string classname = Path.GetFileNameWithoutExtension(filename);
-			string text = null;
-
-			if (File.Exists(filename))
-				text = File.ReadAllText(filename);
-			else
-				return "ERROR: file not found";
-
-			EnhancedScript script = new EnhancedScript(filename, text, delay);
-			string result = script.Create(null);
-
-			if (result == "Created")
-			{
-				lock (m_Lock)
-				{
-					m_EnhancedScripts.Add(script);
-				}
-			}
-			else
-			{
-				status = "ERROR: " + result;
-			}
-
-			return status;
-		}
-
-		internal static void EnqueueKey(Keys k)
-		{
-			if (m_Keys != null)
-			{
-				m_Keys.Enqueue(k);
-			}
 		}
 	}
 }

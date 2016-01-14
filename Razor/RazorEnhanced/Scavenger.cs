@@ -375,7 +375,7 @@ namespace RazorEnhanced
 			DragDropManager.ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		}
 
-		internal static void Engine()
+		internal static void AutoRun()
 		{
 			int exit = Int32.MinValue;
 

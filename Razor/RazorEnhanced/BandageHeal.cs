@@ -400,7 +400,7 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		internal static void Engine()
+		internal static void AutoRun()
 		{
 			int exit = Int32.MinValue;
 

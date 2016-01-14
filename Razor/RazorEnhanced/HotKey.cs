@@ -1,5 +1,6 @@
 ﻿using Assistant;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace RazorEnhanced
@@ -235,7 +236,20 @@ namespace RazorEnhanced
 						break;
 
 					case "SList":
-						RazorEnhanced.Scripts.EnqueueKey(k);
+						string filename = RazorEnhanced.Settings.HotKey.FindScript(k);
+						Scripts.EnhancedScript script = Scripts.Search(filename);
+						if (script != null)
+						{
+							if (!script.Wait && (script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin))
+							{
+								script.Stop();
+							}
+							else
+							{
+								script.Run = true;
+								Engine.MainWindow.UpdateScriptGrid(script.Filename, true);
+							}
+						}
 						break;
 
 					case "UseVirtue":

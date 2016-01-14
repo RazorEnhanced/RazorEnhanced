@@ -1,3 +1,2 @@
-while True:
-    Misc.Pause(1.0)
-    Misc.SendMessage("prova!")
+Misc.Pause(500)
+Misc.SendMessage("prova!")

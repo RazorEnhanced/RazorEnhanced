@@ -104,13 +104,12 @@ namespace Assistant
 		private RazorComboBox clientPrio;
 		private System.Windows.Forms.Label label9;
 		private TabPage scriptingTab;
-		private RazorButton xButton2;
-		private RazorButton xButton3;
+		private RazorButton buttonAddScript;
+		private RazorButton buttonRemoveScript;
 		private DataGridView dataGridViewScripting;
-		private RazorButton razorButtonUp;
-		private RazorButton razorButtonDown;
-		internal RazorCheckBox razorCheckBoxAuto;
-		private RazorButton razorButtonEdit;
+		private RazorButton buttonScriptUp;
+		private RazorButton buttonScriptDown;
+		private RazorButton buttonScriptEditor;
 		private Label labelFeatures;
 		private Label labelStatus;
 		private Panel panelUODlogo;
@@ -489,9 +488,9 @@ namespace Assistant
 		private Label label47;
 		private RazorButton remountsetbutton;
 		private RazorCheckBox remountcheckbox;
-		private Button buttonPlayScript;
-		private Button buttonStopScript;
-		private Label labelDelay;
+		private Button buttonScriptPlay;
+		private Button buttonScriptStop;
+		private Label labelTimerDelay;
 		private TextBox textBoxDelay;
 		private RazorCheckBox showheadtargetCheckBox;
 		private RazorCheckBox notshowlauncher;
@@ -666,17 +665,6 @@ namespace Assistant
 
 		// Profiles
 		internal RazorComboBox ProfilesComboBox { get { return profilesComboBox; } }
-
-		// Enhanced map
-		//internal ListBox MapLogListBox { get { return mapLoglistBox; } }
-
-		//internal TextBox MapServerAddressTextBox { get { return mapserveraddressTextBox; } }
-		//internal TextBox MapServerPortTextBox { get { return mapserverportTextBox; } }
-		//internal TextBox MapLinkUsernameTextBox { get { return mapLinkUsernameTextBox; } }
-		//internal TextBox MapLinkPasswordTextBox { get { return mapLinkPasswordTextBox; } }
-		//internal Button MapConnectButton { get { return mapConnectButton; } }
-		//internal Button MapDisconnectButton { get { return mapDisconnectButton; } }
-		//internal Label MapLinkStatusLabel { get { return mapLinkStatusLabel; } }
 
 		private DataTable scriptTable;
 
@@ -945,17 +933,16 @@ namespace Assistant
 			this.razorButtonCreateUODAccount = new RazorEnhanced.UI.RazorButton();
 			this.razorButtonVisitUOD = new RazorEnhanced.UI.RazorButton();
 			this.scriptingTab = new System.Windows.Forms.TabPage();
-			this.labelDelay = new System.Windows.Forms.Label();
+			this.labelTimerDelay = new System.Windows.Forms.Label();
 			this.textBoxDelay = new System.Windows.Forms.TextBox();
-			this.buttonStopScript = new System.Windows.Forms.Button();
-			this.buttonPlayScript = new System.Windows.Forms.Button();
+			this.buttonScriptStop = new System.Windows.Forms.Button();
+			this.buttonScriptPlay = new System.Windows.Forms.Button();
 			this.dataGridViewScripting = new System.Windows.Forms.DataGridView();
-			this.razorButtonEdit = new RazorEnhanced.UI.RazorButton();
-			this.razorCheckBoxAuto = new RazorEnhanced.UI.RazorCheckBox();
-			this.razorButtonUp = new RazorEnhanced.UI.RazorButton();
-			this.razorButtonDown = new RazorEnhanced.UI.RazorButton();
-			this.xButton3 = new RazorEnhanced.UI.RazorButton();
-			this.xButton2 = new RazorEnhanced.UI.RazorButton();
+			this.buttonScriptEditor = new RazorEnhanced.UI.RazorButton();
+			this.buttonScriptUp = new RazorEnhanced.UI.RazorButton();
+			this.buttonScriptDown = new RazorEnhanced.UI.RazorButton();
+			this.buttonRemoveScript = new RazorEnhanced.UI.RazorButton();
+			this.buttonAddScript = new RazorEnhanced.UI.RazorButton();
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
@@ -1469,9 +1456,9 @@ namespace Assistant
 			// 
 			// forceSizeY
 			// 
-			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeY.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeY.BackColor = System.Drawing.Color.White;
 			this.forceSizeY.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeY.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1484,9 +1471,9 @@ namespace Assistant
 			// 
 			// forceSizeX
 			// 
-			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.forceSizeX.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.forceSizeX.BackColor = System.Drawing.Color.White;
 			this.forceSizeX.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.forceSizeX.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1521,12 +1508,12 @@ namespace Assistant
 			this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.clientPrio.Items.AddRange(new object[] {
-            "Idle",
-            "BelowNormal",
-            "Normal",
-            "AboveNormal",
-            "High",
-            "Realtime"});
+			"Idle",
+			"BelowNormal",
+			"Normal",
+			"AboveNormal",
+			"High",
+			"Realtime"});
 			this.clientPrio.Location = new System.Drawing.Point(363, 186);
 			this.clientPrio.Name = "clientPrio";
 			this.clientPrio.Size = new System.Drawing.Size(88, 22);
@@ -1816,9 +1803,9 @@ namespace Assistant
 			// 
 			// healthFmt
 			// 
-			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.healthFmt.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.healthFmt.BackColor = System.Drawing.Color.White;
 			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.healthFmt.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1849,9 +1836,9 @@ namespace Assistant
 			// 
 			// ltRange
 			// 
-			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ltRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.ltRange.BackColor = System.Drawing.Color.White;
 			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.ltRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1882,9 +1869,9 @@ namespace Assistant
 			// 
 			// txtObjDelay
 			// 
-			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtObjDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtObjDelay.BackColor = System.Drawing.Color.White;
 			this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtObjDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -1919,10 +1906,10 @@ namespace Assistant
 			this.msglvl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.msglvl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.msglvl.Items.AddRange(new object[] {
-            "Show All",
-            "Warnings & Errors",
-            "Errors Only",
-            "None"});
+			"Show All",
+			"Warnings & Errors",
+			"Errors Only",
+			"None"});
 			this.msglvl.Location = new System.Drawing.Point(106, 246);
 			this.msglvl.Name = "msglvl";
 			this.msglvl.Size = new System.Drawing.Size(88, 22);
@@ -2023,9 +2010,9 @@ namespace Assistant
 			// 
 			// corpseRange
 			// 
-			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.corpseRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.corpseRange.BackColor = System.Drawing.Color.White;
 			this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.corpseRange.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2180,9 +2167,9 @@ namespace Assistant
 			// 
 			// txtSpellFormat
 			// 
-			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtSpellFormat.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSpellFormat.BackColor = System.Drawing.Color.White;
 			this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.txtSpellFormat.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2243,9 +2230,9 @@ namespace Assistant
 			// 
 			// remountedelay
 			// 
-			this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.remountedelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.remountedelay.BackColor = System.Drawing.Color.White;
 			this.remountedelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.remountedelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2258,9 +2245,9 @@ namespace Assistant
 			// 
 			// remountdelay
 			// 
-			this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.remountdelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.remountdelay.BackColor = System.Drawing.Color.White;
 			this.remountdelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.remountdelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2448,9 +2435,9 @@ namespace Assistant
 			// 
 			this.mobfilterlistView.CheckBoxes = true;
 			this.mobfilterlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader52,
-            this.columnHeader53,
-            this.columnHeader54});
+			this.columnHeader52,
+			this.columnHeader53,
+			this.columnHeader54});
 			this.mobfilterlistView.FullRowSelect = true;
 			this.mobfilterlistView.GridLines = true;
 			this.mobfilterlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -2636,9 +2623,9 @@ namespace Assistant
 			// 
 			// toolboxslotsTextBox
 			// 
-			this.toolboxslotsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxslotsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxslotsTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxslotsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxslotsTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2774,9 +2761,9 @@ namespace Assistant
 			// 
 			// toolboxcountNameTextBox
 			// 
-			this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountNameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountNameTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountNameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2820,9 +2807,9 @@ namespace Assistant
 			// 
 			// toolboxcountWarningTextBox
 			// 
-			this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountWarningTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountWarningTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountWarningTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountWarningTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2853,9 +2840,9 @@ namespace Assistant
 			// 
 			// toolboxcountHueTextBox
 			// 
-			this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountHueTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountHueTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountHueTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountHueTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -2877,9 +2864,9 @@ namespace Assistant
 			// 
 			// toolboxcountGraphTextBox
 			// 
-			this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.toolboxcountGraphTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.toolboxcountGraphTextBox.BackColor = System.Drawing.Color.White;
 			this.toolboxcountGraphTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.toolboxcountGraphTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3046,23 +3033,23 @@ namespace Assistant
 			// targetlistView
 			// 
 			this.targetlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader51,
-            this.columnHeader36,
-            this.columnHeader37,
-            this.columnHeader38,
-            this.columnHeader39,
-            this.columnHeader40,
-            this.columnHeader41,
-            this.columnHeader42,
-            this.columnHeader43,
-            this.columnHeader44,
-            this.columnHeader45,
-            this.columnHeader46,
-            this.columnHeader47,
-            this.columnHeader48,
-            this.columnHeader55,
-            this.columnHeader49,
-            this.columnHeader50});
+			this.columnHeader51,
+			this.columnHeader36,
+			this.columnHeader37,
+			this.columnHeader38,
+			this.columnHeader39,
+			this.columnHeader40,
+			this.columnHeader41,
+			this.columnHeader42,
+			this.columnHeader43,
+			this.columnHeader44,
+			this.columnHeader45,
+			this.columnHeader46,
+			this.columnHeader47,
+			this.columnHeader48,
+			this.columnHeader55,
+			this.columnHeader49,
+			this.columnHeader50});
 			this.targetlistView.FullRowSelect = true;
 			this.targetlistView.GridLines = true;
 			this.targetlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -3242,9 +3229,9 @@ namespace Assistant
 			this.locks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.locks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.locks.Items.AddRange(new object[] {
-            "Up",
-            "Down",
-            "Locked"});
+			"Up",
+			"Down",
+			"Locked"});
 			this.locks.Location = new System.Drawing.Point(608, 45);
 			this.locks.Name = "locks";
 			this.locks.Size = new System.Drawing.Size(37, 22);
@@ -3276,12 +3263,12 @@ namespace Assistant
 			// 
 			this.skillList.AutoArrange = false;
 			this.skillList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.skillHDRName,
-            this.skillHDRvalue,
-            this.skillHDRbase,
-            this.skillHDRdelta,
-            this.skillHDRcap,
-            this.skillHDRlock});
+			this.skillHDRName,
+			this.skillHDRvalue,
+			this.skillHDRbase,
+			this.skillHDRdelta,
+			this.skillHDRcap,
+			this.skillHDRlock});
 			this.skillList.FullRowSelect = true;
 			this.skillList.Location = new System.Drawing.Point(7, 13);
 			this.skillList.Name = "skillList";
@@ -3346,14 +3333,14 @@ namespace Assistant
 			this.imgFmt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.imgFmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.imgFmt.Items.AddRange(new object[] {
-            "jpg",
-            "png",
-            "bmp",
-            "gif",
-            "tif",
-            "wmf",
-            "exif",
-            "emf"});
+			"jpg",
+			"png",
+			"bmp",
+			"gif",
+			"tif",
+			"wmf",
+			"exif",
+			"emf"});
 			this.imgFmt.Location = new System.Drawing.Point(94, 202);
 			this.imgFmt.Name = "imgFmt";
 			this.imgFmt.Size = new System.Drawing.Size(71, 22);
@@ -3381,9 +3368,9 @@ namespace Assistant
 			// 
 			// screenPath
 			// 
-			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.screenPath.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.screenPath.BackColor = System.Drawing.Color.White;
 			this.screenPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.screenPath.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3496,7 +3483,7 @@ namespace Assistant
 			this.labelUOD.Size = new System.Drawing.Size(213, 64);
 			this.labelUOD.TabIndex = 4;
 			this.labelUOD.Text = "To support the Razor Enhanced developers,  please visit UODreams shard and stay w" +
-    "ith us! You are welcome!";
+	"ith us! You are welcome!";
 			this.labelUOD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
 			// panelUODlogo
@@ -3561,17 +3548,16 @@ namespace Assistant
 			// scriptingTab
 			// 
 			this.scriptingTab.BackColor = System.Drawing.SystemColors.Control;
-			this.scriptingTab.Controls.Add(this.labelDelay);
+			this.scriptingTab.Controls.Add(this.labelTimerDelay);
 			this.scriptingTab.Controls.Add(this.textBoxDelay);
-			this.scriptingTab.Controls.Add(this.buttonStopScript);
-			this.scriptingTab.Controls.Add(this.buttonPlayScript);
+			this.scriptingTab.Controls.Add(this.buttonScriptStop);
+			this.scriptingTab.Controls.Add(this.buttonScriptPlay);
 			this.scriptingTab.Controls.Add(this.dataGridViewScripting);
-			this.scriptingTab.Controls.Add(this.razorButtonEdit);
-			this.scriptingTab.Controls.Add(this.razorCheckBoxAuto);
-			this.scriptingTab.Controls.Add(this.razorButtonUp);
-			this.scriptingTab.Controls.Add(this.razorButtonDown);
-			this.scriptingTab.Controls.Add(this.xButton3);
-			this.scriptingTab.Controls.Add(this.xButton2);
+			this.scriptingTab.Controls.Add(this.buttonScriptEditor);
+			this.scriptingTab.Controls.Add(this.buttonScriptUp);
+			this.scriptingTab.Controls.Add(this.buttonScriptDown);
+			this.scriptingTab.Controls.Add(this.buttonRemoveScript);
+			this.scriptingTab.Controls.Add(this.buttonAddScript);
 			this.scriptingTab.Location = new System.Drawing.Point(4, 40);
 			this.scriptingTab.Name = "scriptingTab";
 			this.scriptingTab.Padding = new System.Windows.Forms.Padding(3);
@@ -3579,43 +3565,43 @@ namespace Assistant
 			this.scriptingTab.TabIndex = 12;
 			this.scriptingTab.Text = "Enhanced Scripting";
 			// 
-			// labelDelay
+			// labelTimerDelay
 			// 
-			this.labelDelay.AutoSize = true;
-			this.labelDelay.Location = new System.Drawing.Point(542, 341);
-			this.labelDelay.Name = "labelDelay";
-			this.labelDelay.Size = new System.Drawing.Size(56, 13);
-			this.labelDelay.TabIndex = 24;
-			this.labelDelay.Text = "Delay (ms)";
+			this.labelTimerDelay.AutoSize = true;
+			this.labelTimerDelay.Location = new System.Drawing.Point(518, 341);
+			this.labelTimerDelay.Name = "labelTimerDelay";
+			this.labelTimerDelay.Size = new System.Drawing.Size(92, 13);
+			this.labelTimerDelay.TabIndex = 24;
+			this.labelTimerDelay.Text = "Engine Delay (ms)";
 			// 
 			// textBoxDelay
 			// 
-			this.textBoxDelay.Location = new System.Drawing.Point(612, 338);
+			this.textBoxDelay.Location = new System.Drawing.Point(616, 338);
 			this.textBoxDelay.Name = "textBoxDelay";
-			this.textBoxDelay.Size = new System.Drawing.Size(46, 20);
+			this.textBoxDelay.Size = new System.Drawing.Size(42, 20);
 			this.textBoxDelay.TabIndex = 23;
 			this.textBoxDelay.Text = "100";
-			this.textBoxDelay.TextChanged += new System.EventHandler(this.textBoxDelay_TextChanged);
+			this.textBoxDelay.TextChanged += new System.EventHandler(this.textBoxEngineDelay_TextChanged);
 			// 
-			// buttonStopScript
+			// buttonScriptStop
 			// 
-			this.buttonStopScript.Image = global::Assistant.Properties.Resources.media_playback_stop_3;
-			this.buttonStopScript.Location = new System.Drawing.Point(446, 334);
-			this.buttonStopScript.Name = "buttonStopScript";
-			this.buttonStopScript.Size = new System.Drawing.Size(30, 27);
-			this.buttonStopScript.TabIndex = 22;
-			this.buttonStopScript.UseVisualStyleBackColor = true;
-			this.buttonStopScript.Click += new System.EventHandler(this.buttonStopScript_Click);
+			this.buttonScriptStop.Image = global::Assistant.Properties.Resources.media_playback_stop_3;
+			this.buttonScriptStop.Location = new System.Drawing.Point(446, 334);
+			this.buttonScriptStop.Name = "buttonScriptStop";
+			this.buttonScriptStop.Size = new System.Drawing.Size(30, 27);
+			this.buttonScriptStop.TabIndex = 22;
+			this.buttonScriptStop.UseVisualStyleBackColor = true;
+			this.buttonScriptStop.Click += new System.EventHandler(this.buttonScriptStop_Click);
 			// 
-			// buttonPlayScript
+			// buttonScriptPlay
 			// 
-			this.buttonPlayScript.Image = global::Assistant.Properties.Resources.media_playback_start_3;
-			this.buttonPlayScript.Location = new System.Drawing.Point(410, 334);
-			this.buttonPlayScript.Name = "buttonPlayScript";
-			this.buttonPlayScript.Size = new System.Drawing.Size(30, 27);
-			this.buttonPlayScript.TabIndex = 21;
-			this.buttonPlayScript.UseVisualStyleBackColor = true;
-			this.buttonPlayScript.Click += new System.EventHandler(this.buttonPlayScript_Click);
+			this.buttonScriptPlay.Image = global::Assistant.Properties.Resources.media_playback_start_3;
+			this.buttonScriptPlay.Location = new System.Drawing.Point(410, 334);
+			this.buttonScriptPlay.Name = "buttonScriptPlay";
+			this.buttonScriptPlay.Size = new System.Drawing.Size(30, 27);
+			this.buttonScriptPlay.TabIndex = 21;
+			this.buttonScriptPlay.UseVisualStyleBackColor = true;
+			this.buttonScriptPlay.Click += new System.EventHandler(this.buttonScriptPlay_Click);
 			// 
 			// dataGridViewScripting
 			// 
@@ -3630,73 +3616,63 @@ namespace Assistant
 			this.dataGridViewScripting.TabIndex = 16;
 			this.dataGridViewScripting.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewScripting_CellContentClick);
 			// 
-			// razorButtonEdit
+			// buttonScriptEditor
 			// 
-			this.razorButtonEdit.ColorTable = office2010BlueTheme1;
-			this.razorButtonEdit.Location = new System.Drawing.Point(352, 337);
-			this.razorButtonEdit.Name = "razorButtonEdit";
-			this.razorButtonEdit.Size = new System.Drawing.Size(52, 20);
-			this.razorButtonEdit.TabIndex = 20;
-			this.razorButtonEdit.Text = "Edit";
-			this.razorButtonEdit.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButtonEdit.UseVisualStyleBackColor = true;
-			this.razorButtonEdit.Click += new System.EventHandler(this.razorButtonEdit_Click);
+			this.buttonScriptEditor.ColorTable = office2010BlueTheme1;
+			this.buttonScriptEditor.Location = new System.Drawing.Point(314, 337);
+			this.buttonScriptEditor.Name = "buttonScriptEditor";
+			this.buttonScriptEditor.Size = new System.Drawing.Size(90, 20);
+			this.buttonScriptEditor.TabIndex = 20;
+			this.buttonScriptEditor.Text = "Open Editor";
+			this.buttonScriptEditor.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buttonScriptEditor.UseVisualStyleBackColor = true;
+			this.buttonScriptEditor.Click += new System.EventHandler(this.buttonOpenEditor_Click);
 			// 
-			// razorCheckBoxAuto
+			// buttonScriptUp
 			// 
-			this.razorCheckBoxAuto.Location = new System.Drawing.Point(482, 338);
-			this.razorCheckBoxAuto.Name = "razorCheckBoxAuto";
-			this.razorCheckBoxAuto.Size = new System.Drawing.Size(54, 20);
-			this.razorCheckBoxAuto.TabIndex = 19;
-			this.razorCheckBoxAuto.Text = "Auto";
-			this.razorCheckBoxAuto.UseVisualStyleBackColor = true;
-			this.razorCheckBoxAuto.CheckedChanged += new System.EventHandler(this.razorCheckBoxAuto_CheckedChanged);
+			this.buttonScriptUp.ColorTable = office2010BlueTheme1;
+			this.buttonScriptUp.Location = new System.Drawing.Point(233, 337);
+			this.buttonScriptUp.Name = "buttonScriptUp";
+			this.buttonScriptUp.Size = new System.Drawing.Size(75, 20);
+			this.buttonScriptUp.TabIndex = 18;
+			this.buttonScriptUp.Text = "Move Up";
+			this.buttonScriptUp.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buttonScriptUp.UseVisualStyleBackColor = true;
+			this.buttonScriptUp.Click += new System.EventHandler(this.buttonScriptUp_Click);
 			// 
-			// razorButtonUp
+			// buttonScriptDown
 			// 
-			this.razorButtonUp.ColorTable = office2010BlueTheme1;
-			this.razorButtonUp.Location = new System.Drawing.Point(271, 337);
-			this.razorButtonUp.Name = "razorButtonUp";
-			this.razorButtonUp.Size = new System.Drawing.Size(75, 20);
-			this.razorButtonUp.TabIndex = 18;
-			this.razorButtonUp.Text = "Move Up";
-			this.razorButtonUp.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButtonUp.UseVisualStyleBackColor = true;
-			this.razorButtonUp.Click += new System.EventHandler(this.razorButtonUp_Click);
+			this.buttonScriptDown.ColorTable = office2010BlueTheme1;
+			this.buttonScriptDown.Location = new System.Drawing.Point(146, 337);
+			this.buttonScriptDown.Name = "buttonScriptDown";
+			this.buttonScriptDown.Size = new System.Drawing.Size(81, 20);
+			this.buttonScriptDown.TabIndex = 17;
+			this.buttonScriptDown.Text = "Move Down";
+			this.buttonScriptDown.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buttonScriptDown.UseVisualStyleBackColor = true;
+			this.buttonScriptDown.Click += new System.EventHandler(this.buttonScriptDown_Click);
 			// 
-			// razorButtonDown
+			// buttonRemoveScript
 			// 
-			this.razorButtonDown.ColorTable = office2010BlueTheme1;
-			this.razorButtonDown.Location = new System.Drawing.Point(184, 337);
-			this.razorButtonDown.Name = "razorButtonDown";
-			this.razorButtonDown.Size = new System.Drawing.Size(81, 20);
-			this.razorButtonDown.TabIndex = 17;
-			this.razorButtonDown.Text = "Move Down";
-			this.razorButtonDown.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButtonDown.UseVisualStyleBackColor = true;
-			this.razorButtonDown.Click += new System.EventHandler(this.razorButtonDown_Click);
+			this.buttonRemoveScript.ColorTable = office2010BlueTheme1;
+			this.buttonRemoveScript.Location = new System.Drawing.Point(73, 337);
+			this.buttonRemoveScript.Name = "buttonRemoveScript";
+			this.buttonRemoveScript.Size = new System.Drawing.Size(67, 20);
+			this.buttonRemoveScript.TabIndex = 15;
+			this.buttonRemoveScript.Text = "Remove";
+			this.buttonRemoveScript.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buttonRemoveScript.Click += new System.EventHandler(this.buttonScriptRemove_Click);
 			// 
-			// xButton3
+			// buttonAddScript
 			// 
-			this.xButton3.ColorTable = office2010BlueTheme1;
-			this.xButton3.Location = new System.Drawing.Point(99, 337);
-			this.xButton3.Name = "xButton3";
-			this.xButton3.Size = new System.Drawing.Size(79, 20);
-			this.xButton3.TabIndex = 15;
-			this.xButton3.Text = "Remove";
-			this.xButton3.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.xButton3.Click += new System.EventHandler(this.xButton3_Click);
-			// 
-			// xButton2
-			// 
-			this.xButton2.ColorTable = office2010BlueTheme1;
-			this.xButton2.Location = new System.Drawing.Point(8, 337);
-			this.xButton2.Name = "xButton2";
-			this.xButton2.Size = new System.Drawing.Size(85, 20);
-			this.xButton2.TabIndex = 14;
-			this.xButton2.Text = "Open Script";
-			this.xButton2.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.xButton2.Click += new System.EventHandler(this.xButton2_Click);
+			this.buttonAddScript.ColorTable = office2010BlueTheme1;
+			this.buttonAddScript.Location = new System.Drawing.Point(8, 337);
+			this.buttonAddScript.Name = "buttonAddScript";
+			this.buttonAddScript.Size = new System.Drawing.Size(59, 20);
+			this.buttonAddScript.TabIndex = 14;
+			this.buttonAddScript.Text = "Add";
+			this.buttonAddScript.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buttonAddScript.Click += new System.EventHandler(this.buttonScriptAdd_Click);
 			// 
 			// EnhancedAgent
 			// 
@@ -3773,9 +3749,9 @@ namespace Assistant
 			// 
 			// autoLootTextBoxDelay
 			// 
-			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
 			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.autoLootTextBoxDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -3992,10 +3968,10 @@ namespace Assistant
 			// 
 			this.autolootlistView.CheckBoxes = true;
 			this.autolootlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader1,
-            this.columnHeader2,
-            this.ColumnHeader3});
+			this.columnHeader4,
+			this.columnHeader1,
+			this.columnHeader2,
+			this.ColumnHeader3});
 			this.autolootlistView.FullRowSelect = true;
 			this.autolootlistView.GridLines = true;
 			this.autolootlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4182,9 +4158,9 @@ namespace Assistant
 			// 
 			// scavengerDragDelay
 			// 
-			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
 			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.scavengerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4220,10 +4196,10 @@ namespace Assistant
 			// 
 			this.scavengerListView.CheckBoxes = true;
 			this.scavengerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8});
+			this.columnHeader5,
+			this.columnHeader6,
+			this.columnHeader7,
+			this.columnHeader8});
 			this.scavengerListView.FullRowSelect = true;
 			this.scavengerListView.GridLines = true;
 			this.scavengerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4470,9 +4446,9 @@ namespace Assistant
 			// 
 			// organizerDragDelay
 			// 
-			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.organizerDragDelay.BackColor = System.Drawing.Color.White;
 			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.organizerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -4509,11 +4485,11 @@ namespace Assistant
 			// 
 			this.organizerListView.CheckBoxes = true;
 			this.organizerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13});
+			this.columnHeader9,
+			this.columnHeader10,
+			this.columnHeader11,
+			this.columnHeader12,
+			this.columnHeader13});
 			this.organizerListView.FullRowSelect = true;
 			this.organizerListView.GridLines = true;
 			this.organizerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4725,11 +4701,11 @@ namespace Assistant
 			// 
 			this.buyListView.CheckBoxes = true;
 			this.buyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader23});
+			this.columnHeader14,
+			this.columnHeader15,
+			this.columnHeader16,
+			this.columnHeader17,
+			this.columnHeader23});
 			this.buyListView.FullRowSelect = true;
 			this.buyListView.GridLines = true;
 			this.buyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4973,11 +4949,11 @@ namespace Assistant
 			// 
 			this.sellListView.CheckBoxes = true;
 			this.sellListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader18,
-            this.columnHeader19,
-            this.columnHeader20,
-            this.columnHeader21,
-            this.columnHeader22});
+			this.columnHeader18,
+			this.columnHeader19,
+			this.columnHeader20,
+			this.columnHeader21,
+			this.columnHeader22});
 			this.sellListView.FullRowSelect = true;
 			this.sellListView.GridLines = true;
 			this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5255,9 +5231,9 @@ namespace Assistant
 			// 
 			// dressDragDelay
 			// 
-			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.dressDragDelay.BackColor = System.Drawing.Color.White;
 			this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.dressDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5272,10 +5248,10 @@ namespace Assistant
 			// 
 			this.dressListView.CheckBoxes = true;
 			this.dressListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader24,
-            this.columnHeader25,
-            this.columnHeader26,
-            this.columnHeader27});
+			this.columnHeader24,
+			this.columnHeader25,
+			this.columnHeader26,
+			this.columnHeader27});
 			this.dressListView.FullRowSelect = true;
 			this.dressListView.GridLines = true;
 			this.dressListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5488,9 +5464,9 @@ namespace Assistant
 			// 
 			this.friendlistView.CheckBoxes = true;
 			this.friendlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader28,
-            this.columnHeader29,
-            this.columnHeader30});
+			this.columnHeader28,
+			this.columnHeader29,
+			this.columnHeader30});
 			this.friendlistView.FullRowSelect = true;
 			this.friendlistView.GridLines = true;
 			this.friendlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5734,9 +5710,9 @@ namespace Assistant
 			// 
 			// restockDragDelay
 			// 
-			this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.restockDragDelay.BackColor = System.Drawing.Color.White;
 			this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.restockDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5773,11 +5749,11 @@ namespace Assistant
 			// 
 			this.restocklistView.CheckBoxes = true;
 			this.restocklistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader31,
-            this.columnHeader32,
-            this.columnHeader33,
-            this.columnHeader34,
-            this.columnHeader35});
+			this.columnHeader31,
+			this.columnHeader32,
+			this.columnHeader33,
+			this.columnHeader34,
+			this.columnHeader35});
 			this.restocklistView.FullRowSelect = true;
 			this.restocklistView.GridLines = true;
 			this.restocklistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -5973,9 +5949,9 @@ namespace Assistant
 			// 
 			// bandagehealhpTextBox
 			// 
-			this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealhpTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealhpTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealhpTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealhpTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -5997,9 +5973,9 @@ namespace Assistant
 			// 
 			// bandagehealdelayTextBox
 			// 
-			this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealdelayTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealdelayTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealdelayTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealdelayTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6031,9 +6007,9 @@ namespace Assistant
 			// 
 			// bandagehealcustomcolorTextBox
 			// 
-			this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealcustomcolorTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealcustomcolorTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6055,9 +6031,9 @@ namespace Assistant
 			// 
 			// bandagehealcustomIDTextBox
 			// 
-			this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealcustomIDTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.bandagehealcustomIDTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6205,9 +6181,9 @@ namespace Assistant
 			// 
 			// hotkeyKeyMasterTextBox
 			// 
-			this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.hotkeyKeyMasterTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.hotkeyKeyMasterTextBox.BackColor = System.Drawing.Color.White;
 			this.hotkeyKeyMasterTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.hotkeyKeyMasterTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6354,9 +6330,9 @@ namespace Assistant
 			// 
 			// hotkeytextbox
 			// 
-			this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.hotkeytextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+			| System.Windows.Forms.AnchorStyles.Left)
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.hotkeytextbox.BackColor = System.Drawing.Color.White;
 			this.hotkeytextbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.hotkeytextbox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
@@ -6564,25 +6540,16 @@ namespace Assistant
 			// Avvio thread version check
 			VersionCheck = new Thread(VersionCheckWorker);
 			VersionCheck.Start();
+
+
 		}
 
 		internal void LoadSettings()
 		{
-			// Scripting
+			// -------------- SCRIPTING --------------------
 			scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
-			RazorEnhanced.Scripts.Reset();
-			dataGridViewScripting.DataSource = scriptTable;
-			foreach (DataGridViewColumn dc in dataGridViewScripting.Columns)
-			{
-				if (dc.Index == 0 || dc.Index == 5)
-				{
-					dc.ReadOnly = false;
-				}
-				else
-				{
-					dc.ReadOnly = true;
-				}
-			}
+			ReloadScriptTable();
+			RefreshScriptGrid();
 
 			// ---------------- AUTOLOOT -----------------
 			RazorEnhanced.AutoLoot.RefreshLists();
@@ -6721,27 +6688,6 @@ namespace Assistant
 
 			txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
 			msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
-
-			// ------------------ ENHANCED MAP  --------------------
-			//Map.MapNetwork.Init();
-			//mapOpenOnLoginCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapOpenOnLoginCheckBox");
-			//mapAutoconnectCheckBox1.Checked = RazorEnhanced.Settings.General.ReadBool("MapAutoConnectCheckBox");
-			//mapHpBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapHpBarCheckBox");
-			//mapStaminaBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapStaminaBarCheckBox");
-			//mapManaBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapManaBarCheckBox");
-			//mapdeathpointCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapDeathPointCheckBox");
-			//mapPanicCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapPanicCheckBox");
-			//mapPartyMemberCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapPartyMemberCheckBox");
-			//mapGuildCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapGuildCheckBox");
-			//mapserverCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapServerCheckBox");
-			//mapChatCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapChatCheckBox");
-			//mapChatPrefixTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapChatPrefixTextBox");
-			//mapAutoOpenChatCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MapAutoOpenChatCheckBox");
-			//InitPreviewHue(mapChatColorlabel, "MapChatColor");
-			//mapserveraddressTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapServerAddressTextBox");
-			//mapserverportTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapServerPortTextBox");
-			//mapLinkUsernameTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapLinkUsernameTextBox");
-			//mapLinkPasswordTextBox.Text = RazorEnhanced.Settings.General.ReadString("MapLinkPasswordTextBox");
 		}
 
 		private bool m_Initializing = false;
@@ -7925,67 +7871,72 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("ShowPartyStats", chkPartyOverhead.Checked);
 		}
 
-		private void xButton2_Click(object sender, EventArgs e)
+		// ------------------- SCRIPTING ----------------------------
+
+		private static string LoadFromFile(string filename, bool wait, bool loop, bool run)
 		{
-			DialogResult result = openFileDialogscript.ShowDialog();
+			string status = "Loaded";
+			string classname = Path.GetFileNameWithoutExtension(filename);
+			string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", filename);
+			string text = null;
 
-			if (result == DialogResult.OK) // Test result.
+			if (File.Exists(fullpath))
 			{
-				scriptTable.Rows.Add(false, openFileDialogscript.FileName, Properties.Resources.yellow, "Idle", Keys.None, true);
-				RazorEnhanced.Settings.Save();
-
-				dataGridViewScripting.DataSource = null;
-				dataGridViewScripting.DataSource = scriptTable;
-				foreach (DataGridViewColumn dc in dataGridViewScripting.Columns)
-				{
-					if (dc.Index == 0 || dc.Index == 5)
-					{
-						dc.ReadOnly = false;
-					}
-					else
-					{
-						dc.ReadOnly = true;
-					}
-				}
-
-				RazorEnhanced.HotKey.Init();
+				text = File.ReadAllText(fullpath);
 			}
+			else
+			{
+				return "ERROR: file not found";
+			}
+
+			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run);
+			string result = script.Create(null);
+
+			if (result == "Created")
+			{
+				Scripts.EnhancedScripts.Push(script);
+			}
+			else
+			{
+				status = "ERROR: " + result;
+			}
+
+			return status;
 		}
 
-		private void xButton3_Click(object sender, EventArgs e)
+		private static void LoadAndInitializeScripts()
 		{
-			for (int i = scriptTable.Rows.Count - 1; i >= 0; i--)
+			foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts)
 			{
-				DataRow row = scriptTable.Rows[i];
-				if ((bool)row["Checked"])
-				{
-					string filename = (string)row["Filename"];
-					Scripts.EnhancedScript script = Scripts.Search(filename);
-					if (script != null)
-						script.Stop();
-
-					scriptTable.Rows.RemoveAt(i);
-				}
+				script.Stop();
 			}
 
-			RazorEnhanced.Settings.Save();
-			Scripts.LoadAndInitializeScripts();
+			Scripts.EnhancedScripts.Clear();
 
-			dataGridViewScripting.DataSource = null;
-			dataGridViewScripting.DataSource = scriptTable;
-			foreach (DataGridViewColumn dc in dataGridViewScripting.Columns)
+			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
+			foreach (DataRow row in scriptTable.Rows)
 			{
-				if (dc.Index == 0 || dc.Index == 5)
+				string filename = (string)row["Filename"];
+				bool wait = (bool)row["Wait"];
+				bool loop = (bool)row["Loop"];
+				string status = (string)row["Status"];
+
+				bool run = false;
+				if (status == "Running")
+					run = true;
+
+				string result = LoadFromFile(filename, wait, loop, run);
+
+				if (result == "Loaded")
 				{
-					dc.ReadOnly = false;
+					row["Flag"] = Assistant.Properties.Resources.red;
+					row["Status"] = "Stopped";
 				}
 				else
 				{
-					dc.ReadOnly = true;
+					MessageBox.Show(status, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
-
-			RazorEnhanced.HotKey.Init();
 		}
 
 		private void MoveUp()
@@ -8010,20 +7961,6 @@ namespace Assistant
 					scriptTable.Rows.InsertAt(newRow, index);
 
 					dataGridViewScripting.Rows[index - 1].Selected = true;
-
-					dataGridViewScripting.DataSource = null;
-					dataGridViewScripting.DataSource = scriptTable;
-					foreach (DataGridViewColumn dc in dataGridViewScripting.Columns)
-					{
-						if (dc.Index == 0 || dc.Index == 5)
-						{
-							dc.ReadOnly = false;
-						}
-						else
-						{
-							dc.ReadOnly = true;
-						}
-					}
 				}
 			}
 		}
@@ -8050,36 +7987,55 @@ namespace Assistant
 					scriptTable.Rows.InsertAt(newRow, index);
 
 					dataGridViewScripting.Rows[index + 1].Selected = true;
+				}
+			}
+		}
 
-					dataGridViewScripting.DataSource = null;
-					dataGridViewScripting.DataSource = scriptTable;
-					foreach (DataGridViewColumn dc in dataGridViewScripting.Columns)
+		internal void ReloadScriptTable()
+		{
+			RazorEnhanced.Settings.Save();
+			LoadAndInitializeScripts();
+			RazorEnhanced.HotKey.Init();
+		}
+
+		internal void UpdateScriptGrid(string name, bool running)
+		{
+			if (InvokeRequired)
+			{
+				Invoke((MethodInvoker)delegate { UpdateScriptGrid(name, running); });
+			}
+			else
+			{
+				if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+				{
+					DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+					string filename = (string)row["Filename"];
+
+					if (name == filename)
 					{
-						if (dc.Index == 0 || dc.Index == 5)
+						if (running)
 						{
-							dc.ReadOnly = false;
+							row["Flag"] = Assistant.Properties.Resources.green;
+							row["Status"] = "Running";
 						}
 						else
 						{
-							dc.ReadOnly = true;
+							row["Flag"] = Assistant.Properties.Resources.red;
+							row["Status"] = "Stopped";
 						}
 					}
 				}
 			}
 		}
 
-		private void dataGridViewScripting_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		private void RefreshScriptGrid()
 		{
-			dataGridViewScripting.EndEdit();
-			scriptTable.Rows[e.RowIndex][e.ColumnIndex] = dataGridViewScripting[e.ColumnIndex, e.RowIndex].Value;
-			scriptTable.AcceptChanges();
-			Scripts.LoadAndInitializeScripts();
-
 			dataGridViewScripting.DataSource = null;
 			dataGridViewScripting.DataSource = scriptTable;
+
 			foreach (DataGridViewColumn dc in dataGridViewScripting.Columns)
 			{
-				if (dc.Index == 0 || dc.Index == 5)
+				if (dc.Index == 3 || dc.Index == 4 || dc.Index == 6)
 				{
 					dc.ReadOnly = false;
 				}
@@ -8090,25 +8046,116 @@ namespace Assistant
 			}
 		}
 
-		private void razorButtonDown_Click(object sender, EventArgs e)
+		private void RunCurrentScript(bool run)
+		{
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+			{
+				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+				string filename = (string)row["Filename"];
+				Scripts.EnhancedScript script = Scripts.Search(filename);
+				if (script != null)
+				{
+					script.Run = run;
+				}
+			}
+		}
+
+		private void LoopCurrentScript(bool loop)
+		{
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+			{
+				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+				string filename = (string)row["Filename"];
+				Scripts.EnhancedScript script = Scripts.Search(filename);
+				if (script != null)
+				{
+					script.Loop = loop;
+				}
+			}
+		}
+
+		private void buttonScriptAdd_Click(object sender, EventArgs e)
+		{
+			DialogResult result = openFileDialogscript.ShowDialog();
+
+			if (result == DialogResult.OK) // Test result.
+			{
+				string filename = Path.GetFileName(openFileDialogscript.FileName);
+				Scripts.EnhancedScript script = Scripts.Search(filename);
+				if (script == null)
+				{
+					scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, Keys.None, true);
+					ReloadScriptTable();
+				}
+			}
+		}
+
+		private void buttonScriptRemove_Click(object sender, EventArgs e)
+		{
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+			{
+				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+				string filename = (string)row["Filename"];
+				RunCurrentScript(false);
+				scriptTable.Rows.Remove(row);
+				ReloadScriptTable();
+			}
+		}
+
+		private void dataGridViewScripting_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			dataGridViewScripting.EndEdit();
+			scriptTable.Rows[e.RowIndex][e.ColumnIndex] = dataGridViewScripting[e.ColumnIndex, e.RowIndex].Value;
+			scriptTable.AcceptChanges();
+			ReloadScriptTable();
+		}
+
+		private void buttonScriptDown_Click(object sender, EventArgs e)
 		{
 			MoveDown();
 		}
 
-		private void razorButtonUp_Click(object sender, EventArgs e)
+		private void buttonScriptUp_Click(object sender, EventArgs e)
 		{
 			MoveUp();
 		}
 
-		private void razorCheckBoxAuto_CheckedChanged(object sender, EventArgs e)
-		{
-			RazorEnhanced.Scripts.AutoMode = razorCheckBoxAuto.Checked;
-		}
-
-		private void razorButtonEdit_Click(object sender, EventArgs e)
+		private void buttonOpenEditor_Click(object sender, EventArgs e)
 		{
 			EnhancedScriptEditor.Init();
 		}
+
+		private void buttonScriptPlay_Click(object sender, EventArgs e)
+		{
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+			{
+				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+				string filename = (string)row["Filename"];
+				RunCurrentScript(true);
+				UpdateScriptGrid(filename, true);
+			}
+		}
+
+		private void buttonScriptStop_Click(object sender, EventArgs e)
+		{
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+			{
+				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+				string filename = (string)row["Filename"];
+				RunCurrentScript(false);
+				UpdateScriptGrid(filename, false);
+			}
+		}
+
+		private void textBoxEngineDelay_TextChanged(object sender, EventArgs e)
+		{
+			int millliseconds = 100;
+			Int32.TryParse(textBoxDelay.Text, out millliseconds);
+			TimeSpan delay = TimeSpan.FromMilliseconds(millliseconds);
+			Scripts.TimerDelay = delay;
+		}
+
+		// ------------------- SCRIPTING END ----------------------------
 
 		private void razorButtonVisitUOD_Click(object sender, EventArgs e)
 		{
@@ -8439,24 +8486,6 @@ namespace Assistant
 			{
 				ListViewItem item = e.Item as ListViewItem;
 				RazorEnhanced.AutoLoot.UpdateSelectedItems(item.Index);
-			}
-		}
-
-		private delegate void SetBoolCallback(bool check);
-
-		internal void SetCheckBoxAutoMode(bool check)
-		{
-			// InvokeRequired required compares the thread ID of the
-			// calling thread to the thread ID of the creating thread.
-			// If these threads are different, it returns true.
-			if (this.razorCheckBoxAuto.InvokeRequired)
-			{
-				SetBoolCallback d = new SetBoolCallback(SetCheckBoxAutoMode);
-				this.Invoke(d, new object[] { check });
-			}
-			else
-			{
-				this.razorCheckBoxAuto.Checked = check;
 			}
 		}
 
@@ -10723,7 +10752,7 @@ namespace Assistant
 			if (lockToolBarCheckBox.Focused)
 			{
 				RazorEnhanced.ToolBar.LockUnlock();
-                RazorEnhanced.Settings.General.WriteBool("LockToolBarCheckBox", lockToolBarCheckBox.Checked);
+				RazorEnhanced.Settings.General.WriteBool("LockToolBarCheckBox", lockToolBarCheckBox.Checked);
 			}
 		}
 
@@ -10829,7 +10858,7 @@ namespace Assistant
 		private void toolboxstyleComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (toolboxstyleComboBox.Focused)
-			{ 
+			{
 				RazorEnhanced.Settings.General.WriteString("ToolBoxStyleComboBox", toolboxstyleComboBox.Text);
 			}
 		}
@@ -10869,8 +10898,8 @@ namespace Assistant
 					{
 						slot += 1;
 					}
-                toolboxslotsTextBox.Text = slot.ToString();
-                RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
+				toolboxslotsTextBox.Text = slot.ToString();
+				RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
 			}
 		}
 
@@ -11071,35 +11100,6 @@ namespace Assistant
 
 		// ----------------- PROFILES END -------------------
 
-		private void buttonPlayScript_Click(object sender, EventArgs e)
-		{
-			Scripts.LoadAndInitializeScripts();
-			if (scriptTable != null && scriptTable.Rows.Count > 0)
-			{
-				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
-				string filename = (string)row["Filename"];
-				Scripts.EnhancedScript script = Scripts.Search(filename);
-				if (script != null)
-				{
-					script.Start();
-				}
-			}
-		}
-
-		private void buttonStopScript_Click(object sender, EventArgs e)
-		{
-			Scripts.AutoMode = false;
-			Scripts.Reset();
-		}
-
-		private void textBoxDelay_TextChanged(object sender, EventArgs e)
-		{
-			int millliseconds = 100;
-			Int32.TryParse(textBoxDelay.Text, out millliseconds);
-			TimeSpan delay = TimeSpan.FromMilliseconds(millliseconds);
-			Scripts.TimerDelay = delay;
-		}
-
 		internal static void VersionCheckWorker()
 		{
 			WebClient client = new WebClient();
@@ -11109,7 +11109,7 @@ namespace Assistant
 
 				if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
 				{
-					DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo);
+					DialogResult dialogResult = MessageBox.Show("A newer version of Razor Enhanced is available! Do you want to open your browser to download it?", "Newer Version Available", MessageBoxButtons.YesNo);
 					if (dialogResult == DialogResult.Yes)
 					{
 						System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
@@ -11120,5 +11120,7 @@ namespace Assistant
 			{
 			}
 		}
+
+
 	}
 }

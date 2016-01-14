@@ -117,7 +117,6 @@
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
     </Reference>
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml">
       <Name>System.XML</Name>
     </Reference>
@@ -166,15 +165,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\ItemID.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Macros\Actions.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Macros\Macro.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Macros\MacroManager.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Core\Main.cs">
@@ -536,9 +526,6 @@
     <Compile Include="Core\ZLib.cs">
       <SubType>Code</SubType>
     </Compile>
-    <EmbeddedResource Include="Macros\Actions.resx">
-      <DependentUpon>Actions.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -711,6 +698,7 @@
     <None Include="RazorEnhanced\Resources\map-paralized.gif" />
     <None Include="RazorEnhanced\Resources\map-deadIn.png" />
     <None Include="RazorEnhanced\Resources\map-deadOut.png" />
+    <Content Include="RazorEnhanced\Resources\loop.png" />
     <Content Include="RazorEnhanced\Resources\razor-enhanced-splash.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
@@ -722,22 +710,6 @@
     <None Include="RazorEnhanced\Resources\uod_logo.png" />
     <None Include="RazorEnhanced\Resources\toolbar.png" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
-    <None Include="Resources\BarraGrandeOrizzontaBordoDestro.png" />
-    <None Include="Resources\BarraGrandeOrizzontaBordoSinistro.png" />
-    <None Include="Resources\BarraGrandeOrizzontaleSlot.png" />
-    <None Include="Resources\BarraGrandeOrizzontaleSpazioStat.png" />
-    <None Include="Resources\BarraGrandeVerticaleBordoSopra.png" />
-    <None Include="Resources\BarraGrandeVerticaleBordoSotto.png" />
-    <None Include="Resources\BarraGrandeVerticaleSlot.png" />
-    <None Include="Resources\BarraGrandeVerticaleSpazioStat.png" />
-    <None Include="Resources\BarraOrizzontaBordoDestro.png" />
-    <None Include="Resources\BarraOrizzontaBordoSinistro.png" />
-    <None Include="Resources\BarraOrizzontaleSlot.png" />
-    <None Include="Resources\BarraOrizzontaleSpazioStat.png" />
-    <None Include="Resources\BarraVerticaleBordoSopra.png" />
-    <None Include="Resources\BarraVerticaleBordoSotto.png" />
-    <None Include="Resources\BarraVerticaleSlot.png" />
-    <None Include="Resources\BarraVerticaleSpazioStat.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />
   </ItemGroup>

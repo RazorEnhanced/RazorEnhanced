@@ -434,7 +434,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void Engine()
+		internal static void AutoRun()
 		{
 			int exit = Int32.MinValue;
 

@@ -194,7 +194,7 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		internal static void AutoCarverEngine()
+		internal static void CarveAutoRun()
 		{
 			int exit = Int32.MinValue;
 
@@ -271,7 +271,7 @@ namespace RazorEnhanced
 			set { m_AutoModeRemount = value; }
 		}
 
-		internal static void AutoRemountEngine()
+		internal static void RemountAutoRun()
 		{
 			if (World.Player == null)
 				return;

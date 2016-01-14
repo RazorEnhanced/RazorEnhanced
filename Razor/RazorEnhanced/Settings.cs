@@ -12,11 +12,21 @@ namespace RazorEnhanced
 {
 	internal class Settings
 	{
-		private static int SettingVersion = 9;     // Versione progressiva della struttura dei salvataggi per successive modifiche
+		// Versione progressiva della struttura dei salvataggi per successive modifiche
+		private static int SettingVersion = 10; 
+
 		private static string m_Save = "RazorEnhanced.settings";
-		internal static string ProfileFiles { get { return m_Save; } set { m_Save = value; } }
+		internal static string ProfileFiles
+		{
+			get { return m_Save; }
+			set { m_Save = value; }
+		}
+
 		private static DataSet m_Dataset;
-		internal static DataSet Dataset { get { return m_Dataset; } }
+		internal static DataSet Dataset
+		{
+			get { return m_Dataset; }
+		}
 
 		internal static void Load()
 		{
@@ -38,13 +48,6 @@ namespace RazorEnhanced
 					m_Dataset = bin.Deserialize(decompress) as DataSet;
 					decompress.Close();
 					stream.Close();
-
-					foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
-					{
-						row["Checked"] = false;
-						row["Flag"] = Assistant.Properties.Resources.yellow;
-						row["Status"] = "Idle";
-					}
 				}
 				catch (Exception ex)
 				{
@@ -53,21 +56,22 @@ namespace RazorEnhanced
 
 				// Version check, Permette update delle tabelle anche se gia esistenti
 				DataRow versionrow = m_Dataset.Tables["GENERAL"].Rows[0];
-				int currentversion = 0;
+				int currentVersion = 0;
+
 				try
 				{
-					currentversion = (int)versionrow["SettingVersion"];
+					currentVersion = (int)versionrow["SettingVersion"];
 				}
-				catch
+				catch (Exception ex)
 				{
 					DataTable general = m_Dataset.Tables["GENERAL"];
 					general.Columns.Add("SettingVersion", typeof(int));
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
 					row["SettingVersion"] = 1;
-					currentversion = 1;
-					Save();
+					currentVersion = 1;
 				}
-				UpdateVersion(currentversion);
+
+				UpdateVersion(currentVersion);
 			}
 			else
 			{
@@ -3879,17 +3883,16 @@ namespace RazorEnhanced
 		}
 
 		// Funzione per cambiare la struttura dei save in caso di modifiche senza dover cancellare e rifare da 0
-
-		internal static void UpdateVersion(int versionp)
+		internal static void UpdateVersion(int previousVersion)
 		{
-			int realversion = versionp;
-			if (realversion == 1)  // Passaggi dalla version 1 alle 2
+			int realVersion = previousVersion;
+
+			if (realVersion == 1)  // Passaggi dalla version 1 alle 2
 			{
 				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
 					if ((string)row["Name"] == "Autoloot Start")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3905,7 +3908,6 @@ namespace RazorEnhanced
 					if ((string)row["Name"] == "Scavenger Start")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3913,7 +3915,6 @@ namespace RazorEnhanced
 					if ((string)row["Name"] == "Scavenger Stop")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3921,7 +3922,6 @@ namespace RazorEnhanced
 					if ((string)row["Name"] == "Sell Agent Enable")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3937,7 +3937,6 @@ namespace RazorEnhanced
 					if ((string)row["Name"] == "Buy Agent Enable")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3945,7 +3944,6 @@ namespace RazorEnhanced
 					if ((string)row["Name"] == "Buy Agent Disable")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3953,7 +3951,6 @@ namespace RazorEnhanced
 					if ((string)row["Name"] == "Bandage Heal Enable")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3961,7 +3958,6 @@ namespace RazorEnhanced
 					if ((string)row["Name"] == "Bandage Heal Disable")
 					{
 						row.Delete();
-						Save();
 						break;
 					}
 
@@ -3999,11 +3995,12 @@ namespace RazorEnhanced
 				newRow["Key"] = Keys.None;
 				newRow["Pass"] = true;
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
 				General.WriteInt("SettingVersion", 2);
-				realversion = 2;
+				realVersion = 2;
 			}
 
-			if (realversion == 2)
+			if (realVersion == 2)
 			{
 				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
 				newRow["Group"] = "SpellsMagery";
@@ -4011,7 +4008,6 @@ namespace RazorEnhanced
 				newRow["Key"] = Keys.None;
 				newRow["Pass"] = true;
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
-				Save();
 
 				m_Dataset.Tables["GENERAL"].Columns.Add("MountSerial", typeof(int));
 				m_Dataset.Tables["GENERAL"].Columns.Add("MountDelay", typeof(int));
@@ -4021,10 +4017,10 @@ namespace RazorEnhanced
 				General.WriteInt("EMountDelay", 1000);
 
 				General.WriteInt("SettingVersion", 3);
-				realversion = 3;
+				realVersion = 3;
 			}
 
-			if (realversion == 3)
+			if (realVersion == 3)
 			{
 				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
 				newRow["Group"] = "Pet Commands";
@@ -4032,7 +4028,6 @@ namespace RazorEnhanced
 				newRow["Key"] = Keys.None;
 				newRow["Pass"] = true;
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
-				Save();
 
 				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
 				newRow["Group"] = "Pet Commands";
@@ -4040,22 +4035,20 @@ namespace RazorEnhanced
 				newRow["Key"] = Keys.None;
 				newRow["Pass"] = true;
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
-				Save();
 
 				m_Dataset.Tables["GENERAL"].Columns.Add("RemountCheckbox", typeof(bool));
 				General.WriteBool("RemountCheckbox", false);
 
 				General.WriteInt("SettingVersion", 4);
-				realversion = 4;
+				realVersion = 4;
 			}
 
-			if (realversion == 4)
+			if (realVersion == 4)
 			{
 				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Clumsy")
 					{
 						row["Name"] = "Wand Clumsy";
-						Save();
 						break;
 					}
 
@@ -4071,7 +4064,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Heal")
 					{
 						row["Name"] = "Wand Heal";
-						Save();
 						break;
 					}
 
@@ -4087,7 +4079,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Weakness")
 					{
 						row["Name"] = "Wand Weakness";
-						Save();
 						break;
 					}
 
@@ -4095,7 +4086,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Magic Arrow")
 					{
 						row["Name"] = "Wand Magic Arrow";
-						Save();
 						break;
 					}
 
@@ -4103,7 +4093,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Harm")
 					{
 						row["Name"] = "Wand Harm";
-						Save();
 						break;
 					}
 
@@ -4111,7 +4100,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Fireball")
 					{
 						row["Name"] = "Wand Fireball";
-						Save();
 						break;
 					}
 
@@ -4119,7 +4107,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Greater Heal")
 					{
 						row["Name"] = "Wand Greater Heal";
-						Save();
 						break;
 					}
 
@@ -4127,7 +4114,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Lightning")
 					{
 						row["Name"] = "Wand Lightning";
-						Save();
 						break;
 					}
 
@@ -4135,7 +4121,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Equip Wands" && (string)row["Name"] == "Mana Drain")
 					{
 						row["Name"] = "Wand Mana Drain";
-						Save();
 						break;
 					}
 
@@ -4143,7 +4128,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Agility")
 					{
 						row["Name"] = "Potion Agility";
-						Save();
 						break;
 					}
 
@@ -4151,7 +4135,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Cure")
 					{
 						row["Name"] = "Potion Cure";
-						Save();
 						break;
 					}
 
@@ -4159,7 +4142,6 @@ namespace RazorEnhanced
 					if ((string)row["Group"] == "Potions" && (string)row["Name"] == "Explosion")
 					{
 						row["Name"] = "Potion Explosion";
-						Save();
 						break;
 					}
 
@@ -4194,20 +4176,21 @@ namespace RazorEnhanced
 						Save();
 						break;
 					}
-				realversion = 5;
+
+				realVersion = 5;
 				General.WriteInt("SettingVersion", 5);
 			}
 
-			if (realversion == 5)
+			if (realVersion == 5)
 			{
 				m_Dataset.Tables["GENERAL"].Columns.Add("ShowHeadTargetCheckBox", typeof(bool));
-				Save();
 				General.WriteBool("ShowHeadTargetCheckBox", false);
-				realversion = 6;
+
+				realVersion = 6;
 				General.WriteInt("SettingVersion", 6);
 			}
 
-			if (realversion == 6)
+			if (realVersion == 6)
 			{
 				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
 				newRow["Group"] = "Target";
@@ -4215,7 +4198,6 @@ namespace RazorEnhanced
 				newRow["Key"] = Keys.None;
 				newRow["Pass"] = true;
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
-				Save();
 
 				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
 				newRow["Group"] = "Target";
@@ -4223,22 +4205,20 @@ namespace RazorEnhanced
 				newRow["Key"] = Keys.None;
 				newRow["Pass"] = true;
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
-				Save();
 
-				realversion = 7;
+				realVersion = 7;
 				General.WriteInt("SettingVersion", 7);
 			}
 
-			if (realversion == 7)
+			if (realVersion == 7)
 			{
 				m_Dataset.Tables["GENERAL"].Columns.Add("NotShowLauncher", typeof(bool));
-				Save();
 				General.WriteBool("NotShowLauncher", false);
-				realversion = 8;
+				realVersion = 8;
 				General.WriteInt("SettingVersion", 8);
 			}
 
-			if (realversion == 8)
+			if (realVersion == 8)
 			{
 				for (int i = 14; i < 60; i++) 
 				{
@@ -4248,7 +4228,6 @@ namespace RazorEnhanced
 					row["Item"] = emptyitem;
 					m_Dataset.Tables["TOOLBAR_ITEMS"].Rows.Add(row);
 				}
-				Save();
 
 				m_Dataset.Tables["GENERAL"].Columns.Add("ShowFollowerToolBarCheckBox", typeof(bool));
 				General.WriteBool("ShowFollowerToolBarCheckBox", true);
@@ -4274,9 +4253,31 @@ namespace RazorEnhanced
 				m_Dataset.Tables["GENERAL"].Columns.Add("ToolBoxSlotsTextBox", typeof(int));
 				General.WriteInt("ToolBoxSlotsTextBox", 2);
 
-				realversion = 9;
+				realVersion = 9;
 				General.WriteInt("SettingVersion", 9);
 			}
+
+			if (realVersion == 9)
+			{
+				if (m_Dataset.Tables.Contains("SCRIPTING"))
+					m_Dataset.Tables.Remove("SCRIPTING");
+
+				// Scripting
+				DataTable scripting = new DataTable("SCRIPTING");
+				scripting.Columns.Add("Filename", typeof(string));
+				scripting.Columns.Add("Flag", typeof(Bitmap));
+				scripting.Columns.Add("Status", typeof(string));
+				scripting.Columns.Add("Loop", typeof(bool));
+				scripting.Columns.Add("Wait", typeof(bool));
+				scripting.Columns.Add("HotKey", typeof(Keys));
+				scripting.Columns.Add("HotKeyPass", typeof(bool));
+				m_Dataset.Tables.Add(scripting);
+
+				realVersion = 10;
+				General.WriteInt("SettingVersion", 10);
+			}
+
+			Save();
 		}
 	}
 }
