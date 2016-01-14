@@ -298,10 +298,9 @@ namespace RazorEnhanced
 			Item sourceBag = Items.FindBySerial(sourceBagserail);
 			Item destinationBag = Items.FindBySerial(destinationBagserial);
 
-			// Apre le bag per item contenuti
+			// Check if container is updated
 			RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
-			Items.UseItem(sourceBag);
-			Thread.Sleep(mseconds);
+			Items.WaitForContents(sourceBag, 1000);
 
 			// Inizia scansione
 			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)

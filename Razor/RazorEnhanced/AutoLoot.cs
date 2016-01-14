@@ -10,7 +10,7 @@ namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
-		private static Queue<int> m_IgnoreCorpseQueue = new Queue<int>();
+		private static List<int> m_IgnoreCorpseList = new List<int>();
 
 		[Serializable]
 		public class AutoLootItem
@@ -302,15 +302,14 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
-				// Apertura forzata 1 solo volta (necessaria in caso di corpi uccisi precedentemente da altri fuori schermata, in quanto vengono flaggati come updated anche se non realmente)
-
-				if (!m_IgnoreCorpseQueue.Contains(corpo.Serial))
+				if (!m_IgnoreCorpseList.Contains(corpo.Serial))
 				{
-					m_IgnoreCorpseQueue.Enqueue(corpo.Serial);
-					DragDropManager.AutoLootOpenAction.Enqueue(corpo.Serial);
-				}
-				else
 					RazorEnhanced.Items.WaitForContents(corpo, 1000);
+					m_IgnoreCorpseList.Add(corpo.Serial);
+                }
+
+				if (m_IgnoreCorpseList.Count > 100)
+					m_IgnoreCorpseList.Clear();
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
@@ -473,8 +472,7 @@ namespace RazorEnhanced
 		// Funzioni di controllo da script
 		public static void ResetIgnore()
 		{
-			m_IgnoreCorpseQueue.Clear();
-			DragDropManager.AutoLootOpenAction = new ConcurrentQueue<int>();
+			m_IgnoreCorpseList.Clear();
 			DragDropManager.AutoLootSerialToGrab = new ConcurrentQueue<int>();
 			Scavenger.ResetIgnore();
 		}
