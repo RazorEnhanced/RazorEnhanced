@@ -73,7 +73,7 @@ namespace Assistant
 
 		private byte m_GridNum;
 
-		private bool m_Updated = true;
+		private bool m_Updated = false;
 
 		internal bool Updated
 		{
