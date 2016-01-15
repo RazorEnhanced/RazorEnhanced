@@ -217,7 +217,20 @@ namespace Assistant
 					s = Get(1, 4); // mini heal
 			}
 
-			if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
+			if (RazorEnhanced.Settings.General.ReadBool("BlockBigHealCheckBox"))
+			{
+				if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
+				{
+					if (s != null)
+					{
+						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+							Targeting.TargetSelf(true);
+						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+						s.Cast();
+					}
+				}
+			}
+			else
 			{
 				if (s != null)
 				{
@@ -238,17 +251,30 @@ namespace Assistant
 			else
 				s = Get(1, 4); // mini heal
 
-			if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
+			if (RazorEnhanced.Settings.General.ReadBool("BlockMiniHealCheckBox"))
+			{
+				if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
+				{
+					if (s != null)
+					{
+						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+							Targeting.TargetSelf(true);
+						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+						s.Cast();
+					}
+				}
+			}
+			else
 			{
 				if (s != null)
 				{
-					//RazorEnhanced.Misc.SendMessage();
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 						Targeting.TargetSelf(true);
 					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
 			}
+
 		}
 
 		internal static void HealOrCureSelfChiva()
@@ -260,7 +286,20 @@ namespace Assistant
 			else
 				s = Get(20, 2); // mini heal
 
-			if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
+			if (RazorEnhanced.Settings.General.ReadBool("BlockChivalryHealCheckBox"))
+			{
+				if (World.Player.Hits < World.Player.HitsMax || World.Player.Poisoned)
+				{
+					if (s != null)
+					{
+						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
+							Targeting.TargetSelf(true);
+						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
+						s.Cast();
+					}
+				}
+			}
+			else
 			{
 				if (s != null)
 				{
@@ -270,6 +309,7 @@ namespace Assistant
 					s.Cast();
 				}
 			}
+
 		}
 
 		internal static void Initialize()

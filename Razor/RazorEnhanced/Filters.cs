@@ -320,6 +320,10 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.RemountCheckbox.Checked = RazorEnhanced.Settings.General.ReadBool("RemountCheckbox");
 			Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox");
 			Assistant.Engine.MainWindow.BlockHealPoisonCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockHealPoison");
+			Assistant.Engine.MainWindow.BlockChivalryHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockChivalryHealCheckBox");
+			Assistant.Engine.MainWindow.BlockBigHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockBigHealCheckBox");
+			Assistant.Engine.MainWindow.BlockMiniHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockMiniHealCheckBox");
+			Assistant.Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox");
 
 			AutoRemountDelay = RazorEnhanced.Settings.General.ReadInt("MountDelay");
 			AutoRemountEDelay = RazorEnhanced.Settings.General.ReadInt("EMountDelay");

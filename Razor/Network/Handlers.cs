@@ -810,6 +810,28 @@ namespace Assistant
 				p.Seek(-2, SeekOrigin.Current);
 				p.Write((ushort)(ltHue & 0x3FFF));
 			}
+			else
+			{
+				// Blocco Color Highlight flag
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				{
+					if ((i.Container as Mobile).Blessed) // Mortal
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)28);
+					}
+					else if ((i.Container as Mobile).Poisoned)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)58);
+					}
+					else if ((i.Container as Mobile).Paralized)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)98);
+					}
+				}
+			}
 
 			if (i.Layer == Layer.Backpack && isNew && ser == World.Player.Serial) // && RazorEnhanced.Settings.General.ReadBool("AutoSearch")
 			{
@@ -1058,6 +1080,28 @@ namespace Assistant
 					p.Seek(-2, SeekOrigin.Current);
 					p.Write((short)(ltHue | 0x8000));
 				}
+				else
+				{
+					// Blocco Color Highlight flag
+					if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+					{
+						if (m.Blessed) // Mortal
+						{
+							p.Seek(-2, SeekOrigin.Current);
+							p.Write((short)28);
+						}
+						else if (m.Poisoned)
+						{
+							p.Seek(-2, SeekOrigin.Current);
+							p.Write((short)58);
+						}
+						else if (m.Paralized)
+						{
+							p.Seek(-2, SeekOrigin.Current);
+							p.Write((short)98);
+						}
+					}
+				}
 
 				bool wasPoisoned = m.Poisoned;
 				m.ProcessPacketFlags(p.ReadByte());
@@ -1299,7 +1343,6 @@ namespace Assistant
 				m.Poisoned = (flag != 0);
 			else if (id == 2)
 				m.Blessed = (flag != 0);
-
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1463,7 +1506,28 @@ namespace Assistant
 				p.Seek(-2, SeekOrigin.Current);
 				p.Write((ushort)(ltHue | 0x8000));
 			}
-
+			else
+			{
+				// Blocco Color Highlight flag
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				{
+					if (m.Blessed) // Mortal
+					{ 
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)28);
+					}
+					else if (m.Poisoned)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)58);
+					}
+					else if (m.Paralized)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)98);
+					}
+				}
+			}
 			bool wasPoisoned = m.Poisoned;
 			m.ProcessPacketFlags(p.ReadByte());
 
@@ -1553,6 +1617,28 @@ namespace Assistant
 			{
 				p.Seek(-2, SeekOrigin.Current);
 				p.Write((short)(ltHue | 0x8000));
+			}
+			else
+			{
+				// Blocco Color Highlight flag
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				{
+					if (m.Blessed) // Mortal
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)28);
+					}
+					else if (m.Poisoned)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)58);
+					}
+					else if (m.Paralized)
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)98);
+					}
+				}
 			}
 
 			bool wasPoisoned = m.Poisoned;
