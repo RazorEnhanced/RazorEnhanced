@@ -6,7 +6,7 @@ namespace Assistant
 	{
 		private static DateTime m_Start;
 		private static byte m_Seq;
-		private static double m_Time, m_Min, m_Max;
+		private static double m_Time, m_Min, m_Max; 
 		private static int m_Total;
 		private static int m_Count;
 
@@ -29,7 +29,7 @@ namespace Assistant
 				{
 					m_Start = DateTime.MinValue;
 					World.Player.SendMessage(MsgLevel.Force, "Ping Response:");
-					World.Player.SendMessage(MsgLevel.Force, "Min: {0:F1}ms  Max: {1:F1}ms  Avg: {2:F1}ms", m_Min, m_Max, m_Time / ((double)m_Total));
+					World.Player.SendMessage(MsgLevel.Force, "Min: {0:F1}ms  Max: {1:F1}ms  Avg: {2:F1}ms", m_Min, m_Max, (m_Min + m_Max) / 2);
 				}
 				return true;
 			}
