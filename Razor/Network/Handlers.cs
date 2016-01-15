@@ -1659,6 +1659,11 @@ namespace Assistant
 				Item i = World.FindItem(serial);
 				if (i != null)
 				{
+					if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
+						// Update Contatori Item ToolBar
+						if (RazorEnhanced.ToolBar.ToolBarForm != null)
+								RazorEnhanced.ToolBar.UpdateCount();
+
 					if (DragDropManager.Holding == i)
 					{
 						//Counter.SupressWarnings = true;
@@ -1671,9 +1676,6 @@ namespace Assistant
 					}
 				}
 			}
-			// Update Contatori Item ToolBar
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		private static void ServerChange(PacketReader p, PacketHandlerEventArgs args)
@@ -1703,9 +1705,6 @@ namespace Assistant
 				return;
 
 			item.Container = null;
-			// Update Contatori Item ToolBar
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.UpdateCount();
 
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(itemID & 0x7FFF);
@@ -1756,6 +1755,12 @@ namespace Assistant
 				}
 			}
 			Item.UpdateContainers();
+
+			if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
+				// Update Contatori Item ToolBar
+				if (RazorEnhanced.ToolBar.ToolBarForm != null)
+						RazorEnhanced.ToolBar.UpdateCount();
+
 			// Filtro muri
 			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
 			{
@@ -1870,10 +1875,6 @@ namespace Assistant
 
 			item.Container = null;
 
-			// Update Contatori Item ToolBar
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.UpdateCount();
-
 			ushort itemID = p.ReadUInt16();
 			item.ItemID = (ushort)(_artDataID == 0x02 ? itemID | 0x4000 : itemID);
 
@@ -1917,6 +1918,12 @@ namespace Assistant
 			}
 
 			Item.UpdateContainers();
+
+			if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
+				// Update Contatori Item ToolBar
+				if (RazorEnhanced.ToolBar.ToolBarForm != null)
+						RazorEnhanced.ToolBar.UpdateCount();
+
 			// Filtro muri
 			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
 			{
