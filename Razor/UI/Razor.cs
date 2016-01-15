@@ -8491,10 +8491,7 @@ namespace Assistant
 
 		private void razorButtonResetIgnore_Click(object sender, EventArgs e)
 		{
-			RazorEnhanced.AutoLoot.AddLog(RazorEnhanced.DragDropManager.AutoLootOpenAction.Count.ToString());
-			RazorEnhanced.AutoLoot.AddLog(RazorEnhanced.DragDropManager.ScavengerSerialToGrab.Count.ToString());
-			RazorEnhanced.AutoLoot.AddLog(RazorEnhanced.DragDropManager.AutoLootSerialToGrab.Count.ToString());
-			//RazorEnhanced.AutoLoot.ResetIgnore();
+			RazorEnhanced.AutoLoot.ResetIgnore();
 		}
 
 		private void autoLootButtonListExport_Click(object sender, EventArgs e)

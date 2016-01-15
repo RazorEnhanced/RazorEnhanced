@@ -7,39 +7,10 @@ namespace RazorEnhanced
 	public class DragDropManager
 	{
 		internal static ConcurrentQueue<int> AutoLootSerialToGrab = new ConcurrentQueue<int>();
-		internal static ConcurrentQueue<int> AutoLootOpenAction = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 
 		internal static void AutoRun()
 		{
-			if (AutoLootOpenAction.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
-			{
-				try
-				{
-					int itemserial = 0;
-					AutoLootOpenAction.TryPeek(out itemserial);
-					Assistant.Item item = Assistant.World.FindItem(itemserial);
-					if (item == null)
-					{
-						AutoLootOpenAction.TryDequeue(out itemserial);
-						return;
-					}
-					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 2))
-					{
-						RazorEnhanced.AutoLoot.AddLog("- Force Open: " + item.Serial.ToString());
-						Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
-						Thread.Sleep(AutoLoot.AutoLootDelay);
-						AutoLootOpenAction.TryDequeue(out itemserial);
-					}
-					else
-					{
-						AutoLootOpenAction.TryDequeue(out itemserial);
-						AutoLootOpenAction.Enqueue(itemserial);
-					}
-				}
-				catch { }
-			}
-
 			if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
 			{
 				try
