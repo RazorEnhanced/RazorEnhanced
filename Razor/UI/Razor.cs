@@ -10990,7 +10990,7 @@ namespace Assistant
 			Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
 			RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
 			if (World.Player != null)
-				RazorEnhanced.Misc.SendMessage("HotKey: ENABLED");
+				RazorEnhanced.Misc.SendMessage("HotKey: ENABLED", 168);
 		}
 
 		private void hotkeyDisableButton_Click(object sender, EventArgs e)
@@ -10998,7 +10998,7 @@ namespace Assistant
 			RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
 			Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
 			if (World.Player != null)
-				RazorEnhanced.Misc.SendMessage("HotKey: DISABLED");
+				RazorEnhanced.Misc.SendMessage("HotKey: DISABLED", 37);
 		}
 
 		// ----------------- HOT KEY END -------------------
