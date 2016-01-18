@@ -160,7 +160,7 @@ namespace RazorEnhanced
 				if (thread != null && (thread.ThreadState == ThreadState.Running || thread.ThreadState == ThreadState.Unstarted || thread.ThreadState == ThreadState.WaitSleepJoin))
 					return true;
 				else
-					return true;
+					return false;
 			}
 
 			internal void Close()
@@ -236,7 +236,7 @@ namespace RazorEnhanced
 				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoLootThread))
 				{
 					try
-					{
+					{ 
 						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
 						m_AutoLootThread.Start();
 					}
