@@ -13,6 +13,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Linq;
+using System.Security.Principal;
 
 namespace Assistant
 {
@@ -6524,10 +6527,12 @@ namespace Assistant
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
 			this.ResumeLayout(false);
+			
 
 		}
 
 		#endregion Windows Form Designer generated code
+	
 
 		protected override void WndProc(ref Message msg)
 		{
@@ -8133,11 +8138,21 @@ namespace Assistant
 			if (result == DialogResult.OK) // Test result.
 			{
 				string filename = Path.GetFileName(openFileDialogscript.FileName);
-				Scripts.EnhancedScript script = Scripts.Search(filename);
-				if (script == null)
+				string pathscript = openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1).ToLower();
+				string pathrazor = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\").ToLower();
+
+				if (pathscript == pathrazor)
 				{
-					scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, Keys.None, true);
-					ReloadScriptTable();
+					Scripts.EnhancedScript script = Scripts.Search(filename);
+					if (script == null)
+					{
+						scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, Keys.None, true);
+						ReloadScriptTable();
+					}
+				}
+				else
+				{
+					MessageBox.Show("Error, Script file must be in Scripts folder!");
 				}
 			}
 		}
