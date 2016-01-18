@@ -9,7 +9,6 @@ namespace RazorEnhanced.UI
 		private const string m_Title = "Enhanced Mobile Inspect";
 		private Thread m_ProcessInfo;
 		private Assistant.Mobile m_mobile;
-		private Form m_inspectform;
 
 		internal EnhancedMobileInspector(Assistant.Mobile mobileTarg)
 		{

@@ -62,7 +62,7 @@ namespace RazorEnhanced
 				{
 					currentVersion = (int)versionrow["SettingVersion"];
 				}
-				catch (Exception ex)
+				catch
 				{
 					DataTable general = m_Dataset.Tables["GENERAL"];
 					general.Columns.Add("SettingVersion", typeof(int));
