@@ -457,6 +457,10 @@ namespace Assistant
 
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(i, dser, newPos);
+
+			// Update Contatori Item ToolBar
+			if (RazorEnhanced.ToolBar.ToolBarForm != null)
+				RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		private static void MovementRej(PacketReader p, PacketHandlerEventArgs args)
