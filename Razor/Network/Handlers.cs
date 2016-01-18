@@ -818,20 +818,21 @@ namespace Assistant
 				// Blocco Color Highlight flag
 				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 				{
-					if ((i.Container as Mobile).Blessed) // Mortal
+					if ((i.Container as Mobile).Poisoned)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)28);
-					}
-					else if ((i.Container as Mobile).Poisoned)
-					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)58);
+						p.Write((short)0x0042);
 					}
 					else if ((i.Container as Mobile).Paralized)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)98);
+						p.Write((short)0x013C);
+					}
+
+					else if((i.Container as Mobile).Blessed) // Mortal
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)0x002E);
 					}
 				}
 			}
@@ -1088,20 +1089,21 @@ namespace Assistant
 					// Blocco Color Highlight flag
 					if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 					{
-						if (m.Blessed) // Mortal
+						if (m.Poisoned)
 						{
 							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)28);
-						}
-						else if (m.Poisoned)
-						{
-							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)58);
+							p.Write((short)0x0042);
 						}
 						else if (m.Paralized)
 						{
 							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)98);
+							p.Write((short)0x013C);
+						}
+
+						else if (m.Blessed) // Mortal
+						{
+							p.Seek(-2, SeekOrigin.Current);
+							p.Write((short)0x002E);
 						}
 					}
 				}
@@ -1514,20 +1516,21 @@ namespace Assistant
 				// Blocco Color Highlight flag
 				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 				{
-					if (m.Blessed) // Mortal
-					{ 
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)28);
-					}
-					else if (m.Poisoned)
+					if (m.Poisoned)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)58);
+						p.Write((short)0x0042);
 					}
 					else if (m.Paralized)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)98);
+						p.Write((short)0x013C);
+					}
+
+					else if (m.Blessed) // Mortal
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)0x002E);
 					}
 				}
 			}
@@ -1626,20 +1629,21 @@ namespace Assistant
 				// Blocco Color Highlight flag
 				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 				{
-					if (m.Blessed) // Mortal
+					if (m.Poisoned)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)28);
-					}
-					else if (m.Poisoned)
-					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)58);
+						p.Write((short)0x0042);
 					}
 					else if (m.Paralized)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)98);
+						p.Write((short)0x013C);
+					}
+
+					else if (m.Blessed) // Mortal
+					{
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((short)0x002E);
 					}
 				}
 			}
