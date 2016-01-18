@@ -383,7 +383,7 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Horizontal");
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Vertical");
 
-			Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox");
+			Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox");
 			Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox");
 			Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + RazorEnhanced.Settings.General.ReadInt("PosXToolBar") + " - Y:" + RazorEnhanced.Settings.General.ReadInt("PosYToolBar");
 			Assistant.Engine.ToolBarX = RazorEnhanced.Settings.General.ReadInt("PosXToolBar");
