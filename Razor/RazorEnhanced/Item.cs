@@ -253,9 +253,9 @@ namespace RazorEnhanced
 		{
 			if (bag.IsCorpse || bag.IsContainer)
 			{
+				RazorEnhanced.Items.UseItem(bag);
 				if (!bag.Updated)
 				{
-					RazorEnhanced.Items.UseItem(bag);
 					int subdelay = delay;
 					while (!bag.Updated)
 					{
