@@ -10,7 +10,7 @@ namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
-		private static List<int> m_IgnoreCorpseList = new List<int>();
+		private static Queue<int> m_IgnoreCorpseList = new Queue<int>();
 
 		[Serializable]
 		public class AutoLootItem
@@ -305,11 +305,11 @@ namespace RazorEnhanced
 				if (!m_IgnoreCorpseList.Contains(corpo.Serial))
 				{
 					RazorEnhanced.Items.WaitForContents(corpo, 1000);
-					m_IgnoreCorpseList.Add(corpo.Serial);
+					m_IgnoreCorpseList.Enqueue(corpo.Serial);
                 }
 
 				if (m_IgnoreCorpseList.Count > 100)
-					m_IgnoreCorpseList.Clear();
+					m_IgnoreCorpseList.Dequeue();
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
