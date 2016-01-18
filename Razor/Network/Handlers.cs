@@ -641,6 +641,9 @@ namespace Assistant
 				//ClientCommunication.SendToServer(new QueryProperties(ser));
 				Item.UpdateContainers();
 			}
+			item = World.FindItem(ser);
+			if (item != null)
+				item.Updated = true;
 		}
 
 		internal static byte[] HandleRPVContainerContent(Packet p)

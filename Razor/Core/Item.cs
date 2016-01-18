@@ -73,14 +73,14 @@ namespace Assistant
 
 		private byte m_GridNum;
 
-		private bool m_Updated = false;
+		private bool m_Updated;
 
 		internal bool Updated
 		{
 			get { return m_Updated; }
 			set
 			{
-				if (this.IsContainer)
+				if (this.IsContainer || this.IsCorpse)
 				{
 					m_Updated = value;
 				}
