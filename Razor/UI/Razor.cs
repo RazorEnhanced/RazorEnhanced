@@ -8185,21 +8185,8 @@ namespace Assistant
 			dataGridViewScripting.EndEdit();
 
 			if (scriptTable.Rows[e.RowIndex][e.ColumnIndex] != dataGridViewScripting[e.ColumnIndex, e.RowIndex].Value)
+			{ 
 				scriptTable.Rows[e.RowIndex][e.ColumnIndex] = dataGridViewScripting[e.ColumnIndex, e.RowIndex].Value;
-
-			bool changed = false;
-
-			foreach (DataRow row in scriptTable.Rows)
-			{
-				if (row.RowState != DataRowState.Unchanged)
-				{
-					changed = true;
-					break;
-				}
-			}
-
-			if (changed)
-			{
 				scriptTable.AcceptChanges();
 				ReloadScriptTable();
 			}
