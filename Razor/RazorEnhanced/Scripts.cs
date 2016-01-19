@@ -59,7 +59,6 @@ namespace RazorEnhanced
 
 				m_Thread = new Thread(AsyncStart);
 				m_Run = false;
-				Engine.MainWindow.UpdateScriptGrid(m_Filename, false);
 			}
 
 			internal string Create(TracebackDelegate traceFunc)

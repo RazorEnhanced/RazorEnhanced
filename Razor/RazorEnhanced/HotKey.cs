@@ -247,7 +247,6 @@ namespace RazorEnhanced
 							else
 							{
 								script.Run = true;
-								Engine.MainWindow.UpdateScriptGrid(script.Filename, true);
 							}
 						}
 						break;
