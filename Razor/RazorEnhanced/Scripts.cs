@@ -217,7 +217,7 @@ namespace RazorEnhanced
 							}
 						}
 					}
-					else if (!(script.State == ThreadState.Aborted || script.State == ThreadState.Stopped || script.State == ThreadState.Unstarted))
+					else if (script.State == ThreadState.Aborted || script.State == ThreadState.Stopped)
 					{
 						script.Stop();
 					}
