@@ -49,7 +49,9 @@ namespace RazorEnhanced
 
 			internal void Stop()
 			{
-				m_Thread.Abort();
+				if (!(this.State == ThreadState.Aborted || this.State == ThreadState.Stopped))
+					m_Thread.Abort();
+
 				m_Thread = new Thread(AsyncStart);
 				m_Run = false;
 			}
