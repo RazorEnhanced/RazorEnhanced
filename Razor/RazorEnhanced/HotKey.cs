@@ -240,13 +240,21 @@ namespace RazorEnhanced
 						Scripts.EnhancedScript script = Scripts.Search(filename);
 						if (script != null)
 						{
-							if (!script.Wait && (script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin))
+							if (!script.Wait && script.IsRunning)
 							{
 								script.Stop();
 							}
 							else
 							{
-								script.Run = true;
+								if (script.IsStopped)
+								{
+									script.Reset();
+								}
+
+								if (script.IsUnstarted)
+								{
+									script.Start();
+								}
 							}
 						}
 						break;

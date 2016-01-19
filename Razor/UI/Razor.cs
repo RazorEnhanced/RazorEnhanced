@@ -7970,8 +7970,8 @@ namespace Assistant
 		{
 			foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts)
 			{
-				if (!(script.State == System.Threading.ThreadState.Aborted || script.State == System.Threading.ThreadState.Stopped || script.State == System.Threading.ThreadState.Unstarted))
-					script.Stop();
+				script.Stop();
+				script.Reset();
 			}
 
 			Scripts.EnhancedScripts.Clear();

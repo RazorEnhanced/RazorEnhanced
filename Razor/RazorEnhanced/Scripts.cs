@@ -26,10 +26,15 @@ namespace RazorEnhanced
 		{
 			internal void Start()
 			{
-				m_Thread = new Thread(AsyncStart);
-				m_Thread.Start();
-				while (!m_Thread.IsAlive)
+				if (!IsRunning && IsUnstarted)
 				{
+					m_Thread.Start();
+
+					while (!m_Thread.IsAlive)
+					{
+					}
+
+					m_Run = true;
 				}
 			}
 
@@ -41,7 +46,7 @@ namespace RazorEnhanced
 					{
 						m_Source.Execute(m_Scope);
 					}
-					catch
+					catch (Exception ex)
 					{
 					}
 				}
@@ -49,9 +54,12 @@ namespace RazorEnhanced
 
 			internal void Stop()
 			{
-				if (!(this.State == ThreadState.Aborted || this.State == ThreadState.Stopped))
+				if (!IsStopped)
 					m_Thread.Abort();
+			}
 
+			internal void Reset()
+			{
 				m_Thread = new Thread(AsyncStart);
 				m_Run = false;
 			}
@@ -105,13 +113,44 @@ namespace RazorEnhanced
 
 			private object m_Lock = new object();
 
-			internal ThreadState State
+			internal bool IsRunning
 			{
 				get
 				{
 					lock (m_Lock)
 					{
-						return m_Thread.ThreadState;
+						if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
+							return true;
+						else
+							return false;
+					}
+				}
+			}
+
+			internal bool IsStopped
+			{
+				get
+				{
+					lock (m_Lock)
+					{
+						if (m_Thread.ThreadState == ThreadState.Stopped || m_Thread.ThreadState == ThreadState.Aborted)
+							return true;
+						else
+							return false;
+					}
+				}
+			}
+
+			internal bool IsUnstarted
+			{
+				get
+				{
+					lock (m_Lock)
+					{
+						if (m_Thread.ThreadState == ThreadState.Unstarted)
+							return true;
+						else
+							return false;
 					}
 				}
 			}
@@ -200,26 +239,39 @@ namespace RazorEnhanced
 					{
 						if (script.Loop)
 						{
-							if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin || script.State == ThreadState.AbortRequested))
+							if (script.IsStopped)
+							{
+								script.Reset();
+							}
+
+							if (script.IsUnstarted)
 							{
 								script.Start();
 							}
 						}
 						else
 						{
-							if (script.State == ThreadState.Aborted || script.State == ThreadState.Stopped)
+							if (script.IsStopped)
 							{
-								script.Stop();
+								script.Reset();
 							}
-							else if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin || script.State == ThreadState.AbortRequested))
+							else if (script.IsUnstarted)
 							{
 								script.Start();
 							}
 						}
 					}
-					else if (script.State == ThreadState.Aborted || script.State == ThreadState.Stopped)
+					else
 					{
-						script.Stop();
+						if (script.IsRunning)
+						{
+							script.Stop();
+						}
+
+						if (script.IsStopped)
+						{
+							script.Reset();
+						}
 					}
 				}
 
