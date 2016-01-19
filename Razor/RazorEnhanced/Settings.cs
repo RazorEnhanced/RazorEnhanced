@@ -77,13 +77,13 @@ namespace RazorEnhanced
 			{
 				// Scripting
 				DataTable scripting = new DataTable("SCRIPTING");
-				scripting.Columns.Add("Checked", typeof(bool));
 				scripting.Columns.Add("Filename", typeof(string));
 				scripting.Columns.Add("Flag", typeof(Bitmap));
 				scripting.Columns.Add("Status", typeof(string));
+				scripting.Columns.Add("Loop", typeof(bool));
+				scripting.Columns.Add("Wait", typeof(bool));
 				scripting.Columns.Add("HotKey", typeof(Keys));
 				scripting.Columns.Add("HotKeyPass", typeof(bool));
-				m_Dataset.Tables.Add(scripting);
 
 				// -------- AUTOLOOT ------------
 				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
