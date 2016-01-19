@@ -306,6 +306,7 @@ namespace RazorEnhanced
 				{
 					RazorEnhanced.Items.WaitForContents(corpo, 1000);
 					m_IgnoreCorpseList.Enqueue(corpo.Serial);
+					AddLog("- Refresh Corpse: 0x" + corpo.Serial.ToString("X8"));
                 }
 
 				if (m_IgnoreCorpseList.Count > 100)
@@ -313,7 +314,6 @@ namespace RazorEnhanced
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
-					Items.WaitForProps(oggettoContenuto, 1000);
 					// Blocco shared
 					if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0) // Attende l'arrivo delle props
 					{
@@ -351,8 +351,6 @@ namespace RazorEnhanced
 					{
 						if (!autoLootItem.Selected)
 							continue;
-
-						Items.WaitForProps(oggettoContenuto, 1000);
 
 						if (autoLootItem.Color == -1)          // Colore ALL
 						{
@@ -402,6 +400,7 @@ namespace RazorEnhanced
 			if (autoLoootItem.Properties.Count > 0) // Item con props
 			{
 				RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
+				Items.WaitForProps(oggettoContenuto, 1000);
 
 				bool propsOK = false;
 				foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props

@@ -8,6 +8,7 @@ namespace RazorEnhanced
 	{
 		internal static ConcurrentQueue<int> AutoLootSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
+		internal static int LastAutolootItem = 0;
 
 		internal static void AutoRun()
 		{
@@ -28,7 +29,9 @@ namespace RazorEnhanced
 						AutoLootSerialToGrab.TryDequeue(out itemserial);
 						return;
 					}
+
 					Assistant.Item corpse = (Assistant.Item)item.Container;
+
 					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 2) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
 					{
 						if ((World.Player.MaxWeight - World.Player.Weight) < 5)
@@ -42,7 +45,8 @@ namespace RazorEnhanced
 							RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
 							Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
 							Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, AutoLoot.AutoLootBag));
-							Thread.Sleep(AutoLoot.AutoLootDelay);
+							LastAutolootItem = item.Serial;
+                            Thread.Sleep(AutoLoot.AutoLootDelay);
 						}
 					}
 					else

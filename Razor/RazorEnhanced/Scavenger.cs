@@ -293,8 +293,6 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item itemGround in itemsOnGround)
 			{
-				Items.WaitForProps(itemGround, 1000);
-
 				if (World.Player.IsGhost)
 				{
 					ResetIgnore();
@@ -338,6 +336,8 @@ namespace RazorEnhanced
 
 			if (scavengerItem.Properties.Count > 0) // Item con props
 			{
+				Items.WaitForProps(itemGround, 1000);
+
 				RazorEnhanced.Scavenger.AddLog("- Item Match found scan props");
 
 				bool propsOK = false;
