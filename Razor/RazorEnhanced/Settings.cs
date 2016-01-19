@@ -84,6 +84,7 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Wait", typeof(bool));
 				scripting.Columns.Add("HotKey", typeof(Keys));
 				scripting.Columns.Add("HotKeyPass", typeof(bool));
+				m_Dataset.Tables.Add(scripting);
 
 				// -------- AUTOLOOT ------------
 				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
