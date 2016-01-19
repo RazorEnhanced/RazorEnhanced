@@ -304,10 +304,9 @@ namespace RazorEnhanced
 			{
 				if (!m_IgnoreCorpseList.Contains(corpo.Serial))
 				{
-					RazorEnhanced.Items.WaitForContents(corpo, 1000);
+					DragDropManager.AutoLootSerialCorpseRefresh.Enqueue(corpo.Serial);
 					m_IgnoreCorpseList.Enqueue(corpo.Serial);
-					AddLog("- Refresh Corpse: 0x" + corpo.Serial.ToString("X8"));
-                }
+				}
 
 				if (m_IgnoreCorpseList.Count > 100)
 					m_IgnoreCorpseList.Dequeue();
@@ -473,6 +472,7 @@ namespace RazorEnhanced
 		{
 			m_IgnoreCorpseList.Clear();
 			DragDropManager.AutoLootSerialToGrab = new ConcurrentQueue<int>();
+			DragDropManager.AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
 			Scavenger.ResetIgnore();
 		}
 

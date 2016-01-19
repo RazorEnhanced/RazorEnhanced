@@ -6,12 +6,44 @@ namespace RazorEnhanced
 {
 	public class DragDropManager
 	{
+		internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> AutoLootSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		internal static int LastAutolootItem = 0;
 
 		internal static void AutoRun()
 		{
+			if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
+			{
+				try
+				{
+					int itemserial = 0;
+					AutoLootSerialCorpseRefresh.TryPeek(out itemserial);
+					Assistant.Item item = Assistant.World.FindItem(itemserial);
+
+					if (item == null)
+					{
+						AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
+						return;
+					}
+
+					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 2) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+					{
+						RazorEnhanced.Items.WaitForContents(Items.FindBySerial(itemserial), 1000);
+						AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
+						Thread.Sleep(AutoLoot.AutoLootDelay);
+						if (item.Updated)
+							AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
+					}
+					else
+					{
+						AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
+						AutoLootSerialCorpseRefresh.Enqueue(itemserial);
+					}
+				}
+				catch { }
+			}
+
 			if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
 			{
 				try
