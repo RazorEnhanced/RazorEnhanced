@@ -54,10 +54,10 @@ namespace RazorEnhanced.UI
 
 		private volatile bool m_Breaktrace = false;
 
-		internal static void Init()
+		internal static void Init(string filename)
 		{
 			ScriptEngine engine = Python.CreateEngine();
-			m_EnhancedScriptEditor = new EnhancedScriptEditor(engine);
+			m_EnhancedScriptEditor = new EnhancedScriptEditor(engine, filename);
 			m_EnhancedScriptEditor.Show();
 		}
 
@@ -71,13 +71,20 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		internal EnhancedScriptEditor(ScriptEngine engine)
+		internal EnhancedScriptEditor(ScriptEngine engine, string filename)
 		{
 			InitializeComponent();
 
 			this.Text = m_Title;
 			this.m_Engine = engine;
 			this.m_Engine.SetTrace(null);
+
+			if (filename != null)
+			{
+				m_Filename = Path.GetFileNameWithoutExtension(filename);
+				this.Text = m_Title + " - " + m_Filename + ".cs";
+				fastColoredTextBoxEditor.Text = File.ReadAllText(filename);
+			}
 		}
 
 		private TracebackDelegate OnTraceback(TraceBackFrame frame, string result, object payload)
@@ -407,7 +414,7 @@ namespace RazorEnhanced.UI
 			if (open.ShowDialog() == DialogResult.OK)
 			{
 				m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
-				this.Text = m_Title + " - " + m_Filename + ".cs";
+				this.Text = m_Title + " - " + m_Filename + ".py";
 				fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
 			}
 		}
@@ -421,7 +428,7 @@ namespace RazorEnhanced.UI
 			if (save.ShowDialog() == DialogResult.OK)
 			{
 				m_Filename = Path.GetFileNameWithoutExtension(save.FileName);
-				this.Text = m_Title + " - " + m_Filename + ".cs";
+				this.Text = m_Title + " - " + m_Filename + ".py";
 				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 			}
 		}

@@ -7970,7 +7970,8 @@ namespace Assistant
 		{
 			foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts)
 			{
-				script.Stop();
+				if (!(script.State == System.Threading.ThreadState.Aborted || script.State == System.Threading.ThreadState.Stopped || script.State == System.Threading.ThreadState.Unstarted))
+					script.Stop();
 			}
 
 			Scripts.EnhancedScripts.Clear();
@@ -8068,25 +8069,26 @@ namespace Assistant
 			}
 			else
 			{
-				if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+				if (scriptTable != null && scriptTable.Rows.Count > 0)
 				{
-					DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
-					string filename = (string)row["Filename"];
-
-					Scripts.EnhancedScript script = Scripts.Search(filename);
+					foreach (DataRow row in scriptTable.Rows)
 					{
-						if (script != null)
+						string filename = (string)row["Filename"];
+						Scripts.EnhancedScript script = Scripts.Search(filename);
 						{
-							if (script.Run)
+							if (script != null)
 							{
-								row["Flag"] = Assistant.Properties.Resources.green;
-								row["Status"] = "Running";
-							}
-							else
-							{
-								row["Flag"] = Assistant.Properties.Resources.red;
-								row["Status"] = "Stopped";
+								if (script.Run)
+								{
+									row["Flag"] = Assistant.Properties.Resources.green;
+									row["Status"] = "Running";
+								}
+								else
+								{
+									row["Flag"] = Assistant.Properties.Resources.red;
+									row["Status"] = "Stopped";
 
+								}
 							}
 						}
 					}
@@ -8147,10 +8149,10 @@ namespace Assistant
 			if (result == DialogResult.OK) // Test result.
 			{
 				string filename = Path.GetFileName(openFileDialogscript.FileName);
-				string pathscript = openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1).ToLower();
-				string pathrazor = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\").ToLower();
+				string scriptPath = openFileDialogscript.FileName.Substring(0, openFileDialogscript.FileName.LastIndexOf("\\") + 1).ToLower();
+				string razorPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\").ToLower();
 
-				if (pathscript == pathrazor)
+				if (scriptPath == razorPath)
 				{
 					Scripts.EnhancedScript script = Scripts.Search(filename);
 					if (script == null)
@@ -8198,7 +8200,16 @@ namespace Assistant
 
 		private void buttonOpenEditor_Click(object sender, EventArgs e)
 		{
-			EnhancedScriptEditor.Init();
+			string fullPath = null;
+
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && dataGridViewScripting.CurrentCell != null)
+			{
+				DataRow row = scriptTable.Rows[dataGridViewScripting.CurrentCell.RowIndex];
+				string filename = (string)row["Filename"];
+				fullPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\") + filename;
+			}
+
+			EnhancedScriptEditor.Init(fullPath);
 		}
 
 		private void buttonScriptPlay_Click(object sender, EventArgs e)

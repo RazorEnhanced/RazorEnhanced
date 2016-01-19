@@ -26,13 +26,10 @@ namespace RazorEnhanced
 		{
 			internal void Start()
 			{
-				if (!(this.State == ThreadState.Running || this.State == ThreadState.WaitSleepJoin))
+				m_Thread = new Thread(AsyncStart);
+				m_Thread.Start();
+				while (!m_Thread.IsAlive)
 				{
-					m_Thread = new Thread(AsyncStart);
-					m_Thread.Start();
-					while (!m_Thread.IsAlive)
-					{
-					}
 				}
 			}
 
@@ -52,11 +49,7 @@ namespace RazorEnhanced
 
 			internal void Stop()
 			{
-				if (!(m_Thread.ThreadState == ThreadState.Aborted || m_Thread.ThreadState == ThreadState.Stopped))
-				{
-					m_Thread.Abort();
-				}
-
+				m_Thread.Abort();
 				m_Thread = new Thread(AsyncStart);
 				m_Run = false;
 			}
@@ -156,7 +149,7 @@ namespace RazorEnhanced
 				if (thread == null)
 					return false;
 
-				if (thread != null && (thread.ThreadState == ThreadState.Running || thread.ThreadState == ThreadState.Unstarted || thread.ThreadState == ThreadState.WaitSleepJoin))
+				if (thread != null && (thread.ThreadState == ThreadState.Running || /*thread.ThreadState == ThreadState.Unstarted ||*/ thread.ThreadState == ThreadState.WaitSleepJoin))
 					return true;
 				else
 					return false;
@@ -205,28 +198,24 @@ namespace RazorEnhanced
 					{
 						if (script.Loop)
 						{
-							if (script.State == ThreadState.Stopped)
-							{
-								script.Start();
-							}
-							else if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin))
+							if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin || script.State == ThreadState.AbortRequested))
 							{
 								script.Start();
 							}
 						}
 						else
 						{
-							if (script.State == ThreadState.Stopped)
+							if (script.State == ThreadState.Aborted || script.State == ThreadState.Stopped)
 							{
 								script.Stop();
 							}
-							else if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin))
+							else if (!(script.State == ThreadState.Running || script.State == ThreadState.WaitSleepJoin || script.State == ThreadState.AbortRequested))
 							{
 								script.Start();
 							}
 						}
 					}
-					else
+					else if (!(script.State == ThreadState.Aborted || script.State == ThreadState.Stopped || script.State == ThreadState.Unstarted))
 					{
 						script.Stop();
 					}
@@ -235,7 +224,7 @@ namespace RazorEnhanced
 				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoLootThread))
 				{
 					try
-					{ 
+					{
 						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
 						m_AutoLootThread.Start();
 					}
@@ -379,6 +368,7 @@ namespace RazorEnhanced
 				if (script.Filename == filename)
 					return script;
 			}
+
 			return null;
 		}
 	}
