@@ -52,7 +52,7 @@ namespace RazorEnhanced
 
 			internal void Stop()
 			{
-				if (m_Thread.ThreadState != ThreadState.Stopped)
+				if (!(m_Thread.ThreadState == ThreadState.Aborted || m_Thread.ThreadState == ThreadState.Stopped))
 				{
 					m_Thread.Abort();
 				}
