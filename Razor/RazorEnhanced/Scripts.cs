@@ -233,7 +233,7 @@ namespace RazorEnhanced
 
 			protected override void OnTick()
 			{
-				foreach (EnhancedScript script in m_EnhancedScripts)
+				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
 				{
 					if (script.Run)
 					{
@@ -282,7 +282,7 @@ namespace RazorEnhanced
 						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
 						m_AutoLootThread.Start();
 					}
-					catch
+					catch (Exception ex)
 					{
 						AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
 					}
@@ -295,7 +295,7 @@ namespace RazorEnhanced
 						m_ScavengerThread = new Thread(Scavenger.AutoRun);
 						m_ScavengerThread.Start();
 					}
-					catch
+					catch (Exception ex)
 					{
 						Scavenger.AddLog("Error in Scaveger Thread, Restart");
 					}
@@ -308,7 +308,7 @@ namespace RazorEnhanced
 						m_BandageHealThread = new Thread(BandageHeal.AutoRun);
 						m_BandageHealThread.Start();
 					}
-					catch
+					catch (Exception ex)
 					{
 						BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
 					}
@@ -321,7 +321,7 @@ namespace RazorEnhanced
 						m_DragDropThread = new Thread(DragDropManager.AutoRun);
 						m_DragDropThread.Start();
 					}
-					catch
+					catch (Exception ex)
 					{
 					}
 				}
@@ -333,7 +333,7 @@ namespace RazorEnhanced
 						m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
 						m_AutoCarverThread.Start();
 					}
-					catch
+					catch (Exception ex)
 					{
 					}
 				}
@@ -345,7 +345,7 @@ namespace RazorEnhanced
 						m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
 						m_AutoRemountThread.Start();
 					}
-					catch
+					catch (Exception ex)
 					{
 					}
 				}
