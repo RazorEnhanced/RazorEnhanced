@@ -5,11 +5,7 @@ using Microsoft.Scripting.Hosting;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
 using System.Threading;
-using System.Windows.Forms;
 
 namespace RazorEnhanced
 {
@@ -87,28 +83,79 @@ namespace RazorEnhanced
 			}
 
 			private string m_Filename;
-			internal string Filename { get { return m_Filename; } }
+			internal string Filename
+			{
+				get
+				{
+					lock (m_Lock)
+					{
+						return m_Filename;
+					}
+				}
+			}
 
 			private string m_Text;
-			internal string Text { get { return m_Text; } }
+			internal string Text
+			{
+				get
+				{
+					lock (m_Lock)
+					{
+						return m_Text;
+					}
+				}
+			}
 
 			private Thread m_Thread;
 
-			private volatile bool m_Wait;
-			internal bool Wait { get { return m_Wait; } }
-
-			private volatile bool m_Loop;
-			internal bool Loop
+			private bool m_Wait;
+			internal bool Wait
 			{
-				get { return m_Loop; }
-				set { m_Loop = value; }
+				get
+				{
+					lock (m_Lock)
+					{
+						return m_Wait;
+					}
+				}
 			}
 
-			private volatile bool m_Run;
+			private bool m_Loop;
+			internal bool Loop
+			{
+				get
+				{
+					lock (m_Lock)
+					{
+						return m_Loop;
+					}
+				}
+				set
+				{
+					lock (m_Lock)
+					{
+						m_Loop = value;
+					}
+				}
+			}
+
+			private bool m_Run;
 			internal bool Run
 			{
-				get { return m_Run; }
-				set { m_Run = value; }
+				get
+				{
+					lock (m_Lock)
+					{
+						return m_Run;
+					}
+				}
+				set
+				{
+					lock (m_Lock)
+					{
+						m_Run = value;
+					}
+				}
 			}
 
 			private object m_Lock = new object();

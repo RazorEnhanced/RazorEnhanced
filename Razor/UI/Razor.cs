@@ -15,7 +15,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
-using System.Security.Principal;
 
 namespace Assistant
 {
@@ -8071,7 +8070,7 @@ namespace Assistant
 			{
 				if (scriptTable != null && scriptTable.Rows.Count > 0)
 				{
-					foreach (DataRow row in scriptTable.Rows)
+					foreach (DataRow row in scriptTable.Rows.Cast<DataRow>().ToList())
 					{
 						string filename = (string)row["Filename"];
 						Scripts.EnhancedScript script = Scripts.Search(filename);
