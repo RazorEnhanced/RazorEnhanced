@@ -301,6 +301,7 @@ namespace RazorEnhanced
 			// Check if container is updated
 			RazorEnhanced.Organizer.AddLog("- Refresh Source Container");
 			Items.WaitForContents(sourceBag, 1000);
+			Thread.Sleep(mseconds);
 
 			// Inizia scansione
 			foreach (RazorEnhanced.Item oggettoContenuto in sourceBag.Contains)
