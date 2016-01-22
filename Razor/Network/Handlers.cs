@@ -402,7 +402,6 @@ namespace Assistant
 				{
 					World.AddItem(item = new Item(serial));
 					item.Amount = amount;
-					//ClientCommunication.SendToServer(new QueryProperties(serial));
 				}
 
 				DragDropManager.Drag(item, amount, true);
@@ -453,14 +452,12 @@ namespace Assistant
 
 			Item dest = World.FindItem(dser);
 			if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
+			{
 				i.IsNew = true;
-
+				RazorEnhanced.Misc.SendMessage(i.Serial);
+			}
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(i, dser, newPos);
-
-			// Update Contatori Item ToolBar
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		private static void MovementRej(PacketReader p, PacketHandlerEventArgs args)
@@ -542,7 +539,6 @@ namespace Assistant
 					return p.Compile();
 
 				World.AddItem(i = new Item(serial));
-				//ClientCommunication.SendToServer(new QueryProperties(serial));
 				i.IsNew = i.AutoStack = true;
 			}
 
@@ -555,10 +551,6 @@ namespace Assistant
 
 			if (i.IsNew)
 				Item.UpdateContainers();
-			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
-				// Update Contatori Item ToolBar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-					RazorEnhanced.ToolBar.UpdateCount();
 
 			return new ContainerItem(i, Engine.UsePostKRPackets).Compile();
 		}
@@ -596,7 +588,6 @@ namespace Assistant
 					return;
 
 				World.AddItem(i = new Item(serial));
-				//ClientCommunication.SendToServer(new QueryProperties(serial));
 				i.IsNew = i.AutoStack = true;
 			}
 			else
@@ -619,10 +610,6 @@ namespace Assistant
 			i.Container = cser;
 			if (i.IsNew)
 				Item.UpdateContainers();
-			if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
-				// Update Contatori Item ToolBar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-					RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		private static void BeginContainerContent(PacketReader p, PacketHandlerEventArgs args)
@@ -642,7 +629,6 @@ namespace Assistant
 			else
 			{
 				World.AddItem(new Item(ser));
-				//ClientCommunication.SendToServer(new QueryProperties(ser));
 				Item.UpdateContainers();
 			}
 			item = World.FindItem(ser);
@@ -665,7 +651,6 @@ namespace Assistant
 				if (item == null)
 				{
 					World.AddItem(item = new Item(serial));
-					//ClientCommunication.SendToServer(new QueryProperties(serial));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -704,10 +689,6 @@ namespace Assistant
 				item.Hue = p.ReadUInt16();
 
 				item.Container = cont; // must be done after hue is set (for counters)
-				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
-					// Update Contatori Item ToolBar
-					if (RazorEnhanced.ToolBar.ToolBarForm != null)
-						RazorEnhanced.ToolBar.UpdateCount();
 
 				list.Add(item);
 			}
@@ -730,7 +711,6 @@ namespace Assistant
 				if (item == null)
 				{
 					World.AddItem(item = new Item(serial));
-					//	ClientCommunication.SendToServer(new QueryProperties(serial));
 					item.IsNew = true;
 					item.AutoStack = false;
 				}
@@ -762,10 +742,6 @@ namespace Assistant
 				item.Hue = p.ReadUInt16();
 
 				item.Container = cont; // must be done after hue is set (for counters)
-				if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
-					// Update Contatori Item ToolBar
-					if (RazorEnhanced.ToolBar.ToolBarForm != null)
-						RazorEnhanced.ToolBar.UpdateCount();
 			}
 
 			foreach (Item container in updated)
@@ -783,7 +759,6 @@ namespace Assistant
 			if (i == null)
 			{
 				World.AddItem(i = new Item(serial));
-				//	ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 				Item.UpdateContainers();
 			}
@@ -1361,7 +1336,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+				if (World.Player.Expansion > 3)
+					ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1485,7 +1461,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+				if (World.Player.Expansion > 3)
+					ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1599,7 +1576,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
+				if (World.Player.Expansion > 3)
+					ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1684,7 +1662,6 @@ namespace Assistant
 				{
 					isNew = true;
 					World.AddItem(item = new Item(serial));
-					//ClientCommunication.SendToServer(new QueryProperties(serial));
 				}
 
 				if (!DragDropManager.EndHolding(serial))
@@ -1756,11 +1733,6 @@ namespace Assistant
 				Item i = World.FindItem(serial);
 				if (i != null)
 				{
-					if (i.IsChildOf(World.Player.Backpack) || i.IsChildOf(World.Player.Quiver))
-						// Update Contatori Item ToolBar
-						if (RazorEnhanced.ToolBar.ToolBarForm != null)
-								RazorEnhanced.ToolBar.UpdateCount();
-
 					if (DragDropManager.Holding == i)
 					{
 						//Counter.SupressWarnings = true;
@@ -1790,7 +1762,6 @@ namespace Assistant
 			if (item == null)
 			{
 				World.AddItem(item = new Item(serial & 0x7FFFFFFF));
-				//ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 			}
 			else
@@ -1852,11 +1823,6 @@ namespace Assistant
 				}
 			}
 			Item.UpdateContainers();
-
-			if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
-				// Update Contatori Item ToolBar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-						RazorEnhanced.ToolBar.UpdateCount();
 
 			// Filtro muri
 			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
@@ -1959,7 +1925,6 @@ namespace Assistant
 			if (item == null)
 			{
 				World.AddItem(item = new Item(serial));
-				//	ClientCommunication.SendToServer(new QueryProperties(serial));
 				isNew = true;
 			}
 			else
@@ -2015,11 +1980,6 @@ namespace Assistant
 			}
 
 			Item.UpdateContainers();
-
-			if (item.IsChildOf(World.Player.Backpack) || item.IsChildOf(World.Player.Quiver))
-				// Update Contatori Item ToolBar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-						RazorEnhanced.ToolBar.UpdateCount();
 
 			// Filtro muri
 			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
@@ -2518,7 +2478,8 @@ namespace Assistant
 							{
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
-								ClientCommunication.SendToServer(new QueryProperties(serial));
+								if (World.Player.Expansion > 3)
+									ClientCommunication.SendToServer(new QueryProperties(serial));
 								ClientCommunication.SendToServer(new StatusQuery(serial));
 							}
 
