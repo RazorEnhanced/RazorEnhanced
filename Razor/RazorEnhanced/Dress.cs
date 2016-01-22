@@ -882,6 +882,9 @@ namespace RazorEnhanced
 					}
 					else
 					{
+						if (World.FindItem(oggettolista.Serial) == null)
+							continue;
+
 						if (conflict)       // Caso abilitato controllo conflitto
 						{
 							Assistant.Item itemonlayer = Assistant.World.Player.GetItemOnLayer(World.FindItem(oggettolista.Serial).Layer);
