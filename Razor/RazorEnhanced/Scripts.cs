@@ -32,6 +32,8 @@ namespace RazorEnhanced
 
 					m_Run = true;
 				}
+
+				Assistant.Engine.MainWindow.UpdateScriptGrid();
 			}
 
 			private void AsyncStart()
@@ -52,12 +54,16 @@ namespace RazorEnhanced
 			{
 				if (!IsStopped)
 					m_Thread.Abort();
+
+				Assistant.Engine.MainWindow.UpdateScriptGrid();
 			}
 
 			internal void Reset()
 			{
 				m_Thread = new Thread(AsyncStart);
 				m_Run = false;
+
+				Assistant.Engine.MainWindow.UpdateScriptGrid();
 			}
 
 			internal string Create(TracebackDelegate traceFunc)

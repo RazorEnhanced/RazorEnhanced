@@ -6558,10 +6558,6 @@ namespace Assistant
 		private void MainForm_Load(object sender, System.EventArgs e)
 		{
 			//ClientCommunication.SetCustomNotoHue( 0x2 );
-			System.Windows.Forms.Timer updateGridTimer = new System.Windows.Forms.Timer();
-			updateGridTimer.Interval = 1000;
-			updateGridTimer.Tick += new EventHandler(UpdateScriptGrid);
-			updateGridTimer.Start();
 
 			m_SystemTimer = new System.Timers.Timer(5);
 			m_SystemTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimedEvent);
@@ -8060,11 +8056,11 @@ namespace Assistant
 			RazorEnhanced.HotKey.Init();
 		}
 
-		private void UpdateScriptGrid(object source, EventArgs e)
+		internal void UpdateScriptGrid()
 		{
 			if (InvokeRequired)
 			{
-				Invoke((MethodInvoker)delegate { UpdateScriptGrid(source, e); });
+				Invoke((MethodInvoker)delegate { UpdateScriptGrid(); });
 			}
 			else
 			{
