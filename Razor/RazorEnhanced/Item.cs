@@ -751,6 +751,9 @@ namespace RazorEnhanced
 
 		public static void WaitForProps(int itemserial, int delay) // Delay in MS
 		{
+			if (World.Player.Expansion <= 3) // Non esistono le props
+				return;
+
 			Assistant.Item i = Assistant.World.FindItem((Assistant.Serial)((uint)itemserial));
 
 			if (i == null)
