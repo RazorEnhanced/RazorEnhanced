@@ -6775,6 +6775,10 @@ namespace Assistant
 			{
 				ReloadScreenShotsList();
 			}
+			else if (tabs.SelectedTab == scriptingTab)
+			{
+				UpdateScriptGrid();
+			}
 		}
 
 		private Version m_Ver = System.Reflection.Assembly.GetCallingAssembly().GetName().Version;
@@ -8064,6 +8068,9 @@ namespace Assistant
 			}
 			else
 			{
+				if (tabs.SelectedTab != scriptingTab)
+					return;
+
 				if (scriptTable != null && scriptTable.Rows.Count > 0)
 				{
 					foreach (DataRow row in scriptTable.Rows.Cast<DataRow>().ToList())
