@@ -930,6 +930,8 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.RemountCheckbox.Enabled == true)
 				Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
 
+			// Stop thread query queue
+			RazorEnhanced.QueryQueue.Abort();
 
 			PlayerData.ExternalZ = false;
 			World.Player = null;

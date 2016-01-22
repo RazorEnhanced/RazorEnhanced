@@ -1020,6 +1020,10 @@ namespace Assistant
 			// Apertura automatica toolbar se abilitata
 			if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && RazorEnhanced.ToolBar.ToolBarForm == null)
 				RazorEnhanced.ToolBar.Open();
+
+			RazorEnhanced.CheckConnection.ConnectionSucccesfull = true;
+
+			RazorEnhanced.QueryQueue.Start();
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
@@ -1337,8 +1341,8 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (World.Player.Expansion > 3)
-					ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
+					RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
+				RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
 			}
 
 			m.Name = p.ReadString(30);
@@ -1352,8 +1356,6 @@ namespace Assistant
 
 			if (m == World.Player && type != 0x00)
 			{
-				RazorEnhanced.CheckConnection.ConnectionSucccesfull = true;
-
 				PlayerData player = (PlayerData)m;
 
 				player.Female = p.ReadBoolean();
@@ -1462,8 +1464,8 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (World.Player.Expansion > 3)
-					ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
+					RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
+				RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
 			}
 
 			bool wasHidden = !m.Visible;
@@ -1577,8 +1579,8 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (World.Player.Expansion > 3)
-					ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
+					RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
+				RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
 			}
 
 			bool wasHidden = !m.Visible;
@@ -2479,8 +2481,8 @@ namespace Assistant
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
 								if (World.Player.Expansion > 3)
-									ClientCommunication.SendToServer(new QueryProperties(serial));
-								ClientCommunication.SendToServer(new StatusQuery(serial));
+									RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
+								RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
 							}
 
 							if (mobile.Name == null || mobile.Name.Length <= 0)

@@ -364,7 +364,7 @@ namespace Assistant
 
 			// Stoppo tick timer agent
 			if (RazorEnhanced.Scripts.Timer != null)
-				RazorEnhanced.Scripts.Timer.Stop();
+				RazorEnhanced.Scripts.Timer.Close();
 
 			// Stop forzato di tutti i thread agent
 			RazorEnhanced.AutoLoot.AutoMode = false;
@@ -391,6 +391,9 @@ namespace Assistant
 				Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
 
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
+
+			// Stop thread query queue
+			RazorEnhanced.QueryQueue.Abort();
 
 			// Stop forzato di tutti i thread agent
 			RazorEnhanced.AutoLoot.AutoMode = false;
