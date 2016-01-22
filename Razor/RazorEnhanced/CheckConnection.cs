@@ -42,7 +42,8 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				m_checkconnectionthread.Abort();
+				if (m_checkconnectionthread != null && (m_checkconnectionthread.ThreadState == ThreadState.Running || m_checkconnectionthread.ThreadState == ThreadState.WaitSleepJoin))
+					m_checkconnectionthread.Abort();
 			}
 			catch { }
 		}
