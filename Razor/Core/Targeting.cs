@@ -1193,6 +1193,9 @@ namespace Assistant
 			if (World.Player == null)
 				return false;
 
+			if (!RazorEnhanced.Settings.General.ReadBool("BlockHealPoison"))
+				return false;
+
 			if (targID == m_SpellTargID && ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
 			{
 				Mobile m = World.FindMobile(ser);

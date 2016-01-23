@@ -123,6 +123,9 @@ namespace RazorEnhanced
 			if (World.Player == null)
 				return false;
 
+			if (!RazorEnhanced.Settings.General.ReadBool("BlockHealPoison"))
+				return false;
+
 			if (ser.IsMobile && (World.Player.LastSpell == Spell.ToID(1, 4) || World.Player.LastSpell == Spell.ToID(4, 5) || World.Player.LastSpell == 202))
 			{
 				Assistant.Mobile m = World.FindMobile(ser);
