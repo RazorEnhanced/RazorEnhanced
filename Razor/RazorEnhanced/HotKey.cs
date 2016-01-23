@@ -243,6 +243,7 @@ namespace RazorEnhanced
 							if (!script.Wait && script.IsRunning)
 							{
 								script.Stop();
+								script.Reset();
 							}
 							else
 							{

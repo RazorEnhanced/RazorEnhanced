@@ -54,8 +54,6 @@ namespace RazorEnhanced
 			{
 				if (!IsStopped)
 					m_Thread.Abort();
-
-				Assistant.Engine.MainWindow.UpdateScriptGrid();
 			}
 
 			internal void Reset()
