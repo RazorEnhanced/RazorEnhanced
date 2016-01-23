@@ -7,8 +7,6 @@ namespace RazorEnhanced
 		internal static bool ConnectionStart = false;
 		internal static bool ConnectionSucccesfull = false;
 		private static Thread m_checkconnectionthread = new Thread(CheckConnectionWorker);
-		public static Thread CheckConnectionThread { get { return m_checkconnectionthread; } }
-
 
 		internal static void CheckStart()
 		{
@@ -42,7 +40,8 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				m_checkconnectionthread.Abort();
+				if (m_checkconnectionthread != null && (m_checkconnectionthread.ThreadState == ThreadState.Running || m_checkconnectionthread.ThreadState == ThreadState.WaitSleepJoin))
+					m_checkconnectionthread.Abort();
 			}
 			catch { }
 		}
