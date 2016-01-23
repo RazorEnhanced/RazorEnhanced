@@ -36,10 +36,9 @@ namespace RazorEnhanced
 					int s = 0;
 					QueryMobsProps.TryDequeue(out s);
 					ClientCommunication.SendToServer(new QueryProperties(s));
+					Thread.Sleep(100);
 				}
 			}
-			Thread.Sleep(5);
-			RazorEnhanced.AutoLoot.AddLog("sss");
 		}
 
 		internal static void Abort()
