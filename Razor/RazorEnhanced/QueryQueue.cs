@@ -35,6 +35,7 @@ namespace RazorEnhanced
 				}
 
 				if (World.Player.Expansion > 3)
+				{
 					if (!QueryMobsProps.IsEmpty)
 					{
 						int s = 0;
@@ -42,6 +43,8 @@ namespace RazorEnhanced
 						ClientCommunication.SendToServer(new QueryProperties(s));
 						Thread.Sleep(100);
 					}
+				}
+				Thread.Sleep(5);
 			}
 		}
 
