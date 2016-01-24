@@ -452,10 +452,8 @@ namespace Assistant
 
 			Item dest = World.FindItem(dser);
 			if (dest != null && dest.IsContainer && World.Player != null && (dest.IsChildOf(World.Player.Backpack) || dest.IsChildOf(World.Player.Quiver)))
-			{
 				i.IsNew = true;
-				RazorEnhanced.Misc.SendMessage(i.Serial);
-			}
+
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(i, dser, newPos);
 		}
