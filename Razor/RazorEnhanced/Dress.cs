@@ -833,7 +833,6 @@ namespace RazorEnhanced
 		internal static void UndressEngine()
 		{
 			// Check bag
-			AddLog("DD: " + DressBag.ToString("X8"));
 			Assistant.Item bag = Assistant.World.FindItem(DressBag);
 			if (bag == null)
 			{
