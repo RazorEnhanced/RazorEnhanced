@@ -24,16 +24,18 @@ namespace RazorEnhanced
 			{
 				if (!IsRunning && IsUnstarted)
 				{
-					m_Thread.Start();
-
-					while (!m_Thread.IsAlive)
+					try
 					{
+						m_Thread.Start();
+						while (!m_Thread.IsAlive)
+						{
+						}
+
+						m_Run = true;
 					}
+					catch { }
 
-					m_Run = true;
 				}
-
-				Assistant.Engine.MainWindow.UpdateScriptGrid();
 			}
 
 			private void AsyncStart()
@@ -60,8 +62,6 @@ namespace RazorEnhanced
 			{
 				m_Thread = new Thread(AsyncStart);
 				m_Run = false;
-
-				Assistant.Engine.MainWindow.UpdateScriptGrid();
 			}
 
 			internal string Create(TracebackDelegate traceFunc)
