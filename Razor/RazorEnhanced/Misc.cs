@@ -167,5 +167,33 @@ namespace RazorEnhanced
 		{
 			return;
 		}
+
+		// Shared Script data
+		public static object ReadSharedValue(string name)
+		{
+			object data = 0;
+			if (RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.ContainsKey(name))
+				RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.TryGetValue(name, out data);
+			return data;
+		}
+
+		public static void SetSharedValue(string name, object value)
+		{
+			RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.AddOrUpdate(name, value, (key, oldValue) => value);
+		}
+		public static void RemoveSharedValue(string name)
+		{
+			object data = null;
+			RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.TryRemove(name, out data);
+		}
+
+		public static bool CheckSharedValue(string name)
+		{
+			if (RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.ContainsKey(name))
+				return true;
+			else
+				return false;
+		}
+
 	}
 }
