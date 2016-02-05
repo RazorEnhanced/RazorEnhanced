@@ -1731,7 +1731,7 @@ namespace Assistant
 			EnsureCapacity(2 + 2 + 2 + Message.Length + 1);
 			Write((ushort)0x06);   // Command
 			Write((byte)0x04);       // Party command
-			WriteAsciiNull(Message);
+			WriteBigUniNull(Message);
 		}
 	}
 
