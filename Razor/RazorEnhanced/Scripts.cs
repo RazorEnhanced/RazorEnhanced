@@ -224,8 +224,10 @@ namespace RazorEnhanced
 			internal static ConcurrentDictionary<string, object> SharedScriptData = new ConcurrentDictionary<string, object>();
 		}
 
-		internal class ScriptTimer : Assistant.Timer
+		internal class ScriptTimer
 		{
+			private System.Threading.Timer m_Timer;
+
 			private Thread m_AutoLootThread;
 			private Thread m_ScavengerThread;
 			private Thread m_BandageHealThread;
@@ -234,8 +236,17 @@ namespace RazorEnhanced
 			private Thread m_AutoRemountThread;
 
 			internal ScriptTimer()
-				: base(m_TimerDelay, m_TimerDelay)
 			{
+			}
+
+			public void Start()
+			{
+				m_Timer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, m_TimerDelay, m_TimerDelay);
+			}
+
+			public void Stop()
+			{
+				m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
 			}
 
 			private bool IsRunningThread(Thread thread)
@@ -284,7 +295,7 @@ namespace RazorEnhanced
 				this.Stop();
 			}
 
-			protected override void OnTick()
+			private void OnTick(object state)
 			{
 				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
 				{
