@@ -232,6 +232,7 @@ namespace RazorEnhanced
 			private Thread m_ScavengerThread;
 			private Thread m_BandageHealThread;
 			private Thread m_AutoCarverThread;
+			private Thread m_BoneCutterThread;
 			private Thread m_DragDropThread;
 			private Thread m_AutoRemountThread;
 
@@ -396,6 +397,18 @@ namespace RazorEnhanced
 					{
 						m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
 						m_AutoCarverThread.Start();
+					}
+					catch (Exception ex)
+					{
+					}
+				}
+
+				if (Filters.BoneCutter && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_BoneCutterThread))
+				{
+					try
+					{
+						m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
+						m_BoneCutterThread.Start();
 					}
 					catch (Exception ex)
 					{

@@ -180,6 +180,7 @@ namespace RazorEnhanced
 				if (!giaTagliato)
 				{
 					Thread.Sleep(200);
+					Target.Cancel();
 					Items.UseItem(Items.FindBySerial(AutoCarverBlade));
 					Target.WaitForTarget(1000);
 					Target.TargetExecute(corpo.Serial);
@@ -210,6 +211,55 @@ namespace RazorEnhanced
 		}
 
 		//////////////// AUTOCARVER STOP ////////////////
+
+		//////////////// BONE CUTTER START ////////////////
+
+		private static bool m_BoneCutter;
+
+		internal static bool BoneCutter
+		{
+			get { return m_BoneCutter; }
+			set { m_BoneCutter = value; }
+		}
+
+		internal static int BoneCutterEngine(Items.Filter filter)
+		{
+			if (World.Player == null)       // Esce se non loggato
+				return 0;
+
+			if (BoneCutterBlade == 0)       // Esce in caso di errore lettura blade
+				return 0;
+
+			List<Item> bones = RazorEnhanced.Items.ApplyFilter(filter);
+
+			foreach (RazorEnhanced.Item bone in bones)
+			{
+				Target.Cancel();
+				Items.UseItem(Items.FindBySerial(BoneCutterBlade));
+				Target.WaitForTarget(1000);
+				Target.TargetExecute(bone.Serial);
+				Thread.Sleep(100);			
+            }
+			return 0;
+		}
+
+		internal static void BoneCutterRun()
+		{
+			int exit = Int32.MinValue;
+
+			// Genero filtro per ossa
+			Items.Filter bonesFilter = new Items.Filter();
+			bonesFilter.Graphics.Add(0x3968);
+			bonesFilter.RangeMax = 1;
+			bonesFilter.Movable = false;
+			bonesFilter.IsCorpse = -1;
+			bonesFilter.OnGround = 1;
+			bonesFilter.Enabled = true;
+
+			exit = BoneCutterEngine(bonesFilter);
+		}
+
+		//////////////// BONE CUTTER STOP ////////////////
 
 		//////////////// AUTOREMOUNT START ////////////////
 
