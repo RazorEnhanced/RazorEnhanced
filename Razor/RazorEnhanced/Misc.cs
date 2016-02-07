@@ -112,22 +112,44 @@ namespace RazorEnhanced
 		}
 
 		// Context Menu
+
+		public static void WaitForContext(Mobile mob, int delay) // Delay in MS
+		{
+			WaitForContext(mob.Serial, delay);
+        }
+
+		public static void WaitForContext(Item i, int delay) // Delay in MS
+		{
+			WaitForContext(i.Serial, delay);
+		}
+
+        public static void WaitForContext(int ser, int delay) // Delay in MS
+		{
+			ClientCommunication.SendToServer(new ContextMenuRequest(ser));
+			int subdelay = delay;
+			while (World.Player.HasContext != true && World.Player.ContextID != ser && subdelay > 0)
+			{
+				Thread.Sleep(2);
+				subdelay -= 2;
+			}
+		}
+
+
 		public static void ContextReply(int serial, int idx)
 		{
-			ClientCommunication.SendToServer(new ContextMenuRequest(serial));
 			ClientCommunication.SendToServer(new ContextMenuResponse(serial, (ushort)idx));
+			World.Player.HasContext = false;
+			World.Player.ContextID = 0;
 		}
 
 		public static void ContextReply(Mobile mob, int idx)
 		{
-			ClientCommunication.SendToServer(new ContextMenuRequest(mob.Serial));
-			ClientCommunication.SendToServer(new ContextMenuResponse(mob.Serial, (ushort)idx));
-		}
+			ContextReply(mob.Serial, idx);
+        }
 
 		public static void ContextReply(Item item, int idx)
 		{
-			ClientCommunication.SendToServer(new ContextMenuRequest(item.Serial));
-			ClientCommunication.SendToServer(new ContextMenuResponse(item.Serial, (ushort)idx));
+			ContextReply(item.Serial, idx);
 		}
 
 		// Prompt Message Stuff

@@ -1011,6 +1011,8 @@ namespace Assistant
 		internal uint CurrentGumpS, CurrentGumpI;
 		internal bool HasGump;
 		internal bool HasPrompt;
+		internal bool HasContext;
+		internal uint ContextID;
 		internal uint PromptSenderSerial;
 		internal uint PromptID;
 		internal uint PromptType;

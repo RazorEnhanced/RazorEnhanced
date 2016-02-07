@@ -247,6 +247,8 @@ namespace Assistant
 						{
 							ushort menu = ent.ContextMenu[idx];
 						}
+						World.Player.HasContext = false;
+						World.Player.ContextID = 0;
 						break;
 					}
 				case 0x1C:// cast spell
@@ -2404,7 +2406,9 @@ namespace Assistant
 							{
 							}
 						}
-						break;
+						World.Player.HasContext = true;
+						World.Player.ContextID = ser;
+                        break;
 					}
 				case 0x18: // map patches
 					{

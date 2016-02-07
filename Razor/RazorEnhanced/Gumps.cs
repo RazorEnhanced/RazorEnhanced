@@ -81,8 +81,10 @@ namespace RazorEnhanced
 		public static bool LastGumpTextExist(string text)
 		{
 			foreach (string stext in World.Player.CurrentGumpStrings)
+			{
 				if (stext.Contains(text))
 					return true;
+			}
 			return false;
 		}
 
