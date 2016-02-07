@@ -549,7 +549,7 @@ namespace Assistant
 					break;
 				m_GZIn.Seek(-1, SeekOrigin.Current);
 
-				ClientCommunication.ProcessPlaybackData(m_GZIn.Compressed);
+				//ClientCommunication.ProcessPlaybackData(m_GZIn.Compressed);
 
 				if (!m_GZIn.EndOfFile)
 					totalDelay += (delay = m_GZIn.Compressed.ReadInt32());
@@ -604,7 +604,7 @@ namespace Assistant
 					break;
 				m_GZIn.Seek(-1, SeekOrigin.Current);
 
-				ClientCommunication.ProcessPlaybackData(m_GZIn.Compressed);
+				//ClientCommunication.ProcessPlaybackData(m_GZIn.Compressed);
 
 				if (!m_GZIn.EndOfFile)
 				{

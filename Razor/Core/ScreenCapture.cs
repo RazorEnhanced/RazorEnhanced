@@ -15,12 +15,10 @@ namespace Assistant
 
 		public static void Initialize()
 		{
-			//HotKey.Add(HKCategory.Misc, LocString.TakeSS, new HotKeyCallback(CaptureNow));
 		}
 
 		internal static void DeathCapture()
 		{
-			if (!PacketPlayer.Playing) // dont take SS of RPV deaths
 				Timer.DelayedCallback(TimeSpan.FromSeconds(0.5), m_DoCaptureCall).Start();
 		}
 

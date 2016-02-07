@@ -2762,9 +2762,6 @@ namespace Assistant
 
 		private static void MovementDemand(PacketReader p, PacketHandlerEventArgs args)
 		{
-			if (PacketPlayer.Playing)
-				ClientCommunication.ForceSendToClient(new MobileUpdate(World.Player));
-
 			World.Player.ProcessMove((Direction)p.ReadByte());
 		}
 
