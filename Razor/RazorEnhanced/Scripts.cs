@@ -247,7 +247,15 @@ namespace RazorEnhanced
 
 			public void Stop()
 			{
-				m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+                m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+
+				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
+				{
+					if (script.IsRunning)
+					{
+						script.Stop();
+					}
+				}
 			}
 
 			private bool IsRunningThread(Thread thread)
