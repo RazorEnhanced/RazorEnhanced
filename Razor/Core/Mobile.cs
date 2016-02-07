@@ -47,43 +47,6 @@ namespace Assistant
 
 		private byte m_Map;
 
-		internal override void SaveState(BinaryWriter writer)
-		{
-			base.SaveState(writer);
-
-			writer.Write(m_Body);
-			writer.Write((byte)m_Direction);
-			writer.Write(m_Name == null ? "" : m_Name);
-			writer.Write(m_Notoriety);
-			writer.Write((byte)GetPacketFlags());
-			writer.Write(m_HitsMax);
-			writer.Write(m_Hits);
-			writer.Write(m_Map);
-
-			writer.Write((int)m_Items.Count);
-			for (int i = 0; i < m_Items.Count; i++)
-				writer.Write((uint)(((Item)m_Items[i]).Serial));
-			//writer.Write(	(int)0 );
-		}
-
-		internal Mobile(BinaryReader reader, int version)
-			: base(reader, version)
-		{
-			m_Body = reader.ReadUInt16();
-			m_Direction = (Direction)reader.ReadByte();
-			m_Name = reader.ReadString();
-			m_Notoriety = reader.ReadByte();
-			ProcessPacketFlags(reader.ReadByte());
-			m_HitsMax = reader.ReadUInt16();
-			m_Hits = reader.ReadUInt16();
-			m_Map = reader.ReadByte();
-
-			int count = reader.ReadInt32();
-			m_Serials = new List<Serial>();
-			for (int i = 0; i < count; i++)
-				m_Serials.Add((Serial)reader.ReadUInt32());
-		}
-
 		internal override void AfterLoad()
 		{
 			m_Items = new List<Item>();

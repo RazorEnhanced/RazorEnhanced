@@ -201,9 +201,6 @@
     <Compile Include="Core\ObjectPropertyList.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\PacketRec.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\PasswordMemory.cs">
       <SubType>Code</SubType>
     </Compile>
