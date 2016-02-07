@@ -1508,15 +1508,9 @@ namespace RazorEnhanced
 			}
 		}
 
-		// party
-		public static bool InParty { get { return Assistant.World.Player.InParty; } }
-
 		public static void ChatParty(string msg)
 		{
-			if (InParty)
 				Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
-			else
-				Misc.SendMessage("Script Error: ChatParty: you are not in a party");
 		}
 
 		public static void PartyInvite()
@@ -1537,13 +1531,10 @@ namespace RazorEnhanced
 
 		public static void PartyCanLoot(bool CanLoot)
 		{
-			if (InParty)
 				if (CanLoot)
 					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x1));
 				else
 					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x0));
-			else
-				Misc.SendMessage("Script Error: ChatParty: you are not in a party");
 		}
 
 		// Moving
