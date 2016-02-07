@@ -50,6 +50,7 @@ namespace RazorEnhanced
 		private static Label m_labelTextWeightBHV = new System.Windows.Forms.Label();
 		private static Label m_labelTextFollowerBHV = new System.Windows.Forms.Label();
 
+		internal static DateTime LastActivate;
 
 		private static List<Panel> m_panellist = new List<Panel>();
 		private static List<Label> m_panelcount = new List<Label>();
@@ -259,7 +260,8 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				if (m_form == null)
+				LastActivate = DateTime.Now;
+                if (m_form == null)
 				{
 					DrawToolBar();
 					m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
@@ -461,6 +463,7 @@ namespace RazorEnhanced
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			m_form.MaximizeBox = false;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra;
@@ -686,6 +689,7 @@ namespace RazorEnhanced
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			m_form.MaximizeBox = false;
 
 			int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro.Width;
 			int offsetstat = 10;
@@ -908,6 +912,7 @@ namespace RazorEnhanced
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			m_form.MaximizeBox = false;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraVerticaleBordoSopra;
@@ -1122,6 +1127,7 @@ namespace RazorEnhanced
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			m_form.MaximizeBox = false;
 
 			int width = Assistant.Properties.Resources.BarraOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraOrizzontaBordoSinistro.Width;
 			int offsetstat = 5;

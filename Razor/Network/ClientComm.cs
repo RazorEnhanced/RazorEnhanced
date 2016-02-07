@@ -952,7 +952,6 @@ namespace Assistant
 			RazorEnhanced.CheckConnection.Abort();
 		}
 
-		//private static DateTime m_LastActivate;
 		internal static bool OnMessage(MainForm razor, uint wParam, int lParam)
 		{
 			bool retVal = true;
@@ -1044,10 +1043,38 @@ namespace Assistant
 				case UONetMessage.KeyDown:
 					//retVal = HotKey.OnKeyDown(lParam);
 					retVal = RazorEnhanced.HotKey.GameKeyDown((Keys)(lParam));
-					break;
+					break; 
 
 				// Activation Tracking
 				case UONetMessage.Activate:
+					if ((lParam & 0x0000FFFF) == 0 && (lParam & 0xFFFF0000) != 0)
+					{
+						if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
+						{
+							if (RazorEnhanced.ToolBar.ToolBarForm != null)
+								RazorEnhanced.ToolBar.ToolBarForm.Hide();
+						}
+					}
+					else
+					{
+						if (lParam == 0)
+						{
+							if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
+							{
+								if (RazorEnhanced.ToolBar.ToolBarForm != null)
+									RazorEnhanced.ToolBar.ToolBarForm.Hide();
+							}
+						}
+						else
+						{
+							if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
+							{
+								if (RazorEnhanced.ToolBar.ToolBarForm != null)
+									RazorEnhanced.ToolBar.ToolBarForm.Show();
+							}
+						}
+					}
+
 					/*if ( Config.GetBool( "AlwaysOnTop" ) )
 					{
 						if ( (lParam&0x0000FFFF) == 0 && (lParam&0xFFFF0000) != 0 && razor.WindowState != FormWindowState.Minimized && razor.Visible )
