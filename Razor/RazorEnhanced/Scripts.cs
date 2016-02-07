@@ -247,7 +247,8 @@ namespace RazorEnhanced
 
 			public void Stop()
 			{
-				m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+                m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
+				m_Timer = null;
 			}
 
 			private bool IsRunningThread(Thread thread)
