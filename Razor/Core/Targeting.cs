@@ -873,7 +873,7 @@ namespace Assistant
 			}
 		}
 
-		private static void CancelClientTarget()
+		internal static void CancelClientTarget()
 		{
 			if (m_ClientTarget)
 			{
