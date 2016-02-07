@@ -62,14 +62,21 @@ namespace RazorEnhanced
 
 		public static string LastGumpGetLine(int line)
 		{
-			if (line > World.Player.CurrentGumpStrings.Count)
+			try
 			{
-				Misc.SendMessage("Script Error: LastGumpGetLine: Text line (" + line + ") not exist");
-				return "";
+				if (line > World.Player.CurrentGumpStrings.Count)
+				{
+					Misc.SendMessage("Script Error: LastGumpGetLine: Text line (" + line + ") not exist");
+					return "";
+				}
+				else
+				{
+					return World.Player.CurrentGumpStrings[line];
+				}
 			}
-			else
+			catch
 			{
-				return World.Player.CurrentGumpStrings[line];
+				return "";
 			}
 		}
 
@@ -80,27 +87,41 @@ namespace RazorEnhanced
 
 		public static bool LastGumpTextExist(string text)
 		{
-			foreach (string stext in World.Player.CurrentGumpStrings)
+			try
 			{
-				if (stext.Contains(text))
-					return true;
+				foreach (string stext in World.Player.CurrentGumpStrings)
+				{
+					if (stext.Contains(text))
+						return true;
+				}
+				return false;
 			}
-			return false;
+			catch
+			{
+				return false;
+			}
 		}
 
 		public static bool LastGumpTextExistByLine(int line, string text)
 		{
-			if (line > World.Player.CurrentGumpStrings.Count)
+			try
 			{
-				Misc.SendMessage("Script Error: LastGumpTextExistByLine: Text line (" + line + ") not exist");
-				return false;
-			}
-			else
-			{
-				if (World.Player.CurrentGumpStrings[line].Contains(text))
-					return true;
-				else
+				if (line > World.Player.CurrentGumpStrings.Count)
+				{
+					Misc.SendMessage("Script Error: LastGumpTextExistByLine: Text line (" + line + ") not exist");
 					return false;
+				}
+				else
+				{
+					if (World.Player.CurrentGumpStrings[line].Contains(text))
+						return true;
+					else
+						return false;
+				}
+			}
+			catch
+			{
+				return false;
 			}
 		}
 	}
