@@ -467,11 +467,11 @@ namespace RazorEnhanced
 					break;
 
 				case "Organizer Start":
-					RazorEnhanced.Organizer.FStop();
+					RazorEnhanced.Organizer.FStart();
 					break;
 
 				case "Organizer Stop":
-					RazorEnhanced.Organizer.FStart();
+					RazorEnhanced.Organizer.FStop();
 					break;
 
 				case "Sell Agent ON/OFF":
