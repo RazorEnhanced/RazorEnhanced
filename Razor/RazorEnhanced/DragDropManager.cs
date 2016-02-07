@@ -9,6 +9,8 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> AutoLootSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
+		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
+
 		internal static int LastAutolootItem = 0;
 
 		internal static void AutoRun()
@@ -132,6 +134,38 @@ namespace RazorEnhanced
 				catch { }
 			}
 
+			if (CorpseToCutSerial.Count > 0 && Filters.AutoCarver)
+			{
+				try
+				{
+					int itemserial = 0;
+					CorpseToCutSerial.TryPeek(out itemserial);
+					Assistant.Item item = Assistant.World.FindItem(itemserial);
+
+					if (item == null)
+					{
+						CorpseToCutSerial.TryDequeue(out itemserial);
+						return;
+					}
+
+					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 1) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+					{
+						Items.UseItem(Items.FindBySerial(Filters.AutoCarverBlade));
+						Target.WaitForTarget(1000);
+						Target.TargetExecute(item.Serial);
+						Items.Message(item.Serial, 10, "*Cutting*");
+
+						CorpseToCutSerial.TryDequeue(out itemserial);
+						Thread.Sleep(800);
+					}
+					else
+					{
+						CorpseToCutSerial.TryDequeue(out itemserial);
+						CorpseToCutSerial.Enqueue(itemserial);
+					}
+				}
+				catch { }
+			}
 		}
 
 		private static bool CheckZLevel(int x, int y)

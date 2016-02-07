@@ -150,7 +150,7 @@ namespace RazorEnhanced
 
 		//////////////// AUTOCARVER START ////////////////
 
-		private static Queue<Item> m_IgnoreCorpiQueue = new Queue<Item>();
+		private static Queue<int> m_IgnoreCutCorpiQueue = new Queue<int>();
 		private static bool m_AutoCarver;
 
 		internal static bool AutoCarver
@@ -161,7 +161,6 @@ namespace RazorEnhanced
 
 		internal static int AutoCarverEngine(Items.Filter filter)
 		{
-			bool giaTagliato = false;
 			if (World.Player == null)       // Esce se non loggato
 				return 0;
 
@@ -172,25 +171,11 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
-				foreach (RazorEnhanced.Item corpoIgnorato in m_IgnoreCorpiQueue)
+				if (!m_IgnoreCutCorpiQueue.Contains(corpo.Serial))
 				{
-					if (corpoIgnorato.Serial == corpo.Serial)
-						giaTagliato = true;
-				}
-				if (!giaTagliato)
-				{
-					Thread.Sleep(200);
-					Target.Cancel();
-					Items.UseItem(Items.FindBySerial(AutoCarverBlade));
-					Target.WaitForTarget(1000);
-					Target.TargetExecute(corpo.Serial);
-					Items.Message(corpo.Serial, 10, "*Cutting*");
-
-					m_IgnoreCorpiQueue.Enqueue(corpo);
-					if (m_IgnoreCorpiQueue.Count > 50)
-						m_IgnoreCorpiQueue.Dequeue();
-					Thread.Sleep(200);
-				}
+					DragDropManager.CorpseToCutSerial.Enqueue(corpo.Serial);
+					m_IgnoreCutCorpiQueue.Enqueue(corpo.Serial);
+                }			
 			}
 			return 0;
 		}

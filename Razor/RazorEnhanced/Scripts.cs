@@ -379,7 +379,7 @@ namespace RazorEnhanced
 					}
 				}
 
-				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode) && Assistant.Engine.Running && !IsRunningThread(m_DragDropThread))
+				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && Assistant.Engine.Running && !IsRunningThread(m_DragDropThread))
 				{
 					try
 					{
