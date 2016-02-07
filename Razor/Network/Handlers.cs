@@ -2802,6 +2802,8 @@ namespace Assistant
 						numStrings = 0;
 
 					// Split on one or more non-digit characters.
+					World.Player.CurrentGumpStrings.Clear();
+
 					string[] numbers = Regex.Split(layout, @"\D+");
 					foreach (string value in numbers)
 					{
@@ -2818,8 +2820,7 @@ namespace Assistant
 
 					PacketReader pComp = p.GetCompressedReader();
 					int len = 0;
-
-					World.Player.CurrentGumpStrings.Clear();
+				
 					while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
 					{
 						tempstring = pComp.ReadUnicodeString(len);
