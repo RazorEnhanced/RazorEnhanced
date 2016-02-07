@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.IO;
 
@@ -2784,8 +2784,6 @@ namespace Assistant
 
 		private static void CompressedGump(PacketReader p, PacketHandlerEventArgs args)
 		{
-			// X MAGNETO: Verificare la lettura dei testi da gump quest e statici.
-
 			World.Player.HasGump = true;
 			if (World.Player != null)
 			{
@@ -2802,7 +2800,22 @@ namespace Assistant
 					int numStrings = p.ReadInt32();
 					if (numStrings < 0 || numStrings > 256)
 						numStrings = 0;
-					ArrayList strings = new ArrayList(numStrings);
+
+					// Split on one or more non-digit characters.
+					string[] numbers = Regex.Split(layout, @"\D+");
+					foreach (string value in numbers)
+					{
+						if (!string.IsNullOrEmpty(value))
+						{
+							int i = int.Parse(value);
+							if ((i >= 500000 && i <= 503405) || (i >= 1000000 && i <= 1155584) || (i >= 3000000 && i <= 3011032))
+							{
+								World.Player.CurrentGumpStrings.Add(Language.GetString(i));
+								stringlist.Add(Language.GetString(i));
+							}
+						}
+					}
+
 					PacketReader pComp = p.GetCompressedReader();
 					int len = 0;
 
