@@ -235,6 +235,17 @@ namespace RazorEnhanced
 						RazorEnhanced.Target.SetLastTargetFromList(RazorEnhanced.Settings.HotKey.FindTargetString(k));
 						break;
 
+					case "Script":
+						if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
+						{
+							RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33);
+							foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.ToArray())
+							{
+								scriptdata.Run = false;
+							}
+						}
+						break;
+
 					case "SList":
 						string filename = RazorEnhanced.Settings.HotKey.FindScript(k);
 						Scripts.EnhancedScript script = Scripts.Search(filename);
