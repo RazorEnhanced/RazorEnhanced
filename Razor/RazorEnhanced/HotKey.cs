@@ -1291,6 +1291,7 @@ namespace RazorEnhanced
 					node.ForeColor = System.Drawing.Color.DarkGreen;
 				}
 			}
+			Assistant.Engine.MainWindow.UpdateScriptGridKey();
 		}
 
 		internal static void UpdateMaster()
@@ -1316,7 +1317,10 @@ namespace RazorEnhanced
 		{
 			string name = node.Name;
 			if (group == "SList")
+			{
 				RazorEnhanced.Settings.HotKey.UpdateScriptKey(name, Keys.None, true);
+				Assistant.Engine.MainWindow.UpdateScriptGridKey();
+			}
 			else if (group == "TList")
 				RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, Keys.None, true);
 			else

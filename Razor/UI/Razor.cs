@@ -8211,6 +8211,25 @@ namespace Assistant
 			RazorEnhanced.HotKey.Init();
 		}
 
+		internal void UpdateScriptGridKey()
+		{
+			int i = 0;
+			scriptlistView.BeginUpdate();
+			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
+			foreach (DataRow row in scriptTable.Rows)
+			{
+				bool passkey = (bool)row["HotKeyPass"];
+				Keys key = (Keys)row["HotKey"];
+				scriptlistView.Items[i].SubItems[5].Text = key.ToString();
+				if (passkey)
+					scriptlistView.Items[i].SubItems[6].Text = "Yes";
+				else
+					scriptlistView.Items[i].SubItems[6].Text = "No";
+				i++;
+			}
+			scriptlistView.EndUpdate();
+		}
+
 		internal void UpdateScriptGrid()
 		{
 
