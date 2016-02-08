@@ -64,7 +64,11 @@ namespace RazorEnhanced
 						return;
 					}
 
-					Assistant.Item corpse = (Assistant.Item)item.Container;
+					Assistant.Item corpse = null;
+                    if (item.Container != null)
+						corpse = (Assistant.Item)item.Container;
+					else
+						return;
 
 					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 2) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
 					{
