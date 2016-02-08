@@ -11347,9 +11347,20 @@ namespace Assistant
 
 		private void profilesRenameButton_Click(object sender, EventArgs e)
 		{
-			EnhancedProfileRename renameprofile = new EnhancedProfileRename();
-			renameprofile.TopMost = true;
-			renameprofile.Show();
+			if (profilesComboBox.Text == "default")
+			{
+				MessageBox.Show("Can't rename default profile",
+				"Can't rename default profile!",
+				MessageBoxButtons.OK,
+				MessageBoxIcon.Exclamation,
+				MessageBoxDefaultButton.Button1);
+			}
+			else
+			{
+				EnhancedProfileRename renameprofile = new EnhancedProfileRename();
+				renameprofile.TopMost = true;
+				renameprofile.Show();
+			}
 		}
 
 		private void profilesCloneButton_Click(object sender, EventArgs e)
