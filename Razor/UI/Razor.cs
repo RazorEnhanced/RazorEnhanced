@@ -7798,6 +7798,7 @@ namespace Assistant
 		private void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			RazorEnhanced.HotKey.KeyDown(e.KeyData);
+			e.SuppressKeyPress = true;
 		}
 
 		private void HotKey_MouseRoll(object sender, System.Windows.Forms.MouseEventArgs e)
