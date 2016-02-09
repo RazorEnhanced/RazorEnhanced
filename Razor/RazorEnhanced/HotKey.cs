@@ -864,6 +864,22 @@ namespace RazorEnhanced
 					RazorEnhanced.Target.Cancel();
 					break;
 
+				case "Clear Target Queue":
+					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"queue\" cleared."));
+					Assistant.Targeting.ClearQueue();
+					break;
+
+				case "Clear Last Target":
+					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last\" cleared."));
+					Assistant.Targeting.ClearLast();
+                    break;
+
+				case "Clear Last and Queue":
+					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 993, 3, Language.CliLocName, World.Player.Name, "Target \"last and queue\" cleared."));
+					Assistant.Targeting.ClearLast();
+					Assistant.Targeting.ClearQueue();
+					break;
+
 				default:
 					break;
 			}
@@ -1193,7 +1209,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[5].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[8].Nodes.Add(a);
 			}
 
 			// Script

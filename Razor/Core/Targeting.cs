@@ -838,6 +838,11 @@ namespace Assistant
 			m_QueueTarget = null;
 		}
 
+		internal static void ClearLast()
+		{
+			m_LastTarget = m_LastGroundTarg = null;
+		}
+
 		private static TimerCallbackState m_OneTimeRespCallback = new TimerCallbackState(OneTimeResponse);
 
 		private static void OneTimeResponse(object state)
