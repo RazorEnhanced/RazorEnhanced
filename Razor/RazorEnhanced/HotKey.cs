@@ -526,6 +526,34 @@ namespace RazorEnhanced
 						RazorEnhanced.BandageHeal.Start();
 					break;
 
+				case "Bone Cutter ON/OFF":
+					if (Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked)
+						Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = false;
+					else
+						Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = true;
+					break;
+
+				case "Auto Carver ON/OFF":
+					if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked)
+						Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
+					else
+						Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = true;
+					break;
+
+				case "Auto Remount ON/OFF":
+					if (Assistant.Engine.MainWindow.RemountCheckbox.Checked)
+						Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
+					else
+						Assistant.Engine.MainWindow.RemountCheckbox.Checked = true;
+					break;
+
+				case "Graphics Filter ON/OFF":
+					if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
+						Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
+					else
+						Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = true;
+					break;
+
 				default:
 					break;
 			}

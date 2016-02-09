@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 11; 
+		private static int SettingVersion = 12; 
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -378,6 +378,22 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Agents", "Bandage Heal ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Agents", "Bone Cutter ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Agents", "Auto Carver ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Agents", "Auto Remount ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Agents", "Graphics Filter ON/OFF", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -4299,6 +4315,41 @@ namespace RazorEnhanced
 				realVersion = 11;
 				General.WriteInt("SettingVersion", 11);
 			}
+
+			if (realVersion == 11)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Agents";
+				newRow["Name"] = "Bone Cutter ON/OFF";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Agents";
+				newRow["Name"] = "Auto Carver ON/OFF";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Agents";
+				newRow["Name"] = "Auto Remount ON/OFF";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Agents";
+				newRow["Name"] = "Graphics Filter ON/OFF";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				realVersion = 12;
+				General.WriteInt("SettingVersion", 12);
+			}
+
 
 			Save();
 		}

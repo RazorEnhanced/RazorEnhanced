@@ -10965,15 +10965,13 @@ namespace Assistant
 
 		private void mobfilterCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (mobfilterCheckBox.Focused)
-			{
-				if (mobfilterCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!");
-				else
-					RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!");
+			if (mobfilterCheckBox.Checked)
+				RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!");
+			else
+				RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!");
 
+			if (mobfilterCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
-			}
 		}
 
 		private void remountdelay_TextChanged(object sender, EventArgs e)
