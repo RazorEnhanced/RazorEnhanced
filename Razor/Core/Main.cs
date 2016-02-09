@@ -383,16 +383,6 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.RestockStop.Enabled == true)
 				Assistant.Engine.MainWindow.RestockStop.PerformClick();
 
-			// Stop filtri
-			if (Assistant.Engine.MainWindow.AutoCarverCheckBox.Enabled == true)
-				Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = false;
-
-			if (Assistant.Engine.MainWindow.RemountCheckbox.Enabled == true)
-				Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
-
-			if (Assistant.Engine.MainWindow.BoneCutterCheckBox.Enabled == true)
-				Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = false;
-
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 
 			// Stop thread query queue
@@ -402,8 +392,6 @@ namespace Assistant
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
-			RazorEnhanced.Filters.AutoModeRemount = false;
-			RazorEnhanced.Filters.AutoCarver = false;
 
 			if (RazorEnhanced.Scripts.Timer != null)
 				RazorEnhanced.Scripts.Timer.Close();
