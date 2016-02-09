@@ -40,7 +40,7 @@ namespace RazorEnhanced
 						return 0;
 					}
 
-					Item blade = RazorEnhanced.Items.FindBySerial(serialblade);
+					Assistant.Item blade = World.FindItem(serialblade);
 					if (blade != null && blade.RootContainer == World.Player)
 						return blade.Serial;
 					else
@@ -68,7 +68,7 @@ namespace RazorEnhanced
 					if (serialblade == 0)
 						return 0;
 
-					Item blade = RazorEnhanced.Items.FindBySerial(serialblade);
+					Assistant.Item blade = World.FindItem(serialblade);
 					if (blade != null && blade.RootContainer == World.Player)
 						return blade.Serial;
 					else
