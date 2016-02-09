@@ -930,6 +930,9 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.RemountCheckbox.Enabled == true)
 				Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
 
+			if (Assistant.Engine.MainWindow.BoneCutterCheckBox.Enabled == true)
+				Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = false;
+
 			// Stop thread query queue
 			RazorEnhanced.QueryQueue.Abort();
 
@@ -1200,7 +1203,7 @@ namespace Assistant
 			CommMutex.WaitOne();
 			fixed (byte* ptr = data)
 			{
-				Packet.Log(PacketPath.RazorToClient, ptr, data.Length);
+				//Packet.Log(PacketPath.RazorToClient, ptr, data.Length);
 				CopyToBuffer(m_OutRecv, ptr, data.Length);
 			}
 			CommMutex.ReleaseMutex();
@@ -1217,7 +1220,7 @@ namespace Assistant
 			InitSendFlush();
 			fixed (byte* ptr = data)
 			{
-				Packet.Log(PacketPath.RazorToServer, ptr, data.Length);
+				//Packet.Log(PacketPath.RazorToServer, ptr, data.Length);
 				CopyToBuffer(m_OutSend, ptr, data.Length);
 			}
 			CommMutex.ReleaseMutex();
@@ -1334,7 +1337,7 @@ namespace Assistant
 					byte[] data = p.Compile();
 					fixed (byte* ptr = data)
 					{
-						Packet.Log(path, ptr, data.Length, blocked);
+						//Packet.Log(path, ptr, data.Length, blocked);
 						if (!blocked)
 							CopyToBuffer(outBuff, ptr, data.Length);
 					}
@@ -1346,17 +1349,19 @@ namespace Assistant
 						CopyToBuffer(outBuff, buff, len);
 				}
 
-					while (queue.Count > 0)
+				while (queue.Count > 0)
+				{
+					p = queue.Dequeue();
+					if (p != null)
 					{
-						p = (Packet)queue.Dequeue();
-
 						byte[] data = p.Compile();
 						fixed (byte* ptr = data)
 						{
 							CopyToBuffer(outBuff, ptr, data.Length);
-							Packet.Log((PacketPath)(((int)path) + 1), ptr, data.Length);
+							//Packet.Log((PacketPath)(((int)path) + 1), ptr, data.Length);
 						}
 					}
+				}
 			}
 			CommMutex.ReleaseMutex();
 		}

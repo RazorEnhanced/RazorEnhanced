@@ -390,6 +390,9 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.RemountCheckbox.Enabled == true)
 				Assistant.Engine.MainWindow.RemountCheckbox.Checked = false;
 
+			if (Assistant.Engine.MainWindow.BoneCutterCheckBox.Enabled == true)
+				Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = false;
+
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 
 			// Stop thread query queue
