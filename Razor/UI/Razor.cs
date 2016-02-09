@@ -10832,9 +10832,15 @@ namespace Assistant
 		private void autocarverCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (autocarverCheckBox.Checked)
+			{
 				RazorEnhanced.Filters.AutoCarver = true;
+				RazorEnhanced.Misc.SendMessage("AutoCarver Engine Start...");
+			}
 			else
+			{
 				RazorEnhanced.Filters.AutoCarver = false;
+				RazorEnhanced.Misc.SendMessage("AutoCarver Engine Stop...");
+			}
 
 			if (autocarverCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("AutoCarverCheckBox", autocarverCheckBox.Checked);
@@ -10843,9 +10849,15 @@ namespace Assistant
 		private void bonecutterCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (bonecutterCheckBox.Checked)
+			{
 				RazorEnhanced.Filters.BoneCutter = true;
+				RazorEnhanced.Misc.SendMessage("BoneCutter Engine Start...");
+			}
 			else
+			{
 				RazorEnhanced.Filters.BoneCutter = false;
+				RazorEnhanced.Misc.SendMessage("BoneCutter Engine Start...");
+			}
 
 			if (bonecutterCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("BoneCutterCheckBox", bonecutterCheckBox.Checked);
@@ -10953,7 +10965,15 @@ namespace Assistant
 
 		private void mobfilterCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
+			if (mobfilterCheckBox.Focused)
+			{
+				if (mobfilterCheckBox.Checked)
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!");
+				else
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!");
+
+				RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
+			}
 		}
 
 		private void remountdelay_TextChanged(object sender, EventArgs e)
@@ -10981,9 +11001,15 @@ namespace Assistant
 		private void remountcheckbox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (remountcheckbox.Checked)
+			{
 				RazorEnhanced.Filters.AutoModeRemount = true;
+				RazorEnhanced.Misc.SendMessage("AutoRemount Engine Start...");
+			}
 			else
+			{
 				RazorEnhanced.Filters.AutoModeRemount = false;
+				RazorEnhanced.Misc.SendMessage("AutoRemount Engine Stop...");
+			}
 
 			if (remountcheckbox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("RemountCheckbox", remountcheckbox.Checked);
