@@ -106,7 +106,7 @@ namespace RazorEnhanced
 			Assistant.Targeting.ClearLast();
 		}
 
-		public static void SetLastandQueue()
+		public static void ClearLastandQueue()
 		{
 			Assistant.Targeting.ClearQueue();
 			Assistant.Targeting.ClearLast();
