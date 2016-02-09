@@ -437,7 +437,9 @@ namespace RazorEnhanced
 				{
 					case "Random":
 						// Esclude Last dalla ricerca
-						mobiles = mobiles.Where((m) => m.Serial != Target.GetLast()).ToList();
+
+						if (mobiles.Count > 1)
+							mobiles = mobiles.Where((m) => m.Serial != Target.GetLast()).ToList();
 
 						try
 						{
