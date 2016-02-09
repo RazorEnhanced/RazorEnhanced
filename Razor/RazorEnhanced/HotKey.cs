@@ -1206,8 +1206,6 @@ namespace RazorEnhanced
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[8].Nodes.Add(a);
 			}
-
-			Engine.MainWindow.HotKeyTreeView.ExpandAll();
 		}
 
 		private static void UpdateOldTreeView(TreeNodeCollection nodes, Keys k)
