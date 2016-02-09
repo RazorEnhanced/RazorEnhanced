@@ -44,11 +44,6 @@ namespace RazorEnhanced
 				Assistant.Targeting.Target(mobile);
 		}
 
-		public static void TargetExecute(Point3D location)
-		{
-			Assistant.Targeting.Target(location);
-		}
-
 		public static void TargetExecute(int x, int y, int z)
 		{
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
@@ -99,6 +94,22 @@ namespace RazorEnhanced
 			Assistant.Mobile mobile = World.FindMobile(serial);
 			if (mobile != null)
 				Assistant.Targeting.SetLastTarget(mobile, 0);
+		}
+
+		public static void ClearQueue()
+		{
+			Assistant.Targeting.ClearQueue();
+		}
+
+		public static void ClearLast()
+		{
+			Assistant.Targeting.ClearLast();
+		}
+
+		public static void SetLastandQueue()
+		{
+			Assistant.Targeting.ClearQueue();
+			Assistant.Targeting.ClearLast();
 		}
 
 		public int PromptTarget()
