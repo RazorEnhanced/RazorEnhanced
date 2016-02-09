@@ -6369,6 +6369,7 @@ namespace Assistant
 			this.hotkeyKeyMasterTextBox.TabIndex = 5;
 			this.hotkeyKeyMasterTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
+			this.hotkeyKeyMasterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
 			// 
 			// hotkeyMasterSetButton
 			// 
@@ -6518,6 +6519,7 @@ namespace Assistant
 			this.hotkeytextbox.TabIndex = 1;
 			this.hotkeytextbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeytextbox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
+			this.hotkeytextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
 			// 
 			// hotkeytreeView
 			// 
@@ -6560,7 +6562,6 @@ namespace Assistant
 			this.Closing += new System.ComponentModel.CancelEventHandler(this.MainForm_Closing);
 			this.Deactivate += new System.EventHandler(this.MainForm_Deactivate);
 			this.Load += new System.EventHandler(this.MainForm_Load);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
 			this.Move += new System.EventHandler(this.MainForm_Move);
 			this.Resize += new System.EventHandler(this.MainForm_Resize);
 			this.tabs.ResumeLayout(false);
@@ -7795,7 +7796,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("RememberPwds", rememberPwds.Checked);
 		}
 
-		private void MainForm_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			RazorEnhanced.HotKey.KeyDown(e.KeyData);
 			e.SuppressKeyPress = true;
