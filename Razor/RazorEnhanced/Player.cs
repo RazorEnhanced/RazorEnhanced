@@ -603,6 +603,10 @@ namespace RazorEnhanced
 				case BuffIcon.TalonStrike:
 					description = "Talon Strike";
 					break;
+
+				case BuffIcon.Weaken:
+					description = "Weaken";
+					break;
 			}
 
 			return description;
