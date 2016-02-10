@@ -66,6 +66,8 @@ namespace Assistant
 			SmartCPU = 21,
 			Negotiate = 22,
 			SetMapHWnd = 23,
+			DwmFree = 25
+
 			// ZIPPY REV 80			SetFwdHWnd = 24,
 		}
 
@@ -649,6 +651,32 @@ namespace Assistant
 			m_SendQueue = new Queue<Packet>();
 			m_RecvQueue = new Queue<Packet>();
 			m_WndReg = new List<WndRegEnt>();
+			ClientCommunication.m_DwmTimer = new ClientCommunication.DwmTimer();
+			ClientCommunication.m_NextCmdID = 1425u;
+			ClientCommunication.m_ClientEnc = false;
+			ClientCommunication.m_ServerEnc = false;
+			ClientCommunication.m_CalTimer = null;
+			ClientCommunication.m_CalibrateNow = new TimerCallback(ClientCommunication.CalibrateNow);
+			ClientCommunication.m_CalPos = Point2D.Zero;
+		}
+
+		private static Assistant.Timer m_DwmTimer;
+
+		private class DwmTimer : Assistant.Timer
+		{
+			public DwmTimer() : base(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0))
+			{
+				base.Start();
+			}
+
+			protected override void OnTick()
+			{
+				if (!ClientCommunication.m_Ready)
+				{
+					return;
+				}
+				ClientCommunication.PostMessage(ClientCommunication.FindUOWindow(), 1025u, (IntPtr)25, (IntPtr)0);
+			}
 		}
 
 		internal static void SetMapWndHandle(Form mapWnd)
