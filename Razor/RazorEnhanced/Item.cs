@@ -774,53 +774,97 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static List<string> GetPropStringList(int serial)
+		{
+			List<string> propstringlist = new List<string>();
+			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
+
+			if (assistantItem != null)
+			{
+				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+				{
+					propstringlist.Add(prop.ToString());
+                }
+			}
+			return propstringlist;
+		}
+
+		public static List<string> GetPropStringList(Item item)
+		{
+			return GetPropStringList(item.Serial);
+        }
+
+		public static string GetPropStringByIndex(int serial, int index)
+		{
+			string propstring = "";
+			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
+
+			if (assistantItem != null)
+			{
+				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+				if (props.Count > index)
+					propstring = props[index].ToString();
+			}
+			return propstring;
+		}
+
+		public static string GetPropStringByIndex(Item item, int index)
+		{
+			return GetPropStringByIndex(item.Serial, index);
+		}
+
 		public static int GetPropValue(int serial, string name)
 		{
-			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
-			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
-			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+			if (assistantItem != null)
 			{
-				if (prop.ToString().ToLower().Contains(name.ToLower()))
+				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+
+				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 				{
-					if (prop.Args == null)  // Props esiste ma non ha valore
-						return 1;
-
-					string propstring = prop.Args;
-					bool subprops = false;
-					int i = 0;
-
-					if (propstring.Length > 7)
-						subprops = true;
-
-					try  // Etraggo il valore
+					if (prop.ToString().ToLower().Contains(name.ToLower()))
 					{
-						string number = string.Empty;
-						foreach (char str in propstring)
+						if (prop.Args == null)  // Props esiste ma non ha valore
+							return 1;
+
+						string propstring = prop.Args;
+						bool subprops = false;
+						int i = 0;
+
+						if (propstring.Length > 7)
+							subprops = true;
+
+						try  // Etraggo il valore
 						{
-							if (subprops)
+							string number = string.Empty;
+							foreach (char str in propstring)
 							{
-								if (i > 7)
+								if (subprops)
+								{
+									if (i > 7)
+										if (char.IsDigit(str))
+											number += str.ToString();
+								}
+								else
+								{
 									if (char.IsDigit(str))
 										number += str.ToString();
-							}
-							else
-							{
-								if (char.IsDigit(str))
-									number += str.ToString();
-							}
+								}
 
-							i++;
+								i++;
+							}
+							return (Convert.ToInt32(number));
 						}
-						return (Convert.ToInt32(number));
-					}
-					catch
-					{
-						return 1;  // errore di conversione ma esiste
+						catch
+						{
+							return 1;  // errore di conversione ma esiste
+						}
 					}
 				}
 			}
-			return 0;  // Non esiste
+			return 0;  // Non esiste o null item
 		}
 
 		public static int GetPropValue(Item item, string name)

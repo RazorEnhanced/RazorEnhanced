@@ -621,50 +621,94 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static List<string> GetPropStringList(int serial)
+		{
+			List<string> propstringlist = new List<string>();
+			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
+
+			if (assistantMobile != null)
+			{
+				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+				{
+					propstringlist.Add(prop.ToString());
+				}
+			}
+			return propstringlist;
+		}
+
+		public static List<string> GetPropStringList(Mobile mob)
+		{
+			return GetPropStringList(mob.Serial);
+		}
+
+		public static string GetPropStringByIndex(int serial, int index)
+		{
+			string propstring = "";
+			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
+
+			if (assistantMobile != null)
+			{
+				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+				if (props.Count > index)
+					propstring = props[index].ToString();
+			}
+			return propstring;
+		}
+
+		public static string GetPropStringByIndex(Mobile mob, int index)
+		{
+			return GetPropStringByIndex(mob.Serial, index);
+		}
+
 		public static int GetPropValue(int serial, string name)
 		{
-			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
-			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
-			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+			if (assistantMobile != null)
 			{
-				RazorEnhanced.Misc.SendMessage(prop.Args);
-				if (prop.ToString().ToLower().Contains(name.ToLower()))
+				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+
+				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 				{
-					if (prop.Args == null)  // Props esiste ma non ha valore
-						return 1;
-
-					string propstring = prop.Args;
-					bool subprops = false;
-					int i = 0;
-
-					if (propstring.Length > 7)
-						subprops = true;
-
-					try  // Etraggo il valore
+					RazorEnhanced.Misc.SendMessage(prop.Args);
+					if (prop.ToString().ToLower().Contains(name.ToLower()))
 					{
-						string number = string.Empty;
-						foreach (char str in propstring)
+						if (prop.Args == null)  // Props esiste ma non ha valore
+							return 1;
+
+						string propstring = prop.Args;
+						bool subprops = false;
+						int i = 0;
+
+						if (propstring.Length > 7)
+							subprops = true;
+
+						try  // Etraggo il valore
 						{
-							if (subprops)
+							string number = string.Empty;
+							foreach (char str in propstring)
 							{
-								if (i > 7)
+								if (subprops)
+								{
+									if (i > 7)
+										if (char.IsDigit(str))
+											number += str.ToString();
+								}
+								else
+								{
 									if (char.IsDigit(str))
 										number += str.ToString();
-							}
-							else
-							{
-								if (char.IsDigit(str))
-									number += str.ToString();
-							}
+								}
 
-							i++;
+								i++;
+							}
+							return (Convert.ToInt32(number));
 						}
-						return (Convert.ToInt32(number));
-					}
-					catch
-					{
-						return 1;  // errore di conversione ma esiste
+						catch
+						{
+							return 1;  // errore di conversione ma esiste
+						}
 					}
 				}
 			}
