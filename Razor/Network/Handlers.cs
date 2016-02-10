@@ -2173,7 +2173,7 @@ namespace Assistant
 			ushort font = p.ReadUInt16();
 			int num = p.ReadInt32();
 			string name = p.ReadStringSafe(30);
-			string ext_str = p.ReadUnicodeStringLESafe();
+			string ext_str = p.ReadUnicodeStringLE();
 
 			if ((num >= 3002011 && num < 3002011 + 64) || // reg spells
 				(num >= 1060509 && num < 1060509 + 16) || // necro
