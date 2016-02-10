@@ -6657,12 +6657,17 @@ namespace Assistant
 
 		protected override void WndProc(ref Message msg)
 		{
-			if (msg.Msg == ClientCommunication.WM_UONETEVENT)
+			if (msg.Msg == 1025)
+			{
 				msg.Result = (IntPtr)(ClientCommunication.OnMessage(this, (uint)msg.WParam.ToInt32(), msg.LParam.ToInt32()) ? 1 : 0);
-			else if (msg.Msg >= (int)ClientCommunication.UOAMessage.First && msg.Msg <= (int)ClientCommunication.UOAMessage.Last)
+				return;
+			}
+			if (msg.Msg >= 1224 && msg.Msg <= 1338)
+			{
 				msg.Result = (IntPtr)ClientCommunication.OnUOAMessage(this, msg.Msg, msg.WParam.ToInt32(), msg.LParam.ToInt32());
-			else
-				base.WndProc(ref msg);
+				return;
+			}
+			base.WndProc(ref msg);
 		}
 
 		private void DisableCloseButton()
