@@ -548,7 +548,7 @@ namespace RazorEnhanced
 					s = Spell.Get(607);
 					break;
 
-				case "Summoniend":
+				case "Summon Fiend":
 					s = Spell.Get(608);
 					break;
 
