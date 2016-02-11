@@ -651,34 +651,26 @@ namespace Assistant
 			m_SendQueue = new Queue<Packet>();
 			m_RecvQueue = new Queue<Packet>();
 			m_WndReg = new List<WndRegEnt>();
-			ClientCommunication.m_DwmTimer = new ClientCommunication.DwmTimer();
-			ClientCommunication.m_NextCmdID = 1425u;
-			ClientCommunication.m_ClientEnc = false;
-			ClientCommunication.m_ServerEnc = false;
-			ClientCommunication.m_CalTimer = null;
-			ClientCommunication.m_CalibrateNow = new TimerCallback(ClientCommunication.CalibrateNow);
-			ClientCommunication.m_CalPos = Point2D.Zero;
+			m_NextCmdID = 1425u;
+			m_ClientEnc = false;
+			m_ServerEnc = false;
+			m_CalTimer = null;
+			m_CalibrateNow = new TimerCallback(ClientCommunication.CalibrateNow);
+			m_CalPos = Point2D.Zero;
+			m_DwmTimer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0));
 		}
 
-		private static Assistant.Timer m_DwmTimer;
+		private static System.Threading.Timer m_DwmTimer;
 
-		private class DwmTimer : Assistant.Timer
+		private static void OnTick(object state)
 		{
-			public DwmTimer() : base(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(1.0))
+			if (!m_Ready)
 			{
-				base.Start();
+				return;
 			}
-
-			protected override void OnTick()
-			{
-				if (!ClientCommunication.m_Ready)
-				{
-					return;
-				}
-				ClientCommunication.PostMessage(ClientCommunication.FindUOWindow(), 1025u, (IntPtr)25, (IntPtr)0);
-			}
+			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
 		}
-
+     
 		internal static void SetMapWndHandle(Form mapWnd)
 		{
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
