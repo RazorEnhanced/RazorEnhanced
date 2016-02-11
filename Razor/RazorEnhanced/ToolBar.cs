@@ -6,8 +6,8 @@ using Assistant;
 
 namespace RazorEnhanced
 {
-	public class ToolBar
-	{
+	internal class ToolBar
+	{ 
 		private static int m_slot = 0;
 		private static Form m_form;
 		internal static Form ToolBarForm
@@ -464,6 +464,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
+			m_form.CausesValidation = true;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra;
@@ -656,9 +657,15 @@ namespace RazorEnhanced
 
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleBordoSotto);
 			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+				m_form.TopMost = true;
+			}
 			else
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+				m_form.TopMost = false;
+			}
 
 			m_form.Name = "ToolBar";
 			m_form.Text = "ToolBar";
@@ -666,7 +673,6 @@ namespace RazorEnhanced
 			m_form.PerformLayout();
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
 			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.TopMost = true;
 			m_form.Show();
 		}
 
@@ -690,6 +696,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
+			m_form.CausesValidation = true;
 
 			int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro.Width;
 			int offsetstat = 10;
@@ -813,9 +820,15 @@ namespace RazorEnhanced
 			m_form.ClientSize = new System.Drawing.Size(width, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Height);
 
 			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+				m_form.TopMost = true;
+			}
 			else
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+				m_form.TopMost = false;
+			}
 
 			m_form.Name = "ToolBar";
 			m_form.Text = "ToolBar";
@@ -913,6 +926,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
+			m_form.CausesValidation = true;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraVerticaleBordoSopra;
@@ -1095,9 +1109,15 @@ namespace RazorEnhanced
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleBordoSotto);
 
 			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+				m_form.TopMost = true;
+			}
 			else
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+				m_form.TopMost = false;
+			}
 
 			m_form.Name = "ToolBar";
 			m_form.Text = "ToolBar";
@@ -1128,6 +1148,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
+			m_form.CausesValidation = true;
 
 			int width = Assistant.Properties.Resources.BarraOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraOrizzontaBordoSinistro.Width;
 			int offsetstat = 5;
@@ -1233,9 +1254,15 @@ namespace RazorEnhanced
 			m_form.ClientSize = new System.Drawing.Size(width, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat.Height);
 
 			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+				m_form.TopMost = true;
+			}
 			else
+			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+				m_form.TopMost = false;
+			}
 
 			m_form.Name = "Toolbar";
 			m_form.Text = "Toolbar";

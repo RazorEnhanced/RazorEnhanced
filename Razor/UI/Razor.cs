@@ -11057,6 +11057,14 @@ namespace Assistant
 			{
 				RazorEnhanced.ToolBar.LockUnlock();
 				RazorEnhanced.Settings.General.WriteBool("LockToolBarCheckBox", lockToolBarCheckBox.Checked);
+				if (RazorEnhanced.ToolBar.ToolBarForm != null)
+				{
+					RazorEnhanced.ToolBar.ToolBarForm.Show();
+					if (lockToolBarCheckBox.Checked)
+						RazorEnhanced.ToolBar.ToolBarForm.TopMost = true;
+					else
+						RazorEnhanced.ToolBar.ToolBarForm.TopMost = false;
+				}
 			}
 		}
 

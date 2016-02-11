@@ -1062,9 +1062,8 @@ namespace Assistant
 					{
 						if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
 						{
-							if (RazorEnhanced.ToolBar.ToolBarForm != null)
+							if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
 							{
-								if (!RazorEnhanced.ToolBar.ToolBarForm.Focused)
 									RazorEnhanced.ToolBar.ToolBarForm.Hide();
 							}
 						}
@@ -1075,17 +1074,19 @@ namespace Assistant
 						{
 							if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
 							{
-								if (RazorEnhanced.ToolBar.ToolBarForm != null)
-									if (!RazorEnhanced.ToolBar.ToolBarForm.Focused)
-										RazorEnhanced.ToolBar.ToolBarForm.Hide();
+								if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
+									RazorEnhanced.ToolBar.ToolBarForm.Hide();
 							}
 						}
 						else
 						{
 							if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
 							{
-								if (RazorEnhanced.ToolBar.ToolBarForm != null)
+								if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
+								{
 									RazorEnhanced.ToolBar.ToolBarForm.Show();
+									SetForegroundWindow(FindUOWindow());
+								}
 							}
 						}
 					}
