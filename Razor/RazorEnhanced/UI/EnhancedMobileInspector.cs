@@ -505,7 +505,7 @@ namespace RazorEnhanced.UI
 			lName.Text = m_mobile.Name.ToString();
 			lSerial.Text = "0x" + m_mobile.Serial.Value.ToString("X8");
 			lMobileID.Text = "0x" + m_mobile.Body.ToString("X4");
-			lColor.Text = m_mobile.Hue.ToString();
+			lColor.Text = "0x" + m_mobile.Hue.ToString("X4");
 			lPosition.Text = m_mobile.Position.ToString();
 			// Details
 			if (m_mobile.Female)
