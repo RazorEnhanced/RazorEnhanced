@@ -1334,9 +1334,6 @@ namespace Assistant
 				m.Poisoned = (flag != 0);
 			else if (id == 2 && World.Player.Expansion > 3)
 				m.Blessed = (flag != 0);
-
-			if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-				ClientCommunication.ForceSendToClient(new MobileMoving(m));
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1465,7 +1462,6 @@ namespace Assistant
 				return;
 
 			Serial serial = p.ReadUInt32();
-
 			Mobile m = World.FindMobile(serial);
 			if (m == null)
 			{
