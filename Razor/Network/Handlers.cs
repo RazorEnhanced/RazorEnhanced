@@ -1061,10 +1061,14 @@ namespace Assistant
 
 				m.Direction = (Direction)p.ReadByte();
 				m.Hue = p.ReadUInt16();
+
+				bool wasPoisoned = m.Poisoned;
+				m.ProcessPacketFlags(p.ReadByte());
+
 				int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 				if (ltHue != 0 && Targeting.IsLastTarget(m))
 				{
-					p.Seek(-2, SeekOrigin.Current);
+					p.Seek(-3, SeekOrigin.Current);
 					p.Write((short)(ltHue | 0x8000));
 				}
 				else
@@ -1074,24 +1078,23 @@ namespace Assistant
 					{
 						if (m.Poisoned)
 						{
-							p.Seek(-2, SeekOrigin.Current);
+							p.Seek(-3, SeekOrigin.Current);
 							p.Write((short)0x0042);
 						}
 						else if (m.Paralized)
 						{
-							p.Seek(-2, SeekOrigin.Current);
+							p.Seek(-3, SeekOrigin.Current);
 							p.Write((short)0x013C);
 						}
 
 						else if (m.Blessed && World.Player.Expansion > 3) // Mortal
 						{
+							p.Seek(-3, SeekOrigin.Current);
 							p.Write((short)0x002E);
 						}
 					}
 				}
 
-				bool wasPoisoned = m.Poisoned;
-				m.ProcessPacketFlags(p.ReadByte());
 				byte oldNoto = m.Notoriety;
 				m.Notoriety = p.ReadByte();
 
@@ -1487,10 +1490,13 @@ namespace Assistant
 			}
 
 			m.Hue = p.ReadUInt16();
+			bool wasPoisoned = m.Poisoned;
+			m.ProcessPacketFlags(p.ReadByte());
+			
 			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 			{
-				p.Seek(-2, SeekOrigin.Current);
+				p.Seek(-3, SeekOrigin.Current);
 				p.Write((ushort)(ltHue | 0x8000));
 			}
 			else
@@ -1500,24 +1506,22 @@ namespace Assistant
 				{
 					if (m.Poisoned)
 					{
-						p.Seek(-2, SeekOrigin.Current);
+						p.Seek(-3, SeekOrigin.Current);
 						p.Write((short)0x0042);
 					}
 					else if (m.Paralized)
 					{
-						p.Seek(-2, SeekOrigin.Current);
+						p.Seek(-3, SeekOrigin.Current);
 						p.Write((short)0x013C);
 					}
 
 					else if (m.Blessed && World.Player.Expansion > 3) // Mortal
 					{
-						p.Seek(-2, SeekOrigin.Current);
+						p.Seek(-3, SeekOrigin.Current);
 						p.Write((short)0x002E);
 					}
 				}
 			}
-			bool wasPoisoned = m.Poisoned;
-			m.ProcessPacketFlags(p.ReadByte());
 
 			if (m == World.Player)
 			{
@@ -1602,9 +1606,13 @@ namespace Assistant
 				m.Position = position;
 			m.Direction = (Direction)p.ReadByte();
 			m.Hue = p.ReadUInt16();
+
+			bool wasPoisoned = m.Poisoned;
+			m.ProcessPacketFlags(p.ReadByte());
+
 			if (isLT)
 			{
-				p.Seek(-2, SeekOrigin.Current);
+				p.Seek(-3, SeekOrigin.Current);
 				p.Write((short)(ltHue | 0x8000));
 			}
 			else
@@ -1614,25 +1622,23 @@ namespace Assistant
 				{
 					if (m.Poisoned)
 					{
-						p.Seek(-2, SeekOrigin.Current);
+						p.Seek(-3, SeekOrigin.Current);
 						p.Write((short)0x0042);
 					}
 					else if (m.Paralized)
 					{
-						p.Seek(-2, SeekOrigin.Current);
+						p.Seek(-3, SeekOrigin.Current);
 						p.Write((short)0x013C);
 					}
 
 					else if (m.Blessed && World.Player.Expansion > 3) // Mortal
 					{
-						p.Seek(-2, SeekOrigin.Current);
+						p.Seek(-3, SeekOrigin.Current);
 						p.Write((short)0x002E);
 					}
 				}
 			}
 
-			bool wasPoisoned = m.Poisoned;
-			m.ProcessPacketFlags(p.ReadByte());
 			byte oldNoto = m.Notoriety;
 			m.Notoriety = p.ReadByte();
 
