@@ -176,13 +176,13 @@ namespace RazorEnhanced
 		private static int[] m_NotoHues = new int[8]
 		{
 			1, // black		unused 0
-			89, // blue		0x0059 1
-			63, // green		0x003F 2
-			946, // greyish	0x03b2 3
-			946, // grey		   "   4
-			114, // orange		0x0090 5
-			34, // red		0x0022 6
-			125, // yellow		0x0035 7
+			0x059, // blue		0x0059 1
+			0x03F, // green		0x003F 2
+			0x3B2, // greyish	0x03b2 3
+			0x3B2, // grey		   "   4
+			0x090, // orange		0x0090 5
+			0x022, // red		0x0022 6
+			0x035, // yellow		0x0035 7
 		};
 
 		private static int GetPlayerColor(Mobile mob)
