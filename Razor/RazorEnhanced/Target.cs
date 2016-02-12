@@ -163,14 +163,7 @@ namespace RazorEnhanced
 		private static string GetPlayerName(int s)
 		{
 			Assistant.Mobile mob = World.FindMobile(s);
-
-			if (mob.ObjPropList.Content.Count > 0)
-			{
-				Assistant.ObjectPropertyList.OPLEntry ent = mob.ObjPropList.Content[0];
-				return ent.ToString();
-			}
-			else
-				return mob.Name;
+			return mob.Name;
 		}
 
 		private static int[] m_NotoHues = new int[8]
@@ -206,9 +199,9 @@ namespace RazorEnhanced
 					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
 					{
 						if (Friend.IsFriend(mobtarget.Serial))
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
 						else
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
 					}
 
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
@@ -239,9 +232,9 @@ namespace RazorEnhanced
 					if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
 					{
 						if (Friend.IsFriend(mobtarget.Serial))
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
 						else
-							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Targetting: [" + GetPlayerName(mobtarget.Serial) + "]"));
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
 					}
 
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
