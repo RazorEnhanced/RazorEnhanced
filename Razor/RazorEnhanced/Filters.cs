@@ -97,6 +97,10 @@ namespace RazorEnhanced
 					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Poisoned]");
 				if (m.IsGhost)
 					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Dead]");
+				if (m.Paralized)
+					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Paralized]");
+				if (m.Blessed)
+					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Mortalled]");
 			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
