@@ -891,6 +891,32 @@ namespace Assistant
 		}
 	}
 
+	internal sealed class MobileMoving : Packet
+	{
+		internal MobileMoving(Mobile m)
+			: base(0x77,17)
+		{
+			Write((int)m.Serial);
+			Write((short)m.Body);
+			Write((short)m.Position.X);
+			Write((short)m.Position.Y);
+			Write((sbyte)m.Position.Z);
+			Write((byte)m.Direction);
+			int hue = m.Hue;
+
+			if (m.Poisoned)
+				hue = 0x0042;
+			else if (m.Paralized)
+				hue = 0x013C;
+			else if (m.Blessed && World.Player.Expansion > 3) // Mortal
+				hue = 0x002E;
+			
+			Write((short)hue);
+			Write((byte)m.GetPacketFlags());
+			Write((byte)m.Notoriety);
+		}
+	}
+
 	internal sealed class MobileIncoming : Packet
 	{
 		internal MobileIncoming(Mobile m)
