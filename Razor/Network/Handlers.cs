@@ -691,6 +691,7 @@ namespace Assistant
 				item.Container = cont; // must be done after hue is set (for counters)
 
 				list.Add(item);
+
 			}
 			Item.UpdateContainers();
 
@@ -1746,9 +1747,7 @@ namespace Assistant
 				{
 					if (DragDropManager.Holding == i)
 					{
-						//Counter.SupressWarnings = true;
 						i.Container = null;
-						//Counter.SupressWarnings = false;
 					}
 					else
 					{

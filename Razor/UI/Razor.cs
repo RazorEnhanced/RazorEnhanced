@@ -11029,7 +11029,7 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.AutoRemountSerial = serial;
 				RazorEnhanced.Settings.General.WriteInt("MountSerial", serial);
-			}
+			} 
 		}
 
 		// ---------------- FILTERS END ----------------
@@ -11038,7 +11038,9 @@ namespace Assistant
 		{
 			UpdateRazorStatus();
 			UpdateScriptGrid();
-        }
+			if (RazorEnhanced.ToolBar.ToolBarForm != null && Assistant.World.Player != null)
+				RazorEnhanced.ToolBar.UpdateCount();
+		}
 
 		// ---------------- TOOLBAR START ----------------
 		private void openToolBarButton_Click(object sender, EventArgs e)

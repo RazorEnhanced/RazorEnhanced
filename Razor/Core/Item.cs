@@ -253,11 +253,6 @@ namespace Assistant
 				else if (m_Parent is Item)
 					((Item)m_Parent).RemoveItem(this);
 
-				if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
-				// Update Contatori Item ToolBar
-					if (RazorEnhanced.ToolBar.ToolBarForm != null)
-						RazorEnhanced.ToolBar.ToolBarForm.Invoke(new Action(() => RazorEnhanced.ToolBar.UpdateCount()));
-
 				if (value is Mobile)
 					m_Parent = ((Mobile)value).Serial;
 				else if (value is Item)
@@ -294,10 +289,6 @@ namespace Assistant
 
 			if (World.Player != null && (IsChildOf(World.Player.Backpack) || IsChildOf(World.Player.Quiver)))
 			{
-				// Update Contatori Item ToolBar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-					RazorEnhanced.ToolBar.ToolBarForm.Invoke(new Action(() => RazorEnhanced.ToolBar.UpdateCount()));
-
 				if (m_IsNew)
 				{
 					if (m_AutoStack)
@@ -492,10 +483,6 @@ namespace Assistant
 
 			foreach (Item r in rem)
 				r.Remove();
-
-			// Update Contatori Item ToolBar
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.ToolBarForm.Invoke(new Action(() => RazorEnhanced.ToolBar.UpdateCount()));
 
 			if (m_Parent is Mobile)
 				((Mobile)m_Parent).RemoveItem(this);
