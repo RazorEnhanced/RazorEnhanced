@@ -99,7 +99,7 @@ namespace RazorEnhanced
 					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Dead]");
 				if (m.Paralized)
 					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Paralized]");
-				if (m.Blessed)
+				if (m.Blessed && World.Player.Expansion > 3)
 					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Mortalled]");
 			}
 

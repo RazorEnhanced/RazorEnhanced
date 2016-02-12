@@ -377,7 +377,8 @@ namespace Assistant
 			if (!PacketHandlers.UseNewStatus)
 			{
 				m_Poisoned = (flags & 0x04) != 0;
-				m_Blessed = (flags & 0x08) != 0;
+				if (World.Player.Expansion > 3)
+					m_Blessed = (flags & 0x08) != 0;
 			}
 			m_Female = (flags & 0x02) != 0;
 			m_Warmode = (flags & 0x40) != 0;

@@ -808,7 +808,7 @@ namespace Assistant
 						p.Write((short)0x013C);
 					}
 
-					else if((i.Container as Mobile).Blessed) // Mortal
+					else if((i.Container as Mobile).Blessed && World.Player.Expansion > 3) // Mortal
 					{
 						p.Seek(-2, SeekOrigin.Current);
 						p.Write((short)0x002E);
@@ -1083,9 +1083,8 @@ namespace Assistant
 							p.Write((short)0x013C);
 						}
 
-						else if (m.Blessed) // Mortal
+						else if (m.Blessed && World.Player.Expansion > 3) // Mortal
 						{
-							p.Seek(-2, SeekOrigin.Current);
 							p.Write((short)0x002E);
 						}
 					}
@@ -1329,7 +1328,7 @@ namespace Assistant
 
 			if (id == 1)
 				m.Poisoned = (flag != 0);
-			else if (id == 2)
+			else if (id == 2 && World.Player.Expansion > 3)
 				m.Blessed = (flag != 0);
 		}
 
@@ -1510,7 +1509,7 @@ namespace Assistant
 						p.Write((short)0x013C);
 					}
 
-					else if (m.Blessed) // Mortal
+					else if (m.Blessed && World.Player.Expansion > 3) // Mortal
 					{
 						p.Seek(-2, SeekOrigin.Current);
 						p.Write((short)0x002E);
@@ -1624,7 +1623,7 @@ namespace Assistant
 						p.Write((short)0x013C);
 					}
 
-					else if (m.Blessed) // Mortal
+					else if (m.Blessed && World.Player.Expansion > 3) // Mortal
 					{
 						p.Seek(-2, SeekOrigin.Current);
 						p.Write((short)0x002E);
