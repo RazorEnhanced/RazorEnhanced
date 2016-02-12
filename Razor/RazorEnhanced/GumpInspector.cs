@@ -24,7 +24,7 @@ namespace RazorEnhanced
 			int i = 0;
 			foreach (int sid in switchid)
 			{
-				AddLog("Switch ID: " + i + " Value: +" + sid.ToString());
+				AddLog("Switch ID: " + i + " Value: " + sid.ToString());
 				i++;
 			}
 		}

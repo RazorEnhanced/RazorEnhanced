@@ -52,13 +52,40 @@ namespace RazorEnhanced
 			World.Player.CurrentGumpI = 0;
 		}
 
-		/*  public static void SendAdvancedAction(uint gumpid, int buttonid, int[] switchs, GumpTextEntry[] entries)
-		  {
-			  ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
-			  ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs, entries));
-			  World.Player.HasGump = false;
-			  World.Player.CurrentGumpStrings.Clear();
-		  }*/
+		public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> switchs)
+		{
+			GumpTextEntry[] entries = new GumpTextEntry[0];
+
+			ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
+			ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
+			World.Player.HasGump = false;
+			World.Player.CurrentGumpStrings.Clear();
+		}
+
+		public static void SendAdvancedAction(uint gumpid, int buttonid, List<int> switchs, List<int> entryID, List<string> entryS)
+		{
+			if (entryID.Count == entryS.Count)
+			{
+				int i = 0;
+				GumpTextEntry[] entries = new GumpTextEntry[entryID.Count];
+				GumpTextEntry entrie = null;
+				foreach (int entry in entryID)
+				{
+					entrie.EntryID = (ushort)entry;
+					entrie.Text = entryS[i];
+					entries[i] = entrie;
+                }
+
+				ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
+				ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
+				World.Player.HasGump = false;
+				World.Player.CurrentGumpStrings.Clear();
+			}
+			else
+			{
+				Misc.SendMessage("Script Error: SendAdvancedAction: entryID and entryS lenght not match");
+			}
+		}
 
 		public static string LastGumpGetLine(int line)
 		{
