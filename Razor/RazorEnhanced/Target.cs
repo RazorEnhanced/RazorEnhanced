@@ -267,8 +267,6 @@ namespace RazorEnhanced
 					RazorEnhanced.Player.Attack(mobtarget.Serial);
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
 						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
-					RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
-					RazorEnhanced.Target.SetLast(mobtarget);
 				}
 			}
 			else
