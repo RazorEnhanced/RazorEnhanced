@@ -177,9 +177,6 @@
     <Compile Include="Core\Facet.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\MemHelper.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\Mobile.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -597,8 +598,8 @@ namespace Assistant
 				return "";
 		}
 
-		private static Queue<Packet> m_SendQueue;
-		private static Queue<Packet> m_RecvQueue;
+		private static ConcurrentQueue<Packet> m_SendQueue;
+		private static ConcurrentQueue<Packet> m_RecvQueue;
 
 		private static bool m_QueueRecv;
 		private static bool m_QueueSend;
@@ -648,8 +649,8 @@ namespace Assistant
 
 		static ClientCommunication()
 		{
-			m_SendQueue = new Queue<Packet>();
-			m_RecvQueue = new Queue<Packet>();
+			m_SendQueue = new ConcurrentQueue<Packet>();
+			m_RecvQueue = new ConcurrentQueue<Packet>();
 			m_WndReg = new List<WndRegEnt>();
 			m_NextCmdID = 1425u;
 			m_ClientEnc = false;
@@ -1279,7 +1280,7 @@ namespace Assistant
 			return new Packet(data, pr.Length, pr.DynamicLength);
 		}
 
-		private static void HandleComm(Buffer* inBuff, Buffer* outBuff, Queue<Packet> queue, PacketPath path)
+		private static void HandleComm(Buffer* inBuff, Buffer* outBuff, ConcurrentQueue<Packet> queue, PacketPath path)
 		{
 			CommMutex.WaitOne();
 			while (inBuff->Length > 0)
@@ -1363,9 +1364,8 @@ namespace Assistant
 				}
 
 				while (queue.Count > 0)
-				{
-					p = queue.Dequeue();
-					if (p != null)
+				{	
+					if (queue.TryDequeue(out p))
 					{
 						byte[] data = p.Compile();
 						fixed (byte* ptr = data)
