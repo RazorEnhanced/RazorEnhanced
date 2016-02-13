@@ -430,6 +430,32 @@ namespace RazorEnhanced.UI
 				m_Filename = Path.GetFileNameWithoutExtension(save.FileName);
 				this.Text = m_Title + " - " + m_Filename + ".py";
 				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+
+				string filename = Path.GetFileName(save.FileName);
+				Scripts.EnhancedScript script = Scripts.Search(filename);
+				if (script != null)
+				{
+					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", filename);
+
+					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(filename))
+					{
+						string text = File.ReadAllText(fullpath);
+						bool loop = script.Loop;
+						bool wait = script.Wait;
+						bool run = script.Run;
+						bool isRunning = script.IsRunning;
+
+						if (isRunning)
+							script.Stop();
+
+						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(filename, text, wait, loop, run);
+						reloaded.Create(null);
+						Scripts.EnhancedScripts[filename] = reloaded;
+
+						if (isRunning)
+							reloaded.Start();
+					}
+				}
 			}
 		}
 

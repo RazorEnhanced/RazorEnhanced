@@ -8082,7 +8082,7 @@ namespace Assistant
 
 			if (result == "Created")
 			{
-				Scripts.EnhancedScripts.Push(script);
+				Scripts.EnhancedScripts.TryAdd(filename, script);
 			}
 			else
 			{
@@ -8093,8 +8093,8 @@ namespace Assistant
 		}
 
 		private void LoadAndInitializeScripts()
-		{
-			foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts)
+		{ 
+			foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
 			{
 				script.Stop();
 				script.Reset();

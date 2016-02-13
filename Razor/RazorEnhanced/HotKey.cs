@@ -1,6 +1,6 @@
 ﻿using Assistant;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace RazorEnhanced
@@ -239,7 +239,7 @@ namespace RazorEnhanced
 						if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
 						{
 							RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33);
-							foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.ToArray())
+							foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
 							{
 								scriptdata.Run = false;
 							}

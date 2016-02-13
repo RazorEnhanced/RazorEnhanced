@@ -3,6 +3,7 @@ using IronPython.Hosting;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 using System;
+using System.Linq;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
@@ -249,7 +250,7 @@ namespace RazorEnhanced
 			{
                 m_Timer.Change(Timeout.Infinite, Timeout.Infinite);
 
-				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
+				foreach (EnhancedScript script in m_EnhancedScripts.Values.ToList())
 				{
 					if (script.IsRunning)
 					{
@@ -306,7 +307,7 @@ namespace RazorEnhanced
 
 			private void OnTick(object state)
 			{
-				foreach (EnhancedScript script in m_EnhancedScripts.ToArray())
+				foreach (EnhancedScript script in m_EnhancedScripts.Values.ToList())
 				{
 					if (script.Run)
 					{
@@ -455,8 +456,8 @@ namespace RazorEnhanced
 		private static ScriptTimer m_Timer = new ScriptTimer();
 		internal static ScriptTimer Timer { get { return m_Timer; } }
 
-		private static ConcurrentStack<EnhancedScript> m_EnhancedScripts = new ConcurrentStack<EnhancedScript>();
-		internal static ConcurrentStack<EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
+		private static ConcurrentDictionary<string, EnhancedScript> m_EnhancedScripts = new ConcurrentDictionary<string, EnhancedScript>();
+		internal static ConcurrentDictionary<string, EnhancedScript> EnhancedScripts { get { return m_EnhancedScripts; } }
 
 		public static void Initialize()
 		{
@@ -502,10 +503,10 @@ namespace RazorEnhanced
 
 		internal static EnhancedScript Search(string filename)
 		{
-			foreach (EnhancedScript script in m_EnhancedScripts)
-			{
-				if (script.Filename == filename)
-					return script;
+			foreach (KeyValuePair<string, EnhancedScript> pair in m_EnhancedScripts)
+			{ 
+				if (pair.Key == filename)
+					return pair.Value;
 			}
 
 			return null;
