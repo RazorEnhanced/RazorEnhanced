@@ -40,6 +40,7 @@ namespace Assistant
 
 			//Server -> Client handlers
 			PacketHandler.RegisterServerToClientViewer(0x11, new PacketViewerCallback(MobileStatus));
+			PacketHandler.RegisterServerToClientViewer(0x16, new PacketViewerCallback(SAMobileStatus));
 			PacketHandler.RegisterServerToClientViewer(0x17, new PacketViewerCallback(NewMobileStatus));
 			PacketHandler.RegisterServerToClientViewer(0x1A, new PacketViewerCallback(WorldItem));
 			PacketHandler.RegisterServerToClientViewer(0x1B, new PacketViewerCallback(LoginConfirm));
@@ -215,12 +216,18 @@ namespace Assistant
 		private static void DeathAnimation(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial killed = p.ReadUInt32();
+			Mobile m = World.FindMobile(killed);
+
 			if (RazorEnhanced.Settings.General.ReadBool("AutoCap"))
 			{
-				Mobile m = World.FindMobile(killed);
 				if (m != null && ((m.Body >= 0x0190 && m.Body <= 0x0193) || (m.Body >= 0x025D && m.Body <= 0x0260)) && Utility.Distance(World.Player.Position, m.Position) <= 12)
 					ScreenCapManager.DeathCapture();
 			}
+			if (m != null)
+			{
+				m.Dead = true;
+			}
+
 		}
 
 		private static void ExtendedClientCommand(Packet p, PacketHandlerEventArgs args)
@@ -1310,6 +1317,11 @@ namespace Assistant
 
 		internal static bool UseNewStatus = false;
 
+		private static void SAMobileStatus(PacketReader p, PacketHandlerEventArgs args)
+		{
+			RazorEnhanced.Misc.SendMessage("SSSS");
+		}
+
 		private static void NewMobileStatus(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Mobile m = World.FindMobile((Serial)p.ReadUInt32());
@@ -1340,8 +1352,11 @@ namespace Assistant
 			else if (id == 2)
 				m.Blessed = mortal = (flag != 0);
 
-			if (m != World.Player)
+			if (m != World.Player && !m.Dead && RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+			{
 				ClientCommunication.SendToClient(new MobileIncomingRefresh(m, poison, mortal));
+				m.Dead = false;
+			}
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1471,6 +1486,7 @@ namespace Assistant
 
 			Serial serial = p.ReadUInt32();
 			Mobile m = World.FindMobile(serial);
+
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));

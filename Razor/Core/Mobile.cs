@@ -36,6 +36,7 @@ namespace Assistant
 		private bool m_Blessed; // Yellow Hits
 		private bool m_Warmode;
 		private bool m_Paralized;
+		private bool m_Dead;
 
 		private bool m_PropsUpdated;
 
@@ -124,6 +125,12 @@ namespace Assistant
 		{
 			get { return m_Blessed; }
 			set { m_Blessed = value; }
+		}
+
+		internal bool Dead
+		{
+			get { return m_Dead; }
+			set { m_Dead = value; }
 		}
 
 		internal bool IsHuman
