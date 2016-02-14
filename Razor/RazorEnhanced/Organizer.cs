@@ -347,7 +347,8 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.Organizer.AddLog("Finish!");
-			RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!");
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!");
 			Assistant.Engine.MainWindow.OrganizerFinishWork();
 			return 0;
 		}
@@ -358,7 +359,8 @@ namespace RazorEnhanced
 			Assistant.Item sbag = Assistant.World.FindItem(OrganizerSource);
 			if (sbag == null)
 			{
-				Misc.SendMessage("Organizer: Invalid Source Bag");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					Misc.SendMessage("Organizer: Invalid Source Bag");
 				AddLog("Invalid Source Bag");
 				Assistant.Engine.MainWindow.OrganizerFinishWork();
 				return;
@@ -366,7 +368,8 @@ namespace RazorEnhanced
 			Assistant.Item dbag = Assistant.World.FindItem(OrganizerDestination);
 			if (dbag == null)
 			{
-				Misc.SendMessage("Organizer: Invalid Destination Bag");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					Misc.SendMessage("Organizer: Invalid Destination Bag");
 				AddLog("Invalid Destination Bag");
 				Assistant.Engine.MainWindow.OrganizerFinishWork();
 				return;
@@ -409,7 +412,10 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.OrganizerExecute.Enabled == true)
 				Assistant.Engine.MainWindow.OrganizerStartExec();
 			else
-				Misc.SendMessage("Script Error: Organizer.FStart: Organizer already running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Organizer.FStart: Organizer already running");
+			}
 		}
 
 		public static void FStop()
@@ -417,7 +423,10 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
 				Assistant.Engine.MainWindow.OrganizerStopExec();
 			else
-				Misc.SendMessage("Script Error: Organizer.FStart: Organizer not running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Organizer.FStart: Organizer not running");
+			}
 		}
 
 		public static bool Status()
@@ -430,14 +439,11 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.OrganizerListSelect.Items.Count; i++)
+			if (!Assistant.Engine.MainWindow.OrganizerListSelect.Items.Contains(nomelista))
 			{
-				if (nomelista == Assistant.Engine.MainWindow.OrganizerListSelect.GetItemText(Assistant.Engine.MainWindow.OrganizerListSelect.Items[i]))
-					ListaOK = true;
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
 			}
-			if (!ListaOK)
-				Misc.SendMessage("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
 			else
 			{
 				if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart

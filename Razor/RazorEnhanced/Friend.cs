@@ -248,14 +248,11 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.FriendListSelect.Items.Count; i++)
+			if (!Assistant.Engine.MainWindow.FriendListSelect.Items.Contains(nomelista))
 			{
-				if (nomelista == Assistant.Engine.MainWindow.FriendListSelect.GetItemText(Assistant.Engine.MainWindow.FriendListSelect.Items[i]))
-					ListaOK = true;
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Friend.ChangeList: Friend List: " + nomelista + " not exist");
 			}
-			if (!ListaOK)
-				Misc.SendMessage("Script Error: Friend.ChangeList: Friend List: " + nomelista + " not exist");
 			else
 			{
 				Assistant.Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = Assistant.Engine.MainWindow.FriendListSelect.Items.IndexOf(nomelista)));  // cambio lista

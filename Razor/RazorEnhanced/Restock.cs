@@ -335,7 +335,8 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.Restock.AddLog("Finish!");
-			RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!");
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!");
 			Assistant.Engine.MainWindow.RestockFinishWork();
 			return 0;
 		}
@@ -346,7 +347,8 @@ namespace RazorEnhanced
 			Assistant.Item sbag = Assistant.World.FindItem(RestockSource);
 			if (sbag == null)
 			{
-				Misc.SendMessage("Restock: Invalid Source Bag");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					Misc.SendMessage("Restock: Invalid Source Bag");
 				AddLog("Invalid Source Bag");
 				Assistant.Engine.MainWindow.RestockFinishWork();
 				return;
@@ -354,7 +356,8 @@ namespace RazorEnhanced
 			Assistant.Item dbag = Assistant.World.FindItem(RestockDestination);
 			if (dbag == null)
 			{
-				Misc.SendMessage("Restock: Invalid Destination Bag");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					Misc.SendMessage("Restock: Invalid Destination Bag");
 				AddLog("Invalid Destination Bag");
 				Assistant.Engine.MainWindow.RestockFinishWork();
 				return;
@@ -397,7 +400,10 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
 				Assistant.Engine.MainWindow.RestockStartExec();
 			else
-				Misc.SendMessage("Script Error: Restock.FStart: Restock already running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Restock.FStart: Restock already running");
+			}
 		}
 
 		public static void FStop()
@@ -405,7 +411,10 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.RestockExecute.Enabled == true)
 				Assistant.Engine.MainWindow.RestockStopExec();
 			else
-				Misc.SendMessage("Script Error: Restock.FStart: Restock not running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Restock.FStart: Restock not running");
+			}
 		}
 
 		public static bool Status()
@@ -418,14 +427,11 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.RestockListSelect.Items.Count; i++)
+			if (!Assistant.Engine.MainWindow.RestockListSelect.Items.Contains(nomelista))
 			{
-				if (nomelista == Assistant.Engine.MainWindow.RestockListSelect.GetItemText(Assistant.Engine.MainWindow.RestockListSelect.Items[i]))
-					ListaOK = true;
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
 			}
-			if (!ListaOK)
-				Misc.SendMessage("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
 			else
 			{
 				if (Assistant.Engine.MainWindow.RestockStop.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart

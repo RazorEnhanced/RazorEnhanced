@@ -540,7 +540,8 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
 			{
-				Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
 				return null;
 			}
 			else
@@ -554,7 +555,8 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: Move: Source Item  not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Source Item  not found");
 				return;
 			}
 			if (amount == 0)
@@ -575,17 +577,20 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: Move: Source Item  not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Source Item  not found");
 				return;
 			}
 			if (bag == null)
 			{
-				Misc.SendMessage("Script Error: Move: Destination Item not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Destination Item not found");
 				return;
 			}
 			if (!bag.IsContainer)
 			{
-				Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Destination Item is not a container");
 				return;
 			}
 			Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
@@ -595,17 +600,20 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: Move: Source Item  not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Source Item  not found");
 				return;
 			}
 			if (bag == null)
 			{
-				Misc.SendMessage("Script Error: Move: Destination Item not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Destination Item not found");
 				return;
 			}
 			if (!bag.IsContainer)
 			{
-				Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Destination Item is not a container");
 				return;
 			}
 			if (amount == 0)
@@ -630,17 +638,20 @@ namespace RazorEnhanced
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: Move: Source Item  not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Source Item  not found");
 				return;
 			}
 			if (bag == null)
 			{
-				Misc.SendMessage("Script Error: Move: Destination Item not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Destination Item not found");
 				return;
 			}
 			if (!bag.IsContainer)
 			{
-				Misc.SendMessage("Script Error: Move: Destination Item is not a container");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Move: Destination Item is not a container");
 				return;
 			}
 			if (amount == 0)
@@ -663,7 +674,8 @@ namespace RazorEnhanced
 		{
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: DropItemGroundSelf: Item not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: DropItemGroundSelf: Item not found");
 				return;
 			}
 			if (amount == 0)
@@ -692,14 +704,18 @@ namespace RazorEnhanced
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: UseItem: Invalid Serial");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: UseItem: Invalid Serial");
 				return;
 			}
 
 			if (item.Serial.IsItem)
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 			else
-				Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: UseItem: (" + item.Serial.ToString() + ") is not a item");
+			}
 		}
 
 		public static bool UseItemByID(int itemid, int color)
@@ -737,7 +753,8 @@ namespace RazorEnhanced
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
 				return;
 			}
 			ClientCommunication.SendToServer(new SingleClick(item));
@@ -893,7 +910,8 @@ namespace RazorEnhanced
 				return ContainerCount(container, itemid, color);
 			else
 			{
-				Misc.SendMessage("Script Error: ContainerCount: Invalid container");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: ContainerCount: Invalid container");
 				return 0;
 			}
 		}
@@ -918,8 +936,10 @@ namespace RazorEnhanced
 				}
 			}
 			else
-				Misc.SendMessage("Script Error: ContainerCount: Invalid container");
-
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: ContainerCount: Invalid container");
+			}
 			return count;
 		}
 

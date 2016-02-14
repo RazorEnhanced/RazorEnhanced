@@ -392,14 +392,16 @@ namespace RazorEnhanced
 			{
 				if (bag.RootContainer != World.Player)
 				{
-					Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
+					if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
 					AddLog("Invalid Bag, Switch to backpack");
 					ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 				}
 			}
 			else
 			{
-				Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
+				if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+					Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack");
 				AddLog("Invalid Bag, Switch to backpack");
 				ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -418,7 +420,8 @@ namespace RazorEnhanced
 
 			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
 			{
-				Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
 			}
 			else
 			{
@@ -431,7 +434,10 @@ namespace RazorEnhanced
 		public static void Start()
 		{
 			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-				Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
+			}
 			else
 				Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = true));
 		}
@@ -439,7 +445,10 @@ namespace RazorEnhanced
 		public static void Stop()
 		{
 			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == false)
-				Misc.SendMessage("Script Error: Scavenger.Stop: Scavenger already sleeping");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Scavenger.Stop: Scavenger already sleeping");
+			}
 			else
 				Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false));
 		}
@@ -452,7 +461,10 @@ namespace RazorEnhanced
 		public static void ChangeList(string nomelista)
 		{
 			if (!Assistant.Engine.MainWindow.ScavengerListSelect.Items.Contains(nomelista))
-				Misc.SendMessage("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
+			}
 			else
 			{
 				if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart

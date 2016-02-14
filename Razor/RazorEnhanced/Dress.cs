@@ -1038,7 +1038,10 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.DressExecuteButton.Enabled == true)
 				Assistant.Engine.MainWindow.DressStart();
 			else
-				Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
+			}
 		}
 
 		public static void UnDressFStart()
@@ -1046,7 +1049,10 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.UnDressExecuteButton.Enabled == true)
 				Assistant.Engine.MainWindow.UndressStart();
 			else
-				Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
+			}
 		}
 
 		public static void DressFStop()
@@ -1054,7 +1060,10 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
 				Assistant.Engine.MainWindow.DressStop();
 			else
-				Misc.SendMessage("Script Error: Dress.DressFStop: Dress not running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Dress.DressFStop: Dress not running");
+			}
 		}
 
 		public static void UnDressFStop()
@@ -1062,19 +1071,19 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true)
 				Assistant.Engine.MainWindow.DressStop();
 			else
-				Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
+			}
 		}
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.DressListSelect.Items.Count; i++)
-			{
-				if (nomelista == Assistant.Engine.MainWindow.DressListSelect.GetItemText(Assistant.Engine.MainWindow.DressListSelect.Items[i]))
-					ListaOK = true;
+			if (!Assistant.Engine.MainWindow.DressListSelect.Items.Contains(nomelista))
+			{ 
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
-			if (!ListaOK)
-				Misc.SendMessage("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
 			else
 			{
 				if (Assistant.Engine.MainWindow.DressStopButton.Enabled == true) // Se è in esecuzione forza stop cambio lista e restart

@@ -449,14 +449,16 @@ namespace RazorEnhanced
 			{
 				if (bag.RootContainer != World.Player)
 				{
-					Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+					if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
 					AddLog("Invalid Bag, Switch to backpack");
 					AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 				}
 			}
 			else
 			{
-				Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+				if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+					Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
 				AddLog("Invalid Bag, Switch to backpack");
 				AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -482,7 +484,8 @@ namespace RazorEnhanced
 
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 			{
-				Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
 			}
 			else
 			{
@@ -495,7 +498,10 @@ namespace RazorEnhanced
 		public static void Start()
 		{
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
-				Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
+			}
 			else
 				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
 		}
@@ -503,7 +509,10 @@ namespace RazorEnhanced
 		public static void Stop()
 		{
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == false)
-				Misc.SendMessage("Script Error: Autoloot.Stop: Autoloot already sleeping");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Autoloot.Stop: Autoloot already sleeping");
+			}
 			else
 				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
 		}
@@ -516,7 +525,10 @@ namespace RazorEnhanced
 		public static void ChangeList(string nomelista)
 		{
 			if (!Assistant.Engine.MainWindow.AutoLootListSelect.Items.Contains(nomelista))
-				Misc.SendMessage("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
+			}
 			else
 			{
 				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart

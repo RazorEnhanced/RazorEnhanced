@@ -432,7 +432,10 @@ namespace RazorEnhanced
 		public static void Start()
 		{
 			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
-				Misc.SendMessage("Script Error: BandageHeal.Start: Bandage Heal already running");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: BandageHeal.Start: Bandage Heal already running");
+			}
 			else
 				Assistant.Engine.MainWindow.BandageHealenableCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = true));
 		}
@@ -440,7 +443,10 @@ namespace RazorEnhanced
 		public static void Stop()
 		{
 			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == false)
-				Misc.SendMessage("Script Error: BandageHeal.Stop: Bandage Heal already sleeping");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: BandageHeal.Stop: Bandage Heal already sleeping");
+			}
 			else
 				Assistant.Engine.MainWindow.BandageHealenableCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked = false));
 		}

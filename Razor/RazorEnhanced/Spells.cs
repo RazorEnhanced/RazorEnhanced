@@ -272,7 +272,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: CastSpellMagery: Invalid spell name: " + SpellName);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: CastSpellMagery: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)
@@ -357,7 +358,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: CastSpellNecro: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)
@@ -414,7 +416,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: CastSpellChivalry: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)
@@ -455,7 +458,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: CastSpellBushido: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)
@@ -504,7 +508,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: CastSpellNinjitsu: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)
@@ -585,7 +590,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: CastSpellSpellweaving: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)
@@ -662,7 +668,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: CastSpellMysticism: Invalid spell name: " + SpellName);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: CastSpellMysticism: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)

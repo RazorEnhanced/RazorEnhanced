@@ -211,7 +211,8 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				Misc.SendMessage("Invalid target data!");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Invalid target data!");
 			}
 		}
 
@@ -246,7 +247,8 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				Misc.SendMessage("Invalid target data!");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Invalid target data!");
 			}
 		}
 
@@ -271,7 +273,8 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				Misc.SendMessage("Invalid target data!");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Invalid target data!");
 			}
 		}
 	}

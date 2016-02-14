@@ -747,7 +747,10 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 			}
 			else
-				Misc.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + layer);
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + layer);
+			}
 		}
 
 		public static void EquipItem(int serial)
@@ -755,13 +758,15 @@ namespace RazorEnhanced
 			Assistant.Item item = Assistant.World.FindItem((Assistant.Serial)serial);
 			if (item == null)
 			{
-				Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") not found");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") not found");
 				return;
 			}
 
 			if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
 			{
-				Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") too away");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") too away");
 				return;
 			}
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
@@ -773,7 +778,8 @@ namespace RazorEnhanced
 			Assistant.Mobile player = Assistant.World.Player;
 			if (item.Container == null && Misc.DistanceSqrt(item.GetWorldPosition(), Position) > 3)
 			{
-				Misc.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
 			}
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
@@ -980,7 +986,8 @@ namespace RazorEnhanced
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Value;
 
 				default:
-					Misc.SendMessage("Script Error: GetSkillValue: Invalid skill name: " + skillname);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: GetSkillValue: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -1152,7 +1159,8 @@ namespace RazorEnhanced
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Cap;
 
 				default:
-					Misc.SendMessage("Script Error: GetSkillCap: Invalid skill name: " + skillname);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: GetSkillCap: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -1324,7 +1332,8 @@ namespace RazorEnhanced
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Lock);
 
 				default:
-					Misc.SendMessage("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -1426,7 +1435,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error: UseSkill: Invalid skill name: " + skillname);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: UseSkill: Invalid skill name: " + skillname);
 					break;
 			}
 		}
@@ -1507,7 +1517,8 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					Misc.SendMessage("Script Error - InvokeVirtue: Invalid virtue name: " + virtue);
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error - InvokeVirtue: Invalid virtue name: " + virtue);
 					break;
 			}
 		}

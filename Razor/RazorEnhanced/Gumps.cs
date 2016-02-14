@@ -83,7 +83,8 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				Misc.SendMessage("Script Error: SendAdvancedAction: entryID and entryS lenght not match");
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: SendAdvancedAction: entryID and entryS lenght not match");
 			}
 		}
 
@@ -93,7 +94,8 @@ namespace RazorEnhanced
 			{
 				if (line > World.Player.CurrentGumpStrings.Count)
 				{
-					Misc.SendMessage("Script Error: LastGumpGetLine: Text line (" + line + ") not exist");
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: LastGumpGetLine: Text line (" + line + ") not exist");
 					return "";
 				}
 				else
@@ -135,7 +137,8 @@ namespace RazorEnhanced
 			{
 				if (line > World.Player.CurrentGumpStrings.Count)
 				{
-					Misc.SendMessage("Script Error: LastGumpTextExistByLine: Text line (" + line + ") not exist");
+					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+						Misc.SendMessage("Script Error: LastGumpTextExistByLine: Text line (" + line + ") not exist");
 					return false;
 				}
 				else

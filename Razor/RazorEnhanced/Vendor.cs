@@ -370,7 +370,10 @@ namespace RazorEnhanced
 		public static void Enable()
 		{
 			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
-				Misc.SendMessage("Script Error: Sell.Enable: Filter alredy enabled");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Sell.Enable: Filter alredy enabled");
+			}
 			else
 				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
 		}
@@ -378,7 +381,10 @@ namespace RazorEnhanced
 		public static void Disable()
 		{
 			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == false)
-				Misc.SendMessage("Script Error: Sell.Disable: Filter alredy disabled");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Sell.Disable: Filter alredy disabled");
+			}
 			else
 				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
 		}
@@ -390,14 +396,11 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.SellListSelect.Items.Count; i++)
-			{
-				if (nomelista == Assistant.Engine.MainWindow.SellListSelect.GetItemText(Assistant.Engine.MainWindow.SellListSelect.Items[i]))
-					ListaOK = true;
+			if (!Assistant.Engine.MainWindow.SellListSelect.Items.Contains(nomelista))
+            { 
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Sell.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
-			if (!ListaOK)
-				Misc.SendMessage("Script Error: Sell.ChangeList: Scavenger list: " + nomelista + " not exist");
 			else
 			{
 				if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
@@ -694,7 +697,10 @@ namespace RazorEnhanced
 		public static void Enable()
 		{
 			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
-				Misc.SendMessage("Script Error: Buy.Enable: Filter alredy enabled");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Buy.Enable: Filter alredy enabled");
+			}
 			else
 				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
 		}
@@ -702,7 +708,10 @@ namespace RazorEnhanced
 		public static void Disable()
 		{
 			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == false)
-				Misc.SendMessage("Script Error: Buy.Disable: Filter alredy disabled");
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Buy.Disable: Filter alredy disabled");
+			}
 			else
 				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
 		}
@@ -714,14 +723,11 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			bool ListaOK = false;
-			for (int i = 0; i < Assistant.Engine.MainWindow.BuyListSelect.Items.Count; i++)
+			if (!Assistant.Engine.MainWindow.BuyListSelect.Items.Contains(nomelista))
 			{
-				if (nomelista == Assistant.Engine.MainWindow.BuyListSelect.GetItemText(Assistant.Engine.MainWindow.BuyListSelect.Items[i]))
-					ListaOK = true;
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					Misc.SendMessage("Script Error: Buy.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
-			if (!ListaOK)
-				Misc.SendMessage("Script Error: Buy.ChangeList: Scavenger list: " + nomelista + " not exist");
 			else
 			{
 				if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
