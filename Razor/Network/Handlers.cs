@@ -1846,7 +1846,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x3B1;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
 					return;
 				}
 				if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
@@ -1855,7 +1856,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x0845;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
 					return;
 				}
 				if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
@@ -1864,7 +1866,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x016A;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
 					return;
 				}
 				if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
@@ -1873,7 +1876,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x0060;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
 					return;
 				}
 			}
@@ -2003,7 +2007,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x3B1;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
 					return;
 				}
 				if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
@@ -2012,7 +2017,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x0845;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
 					return;
 				}
 				if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
@@ -2021,7 +2027,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x016A;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
 					return;
 				}
 				if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
@@ -2030,7 +2037,8 @@ namespace Assistant
 					item.ItemID = 0x28A8;
 					item.Hue = 0x0060;
 					ClientCommunication.SendToClient(new WorldItem(item));
-					RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
 					return;
 				}
 			}
@@ -2595,7 +2603,8 @@ namespace Assistant
 							{
 								Assistant.Mobile leader = World.FindMobile(PartyLeader);
 								RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
-								RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+								if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+									RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
 								ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 								PacketHandlers.PartyLeader = Serial.Zero;
 							}

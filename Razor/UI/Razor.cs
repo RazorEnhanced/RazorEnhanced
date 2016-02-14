@@ -526,6 +526,9 @@ namespace Assistant
 		private RazorCheckBox scriptloopmodecheckbox;
 		private Label scriptfilelabel;
 		private GroupBox groupBox31;
+		private RazorCheckBox showagentmessageCheckBox;
+		private RazorCheckBox showmessagefieldCheckBox;
+		private RazorCheckBox showscriptmessageCheckBox;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -670,6 +673,8 @@ namespace Assistant
 		internal RazorCheckBox BlockMiniHealCheckBox { get { return blockminihealCheckBox; } }
 		internal RazorCheckBox BlockBigHealCheckBox { get { return blockbighealCheckBox; } }
 		internal RazorCheckBox BlockChivalryHealCheckBox { get { return blockchivalryhealCheckBox; } }
+		internal RazorCheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
+		internal RazorCheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
@@ -735,6 +740,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme4 = new RazorEnhanced.UI.Office2010BlueTheme();
 			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
@@ -1229,6 +1235,9 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+			this.showmessagefieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.showagentmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.showscriptmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1368,24 +1377,24 @@ namespace Assistant
 			// 
 			// profilesExportButton
 			// 
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.profilesExportButton.ColorTable = office2010BlueTheme1;
+			office2010BlueTheme4.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme4.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme4.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme4.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme4.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme4.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme4.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme4.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme4.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme4.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme4.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme4.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme4.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme4.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme4.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme4.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme4.TextColor = System.Drawing.Color.White;
+			this.profilesExportButton.ColorTable = office2010BlueTheme4;
 			this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
 			this.profilesExportButton.Name = "profilesExportButton";
 			this.profilesExportButton.Size = new System.Drawing.Size(63, 20);
@@ -2353,6 +2362,8 @@ namespace Assistant
 			// 
 			// groupBox24
 			// 
+			this.groupBox24.Controls.Add(this.showagentmessageCheckBox);
+			this.groupBox24.Controls.Add(this.showmessagefieldCheckBox);
 			this.groupBox24.Controls.Add(this.colorflagsHighlightCheckBox);
 			this.groupBox24.Controls.Add(this.blockchivalryhealCheckBox);
 			this.groupBox24.Controls.Add(this.blockbighealCheckBox);
@@ -2366,7 +2377,7 @@ namespace Assistant
 			this.groupBox24.Controls.Add(this.showstaticfieldCheckBox);
 			this.groupBox24.Location = new System.Drawing.Point(8, 14);
 			this.groupBox24.Name = "groupBox24";
-			this.groupBox24.Size = new System.Drawing.Size(178, 276);
+			this.groupBox24.Size = new System.Drawing.Size(178, 317);
 			this.groupBox24.TabIndex = 67;
 			this.groupBox24.TabStop = false;
 			this.groupBox24.Text = "Misc";
@@ -2382,7 +2393,7 @@ namespace Assistant
 			// 
 			// blockchivalryhealCheckBox
 			// 
-			this.blockchivalryhealCheckBox.Location = new System.Drawing.Point(6, 244);
+			this.blockchivalryhealCheckBox.Location = new System.Drawing.Point(6, 267);
 			this.blockchivalryhealCheckBox.Name = "blockchivalryhealCheckBox";
 			this.blockchivalryhealCheckBox.Size = new System.Drawing.Size(166, 22);
 			this.blockchivalryhealCheckBox.TabIndex = 67;
@@ -2391,7 +2402,7 @@ namespace Assistant
 			// 
 			// blockbighealCheckBox
 			// 
-			this.blockbighealCheckBox.Location = new System.Drawing.Point(6, 221);
+			this.blockbighealCheckBox.Location = new System.Drawing.Point(6, 244);
 			this.blockbighealCheckBox.Name = "blockbighealCheckBox";
 			this.blockbighealCheckBox.Size = new System.Drawing.Size(157, 22);
 			this.blockbighealCheckBox.TabIndex = 66;
@@ -2400,7 +2411,7 @@ namespace Assistant
 			// 
 			// blockminihealCheckBox
 			// 
-			this.blockminihealCheckBox.Location = new System.Drawing.Point(6, 198);
+			this.blockminihealCheckBox.Location = new System.Drawing.Point(6, 221);
 			this.blockminihealCheckBox.Name = "blockminihealCheckBox";
 			this.blockminihealCheckBox.Size = new System.Drawing.Size(157, 22);
 			this.blockminihealCheckBox.TabIndex = 65;
@@ -2409,16 +2420,16 @@ namespace Assistant
 			// 
 			// blockhealpoisonCheckBox
 			// 
-			this.blockhealpoisonCheckBox.Location = new System.Drawing.Point(6, 175);
+			this.blockhealpoisonCheckBox.Location = new System.Drawing.Point(6, 198);
 			this.blockhealpoisonCheckBox.Name = "blockhealpoisonCheckBox";
-			this.blockhealpoisonCheckBox.Size = new System.Drawing.Size(157, 22);
+			this.blockhealpoisonCheckBox.Size = new System.Drawing.Size(166, 22);
 			this.blockhealpoisonCheckBox.TabIndex = 64;
 			this.blockhealpoisonCheckBox.Text = "Block Heal if Poison/Mortal";
 			this.blockhealpoisonCheckBox.CheckedChanged += new System.EventHandler(this.blockhealpoisonCheckBox_CheckedChanged);
 			// 
 			// showheadtargetCheckBox
 			// 
-			this.showheadtargetCheckBox.Location = new System.Drawing.Point(6, 152);
+			this.showheadtargetCheckBox.Location = new System.Drawing.Point(6, 175);
 			this.showheadtargetCheckBox.Name = "showheadtargetCheckBox";
 			this.showheadtargetCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.showheadtargetCheckBox.TabIndex = 63;
@@ -2427,7 +2438,7 @@ namespace Assistant
 			// 
 			// blockpartyinviteCheckBox
 			// 
-			this.blockpartyinviteCheckBox.Location = new System.Drawing.Point(6, 129);
+			this.blockpartyinviteCheckBox.Location = new System.Drawing.Point(6, 152);
 			this.blockpartyinviteCheckBox.Name = "blockpartyinviteCheckBox";
 			this.blockpartyinviteCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.blockpartyinviteCheckBox.TabIndex = 62;
@@ -2436,7 +2447,7 @@ namespace Assistant
 			// 
 			// blocktraderequestCheckBox
 			// 
-			this.blocktraderequestCheckBox.Location = new System.Drawing.Point(6, 107);
+			this.blocktraderequestCheckBox.Location = new System.Drawing.Point(6, 130);
 			this.blocktraderequestCheckBox.Name = "blocktraderequestCheckBox";
 			this.blocktraderequestCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.blocktraderequestCheckBox.TabIndex = 61;
@@ -3636,6 +3647,7 @@ namespace Assistant
 			// 
 			// groupBox31
 			// 
+			this.groupBox31.Controls.Add(this.showscriptmessageCheckBox);
 			this.groupBox31.Controls.Add(this.buttonAddScript);
 			this.groupBox31.Controls.Add(this.buttonRemoveScript);
 			this.groupBox31.Controls.Add(this.buttonScriptDown);
@@ -3647,7 +3659,7 @@ namespace Assistant
 			this.groupBox31.Controls.Add(this.buttonScriptPlay);
 			this.groupBox31.Location = new System.Drawing.Point(482, 112);
 			this.groupBox31.Name = "groupBox31";
-			this.groupBox31.Size = new System.Drawing.Size(175, 166);
+			this.groupBox31.Size = new System.Drawing.Size(175, 192);
 			this.groupBox31.TabIndex = 50;
 			this.groupBox31.TabStop = false;
 			this.groupBox31.Text = "Script Operation";
@@ -6367,9 +6379,9 @@ namespace Assistant
 			this.hotkeyKeyMasterTextBox.ReadOnly = true;
 			this.hotkeyKeyMasterTextBox.Size = new System.Drawing.Size(104, 20);
 			this.hotkeyKeyMasterTextBox.TabIndex = 5;
+			this.hotkeyKeyMasterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
 			this.hotkeyKeyMasterTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
-			this.hotkeyKeyMasterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
 			// 
 			// hotkeyMasterSetButton
 			// 
@@ -6517,9 +6529,9 @@ namespace Assistant
 			this.hotkeytextbox.ReadOnly = true;
 			this.hotkeytextbox.Size = new System.Drawing.Size(104, 20);
 			this.hotkeytextbox.TabIndex = 1;
+			this.hotkeytextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
 			this.hotkeytextbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeytextbox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
-			this.hotkeytextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
 			// 
 			// hotkeytreeView
 			// 
@@ -6545,6 +6557,33 @@ namespace Assistant
 			this.timerupdatestatus.Enabled = true;
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
+			// 
+			// showmessagefieldCheckBox
+			// 
+			this.showmessagefieldCheckBox.Location = new System.Drawing.Point(6, 108);
+			this.showmessagefieldCheckBox.Name = "showmessagefieldCheckBox";
+			this.showmessagefieldCheckBox.Size = new System.Drawing.Size(157, 22);
+			this.showmessagefieldCheckBox.TabIndex = 69;
+			this.showmessagefieldCheckBox.Text = "Show Filed Message";
+			this.showmessagefieldCheckBox.CheckedChanged += new System.EventHandler(this.showmessagefieldCheckBox_CheckedChanged);
+			// 
+			// showagentmessageCheckBox
+			// 
+			this.showagentmessageCheckBox.Location = new System.Drawing.Point(6, 290);
+			this.showagentmessageCheckBox.Name = "showagentmessageCheckBox";
+			this.showagentmessageCheckBox.Size = new System.Drawing.Size(166, 22);
+			this.showagentmessageCheckBox.TabIndex = 70;
+			this.showagentmessageCheckBox.Text = "Show Agent Message";
+			this.showagentmessageCheckBox.CheckedChanged += new System.EventHandler(this.showagentmessageCheckBox_CheckedChanged);
+			// 
+			// showscriptmessageCheckBox
+			// 
+			this.showscriptmessageCheckBox.Location = new System.Drawing.Point(9, 162);
+			this.showscriptmessageCheckBox.Name = "showscriptmessageCheckBox";
+			this.showscriptmessageCheckBox.Size = new System.Drawing.Size(160, 22);
+			this.showscriptmessageCheckBox.TabIndex = 72;
+			this.showscriptmessageCheckBox.Text = "Show Script Message";
+			this.showscriptmessageCheckBox.CheckedChanged += new System.EventHandler(this.showscriptmessageCheckBox_CheckedChanged);
 			// 
 			// MainForm
 			// 
@@ -6870,7 +6909,10 @@ namespace Assistant
 			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
 
 			txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
-			msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
+			msglvl.SelectedIndex = 0;
+			msglvl.Enabled = false;
+
+			showscriptmessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox");
 		}
 
 		private bool m_Initializing = false;
@@ -8366,6 +8408,12 @@ namespace Assistant
 			Scripts.TimerDelay = delay;
 		}
 
+		private void showscriptmessageCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (showscriptmessageCheckBox.Focused)
+				RazorEnhanced.Settings.General.WriteBool("ShowScriptMessageCheckBox", showscriptmessageCheckBox.Checked);
+		}
+
 		private void scriptlistView_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (scriptlistView.SelectedItems.Count == 1)
@@ -8461,13 +8509,15 @@ namespace Assistant
 
 			if (autoLootBag != null && autoLootBag.Serial.IsItem && autoLootBag.IsContainer && autoLootBag.RootContainer == Assistant.World.Player)
 			{
-				RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString());
 				RazorEnhanced.AutoLoot.AddLog("Autoloot Container set to: " + autoLootBag.ToString());
 				AutoLoot.AutoLootBag = (int)autoLootBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Autoloot Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Autoloot Container, set backpack");
 				RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
 				AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -8488,12 +8538,16 @@ namespace Assistant
 			Assistant.Item autoLootItem = Assistant.World.FindItem(serial);
 			if (autoLootItem != null && autoLootItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
+				RazorEnhanced.AutoLoot.AddLog("Autoloot item added: " + autoLootItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.AutoLoot.AddLog("Invalid target");
 			}
 		}
 
@@ -8663,7 +8717,8 @@ namespace Assistant
 						RazorEnhanced.AutoLoot.ResetIgnore();
 						RazorEnhanced.AutoLoot.AutoMode = true;
 						RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Start...");
-						RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
+						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+							RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Start...");
 					}
 					else
 					{
@@ -8676,7 +8731,8 @@ namespace Assistant
 
 						// Stop autoloot
 						RazorEnhanced.AutoLoot.AutoMode = false;
-						RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Stop...");
+						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+							RazorEnhanced.Misc.SendMessage("AUTOLOOT: Engine Stop...");
 						RazorEnhanced.AutoLoot.AddLog("Autoloot Engine Stop...");
 					}
 				}
@@ -8856,12 +8912,16 @@ namespace Assistant
 			Assistant.Item autoLootItem = Assistant.World.FindItem(serial);
 			if (autoLootItem != null && autoLootItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
+				RazorEnhanced.Scavenger.AddLog("Autoloot item added: " + autoLootItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.Scavenger.AddLog("Invalid target");
 			}
 		}
 
@@ -8894,13 +8954,15 @@ namespace Assistant
 
 			if (scavengerBag != null && scavengerBag.Serial.IsItem && scavengerBag.IsContainer && scavengerBag.RootContainer == Assistant.World.Player)
 			{
-				RazorEnhanced.Misc.SendMessage("Scavenger Container set to: " + scavengerBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Scavenger Container set to: " + scavengerBag.ToString());
 				RazorEnhanced.Scavenger.AddLog("Scavenger Container set to: " + scavengerBag.ToString());
 				Scavenger.ScavengerBag = (int)scavengerBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Scavenger Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Scavenger Container, set backpack");
 				RazorEnhanced.Scavenger.AddLog("Invalid Scavenger Container, set backpack");
 				Scavenger.ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -8975,7 +9037,8 @@ namespace Assistant
 						RazorEnhanced.Scavenger.ResetIgnore();
 						RazorEnhanced.Scavenger.AutoMode = true;
 						RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
-						RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
+						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+							RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Start...");
 					}
 					else
 					{
@@ -8988,7 +9051,8 @@ namespace Assistant
 
 						RazorEnhanced.Scavenger.AutoMode = false;
 						RazorEnhanced.Scavenger.AddLog("Scavenger Engine Stop...");
-						RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
+						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+							RazorEnhanced.Misc.SendMessage("SCAVENGER: Engine Stop...");
 					}
 				}
 				else
@@ -9187,7 +9251,8 @@ namespace Assistant
 			Assistant.Item organizerBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (organizerBag == null)
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -9195,13 +9260,15 @@ namespace Assistant
 
 			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer)
 			{
-				RazorEnhanced.Misc.SendMessage("Source Container set to: " + organizerBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Source Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.AddLog("Source Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.OrganizerSource = (int)organizerBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -9224,7 +9291,8 @@ namespace Assistant
 
 			if (organizerBag == null)
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -9232,13 +9300,15 @@ namespace Assistant
 
 			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer)
 			{
-				RazorEnhanced.Misc.SendMessage("Destination Container set to: " + organizerBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Destination Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.AddLog("Destination Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.OrganizerDestination = (int)organizerBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -9277,12 +9347,16 @@ namespace Assistant
 			Assistant.Item organizerItem = Assistant.World.FindItem(serial);
 			if (organizerItem != null && organizerItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
+				RazorEnhanced.Organizer.AddLog("Organizer item added: " + organizerItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, -1, -1); });
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.Organizer.AddLog("Invalid target");
 			}
 		}
 
@@ -9315,7 +9389,8 @@ namespace Assistant
 			{
 				RazorEnhanced.Organizer.Start();
 				RazorEnhanced.Organizer.AddLog("Organizer Engine Start...");
-				RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
 				organizerStopButton.Enabled = true;
 				organizerExecuteButton.Enabled = false;
 				organizerListSelect.Enabled = false;
@@ -9349,7 +9424,8 @@ namespace Assistant
 			RazorEnhanced.Organizer.ForceStop();
 
 			RazorEnhanced.Organizer.AddLog("Organizer Engine force stop...");
-			RazorEnhanced.Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
 			organizerExecuteButton.Enabled = true;
 			organizerListSelect.Enabled = true;
 			organizerAddListB.Enabled = true;
@@ -9452,12 +9528,16 @@ namespace Assistant
 			Assistant.Item sellItem = Assistant.World.FindItem(serial);
 			if (sellItem != null && sellItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString());
+				RazorEnhanced.SellAgent.AddLog("Sell Agent item added: " + sellItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue); });
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.SellAgent.AddLog("Invalid target");
 			}
 		}
 
@@ -9527,7 +9607,8 @@ namespace Assistant
 							if (bag.RootContainer != World.Player || !bag.IsContainer)
 							{
 								RazorEnhanced.SellAgent.AddLog("Invalid or not accessible Container!");
-								RazorEnhanced.Misc.SendMessage("Invalid or not accessible Container!");
+								if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+									RazorEnhanced.Misc.SendMessage("Invalid or not accessible Container!");
 								sellEnableCheckBox.Checked = false;
 							}
 							else
@@ -9538,13 +9619,15 @@ namespace Assistant
 								sellImportListButton.Enabled = false;
 								sellExportListButton.Enabled = false;
 								RazorEnhanced.SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-								RazorEnhanced.Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+								if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+									RazorEnhanced.Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 								RazorEnhanced.SellAgent.EnableSellFilter();
 							}
 						else
 						{
 							RazorEnhanced.SellAgent.AddLog("Invalid or not accessible Container!");
-							RazorEnhanced.Misc.SendMessage("Invalid or not accessible Container!");
+							if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+								RazorEnhanced.Misc.SendMessage("Invalid or not accessible Container!");
 							sellEnableCheckBox.Checked = false;
 						}
 					}
@@ -9564,7 +9647,8 @@ namespace Assistant
 					if (sellListSelect.Text != "")
 					{
 						RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
-						RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+							RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 					}
 				}
 			}
@@ -9603,13 +9687,15 @@ namespace Assistant
 
 			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsContainer && sellBag.RootContainer == Assistant.World.Player)
 			{
-				RazorEnhanced.Misc.SendMessage("Container set to: " + sellBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Container set to: " + sellBag.ToString());
 				RazorEnhanced.SellAgent.AddLog("Container set to: " + sellBag.ToString());
 				RazorEnhanced.SellAgent.SellBag = (int)sellBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid container, set backpack");
 				RazorEnhanced.SellAgent.AddLog("Invalid container, set backpack");
 				RazorEnhanced.SellAgent.SellBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -9697,12 +9783,16 @@ namespace Assistant
 			Assistant.Item buyItem = Assistant.World.FindItem(serial);
 			if (buyItem != null && buyItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Buy Agent item added: " + buyItem.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Buy Agent item added: " + buyItem.ToString());
+				RazorEnhanced.BuyAgent.AddLog("Buy Agent item added: " + buyItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue); });
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.BuyAgent.AddLog("Invalid target");
 			}
 		}
 
@@ -9772,7 +9862,8 @@ namespace Assistant
 						buyImportListButton.Enabled = false;
 						buyExportListButton.Enabled = false;
 						RazorEnhanced.BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-						RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+							RazorEnhanced.Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 						RazorEnhanced.BuyAgent.EnableBuyFilter();
 					}
 					else
@@ -9783,7 +9874,8 @@ namespace Assistant
 						buyImportListButton.Enabled = true;
 						buyExportListButton.Enabled = true;
 						RazorEnhanced.BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
-						RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+							RazorEnhanced.Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 					}
 				}
 				else
@@ -9901,13 +9993,15 @@ namespace Assistant
 
 			if (dressBag != null && dressBag.Serial.IsItem && dressBag.IsContainer)
 			{
-				RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString());
 				RazorEnhanced.Dress.AddLog("Undress Container set to: " + dressBag.ToString());
 				RazorEnhanced.Dress.DressBag = (int)dressBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack");
 				RazorEnhanced.Dress.AddLog("Invalid Undress Container, set backpack");
 				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -9964,7 +10058,11 @@ namespace Assistant
 			if (dressItem != null && dressItem.Serial.IsItem)
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Dress.AddItemByTarger(dressItem); });
 			else
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+			{
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.Dress.AddLog("Invalid target");
+			}
 		}
 
 		private void dressAddManualB_Click(object sender, EventArgs e)
@@ -10004,7 +10102,8 @@ namespace Assistant
 				RazorEnhanced.Dress.UndressStart();
 
 				RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
-				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
 
 				dressStopButton.Enabled = true;
 				dressConflictCheckB.Enabled = false;
@@ -10074,7 +10173,8 @@ namespace Assistant
 				RazorEnhanced.Dress.DressStart();
 
 				RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
-				RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
 
 				dressStopButton.Enabled = true;
 				dressConflictCheckB.Enabled = false;
@@ -10111,7 +10211,8 @@ namespace Assistant
 			RazorEnhanced.Dress.ForceStop();
 
 			RazorEnhanced.Dress.AddLog("Dress / Undress Engine force stop...");
-			RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...");
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...");
 			dressStopButton.Enabled = false;
 			dressConflictCheckB.Enabled = true;
 			dressExecuteButton.Enabled = true;
@@ -10216,12 +10317,16 @@ namespace Assistant
 			Assistant.Mobile friendplayer = Assistant.World.FindMobile(serial);
 			if (friendplayer != null && friendplayer.Serial.IsMobile && friendplayer.Serial != World.Player.Serial)
 			{
-				RazorEnhanced.Misc.SendMessage("Friend player added: " + friendplayer.Name.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Friend player added: " + friendplayer.Name.ToString());
+				RazorEnhanced.Friend.AddLog("Friend player added: " + friendplayer.Name.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Friend.AddPlayerToList(friendplayer.Name, friendplayer.Serial); });
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.Friend.AddLog("Invalid target");
 			}
 		}
 
@@ -10328,7 +10433,8 @@ namespace Assistant
 			Assistant.Item restockBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (restockBag == null)
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
 				RazorEnhanced.Restock.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -10336,13 +10442,15 @@ namespace Assistant
 
 			if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
 			{
-				RazorEnhanced.Misc.SendMessage("Source Container set to: " + restockBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Source Container set to: " + restockBag.ToString());
 				RazorEnhanced.Restock.AddLog("Source Container set to: " + restockBag.ToString());
 				RazorEnhanced.Restock.RestockSource = (int)restockBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
 				RazorEnhanced.Restock.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -10367,7 +10475,8 @@ namespace Assistant
 			Assistant.Item restockBag = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (restockBag == null)
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
 				RazorEnhanced.Restock.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -10375,13 +10484,15 @@ namespace Assistant
 
 			if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
 			{
-				RazorEnhanced.Misc.SendMessage("Destination Container set to: " + restockBag.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Destination Container set to: " + restockBag.ToString());
 				RazorEnhanced.Restock.AddLog("Destination Container set to: " + restockBag.ToString());
 				RazorEnhanced.Restock.RestockDestination = (int)restockBag.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
 				RazorEnhanced.Restock.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -10486,7 +10597,8 @@ namespace Assistant
 			{
 				RazorEnhanced.Restock.Start();
 				RazorEnhanced.Restock.AddLog("Restock Engine Start...");
-				RazorEnhanced.Misc.SendMessage("RESTOCK: Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("RESTOCK: Engine Start...");
 				restockStopButton.Enabled = true;
 				restockExecuteButton.Enabled = false;
 				restockListSelect.Enabled = false;
@@ -10520,7 +10632,8 @@ namespace Assistant
 			RazorEnhanced.Restock.ForceStop();
 
 			RazorEnhanced.Restock.AddLog("Restock Engine force stop...");
-			RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...");
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...");
 			restockStopButton.Enabled = false;
 			restockExecuteButton.Enabled = true;
 			restockListSelect.Enabled = true;
@@ -10573,12 +10686,16 @@ namespace Assistant
 			Assistant.Item restockItem = Assistant.World.FindItem(serial);
 			if (restockItem != null && restockItem.Serial.IsItem)
 			{
-				RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString());
+				RazorEnhanced.Restock.AddLog("Restock item added: " + restockItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, 0, restockItem.Hue); });
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid target");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid target");
+				RazorEnhanced.Restock.AddLog("Invalid target");
 			}
 		}
 
@@ -10594,13 +10711,15 @@ namespace Assistant
 				{
 					RazorEnhanced.BandageHeal.AutoMode = true;
 					RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Start...");
-					RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...");
+					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...");
 				}
 				else
 				{
 					// Stop BANDAGEHEAL
 					RazorEnhanced.BandageHeal.AutoMode = false;
-					RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...");
+					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...");
 					RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Stop...");
 				}
 			}
@@ -10645,21 +10764,24 @@ namespace Assistant
 
 			if (mobile == null)
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Target!");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Target!");
 				RazorEnhanced.BandageHeal.AddLog("Invalid Target!");
 				return;
 			}
 
 			if (mobile.Serial.IsMobile)
 			{
-				RazorEnhanced.Misc.SendMessage("Bandage Heal target set to: " + mobile.Name);
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Bandage Heal target set to: " + mobile.Name);
 				RazorEnhanced.BandageHeal.AddLog("Bandage Heal target set to: " + mobile.Name);
 				BandageHeal.TargetSerial = mobile.Serial;
 				RazorEnhanced.Settings.General.WriteInt("BandageHealtargetLabel", mobile.Serial);
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid Target!");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid Target!");
 				RazorEnhanced.Scavenger.AddLog("Invalid Target!");
 			}
 		}
@@ -10796,12 +10918,14 @@ namespace Assistant
 
 			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
 			{
-				RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString());
 				RazorEnhanced.Filters.AutoCarverBlade = (int)blade.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid AutoCarve Blade");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid AutoCarve Blade");
 				RazorEnhanced.Filters.AutoCarverBlade = 0;
 			}
 
@@ -10822,12 +10946,14 @@ namespace Assistant
 
 			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
 			{
-				RazorEnhanced.Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString());
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString());
 				RazorEnhanced.Filters.BoneCutterBlade = (int)blade.Serial.Value;
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessage("Invalid BoneCutter Blade");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("Invalid BoneCutter Blade");
 				RazorEnhanced.Filters.BoneCutterBlade = 0;
 			}
 
@@ -10839,12 +10965,14 @@ namespace Assistant
 			if (autocarverCheckBox.Checked)
 			{
 				RazorEnhanced.Filters.AutoCarver = true;
-				RazorEnhanced.Misc.SendMessage("AutoCarver Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("AutoCarver Engine Start...");
 			}
 			else
 			{
 				RazorEnhanced.Filters.AutoCarver = false;
-				RazorEnhanced.Misc.SendMessage("AutoCarver Engine Stop...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("AutoCarver Engine Stop...");
 			}
 
 			if (autocarverCheckBox.Focused)
@@ -10856,12 +10984,14 @@ namespace Assistant
 			if (bonecutterCheckBox.Checked)
 			{
 				RazorEnhanced.Filters.BoneCutter = true;
-				RazorEnhanced.Misc.SendMessage("BoneCutter Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("BoneCutter Engine Start...");
 			}
 			else
 			{
 				RazorEnhanced.Filters.BoneCutter = false;
-				RazorEnhanced.Misc.SendMessage("BoneCutter Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("BoneCutter Engine Start...");
 			}
 
 			if (bonecutterCheckBox.Focused)
@@ -10934,6 +11064,18 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("BlockChivalryHealCheckBox", blockchivalryhealCheckBox.Checked);
 		}
 
+		private void showmessagefieldCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (showmessagefieldCheckBox.Focused)
+				RazorEnhanced.Settings.General.WriteBool("ShowMessageFieldCheckBox", showmessagefieldCheckBox.Checked);
+		}
+
+		private void showagentmessageCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (showagentmessageCheckBox.Focused)
+				RazorEnhanced.Settings.General.WriteBool("ShowAgentMessageCheckBox", showagentmessageCheckBox.Checked);
+		}
+
 		private void mobfilterRemoveButton_Click(object sender, EventArgs e)
 		{
 			if (mobfilterlistView.SelectedItems.Count == 1)
@@ -10970,10 +11112,13 @@ namespace Assistant
 
 		private void mobfilterCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (mobfilterCheckBox.Checked)
-				RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!");
-			else
-				RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!");
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+			{
+				if (mobfilterCheckBox.Checked)
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!");
+				else
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!");
+			}
 
 			if (mobfilterCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("MobFilterCheckBox", mobfilterCheckBox.Checked);
@@ -11006,12 +11151,14 @@ namespace Assistant
 			if (remountcheckbox.Checked)
 			{
 				RazorEnhanced.Filters.AutoModeRemount = true;
-				RazorEnhanced.Misc.SendMessage("AutoRemount Engine Start...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Start...");
 			}
 			else
 			{
 				RazorEnhanced.Filters.AutoModeRemount = false;
-				RazorEnhanced.Misc.SendMessage("AutoRemount Engine Stop...");
+				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Stop...");
 			}
 
 			if (remountcheckbox.Focused)
@@ -11424,13 +11571,6 @@ namespace Assistant
 		}
 
 		// ----------------- PROFILES END -------------------
-
-		/// <summary>
-		///  NEw script
-		/// </summary>
-		/// 
-
-
 		
 		internal static void VersionCheckWorker()
 		{

@@ -371,6 +371,8 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.BlockBigHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockBigHealCheckBox");
 			Assistant.Engine.MainWindow.BlockMiniHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockMiniHealCheckBox");
 			Assistant.Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox");
+			Assistant.Engine.MainWindow.ShowMessageFieldCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox");
+			Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox");
 
 			AutoRemountDelay = RazorEnhanced.Settings.General.ReadInt("MountDelay");
 			AutoRemountEDelay = RazorEnhanced.Settings.General.ReadInt("EMountDelay");
