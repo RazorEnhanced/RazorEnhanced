@@ -791,28 +791,28 @@ namespace Assistant
 			if (ltHue != 0 && Targeting.IsLastTarget(i.Container as Mobile))
 			{
 				p.Seek(-2, SeekOrigin.Current);
-				p.Write((ushort)(ltHue & 0x3FFF));
+				p.Write((ushort)ltHue);
 			}
 			else
 			{
 				// Blocco Color Highlight flag
 				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 				{
-					if ((i.Container as Mobile).Poisoned)
+					if ((i.Container as Mobile) != null && (i.Container as Mobile).Poisoned)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x0042);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
 					}
-					else if ((i.Container as Mobile).Paralized)
+					else if ((i.Container as Mobile) != null && (i.Container as Mobile).Paralized)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x013C);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
 					}
 
-					else if((i.Container as Mobile).Blessed) // Mortal
+					else if ((i.Container as Mobile) != null && (i.Container as Mobile).Blessed) // Mortal
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x002E);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
 					}
 				}
 			}
@@ -1061,12 +1061,17 @@ namespace Assistant
 				Targeting.CheckLastTargetRange(m);
 
 				m.Direction = (Direction)p.ReadByte();
+
 				m.Hue = p.ReadUInt16();
+				m.ProcessPacketFlags(p.ReadByte());
+
 				int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
 				if (ltHue != 0 && Targeting.IsLastTarget(m))
 				{
-					p.Seek(-2, SeekOrigin.Current);
-					p.Write((short)(ltHue | 0x8000));
+					p.Seek(-3, SeekOrigin.Current);
+					p.Write((short)(ltHue));
+					p.Seek(+1, SeekOrigin.Current);
+
 				}
 				else
 				{
@@ -1075,26 +1080,26 @@ namespace Assistant
 					{
 						if (m.Poisoned)
 						{
-							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)0x0042);
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
+							p.Seek(+1, SeekOrigin.Current);
 						}
 						else if (m.Paralized)
 						{
-							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)0x013C);
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
+							p.Seek(+1, SeekOrigin.Current);
 						}
 
 						else if (m.Blessed) // Mortal
 						{
-							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)0x002E);
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
+							p.Seek(+1, SeekOrigin.Current);
 						}
 					}
 				}
 
-				bool wasPoisoned = m.Poisoned;
-				m.ProcessPacketFlags(p.ReadByte());
-				byte oldNoto = m.Notoriety;
 				m.Notoriety = p.ReadByte();
 
 				if (m == World.Player)
@@ -1327,11 +1332,16 @@ namespace Assistant
 			// For Poison: Poison Level + 1
 
 			byte flag = p.ReadByte();
+			bool poison = false;
+			bool mortal = false;
 
 			if (id == 1)
-				m.Poisoned = (flag != 0);
+				m.Poisoned = poison = (flag != 0);
 			else if (id == 2)
-				m.Blessed = (flag != 0);
+				m.Blessed = mortal = (flag != 0);
+
+			if (m != World.Player)
+				ClientCommunication.SendToClient(new MobileIncomingRefresh(m, poison, mortal));
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
@@ -1489,37 +1499,42 @@ namespace Assistant
 			}
 
 			m.Hue = p.ReadUInt16();
+			m.ProcessPacketFlags(p.ReadByte());
+
 			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 			{
-				p.Seek(-2, SeekOrigin.Current);
-				p.Write((ushort)(ltHue | 0x8000));
+				p.Seek(-3, SeekOrigin.Current);
+				p.Write((ushort)(ltHue));
+				p.Seek(+1, SeekOrigin.Current);
 			}
 			else
 			{
-				// Blocco Color Highlight flag
+				//Blocco Color Highlight flag
 				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 				{
 					if (m.Poisoned)
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x0042);
+						p.Seek(-3, SeekOrigin.Current);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
+						p.Seek(+1, SeekOrigin.Current);
 					}
 					else if (m.Paralized)
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x013C);
+						p.Seek(-3, SeekOrigin.Current);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
+						p.Seek(+1, SeekOrigin.Current);
 					}
 
 					else if (m.Blessed) // Mortal
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x002E);
+						p.Seek(-3, SeekOrigin.Current);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
+						p.Seek(+1, SeekOrigin.Current);
 					}
 				}
 			}
-			bool wasPoisoned = m.Poisoned;
-			m.ProcessPacketFlags(p.ReadByte());
 
 			if (m == World.Player)
 			{
@@ -1603,11 +1618,15 @@ namespace Assistant
 			if (m != World.Player || World.Player.OutstandingMoveReqs == 0)
 				m.Position = position;
 			m.Direction = (Direction)p.ReadByte();
+
 			m.Hue = p.ReadUInt16();
+			m.ProcessPacketFlags(p.ReadByte());
+
 			if (isLT)
 			{
-				p.Seek(-2, SeekOrigin.Current);
-				p.Write((short)(ltHue | 0x8000));
+				p.Seek(-3, SeekOrigin.Current);
+				p.Write((short)(ltHue));
+				p.Seek(+1, SeekOrigin.Current);
 			}
 			else
 			{
@@ -1616,26 +1635,26 @@ namespace Assistant
 				{
 					if (m.Poisoned)
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x0042);
+						p.Seek(-3, SeekOrigin.Current);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
+						p.Seek(+1, SeekOrigin.Current);
 					}
 					else if (m.Paralized)
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x013C);
+						p.Seek(-3, SeekOrigin.Current);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
+						p.Seek(+1, SeekOrigin.Current);
 					}
 
 					else if (m.Blessed) // Mortal
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)0x002E);
+						p.Seek(-3, SeekOrigin.Current);
+						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
+						p.Seek(+1, SeekOrigin.Current);
 					}
 				}
 			}
 
-			bool wasPoisoned = m.Poisoned;
-			m.ProcessPacketFlags(p.ReadByte());
-			byte oldNoto = m.Notoriety;
 			m.Notoriety = p.ReadByte();
 
 			if (m == World.Player)
@@ -1672,14 +1691,7 @@ namespace Assistant
 
 				item.Container = m;
 
-				ushort id = p.ReadUInt16();
-
-				if (Engine.UseNewMobileIncoming)
-					item.ItemID = (ushort)(id & 0xFFFF);
-				else if (Engine.UsePostSAChanges)
-					item.ItemID = (ushort)(id & 0x7FFF);
-				else
-					item.ItemID = (ushort)(id & 0x3FFF);
+				item.ItemID = p.ReadUInt16();
 
 				item.Layer = (Layer)p.ReadByte();
 
@@ -1689,25 +1701,25 @@ namespace Assistant
 					if (isLT)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)(ltHue & 0x3FFF));
+						p.Write((short)ltHue);
 					}
 				}
 				else
 				{
-					if ((id & 0x8000) != 0)
+					if ((item.ItemID & 0x8000) != 0)
 					{
 						item.Hue = p.ReadUInt16();
 						if (isLT)
 						{
 							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)(ltHue & 0x3FFF));
+							p.Write((short)ltHue);
 						}
 					}
 					else
 					{
 						item.Hue = 0;
 						if (isLT)
-							ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)(ltHue & 0x3FFF), m.Serial));
+							ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)ltHue, m.Serial));
 					}
 				}
 

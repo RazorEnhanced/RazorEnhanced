@@ -342,6 +342,14 @@ namespace RazorEnhanced
 		}
 
 		//////////////// AUTOREMOUNT STOP ////////////////
+		
+		// COLORI FLAG HIGHLIGHT //
+		internal static int[] PoisonHighLightColor = new int[3]
+		{
+			0x0042, // Poison color
+			0x013C, // Paralized color
+			0x002E, // Blessed COlor
+		};
 
 		//////////////// Load settings ////////////////
 		internal static void LoadSettings()
