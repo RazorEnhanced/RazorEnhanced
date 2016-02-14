@@ -1319,7 +1319,39 @@ namespace Assistant
 
 		private static void SAMobileStatus(PacketReader p, PacketHandlerEventArgs args)
 		{
-			RazorEnhanced.Misc.SendMessage("SSSS");
+			Mobile m = World.FindMobile((Serial)p.ReadUInt32());
+
+			if (m == null)
+				return;
+
+			UseNewStatus = true;
+
+			if (p.ReadUInt16()!= 0)
+			{
+				// 00 01 Poison
+				// 00 02 Yellow Health Bar
+
+				ushort id = p.ReadUInt16();
+
+				// 00 Off
+				// 01 On
+				// For Poison: Poison Level + 1
+
+				byte flag = p.ReadByte();
+				bool poison = false;
+				bool mortal = false;
+
+				if (id == 1)
+					m.Poisoned = poison = (flag != 0);
+				else if (id == 2)
+					m.Blessed = mortal = (flag != 0);
+
+				if (m != World.Player && !m.Dead && RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				{
+					ClientCommunication.SendToClient(new MobileIncomingRefresh(m, poison, mortal));
+					m.Dead = false;
+				}
+			}
 		}
 
 		private static void NewMobileStatus(PacketReader p, PacketHandlerEventArgs args)
