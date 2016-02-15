@@ -8203,53 +8203,47 @@ namespace Assistant
 
 		private void MoveDown()
 		{
-			if (scriptTable.Rows.Count > 1)
-			{
-				if (scriptlistView.SelectedItems[0] != null)
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+			{ 
+				int rowCount = scriptlistView.Items.Count;
+				int index = scriptlistView.SelectedItems[0].Index;
+
+				if (index >= rowCount -1)
 				{
-					int rowCount = scriptlistView.Items.Count;
-					int index = scriptlistView.SelectedItems[0].Index;
-
-					if (index >= rowCount -1)
-					{
-						return;
-					}
-
-					DataRow newRow = scriptTable.NewRow();
-					// We "clone" the row
-					newRow.ItemArray = scriptTable.Rows[index + 1].ItemArray;
-					// We remove the old and insert the new
-					scriptTable.Rows.RemoveAt(index + 1);
-					scriptTable.Rows.InsertAt(newRow, index);
-					ReloadScriptTable();
-					scriptlistView.Items[index + 1].Selected = true;
+					return;
 				}
+
+				DataRow newRow = scriptTable.NewRow();
+				// We "clone" the row
+				newRow.ItemArray = scriptTable.Rows[index + 1].ItemArray;
+				// We remove the old and insert the new
+				scriptTable.Rows.RemoveAt(index + 1);
+				scriptTable.Rows.InsertAt(newRow, index);
+				ReloadScriptTable();
+				scriptlistView.Items[index + 1].Selected = true;
 			}
 		}
 
 		private void MoveUp()
 		{
-			if (scriptTable.Rows.Count > 1)
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
-				if (scriptlistView.SelectedItems[0] != null)
+				int rowCount = scriptlistView.Items.Count;
+				int index = scriptlistView.SelectedItems[0].Index;
+
+				if (index == 0) // include the header row
 				{
-					int rowCount = scriptlistView.Items.Count;
-					int index = scriptlistView.SelectedItems[0].Index;
-
-					if (index == 0) // include the header row
-					{
-						return;
-					}
-
-					DataRow newRow = scriptTable.NewRow();
-					// We "clone" the row
-					newRow.ItemArray = scriptTable.Rows[index - 1].ItemArray;
-					// We remove the old and insert the new
-					scriptTable.Rows.RemoveAt(index - 1);
-					scriptTable.Rows.InsertAt(newRow, index);
-					ReloadScriptTable();
-					scriptlistView.Items[index - 1].Selected = true;
+					return;
 				}
+
+				DataRow newRow = scriptTable.NewRow();
+				// We "clone" the row
+				newRow.ItemArray = scriptTable.Rows[index - 1].ItemArray;
+				// We remove the old and insert the new
+				scriptTable.Rows.RemoveAt(index - 1);
+				scriptTable.Rows.InsertAt(newRow, index);
+				ReloadScriptTable();
+				scriptlistView.Items[index - 1].Selected = true;
 			}
 		}
 
