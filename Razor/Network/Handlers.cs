@@ -89,8 +89,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0xDD, new PacketViewerCallback(CompressedGump));
 			PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BuffDebuff));
 			PacketHandler.RegisterServerToClientViewer(0xF0, new PacketViewerCallback(RunUOProtocolExtention)); // Special RunUO protocol extentions (for KUOC/Razor)
-
 			PacketHandler.RegisterServerToClientViewer(0xF3, new PacketViewerCallback(SAWorldItem));
+			PacketHandler.RegisterServerToClientViewer(0xF6, new PacketViewerCallback(MoveBoatHS));
 		}
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
@@ -2068,6 +2068,44 @@ namespace Assistant
 						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
 					return;
 				}
+			}
+		}
+
+		private static void MoveBoatHS(PacketReader p, PacketHandlerEventArgs args)
+		{
+			Serial serial = p.ReadUInt32();
+			p.ReadByte();
+			p.ReadByte();
+			p.ReadByte();
+			Point3D position = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadInt16());
+			UOEntity uOEntity = World.FindItem(serial);
+			if (uOEntity != null)
+			{
+				uOEntity.Position = position;
+			}
+			int num = (int)p.ReadInt16();
+			int i = 0;
+			while (i < num)
+			{
+				serial = p.ReadUInt32();
+				position = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadInt16());
+				if (serial.IsMobile)
+				{
+					uOEntity = World.FindMobile(serial);
+					if (uOEntity != null)
+					{
+						uOEntity.Position = position;
+					}
+				}
+				if (serial.IsItem)
+				{
+					uOEntity = World.FindItem(serial);
+					if (uOEntity != null)
+					{
+						uOEntity.Position = position;
+					}
+				}
+				i++;
 			}
 		}
 
