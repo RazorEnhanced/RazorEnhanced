@@ -223,9 +223,9 @@ namespace Assistant
 
 			text = text.Trim();
 
-			if (text.Length > 0)
+			if (text.Length > 1)
 			{
-				if (text[0] == '-')
+				if (text[0] == '-' && text[1] != '-')
 				{
 					text = text.Substring(1).ToLower();
 					string[] split = text.Split(' ', '\t');
