@@ -223,11 +223,6 @@ namespace Assistant
 				if (m != null && ((m.Body >= 0x0190 && m.Body <= 0x0193) || (m.Body >= 0x025D && m.Body <= 0x0260)) && Utility.Distance(World.Player.Position, m.Position) <= 12)
 					ScreenCapManager.DeathCapture();
 			}
-			if (m != null)
-			{
-				m.Dead = true;
-			}
-
 		}
 
 		private static void ExtendedClientCommand(Packet p, PacketHandlerEventArgs args)
@@ -1338,19 +1333,11 @@ namespace Assistant
 				// For Poison: Poison Level + 1
 
 				byte flag = p.ReadByte();
-				bool poison = false;
-				bool mortal = false;
 
 				if (id == 1)
-					m.Poisoned = poison = (flag != 0);
+					m.Poisoned = (flag != 0);
 				else if (id == 2)
-					m.Blessed = mortal = (flag != 0);
-
-				if (m != World.Player && !m.Dead && RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-				{
-					ClientCommunication.SendToClient(new MobileIncomingRefresh(m, poison, mortal));
-					m.Dead = false;
-				}
+					m.Blessed = (flag != 0);
 			}
 		}
 
@@ -1376,19 +1363,11 @@ namespace Assistant
 			// For Poison: Poison Level + 1
 
 			byte flag = p.ReadByte();
-			bool poison = false;
-			bool mortal = false;
 
 			if (id == 1)
-				m.Poisoned = poison = (flag != 0);
+				m.Poisoned = (flag != 0);
 			else if (id == 2)
-				m.Blessed = mortal = (flag != 0);
-
-			if (m != World.Player && !m.Dead && RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-			{
-				ClientCommunication.SendToClient(new MobileIncomingRefresh(m, poison, mortal));
-				m.Dead = false;
-			}
+				m.Blessed = (flag != 0);
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)

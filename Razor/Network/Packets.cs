@@ -868,59 +868,7 @@ namespace Assistant
 			Write(seq);
 		}
 	}
-
-	internal sealed class MobileIncomingRefresh : Packet            // Packet per refresh highlight
-	{
-		internal MobileIncomingRefresh(Mobile m, bool poison, bool mortal)
-			: base(0x78)
-		{
-			int count = m.Contains.Count;
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-			int hue = m.Hue;
-
-			if (ltHue != 0 && Targeting.IsLastTarget(m))
-				hue = ltHue;
-			else   // Inizio controllo flag
-			{
-				if (poison) // Caso Poison
-					hue = RazorEnhanced.Filters.PoisonHighLightColor[0];
-				else if (mortal) // Caso Mortal
-					hue = RazorEnhanced.Filters.PoisonHighLightColor[2];
-			}
-
-			EnsureCapacity(3 + 4 + 2 + 2 + 2 + 1 + 1 + 2 + 1 + 1 + 4 + count * (4 + 2 + 1 + 2));
-			Write((uint)m.Serial);
-			Write((ushort)m.Body);
-			Write((ushort)m.Position.X);
-			Write((ushort)m.Position.Y);
-			Write((sbyte)m.Position.Z);
-			Write((byte)m.Direction);
-			Write((ushort)hue);
-			Write((byte)m.GetPacketFlags());
-			Write((byte)m.Notoriety);
-
-			for (int i = 0; i < count; ++i)
-			{
-				Item item = (Item)m.Contains[i];
-				Write((uint)item.Serial);
-				Write((ushort)item.ItemID);
-				Write((byte)item.Layer);
-				if (ltHue != 0 && Targeting.IsLastTarget(m))
-					Write((ushort)ltHue);
-				else   // Inizio controllo flag
-				{
-					if (poison) // Caso Poison
-						Write((ushort)RazorEnhanced.Filters.PoisonHighLightColor[0]);
-					else if (mortal) // Caso Mortal
-						Write((ushort)RazorEnhanced.Filters.PoisonHighLightColor[2]);
-					else
-						Write((ushort)item.Hue);
-				}
-			}
-			Write((uint)0); // terminate
-		}
-	}
-
+	
 	internal sealed class MobileIncoming : Packet
 	{
 		internal MobileIncoming(Mobile m)
