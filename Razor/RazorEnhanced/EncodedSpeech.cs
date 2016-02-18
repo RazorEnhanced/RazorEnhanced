@@ -186,59 +186,5 @@ namespace RazorEnhanced
 			}
 			return ((split[split.Length - 1].Length <= 0) || (startIndex == input.Length));
 		}
-
-		internal sealed class ClientUniMessage : Packet
-		{
-			internal ClientUniMessage(MessageType type, int hue, int font, string lang, string text, SpeechEntry[] keys)
-				: base(0xAD)
-			{
-				if (lang == null || lang == "") lang = "ENU";
-				if (text == null) text = "";
-
-				this.EnsureCapacity(50 + (text.Length * 2) + (keys == null ? 0 : keys.Length));
-				if (keys == null || keys.Length <= 0)
-					Write((byte)type);
-				else
-					Write((byte)(type | MessageType.Encoded));
-				Write((short)hue);
-				Write((short)font);
-				WriteAsciiFixed(lang, 4);
-
-
-				if (keys != null || (keys.Length <= 0))
-				{
-					WriteBigUniNull(text);
-				}
-				else
-				{
-                    Write((byte)(keys.Length >> 4));
-					int num = keys.Length & 15;
-					bool flag = false;
-					int index = 0;
-					while (index < keys.Length)
-					{
-						SpeechEntry entry = keys[index];
-						int keywordID = entry.m_KeywordID;
-						if (flag)
-						{
-							Write((byte)(keywordID >> 4));
-							num = keywordID & 15;
-						}
-						else
-						{
-							Write((byte)((num << 4) | ((keywordID >> 8) & 15)));
-							Write((byte)keywordID);
-						}
-						index++;
-						flag = !flag;
-					}
-					if (!flag)
-					{
-						Write((byte)(num << 4));
-					}
-					WriteUTF8Null(text);
-				}
-			}
-		}
 	}
 }
