@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.Win32.SafeHandles;
 
 namespace Assistant
 {
@@ -776,6 +777,8 @@ namespace Assistant
 			SetServer(m_ServerIP, m_ServerPort);
 
 			CommMutex = new Mutex();
+			CommMutex.SafeWaitHandle = (new SafeWaitHandle(GetCommMutex(), true));
+
 			// ZIPPY REV 80			FwdMutex = new Mutex( false, String.Format( "UONetFwd_{0:X}", ClientProc.Id ) );
 			// ZIPPY REV 80			m_FwdWnd = IntPtr.Zero;
 
