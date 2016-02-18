@@ -2,6 +2,7 @@
 using System;
 using System.Media;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
@@ -116,14 +117,14 @@ namespace RazorEnhanced
 		public static void WaitForContext(Mobile mob, int delay) // Delay in MS
 		{
 			WaitForContext(mob.Serial, delay);
-        }
+		}
 
 		public static void WaitForContext(Item i, int delay) // Delay in MS
 		{
 			WaitForContext(i.Serial, delay);
 		}
 
-        public static void WaitForContext(int ser, int delay) // Delay in MS
+		public static void WaitForContext(int ser, int delay) // Delay in MS
 		{
 			ClientCommunication.SendToServer(new ContextMenuRequest(ser));
 			int subdelay = delay;
@@ -145,7 +146,7 @@ namespace RazorEnhanced
 		public static void ContextReply(Mobile mob, int idx)
 		{
 			ContextReply(mob.Serial, idx);
-        }
+		}
 
 		public static void ContextReply(Item item, int idx)
 		{
@@ -216,6 +217,5 @@ namespace RazorEnhanced
 			else
 				return false;
 		}
-
 	}
 }

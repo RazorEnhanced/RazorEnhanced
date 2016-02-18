@@ -1444,7 +1444,11 @@ namespace RazorEnhanced
 		// Game Message
 		public static void ChatSay(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Regular, hue, 1, msg));
+			List<ushort> kw = EncodedSpeech.GetKeywords(msg);
+			if (kw.Count == 1 && kw[0] == 0)
+				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
+			else
+				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
 		}
 
 		public static void ChatGuild(string msg)
@@ -1631,13 +1635,6 @@ namespace RazorEnhanced
 		public static void GuildButton()
 		{
 			Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
-		}
-
-		// open bank
-		public static void OpenBank(string text)
-		{
-			List<ushort> kw = new List<ushort> { 16, 2 };
-			ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SpeechHue"), 3, Language.CliLocName, kw, text));
 		}
 
 		// Range

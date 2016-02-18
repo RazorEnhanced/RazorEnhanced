@@ -455,7 +455,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				RazorEnhanced.Pets.Command(function);
+				RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), function);
 			}
 		}
 

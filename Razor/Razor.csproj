@@ -158,9 +158,9 @@
     <Compile Include="Core\Geometry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\QueryQueue.cs" />
     <Compile Include="RazorEnhanced\DragDropManager.cs" />
-    <Compile Include="RazorEnhanced\Pets.cs" />
     <Compile Include="RazorEnhanced\Profiles.cs" />
     <Compile Include="RazorEnhanced\SpecialMoves.cs">
       <SubType>Code</SubType>
