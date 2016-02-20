@@ -1,41 +1,35 @@
-﻿using Assistant;
-using System;
+﻿using System;
 using System.IO;
-using System.Collections;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace RazorEnhanced
-{ 
+{
 	public class EncodedSpeech
 	{
-		[DllImport("Kernel32", EntryPoint = "_lread")] 
-        private static extern unsafe int lread(IntPtr hFile, void* lpBuffer, int wBytes);
+		[DllImport("Kernel32", EntryPoint = "_lread")]
+		private static extern unsafe int lread(IntPtr hFile, void* lpBuffer, int wBytes);
 
-		private static Queue m_DataStores = new Queue();
-
-		public class SpeechEntry : IComparable
+		internal class SpeechEntry : IComparable<SpeechEntry>
 		{
-			public short m_KeywordID;
-			public string[] m_Keywords;
+			internal short m_KeywordID;
+			internal string[] m_Keywords;
 
-
-			public SpeechEntry(int idKeyword, string keyword)
+			internal SpeechEntry(int idKeyword, string keyword)
 			{
 				m_KeywordID = (short)idKeyword;
 				m_Keywords = keyword.Split(new char[] { '*' });
 			}
 
-
-			public int CompareTo(object x)
+			public int CompareTo(SpeechEntry entry)
 			{
-				if ((x == null) || (x.GetType() != typeof(SpeechEntry)))
+				if (entry == null)
 				{
 					return -1;
 				}
-				if (x != this)
+				if (entry != this)
 				{
-					SpeechEntry entry = (SpeechEntry)x;
 					if (m_KeywordID < entry.m_KeywordID)
 					{
 						return -1;
@@ -49,8 +43,7 @@ namespace RazorEnhanced
 			}
 		}
 
-
-		private static SpeechEntry[] m_Speech;
+		private static List<SpeechEntry> m_Speech;
 
 		private static unsafe int NativeRead(FileStream fs, void* pBuffer, int bytes)
 		{
@@ -68,16 +61,17 @@ namespace RazorEnhanced
 		internal static unsafe void LoadSpeechTable()
 		{
 			string path = Ultima.Files.GetFilePath("Speech.mul");
+
 			if (!File.Exists(path))
 			{
-				m_Speech = new SpeechEntry[0];
+				m_Speech = new List<SpeechEntry>();
 			}
 			else
 			{
 				byte[] buffer = new byte[0x400];
 				fixed (byte* numRef = buffer)
 				{
-					ArrayList list = new ArrayList();
+					List<SpeechEntry> list = new List<SpeechEntry>();
 					FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
 					int num = 0;
 					while ((num = NativeRead(fs, (void*)numRef, 4)) > 0)
@@ -90,41 +84,44 @@ namespace RazorEnhanced
 							list.Add(new SpeechEntry(idKeyword, new string((sbyte*)numRef, 0, bytes)));
 						}
 					}
+
 					fs.Close();
-					m_Speech = (SpeechEntry[])list.ToArray(typeof(SpeechEntry));
+					m_Speech = list;
 				}
 			}
 		}
-		internal static List<ushort> GetKeywords(string text)
-         { 
-             if (m_Speech == null) 
-             { 
-                 LoadSpeechTable(); 
-             } 
-            text = text.ToLower(); 
-            ArrayList dataStore = GetDataStore(); 
-            SpeechEntry[] speech = m_Speech; 
-            int length = speech.Length; 
-            for (int i = 0; i<length; i++) 
-             { 
-                 SpeechEntry entry = speech[i]; 
-                 if (IsMatch(text, entry.m_Keywords))
-				{ 
-                     dataStore.Add(entry); 
-                 } 
-             } 
-             dataStore.Sort(); 
-             SpeechEntry[] keywords = (SpeechEntry[])dataStore.ToArray(typeof(SpeechEntry)); 
-             ReleaseDataStore(dataStore);
 
-			int numk = keywords.Length & 15;
+		internal static List<ushort> GetKeywords(string text)
+		{
 			List<ushort> keynumber = new List<ushort>();
-			bool flag = false;
-			int index = 0;
-			while (index < keywords.Length)
+
+			if (m_Speech == null)
 			{
-				EncodedSpeech.SpeechEntry entry = keywords[index];
+				LoadSpeechTable();
+			}
+
+			text = text.ToLower();
+			int numk = m_Speech.Count & 15;
+
+			List<SpeechEntry> keywords = new List<SpeechEntry>();
+			List<SpeechEntry> speech = m_Speech.ToList();
+			foreach (SpeechEntry entry in speech)
+			{
+				if (IsMatch(text, entry.m_Keywords))
+				{
+					keywords.Add(entry);
+				}
+			}
+			keywords.Sort();
+
+			bool flag = false;
+
+			int index = 0;
+			while (index < m_Speech.Count)
+			{
+				SpeechEntry entry = m_Speech[index];
 				int keywordID = entry.m_KeywordID;
+
 				if (flag)
 				{
 					keynumber.Add((byte)(keywordID >> 4));
@@ -135,39 +132,23 @@ namespace RazorEnhanced
 					keynumber.Add((byte)((numk << 4) | ((keywordID >> 8) & 15)));
 					keynumber.Add((byte)keywordID);
 				}
+
 				index++;
 				flag = !flag;
 			}
+
 			if (!flag)
 			{
 				keynumber.Add((byte)(numk << 4));
 			}
 
-			return keynumber; 
-         }
-
-		private static ArrayList GetDataStore()
-		{
-			if (m_DataStores.Count > 0)
-			{
-				return (ArrayList)m_DataStores.Dequeue();
-			}
-			return new ArrayList();
-		}
-
-
-		private static void ReleaseDataStore(ArrayList list)
-		{
-			if (list.Count > 0)
-			{
-				list.Clear();
-			}
-			m_DataStores.Enqueue(list);
+			return keynumber;
 		}
 
 		private static bool IsMatch(string input, string[] split)
 		{
 			int startIndex = 0;
+
 			for (int i = 0; i < split.Length; i++)
 			{
 				if (split[i].Length > 0)
@@ -184,6 +165,7 @@ namespace RazorEnhanced
 					startIndex = index + split[i].Length;
 				}
 			}
+
 			return ((split[split.Length - 1].Length <= 0) || (startIndex == input.Length));
 		}
 	}
