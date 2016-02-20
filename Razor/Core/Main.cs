@@ -14,7 +14,7 @@ namespace Assistant
 {
 	internal class Engine
 	{
-		private static DateTime m_ExpireDate = new DateTime(2016, 3, 1);
+		private static DateTime m_ExpireDate = new DateTime(2016, 4, 1);
 
 		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
 		{
