@@ -101,7 +101,6 @@ namespace RazorEnhanced
 			}
 
 			text = text.ToLower();
-			int numk = m_Speech.Count & 15;
 
 			List<SpeechEntry> keywords = new List<SpeechEntry>();
 			List<SpeechEntry> speech = m_Speech.ToList();
@@ -116,10 +115,11 @@ namespace RazorEnhanced
 
 			bool flag = false;
 
+			int numk = keywords.Count & 15;
 			int index = 0;
-			while (index < m_Speech.Count)
+			while (index < keywords.Count)
 			{
-				SpeechEntry entry = m_Speech[index];
+				SpeechEntry entry = keywords[index];
 				int keywordID = entry.m_KeywordID;
 
 				if (flag)
