@@ -107,7 +107,7 @@ namespace RazorEnhanced
 					s = Spell.Get(23);
 					break;
 
-				case "Wall Of Stone":
+				case "Wall of Stone":
 					s = Spell.Get(24);
 					break;
 				// Quarto circolo magery
