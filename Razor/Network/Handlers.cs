@@ -1874,7 +1874,7 @@ namespace Assistant
 					item.Hue = 0x3B1;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Wall Of Stone]"));
 					return;
 				}
 				if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
@@ -1884,7 +1884,7 @@ namespace Assistant
 					item.Hue = 0x0845;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Fire Field]"));
 					return;
 				}
 				if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
@@ -1894,7 +1894,7 @@ namespace Assistant
 					item.Hue = 0x016A;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Poison Field]"));
 					return;
 				}
 				if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
@@ -1904,7 +1904,7 @@ namespace Assistant
 					item.Hue = 0x0060;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Paralyze Field]"));
 					return;
 				}
 			}
@@ -2035,7 +2035,7 @@ namespace Assistant
 					item.Hue = 0x3B1;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+							Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Wall Of Stone]"));
 					return;
 				}
 				if (item.ItemID == 0x3996 || item.ItemID == 0x398C)      // Fire Field
@@ -2045,7 +2045,7 @@ namespace Assistant
 					item.Hue = 0x0845;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Fire Field]"));
 					return;
 				}
 				if (item.ItemID == 0x3915 || item.ItemID == 0x3922)      // Poison Field
@@ -2055,7 +2055,7 @@ namespace Assistant
 					item.Hue = 0x016A;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Poison Field]"));
 					return;
 				}
 				if (item.ItemID == 0x3967 || item.ItemID == 0x3979)      // Paral Field
@@ -2065,7 +2065,7 @@ namespace Assistant
 					item.Hue = 0x0060;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Paralyze Field]"));
 					return;
 				}
 			}
@@ -2669,7 +2669,7 @@ namespace Assistant
 								Assistant.Mobile leader = World.FindMobile(PartyLeader);
 								RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
 								if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-									RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+									World.Player.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
 								ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 								PacketHandlers.PartyLeader = Serial.Zero;
 							}
@@ -2981,7 +2981,7 @@ namespace Assistant
 					if (bersaglio != null)
 					{
 						RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
-						RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+						World.Player.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
 					}
 					args.Block = true;
 					return;
