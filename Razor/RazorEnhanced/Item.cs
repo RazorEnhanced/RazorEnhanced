@@ -561,6 +561,7 @@ namespace RazorEnhanced
 			}
 			if (amount == 0)
 			{
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
 			}
 			else
@@ -569,6 +570,7 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
 			}
 		}
@@ -593,6 +595,7 @@ namespace RazorEnhanced
 					Misc.SendMessage("Script Error: Move: Destination Item is not a container");
 				return;
 			}
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
 		}
 
@@ -618,7 +621,9 @@ namespace RazorEnhanced
 			}
 			if (amount == 0)
 			{
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
 			}
 			else
@@ -627,7 +632,9 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
 			}
 		}
@@ -656,7 +663,9 @@ namespace RazorEnhanced
 			}
 			if (amount == 0)
 			{
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
 			}
 			else
@@ -665,7 +674,9 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
 			}
 		}
@@ -680,7 +691,9 @@ namespace RazorEnhanced
 			}
 			if (amount == 0)
 			{
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.Zero));
 			}
 			else
@@ -689,13 +702,16 @@ namespace RazorEnhanced
 				{
 					amount = item.Amount;
 				}
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, amount));
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.Zero));
 			}
 		}
 
 		public static void UseItem(Item item)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new DoubleClick((Assistant.Serial)item.Serial));
 		}
 
@@ -710,7 +726,10 @@ namespace RazorEnhanced
 			}
 
 			if (item.Serial.IsItem)
+			{
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
@@ -745,6 +764,7 @@ namespace RazorEnhanced
 		// Single Click
 		public static void SingleClick(Item item)
 		{
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new SingleClick(item));
 		}
 
@@ -757,6 +777,7 @@ namespace RazorEnhanced
 					Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
 				return;
 			}
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new SingleClick(item));
 		}
 
@@ -778,6 +799,7 @@ namespace RazorEnhanced
 
 			if (!i.PropsUpdated)
 			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToServer(new QueryProperties(i.Serial));
 				int subdelay = delay;
 

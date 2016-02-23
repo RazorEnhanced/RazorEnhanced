@@ -743,7 +743,9 @@ namespace RazorEnhanced
 
 			if (item != null)
 			{
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 			}
 			else
@@ -769,7 +771,9 @@ namespace RazorEnhanced
 					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") too away");
 				return;
 			}
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
 		}
 
@@ -782,7 +786,9 @@ namespace RazorEnhanced
 					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
 			}
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.AssistantLayer)); // Equippa
 		}
 
@@ -1343,94 +1349,117 @@ namespace RazorEnhanced
 			switch (skillname)
 			{
 				case "Animal Lore":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalLore)));
 					break;
 
 				case "Item ID":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ItemID)));
 					break;
 
 				case "Arms Lore":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ArmsLore)));
 					break;
 
 				case "Begging":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Begging)));
 					break;
 
 				case "Peacemaking":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Peacemaking)));
 					break;
 
 				case "Cartography":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Cartography)));
 					break;
 
 				case "Detect Hidden":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.DetectHidden)));
 					break;
 
 				case "Discordance":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Discordance)));
 					break;
 
 				case "Eval Int":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.EvalInt)));
 					break;
 
 				case "Forensics":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Forensics)));
 					break;
 
 				case "Hiding":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Hiding)));
 					break;
 
 				case "Provocation":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Provocation)));
 					break;
 
 				case "Poisoning":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Poisoning)));
 					break;
 
 				case "Spirit Speak":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.SpiritSpeak)));
 					break;
 
 				case "Stealing":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealing)));
 					break;
 
 				case "Animal Taming":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalTaming)));
 					break;
 
 				case "Taste ID":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.TasteID)));
 					break;
 
 				case "Tracking":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Tracking)));
 					break;
 
 				case "Meditation":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Meditation)));
 					break;
 
 				case "Stealth":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealth)));
 					break;
 
 				case "Remove Trap":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.RemoveTrap)));
 					break;
 
 				case "Inscribe":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Inscribe)));
 					break;
 
 				case "Anatomy":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Anatomy)));
 					break;
 
@@ -1446,44 +1475,57 @@ namespace RazorEnhanced
 		{
 			List<ushort> kw = EncodedSpeech.GetKeywords(msg);
 			if (kw.Count == 1 && kw[0] == 0)
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
+			}
 			else
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
+			}
 		}
 
 		public static void ChatGuild(string msg)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
 		}
 
 		public static void ChatAlliance(string msg)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
 		public static void ChatEmote(int hue, string msg)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
 		}
 
 		public static void ChatWhisper(int hue, string msg)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
 		}
 
 		public static void ChatYell(int hue, string msg)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
 		}
 
 		// attack
 		public static void SetWarMode(bool warflag)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new SetWarMode(warflag));
 		}
 
 		public static void Attack(int serial)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new AttackReq(serial));
 		}
 
@@ -1493,30 +1535,37 @@ namespace RazorEnhanced
 			switch (virtue)
 			{
 				case "Honor":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(1));
 					break;
 
 				case "Sacrifice":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(2));
 					break;
 
 				case "Valor":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(3));
 					break;
 
 				case "Compassion":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(4));
 					break;
 
 				case "Honesty":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(5));
 					break;
 
 				case "Humility":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(6));
 					break;
 
 				case "Justice":
+					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(7));
 					break;
 
@@ -1529,31 +1578,41 @@ namespace RazorEnhanced
 
 		public static void ChatParty(string msg)
 		{
-				Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
+			ClientCommunication.SendRecvWait();
+			Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
 		}
 
 		public static void PartyInvite()
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new PartyInvite());
 		}
 
 		public static void LeaveParty()
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(World.Player.Serial));
 		}
 
 		public static void KickMember(int serial)
 		{
 			uint userial = Convert.ToUInt16(serial);
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(userial));
 		}
 
 		public static void PartyCanLoot(bool CanLoot)
 		{
-				if (CanLoot)
-					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x1));
-				else
-					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x0));
+			if (CanLoot)
+			{
+				ClientCommunication.SendRecvWait();
+				Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x1));
+			}
+			else
+			{
+				ClientCommunication.SendRecvWait();
+				Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x0));
+			}
 		}
 
 		// Moving
@@ -1601,6 +1660,7 @@ namespace RazorEnhanced
 
 			if (dir != Direction.Mask)
 			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToServer(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
 			}
 		}
@@ -1629,11 +1689,13 @@ namespace RazorEnhanced
 		// Paperdool button click
 		public static void QuestButton()
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new QuestButton(World.Player.Serial));
 		}
 
 		public static void GuildButton()
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
 		}
 

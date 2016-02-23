@@ -28,77 +28,111 @@ namespace RazorEnhanced
 		// Sysmessage
 		public static void SendMessage(int num)
 		{
-			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, num.ToString());
+            if (Assistant.World.Player != null)
+			{
+				ClientCommunication.SendRecvWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SysColor"), 3, Language.CliLocName, "System", num.ToString()));
+			}
 		}
 
 		public static void SendMessage(object obj)
 		{
 			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, obj.ToString());
+			{
+				ClientCommunication.SendRecvWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SysColor"), 3, Language.CliLocName, "System", obj.ToString()));
+			}
 		}
 
 		public static void SendMessage(uint num)
 		{
 			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, num.ToString());
+			{
+				ClientCommunication.SendRecvWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SysColor"), 3, Language.CliLocName, "System", num.ToString()));
+			}
 		}
 
 		public static void SendMessage(string msg)
 		{
 			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, msg);
+			{
+				ClientCommunication.SendRecvWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SysColor"), 3, Language.CliLocName, "System", msg));
+			}
 		}
 
 		public static void SendMessage(bool msg)
 		{
 			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
+			{
+				ClientCommunication.SendRecvWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SysColor"), 3, Language.CliLocName, "System", msg.ToString()));
+			}
 		}
 
 		public static void SendMessage(double msg)
 		{
 			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
+			{
+				ClientCommunication.SendRecvWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SysColor"), 3, Language.CliLocName, "System", msg.ToString()));
+			}
 		}
 
 		public static void SendMessage(int num, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
+			}
 		}
 
 		public static void SendMessage(object obj, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
+			}
 		}
 
 		public static void SendMessage(uint num, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
+			}
 		}
 
 		public static void SendMessage(string msg, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			}
 		}
 
 		public static void SendMessage(bool msg, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			}
 		}
 
 		public static void SendMessage(double msg, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
-
+			}
 		}
-
 
 
 		public static void Beep()
@@ -126,6 +160,7 @@ namespace RazorEnhanced
 
 		public static void WaitForContext(int ser, int delay) // Delay in MS
 		{
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new ContextMenuRequest(ser));
 			int subdelay = delay;
 			while (World.Player.HasContext != true && World.Player.ContextID != ser && subdelay > 0)
@@ -138,6 +173,7 @@ namespace RazorEnhanced
 
 		public static void ContextReply(int serial, int idx)
 		{
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new ContextMenuResponse(serial, (ushort)idx));
 			World.Player.HasContext = false;
 			World.Player.ContextID = 0;
@@ -176,12 +212,14 @@ namespace RazorEnhanced
 
 		public static void CancelPrompt()
 		{
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
 			World.Player.HasPrompt = false;
 		}
 
 		public static void ResponsePrompt(string text)
 		{
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
 			World.Player.HasPrompt = false;
 		}

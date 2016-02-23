@@ -25,6 +25,7 @@ namespace RazorEnhanced
 			{
 				int s = 0;
 				QueryStats.TryDequeue(out s);
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToServer(new StatusQuery(s));
 				Thread.Sleep(100);
 			}
@@ -35,6 +36,7 @@ namespace RazorEnhanced
 				{
 					int s = 0;
 					QueryMobsProps.TryDequeue(out s);
+					ClientCommunication.SendRecvWait();
 					ClientCommunication.SendToServer(new QueryProperties(s));
 					Thread.Sleep(100);
 				}

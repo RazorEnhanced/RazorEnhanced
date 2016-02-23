@@ -94,12 +94,14 @@ namespace Assistant
 		internal void OnCast(PacketReader p)
 		{
 			Cast();
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(p);
 		}
 
 		internal void OnCast(Packet p)
 		{
 			Cast();
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(p);
 		}
 
@@ -225,6 +227,7 @@ namespace Assistant
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 							Targeting.TargetSelf(true);
+						ClientCommunication.SendRecvWait();
 						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
@@ -236,6 +239,7 @@ namespace Assistant
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 						Targeting.TargetSelf(true);
+					ClientCommunication.SendRecvWait();
 					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
@@ -259,6 +263,7 @@ namespace Assistant
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 							Targeting.TargetSelf(true);
+						ClientCommunication.SendRecvWait();
 						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
@@ -270,6 +275,7 @@ namespace Assistant
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 						Targeting.TargetSelf(true);
+					ClientCommunication.SendRecvWait();
 					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}
@@ -294,6 +300,7 @@ namespace Assistant
 					{
 						if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 							Targeting.TargetSelf(true);
+						ClientCommunication.SendRecvWait();
 						ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 						s.Cast();
 					}
@@ -305,6 +312,7 @@ namespace Assistant
 				{
 					if (World.Player.Poisoned || World.Player.Hits < World.Player.HitsMax)
 						Targeting.TargetSelf(true);
+					ClientCommunication.SendRecvWait();
 					ClientCommunication.SendToServer(new CastSpellFromMacro((ushort)s.GetID()));
 					s.Cast();
 				}

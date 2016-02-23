@@ -602,8 +602,9 @@ namespace Assistant
 		private static ConcurrentQueue<Packet> m_SendQueue;
 		private static ConcurrentQueue<Packet> m_RecvQueue;
 
-		private static bool m_QueueRecv;
-		private static bool m_QueueSend;
+		private static volatile bool m_QueueRecv;
+		private static volatile bool m_QueueSend;
+		internal static volatile bool LockSendRecv;
 
 		// ZIPPY REV 80		private static Buffer *m_OutFwd;
 		private static Buffer* m_InRecv;
@@ -1174,7 +1175,9 @@ namespace Assistant
 
 			if (!m_QueueSend)
 			{
+				LockSendRecv = true;
 				ForceSendToServer(p);
+				LockSendRecv = false;
 			}
 			else
 			{
@@ -1197,7 +1200,9 @@ namespace Assistant
 
 			if (!m_QueueRecv)
 			{
+				LockSendRecv = true;
 				ForceSendToClient(p);
+				LockSendRecv = false;
 			}
 			else
 			{
@@ -1384,16 +1389,26 @@ namespace Assistant
 
 		private static void OnRecv()
 		{
+			LockSendRecv = true;
 			m_QueueRecv = true;
 			HandleComm(m_InRecv, m_OutRecv, m_RecvQueue, PacketPath.ServerToClient);
 			m_QueueRecv = false;
+			LockSendRecv = false;
 		}
 
 		private static void OnSend()
 		{
+			LockSendRecv = true;
 			m_QueueSend = true;
 			HandleComm(m_InSend, m_OutSend, m_SendQueue, PacketPath.ClientToServer);
 			m_QueueSend = false;
+			LockSendRecv = false;
+		}
+
+		internal static void SendRecvWait()
+		{
+			while (ClientCommunication.LockSendRecv)
+			{ }
 		}
 	}
 }

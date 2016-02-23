@@ -30,36 +30,49 @@ namespace RazorEnhanced
 		public static void TargetExecute(int serial)
 		{
 			if (!CheckHealPoisonTarg(serial))
+			{
+				ClientCommunication.SendRecvWait();
 				Assistant.Targeting.Target(serial);
+			}
 		}
 
 		public static void TargetExecute(RazorEnhanced.Item item)
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.Targeting.Target(item);
 		}
 
 		public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
 			if (!CheckHealPoisonTarg(mobile.Serial))
+			{
+				ClientCommunication.SendRecvWait();
 				Assistant.Targeting.Target(mobile);
+			}
 		}
 
 		public static void TargetExecute(int x, int y, int z)
 		{
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+			ClientCommunication.SendRecvWait();
 			Assistant.Targeting.Target(location);
 		}
 
 		public static void Cancel()
 		{
+			ClientCommunication.SendRecvWait();
 			Assistant.Targeting.CancelClientTarget();
-            Assistant.Targeting.CancelOneTimeTarget();
+			ClientCommunication.SendRecvWait();
+			Assistant.Targeting.CancelOneTimeTarget();
         }
 
 		public static void Self()
 		{
 			if (!CheckHealPoisonTarg(World.Player.Serial))
+			{
+				ClientCommunication.SendRecvWait();
 				Assistant.Targeting.TargetSelf();
+			}
 		}
 
 		public static void SelfQueued()
@@ -70,7 +83,10 @@ namespace RazorEnhanced
 		public static void Last()
 		{
 			if (!CheckHealPoisonTarg(GetLast()))
+			{
+				ClientCommunication.SendRecvWait();
 				Assistant.Targeting.LastTarget();
+			}
 		}
 
 		public static void LastQueued()

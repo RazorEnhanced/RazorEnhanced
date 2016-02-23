@@ -45,7 +45,9 @@ namespace RazorEnhanced
 		{
 			int[] nullswitch = new int[0];
 			GumpTextEntry[] nullentries = new GumpTextEntry[0];
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries));
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
@@ -56,7 +58,9 @@ namespace RazorEnhanced
 		{
 			GumpTextEntry[] entries = new GumpTextEntry[0];
 
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
+			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
@@ -75,8 +79,9 @@ namespace RazorEnhanced
 					entrie.Text = entryS[i];
 					entries[i] = entrie;
                 }
-
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
+				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
 				World.Player.HasGump = false;
 				World.Player.CurrentGumpStrings.Clear();
