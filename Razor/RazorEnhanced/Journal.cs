@@ -1,5 +1,6 @@
 ﻿using Assistant;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
@@ -114,6 +115,24 @@ namespace RazorEnhanced
 					if (entrys.Text.Contains(text))
 						result = entrys.Text;
 				}
+				return result;
+			}
+			catch
+			{
+				return result;
+			}
+		}
+
+		public static List<string> GetSpeechName()
+		{
+			List<string> result = new List<string>();
+			try
+			{
+				foreach (JournalEntry entrys in World.Player.Journal)
+				{
+					if (entrys.Name != null && entrys.Name != "")
+						result.Add(entrys.Name);
+                }
 				return result;
 			}
 			catch
