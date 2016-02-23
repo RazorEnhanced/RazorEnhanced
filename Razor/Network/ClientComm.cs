@@ -602,8 +602,8 @@ namespace Assistant
 		private static ConcurrentQueue<Packet> m_SendQueue;
 		private static ConcurrentQueue<Packet> m_RecvQueue;
 
-		private static bool m_QueueRecv;
-		private static bool m_QueueSend;
+		private static volatile bool m_QueueRecv;
+		private static volatile bool m_QueueSend;
 
 		// ZIPPY REV 80		private static Buffer *m_OutFwd;
 		private static Buffer* m_InRecv;
@@ -777,7 +777,7 @@ namespace Assistant
 			SetServer(m_ServerIP, m_ServerPort);
 
 			CommMutex = new Mutex();
-			CommMutex.SafeWaitHandle = (new SafeWaitHandle(GetCommMutex(), true));
+			CommMutex.Handle = GetCommMutex();
 
 			// ZIPPY REV 80			FwdMutex = new Mutex( false, String.Format( "UONetFwd_{0:X}", ClientProc.Id ) );
 			// ZIPPY REV 80			m_FwdWnd = IntPtr.Zero;
@@ -1175,11 +1175,9 @@ namespace Assistant
 			if (!m_QueueSend)
 			{
 				ForceSendToServer(p);
+				return;
 			}
-			else
-			{
-				m_SendQueue.Enqueue(p);
-			}
+			m_SendQueue.Enqueue(p);
 		}
 
 		internal static void SendToServer(PacketReader pr)
@@ -1198,11 +1196,9 @@ namespace Assistant
 			if (!m_QueueRecv)
 			{
 				ForceSendToClient(p);
+				return;
 			}
-			else
-			{
-				m_RecvQueue.Enqueue(p);
-			}
+			m_RecvQueue.Enqueue(p);
 		}
 
 		internal static void SendToClient(PacketReader pr)
