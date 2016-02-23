@@ -251,7 +251,7 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.MainWindow.FriendListSelect.Items.Contains(nomelista))
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Friend.ChangeList: Friend List: " + nomelista + " not exist");
+					World.Player.SendMessage("Script Error: Friend.ChangeList: Friend List: " + nomelista + " not exist");
 			}
 			else
 			{

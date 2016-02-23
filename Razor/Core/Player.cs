@@ -853,27 +853,30 @@ namespace Assistant
 
 		internal void SendMessage(MsgLevel lvl, string text)
 		{
-			if (lvl >= (MsgLevel)RazorEnhanced.Settings.General.ReadInt("MessageLevel") && text.Length > 0)
+			if (Assistant.Engine.Running && World.Player != null)
 			{
-				int hue;
-				switch (lvl)
+				if (lvl >= (MsgLevel)RazorEnhanced.Settings.General.ReadInt("MessageLevel") && text.Length > 0)
 				{
-					case MsgLevel.Error:
-					case MsgLevel.Warning:
-						hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
-						break;
+					int hue;
+					switch (lvl)
+					{
+						case MsgLevel.Error:
+						case MsgLevel.Warning:
+							hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
+							break;
 
-					default:
-						hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
-						break;
+						default:
+							hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
+							break;
+					}
+
+					ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
+
+					PacketHandlers.SysMessages.Add(text.ToLower());
+
+					if (PacketHandlers.SysMessages.Count >= 25)
+						PacketHandlers.SysMessages.RemoveRange(0, 10);
 				}
-
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
-
-				PacketHandlers.SysMessages.Add(text.ToLower());
-
-				if (PacketHandlers.SysMessages.Count >= 25)
-					PacketHandlers.SysMessages.RemoveRange(0, 10);
 			}
 		}
 

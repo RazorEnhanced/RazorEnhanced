@@ -71,14 +71,14 @@ namespace RazorEnhanced
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessage("HotKey: DISABLED", 37);
+							World.Player.SendMessage("HotKey: DISABLED", 37);
 					}
 					else
 					{
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessage("HotKey: ENABLED", 168);
+							World.Player.SendMessage("HotKey: ENABLED", 168);
 					}
 				}
 			}
@@ -238,7 +238,7 @@ namespace RazorEnhanced
 					case "Script":
 						if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
 						{
-							RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33);
+							World.Player.SendMessage("Stopping all scripts...",33);
 							foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
 							{
 								scriptdata.Run = false;
@@ -300,7 +300,6 @@ namespace RazorEnhanced
 				case "Accept Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
-						ClientCommunication.SendRecvWait();
 						ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
@@ -309,7 +308,6 @@ namespace RazorEnhanced
 				case "Decline Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
-						ClientCommunication.SendRecvWait();
 						ClientCommunication.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
@@ -332,12 +330,12 @@ namespace RazorEnhanced
 					break;
 
 				case "Grab Item":
-					RazorEnhanced.Misc.SendMessage("Target item to Grab.");
+					World.Player.SendMessage("Target item to Grab.");
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(grabitemTarget_Callback));
 					break;
 
 				case "Drop Item":
-					RazorEnhanced.Misc.SendMessage("Target item to Drop at feet.");
+					World.Player.SendMessage("Target item to Drop at feet.");
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(dropitemTarget_Callback));
 					break;
 
@@ -353,7 +351,7 @@ namespace RazorEnhanced
 			if (itemtograb != null && itemtograb.Serial.IsItem && itemtograb.Movable)
 				RazorEnhanced.Items.Move(itemtograb.Serial, World.Player.Backpack.Serial, 0);
 			else
-				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
+				World.Player.SendMessage("Invalid or inaccessible item.");
 		}
 
 		private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -363,7 +361,7 @@ namespace RazorEnhanced
 			if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player)
 				RazorEnhanced.Items.DropItemGroundSelf(itemtodrop, 0);
 			else
-				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
+				World.Player.SendMessage("Invalid or inaccessible item.");
 		}
 
 		private static void ProcessUse(string function)
@@ -450,13 +448,11 @@ namespace RazorEnhanced
 			{
 				if (Filters.AutoRemountSerial != 0)
 				{
-					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
 				}
 			}
 			else if (function == "Dismount")
 			{
-				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
 			}
 			else
@@ -816,7 +812,6 @@ namespace RazorEnhanced
 			{
 				if (World.Player.LastSkill != -1)
 				{
-					ClientCommunication.SendRecvWait();
 					ClientCommunication.SendToServer(new UseSkill(World.Player.LastSkill));
 				}
 			}
