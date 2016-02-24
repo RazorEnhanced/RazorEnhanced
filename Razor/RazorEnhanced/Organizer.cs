@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
-using Assistant;
 
 namespace RazorEnhanced
 {
@@ -415,7 +414,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Organizer.FStart: Organizer already running");
+					Misc.SendMessage("Script Error: Organizer.FStart: Organizer already running");
 			}
 		}
 
@@ -426,7 +425,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Organizer.FStart: Organizer not running");
+					Misc.SendMessage("Script Error: Organizer.FStart: Organizer not running");
 			}
 		}
 
@@ -443,7 +442,7 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.MainWindow.OrganizerListSelect.Items.Contains(nomelista))
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
+					Misc.SendMessage("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
 			}
 			else
 			{

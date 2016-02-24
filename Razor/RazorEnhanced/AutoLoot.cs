@@ -485,7 +485,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
+					Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
 			}
 			else
 			{
@@ -500,7 +500,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
+					Misc.SendMessage("Script Error: Autoloot.Start: Autoloot already running");
 			}
 			else
 				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = true));
@@ -511,7 +511,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == false)
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Autoloot.Stop: Autoloot already sleeping");
+					Misc.SendMessage("Script Error: Autoloot.Stop: Autoloot already sleeping");
 			}
 			else
 				Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
@@ -527,7 +527,7 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.MainWindow.AutoLootListSelect.Items.Contains(nomelista))
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
+					Misc.SendMessage("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
 			}
 			else
 			{
