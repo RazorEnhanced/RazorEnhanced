@@ -71,14 +71,14 @@ namespace RazorEnhanced
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessageNoWait("HotKey: DISABLED", 37);
+							World.Player.SendMessage("HotKey: DISABLED", 37);
 					}
 					else
 					{
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessageNoWait("HotKey: ENABLED", 168);
+							World.Player.SendMessage("HotKey: ENABLED", 168);
 					}
 				}
 			}
@@ -238,7 +238,7 @@ namespace RazorEnhanced
 					case "Script":
 						if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
 						{
-							RazorEnhanced.Misc.SendMessageNoWait("Stopping all scripts...",33);
+							World.Player.SendMessage("Stopping all scripts...",33);
 							foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
 							{
 								scriptdata.Run = false;
@@ -326,16 +326,16 @@ namespace RazorEnhanced
 					if (World.Player.GetItemOnLayer(Layer.Mount) != null)
 						ActionQueue.DoubleClick(true, World.Player.Serial);
 					else
-						RazorEnhanced.Misc.SendMessageNoWait("You are not mounted.");
+						World.Player.SendMessage("You are not mounted.");
 					break;
 
 				case "Grab Item":
-					RazorEnhanced.Misc.SendMessageNoWait("Target item to Grab.");
+					World.Player.SendMessage("Target item to Grab.");
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(grabitemTarget_Callback));
 					break;
 
 				case "Drop Item":
-					RazorEnhanced.Misc.SendMessageNoWait("Target item to Drop at feet.");
+					World.Player.SendMessage("Target item to Drop at feet.");
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(dropitemTarget_Callback));
 					break;
 
@@ -351,7 +351,7 @@ namespace RazorEnhanced
 			if (itemtograb != null && itemtograb.Serial.IsItem && itemtograb.Movable)
 				RazorEnhanced.Items.Move(itemtograb.Serial, World.Player.Backpack.Serial, 0);
 			else
-				RazorEnhanced.Misc.SendMessageNoWait("Invalid or inaccessible item.");
+				World.Player.SendMessage("Invalid or inaccessible item.");
 		}
 
 		private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -361,7 +361,7 @@ namespace RazorEnhanced
 			if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player)
 				RazorEnhanced.Items.DropItemGroundSelf(itemtodrop, 0);
 			else
-				RazorEnhanced.Misc.SendMessageNoWait("Invalid or inaccessible item.");
+				World.Player.SendMessage("Invalid or inaccessible item.");
 		}
 
 		private static void ProcessUse(string function)
@@ -603,7 +603,7 @@ namespace RazorEnhanced
 					{
 						if (!UseItemById(pack, 3617))
 						{
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.NoBandages);
+							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 						}
 						else
 						{
@@ -618,7 +618,7 @@ namespace RazorEnhanced
 					{
 						if (!UseItemById(pack, 3617))
 						{
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.NoBandages);
+							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 						}
 						else
 						{
@@ -632,7 +632,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3617))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.NoBandages);
+							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 					}
 					break;
 
@@ -650,7 +650,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3848))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No potions left");
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
 
@@ -658,7 +658,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3847))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No potions left");
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
 
@@ -666,7 +666,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3853))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No potions left");
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
 
@@ -674,7 +674,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3852))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No potions left");
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
 
@@ -682,7 +682,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3851))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No potions left");
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
 
@@ -690,7 +690,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3849))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No potions left");
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
 
@@ -698,7 +698,7 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemById(pack, 3846))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No potions left");
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
 
@@ -716,61 +716,61 @@ namespace RazorEnhanced
 					if (pack != null)
 					{
 						if (!UseItemByIdHue(pack, 12248, 1160))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No item left");
+							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 
 				case "Orange Petals":
 					if (pack != null)
 					{
-						RazorEnhanced.Misc.SendMessageNoWait("Da implementare");
+						World.Player.SendMessage("Da implementare");
 						if (!UseItemByIdHue(pack, 13848, 0))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No item left");
+							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 
 				case "Wrath Grapes":
 					if (pack != null)
 					{
-						RazorEnhanced.Misc.SendMessageNoWait("Da implementare");
+						World.Player.SendMessage("Da implementare");
 						if (!UseItemByIdHue(pack, 13848, 0))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No item left");
+							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 
 				case "Rose Of Trinsic":
 					if (pack != null)
 					{
-						RazorEnhanced.Misc.SendMessageNoWait("Da implementare");
+						World.Player.SendMessage("Da implementare");
 						if (!UseItemByIdHue(pack, 13848, 0))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No item left");
+							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 
 				case "Smoke Bomb":
 					if (pack != null)
 					{
-						RazorEnhanced.Misc.SendMessageNoWait("Da implementare");
+						World.Player.SendMessage("Da implementare");
 						if (!UseItemByIdHue(pack, 13848, 0))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No item left");
+							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 
 				case "Spell Stone":
 					if (pack != null)
 					{
-						RazorEnhanced.Misc.SendMessageNoWait("Da implementare");
+						World.Player.SendMessage("Da implementare");
 						if (!UseItemByIdHue(pack, 13848, 0))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No item left");
+							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 
 				case "Healing Stone":
 					if (pack != null)
 					{
-						RazorEnhanced.Misc.SendMessageNoWait("Da implementare");
+						World.Player.SendMessage("Da implementare");
 						if (!UseItemByIdHue(pack, 13848, 0))
-							RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "No item left");
+							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
 
@@ -801,7 +801,7 @@ namespace RazorEnhanced
 			switch (function)
 			{
 				default:
-					RazorEnhanced.Misc.SendMessageNoWait("Da implementare");
+					World.Player.SendMessage("Da implementare");
 					break;
 			}
 		}

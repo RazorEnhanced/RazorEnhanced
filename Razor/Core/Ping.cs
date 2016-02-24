@@ -28,8 +28,8 @@ namespace Assistant
 				else
 				{
 					m_Start = DateTime.MinValue;
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Ping Response:");
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Min: {0:F1}ms  Max: {1:F1}ms  Avg: {2:F1}ms", m_Min, m_Max, (m_Min + m_Max) / 2);
+					World.Player.SendMessage(MsgLevel.Force, "Ping Response:");
+					World.Player.SendMessage(MsgLevel.Force, "Min: {0:F1}ms  Max: {1:F1}ms  Avg: {2:F1}ms", m_Min, m_Max, (m_Min + m_Max) / 2);
 				}
 				return true;
 			}
@@ -51,7 +51,7 @@ namespace Assistant
 			m_Min = double.MaxValue;
 			m_Max = 0;
 
-			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Pinging server with {0} packets ({1} bytes)...", m_Count, m_Count * 2);
+			World.Player.SendMessage(MsgLevel.Force, "Pinging server with {0} packets ({1} bytes)...", m_Count, m_Count * 2);
 			DoPing();
 		}
 

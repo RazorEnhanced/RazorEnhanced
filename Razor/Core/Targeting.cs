@@ -158,7 +158,7 @@ namespace Assistant
 			{
 				m_LTWasSet = false;
 				OneTimeTarget(false, new TargetResponseCallback(OnSetLastTarget), new CancelTargetCallback(OnSLTCancel));
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.TargSetLT);
+				World.Player.SendMessage(MsgLevel.Force, LocString.TargSetLT);
 			}
 		}
 
@@ -187,7 +187,7 @@ namespace Assistant
 
 			m_LTWasSet = true;
 
-			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.LTSet);
+			World.Player.SendMessage(MsgLevel.Force, LocString.LTSet);
 			if (serial.IsMobile)
 			{
 				LastTargetChanged();
@@ -322,7 +322,7 @@ namespace Assistant
 
 			ClientCommunication.SendToClient(new ChangeCombatant(m));
 			m_LastCombatant = m.Serial;
-			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.NewTargSet);
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
 			bool wasSmart = RazorEnhanced.Settings.General.ReadBool("SmartLastTarget");
 			if (wasSmart)
@@ -359,7 +359,7 @@ namespace Assistant
 
 			ClientCommunication.SendToClient(new ChangeCombatant(m));
 			m_LastCombatant = m.Serial;
-			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.NewTargSet);
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
 			LastTargetChanged();
 		}
@@ -513,7 +513,7 @@ namespace Assistant
 			{
 				if (!m_AllowGround && (targ.Serial == Serial.Zero || targ.Serial >= 0x80000000))
 				{
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.LTGround);
+					World.Player.SendMessage(MsgLevel.Warning, LocString.LTGround);
 					return false;
 				}
 				else
@@ -526,7 +526,7 @@ namespace Assistant
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("QueueTargets"))
 					m_QueueTarget = LastTargetAction;
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.LTOutOfRange);
+				World.Player.SendMessage(MsgLevel.Warning, LocString.LTOutOfRange);
 				return false;
 			}
 
@@ -761,7 +761,7 @@ namespace Assistant
 
 			if (list.Count <= 0)
 			{
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.TargNoOne);
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
 
@@ -785,7 +785,7 @@ namespace Assistant
 
 			if (m == null)
 			{
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.TargNoOne);
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
 
@@ -806,7 +806,7 @@ namespace Assistant
 
 			ClientCommunication.SendToClient(new ChangeCombatant(m));
 			m_LastCombatant = m.Serial;
-			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.NewTargSet);
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
 			/*if ( m_HasTarget )
 			{
@@ -830,7 +830,7 @@ namespace Assistant
 
 			if (list.Count <= 0)
 			{
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.TargNoOne);
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
 
@@ -857,7 +857,7 @@ namespace Assistant
 
 			if (m == null)
 			{
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, LocString.TargNoOne);
+				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
 				return;
 			}
 
@@ -878,7 +878,7 @@ namespace Assistant
 
 			ClientCommunication.SendToClient(new ChangeCombatant(m));
 			m_LastCombatant = m.Serial;
-			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.NewTargSet);
+			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
 			/*if ( m_HasTarget )
 			{
@@ -919,12 +919,12 @@ namespace Assistant
 
 				if (m != null && m.Poisoned)
 				{
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "Heal blocked, Target is poisoned!");
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is poisoned!");
 					return true;
 				}
 				else if (m != null && m.Blessed)
 				{
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "Heal blocked, Target is mortelled!");
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is mortelled!");
 					return true;
 				}
 			}
@@ -1058,7 +1058,7 @@ namespace Assistant
 				if (m_Intercept)
 				{
 					EndIntercept();
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Error, LocString.OTTCancel);
+					World.Player.SendMessage(MsgLevel.Error, LocString.OTTCancel);
 				}
 				return;
 			}
@@ -1098,7 +1098,7 @@ namespace Assistant
 					if (m_OnCancel != null)
 						m_OnCancel();
 					EndIntercept();
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Error, LocString.OTTCancel);
+					World.Player.SendMessage(MsgLevel.Error, LocString.OTTCancel);
 
 					m_FilterCancel.Add((uint)prevID);
 				}

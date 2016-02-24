@@ -82,11 +82,11 @@ namespace Assistant
 					prio = (System.Diagnostics.ProcessPriorityClass)Enum.Parse(typeof(System.Diagnostics.ProcessPriorityClass), param[0], true);
 
 				ClientCommunication.ClientProcess.PriorityClass = prio;
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.PrioSet, prio);
+				World.Player.SendMessage(MsgLevel.Force, LocString.PrioSet, prio);
 			}
 			catch (Exception e)
 			{
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.PrioSet, String.Format("Error: {0}", e.Message));
+				World.Player.SendMessage(MsgLevel.Force, LocString.PrioSet, String.Format("Error: {0}", e.Message));
 			}
 		}
 
@@ -127,7 +127,7 @@ namespace Assistant
 					mapStr = String.Format("Unknown (#{0})", World.Player.Map);
 					break;
 			}
-			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.CurLoc, World.Player.Position, mapStr);
+			World.Player.SendMessage(MsgLevel.Force, LocString.CurLoc, World.Player.Position, mapStr);
 		}
 
 		private static void Ping(string[] param)

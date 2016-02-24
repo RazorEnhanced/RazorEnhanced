@@ -386,7 +386,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				RazorEnhanced.Misc.SendMessageNoWait("This item not have valid layer: " + layertoinsert);
+				Misc.SendMessage("This item not have valid layer: " + layertoinsert);
 			}
 		}
 
@@ -1040,7 +1040,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Dress.DressFStart: Dress already running");
+					World.Player.SendMessage("Script Error: Dress.DressFStart: Dress already running");
 			}
 		}
 
@@ -1051,7 +1051,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Dress.UnDressFStart: Undress already running");
+					World.Player.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
 			}
 		}
 
@@ -1062,7 +1062,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Dress.DressFStop: Dress not running");
+					World.Player.SendMessage("Script Error: Dress.DressFStop: Dress not running");
 			}
 		}
 
@@ -1073,7 +1073,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Dress.DressFStop: UnDress not running");
+					World.Player.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
 			}
 		}
 
@@ -1082,7 +1082,7 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.MainWindow.DressListSelect.Items.Contains(nomelista))
 			{ 
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
+					World.Player.SendMessage("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
 			else
 			{

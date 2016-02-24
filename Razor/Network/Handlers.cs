@@ -204,7 +204,7 @@ namespace Assistant
 
 			if (RazorEnhanced.Settings.General.ReadBool("BlockDismount") && World.Player != null && ser == World.Player.Serial && World.Player.Warmode && World.Player.GetItemOnLayer(Layer.Mount) != null)
 			{ // mount layer = 0x19
-				RazorEnhanced.Misc.SendMessageNoWait(LocString.DismountBlocked);
+				World.Player.SendMessage(LocString.DismountBlocked);
 				args.Block = true;
 				return;
 			}
@@ -930,7 +930,7 @@ namespace Assistant
 							Engine.MainWindow.UpdateSkill(skill);
 
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-								RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
+								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, skill.FixedBase - old > 0 ? "+" : "", ((double)(skill.FixedBase - old)) / 10.0);
 							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
@@ -954,7 +954,7 @@ namespace Assistant
 							skill.FixedCap = 100;
 							Engine.MainWindow.UpdateSkill(skill);
 							if (RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges") && skill.FixedBase != old)
-								RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
+								World.Player.SendMessage(MsgLevel.Force, LocString.SkillChanged, (SkillName)i, skill.Delta > 0 ? "+" : "", skill.Delta, skill.Value, ((double)(skill.FixedBase - old)) / 10.0, skill.FixedBase - old > 0 ? "+" : "");
 							ClientCommunication.PostSkillUpdate(i, skill.FixedBase);
 						}
 						break;
@@ -1405,13 +1405,13 @@ namespace Assistant
 				player.Int = p.ReadUInt16();
 
 				if (player.Str != oStr && oStr != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
+					World.Player.SendMessage(MsgLevel.Force, LocString.StrChanged, player.Str - oStr > 0 ? "+" : "", player.Str - oStr, player.Str);
 
 				if (player.Dex != oDex && oDex != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
+					World.Player.SendMessage(MsgLevel.Force, LocString.DexChanged, player.Dex - oDex > 0 ? "+" : "", player.Dex - oDex, player.Dex);
 
 				if (player.Int != oInt && oInt != 0 && RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges"))
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
+					World.Player.SendMessage(MsgLevel.Force, LocString.IntChanged, player.Int - oInt > 0 ? "+" : "", player.Int - oInt, player.Int);
 
 				player.Stam = p.ReadUInt16();
 				player.StamMax = p.ReadUInt16();
@@ -2669,7 +2669,7 @@ namespace Assistant
 								Assistant.Mobile leader = World.FindMobile(PartyLeader);
 								RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
 								if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-									RazorEnhanced.Misc.SendMessageNoWait("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+									World.Player.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
 								ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 								PacketHandlers.PartyLeader = Serial.Zero;
 							}
@@ -2981,7 +2981,7 @@ namespace Assistant
 					if (bersaglio != null)
 					{
 						RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
-						RazorEnhanced.Misc.SendMessageNoWait("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+						World.Player.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
 					}
 					args.Block = true;
 					return;

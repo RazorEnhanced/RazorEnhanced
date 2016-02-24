@@ -160,12 +160,12 @@ namespace RazorEnhanced
 
 				if (m != null && m.Poisoned)
 				{
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "Heal blocked, Target is poisoned!");
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is poisoned!");
 					return true;
 				}
 				else if (m != null && m.Blessed)
 				{
-					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Warning, "Heal blocked, Target is mortelled!");
+					World.Player.SendMessage(MsgLevel.Warning, "Heal blocked, Target is mortelled!");
 					return true;
 				}
 				return false;
@@ -228,7 +228,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessageNoWait("Invalid target data!");
+					Assistant.World.Player.SendMessage("Invalid target data!");
 			}
 		}
 
@@ -264,7 +264,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessageNoWait("Invalid target data!");
+					Assistant.World.Player.SendMessage("Invalid target data!");
 			}
 		}
 
@@ -290,7 +290,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessageNoWait("Invalid target data!");
+					Assistant.World.Player.SendMessage("Invalid target data!");
 			}
 		}
 	}

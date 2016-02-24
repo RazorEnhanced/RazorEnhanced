@@ -13,7 +13,7 @@ namespace Assistant
 			if (m_Hidden && RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
 			{
 				m_Count++;
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Error, LocString.StealthSteps, m_Count);
+				World.Player.SendMessage(MsgLevel.Error, LocString.StealthSteps, m_Count);
 				if (m_Count > 30)
 					Unhide();
 			}
@@ -24,7 +24,7 @@ namespace Assistant
 			m_Hidden = true;
 			m_Count = 0;
 			if (RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
-				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Error, LocString.StealthStart);
+				World.Player.SendMessage(MsgLevel.Error, LocString.StealthStart);
 		}
 
 		internal static void Unhide()

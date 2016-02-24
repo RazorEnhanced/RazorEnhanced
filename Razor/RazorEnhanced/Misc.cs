@@ -25,52 +25,6 @@ namespace RazorEnhanced
 			return distance;
 		}
 
-		internal static void SendMessageNoWait(string format, params object[] args)
-		{
-			SendMessageNoWait(MsgLevel.Info, String.Format(format, args));
-		}
-
-		internal static void SendMessageNoWait(MsgLevel lvl, string format, params object[] args)
-		{
-			SendMessageNoWait(lvl, String.Format(format, args));
-		}
-
-		internal static void SendMessageNoWait(MsgLevel lvl, LocString loc, params object[] args)
-		{
-			SendMessageNoWait(lvl, Language.Format(loc, args));
-		}
-
-		internal static void SendMessageNoWait(MsgLevel lvl, LocString loc)
-		{
-			SendMessageNoWait(Language.GetString(loc));
-		}
-
-		internal static void SendMessageNoWait(MsgLevel lvl, string msg)
-		{
-			SendMessageNoWait(msg);
-		}
-
-		internal static void SendMessageNoWait(LocString loc)
-		{
-			SendMessageNoWait(Language.GetString(loc));
-		}
-
-		public static void SendMessageNoWait(string msg, int color)
-		{
-			if (Assistant.Engine.Running && Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg));
-			}
-		}
-
-		public static void SendMessageNoWait(string msg)
-		{
-			if (Assistant.Engine.Running && Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, RazorEnhanced.Settings.General.ReadInt("SysColor"), 3, Language.CliLocName, "System", msg));
-			}
-		}
-
 		// Sysmessage
 		public static void SendMessage(int num)
 		{
