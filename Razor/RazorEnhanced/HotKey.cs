@@ -300,7 +300,6 @@ namespace RazorEnhanced
 				case "Accept Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
-						ClientCommunication.SendRecvWait();
 						ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
@@ -309,7 +308,6 @@ namespace RazorEnhanced
 				case "Decline Party":
 					if (PacketHandlers.PartyLeader != Assistant.Serial.Zero)
 					{
-						ClientCommunication.SendRecvWait();
 						ClientCommunication.SendToServer(new DeclineParty(PacketHandlers.PartyLeader));
 						PacketHandlers.PartyLeader = Assistant.Serial.Zero;
 					}
@@ -449,14 +447,10 @@ namespace RazorEnhanced
 			if (function == "Mount")
 			{
 				if (Filters.AutoRemountSerial != 0)
-				{
-					ClientCommunication.SendRecvWait();
 					Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
-				}
 			}
 			else if (function == "Dismount")
 			{
-				ClientCommunication.SendRecvWait();
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
 			}
 			else
@@ -815,10 +809,7 @@ namespace RazorEnhanced
 			if (function == "Last Used")
 			{
 				if (World.Player.LastSkill != -1)
-				{
-					ClientCommunication.SendRecvWait();
 					ClientCommunication.SendToServer(new UseSkill(World.Player.LastSkill));
-				}
 			}
 			else
 			{
