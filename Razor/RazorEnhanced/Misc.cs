@@ -62,40 +62,70 @@ namespace RazorEnhanced
 				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
 		}
 
-		public static void SendMessage(int num, int color)
-		{
-			if (Assistant.World.Player != null)
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
-		}
-
-		public static void SendMessage(object obj, int color)
+		public static void SendMessageNoWait(object obj, int color)
 		{
 			if (Assistant.World.Player != null)
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
 		}
 
-		public static void SendMessage(uint num, int color)
+		public static void SendMessageNoWait(uint num, int color)
 		{
 			if (Assistant.World.Player != null)
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
 		}
 
+		public static void SendMessage(int num, int color)
+		{
+			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.ScriptWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
+			}
+		}
+
+		public static void SendMessage(object obj, int color)
+		{
+			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.ScriptWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
+			}
+		}
+
+		public static void SendMessage(uint num, int color)
+		{
+			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.ScriptWait();
+				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
+			}
+		}
+
 		public static void SendMessage(string msg, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.ScriptWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			}
 		}
 
 		public static void SendMessage(bool msg, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.ScriptWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			}
 		}
 
 		public static void SendMessage(double msg, int color)
 		{
 			if (Assistant.World.Player != null)
+			{
+				ClientCommunication.ScriptWait();
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			}
 
 		}
 

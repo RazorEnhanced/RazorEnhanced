@@ -71,14 +71,14 @@ namespace RazorEnhanced
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessage("HotKey: DISABLED", 37);
+							RazorEnhanced.Misc.SendMessageNoWait("HotKey: DISABLED", 37);
 					}
 					else
 					{
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessage("HotKey: ENABLED", 168);
+							RazorEnhanced.Misc.SendMessageNoWait("HotKey: ENABLED", 168);
 					}
 				}
 			}
@@ -238,7 +238,7 @@ namespace RazorEnhanced
 					case "Script":
 						if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
 						{
-							RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33);
+							RazorEnhanced.Misc.SendMessageNoWait("Stopping all scripts...",33);
 							foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
 							{
 								scriptdata.Run = false;
