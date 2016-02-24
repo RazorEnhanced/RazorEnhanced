@@ -277,10 +277,7 @@ namespace RazorEnhanced
 					break;
 			}
 			if (s != null)
-			{
-				ClientCommunication.SendRecvWait();
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-			}
 		}
 
 		public static void CastNecro(string SpellName)
@@ -366,10 +363,7 @@ namespace RazorEnhanced
 					break;
 			}
 			if (s != null)
-			{
-				ClientCommunication.SendRecvWait();
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-			}
 		}
 
 		public static void CastChivalry(string SpellName)
@@ -427,10 +421,7 @@ namespace RazorEnhanced
 					break;
 			}
 			if (s != null)
-			{
-				ClientCommunication.SendRecvWait();
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-			}
 		}
 
 		public static void CastBushido(string SpellName)
@@ -472,10 +463,7 @@ namespace RazorEnhanced
 					break;
 			}
 			if (s != null)
-			{
-				ClientCommunication.SendRecvWait();
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-			}
 		}
 
 		public static void CastNinjitsu(string SpellName)
@@ -525,10 +513,7 @@ namespace RazorEnhanced
 					break;
 			}
 			if (s != null)
-			{
-				ClientCommunication.SendRecvWait();
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-			}
 		}
 
 		public static void CastSpellweaving(string SpellName)
@@ -610,10 +595,7 @@ namespace RazorEnhanced
 					break;
 			}
 			if (s != null)
-			{
-				ClientCommunication.SendRecvWait();
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-			}
 		}
 
 		public static void CastMysticism(string SpellName)
@@ -691,10 +673,7 @@ namespace RazorEnhanced
 					break;
 			}
 			if (s != null)
-			{
-				ClientCommunication.SendRecvWait();
 				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-			}
 		}
 	}
 }
