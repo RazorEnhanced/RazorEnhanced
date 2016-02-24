@@ -32,13 +32,13 @@ namespace Assistant
 
 			World.Player.VisRange = range;
 			ClientCommunication.SendToClient(new SetUpdateRange(range));
-			World.Player.SendMessage("Set VisRange to {0}", range);
+			RazorEnhanced.Misc.SendMessageNoWait("Set VisRange to {"+range+"}");
 		}
 
 		public static void ResetFind(string[] args)
 		{
 			uint wParam = ((uint)ClientCommunication.UONetMessage.FindData) | 0xFFFF0000;
-			World.Player.SendMessage(MsgLevel.Force, "Clearing addr list.");
+			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Clearing addr list.");
 			ClientCommunication.PostMessage(ClientCommunication.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)wParam, IntPtr.Zero);
 		}
 
@@ -53,7 +53,7 @@ namespace Assistant
 				loc.Z = Utility.ToInt32(args[2], 0);
 
 				ClientCommunication.SendToClient(new PathFindTo(loc));
-				World.Player.SendMessage("Going... {0}", loc);
+				RazorEnhanced.Misc.SendMessageNoWait("Going... {"+loc+"}");
 			}
 			catch
 			{
@@ -71,12 +71,12 @@ namespace Assistant
 			{
 			}
 
-			World.Player.SendMessage(MsgLevel.Force, "Pwning... {0}", count);
+			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Pwning... {0}", count);
 
 			for (int i = 0; i < count; i++)
 				ClientCommunication.SendToServer(new ResyncReq());
 
-			World.Player.SendMessage(MsgLevel.Force, "Done.");
+			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Done.");
 		}
 
 		public static void Find(string[] args)
@@ -95,14 +95,14 @@ namespace Assistant
 					size = 4;
 				}
 
-				World.Player.SendMessage(MsgLevel.Force, "Finding 0x{0:X8} ({1})...", val, size);
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Finding 0x{0:X8} ({1})...", val, size);
 
 				ClientCommunication.PostMessage(ClientCommunication.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)(((uint)ClientCommunication.UONetMessage.FindData) | (((uint)size) << 16)), (IntPtr)((int)val));
 			}
 			catch (Exception e)
 			{
-				World.Player.SendMessage(MsgLevel.Force, e.Message);
-				World.Player.SendMessage(MsgLevel.Force, "Usage: Find <hex value> [size = 4]");
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, e.Message);
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Usage: Find <hex value> [size = 4]");
 			}
 		}
 
@@ -113,9 +113,9 @@ namespace Assistant
 			if (World.Player != null)
 			{
 				if (c == 0)
-					World.Player.SendMessage(MsgLevel.Force, "{0} Values found!", a);
+					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "{0} Values found!", a);
 				else
-					World.Player.SendMessage(MsgLevel.Force, "{0} @ {1:X8}", c, a);
+					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "{0} @ {1:X8}", c, a);
 			}
 		}
 	}
@@ -163,9 +163,9 @@ namespace Assistant
 		{
 			if (args.Length <= 0)
 			{
-				World.Player.SendMessage(MsgLevel.Force, "Syntax: -autotarget TYPE");
-				World.Player.SendMessage(MsgLevel.Force, "Where TYPE Can be: blue, red, grey, grey2, green, orange, yellow, or none");
-				World.Player.SendMessage(MsgLevel.Force, "Auto Targ Aq currently set to: {0}", m_Type);
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Syntax: -autotarget TYPE");
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Where TYPE Can be: blue, red, grey, grey2, green, orange, yellow, or none");
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Auto Targ Aq currently set to: {0}", m_Type);
 				return;
 			}
 
@@ -175,11 +175,11 @@ namespace Assistant
 			}
 			catch
 			{
-				World.Player.SendMessage(MsgLevel.Force, "Invalid type specified.");
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Invalid type specified.");
 				return;
 			}
 
-			World.Player.SendMessage(MsgLevel.Force, "Auto Target Aq set to: {0}", m_Type);
+			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "Auto Target Aq set to: {0}", m_Type);
 		}
 
 		private static void MobileMoving(PacketReader p, PacketHandlerEventArgs args)
@@ -200,7 +200,7 @@ namespace Assistant
 				if (oldDist > dist && oldDist > range && dist <= range)
 				{
 					Targeting.SetLastTargetTo(m);
-					World.Player.SendMessage(MsgLevel.Force, "New target acquired.");
+					RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "New target acquired.");
 				}
 			}
 		}
@@ -212,7 +212,7 @@ namespace Assistant
 			if (m != null && m.Notoriety == (byte)m_Type && m_Type != AutoTargType.none)
 			{
 				Targeting.SetLastTargetTo(m);
-				World.Player.SendMessage(MsgLevel.Force, "New target acquired.");
+				RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, "New target acquired.");
 			}
 		}
 	}

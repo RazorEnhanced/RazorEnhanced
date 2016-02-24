@@ -403,7 +403,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Restock.FStart: Restock already running");
+					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Restock.FStart: Restock already running");
 			}
 		}
 
@@ -414,7 +414,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Restock.FStart: Restock not running");
+					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Restock.FStart: Restock not running");
 			}
 		}
 
@@ -431,7 +431,7 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.MainWindow.RestockListSelect.Items.Contains(nomelista))
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					World.Player.SendMessage("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
+					RazorEnhanced.Misc.SendMessageNoWait("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
 			}
 			else
 			{

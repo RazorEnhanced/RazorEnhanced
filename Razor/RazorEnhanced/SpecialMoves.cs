@@ -292,7 +292,7 @@ namespace Assistant
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(ClearAbility.Instance);
-				World.Player.SendMessage(LocString.SettingAOSAb, a);
+				RazorEnhanced.Misc.SendMessageNoWait(LocString.SettingAOSAb.ToString() + a.ToString());
 			}
 		}
 
@@ -317,7 +317,7 @@ namespace Assistant
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendRecvWait();
 				ClientCommunication.SendToClient(ClearAbility.Instance);
-				World.Player.SendMessage(LocString.SettingAOSAb, a);
+				RazorEnhanced.Misc.SendMessageNoWait(LocString.SettingAOSAb.ToString() + a.ToString());
 			}
 		}
 
@@ -327,7 +327,7 @@ namespace Assistant
 			ClientCommunication.SendToServer(new UseAbility(AOSAbility.Clear));
 			ClientCommunication.SendRecvWait();
 			ClientCommunication.SendToClient(ClearAbility.Instance);
-			World.Player.SendMessage(LocString.AOSAbCleared);
+			RazorEnhanced.Misc.SendMessageNoWait(LocString.AOSAbCleared);
 		}
 	}
 }

@@ -257,7 +257,7 @@ namespace Assistant
 
 			Callback = new HueEntryCallback(HueResp);
 			ClientCommunication.SendToClient(new HuePicker());
-			World.Player.SendMessage(MsgLevel.Force, LocString.SelHue);
+			RazorEnhanced.Misc.SendMessageNoWait(MsgLevel.Force, LocString.SelHue);
 		}
 
 		private void okay_Click(object sender, System.EventArgs e)

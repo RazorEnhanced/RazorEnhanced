@@ -949,6 +949,9 @@ namespace Assistant
 			// Stop thread query queue
 			RazorEnhanced.QueryQueue.Abort();
 
+			if (RazorEnhanced.ToolBar.ToolBarForm != null)
+				RazorEnhanced.ToolBar.ToolBarForm.Close();
+
 			PlayerData.ExternalZ = false;
 			World.Player = null;
 			PlayerData.FastWalkKey = 0;
@@ -956,9 +959,6 @@ namespace Assistant
 			World.Mobiles.Clear();
 			ActionQueue.Stop();
 			StealthSteps.Unhide();
-
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.ToolBarForm.Close();
 
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();

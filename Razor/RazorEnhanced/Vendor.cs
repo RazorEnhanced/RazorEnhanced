@@ -361,7 +361,7 @@ namespace RazorEnhanced
 			{
 				ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
 				AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
-				World.Player.SendMessage("Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
+				RazorEnhanced.Misc.SendMessageNoWait("Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
 				args.Block = true;
 			}
 		}
@@ -372,7 +372,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Script Error: Sell.Enable: Filter alredy enabled");
+					Misc.SendMessageNoWait("Script Error: Sell.Enable: Filter alredy enabled");
 			}
 			else
 				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
@@ -383,7 +383,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == false)
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Script Error: Sell.Disable: Filter alredy disabled");
+					Misc.SendMessageNoWait("Script Error: Sell.Disable: Filter alredy disabled");
 			}
 			else
 				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
@@ -399,7 +399,7 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.MainWindow.SellListSelect.Items.Contains(nomelista))
             { 
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Script Error: Sell.ChangeList: Scavenger list: " + nomelista + " not exist");
+					Misc.SendMessageNoWait("Script Error: Sell.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
 			else
 			{
@@ -689,7 +689,7 @@ namespace RazorEnhanced
 				args.Block = true;
 				ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
 				AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
-				World.Player.SendMessage("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
+				RazorEnhanced.Misc.SendMessageNoWait("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 			}
 		}
 
@@ -699,7 +699,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Script Error: Buy.Enable: Filter alredy enabled");
+					Misc.SendMessageNoWait("Script Error: Buy.Enable: Filter alredy enabled");
 			}
 			else
 				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
@@ -710,7 +710,7 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == false)
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Script Error: Buy.Disable: Filter alredy disabled");
+					Misc.SendMessageNoWait("Script Error: Buy.Disable: Filter alredy disabled");
 			}
 			else
 				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
@@ -726,7 +726,7 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.MainWindow.BuyListSelect.Items.Contains(nomelista))
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Script Error: Buy.ChangeList: Scavenger list: " + nomelista + " not exist");
+					Misc.SendMessageNoWait("Script Error: Buy.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
 			else
 			{
