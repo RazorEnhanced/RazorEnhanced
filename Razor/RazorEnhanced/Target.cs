@@ -30,23 +30,31 @@ namespace RazorEnhanced
 		public static void TargetExecute(int serial)
 		{
 			if (!CheckHealPoisonTarg(serial))
+			{
+				ClientCommunication.ScriptWait();
 				Assistant.Targeting.Target(serial);
+			}
 		}
 
 		public static void TargetExecute(RazorEnhanced.Item item)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.Targeting.Target(item);
 		}
 
 		public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
 			if (!CheckHealPoisonTarg(mobile.Serial))
+			{
+				ClientCommunication.ScriptWait();
 				Assistant.Targeting.Target(mobile);
+			}
 		}
 
 		public static void TargetExecute(int x, int y, int z)
 		{
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+			ClientCommunication.ScriptWait();
 			Assistant.Targeting.Target(location);
 		}
 
@@ -59,7 +67,10 @@ namespace RazorEnhanced
 		public static void Self()
 		{
 			if (!CheckHealPoisonTarg(World.Player.Serial))
+			{
+				ClientCommunication.ScriptWait();
 				Assistant.Targeting.TargetSelf();
+			}
 		}
 
 		public static void SelfQueued()

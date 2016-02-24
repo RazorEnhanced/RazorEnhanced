@@ -743,7 +743,9 @@ namespace RazorEnhanced
 
 			if (item != null)
 			{
+				ClientCommunication.ScriptWait();
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+				ClientCommunication.ScriptWait();
 				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 			}
 			else
@@ -769,7 +771,9 @@ namespace RazorEnhanced
 					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") too away");
 				return;
 			}
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
 		}
 
@@ -782,7 +786,9 @@ namespace RazorEnhanced
 					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
 			}
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.AssistantLayer)); // Equippa
 		}
 
@@ -1343,74 +1349,92 @@ namespace RazorEnhanced
 			switch (skillname)
 			{
 				case "Animal Lore":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalLore)));
 					break;
 
 				case "Item ID":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ItemID)));
 					break;
 
 				case "Arms Lore":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ArmsLore)));
 					break;
 
 				case "Begging":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Begging)));
 					break;
 
 				case "Peacemaking":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Peacemaking)));
 					break;
 
 				case "Cartography":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Cartography)));
 					break;
 
 				case "Detect Hidden":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.DetectHidden)));
 					break;
 
 				case "Discordance":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Discordance)));
 					break;
 
 				case "Eval Int":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.EvalInt)));
 					break;
 
 				case "Forensics":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Forensics)));
 					break;
 
 				case "Hiding":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Hiding)));
 					break;
 
 				case "Provocation":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Provocation)));
 					break;
 
 				case "Poisoning":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Poisoning)));
 					break;
 
 				case "Spirit Speak":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.SpiritSpeak)));
 					break;
 
 				case "Stealing":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealing)));
 					break;
 
 				case "Animal Taming":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalTaming)));
 					break;
 
 				case "Taste ID":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.TasteID)));
 					break;
 
 				case "Tracking":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Tracking)));
 					break;
 
@@ -1419,18 +1443,22 @@ namespace RazorEnhanced
 					break;
 
 				case "Stealth":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealth)));
 					break;
 
 				case "Remove Trap":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.RemoveTrap)));
 					break;
 
 				case "Inscribe":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Inscribe)));
 					break;
 
 				case "Anatomy":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Anatomy)));
 					break;
 
@@ -1446,44 +1474,57 @@ namespace RazorEnhanced
 		{
 			List<ushort> kw = EncodedSpeech.GetKeywords(msg);
 			if (kw.Count == 1 && kw[0] == 0)
+			{
+				ClientCommunication.ScriptWait();
 				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
+			}
 			else
+			{
+				ClientCommunication.ScriptWait();
 				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
+			}
 		}
 
 		public static void ChatGuild(string msg)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
 		}
 
 		public static void ChatAlliance(string msg)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
 		public static void ChatEmote(int hue, string msg)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
 		}
 
 		public static void ChatWhisper(int hue, string msg)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
 		}
 
 		public static void ChatYell(int hue, string msg)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
 		}
 
 		// attack
 		public static void SetWarMode(bool warflag)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new SetWarMode(warflag));
 		}
 
 		public static void Attack(int serial)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new AttackReq(serial));
 		}
 
@@ -1493,30 +1534,37 @@ namespace RazorEnhanced
 			switch (virtue)
 			{
 				case "Honor":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(1));
 					break;
 
 				case "Sacrifice":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(2));
 					break;
 
 				case "Valor":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(3));
 					break;
 
 				case "Compassion":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(4));
 					break;
 
 				case "Honesty":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(5));
 					break;
 
 				case "Humility":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(6));
 					break;
 
 				case "Justice":
+					ClientCommunication.ScriptWait();
 					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(7));
 					break;
 
@@ -1529,28 +1577,33 @@ namespace RazorEnhanced
 
 		public static void ChatParty(string msg)
 		{
-				Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
+			ClientCommunication.ScriptWait();
+			Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
 		}
 
 		public static void PartyInvite()
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new PartyInvite());
 		}
 
 		public static void LeaveParty()
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(World.Player.Serial));
 		}
 
 		public static void KickMember(int serial)
 		{
 			uint userial = Convert.ToUInt16(serial);
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(userial));
 		}
 
 		public static void PartyCanLoot(bool CanLoot)
 		{
-				if (CanLoot)
+			ClientCommunication.ScriptWait();
+			if (CanLoot)
 					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x1));
 				else
 					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x0));
@@ -1601,12 +1654,14 @@ namespace RazorEnhanced
 
 			if (dir != Direction.Mask)
 			{
+				ClientCommunication.ScriptWait();
 				ClientCommunication.SendToServer(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
 			}
 		}
 
 		internal static void PathFindTo(Assistant.Point3D Location)
 		{
+			ClientCommunication.ScriptWait();
 			ClientCommunication.SendToClient(new PathFindTo(Location));
 		}
 
@@ -1616,6 +1671,7 @@ namespace RazorEnhanced
 			Location.X = x;
 			Location.Y = y;
 			Location.Z = z;
+			ClientCommunication.ScriptWait();
 			ClientCommunication.SendToClient(new PathFindTo(Location));
 		}
 
@@ -1623,17 +1679,20 @@ namespace RazorEnhanced
 
 		public static void HeadMessage(int hue, string message)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
 		}
 
 		// Paperdool button click
 		public static void QuestButton()
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new QuestButton(World.Player.Serial));
 		}
 
 		public static void GuildButton()
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
 		}
 

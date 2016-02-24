@@ -126,6 +126,7 @@ namespace RazorEnhanced
 
 		public static void WaitForContext(int ser, int delay) // Delay in MS
 		{
+			ClientCommunication.ScriptWait();
 			ClientCommunication.SendToServer(new ContextMenuRequest(ser));
 			int subdelay = delay;
 			while (World.Player.HasContext != true && World.Player.ContextID != ser && subdelay > 0)
@@ -138,6 +139,7 @@ namespace RazorEnhanced
 
 		public static void ContextReply(int serial, int idx)
 		{
+			ClientCommunication.ScriptWait();
 			ClientCommunication.SendToServer(new ContextMenuResponse(serial, (ushort)idx));
 			World.Player.HasContext = false;
 			World.Player.ContextID = 0;
@@ -176,12 +178,14 @@ namespace RazorEnhanced
 
 		public static void CancelPrompt()
 		{
+			ClientCommunication.ScriptWait();
 			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
 			World.Player.HasPrompt = false;
 		}
 
 		public static void ResponsePrompt(string text)
 		{
+			ClientCommunication.ScriptWait();
 			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
 			World.Player.HasPrompt = false;
 		}

@@ -543,6 +543,7 @@ namespace RazorEnhanced
 
 		public static void UseMobile(Mobile mobile)
 		{
+			ClientCommunication.ScriptWait();
 			Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
 		}
 
@@ -557,7 +558,10 @@ namespace RazorEnhanced
 			}
 
 			if (mobile.Serial.IsMobile)
+			{
+				ClientCommunication.ScriptWait();
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
+			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
@@ -568,6 +572,7 @@ namespace RazorEnhanced
 		// Single Click
 		public static void SingleClick(Mobile mobile)
 		{
+			ClientCommunication.ScriptWait();
 			ClientCommunication.SendToServer(new SingleClick(mobile));
 		}
 
@@ -614,6 +619,7 @@ namespace RazorEnhanced
 
 			if (!m.PropsUpdated)
 			{
+				ClientCommunication.ScriptWait();
 				ClientCommunication.SendToServer(new QueryProperties(m.Serial));
 				int subdelay = delay;
 
