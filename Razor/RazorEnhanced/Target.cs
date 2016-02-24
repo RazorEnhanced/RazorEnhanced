@@ -221,14 +221,14 @@ namespace RazorEnhanced
 					}
 
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobtarget.Serial, mobtarget.Body, MessageType.Regular, 10, 3, Language.CliLocName, mobtarget.Name, "*Target*"));
+						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
 					RazorEnhanced.Target.SetLast(mobtarget);
 				}
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Invalid target data!");
+					Misc.SendMessage("Invalid target data!");
 			}
 		}
 
@@ -255,7 +255,7 @@ namespace RazorEnhanced
 					}
 
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobtarget.Serial, mobtarget.Body, MessageType.Regular, 10, 3, Language.CliLocName, mobtarget.Name, "*Target*"));
+						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
 
 					RazorEnhanced.Target.TargetExecute(mobtarget.Serial);
 					RazorEnhanced.Target.SetLast(mobtarget);
@@ -264,7 +264,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Invalid target data!");
+					Misc.SendMessage("Invalid target data!");
 			}
 		}
 
@@ -284,13 +284,13 @@ namespace RazorEnhanced
 				{
 					RazorEnhanced.Player.Attack(mobtarget.Serial);
 					if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-						Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobtarget.Serial, mobtarget.Body, MessageType.Regular, 10, 3, Language.CliLocName, mobtarget.Name, "*Target*"));
+						Mobiles.Message(mobtarget.Serial, 10, "* Target *");
 				}
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Assistant.World.Player.SendMessage("Invalid target data!");
+					Misc.SendMessage("Invalid target data!");
 			}
 		}
 	}

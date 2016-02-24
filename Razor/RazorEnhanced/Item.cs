@@ -915,14 +915,12 @@ namespace RazorEnhanced
 
 		public static void Message(Item item, int hue, string message)
 		{
-			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 
 		public static void Message(int serial, int hue, string message)
 		{
 			Item item = FindBySerial(serial);
-			ClientCommunication.SendRecvWait();
 			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 

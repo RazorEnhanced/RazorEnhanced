@@ -94,19 +94,19 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked)
 			{
 				if (m.Poisoned)
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(m.Serial, m.Body, MessageType.Regular, 10, 3, Language.CliLocName, m.Name, "[Poisoned]"));
+					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Poisoned]");
 				if (m.IsGhost)
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(m.Serial, m.Body, MessageType.Regular, 10, 3, Language.CliLocName, m.Name, "[Dead]"));
+					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Dead]");
 				if (m.Paralized)
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(m.Serial, m.Body, MessageType.Regular, 10, 3, Language.CliLocName, m.Name, "[Paralized]"));
+					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Paralized]");
 				if (m.Blessed)
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(m.Serial, m.Body, MessageType.Regular, 10, 3, Language.CliLocName, m.Name, "[Mortalled]"));
+					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Mortalled]");
 			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
 			{
 				if (Targeting.IsLastTarget(m))
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(m.Serial, m.Body, MessageType.Regular, 10, 3, Language.CliLocName, m.Name, "[Target]"));
+					RazorEnhanced.Mobiles.Message(m.Serial, 10, "*[Target]*");
 			}
 		}
 
