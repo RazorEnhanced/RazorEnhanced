@@ -19,6 +19,15 @@ namespace RazorEnhanced
 			Loop,
 		}
 
+		internal static void SendMessageScriptError(string msg)
+		{
+			if (Assistant.World.Player != null)
+			{
+				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+					ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 1, 3, Language.CliLocName, "System", msg.ToString()));
+			}
+		}
+
 		internal class EnhancedScript
 		{
 			internal void Start()

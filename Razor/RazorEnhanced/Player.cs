@@ -743,15 +743,12 @@ namespace RazorEnhanced
 
 			if (item != null)
 			{
-				ClientCommunication.ScriptWait();
-				Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-				ClientCommunication.ScriptWait();
-				Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 			}
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: UnEquipItemByLayer: No item found on layer: " + layer);
+				Scripts.SendMessageScriptError("Script Error: UnEquipItemByLayer: No item found on layer: " + layer);
 			}
 		}
 
@@ -760,21 +757,17 @@ namespace RazorEnhanced
 			Assistant.Item item = Assistant.World.FindItem((Assistant.Serial)serial);
 			if (item == null)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") not found");
+				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + serial + ") not found");
 				return;
 			}
 
 			if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + serial + ") too away");
+				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + serial + ") too away");
 				return;
 			}
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
+			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
+			Assistant.ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
 		}
 
 		public static void EquipItem(Item item)
@@ -782,14 +775,11 @@ namespace RazorEnhanced
 			Assistant.Mobile player = Assistant.World.Player;
 			if (item.Container == null && Misc.DistanceSqrt(item.GetWorldPosition(), Position) > 3)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
+				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
 			}
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount)); // Prende
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.AssistantLayer)); // Equippa
+			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
+			Assistant.ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.AssistantLayer)); // Equippa
 		}
 
 		public static bool CheckLayer(String layer)
@@ -992,8 +982,7 @@ namespace RazorEnhanced
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Value;
 
 				default:
-					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-						Misc.SendMessage("Script Error: GetSkillValue: Invalid skill name: " + skillname);
+					Scripts.SendMessageScriptError("Script Error: GetSkillValue: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -1165,8 +1154,7 @@ namespace RazorEnhanced
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Cap;
 
 				default:
-					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-						Misc.SendMessage("Script Error: GetSkillCap: Invalid skill name: " + skillname);
+					Scripts.SendMessageScriptError("Script Error: GetSkillCap: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -1338,8 +1326,7 @@ namespace RazorEnhanced
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Lock);
 
 				default:
-					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-						Misc.SendMessage("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
+					Scripts.SendMessageScriptError("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
 					return 0;
 			}
 		}
@@ -1349,122 +1336,99 @@ namespace RazorEnhanced
 			switch (skillname)
 			{
 				case "Animal Lore":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalLore)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalLore)));
 					break;
 
 				case "Item ID":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ItemID)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.ItemID)));
 					break;
 
 				case "Arms Lore":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.ArmsLore)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.ArmsLore)));
 					break;
 
 				case "Begging":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Begging)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Begging)));
 					break;
 
 				case "Peacemaking":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Peacemaking)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Peacemaking)));
 					break;
 
 				case "Cartography":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Cartography)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Cartography)));
 					break;
 
 				case "Detect Hidden":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.DetectHidden)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.DetectHidden)));
 					break;
 
 				case "Discordance":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Discordance)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Discordance)));
 					break;
 
 				case "Eval Int":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.EvalInt)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.EvalInt)));
 					break;
 
 				case "Forensics":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Forensics)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Forensics)));
 					break;
 
 				case "Hiding":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Hiding)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Hiding)));
 					break;
 
 				case "Provocation":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Provocation)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Provocation)));
 					break;
 
 				case "Poisoning":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Poisoning)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Poisoning)));
 					break;
 
 				case "Spirit Speak":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.SpiritSpeak)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.SpiritSpeak)));
 					break;
 
 				case "Stealing":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealing)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealing)));
 					break;
 
 				case "Animal Taming":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalTaming)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalTaming)));
 					break;
 
 				case "Taste ID":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.TasteID)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.TasteID)));
 					break;
 
 				case "Tracking":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Tracking)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Tracking)));
 					break;
 
 				case "Meditation":
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Meditation)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Meditation)));
 					break;
 
 				case "Stealth":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealth)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealth)));
 					break;
 
 				case "Remove Trap":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.RemoveTrap)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.RemoveTrap)));
 					break;
 
 				case "Inscribe":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Inscribe)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Inscribe)));
 					break;
 
 				case "Anatomy":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new UseSkill(Convert.ToInt16(Assistant.SkillName.Anatomy)));
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Anatomy)));
 					break;
 
 				default:
-					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-						Misc.SendMessage("Script Error: UseSkill: Invalid skill name: " + skillname);
+					Scripts.SendMessageScriptError("Script Error: UseSkill: Invalid skill name: " + skillname);
 					break;
 			}
 		}
@@ -1475,57 +1439,48 @@ namespace RazorEnhanced
 			List<ushort> kw = EncodedSpeech.GetKeywords(msg);
 			if (kw.Count == 1 && kw[0] == 0)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
+				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Regular, hue, 3, Language.CliLocName, kw, msg));
 			}
 			else
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToServer(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
+				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
 			}
 		}
 
 		public static void ChatGuild(string msg)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
+			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
 		}
 
 		public static void ChatAlliance(string msg)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
+			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
 		public static void ChatEmote(int hue, string msg)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
+			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
 		}
 
 		public static void ChatWhisper(int hue, string msg)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
+			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
 		}
 
 		public static void ChatYell(int hue, string msg)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
+			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
 		}
 
 		// attack
 		public static void SetWarMode(bool warflag)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new SetWarMode(warflag));
+			Assistant.ClientCommunication.SendToServerWait(new SetWarMode(warflag));
 		}
 
 		public static void Attack(int serial)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new AttackReq(serial));
+			Assistant.ClientCommunication.SendToServerWait(new AttackReq(serial));
 		}
 
 		// Virtue
@@ -1534,79 +1489,66 @@ namespace RazorEnhanced
 			switch (virtue)
 			{
 				case "Honor":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(1));
+					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(1));
 					break;
 
 				case "Sacrifice":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(2));
+					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(2));
 					break;
 
 				case "Valor":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(3));
+					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(3));
 					break;
 
 				case "Compassion":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(4));
+					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(4));
 					break;
 
 				case "Honesty":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(5));
+					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(5));
 					break;
 
 				case "Humility":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(6));
+					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(6));
 					break;
 
 				case "Justice":
-					ClientCommunication.ScriptWait();
-					Assistant.ClientCommunication.SendToServer(new InvokeVirtue(7));
+					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(7));
 					break;
 
 				default:
-					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-						Misc.SendMessage("Script Error - InvokeVirtue: Invalid virtue name: " + virtue);
+					Scripts.SendMessageScriptError("Script Error - InvokeVirtue: Invalid virtue name: " + virtue);
 					break;
 			}
 		}
 
 		public static void ChatParty(string msg)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new SendPartyMessage(Assistant.World.Player.Serial, msg));
+			Assistant.ClientCommunication.SendToServerWait(new SendPartyMessage(Assistant.World.Player.Serial, msg));
 		}
 
 		public static void PartyInvite()
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new PartyInvite());
+			Assistant.ClientCommunication.SendToServerWait(new PartyInvite());
 		}
 
 		public static void LeaveParty()
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(World.Player.Serial));
+			Assistant.ClientCommunication.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
 		}
 
 		public static void KickMember(int serial)
 		{
 			uint userial = Convert.ToUInt16(serial);
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new PartyRemoveMember(userial));
+			Assistant.ClientCommunication.SendToServerWait(new PartyRemoveMember(userial));
 		}
 
 		public static void PartyCanLoot(bool CanLoot)
 		{
-			ClientCommunication.ScriptWait();
 			if (CanLoot)
-					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x1));
+					Assistant.ClientCommunication.SendToServerWait(new PartyCanLoot(0x1));
 				else
-					Assistant.ClientCommunication.SendToServer(new PartyCanLoot(0x0));
+					Assistant.ClientCommunication.SendToServerWait(new PartyCanLoot(0x0));
 		}
 
 		// Moving
@@ -1654,15 +1596,13 @@ namespace RazorEnhanced
 
 			if (dir != Direction.Mask)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToServer(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
+				ClientCommunication.SendToServerWait(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
 			}
 		}
 
 		internal static void PathFindTo(Assistant.Point3D Location)
 		{
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToClient(new PathFindTo(Location));
+			ClientCommunication.SendToClientWait(new PathFindTo(Location));
 		}
 
 		public static void PathFindTo(int x, int y, int z)
@@ -1671,29 +1611,25 @@ namespace RazorEnhanced
 			Location.X = x;
 			Location.Y = y;
 			Location.Z = z;
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToClient(new PathFindTo(Location));
+			ClientCommunication.SendToClientWait(new PathFindTo(Location));
 		}
 
 		// Message
 
 		public static void HeadMessage(int hue, string message)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
+			Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
 		}
 
 		// Paperdool button click
 		public static void QuestButton()
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new QuestButton(World.Player.Serial));
+			Assistant.ClientCommunication.SendToServerWait(new QuestButton(World.Player.Serial));
 		}
 
 		public static void GuildButton()
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new GuildButton(World.Player.Serial));
+			Assistant.ClientCommunication.SendToServerWait(new GuildButton(World.Player.Serial));
 		}
 
 		// Range

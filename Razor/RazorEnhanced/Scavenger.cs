@@ -420,8 +420,7 @@ namespace RazorEnhanced
 
 			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
+				Scripts.SendMessageScriptError("Script Error: Scavenger.Start: Scavenger already running");
 			}
 			else
 			{
@@ -435,8 +434,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Scavenger.Start: Scavenger already running");
+				Scripts.SendMessageScriptError("Script Error: Scavenger.Start: Scavenger already running");
 			}
 			else
 				Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = true));
@@ -446,8 +444,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == false)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Scavenger.Stop: Scavenger already sleeping");
+				Scripts.SendMessageScriptError("Script Error: Scavenger.Stop: Scavenger already sleeping");
 			}
 			else
 				Assistant.Engine.MainWindow.ScavengerCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false));
@@ -462,8 +459,7 @@ namespace RazorEnhanced
 		{
 			if (!Assistant.Engine.MainWindow.ScavengerListSelect.Items.Contains(nomelista))
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
 			else
 			{

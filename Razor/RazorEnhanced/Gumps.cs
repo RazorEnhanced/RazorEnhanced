@@ -8,8 +8,7 @@ namespace RazorEnhanced
 	{
 		public static void CloseGump(uint gumpid)
 		{
-			ClientCommunication.ScriptWait();
-            ClientCommunication.SendToClient(new CloseGump(gumpid));
+            ClientCommunication.SendToClientWait(new CloseGump(gumpid));
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
 			World.Player.CurrentGumpI = 0;
@@ -47,10 +46,8 @@ namespace RazorEnhanced
 			int[] nullswitch = new int[0];
 			GumpTextEntry[] nullentries = new GumpTextEntry[0];
 
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries));
+			ClientCommunication.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
+			ClientCommunication.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, gumpid, buttonid, nullswitch, nullentries));
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
 			World.Player.CurrentGumpI = 0;
@@ -60,10 +57,8 @@ namespace RazorEnhanced
 		{
 			GumpTextEntry[] entries = new GumpTextEntry[0];
 
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
+			ClientCommunication.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
+			ClientCommunication.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
 			World.Player.HasGump = false;
 			World.Player.CurrentGumpStrings.Clear();
 		}
@@ -82,17 +77,14 @@ namespace RazorEnhanced
 					entries[i] = entrie;
                 }
 
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToClient(new CloseGump(World.Player.CurrentGumpI));
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToServer(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
+				ClientCommunication.SendToClientWait(new CloseGump(World.Player.CurrentGumpI));
+				ClientCommunication.SendToServerWait(new GumpResponse(World.Player.CurrentGumpS, (uint)gumpid, buttonid, switchs.ToArray(), entries));
 				World.Player.HasGump = false;
 				World.Player.CurrentGumpStrings.Clear();
 			}
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: SendAdvancedAction: entryID and entryS lenght not match");
+				Scripts.SendMessageScriptError("Script Error: SendAdvancedAction: entryID and entryS lenght not match");
 			}
 		}
 
@@ -102,8 +94,7 @@ namespace RazorEnhanced
 			{
 				if (line > World.Player.CurrentGumpStrings.Count)
 				{
-					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-						Misc.SendMessage("Script Error: LastGumpGetLine: Text line (" + line + ") not exist");
+					Scripts.SendMessageScriptError("Script Error: LastGumpGetLine: Text line (" + line + ") not exist");
 					return "";
 				}
 				else
@@ -145,8 +136,7 @@ namespace RazorEnhanced
 			{
 				if (line > World.Player.CurrentGumpStrings.Count)
 				{
-					if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-						Misc.SendMessage("Script Error: LastGumpTextExistByLine: Text line (" + line + ") not exist");
+					Scripts.SendMessageScriptError("Script Error: LastGumpTextExistByLine: Text line (" + line + ") not exist");
 					return false;
 				}
 				else

@@ -413,8 +413,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.OrganizerStartExec();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Organizer.FStart: Organizer already running");
+				Scripts.SendMessageScriptError("Script Error: Organizer.FStart: Organizer already running");
 			}
 		}
 
@@ -424,8 +423,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.OrganizerStopExec();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Organizer.FStart: Organizer not running");
+				Scripts.SendMessageScriptError("Script Error: Organizer.FStart: Organizer not running");
 			}
 		}
 
@@ -441,8 +439,7 @@ namespace RazorEnhanced
 		{
 			if (!Assistant.Engine.MainWindow.OrganizerListSelect.Items.Contains(nomelista))
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Organizer.ChangeList: Organizer list: " + nomelista + " not exist");
 			}
 			else
 			{

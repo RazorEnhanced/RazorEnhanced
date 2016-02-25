@@ -62,13 +62,13 @@ namespace RazorEnhanced
 				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
 		}
 
-		public static void SendMessageNoWait(object obj, int color)
+		internal static void SendMessageNoWait(object obj, int color)
 		{
 			if (Assistant.World.Player != null)
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
 		}
 
-		public static void SendMessageNoWait(uint num, int color)
+		internal static void SendMessageNoWait(uint num, int color)
 		{
 			if (Assistant.World.Player != null)
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
@@ -78,8 +78,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
+				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
 			}
 		}
 
@@ -87,8 +86,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
+				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
 			}
 		}
 
@@ -96,8 +94,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
+				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
 			}
 		}
 
@@ -105,8 +102,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
 			}
 		}
 
@@ -114,8 +110,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
 			}
 		}
 
@@ -123,8 +118,7 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
 			}
 
 		}
@@ -156,8 +150,7 @@ namespace RazorEnhanced
 
 		public static void WaitForContext(int ser, int delay) // Delay in MS
 		{
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToServer(new ContextMenuRequest(ser));
+			ClientCommunication.SendToServerWait(new ContextMenuRequest(ser));
 			int subdelay = delay;
 			while (World.Player.HasContext != true && World.Player.ContextID != ser && subdelay > 0)
 			{
@@ -169,8 +162,7 @@ namespace RazorEnhanced
 
 		public static void ContextReply(int serial, int idx)
 		{
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToServer(new ContextMenuResponse(serial, (ushort)idx));
+			ClientCommunication.SendToServerWait(new ContextMenuResponse(serial, (ushort)idx));
 			World.Player.HasContext = false;
 			World.Player.ContextID = 0;
 		}
@@ -208,15 +200,13 @@ namespace RazorEnhanced
 
 		public static void CancelPrompt()
 		{
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
+			ClientCommunication.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
 			World.Player.HasPrompt = false;
 		}
 
 		public static void ResponsePrompt(string text)
 		{
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToServer(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
+			ClientCommunication.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 1, Language.CliLocName, text));
 			World.Player.HasPrompt = false;
 		}
 

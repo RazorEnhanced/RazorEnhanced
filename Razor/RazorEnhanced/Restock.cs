@@ -401,8 +401,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.RestockStartExec();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Restock.FStart: Restock already running");
+				Scripts.SendMessageScriptError("Script Error: Restock.FStart: Restock already running");
 			}
 		}
 
@@ -412,8 +411,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.RestockStopExec();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Restock.FStart: Restock not running");
+				Scripts.SendMessageScriptError("Script Error: Restock.FStart: Restock not running");
 			}
 		}
 
@@ -429,8 +427,7 @@ namespace RazorEnhanced
 		{
 			if (!Assistant.Engine.MainWindow.RestockListSelect.Items.Contains(nomelista))
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
+				Scripts.SendMessageScriptError("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
 			}
 			else
 			{

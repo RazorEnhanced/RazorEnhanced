@@ -1185,6 +1185,26 @@ namespace Assistant
 			m_ScriptWaitSendRecv = false;
         }
 
+		internal static void SendToServerWait(Packet p)
+		{
+			if (!m_Ready)
+				return;
+
+			while (m_ScriptWaitSendRecv)
+			{ }
+
+			m_ScriptWaitSendRecv = true;
+			if (!m_QueueSend)
+			{
+				ForceSendToServer(p);
+			}
+			else
+			{
+				m_SendQueue.Enqueue(p);
+			}
+			m_ScriptWaitSendRecv = false;
+		}
+
 		internal static void SendToServer(PacketReader pr)
 		{
 			if (!m_Ready)
@@ -1192,6 +1212,27 @@ namespace Assistant
 
 			SendToServer(MakePacketFrom(pr));
 		}
+
+		internal static void SendToClientWait(Packet p)
+		{
+			if (!m_Ready || p.Length <= 0)
+				return;
+
+			while (m_ScriptWaitSendRecv)
+			{ }
+
+			m_ScriptWaitSendRecv = true;
+			if (!m_QueueRecv)
+			{
+				ForceSendToClient(p);
+			}
+			else
+			{
+				m_RecvQueue.Enqueue(p);
+			}
+			m_ScriptWaitSendRecv = false;
+		}
+
 
 		internal static void SendToClient(Packet p)
 		{

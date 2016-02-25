@@ -94,19 +94,19 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked)
 			{
 				if (m.Poisoned)
-					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Poisoned]");
+					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Poisoned]");
 				if (m.IsGhost)
-					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Dead]");
+					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Dead]");
 				if (m.Paralized)
-					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Paralized]");
+					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Paralized]");
 				if (m.Blessed)
-					RazorEnhanced.Mobiles.Message(m.Serial, 10, "[Mortalled]");
+					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Mortalled]");
 			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
 			{
 				if (Targeting.IsLastTarget(m))
-					RazorEnhanced.Mobiles.Message(m.Serial, 10, "*[Target]*");
+					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "*[Target]*");
 			}
 		}
 

@@ -280,8 +280,7 @@ namespace RazorEnhanced
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((Assistant.Serial)((uint)serial));
 			if (assistantMobile == null)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
+				Scripts.SendMessageScriptError("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
 				return null;
 			}
 			else
@@ -543,8 +542,7 @@ namespace RazorEnhanced
 
 		public static void UseMobile(Mobile mobile)
 		{
-			ClientCommunication.ScriptWait();
-			Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
+			Assistant.ClientCommunication.SendToServerWait(new DoubleClick(mobile.Serial));
 		}
 
 		public static void UseMobile(int mobileserial)
@@ -552,28 +550,24 @@ namespace RazorEnhanced
 			Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
 			if (mobile == null)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: UseMobile: Invalid Serial");
+				Scripts.SendMessageScriptError("Script Error: UseMobile: Invalid Serial");
 				return;
 			}
 
 			if (mobile.Serial.IsMobile)
 			{
-				ClientCommunication.ScriptWait();
-				Assistant.ClientCommunication.SendToServer(new DoubleClick(mobile.Serial));
+				Assistant.ClientCommunication.SendToServerWait(new DoubleClick(mobile.Serial));
 			}
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
+				Scripts.SendMessageScriptError("Script Error: UseMobile: (" + mobile.Serial.ToString() + ") is not a mobile");
 			}
 		}
 
 		// Single Click
 		public static void SingleClick(Mobile mobile)
 		{
-			ClientCommunication.ScriptWait();
-			ClientCommunication.SendToServer(new SingleClick(mobile));
+			ClientCommunication.SendToServerWait(new SingleClick(mobile));
 		}
 
 		public static void SingleClick(int mobileserial)
@@ -581,23 +575,29 @@ namespace RazorEnhanced
 			Assistant.Mobile mobile = Assistant.World.FindMobile(mobileserial);
 			if (mobile == null)
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: SingleClick: Invalid Serial");
+				Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
 				return;
 			}
 			ClientCommunication.SendToServer(new SingleClick(mobile));
 		}
 
 		// Message
+
+		internal static void MessageNoWait(int serial, int hue, string message)
+		{
+			Mobile mobile = FindBySerial(serial);
+			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+		}
+
 		public static void Message(Mobile mobile, int hue, string message)
 		{
-			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+			Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
 		public static void Message(int serial, int hue, string message)
 		{
 			Mobile mobile = FindBySerial(serial);
-			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+			Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
 		// Props
@@ -619,8 +619,7 @@ namespace RazorEnhanced
 
 			if (!m.PropsUpdated)
 			{
-				ClientCommunication.ScriptWait();
-				ClientCommunication.SendToServer(new QueryProperties(m.Serial));
+				ClientCommunication.SendToServerWait(new QueryProperties(m.Serial));
 				int subdelay = delay;
 
 				while (!m.PropsUpdated)

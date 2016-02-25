@@ -1039,8 +1039,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.DressStart();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Dress.DressFStart: Dress already running");
+				Scripts.SendMessageScriptError("Script Error: Dress.DressFStart: Dress already running");
 			}
 		}
 
@@ -1050,8 +1049,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.UndressStart();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Dress.UnDressFStart: Undress already running");
+				Scripts.SendMessageScriptError("Script Error: Dress.UnDressFStart: Undress already running");
 			}
 		}
 
@@ -1061,8 +1059,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.DressStop();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Dress.DressFStop: Dress not running");
+				Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: Dress not running");
 			}
 		}
 
@@ -1072,17 +1069,15 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.DressStop();
 			else
 			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Dress.DressFStop: UnDress not running");
+				Scripts.SendMessageScriptError("Script Error: Dress.DressFStop: UnDress not running");
 			}
 		}
 
 		public static void ChangeList(string nomelista)
 		{
 			if (!Assistant.Engine.MainWindow.DressListSelect.Items.Contains(nomelista))
-			{ 
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					Misc.SendMessage("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
+			{
+				Scripts.SendMessageScriptError("Script Error: Dress.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
 			else
 			{
