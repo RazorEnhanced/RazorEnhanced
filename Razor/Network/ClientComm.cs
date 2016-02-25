@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32.SafeHandles;
+using System.Runtime.CompilerServices;
 
 namespace Assistant
 {
@@ -1448,8 +1449,17 @@ namespace Assistant
 
 		internal static void ScriptWait()
 		{
+			DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
-			{ }
+			{
+				if (entertime + TimeSpan.FromSeconds(1) > DateTime.Now)
+				{
+					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
+					string methodName = caller.GetMethod().Name;
+					MessageBox.Show("DEBUG: LOCK DETECTED: " + methodName);
+					break;
+				}
+            }
 		}
 	}
 }
