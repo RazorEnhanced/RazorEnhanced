@@ -81,8 +81,8 @@ namespace RazorEnhanced
 						else
 						{
 							RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
-							Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-							Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, AutoLoot.AutoLootBag));
+							Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+							Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, AutoLoot.AutoLootBag));
 							LastAutolootItem = item.Serial;
                             Thread.Sleep(AutoLoot.AutoLootDelay);
 						}
@@ -124,8 +124,8 @@ namespace RazorEnhanced
 						else
 						{
 							RazorEnhanced.Scavenger.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Grabbing");
-							Assistant.ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
-							Assistant.ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, Scavenger.ScavengerBag));
+							Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+							Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, Scavenger.ScavengerBag));
 							Thread.Sleep(Scavenger.ScavengerDelay);
 						}
 					}
