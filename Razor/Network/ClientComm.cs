@@ -1190,9 +1190,17 @@ namespace Assistant
 		{
 			if (!m_Ready)
 				return;
-
+			DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
-			{ }
+			{
+				if (entertime + TimeSpan.FromSeconds(1) < DateTime.Now)
+				{
+					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
+					string methodName = caller.GetMethod().Name;
+					MessageBox.Show("DEBUG: LOCK DETECTED: " + methodName);
+					break;
+				}
+			}
 
 			m_ScriptWaitSendRecv = true;
 			if (!m_QueueSend)
@@ -1218,9 +1226,17 @@ namespace Assistant
 		{
 			if (!m_Ready || p.Length <= 0)
 				return;
-
+			DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
-			{ }
+			{
+				if (entertime + TimeSpan.FromSeconds(1) < DateTime.Now)
+				{
+					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
+					string methodName = caller.GetMethod().Name;
+					MessageBox.Show("DEBUG: LOCK DETECTED: " + methodName);
+					break;
+				}
+			}
 
 			m_ScriptWaitSendRecv = true;
 			if (!m_QueueRecv)
@@ -1452,7 +1468,7 @@ namespace Assistant
 			DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
 			{
-				if (entertime + TimeSpan.FromSeconds(1) > DateTime.Now)
+				if (entertime + TimeSpan.FromSeconds(1) < DateTime.Now)
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
