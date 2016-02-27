@@ -584,9 +584,17 @@ namespace RazorEnhanced
 		{
 			switch (function)
 			{
-				default:
+				case "Attack Last Target":
 					uint target = Assistant.Targeting.GetLastTarger;
-					RazorEnhanced.Player.Attack((int)target);
+					Assistant.Mobile targetmob = World.FindMobile(target);
+					if (targetmob != null)
+						RazorEnhanced.Player.Attack((int)target);
+					break;
+				case "Attack Last":
+					if (Targeting.LastAttack != 0)
+						RazorEnhanced.Player.Attack((int)Targeting.LastAttack);
+					break;
+				default:
 					break;
 			}
 		}

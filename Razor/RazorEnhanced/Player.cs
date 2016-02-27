@@ -1483,6 +1483,12 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServerWait(new AttackReq(serial));
 		}
 
+		public static void AttackLast()
+		{
+			if (Targeting.LastAttack != 0)
+				Assistant.ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
+		}
+
 		// Virtue
 		public static void InvokeVirtue(string virtue)
 		{

@@ -94,6 +94,11 @@ namespace RazorEnhanced
 			return (int)Assistant.Targeting.GetLastTarger;
 		}
 
+		public static int GetLastAttack()
+		{
+			return (int)Assistant.Targeting.LastAttack;
+		}
+
 		public static void SetLast(RazorEnhanced.Mobile mob)
 		{
 			Assistant.Mobile mobile = World.FindMobile(mob.Serial);

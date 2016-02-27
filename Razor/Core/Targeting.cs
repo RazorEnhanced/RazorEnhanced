@@ -42,6 +42,7 @@ namespace Assistant
 		private static byte m_PrevFlags;
 
 		private static Serial m_LastCombatant;
+		private static uint m_LastAttack;
 
 		private delegate bool QueueTarget();
 
@@ -64,6 +65,18 @@ namespace Assistant
 					return m_LastTarget.Serial;
 				else
 					return 0;
+			}
+		}
+
+		internal static uint LastAttack
+		{
+			get
+			{
+				return m_LastAttack;
+			}
+			set
+			{
+				m_LastAttack = value;
 			}
 		}
 

@@ -2972,9 +2972,9 @@ namespace Assistant
 
 		private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
 		{
+			uint serialbersaglio = p.ReadUInt32();
 			if (RazorEnhanced.Friend.PreventAttack)
 			{
-				uint serialbersaglio = p.ReadUInt32();
 				if (RazorEnhanced.Friend.IsFriend((int)serialbersaglio))
 				{
 					Assistant.Mobile bersaglio = World.FindMobile(serialbersaglio);
@@ -2987,7 +2987,8 @@ namespace Assistant
 					return;
 				}
 			}
-		}
+			Targeting.LastAttack = serialbersaglio;
+        }
 
 		private static void TradeRequest(PacketReader p, PacketHandlerEventArgs args)
 		{
