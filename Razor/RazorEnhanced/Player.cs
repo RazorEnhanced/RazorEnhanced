@@ -1481,7 +1481,8 @@ namespace RazorEnhanced
 		public static void Attack(int serial)
 		{
 			Assistant.ClientCommunication.SendToServerWait(new AttackReq(serial));
-		}
+			Targeting.LastAttack = (uint)serial;
+        }
 
 		public static void AttackLast()
 		{
