@@ -966,7 +966,7 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.Dress.AddLog("Finish!");
-			RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!");
+			RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945);
 			Assistant.Engine.MainWindow.UndressFinishWork();
 			return 0;
 		}
@@ -980,7 +980,7 @@ namespace RazorEnhanced
 			Assistant.Item bag = Assistant.World.FindItem(DressBag);
 			if (bag == null)
 			{
-				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
+				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945);
 				AddLog("Invalid Bag, Switch to backpack");
 				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}

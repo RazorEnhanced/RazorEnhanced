@@ -450,7 +450,7 @@ namespace RazorEnhanced
 				if (bag.RootContainer != World.Player)
 				{
 					if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+						Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack", 945);
 					AddLog("Invalid Bag, Switch to backpack");
 					AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 				}
@@ -458,7 +458,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-					Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack");
+					Misc.SendMessage("Autoloot: Invalid Bag, Switch to backpack", 945);
 				AddLog("Invalid Bag, Switch to backpack");
 				AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
