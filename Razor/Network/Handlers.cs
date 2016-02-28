@@ -2667,9 +2667,18 @@ namespace Assistant
 							if (PacketHandlers.PartyLeader != Serial.Zero)
 							{
 								Assistant.Mobile leader = World.FindMobile(PartyLeader);
-								RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
-								if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-									RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+								if (leader != null)
+								{
+									RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+									if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+										RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+								}
+								else
+								{
+                                    RazorEnhanced.Friend.AddLog("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")");
+									if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+										RazorEnhanced.Misc.SendMessage("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")");
+								}
 								ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 								PacketHandlers.PartyLeader = Serial.Zero;
 							}
