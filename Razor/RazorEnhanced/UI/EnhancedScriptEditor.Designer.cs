@@ -53,6 +53,7 @@
 			this.fastColoredTextBoxEditor = new FastColoredTextBoxNS.FastColoredTextBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.textBoxDebug = new System.Windows.Forms.TextBox();
+			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -69,6 +70,7 @@
 			// 
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonOpen,
+            this.toolStripButton2,
             this.toolStripButtonSave,
             this.toolStripButtonClose,
             this.toolStripSeparator1,
@@ -86,7 +88,7 @@
             this.toolStripButton1});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(976, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(1072, 25);
 			this.toolStrip1.TabIndex = 1;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -104,9 +106,9 @@
 			this.toolStripButtonSave.Image = global::Assistant.Properties.Resources.document_save_5;
 			this.toolStripButtonSave.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButtonSave.Name = "toolStripButtonSave";
-			this.toolStripButtonSave.Size = new System.Drawing.Size(51, 22);
-			this.toolStripButtonSave.Text = "Save";
-			this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSave_Click);
+			this.toolStripButtonSave.Size = new System.Drawing.Size(67, 22);
+			this.toolStripButtonSave.Text = "Save As";
+			this.toolStripButtonSave.Click += new System.EventHandler(this.toolStripButtonSaveAs_Click);
 			// 
 			// toolStripButtonClose
 			// 
@@ -226,9 +228,9 @@
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelScript});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 443);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 483);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(976, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1072, 22);
 			this.statusStrip1.TabIndex = 2;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -250,8 +252,8 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer1.Size = new System.Drawing.Size(976, 418);
-			this.splitContainer1.SplitterDistance = 726;
+			this.splitContainer1.Size = new System.Drawing.Size(1072, 458);
+			this.splitContainer1.SplitterDistance = 797;
 			this.splitContainer1.TabIndex = 3;
 			// 
 			// fastColoredTextBoxEditor
@@ -271,17 +273,23 @@
 			this.fastColoredTextBoxEditor.BackBrush = null;
 			this.fastColoredTextBoxEditor.CharHeight = 14;
 			this.fastColoredTextBoxEditor.CharWidth = 8;
+			this.fastColoredTextBoxEditor.CommentPrefix = "#";
 			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
 			this.fastColoredTextBoxEditor.IsReplaceMode = false;
 			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
+			this.fastColoredTextBoxEditor.LeftBracket = '(';
+			this.fastColoredTextBoxEditor.LeftBracket2 = '[';
 			this.fastColoredTextBoxEditor.Location = new System.Drawing.Point(0, 0);
 			this.fastColoredTextBoxEditor.Name = "fastColoredTextBoxEditor";
 			this.fastColoredTextBoxEditor.Paddings = new System.Windows.Forms.Padding(0);
+			this.fastColoredTextBoxEditor.RightBracket = ')';
+			this.fastColoredTextBoxEditor.RightBracket2 = ']';
 			this.fastColoredTextBoxEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.fastColoredTextBoxEditor.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBoxEditor.ServiceColors")));
-			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(726, 418);
+			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(797, 458);
 			this.fastColoredTextBoxEditor.TabIndex = 0;
 			this.fastColoredTextBoxEditor.Zoom = 100;
 			// 
@@ -298,8 +306,8 @@
 			this.splitContainer2.Panel1.Controls.Add(this.textBoxDebug);
 			this.splitContainer2.Panel1MinSize = 0;
 			this.splitContainer2.Panel2MinSize = 0;
-			this.splitContainer2.Size = new System.Drawing.Size(246, 418);
-			this.splitContainer2.SplitterDistance = 389;
+			this.splitContainer2.Size = new System.Drawing.Size(271, 458);
+			this.splitContainer2.SplitterDistance = 426;
 			this.splitContainer2.TabIndex = 0;
 			// 
 			// textBoxDebug
@@ -310,14 +318,23 @@
 			this.textBoxDebug.Name = "textBoxDebug";
 			this.textBoxDebug.ReadOnly = true;
 			this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxDebug.Size = new System.Drawing.Size(246, 389);
+			this.textBoxDebug.Size = new System.Drawing.Size(271, 426);
 			this.textBoxDebug.TabIndex = 0;
+			// 
+			// toolStripButton2
+			// 
+			this.toolStripButton2.Image = global::Assistant.Properties.Resources.document_save_5;
+			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton2.Name = "toolStripButton2";
+			this.toolStripButton2.Size = new System.Drawing.Size(51, 22);
+			this.toolStripButton2.Text = "Save";
+			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButtonSave_Click);
 			// 
 			// EnhancedScriptEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(976, 465);
+			this.ClientSize = new System.Drawing.Size(1072, 505);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
@@ -369,5 +386,6 @@
 		private System.Windows.Forms.ToolStripButton toolStripButton1;
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBoxEditor;
+		private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}
 }

@@ -40,6 +40,7 @@ namespace RazorEnhanced.UI
 
 		private const string m_Title = "Enhanced Script Editor";
 		private string m_Filename = "";
+		private string m_Filepath = "";
 
 		private ScriptEngine m_Engine;
 		private ScriptSource m_Source;
@@ -81,7 +82,8 @@ namespace RazorEnhanced.UI
 
 			if (filename != null)
 			{
-				m_Filename = Path.GetFileNameWithoutExtension(filename);
+				m_Filepath = filename;
+                m_Filename = Path.GetFileNameWithoutExtension(filename);
 				this.Text = m_Title + " - " + m_Filename + ".cs";
 				fastColoredTextBoxEditor.Text = File.ReadAllText(filename);
 			}
@@ -410,71 +412,45 @@ namespace RazorEnhanced.UI
 			OpenFileDialog open = new OpenFileDialog();
 			open.Filter = "Script Files|*.py";
 			open.RestoreDirectory = true;
-
-			if (open.ShowDialog() == DialogResult.OK)
+            if (open.ShowDialog() == DialogResult.OK)
 			{
 				m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
-				this.Text = m_Title + " - " + m_Filename + ".py";
+				m_Filepath = open.FileName;
+                this.Text = m_Title + " - " + m_Filename + ".py";
 				fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
 			}
 		}
 
-		private void toolStripButtonSave_Click(object sender, EventArgs e)
+		private void toolStripButtonSaveAs_Click(object sender, EventArgs e)
 		{
-			SaveFileDialog save = new SaveFileDialog();
-			save.Filter = "Script Files|*.py";
-			save.RestoreDirectory = true;
-
-			if (save.ShowDialog() == DialogResult.OK)
-			{
-				m_Filename = Path.GetFileNameWithoutExtension(save.FileName);
-				this.Text = m_Title + " - " + m_Filename + ".py";
-				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
-
-				string filename = Path.GetFileName(save.FileName);
-				Scripts.EnhancedScript script = Scripts.Search(filename);
-				if (script != null)
-				{
-					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", filename);
-
-					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(filename))
-					{
-						string text = File.ReadAllText(fullpath);
-						bool loop = script.Loop;
-						bool wait = script.Wait;
-						bool run = script.Run;
-						bool isRunning = script.IsRunning;
-
-						if (isRunning)
-							script.Stop();
-
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(filename, text, wait, loop, run);
-						reloaded.Create(null);
-						Scripts.EnhancedScripts[filename] = reloaded;
-
-						if (isRunning)
-							reloaded.Start();
-					}
-				}
-			}
-		}
+			SaveAs();
+        }
 
 		private void toolStripButtonClose_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Yes)
+			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (res == System.Windows.Forms.DialogResult.Yes)
 			{
 				SaveFileDialog save = new SaveFileDialog();
 				save.Filter = "Script Files|*.py";
+				save.FileName = m_Filename;
 
 				if (save.ShowDialog() == DialogResult.OK)
 				{
 					File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 				}
+				fastColoredTextBoxEditor.Text = "";
+				m_Filename = "";
+				m_Filepath = "";
+				this.Text = m_Title;
 			}
-
-			fastColoredTextBoxEditor.Text = "";
-			m_Filename = "";
-			this.Text = m_Title;
+			else if (res == System.Windows.Forms.DialogResult.No)
+			{
+				fastColoredTextBoxEditor.Text = "";
+				m_Filename = "";
+				m_Filepath = "";
+				this.Text = m_Title;
+			}
 		}
 
 		private void toolStripButtonInspect_Click(object sender, EventArgs e)
@@ -520,6 +496,85 @@ namespace RazorEnhanced.UI
 		private void gumpinspector_close(object sender, EventArgs e)
 		{
 			Assistant.Engine.MainWindow.GumpInspectorEnable = false;
+		}
+
+		private void toolStripButtonSave_Click(object sender, EventArgs e)
+		{
+			if (m_Filename != "")
+			{
+				this.Text = m_Title + " - " + m_Filename + ".py";
+				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+				Scripts.EnhancedScript script = Scripts.Search(m_Filename + ".py");
+				if (script != null)
+				{
+					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename + ".py");
+
+					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename + ".py"))
+					{
+						string text = File.ReadAllText(fullpath);
+						bool loop = script.Loop;
+						bool wait = script.Wait;
+						bool run = script.Run;
+						bool isRunning = script.IsRunning;
+
+						if (isRunning)
+							script.Stop();
+
+						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename + ".py", text, wait, loop, run);
+						reloaded.Create(null);
+						Scripts.EnhancedScripts[m_Filename + ".py"] = reloaded;
+
+						if (isRunning)
+							reloaded.Start();
+					}
+				}
+			}
+			else
+			{
+				SaveAs();
+            }
+
+		}
+
+		private void SaveAs()
+		{
+			SaveFileDialog save = new SaveFileDialog();
+			save.Filter = "Script Files|*.py";
+			save.RestoreDirectory = true;
+
+			if (save.ShowDialog() == DialogResult.OK)
+			{
+				m_Filename = Path.GetFileNameWithoutExtension(save.FileName);
+				this.Text = m_Title + " - " + m_Filename + ".py";
+				m_Filepath = save.FileName;
+				File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+
+				string filename = Path.GetFileName(save.FileName);
+				Scripts.EnhancedScript script = Scripts.Search(filename);
+				if (script != null)
+				{
+					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", filename);
+
+					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(filename))
+					{
+						string text = File.ReadAllText(fullpath);
+						bool loop = script.Loop;
+						bool wait = script.Wait;
+						bool run = script.Run;
+						bool isRunning = script.IsRunning;
+
+						if (isRunning)
+							script.Stop();
+
+						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(filename, text, wait, loop, run);
+						reloaded.Create(null);
+						Scripts.EnhancedScripts[filename] = reloaded;
+
+						if (isRunning)
+							reloaded.Start();
+					}
+				}
+			}
 		}
 	}
 }
