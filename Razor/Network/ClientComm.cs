@@ -704,6 +704,14 @@ namespace Assistant
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
 		}
 
+		internal static void PostTextSend(string text)
+		{
+			if (World.Player != null)
+			{
+				PostToWndReg(1425, (IntPtr)GlobalAddAtom(text), IntPtr.Zero);
+			}
+		}
+
 		internal static Loader_Error LaunchClient(string client)
 		{
 			string dll = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Crypt.dll");
