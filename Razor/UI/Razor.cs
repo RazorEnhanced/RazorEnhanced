@@ -10593,26 +10593,12 @@ namespace Assistant
 				RazorEnhanced.Restock.AddLog("Restock Engine Start...");
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("RESTOCK: Engine Start...");
-				restockStopButton.Enabled = true;
-				restockExecuteButton.Enabled = false;
-				restockListSelect.Enabled = false;
-				restockAddListB.Enabled = false;
-				restockRemoveListB.Enabled = false;
-				restockExportListB.Enabled = false;
-				restockImportListB.Enabled = false;
-				restockDragDelay.Enabled = false;
-			}
+				RestockStartWork();
+            }
 			else
 			{
 				RazorEnhanced.Restock.AddLog("You are not logged in game!");
-				restockStopButton.Enabled = false;
-				restockExecuteButton.Enabled = true;
-				restockListSelect.Enabled = true;
-				restockAddListB.Enabled = true;
-				restockRemoveListB.Enabled = true;
-				restockExportListB.Enabled = true;
-				restockImportListB.Enabled = true;
-				restockDragDelay.Enabled = true;
+				RestockFinishWork();
 			}
 		}
 
@@ -10628,15 +10614,8 @@ namespace Assistant
 			RazorEnhanced.Restock.AddLog("Restock Engine force stop...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 				RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...");
-			restockStopButton.Enabled = false;
-			restockExecuteButton.Enabled = true;
-			restockListSelect.Enabled = true;
-			restockAddListB.Enabled = true;
-			restockRemoveListB.Enabled = true;
-			restockExportListB.Enabled = true;
-			restockImportListB.Enabled = true;
-			restockDragDelay.Enabled = true;
-		}
+			RestockFinishWork();
+        }
 
 		private delegate void RestockFinishWorkCallback();
 
@@ -10649,7 +10628,7 @@ namespace Assistant
 				restockRemoveListB.InvokeRequired ||
 				restockExportListB.InvokeRequired ||
 				restockImportListB.InvokeRequired ||
-				restockDragDelay.Enabled)
+				restockDragDelay.InvokeRequired)
 			{
 				RestockFinishWorkCallback d = new RestockFinishWorkCallback(RestockFinishWork);
 				this.Invoke(d, null);
@@ -10664,6 +10643,35 @@ namespace Assistant
 				restockExportListB.Enabled = true;
 				restockImportListB.Enabled = true;
 				restockDragDelay.Enabled = true;
+			}
+		}
+
+		private delegate void RestockStartWorkCallback();
+
+		internal void RestockStartWork()
+		{
+			if (restockStopButton.InvokeRequired ||
+				restockExecuteButton.InvokeRequired ||
+				restockListSelect.InvokeRequired ||
+				restockAddListB.InvokeRequired ||
+				restockRemoveListB.InvokeRequired ||
+				restockExportListB.InvokeRequired ||
+				restockImportListB.InvokeRequired ||
+				restockDragDelay.InvokeRequired)
+			{
+				RestockStartWorkCallback d = new RestockStartWorkCallback(RestockStartWork);
+				this.Invoke(d, null);
+			}
+			else
+			{
+				restockStopButton.Enabled = true;
+				restockExecuteButton.Enabled = false;
+				restockListSelect.Enabled = false;
+				restockAddListB.Enabled = false;
+				restockRemoveListB.Enabled = false;
+				restockExportListB.Enabled = false;
+				restockImportListB.Enabled = false;
+				restockDragDelay.Enabled = false;
 			}
 		}
 
