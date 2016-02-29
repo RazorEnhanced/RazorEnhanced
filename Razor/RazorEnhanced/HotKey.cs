@@ -200,31 +200,31 @@ namespace RazorEnhanced
 						break;
 
 					case "SpellsMagery":
-						RazorEnhanced.Spells.CastMagery(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastMageryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "SpellsNecro":
-						RazorEnhanced.Spells.CastNecro(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastNecroHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "SpellsBushido":
-						RazorEnhanced.Spells.CastBushido(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastBushidoHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "SpellsNinjitsu":
-						RazorEnhanced.Spells.CastNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastNinjitsuHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "SpellsSpellweaving":
-						RazorEnhanced.Spells.CastSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastSpellweavingHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "SpellsMysticism":
-						RazorEnhanced.Spells.CastMysticism(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastMysticismHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "SpellsChivalry":
-						RazorEnhanced.Spells.CastChivalry(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastChivalryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "Target":
@@ -851,7 +851,7 @@ namespace RazorEnhanced
 			switch (function)
 			{
 				case "Target Self":
-					RazorEnhanced.Target.Self();
+					Assistant.Targeting.TargetSelf();
 					break;
 
 				case "Target Last":
@@ -869,7 +869,8 @@ namespace RazorEnhanced
 					break;
 
 				case "Target Cancel":
-					RazorEnhanced.Target.Cancel();
+					Assistant.Targeting.CancelClientTarget();
+					Assistant.Targeting.CancelOneTimeTarget();
 					break;
 
 				case "Clear Target Queue":

@@ -679,6 +679,20 @@ namespace Assistant
 			Target(info);
 		}
 
+		internal static void TargetByScript(Point3D pt)
+		{
+			TargetInfo info = new TargetInfo();
+			info.Type = 1;
+			info.Flags = 0;
+			info.Serial = 0;
+			info.X = pt.X;
+			info.Y = pt.Y;
+			info.Z = pt.Z;
+			info.Gfx = 0;
+
+			TargetByScript(info);
+		}
+
 		internal static void Target(Point3D pt, int gfx)
 		{
 			TargetInfo info = new TargetInfo();
@@ -724,6 +738,77 @@ namespace Assistant
 			}
 
 			Target(info);
+		}
+
+		internal static void TargetByScript(Serial s)
+		{
+			TargetInfo info = new TargetInfo();
+			info.Type = 0;
+			info.Flags = 0;
+			info.Serial = s;
+
+			if (s.IsItem)
+			{
+				Item item = World.FindItem(s);
+				if (item != null)
+				{
+					info.X = item.Position.X;
+					info.Y = item.Position.Y;
+					info.Z = item.Position.Z;
+					info.Gfx = item.ItemID;
+				}
+			}
+			else if (s.IsMobile)
+			{
+				Mobile m = World.FindMobile(s);
+				if (m != null)
+				{
+					info.X = m.Position.X;
+					info.Y = m.Position.Y;
+					info.Z = m.Position.Z;
+					info.Gfx = m.Body;
+				}
+			}
+
+			TargetByScript(info);
+		}
+
+		internal static void TargetByScript(object o)
+		{
+			if (o is Item)
+			{
+				Item item = (Item)o;
+				TargetInfo info = new TargetInfo();
+				info.Type = 0;
+				info.Flags = 0;
+				info.Serial = item.Serial;
+				info.X = item.Position.X;
+				info.Y = item.Position.Y;
+				info.Z = item.Position.Z;
+				info.Gfx = item.ItemID;
+				TargetByScript(info);
+			}
+			else if (o is Mobile)
+			{
+				Mobile m = (Mobile)o;
+				TargetInfo info = new TargetInfo();
+				info.Type = 0;
+				info.Flags = 0;
+				info.Serial = m.Serial;
+				info.X = m.Position.X;
+				info.Y = m.Position.Y;
+				info.Z = m.Position.Z;
+				info.Gfx = m.Body;
+				TargetByScript(info);
+			}
+			else if (o is Serial)
+			{
+				TargetByScript((Serial)o);
+			}
+			else if (o is TargetInfo)
+			{
+				TargetByScript((TargetInfo)o);
+			}
 		}
 
 		internal static void Target(object o)

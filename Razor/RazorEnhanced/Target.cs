@@ -29,64 +29,29 @@ namespace RazorEnhanced
 
 		public static void TargetExecute(int serial)
 		{
-            if (!CheckHealPoisonTarg(serial))
+			if (!CheckHealPoisonTarg(serial))
 			{
-				Assistant.Serial s = serial;
-				TargetInfo info = new TargetInfo();
-				info.Type = 0;
-				info.Flags = 0;
-				info.Serial = s;
-
-				if (s.IsItem)
-				{
-					Assistant.Item item = World.FindItem(s);
-					if (item != null)
-					{
-						info.X = item.Position.X;
-						info.Y = item.Position.Y;
-						info.Z = item.Position.Z;
-						info.Gfx = item.ItemID;
-					}
-				}
-				else if (s.IsMobile)
-				{
-					Assistant.Mobile m = World.FindMobile(s);
-					if (m != null)
-					{
-						info.X = m.Position.X;
-						info.Y = m.Position.Y;
-						info.Z = m.Position.Z;
-						info.Gfx = m.Body;
-					}
-				}
-
+				Assistant.Targeting.TargetByScript(serial);
 			}
 		}
 
 		public static void TargetExecute(RazorEnhanced.Item item)
 		{
-			TargetExecute(item.Serial);
-        }
+			Assistant.Targeting.TargetByScript(item);
+		}
 
 		public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
 			if (!CheckHealPoisonTarg(mobile.Serial))
 			{
-				TargetExecute(mobile.Serial);
+				Assistant.Targeting.TargetByScript(mobile);
 			}
 		}
 
 		public static void TargetExecute(int x, int y, int z)
 		{
-			TargetInfo info = new TargetInfo();
-			info.Type = 1;
-			info.Flags = 0;
-			info.Serial = 0;
-			info.X = x;
-			info.Y = y;
-			info.Z = z;
-			info.Gfx = 0;
-			Assistant.Targeting.TargetByScript(info);
+			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+			Assistant.Targeting.TargetByScript(location);
 		}
 
 		public static void Cancel()
@@ -97,10 +62,7 @@ namespace RazorEnhanced
 
 		public static void Self()
 		{
-			if (!CheckHealPoisonTarg(World.Player.Serial))
-			{
-				TargetExecute(World.Player.Serial);
-			}
+			TargetExecute(World.Player.Serial);
 		}
 
 		public static void SelfQueued()
@@ -111,7 +73,7 @@ namespace RazorEnhanced
 		public static void Last()
 		{
 			if (!CheckHealPoisonTarg(GetLast()))
-				TargetExecute((int)Assistant.Targeting.GetLastTarger);
+				Assistant.Targeting.LastTarget();
 		}
 
 		public static void LastQueued()

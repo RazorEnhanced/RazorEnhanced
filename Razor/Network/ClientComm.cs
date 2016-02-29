@@ -1470,20 +1470,5 @@ namespace Assistant
 			m_QueueSend = false;
 			m_ScriptWaitSendRecv = false;
         }
-
-		internal static void ScriptWait()
-		{
-			DateTime entertime = DateTime.Now;
-			while (m_ScriptWaitSendRecv)
-			{
-				if (entertime + TimeSpan.FromSeconds(1) < DateTime.Now)
-				{
-					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
-					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED: " + methodName));
-					break;
-				}
-            }
-		}
 	}
 }
