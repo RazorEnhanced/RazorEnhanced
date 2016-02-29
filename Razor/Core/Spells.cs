@@ -103,6 +103,12 @@ namespace Assistant
 			ClientCommunication.SendToServer(p);
 		}
 
+		internal void OnCastByScript(Packet p)
+		{
+			Cast();
+			ClientCommunication.SendToServerWait(p);
+		}
+
 		private void Cast()
 		{
 			if (RazorEnhanced.Settings.General.ReadBool("SpellUnequip"))

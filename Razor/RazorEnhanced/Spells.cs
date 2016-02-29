@@ -277,8 +277,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				ClientCommunication.ScriptWait();
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
 
@@ -365,8 +364,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				ClientCommunication.ScriptWait();
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
 
@@ -425,8 +423,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				ClientCommunication.ScriptWait();
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
 
@@ -469,8 +466,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				ClientCommunication.ScriptWait();
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
 
@@ -521,8 +517,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				ClientCommunication.ScriptWait();
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
 
@@ -605,8 +600,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				ClientCommunication.ScriptWait();
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
 
@@ -685,8 +679,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				ClientCommunication.ScriptWait();
-				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
 	}
