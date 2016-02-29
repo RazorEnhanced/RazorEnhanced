@@ -9385,27 +9385,13 @@ namespace Assistant
 				RazorEnhanced.Organizer.AddLog("Organizer Engine Start...");
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
-				organizerStopButton.Enabled = true;
-				organizerExecuteButton.Enabled = false;
-				organizerListSelect.Enabled = false;
-				organizerAddListB.Enabled = false;
-				organizerRemoveListB.Enabled = false;
-				organizerExportListB.Enabled = false;
-				organizerImportListB.Enabled = false;
-				organizerDragDelay.Enabled = false;
-			}
+				OrganizerStartWork();
+            }
 			else
 			{
 				RazorEnhanced.Organizer.AddLog("You are not logged in game!");
-				organizerStopButton.Enabled = false;
-				organizerExecuteButton.Enabled = true;
-				organizerListSelect.Enabled = true;
-				organizerAddListB.Enabled = true;
-				organizerRemoveListB.Enabled = true;
-				organizerExportListB.Enabled = true;
-				organizerImportListB.Enabled = true;
-				organizerDragDelay.Enabled = true;
-			}
+				OrganizerFinishWork();
+            }
 		}
 
 		private void organizerStop_Click(object sender, EventArgs e)
@@ -9420,20 +9406,44 @@ namespace Assistant
 			RazorEnhanced.Organizer.AddLog("Organizer Engine force stop...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 				RazorEnhanced.Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
-			organizerExecuteButton.Enabled = true;
-			organizerListSelect.Enabled = true;
-			organizerAddListB.Enabled = true;
-			organizerRemoveListB.Enabled = true;
-			organizerExportListB.Enabled = true;
-			organizerImportListB.Enabled = true;
-			organizerDragDelay.Enabled = true;
+			OrganizerFinishWork();
+        }
+
+		private delegate void OrganizerStartWorkCallback();
+
+		internal void OrganizerStartWork()
+		{
+			if (organizerStopButton.InvokeRequired ||
+				organizerExecuteButton.InvokeRequired ||
+				organizerListSelect.InvokeRequired ||
+				organizerAddListB.InvokeRequired ||
+				organizerRemoveListB.InvokeRequired ||
+				organizerExportListB.InvokeRequired ||
+				organizerImportListB.InvokeRequired ||
+				organizerDragDelay.InvokeRequired)
+			{
+				OrganizerStartWorkCallback d = new OrganizerStartWorkCallback(OrganizerStartWork);
+				this.Invoke(d, null);
+			}
+			else
+			{
+				organizerStopButton.Enabled = true;
+				organizerExecuteButton.Enabled = false;
+				organizerListSelect.Enabled = false;
+				organizerAddListB.Enabled = false;
+				organizerRemoveListB.Enabled = false;
+				organizerExportListB.Enabled = false;
+				organizerImportListB.Enabled = false;
+				organizerDragDelay.Enabled = false;
+			}
 		}
 
 		private delegate void OrganizerFinishWorkCallback();
 
 		internal void OrganizerFinishWork()
 		{
-			if (organizerExecuteButton.InvokeRequired ||
+			if (organizerStopButton.InvokeRequired ||
+                organizerExecuteButton.InvokeRequired ||
 				organizerListSelect.InvokeRequired ||
 				organizerAddListB.InvokeRequired ||
 				organizerRemoveListB.InvokeRequired ||
@@ -9446,6 +9456,7 @@ namespace Assistant
 			}
 			else
 			{
+				organizerStopButton.Enabled = false;
 				organizerExecuteButton.Enabled = true;
 				organizerListSelect.Enabled = true;
 				organizerAddListB.Enabled = true;
@@ -10099,29 +10110,13 @@ namespace Assistant
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
 
-				dressStopButton.Enabled = true;
-				dressConflictCheckB.Enabled = false;
-				dressExecuteButton.Enabled = false;
-				undressExecuteButton.Enabled = false;
-				dressAddListB.Enabled = false;
-				dressRemoveListB.Enabled = false;
-				dressExportListB.Enabled = false;
-				dressImportListB.Enabled = false;
-				dressDragDelay.Enabled = false;
-			}
+				UndressStartWork();
+            }
 			else
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
-				dressStopButton.Enabled = false;
-				dressConflictCheckB.Enabled = true;
-				dressExecuteButton.Enabled = true;
-				undressExecuteButton.Enabled = true;
-				dressAddListB.Enabled = true;
-				dressRemoveListB.Enabled = true;
-				dressExportListB.Enabled = true;
-				dressImportListB.Enabled = true;
-				dressDragDelay.Enabled = true;
-			}
+				UndressFinishWork();
+            }
 		}
 
 		private delegate void UndressFinishWorkCallback();
@@ -10155,6 +10150,37 @@ namespace Assistant
 			}
 		}
 
+		private delegate void UndressStartWorkCallback();
+
+		internal void UndressStartWork()
+		{
+			if (dressConflictCheckB.InvokeRequired ||
+				dressExecuteButton.InvokeRequired ||
+				undressExecuteButton.InvokeRequired ||
+				dressAddListB.InvokeRequired ||
+				dressRemoveListB.InvokeRequired ||
+				organizerExportListB.InvokeRequired ||
+				organizerImportListB.InvokeRequired ||
+				dressStopButton.InvokeRequired ||
+				organizerDragDelay.InvokeRequired)
+			{
+				UndressStartWorkCallback d = new UndressStartWorkCallback(UndressStartWork);
+				this.Invoke(d, null);
+			}
+			else
+			{
+				dressStopButton.Enabled = true;
+				dressConflictCheckB.Enabled = false;
+				dressExecuteButton.Enabled = false;
+				undressExecuteButton.Enabled = false;
+				dressAddListB.Enabled = false;
+				dressRemoveListB.Enabled = false;
+				dressExportListB.Enabled = false;
+				dressImportListB.Enabled = false;
+				dressDragDelay.Enabled = false;
+			}
+		}
+
 		private void dressExecuteButton_Click(object sender, EventArgs e)
 		{
 			DressStart();
@@ -10170,29 +10196,13 @@ namespace Assistant
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
 
-				dressStopButton.Enabled = true;
-				dressConflictCheckB.Enabled = false;
-				dressExecuteButton.Enabled = false;
-				undressExecuteButton.Enabled = false;
-				dressAddListB.Enabled = false;
-				dressRemoveListB.Enabled = false;
-				dressExportListB.Enabled = false;
-				dressImportListB.Enabled = false;
-				dressDragDelay.Enabled = false;
+				UndressStartWork();
 			}
 			else
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
-				dressStopButton.Enabled = false;
-				dressConflictCheckB.Enabled = true;
-				dressExecuteButton.Enabled = true;
-				undressExecuteButton.Enabled = true;
-				dressAddListB.Enabled = true;
-				dressRemoveListB.Enabled = true;
-				dressExportListB.Enabled = true;
-				dressImportListB.Enabled = true;
-				dressDragDelay.Enabled = true;
-			}
+				UndressFinishWork();
+            }
 		}
 
 		private void dressStopButton_Click(object sender, EventArgs e)
@@ -10207,16 +10217,8 @@ namespace Assistant
 			RazorEnhanced.Dress.AddLog("Dress / Undress Engine force stop...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 				RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...");
-			dressStopButton.Enabled = false;
-			dressConflictCheckB.Enabled = true;
-			dressExecuteButton.Enabled = true;
-			undressExecuteButton.Enabled = true;
-			dressAddListB.Enabled = true;
-			dressRemoveListB.Enabled = true;
-			dressExportListB.Enabled = true;
-			dressImportListB.Enabled = true;
-			dressDragDelay.Enabled = true;
-		}
+			UndressFinishWork();
+        }
 
 		// --------------- DRESS END ---------
 
