@@ -163,6 +163,14 @@ namespace Assistant
 			EndIntercept();
 		}
 
+		internal static void CancelOneTimeTargetByScript()
+		{
+			m_ClientTarget = m_HasTarget = false;
+
+			ClientCommunication.SendToClientWait(new CancelTarget(LocalTargID));
+			EndIntercept();
+		}
+
 		private static bool m_LTWasSet;
 
 		internal static void TargetSetLastTarget()
@@ -613,6 +621,16 @@ namespace Assistant
 			}
 		}
 
+		internal static void CancelClientTargetByScript()
+		{
+			if (m_ClientTarget)
+			{
+				m_FilterCancel.Add((uint)m_CurrentID);
+				ClientCommunication.SendToClientWait(new CancelTarget(m_CurrentID));
+				m_ClientTarget = false;
+			}
+		}
+
 		internal static void Target(TargetInfo info)
 		{
 			if (m_Intercept)
@@ -627,6 +645,23 @@ namespace Assistant
 			}
 
 			CancelClientTarget();
+			m_HasTarget = false;
+		}
+
+		internal static void TargetByScript(TargetInfo info)
+		{
+			if (m_Intercept)
+			{
+				OneTimeResponse(info);
+			}
+			else if (m_HasTarget)
+			{
+				info.TargID = m_CurrentID;
+				m_LastGroundTarg = m_LastTarget = info;
+				ClientCommunication.SendToServerWait(new TargetResponse(info));
+			}
+
+			CancelClientTargetByScript();
 			m_HasTarget = false;
 		}
 
