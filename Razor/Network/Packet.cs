@@ -906,7 +906,15 @@ namespace Assistant
 		{
 			if (m_Pos + 1 > m_Length || m_Data == null)
 				return 0;
-			return m_Data[m_Pos++];
+
+			try
+			{
+				return m_Data[m_Pos++];
+			}
+			catch
+			{
+				return 0;
+			}
 		}
 
 		internal int ReadInt32()
