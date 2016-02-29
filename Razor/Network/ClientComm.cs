@@ -409,6 +409,14 @@ namespace Assistant
 				PostToWndReg((uint)UOAMessage.DEX_STATUS, (IntPtr)World.Player.StamMax, (IntPtr)World.Player.Stam);
 		}
 
+		internal static void PostTextSend(string text)
+		{
+			if (World.Player != null)
+			{
+				PostToWndReg(1425, (IntPtr)GlobalAddAtom(text), IntPtr.Zero);
+			}
+		}
+
 		private static void PostToWndReg(uint Msg, IntPtr wParam, IntPtr lParam)
 		{
 			List<WndRegEnt> rem = null;
@@ -702,14 +710,6 @@ namespace Assistant
 		internal static void SetGameSize(int x, int y)
 		{
 			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
-		}
-
-		internal static void PostTextSend(string text)
-		{
-			if (World.Player != null)
-			{
-				PostToWndReg(1425, (IntPtr)GlobalAddAtom(text), IntPtr.Zero);
-			}
 		}
 
 		internal static Loader_Error LaunchClient(string client)

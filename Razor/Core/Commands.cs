@@ -246,7 +246,7 @@ namespace Assistant
 				else if (text[0] == '-' && text[1] == '-')
 				{
 					args.Block = true;
-					ClientCommunication.PostTextSend(text);
+					ClientCommunication.PostTextSend(text.Substring(2));
                 }
 			}
 		}
