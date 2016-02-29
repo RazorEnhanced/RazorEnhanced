@@ -911,9 +911,10 @@ namespace Assistant
 			{
 				return m_Data[m_Pos++];
 			}
-			catch
+			catch (Exception e)
 			{
-				return 0;
+				Engine.LogCrash(new Exception("ReadByte - ", e));
+                return 0;
 			}
 		}
 

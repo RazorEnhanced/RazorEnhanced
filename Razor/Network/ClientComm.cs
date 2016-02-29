@@ -1197,7 +1197,7 @@ namespace Assistant
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
-					MessageBox.Show("DEBUG: LOCK DETECTED: " + methodName);
+					Engine.LogCrash(new Exception("LOCK DETECTED: " + methodName));
 					break;
 				}
 			}
@@ -1233,7 +1233,7 @@ namespace Assistant
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
-					MessageBox.Show("DEBUG: LOCK DETECTED: " + methodName);
+					Engine.LogCrash(new Exception("LOCK DETECTED: " + methodName));
 					break;
 				}
 			}
@@ -1472,7 +1472,7 @@ namespace Assistant
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
-					MessageBox.Show("DEBUG: LOCK DETECTED: " + methodName);
+					Engine.LogCrash(new Exception("LOCK DETECTED: " + methodName));
 					break;
 				}
             }
