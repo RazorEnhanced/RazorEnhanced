@@ -1198,16 +1198,16 @@ namespace Assistant
 		{
 			if (!m_Ready)
 				return;
-			DateTime entertime = DateTime.Now;
+			//DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
 			{
-				if (entertime + TimeSpan.FromSeconds(4) > DateTime.Now)
+			/*	if (entertime + TimeSpan.FromSeconds(10) > DateTime.Now)
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED: " + methodName));
+					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName));
 					break;
-				}
+				}*/
 			}
 
 			m_ScriptWaitSendRecv = true;
@@ -1234,16 +1234,16 @@ namespace Assistant
 		{
 			if (!m_Ready || p.Length <= 0)
 				return;
-			DateTime entertime = DateTime.Now;
+			//DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
 			{
-				if (entertime + TimeSpan.FromSeconds(4) > DateTime.Now)
+				/*if (entertime + TimeSpan.FromSeconds(10) > DateTime.Now)
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED: " + methodName));
+					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName));
 					break;
-				}
+				}*/
 			}
 
 			m_ScriptWaitSendRecv = true;
