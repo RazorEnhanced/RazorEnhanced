@@ -1201,7 +1201,7 @@ namespace Assistant
 			DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
 			{
-				if (entertime + TimeSpan.FromSeconds(1) < DateTime.Now)
+				if (entertime + TimeSpan.FromSeconds(4) > DateTime.Now)
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
@@ -1237,7 +1237,7 @@ namespace Assistant
 			DateTime entertime = DateTime.Now;
 			while (m_ScriptWaitSendRecv)
 			{
-				if (entertime + TimeSpan.FromSeconds(1) < DateTime.Now)
+				if (entertime + TimeSpan.FromSeconds(4) > DateTime.Now)
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					string methodName = caller.GetMethod().Name;
