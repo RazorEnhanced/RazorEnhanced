@@ -349,7 +349,10 @@ namespace RazorEnhanced
 			Assistant.Item itemtograb = Assistant.World.FindItem(serial);
 
 			if (itemtograb != null && itemtograb.Serial.IsItem && itemtograb.Movable)
-				RazorEnhanced.Items.Move(itemtograb.Serial, World.Player.Backpack.Serial, 0);
+			{
+				Assistant.ClientCommunication.SendToServer(new LiftRequest(itemtograb.Serial, itemtograb.Amount));
+				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtograb.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+			}
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
 		}
@@ -359,7 +362,10 @@ namespace RazorEnhanced
 			Item itemtodrop = RazorEnhanced.Items.FindBySerial(serial);
 
 			if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player)
-				RazorEnhanced.Items.DropItemGroundSelf(itemtodrop, 0);
+			{
+				Assistant.ClientCommunication.SendToServer(new LiftRequest(itemtodrop.Serial, itemtodrop.Amount));
+				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtodrop.Serial, World.Player.Position, Assistant.Serial.Zero));
+			}
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
 		}
@@ -371,19 +377,19 @@ namespace RazorEnhanced
 			{
 				case "Last Item":
 					if (World.Player.LastObject != Assistant.Serial.Zero)
-						RazorEnhanced.Items.UseItem(World.Player.LastObject);
+						Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.LastObject));
 					break;
 
 				case "Left Hand":
 					item = World.Player.GetItemOnLayer(Layer.LeftHand);
 					if (item != null)
-						RazorEnhanced.Items.UseItem(item.Serial);
+						Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 					break;
 
 				case "Right Hand":
 					item = World.Player.GetItemOnLayer(Layer.RightHand);
 					if (item != null)
-						RazorEnhanced.Items.UseItem(item.Serial);
+						Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 					break;
 
 				default:
@@ -588,11 +594,11 @@ namespace RazorEnhanced
 					uint target = Assistant.Targeting.GetLastTarger;
 					Assistant.Mobile targetmob = World.FindMobile(target);
 					if (targetmob != null)
-						RazorEnhanced.Player.Attack((int)target);
+						Assistant.ClientCommunication.SendToServer(new AttackReq(target));
 					break;
 				case "Attack Last":
 					if (Targeting.LastAttack != 0)
-						RazorEnhanced.Player.Attack((int)Targeting.LastAttack);
+						Assistant.ClientCommunication.SendToServer(new AttackReq(Targeting.LastAttack));
 					break;
 				default:
 					break;
