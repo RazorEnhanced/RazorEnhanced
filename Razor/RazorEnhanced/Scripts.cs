@@ -311,6 +311,8 @@ namespace RazorEnhanced
 					m_AutoRemountThread.Abort();
 				}
 
+				UI.EnhancedScriptEditor.End();
+
 				this.Stop();
 			}
 

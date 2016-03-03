@@ -32,6 +32,7 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedScriptEditor));
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButtonOpen = new System.Windows.Forms.ToolStripButton();
+			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonSave = new System.Windows.Forms.ToolStripButton();
 			this.toolStripButtonClose = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -53,7 +54,6 @@
 			this.fastColoredTextBoxEditor = new FastColoredTextBoxNS.FastColoredTextBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.textBoxDebug = new System.Windows.Forms.TextBox();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -100,6 +100,15 @@
 			this.toolStripButtonOpen.Size = new System.Drawing.Size(56, 22);
 			this.toolStripButtonOpen.Text = "Open";
 			this.toolStripButtonOpen.Click += new System.EventHandler(this.toolStripButtonOpen_Click);
+			// 
+			// toolStripButton2
+			// 
+			this.toolStripButton2.Image = global::Assistant.Properties.Resources.document_save_5;
+			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton2.Name = "toolStripButton2";
+			this.toolStripButton2.Size = new System.Drawing.Size(51, 22);
+			this.toolStripButton2.Text = "Save";
+			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButtonSave_Click);
 			// 
 			// toolStripButtonSave
 			// 
@@ -277,7 +286,6 @@
 			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
 			this.fastColoredTextBoxEditor.IsReplaceMode = false;
 			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
 			this.fastColoredTextBoxEditor.LeftBracket = '(';
@@ -321,15 +329,6 @@
 			this.textBoxDebug.Size = new System.Drawing.Size(271, 426);
 			this.textBoxDebug.TabIndex = 0;
 			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.Image = global::Assistant.Properties.Resources.document_save_5;
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(51, 22);
-			this.toolStripButton2.Text = "Save";
-			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButtonSave_Click);
-			// 
 			// EnhancedScriptEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -342,7 +341,6 @@
 			this.Name = "EnhancedScriptEditor";
 			this.Text = "Enhanced Script Editor";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnhancedScriptEditor_FormClosing);
-			this.Load += new System.EventHandler(this.EnhancedScriptEditor_Load);
 			this.toolStrip1.ResumeLayout(false);
 			this.toolStrip1.PerformLayout();
 			this.statusStrip1.ResumeLayout(false);

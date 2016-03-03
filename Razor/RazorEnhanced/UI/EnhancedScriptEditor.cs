@@ -33,6 +33,7 @@ namespace RazorEnhanced.UI
 		}
 
 		private static Thread m_Thread;
+
 		private static EnhancedScriptEditor m_EnhancedScriptEditor;
 		private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
 		private static Command m_CurrentCommand = Command.None;
@@ -41,6 +42,7 @@ namespace RazorEnhanced.UI
 		private const string m_Title = "Enhanced Script Editor";
 		private string m_Filename = "";
 		private string m_Filepath = "";
+		private static bool m_OnClosing = false;
 
 		private ScriptEngine m_Engine;
 		private ScriptSource m_Source;
@@ -66,9 +68,10 @@ namespace RazorEnhanced.UI
 		{
 			if (m_EnhancedScriptEditor != null)
 			{
-				m_EnhancedScriptEditor.Stop();
-				m_EnhancedScriptEditor.Close();
-				m_EnhancedScriptEditor.Dispose();
+				m_OnClosing = true;
+                m_EnhancedScriptEditor.Stop();
+				//m_EnhancedScriptEditor.Close();
+				//m_EnhancedScriptEditor.Dispose();
 			}
 		}
 
@@ -221,14 +224,17 @@ namespace RazorEnhanced.UI
 			}
 			catch (Exception ex)
 			{
-				if (ex is SyntaxErrorException)
+				if (!m_OnClosing)
 				{
-					SyntaxErrorException se = ex as SyntaxErrorException;
-					MessageBox.Show("LINE: " + se.Line + "\nCOLUMN: " + se.Column + "\nSEVERITY: " + se.Severity + "\nMESSAGE: " + ex.Message, "Syntax Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-				}
-				else
-				{
-					MessageBox.Show("MESSAGE: " + ex.Message, "Exception!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					if (ex is SyntaxErrorException)
+					{
+						SyntaxErrorException se = ex as SyntaxErrorException;
+						MessageBox.Show("LINE: " + se.Line + "\nCOLUMN: " + se.Column + "\nSEVERITY: " + se.Severity + "\nMESSAGE: " + ex.Message, "Syntax Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					}
+					else
+					{
+						MessageBox.Show("MESSAGE: " + ex.Message, "Exception!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+					}
 				}
 
 				if (m_Thread != null)
@@ -335,10 +341,6 @@ namespace RazorEnhanced.UI
 			{
 				this.textBoxDebug.Text = text;
 			}
-		}
-
-		private void EnhancedScriptEditor_Load(object sender, EventArgs e)
-		{
 		}
 
 		private void scintillaEditor_TextChanged(object sender, EventArgs e)
