@@ -239,6 +239,9 @@ namespace RazorEnhanced
 			// Salvo password memory
 			PasswordMemory.Save();
 
+			// Salvo parametri di uscita
+			RazorEnhanced.Settings.General.SaveExitData();
+
 			// Stop forzato di tutti gli script
 			// TODO X Magneto (Funzione STOP DI SCRIPT IN ESECUZIONE)
 
