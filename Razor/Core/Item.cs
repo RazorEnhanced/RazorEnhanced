@@ -579,8 +579,86 @@ namespace Assistant
 			get
 			{
 				ushort iid = m_ItemID.Value;
-				return (iid >= 0x0675 && iid <= 0x06F6) || (iid >= 0x0821 && iid <= 0x0875) || (iid >= 0x1FED && iid <= 0x1FFC) ||
-					  (iid >= 0x241F && iid <= 0x2424) || (iid >= 0x2A05 && iid <= 0x2A1C);
+				if (iid >= 1653 && iid <= 1668) // Metal Door
+					return true;
+				else if (iid >= 8173 && iid <= 8188) // Metal Gate
+					return true;
+				else if (iid >= 1685 && iid <= 1700) // Rattan Door
+					return true;
+				else if (iid >= 1701 && iid <= 1716) // Dark Wood Door
+					return true;
+				else if (iid >= 1717 && iid <= 1732) // Wood Door
+					return true;
+				else if (iid >= 1749 && iid <= 1764) // Light Wood Door
+					return true;
+				else if (iid >= 1765 && iid <= 1780) // Wood and Metal Door
+					return true;
+				else if (iid >= 2084 && iid <= 2099) // Tall Wrought Iron Gate
+					return true;
+				else if (iid >= 2105 && iid <= 2120) // Light Wood Gate
+					return true;
+				else if (iid >= 2124 && iid <= 2139) // Short Wrought Iron Gate
+					return true;
+				else if (iid >= 2150 && iid <= 2165) // Dark Wood Gate
+					return true;
+				else if (iid >= 804 && iid <= 819) // Weathered Stone Secret Door
+					return true;
+				else if (iid >= 820 && iid <= 835) // Dark Wood Secret Door
+					return true;
+				else if (iid >= 836 && iid <= 851) // Light Wood Secret Door
+					return true;
+				else if (iid >= 852 && iid <= 867) // Grey Stone Secret Door
+					return true;
+				else if ((iid >= 9247 && iid <= 9248) || (iid >= 9251 && iid <= 9252)) // Japanese Doors
+					return true;
+				else if (iid >= 10765 && iid <= 10772) // Sliding Doors 1
+					return true;
+				else if (iid >= 10757 && iid <= 10764) // Sliding Doors 2
+					return true;
+				else if (iid >= 10773 && iid <= 10780) // Sliding Doors 3
+					return true;
+				else if ((iid >= 12716 && iid <= 12719) || (iid >= 11590 && iid <= 11593)) // Elvan Wood Door
+					return true;
+				else if ((iid >= 11619 && iid <= 11622) || (iid >= 12704 && iid <= 12707)) // Elvan White Wooden Door 1
+					return true;
+				else if ((iid >= 11623 && iid <= 11626) || (iid >= 12708 && iid <= 12710)) // Elvan Ornate Door
+					return true;
+				else if ((iid >= 11627 && iid <= 11630) || (iid >= 12712 && iid <= 12715)) // Elvan Kia Wood Door 2
+					return true;
+				else if ((iid >= 12700 && iid <= 12703) || (iid >= 12258 && iid <= 12261)) // Elvan Moon Door
+					return true;
+				else if (iid >= 13947 && iid <= 13962) // Crystal Door
+					return true;
+				else if (iid >= 13963 && iid <= 13978) // Shadow Door
+					return true;
+				else if (iid >= 16541 && iid <= 16546) // Gargish Carved Green Door
+					return true;
+				else if (iid >= 16652 && iid <= 16659) // Gargish Brown Door
+					return true;
+				else if (iid >= 16834 && iid <= 16841) // Sun Door
+					return true;
+				else if (iid >= 16847 && iid <= 16854) // Gargish Grey Door
+					return true;
+				else if (iid >= 17262 && iid <= 17277) // Gargish Set Door
+					return true;
+				else if (iid >= 18141 && iid <= 18148) // Ruined Door
+					return true;
+				else if (iid >= 19746 && iid <= 19753) // Gargish Blue Door
+					return true;
+				else if (iid >= 20680 && iid <= 20695) // Gargish Red Doors
+					return true;
+				else if (iid >= 20802 && iid <= 20809) // Gargish Prison Door
+					return true;
+				else if (iid >= 1733 && iid <= 1748) // Metal Doors (Dungeon)
+					return true;
+				else if (iid >= 788 && iid <= 803) // Hidden Door (brick)
+					return true;
+				else if (iid >= 1669 && iid <= 1684) // Barred Metal Gate
+					return true;
+				else if (iid >= 1781 && iid <= 1783) // Portcullis
+					return true;
+				else
+					return false;
 			}
 		}
 
