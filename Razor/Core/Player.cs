@@ -867,7 +867,6 @@ namespace Assistant
 						hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
 						break;
 				}
-
 				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
 
 				PacketHandlers.SysMessages.Add(text.ToLower());
@@ -887,9 +886,39 @@ namespace Assistant
 		internal uint PromptType;
 		internal List<string> CurrentGumpStrings = new List<string>();
 		internal Queue<RazorEnhanced.Journal.JournalEntry> Journal = new Queue<RazorEnhanced.Journal.JournalEntry>();
+
+		// Menu Old
 		internal uint CurrentMenuS;
 		internal ushort CurrentMenuI;
 		internal bool HasMenu;
+		internal string MenuQuestionText;
+
+		internal class MenuItem
+		{
+			private ushort m_modelID;
+			public ushort ModelID { get { return m_modelID; } }
+
+			private ushort m_modelColor;
+			public ushort ModelColor { get { return m_modelColor; } }
+
+			private string m_modelText;
+			public string ModelText { get { return m_modelText; } }
+
+			public MenuItem(ushort modelid, ushort modelcolor, string modeltext)
+			{
+				m_modelID = modelid;
+				m_modelColor = modelcolor;
+				m_modelText = modeltext;
+			}
+		}
+
+		internal List<MenuItem> MenuEntry = new List<MenuItem>();
+
+		// Query String
+		internal bool HasQueryString;
+		internal int QueryStringID;
+		internal byte QueryStringType;
+		internal byte QueryStringIndex;
 
 		private ushort m_SpeechHue;
 		internal ushort SpeechHue { get { return m_SpeechHue; } set { m_SpeechHue = value; } }

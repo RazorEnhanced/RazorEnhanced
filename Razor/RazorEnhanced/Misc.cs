@@ -2,12 +2,15 @@
 using System;
 using System.Media;
 using System.Threading;
-using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
 	public class Misc
 	{
+		// Bool per blocco packet in attesa di menu vecchi e vecchio gump response
+		internal static bool BlockMenu = false;
+		internal static bool BlockGump = false;
+
 		//General
 		public static void Pause(int mseconds)
 		{
@@ -241,5 +244,53 @@ namespace RazorEnhanced
 			else
 				return false;
 		}
+
+		// Comandi Script per Menu Old
+
+		public static void WaitForMenu(int delay) // Delay in MS
+		{
+			BlockMenu = true;
+            int subdelay = delay;
+			while (!World.Player.HasMenu && subdelay > 0)
+			{
+				Thread.Sleep(2);
+				subdelay -= 2;
+			}
+			BlockMenu = false;
+		}
+
+		public static void MenuResponse(int subindex) // Delay in MS
+		{
+			if (World.Player.MenuEntry.Count > subindex)
+			{
+				PlayerData.MenuItem menuentryinfo = World.Player.MenuEntry[subindex];
+				ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, (ushort)subindex, menuentryinfo.ModelID, menuentryinfo.ModelColor));
+				World.Player.HasMenu = false;
+			}
+			else
+			{
+				Scripts.SendMessageScriptError("MenuResponse Error: Out of Bounds");
+			}
+		}
+
+		// Comandi Query String
+
+		public static void WaitForQueryString(int delay) // Delay in MS
+		{
+			BlockGump = true;
+			int subdelay = delay;
+			while (!World.Player.HasQueryString && subdelay > 0)
+			{
+				Thread.Sleep(2);
+				subdelay -= 2;
+			}
+			BlockGump = false;
+        }
+
+		public static void QueryStringResponse(bool okcancel, string response) // Delay in MS
+		{
+			ClientCommunication.SendToServerWait(new StringQueryResponse(World.Player.QueryStringID, World.Player.QueryStringType, World.Player.QueryStringIndex, okcancel, response));
+		}
+
 	}
 }

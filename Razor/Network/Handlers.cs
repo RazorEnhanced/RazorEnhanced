@@ -31,7 +31,8 @@ namespace Assistant
 			PacketHandler.RegisterClientToServerFilter(0x91, new PacketFilterCallback(GameLogin));
 			PacketHandler.RegisterClientToServerViewer(0x95, new PacketViewerCallback(HueResponse));
 			PacketHandler.RegisterClientToServerViewer(0xA0, new PacketViewerCallback(PlayServer));
-			PacketHandler.RegisterClientToServerViewer(0xB1, new PacketViewerCallback(ClientGumpResponse));
+			PacketHandler.RegisterClientToServerViewer(0xAC, new PacketViewerCallback(ResponseStringQuery));
+            PacketHandler.RegisterClientToServerViewer(0xB1, new PacketViewerCallback(ClientGumpResponse));
 			PacketHandler.RegisterClientToServerFilter(0xBF, new PacketFilterCallback(ExtendedClientCommand));
 			//PacketHandler.RegisterClientToServerViewer( 0xD6, new PacketViewerCallback( BatchQueryProperties ) );
 			PacketHandler.RegisterClientToServerViewer(0xC2, new PacketViewerCallback(UnicodePromptSend));
@@ -95,6 +96,13 @@ namespace Assistant
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
+			World.Player.HasQueryString = true;
+			World.Player.QueryStringID = p.ReadInt32();
+			World.Player.QueryStringType = p.ReadByte();
+			World.Player.QueryStringIndex = p.ReadByte();
+
+			if (RazorEnhanced.Misc.BlockGump)
+				args.Block = true;
 		}
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
@@ -389,6 +397,11 @@ namespace Assistant
 				World.ShardName = "[Unknown]";
 		}
 
+		private static void ResponseStringQuery(PacketReader p, PacketHandlerEventArgs args)
+		{
+			World.Player.HasQueryString = false;
+		}
+		
 		private static void LiftRequest(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial serial = p.ReadUInt32();
@@ -2789,6 +2802,26 @@ namespace Assistant
 			World.Player.CurrentMenuS = p.ReadUInt32();
 			World.Player.CurrentMenuI = p.ReadUInt16();
 			World.Player.HasMenu = true;
+
+			byte m_questionlenght = p.ReadByte();
+			World.Player.MenuQuestionText = p.ReadStringSafe(m_questionlenght);
+
+			byte m_objectcount = p.ReadByte();
+
+			World.Player.MenuEntry.Clear();
+            for (int x = 0; x < m_objectcount; x ++)
+			{
+				ushort m_modelID = 	p.ReadUInt16(); // Model ID
+				ushort m_modelColor = p.ReadUInt16(); // Model ID
+				byte m_modelTextLenght = p.ReadByte();
+				string m_modelText = p.ReadStringSafe(m_modelTextLenght);
+
+				PlayerData.MenuItem m_entry = new PlayerData.MenuItem(m_modelID, m_modelColor, m_modelText);
+				World.Player.MenuEntry.Add(m_entry);
+			}
+
+			if (RazorEnhanced.Misc.BlockMenu)
+				args.Block = true;
 		}
 
 		private static void HueResponse(PacketReader p, PacketHandlerEventArgs args)
