@@ -96,13 +96,14 @@ namespace Assistant
 
 		private static void DisplayStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
-			World.Player.HasQueryString = true;
 			World.Player.QueryStringID = p.ReadInt32();
 			World.Player.QueryStringType = p.ReadByte();
 			World.Player.QueryStringIndex = p.ReadByte();
 
 			if (RazorEnhanced.Misc.BlockGump)
 				args.Block = true;
+
+			World.Player.HasQueryString = true;
 		}
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
@@ -2801,7 +2802,6 @@ namespace Assistant
 
 			World.Player.CurrentMenuS = p.ReadUInt32();
 			World.Player.CurrentMenuI = p.ReadUInt16();
-			World.Player.HasMenu = true;
 
 			byte m_questionlenght = p.ReadByte();
 			World.Player.MenuQuestionText = p.ReadStringSafe(m_questionlenght);
@@ -2822,6 +2822,8 @@ namespace Assistant
 
 			if (RazorEnhanced.Misc.BlockMenu)
 				args.Block = true;
+
+			World.Player.HasMenu = true;
 		}
 
 		private static void HueResponse(PacketReader p, PacketHandlerEventArgs args)
