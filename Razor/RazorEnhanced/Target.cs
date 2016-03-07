@@ -37,14 +37,14 @@ namespace RazorEnhanced
 
 		public static void TargetExecute(RazorEnhanced.Item item)
 		{
-			Assistant.Targeting.TargetByScript(item);
+			Assistant.Targeting.TargetByScript(item.Serial);
 		}
 
 		public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
 			if (!CheckHealPoisonTarg(mobile.Serial))
 			{
-				Assistant.Targeting.TargetByScript(mobile);
+				Assistant.Targeting.TargetByScript(mobile.Serial);
 			}
 		}
 
