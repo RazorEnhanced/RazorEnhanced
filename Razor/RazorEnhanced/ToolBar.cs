@@ -202,7 +202,7 @@ namespace RazorEnhanced
 			{
 				if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 				{
-						m_labelTextFollowerBHV.Text = "Weight: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
+						m_labelTextFollowerBHV.Text = "Follower: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
 				}
 				else
 				{
