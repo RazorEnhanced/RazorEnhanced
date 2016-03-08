@@ -259,18 +259,19 @@ namespace RazorEnhanced
 			BlockMenu = false;
 		}
 
-		public static void MenuResponse(int subindex) // Delay in MS
+		public static void MenuResponse(string submenu) // Delay in MS
 		{
-			if (World.Player.MenuEntry.Count > subindex)
+			int i = 1;
+			foreach (PlayerData.MenuItem menuentry in World.Player.MenuEntry)
 			{
-				PlayerData.MenuItem menuentryinfo = World.Player.MenuEntry[subindex];
-				ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, (ushort)subindex, menuentryinfo.ModelID, menuentryinfo.ModelColor));
-				World.Player.HasMenu = false;
+				if (menuentry.ModelText == submenu)
+				{
+					ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, (ushort)i, menuentry.ModelID, menuentry.ModelColor));
+					World.Player.HasMenu = false;
+					return;
+				}
 			}
-			else
-			{
-				Scripts.SendMessageScriptError("MenuResponse Error: Out of Bounds");
-			}
+			Scripts.SendMessageScriptError("MenuResponse Error: No menu name found");
 		}
 
 		// Comandi Query String
@@ -290,6 +291,7 @@ namespace RazorEnhanced
 		public static void QueryStringResponse(bool okcancel, string response) // Delay in MS
 		{
 			ClientCommunication.SendToServerWait(new StringQueryResponse(World.Player.QueryStringID, World.Player.QueryStringType, World.Player.QueryStringIndex, okcancel, response));
+			World.Player.HasQueryString = false;
 		}
 
 	}
