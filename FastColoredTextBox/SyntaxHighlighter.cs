@@ -22,6 +22,8 @@ namespace FastColoredTextBoxNS
 		public readonly Style MaroonStyle = new TextStyle(Brushes.Maroon, null, FontStyle.Regular);
 		public readonly Style RedStyle = new TextStyle(Brushes.Red, null, FontStyle.Regular);
 		public readonly Style BlackStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
+		public readonly Style YellowStyle = new TextStyle(Brushes.YellowGreen, null, FontStyle.Regular);
+		public readonly Style OrangeStyle = new TextStyle(Brushes.Orange, null, FontStyle.Regular);
 		//
 		protected readonly Dictionary<string, SyntaxDescriptor> descByXMLfileNames =
 			new Dictionary<string, SyntaxDescriptor>();
@@ -88,6 +90,12 @@ namespace FastColoredTextBoxNS
 		protected Regex PythonNumberRegex;
 		protected Regex PythonStringRegex1;
 		protected Regex PythonStringRegex2;
+
+		protected Regex RazorClassKeywordRegex;
+		protected Regex RazorGenericPropsRegex;
+		protected Regex RazorPlayerPropsKeywordRegex;
+		protected Regex RazorPlayerFunctionsKeywordRegex;
+		protected Regex RazorSpellsFunctionsKeywordRegex;
 
 		protected Regex PHPCommentRegex1,
 					  PHPCommentRegex2,
@@ -638,6 +646,10 @@ namespace FastColoredTextBoxNS
 					NumberStyle = BrownStyle;
 					KeywordStyle = BlueStyle;
 					FunctionsStyle = RedStyle;
+					RazorClassStyle = MaroonStyle;
+					RazorGenericPropsStyle = YellowStyle;
+					RazorPlayerPropsKeywordStyle = BlueBoldStyle;
+					RazorFunctionStyle = OrangeStyle;
 					break;
 				case Language.PHP:
 					StringStyle = RedStyle;
@@ -1274,6 +1286,13 @@ namespace FastColoredTextBoxNS
 
 			PythonNumberRegex = new Regex(@"\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b", RegexCompiledOption);
 			PythonKeywordRegex = new Regex(@"\b(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|not|or|pass|print|raise|return|try|while|yield|None|True|False)\b", RegexCompiledOption);
+
+			RazorClassKeywordRegex = new Regex(@"\b(Player|Spells|Mobile|Mobiles|Item|Items|Misc|Target|Gumps|Journal|AutoLoot|Scavenger|Organizer|Restock|SellAgent|BuyAgent|Dress|Friend|BandageHeal)\b", RegexCompiledOption);
+			RazorGenericPropsRegex = new Regex(@"\b(Serial|Hue|X|Y|Z)\b", RegexCompiledOption);
+			RazorPlayerPropsKeywordRegex = new Regex(@"\b(Hits|HitsMax|Str|Mana|ManaMax|Int|Stam|StamMax|Dex|StatCap|AR|FireResistance|ColdResistance|EnergyResistance|PoisonResistance|Buffs|IsGhost|Poisoned|Blessed|Visible|WarMode|Paralized|Female|Name|Backpack|Bankbox|Quiver|Mount|Gold|Luck|Body|Notoriety|Followers|FollowersMax|Weight|MaxWeight|Position|Dir)\b", RegexCompiledOption);
+			RazorPlayerFunctionsKeywordRegex = new Regex(@"\b(HeadMessage|InRangeMobile|InRangeItem|GetItemOnLayer|UnEquipItemByLayer|EquipItem|CheckLayer|GetAssistantLayer|GetSkillValue|GetSkillCap|GetSkillStatus|UseSkill|ChatSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyLeave|KickMember|InvokeVirtue|Walk|PathFindTo|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA)\b", RegexCompiledOption);
+			RazorSpellsFunctionsKeywordRegex = new Regex(@"\b(CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism)\b", RegexCompiledOption);
+
 		}
 
 		/// <summary>
@@ -1310,6 +1329,14 @@ namespace FastColoredTextBoxNS
 
 			//keyword highlighting
 			range.SetStyle(KeywordStyle, PythonKeywordRegex);
+
+			// Razor highlight
+			range.SetStyle(RazorClassStyle, RazorClassKeywordRegex);
+			range.SetStyle(RazorGenericPropsStyle, RazorGenericPropsRegex);
+			range.SetStyle(RazorPlayerPropsKeywordStyle, RazorPlayerPropsKeywordRegex);
+			range.SetStyle(RazorFunctionStyle, RazorPlayerFunctionsKeywordRegex);
+			range.SetStyle(RazorFunctionStyle, RazorSpellsFunctionsKeywordRegex);
+
 
 			//clear folding markers
 			range.ClearFoldingMarkers();
@@ -1435,6 +1462,12 @@ namespace FastColoredTextBoxNS
 		/// SQL Types style
 		/// </summary>
 		public Style TypesStyle { get; set; }
+
+		// Razor style
+		public Style RazorClassStyle { get; set; }
+		public Style RazorGenericPropsStyle { get; set; }
+		public Style RazorPlayerPropsKeywordStyle { get; set; }
+		public Style RazorFunctionStyle { get; set; }
 
 		#endregion
 	}
