@@ -74,9 +74,6 @@ namespace RazorEnhanced
 			}
 		}
 
-		// Position
-		public Point3D Pos { get { return new Point3D(m_AssistantMobile.Position); } }
-
 		public string Direction
 		{
 			get
