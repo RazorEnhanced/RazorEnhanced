@@ -247,6 +247,42 @@ namespace RazorEnhanced
 
 		// Comandi Script per Menu Old
 
+		public static bool HasMenu() 
+		{
+			return World.Player.HasMenu;
+		}
+
+		public static void CloseMenu()
+		{
+			if(World.Player.HasMenu)
+			{
+				ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, 0, 0, 0));
+				World.Player.MenuEntry.Clear();
+				World.Player.HasMenu = false;
+			}
+		}
+
+		public static bool MenuContain(string submenu)
+		{
+			foreach (PlayerData.MenuItem menuentry in World.Player.MenuEntry)
+			{
+				if (menuentry.ModelText.Contains(submenu))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
+		public static string GetMenuTitle()
+		{
+			if (World.Player.HasMenu)
+			{
+				return World.Player.MenuQuestionText;
+			}
+			return "";
+		}
+
 		public static void WaitForMenu(int delay) // Delay in MS
 		{
 			BlockMenu = true;
@@ -264,19 +300,29 @@ namespace RazorEnhanced
 			int i = 1;
 			foreach (PlayerData.MenuItem menuentry in World.Player.MenuEntry)
 			{
-				if (menuentry.ModelText == submenu)
+				if (menuentry.ModelText.Contains(submenu))
 				{
 					ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, (ushort)i, menuentry.ModelID, menuentry.ModelColor));
-					World.Player.HasMenu = false;
+					World.Player.MenuEntry.Clear();
+                    World.Player.HasMenu = false;
 					return;
 				}
+				i++;
 			}
+			ClientCommunication.SendToServerWait(new MenuResponse(World.Player.CurrentMenuS, World.Player.CurrentMenuI, 0, 0, 0));
+			World.Player.MenuEntry.Clear();
+			World.Player.HasMenu = false;
 			Scripts.SendMessageScriptError("MenuResponse Error: No menu name found");
 		}
 
 		// Comandi Query String
 
-		public static void WaitForQueryString(int delay) // Delay in MS
+		public static bool HasQueryString()
+		{
+			return World.Player.HasQueryString;
+		}
+
+        public static void WaitForQueryString(int delay) // Delay in MS
 		{
 			BlockGump = true;
 			int subdelay = delay;
