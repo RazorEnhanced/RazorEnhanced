@@ -591,62 +591,66 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
 		}
 
-		public static void Move(Item item, Item bag, int amount)
+		public static void Move(Item source, Mobile destination, int amount)
 		{
-			if (item == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
-				return;
-			}
-			if (bag == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination Item not found");
-				return;
-			}
-			if (!bag.IsContainer)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination Item is not a container");
-				return;
-			}
-			if (amount == 0)
-			{ 
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
-			}
-			else
-			{
-				if (item.Amount < amount)
-				{
-					amount = item.Amount;
-				}
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
-			}
+			Move(source.Serial, destination.Serial, amount);
 		}
 
-		public static void Move(int itemserial, int bagserial, int amount)
+		public static void Move(int source, Mobile destination, int amount)
 		{
-			Assistant.Item bag = Assistant.World.FindItem(bagserial);
-			Assistant.Item item = Assistant.World.FindItem(itemserial);
+			Move(source, destination.Serial, amount);
+		}
+
+		public static void Move(Item source, int destination, int amount)
+		{
+			Move(source.Serial, destination, amount);
+		}
+
+		public static void Move(int source, Item destination, int amount)
+		{
+			Move(source, destination.Serial, amount);
+		}
+
+		public static void Move(Item source, Item destination, int amount)
+		{
+			Move(source.Serial, destination.Serial, amount);
+        }
+
+		public static void Move(int source, int destination, int amount)
+		{
+			Assistant.Item bag = Assistant.World.FindItem(destination);
+			Assistant.Item item = Assistant.World.FindItem(source);
+			int serialdestination = 0;
+
 			if (item == null)
 			{
 				Scripts.SendMessageScriptError("Script Error: Move: Source Item  not found");
 				return;
 			}
-			if (bag == null)
+
+			if (bag != null)
 			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination Item not found");
+				serialdestination = bag.Serial;
+			}
+			else
+			{
+				Assistant.Mobile mbag = Assistant.World.FindMobile(destination);
+				if (mbag != null)
+				{
+					serialdestination = mbag.Serial;
+				}
+            }
+
+			if (serialdestination == 0)
+			{
+				Scripts.SendMessageScriptError("Script Error: Move: Destination not found");
 				return;
 			}
-			if (!bag.IsContainer)
-			{
-				Scripts.SendMessageScriptError("Script Error: Move: Destination Item is not a container");
-				return;
-			}
+
 			if (amount == 0)
 			{
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, serialdestination));
 			}
 			else
 			{
@@ -655,7 +659,7 @@ namespace RazorEnhanced
 					amount = item.Amount;
 				}
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, bag.Serial));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, serialdestination));
 			}
 		}
 
