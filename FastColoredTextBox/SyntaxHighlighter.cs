@@ -22,8 +22,10 @@ namespace FastColoredTextBoxNS
 		public readonly Style MaroonStyle = new TextStyle(Brushes.Maroon, null, FontStyle.Regular);
 		public readonly Style RedStyle = new TextStyle(Brushes.Red, null, FontStyle.Regular);
 		public readonly Style BlackStyle = new TextStyle(Brushes.Black, null, FontStyle.Regular);
-		public readonly Style YellowStyle = new TextStyle(Brushes.YellowGreen, null, FontStyle.Regular);
-		public readonly Style OrangeStyle = new TextStyle(Brushes.Orange, null, FontStyle.Regular);
+		public readonly Style CrimsonStyle = new TextStyle(Brushes.Crimson, null, FontStyle.Regular);
+		public readonly Style DarkOrangeStyle = new TextStyle(Brushes.DarkOrange, null, FontStyle.Regular);
+		public readonly Style DodgerBlueStyle = new TextStyle(Brushes.DodgerBlue, null, FontStyle.Regular);
+
 		//
 		protected readonly Dictionary<string, SyntaxDescriptor> descByXMLfileNames =
 			new Dictionary<string, SyntaxDescriptor>();
@@ -92,10 +94,8 @@ namespace FastColoredTextBoxNS
 		protected Regex PythonStringRegex2;
 
 		protected Regex RazorClassKeywordRegex;
-		protected Regex RazorGenericPropsRegex;
-		protected Regex RazorPlayerPropsKeywordRegex;
-		protected Regex RazorPlayerFunctionsKeywordRegex;
-		protected Regex RazorSpellsFunctionsKeywordRegex;
+		protected Regex RazorPropsKeywordRegex;
+		protected Regex RazorFunctionsKeywordRegex;
 
 		protected Regex PHPCommentRegex1,
 					  PHPCommentRegex2,
@@ -646,10 +646,9 @@ namespace FastColoredTextBoxNS
 					NumberStyle = BrownStyle;
 					KeywordStyle = BlueStyle;
 					FunctionsStyle = RedStyle;
-					RazorClassStyle = MaroonStyle;
-					RazorGenericPropsStyle = YellowStyle;
-					RazorPlayerPropsKeywordStyle = BlueBoldStyle;
-					RazorFunctionStyle = OrangeStyle;
+					RazorClassKeywordStyle = CrimsonStyle;
+					RazorPropsKeywordStyle = DarkOrangeStyle;
+					RazorFunctionsKeywordStyle = DodgerBlueStyle;
 					break;
 				case Language.PHP:
 					StringStyle = RedStyle;
@@ -1288,11 +1287,24 @@ namespace FastColoredTextBoxNS
 			PythonKeywordRegex = new Regex(@"\b(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|not|or|pass|print|raise|return|try|while|yield|None|True|False)\b", RegexCompiledOption);
 
 			RazorClassKeywordRegex = new Regex(@"\b(Player|Spells|Mobile|Mobiles|Item|Items|Misc|Target|Gumps|Journal|AutoLoot|Scavenger|Organizer|Restock|SellAgent|BuyAgent|Dress|Friend|BandageHeal)\b", RegexCompiledOption);
-			RazorGenericPropsRegex = new Regex(@"\b(Serial|Hue|X|Y|Z)\b", RegexCompiledOption);
-			RazorPlayerPropsKeywordRegex = new Regex(@"\b(Hits|HitsMax|Str|Mana|ManaMax|Int|Stam|StamMax|Dex|StatCap|AR|FireResistance|ColdResistance|EnergyResistance|PoisonResistance|Buffs|IsGhost|Poisoned|Blessed|Visible|WarMode|Paralized|Female|Name|Backpack|Bankbox|Quiver|Mount|Gold|Luck|Body|Notoriety|Followers|FollowersMax|Weight|MaxWeight|Position|Dir)\b", RegexCompiledOption);
-			RazorPlayerFunctionsKeywordRegex = new Regex(@"\b(HeadMessage|InRangeMobile|InRangeItem|GetItemOnLayer|UnEquipItemByLayer|EquipItem|CheckLayer|GetAssistantLayer|GetSkillValue|GetSkillCap|GetSkillStatus|UseSkill|ChatSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyLeave|KickMember|InvokeVirtue|Walk|PathFindTo|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA)\b", RegexCompiledOption);
-			RazorSpellsFunctionsKeywordRegex = new Regex(@"\b(CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism)\b", RegexCompiledOption);
 
+			string GenericProps = "Serial|Hue|Position|X|Y|Z|Contains|Weight";
+			string PlayerProps = "Str|Int|Dex|StatCap|AR|FireResistance|ColdResistance|EnergyResistance|PoisonResistance|Buffs|IsGhost|Blessed|Gold|Luck|Followers|FollowersMax|MaxWeight|Dir";
+			string MobileProps = "Name|Body|Color|Direction|Visible|Poisoned|YellowHits|Paralized|Human|WarMode|Female|Hits|MaxHits|Stam|StamMax|Mana|ManaMax|Backpack|Mount|Quiver|Notoriety|Map|InParty|Properties";
+			string ItemsProps = "Amount|IsBagOfSending|IsContainer|IsCorpse|IsDoor|IsInBank|Movable|OnGround|ItemID|RootContainer|Durability|MaxDurability";
+			RazorPropsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3})\b", GenericProps, PlayerProps, MobileProps, ItemsProps), RegexCompiledOption);
+
+			string GenericFunctions = "GetItemOnLayer|GetAssistantLayer|FindBySerial|ApplyFilter|WaitForProps|GetPropValue|GetPropStringByIndex|GetPropStringList|Message";
+			string PlayerFunctions = "BuffsExist|GetBuffDescription|HeadMessage|InRangeMobile|InRangeItem|UnEquipItemByLayer|EquipItem|CheckLayer|GetSkillValue|GetSkillCap|GetSkillStatus|UseSkill|ChatSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyLeave|KickMember|InvokeVirtue|Walk|PathFindTo|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA";
+			string SpellsFunctions = "CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism";
+			string MobileFunctions = "UseMobile";
+			string ItemsFunctions = "DistanceTo|Move|DropItemGroundSelf|UseItem|WaitForContents|BackpackCount|ContainerCount|GetPropByCliloc|GetPropByString";
+			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContains|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse";
+			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList";
+			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal";
+			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend";
+			string DressUndressAgentFunctions = "DessStatus|UnDressStatus|DressFStart|UnDressFStart|DressFStop|UnDressFStop";
+			RazorFunctionsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9})\b", GenericFunctions, PlayerFunctions, SpellsFunctions, MobileFunctions, ItemsFunctions, MiscFunctions, TargetFunctions, JournalFunctions, AgentsFunctions, DressUndressAgentFunctions), RegexCompiledOption);
 		}
 
 		/// <summary>
@@ -1331,12 +1343,9 @@ namespace FastColoredTextBoxNS
 			range.SetStyle(KeywordStyle, PythonKeywordRegex);
 
 			// Razor highlight
-			range.SetStyle(RazorClassStyle, RazorClassKeywordRegex);
-			range.SetStyle(RazorGenericPropsStyle, RazorGenericPropsRegex);
-			range.SetStyle(RazorPlayerPropsKeywordStyle, RazorPlayerPropsKeywordRegex);
-			range.SetStyle(RazorFunctionStyle, RazorPlayerFunctionsKeywordRegex);
-			range.SetStyle(RazorFunctionStyle, RazorSpellsFunctionsKeywordRegex);
-
+			range.SetStyle(RazorClassKeywordStyle, RazorClassKeywordRegex);
+			range.SetStyle(RazorPropsKeywordStyle, RazorPropsKeywordRegex);
+			range.SetStyle(RazorFunctionsKeywordStyle, RazorFunctionsKeywordRegex);
 
 			//clear folding markers
 			range.ClearFoldingMarkers();
@@ -1464,10 +1473,9 @@ namespace FastColoredTextBoxNS
 		public Style TypesStyle { get; set; }
 
 		// Razor style
-		public Style RazorClassStyle { get; set; }
-		public Style RazorGenericPropsStyle { get; set; }
-		public Style RazorPlayerPropsKeywordStyle { get; set; }
-		public Style RazorFunctionStyle { get; set; }
+		public Style RazorClassKeywordStyle { get; set; }
+		public Style RazorPropsKeywordStyle { get; set; }
+		public Style RazorFunctionsKeywordStyle { get; set; }
 
 		#endregion
 	}
