@@ -340,5 +340,41 @@ namespace RazorEnhanced
 			World.Player.HasQueryString = false;
 		}
 
+		// Script function
+		public static void ScriptRun(string scriptfile)
+		{
+			Scripts.EnhancedScript script = Scripts.Search(scriptfile);
+			if (script != null)
+			{
+				script.Run = true;
+			}
+			else
+				Scripts.SendMessageScriptError("ScriptStatus: Script not exist");
+		}
+
+		public static void ScriptStop(string scriptfile)
+		{
+			Scripts.EnhancedScript script = Scripts.Search(scriptfile);
+			if (script != null)
+			{
+				script.Run = false;
+			}
+			else
+				Scripts.SendMessageScriptError("ScriptStatus: Script not exist");
+		}
+
+		public static bool ScriptStatus(string scriptfile)
+		{
+			Scripts.EnhancedScript script = Scripts.Search(scriptfile);
+			if (script != null)
+			{
+				return script.Run;
+			}
+			else
+			{
+				Scripts.SendMessageScriptError("ScriptStatus: Script not exist");
+				return false;
+			}
+		}
 	}
 }
