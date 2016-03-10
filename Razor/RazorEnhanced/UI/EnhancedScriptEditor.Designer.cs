@@ -54,6 +54,8 @@
 			this.fastColoredTextBoxEditor = new FastColoredTextBoxNS.FastColoredTextBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.textBoxDebug = new System.Windows.Forms.TextBox();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -236,7 +238,8 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabelScript});
+            this.toolStripStatusLabelScript,
+            this.toolStripStatusLabel1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 483);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(1072, 22);
@@ -257,6 +260,7 @@
 			// splitContainer1.Panel1
 			// 
 			this.splitContainer1.Panel1.Controls.Add(this.fastColoredTextBoxEditor);
+			this.splitContainer1.Panel1.Controls.Add(this.listBox1);
 			// 
 			// splitContainer1.Panel2
 			// 
@@ -286,6 +290,7 @@
 			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
 			this.fastColoredTextBoxEditor.IsReplaceMode = false;
 			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
 			this.fastColoredTextBoxEditor.LeftBracket = '(';
@@ -297,7 +302,7 @@
 			this.fastColoredTextBoxEditor.RightBracket2 = ']';
 			this.fastColoredTextBoxEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.fastColoredTextBoxEditor.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBoxEditor.ServiceColors")));
-			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(797, 458);
+			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(797, 441);
 			this.fastColoredTextBoxEditor.TabIndex = 0;
 			this.fastColoredTextBoxEditor.Zoom = 100;
 			// 
@@ -328,6 +333,21 @@
 			this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
 			this.textBoxDebug.Size = new System.Drawing.Size(271, 426);
 			this.textBoxDebug.TabIndex = 0;
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+			this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+			// 
+			// listBox1
+			// 
+			this.listBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.listBox1.FormattingEnabled = true;
+			this.listBox1.Location = new System.Drawing.Point(0, 441);
+			this.listBox1.Name = "listBox1";
+			this.listBox1.Size = new System.Drawing.Size(797, 17);
+			this.listBox1.TabIndex = 1;
 			// 
 			// EnhancedScriptEditor
 			// 
@@ -385,5 +405,7 @@
 		private System.Windows.Forms.SplitContainer splitContainer2;
 		private FastColoredTextBoxNS.FastColoredTextBox fastColoredTextBoxEditor;
 		private System.Windows.Forms.ToolStripButton toolStripButton2;
+		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+		private System.Windows.Forms.ListBox listBox1;
 	}
 }
