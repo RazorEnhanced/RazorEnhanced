@@ -1299,7 +1299,7 @@ namespace FastColoredTextBoxNS
 			string SpellsFunctions = "CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism";
 			string MobileFunctions = "UseMobile";
 			string ItemsFunctions = "DistanceTo|Move|DropItemGroundSelf|UseItem|WaitForContents|BackpackCount|ContainerCount|GetPropByCliloc|GetPropByString";
-			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContains|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse";
+			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContains|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse|NoOperation|ScriptRun|ScriptStop|ScriptStatus";
 			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList";
 			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal";
 			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend";
