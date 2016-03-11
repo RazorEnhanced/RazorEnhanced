@@ -236,7 +236,7 @@ namespace RazorEnhanced.UI
 					if (ex is SyntaxErrorException)
 					{
 						SyntaxErrorException se = ex as SyntaxErrorException;
-						SetErrorBox("Sintex Error:");
+						SetErrorBox("Sintax Error:");
 						SetErrorBox("--> LINE: " + se.Line);
 						SetErrorBox("--> COLUMN: " + se.Column);
 						SetErrorBox("--> SEVERITY: " + se.Severity);
