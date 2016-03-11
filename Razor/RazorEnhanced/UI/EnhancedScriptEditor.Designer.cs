@@ -50,12 +50,12 @@
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabelScript = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.fastColoredTextBoxEditor = new FastColoredTextBoxNS.FastColoredTextBox();
+			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.textBoxDebug = new System.Windows.Forms.TextBox();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.listBox1 = new System.Windows.Forms.ListBox();
 			this.toolStrip1.SuspendLayout();
 			this.statusStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -240,7 +240,7 @@
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelScript,
             this.toolStripStatusLabel1});
-			this.statusStrip1.Location = new System.Drawing.Point(0, 483);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 610);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(1072, 22);
 			this.statusStrip1.TabIndex = 2;
@@ -250,6 +250,12 @@
 			// 
 			this.toolStripStatusLabelScript.Name = "toolStripStatusLabelScript";
 			this.toolStripStatusLabelScript.Size = new System.Drawing.Size(0, 17);
+			// 
+			// toolStripStatusLabel1
+			// 
+			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+			this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
+			this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
 			// 
 			// splitContainer1
 			// 
@@ -265,7 +271,7 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer1.Size = new System.Drawing.Size(1072, 458);
+			this.splitContainer1.Size = new System.Drawing.Size(1072, 585);
 			this.splitContainer1.SplitterDistance = 797;
 			this.splitContainer1.TabIndex = 3;
 			// 
@@ -290,7 +296,6 @@
 			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
 			this.fastColoredTextBoxEditor.IsReplaceMode = false;
 			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
 			this.fastColoredTextBoxEditor.LeftBracket = '(';
@@ -302,9 +307,18 @@
 			this.fastColoredTextBoxEditor.RightBracket2 = ']';
 			this.fastColoredTextBoxEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.fastColoredTextBoxEditor.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBoxEditor.ServiceColors")));
-			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(797, 441);
+			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(797, 464);
 			this.fastColoredTextBoxEditor.TabIndex = 0;
 			this.fastColoredTextBoxEditor.Zoom = 100;
+			// 
+			// listBox1
+			// 
+			this.listBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+			this.listBox1.FormattingEnabled = true;
+			this.listBox1.Location = new System.Drawing.Point(0, 464);
+			this.listBox1.Name = "listBox1";
+			this.listBox1.Size = new System.Drawing.Size(797, 121);
+			this.listBox1.TabIndex = 1;
 			// 
 			// splitContainer2
 			// 
@@ -319,8 +333,8 @@
 			this.splitContainer2.Panel1.Controls.Add(this.textBoxDebug);
 			this.splitContainer2.Panel1MinSize = 0;
 			this.splitContainer2.Panel2MinSize = 0;
-			this.splitContainer2.Size = new System.Drawing.Size(271, 458);
-			this.splitContainer2.SplitterDistance = 426;
+			this.splitContainer2.Size = new System.Drawing.Size(271, 585);
+			this.splitContainer2.SplitterDistance = 544;
 			this.splitContainer2.TabIndex = 0;
 			// 
 			// textBoxDebug
@@ -331,29 +345,14 @@
 			this.textBoxDebug.Name = "textBoxDebug";
 			this.textBoxDebug.ReadOnly = true;
 			this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxDebug.Size = new System.Drawing.Size(271, 426);
+			this.textBoxDebug.Size = new System.Drawing.Size(271, 544);
 			this.textBoxDebug.TabIndex = 0;
-			// 
-			// toolStripStatusLabel1
-			// 
-			this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-			this.toolStripStatusLabel1.Size = new System.Drawing.Size(118, 17);
-			this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
-			// 
-			// listBox1
-			// 
-			this.listBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.Location = new System.Drawing.Point(0, 441);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(797, 17);
-			this.listBox1.TabIndex = 1;
 			// 
 			// EnhancedScriptEditor
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1072, 505);
+			this.ClientSize = new System.Drawing.Size(1072, 632);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);

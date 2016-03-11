@@ -209,9 +209,15 @@ namespace RazorEnhanced.UI
 		private void AsyncStart(bool debug)
 		{
 			if (debug)
+			{
+				SetErrorBox("Starting Script in debug mode: " + m_Filename);
 				SetStatusLabel("DEBUGGER ACTIVE");
+			}
 			else
+			{
+				SetErrorBox("Starting Script: " + m_Filename);
 				SetStatusLabel("");
+			}
 
 			try
 			{
@@ -221,6 +227,7 @@ namespace RazorEnhanced.UI
 				m_Scope = RazorEnhanced.Scripts.GetRazorScope(m_Engine);
 				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 				m_Source.Execute(m_Scope);
+				SetErrorBox("Script " + m_Filename + " run completed!");
 			}
 			catch (Exception ex)
 			{
@@ -229,11 +236,18 @@ namespace RazorEnhanced.UI
 					if (ex is SyntaxErrorException)
 					{
 						SyntaxErrorException se = ex as SyntaxErrorException;
-						MessageBox.Show("LINE: " + se.Line + "\nCOLUMN: " + se.Column + "\nSEVERITY: " + se.Severity + "\nMESSAGE: " + ex.Message, "Syntax Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						SetErrorBox("Sintex Error:");
+						SetErrorBox("--> LINE: " + se.Line);
+						SetErrorBox("--> COLUMN: " + se.Column);
+						SetErrorBox("--> SEVERITY: " + se.Severity);
+						SetErrorBox("--> MESSAGE: " + se.Message);
+						//MessageBox.Show("LINE: " + se.Line + "\nCOLUMN: " + se.Column + "\nSEVERITY: " + se.Severity + "\nMESSAGE: " + ex.Message, "Syntax Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					}
 					else
 					{
-						MessageBox.Show("MESSAGE: " + ex.Message, "Exception!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+						SetErrorBox("Generic Error:");
+						SetErrorBox("--> MESSAGE: " + ex.Message);
+						//MessageBox.Show("MESSAGE: " + ex.Message, "Exception!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
 					}
 				}
 
@@ -260,6 +274,8 @@ namespace RazorEnhanced.UI
 				m_Thread.Abort();
 				m_Thread = null;
 			}
+
+			SetErrorBox("Stop Script: " + m_Filename);
 		}
 
 		private void SetHighlightLine(int iline, Color background)
@@ -340,6 +356,20 @@ namespace RazorEnhanced.UI
 			else
 			{
 				this.textBoxDebug.Text = text;
+			}
+		}
+
+		private void SetErrorBox(string text)
+		{
+			if (this.listBox1.InvokeRequired)
+			{
+				SetTracebackDelegate d = new SetTracebackDelegate(SetErrorBox);
+				this.Invoke(d, new object[] { text });
+			}
+			else
+			{
+				this.listBox1.Items.Add("- " + text);
+				this.listBox1.SelectedIndex = this.listBox1.Items.Count - 1;
 			}
 		}
 
