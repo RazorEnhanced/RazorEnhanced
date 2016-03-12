@@ -1199,7 +1199,7 @@ namespace Assistant
 			if (!m_Ready)
 				return;
 			DateTime entertime = DateTime.Now;
-			while (m_ScriptWaitSendRecv)
+			while (m_ScriptWaitSendRecv || m_QueueRecv || m_QueueSend)
 			{
 				if (entertime > DateTime.Now + TimeSpan.FromSeconds(2))
 				{
@@ -1235,7 +1235,7 @@ namespace Assistant
 			if (!m_Ready || p.Length <= 0)
 				return;
 			DateTime entertime = DateTime.Now;
-			while (m_ScriptWaitSendRecv)
+			while (m_ScriptWaitSendRecv || m_QueueRecv || m_QueueSend)
 			{
 				if (entertime > DateTime.Now + TimeSpan.FromSeconds(2))
 				{
