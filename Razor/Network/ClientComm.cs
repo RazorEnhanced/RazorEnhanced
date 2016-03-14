@@ -972,9 +972,6 @@ namespace Assistant
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
 			PasswordMemory.Save();
-
-			// Stop controllo blocco connessione
-			RazorEnhanced.CheckConnection.Abort();
 		}
 
 		internal static bool OnMessage(MainForm razor, uint wParam, int lParam)

@@ -1038,8 +1038,6 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && RazorEnhanced.ToolBar.ToolBarForm == null)
 				RazorEnhanced.ToolBar.Open();
 
-			RazorEnhanced.CheckConnection.ConnectionSucccesfull = true;
-
 			RazorEnhanced.QueryQueue.Start();
 		}
 
@@ -2760,8 +2758,6 @@ namespace Assistant
 			{
 				PasswordMemory.Add(World.AccountName, pass, ClientCommunication.LastConnection);
 			}
-
-			RazorEnhanced.CheckConnection.CheckStart();
 		}
 
 		private static void GameLogin(Packet p, PacketHandlerEventArgs args)

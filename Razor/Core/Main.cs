@@ -396,9 +396,6 @@ namespace Assistant
 			if (RazorEnhanced.Scripts.Timer != null)
 				RazorEnhanced.Scripts.Timer.Close();
 
-			// Stop controllo blocco connessione
-			RazorEnhanced.CheckConnection.Abort();
-
 			ClientCommunication.Close();
 		}
 
