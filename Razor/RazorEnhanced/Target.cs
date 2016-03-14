@@ -132,6 +132,7 @@ namespace RazorEnhanced
 			while (m_ptarget == -1 && Targeting.HasTarget)
 				Thread.Sleep(30);
 
+			Thread.Sleep(500);
 			if (m_ptarget == -1)
 				Misc.SendMessage("PromptTarget Cancelled", 945);
 			else
