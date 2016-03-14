@@ -123,11 +123,19 @@ namespace RazorEnhanced
 		public int PromptTarget()
 		{
 			m_ptarget = -1;
-			Misc.SendMessage("Select Item or Mobile");
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
+			Misc.SendMessage("Select Item or Mobile", 945);
+			Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
 
-			while (m_ptarget == -1)
+			while (!Targeting.HasTarget)
+				Thread.Sleep(2);
+
+			while (m_ptarget == -1 && Targeting.HasTarget)
 				Thread.Sleep(30);
+
+			if (m_ptarget == -1)
+				Misc.SendMessage("PromptTarget Cancelled", 945);
+			else
+				Misc.SendMessage("PromptTarget on Serial: " + m_ptarget, 945);
 
 			return m_ptarget;
 		}
