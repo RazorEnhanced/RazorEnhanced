@@ -210,8 +210,8 @@ namespace RazorEnhanced.UI
 		{
 			if (debug)
 			{
-				SetErrorBox("Starting Script in debug mode: " + m_Filename);
-				SetStatusLabel("DEBUGGER ACTIVE");
+                SetErrorBox("Starting Script in debug mode: " + m_Filename);
+                SetStatusLabel("DEBUGGER ACTIVE");
 			}
 			else
 			{
@@ -273,9 +273,8 @@ namespace RazorEnhanced.UI
 			{
 				m_Thread.Abort();
 				m_Thread = null;
-			}
-
-			SetErrorBox("Stop Script: " + m_Filename);
+                SetErrorBox("Stop Script: " + m_Filename);
+            }
 		}
 
 		private void SetHighlightLine(int iline, Color background)
@@ -415,79 +414,37 @@ namespace RazorEnhanced.UI
 
 		private void toolStripButtonAddBreakpoint_Click(object sender, EventArgs e)
 		{
-			int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
-
-			if (!m_Breakpoints.Contains(iline))
-			{
-				m_Breakpoints.Add(iline);
-				FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
-				line.BackgroundBrush = new SolidBrush(Color.Red);
-				fastColoredTextBoxEditor.Invalidate();
-			}
+            AddBreakpoint();
 		}
 
 		private void toolStripButtonRemoveBreakpoints_Click(object sender, EventArgs e)
 		{
-			int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
-
-			if (m_Breakpoints.Contains(iline))
-			{
-				m_Breakpoints.Remove(iline);
-				FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
-				line.BackgroundBrush = new SolidBrush(Color.White);
-				fastColoredTextBoxEditor.Invalidate();
-			}
+            RemoveBreakpoint();
 		}
 
 		private void toolStripButtonOpen_Click(object sender, EventArgs e)
 		{
-			OpenFileDialog open = new OpenFileDialog();
-			open.Filter = "Script Files|*.py";
-			open.RestoreDirectory = true;
-            if (open.ShowDialog() == DialogResult.OK)
-			{
-				m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
-				m_Filepath = open.FileName;
-                this.Text = m_Title + " - " + m_Filename + ".py";
-				fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
-			}
+		    Open();
 		}
 
-		private void toolStripButtonSaveAs_Click(object sender, EventArgs e)
+        private void toolStripButtonSave_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void toolStripButtonSaveAs_Click(object sender, EventArgs e)
 		{
 			SaveAs();
         }
 
 		private void toolStripButtonClose_Click(object sender, EventArgs e)
 		{
-			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
-            if (res == System.Windows.Forms.DialogResult.Yes)
-			{
-				SaveFileDialog save = new SaveFileDialog();
-				save.Filter = "Script Files|*.py";
-				save.FileName = m_Filename;
-
-				if (save.ShowDialog() == DialogResult.OK)
-				{
-					File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
-				}
-				fastColoredTextBoxEditor.Text = "";
-				m_Filename = "";
-				m_Filepath = "";
-				this.Text = m_Title;
-			}
-			else if (res == System.Windows.Forms.DialogResult.No)
-			{
-				fastColoredTextBoxEditor.Text = "";
-				m_Filename = "";
-				m_Filepath = "";
-				this.Text = m_Title;
-			}
+		    Close();
 		}
 
 		private void toolStripButtonInspect_Click(object sender, EventArgs e)
 		{
-			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(InspectItemTarget_Callback));
+            InspectEntities();
 		}
 
 		private void InspectItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -517,12 +474,9 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		private void toolStripButton1_Click(object sender, EventArgs e)
+		private void toolStripButtonGumps_Click(object sender, EventArgs e)
 		{
-			EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
-			ginspector.FormClosed += new FormClosedEventHandler(gumpinspector_close);
-			ginspector.TopMost = true;
-			ginspector.Show();
+		    InspectGumps();
 		}
 
 		private void gumpinspector_close(object sender, EventArgs e)
@@ -530,42 +484,56 @@ namespace RazorEnhanced.UI
 			Assistant.Engine.MainWindow.GumpInspectorEnable = false;
 		}
 
-		private void toolStripButtonSave_Click(object sender, EventArgs e)
-		{
-			if (m_Filename != "")
-			{
-				this.Text = m_Title + " - " + m_Filename + ".py";
-				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
-				Scripts.EnhancedScript script = Scripts.Search(m_Filename + ".py");
-				if (script != null)
-				{
-					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename + ".py");
-
-					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename + ".py"))
-					{
-						string text = File.ReadAllText(fullpath);
-						bool loop = script.Loop;
-						bool wait = script.Wait;
-						bool run = script.Run;
-						bool isRunning = script.IsRunning;
-
-						if (isRunning)
-							script.Stop();
-
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename + ".py", text, wait, loop, run);
-						reloaded.Create(null);
-						Scripts.EnhancedScripts[m_Filename + ".py"] = reloaded;
-
-						if (isRunning)
-							reloaded.Start();
-					}
-				}
-			}
-			else
-			{
-				SaveAs();
+	    private void Open()
+	    {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "Script Files|*.py";
+            open.RestoreDirectory = true;
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
+                m_Filepath = open.FileName;
+                this.Text = m_Title + " - " + m_Filename + ".py";
+                fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
             }
-		}
+        }
+
+	    private void Save()
+	    {
+            if (m_Filename != "")
+            {
+                this.Text = m_Title + " - " + m_Filename + ".py";
+                File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
+                Scripts.EnhancedScript script = Scripts.Search(m_Filename + ".py");
+                if (script != null)
+                {
+                    string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts", m_Filename + ".py");
+
+                    if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(m_Filename + ".py"))
+                    {
+                        string text = File.ReadAllText(fullpath);
+                        bool loop = script.Loop;
+                        bool wait = script.Wait;
+                        bool run = script.Run;
+                        bool isRunning = script.IsRunning;
+
+                        if (isRunning)
+                            script.Stop();
+
+                        Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename + ".py", text, wait, loop, run);
+                        reloaded.Create(null);
+                        Scripts.EnhancedScripts[m_Filename + ".py"] = reloaded;
+
+                        if (isRunning)
+                            reloaded.Start();
+                    }
+                }
+            }
+            else
+            {
+                SaveAs();
+            }
+        }
 
 		private void SaveAs()
 		{
@@ -607,5 +575,166 @@ namespace RazorEnhanced.UI
 				}
 			}
 		}
-	}
+
+	    private void Close()
+	    {
+            DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (res == System.Windows.Forms.DialogResult.Yes)
+            {
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "Script Files|*.py";
+                save.FileName = m_Filename;
+
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
+                }
+                fastColoredTextBoxEditor.Text = "";
+                m_Filename = "";
+                m_Filepath = "";
+                this.Text = m_Title;
+            }
+            else if (res == System.Windows.Forms.DialogResult.No)
+            {
+                fastColoredTextBoxEditor.Text = "";
+                m_Filename = "";
+                m_Filepath = "";
+                this.Text = m_Title;
+            }
+        }
+
+	    private void InspectEntities()
+	    {
+            Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(InspectItemTarget_Callback));
+        }
+
+	    private void InspectGumps()
+	    {
+            EnhancedGumpInspector ginspector = new EnhancedGumpInspector();
+            ginspector.FormClosed += new FormClosedEventHandler(gumpinspector_close);
+            ginspector.TopMost = true;
+            ginspector.Show();
+        }
+
+	    private void AddBreakpoint()
+	    {
+            int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
+
+            if (!m_Breakpoints.Contains(iline))
+            {
+                m_Breakpoints.Add(iline);
+                FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
+                line.BackgroundBrush = new SolidBrush(Color.Red);
+                fastColoredTextBoxEditor.Invalidate();
+            }
+        }
+
+	    private void RemoveBreakpoint()
+	    {
+            int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
+
+            if (m_Breakpoints.Contains(iline))
+            {
+                m_Breakpoints.Remove(iline);
+                FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
+                line.BackgroundBrush = new SolidBrush(Color.White);
+                fastColoredTextBoxEditor.Invalidate();
+            }
+        }
+        
+        /// <summary>
+        /// Function to Shortcut with keyboard
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <param name="keyData"></param>
+        /// <returns></returns>
+	    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            //Open File
+            if (keyData == (Keys.Control | Keys.O))
+            {
+                Open();
+                return true;
+            }
+            //Save File
+            if (keyData == (Keys.Control | Keys.S))
+            {
+                Save();
+                return true;
+            }
+            //Save As File
+            if (keyData == (Keys.Control | Keys.Shift | Keys.S))
+            {
+                SaveAs();
+                return true;
+            }
+            //Close the file
+            if (keyData == (Keys.Control | Keys.E))
+            {
+                Close();
+                return true;
+            }
+            //Inspect Entities
+            if (keyData == (Keys.Control | Keys.I))
+            {
+                InspectEntities();
+                return true;
+            }
+            //Inspect Gumps
+            if (keyData == (Keys.Control | Keys.G))
+            {
+                InspectGumps();
+                return true;
+            }
+            //Start with Debug
+            if (keyData == (Keys.F5))
+            {
+                Start(true);
+                return true;
+            }
+            //Start without Debug
+            if (keyData == (Keys.F6))
+            {
+                Start(false);
+                return true;
+            }
+            //Stop
+            if (keyData == (Keys.F4))
+            {
+                Stop();
+                return true;
+            }
+            //Add Breakpoint
+            if (keyData == (Keys.F7))
+            {
+                AddBreakpoint();
+                return true;
+            }
+            //Remove Breakpoint
+            if (keyData == (Keys.F8))
+            {
+                RemoveBreakpoint();
+                return true;
+            }
+            //Debug - Next Call
+            if (keyData == (Keys.F9))
+            {
+                EnqueueCommand(Command.Call);
+                return true;
+            }
+            //Debug - Next Line
+            if (keyData == (Keys.F10))
+            {
+                EnqueueCommand(Command.Line);
+                return true;
+            }
+            //Debug - Next Return
+            if (keyData == (Keys.F11))
+            {
+                EnqueueCommand(Command.Return);
+                return true;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+    }
 }
