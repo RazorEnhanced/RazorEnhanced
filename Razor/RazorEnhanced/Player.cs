@@ -143,6 +143,7 @@ namespace RazorEnhanced
 
 		// Position
 		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
+		public static int Map { get { return World.Player.Map; } }
 		public static string Dir
 		{
 			get
