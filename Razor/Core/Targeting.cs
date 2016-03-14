@@ -693,6 +693,20 @@ namespace Assistant
 			TargetByScript(info);
 		}
 
+		internal static void TargetByScript(Point3D pt, int gfx)
+		{
+			TargetInfo info = new TargetInfo();
+			info.Type = 1;
+			info.Flags = 0;
+			info.Serial = 0;
+			info.X = pt.X;
+			info.Y = pt.Y;
+			info.Z = pt.Z;
+			info.Gfx = (ushort)(gfx & 0x3FFF);
+
+			TargetByScript(info);
+		}
+
 		internal static void Target(Point3D pt, int gfx)
 		{
 			TargetInfo info = new TargetInfo();

@@ -54,6 +54,12 @@ namespace RazorEnhanced
 			Assistant.Targeting.TargetByScript(location);
 		}
 
+		public static void TargetExecute(int x, int y, int z, int gfx)
+		{
+			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
+			Assistant.Targeting.TargetByScript(location, gfx);
+		}
+
 		public static void Cancel()
 		{
 			Assistant.Targeting.CancelClientTargetByScript();
