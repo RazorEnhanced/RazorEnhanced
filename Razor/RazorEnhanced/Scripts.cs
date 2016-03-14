@@ -497,7 +497,8 @@ namespace RazorEnhanced
 			scope.SetVariable("Gumps", new RazorEnhanced.Gumps());
 			scope.SetVariable("Journal", new RazorEnhanced.Journal());
 			scope.SetVariable("Target", new RazorEnhanced.Target());
-
+			scope.SetVariable("Statics", new RazorEnhanced.Statics());
+			
 			scope.SetVariable("AutoLoot", new RazorEnhanced.AutoLoot());
 			scope.SetVariable("Scavenger", new RazorEnhanced.Scavenger());
 			scope.SetVariable("SellAgent", new RazorEnhanced.SellAgent());
