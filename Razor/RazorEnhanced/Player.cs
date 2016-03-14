@@ -822,13 +822,13 @@ namespace RazorEnhanced
 				case "Alchemy":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Alchemy)].Value;
 
-				case "AnimalLore":
+				case "Animal Lore":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalLore)].Value;
 
-				case "ItemID":
+				case "Item ID":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ItemID)].Value;
 
-				case "ArmsLore":
+				case "Arms Lore":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ArmsLore)].Value;
 
 				case "Parry":
@@ -858,13 +858,13 @@ namespace RazorEnhanced
 				case "Cooking":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cooking)].Value;
 
-				case "DetectHidden":
+				case "Detect Hidden":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.DetectHidden)].Value;
 
 				case "Discordance":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Discordance)].Value;
 
-				case "EvalInt":
+				case "Eval Int":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.EvalInt)].Value;
 
 				case "Healing":
@@ -894,7 +894,7 @@ namespace RazorEnhanced
 				case "Magery":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Magery)].Value;
 
-				case "MagicResist":
+				case "Magic Resist":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.MagicResist)].Value;
 
 				case "Tactics":
@@ -912,7 +912,7 @@ namespace RazorEnhanced
 				case "Archery":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Archery)].Value;
 
-				case "SpiritSpeak":
+				case "Spirit Speak":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpiritSpeak)].Value;
 
 				case "Stealing":
@@ -921,10 +921,10 @@ namespace RazorEnhanced
 				case "Tailoring":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tailoring)].Value;
 
-				case "AnimalTaming":
+				case "Animal Taming":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalTaming)].Value;
 
-				case "TasteID":
+				case "Taste ID":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.TasteID)].Value;
 
 				case "Tinkering":
@@ -960,7 +960,7 @@ namespace RazorEnhanced
 				case "Stealth":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealth)].Value;
 
-				case "RemoveTrap":
+				case "Remove Trap":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.RemoveTrap)].Value;
 
 				case "Necromancy":
@@ -978,7 +978,7 @@ namespace RazorEnhanced
 				case "Ninjitsu":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Ninjitsu)].Value;
 
-				case "SpellWeaving":
+				case "Spell Weaving":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Value;
 
 				default:
@@ -994,10 +994,10 @@ namespace RazorEnhanced
 				case "Alchemy":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Alchemy)].Cap;
 
-				case "AnimalLore":
+				case "Animal Lore":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalLore)].Cap;
 
-				case "ItemID":
+				case "Item ID":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ItemID)].Cap;
 
 				case "ArmsLore":
@@ -1030,7 +1030,7 @@ namespace RazorEnhanced
 				case "Cooking":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cooking)].Cap;
 
-				case "DetectHidden":
+				case "Detect Hidden":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.DetectHidden)].Cap;
 
 				case "Discordance":
@@ -1066,7 +1066,7 @@ namespace RazorEnhanced
 				case "Magery":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Magery)].Cap;
 
-				case "MagicResist":
+				case "Magic Resist":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.MagicResist)].Cap;
 
 				case "Tactics":
@@ -1084,7 +1084,7 @@ namespace RazorEnhanced
 				case "Archery":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Archery)].Cap;
 
-				case "SpiritSpeak":
+				case "Spirit Speak":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpiritSpeak)].Cap;
 
 				case "Stealing":
@@ -1093,10 +1093,10 @@ namespace RazorEnhanced
 				case "Tailoring":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tailoring)].Cap;
 
-				case "AnimalTaming":
+				case "Animal Taming":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalTaming)].Cap;
 
-				case "TasteID":
+				case "Taste ID":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.TasteID)].Cap;
 
 				case "Tinkering":
@@ -1132,7 +1132,7 @@ namespace RazorEnhanced
 				case "Stealth":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealth)].Cap;
 
-				case "RemoveTrap":
+				case "Remove Trap":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.RemoveTrap)].Cap;
 
 				case "Necromancy":
@@ -1150,7 +1150,7 @@ namespace RazorEnhanced
 				case "Ninjitsu":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Ninjitsu)].Cap;
 
-				case "SpellWeaving":
+				case "Spell Weaving":
 					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Cap;
 
 				default:
@@ -1166,13 +1166,13 @@ namespace RazorEnhanced
 				case "Alchemy":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Alchemy)].Lock);
 
-				case "AnimalLore":
+				case "Animal Lore":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalLore)].Lock);
 
-				case "ItemID":
+				case "Item ID":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ItemID)].Lock);
 
-				case "ArmsLore":
+				case "Arms Lore":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ArmsLore)].Lock);
 
 				case "Parry":
@@ -1202,13 +1202,13 @@ namespace RazorEnhanced
 				case "Cooking":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cooking)].Lock);
 
-				case "DetectHidden":
+				case "Detect Hidden":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.DetectHidden)].Lock);
 
 				case "Discordance":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Discordance)].Lock);
 
-				case "EvalInt":
+				case "Eval Int":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.EvalInt)].Lock);
 
 				case "Healing":
@@ -1238,7 +1238,7 @@ namespace RazorEnhanced
 				case "Magery":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Magery)].Lock);
 
-				case "MagicResist":
+				case "Magic Resist":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.MagicResist)].Lock);
 
 				case "Tactics":
@@ -1256,7 +1256,7 @@ namespace RazorEnhanced
 				case "Archery":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Archery)].Lock);
 
-				case "SpiritSpeak":
+				case "Spirit Speak":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpiritSpeak)].Lock);
 
 				case "Stealing":
@@ -1265,10 +1265,10 @@ namespace RazorEnhanced
 				case "Tailoring":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tailoring)].Lock);
 
-				case "AnimalTaming":
+				case "Animal Taming":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalTaming)].Lock);
 
-				case "TasteID":
+				case "Taste ID":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.TasteID)].Lock);
 
 				case "Tinkering":
@@ -1304,7 +1304,7 @@ namespace RazorEnhanced
 				case "Stealth":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealth)].Lock);
 
-				case "RemoveTrap":
+				case "Remove Trap":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.RemoveTrap)].Lock);
 
 				case "Necromancy":
@@ -1322,7 +1322,7 @@ namespace RazorEnhanced
 				case "Ninjitsu":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Ninjitsu)].Lock);
 
-				case "SpellWeaving":
+				case "Spell Weaving":
 					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Lock);
 
 				default:
