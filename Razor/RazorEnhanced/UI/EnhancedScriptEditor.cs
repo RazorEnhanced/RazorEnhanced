@@ -650,91 +650,81 @@ namespace RazorEnhanced.UI
         /// <returns></returns>
 	    protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            //Open File
-            if (keyData == (Keys.Control | Keys.O))
+            switch (keyData)
             {
-                Open();
-                return true;
+                //Open File
+                case (Keys.Control | Keys.O):
+                    Open();
+                    return true;
+
+                //Save File
+                case (Keys.Control | Keys.S):
+                    Save();
+                    return true;
+
+                //Save As File
+                case (Keys.Control | Keys.Shift | Keys.S):
+                    SaveAs();
+                    return true;
+
+                //Close File
+                case (Keys.Control | Keys.E):
+                    Close();
+                    return true;
+
+                //Inspect Entities
+                case (Keys.Control | Keys.I):
+                    InspectEntities();
+                    return true;
+
+                //Inspect Gumps
+                case (Keys.Control | Keys.G):
+                    InspectGumps();
+                    return true;
+
+                //Start with Debug
+                case (Keys.F5):
+                    Start(true);
+                    return true;
+
+                //Start without Debug
+                case (Keys.F6):
+                    Start(false);
+                    return true;
+
+                //Stop
+                case (Keys.F4):
+                    Stop();
+                    return true;
+
+                //Add Breakpoint
+                case (Keys.F7):
+                    AddBreakpoint();
+                    return true;
+
+                //Remove Breakpoint
+                case (Keys.F8):
+                    RemoveBreakpoint();
+                    return true;
+
+                //Debug - Next Call
+                case (Keys.F9):
+                    EnqueueCommand(Command.Call);
+                    return true;
+
+                //Debug - Next Line
+                case (Keys.F10):
+                    EnqueueCommand(Command.Line);
+                    return true;
+
+                //Debug - Next Return
+                case (Keys.F11):
+                    EnqueueCommand(Command.Return);
+                    return true;
+
+                default:
+                    return base.ProcessCmdKey(ref msg, keyData);
             }
-            //Save File
-            if (keyData == (Keys.Control | Keys.S))
-            {
-                Save();
-                return true;
-            }
-            //Save As File
-            if (keyData == (Keys.Control | Keys.Shift | Keys.S))
-            {
-                SaveAs();
-                return true;
-            }
-            //Close the file
-            if (keyData == (Keys.Control | Keys.E))
-            {
-                Close();
-                return true;
-            }
-            //Inspect Entities
-            if (keyData == (Keys.Control | Keys.I))
-            {
-                InspectEntities();
-                return true;
-            }
-            //Inspect Gumps
-            if (keyData == (Keys.Control | Keys.G))
-            {
-                InspectGumps();
-                return true;
-            }
-            //Start with Debug
-            if (keyData == (Keys.F5))
-            {
-                Start(true);
-                return true;
-            }
-            //Start without Debug
-            if (keyData == (Keys.F6))
-            {
-                Start(false);
-                return true;
-            }
-            //Stop
-            if (keyData == (Keys.F4))
-            {
-                Stop();
-                return true;
-            }
-            //Add Breakpoint
-            if (keyData == (Keys.F7))
-            {
-                AddBreakpoint();
-                return true;
-            }
-            //Remove Breakpoint
-            if (keyData == (Keys.F8))
-            {
-                RemoveBreakpoint();
-                return true;
-            }
-            //Debug - Next Call
-            if (keyData == (Keys.F9))
-            {
-                EnqueueCommand(Command.Call);
-                return true;
-            }
-            //Debug - Next Line
-            if (keyData == (Keys.F10))
-            {
-                EnqueueCommand(Command.Line);
-                return true;
-            }
-            //Debug - Next Return
-            if (keyData == (Keys.F11))
-            {
-                EnqueueCommand(Command.Return);
-                return true;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }
