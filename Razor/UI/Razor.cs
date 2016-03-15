@@ -11565,8 +11565,7 @@ namespace Assistant
 		{
 			RazorEnhanced.Profiles.SetLast(profilesComboBox.Text);
 			profilelinklabel.Text = "Linked to: " + RazorEnhanced.Profiles.GetLinkName(profilesComboBox.Text);
-			if (profilesComboBox.Focused)
-				RazorEnhanced.Profiles.ProfileChange(profilesComboBox.Text);
+			RazorEnhanced.Profiles.ProfileChange(profilesComboBox.Text);
 		}
 
 		private void profilesLinkButton_Click(object sender, EventArgs e)
