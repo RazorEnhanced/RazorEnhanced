@@ -1286,7 +1286,7 @@ namespace FastColoredTextBoxNS
 			PythonNumberRegex = new Regex(@"\b[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?\b", RegexCompiledOption);
 			PythonKeywordRegex = new Regex(@"\b(and|assert|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|not|or|pass|print|raise|return|try|while|yield|None|True|False|as)\b", RegexCompiledOption);
 
-			RazorClassKeywordRegex = new Regex(@"\b(Player|Spells|Mobile|Mobiles|Item|Items|Misc|Target|Gumps|Journal|AutoLoot|Scavenger|Organizer|Restock|SellAgent|BuyAgent|Dress|Friend|BandageHeal)\b", RegexCompiledOption);
+			RazorClassKeywordRegex = new Regex(@"\b(Player|Spells|Mobile|Mobiles|Item|Items|Misc|Target|Gumps|Journal|AutoLoot|Scavenger|Organizer|Restock|SellAgent|BuyAgent|Dress|Friend|BandageHeal|Statics)\b", RegexCompiledOption);
 
 			string GenericProps = "Serial|Hue|Position|X|Y|Z|Contains|Weight";
 			string PlayerProps = "Str|Int|Dex|StatCap|AR|FireResistance|ColdResistance|EnergyResistance|PoisonResistance|Buffs|IsGhost|Blessed|Gold|Luck|Followers|FollowersMax|MaxWeight|Dir";
@@ -1300,11 +1300,12 @@ namespace FastColoredTextBoxNS
 			string MobileFunctions = "UseMobile";
 			string ItemsFunctions = "DistanceTo|Move|DropItemGroundSelf|UseItem|WaitForContents|BackpackCount|ContainerCount|GetPropByCliloc|GetPropByString";
 			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContains|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse|NoOperation|ScriptRun|ScriptStop|ScriptStatus";
-			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList";
+			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList|PromptTarget";
 			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal";
 			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend";
 			string DressUndressAgentFunctions = "DessStatus|UnDressStatus|DressFStart|UnDressFStart|DressFStop|UnDressFStop";
-			RazorFunctionsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9})\b", GenericFunctions, PlayerFunctions, SpellsFunctions, MobileFunctions, ItemsFunctions, MiscFunctions, TargetFunctions, JournalFunctions, AgentsFunctions, DressUndressAgentFunctions), RegexCompiledOption);
+			string StaticsFunctions = "GetLandID|GetLandZ|GetStaticsTileInfo";
+			RazorFunctionsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10})\b", GenericFunctions, PlayerFunctions, SpellsFunctions, MobileFunctions, ItemsFunctions, MiscFunctions, TargetFunctions, JournalFunctions, AgentsFunctions, DressUndressAgentFunctions, StaticsFunctions), RegexCompiledOption);
 		}
 
 		/// <summary>
