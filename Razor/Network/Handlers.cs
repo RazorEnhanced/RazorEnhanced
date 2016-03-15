@@ -15,7 +15,7 @@ namespace Assistant
 			//Client -> Server handlers
 			PacketHandler.RegisterClientToServerViewer(0x00, new PacketViewerCallback(CreateCharacter));
 			PacketHandler.RegisterClientToServerViewer(0x02, new PacketViewerCallback(MovementRequest));
-			PacketHandler.RegisterClientToServerFilter(0x05, new PacketFilterCallback(AttackRequest));
+			PacketHandler.RegisterClientToServerFilter(0x05, new PacketFilterCallback(AttackRequest));	
 			PacketHandler.RegisterClientToServerViewer(0x06, new PacketViewerCallback(ClientDoubleClick));
 			PacketHandler.RegisterClientToServerViewer(0x07, new PacketViewerCallback(LiftRequest));
 			PacketHandler.RegisterClientToServerViewer(0x08, new PacketViewerCallback(DropRequest));
@@ -188,10 +188,15 @@ namespace Assistant
 
 		private static void ClientSingleClick(PacketReader p, PacketHandlerEventArgs args)
 		{
+			Serial ser = p.ReadUInt32();
+
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);
+
 			// if you modify this, don't forget to modify the allnames hotkey
 			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
 			{
-				Mobile m = World.FindMobile(p.ReadUInt32());
+				Mobile m = World.FindMobile(ser);
 				if (m != null)
 					Targeting.CheckTextFlags(m);
 			}
@@ -200,6 +205,9 @@ namespace Assistant
 		private static void ClientDoubleClick(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial ser = p.ReadUInt32();
+
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_ClientDoubleClick(ser);
 
 			if (ser.IsItem)
 			{
@@ -268,6 +276,10 @@ namespace Assistant
 						if (p.ReadUInt16() == 1)
 							ser = p.ReadUInt32();
 						ushort sid = p.ReadUInt16();
+
+						if (RazorEnhanced.ScriptRecorder.OnRecord)
+							RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, sid);
+
 						Spell s = Spell.Get(sid);
 						if (s != null)
 						{
@@ -306,6 +318,9 @@ namespace Assistant
 						try { skillIndex = Convert.ToInt32(command.Split(' ')[0]); }
 						catch { break; }
 
+						if (RazorEnhanced.ScriptRecorder.OnRecord)
+							RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(1, skillIndex);
+
 						if (World.Player != null)
 							World.Player.LastSkill = skillIndex;
 
@@ -323,6 +338,10 @@ namespace Assistant
 							{
 								ushort spellID = Convert.ToUInt16(split[0]);
 								Serial serial = Convert.ToUInt32(split.Length > 1 ? Utility.ToInt32(split[1], -1) : -1);
+
+								if (RazorEnhanced.ScriptRecorder.OnRecord)
+									RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
+
 								Spell s = Spell.Get(spellID);
 								if (s != null)
 								{
@@ -341,6 +360,10 @@ namespace Assistant
 						try
 						{
 							ushort spellID = Convert.ToUInt16(command);
+
+							if (RazorEnhanced.ScriptRecorder.OnRecord)
+								RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(2, spellID);
+
 							Spell s = Spell.Get(spellID);
 							if (s != null)
 							{
@@ -448,6 +471,9 @@ namespace Assistant
 			if (m == null)
 				return;
 
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_EquipRequest(item, layer, m);
+
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(item, m, layer);
 		}
@@ -463,6 +489,9 @@ namespace Assistant
 				p.ReadByte();
 			Point3D newPos = new Point3D(x, y, z);
 			Serial dser = p.ReadUInt32();
+
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_DropRequest(iser, dser);
 
 			Item i = World.FindItem(iser);
 			if (i == null)
@@ -3009,6 +3038,10 @@ namespace Assistant
 		private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
 		{
 			uint serialbersaglio = p.ReadUInt32();
+
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_AttackRequest(serialbersaglio);
+
 			if (RazorEnhanced.Friend.PreventAttack)
 			{
 				if (RazorEnhanced.Friend.IsFriend((int)serialbersaglio))

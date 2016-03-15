@@ -376,5 +376,18 @@ namespace RazorEnhanced
 				return false;
 			}
 		}
+
+		// Pet Rename
+		public static void PetRename(int serial, string name)
+		{
+			ClientCommunication.SendToServerWait(new RenameRequest((uint)serial, name));
+		}
+
+		public static void PetRename(RazorEnhanced.Mobile mob, string name)
+		{
+			ClientCommunication.SendToServerWait(new RenameRequest((uint)mob.Serial, name));
+		}
+
+
 	}
 }
