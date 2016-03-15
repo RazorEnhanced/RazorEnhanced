@@ -9,8 +9,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
+using FastColoredTextBoxNS;
 
 namespace RazorEnhanced.UI
 {
@@ -57,6 +60,8 @@ namespace RazorEnhanced.UI
 
 		private volatile bool m_Breaktrace = false;
 
+	    private FastColoredTextBoxNS.AutocompleteMenu m_popupMenu;
+
 		internal static void Init(string filename)
 		{
 			ScriptEngine engine = Python.CreateEngine();
@@ -79,7 +84,204 @@ namespace RazorEnhanced.UI
 		{
 			InitializeComponent();
 
-			this.Text = m_Title;
+            //Automenu Section
+            m_popupMenu = new AutocompleteMenu(fastColoredTextBoxEditor);
+            m_popupMenu.Items.ImageList = imageList2;
+            m_popupMenu.SearchPattern = @"[\w\.:=!<>]";
+            m_popupMenu.AllowTabKey = true;
+
+            #region Keywords
+
+            string[] keywords =
+		    {
+		        "and", "assert", "break", "class", "continue", "def", "del", "elif", "else", "except", "exec",
+		        "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or", "pass", "print",
+		        "raise", "return", "try", "while", "yield", "None", "True", "False", "as"
+		    };
+
+            #endregion
+
+            #region Classes Autocomplete
+
+            string[] classes =
+		    {
+		        "Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
+		        "AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
+                "Statics"
+		    };
+
+            #endregion
+
+            #region Methods Autocomplete
+
+            string[] methodsPlayer =
+		    {
+		        "Player.BuffsExist", "Player.GetBuffDescription",
+		        "Player.HeadMessage", "Player.InRangeMobile", "Player.InRangeItem", "Player.GetItemOnLayer",
+		        "Player.UnEquipItemByLayer", "Player.EquipItem", "Player.CheckLayer", "Player.GetAssistantLayer",
+		        "Player.GetSkillValue", "Player.GetSkillCap", "Player.GetSkillStatus", "Player.UseSkill", "Player.ChatSay",
+		        "Player.ChatEmote", "Player.ChatWhisper",
+		        "Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
+		        "Player.AttackLast", "Player.InParty", "Player.ChatParty",
+		        "Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
+		        "Player.Walk", "Player.PathFindTo", "Player.QuestButton",
+		        "Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
+		        "Player.WeaponStunSA", "Player.WeaponDisarmSA"
+		    };
+
+		    string[] methodsSpells =
+		    {
+                "Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism"
+            };
+
+		    string[] methodsMobiles =
+		    {
+		        "Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile",
+		        "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
+		        "Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList"
+		    };
+
+		    string[] methodsItems =
+		    {
+		        "Items.FindBySerial", "Items.Move", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.WaitForProps",
+		        "Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
+		        "Items.WaitForContents",
+		        "Items.Message", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount"
+		    };
+
+		    string[] methodsMisc =
+		    {
+		        "Misc.SendMessage", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
+		        "Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
+		        "Misc.SetSharedValue",
+		        "Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContains", "Misc.GetMenuTitle", "Misc.WaitForMenu",
+		        "Misc.MenuResponse", "Misc.HasQueryString",
+		        "Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
+		        "Misc.ScriptStatus", "Misc.PetRename"
+		    };
+
+		    string[] methodsTarget =
+		    {
+                "Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.Cancel", "Target.Last", "Target.LastQueued",
+                "Target.Self", "Target.SelfQueued", "Target.SetLast", "Target.ClearLast", "Target.ClearQueue", "Target.ClearLastandQueue", "Target.SetLastTargetFromList",
+                "Target.PerformTargetFromList", "Target.AttackTargetFromList"
+            };
+
+		    string[] methodsJournal =
+		    {
+		        "Journal.Clear", "Journal.Search", "Journal.SearchByName", "Journal.SearchByColor",
+		        "Journal.SearchByType", "Journal.GetLineText", "Journal.GetSpeechName", "Journal.WaitJournal"
+		    };
+
+		    string[] methodsAutoLoot =
+		    {
+                "AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "Scavenger.RunOnce"
+            };
+
+		    string[] methodsScavenger =
+		    {
+                "Scavenger.Status", "Scavenger.Start", "Scavenger.Stop", "Scavenger.ChangeList", "Scavenger.RunOnce"
+            };
+
+            string[] methodsRestock =
+            {
+                "Restock.Status", "Restock.FStart", "Restock.FStop", "Restock.ChangeList"
+            };
+
+            string[] methodsSellAgent =
+            {
+                "SellAgent.Status", "SellAgent.Enable", "SellAgent.Disable", "SellAgent.ChangeList"
+            };
+
+            string[] methodsBuyAgent =
+            {
+                "BuyAgent.Status", "BuyAgent.Enable", "BuyAgent.Disable", "BuyAgent.ChangeList"
+            };
+
+		    string[] methodsDress =
+		    {
+                "Dress.DessStatus", "Dress.UnDressStatus", "Dress.DressFStart", "Dress.UnDressFStart", "Dress.DressFStop", "Dress.UnDressFStop", "Dress.ChangeList"
+            };
+
+		    string[] methodsFriend =
+		    {
+                "Friend.IsFriend", "Friend.ChangeList"
+		    };
+
+            string[] methodsBandageHeal =
+            {
+                "BandageHeal.Status", "BandageHeal.Start", "BandageHeal.Stop"
+            };
+
+		    string[] methodsStatics =
+		    {
+                "Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo"
+            };
+
+		    string[] methods =
+		        methodsPlayer.Union(methodsSpells)
+		            .Union(methodsMobiles)
+		            .Union(methodsItems)
+		            .Union(methodsMisc)
+		            .Union(methodsTarget)
+		            .Union(methodsJournal)
+		            .Union(methodsAutoLoot)
+		            .Union(methodsScavenger)
+		            .Union(methodsRestock)
+		            .Union(methodsSellAgent)
+		            .Union(methodsBuyAgent)
+		            .Union(methodsDress)
+		            .Union(methodsFriend)
+		            .Union(methodsBandageHeal)
+                    .Union(methodsStatics)
+		            .ToArray();
+
+            #endregion
+
+            #region Props Autocomplete
+
+		    string[] propsPlayer =
+		    {
+		        "Player.StatCap", "Player.AR", "Player.FireResistance", "Player.ColdResistance", "Player.EnergyResistance",
+		        "Player.PoisonResistance",
+		        "Player.Buffs", "Player.IsGhost", "Player.Female", "Player.Name", "Player.Bankbox",
+		        "Player.Gold", "Player.Luck", "Player.Body",
+		        "Player.Followers", "Player.FollowersMax", "Player.MaxWeight"
+		    };
+
+		    string[] propsGeneric =
+		    {
+		        "Serial", "Hue", "Name", "Body", "Color", "Direction", "Visible", "Poisoned", "YellowHits", "Paralized",
+		        "Human", "WarMode", "Female", "Hits", "MaxHits", "Stam", "StamMax", "Mana", "ManaMax", "Backpack", "Mount",
+		        "Quiver", "Notoriety", "Map", "InParty", "Properties", "Amount", "IsBagOfSending", "IsContainer", "IsCorpse",
+		        "IsDoor", "IsInBank", "Movable", "OnGround", "ItemID", "RootContainer", "Durability", "MaxDurability",
+		        "Contains", "Weight"
+		    };
+
+            string[] props = propsGeneric;
+
+            #endregion
+
+            List<AutocompleteItem> items = new List<AutocompleteItem>();
+
+		    foreach (var item in keywords)
+                items.Add(new AutocompleteItem(item) { ImageIndex = 0 });
+
+		    foreach (var item in classes)
+		        items.Add(new AutocompleteItem(item) { ImageIndex = 1 });
+
+            foreach (var item in methods)
+                items.Add(new MethodAutocompleteItemAdvance(item) { ImageIndex = 2 });
+
+		    foreach (var item in propsPlayer)
+		        items.Add(new MethodAutocompleteItemAdvance(item) { ImageIndex = 3 });
+
+            foreach (var item in props)
+                items.Add(new MethodAutocompleteItem(item) { ImageIndex = 3 });
+
+            m_popupMenu.Items.SetAutocompleteItems(items);
+
+            this.Text = m_Title;
 			this.m_Engine = engine;
 			this.m_Engine.SetTrace(null);
 
@@ -725,6 +927,75 @@ namespace RazorEnhanced.UI
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);
             }
+        }
+    }
+
+    /// <summary>
+    /// This autocomplete item appears after dot
+    /// </summary>
+    public class MethodAutocompleteItemAdvance : MethodAutocompleteItem
+    {
+        string firstPart;
+        string lastPart;
+
+        public MethodAutocompleteItemAdvance(string text)
+            : base(text)
+        {
+            var i = text.LastIndexOf('.');
+            if (i < 0)
+                firstPart = text;
+            else
+            {
+                firstPart = text.Substring(0, i);
+                lastPart = text.Substring(i + 1);
+            }
+        }
+
+        public override CompareResult Compare(string fragmentText)
+        {
+            int i = fragmentText.LastIndexOf('.');
+
+            if (i < 0)
+            {
+                if (firstPart.StartsWith(fragmentText) && string.IsNullOrEmpty(lastPart))
+                    return CompareResult.VisibleAndSelected;
+                //if (firstPart.ToLower().Contains(fragmentText.ToLower()))
+                //  return CompareResult.Visible;
+            }
+            else
+            {
+                var fragmentFirstPart = fragmentText.Substring(0, i);
+                var fragmentLastPart = fragmentText.Substring(i + 1);
+
+
+                if (firstPart != fragmentFirstPart)
+                    return CompareResult.Hidden;
+
+                if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
+                    return CompareResult.VisibleAndSelected;
+
+                if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
+                    return CompareResult.Visible;
+
+            }
+
+            return CompareResult.Hidden;
+        }
+
+        public override string GetTextForReplace()
+        {
+            if (lastPart == null)
+                return firstPart;
+
+            return firstPart + "." + lastPart;
+        }
+
+        public override string ToString()
+        {
+            if (lastPart == null)
+                return firstPart;
+
+            return lastPart;
         }
     }
 }

@@ -56,6 +56,7 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.textBoxDebug = new System.Windows.Forms.TextBox();
+            this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -362,6 +363,15 @@
             this.textBoxDebug.Size = new System.Drawing.Size(271, 544);
             this.textBoxDebug.TabIndex = 0;
             // 
+            // imageList2
+            // 
+            this.imageList2.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList2.ImageStream")));
+            this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList2.Images.SetKeyName(0, "Key_16x.png");
+            this.imageList2.Images.SetKeyName(1, "Class_yellow_16x.png");
+            this.imageList2.Images.SetKeyName(2, "Method_purple_16x.png");
+            this.imageList2.Images.SetKeyName(3, "Field_blue_16x.png");
+            // 
             // EnhancedScriptEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -391,7 +401,7 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
 		#endregion
 
@@ -421,5 +431,6 @@
 		private System.Windows.Forms.ToolStripButton toolStripButtonSave;
 		private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
 		private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ImageList imageList2;
     }
 }
