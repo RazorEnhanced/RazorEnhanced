@@ -144,20 +144,20 @@ namespace RazorEnhanced
 		// Position
 		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
 		public static int Map { get { return World.Player.Map; } }
-		public static string Dir
+		public static string Direction
 		{
 			get
 			{
-				switch (Assistant.World.Player.Direction & Direction.Mask)
+				switch (Assistant.World.Player.Direction & Assistant.Direction.Mask)
 				{
-					case Direction.North: return "North";
-					case Direction.South: return "South";
-					case Direction.West: return "West";
-					case Direction.East: return "East";
-					case Direction.Right: return "Right";
-					case Direction.Left: return "Left";
-					case Direction.Down: return "Down";
-					case Direction.Up: return "Up";
+					case Assistant.Direction.North: return "North";
+					case Assistant.Direction.South: return "South";
+					case Assistant.Direction.West: return "West";
+					case Assistant.Direction.East: return "East";
+					case Assistant.Direction.Right: return "Right";
+					case Assistant.Direction.Left: return "Left";
+					case Assistant.Direction.Down: return "Down";
+					case Assistant.Direction.Up: return "Up";
 					default: return "Undefined";
 				}
 			}
@@ -1566,43 +1566,43 @@ namespace RazorEnhanced
 			switch (direction)
 			{
 				case "North":
-					dir = Direction.North;
+					dir = Assistant.Direction.North;
 					break;
 
 				case "South":
-					dir = Direction.South;
+					dir = Assistant.Direction.South;
 					break;
 
 				case "East":
-					dir = Direction.East;
+					dir = Assistant.Direction.East;
 					break;
 
 				case "West":
-					dir = Direction.West;
+					dir = Assistant.Direction.West;
 					break;
 
 				case "Up":
-					dir = Direction.Up;
+					dir = Assistant.Direction.Up;
 					break;
 
 				case "Down":
-					dir = Direction.Down;
+					dir = Assistant.Direction.Down;
 					break;
 
 				case "Left":
-					dir = Direction.Left;
+					dir = Assistant.Direction.Left;
 					break;
 
 				case "Right":
-					dir = Direction.Right;
+					dir = Assistant.Direction.Right;
 					break;
 
 				default:
-					dir = Direction.Mask;
+					dir = Assistant.Direction.Mask;
 					break;
 			}
 
-			if (dir != Direction.Mask)
+			if (dir != Assistant.Direction.Mask)
 			{
 				ClientCommunication.SendToServerWait(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
 			}
