@@ -136,7 +136,7 @@ namespace RazorEnhanced.UI
 
 		    string[] methodsMobiles =
 		    {
-		        "Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick"
+		        "Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
 		        "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
 		        "Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList"
 		    };
