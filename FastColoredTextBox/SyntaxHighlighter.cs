@@ -1294,7 +1294,7 @@ namespace FastColoredTextBoxNS
 			string ItemsProps = "Amount|IsBagOfSending|IsContainer|IsCorpse|IsDoor|IsInBank|Movable|OnGround|ItemID|RootContainer|Durability|MaxDurability";
 			RazorPropsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3})\b", GenericProps, PlayerProps, MobileProps, ItemsProps), RegexCompiledOption);
 
-			string GenericFunctions = "GetItemOnLayer|GetAssistantLayer|FindBySerial|ApplyFilter|WaitForProps|GetPropValue|GetPropStringByIndex|GetPropStringList|Message";
+			string GenericFunctions = "GetItemOnLayer|GetAssistantLayer|FindBySerial|ApplyFilter|SingleClick|WaitForProps|GetPropValue|GetPropStringByIndex|GetPropStringList|Message";
 			string PlayerFunctions = "BuffsExist|GetBuffDescription|HeadMessage|InRangeMobile|InRangeItem|UnEquipItemByLayer|EquipItem|CheckLayer|GetSkillValue|GetSkillCap|GetSkillStatus|UseSkill|ChatSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyLeave|KickMember|InvokeVirtue|Walk|PathFindTo|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA";
 			string SpellsFunctions = "CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism";
 			string MobileFunctions = "UseMobile";

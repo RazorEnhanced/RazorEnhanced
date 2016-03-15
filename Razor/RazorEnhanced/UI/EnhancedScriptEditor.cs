@@ -136,15 +136,15 @@ namespace RazorEnhanced.UI
 
 		    string[] methodsMobiles =
 		    {
-		        "Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile",
+		        "Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick"
 		        "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
 		        "Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList"
 		    };
 
 		    string[] methodsItems =
 		    {
-		        "Items.FindBySerial", "Items.Move", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.WaitForProps",
-		        "Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
+		        "Items.FindBySerial", "Items.Move", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
+                "Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
 		        "Items.WaitForContents",
 		        "Items.Message", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount"
 		    };
@@ -549,9 +549,6 @@ namespace RazorEnhanced.UI
 
 		private void SetTraceback(string text)
 		{
-			if (m_OnClosing)
-				return;
-
 			if (this.textBoxDebug.InvokeRequired)
 			{
 				SetTracebackDelegate d = new SetTracebackDelegate(SetTraceback);
