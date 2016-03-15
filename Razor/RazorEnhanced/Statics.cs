@@ -4,10 +4,27 @@ namespace RazorEnhanced
 {
 	public class Statics
 	{
+		private static bool m_loaded = false;
+
+		private static void LoadMapData()
+		{
+			// Inizializza mappe
+			Ultima.Map.InitializeMap("Felucca");
+			Ultima.Map.InitializeMap("Trammel");
+			Ultima.Map.InitializeMap("Ilshenar");
+			Ultima.Map.InitializeMap("Malas");
+			Ultima.Map.InitializeMap("Tokuno");
+			Ultima.Map.InitializeMap("TerMur");
+			m_loaded = true;
+		}
+
 		// Blocco info sul terreno
 		public static int GetLandID(int x, int y, int map)
 		{
-			switch (map)
+			if (!m_loaded)
+				LoadMapData();
+
+            switch (map)
 			{
 				case 0:
 					return Ultima.Map.Felucca.Tiles.GetLandTile(x, y).ID;
@@ -29,6 +46,9 @@ namespace RazorEnhanced
 
 		public static int GetLandZ(int x, int y, int map)
 		{
+			if (!m_loaded)
+				LoadMapData();
+
 			switch (map)
 			{
 				case 0:
@@ -71,6 +91,9 @@ namespace RazorEnhanced
 
 		public static List<TileInfo> GetStaticsTileInfo(int x, int y, int map)
 		{
+			if (!m_loaded)
+				LoadMapData();
+
 			Ultima.HuedTile[] tiles;
 			List<TileInfo> tileinfo = new List<TileInfo>();
 

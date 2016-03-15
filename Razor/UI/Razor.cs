@@ -6925,14 +6925,6 @@ namespace Assistant
 			msglvl.Enabled = false;
 
 			showscriptmessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox");
-
-			// Inizializza mappe
-			Ultima.Map.InitializeMap("Felucca");
-			Ultima.Map.InitializeMap("Trammel");
-			Ultima.Map.InitializeMap("Ilshenar");
-			Ultima.Map.InitializeMap("Malas");
-			Ultima.Map.InitializeMap("Tokuno");
-			Ultima.Map.InitializeMap("TerMur");
 		}
 
 		private bool m_Initializing = false;
