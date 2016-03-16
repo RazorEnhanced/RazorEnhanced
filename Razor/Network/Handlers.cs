@@ -1064,6 +1064,14 @@ namespace Assistant
 				RazorEnhanced.ToolBar.Open();
 
 			RazorEnhanced.QueryQueue.Start();
+
+
+			if (RazorEnhanced.UoNet.UO.Open())
+			{
+				RazorEnhanced.UoNet.UO.Lock_Item = new object();
+				RazorEnhanced.UoNet.UOHandler = new RazorEnhanced.UoNet.UO();
+			}
+
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)

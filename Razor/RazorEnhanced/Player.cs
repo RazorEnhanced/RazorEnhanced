@@ -1610,16 +1610,12 @@ namespace RazorEnhanced
 
 		internal static void PathFindTo(Assistant.Point3D Location)
 		{
-			ClientCommunication.SendToClientWait(new PathFindTo(Location));
+			PathFindTo(Location.X, Location.Y, Location.Z);
 		}
 
 		public static void PathFindTo(int x, int y, int z)
 		{
-			Assistant.Point3D Location = new Assistant.Point3D(Assistant.Point3D.Zero);
-			Location.X = x;
-			Location.Y = y;
-			Location.Z = z;
-			ClientCommunication.SendToClientWait(new PathFindTo(Location));
+			RazorEnhanced.UoNet.UOHandler.PathFind(x, y, z);
 		}
 
 		// Message
