@@ -1706,5 +1706,80 @@ namespace RazorEnhanced
 		{
 			Assistant.SpecialMoves.OnStun();
 		}
+
+		// Props 
+
+		public static List<string> GetPropStringList()
+		{
+			List<string> propstringlist = new List<string>();
+
+			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
+			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+			{
+				propstringlist.Add(prop.ToString());
+			}
+
+			return propstringlist;
+		}
+
+		public static string GetPropStringByIndex(int index)
+		{
+			string propstring = "";
+
+			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
+			if (props.Count > index)
+				propstring = props[index].ToString();
+
+			return propstring;
+		}
+
+		public static int GetPropValue(string name)
+		{
+			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
+
+			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
+			{
+				RazorEnhanced.Misc.SendMessage(prop.Args);
+				if (prop.ToString().ToLower().Contains(name.ToLower()))
+				{
+					if (prop.Args == null)  // Props esiste ma non ha valore
+						return 1;
+
+					string propstring = prop.Args;
+					bool subprops = false;
+					int i = 0;
+
+					if (propstring.Length > 7)
+						subprops = true;
+
+					try  // Etraggo il valore
+					{
+						string number = string.Empty;
+						foreach (char str in propstring)
+						{
+							if (subprops)
+							{
+								if (i > 7)
+									if (char.IsDigit(str))
+										number += str.ToString();
+							}
+							else
+							{
+								if (char.IsDigit(str))
+									number += str.ToString();
+							}
+
+							i++;
+						}
+						return (Convert.ToInt32(number));
+					}
+					catch
+					{
+						return 1;  // errore di conversione ma esiste
+					}
+				}
+			}
+			return 0;  // Non esiste
+		}
 	}
 }
