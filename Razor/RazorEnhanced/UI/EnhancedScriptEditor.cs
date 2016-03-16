@@ -549,6 +549,8 @@ namespace RazorEnhanced.UI
 
 		private void SetTraceback(string text)
 		{
+			if(m_OnClosing)
+				return;
 			if (this.textBoxDebug.InvokeRequired)
 			{
 				SetTracebackDelegate d = new SetTracebackDelegate(SetTraceback);
