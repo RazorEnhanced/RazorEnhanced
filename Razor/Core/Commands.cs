@@ -221,6 +221,11 @@ namespace Assistant
 				text = pvSrc.ReadUnicodeStringSafe();
 			}
 
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+			{
+				RazorEnhanced.ScriptRecorder.Record_UnicodeSpeech(text, hue);
+			}
+
 			text = text.Trim();
 
 			if (text.Length > 1)

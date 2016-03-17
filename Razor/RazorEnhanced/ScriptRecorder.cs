@@ -151,11 +151,11 @@ namespace RazorEnhanced
 				}
 
 			}
-			else  // Cast Spell
+			else if (type == 3) // Cast Spell
 			{
 				Spell s = Spell.Get(id);
 				if (id >= 1 && id <= 64)
-					AddLog("Spells.CastMagery(\""+ Language.GetString(s.Name) + "\")");
+					AddLog("Spells.CastMagery(\"" + Language.GetString(s.Name) + "\")");
 				else if (id >= 101 && id <= 117)
 					AddLog("Spells.CastNecro(\"" + Language.GetString(s.Name) + "\")");
 				else if (id >= 201 && id <= 201)
@@ -169,7 +169,37 @@ namespace RazorEnhanced
 				else if (id >= 678 && id <= 692)
 					AddLog("Spells.CastMysticism(\"" + Language.GetString(s.Name) + "\")");
 			}
-		}
+			else // InvokeVirtue
+			{
+				switch (id)
+				{
+					case 1:
+						AddLog("Player.InvokeVirtue(\"Honor\")");
+						break;
+					case 2:
+						AddLog("Player.InvokeVirtue(\"Sacrifice\")");
+						break;
+					case 3:
+						AddLog("Player.InvokeVirtue(\"Valor\")");
+						break;
+					case 4:
+						AddLog("Player.InvokeVirtue(\"Compassion\")");
+						break;
+					case 5:
+						AddLog("Player.InvokeVirtue(\"Honesty\")");
+						break;
+					case 6:
+						AddLog("Player.InvokeVirtue(\"Humility\")");
+						break;
+					case 7:
+						AddLog("Player.InvokeVirtue(\"Justice\")");
+						break;
+					case 8:
+						AddLog("Player.InvokeVirtue(\"Spirituality\")");
+						break;
+				}
+			}
+        }
 
 		internal static void Record_EquipRequest(Assistant.Item item, Assistant.Layer l, Assistant.Mobile m)
 		{
@@ -179,7 +209,25 @@ namespace RazorEnhanced
 				AddLog("Player.UnEquipItemByLayer("+ l.ToString() + ")");
 		}
 
-		
+		internal static void Record_RenameMobile(int serial, string name)
+		{
+			AddLog("Misc.PerRename(0x" + serial.ToString("X8") + ", " + name + " )");
+		}
+
+		internal static void Record_AsciiPromptResponse(uint type, string text)
+		{
+			AddLog("Misc.WaitForPrompt(10000)");
+			if (type == 0)
+				AddLog("Misc.WaitForPrompt(10000)");
+			else
+				AddLog("Misc.ResponsePrompt(\"" + text + "\")");
+		}
+
+		internal static void Record_UnicodeSpeech(string text, int hue)
+		{
+			AddLog("Player.ChatSay(" + hue + ", \"" + text + "\")");
+		}
+
 
 	}
 }

@@ -26,10 +26,12 @@ namespace Assistant
 			// 0x29 - UOKR confirm drop.  0 bytes payload (just a single byte, 0x29, no length or data)
 			PacketHandler.RegisterClientToServerViewer(0x3A, new PacketViewerCallback(SetSkillLock));
 			PacketHandler.RegisterClientToServerViewer(0x5D, new PacketViewerCallback(PlayCharacter));
+			PacketHandler.RegisterClientToServerViewer(0x75, new PacketViewerCallback(RenameMobile));
 			PacketHandler.RegisterClientToServerViewer(0x7D, new PacketViewerCallback(MenuResponse));
 			PacketHandler.RegisterClientToServerFilter(0x80, new PacketFilterCallback(ServerListLogin));
 			PacketHandler.RegisterClientToServerFilter(0x91, new PacketFilterCallback(GameLogin));
 			PacketHandler.RegisterClientToServerViewer(0x95, new PacketViewerCallback(HueResponse));
+			PacketHandler.RegisterClientToServerViewer(0x9A, new PacketViewerCallback(ClientAsciiPromptResponse));
 			PacketHandler.RegisterClientToServerViewer(0xA0, new PacketViewerCallback(PlayServer));
 			PacketHandler.RegisterClientToServerViewer(0xAC, new PacketViewerCallback(ResponseStringQuery));
             PacketHandler.RegisterClientToServerViewer(0xB1, new PacketViewerCallback(ClientGumpResponse));
@@ -376,6 +378,21 @@ namespace Assistant
 						}
 						break;
 					}
+				case 0xF4: // Invoke Virtue
+					{
+						if (RazorEnhanced.ScriptRecorder.OnRecord)
+						{
+							int virtueid = 0;
+							try
+							{
+								virtueid = Convert.ToInt32(command.Split(' ')[0]);
+								RazorEnhanced.ScriptRecorder.Record_ClientTextCommand(3, virtueid);
+							}
+							catch { break; }
+						}
+						break;
+					}
+
 			}
 		}
 
@@ -395,6 +412,16 @@ namespace Assistant
 			World.OrigPlayerName = p.ReadStringSafe(30);
 
 			PlayCharTime = DateTime.Now;
+		}
+
+		private static void RenameMobile(PacketReader p, PacketHandlerEventArgs args)
+		{
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+			{
+				Serial ser = p.ReadUInt32();
+				string name = p.ReadStringSafe(30);
+				RazorEnhanced.ScriptRecorder.Record_RenameMobile((int)ser, name);
+			}
 		}
 
 		private static void ServerList(PacketReader p, PacketHandlerEventArgs args)
@@ -2866,6 +2893,18 @@ namespace Assistant
 				if (HueEntry.Callback != null)
 					HueEntry.Callback(hue);
 				args.Block = true;
+			}
+		}
+
+		private static void ClientAsciiPromptResponse(PacketReader p, PacketHandlerEventArgs args)
+		{
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+			{
+				p.ReadUInt32(); // sender serial
+				p.ReadUInt32(); // Prompt ID
+				uint type = p.ReadUInt32(); // type
+				string text = p.ReadUnicodeStringSafe();
+				RazorEnhanced.ScriptRecorder.Record_AsciiPromptResponse(type, text);
 			}
 		}
 
