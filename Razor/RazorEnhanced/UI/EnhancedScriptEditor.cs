@@ -124,7 +124,7 @@ namespace RazorEnhanced.UI
 		        "Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 		        "Player.AttackLast", "Player.InParty", "Player.ChatParty",
 		        "Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
-		        "Player.Walk", "Player.PathFindTo", "Player.QuestButton",
+		        "Player.Walk", "Player.PathFindTo", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
 		        "Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
 		        "Player.WeaponStunSA", "Player.WeaponDisarmSA"
 		    };
@@ -137,7 +137,7 @@ namespace RazorEnhanced.UI
 		    string[] methodsMobiles =
 		    {
 		        "Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
-		        "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
+		        "Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
 		        "Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList"
 		    };
 
@@ -145,8 +145,7 @@ namespace RazorEnhanced.UI
 		    {
 		        "Items.FindBySerial", "Items.Move", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
                 "Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
-		        "Items.WaitForContents",
-		        "Items.Message", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount"
+		        "Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount"
 		    };
 
 		    string[] methodsMisc =
@@ -162,10 +161,17 @@ namespace RazorEnhanced.UI
 
 		    string[] methodsTarget =
 		    {
-                "Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.Cancel", "Target.Last", "Target.LastQueued",
+                "Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.PromptTarget", "Target.Cancel", "Target.Last", "Target.LastQueued",
                 "Target.Self", "Target.SelfQueued", "Target.SetLast", "Target.ClearLast", "Target.ClearQueue", "Target.ClearLastandQueue", "Target.SetLastTargetFromList",
                 "Target.PerformTargetFromList", "Target.AttackTargetFromList"
             };
+
+		    string[] methodsGumps =
+		    {
+		        "Gumps.CurrentGump", "Gumps.HasGump", "Gumps.CloseGump", "Gumps.WaitForGump", "Gumps.SendAction",
+		        "Gumps.SendAdvancedAction", "Gumps.LastGumpGetLine", "Gumps.LastGumpGetLineList", "Gumps.LastGumpTextExist",
+		        "Gumps.LastGumpTextExistByLine"
+		    };
 
 		    string[] methodsJournal =
 		    {
@@ -175,7 +181,7 @@ namespace RazorEnhanced.UI
 
 		    string[] methodsAutoLoot =
 		    {
-                "AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "Scavenger.RunOnce"
+                "AutoLoot.Status", "AutoLoot.Start", "AutoLoot.Stop", "AutoLoot.ChangeList", "AutoLoot.RunOnce"
             };
 
 		    string[] methodsScavenger =
@@ -224,7 +230,8 @@ namespace RazorEnhanced.UI
 		            .Union(methodsItems)
 		            .Union(methodsMisc)
 		            .Union(methodsTarget)
-		            .Union(methodsJournal)
+                    .Union(methodsGumps)
+                    .Union(methodsJournal)
 		            .Union(methodsAutoLoot)
 		            .Union(methodsScavenger)
 		            .Union(methodsRestock)
@@ -262,24 +269,355 @@ namespace RazorEnhanced.UI
 
             #endregion
 
+            #region Methods Descriptions
+
+            #region Description Player
+
+            Dictionary<string, ToolTipDescriptions> descriptionPlayer = new Dictionary<string, ToolTipDescriptions>();
+            descriptionPlayer.Add("Player.BuffsExist", new ToolTipDescriptions("Player.BuffsExist(string)", "Parameters:\n\tstring BuffName\nReturns: bool"));
+            descriptionPlayer.Add("Player.GetBuffDescription", new ToolTipDescriptions("Player.BuffsExist(BuffIcon)", "Parameters:\n\tBuffIcon name\nReturns: string"));
+            descriptionPlayer.Add("Player.HeadMessage", new ToolTipDescriptions("Player.HeadMessage(int, string)", "Parameters:\n\tint MessageColor\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.InRangeMobile", new ToolTipDescriptions("Player.InRangeMobile(Mobile or int, int)", "Parameters:\n\tMobile mobiletocheck or int serialmobiletocheck\n\tint range\nReturns: bool"));
+            descriptionPlayer.Add("Player.InRangeItem", new ToolTipDescriptions("Player.InRangeItem(Item or int, int)", "Parameters:\n\tItem itemtocheck or int serialitemtocheck\n\tint range\nReturns: bool"));
+            descriptionPlayer.Add("Player.GetItemOnLayer", new ToolTipDescriptions("Player.GetItemOnLayer(string)", "Parameters:\n\tstring LayerName\nReturns: Item"));
+            descriptionPlayer.Add("Player.UnEquipItemByLayer", new ToolTipDescriptions("Player.UnEquipItemByLayer(string)", "Parameters:\n\tstring LayerName\nReturns: void"));
+            descriptionPlayer.Add("Player.EquipItem", new ToolTipDescriptions("Player.EquipItem(Item or int)", "Parameters:\n\tItem item or int serialitem\nReturns: void"));
+            descriptionPlayer.Add("Player.CheckLayer", new ToolTipDescriptions("Player.CheckLayer(string)", "Parameters:\n\tstring LayerName\nReturns: bool"));
+            descriptionPlayer.Add("Player.GetAssistantLayer", new ToolTipDescriptions("Player.GetAssistantLayer(string)", "Parameters:\n\tstring LayerName\nReturns: Layer"));
+            descriptionPlayer.Add("Player.GetSkillValue", new ToolTipDescriptions("Player.GetSkillValue(string)", "Parameters:\n\tstring SkillName\nReturns: double"));
+            descriptionPlayer.Add("Player.GetSkillCap", new ToolTipDescriptions("Player.GetSkillCap(string)", "Parameters:\n\tstring SkillName\nReturns: double"));
+            descriptionPlayer.Add("Player.GetSkillStatus", new ToolTipDescriptions("Player.GetSkillStatus(string)", "Parameters:\n\tstring SkillName\nReturns: int"));
+            descriptionPlayer.Add("Player.UseSkill", new ToolTipDescriptions("Player.UseSkill(string)", "Parameters:\n\tstring SkillName\nReturns: void"));
+            descriptionPlayer.Add("Player.ChatSay", new ToolTipDescriptions("Player.ChatSay(int, string)", "Parameters:\n\tint MessageColor\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.ChatEmote", new ToolTipDescriptions("Player.ChatEmote(int, string)", "Parameters:\n\tint MessageColor\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.ChatWhisper", new ToolTipDescriptions("Player.ChatWhisper(int, string)", "Parameters:\n\tint MessageColor\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.ChatYell", new ToolTipDescriptions("Player.ChatYell(int, string)", "Parameters:\n\tint MessageColor\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.ChatGuild", new ToolTipDescriptions("Player.ChatGuild(string)", "Parameters:\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.ChatAlliance", new ToolTipDescriptions("Player.ChatAlliance(string)", "Parameters:\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.SetWarMode", new ToolTipDescriptions("Player.SetWarMode(bool)", "Parameters:\n\tbool warstatus\nReturns: void"));
+            descriptionPlayer.Add("Player.Attack", new ToolTipDescriptions("Player.Attack(int)", "Parameters:\n\tint targetserial\nReturns: void"));
+            descriptionPlayer.Add("Player.AttackLast", new ToolTipDescriptions("Player.AttackLast()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.InParty", new ToolTipDescriptions("Player.InParty()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionPlayer.Add("Player.ChatParty", new ToolTipDescriptions("Player.ChatParty(string)", "Parameters:\n\tstring Message\nReturns: void"));
+            descriptionPlayer.Add("Player.PartyCanLoot", new ToolTipDescriptions("Player.PartyCanLoot(bool)", "Parameters:\n\tbool flag\nReturns: void"));
+            descriptionPlayer.Add("Player.PartyInvite", new ToolTipDescriptions("Player.PartyInvite()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.PartyLeave", new ToolTipDescriptions("Player.PartyLeave()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.KickMember", new ToolTipDescriptions("Player.KickMember(int)", "Parameters:\n\tint SerialPersonToKick\nReturns: void"));
+            descriptionPlayer.Add("Player.InvokeVirtue", new ToolTipDescriptions("Player.InvokeVirtue(string)", "Parameters:\n\tstring Virtuename\nReturns: void"));
+            descriptionPlayer.Add("Player.Walk", new ToolTipDescriptions("Player.Walk(string)", "Parameters:\n\tstring Direction\nReturns: void"));
+            descriptionPlayer.Add("Player.PathFindTo", new ToolTipDescriptions("Player.PathFindTo(Point3D or (int, int, int))", "Parameters:\n\tPoint3D coords or\n\tint x, int y, int z\nReturns: void"));
+            descriptionPlayer.Add("Player.GetPropValue", new ToolTipDescriptions("Player.GetPropValue(string)", "Parameters:\n\tstring PropName\nReturns: int"));
+            descriptionPlayer.Add("Player.GetPropStringByIndex", new ToolTipDescriptions("Player.GetPropStringByIndex(int)", "Parameters:\n\tint PropIndex\nReturns: string"));
+            descriptionPlayer.Add("Player.GetPropStringList", new ToolTipDescriptions("Player.GetPropStringList()", "Parameters:\n\tnone\nReturns: List<string>"));
+            descriptionPlayer.Add("Player.QuestButton", new ToolTipDescriptions("Player.QuestButton()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.GuildButton", new ToolTipDescriptions("Player.GuildButton()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.WeaponPrimarySA", new ToolTipDescriptions("Player.WeaponPrimarySA()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.WeaponSecondarySA", new ToolTipDescriptions("Player.WeaponSecondarySA()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.WeaponClearSA", new ToolTipDescriptions("Player.WeaponClearSA()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.WeaponStunSA", new ToolTipDescriptions("Player.WeaponStunSA()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionPlayer.Add("Player.WeaponDisarmSA", new ToolTipDescriptions("Player.WeaponDisarmSA()", "Parameters:\n\tnone\nReturns: void"));
+
+            #endregion
+
+            #region Description Spells
+
+            Dictionary<string, ToolTipDescriptions> descriptionSpells = new Dictionary<string, ToolTipDescriptions>();
+            descriptionSpells.Add("Spells.CastMagery", new ToolTipDescriptions("Spells.CastMagery(string)", "Parameters:\n\tstring Spellname\nReturns: void"));
+            descriptionSpells.Add("Spells.CastNecro", new ToolTipDescriptions("Spells.CastNecro(string)", "Parameters:\n\tstring Spellname\nReturns: void"));
+            descriptionSpells.Add("Spells.CastChivalry", new ToolTipDescriptions("Spells.CastChivalry(string)", "Parameters:\n\tstring Spellname\nReturns: void"));
+            descriptionSpells.Add("Spells.CastBushido", new ToolTipDescriptions("Spells.CastBushido(string)", "Parameters:\n\tstring Spellname\nReturns: void"));
+            descriptionSpells.Add("Spells.CastNinjitsu", new ToolTipDescriptions("Spells.CastNinjitsu(string)", "Parameters:\n\tstring Spellname\nReturns: void"));
+            descriptionSpells.Add("Spells.CastSpellweaving", new ToolTipDescriptions("Spells.CastSpellweaving(string)", "Parameters:\n\tstring Spellname\nReturns: void"));
+            descriptionSpells.Add("Spells.CastMysticism", new ToolTipDescriptions("Spells.CastMysticism(string)", "Parameters:\n\tstring Spellname\nReturns: void"));
+
+            #endregion
+
+            #region Description Mobiles
+
+            Dictionary<string, ToolTipDescriptions> descriptionMobiles = new Dictionary<string, ToolTipDescriptions>();
+            descriptionMobiles.Add("Mobiles.FindBySerial", new ToolTipDescriptions("Mobiles.FindBySerial(int)", "Parameters:\n\tint Mobileserial\nReturns: Mobile"));
+            descriptionMobiles.Add("Mobiles.UseMobile", new ToolTipDescriptions("Mobiles.UseMobile(Mobile or int)", "Parameters:\n\tMobile mobile or int serialmobile\nReturns: void"));
+            descriptionMobiles.Add("Mobiles.SingleClick", new ToolTipDescriptions("Mobiles.SingleClick(Mobile or int)", "Parameters:\n\tMobile mobile or int serialmobile\nReturns: void"));
+            descriptionMobiles.Add("Mobiles.Filter", new ToolTipDescriptions("Mobiles.Filter()", "Parameters:\n\tnone\nReturns: Filter"));
+            descriptionMobiles.Add("Mobiles.ApplyFilter", new ToolTipDescriptions("Mobiles.ApplyFilter(filter)", "Parameters:\n\tFilter filtermobile\nReturns: List<Mobiles>"));
+            descriptionMobiles.Add("Mobiles.Message", new ToolTipDescriptions("Mobiles.Message(Mobile or int, int string)", "Parameters:\n\tMobile mobile or int serialmobile\n\tint Colormessage\n\tstring Message\nReturns: void"));
+            descriptionMobiles.Add("Mobiles.WaitForProps", new ToolTipDescriptions("Mobiles.WaitForProps(Mobile or int, int)", "Parameters:\n\tMobile mobile or int serialmobile\n\tint timeoutProps\nReturns: void"));
+            descriptionMobiles.Add("Mobiles.GetPropValue", new ToolTipDescriptions("Mobiles.GetPropValue(Mobile or int, string)", "Parameters:\n\tMobile mobile or int serialmobile\n\tstring PropName\nReturns: int"));
+            descriptionMobiles.Add("Mobiles.GetPropStringByIndex", new ToolTipDescriptions("Mobiles.GetPropStringByIndex(Mobile or int, int)", "Parameters:\n\tMobile mobile or int serialmobile\n\tint PropIndex\nReturns: string"));
+            descriptionMobiles.Add("Mobiles.GetPropStringList", new ToolTipDescriptions("Mobiles.GetPropStringList(Mobile or int)", "Parameters:\n\tMobile mobile or int serialmobile\nReturns: List<string>"));
+
+            #endregion
+
+            #region Description Items
+
+            Dictionary<string, ToolTipDescriptions> descriptionItems = new Dictionary<string, ToolTipDescriptions>();
+            descriptionItems.Add("Items.FindBySerial", new ToolTipDescriptions("Items.FindBySerial(int)", "Parameters:\n\tint ItemSerial\nReturns: Item"));
+            descriptionItems.Add("Items.Move", new ToolTipDescriptions("Items.Move(Item or int, Item or Mobile or int, int)", "Parameters:\n\tItem source or int sourceItem\n\tItem destinationItem or Mobile destinationMobile or int destinationSerial\n\tint amountToMove\nReturns: void"));
+            descriptionItems.Add("Items.DropItemOnGroundSelf", new ToolTipDescriptions("Items.DropItemOnGroundSelf(Item, int)", "Parameters:\n\tItem item\n\tint amount\nReturns: void"));
+            descriptionItems.Add("Items.UseItem", new ToolTipDescriptions("Items.UseItem(Item or int)", "Parameters:\n\tItem item or int ItemSerial\nReturns: void"));
+            descriptionItems.Add("Items.SingleClick", new ToolTipDescriptions("Items.SingleClick(Item or int)", "Parameters:\n\tItem item or int ItemSerial\nReturns: void"));
+            descriptionItems.Add("Items.WaitForProps", new ToolTipDescriptions("Items.WaitForProps(Item or int, int)", "Parameters:\n\tItem item or int serialitem\n\tint timeoutProps\nReturns: void"));
+            descriptionItems.Add("Items.GetPropValue", new ToolTipDescriptions("Items.GetPropValue(Item or int, string)", "Parameters:\n\tItem item or int serialitem\n\tstring PropName\nReturns: int"));
+            descriptionItems.Add("Items.GetPropStringByIndex", new ToolTipDescriptions("Items.GetPropStringByIndex(Item or int, int)", "Parameters:\n\tItem item or int serialitem\n\tint PropIndex\nReturns: string"));
+            descriptionItems.Add("Items.GetPropStringList", new ToolTipDescriptions("Items.GetPropStringList(Item or int)", "Parameters:\n\tItem item or int serialitem\nReturns: List<string>"));
+            descriptionItems.Add("Items.WaitForContents", new ToolTipDescriptions("Items.WaitForContents(Item or int, int)", "Parameters:\n\tItem itemtouse or int serialitemtouse\n\tint timeoutContentWait\nReturns: void"));
+            descriptionItems.Add("Items.Message", new ToolTipDescriptions("Items.Message(Item or int, int, string)", "Parameters:\n\tItem item or int serialitem\n\tint messageColor\n\tstring message\nReturns: void"));
+            descriptionItems.Add("Items.Filter", new ToolTipDescriptions("Items.Filter()", "Parameters:\n\tnone\nReturns: Filter"));
+            descriptionItems.Add("Items.ApplyFilter", new ToolTipDescriptions("Items.ApplyFilter(Filter)", "Parameters:\n\tFilter filterItem\nReturns: List<Item>"));
+            descriptionItems.Add("Items.BackpackCount", new ToolTipDescriptions("Items.BackpackCount(int, int)", "Parameters:\n\tint itemID\n\tint color\nReturns: int"));
+            descriptionItems.Add("Items.ContainerCount", new ToolTipDescriptions("Items.ContainerCount(item or int, int, int)", "Parameters:\n\tItem container or int serialContainer\n\tint itemID\n\tint color\nReturns: List<Item>"));
+
+            #endregion
+
+            #region Description Misc
+
+            Dictionary<string, ToolTipDescriptions> descriptionMisc = new Dictionary<string, ToolTipDescriptions>();
+            descriptionMisc.Add("Misc.SendMessage", new ToolTipDescriptions("Misc.SendMessage(string or int or bool, color)", "Parameters:\n\tstring Message or int Value or bool Status\n\tint color (optional)\nReturns: void"));
+            descriptionMisc.Add("Misc.Resync", new ToolTipDescriptions("Misc.Resync()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionMisc.Add("Misc.Pause", new ToolTipDescriptions("Misc.Pause(int)", "Parameters:\n\tint pauseTime\nReturns: void"));
+            descriptionMisc.Add("Misc.Beep", new ToolTipDescriptions("Misc.Beep()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionMisc.Add("Misc.Disconnect", new ToolTipDescriptions("Misc.Disconnect()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionMisc.Add("Misc.WaitForContext", new ToolTipDescriptions("Misc.WaitForContext(int or Mobile or Item, int)", "Parameters:\n\tint serial or Mobile mobile or Item item\n\tint timeout\nReturns: void"));
+            descriptionMisc.Add("Misc.ContextReply", new ToolTipDescriptions("Misc.ContextReply(int or Mobile or Item, int)", "Parameters:\n\tint serial or Mobile mobile or Item item\n\tint menuID\nReturns: void"));
+            descriptionMisc.Add("Misc.ReadSharedValue", new ToolTipDescriptions("Misc.ReadSharedValue(string)", "Parameters:\n\tstring nameOfValue\nReturns: object"));
+            descriptionMisc.Add("Misc.RemoveSharedValue", new ToolTipDescriptions("Misc.RemoveSharedValue(string)", "Parameters:\n\tstring nameOfValue\nReturns: void"));
+            descriptionMisc.Add("Misc.CheckSharedValue", new ToolTipDescriptions("Misc.CheckSharedValue(string)", "Parameters:\n\tstring nameOfValue\nReturns: bool"));
+            descriptionMisc.Add("Misc.SetSharedValue", new ToolTipDescriptions("Misc.SetSharedValue(string, object)", "Parameters:\n\tstring nameOfValue\n\tobject valueToSet\nReturns: void"));
+            descriptionMisc.Add("Misc.HasMenu", new ToolTipDescriptions("Misc.HasMenu()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionMisc.Add("Misc.CloseMenu", new ToolTipDescriptions("Misc.CloseMenu()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionMisc.Add("Misc.MenuContains", new ToolTipDescriptions("Misc.MenuContains(string)", "Parameters:\n\tstring texttosearch\nReturns: bool"));
+            descriptionMisc.Add("Misc.GetMenuTitle", new ToolTipDescriptions("Misc.GetMenuTitle()", "Parameters:\n\tnone\nReturns: string"));
+            descriptionMisc.Add("Misc.WaitForMenu", new ToolTipDescriptions("Misc.WaitForMenu(int)", "Parameters:\n\tint timeout\nReturns: void"));
+            descriptionMisc.Add("Misc.MenuResponse", new ToolTipDescriptions("Misc.MenuResponse(string)", "Parameters:\n\tstring submitname\nReturns: void"));
+            descriptionMisc.Add("Misc.HasQueryString", new ToolTipDescriptions("Misc.HasQueryString()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionMisc.Add("Misc.WaitForQueryString", new ToolTipDescriptions("Misc.WaitForQueryString(int)", "Parameters:\n\tint timeout\nReturns: void"));
+            descriptionMisc.Add("Misc.QueryStringResponse", new ToolTipDescriptions("Misc.QueryStringResponse(string)", "Parameters:\n\tbool yescancelstatus\n\tstring stringtoresponse\nReturns: void"));
+            descriptionMisc.Add("Misc.NoOperation", new ToolTipDescriptions("Misc.NoOperation()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionMisc.Add("Misc.ScriptRun", new ToolTipDescriptions("Misc.ScriptRun(string)", "Parameters:\n\tstring scriptfilename\nReturns: void"));
+            descriptionMisc.Add("Misc.ScriptStop", new ToolTipDescriptions("Misc.ScriptStop(string)", "Parameters:\n\tstring scriptfilename\nReturns: void"));
+            descriptionMisc.Add("Misc.ScriptStatus", new ToolTipDescriptions("Misc.ScriptStatus(string)", "Parameters:\n\tstring scriptfilename\nReturns: bool"));
+            descriptionMisc.Add("Misc.PetRename", new ToolTipDescriptions("Misc.PetRename(Mobile or int, string)", "Parameters:\n\tMobile mobile or int serialmobile\n\tstring newname\nReturns: void"));
+
+            #endregion
+
+            #region Description Target
+
+            Dictionary<string, ToolTipDescriptions> descriptionTarget = new Dictionary<string, ToolTipDescriptions>();
+            descriptionTarget.Add("Target.HasTarget", new ToolTipDescriptions("Target.HasTarget()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionTarget.Add("Target.GetLast", new ToolTipDescriptions("Target.GetLast()", "Parameters:\n\tnone\nReturns: int"));
+            descriptionTarget.Add("Target.GetLastAttack", new ToolTipDescriptions("Target.GetLastAttack()", "Parameters:\n\tnone\nReturns: int"));
+            descriptionTarget.Add("Target.WaitForTarget", new ToolTipDescriptions("Target.WaitForTarget(int)", "Parameters:\n\tint timeoutDelay\nReturns: int"));
+            descriptionTarget.Add("Target.TargetExecute", new ToolTipDescriptions("Target.TargetExecute(int or Item or Mobile or (int, int, int))", "Parameters:\n\tint serial or Item item or Mobile mobile\n\tor int x, int y, int z\nReturns: void"));
+            descriptionTarget.Add("Target.PromptTarget", new ToolTipDescriptions("Target.PromptTarget()", "Parameters:\n\tnone\nReturns: int"));
+            descriptionTarget.Add("Target.Cancel", new ToolTipDescriptions("Target.Cancel()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.Last", new ToolTipDescriptions("Target.Last()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.LastQueued", new ToolTipDescriptions("Target.LastQueued()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.Self", new ToolTipDescriptions("Target.Self()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.SelfQueued", new ToolTipDescriptions("Target.SelfQueued()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.SetLast", new ToolTipDescriptions("Target.SetLast(Mobile or int)", "Parameters:\n\tMobile mobileTarget or int serialTarget\nReturns: void"));
+            descriptionTarget.Add("Target.ClearLast", new ToolTipDescriptions("Target.ClearLast()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.ClearQueue", new ToolTipDescriptions("Target.ClearQueue()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.ClearLastandQueue", new ToolTipDescriptions("Target.ClearLastandQueue()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionTarget.Add("Target.SetLastTargetFromList", new ToolTipDescriptions("Target.SetLastTargetFromList(string)", "Parameters:\n\tstring targetFilterName\nReturns: bool"));
+            descriptionTarget.Add("Target.PerformTargetFromList", new ToolTipDescriptions("Target.PerformTargetFromList(string)", "Parameters:\n\tstring targetFilterName\nReturns: bool"));
+            descriptionTarget.Add("Target.AttackTargetFromList", new ToolTipDescriptions("Target.AttackTargetFromList(string)", "Parameters:\n\tstring targetFilterName\nReturns: bool"));
+
+            #endregion
+
+            #region Description Gumps
+
+            Dictionary<string, ToolTipDescriptions> descriptionGumps = new Dictionary<string, ToolTipDescriptions>();
+            descriptionGumps.Add("Gumps.CurrentGump", new ToolTipDescriptions("Gumps.CurrentGump()", "Parameters:\n\tnone\nReturns: uint"));
+            descriptionGumps.Add("Gumps.HasGump", new ToolTipDescriptions("Gumps.HasGump()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionGumps.Add("Gumps.CloseGump", new ToolTipDescriptions("Gumps.CloseGump(uint)", "Parameters:\n\tuint gumpID\nReturns: void"));
+            descriptionGumps.Add("Gumps.WaitForGump", new ToolTipDescriptions("Gumps.WaitForGump(uint, int)", "Parameters:\n\tuint gumpID\n\tint timeout\nReturns: void"));
+            descriptionGumps.Add("Gumps.SendAction", new ToolTipDescriptions("Gumps.SendAction(uint, int)", "Parameters:\n\tuint gumpID\n\tint buttonID\nReturns: void"));
+            descriptionGumps.Add("Gumps.SendAdvancedAction", new ToolTipDescriptions("Gumps.SendAdvancedAction(uint, int, list<int>, (optional)list<int>, (optional)list<string>)", "Parameters:\n\tuint gumpID\n\tint buttonID\n\tlist<int> switches\n\tlist<int> textID\n\tlist<string> texts\nReturns: void"));
+            descriptionGumps.Add("Gumps.LastGumpGetLine", new ToolTipDescriptions("Gumps.LastGumpGetLine(int)", "Parameters:\n\tint lineNumber\nReturns: string"));
+            descriptionGumps.Add("Gumps.LastGumpGetLineList", new ToolTipDescriptions("Gumps.LastGumpGetLineList()", "Parameters:\n\tnone\nReturns: list<string>"));
+            descriptionGumps.Add("Gumps.LastGumpTextExist", new ToolTipDescriptions("Gumps.LastGumpTextExist(string)", "Parameters:\n\tstring texttosearch\nReturns: bool"));
+            descriptionGumps.Add("Gumps.LastGumpTextExistByLine", new ToolTipDescriptions("Gumps.LastGumpTextExistByLine(int, string)", "Parameters:\n\tint lineNumber\n\ttstring texttosearch\nReturns: bool"));
+
+            #endregion
+
+            #region Description Journal
+
+            Dictionary<string, ToolTipDescriptions> descriptionJournal = new Dictionary<string, ToolTipDescriptions>();
+            descriptionJournal.Add("Journal.Clear", new ToolTipDescriptions("Journal.Clear()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionJournal.Add("Journal.Search", new ToolTipDescriptions("Journal.Search(string)", "Parameters:\n\tstring TextToSearch\nReturns: bool"));
+            descriptionJournal.Add("Journal.SearchByName", new ToolTipDescriptions("Journal.SearchByName(string, string)", "Parameters:\n\tstring TextToSearch\n\tstring senderName\nReturns: bool"));
+            descriptionJournal.Add("Journal.SearchByColor", new ToolTipDescriptions("Journal.SearchByColor(string, int)", "Parameters:\n\tstring TextToSearch\n\tstring colorToSearch\nReturns: bool"));
+            descriptionJournal.Add("Journal.SearchByType", new ToolTipDescriptions("Journal.SearchByType(string, string)", "Parameters:\n\tstring TextToSearch\n\tstring messageType\nReturns: bool"));
+            descriptionJournal.Add("Journal.GetLineText", new ToolTipDescriptions("Journal.GetLineText(string)", "Parameters:\n\tstring TextToSearch\nReturns: string"));
+            descriptionJournal.Add("Journal.GetSpeechName", new ToolTipDescriptions("Journal.GetSpeechName()", "Parameters:\n\tnone\nReturns: list<string>"));
+            descriptionJournal.Add("Journal.WaitJournal", new ToolTipDescriptions("Journal.WaitJournal(string, int)", "Parameters:\n\tstring TextToSearch\n\tint timeoutTime\nReturns: void"));
+
+            #endregion
+
+            #region Description AutoLoot
+
+            Dictionary<string, ToolTipDescriptions> descriptionAutoLoot = new Dictionary<string, ToolTipDescriptions>();
+            descriptionAutoLoot.Add("AutoLoot.Status", new ToolTipDescriptions("AutoLoot.Status()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionAutoLoot.Add("AutoLoot.Start", new ToolTipDescriptions("AutoLoot.Start()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionAutoLoot.Add("AutoLoot.Stop", new ToolTipDescriptions("AutoLoot.Stop()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionAutoLoot.Add("AutoLoot.ChangeList", new ToolTipDescriptions("AutoLoot.ChangeList(string)", "Parameters:\n\tstring listName\nReturns: void"));
+            descriptionAutoLoot.Add("AutoLoot.RunOnce", new ToolTipDescriptions("AutoLoot.RunOnce(AutoLootItem, double, Filter)", "Parameters:\n\tAutoLootItem itemList\n\tdouble DelayGrabInMs\n\tFilter FilterToSearch\nReturns: void"));
+
+            #endregion
+
+            #region Description Scavenger
+
+            Dictionary<string, ToolTipDescriptions> descriptionScavenger = new Dictionary<string, ToolTipDescriptions>();
+            descriptionScavenger.Add("Scavenger.Status", new ToolTipDescriptions("Scavenger.Status()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionScavenger.Add("Scavenger.Start", new ToolTipDescriptions("Scavenger.Start()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionScavenger.Add("Scavenger.Stop", new ToolTipDescriptions("Scavenger.Stop()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionScavenger.Add("Scavenger.ChangeList", new ToolTipDescriptions("Scavenger.ChangeList(string)", "Parameters:\n\tstring listName\nReturns: void"));
+            descriptionScavenger.Add("Scavenger.RunOnce", new ToolTipDescriptions("Scavenger.RunOnce(ScavengerItem, double, Filter)", "Parameters:\n\tScavengerItem itemList\n\tdouble DelayGrabInMs\n\tFilter FilterToSearch\nReturns: void"));
+
+            #endregion
+
+            #region Description Restock
+
+            Dictionary<string, ToolTipDescriptions> descriptionRestock = new Dictionary<string, ToolTipDescriptions>();
+            descriptionRestock.Add("Restock.Status", new ToolTipDescriptions("Restock.Status()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionRestock.Add("Restock.FStart", new ToolTipDescriptions("Restock.FStart()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionRestock.Add("Restock.FStop", new ToolTipDescriptions("Restock.FStop()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionRestock.Add("Restock.ChangeList", new ToolTipDescriptions("Restock.ChangeList(string)", "Parameters:\n\tstring listName\nReturns: void"));
+
+            #endregion
+
+            #region Description SellAgent
+
+            Dictionary<string, ToolTipDescriptions> descriptionSellAgent = new Dictionary<string, ToolTipDescriptions>();
+            descriptionSellAgent.Add("SellAgent.Status", new ToolTipDescriptions("SellAgent.Status()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionSellAgent.Add("SellAgent.Enable", new ToolTipDescriptions("SellAgent.Enable()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionSellAgent.Add("SellAgent.Disable", new ToolTipDescriptions("SellAgent.Disable()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionSellAgent.Add("SellAgent.ChangeList", new ToolTipDescriptions("SellAgent.ChangeList(string)", "Parameters:\n\tstring listName\nReturns: void"));
+
+            #endregion
+
+            #region Description BuyAgent
+
+            Dictionary<string, ToolTipDescriptions> descriptionBuyAgent = new Dictionary<string, ToolTipDescriptions>();
+            descriptionBuyAgent.Add("BuyAgent.Status", new ToolTipDescriptions("BuyAgent.Status()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionBuyAgent.Add("BuyAgent.Enable", new ToolTipDescriptions("BuyAgent.Enable()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionBuyAgent.Add("BuyAgent.Disable", new ToolTipDescriptions("BuyAgent.Disable()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionBuyAgent.Add("BuyAgent.ChangeList", new ToolTipDescriptions("BuyAgent.ChangeList(string)", "Parameters:\n\tstring listName\nReturns: void"));
+
+            #endregion
+
+            #region Description Dress
+
+            Dictionary<string, ToolTipDescriptions> descriptionDress = new Dictionary<string, ToolTipDescriptions>();
+            descriptionDress.Add("Dress.DessStatus", new ToolTipDescriptions("Dress.DessStatus()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionDress.Add("Dress.UnDressStatus", new ToolTipDescriptions("Dress.UnDressStatus()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionDress.Add("Dress.DressFStart", new ToolTipDescriptions("Dress.DressFStart()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionDress.Add("Dress.UnDressFStart", new ToolTipDescriptions("Dress.UnDressFStart()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionDress.Add("Dress.DressFStop", new ToolTipDescriptions("Dress.DressFStop()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionDress.Add("Dress.UnDressFStop", new ToolTipDescriptions("Dress.UnDressFStop()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionDress.Add("Dress.ChangeList", new ToolTipDescriptions("Dress.ChangeList(string)", "Parameters:\n\tstring listName\nReturns: void"));
+
+            #endregion
+
+            #region Description Friend
+
+            Dictionary<string, ToolTipDescriptions> descriptionFriend = new Dictionary<string, ToolTipDescriptions>();
+            descriptionDress.Add("Friend.IsFriend", new ToolTipDescriptions("Friend.IsFriend(int)", "Parameters:\n\tint SerialToSearch\nReturns: bool"));
+            descriptionFriend.Add("Friend.ChangeList", new ToolTipDescriptions("Friend.ChangeList(string)", "Parameters:\n\tstring listName\nReturns: void"));
+
+            #endregion
+
+            #region Description BandageHeal
+
+            Dictionary<string, ToolTipDescriptions> descriptionBandageHeal = new Dictionary<string, ToolTipDescriptions>();
+            descriptionBandageHeal.Add("BandageHeal.Status", new ToolTipDescriptions("BandageHeal.Status()", "Parameters:\n\tnone\nReturns: bool"));
+            descriptionBandageHeal.Add("BandageHeal.Start", new ToolTipDescriptions("BandageHeal.Start()", "Parameters:\n\tnone\nReturns: void"));
+            descriptionBandageHeal.Add("BandageHeal.Stop", new ToolTipDescriptions("BandageHeal.Stop()", "Parameters:\n\tnone\nReturns: void"));
+
+            #endregion
+
+            #region Description Statics
+
+            Dictionary<string, ToolTipDescriptions> descriptionStatics = new Dictionary<string, ToolTipDescriptions>();
+            descriptionStatics.Add("Statics.GetLandID", new ToolTipDescriptions("Statics.GetLandID()", "Parameters:\n\t\nReturns: "));
+            descriptionStatics.Add("Statics.GetLandZ", new ToolTipDescriptions("Statics.GetLandZ()", "Parameters:\n\t\nReturns: "));
+            descriptionStatics.Add("Statics.GetStaticsTileInfo", new ToolTipDescriptions("Statics.GetStaticsTileInfo()", "Parameters:\n\t\nReturns: "));
+
+            #endregion
+
+            Dictionary<string, ToolTipDescriptions> descriptionMethods =
+		        descriptionPlayer
+                .Union(descriptionSpells)
+                .Union(descriptionMobiles)
+                .Union(descriptionItems)
+                .Union(descriptionMisc)
+                .Union(descriptionTarget)
+                .Union(descriptionGumps)
+                .Union(descriptionJournal)
+                .Union(descriptionAutoLoot)
+                .Union(descriptionScavenger)
+                .Union(descriptionRestock)
+                .Union(descriptionSellAgent)
+                .Union(descriptionBuyAgent)
+                .Union(descriptionDress)
+                .Union(descriptionFriend)
+                .Union(descriptionBandageHeal)
+                .Union(descriptionStatics)
+                .ToDictionary(x => x.Key, x => x.Value);
+
+            #endregion
+
             List<AutocompleteItem> items = new List<AutocompleteItem>();
 
+            //Permette la creazione del menu con la singola keyword
+            Array.Sort(keywords);
 		    foreach (var item in keywords)
                 items.Add(new AutocompleteItem(item) { ImageIndex = 0 });
 
-		    foreach (var item in classes)
+            //Permette la creazione del menu con la singola classe
+            Array.Sort(classes);
+            foreach (var item in classes)
 		        items.Add(new AutocompleteItem(item) { ImageIndex = 1 });
 
-            foreach (var item in methods)
-                items.Add(new MethodAutocompleteItemAdvance(item) { ImageIndex = 2 });
+            //Permette di creare il menu solo per i metodi della classe digitata
+            Array.Sort(methods);
+		    foreach (var item in methods)
+		    {
+                ToolTipDescriptions element;
+                descriptionMethods.TryGetValue(item, out element);
 
-		    foreach (var item in propsPlayer)
+		        if (element != null)
+		        {
+		            items.Add(new MethodAutocompleteItemAdvance(item)
+		            {
+		                ImageIndex = 2,
+		                ToolTipTitle = element.Title,
+		                ToolTipText = element.Description
+		            });
+		        }
+		        else
+                {
+                    items.Add(new MethodAutocompleteItemAdvance(item)
+                    {
+                        ImageIndex = 2
+                    });
+                }
+		    }
+
+		    //Permette di creare il menu per le props solo sulla classe Player
+            Array.Sort(propsPlayer);
+            foreach (var item in propsPlayer)
 		        items.Add(new MethodAutocompleteItemAdvance(item) { ImageIndex = 3 });
 
+            //Props generiche divise tra quelle Mobiles e Items, che possono
+            //Appartenere a variabili istanziate di una certa classe
+            //Qui sta alla cura dell'utente capire se una props va bene o no
+            //Per quella istanza
+            Array.Sort(props);
             foreach (var item in props)
                 items.Add(new MethodAutocompleteItem(item) { ImageIndex = 3 });
 
-            m_popupMenu.Items.SetAutocompleteItems(items);
+		    m_popupMenu.Items.SetAutocompleteItems(items);
 
             this.Text = m_Title;
 			this.m_Engine = engine;
@@ -929,6 +1267,18 @@ namespace RazorEnhanced.UI
                 default:
                     return base.ProcessCmdKey(ref msg, keyData);
             }
+        }
+    }
+
+    public class ToolTipDescriptions
+    {
+        public string Title;
+        public string Description;
+
+        public ToolTipDescriptions(string title, string description)
+        {
+            Title = title;
+            Description = description;
         }
     }
 
