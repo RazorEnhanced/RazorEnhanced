@@ -253,8 +253,15 @@ namespace RazorEnhanced.UI
 		        "Player.PoisonResistance",
 		        "Player.Buffs", "Player.IsGhost", "Player.Female", "Player.Name", "Player.Bankbox",
 		        "Player.Gold", "Player.Luck", "Player.Body",
-		        "Player.Followers", "Player.FollowersMax", "Player.MaxWeight"
+		        "Player.Followers", "Player.FollowersMax", "Player.MaxWeight", "Player.Str", "Player.Dex", "Player.Int"
 		    };
+
+            string[] propsPositions =
+            {
+                "Position.X", "Position.Y", "Position.Z"
+            };
+
+		    string[] propsWithCheck = propsPlayer.Union(propsPositions).ToArray();
 
 		    string[] propsGeneric =
 		    {
@@ -262,8 +269,8 @@ namespace RazorEnhanced.UI
 		        "Human", "WarMode", "Female", "Hits", "MaxHits", "Stam", "StamMax", "Mana", "ManaMax", "Backpack", "Mount",
 		        "Quiver", "Notoriety", "Map", "InParty", "Properties", "Amount", "IsBagOfSending", "IsContainer", "IsCorpse",
 		        "IsDoor", "IsInBank", "Movable", "OnGround", "ItemID", "RootContainer", "Durability", "MaxDurability",
-		        "Contains", "Weight"
-		    };
+		        "Contains", "Weight", "Position"
+            };
 
             string[] props = propsGeneric;
 
@@ -605,9 +612,9 @@ namespace RazorEnhanced.UI
 		    }
 
 		    //Permette di creare il menu per le props solo sulla classe Player
-            Array.Sort(propsPlayer);
-            foreach (var item in propsPlayer)
-		        items.Add(new MethodAutocompleteItemAdvance(item) { ImageIndex = 3 });
+            Array.Sort(propsWithCheck);
+            foreach (var item in propsWithCheck)
+		        items.Add(new SubPropertiesAutocompleteItem(item) { ImageIndex = 4 });
 
             //Props generiche divise tra quelle Mobiles e Items, che possono
             //Appartenere a variabili istanziate di una certa classe
@@ -1282,6 +1289,8 @@ namespace RazorEnhanced.UI
         }
     }
 
+    #region Custom Items per Autocomplete
+
     /// <summary>
     /// This autocomplete item appears after dot
     /// </summary>
@@ -1350,4 +1359,103 @@ namespace RazorEnhanced.UI
             return lastPart;
         }
     }
+
+    /// <summary>
+    /// This autocomplete item appears after dot
+    /// </summary>
+    public class SubPropertiesAutocompleteItem : MethodAutocompleteItem
+    {
+        string firstPart;
+        string lastPart;
+
+        public SubPropertiesAutocompleteItem(string text)
+            : base(text)
+        {
+            var i = text.LastIndexOf('.');
+            if (i < 0)
+                firstPart = text;
+            else
+            {
+                var keywords = text.Split('.');
+                if (keywords.Length >= 2)
+                {
+                    firstPart = keywords[keywords.Length - 2];
+                    lastPart = keywords[keywords.Length - 1];
+                }
+                else
+                {
+                    firstPart = text.Substring(0, i);
+                    lastPart = text.Substring(i + 1, text.Length);
+                }
+            }
+        }
+
+        public override CompareResult Compare(string fragmentText)
+        {
+            int i = fragmentText.LastIndexOf('.');
+
+            if (i < 0)
+            {
+                if (firstPart.StartsWith(fragmentText) && string.IsNullOrEmpty(lastPart))
+                    return CompareResult.VisibleAndSelected;
+                //if (firstPart.ToLower().Contains(fragmentText.ToLower()))
+                //  return CompareResult.Visible;
+            }
+            else
+            {
+                var keywords = fragmentText.Split('.');
+                if (keywords.Length >= 2)
+                {
+                    var fragmentFirstPart = keywords[keywords.Length - 2];
+                    var fragmentLastPart = keywords[keywords.Length - 1];
+
+
+                    if (firstPart != fragmentFirstPart)
+                        return CompareResult.Hidden;
+
+                    if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
+                        return CompareResult.VisibleAndSelected;
+
+                    if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
+                        return CompareResult.Visible;
+                }
+                else
+                {
+                    var fragmentFirstPart = fragmentText.Substring(0, i);
+                    var fragmentLastPart = fragmentText.Substring(i + 1);
+
+
+                    if (firstPart != fragmentFirstPart)
+                        return CompareResult.Hidden;
+
+                    if (lastPart != null && lastPart.StartsWith(fragmentLastPart))
+                        return CompareResult.VisibleAndSelected;
+
+                    if (lastPart != null && lastPart.ToLower().Contains(fragmentLastPart.ToLower()))
+                        return CompareResult.Visible;
+                }
+
+            }
+
+            return CompareResult.Hidden;
+        }
+
+        public override string GetTextForReplace()
+        {
+            if (lastPart == null)
+                return firstPart;
+
+            return firstPart + "." + lastPart;
+        }
+
+        public override string ToString()
+        {
+            if (lastPart == null)
+                return firstPart;
+
+            return lastPart;
+        }
+    }
+
+    #endregion
 }

@@ -311,6 +311,7 @@
             this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
             this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
             this.fastColoredTextBoxEditor.IsReplaceMode = false;
             this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
             this.fastColoredTextBoxEditor.LeftBracket = '(';
@@ -371,6 +372,7 @@
             this.imageList2.Images.SetKeyName(1, "Class_yellow_16x.png");
             this.imageList2.Images.SetKeyName(2, "Method_purple_16x.png");
             this.imageList2.Images.SetKeyName(3, "Field_blue_16x.png");
+            this.imageList2.Images.SetKeyName(4, "Field_black_16x.png");
             // 
             // EnhancedScriptEditor
             // 
