@@ -151,7 +151,7 @@ namespace RazorEnhanced
 				}
 
 			}
-			else if (type == 3) // Cast Spell
+			else if (type == 2) // Cast Spell
 			{
 				Spell s = Spell.Get(id);
 				if (id >= 1 && id <= 64)
@@ -228,6 +228,26 @@ namespace RazorEnhanced
 			AddLog("Player.ChatSay(" + hue + ", \"" + text + "\")");
 		}
 
+		internal static void Record_GumpsResponse(uint id, int operation)
+		{
+			AddLog("Gumps.WaitForGump("+id+", 10000)");
+			AddLog("Gumps.SendAction(" + id + ", "+ operation + ")");
+		}
 
+		internal static void Record_SADisarm()
+		{
+			AddLog("Player.WeaponDisarmSA( )");
+		}
+
+		internal static void Record_SAStun()
+		{
+			AddLog("Player.WeaponStunSA( )");
+		}
+
+		internal static void Record_ContextMenuResponse(int serial, ushort idx)
+		{
+			AddLog("Gumps.WaitForContext(" + idx + ", 10000)");
+			AddLog("Gumps.ContextReply(" + serial.ToString("X8") + ", " + idx + ")");
+		}
 	}
 }

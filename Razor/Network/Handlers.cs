@@ -249,6 +249,18 @@ namespace Assistant
 			ushort ext = p.ReadUInt16();
 			switch (ext)
 			{
+				case 0x09: // Sa disarm
+					{
+						if (RazorEnhanced.ScriptRecorder.OnRecord)
+							RazorEnhanced.ScriptRecorder.Record_SADisarm();
+						break;
+					}
+				case 0x0A: // Sa Stun
+					{
+						if (RazorEnhanced.ScriptRecorder.OnRecord)
+							RazorEnhanced.ScriptRecorder.Record_SAStun();
+						break;
+					}
 				case 0x10: // query object properties
 					{
 						break;
@@ -267,9 +279,12 @@ namespace Assistant
 						if (ent != null && ent.ContextMenu != null && ent.ContextMenu.ContainsKey(idx))
 						{
 							ushort menu = ent.ContextMenu[idx];
+							if (RazorEnhanced.ScriptRecorder.OnRecord)
+								RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, menu);
 						}
 						World.Player.HasContext = false;
 						World.Player.ContextID = 0;
+
 						break;
 					}
 				case 0x1C:// cast spell
@@ -2439,6 +2454,9 @@ namespace Assistant
 			}
 			RazorEnhanced.GumpInspector.GumpResponseAddLogTextID(texts);
 			RazorEnhanced.GumpInspector.GumpResponseAddLogEnd();
+
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_GumpsResponse(tid, bid);
 		}
 
 		private static void ChangeSeason(PacketReader p, PacketHandlerEventArgs args)
