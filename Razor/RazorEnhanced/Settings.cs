@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 18; 
+		private static int SettingVersion = 20; 
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -181,9 +181,9 @@ namespace RazorEnhanced
 				friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
 				m_Dataset.Tables.Add(friend_player);
 
-				DataTable friend_guild = new DataTable("FRIEND_GUILD");
+				DataTable friend_guild = new DataTable("FRIEND_GUILDS");
 				friend_guild.Columns.Add("List", typeof(string));
-				friend_guild.Columns.Add("Guild", typeof(string));
+				friend_guild.Columns.Add("Guild", typeof(RazorEnhanced.Friend.FriendGuild));
 				m_Dataset.Tables.Add(friend_guild);
 
 				// ----------- RESTOCK ----------
@@ -2808,7 +2808,7 @@ namespace RazorEnhanced
 				return false;
 			}
 
-			internal static void ListInsert(string description, bool includeparty, bool preventattack, bool autoacceptparty)
+			internal static void ListInsert(string description, bool includeparty, bool preventattack, bool autoacceptparty, bool slfriend, bool tbfriend, bool comfriend, bool minfriend)
 			{
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
 				{
@@ -2820,13 +2820,17 @@ namespace RazorEnhanced
 				newRow["IncludeParty"] = includeparty;
 				newRow["PreventAttack"] = preventattack;
 				newRow["AutoacceptParty"] = autoacceptparty;
+				newRow["SLFrinedCheckBox"] = slfriend;
+				newRow["TBFrinedCheckBox"] = tbfriend;
+				newRow["COMFrinedCheckBox"] = comfriend;
+				newRow["MINFrinedCheckBox"] = minfriend;
 				newRow["Selected"] = true;
 				m_Dataset.Tables["FRIEND_LISTS"].Rows.Add(newRow);
 
 				Save();
 			}
 
-			internal static void ListUpdate(string description, bool includeparty, bool preventattack, bool autoacceptparty, bool selected)
+			internal static void ListUpdate(string description, bool includeparty, bool preventattack, bool autoacceptparty, bool slfriend, bool tbfriend, bool comfriend, bool minfriend, bool selected)
 			{
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
@@ -2856,6 +2860,10 @@ namespace RazorEnhanced
 							row["IncludeParty"] = includeparty;
 							row["PreventAttack"] = preventattack;
 							row["AutoacceptParty"] = autoacceptparty;
+							row["SLFrinedCheckBox"] = slfriend;
+							row["TBFrinedCheckBox"] = tbfriend;
+							row["COMFrinedCheckBox"] = comfriend;
+							row["MINFrinedCheckBox"] = minfriend;
 							row["Selected"] = selected;
 							break;
 						}
@@ -2899,9 +2907,15 @@ namespace RazorEnhanced
 					bool includeparty = (bool)row["IncludeParty"];
 					bool preventattack = (bool)row["PreventAttack"];
 					bool autoacceptparty = (bool)row["AutoacceptParty"];
+
+					bool slfriend = (bool)row["SLFrinedCheckBox"];
+					bool tbfriend = (bool)row["TBFrinedCheckBox"];
+					bool comfriend = (bool)row["COMFrinedCheckBox"];
+					bool minfriend = (bool)row["MINFrinedCheckBox"];
+
 					bool selected = (bool)row["Selected"];
 
-					RazorEnhanced.Friend.FriendList list = new RazorEnhanced.Friend.FriendList(description, autoacceptparty, preventattack, includeparty, selected);
+					RazorEnhanced.Friend.FriendList list = new RazorEnhanced.Friend.FriendList(description, autoacceptparty, preventattack, includeparty, slfriend, tbfriend, comfriend, minfriend, selected);
 					listsOut.Add(list);
 				}
 				lists = listsOut;
@@ -2919,12 +2933,34 @@ namespace RazorEnhanced
 				return false;
 			}
 
+			internal static bool GuildExists(string list, string guild)
+			{
+				foreach (DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows)
+				{
+					RazorEnhanced.Friend.FriendGuild dacercare = (RazorEnhanced.Friend.FriendGuild)row["Guild"];
+					if ((string)row["List"] == list && dacercare.Name == guild)
+						return true;
+				}
+				
+				return false;
+			}
+
 			internal static void PlayerInsert(string list, RazorEnhanced.Friend.FriendPlayer player)
 			{
 				DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].NewRow();
 				row["List"] = list;
 				row["Player"] = player;
 				m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
+
+				Save();
+			}
+
+			internal static void GuildInsert(string list, RazorEnhanced.Friend.FriendGuild guild)
+			{
+				DataRow row = m_Dataset.Tables["FRIEND_GUILDS"].NewRow();
+				row["List"] = list;
+				row["Guild"] = guild;
+				m_Dataset.Tables["FRIEND_GUILDS"].Rows.Add(row);
 
 				Save();
 			}
@@ -2937,6 +2973,18 @@ namespace RazorEnhanced
 					row["List"] = list;
 					row["Player"] = player;
 					m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Add(row);
+				}
+				Save();
+			}
+
+			internal static void GuildInsertFromImport(string list, List<RazorEnhanced.Friend.FriendGuild> guilds)
+			{
+				foreach (RazorEnhanced.Friend.FriendGuild guild in guilds)
+				{
+					DataRow row = m_Dataset.Tables["FRIEND_GUILDS"].NewRow();
+					row["List"] = list;
+					row["Guild"] = guild;
+					m_Dataset.Tables["FRIEND_GUILDS"].Rows.Add(row);
 				}
 				Save();
 			}
@@ -2959,12 +3007,45 @@ namespace RazorEnhanced
 				Save();
 			}
 
+			internal static void GuildReplace(string list, int index, RazorEnhanced.Friend.FriendGuild guild)
+			{
+				int count = -1;
+				foreach (DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows)
+				{
+					if ((string)row["List"] == list)
+					{
+						count++;
+						if (count == index)
+						{
+							row["Guild"] = guild;
+						}
+					}
+				}
+
+				Save();
+			}
+
 			internal static void PlayerDelete(string list, RazorEnhanced.Friend.FriendPlayer player)
 			{
 				for (int i = m_Dataset.Tables["FRIEND_PLAYERS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["FRIEND_PLAYERS"].Rows[i];
 					if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendPlayer)row["Player"] == player)
+					{
+						row.Delete();
+						break;
+					}
+				}
+
+				Save();
+			}
+
+			internal static void GuildDelete(string list, RazorEnhanced.Friend.FriendGuild guild)
+			{
+				for (int i = m_Dataset.Tables["FRIEND_GUILDS"].Rows.Count - 1; i >= 0; i--)
+				{
+					DataRow row = m_Dataset.Tables["FRIEND_GUILDS"].Rows[i];
+					if ((string)row["List"] == list && (RazorEnhanced.Friend.FriendGuild)row["Guild"] == guild)
 					{
 						row.Delete();
 						break;
@@ -2992,11 +3073,35 @@ namespace RazorEnhanced
 				players = playersOut;
 			}
 
-			internal static void ListDetailsRead(string listname, out bool includeparty, out bool preventattack, out bool autoacceptparty)
+			internal static void GuildRead(string list, out List<RazorEnhanced.Friend.FriendGuild> guilds)
+			{
+				List<RazorEnhanced.Friend.FriendGuild> guildsOut = new List<RazorEnhanced.Friend.FriendGuild>();
+
+				if (ListExists(list))
+				{
+					foreach (DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows)
+					{
+						if ((string)row["List"] == list)
+						{
+							guildsOut.Add((RazorEnhanced.Friend.FriendGuild)row["Guild"]);
+						}
+					}
+				}
+
+				guilds = guildsOut;
+			}
+
+			internal static void ListDetailsRead(string listname, out bool includeparty, out bool preventattack, out bool autoacceptparty, out bool slfriend, out bool tbfiriend, out bool comfriend, out bool minfriend)
 			{
 				bool includepartyOut = false;
 				bool preventattackOut = false;
 				bool autoacceptpartyOut = false;
+				bool slfriendOut = false;
+				bool tbfriendOut = false;
+				bool comfriendOut = false;
+				bool minfriendOut = false;
+
+
 
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
 				{
@@ -3005,11 +3110,19 @@ namespace RazorEnhanced
 						includepartyOut = (bool)row["IncludeParty"];
 						preventattackOut = (bool)row["PreventAttack"];
 						autoacceptpartyOut = (bool)row["AutoacceptParty"];
+						slfriendOut = (bool)row["SLFrinedCheckBox"];
+						tbfriendOut = (bool)row["TBFrinedCheckBox"];
+						comfriendOut = (bool)row["COMFrinedCheckBox"];
+						minfriendOut = (bool)row["MINFrinedCheckBox"];
 					}
 				}
 				includeparty = includepartyOut;
 				preventattack = preventattackOut;
 				autoacceptparty = autoacceptpartyOut;
+				slfriend = slfriendOut;
+				tbfiriend = tbfriendOut;
+				minfriend = minfriendOut;
+				comfriend = comfriendOut;
 			}
 		}
 
@@ -4502,6 +4615,37 @@ namespace RazorEnhanced
 				realVersion = 18;
 				General.WriteInt("SettingVersion", 18);
 			}
+
+
+			if (realVersion == 18)
+			{
+				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
+				{
+					row["SLFrinedCheckBox"] = false;
+					row["TBFrinedCheckBox"] = false;
+					row["COMFrinedCheckBox"] = false;
+					row["MINFrinedCheckBox"] = false;
+				}
+
+				realVersion = 19;
+				General.WriteInt("SettingVersion", 19);
+			}
+
+			if (realVersion == 19)
+			{
+				if (m_Dataset.Tables.Contains("FRIEND_GUILD"))
+					m_Dataset.Tables.Remove("FRIEND_GUILD");
+
+				DataTable friend_guild = new DataTable("FRIEND_GUILDS");
+				friend_guild.Columns.Add("List", typeof(string));
+				friend_guild.Columns.Add("Guild", typeof(RazorEnhanced.Friend.FriendGuild));
+				m_Dataset.Tables.Add(friend_guild);
+
+				realVersion = 20;
+				General.WriteInt("SettingVersion", 20);
+			}
+
+
 
 			Save();
 		}

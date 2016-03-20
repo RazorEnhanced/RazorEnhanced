@@ -28,6 +28,22 @@ namespace RazorEnhanced
 			}
 		}
 
+		[Serializable]
+		public class FriendGuild
+		{
+			private string m_Name;
+			public string Name { get { return m_Name; } }
+
+			private bool m_Selected;
+			internal bool Selected { get { return m_Selected; } }
+
+			public FriendGuild(string name, bool selected)
+			{
+				m_Name = name;
+				m_Selected = selected;
+			}
+		}
+
 		internal class FriendList
 		{
 			private string m_Description;
@@ -42,15 +58,31 @@ namespace RazorEnhanced
 			private bool m_IncludeParty;
 			internal bool IncludeParty { get { return m_IncludeParty; } }
 
+			private bool m_SLFriend;
+			internal bool SLFriend { get { return m_SLFriend; } }
+
+			private bool m_TBFriend;
+			internal bool TBFriend { get { return m_TBFriend; } }
+
+			private bool m_COMFriend;
+			internal bool COMFriend { get { return m_COMFriend; } }
+
+			private bool m_MINFriend;
+			internal bool MINFRiend { get { return m_MINFriend; } }
+
 			private bool m_Selected;
 			internal bool Selected { get { return m_Selected; } }
 
-			public FriendList(string description, bool autoacceptparty, bool preventattack, bool includeparty, bool selected)
+			public FriendList(string description, bool autoacceptparty, bool preventattack, bool includeparty, bool slfriend, bool tbfriend, bool comfriend, bool minfriend, bool selected)
 			{
 				m_Description = description;
 				m_AutoacceptParty = autoacceptparty;
 				m_PreventAttack = preventattack;
 				m_IncludeParty = includeparty;
+				m_SLFriend = slfriend;
+				m_TBFriend = tbfriend;
+				m_COMFriend = comfriend;
+				m_MINFriend = minfriend;
 				m_Selected = selected;
 			}
 		}
@@ -102,6 +134,54 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static bool SLFriend
+		{
+			get
+			{
+				return Assistant.Engine.MainWindow.FriendSLCheckBox.Checked;
+			}
+			set
+			{
+				Assistant.Engine.MainWindow.FriendSLCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendSLCheckBox.Checked = value));
+			}
+		}
+
+		internal static bool TBFriend
+		{
+			get
+			{
+				return Assistant.Engine.MainWindow.FriendTBCheckBox.Checked;
+			}
+			set
+			{ 
+				Assistant.Engine.MainWindow.FriendTBCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendTBCheckBox.Checked = value));
+			}
+		}
+
+		internal static bool COMFriend
+		{
+			get
+			{
+				return Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked;
+			}
+			set
+			{
+				Assistant.Engine.MainWindow.FriendTBCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked = value));
+			}
+		}
+
+		internal static bool MINFriend
+		{
+			get
+			{
+				return Assistant.Engine.MainWindow.FriendMINCheckBox.Checked;
+			}
+			set
+			{
+				Assistant.Engine.MainWindow.FriendMINCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendMINCheckBox.Checked = value));
+			}
+		}
+
 		internal static string FriendListName
 		{
 			get
@@ -115,6 +195,7 @@ namespace RazorEnhanced
 			}
 		}
 
+
 		internal static void RefreshLists()
 		{
 			List<FriendList> lists;
@@ -126,6 +207,11 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked = false;
 				Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked = false;
 				Assistant.Engine.MainWindow.FriendPartyCheckBox.Checked = false;
+				Assistant.Engine.MainWindow.FriendSLCheckBox.Checked = false;
+				Assistant.Engine.MainWindow.FriendTBCheckBox.Checked = false;
+				Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked = false;
+				Assistant.Engine.MainWindow.FriendMINCheckBox.Checked = false;
+
 			}
 
 			FriendList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
@@ -143,6 +229,10 @@ namespace RazorEnhanced
 					IncludeParty = l.IncludeParty;
 					PreventAttack = l.PreventAttack;
 					AutoacceptParty = l.AutoacceptParty;
+					SLFriend = l.SLFriend;
+					TBFriend = l.TBFriend;
+					COMFriend = l.COMFriend;
+					MINFriend = l.MINFRiend;
 				}
 			}
 		}
@@ -175,9 +265,36 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static void RefreshGuilds()
+		{
+			List<FriendList> lists;
+			RazorEnhanced.Settings.Friend.ListsRead(out lists);
+
+			Assistant.Engine.MainWindow.FriendGuildListView.Items.Clear();
+			foreach (FriendList l in lists)
+			{
+				if (l.Selected)
+				{
+					List<Friend.FriendGuild> guilds;
+					RazorEnhanced.Settings.Friend.GuildRead(l.Description, out guilds);
+
+					foreach (FriendGuild guild in guilds)
+					{
+						ListViewItem listitem = new ListViewItem();
+
+						listitem.Checked = guild.Selected;
+
+						listitem.SubItems.Add(guild.Name);
+
+						Assistant.Engine.MainWindow.FriendGuildListView.Items.Add(listitem);
+					}
+				}
+			}
+		}
+
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.Friend.ListInsert(newList, false, false, false);
+			RazorEnhanced.Settings.Friend.ListInsert(newList, false, false, false, false, false, false,false);
 
 			RazorEnhanced.Friend.RefreshLists();
 			RazorEnhanced.Friend.RefreshPlayers();
@@ -207,6 +324,19 @@ namespace RazorEnhanced
 			RazorEnhanced.Friend.RefreshPlayers();
 		}
 
+		internal static void AddGuildToList(string name)
+		{
+			string selection = Assistant.Engine.MainWindow.FriendListSelect.Text;
+			FriendGuild guild = new FriendGuild(name, true);
+
+			if (RazorEnhanced.Settings.Friend.ListExists(selection))
+			{
+				if (!RazorEnhanced.Settings.Friend.GuildExists(selection, name))
+					RazorEnhanced.Settings.Friend.GuildInsert(selection, guild);
+			}
+			RazorEnhanced.Friend.RefreshGuilds();
+		}
+
 		internal static void UpdateSelectedPlayer(int i)
 		{
 			List<FriendPlayer> players;
@@ -229,22 +359,114 @@ namespace RazorEnhanced
 
 		public static bool IsFriend(int serial)
 		{
-			List<Friend.FriendPlayer> players;
-			RazorEnhanced.Settings.Friend.PlayersRead(Friend.FriendListName, out players);
-			foreach (FriendPlayer player in players)        // Ricerca nella friend list normale
-			{
-				if (player.Selected)
-					if (player.Serial == serial)
-						return true;
-			}
+            List<Friend.FriendPlayer> players;
+            RazorEnhanced.Settings.Friend.PlayersRead(Friend.FriendListName, out players);
+            foreach (FriendPlayer player in players)        // Ricerca nella friend list normale
+            {
+                if (player.Selected)
+                {
+                    if (player.Serial == serial)
+                        return true;
+                }
+            }
 
-			if (Friend.IncludeParty && PacketHandlers.Party.Contains(serial))            // Ricerco nel party se attiva l'opzione
-			{
+            if (Friend.IncludeParty && PacketHandlers.Party.Contains(serial))            // Ricerco nel party se attiva l'opzione
 				return true;
-			}
 
-			return false;
+
+       /*     if (Assistant.Engine.MainWindow.FriendSLCheckBox.Checked)
+            {
+                if (GetFactionGuild("SL", "", 1, serial))
+                    return true;
+            }
+            else if (Assistant.Engine.MainWindow.FriendTBCheckBox.Checked)
+            {
+                if (GetFactionGuild("TB", "", 1, serial))
+                    return true;
+            }
+            else if (Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked)
+            {
+                if (GetFactionGuild("CoM", "", 1, serial))
+                    return true;
+            }
+            else if (Assistant.Engine.MainWindow.FriendMINCheckBox.Checked)
+            {
+                if (GetFactionGuild("MIN", "", 1, serial))
+                    return true;
+            }
+
+            List<Friend.FriendGuild> guilds = new List<FriendGuild>();
+            RazorEnhanced.Settings.Friend.GuildRead(Friend.FriendListName, out guilds);
+            foreach (FriendGuild guild in guilds)
+            {
+                if (guild.Selected)
+                {
+                    int index;
+                    if (Player.Map == 0)
+                        index = 2;
+                    else
+                        index = 1;
+
+                    if (GetFactionGuild("", guild.Name, index, serial))
+                        return true;
+                }
+            }
+			*/
+            return false;
 		}
+
+        private static bool GetFactionGuild(string factionName, string guildName, int index, int serial)
+        {
+            Assistant.Mobile target = Assistant.World.FindMobile(serial);
+
+            if (target == null)
+                return false;
+
+           // List<string> props = Mobiles.GetPropStringList(target.Serial);
+            if (target.ObjPropList.Content.Count > 0)
+            {
+                string faction = target.ObjPropList.Content[0].ToString();
+                if (faction.IndexOf('[') > 0)
+                {
+                    string[] factionArr = faction.Trim(' ').Replace("]", "").Split('['); //[0] è il nome, [1] è la fazione o la gilda se non c'è altro, [2] è la gilda se c'è la fazione
+
+                    switch (index)
+                    {
+                        case 1: //cerco fazione
+                            {
+                                if (factionArr[1] == factionName)
+                                    return true;
+                                break;
+                            }
+                        case 2: //cerco gilda
+                            {
+                                switch (factionArr.Length)
+                                {
+                                    case 2:
+                                        {
+                                            if (factionArr[1] == guildName)
+                                                return true;
+                                            break;
+                                        }
+                                    case 3:
+                                        {
+                                            if (factionArr[2] == guildName)
+                                                return true;
+                                            break;
+                                        }
+                                    default:
+                                        break;
+                                }
+                                break;
+                            }
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            return false;
+        }
 
 		public static void ChangeList(string nomelista)
 		{

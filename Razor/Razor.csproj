@@ -254,6 +254,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.Designer.cs">
+      <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedProfileImport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -530,6 +536,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.resx">
+      <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedProfileImport.resx">
       <DependentUpon>EnhancedProfileImport.cs</DependentUpon>
     </EmbeddedResource>
@@ -705,6 +714,7 @@
     <Content Include="RazorEnhanced\Resources\RazorComboBox.Arrow.png" />
     <Content Include="RazorEnhanced\Resources\RazorRadioButton.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorRadioButton.On.png" />
+    <None Include="RazorEnhanced\Resources\record.png" />
     <Content Include="RazorEnhanced\Resources\red.png" />
     <None Include="RazorEnhanced\Resources\RoundButton.png" />
     <None Include="RazorEnhanced\Resources\uod_logo.png" />
