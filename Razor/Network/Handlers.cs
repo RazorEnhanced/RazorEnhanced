@@ -466,6 +466,16 @@ namespace Assistant
 		private static void ResponseStringQuery(PacketReader p, PacketHandlerEventArgs args)
 		{
 			World.Player.HasQueryString = false;
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+			{
+				p.ReadUInt32(); //  Serial
+				p.ReadByte(); // Parent ID
+				p.ReadByte(); // Button
+				byte yesno = p.ReadByte();
+				int textlenght = p.ReadInt16();
+				string text = p.ReadStringSafe(textlenght);
+				RazorEnhanced.ScriptRecorder.Record_ResponseStringQuery(yesno, text);
+			}
 		}
 		
 		private static void LiftRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -582,6 +592,9 @@ namespace Assistant
 				byte seq = p.ReadByte();
 
 				World.Player.MoveReq(dir, seq);
+
+				if (RazorEnhanced.ScriptRecorder.OnRecord)
+					RazorEnhanced.ScriptRecorder.Record_Movement(dir);
 			}
 		}
 
@@ -2865,6 +2878,9 @@ namespace Assistant
 			ushort index = pvSrc.ReadUInt16();
 			ushort itemID = pvSrc.ReadUInt16();
 			ushort hue = pvSrc.ReadUInt16();
+
+			if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_MenuResponse(index);
 
 			World.Player.HasMenu = false;
 		}

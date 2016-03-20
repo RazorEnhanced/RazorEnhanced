@@ -249,5 +249,63 @@ namespace RazorEnhanced
 			AddLog("Gumps.WaitForContext(" + idx + ", 10000)");
 			AddLog("Gumps.ContextReply(" + serial.ToString("X8") + ", " + idx + ")");
 		}
+
+		internal static void Record_ResponseStringQuery(byte yesno, string text)
+		{
+			AddLog("Misc.WaitForQueryString(10000)");
+			if (yesno != 0)
+				AddLog("Misc.QueryStringResponse(True, " + text + ")");
+			else
+				AddLog("Misc.QueryStringResponse(False, " + text + ")");
+		}
+
+		internal static void Record_MenuResponse(int index)
+		{
+			AddLog("Misc.WaitForMenu(10000)");
+			string text = "";
+            try
+			{
+				text = World.Player.MenuEntry[index].ModelText;
+			}
+			catch { }
+			AddLog("Misc.MenuResponse(" + text+ ")");
+		}
+
+		internal static void Record_Movement(Direction dir)
+		{
+			switch (World.Player.Direction & Direction.Mask)
+			{
+				case Direction.North: AddLog("Player.Walk(\"North\")"); break;
+				case Direction.South: AddLog("Player.Walk(\"South\")"); break;
+				case Direction.West: AddLog("Player.Walk(\"West\")"); break;
+				case Direction.East: AddLog("Player.Walk(\"East\")"); break;
+				case Direction.Right: AddLog("Player.Walk(\"Right\")"); break;
+				case Direction.Left: AddLog("Player.Walk(\"Left\")"); break;
+				case Direction.Down: AddLog("Player.Walk(\"Down\")"); break;
+				case Direction.Up: AddLog("Player.Walk(\"Up\")"); break;
+				default: break;
+			}
+		}
+
+		internal static void Record_Target(TargetInfo info)
+		{
+			AddLog("Target.WaitForTarget(10000)");
+			if (info.X == 0xFFFF && info.X == 0xFFFF && (info.Serial <= 0 || info.Serial >= 0x80000000))
+			{
+				AddLog("Target.Cancel( )");
+				return;
+			}
+
+			if (info.Serial == 0)
+			{
+				if (info.Gfx == 0)
+					AddLog("Target.TargetExecute(" + info.X + ", " + info.Y + " ," + info.Z + ")");
+				else
+					AddLog("Target.TargetExecute(" + info.X + ", " + info.Y + " ," + info.Z + " ," + info.Gfx + ")");
+			}
+			else
+				AddLog("Target.TargetExecute(" + info.Serial + ")");
+
+		}
 	}
 }
