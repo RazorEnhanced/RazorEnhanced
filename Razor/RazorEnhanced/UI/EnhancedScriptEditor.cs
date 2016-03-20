@@ -1008,7 +1008,12 @@ namespace RazorEnhanced.UI
             InspectEntities();
 		}
 
-		private void InspectItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+        private void toolStripInspectGump_Click(object sender, EventArgs e)
+        {
+            InspectGumps();
+        }
+
+        private void InspectItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
 			if (assistantItem != null && assistantItem.Serial.IsItem)
@@ -1037,40 +1042,8 @@ namespace RazorEnhanced.UI
 
 		private void toolStripRecord_Click(object sender, EventArgs e)
 		{
-			if (ScriptRecorder.OnRecord && !m_OnRecord)
-			{
-				SetErrorBox("RECORDER ERROR: Other Editor are on Record");
-				return;
-			}
-
-			if (m_Thread == null ||
-					(m_Thread != null && m_Thread.ThreadState != ThreadState.Running &&
-					m_Thread.ThreadState != ThreadState.Unstarted &&
-					m_Thread.ThreadState != ThreadState.WaitSleepJoin)
-				)
-			{
-				if (m_OnRecord)
-				{
-					SetErrorBox("RECORDER: Stop Record");
-					m_OnRecord = false;
-					ScriptRecorder.OnRecord = false;
-					SetStatusLabel("");
-					return;
-				}
-				else
-				{
-					SetErrorBox("RECORDER: Start Record");
-					m_OnRecord = true;
-					ScriptRecorder.OnRecord = true;
-					SetStatusLabel("ON RECORD");
-					return;
-				}
-			}
-			else
-			{
-				SetErrorBox("RECORDER ERROR: Can't Record if script is running");
-			}
-        }
+		    ScriptRecord();
+		}
 
 		private void gumpinspector_close(object sender, EventArgs e)
 		{
@@ -1196,7 +1169,33 @@ namespace RazorEnhanced.UI
             }
         }
 
-	    private void InspectEntities()
+        private void AddBreakpoint()
+        {
+            int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
+
+            if (!m_Breakpoints.Contains(iline))
+            {
+                m_Breakpoints.Add(iline);
+                FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
+                line.BackgroundBrush = new SolidBrush(Color.Red);
+                fastColoredTextBoxEditor.Invalidate();
+            }
+        }
+
+        private void RemoveBreakpoint()
+        {
+            int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
+
+            if (m_Breakpoints.Contains(iline))
+            {
+                m_Breakpoints.Remove(iline);
+                FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
+                line.BackgroundBrush = new SolidBrush(Color.White);
+                fastColoredTextBoxEditor.Invalidate();
+            }
+        }
+
+        private void InspectEntities()
 	    {
             Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(InspectItemTarget_Callback));
         }
@@ -1209,29 +1208,40 @@ namespace RazorEnhanced.UI
             ginspector.Show();
         }
 
-	    private void AddBreakpoint()
+	    private void ScriptRecord()
 	    {
-            int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
-
-            if (!m_Breakpoints.Contains(iline))
+            if (ScriptRecorder.OnRecord && !m_OnRecord)
             {
-                m_Breakpoints.Add(iline);
-                FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
-                line.BackgroundBrush = new SolidBrush(Color.Red);
-                fastColoredTextBoxEditor.Invalidate();
+                SetErrorBox("RECORDER ERROR: Other Editor are on Record");
+                return;
             }
-        }
 
-	    private void RemoveBreakpoint()
-	    {
-            int iline = fastColoredTextBoxEditor.Selection.Start.iLine;
-
-            if (m_Breakpoints.Contains(iline))
+            if (m_Thread == null ||
+                    (m_Thread != null && m_Thread.ThreadState != ThreadState.Running &&
+                    m_Thread.ThreadState != ThreadState.Unstarted &&
+                    m_Thread.ThreadState != ThreadState.WaitSleepJoin)
+                )
             {
-                m_Breakpoints.Remove(iline);
-                FastColoredTextBoxNS.Line line = fastColoredTextBoxEditor[iline];
-                line.BackgroundBrush = new SolidBrush(Color.White);
-                fastColoredTextBoxEditor.Invalidate();
+                if (m_OnRecord)
+                {
+                    SetErrorBox("RECORDER: Stop Record");
+                    m_OnRecord = false;
+                    ScriptRecorder.OnRecord = false;
+                    SetStatusLabel("");
+                    return;
+                }
+                else
+                {
+                    SetErrorBox("RECORDER: Start Record");
+                    m_OnRecord = true;
+                    ScriptRecorder.OnRecord = true;
+                    SetStatusLabel("ON RECORD");
+                    return;
+                }
+            }
+            else
+            {
+                SetErrorBox("RECORDER ERROR: Can't Record if script is running");
             }
         }
         
@@ -1273,6 +1283,10 @@ namespace RazorEnhanced.UI
                 //Inspect Gumps
                 case (Keys.Control | Keys.G):
                     InspectGumps();
+                    return true;
+
+                case (Keys.Control | Keys.R):
+                    ScriptRecord();
                     return true;
 
                 //Start with Debug
@@ -1319,11 +1333,6 @@ namespace RazorEnhanced.UI
                     return base.ProcessCmdKey(ref msg, keyData);
             }
         }
-
-		private void toolStripInspectGump_Click(object sender, EventArgs e)
-		{
-			InspectGumps();
-		}
 	}
 
 	public class ToolTipDescriptions
