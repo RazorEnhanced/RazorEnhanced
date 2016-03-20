@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 17; 
+		private static int SettingVersion = 18; 
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -169,13 +169,22 @@ namespace RazorEnhanced
 				friend_lists.Columns.Add("IncludeParty", typeof(bool));
 				friend_lists.Columns.Add("PreventAttack", typeof(bool));
 				friend_lists.Columns.Add("AutoacceptParty", typeof(bool));
+				friend_lists.Columns.Add("SLFrinedCheckBox", typeof(bool));
+				friend_lists.Columns.Add("TBFrinedCheckBox", typeof(bool));
+				friend_lists.Columns.Add("COMFrinedCheckBox", typeof(bool));
+				friend_lists.Columns.Add("MINFrinedCheckBox", typeof(bool));
 				friend_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(friend_lists);
-
+				
 				DataTable friend_player = new DataTable("FRIEND_PLAYERS");
 				friend_player.Columns.Add("List", typeof(string));
 				friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
 				m_Dataset.Tables.Add(friend_player);
+
+				DataTable friend_guild = new DataTable("FRIEND_GUILD");
+				friend_guild.Columns.Add("List", typeof(string));
+				friend_guild.Columns.Add("Guild", typeof(string));
+				m_Dataset.Tables.Add(friend_guild);
 
 				// ----------- RESTOCK ----------
 				DataTable restock_lists = new DataTable("RESTOCK_LISTS");
@@ -4469,6 +4478,29 @@ namespace RazorEnhanced
 
 				realVersion = 17;
 				General.WriteInt("SettingVersion", 17);
+			}
+
+			if (realVersion == 17)
+			{
+				DataTable friend_guild = new DataTable("FRIEND_GUILD");
+				friend_guild.Columns.Add("List", typeof(string));
+				friend_guild.Columns.Add("Guild", typeof(string));
+				m_Dataset.Tables.Add(friend_guild);
+
+				m_Dataset.Tables["FRIEND_LISTS"].Columns.Add("SLFrinedCheckBox", typeof(bool));
+				General.WriteBool("ShowMessageFieldCheckBox", false);
+
+				m_Dataset.Tables["FRIEND_LISTS"].Columns.Add("TBFrinedCheckBox", typeof(bool));
+				General.WriteBool("ShowMessageFieldCheckBox", false);
+
+				m_Dataset.Tables["FRIEND_LISTS"].Columns.Add("COMFrinedCheckBox", typeof(bool));
+				General.WriteBool("ShowMessageFieldCheckBox", false);
+
+				m_Dataset.Tables["FRIEND_LISTS"].Columns.Add("MINFrinedCheckBox", typeof(bool));
+				General.WriteBool("ShowMessageFieldCheckBox", false);
+
+				realVersion = 18;
+				General.WriteInt("SettingVersion", 18);
 			}
 
 			Save();
