@@ -3,13 +3,14 @@ namespace RazorEnhanced
 {
 	public class ScriptRecorder
 	{
-		private static bool m_onrecord = true;
+		private static bool m_onrecord = false;
 		internal static bool OnRecord { get { return m_onrecord; } set { m_onrecord = value; } }
 
 		private static void AddLog(string code)
 		{
-			RazorEnhanced.AutoLoot.AddLog(code);
-		}
+			if (UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea != null)
+				UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text = UI.EnhancedScriptEditor.EnhancedScriptEditorTextArea.Text +"\n" + code;
+        }
 
 		internal static void Record_AttackRequest(uint serial)
 		{

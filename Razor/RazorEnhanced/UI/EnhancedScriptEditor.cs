@@ -38,6 +38,7 @@ namespace RazorEnhanced.UI
 		private static Thread m_Thread;
 
 		private static EnhancedScriptEditor m_EnhancedScriptEditor;
+		internal static FastColoredTextBox EnhancedScriptEditorTextArea { get { return m_EnhancedScriptEditor.fastColoredTextBoxEditor; } }
 		private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
 		private static Command m_CurrentCommand = Command.None;
 		private static AutoResetEvent m_DebugContinue = new AutoResetEvent(false);
@@ -46,6 +47,7 @@ namespace RazorEnhanced.UI
 		private string m_Filename = "";
 		private string m_Filepath = "";
 		private static bool m_OnClosing = false;
+		private static bool m_OnRecord = false;
 
 		private ScriptEngine m_Engine;
 		private ScriptSource m_Source;
@@ -74,6 +76,11 @@ namespace RazorEnhanced.UI
 			if (m_EnhancedScriptEditor != null)
 			{
 				m_OnClosing = true;
+				if (m_OnRecord)
+				{
+					m_OnRecord = false;
+					ScriptRecorder.OnRecord = false;
+                }
                 m_EnhancedScriptEditor.Stop();
 				//m_EnhancedScriptEditor.Close();
 				//m_EnhancedScriptEditor.Dispose();
@@ -83,16 +90,17 @@ namespace RazorEnhanced.UI
 		internal EnhancedScriptEditor(ScriptEngine engine, string filename)
 		{
 			InitializeComponent();
-
-            //Automenu Section
-            m_popupMenu = new AutocompleteMenu(fastColoredTextBoxEditor);
+			//Automenu Section
+			m_popupMenu = new AutocompleteMenu(fastColoredTextBoxEditor);
             m_popupMenu.Items.ImageList = imageList2;
             m_popupMenu.SearchPattern = @"[\w\.:=!<>]";
             m_popupMenu.AllowTabKey = true;
+			m_popupMenu.ToolTipDuration = 5000;
+			m_popupMenu.AppearInterval = 100;
 
-            #region Keywords
+			#region Keywords
 
-            string[] keywords =
+			string[] keywords =
 		    {
 		        "and", "assert", "break", "class", "continue", "def", "del", "elif", "else", "except", "exec",
 		        "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or", "pass", "print",
@@ -896,6 +904,7 @@ namespace RazorEnhanced.UI
 		{
 			if(m_OnClosing)
 				return;
+
 			if (this.textBoxDebug.InvokeRequired)
 			{
 				SetTracebackDelegate d = new SetTracebackDelegate(SetTraceback);
@@ -909,6 +918,9 @@ namespace RazorEnhanced.UI
 
 		private void SetErrorBox(string text)
 		{
+			if (m_OnClosing)
+				return;
+
 			if (this.listBox1.InvokeRequired)
 			{
 				SetTracebackDelegate d = new SetTracebackDelegate(SetErrorBox);
@@ -1023,10 +1035,42 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		private void toolStripButtonGumps_Click(object sender, EventArgs e)
+		private void toolStripRecord_Click(object sender, EventArgs e)
 		{
-		    InspectGumps();
-		}
+			if (ScriptRecorder.OnRecord && !m_OnRecord)
+			{
+				SetErrorBox("RECORDER ERROR: Other Editor are on Record");
+				return;
+			}
+
+			if (m_Thread == null ||
+					(m_Thread != null && m_Thread.ThreadState != ThreadState.Running &&
+					m_Thread.ThreadState != ThreadState.Unstarted &&
+					m_Thread.ThreadState != ThreadState.WaitSleepJoin)
+				)
+			{
+				if (m_OnRecord)
+				{
+					SetErrorBox("RECORDER: Stop Record");
+					m_OnRecord = false;
+					ScriptRecorder.OnRecord = false;
+					SetStatusLabel("");
+					return;
+				}
+				else
+				{
+					SetErrorBox("RECORDER: Start Record");
+					m_OnRecord = true;
+					ScriptRecorder.OnRecord = true;
+					SetStatusLabel("ON RECORD");
+					return;
+				}
+			}
+			else
+			{
+				SetErrorBox("RECORDER ERROR: Can't Record if script is running");
+			}
+        }
 
 		private void gumpinspector_close(object sender, EventArgs e)
 		{
@@ -1275,9 +1319,14 @@ namespace RazorEnhanced.UI
                     return base.ProcessCmdKey(ref msg, keyData);
             }
         }
-    }
 
-    public class ToolTipDescriptions
+		private void toolStripInspectGump_Click(object sender, EventArgs e)
+		{
+			InspectGumps();
+		}
+	}
+
+	public class ToolTipDescriptions
     {
         public string Title;
         public string Description;

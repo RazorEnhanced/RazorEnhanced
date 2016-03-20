@@ -118,20 +118,83 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="razor_enhanced_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\razor-enhanced.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RazorCheckBox_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\RazorCheckBox.Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BarraGrandeVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="razor_enhanced_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\razor-enhanced.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RazorCheckBox_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\RazorCheckBox.On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="RazorComboBox_Arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\RazorComboBox.Arrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BarraGrandeVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaBordoDestro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoDestro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="document_close_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\document-close-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RoundButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RoundButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RazorRadioButton_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\RazorRadioButton.Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_loop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\loop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RazorComboBox_Arrow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RazorComboBox.Arrow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="gump" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\gump.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_deadOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-deadOut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_skip_forward_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-skip-forward-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="accessories_text_editor_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\accessories-text-editor-5.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bug_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\bug-delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_paralized" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-paralized.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="uod_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\uod_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\yellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="RazorRadioButton_On" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\RazorRadioButton.On.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,86 +202,17 @@
   <data name="red" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\red.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="yellow" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\yellow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BarraGrandeOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="bug_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\bug-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bug_delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\bug-delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="document_close_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\document-close-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\green.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="document_open_7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\document-open-7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="document_save_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\document-save-5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="media_playback_stop_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\media-playback-stop-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="media_seek_forward_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\media-seek-forward-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="media_playback_start_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\media-playback-start-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="media_skip_forward_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\media-skip-forward-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="media_playback_pause_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\media-playback-pause-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="accessories_text_editor_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\accessories-text-editor-5.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RoundButton" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\RoundButton.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="applications_utilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\applications-utilities.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="applications_utilities1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\applications-utilities.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="razor_enhanced_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\razor-enhanced.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="uod_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\uod_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="razor_enhanced_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\razor-enhanced.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="bug" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\bug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="gump" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\gump.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="map_poison" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\map-poison.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="map_dead" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\map-dead.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="map_mortal" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\map-mortal.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="map_paralized" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\map-paralized.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="map_deadIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\map-deadIn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="map_deadOut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\map-deadOut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="razor_enhanced_splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\razor-enhanced-splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BarraVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="toolbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\toolbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -226,52 +220,61 @@
   <data name="BarraGrandeOrizzontaBordoDestro" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaBordoDestro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BarraGrandeOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="map_mortal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-mortal.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BarraGrandeOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="map_deadIn" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-deadIn.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BarraGrandeOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraGrandeVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraGrandeVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraGrandeVerticaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraGrandeVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraOrizzontaBordoDestro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoDestro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraOrizzontaBordoSinistro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraOrizzontaBordoSinistro.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraOrizzontaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraVerticaleBordoSopra" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSopra.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="BarraVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="applications_utilities" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\applications-utilities.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="BarraVerticaleSlot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\BarraVerticaleSlot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="BarraVerticaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\BarraVerticaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="document_save_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\document-save-5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="media_playback_loop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\RazorEnhanced\Resources\loop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="media_seek_forward_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-seek-forward-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_poison" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-poison.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeVerticaleBordoSotto" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeVerticaleBordoSotto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bug_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\bug-add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="razor_enhanced_splash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\razor-enhanced-splash.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_start_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-playback-start-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="BarraGrandeOrizzontaleSpazioStat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\BarraGrandeOrizzontaleSpazioStat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="map_dead" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\map-dead.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_pause_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-playback-pause-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="media_playback_stop_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\media-playback-stop-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bug" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\bug.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RazorCheckBox_Off" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\RazorCheckBox.Off.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="applications_utilities1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\applications-utilities.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="rec" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\rec.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
