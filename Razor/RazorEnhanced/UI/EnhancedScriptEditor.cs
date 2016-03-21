@@ -98,9 +98,9 @@ namespace RazorEnhanced.UI
 			m_popupMenu.ToolTipDuration = 5000;
 			m_popupMenu.AppearInterval = 100;
 
-			#region Keywords
+            #region Keywords
 
-			string[] keywords =
+            string[] keywords =
 		    {
 		        "and", "assert", "break", "class", "continue", "def", "del", "elif", "else", "except", "exec",
 		        "finally", "for", "from", "global", "if", "import", "in", "is", "lambda", "not", "or", "pass", "print",
@@ -587,14 +587,13 @@ namespace RazorEnhanced.UI
             //Permette la creazione del menu con la singola keyword
             Array.Sort(keywords);
 		    foreach (var item in keywords)
-                items.Add(new AutocompleteItem(item) { ImageIndex = 0 });
-
-            //Permette la creazione del menu con la singola classe
+		        items.Add(new AutocompleteItem(item) {ImageIndex = 0});
+		    //Permette la creazione del menu con la singola classe
             Array.Sort(classes);
-            foreach (var item in classes)
-		        items.Add(new AutocompleteItem(item) { ImageIndex = 1 });
+		    foreach (var item in classes)
+		        items.Add(new AutocompleteItem(item) {ImageIndex = 1});
 
-            //Permette di creare il menu solo per i metodi della classe digitata
+		    //Permette di creare il menu solo per i metodi della classe digitata
             Array.Sort(methods);
 		    foreach (var item in methods)
 		    {
@@ -617,22 +616,26 @@ namespace RazorEnhanced.UI
                         ImageIndex = 2
                     });
                 }
-		    }
+            }
 
 		    //Permette di creare il menu per le props solo sulla classe Player
             Array.Sort(propsWithCheck);
-            foreach (var item in propsWithCheck)
-		        items.Add(new SubPropertiesAutocompleteItem(item) { ImageIndex = 4 });
+		    foreach (var item in propsWithCheck)
+		        items.Add(new SubPropertiesAutocompleteItem(item) {ImageIndex = 4});
 
-            //Props generiche divise tra quelle Mobiles e Items, che possono
+		    //Props generiche divise tra quelle Mobiles e Items, che possono
             //Appartenere a variabili istanziate di una certa classe
             //Qui sta alla cura dell'utente capire se una props va bene o no
             //Per quella istanza
             Array.Sort(props);
-            foreach (var item in props)
-                items.Add(new MethodAutocompleteItem(item) { ImageIndex = 3 });
+		    foreach (var item in props)
+		        items.Add(new MethodAutocompleteItem(item) {ImageIndex = 3});
 
-		    m_popupMenu.Items.SetAutocompleteItems(items);
+            m_popupMenu.Items.SetAutocompleteItems(items);
+
+            //Aumenta la larghezza per i singoli item, in modo che l'intero nome sia visibile
+            m_popupMenu.Items.MaximumSize = new Size(m_popupMenu.Items.Width + 20, m_popupMenu.Items.Height);
+            m_popupMenu.Items.Width = m_popupMenu.Items.Width + 20;
 
             this.Text = m_Title;
 			this.m_Engine = engine;
