@@ -673,7 +673,7 @@ namespace RazorEnhanced
 			if (amount == 0)
 			{
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.Zero));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.MinusOne));
 			}
 			else
 			{
@@ -682,7 +682,7 @@ namespace RazorEnhanced
 					amount = item.Amount;
 				}
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.Zero));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.MinusOne));
 			}
 		}
 
