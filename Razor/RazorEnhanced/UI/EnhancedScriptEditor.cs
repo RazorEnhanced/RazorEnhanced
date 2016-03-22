@@ -1289,7 +1289,8 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedScriptEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			Stop();
+			End();
+            Stop();
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
