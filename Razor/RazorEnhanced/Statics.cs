@@ -72,20 +72,20 @@ namespace RazorEnhanced
 		// Blocco info su statici
 		public class TileInfo
 		{
-			private int m_ID;
-			public int ID { get { return m_ID; } }
+			private int m_StaticID;
+			public int StaticID { get { return m_StaticID; } }
 
-			private int m_Hue;
-			public int Hue { get { return m_Hue; } }
+			private int m_StaticHue;
+			public int StaticHue { get { return m_StaticHue; } }
 
-			private int m_Z;
-			public int Z { get { return m_Z; } }
+			private int m_StaticZ;
+			public int StaticZ { get { return m_StaticZ; } }
 
 			public TileInfo(int id, int hue, int z)
 			{
-				m_ID = id;
-				m_Hue = hue;
-				m_Z = z;
+                m_StaticID = id;
+				m_StaticHue = hue;
+                m_StaticZ = z;
 			}
 		}
 

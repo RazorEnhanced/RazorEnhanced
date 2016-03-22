@@ -277,7 +277,7 @@ namespace RazorEnhanced.UI
 		        "Human", "WarMode", "Female", "Hits", "MaxHits", "Stam", "StamMax", "Mana", "ManaMax", "Backpack", "Mount",
 		        "Quiver", "Notoriety", "Map", "InParty", "Properties", "Amount", "IsBagOfSending", "IsContainer", "IsCorpse",
 		        "IsDoor", "IsInBank", "Movable", "OnGround", "ItemID", "RootContainer", "Durability", "MaxDurability",
-		        "Contains", "Weight", "Position"
+		        "Contains", "Weight", "Position", "StaticID", "StaticHue", "StaticZ"
             };
 
             string[] props = propsGeneric;
@@ -631,7 +631,7 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Target.WaitForTarget(int)", new string[] { "int TimeoutTarget" }, "int", "Ammaccabanana");
             descriptionTarget.Add("Target.WaitForTarget", tooltip);
 
-            tooltip = new ToolTipDescriptions("Target.TargetExecute(int or Item or Mobile or (int, int, int))", new string[] { "int Serial or Item ItemInstance or Mobile MobileInstance or ( int X, int Y, int Z )" }, "void", "Ammaccabanana");
+            tooltip = new ToolTipDescriptions("Target.TargetExecute(int or Item or Mobile or (int, int, int, (optional)int))", new string[] { "int Serial or Item ItemInstance or Mobile MobileInstance or ( int X, int Y, int Z, int TileID )" }, "void", "Ammaccabanana");
             descriptionTarget.Add("Target.TargetExecute", tooltip);
 
             tooltip = new ToolTipDescriptions("Target.PromptTarget()", new string[] { "none" }, "int", "Ammaccabanana");
