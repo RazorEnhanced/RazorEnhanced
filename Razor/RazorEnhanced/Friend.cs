@@ -374,99 +374,77 @@ namespace RazorEnhanced
 				return true;
 
 
-       /*     if (Assistant.Engine.MainWindow.FriendSLCheckBox.Checked)
-            {
-                if (GetFactionGuild("SL", "", 1, serial))
-                    return true;
-            }
-            else if (Assistant.Engine.MainWindow.FriendTBCheckBox.Checked)
-            {
-                if (GetFactionGuild("TB", "", 1, serial))
-                    return true;
-            }
-            else if (Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked)
-            {
-                if (GetFactionGuild("CoM", "", 1, serial))
-                    return true;
-            }
-            else if (Assistant.Engine.MainWindow.FriendMINCheckBox.Checked)
-            {
-                if (GetFactionGuild("MIN", "", 1, serial))
-                    return true;
-            }
+			if (Assistant.Engine.MainWindow.FriendSLCheckBox.Checked)
+			{
+				if (GetFaction("SL", serial))
+					return true;
+			}
 
-            List<Friend.FriendGuild> guilds = new List<FriendGuild>();
-            RazorEnhanced.Settings.Friend.GuildRead(Friend.FriendListName, out guilds);
-            foreach (FriendGuild guild in guilds)
-            {
-                if (guild.Selected)
-                {
-                    int index;
-                    if (Player.Map == 0)
-                        index = 2;
-                    else
-                        index = 1;
+			if (Assistant.Engine.MainWindow.FriendTBCheckBox.Checked)
+			{
+				if (GetFaction("TB", serial))
+					return true;
+			}
 
-                    if (GetFactionGuild("", guild.Name, index, serial))
-                        return true;
-                }
-            }
-			*/
-            return false;
+			if (Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked)
+			{
+				if (GetFaction("CoM", serial))
+					return true;
+			}
+
+			if (Assistant.Engine.MainWindow.FriendMINCheckBox.Checked)
+			{
+				if (GetFaction("MIN", serial))
+					return true;
+			}
+
+			List<Friend.FriendGuild> guilds = new List<FriendGuild>();
+			RazorEnhanced.Settings.Friend.GuildRead(Friend.FriendListName, out guilds);
+			foreach (FriendGuild guild in guilds)
+			{
+				if (guild.Selected)
+				{
+					if (GetGuild(guild.Name, serial))
+						return true;
+				}
+			}
+			return false;
 		}
 
-        private static bool GetFactionGuild(string factionName, string guildName, int index, int serial)
-        {
-            Assistant.Mobile target = Assistant.World.FindMobile(serial);
 
-            if (target == null)
-                return false;
+		private static bool GetFaction(string name, int serial)
+		{
+			Assistant.Mobile target = Assistant.World.FindMobile(serial);
 
-           // List<string> props = Mobiles.GetPropStringList(target.Serial);
-            if (target.ObjPropList.Content.Count > 0)
-            {
-                string faction = target.ObjPropList.Content[0].ToString();
-                if (faction.IndexOf('[') > 0)
-                {
-                    string[] factionArr = faction.Trim(' ').Replace("]", "").Split('['); //[0] è il nome, [1] è la fazione o la gilda se non c'è altro, [2] è la gilda se c'è la fazione
+			if (target == null)
+				return false;
 
-                    switch (index)
-                    {
-                        case 1: //cerco fazione
-                            {
-                                if (factionArr[1] == factionName)
-                                    return true;
-                                break;
-                            }
-                        case 2: //cerco gilda
-                            {
-                                switch (factionArr.Length)
-                                {
-                                    case 2:
-                                        {
-                                            if (factionArr[1] == guildName)
-                                                return true;
-                                            break;
-                                        }
-                                    case 3:
-                                        {
-                                            if (factionArr[2] == guildName)
-                                                return true;
-                                            break;
-                                        }
-                                    default:
-                                        break;
-                                }
-                                break;
-                            }
-                        default:
-                            break;
-                    }
-                }
-            }
+			if (target.ObjPropList.Content.Count > 0)
+			{
+				string firstProp = target.ObjPropList.Content[0].ToString();
+				if (firstProp.Contains(string.Format("[{0}]", name)))
+					return true;
+			}
+			return false;
+		}
 
-            return false;
-        }
+
+		private static bool GetGuild(string name, int serial)
+		{
+			Assistant.Mobile target = Assistant.World.FindMobile(serial);
+
+			if (target == null)
+				return false;
+
+			if (target.ObjPropList.Content.Count > 0)
+			{
+				string firstProp = target.ObjPropList.Content[0].ToString();
+				if (firstProp.Contains(string.Format("[{0}]", name)))
+					return true;
+			}
+			return false;
+		}
+
 
 		public static void ChangeList(string nomelista)
 		{
