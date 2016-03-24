@@ -1753,6 +1753,12 @@ namespace RazorEnhanced.UI
                     return base.ProcessCmdKey(ref msg, keyData);
             }
         }
+
+		private void EnhancedScriptEditor_Load(object sender, EventArgs e)
+		{
+			m_OnClosing = false;
+			m_OnRecord = false;
+		}
 	}
 
 	public class ToolTipDescriptions
