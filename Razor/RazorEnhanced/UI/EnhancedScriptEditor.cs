@@ -237,6 +237,11 @@ namespace RazorEnhanced.UI
                 "Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo"
             };
 
+		    string[] methodsGeneric =
+		    {
+                "GetItemOnLayer", "GetAssistantLayer", "DistanceTo"
+		    };
+
 		    string[] methods =
 		        methodsPlayer.Union(methodsSpells)
 		            .Union(methodsMobiles)
@@ -298,7 +303,7 @@ namespace RazorEnhanced.UI
 
             Dictionary<string, ToolTipDescriptions> descriptionPlayer = new Dictionary<string, ToolTipDescriptions>();
 
-            tooltip = new ToolTipDescriptions("Player.BuffsExist(string)", new string[] { "string BuffName" }, "bool", "Get a bool value if specific buff exist or not");
+            tooltip = new ToolTipDescriptions("Player.BuffsExist(string)", new string[] { "string BuffName" }, "bool", "Get a bool value if specific buff exist or not\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.BuffsExist", tooltip);
 
             tooltip = new ToolTipDescriptions("Player.GetBuffDescription(BuffIcon)", new string[] { "BuffIcon Name" }, "string", "Get description of a specific BuffIcon");
@@ -313,31 +318,31 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Player.InRangeItem(Item or int, int)", new string[] { "Item ItemToCheck or int SerialItemToCheck", "int range" }, "bool", "Retrieves a bool value if specific item is in a certain range");
             descriptionPlayer.Add("Player.InRangeItem", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.GetItemOnLayer(string)", new string[] { "string LayerName" }, "Item", "Retrieves a item value of item equipped on specific layer");
+            tooltip = new ToolTipDescriptions("Player.GetItemOnLayer(string)", new string[] { "string LayerName" }, "Item", "Retrieves a item value of item equipped on specific layer\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.GetItemOnLayer", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.UnEquipItemByLayer(string)", new string[] { "string LayerName" }, "void", "Unequip an item on a specific layer");
+            tooltip = new ToolTipDescriptions("Player.UnEquipItemByLayer(string)", new string[] { "string LayerName" }, "void", "Unequip an item on a specific layer\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.UnEquipItemByLayer", tooltip);
 
             tooltip = new ToolTipDescriptions("Player.EquipItem(Item or int)", new string[] { "Item ItemInstance or int SerialItem" }, "void", "Equip an item on a layer");
             descriptionPlayer.Add("Player.EquipItem", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.CheckLayer(string)", new string[] { "string LayerName" }, "bool", "Retrieves current status of a certain layer\n\tTrue: busy, False: free ");
+            tooltip = new ToolTipDescriptions("Player.CheckLayer(string)", new string[] { "string LayerName" }, "bool", "Retrieves current status of a certain layer\n\tTrue: busy, False: free\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.CheckLayer", tooltip);
 
             tooltip = new ToolTipDescriptions("Player.GetAssistantLayer(string)", new string[] { "string LayerName" }, "Layer", "Retrives HexID from the Layer's name");
             descriptionPlayer.Add("Player.GetAssistantLayer", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.GetSkillValue(string)", new string[] { "string SkillName" }, "dobule", "Get current value of a specific skill");
+            tooltip = new ToolTipDescriptions("Player.GetSkillValue(string)", new string[] { "string SkillName" }, "dobule", "Get current value of a specific skill\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.GetSkillValue", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.GetSkillCap(string)", new string[] { "string SkillName" }, "double", "Get current value of a specific skillcap");
+            tooltip = new ToolTipDescriptions("Player.GetSkillCap(string)", new string[] { "string SkillName" }, "double", "Get current value of a specific skillcap\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.GetSkillCap", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.GetSkillStatus(string)", new string[] { "string SkillName" }, "int", "Get lock status for a certain skill\n\tUP: 0, DOWN: 1, LOCKED: 2");
+            tooltip = new ToolTipDescriptions("Player.GetSkillStatus(string)", new string[] { "string SkillName" }, "int", "Get lock status for a certain skill\n\tUP: 0, DOWN: 1, LOCKED: 2\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.GetSkillStatus", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.UseSkill(string)", new string[] { "string SkillName" }, "void", "Use a specific skill");
+            tooltip = new ToolTipDescriptions("Player.UseSkill(string)", new string[] { "string SkillName" }, "void", "Use a specific skill\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.UseSkill", tooltip);
 
             tooltip = new ToolTipDescriptions("Player.ChatSay(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Send a message in say with a specific color");
@@ -388,7 +393,7 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Player.InvokeVirtue(string)", new string[] { "string VirtueName" }, "void", "Invoke a chracter virtue by name");
             descriptionPlayer.Add("Player.InvokeVirtue", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.Walk(string)", new string[] { "string Direction" }, "void", "Move character in a specific direction");
+            tooltip = new ToolTipDescriptions("Player.Walk(string)", new string[] { "string Direction" }, "void", "Move character in a specific direction\n\tCheck the wiki for the possible strings");
             descriptionPlayer.Add("Player.Walk", tooltip);
 
             tooltip = new ToolTipDescriptions("Player.PathFindTo(Point3D or (int, int, int))", new string[] { "Point3D Coords or ( int X, int Y, int Z )" }, "void", "Client pathfinder to specific location with Point3D or XYZ coordinates");
@@ -430,25 +435,25 @@ namespace RazorEnhanced.UI
 
             Dictionary<string, ToolTipDescriptions> descriptionSpells = new Dictionary<string, ToolTipDescriptions>();
 
-            tooltip = new ToolTipDescriptions("Spells.CastMagery(string)", new string[] { "string SpellName" }, "void", "Cast a magery spell by spell name");
+            tooltip = new ToolTipDescriptions("Spells.CastMagery(string)", new string[] { "string SpellName" }, "void", "Cast a magery spell by spell name\n\tCheck the wiki for the possible strings");
             descriptionSpells.Add("Spells.CastMagery", tooltip);
 
-            tooltip = new ToolTipDescriptions("Spells.CastNecro(string)", new string[] { "string SpellName" }, "void", "Cast a necro spell by spell name");
+            tooltip = new ToolTipDescriptions("Spells.CastNecro(string)", new string[] { "string SpellName" }, "void", "Cast a necro spell by spell name\n\tCheck the wiki for the possible strings");
             descriptionSpells.Add("Spells.CastNecro", tooltip);
 
-            tooltip = new ToolTipDescriptions("Spells.CastChivalry(string)", new string[] { "string SpellName" }, "void", "Cast a chivalry spell by spell name");
+            tooltip = new ToolTipDescriptions("Spells.CastChivalry(string)", new string[] { "string SpellName" }, "void", "Cast a chivalry spell by spell name\n\tCheck the wiki for the possible strings");
             descriptionSpells.Add("Spells.CastChivalry", tooltip);
 
-            tooltip = new ToolTipDescriptions("Spells.CastBushido(string)", new string[] { "string SpellName" }, "void", "Cast a bushido spell by spell name");
+            tooltip = new ToolTipDescriptions("Spells.CastBushido(string)", new string[] { "string SpellName" }, "void", "Cast a bushido spell by spell name\n\tCheck the wiki for the possible strings");
             descriptionSpells.Add("Spells.CastBushido", tooltip);
 
-            tooltip = new ToolTipDescriptions("Spells.CastNinjitsu(string)", new string[] { "string SpellName" }, "void", "Cast a ninjitsu spell by spell name");
+            tooltip = new ToolTipDescriptions("Spells.CastNinjitsu(string)", new string[] { "string SpellName" }, "void", "Cast a ninjitsu spell by spell name\n\tCheck the wiki for the possible strings");
             descriptionSpells.Add("Spells.CastNinjitsu", tooltip);
 
-            tooltip = new ToolTipDescriptions("Spells.CastSpellweaving(string)", new string[] { "string SpellName" }, "void", "Cast a spellweaving spell by spell name");
+            tooltip = new ToolTipDescriptions("Spells.CastSpellweaving(string)", new string[] { "string SpellName" }, "void", "Cast a spellweaving spell by spell name\n\tCheck the wiki for the possible strings");
             descriptionSpells.Add("Spells.CastSpellweaving", tooltip);
 
-            tooltip = new ToolTipDescriptions("Spells.CastMysticism(string)", new string[] { "string SpellName" }, "void", "Cast a mysticism spell by spell name");
+            tooltip = new ToolTipDescriptions("Spells.CastMysticism(string)", new string[] { "string SpellName" }, "void", "Cast a mysticism spell by spell name\n\tCheck the wiki for the possible strings");
             descriptionSpells.Add("Spells.CastMysticism", tooltip);
 
             #endregion
@@ -733,7 +738,7 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Journal.SearchByColor(string, int)", new string[] { "string TextToSearch", "int ColorToSearch" }, "bool", "Search a text in all journal buffer by color, and text is case sensitive\n\tTrue: text found, False: text not found");
             descriptionJournal.Add("Journal.SearchByColor", tooltip);
 
-            tooltip = new ToolTipDescriptions("Journal.SearchByType(string, string)", new string[] { "string TextToSearch", "string MessageType" }, "bool", "Search a text in all journal buffer by type, and text and type are case sensitive\n\tTrue: text found, False: text not found");
+            tooltip = new ToolTipDescriptions("Journal.SearchByType(string, string)", new string[] { "string TextToSearch", "string MessageType" }, "bool", "Search a text in all journal buffer by type, and text and type are case sensitive\n\tTrue: text found, False: text not found\n\tCheck the wiki for the possible strings");
             descriptionJournal.Add("Journal.SearchByType", tooltip);
 
             tooltip = new ToolTipDescriptions("Journal.GetLineText(string)", new string[] { "string TextToSearch" }, "string", "Search and get last line with searched text, and text is case sensitive\n\tTrue: text found, False: text not found");
@@ -930,6 +935,21 @@ namespace RazorEnhanced.UI
 
             #endregion
 
+            #region Description Generics
+
+            Dictionary<string, ToolTipDescriptions> descriptionGenerics = new Dictionary<string, ToolTipDescriptions>();
+
+            tooltip = new ToolTipDescriptions("GetItemOnLayer(string)", new string[] { "string LayerName" }, "Item", "Retrieves a item value of item equipped on specific layer\n\tCheck the wiki for the possible strings\n\tWorks only on Mobile Instances");
+            descriptionGenerics.Add("GetItemOnLayer", tooltip);
+
+            tooltip = new ToolTipDescriptions("GetAssistantLayer(string)", new string[] { "string LayerName" }, "Layer", "Retrives HexID from the Layer's name\n\tWorks only on Mobile Instances");
+            descriptionGenerics.Add("GetAssistantLayer", tooltip);
+
+            tooltip = new ToolTipDescriptions("DistanceTo(Mobile)", new string[] { "Mobile MobileInstance" }, "int", "Return a value about distance from the mobile\n\tWorks only on Item Instances");
+            descriptionGenerics.Add("DistanceTo", tooltip);
+
+            #endregion
+
             Dictionary<string, ToolTipDescriptions> descriptionMethods =
 		        descriptionPlayer
                 .Union(descriptionSpells)
@@ -989,6 +1009,31 @@ namespace RazorEnhanced.UI
                 }
             }
 
+            //Metodi generici per instanze di tipo Item o Mobile
+            Array.Sort(methodsGeneric);
+		    foreach (var item in methodsGeneric)
+		    {
+		        ToolTipDescriptions element;
+                descriptionGenerics.TryGetValue(item, out element);
+
+		        if (element != null)
+		        {
+		            items.Add(new MethodAutocompleteItem(item)
+		            {
+		                ImageIndex = 3,
+		                ToolTipTitle = element.Title,
+		                ToolTipText = element.ToolTipDescription()
+		            });
+		        }
+		        else
+		        {
+		            items.Add(new MethodAutocompleteItem(item)
+		            {
+		                ImageIndex = 3
+		            });
+		        }
+		    }
+
 		    //Permette di creare il menu per le props solo sulla classe Player
             Array.Sort(propsWithCheck);
 		    foreach (var item in propsWithCheck)
@@ -1000,7 +1045,7 @@ namespace RazorEnhanced.UI
             //Per quella istanza
             Array.Sort(props);
 		    foreach (var item in props)
-		        items.Add(new MethodAutocompleteItem(item) {ImageIndex = 3});
+		        items.Add(new MethodAutocompleteItem(item) {ImageIndex = 5});
 
             m_popupMenu.Items.SetAutocompleteItems(items);
 
