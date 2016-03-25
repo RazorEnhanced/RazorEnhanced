@@ -714,7 +714,7 @@ namespace RazorEnhanced
 
 			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
 			if (x != -1 && y != -1)
-				loc = new Assistant.Point3D(x, y, 0);
+				loc = new Assistant.Point3D(x, y, z);
 
 			if (amount == 0)
 			{
