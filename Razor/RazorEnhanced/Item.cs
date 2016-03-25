@@ -593,30 +593,60 @@ namespace RazorEnhanced
 
 		public static void Move(Item source, Mobile destination, int amount)
 		{
-			Move(source.Serial, destination.Serial, amount);
+			Move(source.Serial, destination.Serial, amount, -1, -1);
 		}
 
 		public static void Move(int source, Mobile destination, int amount)
 		{
-			Move(source, destination.Serial, amount);
+			Move(source, destination.Serial, amount, -1, -1);
 		}
 
 		public static void Move(Item source, int destination, int amount)
 		{
-			Move(source.Serial, destination, amount);
+			Move(source.Serial, destination, amount, -1, -1);
 		}
 
 		public static void Move(int source, Item destination, int amount)
 		{
-			Move(source, destination.Serial, amount);
+			Move(source, destination.Serial, amount, -1, -1);
 		}
 
 		public static void Move(Item source, Item destination, int amount)
 		{
-			Move(source.Serial, destination.Serial, amount);
+			Move(source.Serial, destination.Serial, amount, -1, -1);
         }
 
 		public static void Move(int source, int destination, int amount)
+		{
+			Move(source, destination, amount, -1, -1);
+		}
+
+		public static void Move(Item source, Mobile destination, int amount, int x, int y)
+		{
+			Move(source.Serial, destination.Serial, amount, x, y);
+		}
+
+		public static void Move(int source, Mobile destination, int amount, int x, int y)
+		{
+			Move(source, destination.Serial, amount, x, y);
+		}
+
+		public static void Move(Item source, int destination, int amount, int x, int y)
+		{
+			Move(source.Serial, destination, amount, x, y);
+		}
+
+		public static void Move(int source, Item destination, int amount, int x, int y)
+		{
+			Move(source, destination.Serial, amount, x, y);
+		}
+
+		public static void Move(Item source, Item destination, int amount, int x, int y)
+		{
+			Move(source.Serial, destination.Serial, amount, x, y);
+		}
+
+		public static void Move(int source, int destination, int amount, int x, int y)
 		{
 			Assistant.Item bag = Assistant.World.FindItem(destination);
 			Assistant.Item item = Assistant.World.FindItem(source);
@@ -639,7 +669,7 @@ namespace RazorEnhanced
 				{
 					serialdestination = mbag.Serial;
 				}
-            }
+			}
 
 			if (serialdestination == 0)
 			{
@@ -647,10 +677,14 @@ namespace RazorEnhanced
 				return;
 			}
 
+			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+			if (x != -1 && y != -1)
+				loc = new Assistant.Point3D(x, y, 0);
+
 			if (amount == 0)
 			{
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, serialdestination));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
 			}
 			else
 			{
@@ -659,7 +693,42 @@ namespace RazorEnhanced
 					amount = item.Amount;
 				}
 				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, serialdestination));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, serialdestination));
+			}
+		}
+
+		public static void MoveOnGround(Item source, int amount, int x, int y, int z)
+		{
+			MoveOnGround(source.Serial, amount, x, y, z);
+        }
+
+        public static void MoveOnGround(int source, int amount, int x, int y, int z)
+		{
+			Assistant.Item item = Assistant.World.FindItem(source);
+
+			if (item == null)
+			{
+				Scripts.SendMessageScriptError("Script Error: MoveOnGround: Source Item  not found");
+				return;
+			}
+
+			Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+			if (x != -1 && y != -1)
+				loc = new Assistant.Point3D(x, y, 0);
+
+			if (amount == 0)
+			{
+				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
+			}
+			else
+			{
+				if (item.Amount < amount)
+				{
+					amount = item.Amount;
+				}
+				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
 			}
 		}
 
