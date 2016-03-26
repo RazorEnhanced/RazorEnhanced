@@ -759,7 +759,7 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
@@ -1409,24 +1409,24 @@ namespace Assistant
 			// 
 			// profilesExportButton
 			// 
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.profilesExportButton.ColorTable = office2010BlueTheme1;
+			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme.TextColor = System.Drawing.Color.White;
+			this.profilesExportButton.ColorTable = office2010BlueTheme;
 			this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
 			this.profilesExportButton.Name = "profilesExportButton";
 			this.profilesExportButton.Size = new System.Drawing.Size(63, 20);
@@ -1437,7 +1437,7 @@ namespace Assistant
 			// 
 			// profilesCloneButton
 			// 
-			this.profilesCloneButton.ColorTable = office2010BlueTheme1;
+			this.profilesCloneButton.ColorTable = office2010BlueTheme;
 			this.profilesCloneButton.Location = new System.Drawing.Point(321, 44);
 			this.profilesCloneButton.Name = "profilesCloneButton";
 			this.profilesCloneButton.Size = new System.Drawing.Size(63, 20);
@@ -1448,7 +1448,7 @@ namespace Assistant
 			// 
 			// profilesRenameButton
 			// 
-			this.profilesRenameButton.ColorTable = office2010BlueTheme1;
+			this.profilesRenameButton.ColorTable = office2010BlueTheme;
 			this.profilesRenameButton.Location = new System.Drawing.Point(252, 44);
 			this.profilesRenameButton.Name = "profilesRenameButton";
 			this.profilesRenameButton.Size = new System.Drawing.Size(63, 20);
@@ -1459,7 +1459,7 @@ namespace Assistant
 			// 
 			// profilesImportButton
 			// 
-			this.profilesImportButton.ColorTable = office2010BlueTheme1;
+			this.profilesImportButton.ColorTable = office2010BlueTheme;
 			this.profilesImportButton.Location = new System.Drawing.Point(252, 70);
 			this.profilesImportButton.Name = "profilesImportButton";
 			this.profilesImportButton.Size = new System.Drawing.Size(63, 20);
@@ -1470,7 +1470,7 @@ namespace Assistant
 			// 
 			// profilesUnlinkButton
 			// 
-			this.profilesUnlinkButton.ColorTable = office2010BlueTheme1;
+			this.profilesUnlinkButton.ColorTable = office2010BlueTheme;
 			this.profilesUnlinkButton.Location = new System.Drawing.Point(75, 70);
 			this.profilesUnlinkButton.Name = "profilesUnlinkButton";
 			this.profilesUnlinkButton.Size = new System.Drawing.Size(63, 20);
@@ -1481,7 +1481,7 @@ namespace Assistant
 			// 
 			// profilesLinkButton
 			// 
-			this.profilesLinkButton.ColorTable = office2010BlueTheme1;
+			this.profilesLinkButton.ColorTable = office2010BlueTheme;
 			this.profilesLinkButton.Location = new System.Drawing.Point(6, 70);
 			this.profilesLinkButton.Name = "profilesLinkButton";
 			this.profilesLinkButton.Size = new System.Drawing.Size(63, 20);
@@ -1501,7 +1501,7 @@ namespace Assistant
 			// 
 			// profilesDeleteButton
 			// 
-			this.profilesDeleteButton.ColorTable = office2010BlueTheme1;
+			this.profilesDeleteButton.ColorTable = office2010BlueTheme;
 			this.profilesDeleteButton.Location = new System.Drawing.Point(321, 18);
 			this.profilesDeleteButton.Name = "profilesDeleteButton";
 			this.profilesDeleteButton.Size = new System.Drawing.Size(63, 20);
@@ -1512,7 +1512,7 @@ namespace Assistant
 			// 
 			// profilesAddButton
 			// 
-			this.profilesAddButton.ColorTable = office2010BlueTheme1;
+			this.profilesAddButton.ColorTable = office2010BlueTheme;
 			this.profilesAddButton.Location = new System.Drawing.Point(252, 18);
 			this.profilesAddButton.Name = "profilesAddButton";
 			this.profilesAddButton.Size = new System.Drawing.Size(63, 20);
@@ -2058,7 +2058,7 @@ namespace Assistant
 			// 
 			// setLTHilight
 			// 
-			this.setLTHilight.ColorTable = office2010BlueTheme1;
+			this.setLTHilight.ColorTable = office2010BlueTheme;
 			this.setLTHilight.Location = new System.Drawing.Point(152, 115);
 			this.setLTHilight.Name = "setLTHilight";
 			this.setLTHilight.Size = new System.Drawing.Size(32, 20);
@@ -2120,7 +2120,7 @@ namespace Assistant
 			// 
 			// setHarmHue
 			// 
-			this.setHarmHue.ColorTable = office2010BlueTheme1;
+			this.setHarmHue.ColorTable = office2010BlueTheme;
 			this.setHarmHue.Enabled = false;
 			this.setHarmHue.Location = new System.Drawing.Point(83, 184);
 			this.setHarmHue.Name = "setHarmHue";
@@ -2132,7 +2132,7 @@ namespace Assistant
 			// 
 			// setNeuHue
 			// 
-			this.setNeuHue.ColorTable = office2010BlueTheme1;
+			this.setNeuHue.ColorTable = office2010BlueTheme;
 			this.setNeuHue.Enabled = false;
 			this.setNeuHue.Location = new System.Drawing.Point(140, 184);
 			this.setNeuHue.Name = "setNeuHue";
@@ -2144,7 +2144,7 @@ namespace Assistant
 			// 
 			// setBeneHue
 			// 
-			this.setBeneHue.ColorTable = office2010BlueTheme1;
+			this.setBeneHue.ColorTable = office2010BlueTheme;
 			this.setBeneHue.Location = new System.Drawing.Point(28, 184);
 			this.setBeneHue.Name = "setBeneHue";
 			this.setBeneHue.Size = new System.Drawing.Size(33, 20);
@@ -2155,7 +2155,7 @@ namespace Assistant
 			// 
 			// setSpeechHue
 			// 
-			this.setSpeechHue.ColorTable = office2010BlueTheme1;
+			this.setSpeechHue.ColorTable = office2010BlueTheme;
 			this.setSpeechHue.Location = new System.Drawing.Point(152, 91);
 			this.setSpeechHue.Name = "setSpeechHue";
 			this.setSpeechHue.Size = new System.Drawing.Size(32, 20);
@@ -2166,7 +2166,7 @@ namespace Assistant
 			// 
 			// setWarnHue
 			// 
-			this.setWarnHue.ColorTable = office2010BlueTheme1;
+			this.setWarnHue.ColorTable = office2010BlueTheme;
 			this.setWarnHue.Location = new System.Drawing.Point(152, 67);
 			this.setWarnHue.Name = "setWarnHue";
 			this.setWarnHue.Size = new System.Drawing.Size(32, 20);
@@ -2177,7 +2177,7 @@ namespace Assistant
 			// 
 			// setMsgHue
 			// 
-			this.setMsgHue.ColorTable = office2010BlueTheme1;
+			this.setMsgHue.ColorTable = office2010BlueTheme;
 			this.setMsgHue.Location = new System.Drawing.Point(152, 43);
 			this.setMsgHue.Name = "setMsgHue";
 			this.setMsgHue.Size = new System.Drawing.Size(32, 19);
@@ -2188,7 +2188,7 @@ namespace Assistant
 			// 
 			// setExHue
 			// 
-			this.setExHue.ColorTable = office2010BlueTheme1;
+			this.setExHue.ColorTable = office2010BlueTheme;
 			this.setExHue.Location = new System.Drawing.Point(152, 18);
 			this.setExHue.Name = "setExHue";
 			this.setExHue.Size = new System.Drawing.Size(32, 20);
@@ -2373,7 +2373,7 @@ namespace Assistant
 			// 
 			// remountsetbutton
 			// 
-			this.remountsetbutton.ColorTable = office2010BlueTheme1;
+			this.remountsetbutton.ColorTable = office2010BlueTheme;
 			this.remountsetbutton.Location = new System.Drawing.Point(81, 19);
 			this.remountsetbutton.Name = "remountsetbutton";
 			this.remountsetbutton.Size = new System.Drawing.Size(70, 19);
@@ -2546,7 +2546,7 @@ namespace Assistant
 			// 
 			// mobfilterRemoveButton
 			// 
-			this.mobfilterRemoveButton.ColorTable = office2010BlueTheme1;
+			this.mobfilterRemoveButton.ColorTable = office2010BlueTheme;
 			this.mobfilterRemoveButton.Location = new System.Drawing.Point(202, 76);
 			this.mobfilterRemoveButton.Name = "mobfilterRemoveButton";
 			this.mobfilterRemoveButton.Size = new System.Drawing.Size(75, 23);
@@ -2558,7 +2558,7 @@ namespace Assistant
 			// 
 			// mobfilterAddButton
 			// 
-			this.mobfilterAddButton.ColorTable = office2010BlueTheme1;
+			this.mobfilterAddButton.ColorTable = office2010BlueTheme;
 			this.mobfilterAddButton.Location = new System.Drawing.Point(202, 47);
 			this.mobfilterAddButton.Name = "mobfilterAddButton";
 			this.mobfilterAddButton.Size = new System.Drawing.Size(75, 23);
@@ -2646,7 +2646,7 @@ namespace Assistant
 			// 
 			// autocarverrazorButton
 			// 
-			this.autocarverrazorButton.ColorTable = office2010BlueTheme1;
+			this.autocarverrazorButton.ColorTable = office2010BlueTheme;
 			this.autocarverrazorButton.Location = new System.Drawing.Point(74, 18);
 			this.autocarverrazorButton.Name = "autocarverrazorButton";
 			this.autocarverrazorButton.Size = new System.Drawing.Size(75, 19);
@@ -2698,7 +2698,7 @@ namespace Assistant
 			// 
 			// boneCutterrazorButton
 			// 
-			this.boneCutterrazorButton.ColorTable = office2010BlueTheme1;
+			this.boneCutterrazorButton.ColorTable = office2010BlueTheme;
 			this.boneCutterrazorButton.Location = new System.Drawing.Point(74, 19);
 			this.boneCutterrazorButton.Name = "boneCutterrazorButton";
 			this.boneCutterrazorButton.Size = new System.Drawing.Size(75, 19);
@@ -2922,7 +2922,7 @@ namespace Assistant
 			// 
 			// toolboxcountClearButton
 			// 
-			this.toolboxcountClearButton.ColorTable = office2010BlueTheme1;
+			this.toolboxcountClearButton.ColorTable = office2010BlueTheme;
 			this.toolboxcountClearButton.Location = new System.Drawing.Point(131, 177);
 			this.toolboxcountClearButton.Name = "toolboxcountClearButton";
 			this.toolboxcountClearButton.Size = new System.Drawing.Size(77, 20);
@@ -2933,7 +2933,7 @@ namespace Assistant
 			// 
 			// toolboxcountTargetButton
 			// 
-			this.toolboxcountTargetButton.ColorTable = office2010BlueTheme1;
+			this.toolboxcountTargetButton.ColorTable = office2010BlueTheme;
 			this.toolboxcountTargetButton.Location = new System.Drawing.Point(9, 177);
 			this.toolboxcountTargetButton.Name = "toolboxcountTargetButton";
 			this.toolboxcountTargetButton.Size = new System.Drawing.Size(77, 20);
@@ -3076,7 +3076,7 @@ namespace Assistant
 			// 
 			// closeToolBarButton
 			// 
-			this.closeToolBarButton.ColorTable = office2010BlueTheme1;
+			this.closeToolBarButton.ColorTable = office2010BlueTheme;
 			this.closeToolBarButton.Location = new System.Drawing.Point(6, 45);
 			this.closeToolBarButton.Name = "closeToolBarButton";
 			this.closeToolBarButton.Size = new System.Drawing.Size(90, 20);
@@ -3087,7 +3087,7 @@ namespace Assistant
 			// 
 			// openToolBarButton
 			// 
-			this.openToolBarButton.ColorTable = office2010BlueTheme1;
+			this.openToolBarButton.ColorTable = office2010BlueTheme;
 			this.openToolBarButton.Location = new System.Drawing.Point(6, 19);
 			this.openToolBarButton.Name = "openToolBarButton";
 			this.openToolBarButton.Size = new System.Drawing.Size(90, 20);
@@ -3121,7 +3121,7 @@ namespace Assistant
 			// 
 			// performTargetButton
 			// 
-			this.performTargetButton.ColorTable = office2010BlueTheme1;
+			this.performTargetButton.ColorTable = office2010BlueTheme;
 			this.performTargetButton.Location = new System.Drawing.Point(495, 23);
 			this.performTargetButton.Name = "performTargetButton";
 			this.performTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -3133,7 +3133,7 @@ namespace Assistant
 			// 
 			// editTargetButton
 			// 
-			this.editTargetButton.ColorTable = office2010BlueTheme1;
+			this.editTargetButton.ColorTable = office2010BlueTheme;
 			this.editTargetButton.Location = new System.Drawing.Point(338, 23);
 			this.editTargetButton.Name = "editTargetButton";
 			this.editTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -3145,7 +3145,7 @@ namespace Assistant
 			// 
 			// removeTargetButton
 			// 
-			this.removeTargetButton.ColorTable = office2010BlueTheme1;
+			this.removeTargetButton.ColorTable = office2010BlueTheme;
 			this.removeTargetButton.Location = new System.Drawing.Point(177, 23);
 			this.removeTargetButton.Name = "removeTargetButton";
 			this.removeTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -3157,7 +3157,7 @@ namespace Assistant
 			// 
 			// addTargetButton
 			// 
-			this.addTargetButton.ColorTable = office2010BlueTheme1;
+			this.addTargetButton.ColorTable = office2010BlueTheme;
 			this.addTargetButton.Location = new System.Drawing.Point(16, 23);
 			this.addTargetButton.Name = "addTargetButton";
 			this.addTargetButton.Size = new System.Drawing.Size(136, 23);
@@ -3324,7 +3324,7 @@ namespace Assistant
 			// 
 			// skillCopyAll
 			// 
-			this.skillCopyAll.ColorTable = office2010BlueTheme1;
+			this.skillCopyAll.ColorTable = office2010BlueTheme;
 			this.skillCopyAll.Location = new System.Drawing.Point(527, 109);
 			this.skillCopyAll.Name = "skillCopyAll";
 			this.skillCopyAll.Size = new System.Drawing.Size(115, 20);
@@ -3335,7 +3335,7 @@ namespace Assistant
 			// 
 			// skillCopySel
 			// 
-			this.skillCopySel.ColorTable = office2010BlueTheme1;
+			this.skillCopySel.ColorTable = office2010BlueTheme;
 			this.skillCopySel.Location = new System.Drawing.Point(527, 81);
 			this.skillCopySel.Name = "skillCopySel";
 			this.skillCopySel.Size = new System.Drawing.Size(115, 21);
@@ -3376,7 +3376,7 @@ namespace Assistant
 			// 
 			// setlocks
 			// 
-			this.setlocks.ColorTable = office2010BlueTheme1;
+			this.setlocks.ColorTable = office2010BlueTheme;
 			this.setlocks.Location = new System.Drawing.Point(527, 46);
 			this.setlocks.Name = "setlocks";
 			this.setlocks.Size = new System.Drawing.Size(76, 20);
@@ -3387,7 +3387,7 @@ namespace Assistant
 			// 
 			// resetDelta
 			// 
-			this.resetDelta.ColorTable = office2010BlueTheme1;
+			this.resetDelta.ColorTable = office2010BlueTheme;
 			this.resetDelta.Location = new System.Drawing.Point(527, 13);
 			this.resetDelta.Name = "resetDelta";
 			this.resetDelta.Size = new System.Drawing.Size(115, 20);
@@ -3494,7 +3494,7 @@ namespace Assistant
 			// 
 			// capNow
 			// 
-			this.capNow.ColorTable = office2010BlueTheme1;
+			this.capNow.ColorTable = office2010BlueTheme;
 			this.capNow.Location = new System.Drawing.Point(314, 14);
 			this.capNow.Name = "capNow";
 			this.capNow.Size = new System.Drawing.Size(285, 20);
@@ -3547,7 +3547,7 @@ namespace Assistant
 			// 
 			// setScnPath
 			// 
-			this.setScnPath.ColorTable = office2010BlueTheme1;
+			this.setScnPath.ColorTable = office2010BlueTheme;
 			this.setScnPath.Location = new System.Drawing.Point(208, 16);
 			this.setScnPath.Name = "setScnPath";
 			this.setScnPath.Size = new System.Drawing.Size(22, 17);
@@ -3648,7 +3648,7 @@ namespace Assistant
 			// 
 			// razorButtonWiki
 			// 
-			this.razorButtonWiki.ColorTable = office2010BlueTheme1;
+			this.razorButtonWiki.ColorTable = office2010BlueTheme;
 			this.razorButtonWiki.Location = new System.Drawing.Point(304, 164);
 			this.razorButtonWiki.Name = "razorButtonWiki";
 			this.razorButtonWiki.Size = new System.Drawing.Size(145, 28);
@@ -3660,7 +3660,7 @@ namespace Assistant
 			// 
 			// razorButtonCreateUODAccount
 			// 
-			this.razorButtonCreateUODAccount.ColorTable = office2010BlueTheme1;
+			this.razorButtonCreateUODAccount.ColorTable = office2010BlueTheme;
 			this.razorButtonCreateUODAccount.Location = new System.Drawing.Point(250, 60);
 			this.razorButtonCreateUODAccount.Name = "razorButtonCreateUODAccount";
 			this.razorButtonCreateUODAccount.Size = new System.Drawing.Size(199, 28);
@@ -3672,7 +3672,7 @@ namespace Assistant
 			// 
 			// razorButtonVisitUOD
 			// 
-			this.razorButtonVisitUOD.ColorTable = office2010BlueTheme1;
+			this.razorButtonVisitUOD.ColorTable = office2010BlueTheme;
 			this.razorButtonVisitUOD.Location = new System.Drawing.Point(250, 26);
 			this.razorButtonVisitUOD.Name = "razorButtonVisitUOD";
 			this.razorButtonVisitUOD.Size = new System.Drawing.Size(199, 28);
@@ -3736,7 +3736,7 @@ namespace Assistant
 			// 
 			// buttonAddScript
 			// 
-			this.buttonAddScript.ColorTable = office2010BlueTheme1;
+			this.buttonAddScript.ColorTable = office2010BlueTheme;
 			this.buttonAddScript.Location = new System.Drawing.Point(7, 19);
 			this.buttonAddScript.Name = "buttonAddScript";
 			this.buttonAddScript.Size = new System.Drawing.Size(75, 20);
@@ -3747,7 +3747,7 @@ namespace Assistant
 			// 
 			// buttonRemoveScript
 			// 
-			this.buttonRemoveScript.ColorTable = office2010BlueTheme1;
+			this.buttonRemoveScript.ColorTable = office2010BlueTheme;
 			this.buttonRemoveScript.Location = new System.Drawing.Point(94, 19);
 			this.buttonRemoveScript.Name = "buttonRemoveScript";
 			this.buttonRemoveScript.Size = new System.Drawing.Size(75, 20);
@@ -3758,7 +3758,7 @@ namespace Assistant
 			// 
 			// buttonScriptDown
 			// 
-			this.buttonScriptDown.ColorTable = office2010BlueTheme1;
+			this.buttonScriptDown.ColorTable = office2010BlueTheme;
 			this.buttonScriptDown.Location = new System.Drawing.Point(7, 45);
 			this.buttonScriptDown.Name = "buttonScriptDown";
 			this.buttonScriptDown.Size = new System.Drawing.Size(75, 20);
@@ -3788,7 +3788,7 @@ namespace Assistant
 			// 
 			// buttonScriptUp
 			// 
-			this.buttonScriptUp.ColorTable = office2010BlueTheme1;
+			this.buttonScriptUp.ColorTable = office2010BlueTheme;
 			this.buttonScriptUp.Location = new System.Drawing.Point(94, 45);
 			this.buttonScriptUp.Name = "buttonScriptUp";
 			this.buttonScriptUp.Size = new System.Drawing.Size(75, 20);
@@ -3800,7 +3800,7 @@ namespace Assistant
 			// 
 			// buttonScriptEditor
 			// 
-			this.buttonScriptEditor.ColorTable = office2010BlueTheme1;
+			this.buttonScriptEditor.ColorTable = office2010BlueTheme;
 			this.buttonScriptEditor.Location = new System.Drawing.Point(7, 71);
 			this.buttonScriptEditor.Name = "buttonScriptEditor";
 			this.buttonScriptEditor.Size = new System.Drawing.Size(162, 20);
@@ -3985,7 +3985,7 @@ namespace Assistant
 			// 
 			// razorButtonResetIgnore
 			// 
-			this.razorButtonResetIgnore.ColorTable = office2010BlueTheme1;
+			this.razorButtonResetIgnore.ColorTable = office2010BlueTheme;
 			this.razorButtonResetIgnore.Location = new System.Drawing.Point(558, 310);
 			this.razorButtonResetIgnore.Name = "razorButtonResetIgnore";
 			this.razorButtonResetIgnore.Size = new System.Drawing.Size(90, 20);
@@ -4020,7 +4020,7 @@ namespace Assistant
 			// 
 			// autoLootButtonRemoveList
 			// 
-			this.autoLootButtonRemoveList.ColorTable = office2010BlueTheme1;
+			this.autoLootButtonRemoveList.ColorTable = office2010BlueTheme;
 			this.autoLootButtonRemoveList.Location = new System.Drawing.Point(366, 14);
 			this.autoLootButtonRemoveList.Name = "autoLootButtonRemoveList";
 			this.autoLootButtonRemoveList.Size = new System.Drawing.Size(90, 20);
@@ -4031,7 +4031,7 @@ namespace Assistant
 			// 
 			// autolootButtonAddList
 			// 
-			this.autolootButtonAddList.ColorTable = office2010BlueTheme1;
+			this.autolootButtonAddList.ColorTable = office2010BlueTheme;
 			this.autolootButtonAddList.Location = new System.Drawing.Point(270, 14);
 			this.autolootButtonAddList.Name = "autolootButtonAddList";
 			this.autolootButtonAddList.Size = new System.Drawing.Size(90, 20);
@@ -4042,7 +4042,7 @@ namespace Assistant
 			// 
 			// autoLootButtonListImport
 			// 
-			this.autoLootButtonListImport.ColorTable = office2010BlueTheme1;
+			this.autoLootButtonListImport.ColorTable = office2010BlueTheme;
 			this.autoLootButtonListImport.Location = new System.Drawing.Point(462, 14);
 			this.autoLootButtonListImport.Name = "autoLootButtonListImport";
 			this.autoLootButtonListImport.Size = new System.Drawing.Size(90, 20);
@@ -4063,7 +4063,7 @@ namespace Assistant
 			// 
 			// autoLootButtonListExport
 			// 
-			this.autoLootButtonListExport.ColorTable = office2010BlueTheme1;
+			this.autoLootButtonListExport.ColorTable = office2010BlueTheme;
 			this.autoLootButtonListExport.Location = new System.Drawing.Point(558, 14);
 			this.autoLootButtonListExport.Name = "autoLootButtonListExport";
 			this.autoLootButtonListExport.Size = new System.Drawing.Size(90, 20);
@@ -4125,7 +4125,7 @@ namespace Assistant
 			// 
 			// autolootMoveDownButton
 			// 
-			this.autolootMoveDownButton.ColorTable = office2010BlueTheme1;
+			this.autolootMoveDownButton.ColorTable = office2010BlueTheme;
 			this.autolootMoveDownButton.Location = new System.Drawing.Point(6, 171);
 			this.autolootMoveDownButton.Name = "autolootMoveDownButton";
 			this.autolootMoveDownButton.Size = new System.Drawing.Size(90, 20);
@@ -4136,7 +4136,7 @@ namespace Assistant
 			// 
 			// autolootMoveUpButton
 			// 
-			this.autolootMoveUpButton.ColorTable = office2010BlueTheme1;
+			this.autolootMoveUpButton.ColorTable = office2010BlueTheme;
 			this.autolootMoveUpButton.Location = new System.Drawing.Point(5, 145);
 			this.autolootMoveUpButton.Name = "autolootMoveUpButton";
 			this.autolootMoveUpButton.Size = new System.Drawing.Size(90, 20);
@@ -4147,7 +4147,7 @@ namespace Assistant
 			// 
 			// autolootItemPropsB
 			// 
-			this.autolootItemPropsB.ColorTable = office2010BlueTheme1;
+			this.autolootItemPropsB.ColorTable = office2010BlueTheme;
 			this.autolootItemPropsB.Location = new System.Drawing.Point(5, 94);
 			this.autolootItemPropsB.Name = "autolootItemPropsB";
 			this.autolootItemPropsB.Size = new System.Drawing.Size(90, 20);
@@ -4158,7 +4158,7 @@ namespace Assistant
 			// 
 			// autolootItemEditB
 			// 
-			this.autolootItemEditB.ColorTable = office2010BlueTheme1;
+			this.autolootItemEditB.ColorTable = office2010BlueTheme;
 			this.autolootItemEditB.Location = new System.Drawing.Point(5, 68);
 			this.autolootItemEditB.Name = "autolootItemEditB";
 			this.autolootItemEditB.Size = new System.Drawing.Size(90, 20);
@@ -4169,7 +4169,7 @@ namespace Assistant
 			// 
 			// autolootAddItemBTarget
 			// 
-			this.autolootAddItemBTarget.ColorTable = office2010BlueTheme1;
+			this.autolootAddItemBTarget.ColorTable = office2010BlueTheme;
 			this.autolootAddItemBTarget.Location = new System.Drawing.Point(5, 43);
 			this.autolootAddItemBTarget.Name = "autolootAddItemBTarget";
 			this.autolootAddItemBTarget.Size = new System.Drawing.Size(90, 20);
@@ -4180,7 +4180,7 @@ namespace Assistant
 			// 
 			// autolootRemoveItemB
 			// 
-			this.autolootRemoveItemB.ColorTable = office2010BlueTheme1;
+			this.autolootRemoveItemB.ColorTable = office2010BlueTheme;
 			this.autolootRemoveItemB.Location = new System.Drawing.Point(5, 119);
 			this.autolootRemoveItemB.Name = "autolootRemoveItemB";
 			this.autolootRemoveItemB.Size = new System.Drawing.Size(90, 20);
@@ -4191,7 +4191,7 @@ namespace Assistant
 			// 
 			// autolootAddItemBManual
 			// 
-			this.autolootAddItemBManual.ColorTable = office2010BlueTheme1;
+			this.autolootAddItemBManual.ColorTable = office2010BlueTheme;
 			this.autolootAddItemBManual.Location = new System.Drawing.Point(5, 18);
 			this.autolootAddItemBManual.Name = "autolootAddItemBManual";
 			this.autolootAddItemBManual.Size = new System.Drawing.Size(90, 20);
@@ -4202,7 +4202,7 @@ namespace Assistant
 			// 
 			// autolootContainerButton
 			// 
-			this.autolootContainerButton.ColorTable = office2010BlueTheme1;
+			this.autolootContainerButton.ColorTable = office2010BlueTheme;
 			this.autolootContainerButton.Location = new System.Drawing.Point(545, 58);
 			this.autolootContainerButton.Name = "autolootContainerButton";
 			this.autolootContainerButton.Size = new System.Drawing.Size(103, 20);
@@ -4302,7 +4302,7 @@ namespace Assistant
 			// 
 			// scavengerMoveDownButton
 			// 
-			this.scavengerMoveDownButton.ColorTable = office2010BlueTheme1;
+			this.scavengerMoveDownButton.ColorTable = office2010BlueTheme;
 			this.scavengerMoveDownButton.Location = new System.Drawing.Point(5, 171);
 			this.scavengerMoveDownButton.Name = "scavengerMoveDownButton";
 			this.scavengerMoveDownButton.Size = new System.Drawing.Size(90, 20);
@@ -4313,7 +4313,7 @@ namespace Assistant
 			// 
 			// scavengerMoveUpButton
 			// 
-			this.scavengerMoveUpButton.ColorTable = office2010BlueTheme1;
+			this.scavengerMoveUpButton.ColorTable = office2010BlueTheme;
 			this.scavengerMoveUpButton.Location = new System.Drawing.Point(5, 145);
 			this.scavengerMoveUpButton.Name = "scavengerMoveUpButton";
 			this.scavengerMoveUpButton.Size = new System.Drawing.Size(90, 20);
@@ -4324,7 +4324,7 @@ namespace Assistant
 			// 
 			// scavengerButtonEditProps
 			// 
-			this.scavengerButtonEditProps.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonEditProps.ColorTable = office2010BlueTheme;
 			this.scavengerButtonEditProps.Location = new System.Drawing.Point(5, 94);
 			this.scavengerButtonEditProps.Name = "scavengerButtonEditProps";
 			this.scavengerButtonEditProps.Size = new System.Drawing.Size(90, 20);
@@ -4335,7 +4335,7 @@ namespace Assistant
 			// 
 			// scavengerButtonEditItem
 			// 
-			this.scavengerButtonEditItem.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonEditItem.ColorTable = office2010BlueTheme;
 			this.scavengerButtonEditItem.Location = new System.Drawing.Point(5, 68);
 			this.scavengerButtonEditItem.Name = "scavengerButtonEditItem";
 			this.scavengerButtonEditItem.Size = new System.Drawing.Size(90, 20);
@@ -4346,7 +4346,7 @@ namespace Assistant
 			// 
 			// scavengerButtonAddTarget
 			// 
-			this.scavengerButtonAddTarget.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonAddTarget.ColorTable = office2010BlueTheme;
 			this.scavengerButtonAddTarget.Location = new System.Drawing.Point(5, 43);
 			this.scavengerButtonAddTarget.Name = "scavengerButtonAddTarget";
 			this.scavengerButtonAddTarget.Size = new System.Drawing.Size(90, 20);
@@ -4357,7 +4357,7 @@ namespace Assistant
 			// 
 			// scavengerButtonRemoveItem
 			// 
-			this.scavengerButtonRemoveItem.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonRemoveItem.ColorTable = office2010BlueTheme;
 			this.scavengerButtonRemoveItem.Location = new System.Drawing.Point(5, 119);
 			this.scavengerButtonRemoveItem.Name = "scavengerButtonRemoveItem";
 			this.scavengerButtonRemoveItem.Size = new System.Drawing.Size(90, 20);
@@ -4368,7 +4368,7 @@ namespace Assistant
 			// 
 			// scavengerButtonAddManual
 			// 
-			this.scavengerButtonAddManual.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonAddManual.ColorTable = office2010BlueTheme;
 			this.scavengerButtonAddManual.Location = new System.Drawing.Point(5, 18);
 			this.scavengerButtonAddManual.Name = "scavengerButtonAddManual";
 			this.scavengerButtonAddManual.Size = new System.Drawing.Size(90, 20);
@@ -4429,7 +4429,7 @@ namespace Assistant
 			// 
 			// scavengerButtonSetContainer
 			// 
-			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme;
 			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(552, 56);
 			this.scavengerButtonSetContainer.Name = "scavengerButtonSetContainer";
 			this.scavengerButtonSetContainer.Size = new System.Drawing.Size(96, 20);
@@ -4499,7 +4499,7 @@ namespace Assistant
 			// 
 			// scavengerButtonRemoveList
 			// 
-			this.scavengerButtonRemoveList.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonRemoveList.ColorTable = office2010BlueTheme;
 			this.scavengerButtonRemoveList.Location = new System.Drawing.Point(371, 14);
 			this.scavengerButtonRemoveList.Name = "scavengerButtonRemoveList";
 			this.scavengerButtonRemoveList.Size = new System.Drawing.Size(90, 20);
@@ -4510,7 +4510,7 @@ namespace Assistant
 			// 
 			// scavengerButtonAddList
 			// 
-			this.scavengerButtonAddList.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonAddList.ColorTable = office2010BlueTheme;
 			this.scavengerButtonAddList.Location = new System.Drawing.Point(275, 14);
 			this.scavengerButtonAddList.Name = "scavengerButtonAddList";
 			this.scavengerButtonAddList.Size = new System.Drawing.Size(90, 20);
@@ -4521,7 +4521,7 @@ namespace Assistant
 			// 
 			// scavengerButtonImport
 			// 
-			this.scavengerButtonImport.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonImport.ColorTable = office2010BlueTheme;
 			this.scavengerButtonImport.Location = new System.Drawing.Point(467, 14);
 			this.scavengerButtonImport.Name = "scavengerButtonImport";
 			this.scavengerButtonImport.Size = new System.Drawing.Size(90, 20);
@@ -4542,7 +4542,7 @@ namespace Assistant
 			// 
 			// scavengerButtonExport
 			// 
-			this.scavengerButtonExport.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonExport.ColorTable = office2010BlueTheme;
 			this.scavengerButtonExport.Location = new System.Drawing.Point(563, 14);
 			this.scavengerButtonExport.Name = "scavengerButtonExport";
 			this.scavengerButtonExport.Size = new System.Drawing.Size(90, 20);
@@ -4580,7 +4580,7 @@ namespace Assistant
 			// 
 			// organizerStopButton
 			// 
-			this.organizerStopButton.ColorTable = office2010BlueTheme1;
+			this.organizerStopButton.ColorTable = office2010BlueTheme;
 			this.organizerStopButton.Location = new System.Drawing.Point(334, 58);
 			this.organizerStopButton.Name = "organizerStopButton";
 			this.organizerStopButton.Size = new System.Drawing.Size(61, 20);
@@ -4591,7 +4591,7 @@ namespace Assistant
 			// 
 			// organizerExecuteButton
 			// 
-			this.organizerExecuteButton.ColorTable = office2010BlueTheme1;
+			this.organizerExecuteButton.ColorTable = office2010BlueTheme;
 			this.organizerExecuteButton.Location = new System.Drawing.Point(268, 58);
 			this.organizerExecuteButton.Name = "organizerExecuteButton";
 			this.organizerExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -4658,7 +4658,7 @@ namespace Assistant
 			// 
 			// organizerEditB
 			// 
-			this.organizerEditB.ColorTable = office2010BlueTheme1;
+			this.organizerEditB.ColorTable = office2010BlueTheme;
 			this.organizerEditB.Location = new System.Drawing.Point(5, 68);
 			this.organizerEditB.Name = "organizerEditB";
 			this.organizerEditB.Size = new System.Drawing.Size(90, 20);
@@ -4669,7 +4669,7 @@ namespace Assistant
 			// 
 			// organizerAddTargetB
 			// 
-			this.organizerAddTargetB.ColorTable = office2010BlueTheme1;
+			this.organizerAddTargetB.ColorTable = office2010BlueTheme;
 			this.organizerAddTargetB.Location = new System.Drawing.Point(5, 43);
 			this.organizerAddTargetB.Name = "organizerAddTargetB";
 			this.organizerAddTargetB.Size = new System.Drawing.Size(90, 20);
@@ -4680,7 +4680,7 @@ namespace Assistant
 			// 
 			// organizerRemoveB
 			// 
-			this.organizerRemoveB.ColorTable = office2010BlueTheme1;
+			this.organizerRemoveB.ColorTable = office2010BlueTheme;
 			this.organizerRemoveB.Location = new System.Drawing.Point(5, 94);
 			this.organizerRemoveB.Name = "organizerRemoveB";
 			this.organizerRemoveB.Size = new System.Drawing.Size(90, 20);
@@ -4691,7 +4691,7 @@ namespace Assistant
 			// 
 			// organizerAddManualB
 			// 
-			this.organizerAddManualB.ColorTable = office2010BlueTheme1;
+			this.organizerAddManualB.ColorTable = office2010BlueTheme;
 			this.organizerAddManualB.Location = new System.Drawing.Point(5, 18);
 			this.organizerAddManualB.Name = "organizerAddManualB";
 			this.organizerAddManualB.Size = new System.Drawing.Size(90, 20);
@@ -4717,7 +4717,7 @@ namespace Assistant
 			// 
 			// organizerSetDestinationB
 			// 
-			this.organizerSetDestinationB.ColorTable = office2010BlueTheme1;
+			this.organizerSetDestinationB.ColorTable = office2010BlueTheme;
 			this.organizerSetDestinationB.Location = new System.Drawing.Point(558, 104);
 			this.organizerSetDestinationB.Name = "organizerSetDestinationB";
 			this.organizerSetDestinationB.Size = new System.Drawing.Size(90, 20);
@@ -4728,7 +4728,7 @@ namespace Assistant
 			// 
 			// organizerSetSourceB
 			// 
-			this.organizerSetSourceB.ColorTable = office2010BlueTheme1;
+			this.organizerSetSourceB.ColorTable = office2010BlueTheme;
 			this.organizerSetSourceB.Location = new System.Drawing.Point(558, 60);
 			this.organizerSetSourceB.Name = "organizerSetSourceB";
 			this.organizerSetSourceB.Size = new System.Drawing.Size(90, 20);
@@ -4796,7 +4796,7 @@ namespace Assistant
 			// 
 			// organizerRemoveListB
 			// 
-			this.organizerRemoveListB.ColorTable = office2010BlueTheme1;
+			this.organizerRemoveListB.ColorTable = office2010BlueTheme;
 			this.organizerRemoveListB.Location = new System.Drawing.Point(369, 14);
 			this.organizerRemoveListB.Name = "organizerRemoveListB";
 			this.organizerRemoveListB.Size = new System.Drawing.Size(90, 20);
@@ -4807,7 +4807,7 @@ namespace Assistant
 			// 
 			// organizerAddListB
 			// 
-			this.organizerAddListB.ColorTable = office2010BlueTheme1;
+			this.organizerAddListB.ColorTable = office2010BlueTheme;
 			this.organizerAddListB.Location = new System.Drawing.Point(273, 14);
 			this.organizerAddListB.Name = "organizerAddListB";
 			this.organizerAddListB.Size = new System.Drawing.Size(90, 20);
@@ -4818,7 +4818,7 @@ namespace Assistant
 			// 
 			// organizerImportListB
 			// 
-			this.organizerImportListB.ColorTable = office2010BlueTheme1;
+			this.organizerImportListB.ColorTable = office2010BlueTheme;
 			this.organizerImportListB.Location = new System.Drawing.Point(465, 14);
 			this.organizerImportListB.Name = "organizerImportListB";
 			this.organizerImportListB.Size = new System.Drawing.Size(90, 20);
@@ -4839,7 +4839,7 @@ namespace Assistant
 			// 
 			// organizerExportListB
 			// 
-			this.organizerExportListB.ColorTable = office2010BlueTheme1;
+			this.organizerExportListB.ColorTable = office2010BlueTheme;
 			this.organizerExportListB.Location = new System.Drawing.Point(561, 14);
 			this.organizerExportListB.Name = "organizerExportListB";
 			this.organizerExportListB.Size = new System.Drawing.Size(90, 20);
@@ -4883,7 +4883,7 @@ namespace Assistant
 			// 
 			// buyEditB
 			// 
-			this.buyEditB.ColorTable = office2010BlueTheme1;
+			this.buyEditB.ColorTable = office2010BlueTheme;
 			this.buyEditB.Location = new System.Drawing.Point(5, 68);
 			this.buyEditB.Name = "buyEditB";
 			this.buyEditB.Size = new System.Drawing.Size(90, 20);
@@ -4894,7 +4894,7 @@ namespace Assistant
 			// 
 			// buyAddTargetB
 			// 
-			this.buyAddTargetB.ColorTable = office2010BlueTheme1;
+			this.buyAddTargetB.ColorTable = office2010BlueTheme;
 			this.buyAddTargetB.Location = new System.Drawing.Point(5, 43);
 			this.buyAddTargetB.Name = "buyAddTargetB";
 			this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
@@ -4905,7 +4905,7 @@ namespace Assistant
 			// 
 			// buyRemoveB
 			// 
-			this.buyRemoveB.ColorTable = office2010BlueTheme1;
+			this.buyRemoveB.ColorTable = office2010BlueTheme;
 			this.buyRemoveB.Location = new System.Drawing.Point(5, 94);
 			this.buyRemoveB.Name = "buyRemoveB";
 			this.buyRemoveB.Size = new System.Drawing.Size(90, 20);
@@ -4916,7 +4916,7 @@ namespace Assistant
 			// 
 			// buyAddManualB
 			// 
-			this.buyAddManualB.ColorTable = office2010BlueTheme1;
+			this.buyAddManualB.ColorTable = office2010BlueTheme;
 			this.buyAddManualB.Location = new System.Drawing.Point(5, 18);
 			this.buyAddManualB.Name = "buyAddManualB";
 			this.buyAddManualB.Size = new System.Drawing.Size(90, 20);
@@ -5012,7 +5012,7 @@ namespace Assistant
 			// 
 			// buyRemoveListButton
 			// 
-			this.buyRemoveListButton.ColorTable = office2010BlueTheme1;
+			this.buyRemoveListButton.ColorTable = office2010BlueTheme;
 			this.buyRemoveListButton.Location = new System.Drawing.Point(369, 14);
 			this.buyRemoveListButton.Name = "buyRemoveListButton";
 			this.buyRemoveListButton.Size = new System.Drawing.Size(90, 20);
@@ -5023,7 +5023,7 @@ namespace Assistant
 			// 
 			// buyAddListButton
 			// 
-			this.buyAddListButton.ColorTable = office2010BlueTheme1;
+			this.buyAddListButton.ColorTable = office2010BlueTheme;
 			this.buyAddListButton.Location = new System.Drawing.Point(273, 14);
 			this.buyAddListButton.Name = "buyAddListButton";
 			this.buyAddListButton.Size = new System.Drawing.Size(90, 20);
@@ -5034,7 +5034,7 @@ namespace Assistant
 			// 
 			// buyImportListButton
 			// 
-			this.buyImportListButton.ColorTable = office2010BlueTheme1;
+			this.buyImportListButton.ColorTable = office2010BlueTheme;
 			this.buyImportListButton.Location = new System.Drawing.Point(465, 14);
 			this.buyImportListButton.Name = "buyImportListButton";
 			this.buyImportListButton.Size = new System.Drawing.Size(90, 20);
@@ -5055,7 +5055,7 @@ namespace Assistant
 			// 
 			// buyExportListButton
 			// 
-			this.buyExportListButton.ColorTable = office2010BlueTheme1;
+			this.buyExportListButton.ColorTable = office2010BlueTheme;
 			this.buyExportListButton.Location = new System.Drawing.Point(561, 14);
 			this.buyExportListButton.Name = "buyExportListButton";
 			this.buyExportListButton.Size = new System.Drawing.Size(90, 20);
@@ -5089,7 +5089,7 @@ namespace Assistant
 			// 
 			// razorButton1
 			// 
-			this.razorButton1.ColorTable = office2010BlueTheme1;
+			this.razorButton1.ColorTable = office2010BlueTheme;
 			this.razorButton1.Location = new System.Drawing.Point(553, 102);
 			this.razorButton1.Name = "razorButton1";
 			this.razorButton1.Size = new System.Drawing.Size(95, 20);
@@ -5121,7 +5121,7 @@ namespace Assistant
 			// 
 			// sellEditButton
 			// 
-			this.sellEditButton.ColorTable = office2010BlueTheme1;
+			this.sellEditButton.ColorTable = office2010BlueTheme;
 			this.sellEditButton.Location = new System.Drawing.Point(5, 68);
 			this.sellEditButton.Name = "sellEditButton";
 			this.sellEditButton.Size = new System.Drawing.Size(90, 20);
@@ -5132,7 +5132,7 @@ namespace Assistant
 			// 
 			// sellAddTargerButton
 			// 
-			this.sellAddTargerButton.ColorTable = office2010BlueTheme1;
+			this.sellAddTargerButton.ColorTable = office2010BlueTheme;
 			this.sellAddTargerButton.Location = new System.Drawing.Point(5, 43);
 			this.sellAddTargerButton.Name = "sellAddTargerButton";
 			this.sellAddTargerButton.Size = new System.Drawing.Size(90, 20);
@@ -5143,7 +5143,7 @@ namespace Assistant
 			// 
 			// sellRemoveButton
 			// 
-			this.sellRemoveButton.ColorTable = office2010BlueTheme1;
+			this.sellRemoveButton.ColorTable = office2010BlueTheme;
 			this.sellRemoveButton.Location = new System.Drawing.Point(5, 94);
 			this.sellRemoveButton.Name = "sellRemoveButton";
 			this.sellRemoveButton.Size = new System.Drawing.Size(90, 20);
@@ -5154,7 +5154,7 @@ namespace Assistant
 			// 
 			// sellAddManualButton
 			// 
-			this.sellAddManualButton.ColorTable = office2010BlueTheme1;
+			this.sellAddManualButton.ColorTable = office2010BlueTheme;
 			this.sellAddManualButton.Location = new System.Drawing.Point(5, 18);
 			this.sellAddManualButton.Name = "sellAddManualButton";
 			this.sellAddManualButton.Size = new System.Drawing.Size(90, 20);
@@ -5183,7 +5183,7 @@ namespace Assistant
 			// 
 			// sellSetBagButton
 			// 
-			this.sellSetBagButton.ColorTable = office2010BlueTheme1;
+			this.sellSetBagButton.ColorTable = office2010BlueTheme;
 			this.sellSetBagButton.Location = new System.Drawing.Point(551, 58);
 			this.sellSetBagButton.Name = "sellSetBagButton";
 			this.sellSetBagButton.Size = new System.Drawing.Size(100, 20);
@@ -5260,7 +5260,7 @@ namespace Assistant
 			// 
 			// sellRemoveListButton
 			// 
-			this.sellRemoveListButton.ColorTable = office2010BlueTheme1;
+			this.sellRemoveListButton.ColorTable = office2010BlueTheme;
 			this.sellRemoveListButton.Location = new System.Drawing.Point(369, 14);
 			this.sellRemoveListButton.Name = "sellRemoveListButton";
 			this.sellRemoveListButton.Size = new System.Drawing.Size(90, 20);
@@ -5271,7 +5271,7 @@ namespace Assistant
 			// 
 			// sellAddListButton
 			// 
-			this.sellAddListButton.ColorTable = office2010BlueTheme1;
+			this.sellAddListButton.ColorTable = office2010BlueTheme;
 			this.sellAddListButton.Location = new System.Drawing.Point(273, 14);
 			this.sellAddListButton.Name = "sellAddListButton";
 			this.sellAddListButton.Size = new System.Drawing.Size(90, 20);
@@ -5282,7 +5282,7 @@ namespace Assistant
 			// 
 			// sellImportListButton
 			// 
-			this.sellImportListButton.ColorTable = office2010BlueTheme1;
+			this.sellImportListButton.ColorTable = office2010BlueTheme;
 			this.sellImportListButton.Location = new System.Drawing.Point(465, 14);
 			this.sellImportListButton.Name = "sellImportListButton";
 			this.sellImportListButton.Size = new System.Drawing.Size(90, 20);
@@ -5303,7 +5303,7 @@ namespace Assistant
 			// 
 			// sellExportListButton
 			// 
-			this.sellExportListButton.ColorTable = office2010BlueTheme1;
+			this.sellExportListButton.ColorTable = office2010BlueTheme;
 			this.sellExportListButton.Location = new System.Drawing.Point(561, 14);
 			this.sellExportListButton.Name = "sellExportListButton";
 			this.sellExportListButton.Size = new System.Drawing.Size(90, 20);
@@ -5341,7 +5341,7 @@ namespace Assistant
 			// 
 			// dressStopButton
 			// 
-			this.dressStopButton.ColorTable = office2010BlueTheme1;
+			this.dressStopButton.ColorTable = office2010BlueTheme;
 			this.dressStopButton.Location = new System.Drawing.Point(407, 58);
 			this.dressStopButton.Name = "dressStopButton";
 			this.dressStopButton.Size = new System.Drawing.Size(61, 20);
@@ -5383,7 +5383,7 @@ namespace Assistant
 			// 
 			// dressAddTargetB
 			// 
-			this.dressAddTargetB.ColorTable = office2010BlueTheme1;
+			this.dressAddTargetB.ColorTable = office2010BlueTheme;
 			this.dressAddTargetB.Location = new System.Drawing.Point(5, 68);
 			this.dressAddTargetB.Name = "dressAddTargetB";
 			this.dressAddTargetB.Size = new System.Drawing.Size(90, 20);
@@ -5394,7 +5394,7 @@ namespace Assistant
 			// 
 			// dressAddManualB
 			// 
-			this.dressAddManualB.ColorTable = office2010BlueTheme1;
+			this.dressAddManualB.ColorTable = office2010BlueTheme;
 			this.dressAddManualB.Location = new System.Drawing.Point(5, 43);
 			this.dressAddManualB.Name = "dressAddManualB";
 			this.dressAddManualB.Size = new System.Drawing.Size(90, 20);
@@ -5405,7 +5405,7 @@ namespace Assistant
 			// 
 			// dressRemoveB
 			// 
-			this.dressRemoveB.ColorTable = office2010BlueTheme1;
+			this.dressRemoveB.ColorTable = office2010BlueTheme;
 			this.dressRemoveB.Location = new System.Drawing.Point(5, 94);
 			this.dressRemoveB.Name = "dressRemoveB";
 			this.dressRemoveB.Size = new System.Drawing.Size(90, 20);
@@ -5416,7 +5416,7 @@ namespace Assistant
 			// 
 			// dressReadB
 			// 
-			this.dressReadB.ColorTable = office2010BlueTheme1;
+			this.dressReadB.ColorTable = office2010BlueTheme;
 			this.dressReadB.Location = new System.Drawing.Point(5, 18);
 			this.dressReadB.Name = "dressReadB";
 			this.dressReadB.Size = new System.Drawing.Size(90, 20);
@@ -5454,7 +5454,7 @@ namespace Assistant
 			// 
 			// dressSetBagB
 			// 
-			this.dressSetBagB.ColorTable = office2010BlueTheme1;
+			this.dressSetBagB.ColorTable = office2010BlueTheme;
 			this.dressSetBagB.Location = new System.Drawing.Point(558, 127);
 			this.dressSetBagB.Name = "dressSetBagB";
 			this.dressSetBagB.Size = new System.Drawing.Size(88, 20);
@@ -5465,7 +5465,7 @@ namespace Assistant
 			// 
 			// undressExecuteButton
 			// 
-			this.undressExecuteButton.ColorTable = office2010BlueTheme1;
+			this.undressExecuteButton.ColorTable = office2010BlueTheme;
 			this.undressExecuteButton.Location = new System.Drawing.Point(340, 58);
 			this.undressExecuteButton.Name = "undressExecuteButton";
 			this.undressExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -5476,7 +5476,7 @@ namespace Assistant
 			// 
 			// dressExecuteButton
 			// 
-			this.dressExecuteButton.ColorTable = office2010BlueTheme1;
+			this.dressExecuteButton.ColorTable = office2010BlueTheme;
 			this.dressExecuteButton.Location = new System.Drawing.Point(274, 58);
 			this.dressExecuteButton.Name = "dressExecuteButton";
 			this.dressExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -5552,7 +5552,7 @@ namespace Assistant
 			// 
 			// dressRemoveListB
 			// 
-			this.dressRemoveListB.ColorTable = office2010BlueTheme1;
+			this.dressRemoveListB.ColorTable = office2010BlueTheme;
 			this.dressRemoveListB.Location = new System.Drawing.Point(366, 14);
 			this.dressRemoveListB.Name = "dressRemoveListB";
 			this.dressRemoveListB.Size = new System.Drawing.Size(90, 20);
@@ -5563,7 +5563,7 @@ namespace Assistant
 			// 
 			// dressAddListB
 			// 
-			this.dressAddListB.ColorTable = office2010BlueTheme1;
+			this.dressAddListB.ColorTable = office2010BlueTheme;
 			this.dressAddListB.Location = new System.Drawing.Point(270, 14);
 			this.dressAddListB.Name = "dressAddListB";
 			this.dressAddListB.Size = new System.Drawing.Size(90, 20);
@@ -5574,7 +5574,7 @@ namespace Assistant
 			// 
 			// dressImportListB
 			// 
-			this.dressImportListB.ColorTable = office2010BlueTheme1;
+			this.dressImportListB.ColorTable = office2010BlueTheme;
 			this.dressImportListB.Location = new System.Drawing.Point(462, 14);
 			this.dressImportListB.Name = "dressImportListB";
 			this.dressImportListB.Size = new System.Drawing.Size(90, 20);
@@ -5595,7 +5595,7 @@ namespace Assistant
 			// 
 			// dressExportListB
 			// 
-			this.dressExportListB.ColorTable = office2010BlueTheme1;
+			this.dressExportListB.ColorTable = office2010BlueTheme;
 			this.dressExportListB.Location = new System.Drawing.Point(558, 14);
 			this.dressExportListB.Name = "dressExportListB";
 			this.dressExportListB.Size = new System.Drawing.Size(90, 20);
@@ -5642,7 +5642,7 @@ namespace Assistant
 			// 
 			// FriendGuildAddButton
 			// 
-			this.FriendGuildAddButton.ColorTable = office2010BlueTheme1;
+			this.FriendGuildAddButton.ColorTable = office2010BlueTheme;
 			this.FriendGuildAddButton.Location = new System.Drawing.Point(9, 19);
 			this.FriendGuildAddButton.Name = "FriendGuildAddButton";
 			this.FriendGuildAddButton.Size = new System.Drawing.Size(90, 20);
@@ -5653,7 +5653,7 @@ namespace Assistant
 			// 
 			// FriendGuildRemoveButton
 			// 
-			this.FriendGuildRemoveButton.ColorTable = office2010BlueTheme1;
+			this.FriendGuildRemoveButton.ColorTable = office2010BlueTheme;
 			this.FriendGuildRemoveButton.Location = new System.Drawing.Point(9, 45);
 			this.FriendGuildRemoveButton.Name = "FriendGuildRemoveButton";
 			this.FriendGuildRemoveButton.Size = new System.Drawing.Size(90, 20);
@@ -5754,7 +5754,7 @@ namespace Assistant
 			// 
 			// friendAddTargetButton
 			// 
-			this.friendAddTargetButton.ColorTable = office2010BlueTheme1;
+			this.friendAddTargetButton.ColorTable = office2010BlueTheme;
 			this.friendAddTargetButton.Location = new System.Drawing.Point(9, 46);
 			this.friendAddTargetButton.Name = "friendAddTargetButton";
 			this.friendAddTargetButton.Size = new System.Drawing.Size(90, 20);
@@ -5765,7 +5765,7 @@ namespace Assistant
 			// 
 			// friendRemoveButton
 			// 
-			this.friendRemoveButton.ColorTable = office2010BlueTheme1;
+			this.friendRemoveButton.ColorTable = office2010BlueTheme;
 			this.friendRemoveButton.Location = new System.Drawing.Point(9, 72);
 			this.friendRemoveButton.Name = "friendRemoveButton";
 			this.friendRemoveButton.Size = new System.Drawing.Size(90, 20);
@@ -5776,7 +5776,7 @@ namespace Assistant
 			// 
 			// friendAddButton
 			// 
-			this.friendAddButton.ColorTable = office2010BlueTheme1;
+			this.friendAddButton.ColorTable = office2010BlueTheme;
 			this.friendAddButton.Location = new System.Drawing.Point(9, 21);
 			this.friendAddButton.Name = "friendAddButton";
 			this.friendAddButton.Size = new System.Drawing.Size(90, 20);
@@ -5877,7 +5877,7 @@ namespace Assistant
 			// 
 			// friendButtonRemoveList
 			// 
-			this.friendButtonRemoveList.ColorTable = office2010BlueTheme1;
+			this.friendButtonRemoveList.ColorTable = office2010BlueTheme;
 			this.friendButtonRemoveList.Location = new System.Drawing.Point(366, 14);
 			this.friendButtonRemoveList.Name = "friendButtonRemoveList";
 			this.friendButtonRemoveList.Size = new System.Drawing.Size(90, 20);
@@ -5888,7 +5888,7 @@ namespace Assistant
 			// 
 			// friendButtonAddList
 			// 
-			this.friendButtonAddList.ColorTable = office2010BlueTheme1;
+			this.friendButtonAddList.ColorTable = office2010BlueTheme;
 			this.friendButtonAddList.Location = new System.Drawing.Point(270, 14);
 			this.friendButtonAddList.Name = "friendButtonAddList";
 			this.friendButtonAddList.Size = new System.Drawing.Size(90, 20);
@@ -5899,7 +5899,7 @@ namespace Assistant
 			// 
 			// friendButtonImportList
 			// 
-			this.friendButtonImportList.ColorTable = office2010BlueTheme1;
+			this.friendButtonImportList.ColorTable = office2010BlueTheme;
 			this.friendButtonImportList.Location = new System.Drawing.Point(462, 14);
 			this.friendButtonImportList.Name = "friendButtonImportList";
 			this.friendButtonImportList.Size = new System.Drawing.Size(90, 20);
@@ -5920,7 +5920,7 @@ namespace Assistant
 			// 
 			// friendButtonExportList
 			// 
-			this.friendButtonExportList.ColorTable = office2010BlueTheme1;
+			this.friendButtonExportList.ColorTable = office2010BlueTheme;
 			this.friendButtonExportList.Location = new System.Drawing.Point(558, 14);
 			this.friendButtonExportList.Name = "friendButtonExportList";
 			this.friendButtonExportList.Size = new System.Drawing.Size(90, 20);
@@ -5958,7 +5958,7 @@ namespace Assistant
 			// 
 			// restockStopButton
 			// 
-			this.restockStopButton.ColorTable = office2010BlueTheme1;
+			this.restockStopButton.ColorTable = office2010BlueTheme;
 			this.restockStopButton.Location = new System.Drawing.Point(334, 58);
 			this.restockStopButton.Name = "restockStopButton";
 			this.restockStopButton.Size = new System.Drawing.Size(61, 20);
@@ -5969,7 +5969,7 @@ namespace Assistant
 			// 
 			// restockExecuteButton
 			// 
-			this.restockExecuteButton.ColorTable = office2010BlueTheme1;
+			this.restockExecuteButton.ColorTable = office2010BlueTheme;
 			this.restockExecuteButton.Location = new System.Drawing.Point(268, 58);
 			this.restockExecuteButton.Name = "restockExecuteButton";
 			this.restockExecuteButton.Size = new System.Drawing.Size(61, 20);
@@ -6036,7 +6036,7 @@ namespace Assistant
 			// 
 			// restockEditButton
 			// 
-			this.restockEditButton.ColorTable = office2010BlueTheme1;
+			this.restockEditButton.ColorTable = office2010BlueTheme;
 			this.restockEditButton.Location = new System.Drawing.Point(5, 68);
 			this.restockEditButton.Name = "restockEditButton";
 			this.restockEditButton.Size = new System.Drawing.Size(90, 20);
@@ -6047,7 +6047,7 @@ namespace Assistant
 			// 
 			// restockAddTargetButton
 			// 
-			this.restockAddTargetButton.ColorTable = office2010BlueTheme1;
+			this.restockAddTargetButton.ColorTable = office2010BlueTheme;
 			this.restockAddTargetButton.Location = new System.Drawing.Point(5, 43);
 			this.restockAddTargetButton.Name = "restockAddTargetButton";
 			this.restockAddTargetButton.Size = new System.Drawing.Size(90, 20);
@@ -6058,7 +6058,7 @@ namespace Assistant
 			// 
 			// restockRemoveButton
 			// 
-			this.restockRemoveButton.ColorTable = office2010BlueTheme1;
+			this.restockRemoveButton.ColorTable = office2010BlueTheme;
 			this.restockRemoveButton.Location = new System.Drawing.Point(5, 94);
 			this.restockRemoveButton.Name = "restockRemoveButton";
 			this.restockRemoveButton.Size = new System.Drawing.Size(90, 20);
@@ -6069,7 +6069,7 @@ namespace Assistant
 			// 
 			// restockAddManualButton
 			// 
-			this.restockAddManualButton.ColorTable = office2010BlueTheme1;
+			this.restockAddManualButton.ColorTable = office2010BlueTheme;
 			this.restockAddManualButton.Location = new System.Drawing.Point(5, 18);
 			this.restockAddManualButton.Name = "restockAddManualButton";
 			this.restockAddManualButton.Size = new System.Drawing.Size(90, 20);
@@ -6095,7 +6095,7 @@ namespace Assistant
 			// 
 			// restockSetDestinationButton
 			// 
-			this.restockSetDestinationButton.ColorTable = office2010BlueTheme1;
+			this.restockSetDestinationButton.ColorTable = office2010BlueTheme;
 			this.restockSetDestinationButton.Location = new System.Drawing.Point(558, 104);
 			this.restockSetDestinationButton.Name = "restockSetDestinationButton";
 			this.restockSetDestinationButton.Size = new System.Drawing.Size(90, 20);
@@ -6106,7 +6106,7 @@ namespace Assistant
 			// 
 			// restockSetSourceButton
 			// 
-			this.restockSetSourceButton.ColorTable = office2010BlueTheme1;
+			this.restockSetSourceButton.ColorTable = office2010BlueTheme;
 			this.restockSetSourceButton.Location = new System.Drawing.Point(558, 60);
 			this.restockSetSourceButton.Name = "restockSetSourceButton";
 			this.restockSetSourceButton.Size = new System.Drawing.Size(90, 20);
@@ -6174,7 +6174,7 @@ namespace Assistant
 			// 
 			// restockRemoveListB
 			// 
-			this.restockRemoveListB.ColorTable = office2010BlueTheme1;
+			this.restockRemoveListB.ColorTable = office2010BlueTheme;
 			this.restockRemoveListB.Location = new System.Drawing.Point(366, 14);
 			this.restockRemoveListB.Name = "restockRemoveListB";
 			this.restockRemoveListB.Size = new System.Drawing.Size(90, 20);
@@ -6185,7 +6185,7 @@ namespace Assistant
 			// 
 			// restockAddListB
 			// 
-			this.restockAddListB.ColorTable = office2010BlueTheme1;
+			this.restockAddListB.ColorTable = office2010BlueTheme;
 			this.restockAddListB.Location = new System.Drawing.Point(270, 14);
 			this.restockAddListB.Name = "restockAddListB";
 			this.restockAddListB.Size = new System.Drawing.Size(90, 20);
@@ -6196,7 +6196,7 @@ namespace Assistant
 			// 
 			// restockImportListB
 			// 
-			this.restockImportListB.ColorTable = office2010BlueTheme1;
+			this.restockImportListB.ColorTable = office2010BlueTheme;
 			this.restockImportListB.Location = new System.Drawing.Point(462, 14);
 			this.restockImportListB.Name = "restockImportListB";
 			this.restockImportListB.Size = new System.Drawing.Size(90, 20);
@@ -6217,7 +6217,7 @@ namespace Assistant
 			// 
 			// restockExportListB
 			// 
-			this.restockExportListB.ColorTable = office2010BlueTheme1;
+			this.restockExportListB.ColorTable = office2010BlueTheme;
 			this.restockExportListB.Location = new System.Drawing.Point(558, 14);
 			this.restockExportListB.Name = "restockExportListB";
 			this.restockExportListB.Size = new System.Drawing.Size(90, 20);
@@ -6285,7 +6285,7 @@ namespace Assistant
 			this.bandagehealhiddedCheckBox.Name = "bandagehealhiddedCheckBox";
 			this.bandagehealhiddedCheckBox.Size = new System.Drawing.Size(155, 22);
 			this.bandagehealhiddedCheckBox.TabIndex = 88;
-			this.bandagehealhiddedCheckBox.Text = "Block heal if hidded";
+			this.bandagehealhiddedCheckBox.Text = "Block heal if Hidden";
 			this.bandagehealhiddedCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealhiddedCheckBox_CheckedChanged);
 			// 
 			// bandagehealmortalCheckBox
@@ -6295,7 +6295,7 @@ namespace Assistant
 			this.bandagehealmortalCheckBox.Name = "bandagehealmortalCheckBox";
 			this.bandagehealmortalCheckBox.Size = new System.Drawing.Size(155, 22);
 			this.bandagehealmortalCheckBox.TabIndex = 87;
-			this.bandagehealmortalCheckBox.Text = "Block heal if mortalled";
+			this.bandagehealmortalCheckBox.Text = "Block heal if Mortal struck";
 			this.bandagehealmortalCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealmortalCheckBox_CheckedChanged);
 			// 
 			// bandagehealpoisonCheckBox
@@ -6305,7 +6305,7 @@ namespace Assistant
 			this.bandagehealpoisonCheckBox.Name = "bandagehealpoisonCheckBox";
 			this.bandagehealpoisonCheckBox.Size = new System.Drawing.Size(155, 22);
 			this.bandagehealpoisonCheckBox.TabIndex = 86;
-			this.bandagehealpoisonCheckBox.Text = "Block heal if poisoned";
+			this.bandagehealpoisonCheckBox.Text = "Block heal if Poisoned";
 			this.bandagehealpoisonCheckBox.CheckedChanged += new System.EventHandler(this.bandagehealpoisonCheckBox_CheckedChanged);
 			// 
 			// label33
@@ -6453,7 +6453,7 @@ namespace Assistant
 			// 
 			// bandagehealsettargetButton
 			// 
-			this.bandagehealsettargetButton.ColorTable = office2010BlueTheme1;
+			this.bandagehealsettargetButton.ColorTable = office2010BlueTheme;
 			this.bandagehealsettargetButton.Location = new System.Drawing.Point(213, 16);
 			this.bandagehealsettargetButton.Name = "bandagehealsettargetButton";
 			this.bandagehealsettargetButton.Size = new System.Drawing.Size(75, 23);
@@ -6539,7 +6539,7 @@ namespace Assistant
 			// 
 			// hotkeyMasterClearButton
 			// 
-			this.hotkeyMasterClearButton.ColorTable = office2010BlueTheme1;
+			this.hotkeyMasterClearButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMasterClearButton.Location = new System.Drawing.Point(92, 50);
 			this.hotkeyMasterClearButton.Name = "hotkeyMasterClearButton";
 			this.hotkeyMasterClearButton.Size = new System.Drawing.Size(53, 23);
@@ -6569,7 +6569,7 @@ namespace Assistant
 			// 
 			// hotkeyMasterSetButton
 			// 
-			this.hotkeyMasterSetButton.ColorTable = office2010BlueTheme1;
+			this.hotkeyMasterSetButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMasterSetButton.Location = new System.Drawing.Point(10, 50);
 			this.hotkeyMasterSetButton.Name = "hotkeyMasterSetButton";
 			this.hotkeyMasterSetButton.Size = new System.Drawing.Size(53, 23);
@@ -6603,7 +6603,7 @@ namespace Assistant
 			// 
 			// hotkeyMDisableButton
 			// 
-			this.hotkeyMDisableButton.ColorTable = office2010BlueTheme1;
+			this.hotkeyMDisableButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMDisableButton.Location = new System.Drawing.Point(92, 58);
 			this.hotkeyMDisableButton.Name = "hotkeyMDisableButton";
 			this.hotkeyMDisableButton.Size = new System.Drawing.Size(53, 23);
@@ -6615,7 +6615,7 @@ namespace Assistant
 			// 
 			// hotkeyMEnableButton
 			// 
-			this.hotkeyMEnableButton.ColorTable = office2010BlueTheme1;
+			this.hotkeyMEnableButton.ColorTable = office2010BlueTheme;
 			this.hotkeyMEnableButton.Location = new System.Drawing.Point(10, 58);
 			this.hotkeyMEnableButton.Name = "hotkeyMEnableButton";
 			this.hotkeyMEnableButton.Size = new System.Drawing.Size(53, 23);
@@ -6668,7 +6668,7 @@ namespace Assistant
 			// 
 			// hotkeyClearButton
 			// 
-			this.hotkeyClearButton.ColorTable = office2010BlueTheme1;
+			this.hotkeyClearButton.ColorTable = office2010BlueTheme;
 			this.hotkeyClearButton.Location = new System.Drawing.Point(92, 71);
 			this.hotkeyClearButton.Name = "hotkeyClearButton";
 			this.hotkeyClearButton.Size = new System.Drawing.Size(53, 23);
@@ -6680,7 +6680,7 @@ namespace Assistant
 			// 
 			// hotkeySetButton
 			// 
-			this.hotkeySetButton.ColorTable = office2010BlueTheme1;
+			this.hotkeySetButton.ColorTable = office2010BlueTheme;
 			this.hotkeySetButton.Location = new System.Drawing.Point(10, 71);
 			this.hotkeySetButton.Name = "hotkeySetButton";
 			this.hotkeySetButton.Size = new System.Drawing.Size(53, 23);
