@@ -152,7 +152,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsItems =
 			{
-				"Items.FindBySerial", "Items.Move", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
+				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
 				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount"
 			};
@@ -502,10 +502,13 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Items.FindBySerial(int)", new string[] { "int ItemSerial" }, "Item", "Find item instance by specific serial");
 			descriptionItems.Add("Items.FindBySerial", tooltip);
 
-			tooltip = new ToolTipDescriptions("Items.Move(Item or int, Item or Mobile or int, int)", new string[] { "Item Source or int SourceItemSerial", "Item DestinationItem or Mobile DestinationMobile or int DestinationSerial", "int AmountToMove" }, "void", "Move a item with a certain amount to specific destination\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack");
-			descriptionItems.Add("Items.Move", tooltip);
+            tooltip = new ToolTipDescriptions("Items.Move(Item or int, Item or Mobile or int, int, (optional)(int, int))", new string[] { "Item Source or int SourceItemSerial", "Item DestinationItem or Mobile DestinationMobile or int DestinationSerial", "int AmountToMove", "int X", "int Y" }, "void", "Move a item with a certain amount to specific destination\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack\n\tIs also possible to declare coordinates where item needs to be positioned\n\tinto the container");
+            descriptionItems.Add("Items.Move", tooltip);
 
-			tooltip = new ToolTipDescriptions("Items.DropItemGroundSelf(Item, int)", new string[] { "Item ItemInstance", "int Amount" }, "void", "Drop on character feets specified item with certain amount.\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack");
+            tooltip = new ToolTipDescriptions("Items.MoveOnGround(Item or int, int, int, int, int)", new string[] { "Item ItemInstance", "int amount", "int X", "int Y", "int Z" }, "void", "");
+            descriptionItems.Add("Items.MoveOnGround", tooltip);
+
+            tooltip = new ToolTipDescriptions("Items.DropItemGroundSelf(Item, int)", new string[] { "Item ItemInstance", "int Amount" }, "void", "Drop on character feets specified item with certain amount.\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack");
 			descriptionItems.Add("Items.DropItemGroundSelf", tooltip);
 
 			tooltip = new ToolTipDescriptions("Items.UseItem(Item or int)", new string[] { "Item ItemInstance or int ItemSerial" }, "void", "Use (double click) specified item.");
