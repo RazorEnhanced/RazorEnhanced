@@ -1618,6 +1618,18 @@ namespace RazorEnhanced
 			RazorEnhanced.UoNet.UOHandler.PathFind(x, y, z);
 		}
 
+		internal static void PathFindToPacket(Assistant.Point3D Location)
+		{
+			ClientCommunication.SendToClientWait(new PathFindTo(Location));
+		}
+
+		internal static void PathFindToPacket(int x, int y, int z)
+		{
+			Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
+			PathFindToPacket(loc);
+        }
+
+
 		// Message
 
 		public static void HeadMessage(int hue, string message)

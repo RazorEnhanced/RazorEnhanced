@@ -177,7 +177,7 @@ namespace RazorEnhanced.UI
 
 		    string[] methodsGumps =
 		    {
-		        "Gumps.CurrentGump", "Gumps.HasGump", "Gumps.CloseGump", "Gumps.WaitForGump", "Gumps.SendAction",
+		        "Gumps.CurrentGump", "Gumps.HasGump", "Gumps.CloseGump", "Gumps.ResetGump", "Gumps.WaitForGump", "Gumps.SendAction",
 		        "Gumps.SendAdvancedAction", "Gumps.LastGumpGetLine", "Gumps.LastGumpGetLineList", "Gumps.LastGumpTextExist",
 		        "Gumps.LastGumpTextExistByLine"
 		    };
@@ -699,6 +699,9 @@ namespace RazorEnhanced.UI
 
             tooltip = new ToolTipDescriptions("Gumps.CloseGump(uint)", new string[] { "uint GumpID" }, "void", "Close a specific Gump");
             descriptionGumps.Add("Gumps.CloseGump", tooltip);
+
+            tooltip = new ToolTipDescriptions("Gumps.ResetGump()", new string[] { "none" }, "void", "Clean gump status");
+            descriptionGumps.Add("Gumps.ResetGump", tooltip);
 
             tooltip = new ToolTipDescriptions("Gumps.WaitForGump(uint, int)", new string[] { "uint GumpID", "int TimeoutGump" }, "void", "Pause script to wait server to send gump after operation for call gump\n\tTimeout is in Milliseconds");
             descriptionGumps.Add("Gumps.WaitForGump", tooltip);
@@ -1762,6 +1765,12 @@ namespace RazorEnhanced.UI
                     return base.ProcessCmdKey(ref msg, keyData);
             }
         }
+
+		private void EnhancedScriptEditor_Load(object sender, EventArgs e)
+		{
+			m_OnClosing = false;
+			m_OnRecord = false;
+		}
 	}
 
 	public class ToolTipDescriptions
