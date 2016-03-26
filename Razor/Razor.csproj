@@ -691,6 +691,7 @@
     <None Include="RazorEnhanced\Resources\BarraVerticaleBordoSotto.png" />
     <None Include="RazorEnhanced\Resources\BarraVerticaleSlot.png" />
     <None Include="RazorEnhanced\Resources\BarraVerticaleSpazioStat.png" />
+    <None Include="RazorEnhanced\Resources\bug_go.png" />
     <Content Include="RazorEnhanced\Resources\green.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start.png" />
     <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />

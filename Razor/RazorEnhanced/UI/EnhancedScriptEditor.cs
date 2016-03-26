@@ -32,7 +32,8 @@ namespace RazorEnhanced.UI
 			None = 0,
 			Line,
 			Call,
-			Return
+			Return,
+			Breakpoint
 		}
 
 		private static Thread m_Thread;
@@ -1070,19 +1071,18 @@ namespace RazorEnhanced.UI
 		{
 			if (m_Breaktrace)
 			{
-				CheckCurrentCommand();
-
 				if (m_CurrentCommand == Command.None)
 				{
 					SetTraceback("");
 					m_DebugContinue.WaitOne();
+					CheckCurrentCommand();
 				}
 				else
 				{
 					UpdateCurrentState(frame, result, payload);
 					int line = (int)m_CurrentFrame.f_lineno;
 
-					if (m_Breakpoints.Contains(line))
+					if (m_Breakpoints.Contains(line) && m_CurrentCommand == Command.Breakpoint)
 					{
 						TracebackBreakpoint();
 					}
@@ -1112,7 +1112,7 @@ namespace RazorEnhanced.UI
 			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightGreen);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
-			ResetCurrentCommand();
+			m_CurrentCommand = Command.None;
 		}
 
 		private void TracebackReturn()
@@ -1121,7 +1121,7 @@ namespace RazorEnhanced.UI
 			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightBlue);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
-			ResetCurrentCommand();
+			m_CurrentCommand = Command.None;
 		}
 
 		private void TracebackLine()
@@ -1130,7 +1130,7 @@ namespace RazorEnhanced.UI
 			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.Yellow);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
-			ResetCurrentCommand();
+			m_CurrentCommand = Command.None;
 		}
 
 		private void TracebackBreakpoint()
@@ -1138,7 +1138,7 @@ namespace RazorEnhanced.UI
 			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Breakpoint at line {0}", m_CurrentFrame.f_lineno));
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
-			ResetCurrentCommand();
+			m_CurrentCommand = Command.None;
 		}
 
 		private void EnqueueCommand(Command command)
@@ -1159,12 +1159,6 @@ namespace RazorEnhanced.UI
 			m_CurrentCode = frame.f_code;
 			m_CurrentResult = result;
 			m_CurrentPayload = payload;
-		}
-
-		private void ResetCurrentCommand()
-		{
-			m_CurrentCommand = Command.None;
-			m_DebugContinue.WaitOne();
 		}
 
 		private void Start(bool debug)
@@ -1195,7 +1189,17 @@ namespace RazorEnhanced.UI
 
 			try
 			{
-				m_Breaktrace = debug;
+				if (debug)
+				{
+					m_CurrentCommand = Command.Breakpoint;
+					m_Breaktrace = true;
+				}
+				else
+				{
+					m_CurrentCommand = Command.None;
+					m_Breaktrace = false;
+				}
+
 				string text = GetFastTextBoxText();
 				m_Source = m_Engine.CreateScriptSourceFromString(text);
 				m_Scope = RazorEnhanced.Scripts.GetRazorScope(m_Engine);
@@ -1386,6 +1390,11 @@ namespace RazorEnhanced.UI
 		private void toolStripButtonNextReturn_Click(object sender, EventArgs e)
 		{
 			EnqueueCommand(Command.Return);
+		}
+
+		private void toolStripButtonNextBreakpoint_Click(object sender, EventArgs e)
+		{
+			EnqueueCommand(Command.Breakpoint);
 		}
 
 		private void toolStripButtonStop_Click(object sender, EventArgs e)
