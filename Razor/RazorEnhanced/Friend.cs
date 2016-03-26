@@ -394,7 +394,7 @@ namespace RazorEnhanced
 
 			if (Assistant.Engine.MainWindow.FriendMINCheckBox.Checked)
 			{
-				if (GetFaction("MIN", serial))
+				if (GetFaction("MiN", serial))
 					return true;
 			}
 
