@@ -1432,7 +1432,7 @@ namespace RazorEnhanced.UI
 
 		private void toolStripButtonClose_Click(object sender, EventArgs e)
 		{
-		    Close();
+		    CloseAndSave();
 		}
 
 		private void toolStripButtonInspect_Click(object sender, EventArgs e)
@@ -1574,7 +1574,7 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-	    private void Close()
+	    private void CloseAndSave()
 	    {
             DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (res == System.Windows.Forms.DialogResult.Yes)
@@ -1704,7 +1704,7 @@ namespace RazorEnhanced.UI
 
                 //Close File
                 case (Keys.Control | Keys.E):
-                    Close();
+                    CloseAndSave();
                     return true;
 
                 //Inspect Entities
