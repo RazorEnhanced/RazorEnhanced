@@ -505,7 +505,7 @@ namespace RazorEnhanced.UI
             tooltip = new ToolTipDescriptions("Items.Move(Item or int, Item or Mobile or int, int, (optional)(int, int))", new string[] { "Item Source or int SourceItemSerial", "Item DestinationItem or Mobile DestinationMobile or int DestinationSerial", "int AmountToMove", "int X", "int Y" }, "void", "Move a item with a certain amount to specific destination\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack\n\tIs also possible to declare coordinates where item needs to be positioned\n\tinto the container");
             descriptionItems.Add("Items.Move", tooltip);
 
-            tooltip = new ToolTipDescriptions("Items.MoveOnGround(Item or int, int, int, int, int)", new string[] { "Item ItemInstance", "int amount", "int X", "int Y", "int Z" }, "void", "");
+            tooltip = new ToolTipDescriptions("Items.MoveOnGround(Item or int, int, int, int, int)", new string[] { "Item ItemInstance or ItemSerial", "int amount", "int X", "int Y", "int Z" }, "void", "Move an item with a specific amount to the ground in specified coordinates\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack");
             descriptionItems.Add("Items.MoveOnGround", tooltip);
 
             tooltip = new ToolTipDescriptions("Items.DropItemGroundSelf(Item, int)", new string[] { "Item ItemInstance", "int Amount" }, "void", "Drop on character feets specified item with certain amount.\n\tIf amount is set to 0 or bigger value of the amount, move the entire stack");
@@ -1758,18 +1758,23 @@ namespace RazorEnhanced.UI
 					RemoveBreakpoint();
 					return true;
 
-				//Debug - Next Call
-				case (Keys.F9):
-					EnqueueCommand(Command.Call);
-					return true;
+                //Next Breakpoint
+                case (Keys.F9):
+                    EnqueueCommand(Command.Breakpoint);
+                    return true;
 
-				//Debug - Next Line
-				case (Keys.F10):
+                //Debug - Next Line
+                case (Keys.F10):
 					EnqueueCommand(Command.Line);
 					return true;
 
-				//Debug - Next Return
-				case (Keys.F11):
+                //Debug - Next Call
+                case (Keys.F11):
+                    EnqueueCommand(Command.Call);
+                    return true;
+
+                //Debug - Next Return
+                case (Keys.F12):
 					EnqueueCommand(Command.Return);
 					return true;
 
