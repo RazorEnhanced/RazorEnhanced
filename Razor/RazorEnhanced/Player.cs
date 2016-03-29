@@ -1623,7 +1623,7 @@ namespace RazorEnhanced
 			ClientCommunication.SendToClientWait(new PathFindTo(Location));
 		}
 
-		internal static void PathFindToPacket(int x, int y, int z)
+		public static void PathFindToPacket(int x, int y, int z)
 		{
 			Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
 			PathFindToPacket(loc);
