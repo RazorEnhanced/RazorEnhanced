@@ -25,8 +25,11 @@ namespace RazorEnhanced
 			{
 				int s = 0;
 				QueryStats.TryDequeue(out s);
-				ClientCommunication.SendToServerWait(new StatusQuery(s));
-				Thread.Sleep(100);
+				if (s != 0)
+				{
+					ClientCommunication.SendToServerWait(new StatusQuery(s));
+					Thread.Sleep(100);
+				}
 			}
 
 			if (World.Player.Expansion > 3)
@@ -35,8 +38,11 @@ namespace RazorEnhanced
 				{
 					int s = 0;
 					QueryMobsProps.TryDequeue(out s);
-					ClientCommunication.SendToServerWait(new QueryProperties(s));
-					Thread.Sleep(100);
+					if (s != 0)
+					{
+						ClientCommunication.SendToServerWait(new QueryProperties(s));
+						Thread.Sleep(100);
+					}
 				}
 			}
 		}
