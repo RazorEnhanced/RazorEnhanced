@@ -70,7 +70,7 @@ namespace RazorEnhanced
 					if (corpse == null)
 						return;
 
-					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 2) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
+					if ((Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 2) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z)) || corpse.ItemID == 0x0E75)
 					{
 						if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 						{

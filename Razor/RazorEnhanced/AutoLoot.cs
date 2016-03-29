@@ -318,7 +318,6 @@ namespace RazorEnhanced
 					{
 						if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties[0].ToString() == "Instanced loot container")  // Rilevato backpack possibile shared loot verifico props
 						{
-							RazorEnhanced.Items.WaitForContents(oggettoContenuto, 1500);
 							foreach (RazorEnhanced.Item oggettoContenutoShard in oggettoContenuto.Contains)
 							{
 								foreach (AutoLootItem autoLootItem in autoLootList)
@@ -330,14 +329,14 @@ namespace RazorEnhanced
 									{
 										if (oggettoContenutoShard.ItemID == autoLootItem.Graphics)
 										{
-											GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+											GrabItem(autoLootItem, oggettoContenutoShard, mseconds);
 										}
 									}
 									else
 									{
 										if (oggettoContenutoShard.ItemID == autoLootItem.Graphics && oggettoContenutoShard.Hue == autoLootItem.Color)
 										{
-											GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+											GrabItem(autoLootItem, oggettoContenutoShard, mseconds);
 										}
 									}
 								}
@@ -362,7 +361,7 @@ namespace RazorEnhanced
 
 								if (grabItem)
 								{
-									GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+									GrabItem(autoLootItem, oggettoContenuto, mseconds);
 								}
 							}
 						}
@@ -377,7 +376,7 @@ namespace RazorEnhanced
 
 								if (grabItem)
 								{
-									GrabItem(autoLootItem, oggettoContenuto, corpo, mseconds);
+									GrabItem(autoLootItem, oggettoContenuto, mseconds);
 								}
 							}
 						}
@@ -388,7 +387,7 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, Item corpo, int mseconds)
+		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int mseconds)
 		{
 			if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
 				return;
