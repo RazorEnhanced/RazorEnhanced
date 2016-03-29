@@ -133,7 +133,7 @@ namespace RazorEnhanced.UI
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
 				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
-				"Player.Walk", "Player.PathFindTo", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
+				"Player.Walk", "Player.PathFindTo", "Player.PathFindToPacket", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
 				"Player.WeaponStunSA", "Player.WeaponDisarmSA"
 			};
@@ -400,7 +400,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.PathFindTo(Point3D or (int, int, int))", new string[] { "Point3D Coords or ( int X, int Y, int Z )" }, "void", "Client pathfinder to specific location with Point3D or XYZ coordinates");
 			descriptionPlayer.Add("Player.PathFindTo", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.GetPropValue(string)", new string[] { "string PropName" }, "int", "Get property value of player");
+            tooltip = new ToolTipDescriptions("Player.PathFindToPacket(int, int, int)", new string[] { "int X, int Y, int Z" }, "void", "Client pathfinder to specific location with XYZ coordinates\n\tPlayer can be blocked with items in path");
+            descriptionPlayer.Add("Player.PathFindToPacket", tooltip);
+
+            tooltip = new ToolTipDescriptions("Player.GetPropValue(string)", new string[] { "string PropName" }, "int", "Get property value of player");
 			descriptionPlayer.Add("Player.GetPropValue", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.GetPropStringByIndex(int)", new string[] { "int PropIndex" }, "string", "Get property name by index, if any property\n\tin selected index, return empty");
