@@ -47,9 +47,9 @@ namespace Assistant
 						if (msg.Count > 0)
 						{
 							if (msg.Lang == "A")
-								ClientCommunication.SendToClient(new AsciiMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
+								ClientCommunication.SendToClientWait(new AsciiMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
 							else
-								ClientCommunication.SendToClient(new UnicodeMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Lang, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
+								ClientCommunication.SendToClientWait(new UnicodeMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Lang, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
 							msg.Count = 0;
 							msg.NextSend = DateTime.Now + msg.Delay;
 						}
