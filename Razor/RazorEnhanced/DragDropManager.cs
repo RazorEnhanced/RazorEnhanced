@@ -15,7 +15,7 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
-			if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
+			if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && !Targeting.HasTarget)
 			{
 				try
 				{
