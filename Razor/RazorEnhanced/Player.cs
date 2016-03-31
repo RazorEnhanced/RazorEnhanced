@@ -1598,11 +1598,11 @@ namespace RazorEnhanced
 					break;
 
 				default:
-					dir = Assistant.Direction.Mask;
+					dir = Assistant.Direction.ValueMask;
 					break;
 			}
 
-			if (dir != Assistant.Direction.Mask)
+			if (dir != Assistant.Direction.ValueMask)
 			{
 				ClientCommunication.SendToServerWait(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
 			}
@@ -1623,7 +1623,7 @@ namespace RazorEnhanced
 			ClientCommunication.SendToClientWait(new PathFindTo(Location));
 		}
 
-		public static void PathFindToPacket(int x, int y, int z)
+		internal static void PathFindToPacket(int x, int y, int z)
 		{
 			Assistant.Point3D loc = new Assistant.Point3D(x, y, z);
 			PathFindToPacket(loc);
