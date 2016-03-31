@@ -1604,10 +1604,7 @@ namespace RazorEnhanced
 
 			if (dir != Assistant.Direction.ValueMask)
 			{
-				ClientCommunication.SendToClient(new MobileUpdate(World.Player));
 				ClientCommunication.SendToServer(new WalkRequest(dir, World.Player.WalkSequence));
-				World.Player.MoveReq(dir, World.Player.WalkSequence);
-				World.Player.Resync();
 			}
 		}
 
@@ -1655,10 +1652,7 @@ namespace RazorEnhanced
 
 			if (dir != Assistant.Direction.ValueMask)
 			{
-                ClientCommunication.SendToClient(new MobileUpdate(World.Player));
 				ClientCommunication.SendToServer(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
-				World.Player.MoveReq(dir | Assistant.Direction.Running, World.Player.WalkSequence);
-				World.Player.Resync();
 			}
 		}
 
