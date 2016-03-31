@@ -117,9 +117,8 @@ namespace RazorEnhanced
 				}
 				else
 				{
-
-					int xx = step.x - oldstep.x;
-					int yy = step.y - oldstep.y;
+                    int xx = oldstep.x - step.x;
+					int yy = oldstep.y - step.y;
 					Assistant.Point3D oldplayerpos = World.Player.Position;
 
 					while (World.Player.Position.X != oldplayerpos.X + xx || World.Player.Position.Y != oldplayerpos.Y + yy)
@@ -127,54 +126,29 @@ namespace RazorEnhanced
 						Assistant.Point3D pp2 = World.Player.Position;
 						Assistant.Direction dd2 = World.Player.Direction;
 
-						if (xx >= 1 && yy >= 1)
-						{
-							Misc.SendMessage("Up");
+						if (xx <= -1 && yy <= -1)
 							RazorEnhanced.Player.Walk("Up");
-						}
 						else if (xx <= -1 && yy == 0)
-						{
-							Misc.SendMessage("West");
 							RazorEnhanced.Player.Walk("West");
-						}
-						else if (xx >= 1 && yy <= -1)
-						{
-							Misc.SendMessage("Left");
-							RazorEnhanced.Player.Walk("Left");
-						}
-						else if (xx == 0 && yy <= -1)
-						{
-							Misc.SendMessage("South");
-							RazorEnhanced.Player.Walk("South");
-						}
-						else if (xx <= -1 && yy <= -1)
-						{
-							Misc.SendMessage("Down");
-							RazorEnhanced.Player.Walk("Down");
-						}
-						else if (xx >= 1 && yy == 0)
-						{
-							Misc.SendMessage("East");
-							RazorEnhanced.Player.Walk("East");
-						}
 						else if (xx <= -1 && yy >= 1)
-						{
-							Misc.SendMessage("Right");
-							RazorEnhanced.Player.Walk("Right");
-						}
+							RazorEnhanced.Player.Walk("Left");
 						else if (xx == 0 && yy >= 1)
-						{
-							Misc.SendMessage("North");
+							RazorEnhanced.Player.Walk("South");
+						else if (xx >= 1 && yy >= 1)
+							RazorEnhanced.Player.Walk("Down");
+						else if (xx >= 1 && yy == 0)
+							RazorEnhanced.Player.Walk("East");
+						else if (xx >= 1 && yy <= -1)
+							RazorEnhanced.Player.Walk("Right");
+						else if (xx == 0 && yy <= -1)
 							RazorEnhanced.Player.Walk("North");
-						}
-
-						Misc.Pause(1000);
-						/*while (pp2 == World.Player.Position && dd2 == World.Player.Direction)
+                        
+						while (pp2 == World.Player.Position && dd2 == World.Player.Direction)
 						{
 							Misc.Pause(10);
-						}*/
+						}
 					}
-
+				    oldstep = step;
 				}
 
 				RazorEnhanced.Misc.SendMessage("step -> X: " + step.x + " Y: " + step.y);
