@@ -508,6 +508,7 @@ namespace RazorEnhanced
 			scope.SetVariable("Friend", new RazorEnhanced.Friend());
 			scope.SetVariable("Restock", new RazorEnhanced.Restock());
 			scope.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
+			scope.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
 
 			return scope;
 		}

@@ -6,7 +6,7 @@ namespace RazorEnhanced
 	{
 		private static bool m_loaded = false;
 
-		private static void LoadMapData()
+		internal static void LoadMapData()
 		{
 			// Inizializza mappe
 			Ultima.Map.InitializeMap("Felucca");
@@ -24,7 +24,7 @@ namespace RazorEnhanced
 			if (!m_loaded)
 				LoadMapData();
 
-            switch (map)
+			switch (map)
 			{
 				case 0:
 					return Ultima.Map.Felucca.Tiles.GetLandTile(x, y).ID;
@@ -83,9 +83,9 @@ namespace RazorEnhanced
 
 			public TileInfo(int id, int hue, int z)
 			{
-                m_StaticID = id;
+				m_StaticID = id;
 				m_StaticHue = hue;
-                m_StaticZ = z;
+				m_StaticZ = z;
 			}
 		}
 
@@ -127,9 +127,51 @@ namespace RazorEnhanced
 				foreach (Ultima.HuedTile tile in tiles)
 				{
 					tileinfo.Add(new TileInfo(tile.ID, tile.Hue, tile.Z));
-                }
+				}
 			}
 
+			return tileinfo;
+		}
+
+		internal static List<int> GetStaticsTileInfoPathfind(int x, int y, int map)
+		{
+			if (!m_loaded)
+				LoadMapData();
+
+			Ultima.HuedTile[] tiles;
+			List<int> tileinfo = new List<int>();
+
+			switch (map)
+			{
+				case 0:
+					tiles = Ultima.Map.Felucca.Tiles.GetStaticTiles(x, y);
+					break;
+				case 1:
+					tiles = Ultima.Map.Trammel.Tiles.GetStaticTiles(x, y);
+					break;
+				case 2:
+					tiles = Ultima.Map.Ilshenar.Tiles.GetStaticTiles(x, y);
+					break;
+				case 3:
+					tiles = Ultima.Map.Malas.Tiles.GetStaticTiles(x, y);
+					break;
+				case 4:
+					tiles = Ultima.Map.Tokuno.Tiles.GetStaticTiles(x, y);
+					break;
+				case 5:
+					tiles = Ultima.Map.TerMur.Tiles.GetStaticTiles(x, y);
+					break;
+				default:
+					return tileinfo;
+			}
+
+			if (tiles != null && tiles.Length > 0)
+			{
+				foreach (Ultima.HuedTile tile in tiles)
+				{
+					tileinfo.Add(tile.ID);
+				}
+			}
 			return tileinfo;
 		}
 	}
