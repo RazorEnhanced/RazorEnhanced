@@ -274,19 +274,38 @@ namespace RazorEnhanced
 
 		internal static void Record_Movement(Direction dir)
 		{
-			switch (World.Player.Direction & Direction.Mask)
+			if ((dir & Direction.Running) == Direction.Running)
 			{
-				case Direction.North: AddLog("Player.Walk(\"North\")"); break;
-				case Direction.South: AddLog("Player.Walk(\"South\")"); break;
-				case Direction.West: AddLog("Player.Walk(\"West\")"); break;
-				case Direction.East: AddLog("Player.Walk(\"East\")"); break;
-				case Direction.Right: AddLog("Player.Walk(\"Right\")"); break;
-				case Direction.Left: AddLog("Player.Walk(\"Left\")"); break;
-				case Direction.Down: AddLog("Player.Walk(\"Down\")"); break;
-				case Direction.Up: AddLog("Player.Walk(\"Up\")"); break;
-				default: break;
+				switch (World.Player.Direction & Direction.Mask)
+				{
+					case Direction.North: AddLog("Player.Run(\"North\")"); break;
+					case Direction.South: AddLog("Player.Run(\"South\")"); break;
+					case Direction.West: AddLog("Player.Run(\"West\")"); break;
+					case Direction.East: AddLog("Player.Run(\"East\")"); break;
+					case Direction.Right: AddLog("Player.Run(\"Right\")"); break;
+					case Direction.Left: AddLog("Player.Run(\"Left\")"); break;
+					case Direction.Down: AddLog("Player.Run(\"Down\")"); break;
+					case Direction.Up: AddLog("Player.Run(\"Up\")"); break;
+					default: break;
+				}
+			}
+			else
+			{
+				switch (World.Player.Direction & Direction.Mask)
+				{
+					case Direction.North: AddLog("Player.Walk(\"North\")"); break;
+					case Direction.South: AddLog("Player.Walk(\"South\")"); break;
+					case Direction.West: AddLog("Player.Walk(\"West\")"); break;
+					case Direction.East: AddLog("Player.Walk(\"East\")"); break;
+					case Direction.Right: AddLog("Player.Walk(\"Right\")"); break;
+					case Direction.Left: AddLog("Player.Walk(\"Left\")"); break;
+					case Direction.Down: AddLog("Player.Walk(\"Down\")"); break;
+					case Direction.Up: AddLog("Player.Walk(\"Up\")"); break;
+					default: break;
+				}
 			}
 		}
+	
 
 		internal static void Record_Target(TargetInfo info)
 		{
