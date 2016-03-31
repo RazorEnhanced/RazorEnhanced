@@ -1604,7 +1604,61 @@ namespace RazorEnhanced
 
 			if (dir != Assistant.Direction.ValueMask)
 			{
-				ClientCommunication.SendToServerWait(new WalkRequest(dir, Assistant.World.Player.WalkSequence));
+				ClientCommunication.SendToClient(new MobileUpdate(World.Player));
+				ClientCommunication.SendToServer(new WalkRequest(dir, World.Player.WalkSequence));
+				World.Player.MoveReq(dir, World.Player.WalkSequence);
+				World.Player.Resync();
+			}
+		}
+
+		public static void Run(string direction)
+		{
+			Direction dir;
+			switch (direction)
+			{
+				case "North":
+					dir = Assistant.Direction.North;
+					break;
+
+				case "South":
+					dir = Assistant.Direction.South;
+					break;
+
+				case "East":
+					dir = Assistant.Direction.East;
+					break;
+
+				case "West":
+					dir = Assistant.Direction.West;
+					break;
+
+				case "Up":
+					dir = Assistant.Direction.Up;
+					break;
+
+				case "Down":
+					dir = Assistant.Direction.Down;
+					break;
+
+				case "Left":
+					dir = Assistant.Direction.Left;
+					break;
+
+				case "Right":
+					dir = Assistant.Direction.Right;
+					break;
+
+				default:
+					dir = Assistant.Direction.ValueMask;
+					break;
+			}
+
+			if (dir != Assistant.Direction.ValueMask)
+			{
+                ClientCommunication.SendToClient(new MobileUpdate(World.Player));
+				ClientCommunication.SendToServer(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
+				World.Player.MoveReq(dir | Assistant.Direction.Running, World.Player.WalkSequence);
+				World.Player.Resync();
 			}
 		}
 

@@ -1694,6 +1694,27 @@ namespace Assistant
 		}
 	}
 
+	internal sealed class MobileUpdate : Packet
+	{
+		internal MobileUpdate(Mobile m) : base(0x20, 19)
+		{
+			Write((int)m.Serial);
+			Write((short)m.Body);
+			Write((byte)0);
+			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			if (ltHue != 0 && Targeting.IsLastTarget(m))
+				Write((short)(ltHue | 0x8000));
+			else
+				Write((short)m.Hue);
+			Write((byte)m.GetPacketFlags());
+			Write((short)m.Position.X);
+			Write((short)m.Position.Y);
+			Write((short)0);
+			Write((byte)m.Direction);
+			Write((sbyte)m.Position.Z);
+		}
+	}
+
 	// Nuovi pacchetti Enhanced
 
 	internal sealed class InvokeVirtue : Packet
