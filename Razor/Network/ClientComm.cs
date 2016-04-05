@@ -613,7 +613,8 @@ namespace Assistant
 
 		private static volatile bool m_QueueRecv;
 		private static volatile bool m_QueueSend;
-		private static volatile bool m_ScriptWaitSendRecv;
+		private static volatile bool m_ScriptWaitSend;
+		private static volatile bool m_ScriptWaitRecv;
 
 		// ZIPPY REV 80		private static Buffer *m_OutFwd;
 		private static Buffer* m_InRecv;
@@ -1179,35 +1180,32 @@ namespace Assistant
 			if (!m_Ready)
 				return;
 
-			m_ScriptWaitSendRecv = true;
-            if (!m_QueueSend)
-			{
-				ForceSendToServer(p);
-			}
-			else
+			
+            if (m_QueueSend || m_ScriptWaitSend)
 			{
 				m_SendQueue.Enqueue(p);
 			}
-			m_ScriptWaitSendRecv = false;
+			else
+			{
+				m_ScriptWaitSend = true;
+				ForceSendToServer(p);
+				m_ScriptWaitSend = false;
+			}
         }
 
 		internal static void SendToServerWait(Packet p)
 		{
 			if (!m_Ready)
 				return;
+
 			DateTime entertime = DateTime.Now;
-			while (m_ScriptWaitSendRecv || m_QueueRecv || m_QueueSend)
+			while (m_ScriptWaitSend || m_QueueSend)
 			{
 				if (entertime > DateTime.Now + TimeSpan.FromSeconds(2))
-				{
-					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
-					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now + " Enter Time: " + entertime ));
 					break;
-				}
 			}
 
-			m_ScriptWaitSendRecv = true;
+			m_ScriptWaitSend = true;
 			if (!m_QueueSend)
 			{
 				ForceSendToServer(p);
@@ -1216,7 +1214,7 @@ namespace Assistant
 			{
 				m_SendQueue.Enqueue(p);
 			}
-			m_ScriptWaitSendRecv = false;
+			m_ScriptWaitSend = false;
 		}
 
 		internal static void SendToServer(PacketReader pr)
@@ -1231,19 +1229,16 @@ namespace Assistant
 		{
 			if (!m_Ready || p.Length <= 0)
 				return;
+
 			DateTime entertime = DateTime.Now;
-			while (m_ScriptWaitSendRecv || m_QueueRecv || m_QueueSend)
+		
+            while (m_ScriptWaitRecv || m_QueueRecv || m_QueueSend)
 			{
 				if (entertime > DateTime.Now + TimeSpan.FromSeconds(2))
-				{
-					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
-					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: "+ DateTime.Now + " Enter Time: " + entertime ));
                     break;
-				}
 			}
 
-			m_ScriptWaitSendRecv = true;
+			m_ScriptWaitRecv = true;
 			if (!m_QueueRecv)
 			{
 				ForceSendToClient(p);
@@ -1252,7 +1247,7 @@ namespace Assistant
 			{
 				m_RecvQueue.Enqueue(p);
 			}
-			m_ScriptWaitSendRecv = false;
+			m_ScriptWaitRecv = false;
 		}
 
 
@@ -1261,17 +1256,17 @@ namespace Assistant
 			if (!m_Ready || p.Length <= 0)
 				return;
 
-			m_ScriptWaitSendRecv = true;
-            if (!m_QueueRecv)
-			{
-				ForceSendToClient(p);
-			}
-			else
+            if (m_QueueRecv || m_ScriptWaitRecv)
 			{
 				m_RecvQueue.Enqueue(p);
 			}
-			m_ScriptWaitSendRecv = false;
-        }
+			else
+			{
+				m_ScriptWaitRecv = true;
+				ForceSendToClient(p);
+				m_ScriptWaitRecv = false;
+			}
+		}
 
 		internal static void SendToClient(PacketReader pr)
 		{
@@ -1452,20 +1447,20 @@ namespace Assistant
 
 		private static void OnRecv()
 		{
-			m_ScriptWaitSendRecv = true;
+			m_ScriptWaitRecv = true;
 			m_QueueRecv = true;
 			HandleComm(m_InRecv, m_OutRecv, m_RecvQueue, PacketPath.ServerToClient);
 			m_QueueRecv = false;
-			m_ScriptWaitSendRecv = false;
+			m_ScriptWaitRecv = false;
         }
 
 		private static void OnSend()
 		{
-			m_ScriptWaitSendRecv = true;
+			m_ScriptWaitSend = true;
 			m_QueueSend = true;
 			HandleComm(m_InSend, m_OutSend, m_SendQueue, PacketPath.ClientToServer);
 			m_QueueSend = false;
-			m_ScriptWaitSendRecv = false;
+			m_ScriptWaitSend = false;
         }
 	}
 }
