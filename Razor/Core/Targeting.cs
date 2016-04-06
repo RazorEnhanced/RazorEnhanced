@@ -385,6 +385,36 @@ namespace Assistant
 			LastTargetChanged();
 		}
 
+		internal static void SetLastTargetWait(Mobile m, byte flagType)
+		{
+			TargetInfo targ = new TargetInfo();
+			m_LastGroundTarg = m_LastTarget = targ;
+
+			if ((m_HasTarget && m_CurFlags == 1) || flagType == 1)
+				m_LastHarmTarg = targ;
+			else if ((m_HasTarget && m_CurFlags == 2) || flagType == 2)
+				m_LastBeneTarg = targ;
+			else if (flagType == 0)
+				m_LastHarmTarg = m_LastBeneTarg = targ;
+
+			targ.Type = 0;
+			if (m_HasTarget)
+				targ.Flags = m_CurFlags;
+			else
+				targ.Flags = flagType;
+
+			targ.Gfx = m.Body;
+			targ.Serial = m.Serial;
+			targ.X = m.Position.X;
+			targ.Y = m.Position.Y;
+			targ.Z = m.Position.Z;
+
+			ClientCommunication.SendToClientWait(new ChangeCombatant(m));
+			m_LastCombatant = m.Serial;
+
+			LastTargetChanged();
+		}
+
 		private static void EndIntercept()
 		{
 			m_Intercept = false;

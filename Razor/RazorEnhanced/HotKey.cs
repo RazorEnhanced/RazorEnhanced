@@ -232,7 +232,7 @@ namespace RazorEnhanced
 						break;
 
 					case "TList":
-						RazorEnhanced.Target.SetLastTargetFromList(RazorEnhanced.Settings.HotKey.FindTargetString(k));
+						RazorEnhanced.Target.SetLastTargetFromListHotKey(RazorEnhanced.Settings.HotKey.FindTargetString(k));
 						break;
 
 					case "Script":
