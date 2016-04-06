@@ -75,7 +75,7 @@ namespace Assistant
 			if (!m_Multis.ContainsKey(item.Serial))
 			{
 				Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
-				m_Multis[item.Serial] = new RazorEnhanced.Multi.MultiData(item.Position, new Point2D(item.Position.X + multiinfo.Min.X - 1, item.Position.Y + multiinfo.Min.Y - 1), new Point2D(item.Position.X - multiinfo.Min.X + 1, item.Position.Y - multiinfo.Min.Y + 1));
+				m_Multis[item.Serial] = new RazorEnhanced.Multi.MultiData(item.Position, new Point2D(item.Position.X + multiinfo.Min.X , item.Position.Y + multiinfo.Min.Y), new Point2D(item.Position.X - multiinfo.Min.X, item.Position.Y - multiinfo.Min.Y));
 			}
 		}
 
