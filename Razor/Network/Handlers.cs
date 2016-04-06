@@ -1950,7 +1950,7 @@ namespace Assistant
 
 			if (isNew && World.Player != null)
 			{
-				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
+				if (item.ItemID == 0x2006) // corpse itemid = 0x2006
 				{
 					if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
 						ClientCommunication.SendToServer(new SingleClick(item));
@@ -1959,6 +1959,7 @@ namespace Assistant
 				}
 				else if (item.IsMulti)
 				{
+					World.AddMulti(item);
 					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
 				}
 			}
@@ -2119,6 +2120,7 @@ namespace Assistant
 				}
 				else if (item.IsMulti)
 				{
+					World.AddMulti(item);
 					ClientCommunication.PostAddMulti(item.ItemID, item.Position);
 				}
 			}

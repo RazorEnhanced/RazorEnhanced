@@ -166,6 +166,7 @@
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
+    <Compile Include="RazorEnhanced\Multi.cs" />
     <Compile Include="RazorEnhanced\Statics.cs" />
     <Compile Include="RazorEnhanced\QueryQueue.cs" />
     <Compile Include="RazorEnhanced\DragDropManager.cs" />

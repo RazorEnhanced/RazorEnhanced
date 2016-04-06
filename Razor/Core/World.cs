@@ -7,6 +7,7 @@ namespace Assistant
 	{
 		private static ConcurrentDictionary<Serial, Item> m_Items;
 		private static ConcurrentDictionary<Serial, Mobile> m_Mobiles;
+		private static ConcurrentDictionary<int, RazorEnhanced.Multi.MultiData> m_Multis;
 		private static PlayerData m_Player;
 		private static string m_ShardName, m_PlayerName, m_AccountName;
 		private static ConcurrentDictionary<ushort, string> m_Servers;
@@ -15,13 +16,15 @@ namespace Assistant
 		{
 			m_Servers = new ConcurrentDictionary<ushort, string>();
 			m_Items = new ConcurrentDictionary<Serial, Item>();
-			m_Mobiles = new ConcurrentDictionary<Serial, Mobile>(); ;
+			m_Mobiles = new ConcurrentDictionary<Serial, Mobile>();
+			m_Multis = new ConcurrentDictionary<int, RazorEnhanced.Multi.MultiData>();
 			m_ShardName = "[None]";
 		}
 
 		internal static ConcurrentDictionary<ushort, string> Servers { get { return m_Servers; } }
 		internal static ConcurrentDictionary<Serial, Item> Items { get { return m_Items; } }
 		internal static ConcurrentDictionary<Serial, Mobile> Mobiles { get { return m_Mobiles; } }
+		internal static ConcurrentDictionary<int, RazorEnhanced.Multi.MultiData> Multis { get { return m_Multis; } }
 
 		internal static Item FindItem(Serial serial)
 		{
@@ -67,6 +70,15 @@ namespace Assistant
 				m_Items[item.Serial] = item;
 		}
 
+		internal static void AddMulti(Item item)
+		{
+			if (!m_Multis.ContainsKey(item.Serial))
+			{
+				Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
+				m_Multis[item.Serial] = new RazorEnhanced.Multi.MultiData(item.Position, new Point2D(item.Position.X + multiinfo.Min.X - 1, item.Position.Y + multiinfo.Min.Y - 1), new Point2D(item.Position.X - multiinfo.Min.X + 1, item.Position.Y - multiinfo.Min.Y + 1));
+			}
+		}
+
 		internal static void AddMobile(Mobile mob)
 		{
 			if (!m_Mobiles.ContainsKey(mob.Serial))
@@ -82,7 +94,15 @@ namespace Assistant
 		internal static void RemoveItem(Item item)
 		{
 			Item removed;
+			if (item.IsMulti)
+				RemoveMulti(item);
 			m_Items.TryRemove(item.Serial, out removed);
+		}
+
+		internal static void RemoveMulti(Item item)
+		{
+			RazorEnhanced.Multi.MultiData removed;
+			m_Multis.TryRemove(item.Serial, out removed);
 		}
 
 		internal static PlayerData Player
