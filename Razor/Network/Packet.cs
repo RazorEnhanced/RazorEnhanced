@@ -801,12 +801,12 @@ namespace Assistant
 
 	internal unsafe sealed class PacketReader
 	{
-		private byte* m_Data;
+		private unsafe byte* m_Data;
 		private int m_Pos;
 		private int m_Length;
 		private bool m_Dyn;
 
-		internal PacketReader(byte* buff, int len, bool dyn)
+		internal unsafe PacketReader(byte* buff, int len, bool dyn)
 		{
 			m_Data = buff;
 			m_Length = len;
@@ -814,7 +814,7 @@ namespace Assistant
 			m_Dyn = dyn;
 		}
 
-		internal PacketReader(byte[] buff, bool dyn)
+		internal unsafe PacketReader(byte[] buff, bool dyn)
 		{
 			fixed (byte* p = buff)
 				m_Data = p;
@@ -856,7 +856,7 @@ namespace Assistant
 
 		internal bool DynamicLength { get { return m_Dyn; } }
 
-		internal byte[] CopyBytes(int offset, int count)
+		internal unsafe byte[] CopyBytes(int offset, int count)
 		{
 			byte[] read = new byte[count];
 			for (m_Pos = offset; m_Pos < offset + count && m_Pos < m_Length; m_Pos++)
@@ -902,12 +902,20 @@ namespace Assistant
 			return new PacketReader(buff, false);
 		}
 
-		unsafe internal byte ReadByte()
+		internal unsafe byte ReadByte()
 		{
-			if (m_Pos + 1 > m_Length || m_Data == null)
-				return 0;
+			try
+			{
+				if (m_Pos + 1 > m_Length || m_Data == null)
+					return 0;
 
-			return m_Data[m_Pos++];
+				return m_Data[m_Pos++];
+			}
+			catch
+			{
+				Engine.LogCrash(new Exception("ReadByte Exception"));
+				return 0;
+			}
 		}
 
 		internal int ReadInt32()
@@ -950,7 +958,7 @@ namespace Assistant
 			return (ushort)((ReadByte() << 8) | ReadByte());
 		}
 
-		internal sbyte ReadSByte()
+		internal unsafe sbyte ReadSByte()
 		{
 			if (m_Pos + 1 > m_Length)
 				return 0;
@@ -1214,7 +1222,7 @@ namespace Assistant
 			return sb.ToString();
 		}
 
-		internal byte PacketID { get { return *m_Data; } }
+		internal unsafe byte PacketID { get { return *m_Data; } }
 		internal int Position { get { return m_Pos; } set { m_Pos = value; } }
 
 		internal bool AtEnd { get { return m_Pos >= m_Length; } }
