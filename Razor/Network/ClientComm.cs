@@ -1202,7 +1202,13 @@ namespace Assistant
 			while (m_ScriptWaitSend || m_QueueSend)
 			{
 				if (DateTime.Now > exittime)
+				{
+					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
+					string methodName = caller.GetMethod().Name;
+					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now));
 					break;
+					break;
+				}
 			}
 
 			m_ScriptWaitSend = true;
@@ -1234,7 +1240,12 @@ namespace Assistant
 			while (m_ScriptWaitRecv || m_QueueRecv)
 			{
 				if (DateTime.Now > exittime)
+				{
+					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
+					string methodName = caller.GetMethod().Name;
+					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now));
 					break;
+				}
 			}
 
 			m_ScriptWaitRecv = true;

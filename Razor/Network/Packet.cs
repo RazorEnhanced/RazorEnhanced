@@ -902,20 +902,12 @@ namespace Assistant
 			return new PacketReader(buff, false);
 		}
 
-		internal byte ReadByte()
+		unsafe internal byte ReadByte()
 		{
 			if (m_Pos + 1 > m_Length || m_Data == null)
 				return 0;
 
-			try
-			{
-				return m_Data[m_Pos++];
-			}
-			catch (Exception e)
-			{
-				Engine.LogCrash(new Exception("ReadByte - ", e));
-                return 0;
-			}
+			return m_Data[m_Pos++];
 		}
 
 		internal int ReadInt32()
