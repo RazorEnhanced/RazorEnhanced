@@ -1205,13 +1205,13 @@ namespace Assistant
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(0);
 					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now));
+					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now));
+					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					caller = (new System.Diagnostics.StackTrace()).GetFrame(2);
 					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now));
+					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					break;
 				}
 			}
@@ -1248,13 +1248,13 @@ namespace Assistant
 				{
 					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(0);
 					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now));
+					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
 					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now));
+					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					caller = (new System.Diagnostics.StackTrace()).GetFrame(2);
 					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now));
+					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					break;
 				}
 			}
