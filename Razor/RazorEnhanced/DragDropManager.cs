@@ -15,7 +15,7 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
-			if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && !Targeting.HasTarget)
+			if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && !Targeting.HasTarget && Player.Visible)
 			{
 				try
 				{
@@ -46,7 +46,7 @@ namespace RazorEnhanced
 				catch { }
 			}
 
-			if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked)
+			if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && Player.Visible)
 			{
 				try
 				{
