@@ -17,6 +17,7 @@ namespace Assistant
 			Command.Register("echo", new CommandCallback(Echo));
 			Command.Register("getserial", new CommandCallback(GetSerial));
 			Command.Register("inspect", new CommandCallback(GetInfo));
+			Command.Register("playscript", new CommandCallback(PlayScript));
 		}
 
 		private static void GetSerial(string[] param)
@@ -136,6 +137,20 @@ namespace Assistant
 			if (param.Length > 0)
 				count = Utility.ToInt32(param[0], 5);
 			Assistant.Ping.StartPing(count);
+		}
+
+		private static void PlayScript(string[] param)
+		{
+			if (param[0] != null)
+			{
+				RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(param[0]);
+				if (script != null)
+				{
+					script.Run = true;
+				}
+				else
+					RazorEnhanced.Misc.SendMessage("Script not exist");
+			}
 		}
 	}
 
