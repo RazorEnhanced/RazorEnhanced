@@ -206,7 +206,7 @@ namespace Assistant
 
 			if (World.Player.Poisoned)
 			{
-				s = Get(4, 1); // big cure
+				s = Get(2, 3); // cure
 			}
 			else if (World.Player.Hits + 2 < World.Player.HitsMax)
 			{
