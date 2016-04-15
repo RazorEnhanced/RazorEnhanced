@@ -1118,9 +1118,6 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && RazorEnhanced.ToolBar.ToolBarForm == null)
 				RazorEnhanced.ToolBar.Open();
 
-			RazorEnhanced.QueryQueue.Start();
-
-
 			if (RazorEnhanced.UoNet.UO.Open())
 			{
 				RazorEnhanced.UoNet.UO.Lock_Item = new object();
@@ -1478,8 +1475,8 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (World.Player.Expansion > 3)
-					RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
-				RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
+					ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			m.Name = p.ReadString(30);
@@ -1602,8 +1599,8 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (World.Player.Expansion > 3)
-					RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
-				RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
+					ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			bool wasHidden = !m.Visible;
@@ -1722,8 +1719,8 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				if (World.Player.Expansion > 3)
-					RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
-				RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
+					ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			bool wasHidden = !m.Visible;
@@ -2672,8 +2669,8 @@ namespace Assistant
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
 								if (World.Player.Expansion > 3)
-									RazorEnhanced.QueryQueue.QueryMobsProps.Enqueue(serial);
-								RazorEnhanced.QueryQueue.QueryStats.Enqueue(serial);
+									ClientCommunication.SendToServer(new QueryProperties(mobile.Serial));
+								ClientCommunication.SendToServer(new StatusQuery(mobile.Serial));
 							}
 
 							if (mobile.Name == null || mobile.Name.Length <= 0)

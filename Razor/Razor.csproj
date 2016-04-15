@@ -168,7 +168,6 @@
     <Compile Include="RazorEnhanced\PathFinding.cs" />
     <Compile Include="RazorEnhanced\Multi.cs" />
     <Compile Include="RazorEnhanced\Statics.cs" />
-    <Compile Include="RazorEnhanced\QueryQueue.cs" />
     <Compile Include="RazorEnhanced\DragDropManager.cs" />
     <Compile Include="RazorEnhanced\Profiles.cs" />
     <Compile Include="RazorEnhanced\SpecialMoves.cs">

@@ -956,9 +956,6 @@ namespace Assistant
 			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.BuyCheckBox.Checked = false;
 
-			// Stop thread query queue
-			RazorEnhanced.QueryQueue.Abort();
-
 			PlayerData.ExternalZ = false;
 			World.Player = null;
 			PlayerData.FastWalkKey = 0;
@@ -1367,7 +1364,7 @@ namespace Assistant
 			return new Packet(data, pr.Length, pr.DynamicLength);
 		}
 
-		private static void HandleComm(Buffer* inBuff, Buffer* outBuff, ConcurrentQueue<Packet> queue, PacketPath path)
+		private static unsafe void HandleComm(Buffer* inBuff, Buffer* outBuff, ConcurrentQueue<Packet> queue, PacketPath path)
 		{
 			CommMutex.WaitOne();
 			while (inBuff->Length > 0)

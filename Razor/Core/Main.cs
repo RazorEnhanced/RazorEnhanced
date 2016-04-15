@@ -385,9 +385,6 @@ namespace Assistant
 
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 
-			// Stop thread query queue
-			RazorEnhanced.QueryQueue.Abort();
-
 			// Stop forzato di tutti i thread agent
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
