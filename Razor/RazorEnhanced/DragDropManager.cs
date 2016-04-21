@@ -15,6 +15,12 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
+			if (World.Player.IsGhost)
+			{
+				Thread.Sleep(2000);
+				return;
+			}
+
 			if (AutoLootSerialCorpseRefresh.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && !Targeting.HasTarget && Player.Visible)
 			{
 				try
