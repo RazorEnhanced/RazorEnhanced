@@ -24,51 +24,38 @@ namespace Assistant
 			internal string Lang, Name;
 		}
 
-		private class MessageTimer : Timer
+		private static void OnTick(object state)
 		{
-			internal MessageTimer()
-				: base(TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1))
-			{
-			}
+			if (m_Table.Count <= 0)
+				return;
 
-			protected override void OnTick()
+			List<KeyValuePair<string, MsgInfo>> list = new List<KeyValuePair<string, MsgInfo>>(m_Table);
+			foreach (KeyValuePair<string, MsgInfo> pair in list)
 			{
-				if (m_Table.Count <= 0)
-					return;
+				string txt = pair.Key.ToString();
+				MsgInfo msg = (MsgInfo)pair.Value;
 
-				List<KeyValuePair<string, MsgInfo>> list = new List<KeyValuePair<string, MsgInfo>>(m_Table);
-				foreach (KeyValuePair<string, MsgInfo> pair in list)
+				if (msg.NextSend <= DateTime.Now)
 				{
-					string txt = pair.Key.ToString();
-					MsgInfo msg = (MsgInfo)pair.Value;
-
-					if (msg.NextSend <= DateTime.Now)
+					if (msg.Count > 0)
 					{
-						if (msg.Count > 0)
-						{
-							if (msg.Lang == "A")
-								ClientCommunication.SendToClient(new AsciiMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
-							else
-								ClientCommunication.SendToClient(new UnicodeMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Lang, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
-							msg.Count = 0;
-							msg.NextSend = DateTime.Now + msg.Delay;
-						}
+						if (msg.Lang == "A")
+							ClientCommunication.SendToClientWait(new AsciiMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
 						else
-						{
-							m_Table.Remove(pair.Key);
-						}
+							ClientCommunication.SendToClientWait(new UnicodeMessage(msg.Serial, msg.Body, msg.Type, msg.Hue, msg.Font, msg.Lang, msg.Name, msg.Count > 1 ? String.Format("{0} [{1}]", txt, msg.Count) : txt));
+						msg.Count = 0;
+						msg.NextSend = DateTime.Now + msg.Delay;
+					}
+					else
+					{
+						m_Table.Remove(pair.Key);
 					}
 				}
 			}
 		}
 
-		private static Timer m_Timer = new MessageTimer();
+		private static System.Threading.Timer m_Timer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1));
 		private static Dictionary<string, MsgInfo> m_Table = new Dictionary<string, MsgInfo>();
-
-		static MessageQueue()
-		{
-			m_Timer.Start();
-		}
 
 		internal static bool Enqueue(Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
