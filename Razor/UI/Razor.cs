@@ -11679,6 +11679,10 @@ namespace Assistant
 		{
 			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null && hotkeytextbox.Text != "" && hotkeytextbox.Text != "None")
 			{
+				if (hotkeytreeView.SelectedNode.Name == "")
+				{
+					return;
+				}
 				if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "TList")
 					RazorEnhanced.HotKey.UpdateTargetKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey target
 				else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "SList")
@@ -11693,10 +11697,16 @@ namespace Assistant
 		private void hotkeyClearButton_Click(object sender, EventArgs e)
 		{
 			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
+			{
+				if (hotkeytreeView.SelectedNode.Name == "")
+				{
+					return;
+				}
 				if (hotkeytreeView.SelectedNode.Parent.Name != null)
 					RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode, hotkeytreeView.SelectedNode.Parent.Name);
 				else
 					RazorEnhanced.HotKey.ClearKey(hotkeytreeView.SelectedNode, "General");
+			}
 			hotkeytextbox.Text = Keys.None.ToString();
 		}
 
