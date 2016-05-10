@@ -1402,7 +1402,7 @@ namespace RazorEnhanced
 
 				if (item.ItemID == find)
 				{
-					RazorEnhanced.Items.UseItem(item.Serial);
+					Assistant.PlayerData.DoubleClick(item);
 					return true;
 				}
 				else if (item.Contains != null && item.Contains.Count > 0)
@@ -1422,7 +1422,7 @@ namespace RazorEnhanced
 
 				if (item.ItemID == find && item.Hue == hue)
 				{
-					RazorEnhanced.Items.UseItem(item.Serial);
+					Assistant.PlayerData.DoubleClick(item);
 					return true;
 				}
 				else if (item.Contains != null && item.Contains.Count > 0)
