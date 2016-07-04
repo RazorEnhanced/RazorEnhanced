@@ -3941,6 +3941,16 @@ namespace RazorEnhanced
 				}
 			}
 
+			internal static void WriteBoolNoSave(string name, bool value)
+			{
+				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+				{
+					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
+					row[name] = value;
+					Save();
+				}
+			}
+
 			internal static string ReadString(string name)
 			{
 				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
