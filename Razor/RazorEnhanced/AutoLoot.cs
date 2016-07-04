@@ -495,7 +495,13 @@ namespace RazorEnhanced
 
 		public static void Start()
 		{
-			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
+			if (!ClientCommunication.AllowBit(FeatureBit.AutolootAgent))
+			{
+				Scripts.SendMessageScriptError("Autoloot Not Allowed!");
+				return;
+			}
+
+				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 			{
 					Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
 			}
