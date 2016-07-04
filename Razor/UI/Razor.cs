@@ -11857,7 +11857,38 @@ namespace Assistant
 		}
 
 		// ----------------- PROFILES END -------------------
-		
+
+		// ----------------- FEATURE START -------------------
+
+		public void UpdateControlLocks()
+		{
+			if (!ClientCommunication.AllowBit(FeatureBit.AutolootAgent))
+			{
+				autoLootCheckBox.Enabled = false;
+				autoLootCheckBox.Checked = false;
+				if (RazorEnhanced.AutoLoot.Status())
+					RazorEnhanced.AutoLoot.Stop();
+            }
+			else
+			{
+				if (!autoLootCheckBox.Enabled)
+					autoLootCheckBox.Enabled = true;
+			}
+
+			if (!ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
+			{
+				autoOpenDoors.Checked = false;
+				autoOpenDoors.Enabled = false;				
+			}
+			else
+			{
+				if (!autoOpenDoors.Enabled)
+					autoOpenDoors.Enabled = true;
+            }
+
+		}
+		// ----------------- FEATURE END -------------------
+
 		internal static void VersionCheckWorker()
 		{
 			WebClient client = new WebClient();

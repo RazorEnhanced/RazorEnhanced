@@ -418,6 +418,9 @@ namespace Assistant
 			p.Seek(1 + 4 + 4 + 1, SeekOrigin.Begin); // skip begining crap
 			World.OrigPlayerName = p.ReadStringSafe(30);
 
+			if (Engine.MainWindow != null)
+				Engine.MainWindow.UpdateControlLocks();
+
 			PlayCharTime = DateTime.Now;
 		}
 
@@ -425,6 +428,9 @@ namespace Assistant
 		{
 			p.ReadUInt32(); //0xedededed
 			World.OrigPlayerName = p.ReadStringSafe(30);
+
+			if (Engine.MainWindow != null)
+				Engine.MainWindow.UpdateControlLocks();
 
 			PlayCharTime = DateTime.Now;
 		}
@@ -2694,6 +2700,8 @@ namespace Assistant
 						if (ClientCommunication.HandleNegotiate(features))
 						{
 							ClientCommunication.SendToServer(new RazorNegotiateResponse());
+							Engine.MainWindow.UpdateControlLocks();
+
 						}
 						break;
 					}
