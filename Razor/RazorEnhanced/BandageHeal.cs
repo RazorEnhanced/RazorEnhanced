@@ -431,6 +431,13 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Start()
 		{
+			if (!ClientCommunication.AllowBit(FeatureBit.AutoBandage))
+			{
+				Scripts.SendMessageScriptError("AutoBandage Not Allowed!");
+				return;
+			}
+
+
 			if (Assistant.Engine.MainWindow.BandageHealenableCheckBox.Checked == true)
 			{
 				Scripts.SendMessageScriptError("Script Error: BandageHeal.Start: Bandage Heal already running");
