@@ -34,7 +34,10 @@ namespace Assistant
 		PsychicAttack,
 		SerpentArrow,
 		ForceOfNature,
-		Invalid
+		// SA Ability
+		InfusedThrow,
+		MysticArc,
+        Invalid
 	}
 
 	internal class SpecialMoves
@@ -176,12 +179,14 @@ namespace Assistant
 		private static int[] ShortbladeID = new int[] { 0x0907, 0x4076 };
 		private static int[] TekagiID = new int[] { 0x27AB, 0x27F6 };
 		private static int[] WarCleaverID = new int[] { 0x2D23, 0x2D2F };
-		private static int[] BoomerangID = new int[] { 0x2D23, 0x2D2F };
+		private static int[] BoomerangID = new int[] { 0x4067 };
+		private static int[] CycloneID = new int[] { 0x406C };
+		private static int[] SoulGlaiveID = new int[] { 0x406B };
 
 
 		private static AbilityInfo[] m_Primary = new AbilityInfo[]
 		{
-			new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID, DiscMaceID, GargishKryssID, ShortbladeID ),
+			new AbilityInfo( AOSAbility.ArmorIgnore, HatchetID, LongSwordID, BladedStaffID, HammerPickID, WarAxeID, KryssID, SpearID, CompositeBowID, DiscMaceID, GargishKryssID, ShortbladeID, SoulGlaiveID ),
 			new AbilityInfo( AOSAbility.ArmorPeirce, YumiID ),
 			new AbilityInfo( AOSAbility.BleedAttack,  CleaverID, BattleAxeID, ExecAxeID, CutlassID, ScytheID, PitchforkID, WarForkID, GargishBattleAxeID, GargishCleaverID, GargishScytheID, GlassSwordID, BloodbladeID, GargishWarForkID ),
 			new AbilityInfo( AOSAbility.Block, NunchakuID ),
@@ -198,11 +203,12 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.FrenziedWhirlwind, WakizashiID ),
 			new AbilityInfo( AOSAbility.ForceArrow, ElvenCompositeLongbowID ),
 			//new AbilityInfo( AOSAbility.MortalStrike ), // not primary for anything
-			new AbilityInfo( AOSAbility.MovingShot, HeavyCrossbowID ),
+			new AbilityInfo( AOSAbility.MovingShot, HeavyCrossbowID, CycloneID ),
 			new AbilityInfo( AOSAbility.ParalyzingBlow, BardicheID, BoneHarvesterID, PikeID, BowID, GargishBardicheID, GargishBoneHarvesterID, GargishPikeID ),
 			new AbilityInfo( AOSAbility.PsychicAttack, ElvenSpellbladeID ),
 			new AbilityInfo( AOSAbility.ShadowStrike, SkinningKnifeID, ClubID, ShortSpearID, GargishDaggerID ),
-			new AbilityInfo( AOSAbility.WhirlwindAttack, LargeBattleAxeID, HalberdID, WarHammerID, BlackStaffID, GargishTalwarID, RadiantScimitarID, GargishWarHammerID, KamaID )
+			new AbilityInfo( AOSAbility.WhirlwindAttack, LargeBattleAxeID, HalberdID, WarHammerID, BlackStaffID, GargishTalwarID, RadiantScimitarID, GargishWarHammerID, KamaID ),
+			new AbilityInfo( AOSAbility.MysticArc, BoomerangID)
 		};
 
 		private static AbilityInfo[] m_Secondary = new AbilityInfo[]
@@ -212,7 +218,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.ArmorIgnore, LargeBattleAxeID, BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
 			new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
 			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID, ElvenSpellbladeID ),
-			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID ),
+			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID, BoomerangID),
 			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),
 			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID, GargishButcherKnifeID, DiscMaceID, DualPointedSpearID, GargishWarForkID ),
@@ -222,7 +228,7 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.DoubleShot, YumiID ),
 			new AbilityInfo( AOSAbility.FrenziedWhirlwind, LajatangID ),
 			new AbilityInfo( AOSAbility.InfectiousStrike, CleaverID, PikeID, KryssID, DoubleBladedStaffID, DualShortAxesID, GargishCleaverID, GargishDaggerID, GargishKryssID, GargishPikeID ),
-			new AbilityInfo( AOSAbility.MortalStrike, ExecAxeID, BoneHarvesterID, CrescentBladeID, HammerPickID, ScepterID, ShortSpearID, CrossbowID, BowID, GargishBoneHarvesterID, GlassSwordID, GlassStaffID, ShortbladeID ),
+			new AbilityInfo( AOSAbility.MortalStrike, ExecAxeID, BoneHarvesterID, CrescentBladeID, HammerPickID, ScepterID, ShortSpearID, CrossbowID, BowID, GargishBoneHarvesterID, GlassSwordID, GlassStaffID, ShortbladeID, SoulGlaiveID ),
 			new AbilityInfo( AOSAbility.MovingShot, CompositeBowID, RepeatingCrossbowID ),
 			new AbilityInfo( AOSAbility.ParalyzingBlow, VikingSwordID, ScimitarID, ScytheID, GnarledStaffID, BlackStaffID, SpearID, FistsID, GargishScytheID, GargishGnarledStaffID, BloodbladeID ),
 			new AbilityInfo( AOSAbility.PsychicAttack, MagicalShortbowID ),
@@ -231,7 +237,8 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.ShadowStrike, TwoHandedAxeID, CutlassID, SmithsHammerID, DaggerID, SledgeHammerID, AssassinSpikeID ),
 			new AbilityInfo( AOSAbility.TalonStrike, GargishTekagiID, TekagiID ),
 			new AbilityInfo( AOSAbility.WhirlwindAttack, DoubleAxeID ),
-			new AbilityInfo( AOSAbility.NerveStrike, BokutoID )
+			new AbilityInfo( AOSAbility.NerveStrike, BokutoID ),
+            new AbilityInfo( AOSAbility.InfusedThrow, CycloneID )
 		};
 
 		private static void ToggleWarPeace()
