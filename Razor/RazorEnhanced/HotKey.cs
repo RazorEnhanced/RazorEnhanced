@@ -271,6 +271,12 @@ namespace RazorEnhanced
 						}
 						break;
 
+					case "DList":
+						string dresslist = RazorEnhanced.Settings.HotKey.FindDress(k);
+						Dress.ChangeList(dresslist);
+						Dress.DressFStart();
+						break;
+
 					case "UseVirtue":
 						RazorEnhanced.Player.InvokeVirtue(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
@@ -987,6 +993,19 @@ namespace RazorEnhanced
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add(a);
 			}
 
+			// Agents -> Dress List
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add("DList", "Dress List");
+			keylist = RazorEnhanced.Settings.HotKey.ReadDress();
+			foreach (HotKeyData keydata in keylist)
+			{
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[16].Nodes.Add(a);
+			}
+
 			// Combats
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes.Add("Combat");
 
@@ -1329,6 +1348,29 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static void UpdateDressKey(TreeNode node, bool passkey)
+		{
+			string name = node.Name;
+			if (!RazorEnhanced.Settings.HotKey.AssignedKey(m_key))
+			{
+				RazorEnhanced.Settings.HotKey.UpdateDressKey(name, m_key, passkey);
+				node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+				node.ForeColor = System.Drawing.Color.DarkGreen;
+			}
+			else
+			{
+				DialogResult dialogResult = MessageBox.Show("Key: " + KeyString(m_key) + " already assigned! Want replace?", "HotKey", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.Settings.HotKey.UnassignKey(m_key);
+					RazorEnhanced.Settings.HotKey.UpdateDressKey(name, m_key, passkey);
+					UpdateOldTreeView(Assistant.Engine.MainWindow.HotKeyTreeView.Nodes, m_key);
+					node.Text = node.Name + " ( " + KeyString(m_key) + " )";
+					node.ForeColor = System.Drawing.Color.DarkGreen;
+				}
+			}
+		}
+
 		internal static void UpdateScriptKey(TreeNode node, bool passkey)
 		{
 			string name = node.Name;
@@ -1382,6 +1424,9 @@ namespace RazorEnhanced
 			}
 			else if (group == "TList")
 				RazorEnhanced.Settings.HotKey.UpdateTargetKey(name, Keys.None, true);
+
+			else if (group == "DList")
+				RazorEnhanced.Settings.HotKey.UpdateDressKey(name, Keys.None, true);
 			else
 				RazorEnhanced.Settings.HotKey.UpdateKey(name, Keys.None, true);
 			node.Text = node.Name + " ( " + KeyString(Keys.None) + " )";

@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 20; 
+		private static int SettingVersion = 21; 
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -156,6 +156,8 @@ namespace RazorEnhanced
 				dress_lists.Columns.Add("Delay", typeof(int));
 				dress_lists.Columns.Add("Conflict", typeof(bool));
 				dress_lists.Columns.Add("Selected", typeof(bool));
+				dress_lists.Columns.Add("HotKey", typeof(Keys));
+				dress_lists.Columns.Add("HotKeyPass", typeof(bool));
 				m_Dataset.Tables.Add(dress_lists);
 
 				DataTable dress_items = new DataTable("DRESS_ITEMS");
@@ -3655,6 +3657,20 @@ namespace RazorEnhanced
 				return keydataOut;
 			}
 
+			internal static List<RazorEnhanced.HotKey.HotKeyData> ReadDress()
+			{
+				List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
+
+				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+				{ 
+					string name = (string)row["Description"];
+					Keys key = (Keys)row["HotKey"];
+	
+					keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
+				}
+				return keydataOut;
+			}
+
 			internal static void UpdateKey(string name, Keys key, bool passkey)
 			{
 				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
@@ -3700,6 +3716,21 @@ namespace RazorEnhanced
 				Save();
 			}
 
+			internal static void UpdateDressKey(string name, Keys key, bool passkey)
+			{
+				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+				{
+					if ((string)row["Description"] == name)
+					{
+						row["HotKey"] = key;
+						row["HotKeyPass"] = passkey;
+						break;
+					}
+				}
+
+				Save();
+			}
+
 			internal static void UnassignKey(Keys key)
 			{
 				if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
@@ -3735,6 +3766,15 @@ namespace RazorEnhanced
 					}
 				}
 
+				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+				{
+					if ((Keys)row["HotKey"] == key)
+					{
+						row["HotKey"] = Keys.None;
+						row["HotKeyPass"] = true;
+					}
+				}
+
 				Save();
 			}
 
@@ -3757,6 +3797,14 @@ namespace RazorEnhanced
 				}
 
 				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+				{
+					if ((Keys)row["HotKey"] == key)
+					{
+						return true;
+					}
+				}
+
+				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
 				{
 					if ((Keys)row["HotKey"] == key)
 					{
@@ -3803,6 +3851,18 @@ namespace RazorEnhanced
 					foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
 					{
 						if ((string)row["Filename"] == name)
+						{
+							key = (Keys)row["HotKey"];
+							passkey = (bool)row["HotKeyPass"];
+							found = true;
+							break;
+						}
+					}
+
+				if (!found)
+					foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+					{
+						if ((string)row["Description"] == name)
 						{
 							key = (Keys)row["HotKey"];
 							passkey = (bool)row["HotKeyPass"];
@@ -3870,6 +3930,19 @@ namespace RazorEnhanced
 				return null;
 			}
 
+			internal static string FindDress(Keys key)
+			{
+				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+				{
+					if ((Keys)row["HotKey"] == key)
+					{
+						return (String)row["Description"];
+					}
+				}
+
+				return null;
+			}
+
 			internal static void FindGroup(Keys key, out string outgroup, out bool outpass)
 			{
 				string group = "";
@@ -3899,16 +3972,29 @@ namespace RazorEnhanced
 						}
 					}
 
-				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
-				{
-					if ((Keys)row["HotKey"] == key)
+				if (!found)
+					foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
 					{
-						group = "SList";
-						pass = (bool)row["HotKeyPass"];
-						found = true;
-						break;
+						if ((Keys)row["HotKey"] == key)
+						{
+							group = "SList";
+							pass = (bool)row["HotKeyPass"];
+							found = true;
+							break;
+						}
 					}
-				}
+
+				if (!found)
+					foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+					{
+						if ((Keys)row["HotKey"] == key)
+						{
+							group = "DList";
+							pass = (bool)row["HotKeyPass"];
+							found = true;
+							break;
+						}
+					}
 
 				outgroup = group;
 				outpass = pass;
@@ -4656,6 +4742,21 @@ namespace RazorEnhanced
 			}
 
 
+			if (realVersion == 20)
+			{
+
+				m_Dataset.Tables["DRESS_LISTS"].Columns.Add("HotKey", typeof(Keys));
+				m_Dataset.Tables["DRESS_LISTS"].Columns.Add("HotKeyPass", typeof(bool));
+
+				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+					{ 
+						row["HotKey"] = Keys.None;
+						row["HotKeyPass"] = true;
+					}
+
+				realVersion = 21;
+				General.WriteInt("SettingVersion", 21);
+			}
 
 			Save();
 		}

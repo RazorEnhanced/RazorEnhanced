@@ -11689,6 +11689,10 @@ namespace Assistant
 				{
 					RazorEnhanced.HotKey.UpdateScriptKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Script
 				}
+				else if (hotkeytreeView.SelectedNode.Parent.Name != null && hotkeytreeView.SelectedNode.Parent.Name == "DList")
+				{
+					RazorEnhanced.HotKey.UpdateDressKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);     // Aggiorno hotkey Dress List
+				}
 				else
 					RazorEnhanced.HotKey.UpdateKey(hotkeytreeView.SelectedNode, hotkeypassCheckBox.Checked);
 			}
