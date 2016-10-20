@@ -322,6 +322,16 @@ namespace RazorEnhanced
 			// Carico save profilo
 			RazorEnhanced.Settings.Load();
 
+			// Refresh list 
+			Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = -1;
+			Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = -1;
+			Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = -1;
+			Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = -1;
+			Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = -1;
+			Assistant.Engine.MainWindow.DressListSelect.SelectedIndex = -1;
+			Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = -1;
+			Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = -1;
+
 			// Reinizzializzo razor
 			Assistant.Engine.MainWindow.LoadSettings();
 
