@@ -163,6 +163,22 @@ namespace RazorEnhanced
 			}
 		}
 
+		public int DistanceTo(Mobile m)
+		{
+			int x = Math.Abs(Position.X - m.Position.X);
+			int y = Math.Abs(Position.Y - m.Position.Y);
+
+			return x > y ? x : y;
+		}
+
+		public int DistanceTo(Item i)
+		{
+			int x = Math.Abs(Position.X - i.Position.X);
+			int y = Math.Abs(Position.Y - i.Position.Y);
+
+			return x > y ? x : y;
+		}
+
 		internal static string GetBuffDescription(BuffIcon icon)
 		{
 			string description = "";

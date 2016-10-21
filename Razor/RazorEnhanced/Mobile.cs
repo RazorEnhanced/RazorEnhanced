@@ -93,6 +93,14 @@ namespace RazorEnhanced
 			}
 		}
 
+		public int DistanceTo(Mobile m)
+		{
+			int x = Math.Abs(this.Position.X - m.Position.X);
+			int y = Math.Abs(this.Position.Y - m.Position.Y);
+
+			return x > y ? x : y;
+		}
+
 		private static Assistant.Layer GetAssistantLayer(string layer)
 		{
 			Assistant.Layer result = Assistant.Layer.Invalid;
