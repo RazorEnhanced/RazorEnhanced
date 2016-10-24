@@ -2580,6 +2580,8 @@ namespace RazorEnhanced
 				newRow["Bag"] = bag;
 				newRow["Conflict"] = conflict;
 				newRow["Selected"] = true;
+				newRow["HotKey"] = Keys.None;
+				newRow["HotKeyPass"] = true;
 				m_Dataset.Tables["DRESS_LISTS"].Rows.Add(newRow);
 
 				Save();

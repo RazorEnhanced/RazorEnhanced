@@ -47,6 +47,7 @@ namespace RazorEnhanced.UI
 			else
 			{
 				Dress.AddList(newList);
+				RazorEnhanced.HotKey.Init();
 				this.Close();
 			}
 		}
