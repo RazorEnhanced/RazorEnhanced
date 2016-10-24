@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 21; 
+		private static int SettingVersion = 21;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -38,20 +38,24 @@ namespace RazorEnhanced
 
 			if (File.Exists(filename))
 			{
+				Stream stream = File.Open(filename, FileMode.Open);
 				try
 				{
 					m_Dataset.RemotingFormat = SerializationFormat.Binary;
 					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-					Stream stream = File.Open(filename, FileMode.Open);
 					GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
 					BinaryFormatter bin = new BinaryFormatter();
 					m_Dataset = bin.Deserialize(decompress) as DataSet;
 					decompress.Close();
 					stream.Close();
+					MakeBackup(m_Save);
 				}
-				catch (Exception ex)
+				catch
 				{
-					MessageBox.Show("Error loading " + m_Save + ": " + ex);
+					stream.Close();
+					MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
+					Settings.RestoreBackup(m_Save);
+					Load();
 				}
 
 				// Version check, Permette update delle tabelle anche se gia esistenti
@@ -177,7 +181,7 @@ namespace RazorEnhanced
 				friend_lists.Columns.Add("MINFrinedCheckBox", typeof(bool));
 				friend_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(friend_lists);
-				
+
 				DataTable friend_player = new DataTable("FRIEND_PLAYERS");
 				friend_player.Columns.Add("List", typeof(string));
 				friend_player.Columns.Add("Player", typeof(RazorEnhanced.Friend.FriendPlayer));
@@ -2943,7 +2947,7 @@ namespace RazorEnhanced
 					if ((string)row["List"] == list && dacercare.Name == guild)
 						return true;
 				}
-				
+
 				return false;
 			}
 
@@ -3662,10 +3666,10 @@ namespace RazorEnhanced
 				List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
 
 				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
-				{ 
+				{
 					string name = (string)row["Description"];
 					Keys key = (Keys)row["HotKey"];
-	
+
 					keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
 				}
 				return keydataOut;
@@ -4491,7 +4495,7 @@ namespace RazorEnhanced
 
 			if (realVersion == 8)
 			{
-				for (int i = 14; i < 60; i++) 
+				for (int i = 14; i < 60; i++)
 				{
 					RazorEnhanced.ToolBar.ToolBarItem emptyitem = new RazorEnhanced.ToolBar.ToolBarItem("Empty", 0x0000, 0x0000, false, 0);
 
@@ -4749,16 +4753,47 @@ namespace RazorEnhanced
 				m_Dataset.Tables["DRESS_LISTS"].Columns.Add("HotKeyPass", typeof(bool));
 
 				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
-					{ 
-						row["HotKey"] = Keys.None;
-						row["HotKeyPass"] = true;
-					}
+				{
+					row["HotKey"] = Keys.None;
+					row["HotKeyPass"] = true;
+				}
 
 				realVersion = 21;
 				General.WriteInt("SettingVersion", 21);
 			}
 
 			Save();
+		}
+
+		// *************************************************************************
+		// **************************** BACKUP SETTINGS ****************************
+		// *************************************************************************
+
+		internal static void MakeBackup(string filename)
+		{
+			if (!Directory.Exists(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup"))
+			{
+				Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup");
+            }
+
+			File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), true);
+		}
+
+		internal static void RestoreBackup(string filename)
+		{
+			if (!Directory.Exists(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup"))
+			{
+				MessageBox.Show("BackUp folder not exist! Can't restore: " + filename );
+				Application.Exit();
+			}
+
+			if (!File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename)))
+			{
+				MessageBox.Show("BackUp of: " + filename + " not exist! Can't restore!");
+                Application.Exit();
+			}
+
+			File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), true);
 		}
 	}
 }

@@ -40,20 +40,24 @@ namespace RazorEnhanced
 
 			if (File.Exists(filename))
 			{
+				Stream stream = File.Open(filename, FileMode.Open);
 				try
 				{
 					m_Dataset.RemotingFormat = SerializationFormat.Binary;
 					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
-					Stream stream = File.Open(filename, FileMode.Open);
 					GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
 					BinaryFormatter bin = new BinaryFormatter();
 					m_Dataset = bin.Deserialize(decompress) as DataSet;
 					decompress.Close();
 					stream.Close();
+					Settings.MakeBackup(m_Save);
 				}
-				catch (Exception ex)
+				catch
 				{
-					MessageBox.Show("Error loading " + m_Save + ": " + ex);
+					stream.Close();
+                    MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
+					Settings.RestoreBackup(m_Save);
+					Load();
 				}
 			}
 			else
