@@ -8363,7 +8363,25 @@ namespace Assistant
 				}
 				else
 				{
-					MessageBox.Show(status, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					ListViewItem listitem = new ListViewItem();
+
+					listitem.SubItems.Add("File Not Found");
+
+					listitem.SubItems.Add("Error");
+
+					listitem.SubItems.Add("No");
+
+					listitem.SubItems.Add("No");
+
+					listitem.SubItems.Add(key.ToString());
+
+					listitem.SubItems.Add("No");
+
+					scriptlistView.Items.Add(listitem);
+
+
+					row["Flag"] = Assistant.Properties.Resources.red;
+					row["Status"] = "Error";
 				}
 			}
 		}
