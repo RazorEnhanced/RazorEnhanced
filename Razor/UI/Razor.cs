@@ -6928,6 +6928,14 @@ namespace Assistant
 			m_Tip.Active = true;
 			SplashScreen.End();
 
+			// Init mappe ultima.dll
+			Ultima.Map.InitializeMap("Felucca");
+			Ultima.Map.InitializeMap("Trammel");
+			Ultima.Map.InitializeMap("Ilshenar");
+			Ultima.Map.InitializeMap("Malas");
+			Ultima.Map.InitializeMap("Tokuno");
+			Ultima.Map.InitializeMap("TerMur");
+
 			// Avvio thread version check
 			VersionCheck = new Thread(VersionCheckWorker);
 			VersionCheck.Start();

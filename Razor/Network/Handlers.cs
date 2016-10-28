@@ -1129,14 +1129,6 @@ namespace Assistant
 				RazorEnhanced.UoNet.UO.Lock_Item = new object();
 				RazorEnhanced.UoNet.UOHandler = new RazorEnhanced.UoNet.UO();
 			}
-
-			// Init mappe ultima.dll
-			Ultima.Map.InitializeMap("Felucca");
-			Ultima.Map.InitializeMap("Trammel");
-			Ultima.Map.InitializeMap("Ilshenar");
-			Ultima.Map.InitializeMap("Malas");
-			Ultima.Map.InitializeMap("Tokuno");
-			Ultima.Map.InitializeMap("TerMur");
 		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
