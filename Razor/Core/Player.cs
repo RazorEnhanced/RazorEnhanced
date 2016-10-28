@@ -885,7 +885,7 @@ namespace Assistant
 		internal uint PromptID;
 		internal uint PromptType;
 		internal List<string> CurrentGumpStrings = new List<string>();
-		internal Queue<RazorEnhanced.Journal.JournalEntry> Journal = new Queue<RazorEnhanced.Journal.JournalEntry>();
+		internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> Journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>();
 
 		// Menu Old
 		internal uint CurrentMenuS;

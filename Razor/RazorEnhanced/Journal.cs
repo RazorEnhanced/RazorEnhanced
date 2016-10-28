@@ -1,6 +1,7 @@
 ﻿using Assistant;
 using System.Threading;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace RazorEnhanced
 {
@@ -31,7 +32,8 @@ namespace RazorEnhanced
 
 		public static void Clear()
 		{
-			World.Player.Journal.Clear();
+			ConcurrentQueue<JournalEntry> Journal = new ConcurrentQueue<JournalEntry>();
+			Interlocked.Exchange(ref World.Player.Journal, Journal);
 		}
 
 		public static bool Search(string text)
