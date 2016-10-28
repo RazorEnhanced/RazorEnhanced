@@ -390,9 +390,6 @@ namespace Assistant
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
 
-			if (RazorEnhanced.Scripts.Timer != null)
-				RazorEnhanced.Scripts.Timer.Close();
-
 			ClientCommunication.Close();
 		}
 
