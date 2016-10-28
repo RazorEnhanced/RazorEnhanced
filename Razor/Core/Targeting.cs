@@ -26,7 +26,7 @@ namespace Assistant
 		private static TargetResponseCallback m_OnTarget;
 
 		private static bool m_Intercept;
-		private static bool m_HasTarget;
+		private static volatile bool m_HasTarget;
 		private static bool m_ClientTarget;
 		private static TargetInfo m_LastTarget;
 		private static TargetInfo m_LastGroundTarg;
