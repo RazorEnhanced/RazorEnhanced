@@ -154,7 +154,7 @@ namespace RazorEnhanced.UI
 			{
 				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
-				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount"
+				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID"
 			};
 
 			string[] methodsMisc =
@@ -550,6 +550,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Items.ContainerCount(item or int, int, int)", new string[] { "Item Container or int ContainerSerial", "int ItemID", "int Color" }, "List<Item>", "Returns amount of specific item (by ItemID) and color in a specific container\n\tColor -1 is wildcard for all color");
 			descriptionItems.Add("Items.ContainerCount", tooltip);
 
+			tooltip = new ToolTipDescriptions("Items.UseItemByID(int, int)", new string[] { "int ItemID", "int Color" }, "void", "Use item whit specific ID\n\tColor -1 is wildcard for all color");
+			descriptionItems.Add("Items.ContainerCount", tooltip);
+
+			
 			#endregion
 
 			#region Description Misc
