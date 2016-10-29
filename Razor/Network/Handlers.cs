@@ -68,7 +68,6 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientFilter(0x77, new PacketFilterCallback(MobileMoving));
 			PacketHandler.RegisterServerToClientFilter(0x78, new PacketFilterCallback(MobileIncoming));
 			PacketHandler.RegisterServerToClientViewer(0x7C, new PacketViewerCallback(SendMenu));
-			PacketHandler.RegisterServerToClientFilter(0x8C, new PacketFilterCallback(ServerAddress));
 			PacketHandler.RegisterServerToClientViewer(0x97, new PacketViewerCallback(MovementDemand));
 			PacketHandler.RegisterServerToClientViewer(0x9A, new PacketViewerCallback(AsciiPromptResponse));
 			PacketHandler.RegisterServerToClientViewer(0xA1, new PacketViewerCallback(HitsUpdate));
@@ -2971,29 +2970,7 @@ namespace Assistant
 				World.Player.Resync();
 		}
 
-		private static void ServerAddress(Packet p, PacketHandlerEventArgs args)
-		{
-			int port = RazorEnhanced.Settings.General.ReadInt("ForcePort");
-			if (port != 0)
-			{
-				try
-				{
-					string[] parts = RazorEnhanced.Settings.General.ReadString("ForceIP").Split('.');
-					p.Write((byte)Convert.ToInt16(parts[0]));
-					p.Write((byte)Convert.ToInt16(parts[1]));
-					p.Write((byte)Convert.ToInt16(parts[2]));
-					p.Write((byte)Convert.ToInt16(parts[3]));
-
-					p.Write((ushort)port);
-				}
-				catch
-				{
-					System.Windows.Forms.MessageBox.Show(Engine.MainWindow, "Error parsing Proxy Settings.", "Force Proxy Error.");
-				}
-			}
-		}
-
-		private static void Features(PacketReader p, PacketHandlerEventArgs args)
+	    private static void Features(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player != null)
 				World.Player.Features = p.ReadUInt16();
