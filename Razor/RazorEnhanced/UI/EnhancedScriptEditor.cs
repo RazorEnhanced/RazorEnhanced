@@ -551,7 +551,7 @@ namespace RazorEnhanced.UI
 			descriptionItems.Add("Items.ContainerCount", tooltip);
 
 			tooltip = new ToolTipDescriptions("Items.UseItemByID(int, int)", new string[] { "int ItemID", "int Color" }, "void", "Use item whit specific ID\n\tColor -1 is wildcard for all color");
-			descriptionItems.Add("Items.ContainerCount", tooltip);
+			descriptionItems.Add("Items.UseItemByID", tooltip);
 
 			
 			#endregion
