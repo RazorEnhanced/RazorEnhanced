@@ -50,8 +50,6 @@ namespace RazorEnhanced
 		private static Label m_labelTextWeightBHV = new System.Windows.Forms.Label();
 		private static Label m_labelTextFollowerBHV = new System.Windows.Forms.Label();
 
-		internal static DateTime LastActivate;
-
 		private static List<Panel> m_panellist = new List<Panel>();
 		private static List<Label> m_panelcount = new List<Label>();
 
@@ -250,9 +248,15 @@ namespace RazorEnhanced
 			if (m_form != null)
 			{
 				if (m_form.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+				{
 					m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+					m_form.ShowInTaskbar = true;
+				}
 				else
+				{
 					m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+					m_form.ShowInTaskbar = false;
+				}
 			}
 		}
 
@@ -260,7 +264,6 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player != null)
 			{
-				LastActivate = DateTime.Now;
                 if (m_form == null)
 				{
 					DrawToolBar();
@@ -464,7 +467,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
-			m_form.CausesValidation = true;
+			m_form.CausesValidation = false;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra;
@@ -660,11 +663,13 @@ namespace RazorEnhanced
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 				m_form.TopMost = true;
+				m_form.ShowInTaskbar = false;
 			}
 			else
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 				m_form.TopMost = false;
+				m_form.ShowInTaskbar = true;
 			}
 
 			m_form.Name = "ToolBar";
@@ -696,7 +701,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
-			m_form.CausesValidation = true;
+			m_form.CausesValidation = false;
 
 			int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro.Width;
 			int offsetstat = 10;
@@ -823,11 +828,13 @@ namespace RazorEnhanced
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
 				m_form.TopMost = true;
+				m_form.ShowInTaskbar = false;
 			}
 			else
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 				m_form.TopMost = false;
+				m_form.ShowInTaskbar = true;
 			}
 
 			m_form.Name = "ToolBar";
@@ -900,7 +907,6 @@ namespace RazorEnhanced
 			m_form.PerformLayout();
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
 			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.TopMost = true;
 			m_form.Show();
 
 		}
@@ -926,7 +932,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
-			m_form.CausesValidation = true;
+			m_form.CausesValidation = false;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraVerticaleBordoSopra;
@@ -1111,12 +1117,12 @@ namespace RazorEnhanced
 			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-				m_form.TopMost = true;
+				m_form.ShowInTaskbar = false;
 			}
 			else
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-				m_form.TopMost = false;
+				m_form.ShowInTaskbar = true;
 			}
 
 			m_form.Name = "ToolBar";
@@ -1125,7 +1131,6 @@ namespace RazorEnhanced
 			m_form.PerformLayout();
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
 			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.TopMost = true;
 			m_form.Show();
 
 		}
@@ -1148,7 +1153,7 @@ namespace RazorEnhanced
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
 			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			m_form.MaximizeBox = false;
-			m_form.CausesValidation = true;
+			m_form.CausesValidation = false;
 
 			int width = Assistant.Properties.Resources.BarraOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraOrizzontaBordoSinistro.Width;
 			int offsetstat = 5;
@@ -1256,12 +1261,12 @@ namespace RazorEnhanced
 			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-				m_form.TopMost = true;
+				m_form.ShowInTaskbar = false;
 			}
 			else
 			{
 				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-				m_form.TopMost = false;
+				m_form.ShowInTaskbar = true;
 			}
 
 			m_form.Name = "Toolbar";
@@ -1310,7 +1315,6 @@ namespace RazorEnhanced
 			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaBordoDestro);
 			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
 			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.TopMost = true;
 			m_form.Show();
 		}
 

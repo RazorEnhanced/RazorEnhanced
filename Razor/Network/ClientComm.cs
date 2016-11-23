@@ -564,6 +564,8 @@ namespace Assistant
 
 			UNKNOWN_ERROR = 99
 		};
+		[DllImport("user32.dll")]
+		public static extern bool ShowWindow(IntPtr handle, int flags);
 
 		[DllImport("Loader.dll")]
 		private static unsafe extern uint Load(string exe, string dll, string func, void* dllData, int dataLen, out uint pid);
@@ -1069,33 +1071,28 @@ namespace Assistant
 				case UONetMessage.Activate:
 					if ((lParam & 0x0000FFFF) == 0 && (lParam & 0xFFFF0000) != 0)
 					{
-						if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
+						if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
 						{
-							if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-							{
-									RazorEnhanced.ToolBar.ToolBarForm.Hide();
-							}
+							RazorEnhanced.ToolBar.ToolBarForm.Hide();
 						}
 					}
 					else
 					{
 						if (lParam == 0)
 						{
-							if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
+							if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
 							{
-								if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-									RazorEnhanced.ToolBar.ToolBarForm.Hide();
+								if (Cursor.Position.X >= RazorEnhanced.ToolBar.ToolBarForm.Location.X && Cursor.Position.X <= (RazorEnhanced.ToolBar.ToolBarForm.Location.X + RazorEnhanced.ToolBar.ToolBarForm.Width) && Cursor.Position.Y >= RazorEnhanced.ToolBar.ToolBarForm.Location.Y && Cursor.Position.Y <= (RazorEnhanced.ToolBar.ToolBarForm.Location.Y + RazorEnhanced.ToolBar.ToolBarForm.Height))
+									break;
+								RazorEnhanced.ToolBar.ToolBarForm.Hide();
 							}
 						}
 						else
 						{
-							if (RazorEnhanced.ToolBar.LastActivate + TimeSpan.FromSeconds(1) < DateTime.Now)
+							if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
 							{
-								if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-								{
-									RazorEnhanced.ToolBar.ToolBarForm.Show();
-									SetForegroundWindow(FindUOWindow());
-								}
+								ShowWindow(RazorEnhanced.ToolBar.ToolBarForm.Handle, 8);
+								SetForegroundWindow(FindUOWindow());
 							}
 						}
 					}
