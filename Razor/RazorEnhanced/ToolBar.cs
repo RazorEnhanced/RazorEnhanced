@@ -6,9 +6,51 @@ using Assistant;
 
 namespace RazorEnhanced
 {
+	internal partial class ToolBarForm : Form
+	{
+		internal ToolBarForm()
+		{
+			Name = "ToolBar";
+			Text = "ToolBar";
+			ResumeLayout(false);
+			PerformLayout();
+			FormClosed += new FormClosedEventHandler(ToolBar.EnhancedToolbar_close);
+			Move += new System.EventHandler(ToolBar.EnhancedToolbar_Move);
+			ContextMenu = ToolBar.GeneraMenu();
+			MouseDown += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseDown);
+			MouseMove += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseMove);
+			MouseUp += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseUp);
+			ShowInTaskbar = false;
+			TopMost = true;
+			FormBorderStyle = FormBorderStyle.None;
+		}
+
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			if (!ToolBar.Lock)
+				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Red, ButtonBorderStyle.Solid);
+			base.OnPaint(e);
+		}
+	}
+
 	internal class ToolBar
 	{ 
 		private static int m_slot = 0;
+
+		private static bool m_lock = false;
+		internal static bool Lock
+		{
+			get
+			{
+				return m_lock;
+			}
+
+			set
+			{
+				m_lock = value;
+			}
+		}
+
 		private static Form m_form;
 		internal static Form ToolBarForm
 		{
@@ -247,16 +289,12 @@ namespace RazorEnhanced
 		{
 			if (m_form != null)
 			{
-				if (m_form.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
-				{
-					m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-					m_form.ShowInTaskbar = true;
-				}
+				if (m_lock)
+					m_lock = false;
 				else
-				{
-					m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-					m_form.ShowInTaskbar = false;
-				}
+					m_lock = true;
+				m_form.ContextMenu = GeneraMenu();
+				m_form.Refresh();
 			}
 		}
 
@@ -265,19 +303,14 @@ namespace RazorEnhanced
 			if (Assistant.World.Player != null)
 			{
                 if (m_form == null)
-				{
 					DrawToolBar();
-					m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-					UpdateAll();
-                }
-				else
-				{
-					m_form.Show();
-					m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-					UpdateAll();
-                }
+
+				UpdateAll();
 				UpdatePanelImage();
 				UpdateCount();
+				ClientCommunication.ShowWindow(m_form.Handle, 8);
+				m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+				ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
 			}
 		}
 
@@ -388,7 +421,7 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Horizontal");
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Vertical");
 
-			Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox");
+			Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = m_lock = RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox");
 			Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox");
 			Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + RazorEnhanced.Settings.General.ReadInt("PosXToolBar") + " - Y:" + RazorEnhanced.Settings.General.ReadInt("PosYToolBar");
 			Assistant.Engine.ToolBarX = RazorEnhanced.Settings.General.ReadInt("PosXToolBar");
@@ -396,7 +429,7 @@ namespace RazorEnhanced
 
 			Assistant.Engine.MainWindow.ToolBoxSizeComboBox.SelectedItem = RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox");
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.SelectedItem = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox");
-			Assistant.Engine.MainWindow.ToolBoxSlotsTextBox.Text = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox").ToString();
+			Assistant.Engine.MainWindow.ToolBoxSlotsLabel.Text = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox").ToString();
 			Assistant.Engine.MainWindow.ShowHitsToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox");
 			Assistant.Engine.MainWindow.ShowStaminaToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox");
 			Assistant.Engine.MainWindow.ShowManaToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox");
@@ -448,6 +481,100 @@ namespace RazorEnhanced
 				
 		}
 
+		//////////////////////////////////////////////////////////////
+		// Context Menu
+		//////////////////////////////////////////////////////////////
+
+		internal static ContextMenu GeneraMenu()
+		{
+			ContextMenu cm = new ContextMenu();
+			MenuItem menuItem = new MenuItem();
+			menuItem.Text = "Close";
+			menuItem.Click += new System.EventHandler(menuItemClose_Click);
+            cm.MenuItems.Add(menuItem);
+
+			menuItem = new MenuItem();
+			if (m_lock)
+			{
+				menuItem.Text = "UnLock";
+				menuItem.Click += new System.EventHandler(menuItemUnLock_Click);	
+			}
+			else
+			{
+				menuItem.Text = "Lock";
+				menuItem.Click += new System.EventHandler(menuItemLock_Click);
+			}
+			cm.MenuItems.Add(menuItem);
+
+			return cm;
+		}
+
+		private static void menuItemClose_Click(object sender, System.EventArgs e)
+		{
+			Close();
+		}
+		private static void menuItemUnLock_Click(object sender, System.EventArgs e)
+		{
+			LockUnlock();
+			Settings.General.WriteBool("LockToolBarCheckBox", m_lock);
+			Engine.MainWindow.LockToolBarCheckBox.Checked = m_lock;
+
+		}
+		private static void menuItemLock_Click(object sender, System.EventArgs e)
+		{
+			LockUnlock();
+			Settings.General.WriteBool("LockToolBarCheckBox", m_lock);
+			Engine.MainWindow.LockToolBarCheckBox.Checked = m_lock;
+		}
+
+		//////////////////////////////////////////////////////////////
+		// Fine context menu
+		//////////////////////////////////////////////////////////////
+
+		//////////////////////////////////////////////////////////////
+		// Form Dragmove start
+		//////////////////////////////////////////////////////////////
+
+		private static bool m_mouseDown;
+		private static Point m_lastLocation;
+
+		internal static void ToolbarForm_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (!m_lock)
+			{
+				m_mouseDown = true;
+				m_lastLocation = e.Location;
+			}
+		}
+
+		internal static void ToolbarForm_MouseMove(object sender, MouseEventArgs e)
+		{
+			if (!m_lock)
+			{
+				if (m_mouseDown)
+				{
+					ToolBarForm.Location = new Point(
+						(ToolBarForm.Location.X - m_lastLocation.X) + e.X, (ToolBarForm.Location.Y - m_lastLocation.Y) + e.Y);
+
+					ToolBarForm.Update();
+				}
+			}
+		}
+
+		internal static void ToolbarForm_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (!m_lock)
+				m_mouseDown = false;
+		}
+
+		//////////////////////////////////////////////////////////////
+		// Form DragMove fine
+		//////////////////////////////////////////////////////////////
+
+		//////////////////////////////////////////////////////////////
+		// Inizio barre
+		//////////////////////////////////////////////////////////////
+
 		private static void DrawToolBarBV() // Grande Verticale
 		{
 			m_panellist = new List<Panel>();
@@ -461,7 +588,7 @@ namespace RazorEnhanced
 			m_labelTextWeightBHV = new System.Windows.Forms.Label();
 			m_labelTextFollowerBHV = new System.Windows.Forms.Label();
 
-			m_form = new Form();
+			m_form = new ToolBarForm();
 			m_form.MinimumSize = new Size(1, 1);
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
@@ -659,26 +786,6 @@ namespace RazorEnhanced
 			m_form.ClientSize = new System.Drawing.Size(Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra.Width, height);
 
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleBordoSotto);
-			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-				m_form.TopMost = true;
-				m_form.ShowInTaskbar = false;
-			}
-			else
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-				m_form.TopMost = false;
-				m_form.ShowInTaskbar = true;
-			}
-
-			m_form.Name = "ToolBar";
-			m_form.Text = "ToolBar";
-			m_form.ResumeLayout(false);
-			m_form.PerformLayout();
-			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
-			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.Show();
 		}
 
 		private static void DrawToolBarBH() // Grande Orizzontale
@@ -695,7 +802,7 @@ namespace RazorEnhanced
 			m_labelTextWeightBHV = new System.Windows.Forms.Label();
 			m_labelTextFollowerBHV = new System.Windows.Forms.Label();
 
-			m_form = new Form();
+			m_form = new ToolBarForm();
 			m_form.MinimumSize = new Size(1, 1);
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
@@ -824,22 +931,6 @@ namespace RazorEnhanced
 
 			m_form.ClientSize = new System.Drawing.Size(width, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Height);
 
-			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-				m_form.TopMost = true;
-				m_form.ShowInTaskbar = false;
-			}
-			else
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-				m_form.TopMost = false;
-				m_form.ShowInTaskbar = true;
-			}
-
-			m_form.Name = "ToolBar";
-			m_form.Text = "ToolBar";
-
 			for (int i = 0; i < m_slot; i += 2)
 			{
 				//Genero sfondo slot
@@ -903,12 +994,6 @@ namespace RazorEnhanced
 			}
 
 			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro);
-			m_form.ResumeLayout(false);
-			m_form.PerformLayout();
-			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
-			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.Show();
-
 		}
 
 		private static void DrawToolBarSV() // Piccola Verticale
@@ -926,7 +1011,7 @@ namespace RazorEnhanced
 			m_weightmaxlabelSV = new System.Windows.Forms.Label();
 			m_followerlabelSV = new System.Windows.Forms.Label();
 
-			m_form = new Form();
+			m_form = new ToolBarForm();
 			m_form.MinimumSize = new Size(1, 1);
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
@@ -1113,26 +1198,6 @@ namespace RazorEnhanced
 			m_form.ClientSize = new System.Drawing.Size(Assistant.Properties.Resources.BarraVerticaleBordoSopra.Width, height);
 
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleBordoSotto);
-
-			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-				m_form.ShowInTaskbar = false;
-			}
-			else
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-				m_form.ShowInTaskbar = true;
-			}
-
-			m_form.Name = "ToolBar";
-			m_form.Text = "ToolBar";
-			m_form.ResumeLayout(false);
-			m_form.PerformLayout();
-			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
-			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.Show();
-
 		}
 
 		private static void DrawToolBarSH() // Piccola Orizzontale
@@ -1147,7 +1212,7 @@ namespace RazorEnhanced
 			m_followerlabelSH = new System.Windows.Forms.Label();
 
 
-			m_form = new Form();
+			m_form = new ToolBarForm();
 			m_form.MinimumSize = new Size(1, 1);
 			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			m_form.BackColor = Color.FromArgb(187, 182, 137);
@@ -1258,23 +1323,6 @@ namespace RazorEnhanced
 
 			m_form.ClientSize = new System.Drawing.Size(width, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat.Height);
 
-			if (RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-				m_form.ShowInTaskbar = false;
-			}
-			else
-			{
-				m_form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-				m_form.ShowInTaskbar = true;
-			}
-
-			m_form.Name = "Toolbar";
-			m_form.Text = "Toolbar";
-			m_form.ResumeLayout(false);
-			m_form.PerformLayout();
-			
-			
 			for (int i = 0; i < m_slot; i++)
 			{
 				//Genero sfondo slot
@@ -1313,30 +1361,23 @@ namespace RazorEnhanced
 			}
 
 			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaBordoDestro);
-			m_form.FormClosed += new FormClosedEventHandler(EnhancedToolbar_close);
-			m_form.Move += new System.EventHandler(EnhancedToolbar_Move);
-			m_form.Show();
 		}
 
-		private static void EnhancedToolbar_close(object sender, EventArgs e)
+		internal static void EnhancedToolbar_close(object sender, EventArgs e)
 		{
 			m_form = null;
 			m_slot = 0;
         }
 
-		private static void EnhancedToolbar_Move(object sender, System.EventArgs e)
+		internal static void EnhancedToolbar_Move(object sender, System.EventArgs e)
 		{
-			if (m_form.Focused)
-			{
-					System.Drawing.Point pt = m_form.Location;
-					if (m_form.WindowState != FormWindowState.Minimized)
-					{
-						Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
-						Assistant.Engine.ToolBarX = pt.X;
-						Assistant.Engine.ToolBarY = pt.Y;
-					}
-				
-			}
+				System.Drawing.Point pt = m_form.Location;
+				if (m_form.WindowState != FormWindowState.Minimized)
+				{
+					Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;
+					Assistant.Engine.ToolBarX = pt.X;
+					Assistant.Engine.ToolBarY = pt.Y;
+				}
 		}
 
 		private static Bitmap BackGroundAddVerticale(Image firstImage, Image secondImage)

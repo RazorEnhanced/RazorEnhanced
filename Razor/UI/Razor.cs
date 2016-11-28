@@ -497,7 +497,6 @@ namespace Assistant
 		private RazorCheckBox notshowlauncher;
 		private RazorCheckBox blockhealpoisonCheckBox;
 		private GroupBox groupBox4;
-		private RazorTextBox toolboxslotsTextBox;
 		private Label label43;
 		private RazorComboBox toolboxsizeComboBox;
 		private Label label41;
@@ -508,7 +507,7 @@ namespace Assistant
 		private RazorCheckBox showhitsToolBarCheckBox;
 		private RazorComboBox toolboxstyleComboBox;
 		private Label label2;
-		private Label label44;
+		private Label toolbarslot_label;
 		private RazorCheckBox colorflagsHighlightCheckBox;
 		private RazorCheckBox blockchivalryhealCheckBox;
 		private RazorCheckBox blockbighealCheckBox;
@@ -541,6 +540,8 @@ namespace Assistant
         private RazorCheckBox SLfriendCheckBox;
 		private GroupBox groupBox34;
 		private GroupBox groupBox33;
+		private RazorButton toolbarremoveslotButton;
+		private RazorButton toolbaraddslotButton;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -563,7 +564,7 @@ namespace Assistant
 		internal RazorCheckBox ShowManaToolBarCheckBox { get { return showmanaToolBarCheckBox; } }
 		internal RazorCheckBox ShowWeightToolBarCheckBox { get { return showweightToolBarCheckBox; } }
 		internal RazorCheckBox ShowFollowerToolBarCheckBox { get { return showfollowerToolBarCheckBox; } }
-		internal RazorTextBox ToolBoxSlotsTextBox { get { return toolboxslotsTextBox; } }
+		internal Label ToolBoxSlotsLabel { get { return toolbarslot_label; } }
 
 		// AutoLoot
 		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
@@ -759,8 +760,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
 			this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
@@ -888,8 +890,9 @@ namespace Assistant
 			this.bonecutterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.toolbarTab = new System.Windows.Forms.TabPage();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
-			this.label44 = new System.Windows.Forms.Label();
-			this.toolboxslotsTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.toolbarremoveslotButton = new RazorEnhanced.UI.RazorButton();
+			this.toolbaraddslotButton = new RazorEnhanced.UI.RazorButton();
+			this.toolbarslot_label = new System.Windows.Forms.Label();
 			this.label43 = new System.Windows.Forms.Label();
 			this.toolboxsizeComboBox = new RazorEnhanced.UI.RazorComboBox();
 			this.label41 = new System.Windows.Forms.Label();
@@ -1409,24 +1412,7 @@ namespace Assistant
 			// 
 			// profilesExportButton
 			// 
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.profilesExportButton.ColorTable = office2010BlueTheme1;
+			this.profilesExportButton.ColorTable = office2010BlueTheme2;
 			this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
 			this.profilesExportButton.Name = "profilesExportButton";
 			this.profilesExportButton.Size = new System.Drawing.Size(63, 20);
@@ -2730,8 +2716,9 @@ namespace Assistant
 			// 
 			// groupBox4
 			// 
-			this.groupBox4.Controls.Add(this.label44);
-			this.groupBox4.Controls.Add(this.toolboxslotsTextBox);
+			this.groupBox4.Controls.Add(this.toolbarremoveslotButton);
+			this.groupBox4.Controls.Add(this.toolbaraddslotButton);
+			this.groupBox4.Controls.Add(this.toolbarslot_label);
 			this.groupBox4.Controls.Add(this.label43);
 			this.groupBox4.Controls.Add(this.toolboxsizeComboBox);
 			this.groupBox4.Controls.Add(this.label41);
@@ -2749,29 +2736,53 @@ namespace Assistant
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Layout";
 			// 
-			// label44
+			// toolbarremoveslotButton
 			// 
-			this.label44.AutoSize = true;
-			this.label44.Location = new System.Drawing.Point(6, 125);
-			this.label44.Name = "label44";
-			this.label44.Size = new System.Drawing.Size(178, 13);
-			this.label44.TabIndex = 78;
-			this.label44.Text = "Close and Reopen ToolBar for apply";
+			office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+			this.toolbarremoveslotButton.ColorTable = office2010BlueTheme2;
+			this.toolbarremoveslotButton.Location = new System.Drawing.Point(86, 85);
+			this.toolbarremoveslotButton.Name = "toolbarremoveslotButton";
+			this.toolbarremoveslotButton.Size = new System.Drawing.Size(19, 20);
+			this.toolbarremoveslotButton.TabIndex = 79;
+			this.toolbarremoveslotButton.Text = "-";
+			this.toolbarremoveslotButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.toolbarremoveslotButton.Click += new System.EventHandler(this.toolbarremoveslotButton_Click);
 			// 
-			// toolboxslotsTextBox
+			// toolbaraddslotButton
 			// 
-			this.toolboxslotsTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.toolboxslotsTextBox.BackColor = System.Drawing.Color.White;
-			this.toolboxslotsTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.toolboxslotsTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.toolboxslotsTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.toolboxslotsTextBox.Location = new System.Drawing.Point(45, 86);
-			this.toolboxslotsTextBox.Name = "toolboxslotsTextBox";
-			this.toolboxslotsTextBox.Size = new System.Drawing.Size(61, 20);
-			this.toolboxslotsTextBox.TabIndex = 72;
-			this.toolboxslotsTextBox.TextChanged += new System.EventHandler(this.toolboxslotsTextBox_TextChanged);
+			this.toolbaraddslotButton.ColorTable = office2010BlueTheme1;
+			this.toolbaraddslotButton.Location = new System.Drawing.Point(61, 85);
+			this.toolbaraddslotButton.Name = "toolbaraddslotButton";
+			this.toolbaraddslotButton.Size = new System.Drawing.Size(19, 20);
+			this.toolbaraddslotButton.TabIndex = 71;
+			this.toolbaraddslotButton.Text = "+";
+			this.toolbaraddslotButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.toolbaraddslotButton.Click += new System.EventHandler(this.toolbaraddslotButton_Click);
+			// 
+			// toolbarslot_label
+			// 
+			this.toolbarslot_label.AutoSize = true;
+			this.toolbarslot_label.Location = new System.Drawing.Point(42, 89);
+			this.toolbarslot_label.Name = "toolbarslot_label";
+			this.toolbarslot_label.Size = new System.Drawing.Size(13, 13);
+			this.toolbarslot_label.TabIndex = 78;
+			this.toolbarslot_label.Text = "0";
 			// 
 			// label43
 			// 
@@ -11510,13 +11521,7 @@ namespace Assistant
 				RazorEnhanced.ToolBar.LockUnlock();
 				RazorEnhanced.Settings.General.WriteBool("LockToolBarCheckBox", lockToolBarCheckBox.Checked);
 				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				{
 					RazorEnhanced.ToolBar.ToolBarForm.Show();
-					if (lockToolBarCheckBox.Checked)
-						RazorEnhanced.ToolBar.ToolBarForm.TopMost = true;
-					else
-						RazorEnhanced.ToolBar.ToolBarForm.TopMost = false;
-				}
 			}
 		}
 
@@ -11624,6 +11629,8 @@ namespace Assistant
 			if (toolboxstyleComboBox.Focused)
 			{
 				RazorEnhanced.Settings.General.WriteString("ToolBoxStyleComboBox", toolboxstyleComboBox.Text);
+				RazorEnhanced.ToolBar.Close();
+				RazorEnhanced.ToolBar.Open();
 			}
 		}
 
@@ -11635,66 +11642,105 @@ namespace Assistant
 				if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
 				{
 					int slot = 2;
-					Int32.TryParse(toolboxslotsTextBox.Text, out slot);
+					Int32.TryParse(toolbarslot_label.Text, out slot);
 					if (slot == 0)
 						slot = 2;
 
 					if (slot % 2 != 0)
 					{
-						toolboxslotsTextBox.Text = slot.ToString();
+						toolbarslot_label.Text = slot.ToString();
 						RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
 					}
 				}
+				RazorEnhanced.ToolBar.Close();
+				RazorEnhanced.ToolBar.Open();
 			}
 		}
 
-		private void toolboxslotsTextBox_TextChanged(object sender, EventArgs e)
+		private void toolbaraddslotButton_Click(object sender, EventArgs e)
 		{
-			if (toolboxslotsTextBox.Focused)
+			int slot = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox");
+			if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
 			{
-				int slot = 2;
-				Int32.TryParse(toolboxslotsTextBox.Text, out slot);
-				if (slot == 0)
-					slot = 2;
-
-				if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
-					if (slot % 2 != 0)
-					{
-						slot += 1;
-					}
-				toolboxslotsTextBox.Text = slot.ToString();
-				RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
+				slot += 2;
 			}
+			else
+				slot += 1;
+
+			RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
+			RazorEnhanced.ToolBar.Close();
+			RazorEnhanced.ToolBar.Open();
+		}
+
+		private void toolbarremoveslotButton_Click(object sender, EventArgs e)
+		{
+			int slot = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox");
+			if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
+				if (slot -2 < 2)
+					slot = 2;
+				else
+					slot -= 2;
+			else
+				if (slot - 1 < 1)
+					slot = 1;
+				else
+					slot -= 1;
+
+			toolbarslot_label.Text = slot.ToString();
+            RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
+			
+			RazorEnhanced.ToolBar.Close();
+			RazorEnhanced.ToolBar.Open();
 		}
 
 		private void showhitsToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showhitsToolBarCheckBox.Focused)
+			{
 				RazorEnhanced.Settings.General.WriteBool("ShowHitsToolBarCheckBox", showhitsToolBarCheckBox.Checked);
+				RazorEnhanced.ToolBar.Close();
+				RazorEnhanced.ToolBar.Open();
+			}
 		}
 
 		private void showstaminaToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showstaminaToolBarCheckBox.Focused)
+			{
 				RazorEnhanced.Settings.General.WriteBool("ShowStaminaToolBarCheckBox", showstaminaToolBarCheckBox.Checked);
+				RazorEnhanced.ToolBar.Close();
+				RazorEnhanced.ToolBar.Open();
+			}
 		}
 
 		private void showmanaToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showmanaToolBarCheckBox.Focused)
+			{
 				RazorEnhanced.Settings.General.WriteBool("ShowManaToolBarCheckBox", showmanaToolBarCheckBox.Checked);
+				RazorEnhanced.ToolBar.Close();
+				RazorEnhanced.ToolBar.Open();
+			}
 		}
 
 		private void showweightToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showweightToolBarCheckBox.Focused)
+			{
 				RazorEnhanced.Settings.General.WriteBool("ShowWeightToolBarCheckBox", showweightToolBarCheckBox.Checked);
+				RazorEnhanced.ToolBar.Close();
+				RazorEnhanced.ToolBar.Open();
+			}
 		}
 
 		private void showfollowerToolBarCheckBox_CheckedChanged(object sender, EventArgs e)
 		{
 			if (showfollowerToolBarCheckBox.Focused)
+			{
 				RazorEnhanced.Settings.General.WriteBool("ShowFollowerToolBarCheckBox", showfollowerToolBarCheckBox.Checked);
+				RazorEnhanced.ToolBar.Close();
+				RazorEnhanced.ToolBar.Open();
+			}
 		}
 
 

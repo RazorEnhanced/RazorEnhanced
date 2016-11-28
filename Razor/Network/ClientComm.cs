@@ -565,7 +565,7 @@ namespace Assistant
 			UNKNOWN_ERROR = 99
 		};
 		[DllImport("user32.dll")]
-		public static extern bool ShowWindow(IntPtr handle, int flags);
+		internal static extern bool ShowWindow(IntPtr handle, int flags);
 
 		[DllImport("Loader.dll")]
 		private static unsafe extern uint Load(string exe, string dll, string func, void* dllData, int dataLen, out uint pid);
