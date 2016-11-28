@@ -12,8 +12,6 @@ namespace RazorEnhanced
 		{
 			Name = "ToolBar";
 			Text = "ToolBar";
-			ResumeLayout(false);
-			PerformLayout();
 			FormClosed += new FormClosedEventHandler(ToolBar.EnhancedToolbar_close);
 			Move += new System.EventHandler(ToolBar.EnhancedToolbar_Move);
 			ContextMenu = ToolBar.GeneraMenu();
@@ -23,6 +21,12 @@ namespace RazorEnhanced
 			ShowInTaskbar = false;
 			TopMost = true;
 			FormBorderStyle = FormBorderStyle.None;
+			MinimumSize = new Size(1, 1);
+			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			BackColor = Color.FromArgb(187, 182, 137);
+			BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+			MaximizeBox = false;
+			CausesValidation = false;
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -589,12 +593,6 @@ namespace RazorEnhanced
 			m_labelTextFollowerBHV = new System.Windows.Forms.Label();
 
 			m_form = new ToolBarForm();
-			m_form.MinimumSize = new Size(1, 1);
-			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			m_form.BackColor = Color.FromArgb(187, 182, 137);
-			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			m_form.MaximizeBox = false;
-			m_form.CausesValidation = false;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra;
@@ -803,12 +801,6 @@ namespace RazorEnhanced
 			m_labelTextFollowerBHV = new System.Windows.Forms.Label();
 
 			m_form = new ToolBarForm();
-			m_form.MinimumSize = new Size(1, 1);
-			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			m_form.BackColor = Color.FromArgb(187, 182, 137);
-			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			m_form.MaximizeBox = false;
-			m_form.CausesValidation = false;
 
 			int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro.Width;
 			int offsetstat = 10;
@@ -1012,12 +1004,6 @@ namespace RazorEnhanced
 			m_followerlabelSV = new System.Windows.Forms.Label();
 
 			m_form = new ToolBarForm();
-			m_form.MinimumSize = new Size(1, 1);
-			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			m_form.BackColor = Color.FromArgb(187, 182, 137);
-			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			m_form.MaximizeBox = false;
-			m_form.CausesValidation = false;
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraVerticaleBordoSopra;
@@ -1210,20 +1196,12 @@ namespace RazorEnhanced
 			m_staminalabelSH = new System.Windows.Forms.Label();
 			m_weightlabelSH = new System.Windows.Forms.Label();
 			m_followerlabelSH = new System.Windows.Forms.Label();
-
-
+			
 			m_form = new ToolBarForm();
-			m_form.MinimumSize = new Size(1, 1);
-			m_form.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			m_form.BackColor = Color.FromArgb(187, 182, 137);
-			m_form.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-			m_form.MaximizeBox = false;
-			m_form.CausesValidation = false;
 
 			int width = Assistant.Properties.Resources.BarraOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraOrizzontaBordoSinistro.Width;
 			int offsetstat = 5;
 			int paneloffset = 11;
-
 
 			// Genero Sfondo
 			Bitmap sfondotemporaneo;
