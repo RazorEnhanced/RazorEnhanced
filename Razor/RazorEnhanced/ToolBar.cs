@@ -571,6 +571,16 @@ namespace RazorEnhanced
 				m_mouseDown = false;
 		}
 
+		internal static void InitEvent()
+		{
+			foreach (Control control in m_form.Controls)
+			{
+				control.MouseDown += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseDown);
+				control.MouseMove += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseMove);
+				control.MouseUp += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseUp);
+			}
+		}
+
 		//////////////////////////////////////////////////////////////
 		// Form DragMove fine
 		//////////////////////////////////////////////////////////////
@@ -784,6 +794,7 @@ namespace RazorEnhanced
 			m_form.ClientSize = new System.Drawing.Size(Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra.Width, height);
 
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleBordoSotto);
+			InitEvent();
 		}
 
 		private static void DrawToolBarBH() // Grande Orizzontale
@@ -986,6 +997,7 @@ namespace RazorEnhanced
 			}
 
 			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro);
+			InitEvent();
 		}
 
 		private static void DrawToolBarSV() // Piccola Verticale
@@ -1184,6 +1196,7 @@ namespace RazorEnhanced
 			m_form.ClientSize = new System.Drawing.Size(Assistant.Properties.Resources.BarraVerticaleBordoSopra.Width, height);
 
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleBordoSotto);
+			InitEvent();
 		}
 
 		private static void DrawToolBarSH() // Piccola Orizzontale
@@ -1339,6 +1352,7 @@ namespace RazorEnhanced
 			}
 
 			m_form.BackgroundImage = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaBordoDestro);
+			InitEvent();
 		}
 
 		internal static void EnhancedToolbar_close(object sender, EventArgs e)
