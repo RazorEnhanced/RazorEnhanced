@@ -19,6 +19,7 @@ namespace RazorEnhanced
 			MouseMove += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseMove);
 			MouseUp += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseUp);
 			MouseClick += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseClick);
+			MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseClick);
 			ShowInTaskbar = false;
 			TopMost = true;
 			FormBorderStyle = FormBorderStyle.None;
@@ -585,6 +586,7 @@ namespace RazorEnhanced
 				control.MouseMove += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseMove);
 				control.MouseUp += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseUp);
 				control.MouseClick += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseClick);
+				control.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseClick);
 			}
 		}
 
