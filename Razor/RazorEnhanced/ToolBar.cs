@@ -18,6 +18,7 @@ namespace RazorEnhanced
 			MouseDown += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseDown);
 			MouseMove += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseMove);
 			MouseUp += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseUp);
+			MouseClick += new System.Windows.Forms.MouseEventHandler(ToolBar.ToolbarForm_MouseClick);
 			ShowInTaskbar = false;
 			TopMost = true;
 			FormBorderStyle = FormBorderStyle.None;
@@ -571,6 +572,11 @@ namespace RazorEnhanced
 				m_mouseDown = false;
 		}
 
+		internal static void ToolbarForm_MouseClick(object sender, MouseEventArgs e)
+		{
+			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
+		}
+
 		internal static void InitEvent()
 		{
 			foreach (Control control in m_form.Controls)
@@ -578,6 +584,7 @@ namespace RazorEnhanced
 				control.MouseDown += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseDown);
 				control.MouseMove += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseMove);
 				control.MouseUp += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseUp);
+				control.MouseClick += new System.Windows.Forms.MouseEventHandler(ToolbarForm_MouseClick);
 			}
 		}
 
