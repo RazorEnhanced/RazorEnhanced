@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 23;
+		private static int SettingVersion = 24;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1321,6 +1321,14 @@ namespace RazorEnhanced
 				general.Columns.Add("ShowStaminaToolBarCheckBox", typeof(bool));
 				general.Columns.Add("ShowHitsToolBarCheckBox", typeof(bool));
 
+				// Parametri Tab (Enhanced Grid)
+				general.Columns.Add("LockGridCheckBox", typeof(bool));
+				general.Columns.Add("GridOpenLoginCheckBox", typeof(bool));
+				general.Columns.Add("PosXGrid", typeof(int));
+				general.Columns.Add("PosYGrid", typeof(int));
+				general.Columns.Add("GridVSlot", typeof(int));
+				general.Columns.Add("GridHSlot", typeof(string));
+
 				// Parametri Tab (Screenshot)
 				general.Columns.Add("CapPath", typeof(string));
 				general.Columns.Add("ImageFormat", typeof(string));
@@ -1465,6 +1473,9 @@ namespace RazorEnhanced
 
                     // Parametri primo avvio per tab Enhanced ToolBar
                     false, false, 10, 10, 2, "Big", "Vertical", true, true, true, true, true,
+
+                    // Parametri primo avvio per tab Enhanced Grid
+                    false, false, 10, 10, 2, 2,
 
                     // Parametri primo avvio per tab screenshot
                     Path.GetDirectoryName(Application.ExecutablePath), "jpg", false, false, false,
@@ -4129,6 +4140,12 @@ namespace RazorEnhanced
 
 			internal static void SaveExitData()
 			{
+				if (Assistant.Engine.GridX > 0)
+					WriteInt("PosXGrid", Assistant.Engine.GridX	);
+
+				if (Assistant.Engine.GridY > 0)
+					WriteInt("PosYGrid", Assistant.Engine.GridY);
+
 				if (Assistant.Engine.ToolBarX > 0)
 					WriteInt("PosXToolBar", Assistant.Engine.ToolBarX);
 
@@ -4810,10 +4827,37 @@ namespace RazorEnhanced
 					spellgrid_items.Rows.Add(emptygrid);
 				}
 				m_Dataset.Tables.Add(spellgrid_items);
+
+				realVersion = 23;
+				General.WriteInt("SettingVersion", 23);
+			}
+
+			if (realVersion == 23)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("LockGridCheckBox", typeof(bool));
+				General.WriteBool("LockGridCheckBox", false);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("GridOpenLoginCheckBox", typeof(bool));
+				General.WriteBool("GridOpenLoginCheckBox", false);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("PosXGrid", typeof(int));
+				General.WriteInt("PosXGrid", 10);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("PosYGrid", typeof(int));
+				General.WriteInt("PosYGrid", 10);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("GridVSlot", typeof(int));
+				General.WriteInt("GridVSlot", 2);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("GridHSlot", typeof(int));
+				General.WriteInt("GridHSlot", 2);
+
+				realVersion = 24;
+				General.WriteInt("SettingVersion", 24);
 			}
 
 			// ----------- SPELLGRID ITEM ----------
-			
+
 			Save();
 
 		}
