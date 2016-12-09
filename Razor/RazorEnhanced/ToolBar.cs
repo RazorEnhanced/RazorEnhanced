@@ -40,7 +40,7 @@ namespace RazorEnhanced
 	}
 
 	internal class ToolBar
-	{ 
+	{  
 		private static int m_slot = 0;
 
 		private static bool m_lock = false;

@@ -543,6 +543,33 @@ namespace Assistant
 		private RazorButton toolbarremoveslotButton;
 		private RazorButton toolbaraddslotButton;
 		private RazorCheckBox autoLootnoopenCheckBox;
+		private TabControl tabControl2;
+		private TabPage tabPage2;
+		private TabPage tabPage3;
+		private GroupBox groupBox37;
+		private RazorButton gridhslotremove_button;
+		private RazorButton gridhslotadd_button;
+		private Label gridhslot_textbox;
+		private Label label53;
+		private RazorButton gridvslotremove_button;
+		private RazorButton gridvslotadd_button;
+		private Label gridvslot_textbox;
+		private Label label49;
+		private GroupBox groupBox36;
+		private RazorComboBox gridborder_ComboBox;
+		private Label label44;
+		private RazorComboBox gridspell_ComboBox;
+		private Label label52;
+		private RazorComboBox gridgroup_ComboBox;
+		private Label label51;
+		private Label label45;
+		private RazorComboBox gridslot_ComboBox;
+		private GroupBox groupBox35;
+		private RazorCheckBox gridlock_CheckBox;
+		private RazorCheckBox gridopenlogin_CheckBox;
+		private Label gridlocation_label;
+		private RazorButton gridclose_button;
+		private RazorButton gridopen_button;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -566,6 +593,10 @@ namespace Assistant
 		internal RazorCheckBox ShowWeightToolBarCheckBox { get { return showweightToolBarCheckBox; } }
 		internal RazorCheckBox ShowFollowerToolBarCheckBox { get { return showfollowerToolBarCheckBox; } }
 		internal Label ToolBoxSlotsLabel { get { return toolbarslot_label; } }
+
+		// Enhanced Grid
+		internal Label GridLocationLabel { get { return gridlocation_label; } }
+		internal RazorCheckBox GridLockCheckBox { get { return gridlock_CheckBox; } }
 
 		// AutoLoot
 		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
@@ -762,8 +793,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme12 = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
 			this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
@@ -1273,6 +1305,33 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+			this.tabControl2 = new System.Windows.Forms.TabControl();
+			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.groupBox37 = new System.Windows.Forms.GroupBox();
+			this.gridhslotremove_button = new RazorEnhanced.UI.RazorButton();
+			this.gridhslotadd_button = new RazorEnhanced.UI.RazorButton();
+			this.gridhslot_textbox = new System.Windows.Forms.Label();
+			this.label53 = new System.Windows.Forms.Label();
+			this.gridvslotremove_button = new RazorEnhanced.UI.RazorButton();
+			this.gridvslotadd_button = new RazorEnhanced.UI.RazorButton();
+			this.gridvslot_textbox = new System.Windows.Forms.Label();
+			this.label49 = new System.Windows.Forms.Label();
+			this.groupBox36 = new System.Windows.Forms.GroupBox();
+			this.gridborder_ComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.label44 = new System.Windows.Forms.Label();
+			this.gridspell_ComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.label52 = new System.Windows.Forms.Label();
+			this.gridgroup_ComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.label51 = new System.Windows.Forms.Label();
+			this.label45 = new System.Windows.Forms.Label();
+			this.gridslot_ComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.groupBox35 = new System.Windows.Forms.GroupBox();
+			this.gridlock_CheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.gridopenlogin_CheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.gridlocation_label = new System.Windows.Forms.Label();
+			this.gridclose_button = new RazorEnhanced.UI.RazorButton();
+			this.gridopen_button = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1334,6 +1393,12 @@ namespace Assistant
 			this.groupBox8.SuspendLayout();
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
+			this.tabControl2.SuspendLayout();
+			this.tabPage2.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.groupBox37.SuspendLayout();
+			this.groupBox36.SuspendLayout();
+			this.groupBox35.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -1414,24 +1479,7 @@ namespace Assistant
 			// 
 			// profilesExportButton
 			// 
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.profilesExportButton.ColorTable = office2010BlueTheme1;
+			this.profilesExportButton.ColorTable = office2010BlueTheme12;
 			this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
 			this.profilesExportButton.Name = "profilesExportButton";
 			this.profilesExportButton.Size = new System.Drawing.Size(63, 20);
@@ -2724,14 +2772,12 @@ namespace Assistant
 			// 
 			// toolbarTab
 			// 
-			this.toolbarTab.Controls.Add(this.groupBox4);
-			this.toolbarTab.Controls.Add(this.groupBox26);
-			this.toolbarTab.Controls.Add(this.groupBox25);
+			this.toolbarTab.Controls.Add(this.tabControl2);
 			this.toolbarTab.Location = new System.Drawing.Point(4, 40);
 			this.toolbarTab.Name = "toolbarTab";
 			this.toolbarTab.Size = new System.Drawing.Size(666, 366);
 			this.toolbarTab.TabIndex = 1;
-			this.toolbarTab.Text = "Enhanced Toolbar";
+			this.toolbarTab.Text = "Enhanced Toolbars";
 			// 
 			// groupBox4
 			// 
@@ -2748,9 +2794,9 @@ namespace Assistant
 			this.groupBox4.Controls.Add(this.showhitsToolBarCheckBox);
 			this.groupBox4.Controls.Add(this.toolboxstyleComboBox);
 			this.groupBox4.Controls.Add(this.label2);
-			this.groupBox4.Location = new System.Drawing.Point(353, 7);
+			this.groupBox4.Location = new System.Drawing.Point(351, 6);
 			this.groupBox4.Name = "groupBox4";
-			this.groupBox4.Size = new System.Drawing.Size(305, 147);
+			this.groupBox4.Size = new System.Drawing.Size(295, 147);
 			this.groupBox4.TabIndex = 61;
 			this.groupBox4.TabStop = false;
 			this.groupBox4.Text = "Layout";
@@ -2816,7 +2862,7 @@ namespace Assistant
 			// 
 			// showfollowerToolBarCheckBox
 			// 
-			this.showfollowerToolBarCheckBox.Location = new System.Drawing.Point(200, 121);
+			this.showfollowerToolBarCheckBox.Location = new System.Drawing.Point(181, 121);
 			this.showfollowerToolBarCheckBox.Name = "showfollowerToolBarCheckBox";
 			this.showfollowerToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
 			this.showfollowerToolBarCheckBox.TabIndex = 75;
@@ -2825,7 +2871,7 @@ namespace Assistant
 			// 
 			// showweightToolBarCheckBox
 			// 
-			this.showweightToolBarCheckBox.Location = new System.Drawing.Point(200, 95);
+			this.showweightToolBarCheckBox.Location = new System.Drawing.Point(181, 95);
 			this.showweightToolBarCheckBox.Name = "showweightToolBarCheckBox";
 			this.showweightToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
 			this.showweightToolBarCheckBox.TabIndex = 74;
@@ -2834,7 +2880,7 @@ namespace Assistant
 			// 
 			// showmanaToolBarCheckBox
 			// 
-			this.showmanaToolBarCheckBox.Location = new System.Drawing.Point(200, 69);
+			this.showmanaToolBarCheckBox.Location = new System.Drawing.Point(181, 69);
 			this.showmanaToolBarCheckBox.Name = "showmanaToolBarCheckBox";
 			this.showmanaToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
 			this.showmanaToolBarCheckBox.TabIndex = 73;
@@ -2843,7 +2889,7 @@ namespace Assistant
 			// 
 			// showstaminaToolBarCheckBox
 			// 
-			this.showstaminaToolBarCheckBox.Location = new System.Drawing.Point(200, 43);
+			this.showstaminaToolBarCheckBox.Location = new System.Drawing.Point(181, 43);
 			this.showstaminaToolBarCheckBox.Name = "showstaminaToolBarCheckBox";
 			this.showstaminaToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
 			this.showstaminaToolBarCheckBox.TabIndex = 72;
@@ -2852,7 +2898,7 @@ namespace Assistant
 			// 
 			// showhitsToolBarCheckBox
 			// 
-			this.showhitsToolBarCheckBox.Location = new System.Drawing.Point(200, 17);
+			this.showhitsToolBarCheckBox.Location = new System.Drawing.Point(181, 17);
 			this.showhitsToolBarCheckBox.Name = "showhitsToolBarCheckBox";
 			this.showhitsToolBarCheckBox.Size = new System.Drawing.Size(99, 22);
 			this.showhitsToolBarCheckBox.TabIndex = 64;
@@ -2893,7 +2939,7 @@ namespace Assistant
 			this.groupBox26.Controls.Add(this.toolboxcountGraphTextBox);
 			this.groupBox26.Controls.Add(this.label18);
 			this.groupBox26.Controls.Add(this.toolboxcountComboBox);
-			this.groupBox26.Location = new System.Drawing.Point(132, 7);
+			this.groupBox26.Location = new System.Drawing.Point(130, 6);
 			this.groupBox26.Name = "groupBox26";
 			this.groupBox26.Size = new System.Drawing.Size(214, 203);
 			this.groupBox26.TabIndex = 60;
@@ -3053,7 +3099,7 @@ namespace Assistant
 			this.groupBox25.Controls.Add(this.locationToolBarLabel);
 			this.groupBox25.Controls.Add(this.closeToolBarButton);
 			this.groupBox25.Controls.Add(this.openToolBarButton);
-			this.groupBox25.Location = new System.Drawing.Point(8, 7);
+			this.groupBox25.Location = new System.Drawing.Point(6, 6);
 			this.groupBox25.Name = "groupBox25";
 			this.groupBox25.Size = new System.Drawing.Size(121, 159);
 			this.groupBox25.TabIndex = 59;
@@ -6774,6 +6820,312 @@ namespace Assistant
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
 			// 
+			// tabControl2
+			// 
+			this.tabControl2.Controls.Add(this.tabPage2);
+			this.tabControl2.Controls.Add(this.tabPage3);
+			this.tabControl2.Location = new System.Drawing.Point(3, 3);
+			this.tabControl2.Name = "tabControl2";
+			this.tabControl2.SelectedIndex = 0;
+			this.tabControl2.Size = new System.Drawing.Size(660, 363);
+			this.tabControl2.TabIndex = 62;
+			// 
+			// tabPage2
+			// 
+			this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+			this.tabPage2.Controls.Add(this.groupBox25);
+			this.tabPage2.Controls.Add(this.groupBox4);
+			this.tabPage2.Controls.Add(this.groupBox26);
+			this.tabPage2.Location = new System.Drawing.Point(4, 22);
+			this.tabPage2.Name = "tabPage2";
+			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage2.Size = new System.Drawing.Size(652, 337);
+			this.tabPage2.TabIndex = 0;
+			this.tabPage2.Text = "Counter / Stat Bar";
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+			this.tabPage3.Controls.Add(this.groupBox37);
+			this.tabPage3.Controls.Add(this.groupBox36);
+			this.tabPage3.Controls.Add(this.groupBox35);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage3.Size = new System.Drawing.Size(652, 337);
+			this.tabPage3.TabIndex = 1;
+			this.tabPage3.Text = "Spell Grid";
+			// 
+			// groupBox37
+			// 
+			this.groupBox37.Controls.Add(this.gridhslotremove_button);
+			this.groupBox37.Controls.Add(this.gridhslotadd_button);
+			this.groupBox37.Controls.Add(this.gridhslot_textbox);
+			this.groupBox37.Controls.Add(this.label53);
+			this.groupBox37.Controls.Add(this.gridvslotremove_button);
+			this.groupBox37.Controls.Add(this.gridvslotadd_button);
+			this.groupBox37.Controls.Add(this.gridvslot_textbox);
+			this.groupBox37.Controls.Add(this.label49);
+			this.groupBox37.Location = new System.Drawing.Point(427, 6);
+			this.groupBox37.Name = "groupBox37";
+			this.groupBox37.Size = new System.Drawing.Size(129, 91);
+			this.groupBox37.TabIndex = 65;
+			this.groupBox37.TabStop = false;
+			this.groupBox37.Text = "Layout";
+			// 
+			// gridhslotremove_button
+			// 
+			office2010BlueTheme12.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme12.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme12.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme12.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme12.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme12.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme12.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme12.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme12.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme12.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme12.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme12.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme12.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme12.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme12.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme12.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme12.TextColor = System.Drawing.Color.White;
+			this.gridhslotremove_button.ColorTable = office2010BlueTheme12;
+			this.gridhslotremove_button.Location = new System.Drawing.Point(90, 47);
+			this.gridhslotremove_button.Name = "gridhslotremove_button";
+			this.gridhslotremove_button.Size = new System.Drawing.Size(19, 20);
+			this.gridhslotremove_button.TabIndex = 83;
+			this.gridhslotremove_button.Text = "-";
+			this.gridhslotremove_button.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.gridhslotremove_button.Click += new System.EventHandler(this.gridhslotremove_button_Click);
+			// 
+			// gridhslotadd_button
+			// 
+			this.gridhslotadd_button.ColorTable = office2010BlueTheme12;
+			this.gridhslotadd_button.Location = new System.Drawing.Point(65, 47);
+			this.gridhslotadd_button.Name = "gridhslotadd_button";
+			this.gridhslotadd_button.Size = new System.Drawing.Size(19, 20);
+			this.gridhslotadd_button.TabIndex = 80;
+			this.gridhslotadd_button.Text = "+";
+			this.gridhslotadd_button.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.gridhslotadd_button.Click += new System.EventHandler(this.gridhslotadd_button_Click);
+			// 
+			// gridhslot_textbox
+			// 
+			this.gridhslot_textbox.AutoSize = true;
+			this.gridhslot_textbox.Location = new System.Drawing.Point(48, 51);
+			this.gridhslot_textbox.Name = "gridhslot_textbox";
+			this.gridhslot_textbox.Size = new System.Drawing.Size(13, 13);
+			this.gridhslot_textbox.TabIndex = 82;
+			this.gridhslot_textbox.Text = "0";
+			// 
+			// label53
+			// 
+			this.label53.AutoSize = true;
+			this.label53.Location = new System.Drawing.Point(6, 51);
+			this.label53.Name = "label53";
+			this.label53.Size = new System.Drawing.Size(44, 13);
+			this.label53.TabIndex = 81;
+			this.label53.Text = "Slots H:";
+			// 
+			// gridvslotremove_button
+			// 
+			this.gridvslotremove_button.ColorTable = office2010BlueTheme12;
+			this.gridvslotremove_button.Location = new System.Drawing.Point(90, 21);
+			this.gridvslotremove_button.Name = "gridvslotremove_button";
+			this.gridvslotremove_button.Size = new System.Drawing.Size(19, 20);
+			this.gridvslotremove_button.TabIndex = 79;
+			this.gridvslotremove_button.Text = "-";
+			this.gridvslotremove_button.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.gridvslotremove_button.Click += new System.EventHandler(this.gridvslotremove_button_Click);
+			// 
+			// gridvslotadd_button
+			// 
+			this.gridvslotadd_button.ColorTable = office2010BlueTheme12;
+			this.gridvslotadd_button.Location = new System.Drawing.Point(65, 21);
+			this.gridvslotadd_button.Name = "gridvslotadd_button";
+			this.gridvslotadd_button.Size = new System.Drawing.Size(19, 20);
+			this.gridvslotadd_button.TabIndex = 71;
+			this.gridvslotadd_button.Text = "+";
+			this.gridvslotadd_button.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.gridvslotadd_button.Click += new System.EventHandler(this.gridvslotadd_button_Click);
+			// 
+			// gridvslot_textbox
+			// 
+			this.gridvslot_textbox.AutoSize = true;
+			this.gridvslot_textbox.Location = new System.Drawing.Point(48, 25);
+			this.gridvslot_textbox.Name = "gridvslot_textbox";
+			this.gridvslot_textbox.Size = new System.Drawing.Size(13, 13);
+			this.gridvslot_textbox.TabIndex = 78;
+			this.gridvslot_textbox.Text = "0";
+			// 
+			// label49
+			// 
+			this.label49.AutoSize = true;
+			this.label49.Location = new System.Drawing.Point(6, 25);
+			this.label49.Name = "label49";
+			this.label49.Size = new System.Drawing.Size(43, 13);
+			this.label49.TabIndex = 71;
+			this.label49.Text = "Slots V:";
+			// 
+			// groupBox36
+			// 
+			this.groupBox36.Controls.Add(this.gridborder_ComboBox);
+			this.groupBox36.Controls.Add(this.label44);
+			this.groupBox36.Controls.Add(this.gridspell_ComboBox);
+			this.groupBox36.Controls.Add(this.label52);
+			this.groupBox36.Controls.Add(this.gridgroup_ComboBox);
+			this.groupBox36.Controls.Add(this.label51);
+			this.groupBox36.Controls.Add(this.label45);
+			this.groupBox36.Controls.Add(this.gridslot_ComboBox);
+			this.groupBox36.Location = new System.Drawing.Point(133, 6);
+			this.groupBox36.Name = "groupBox36";
+			this.groupBox36.Size = new System.Drawing.Size(288, 145);
+			this.groupBox36.TabIndex = 64;
+			this.groupBox36.TabStop = false;
+			this.groupBox36.Text = "Grid Item";
+			// 
+			// gridborder_ComboBox
+			// 
+			this.gridborder_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.gridborder_ComboBox.FormattingEnabled = true;
+			this.gridborder_ComboBox.Location = new System.Drawing.Point(75, 107);
+			this.gridborder_ComboBox.Name = "gridborder_ComboBox";
+			this.gridborder_ComboBox.Size = new System.Drawing.Size(202, 24);
+			this.gridborder_ComboBox.TabIndex = 76;
+			this.gridborder_ComboBox.SelectedIndexChanged += new System.EventHandler(this.gridborder_ComboBox_SelectedIndexChanged);
+			// 
+			// label44
+			// 
+			this.label44.AutoSize = true;
+			this.label44.Location = new System.Drawing.Point(6, 112);
+			this.label44.Name = "label44";
+			this.label44.Size = new System.Drawing.Size(44, 13);
+			this.label44.TabIndex = 75;
+			this.label44.Text = "Border: ";
+			// 
+			// gridspell_ComboBox
+			// 
+			this.gridspell_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.gridspell_ComboBox.FormattingEnabled = true;
+			this.gridspell_ComboBox.Location = new System.Drawing.Point(75, 77);
+			this.gridspell_ComboBox.Name = "gridspell_ComboBox";
+			this.gridspell_ComboBox.Size = new System.Drawing.Size(202, 24);
+			this.gridspell_ComboBox.TabIndex = 74;
+			this.gridspell_ComboBox.SelectedIndexChanged += new System.EventHandler(this.gridspell_ComboBox_SelectedIndexChanged);
+			// 
+			// label52
+			// 
+			this.label52.AutoSize = true;
+			this.label52.Location = new System.Drawing.Point(6, 82);
+			this.label52.Name = "label52";
+			this.label52.Size = new System.Drawing.Size(65, 13);
+			this.label52.TabIndex = 73;
+			this.label52.Text = "Ability/Spell:";
+			// 
+			// gridgroup_ComboBox
+			// 
+			this.gridgroup_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.gridgroup_ComboBox.FormattingEnabled = true;
+			this.gridgroup_ComboBox.Location = new System.Drawing.Point(75, 47);
+			this.gridgroup_ComboBox.Name = "gridgroup_ComboBox";
+			this.gridgroup_ComboBox.Size = new System.Drawing.Size(202, 24);
+			this.gridgroup_ComboBox.TabIndex = 72;
+			this.gridgroup_ComboBox.SelectedIndexChanged += new System.EventHandler(this.gridgroup_ComboBox_SelectedIndexChanged);
+			// 
+			// label51
+			// 
+			this.label51.AutoSize = true;
+			this.label51.Location = new System.Drawing.Point(6, 23);
+			this.label51.Name = "label51";
+			this.label51.Size = new System.Drawing.Size(28, 13);
+			this.label51.TabIndex = 71;
+			this.label51.Text = "Slot:";
+			// 
+			// label45
+			// 
+			this.label45.AutoSize = true;
+			this.label45.Location = new System.Drawing.Point(6, 52);
+			this.label45.Name = "label45";
+			this.label45.Size = new System.Drawing.Size(39, 13);
+			this.label45.TabIndex = 68;
+			this.label45.Text = "Group:";
+			// 
+			// gridslot_ComboBox
+			// 
+			this.gridslot_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.gridslot_ComboBox.FormattingEnabled = true;
+			this.gridslot_ComboBox.Location = new System.Drawing.Point(75, 17);
+			this.gridslot_ComboBox.Name = "gridslot_ComboBox";
+			this.gridslot_ComboBox.Size = new System.Drawing.Size(202, 24);
+			this.gridslot_ComboBox.TabIndex = 0;
+			this.gridslot_ComboBox.SelectedIndexChanged += new System.EventHandler(this.gridslot_ComboBox_SelectedIndexChanged);
+			// 
+			// groupBox35
+			// 
+			this.groupBox35.Controls.Add(this.gridlock_CheckBox);
+			this.groupBox35.Controls.Add(this.gridopenlogin_CheckBox);
+			this.groupBox35.Controls.Add(this.gridlocation_label);
+			this.groupBox35.Controls.Add(this.gridclose_button);
+			this.groupBox35.Controls.Add(this.gridopen_button);
+			this.groupBox35.Location = new System.Drawing.Point(6, 6);
+			this.groupBox35.Name = "groupBox35";
+			this.groupBox35.Size = new System.Drawing.Size(121, 145);
+			this.groupBox35.TabIndex = 63;
+			this.groupBox35.TabStop = false;
+			this.groupBox35.Text = "General";
+			// 
+			// gridlock_CheckBox
+			// 
+			this.gridlock_CheckBox.Location = new System.Drawing.Point(6, 71);
+			this.gridlock_CheckBox.Name = "gridlock_CheckBox";
+			this.gridlock_CheckBox.Size = new System.Drawing.Size(99, 22);
+			this.gridlock_CheckBox.TabIndex = 63;
+			this.gridlock_CheckBox.Text = "Lock Grid";
+			this.gridlock_CheckBox.CheckedChanged += new System.EventHandler(this.gridlock_CheckBox_CheckedChanged);
+			// 
+			// gridopenlogin_CheckBox
+			// 
+			this.gridopenlogin_CheckBox.Location = new System.Drawing.Point(6, 93);
+			this.gridopenlogin_CheckBox.Name = "gridopenlogin_CheckBox";
+			this.gridopenlogin_CheckBox.Size = new System.Drawing.Size(112, 22);
+			this.gridopenlogin_CheckBox.TabIndex = 62;
+			this.gridopenlogin_CheckBox.Text = "Open On Login";
+			this.gridopenlogin_CheckBox.CheckedChanged += new System.EventHandler(this.gridopenlogin_CheckBox_CheckedChanged);
+			// 
+			// gridlocation_label
+			// 
+			this.gridlocation_label.AutoSize = true;
+			this.gridlocation_label.Location = new System.Drawing.Point(6, 118);
+			this.gridlocation_label.Name = "gridlocation_label";
+			this.gridlocation_label.Size = new System.Drawing.Size(42, 13);
+			this.gridlocation_label.TabIndex = 61;
+			this.gridlocation_label.Text = "X:0 Y:0";
+			// 
+			// gridclose_button
+			// 
+			this.gridclose_button.ColorTable = office2010BlueTheme12;
+			this.gridclose_button.Location = new System.Drawing.Point(6, 45);
+			this.gridclose_button.Name = "gridclose_button";
+			this.gridclose_button.Size = new System.Drawing.Size(90, 20);
+			this.gridclose_button.TabIndex = 59;
+			this.gridclose_button.Text = "Close";
+			this.gridclose_button.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.gridclose_button.Click += new System.EventHandler(this.gridclose_button_Click);
+			// 
+			// gridopen_button
+			// 
+			this.gridopen_button.ColorTable = office2010BlueTheme1;
+			this.gridopen_button.Location = new System.Drawing.Point(6, 19);
+			this.gridopen_button.Name = "gridopen_button";
+			this.gridopen_button.Size = new System.Drawing.Size(90, 20);
+			this.gridopen_button.TabIndex = 58;
+			this.gridopen_button.Text = "Open";
+			this.gridopen_button.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.gridopen_button.Click += new System.EventHandler(this.gridopen_button_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -6878,6 +7230,15 @@ namespace Assistant
 			this.groupBox28.PerformLayout();
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
+			this.tabControl2.ResumeLayout(false);
+			this.tabPage2.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			this.groupBox37.ResumeLayout(false);
+			this.groupBox37.PerformLayout();
+			this.groupBox36.ResumeLayout(false);
+			this.groupBox36.PerformLayout();
+			this.groupBox35.ResumeLayout(false);
+			this.groupBox35.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -12115,6 +12476,7 @@ namespace Assistant
 		}
 		// ----------------- FEATURE END -------------------
 
+		// ----------------- CHECK UPDATE START -------------------
 		internal static void VersionCheckWorker()
 		{
 			WebClient client = new WebClient();
@@ -12135,5 +12497,69 @@ namespace Assistant
 			{
 			}
 		}
+		// ----------------- CHECK UPDATE END -------------------
+
+		// ----------------- GRID START -------------------
+
+		private void gridopen_button_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridclose_button_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridlock_CheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridopenlogin_CheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridslot_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridgroup_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridspell_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridborder_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridvslotadd_button_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridvslotremove_button_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridhslotadd_button_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void gridhslotremove_button_Click(object sender, EventArgs e)
+		{
+
+		}
+		// ----------------- GRID END -------------------
 	}
 }

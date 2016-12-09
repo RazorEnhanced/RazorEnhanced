@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 22;
+		private static int SettingVersion = 23;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -232,6 +232,19 @@ namespace RazorEnhanced
 					toolbar_items.Rows.Add(emptytoolbar);
 				}
 				m_Dataset.Tables.Add(toolbar_items);
+
+				// ----------- SPELLGRID ITEM ----------
+				DataTable spellgrid_items = new DataTable("SPELLGRID_ITEMS");
+				spellgrid_items.Columns.Add("Item", typeof(RazorEnhanced.SpellGrid.SpellGridItem));
+
+				for (int i = 0; i < 100; i++)  // Popolo di slot vuoti al primo avvio
+				{
+					DataRow emptygrid = spellgrid_items.NewRow();
+					RazorEnhanced.SpellGrid.SpellGridItem emptyitem = new RazorEnhanced.SpellGrid.SpellGridItem("Empty", "Empty", Color.Transparent, Color.Transparent);
+					emptygrid.ItemArray = new object[] { emptyitem };
+					spellgrid_items.Rows.Add(emptygrid);
+				}
+				m_Dataset.Tables.Add(spellgrid_items);
 
 				// ----------- SAVE PASSWORD ----------
 				DataTable password = new DataTable("PASSWORD");
@@ -4784,6 +4797,23 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", 22);
 			}
 
+			if (realVersion == 22)
+			{
+				DataTable spellgrid_items = new DataTable("SPELLGRID_ITEMS");
+				spellgrid_items.Columns.Add("Item", typeof(RazorEnhanced.SpellGrid.SpellGridItem));
+
+				for (int i = 0; i < 100; i++)
+				{
+					DataRow emptygrid = spellgrid_items.NewRow();
+					RazorEnhanced.SpellGrid.SpellGridItem emptyitem = new RazorEnhanced.SpellGrid.SpellGridItem("Empty", "Empty", Color.Transparent, Color.Transparent);
+					emptygrid.ItemArray = new object[] { emptyitem };
+					spellgrid_items.Rows.Add(emptygrid);
+				}
+				m_Dataset.Tables.Add(spellgrid_items);
+			}
+
+			// ----------- SPELLGRID ITEM ----------
+			
 			Save();
 
 		}
