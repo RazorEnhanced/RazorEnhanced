@@ -74,13 +74,17 @@ namespace RazorEnhanced
 			private bool m_Selected;
 			internal bool Selected { get { return m_Selected; } }
 
-			public AutoLootList(string description, int delay, int bag, bool selected)
+			private bool m_Noopencorpse;
+			internal bool NoOpenCorpse { get { return m_Noopencorpse; } }
+
+			public AutoLootList(string description, int delay, int bag, bool selected, bool noopencorpse)
 			{
 				m_Description = description;
 				m_Delay = delay;
 				m_Bag = bag;
 				m_Selected = selected;
-			}
+				m_Noopencorpse = noopencorpse;
+            }
 		}
 
 		private static bool m_AutoMode;
@@ -141,6 +145,19 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static bool NoOpenCorpse
+		{
+			get
+			{
+				return Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Checked;
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Checked = value));
+			}
+		}
+
 		internal static void AddLog(string addlog)
 		{
 			if (Assistant.Engine.Running)
@@ -174,6 +191,7 @@ namespace RazorEnhanced
 					Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutoLootListSelect.Items.IndexOf(l.Description);
 					AutoLootDelay = l.Delay;
 					AutoLootBag = l.Bag;
+					NoOpenCorpse = l.NoOpenCorpse;
 				}
 			}
 		}
@@ -233,7 +251,7 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0);
+			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0, RazorEnhanced.AutoLoot.NoOpenCorpse);
 
 			RazorEnhanced.AutoLoot.RefreshLists();
 			RazorEnhanced.AutoLoot.RefreshItems();
@@ -302,14 +320,17 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
-				if (!m_IgnoreCorpseList.Contains(corpo.Serial))
+				if (!NoOpenCorpse)
 				{
-					DragDropManager.AutoLootSerialCorpseRefresh.Enqueue(corpo.Serial);
-					m_IgnoreCorpseList.Enqueue(corpo.Serial);
-				}
+					if (!m_IgnoreCorpseList.Contains(corpo.Serial))
+					{
+						DragDropManager.AutoLootSerialCorpseRefresh.Enqueue(corpo.Serial);
+						m_IgnoreCorpseList.Enqueue(corpo.Serial);
+					}
 
-				if (m_IgnoreCorpseList.Count > 100)
-					m_IgnoreCorpseList.Dequeue();
+					if (m_IgnoreCorpseList.Count > 100)
+						m_IgnoreCorpseList.Dequeue();
+				}
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{

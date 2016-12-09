@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 21;
+		private static int SettingVersion = 22;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -96,6 +96,7 @@ namespace RazorEnhanced
 				autoloot_lists.Columns.Add("Delay", typeof(int));
 				autoloot_lists.Columns.Add("Bag", typeof(int));
 				autoloot_lists.Columns.Add("Selected", typeof(bool));
+				autoloot_lists.Columns.Add("NoOpenCorpse", typeof(bool));
 				m_Dataset.Tables.Add(autoloot_lists);
 
 				DataTable autoloot_items = new DataTable("AUTOLOOT_ITEMS");
@@ -1515,7 +1516,7 @@ namespace RazorEnhanced
 				return false;
 			}
 
-			internal static void ListInsert(string description, int delay, int bag)
+			internal static void ListInsert(string description, int delay, int bag, bool noopencorpse)
 			{
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
@@ -1527,12 +1528,13 @@ namespace RazorEnhanced
 				newRow["Delay"] = delay;
 				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
-				m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
+				newRow["NoOpenCorpse"] = noopencorpse;
+                m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
 
 				Save();
 			}
 
-			internal static void ListUpdate(string description, int delay, int bag, bool selected)
+			internal static void ListUpdate(string description, int delay, int bag, bool selected, bool noopencorpse)
 			{
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
@@ -1561,6 +1563,7 @@ namespace RazorEnhanced
 							row["Delay"] = delay;
 							row["Bag"] = bag;
 							row["Selected"] = selected;
+							row["NoOpenCorpse"] = noopencorpse;
 							break;
 						}
 					}
@@ -1604,8 +1607,9 @@ namespace RazorEnhanced
 					int delay = (int)row["Delay"];
 					int bag = (int)row["Bag"];
 					bool selected = (bool)row["Selected"];
+					bool noopencorspe = (bool)row["NoOpenCorpse"];
 
-					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected);
+					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected, noopencorspe);
 					listsOut.Add(list);
 				}
 
@@ -1696,20 +1700,24 @@ namespace RazorEnhanced
 				items = itemsOut;
 			}
 
-			internal static void ListDetailsRead(string listname, out int bag, out int delay)
+			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse)
 			{
 				int bagOut = 0;
 				int delayOut = 0;
-				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+				bool noopencorpseOut = false;
+
+                foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == listname)
 					{
 						bagOut = (int)row["Bag"];
 						delayOut = (int)row["Delay"];
+						noopencorpseOut = (bool)row["NoOpenCorpse"];
 					}
 				}
 				bag = bagOut;
 				delay = delayOut;
+				noopencorpse = noopencorpseOut;
 			}
 		}
 
@@ -4750,7 +4758,6 @@ namespace RazorEnhanced
 
 			if (realVersion == 20)
 			{
-
 				m_Dataset.Tables["DRESS_LISTS"].Columns.Add("HotKey", typeof(Keys));
 				m_Dataset.Tables["DRESS_LISTS"].Columns.Add("HotKeyPass", typeof(bool));
 
@@ -4764,7 +4771,21 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", 21);
 			}
 
+			if (realVersion == 21)
+			{
+				m_Dataset.Tables["AUTOLOOT_LISTS"].Columns.Add("NoOpenCorpse", typeof(bool));
+
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+				{
+					row["NoOpenCorpse"] = false;
+				}
+
+				realVersion = 22;
+				General.WriteInt("SettingVersion", 22);
+			}
+
 			Save();
+
 		}
 
 		// *************************************************************************

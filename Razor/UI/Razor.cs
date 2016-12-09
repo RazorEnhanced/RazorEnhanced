@@ -542,6 +542,7 @@ namespace Assistant
 		private GroupBox groupBox33;
 		private RazorButton toolbarremoveslotButton;
 		private RazorButton toolbaraddslotButton;
+		private RazorCheckBox autoLootnoopenCheckBox;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -574,6 +575,7 @@ namespace Assistant
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal ListView AutoLootListView { get { return autolootlistView; } }
 		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
+		internal CheckBox AutoLootNoOpenCheckBox { get { return autoLootnoopenCheckBox; } }
 
 		// Scavenger
 		internal RazorCheckBox ScavengerCheckBox { get { return scavengerCheckBox; } }
@@ -760,9 +762,8 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
 			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
 			this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
@@ -1012,6 +1013,7 @@ namespace Assistant
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
+			this.autoLootnoopenCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.razorButtonResetIgnore = new RazorEnhanced.UI.RazorButton();
 			this.label21 = new System.Windows.Forms.Label();
 			this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorTextBox();
@@ -1412,7 +1414,24 @@ namespace Assistant
 			// 
 			// profilesExportButton
 			// 
-			this.profilesExportButton.ColorTable = office2010BlueTheme2;
+			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+			this.profilesExportButton.ColorTable = office2010BlueTheme1;
 			this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
 			this.profilesExportButton.Name = "profilesExportButton";
 			this.profilesExportButton.Size = new System.Drawing.Size(63, 20);
@@ -2738,24 +2757,7 @@ namespace Assistant
 			// 
 			// toolbarremoveslotButton
 			// 
-			office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-			this.toolbarremoveslotButton.ColorTable = office2010BlueTheme2;
+			this.toolbarremoveslotButton.ColorTable = office2010BlueTheme1;
 			this.toolbarremoveslotButton.Location = new System.Drawing.Point(86, 85);
 			this.toolbarremoveslotButton.Name = "toolbarremoveslotButton";
 			this.toolbarremoveslotButton.Size = new System.Drawing.Size(19, 20);
@@ -3980,6 +3982,7 @@ namespace Assistant
 			// 
 			// eautoloot
 			// 
+			this.eautoloot.Controls.Add(this.autoLootnoopenCheckBox);
 			this.eautoloot.Controls.Add(this.razorButtonResetIgnore);
 			this.eautoloot.Controls.Add(this.label21);
 			this.eautoloot.Controls.Add(this.autoLootTextBoxDelay);
@@ -4003,6 +4006,15 @@ namespace Assistant
 			this.eautoloot.Text = "Autoloot";
 			this.eautoloot.UseVisualStyleBackColor = true;
 			// 
+			// autoLootnoopenCheckBox
+			// 
+			this.autoLootnoopenCheckBox.Location = new System.Drawing.Point(275, 68);
+			this.autoLootnoopenCheckBox.Name = "autoLootnoopenCheckBox";
+			this.autoLootnoopenCheckBox.Size = new System.Drawing.Size(153, 22);
+			this.autoLootnoopenCheckBox.TabIndex = 61;
+			this.autoLootnoopenCheckBox.Text = "No Open Corpse";
+			this.autoLootnoopenCheckBox.CheckedChanged += new System.EventHandler(this.autoLootnoopenCheckBox_CheckedChanged);
+			// 
 			// razorButtonResetIgnore
 			// 
 			this.razorButtonResetIgnore.ColorTable = office2010BlueTheme1;
@@ -4017,7 +4029,7 @@ namespace Assistant
 			// label21
 			// 
 			this.label21.AutoSize = true;
-			this.label21.Location = new System.Drawing.Point(436, 59);
+			this.label21.Location = new System.Drawing.Point(436, 45);
 			this.label21.Name = "label21";
 			this.label21.Size = new System.Drawing.Size(80, 13);
 			this.label21.TabIndex = 59;
@@ -4032,7 +4044,7 @@ namespace Assistant
 			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.autoLootTextBoxDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.autoLootTextBoxDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.autoLootTextBoxDelay.Location = new System.Drawing.Point(383, 56);
+			this.autoLootTextBoxDelay.Location = new System.Drawing.Point(383, 42);
 			this.autoLootTextBoxDelay.Name = "autoLootTextBoxDelay";
 			this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
 			this.autoLootTextBoxDelay.TabIndex = 58;
@@ -4104,9 +4116,9 @@ namespace Assistant
 			// groupBox13
 			// 
 			this.groupBox13.Controls.Add(this.autolootLogBox);
-			this.groupBox13.Location = new System.Drawing.Point(267, 84);
+			this.groupBox13.Location = new System.Drawing.Point(267, 96);
 			this.groupBox13.Name = "groupBox13";
-			this.groupBox13.Size = new System.Drawing.Size(278, 251);
+			this.groupBox13.Size = new System.Drawing.Size(278, 239);
 			this.groupBox13.TabIndex = 53;
 			this.groupBox13.TabStop = false;
 			this.groupBox13.Text = "Autoloot Log";
@@ -4116,7 +4128,7 @@ namespace Assistant
 			this.autolootLogBox.FormattingEnabled = true;
 			this.autolootLogBox.Location = new System.Drawing.Point(7, 18);
 			this.autolootLogBox.Name = "autolootLogBox";
-			this.autolootLogBox.Size = new System.Drawing.Size(265, 225);
+			this.autolootLogBox.Size = new System.Drawing.Size(265, 212);
 			this.autolootLogBox.TabIndex = 0;
 			// 
 			// autolootContainerLabel
@@ -4233,7 +4245,7 @@ namespace Assistant
 			// 
 			// autoLootCheckBox
 			// 
-			this.autoLootCheckBox.Location = new System.Drawing.Point(275, 56);
+			this.autoLootCheckBox.Location = new System.Drawing.Point(275, 42);
 			this.autoLootCheckBox.Name = "autoLootCheckBox";
 			this.autoLootCheckBox.Size = new System.Drawing.Size(103, 22);
 			this.autoLootCheckBox.TabIndex = 48;
@@ -8755,7 +8767,7 @@ namespace Assistant
 				RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
 				AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
-			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true); });
+			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true, RazorEnhanced.AutoLoot.NoOpenCorpse); });
 			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.RefreshLists(); });
 		}
 
@@ -8987,11 +8999,13 @@ namespace Assistant
 		{
 			int bag = 0;
 			int delay = 0;
-			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay);
+			bool noopencorpse = false;
+			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay, out noopencorpse);
 			RazorEnhanced.AutoLoot.AutoLootBag = bag;
 			RazorEnhanced.AutoLoot.AutoLootDelay = delay;
+			RazorEnhanced.AutoLoot.NoOpenCorpse = noopencorpse;
 
-			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true);
+			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse);
 			RazorEnhanced.AutoLoot.RefreshItems();
 
 			if (autolootListSelect.Text != "")
@@ -9002,7 +9016,16 @@ namespace Assistant
 		{
 			if (autoLootTextBoxDelay.Focused)
 			{
-				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true);
+				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse);
+				RazorEnhanced.AutoLoot.RefreshLists();
+			}
+		}
+
+		private void autoLootnoopenCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (autoLootnoopenCheckBox.Focused)
+			{
+				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse);
 				RazorEnhanced.AutoLoot.RefreshLists();
 			}
 		}
