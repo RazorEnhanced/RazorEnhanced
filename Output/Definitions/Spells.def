@@ -156,19 +156,20 @@ B | 16 | 60 | Arcane Empowerment | Aslavdra
 #
 # Mysticism
 #
-H | 78 | 60 | Animated Weapon | In Jux Por Ylem
+H | 78 | 60 | Nether Bolt | In Corp Ylem
 B | 79 | 60 | Healing Stone | Kal In Mani
-H | 80 | 60 | Purge | An Ort Sanct 
+H | 80 | 60 | Purge Magic | An Ort Sanct
 N | 81 | 60 | Enchant | In Ort Ylem
 H | 82 | 60 | Sleep | In Zu
 H | 83 | 60 | Eagle Strike | Kal Por Xen
-N | 84 | 60 | Stone Form | In Rel Ylem
-N | 85 | 60 | Spell Trigger | In Vas Ort Ex
-H | 86 | 60 | Mass Sleep | Vas Zu
-B | 87 | 60 | Cleansing Winds | In Vas Mani Hur
-H | 88 | 60 | Bombard | Corp Por Ylem
-H | 99 | 60 | Spell Plague | Vas Rel Jux Ort
-H | 90 | 60 | Hail Storm | Kal Des Ylem
-H | 91 | 60 | Nether Cyclone | Grav Hur
-N | 92 | 60 | Rising Colossus | Kal Vas Xen Corp Ylem
+N | 84 | 60 | Animated Weapon | In Jux Por Ylem
+N | 85 | 60 | Stone Form | In Rel Ylem
+H | 86 | 60 | Spell Trigger | In Vas Ort Ex
+B | 87 | 60 | Mass Sleep | Vas Zu
+H | 88 | 60 | Cleansing Winds | In Vas Mani Hur
+H | 99 | 60 | Bombard | Corp Por Ylem
+H | 90 | 60 | Spell Plague | Vas Rel Jux Ort
+H | 91 | 60 | Hail Storm | Kal Des Ylem
+N | 92 | 60 | Nether Cyclone | Grav Hur
+N | 93 | 60 | Rising Colossus | Kal Vas Xen Corp Ylem
 

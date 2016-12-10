@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 24;
+		private static int SettingVersion = 25;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1110,7 +1110,7 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Animated Weapon", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Nether Bolt", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -1118,7 +1118,7 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Purge", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Purge Magic", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -1126,11 +1126,19 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Sleep", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Eagle Strike", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "StoneForm", Keys.None, true };
+				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Animated Weapon", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsMysticism", "Stone Form", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -3613,6 +3621,36 @@ namespace RazorEnhanced
 
 		// ------------- TOOLBAR END -----------------
 
+		// ------------- TOOLBAR -----------------
+		internal class SpellGrid
+		{
+			internal static List<RazorEnhanced.SpellGrid.SpellGridItem> ReadItems()
+			{
+				List<RazorEnhanced.SpellGrid.SpellGridItem> itemsOut = new List<RazorEnhanced.SpellGrid.SpellGridItem>();
+
+				foreach (DataRow row in m_Dataset.Tables["SPELLGRID_ITEMS"].Rows)
+				{
+					RazorEnhanced.SpellGrid.SpellGridItem item = (RazorEnhanced.SpellGrid.SpellGridItem)row["Item"];
+					itemsOut.Add(item);
+				}
+				return itemsOut;
+			}
+
+			internal static RazorEnhanced.SpellGrid.SpellGridItem ReadSelectedItem(int index)
+			{
+				return (RazorEnhanced.SpellGrid.SpellGridItem)m_Dataset.Tables["SPELLGRID_ITEMS"].Rows[index]["Item"];
+			}
+			
+			internal static void UpdateItem(int index, string group, string spell, Color border)
+			{
+				RazorEnhanced.SpellGrid.SpellGridItem item = new RazorEnhanced.SpellGrid.SpellGridItem(group, spell, border, Color.Transparent);
+				m_Dataset.Tables["SPELLGRID_ITEMS"].Rows[index]["Item"] = item;
+				Save();
+			}
+		}
+
+		// ------------- TOOLBAR END -----------------
+
 		// ------------- PASSWORD START -----------------
 		internal class Password
 		{
@@ -4856,7 +4894,130 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", 24);
 			}
 
-			// ----------- SPELLGRID ITEM ----------
+			if (realVersion == 24)
+			{
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Group"] == "SpellsMysticism")
+					{
+						row.Delete();
+					}
+
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Nether Bolt";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Healing Stone";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Purge Magic";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Enchant";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Sleep";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Eagle Strike";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Animated Weapon";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Stone Form";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Spell Trigger";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Mass Sleep";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Cleansing Winds";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Bombard";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Spell Plague";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Hail Storm";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Nether Cyclone";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsMysticism";
+				newRow["Name"] = "Rising Colossus";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+
+				realVersion = 25;
+				General.WriteInt("SettingVersion", 25);
+			}
 
 			Save();
 
