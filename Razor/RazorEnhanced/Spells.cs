@@ -613,7 +613,7 @@ namespace RazorEnhanced
 
 			switch (SpellName)
 			{
-				case "Animated Weapon":
+				case "Nether Bolt":
 					s = Spell.Get(678);
 					break;
 
@@ -621,7 +621,7 @@ namespace RazorEnhanced
 					s = Spell.Get(679);
 					break;
 
-				case "Purge":
+				case "Purge Magic":
 					s = Spell.Get(680);
 					break;
 
@@ -637,40 +637,44 @@ namespace RazorEnhanced
 					s = Spell.Get(683);
 					break;
 
-				case "Stone Form":
+				case "Animated Weapon":
 					s = Spell.Get(684);
 					break;
 
-				case "Spell Trigger":
+				case "Stone Form":
 					s = Spell.Get(685);
 					break;
 
-				case "Mass Sleep":
+				case "Spell Trigger":
 					s = Spell.Get(686);
 					break;
 
-				case "Cleansing Winds":
+				case "Mass Sleep":
 					s = Spell.Get(687);
 					break;
 
-				case "Bombard":
+				case "Cleansing Winds":
 					s = Spell.Get(688);
 					break;
 
-				case "Spell Plague":
+				case "Bombard":
 					s = Spell.Get(689);
 					break;
 
-				case "Hail Storm":
+				case "Spell Plague":
 					s = Spell.Get(690);
 					break;
 
-				case "Nether Cyclone":
+				case "Hail Storm":
 					s = Spell.Get(691);
 					break;
 
-				case "Rising Colossus":
+				case "Nether Cyclone":
 					s = Spell.Get(692);
+					break;
+
+				case "Rising Colossus":
+					s = Spell.Get(693);
 					break;
 
 				default:
