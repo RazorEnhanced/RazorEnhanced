@@ -285,6 +285,8 @@ namespace RazorEnhanced
 		{
 			if (m_form != null)
 			{
+				Settings.General.WriteInt("PosXToolBar", m_form.Location.X);
+				Settings.General.WriteInt("PosYToolBar", m_form.Location.Y);
 				m_form.Close();
 				m_form = null;
 				m_slot = 0;

@@ -153,6 +153,8 @@ namespace RazorEnhanced
 		{
 			if (m_form != null)
 			{
+				Settings.General.WriteInt("PosXGrid", m_form.Location.X);
+				Settings.General.WriteInt("PosYGrid", m_form.Location.Y);
 				m_form.Close();
 				m_form = null;
 				m_hslot = m_vslot = 0;
