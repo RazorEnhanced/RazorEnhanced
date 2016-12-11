@@ -600,6 +600,7 @@ namespace Assistant
 		internal Label GridHSlotLabel { get { return gridhslot_textbox; } }
 		internal RazorComboBox GridSlotComboBox { get { return gridslot_ComboBox; } }
 		internal RazorComboBox GridGroupComboBox { get { return gridgroup_ComboBox; } }
+		internal RazorComboBox GridBorderComboBox { get { return gridborder_ComboBox; } }
 
 		// AutoLoot
 		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
@@ -7359,7 +7360,7 @@ namespace Assistant
 
 			// ------------------ ENHANCED SPELLGRID --------------------
 			RazorEnhanced.SpellGrid.LoadSettings();
-
+			
 			// ------------------ TARGETS --------------------
 			RazorEnhanced.TargetGUI.RefreshTarget();
 
@@ -7474,7 +7475,7 @@ namespace Assistant
 		internal void InitConfig()
 		{
 			m_Initializing = true;
-
+			PasswordMemory.Load();
 			//LoadSettings();
 			RazorEnhanced.Profiles.Refresh();
 
@@ -12497,22 +12498,27 @@ namespace Assistant
 
 		private void gridopen_button_Click(object sender, EventArgs e)
 		{
-
+			RazorEnhanced.SpellGrid.Open();
 		}
 
 		private void gridclose_button_Click(object sender, EventArgs e)
 		{
-
+			RazorEnhanced.SpellGrid.Close();
 		}
 
 		private void gridlock_CheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-
+			if (gridlock_CheckBox.Focused)
+			{
+				SpellGrid.LockUnlock();
+				Settings.General.WriteBool("LockGridCheckBox", gridlock_CheckBox.Checked);
+			}
 		}
 
 		private void gridopenlogin_CheckBox_CheckedChanged(object sender, EventArgs e)
 		{
-
+			if (gridopenlogin_CheckBox.Focused)
+				Settings.General.WriteBool("GridOpenLoginCheckBox", gridopenlogin_CheckBox.Checked);
 		}
 
 		private void gridslot_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -12522,13 +12528,22 @@ namespace Assistant
 			gridgroup_ComboBox.SelectedIndex = gridgroup_ComboBox.Items.IndexOf(item.Group);
 			if (item.Group != "Empty")
 			{
-				gridspell_ComboBox.SelectedIndex = gridspell_ComboBox.Items.IndexOf(item.Spell);
-				gridspell_ComboBox.Enabled = true;
+                gridspell_ComboBox.SelectedIndex = gridspell_ComboBox.Items.IndexOf(item.Spell);
+				gridborder_ComboBox.SelectedIndex = gridborder_ComboBox.Items.IndexOf(item.Color.Name);
+                gridspell_ComboBox.Enabled = true;
+				gridborder_ComboBox.Enabled = true;
 			}
 			else
 			{
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
+				gridspell_ComboBox.SelectedIndex = -1;
+				gridborder_ComboBox.SelectedIndex = -1;
 				gridspell_ComboBox.Enabled = false;
+				gridborder_ComboBox.Enabled = false;
 			}
+
+			if (gridslot_ComboBox.Focused)
+                SpellGrid.Open();
 		}
 
 		private void gridgroup_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -12539,6 +12554,11 @@ namespace Assistant
 					{
 						gridspell_ComboBox.Items.Clear();
 						gridspell_ComboBox.Enabled = false;
+						gridborder_ComboBox.Enabled = false;
+						gridspell_ComboBox.SelectedIndex = -1;
+						gridborder_ComboBox.SelectedIndex = -1;
+						if (gridgroup_ComboBox.Focused)
+							SpellGrid.Close();
 						break;
 					}
 				case "Magery":
@@ -12547,6 +12567,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconMagery.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Abilities":
@@ -12555,6 +12578,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconAbilities.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Bardic":
@@ -12563,6 +12589,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconBardic.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Bushido":
@@ -12572,6 +12601,8 @@ namespace Assistant
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
 						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Chivalry":
@@ -12580,6 +12611,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconChivalry.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Necromancy":
@@ -12588,6 +12622,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconNecromancy.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Ninjitsu":
@@ -12596,6 +12633,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconNinjitsu.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Mysticism":
@@ -12604,6 +12644,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconMysticism.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Spellweaving":
@@ -12612,6 +12655,9 @@ namespace Assistant
 						foreach (string spell in SpellGrid.SpellIconSpellweaving.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = true;
+						gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = 0;
+						gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				default:
@@ -12620,6 +12666,8 @@ namespace Assistant
 			if (gridgroup_ComboBox.Focused)
 			{
 				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
+				SpellGrid.UpdatePanelImage();
+				SpellGrid.Open();
             }
 		}
 
@@ -12628,21 +12676,34 @@ namespace Assistant
 			if (gridspell_ComboBox.Focused)
 			{
 				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
+				SpellGrid.UpdatePanelImage();
+				SpellGrid.Open();
 			}
 		}
 
 		private void gridborder_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-
+			if (gridborder_ComboBox.Focused)
+			{
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.FromName(gridborder_ComboBox.SelectedItem.ToString()));
+				SpellGrid.UpdatePanelImage();
+				SpellGrid.SpellGridForm.Refresh();
+				SpellGrid.Open();
+			}
 		}
 
 		private void gridvslotadd_button_Click(object sender, EventArgs e)
 		{
+			if (SpellGrid.VSlot + SpellGrid.HSlot == 99)
+				return;
+
 			int slot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
 			slot += 1;
 
 			RazorEnhanced.Settings.General.WriteInt("GridVSlot", slot);
-			gridvslot_textbox.Text = slot.ToString();
+			RazorEnhanced.SpellGrid.VSlot = slot;
+            gridvslot_textbox.Text = slot.ToString();
+			RazorEnhanced.SpellGrid.UpdateBox();
             RazorEnhanced.SpellGrid.Close();
 			RazorEnhanced.SpellGrid.Open();
 		}
@@ -12654,7 +12715,9 @@ namespace Assistant
 			{
 				slot -= 1;
 				RazorEnhanced.Settings.General.WriteInt("GridVSlot", slot);
+				RazorEnhanced.SpellGrid.VSlot = slot;
 				gridvslot_textbox.Text = slot.ToString();
+				RazorEnhanced.SpellGrid.UpdateBox();
 				RazorEnhanced.SpellGrid.Close();
 				RazorEnhanced.SpellGrid.Open();
 			}
@@ -12662,11 +12725,16 @@ namespace Assistant
 
 		private void gridhslotadd_button_Click(object sender, EventArgs e)
 		{
+			if (SpellGrid.VSlot + SpellGrid.HSlot == 99)
+				return;
+
 			int slot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
 			slot += 1;
 
 			RazorEnhanced.Settings.General.WriteInt("GridHSlot", slot);
+			RazorEnhanced.SpellGrid.HSlot = slot;
 			gridhslot_textbox.Text = slot.ToString();
+			RazorEnhanced.SpellGrid.UpdateBox();
 			RazorEnhanced.SpellGrid.Close();
 			RazorEnhanced.SpellGrid.Open();
 		}
@@ -12678,7 +12746,9 @@ namespace Assistant
 			{
 				slot -= 1;
 				RazorEnhanced.Settings.General.WriteInt("GridHSlot", slot);
+				RazorEnhanced.SpellGrid.HSlot = slot;
 				gridhslot_textbox.Text = slot.ToString();
+				RazorEnhanced.SpellGrid.UpdateBox();
 				RazorEnhanced.SpellGrid.Close();
 				RazorEnhanced.SpellGrid.Open();
 			}

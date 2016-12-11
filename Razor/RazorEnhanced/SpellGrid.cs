@@ -3,9 +3,41 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Assistant;
+using System.Reflection;
 
 namespace RazorEnhanced
 {
+	internal partial class PalenGrid : Panel
+	{
+		private string m_spell = "Empty";
+		public string Spell
+		{
+			get { return m_spell; }
+			set { m_spell = value; }
+		}
+
+		private string m_group = "Empty";
+		public string Group
+		{
+			get { return m_group; }
+			set { m_group = value; }
+		}
+
+		private Color m_bordercolor = Color.Transparent;
+		public Color BorderColor
+		{
+			get { return m_bordercolor; }
+			set { m_bordercolor = value; }
+		}
+
+		protected override void OnPaint(PaintEventArgs e)
+		{
+			if (BorderColor != Color.Transparent)
+				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
+			base.OnPaint(e);
+		}
+	}
+
 	internal partial class SpellGridForm : Form
 	{
 		internal SpellGridForm()
@@ -23,18 +55,19 @@ namespace RazorEnhanced
 			FormBorderStyle = FormBorderStyle.None;
 			MinimumSize = new Size(1, 1);
 			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			BackColor = Color.FromArgb(187, 182, 137);
+			TransparencyKey = Color.YellowGreen;
+			BackColor = Color.YellowGreen;
 			BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			MaximizeBox = false;
 			CausesValidation = false;
 		}
 
-	/*	protected override void OnPaint(PaintEventArgs e)
+		protected override void OnPaint(PaintEventArgs e)
 		{
-			if (!ToolBar.Lock)
+			if (!SpellGrid.Lock)
 				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, Color.Red, ButtonBorderStyle.Solid);
 			base.OnPaint(e);
-		}*/
+		}
 	}
 
 	internal class SpellGrid
@@ -128,8 +161,18 @@ namespace RazorEnhanced
 
 		internal static void Open()
 		{
-			m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
-			m_hslot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
+			if (Assistant.World.Player != null)
+			{
+				m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
+				m_hslot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
+				if (m_form == null)
+					DrawSpellGrid();
+
+				UpdatePanelImage();
+				ClientCommunication.ShowWindow(m_form.Handle, 8);
+				m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
+				ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
+			}
 		}
 
 		internal static void LockUnlock()
@@ -143,6 +186,30 @@ namespace RazorEnhanced
 				m_form.ContextMenu = GeneraMenu();
 				m_form.Refresh();
 			}
+		}
+
+		internal static void UpdateBox()
+		{
+			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
+
+			int i = 0;
+			int oldindex = Engine.MainWindow.GridSlotComboBox.SelectedIndex;
+			Engine.MainWindow.GridSlotComboBox.Items.Clear();
+            foreach (SpellGridItem item in items)
+			{
+				Engine.MainWindow.GridSlotComboBox.Items.Add("Slot: " + i);
+				if (i == (m_hslot * m_vslot) - 1)
+					break;
+				i++;
+				if (i > 99)
+					break;
+			}
+
+			if (oldindex < i)
+				Engine.MainWindow.GridSlotComboBox.SelectedIndex = oldindex;
+			else
+				Engine.MainWindow.GridSlotComboBox.SelectedIndex = 0;
+
 		}
 
 		//////////////////////////////////////////////////////////////
@@ -181,9 +248,51 @@ namespace RazorEnhanced
 				m_mouseDown = false;
 		}
 
+		internal static void SpellGrid_MouseClick_Control(object sender, MouseEventArgs e)
+		{
+			PalenGrid pl = (PalenGrid)sender;
+			switch (pl.Group)
+			{
+				case "Magery":
+					RazorEnhanced.Spells.CastMageryHotKey(pl.Spell);
+					break;
+				case "Abilities":
+					if (pl.Spell == "Primary")
+						Assistant.SpecialMoves.SetPrimaryAbility();
+					else
+						Assistant.SpecialMoves.SetSecondaryAbility();
+					break;
+				case "Bardic":
+					
+					break;
+				case "Bushido":
+					RazorEnhanced.Spells.CastBushidoHotKey(pl.Spell);
+					break;
+				case "Chivalry":
+					RazorEnhanced.Spells.CastChivalryHotKey(pl.Spell);
+					break;
+				case "Necromancy":
+					RazorEnhanced.Spells.CastNecroHotKey(pl.Spell);
+					break;
+				case "Ninjitsu":
+					RazorEnhanced.Spells.CastNinjitsuHotKey(pl.Spell);
+					break;
+				case "Mysticism":
+					RazorEnhanced.Spells.CastMysticismHotKey(pl.Spell);
+					break;
+				case "Spellweaving":
+					RazorEnhanced.Spells.CastSpellweavingHotKey(pl.Spell);
+					break;
+				default:
+					break;
+			}
+
+			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
+		}
+
 		internal static void SpellGrid_MouseClick(object sender, MouseEventArgs e)
 		{
-			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
+            ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
 		}
 
 		internal static void InitEvent()
@@ -193,8 +302,108 @@ namespace RazorEnhanced
 				control.MouseDown += new System.Windows.Forms.MouseEventHandler(SpellGrid_MouseDown);
 				control.MouseMove += new System.Windows.Forms.MouseEventHandler(SpellGrid_MouseMove);
 				control.MouseUp += new System.Windows.Forms.MouseEventHandler(SpellGrid_MouseUp);
-				control.MouseClick += new System.Windows.Forms.MouseEventHandler(SpellGrid_MouseClick);
-				control.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(SpellGrid_MouseClick);
+				control.MouseClick += new System.Windows.Forms.MouseEventHandler(SpellGrid_MouseClick_Control);
+				control.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(SpellGrid_MouseClick_Control);
+			}
+		}
+
+		////////////////////////////////////////////////////
+		/////////////// DRAW SPELLGRID START ///////////////
+		////////////////////////////////////////////////////
+
+		private static List<PalenGrid> m_panellist = new List<PalenGrid>();
+
+		internal static void DrawSpellGrid()
+		{
+			m_panellist = new List<PalenGrid>();
+			m_form = new SpellGridForm();
+
+			m_form.ClientSize = new System.Drawing.Size(m_hslot * 44 + m_hslot * 3, m_vslot * 44 + m_vslot * 3);
+			int paneloffsetX = 1;
+			int paneloffsetY = 1;
+			for (int i = 0; i < m_vslot; i += 1)
+			{
+				for (int x = 0; x < m_hslot; x += 1)
+				{
+					// Aggiungo panel dinamici
+					PalenGrid paneltemp = new PalenGrid();
+
+					paneltemp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+					paneltemp.Location = new System.Drawing.Point(paneloffsetX, paneloffsetY);
+					paneltemp.Margin = new System.Windows.Forms.Padding(0);
+					paneltemp.Size = new System.Drawing.Size(44, 44);
+					paneltemp.TabIndex = i;
+					paneltemp.BackColor = Color.Transparent;
+
+					m_panellist.Add(paneltemp);
+					m_form.Controls.Add(paneltemp);
+					paneloffsetX += 45;
+				}
+				paneloffsetX = 1;
+				paneloffsetY += 45;
+            }
+			InitEvent();
+		}
+
+		internal static void UpdatePanelImage()
+		{
+			if (m_form == null)
+				return;
+
+			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
+
+			for (int x = 0; x < m_vslot * m_hslot; x++)
+			{
+				int imageid = 0;
+
+				m_panellist[x].BorderColor = items[x].Color;
+
+				switch (items[x].Group)
+				{
+					case "Magery":
+						SpellIconMagery.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Abilities":
+						SpellIconAbilities.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Bardic":
+						SpellIconBardic.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Bushido":
+						SpellIconBushido.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Chivalry":
+						SpellIconChivalry.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Necromancy":
+						SpellIconNecromancy.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Ninjitsu":
+						SpellIconNinjitsu.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Mysticism":
+						SpellIconMysticism.TryGetValue(items[x].Spell, out imageid);
+						break;
+					case "Spellweaving":
+						SpellIconSpellweaving.TryGetValue(items[x].Spell, out imageid);
+						break;
+					default:
+						imageid = 0;
+						break;
+				}
+
+				if (imageid != 0)
+				{
+					Bitmap image = Ultima.Gumps.GetGump(imageid);
+					m_panellist[x].BackgroundImage = image;
+					m_panellist[x].Enabled = true;
+					m_panellist[x].Spell = items[x].Spell;
+				}
+				else
+					m_panellist[x].Enabled = false;
+
+				m_panellist[x].Group = items[x].Group;
+				
 			}
 		}
 
@@ -278,17 +487,26 @@ namespace RazorEnhanced
 			if (!m_dicloaded)
 			{
 				// Abilities
-				SpellIconAbilities.Add("Primary", 0);
-				SpellIconAbilities.Add("Secondary", 0);
+				SpellIconAbilities.Add("Primary", 0x5204);
+				SpellIconAbilities.Add("Secondary", 0x5206);
+
+				// Bardic
+				SpellIconBardic.Add("Inspire", 0x945);
+				SpellIconBardic.Add("Invigorate", 0x946);
+				SpellIconBardic.Add("Resilience", 0x947);
+				SpellIconBardic.Add("Perseverance", 0x948);
+				SpellIconBardic.Add("Tribulation", 0x949);
+				SpellIconBardic.Add("Despair", 0x946A);
 
 				// Mysticism
-				SpellIconMysticism.Add("Animated Weapon", 0x5DC6);
+				SpellIconMysticism.Add("Nether Bolt | In Corp Ylem", 0x5DC0);
                 SpellIconMysticism.Add("Healing Stone", 0x5DC1);
-				SpellIconMysticism.Add("Purge", 0x5DC2);
+				SpellIconMysticism.Add("Purge Magic", 0x5DC2);
 				SpellIconMysticism.Add("Enchant", 0x5DC3);
-				SpellIconMysticism.Add("Sleep", 0x5DC1);
+				SpellIconMysticism.Add("Sleep", 0x5DC4);
 				SpellIconMysticism.Add("Eagle Strike", 0x5DC5);
-				SpellIconMysticism.Add("Stone Form", 0x5DC7);
+				SpellIconMysticism.Add("Animated Weapon", 0x5DC6);
+                SpellIconMysticism.Add("Stone Form", 0x5DC7);
 				SpellIconMysticism.Add("Spell Trigger", 0x5DC8);
 				SpellIconMysticism.Add("Mass Sleep", 0x5DC9);
 				SpellIconMysticism.Add("Cleansing Winds", 0x5DCA);
@@ -347,23 +565,23 @@ namespace RazorEnhanced
 				SpellIconChivalry.Add("Sacred Journey", 0x5109);
 
 				// Necromancy
-				SpellIconAbilities.Add("Animate Dead", 0x5000);
-                SpellIconAbilities.Add("Blood Oath", 0x5001);
-				SpellIconAbilities.Add("Corpse Skin", 0x5002);
-				SpellIconAbilities.Add("Curse Weapon", 0x503);
-				SpellIconAbilities.Add("Evil Omen", 0x5004);
-				SpellIconAbilities.Add("Horrific Beast", 0x5005);
-				SpellIconAbilities.Add("Lich Form", 0x5006);
-				SpellIconAbilities.Add("Mind Rot", 0x5007);
-				SpellIconAbilities.Add("Pain Spike", 0x5008);
-				SpellIconAbilities.Add("Poison Strike", 0x5009);
-				SpellIconAbilities.Add("Strangle", 0x500A);
-				SpellIconAbilities.Add("Summon Familiar", 0x500B);
-				SpellIconAbilities.Add("Vampiric Embrace", 0x500C);
-				SpellIconAbilities.Add("Vengeful Spirit", 0x500D);
-				SpellIconAbilities.Add("Wither", 0x500E);
-				SpellIconAbilities.Add("Wraith Form", 0x500F);
-				SpellIconAbilities.Add("Exorcism", 0x5010);
+				SpellIconNecromancy.Add("Animate Dead", 0x5000);
+				SpellIconNecromancy.Add("Blood Oath", 0x5001);
+				SpellIconNecromancy.Add("Corpse Skin", 0x5002);
+				SpellIconNecromancy.Add("Curse Weapon", 0x503);
+				SpellIconNecromancy.Add("Evil Omen", 0x5004);
+				SpellIconNecromancy.Add("Horrific Beast", 0x5005);
+				SpellIconNecromancy.Add("Lich Form", 0x5006);
+				SpellIconNecromancy.Add("Mind Rot", 0x5007);
+				SpellIconNecromancy.Add("Pain Spike", 0x5008);
+				SpellIconNecromancy.Add("Poison Strike", 0x5009);
+				SpellIconNecromancy.Add("Strangle", 0x500A);
+				SpellIconNecromancy.Add("Summon Familiar", 0x500B);
+				SpellIconNecromancy.Add("Vampiric Embrace", 0x500C);
+				SpellIconNecromancy.Add("Vengeful Spirit", 0x500D);
+				SpellIconNecromancy.Add("Wither", 0x500E);
+				SpellIconNecromancy.Add("Wraith Form", 0x500F);
+				SpellIconNecromancy.Add("Exorcism", 0x5010);
 
 				// Magery
 				SpellIconMagery.Add("Clumsy", 0x8c0);
@@ -434,6 +652,15 @@ namespace RazorEnhanced
 				m_dicloaded = true;
             }
 
+			// Color Picked Combobox
+			Engine.MainWindow.GridBorderComboBox.Items.Clear();
+			Type colorType = typeof(System.Drawing.Color);
+			PropertyInfo[] propInfoList = colorType.GetProperties(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public);
+			foreach (PropertyInfo c in propInfoList)
+			{
+				Engine.MainWindow.GridBorderComboBox.Items.Add(c.Name);
+			}
+
 			// Carico Item
 			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
 
@@ -441,12 +668,13 @@ namespace RazorEnhanced
 			foreach (SpellGridItem item in items)
 			{
 				Engine.MainWindow.GridSlotComboBox.Items.Add("Slot " + i);
-				if (i == (m_hslot * m_vslot))
+				if (i == (m_hslot * m_vslot) -1 )
 					break;
 				i++;
-			}
+				if (i > 99)
+					break;
+            }
 			Engine.MainWindow.GridSlotComboBox.SelectedIndex = 0;
-
 		}
 	}
 }

@@ -1120,8 +1120,12 @@ namespace Assistant
 				Engine.MainWindow.ProfilesComboBox.SelectedIndex = Engine.MainWindow.ProfilesComboBox.FindString(profilename);
 
 			// Apertura automatica toolbar se abilitata
-			if (Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked && RazorEnhanced.ToolBar.ToolBarForm == null)
+			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox") && RazorEnhanced.ToolBar.ToolBarForm == null)
 				RazorEnhanced.ToolBar.Open();
+
+			// Apertura automatica spellgrit se abilitata
+			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox") && RazorEnhanced.SpellGrid.SpellGridForm == null)
+				RazorEnhanced.SpellGrid.Open();
 
 			if (RazorEnhanced.UoNet.UO.Open())
 			{

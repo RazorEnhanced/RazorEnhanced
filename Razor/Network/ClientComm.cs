@@ -969,6 +969,9 @@ namespace Assistant
 			if (RazorEnhanced.ToolBar.ToolBarForm != null)
 				RazorEnhanced.ToolBar.ToolBarForm.Close();
 
+			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+				RazorEnhanced.SpellGrid.SpellGridForm.Close();
+
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
 			PasswordMemory.Save();
@@ -977,6 +980,8 @@ namespace Assistant
 		internal static bool OnMessage(MainForm razor, uint wParam, int lParam)
 		{
 			bool retVal = true;
+			bool m_hidetoolbar = false;
+			bool m_hidespellgrid = false;
 
 			switch ((UONetMessage)(wParam & 0xFFFF))
 			{
@@ -1071,29 +1076,43 @@ namespace Assistant
 				case UONetMessage.Activate:
 					if ((lParam & 0x0000FFFF) == 0 && (lParam & 0xFFFF0000) != 0)
 					{
-						if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-						{
+						if (RazorEnhanced.ToolBar.ToolBarForm != null)
 							RazorEnhanced.ToolBar.ToolBarForm.Hide();
-						}
+
+						if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+							RazorEnhanced.SpellGrid.SpellGridForm.Hide();
 					}
 					else
 					{
 						if (lParam == 0)
 						{
-							if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
+							if (RazorEnhanced.ToolBar.ToolBarForm != null)
 							{
 								if (Cursor.Position.X >= RazorEnhanced.ToolBar.ToolBarForm.Location.X && Cursor.Position.X <= (RazorEnhanced.ToolBar.ToolBarForm.Location.X + RazorEnhanced.ToolBar.ToolBarForm.Width) && Cursor.Position.Y >= RazorEnhanced.ToolBar.ToolBarForm.Location.Y && Cursor.Position.Y <= (RazorEnhanced.ToolBar.ToolBarForm.Location.Y + RazorEnhanced.ToolBar.ToolBarForm.Height))
 									break;
-								RazorEnhanced.ToolBar.ToolBarForm.Hide();
+								m_hidetoolbar = true;
 							}
+							if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+							{
+								if (Cursor.Position.X >= RazorEnhanced.SpellGrid.SpellGridForm.Location.X && Cursor.Position.X <= (RazorEnhanced.SpellGrid.SpellGridForm.Location.X + RazorEnhanced.SpellGrid.SpellGridForm.Width) && Cursor.Position.Y >= RazorEnhanced.SpellGrid.SpellGridForm.Location.Y && Cursor.Position.Y <= (RazorEnhanced.SpellGrid.SpellGridForm.Location.Y + RazorEnhanced.SpellGrid.SpellGridForm.Height))
+									break;
+								m_hidespellgrid = true;
+							}
+
+							if (m_hidetoolbar)
+								RazorEnhanced.ToolBar.ToolBarForm.Hide();
+							if (m_hidespellgrid)
+								RazorEnhanced.SpellGrid.SpellGridForm.Hide();
 						}
 						else
 						{
-							if (RazorEnhanced.ToolBar.ToolBarForm != null && RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox"))
-							{
+							if (RazorEnhanced.ToolBar.ToolBarForm != null)
 								ShowWindow(RazorEnhanced.ToolBar.ToolBarForm.Handle, 8);
-								SetForegroundWindow(FindUOWindow());
-							}
+
+							if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+								ShowWindow(RazorEnhanced.SpellGrid.SpellGridForm.Handle, 8);
+
+							SetForegroundWindow(FindUOWindow());
 						}
 					}
 
