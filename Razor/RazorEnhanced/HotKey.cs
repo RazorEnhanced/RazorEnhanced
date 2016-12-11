@@ -227,6 +227,10 @@ namespace RazorEnhanced
 						RazorEnhanced.Spells.CastChivalryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
+					case "SpellsBard":
+						RazorEnhanced.Spells.CastBardHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						break;
+
 					case "Target":
 						ProcessTarget(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
@@ -1218,6 +1222,19 @@ namespace RazorEnhanced
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(a);
+			}
+
+			// Spells -- > Bard
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Bard");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsBard");
+			foreach (HotKeyData keydata in keylist)
+			{
+				TreeNode a = new TreeNode();
+				a.Name = keydata.Name;
+				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				if (keydata.Key != Keys.None)
+					a.ForeColor = System.Drawing.Color.DarkGreen;
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[10].Nodes.Add(a);
 			}
 
 			// Target

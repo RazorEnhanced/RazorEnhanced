@@ -13,7 +13,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 25;
+		private static int SettingVersion = 26;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1211,6 +1211,30 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "SpellsChivalry", "Sacred Journey", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsBard", "Inspire", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsBard", "Invigorate", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsBard", "Resilience", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsBard", "Perseverance", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsBard", "Tribulation", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "SpellsBard", "Despair", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -5017,6 +5041,54 @@ namespace RazorEnhanced
 
 				realVersion = 25;
 				General.WriteInt("SettingVersion", 25);
+			}
+
+			if (realVersion == 25)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsBard";
+				newRow["Name"] = "Inspire";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsBard";
+				newRow["Name"] = "Invigorate";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsBard";
+				newRow["Name"] = "Resilience";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsBard";
+				newRow["Name"] = "Perseverance";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsBard";
+				newRow["Name"] = "Tribulation";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "SpellsBard";
+				newRow["Name"] = "Despair";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				realVersion = 26;
+				General.WriteInt("SettingVersion", 26);
 			}
 
 			Save();

@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace RazorEnhanced
 {
-	internal partial class PalenGrid : Panel
+	internal partial class PanelGrid : Panel
 	{
 		private string m_spell = "Empty";
 		public string Spell
@@ -252,7 +252,7 @@ namespace RazorEnhanced
 
 		internal static void SpellGrid_MouseClick_Control(object sender, MouseEventArgs e)
 		{
-			PalenGrid pl = (PalenGrid)sender;
+			PanelGrid pl = (PanelGrid)sender;
 			switch (pl.Group)
 			{
 				case "Magery":
@@ -265,7 +265,7 @@ namespace RazorEnhanced
 						Assistant.SpecialMoves.SetSecondaryAbility();
 					break;
 				case "Bardic":
-					
+					RazorEnhanced.Spells.CastBardHotKey(pl.Spell);
 					break;
 				case "Bushido":
 					RazorEnhanced.Spells.CastBushidoHotKey(pl.Spell);
@@ -313,11 +313,11 @@ namespace RazorEnhanced
 		/////////////// DRAW SPELLGRID START ///////////////
 		////////////////////////////////////////////////////
 
-		private static List<PalenGrid> m_panellist = new List<PalenGrid>();
+		private static List<PanelGrid> m_panellist = new List<PanelGrid>();
 
 		internal static void DrawSpellGrid()
 		{
-			m_panellist = new List<PalenGrid>();
+			m_panellist = new List<PanelGrid>();
 			m_form = new SpellGridForm();
 
 			m_form.ClientSize = new System.Drawing.Size(m_hslot * 44 + m_hslot * 3, m_vslot * 44 + m_vslot * 3);
@@ -328,7 +328,7 @@ namespace RazorEnhanced
 				for (int x = 0; x < m_hslot; x += 1)
 				{
 					// Aggiungo panel dinamici
-					PalenGrid paneltemp = new PalenGrid();
+					PanelGrid paneltemp = new PanelGrid();
 
 					paneltemp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 					paneltemp.Location = new System.Drawing.Point(paneloffsetX, paneloffsetY);
