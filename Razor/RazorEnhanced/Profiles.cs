@@ -323,6 +323,10 @@ namespace RazorEnhanced
 			if (RazorEnhanced.ToolBar.ToolBarForm != null)
 				RazorEnhanced.ToolBar.ToolBarForm.Close();
 
+			// Chiuto toolbar
+			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+				RazorEnhanced.SpellGrid.SpellGridForm.Close();
+			
 			// Carico save profilo
 			RazorEnhanced.Settings.Load();
 

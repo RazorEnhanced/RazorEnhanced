@@ -12553,10 +12553,8 @@ namespace Assistant
 				case "Empty":
 					{
 						gridspell_ComboBox.Items.Clear();
-						gridspell_ComboBox.Enabled = false;
-						gridborder_ComboBox.Enabled = false;
-						gridspell_ComboBox.SelectedIndex = -1;
-						gridborder_ComboBox.SelectedIndex = -1;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = false;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = -1;
 						if (gridgroup_ComboBox.Focused)
 							SpellGrid.Close();
 						break;
@@ -12566,10 +12564,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconMagery.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Abilities":
@@ -12577,10 +12573,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconAbilities.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Bardic":
@@ -12588,10 +12582,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconBardic.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Bushido":
@@ -12599,10 +12591,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconBushido.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Chivalry":
@@ -12610,10 +12600,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconChivalry.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Necromancy":
@@ -12621,10 +12609,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconNecromancy.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Ninjitsu":
@@ -12632,10 +12618,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconNinjitsu.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Mysticism":
@@ -12643,10 +12627,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconMysticism.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				case "Spellweaving":
@@ -12654,10 +12636,8 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconSpellweaving.Keys)
 							gridspell_ComboBox.Items.Add(spell);
-						gridspell_ComboBox.Enabled = true;
-						gridborder_ComboBox.Enabled = true;
-						gridspell_ComboBox.SelectedIndex = 0;
-						gridborder_ComboBox.SelectedIndex = 0;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
 				default:
@@ -12666,7 +12646,6 @@ namespace Assistant
 			if (gridgroup_ComboBox.Focused)
 			{
 				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
-				SpellGrid.UpdatePanelImage();
 				SpellGrid.Open();
             }
 		}
@@ -12676,7 +12655,6 @@ namespace Assistant
 			if (gridspell_ComboBox.Focused)
 			{
 				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
-				SpellGrid.UpdatePanelImage();
 				SpellGrid.Open();
 			}
 		}
@@ -12686,7 +12664,6 @@ namespace Assistant
 			if (gridborder_ComboBox.Focused)
 			{
 				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.FromName(gridborder_ComboBox.SelectedItem.ToString()));
-				SpellGrid.UpdatePanelImage();
 				SpellGrid.SpellGridForm.Refresh();
 				SpellGrid.Open();
 			}

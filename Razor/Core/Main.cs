@@ -366,6 +366,10 @@ namespace Assistant
 			if (RazorEnhanced.ToolBar.ToolBarForm!= null)
 				RazorEnhanced.ToolBar.ToolBarForm.Close();
 
+			// Chiuto Spellgrid
+			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+				RazorEnhanced.SpellGrid.SpellGridForm.Close();
+
 			// Stoppo tick timer agent
 			if (RazorEnhanced.Scripts.Timer != null)
 				RazorEnhanced.Scripts.Timer.Close();
