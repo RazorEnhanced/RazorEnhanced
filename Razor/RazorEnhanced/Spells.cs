@@ -687,7 +687,93 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void CastMageryHotKey(string SpellName)
+		public static void CastBard(string SpellName)
+		{
+			if (World.Player == null)
+				return;
+
+			Spell s = null;
+
+			switch (SpellName)
+			{
+				case "Inspire":
+					s = Spell.Get(701);
+					break;
+
+				case "Invigorate":
+					s = Spell.Get(702);
+					break;
+
+				case "Resilience":
+					s = Spell.Get(703);
+					break;
+
+				case "Perseverance":
+					s = Spell.Get(704);
+					break;
+
+				case "Tribulation":
+					s = Spell.Get(705);
+					break;
+
+				case "Despair":
+					s = Spell.Get(705);
+					break;
+
+				default:
+					Scripts.SendMessageScriptError("Script Error: CastBard: Invalid spell name: " + SpellName);
+					break;
+			}
+			if (s != null)
+			{
+				s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+			}
+		}
+
+		public static void CastBardHotKey(string SpellName)
+		{
+			if (World.Player == null)
+				return;
+
+			Spell s = null;
+
+			switch (SpellName)
+			{
+				case "Inspire":
+					s = Spell.Get(701);
+					break;
+
+				case "Invigorate":
+					s = Spell.Get(702);
+					break;
+
+				case "Resilience":
+					s = Spell.Get(703);
+					break;
+
+				case "Perseverance":
+					s = Spell.Get(704);
+					break;
+
+				case "Tribulation":
+					s = Spell.Get(705);
+					break;
+
+				case "Despair":
+					s = Spell.Get(705);
+					break;
+
+				default:
+					Scripts.SendMessageScriptError("Script Error: CastBard: Invalid spell name: " + SpellName);
+					break;
+			}
+			if (s != null)
+			{
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
+			}
+		}
+
+        internal static void CastMageryHotKey(string SpellName)
 		{
 			if (World.Player == null)
 				return;
