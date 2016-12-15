@@ -167,8 +167,10 @@ namespace RazorEnhanced
 					AddLog("Spells.CastNinjitsu(\"" + Language.GetString(s.Name) + "\")");
 				else if (id >= 601 && id <= 616)
 					AddLog("Spells.CastSpellweaving(\"" + Language.GetString(s.Name) + "\")");
-				else if (id >= 678 && id <= 692)
+				else if (id >= 678 && id <= 693)
 					AddLog("Spells.CastMysticism(\"" + Language.GetString(s.Name) + "\")");
+				else if (id >= 701 && id <= 705)
+					AddLog("Spells.CastBard(\"" + Language.GetString(s.Name) + "\")");
 			}
 			else // InvokeVirtue
 			{

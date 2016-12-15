@@ -140,7 +140,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsSpells =
 			{
-				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism"
+				"Spells.CastMagery", "Spells.CastNecro", "Spells.CastChivalry", "Spells.CastBushido", "Spells.CastNinjitsu", "Spells.CastSpellweaving", "Spells.CastMysticism", "Spells.CastBard"
 			};
 
 			string[] methodsMobiles =
@@ -459,6 +459,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Spells.CastMysticism(string)", new string[] { "string SpellName" }, "void", "Cast a mysticism spell by spell name\n\tCheck the wiki for the possible strings");
 			descriptionSpells.Add("Spells.CastMysticism", tooltip);
+
+			tooltip = new ToolTipDescriptions("Spells.CastBard(string)", new string[] { "string SpellName" }, "void", "Cast a bard spell by spell name\n\tCheck the wiki for the possible strings");
+			descriptionSpells.Add("Spells.CastBard", tooltip);
 
 			#endregion
 
