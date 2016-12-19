@@ -1359,7 +1359,7 @@ namespace RazorEnhanced
 				general.Columns.Add("PosXGrid", typeof(int));
 				general.Columns.Add("PosYGrid", typeof(int));
 				general.Columns.Add("GridVSlot", typeof(int));
-				general.Columns.Add("GridHSlot", typeof(string));
+				general.Columns.Add("GridHSlot", typeof(int));
 
 				// Parametri Tab (Screenshot)
 				general.Columns.Add("CapPath", typeof(string));
