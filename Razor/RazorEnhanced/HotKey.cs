@@ -374,7 +374,7 @@ namespace RazorEnhanced
 			if (itemtodrop != null && itemtodrop.Movable && itemtodrop.RootContainer == World.Player)
 			{
 				Assistant.ClientCommunication.SendToServer(new LiftRequest(itemtodrop.Serial, itemtodrop.Amount));
-				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtodrop.Serial, World.Player.Position, Assistant.Serial.Zero));
+				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtodrop.Serial, World.Player.Position, Assistant.Serial.MinusOne));
 			}
 			else
 				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");

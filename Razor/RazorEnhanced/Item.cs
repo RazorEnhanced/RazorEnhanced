@@ -716,20 +716,12 @@ namespace RazorEnhanced
 			if (x != -1 && y != -1)
 				loc = new Assistant.Point3D(x, y, z);
 
-			if (amount == 0)
-			{
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
-			}
-			else
-			{
-				if (item.Amount < amount)
-				{
-					amount = item.Amount;
-				}
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
-			}
+			int amounttodrop = amount;
+			if ((item.Amount < amount) || (amount == 0))
+                amounttodrop = item.Amount;
+
+			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amounttodrop));
+			Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, loc, Assistant.Serial.MinusOne));
 		}
 
 		public static void DropItemGroundSelf(Item item, int amount)
@@ -739,21 +731,19 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: DropItemGroundSelf: Item not found");
 				return;
 			}
-			if (amount == 0)
-			{
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.MinusOne));
-			}
-			else
-			{
-				if (item.Amount < amount)
-				{
-					amount = item.Amount;
-				}
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, World.Player.Position, Assistant.Serial.MinusOne));
-			}
+
+			int amounttodrop = amount;
+			if ((item.Amount < amount) || (amount == 0))
+                amounttodrop = item.Amount;
+
+			MoveOnGround(item.Serial, amount, Player.Position.X, Player.Position.Y, Player.Position.Z);
 		}
+
+		public static void DropItemGroundSelf(int serialitem, int amount)
+		{
+			Item i = FindBySerial(serialitem);
+			DropItemGroundSelf(i, amount);
+        }
 
 		public static void UseItem(Item item)
 		{
