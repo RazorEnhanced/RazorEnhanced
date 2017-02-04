@@ -249,8 +249,8 @@ namespace RazorEnhanced
 
 		internal static void Record_ContextMenuResponse(int serial, ushort idx)
 		{
-			AddLog("Gumps.WaitForContext(" + idx + ", 10000)");
-			AddLog("Gumps.ContextReply(" + serial.ToString("X8") + ", " + idx + ")");
+			AddLog("Misc.WaitForContext(" + idx + ", 10000)");
+			AddLog("Misc.ContextReply(" + serial.ToString("X8") + ", " + idx + ")");
 		}
 
 		internal static void Record_ResponseStringQuery(byte yesno, string text)
