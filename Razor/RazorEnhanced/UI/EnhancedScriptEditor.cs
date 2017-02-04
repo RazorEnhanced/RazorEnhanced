@@ -271,7 +271,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player.StatCap", "Player.AR", "Player.FireResistance", "Player.ColdResistance", "Player.EnergyResistance",
 				"Player.PoisonResistance",
-				"Player.Buffs", "Player.IsGhost", "Player.Female", "Player.Name", "Player.Bankbox",
+				"Player.Buffs", "Player.IsGhost", "Player.Female", "Player.Name", "Player.Bank",
 				"Player.Gold", "Player.Luck", "Player.Body",
 				"Player.Followers", "Player.FollowersMax", "Player.MaxWeight", "Player.Str", "Player.Dex", "Player.Int"
 			};
