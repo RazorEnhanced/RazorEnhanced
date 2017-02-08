@@ -57,18 +57,14 @@ namespace RazorEnhanced
 				try
 				{
 					int itemserial = 0;
-					AutoLootSerialToGrab.TryPeek(out itemserial);
+					AutoLootSerialToGrab.TryDequeue(out itemserial);
 					Assistant.Item item = Assistant.World.FindItem(itemserial);
+
 					if (item == null)
-					{
-						AutoLootSerialToGrab.TryDequeue(out itemserial);
 						return;
-					}
+
 					if (item.RootContainer == World.Player)
-					{
-						AutoLootSerialToGrab.TryDequeue(out itemserial);
 						return;
-					}
 
 					Assistant.Item corpse = null;
 					corpse = item.Container as Assistant.Item;
@@ -93,11 +89,6 @@ namespace RazorEnhanced
                             Thread.Sleep(AutoLoot.AutoLootDelay);
 						}
 					}
-					else
-					{
-						AutoLootSerialToGrab.TryDequeue(out itemserial);
-						AutoLootSerialToGrab.Enqueue(itemserial);
-					}
 				}
 				catch { }
 			}
@@ -107,18 +98,15 @@ namespace RazorEnhanced
 				try
 				{
 					int itemserial = 0;
-					ScavengerSerialToGrab.TryPeek(out itemserial);
+					ScavengerSerialToGrab.TryDequeue(out itemserial);
 					Assistant.Item item = Assistant.World.FindItem(itemserial);
+
 					if (item == null)
-					{
-						ScavengerSerialToGrab.TryDequeue(out itemserial);
 						return;
-					}
+
 					if (item.RootContainer == World.Player)
-					{
-						ScavengerSerialToGrab.TryDequeue(out itemserial);
 						return;
-					}
+
 					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 2) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 					{
 						if ((World.Player.MaxWeight - World.Player.Weight) < 5)
@@ -134,11 +122,6 @@ namespace RazorEnhanced
 							Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, Scavenger.ScavengerBag));
 							Thread.Sleep(Scavenger.ScavengerDelay);
 						}
-					}
-					else
-					{
-						ScavengerSerialToGrab.TryDequeue(out itemserial);
-						ScavengerSerialToGrab.Enqueue(itemserial);
 					}
 				}
 				catch { }
