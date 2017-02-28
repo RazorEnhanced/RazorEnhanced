@@ -327,6 +327,9 @@ namespace RazorEnhanced
 
 			// Riapro toollbar se le condizioni lo permettono
 			RazorEnhanced.ToolBar.Open();
+
+			// Riapro la spellgrid se le condizioni lo permettono
+			RazorEnhanced.SpellGrid.Open();
 		}
 
 		internal static void Save()
