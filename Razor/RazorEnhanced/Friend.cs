@@ -89,13 +89,13 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (Engine.Running)
-			{
-				Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Add(addlog)));
-				Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.SelectedIndex = Engine.MainWindow.FriendLogBox.Items.Count - 1));
-				if (Assistant.Engine.MainWindow.FriendLogBox.Items.Count > 300)
-					Assistant.Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendLogBox.Items.Clear()));
-			}
+			if (!Engine.Running)
+				return;
+
+			Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Add(addlog)));
+			Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.SelectedIndex = Engine.MainWindow.FriendLogBox.Items.Count - 1));
+			if (Assistant.Engine.MainWindow.FriendLogBox.Items.Count > 300)
+				Assistant.Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendLogBox.Items.Clear()));
 		}
 
 		internal static bool IncludeParty
@@ -214,7 +214,7 @@ namespace RazorEnhanced
 
 			}
 
-			FriendList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			FriendList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.FriendListSelect.Text)
 				return;
 
@@ -223,17 +223,17 @@ namespace RazorEnhanced
 			{
 				Assistant.Engine.MainWindow.FriendListSelect.Items.Add(l.Description);
 
-				if (l.Selected)
-				{
-					Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = Assistant.Engine.MainWindow.FriendListSelect.Items.IndexOf(l.Description);
-					IncludeParty = l.IncludeParty;
-					PreventAttack = l.PreventAttack;
-					AutoacceptParty = l.AutoacceptParty;
-					SLFriend = l.SLFriend;
-					TBFriend = l.TBFriend;
-					COMFriend = l.COMFriend;
-					MINFriend = l.MINFRiend;
-				}
+				if (!l.Selected)
+					continue;
+
+				Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = Assistant.Engine.MainWindow.FriendListSelect.Items.IndexOf(l.Description);
+				IncludeParty = l.IncludeParty;
+				PreventAttack = l.PreventAttack;
+				AutoacceptParty = l.AutoacceptParty;
+				SLFriend = l.SLFriend;
+				TBFriend = l.TBFriend;
+				COMFriend = l.COMFriend;
+				MINFriend = l.MINFRiend;
 			}
 		}
 
@@ -245,22 +245,22 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.FriendListView.Items.Clear();
 			foreach (FriendList l in lists)
 			{
-				if (l.Selected)
+				if (!l.Selected)
+					continue;
+
+				List<Friend.FriendPlayer> players;
+				RazorEnhanced.Settings.Friend.PlayersRead(l.Description, out players);
+
+				foreach (FriendPlayer player in players)
 				{
-					List<Friend.FriendPlayer> players;
-					RazorEnhanced.Settings.Friend.PlayersRead(l.Description, out players);
+					ListViewItem listitem = new ListViewItem();
 
-					foreach (FriendPlayer player in players)
-					{
-						ListViewItem listitem = new ListViewItem();
+					listitem.Checked = player.Selected;
 
-						listitem.Checked = player.Selected;
+					listitem.SubItems.Add(player.Name);
+					listitem.SubItems.Add("0x" + player.Serial.ToString("X8"));
 
-						listitem.SubItems.Add(player.Name);
-						listitem.SubItems.Add("0x" + player.Serial.ToString("X8"));
-
-						Assistant.Engine.MainWindow.FriendListView.Items.Add(listitem);
-					}
+					Assistant.Engine.MainWindow.FriendListView.Items.Add(listitem);
 				}
 			}
 		}
@@ -273,21 +273,21 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.FriendGuildListView.Items.Clear();
 			foreach (FriendList l in lists)
 			{
-				if (l.Selected)
+				if (!l.Selected)
+					continue;
+
+				List<Friend.FriendGuild> guilds;
+				RazorEnhanced.Settings.Friend.GuildRead(l.Description, out guilds);
+
+				foreach (FriendGuild guild in guilds)
 				{
-					List<Friend.FriendGuild> guilds;
-					RazorEnhanced.Settings.Friend.GuildRead(l.Description, out guilds);
+					ListViewItem listitem = new ListViewItem();
 
-					foreach (FriendGuild guild in guilds)
-					{
-						ListViewItem listitem = new ListViewItem();
+					listitem.Checked = guild.Selected;
 
-						listitem.Checked = guild.Selected;
+					listitem.SubItems.Add(guild.Name);
 
-						listitem.SubItems.Add(guild.Name);
-
-						Assistant.Engine.MainWindow.FriendGuildListView.Items.Add(listitem);
-					}
+					Assistant.Engine.MainWindow.FriendGuildListView.Items.Add(listitem);
 				}
 			}
 		}
@@ -363,11 +363,11 @@ namespace RazorEnhanced
             RazorEnhanced.Settings.Friend.PlayersRead(Friend.FriendListName, out players);
             foreach (FriendPlayer player in players)        // Ricerca nella friend list normale
             {
-                if (player.Selected)
-                {
-                    if (player.Serial == serial)
-                        return true;
-                }
+	            if (!player.Selected)
+					continue;
+
+	            if (player.Serial == serial)
+		            return true;
             }
 
             if (Friend.IncludeParty && PacketHandlers.Party.Contains(serial))            // Ricerco nel party se attiva l'opzione
@@ -402,11 +402,11 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.Friend.GuildRead(Friend.FriendListName, out guilds);
 			foreach (FriendGuild guild in guilds)
 			{
-				if (guild.Selected)
-				{
-					if (GetGuild(guild.Name, serial))
-						return true;
-				}
+				if (!guild.Selected)
+					continue;
+
+				if (GetGuild(guild.Name, serial))
+					return true;
 			}
 			return false;
 		}
@@ -419,12 +419,12 @@ namespace RazorEnhanced
 			if (target == null)
 				return false;
 
-			if (target.ObjPropList.Content.Count > 0)
-			{
-				string firstProp = target.ObjPropList.Content[0].ToString();
-				if (firstProp.Contains(string.Format("[{0}]", name)))
-					return true;
-			}
+			if (target.ObjPropList.Content.Count <= 0)
+				return false;
+
+			string firstProp = target.ObjPropList.Content[0].ToString();
+			if (firstProp.Contains(string.Format("[{0}]", name)))
+				return true;
 			return false;
 		}
 

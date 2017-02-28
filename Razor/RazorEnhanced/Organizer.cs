@@ -139,13 +139,13 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (Assistant.Engine.Running)
-			{
-				Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.Items.Add(addlog)));
-				Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.SelectedIndex = Assistant.Engine.MainWindow.OrganizerLogBox.Items.Count - 1));
-				if (Assistant.Engine.MainWindow.OrganizerLogBox.Items.Count > 300)
-					Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.Items.Clear()));
-			}
+			if (!Assistant.Engine.Running)
+				return;
+
+			Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.Items.Add(addlog)));
+			Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.SelectedIndex = Assistant.Engine.MainWindow.OrganizerLogBox.Items.Count - 1));
+			if (Assistant.Engine.MainWindow.OrganizerLogBox.Items.Count > 300)
+				Assistant.Engine.MainWindow.OrganizerLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.OrganizerLogBox.Items.Clear()));
 		}
 
 		internal static void RefreshLists()
@@ -156,7 +156,7 @@ namespace RazorEnhanced
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
 
-			OrganizerList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			OrganizerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
 				return;
 
@@ -165,13 +165,13 @@ namespace RazorEnhanced
 			{
 				Assistant.Engine.MainWindow.OrganizerListSelect.Items.Add(l.Description);
 
-				if (l.Selected)
-				{
-					Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(l.Description);
-					OrganizerDelay = l.Delay;
-					OrganizerSource = l.Source;
-					OrganizerDestination = l.Destination;
-				}
+				if (!l.Selected)
+					continue;
+
+				Assistant.Engine.MainWindow.OrganizerListSelect.SelectedIndex = Assistant.Engine.MainWindow.OrganizerListSelect.Items.IndexOf(l.Description);
+				OrganizerDelay = l.Delay;
+				OrganizerSource = l.Source;
+				OrganizerDestination = l.Destination;
 			}
 		}
 
@@ -183,32 +183,32 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
 			foreach (OrganizerList l in lists)
 			{
-				if (l.Selected)
+				if (!l.Selected)
+					continue;
+
+				List<Organizer.OrganizerItem> items;
+				RazorEnhanced.Settings.Organizer.ItemsRead(l.Description, out items);
+
+				foreach (OrganizerItem item in items)
 				{
-					List<Organizer.OrganizerItem> items;
-					RazorEnhanced.Settings.Organizer.ItemsRead(l.Description, out items);
+					ListViewItem listitem = new ListViewItem();
 
-					foreach (OrganizerItem item in items)
-					{
-						ListViewItem listitem = new ListViewItem();
+					listitem.Checked = item.Selected;
 
-						listitem.Checked = item.Selected;
+					listitem.SubItems.Add(item.Name);
+					listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
 
-						listitem.SubItems.Add(item.Name);
-						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+					if (item.Color == -1)
+						listitem.SubItems.Add("All");
+					else
+						listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
 
-						if (item.Color == -1)
-							listitem.SubItems.Add("All");
-						else
-							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+					if (item.Amount == -1)
+						listitem.SubItems.Add("All");
+					else
+						listitem.SubItems.Add(item.Amount.ToString());
 
-						if (item.Amount == -1)
-							listitem.SubItems.Add("All");
-						else
-							listitem.SubItems.Add(item.Amount.ToString());
-
-						Assistant.Engine.MainWindow.OrganizerListView.Items.Add(listitem);
-					}
+					Assistant.Engine.MainWindow.OrganizerListView.Items.Add(listitem);
 				}
 			}
 		}
@@ -311,36 +311,36 @@ namespace RazorEnhanced
 					if (!oggettoDaLista.Selected)
 						continue;
 
-					if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))     // Verifico il match fra colore e grafica
+					if (oggettoContenuto.ItemID != oggettoDaLista.Graphics || !ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))
+						continue;
+
+					// Controllo amount e caso -1
+					if (oggettoDaLista.Amount == -1) // Sposta senza contare
 					{
-						// Controllo amount e caso -1
-						if (oggettoDaLista.Amount == -1) // Sposta senza contare
+						RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
+						RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move: All ");
+						RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
+						Thread.Sleep(mseconds);
+					}
+					else   // Caso con limite quantita'
+					{
+						if (oggettoContenuto.Amount <= oggettoDaLista.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti
 						{
+							RazorEnhanced.Organizer.AddLog("n");
+
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
-							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move: All ");
+							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
 							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
 							Thread.Sleep(mseconds);
 						}
-						else   // Caso con limite quantita'
+						else  // Caso che lo stack sia superiore (sposta solo un blocco)
 						{
-							if (oggettoContenuto.Amount <= oggettoDaLista.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti
-							{
-								RazorEnhanced.Organizer.AddLog("n");
+							RazorEnhanced.Organizer.AddLog("s");
 
-								RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
-								RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
-								RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
-								Thread.Sleep(mseconds);
-							}
-							else  // Caso che lo stack sia superiore (sposta solo un blocco)
-							{
-								RazorEnhanced.Organizer.AddLog("s");
-
-								RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
-								RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
-								RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, oggettoDaLista.Amount);
-								Thread.Sleep(mseconds);
-							}
+							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
+							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
+							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, oggettoDaLista.Amount);
+							Thread.Sleep(mseconds);
 						}
 					}
 				}

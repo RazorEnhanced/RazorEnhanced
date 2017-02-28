@@ -133,19 +133,20 @@ namespace RazorEnhanced
 				{
 					int number = property.Number;
 					string args = property.Args;
-					if (number == 1072788)
+					switch (number)
 					{
-						return 1;       // Peso 1 se cliloc è 1072788
+						case 1072788:
+							return 1;       // Peso 1 se cliloc è 1072788
+						case 1072789:
+							try
+							{
+								return Convert.ToInt32(args);  // Ritorna valore peso
+							}
+							catch
+							{
+								return 1;  // errore di conversione torna peso  1
+							}
 					}
-					if (number == 1072789)
-						try
-						{
-							return Convert.ToInt32(args);  // Ritorna valore peso
-						}
-						catch
-						{
-							return 1;  // errore di conversione torna peso  1
-						}
 				}
 				return 0;  // item senza peso
 			}
@@ -159,38 +160,38 @@ namespace RazorEnhanced
 				foreach (Property property in properties)
 				{
 					int number = property.Number;
-					if (number == 1060639)
+					if (number != 1060639)
+						continue;
+
+					string Text = property.Args;
+					int step = 0;
+					string Durability = "";
+
+					for (int i = 0; i <= Text.Length - 1; i++)
 					{
-						string Text = property.Args;
-						int step = 0;
-						string Durability = "";
+						if (step == 0)
+							if (Char.IsNumber(Text[i]))
+							{
+								Durability = Durability + Text[i];
+								step = 1;
+								i++;
+							}
+						if (step == 1)
+							if (Char.IsNumber(Text[i]))
+							{
+								Durability = Durability + Text[i];
+							}
+							else
+								step = 2;
+					}
 
-						for (int i = 0; i <= Text.Length - 1; i++)
-						{
-							if (step == 0)
-								if (Char.IsNumber(Text[i]))
-								{
-									Durability = Durability + Text[i];
-									step = 1;
-									i++;
-								}
-							if (step == 1)
-								if (Char.IsNumber(Text[i]))
-								{
-									Durability = Durability + Text[i];
-								}
-								else
-									step = 2;
-						}
-
-						try
-						{
-							return Convert.ToInt32(Durability);  // Ritorna valore Dur
-						}
-						catch
-						{
-							return 0;  // errore di conversione torna 0
-						}
+					try
+					{
+						return Convert.ToInt32(Durability);  // Ritorna valore Dur
+					}
+					catch
+					{
+						return 0;  // errore di conversione torna 0
 					}
 				}
 				return 0; // item senza Dur
@@ -205,41 +206,41 @@ namespace RazorEnhanced
 				foreach (Property property in properties)
 				{
 					int number = property.Number;
-					if (number == 1060639)
+					if (number != 1060639)
+						continue;
+
+					string Text = property.Args;
+					string TempMaxDurability = "";
+					int step = 0;
+					string MaxDurability = "";
+					for (int y = Text.Length - 1; y != 0; y--)
 					{
-						string Text = property.Args;
-						string TempMaxDurability = "";
-						int step = 0;
-						string MaxDurability = "";
-						for (int y = Text.Length - 1; y != 0; y--)
-						{
-							if (step == 0)
-								if (Char.IsNumber(Text[y]))
-								{
-									TempMaxDurability = TempMaxDurability + Text[y];
-									step = 1;
-									y--;
-								}
-							if (step == 1)
-								if (Char.IsNumber(Text[y]))
-								{
-									TempMaxDurability = TempMaxDurability + Text[y];
-								}
-								else
-									step = 2;
-						}
-						for (int i = TempMaxDurability.Length - 1; i > -1; i--)
-						{
-							MaxDurability += TempMaxDurability[i];
-						}
-						try
-						{
-							return Convert.ToInt32(MaxDurability);  // Ritorna valore maxdur
-						}
-						catch
-						{
-							return 0;  // errore di conversione torna 0
-						}
+						if (step == 0)
+							if (Char.IsNumber(Text[y]))
+							{
+								TempMaxDurability = TempMaxDurability + Text[y];
+								step = 1;
+								y--;
+							}
+						if (step == 1)
+							if (Char.IsNumber(Text[y]))
+							{
+								TempMaxDurability = TempMaxDurability + Text[y];
+							}
+							else
+								step = 2;
+					}
+					for (int i = TempMaxDurability.Length - 1; i > -1; i--)
+					{
+						MaxDurability += TempMaxDurability[i];
+					}
+					try
+					{
+						return Convert.ToInt32(MaxDurability);  // Ritorna valore maxdur
+					}
+					catch
+					{
+						return 0;  // errore di conversione torna 0
 					}
 				}
 				return 0; // item senza maxdur
@@ -251,21 +252,22 @@ namespace RazorEnhanced
 	{
 		public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
-			if (bag.IsCorpse || bag.IsContainer)
+			if (!bag.IsCorpse && !bag.IsContainer)
+				return;
+
+			RazorEnhanced.Items.UseItem(bag);
+
+			if (bag.Updated)
+				return;
+
+			int subdelay = delay;
+			while (!bag.Updated)
 			{
-				RazorEnhanced.Items.UseItem(bag);
-				if (!bag.Updated)
-				{
-					int subdelay = delay;
-					while (!bag.Updated)
-					{
-						Thread.Sleep(2);
-						subdelay -= 2;
-						if (subdelay <= 0)
-							break;
-					}
-				}
-			}		
+				Thread.Sleep(2);
+				subdelay -= 2;
+				if (subdelay <= 0)
+					break;
+			}
 		}
 
 		public class Filter
@@ -390,146 +392,143 @@ namespace RazorEnhanced
 		{
 			Item result = null;
 
-			if (items.Count > 0)
+			if (items.Count <= 0)
+				return null;
+
+			switch (selector)
 			{
-				switch (selector)
-				{
-					case "Random":
-						result = items[Utility.Random(items.Count)] as Item;
-						break;
+				case "Random":
+					result = items[Utility.Random(items.Count)] as Item;
+					break;
 
-					case "Nearest":
-						Item nearest = items[0] as Item;
-						if (nearest != null)
+				case "Nearest":
+					Item nearest = items[0] as Item;
+					if (nearest != null)
+					{
+						double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
+						foreach (Item t in items)
 						{
-							double minDist = Misc.DistanceSqrt(Player.Position, nearest.Position);
-							for (int i = 0; i < items.Count; i++)
-							{
-								Item item = items[i] as Item;
-								if (item != null)
-								{
-									double dist = Misc.DistanceSqrt(Player.Position, item.Position);
-									if (dist < minDist)
-									{
-										nearest = item;
-										minDist = dist;
-									}
-								}
-							}
-							result = nearest;
-						}
-						break;
+							if (t == null)
+								continue;
 
-					case "Farthest":
-						Item farthest = items[0] as Item;
-						if (farthest != null)
-						{
-							double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
-							for (int i = 0; i < items.Count; i++)
-							{
-								Item item = items[i] as Item;
-								if (item != null)
-								{
-									double dist = Misc.DistanceSqrt(Player.Position, item.Position);
-									if (dist > maxDist)
-									{
-										farthest = item;
-										maxDist = dist;
-									}
-								}
-							}
-							result = farthest;
-						}
-						break;
+							double dist = Misc.DistanceSqrt(Player.Position, t.Position);
 
-					case "Less":
-						Item least = items[0] as Item;
-						if (least != null)
-						{
-							int minAmount = least.Amount;
-							for (int i = 0; i < items.Count; i++)
-							{
-								Item item = items[i] as Item;
-								if (item != null)
-								{
-									int amount = item.Amount;
-									if (amount < minAmount)
-									{
-										least = item;
-										minAmount = amount;
-									}
-								}
-							}
-							result = least;
-						}
-						break;
+							if (!(dist < minDist))
+								continue;
 
-					case "Most":
-						Item most = items[0] as Item;
-						if (most != null)
-						{
-							int maxAmount = most.Amount;
-							for (int i = 0; i < items.Count; i++)
-							{
-								Item item = items[i] as Item;
-								if (item != null)
-								{
-									int amount = item.Amount;
-									if (amount > maxAmount)
-									{
-										most = item;
-										maxAmount = amount;
-									}
-								}
-							}
-							result = most;
+							nearest = t;
+							minDist = dist;
 						}
-						break;
+						result = nearest;
+					}
+					break;
 
-					case "Weakest":
-						Item weakest = items[0] as Item;
-						if (weakest != null)
+				case "Farthest":
+					Item farthest = items[0] as Item;
+					if (farthest != null)
+					{
+						double maxDist = Misc.DistanceSqrt(Player.Position, farthest.Position);
+						foreach (Item t in items)
 						{
-							int minDur = weakest.Durability;
-							for (int i = 0; i < items.Count; i++)
-							{
-								Item item = items[i] as Item;
-								if (item != null)
-								{
-									int dur = item.Durability;
-									if (dur < minDur)
-									{
-										weakest = item;
-										minDur = dur;
-									}
-								}
-							}
-							result = weakest;
-						}
-						break;
+							if (t == null)
+								continue;
 
-					case "Strongest":
-						Item strongest = items[0] as Item;
-						if (strongest != null)
-						{
-							int maxDur = strongest.Amount;
-							for (int i = 0; i < items.Count; i++)
+							double dist = Misc.DistanceSqrt(Player.Position, t.Position);
+							if (dist > maxDist)
 							{
-								Item item = items[i] as Item;
-								if (item != null)
-								{
-									int dur = item.Durability;
-									if (dur > maxDur)
-									{
-										strongest = item;
-										maxDur = dur;
-									}
-								}
+								farthest = t;
+								maxDist = dist;
 							}
-							result = strongest;
 						}
-						break;
-				}
+						result = farthest;
+					}
+					break;
+
+				case "Less":
+					Item least = items[0] as Item;
+					if (least != null)
+					{
+						int minAmount = least.Amount;
+						foreach (Item t in items)
+						{
+							if (t == null)
+								continue;
+
+							int amount = t.Amount;
+							if (amount < minAmount)
+							{
+								least = t;
+								minAmount = amount;
+							}
+						}
+						result = least;
+					}
+					break;
+
+				case "Most":
+					Item most = items[0] as Item;
+					if (most != null)
+					{
+						int maxAmount = most.Amount;
+						foreach (Item t in items)
+						{
+							if (t == null)
+								continue;
+
+							int amount = t.Amount;
+
+							if (amount <= maxAmount)
+								continue;
+
+							most = t;
+							maxAmount = amount;
+						}
+						result = most;
+					}
+					break;
+
+				case "Weakest":
+					Item weakest = items[0] as Item;
+					if (weakest != null)
+					{
+						int minDur = weakest.Durability;
+						foreach (Item t in items)
+						{
+							if (t == null)
+								continue;
+
+							int dur = t.Durability;
+
+							if (dur >= minDur)
+								continue;
+
+							weakest = t;
+							minDur = dur;
+						}
+						result = weakest;
+					}
+					break;
+
+				case "Strongest":
+					Item strongest = items[0] as Item;
+					if (strongest != null)
+					{
+						int maxDur = strongest.Amount;
+						foreach (Item t in items)
+						{
+							if (t == null)
+								continue;
+
+							int dur = t.Durability;
+
+							if (dur <= maxDur)
+								continue;
+							strongest = t;
+							maxDur = dur;
+						}
+						result = strongest;
+					}
+					break;
 			}
 
 			return result;
@@ -826,18 +825,18 @@ namespace RazorEnhanced
 			if (i == null)
 				return;
 
-			if (!i.PropsUpdated)
-			{
-				ClientCommunication.SendToServerWait(new QueryProperties(i.Serial));
-				int subdelay = delay;
+			if (i.PropsUpdated)
+				return;
 
-				while (!i.PropsUpdated)
-				{
-					Thread.Sleep(2);
-					subdelay -= 2;
-					if (subdelay <= 0)
-						break;
-				}
+			ClientCommunication.SendToServerWait(new QueryProperties(i.Serial));
+			int subdelay = delay;
+
+			while (!i.PropsUpdated)
+			{
+				Thread.Sleep(2);
+				subdelay -= 2;
+				if (subdelay <= 0)
+					break;
 			}
 		}
 
@@ -846,13 +845,13 @@ namespace RazorEnhanced
 			List<string> propstringlist = new List<string>();
 			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
-			if (assistantItem != null)
+			if (assistantItem == null)
+				return propstringlist;
+
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 			{
-				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
-				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-				{
-					propstringlist.Add(prop.ToString());
-                }
+				propstringlist.Add(prop.ToString());
 			}
 			return propstringlist;
 		}
@@ -867,12 +866,12 @@ namespace RazorEnhanced
 			string propstring = "";
 			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
-			if (assistantItem != null)
-			{
-				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
-				if (props.Count > index)
-					propstring = props[index].ToString();
-			}
+			if (assistantItem == null)
+				return propstring;
+
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+			if (props.Count > index)
+				propstring = props[index].ToString();
 			return propstring;
 		}
 
@@ -891,43 +890,43 @@ namespace RazorEnhanced
 
 				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 				{
-					if (prop.ToString().ToLower().Contains(name.ToLower()))
+					if (!prop.ToString().ToLower().Contains(name.ToLower()))
+						continue;
+
+					if (prop.Args == null)  // Props esiste ma non ha valore
+						return 1;
+
+					string propstring = prop.Args;
+					bool subprops = false;
+					int i = 0;
+
+					if (propstring.Length > 7)
+						subprops = true;
+
+					try  // Etraggo il valore
 					{
-						if (prop.Args == null)  // Props esiste ma non ha valore
-							return 1;
-
-						string propstring = prop.Args;
-						bool subprops = false;
-						int i = 0;
-
-						if (propstring.Length > 7)
-							subprops = true;
-
-						try  // Etraggo il valore
+						string number = string.Empty;
+						foreach (char str in propstring)
 						{
-							string number = string.Empty;
-							foreach (char str in propstring)
+							if (subprops)
 							{
-								if (subprops)
-								{
-									if (i > 7)
-										if (char.IsDigit(str))
-											number += str.ToString();
-								}
-								else
-								{
+								if (i > 7)
 									if (char.IsDigit(str))
 										number += str.ToString();
-								}
-
-								i++;
 							}
-							return (Convert.ToInt32(number));
+							else
+							{
+								if (char.IsDigit(str))
+									number += str.ToString();
+							}
+
+							i++;
 						}
-						catch
-						{
-							return 1;  // errore di conversione ma esiste
-						}
+						return (Convert.ToInt32(number));
+					}
+					catch
+					{
+						return 1;  // errore di conversione ma esiste
 					}
 				}
 			}
@@ -968,7 +967,7 @@ namespace RazorEnhanced
 		public static int ContainerCount(Item container, int itemid, int color)
 		{
 			int count = 0;
-			if (container.IsContainer && container != null)
+			if (container != null && container.IsContainer)
 			{
 				foreach (RazorEnhanced.Item itemcontenuti in container.Contains)
 				{

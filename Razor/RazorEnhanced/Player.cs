@@ -1,6 +1,7 @@
 ﻿using Assistant;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RazorEnhanced
 {
@@ -645,12 +646,7 @@ namespace RazorEnhanced
 
 		public static bool BuffsExist(string buffname)
 		{
-			foreach (BuffIcon icon in Assistant.World.Player.Buffs)
-			{
-				if (GetBuffDescription(icon) == buffname)
-					return true;
-			}
-			return false;
+			return Assistant.World.Player.Buffs.Any(icon => GetBuffDescription(icon) == buffname);
 		}
 
 		// Layer
@@ -1715,10 +1711,7 @@ namespace RazorEnhanced
 		// Range
 		public static bool InRangeMobile(Mobile mob, int range)
 		{
-			if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range))
-				return true;
-			else
-				return false;
+			return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
 		}
 
 		public static bool InRangeMobile(int mobserial, int range)
@@ -1726,10 +1719,7 @@ namespace RazorEnhanced
 			Assistant.Mobile mob = World.FindMobile(mobserial);
 			if (mob != null)
 			{
-				if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range))
-					return true;
-				else
-					return false;
+				return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
 			}
 			else
 				return false;
@@ -1737,10 +1727,7 @@ namespace RazorEnhanced
 
 		public static bool InRangeItem(Item mob, int range)
 		{
-			if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range))
-				return true;
-			else
-				return false;
+			return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
 		}
 
 		public static bool InRangeItem(int itemserial, int range)
@@ -1748,10 +1735,7 @@ namespace RazorEnhanced
 			Assistant.Item item = World.FindItem(itemserial);
 			if (item != null)
 			{
-				if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), range))
-					return true;
-				else
-					return false;
+				return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), range);
 			}
 			else
 				return false;
@@ -1787,15 +1771,9 @@ namespace RazorEnhanced
 
 		public static List<string> GetPropStringList()
 		{
-			List<string> propstringlist = new List<string>();
-
 			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
-			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-			{
-				propstringlist.Add(prop.ToString());
-			}
 
-			return propstringlist;
+			return props.Select(prop => prop.ToString()).ToList();
 		}
 
 		public static string GetPropStringByIndex(int index)
@@ -1816,43 +1794,43 @@ namespace RazorEnhanced
 			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 			{
 				RazorEnhanced.Misc.SendMessage(prop.Args);
-				if (prop.ToString().ToLower().Contains(name.ToLower()))
+				if (!prop.ToString().ToLower().Contains(name.ToLower()))
+					continue;
+
+				if (prop.Args == null)  // Props esiste ma non ha valore
+					return 1;
+
+				string propstring = prop.Args;
+				bool subprops = false;
+				int i = 0;
+
+				if (propstring.Length > 7)
+					subprops = true;
+
+				try  // Etraggo il valore
 				{
-					if (prop.Args == null)  // Props esiste ma non ha valore
-						return 1;
-
-					string propstring = prop.Args;
-					bool subprops = false;
-					int i = 0;
-
-					if (propstring.Length > 7)
-						subprops = true;
-
-					try  // Etraggo il valore
+					string number = string.Empty;
+					foreach (char str in propstring)
 					{
-						string number = string.Empty;
-						foreach (char str in propstring)
+						if (subprops)
 						{
-							if (subprops)
-							{
-								if (i > 7)
-									if (char.IsDigit(str))
-										number += str.ToString();
-							}
-							else
-							{
+							if (i > 7)
 								if (char.IsDigit(str))
 									number += str.ToString();
-							}
-
-							i++;
 						}
-						return (Convert.ToInt32(number));
+						else
+						{
+							if (char.IsDigit(str))
+								number += str.ToString();
+						}
+
+						i++;
 					}
-					catch
-					{
-						return 1;  // errore di conversione ma esiste
-					}
+					return (Convert.ToInt32(number));
+				}
+				catch
+				{
+					return 1;  // errore di conversione ma esiste
 				}
 			}
 			return 0;  // Non esiste

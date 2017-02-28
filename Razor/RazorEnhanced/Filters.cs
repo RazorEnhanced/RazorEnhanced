@@ -186,17 +186,17 @@ namespace RazorEnhanced
 
 		internal static void CarveAutoRun()
 		{
-			int exit = Int32.MinValue;
-
 			// Genero filtro per corpi
-			Items.Filter corpseFilter = new Items.Filter();
-			corpseFilter.RangeMax = 3;
-			corpseFilter.Movable = false;
-			corpseFilter.IsCorpse = 1;
-			corpseFilter.OnGround = 1;
-			corpseFilter.Enabled = true;
+			Items.Filter corpseFilter = new Items.Filter
+			{
+				RangeMax = 3,
+				Movable = false,
+				IsCorpse = 1,
+				OnGround = 1,
+				Enabled = true
+			};
 
-			exit = AutoCarverEngine(corpseFilter);
+			AutoCarverEngine(corpseFilter);
 		}
 
 		//////////////// AUTOCARVER STOP ////////////////
@@ -234,8 +234,6 @@ namespace RazorEnhanced
 
 		internal static void BoneCutterRun()
 		{
-			int exit = Int32.MinValue;
-
 			// Genero filtro per ossa
 			Items.Filter bonesFilter = new Items.Filter();
 			bonesFilter.Graphics.Add(0x3968);
@@ -245,7 +243,7 @@ namespace RazorEnhanced
 			bonesFilter.OnGround = 1;
 			bonesFilter.Enabled = true;
 
-			exit = BoneCutterEngine(bonesFilter);
+			BoneCutterEngine(bonesFilter);
 		}
 
 		//////////////// BONE CUTTER STOP ////////////////

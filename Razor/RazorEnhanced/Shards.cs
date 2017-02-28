@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
@@ -105,13 +106,7 @@ namespace RazorEnhanced
 
 		internal static bool Exists(string description)
 		{
-			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-			{
-				if (((string)row["Description"]).ToLower() == description.ToLower())
-					return true;
-			}
-
-			return false;
+			return m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 		}
 
 		internal static void Insert(string description, string clientpath, string clientfolder, string host, string port, bool parchenc, bool osienc)
@@ -137,15 +132,7 @@ namespace RazorEnhanced
 
 		internal static void Update(string description, string clientpath, string clientfolder, string host, int port, bool parchenc, bool osienc, bool selected)
 		{
-			bool found = false;
-			foreach (DataRow row in m_Dataset.Tables["SHARDS"].Rows)
-			{
-				if ((string)row["Description"] == description)
-				{
-					found = true;
-					break;
-				}
-			}
+			bool found = m_Dataset.Tables["SHARDS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 			if (found)
 			{

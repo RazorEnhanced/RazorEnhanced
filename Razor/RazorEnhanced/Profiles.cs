@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
@@ -134,11 +135,11 @@ namespace RazorEnhanced
 		{
 			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
 			{
-				if ((string)row["Name"] == name)
-				{
-					row.Delete();
-					break;
-				}
+				if ((string) row["Name"] != name)
+					continue;
+
+				row.Delete();
+				break;
 			}
 
 			Save();
@@ -146,35 +147,17 @@ namespace RazorEnhanced
 
 		internal static bool Exist(string name)
 		{
-			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
-			{
-				if ((string)row["Name"] == name)
-					return true;
-			}
-
-			return false;
+			return m_Dataset.Tables["PROFILES"].Rows.Cast<DataRow>().Any(row => (string) row["Name"] == name);
 		}
 
 		internal static string IsLinked(int serial)
 		{
-			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
-			{
-				if ((int)row["PlayerSerial"] == serial)
-					return (string)row["Name"];
-			}
-
-			return null;
+			return (from DataRow row in m_Dataset.Tables["PROFILES"].Rows where (int) row["PlayerSerial"] == serial select (string) row["Name"]).FirstOrDefault();
 		}
 
 		internal static string GetLinkName(string profilename)
 		{
-			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
-			{
-				if ((string)row["Name"] == profilename)
-					return (string)row["PlayerName"];
-			}
-
-			return null;
+			return (from DataRow row in m_Dataset.Tables["PROFILES"].Rows where (string) row["Name"] == profilename select (string) row["PlayerName"]).FirstOrDefault();
 		}
 
 		internal static void Link(int serial, string profile, string playername)
@@ -247,7 +230,6 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.General.SaveExitData();
 
 			// Stop forzato di tutti gli script
-			// TODO X Magneto (Funzione STOP DI SCRIPT IN ESECUZIONE)
 
 			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)

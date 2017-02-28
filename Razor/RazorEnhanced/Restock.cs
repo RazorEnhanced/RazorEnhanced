@@ -137,13 +137,13 @@ namespace RazorEnhanced
 
 		internal static void AddLog(string addlog)
 		{
-			if (Assistant.Engine.Running)
-			{
-				Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.Items.Add(addlog)));
-				Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.SelectedIndex = Assistant.Engine.MainWindow.RestockLogBox.Items.Count - 1));
-				if (Assistant.Engine.MainWindow.RestockLogBox.Items.Count > 300)
-					Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.Items.Clear()));
-			}
+			if (!Assistant.Engine.Running)
+				return;
+
+			Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.Items.Add(addlog)));
+			Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.SelectedIndex = Assistant.Engine.MainWindow.RestockLogBox.Items.Count - 1));
+			if (Assistant.Engine.MainWindow.RestockLogBox.Items.Count > 300)
+				Assistant.Engine.MainWindow.RestockLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockLogBox.Items.Clear()));
 		}
 
 		internal static void RefreshLists()
@@ -154,7 +154,7 @@ namespace RazorEnhanced
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.RestockListView.Items.Clear();
 
-			RestockList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			RestockList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.RestockListSelect.Text)
 				return;
 
@@ -302,34 +302,34 @@ namespace RazorEnhanced
 			{
 				foreach (RestockItem oggettoDaLista in restockItemList)
 				{
-					if (oggettoDaLista.Selected)
+					if (!oggettoDaLista.Selected)
+						continue;
+
+					if (oggettoContenuto.ItemID != oggettoDaLista.Graphics || !ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))
+						continue;
+
+					int amountpresente = RazorEnhanced.Items.ContainerCount(destinationBag.Serial, oggettoDaLista.Graphics, oggettoDaLista.Color);
+					AddLog("Detected:" + amountpresente + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " on destination bag.");
+					int left = oggettoDaLista.AmountLimit - amountpresente;
+					if (left > 0)
 					{
-						if (oggettoContenuto.ItemID == oggettoDaLista.Graphics && ColorCheck(oggettoDaLista.Color, oggettoContenuto.Hue))     // Verifico il match fra colore e grafica
+						AddLog("Left:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " on destination bag.");
+						if (oggettoContenuto.Amount > left)
 						{
-							int amountpresente = RazorEnhanced.Items.ContainerCount(destinationBag.Serial, oggettoDaLista.Graphics, oggettoDaLista.Color);
-							AddLog("Detected:" + amountpresente + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " on destination bag.");
-							int left = oggettoDaLista.AmountLimit - amountpresente;
-							if (left > 0)
-							{
-								AddLog("Left:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " on destination bag.");
-								if (oggettoContenuto.Amount > left)
-								{
-									AddLog("Moving:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " to destination bag.");
-									RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, left);
-									Thread.Sleep(mseconds);
-								}
-								else
-								{
-									AddLog("Moving:" + oggettoContenuto.Amount + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " to destination bag.");
-									RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
-									Thread.Sleep(mseconds);
-								}
-							}
-							else
-							{
-								AddLog("Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " limit reached.");
-							}
+							AddLog("Moving:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " to destination bag.");
+							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, left);
+							Thread.Sleep(mseconds);
 						}
+						else
+						{
+							AddLog("Moving:" + oggettoContenuto.Amount + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " to destination bag.");
+							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
+							Thread.Sleep(mseconds);
+						}
+					}
+					else
+					{
+						AddLog("Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " limit reached.");
 					}
 				}
 			}

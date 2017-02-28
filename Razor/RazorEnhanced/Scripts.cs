@@ -21,44 +21,43 @@ namespace RazorEnhanced
 
 		internal static void SendMessageScriptError(string msg)
 		{
-			if (Assistant.World.Player != null)
-			{
-				if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
-					ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
-			}
+			if (Assistant.World.Player == null)
+				return;
+
+			if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
 		}
 
 		internal class EnhancedScript
 		{
 			internal void Start()
 			{
-				if (!IsRunning && IsUnstarted)
+				if (IsRunning || !IsUnstarted)
+					return;
+
+				try
 				{
-					try
+					m_Thread.Start();
+					while (!m_Thread.IsAlive)
 					{
-						m_Thread.Start();
-						while (!m_Thread.IsAlive)
-						{
-						}
-
-						m_Run = true;
 					}
-					catch { }
 
+					m_Run = true;
 				}
+				catch { }
 			}
 
 			private void AsyncStart()
 			{
-				if (m_Source != null)
+				if (m_Source == null)
+					return;
+
+				try
 				{
-					try
-					{
-						m_Source.Execute(m_Scope);
-					}
-					catch (Exception ex)
-					{
-					}
+					m_Source.Execute(m_Scope);
+				}
+				catch
+				{
 				}
 			}
 
@@ -362,89 +361,44 @@ namespace RazorEnhanced
 
 				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoLootThread))
 				{
-					try
-					{
-						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
-						m_AutoLootThread.Start();
-					}
-					catch (Exception ex)
-					{
-						AutoLoot.AddLog("Error in AutoLoot Thread, Restart");
-					}
+					m_AutoLootThread = new Thread(AutoLoot.AutoRun);
+					m_AutoLootThread.Start();
 				}
 
 				if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_ScavengerThread))
 				{
-					try
-					{
-						m_ScavengerThread = new Thread(Scavenger.AutoRun);
-						m_ScavengerThread.Start();
-					}
-					catch (Exception ex)
-					{
-						Scavenger.AddLog("Error in Scaveger Thread, Restart");
-					}
+					m_ScavengerThread = new Thread(Scavenger.AutoRun);
+					m_ScavengerThread.Start();
 				}
 
 				if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_BandageHealThread))
 				{
-					try
-					{
-						m_BandageHealThread = new Thread(BandageHeal.AutoRun);
-						m_BandageHealThread.Start();
-					}
-					catch (Exception ex)
-					{
-						BandageHeal.AddLog("Error in BandageHeal Thread, Restart");
-					}
+					m_BandageHealThread = new Thread(BandageHeal.AutoRun);
+					m_BandageHealThread.Start();
 				}
 
 				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && Assistant.Engine.Running && !IsRunningThread(m_DragDropThread))
 				{
-					try
-					{
-						m_DragDropThread = new Thread(DragDropManager.AutoRun);
-						m_DragDropThread.Start();
-					}
-					catch (Exception ex)
-					{
-					}
+					m_DragDropThread = new Thread(DragDropManager.AutoRun);
+					m_DragDropThread.Start();
 				}
 
 				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoCarverThread))
 				{
-					try
-					{
-						m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
-						m_AutoCarverThread.Start();
-					}
-					catch (Exception ex)
-					{
-					}
+					m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
+					m_AutoCarverThread.Start();
 				}
 
 				if (Filters.BoneCutter && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_BoneCutterThread))
 				{
-					try
-					{
-						m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
-						m_BoneCutterThread.Start();
-					}
-					catch (Exception ex)
-					{
-					}
+					m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
+					m_BoneCutterThread.Start();
 				}
 
 				if (Filters.AutoModeRemount && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoRemountThread))
 				{
-					try
-					{
-						m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
-						m_AutoRemountThread.Start();
-					}
-					catch (Exception ex)
-					{
-					}
+					m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
+					m_AutoRemountThread.Start();
 				}
 			}
 		}

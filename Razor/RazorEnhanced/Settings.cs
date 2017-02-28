@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
@@ -1563,13 +1564,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description, int delay, int bag, bool noopencorpse)
@@ -1592,15 +1587,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int bag, bool selected, bool noopencorpse)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -1674,13 +1661,7 @@ namespace RazorEnhanced
 
 			internal static bool ItemExists(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
 			{
-				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list && (RazorEnhanced.AutoLoot.AutoLootItem)row["Item"] == item)
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.AutoLoot.AutoLootItem) row["Item"] == item);
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
@@ -1744,13 +1725,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
-					{
-						if ((string)row["List"] == list)
-						{
-							itemsOut.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
-						}
-					}
+					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.AutoLoot.AutoLootItem) row["Item"]);
 				}
 
 				items = itemsOut;
@@ -1784,13 +1759,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description, int delay, int bag)
@@ -1812,15 +1781,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int bag, bool selected)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -1892,13 +1853,7 @@ namespace RazorEnhanced
 
 			internal static bool ItemExists(string list, RazorEnhanced.Scavenger.ScavengerItem item)
 			{
-				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list && (RazorEnhanced.Scavenger.ScavengerItem)row["Item"] == item)
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["SCAVENGER_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.Scavenger.ScavengerItem) row["Item"] == item);
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.Scavenger.ScavengerItem item)
@@ -1962,13 +1917,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
-					{
-						if ((string)row["List"] == list)
-						{
-							itemsOut.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
-						}
-					}
+					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Scavenger.ScavengerItem) row["Item"]);
 				}
 
 				items = itemsOut;
@@ -1999,13 +1948,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["ORGANIZER_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description, int delay, int source, int destination)
@@ -2028,15 +1971,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int source, int destination, bool selected)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["ORGANIZER_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -2110,13 +2045,7 @@ namespace RazorEnhanced
 
 			internal static bool ItemExists(string list, RazorEnhanced.Organizer.OrganizerItem item)
 			{
-				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list && (RazorEnhanced.Organizer.OrganizerItem)row["Item"] == item)
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["ORGANIZER_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.Organizer.OrganizerItem) row["Item"] == item);
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.Organizer.OrganizerItem item)
@@ -2180,13 +2109,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows)
-					{
-						if ((string)row["List"] == list)
-						{
-							itemsOut.Add((RazorEnhanced.Organizer.OrganizerItem)row["Item"]);
-						}
-					}
+					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Organizer.OrganizerItem) row["Item"]);
 				}
 
 				items = itemsOut;
@@ -2220,13 +2143,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["SELL_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description, int bag)
@@ -2247,15 +2164,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int bag, bool selected)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["SELL_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -2325,26 +2234,12 @@ namespace RazorEnhanced
 
 			internal static bool ItemExists(string list, RazorEnhanced.SellAgent.SellAgentItem item)
 			{
-				foreach (DataRow row in m_Dataset.Tables["SELL_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list && (RazorEnhanced.SellAgent.SellAgentItem)row["Item"] == item)
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["SELL_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.SellAgent.SellAgentItem) row["Item"] == item);
 			}
 
 			internal static int BagRead(string listname)
 			{
-				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == listname)
-					{
-						return (int)row["Bag"];
-					}
-				}
-
-				return 0;
+				return (from DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows where (string) row["Description"] == listname select (int) row["Bag"]).FirstOrDefault();
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.SellAgent.SellAgentItem item)
@@ -2429,13 +2324,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["BUY_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description)
@@ -2455,15 +2344,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, bool selected)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["BUY_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -2515,29 +2396,14 @@ namespace RazorEnhanced
 
 			internal static void ListsRead(out List<RazorEnhanced.BuyAgent.BuyAgentList> lists)
 			{
-				List<RazorEnhanced.BuyAgent.BuyAgentList> listsOut = new List<RazorEnhanced.BuyAgent.BuyAgentList>();
-
-				foreach (DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows)
-				{
-					string description = (string)row["Description"];
-					bool selected = (bool)row["Selected"];
-
-					RazorEnhanced.BuyAgent.BuyAgentList list = new RazorEnhanced.BuyAgent.BuyAgentList(description, selected);
-					listsOut.Add(list);
-				}
+				List<RazorEnhanced.BuyAgent.BuyAgentList> listsOut = (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows let description = (string) row["Description"] let selected = (bool) row["Selected"] select new RazorEnhanced.BuyAgent.BuyAgentList(description, selected)).ToList();
 
 				lists = listsOut;
 			}
 
 			internal static bool ItemExists(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
 			{
-				foreach (DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list && (RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"] == item)
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["BUY_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.BuyAgent.BuyAgentItem) row["Item"] == item);
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
@@ -2601,13 +2467,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows)
-					{
-						if ((string)row["List"] == list)
-						{
-							itemsOut.Add((RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"]);
-						}
-					}
+					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.BuyAgent.BuyAgentItem) row["Item"]);
 				}
 
 				items = itemsOut;
@@ -2622,13 +2482,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["DRESS_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description, int delay, int bag, bool conflict)
@@ -2653,15 +2507,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int bag, bool conflict, bool selected)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["DRESS_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -2739,13 +2585,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
-					{
-						if ((string)row["List"] == list)
-						{
-							itemsOut.Add((RazorEnhanced.Dress.DressItem)row["Item"]);
-						}
-					}
+					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Dress.DressItem) row["Item"]);
 				}
 
 				items = itemsOut;
@@ -2871,13 +2711,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["FRIEND_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description, bool includeparty, bool preventattack, bool autoacceptparty, bool slfriend, bool tbfriend, bool comfriend, bool minfriend)
@@ -2904,15 +2738,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, bool includeparty, bool preventattack, bool autoacceptparty, bool slfriend, bool tbfriend, bool comfriend, bool minfriend, bool selected)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["FRIEND_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -2995,26 +2821,12 @@ namespace RazorEnhanced
 
 			internal static bool PlayerExists(string list, RazorEnhanced.Friend.FriendPlayer player)
 			{
-				foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
-				{
-					RazorEnhanced.Friend.FriendPlayer dacercare = (RazorEnhanced.Friend.FriendPlayer)row["Player"];
-					if ((string)row["List"] == list && dacercare.Serial == player.Serial)
-						return true;
-				}
-
-				return false;
+				return (from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows let dacercare = (RazorEnhanced.Friend.FriendPlayer) row["Player"] where (string) row["List"] == list && dacercare.Serial == player.Serial select row).Any();
 			}
 
 			internal static bool GuildExists(string list, string guild)
 			{
-				foreach (DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows)
-				{
-					RazorEnhanced.Friend.FriendGuild dacercare = (RazorEnhanced.Friend.FriendGuild)row["Guild"];
-					if ((string)row["List"] == list && dacercare.Name == guild)
-						return true;
-				}
-
-				return false;
+				return (from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows let dacercare = (RazorEnhanced.Friend.FriendGuild) row["Guild"] where (string) row["List"] == list && dacercare.Name == guild select row).Any();
 			}
 
 			internal static void PlayerInsert(string list, RazorEnhanced.Friend.FriendPlayer player)
@@ -3133,13 +2945,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows)
-					{
-						if ((string)row["List"] == list)
-						{
-							playersOut.Add((RazorEnhanced.Friend.FriendPlayer)row["Player"]);
-						}
-					}
+					playersOut.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendPlayer) row["Player"]);
 				}
 
 				players = playersOut;
@@ -3151,13 +2957,7 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					foreach (DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows)
-					{
-						if ((string)row["List"] == list)
-						{
-							guildsOut.Add((RazorEnhanced.Friend.FriendGuild)row["Guild"]);
-						}
-					}
+					guildsOut.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendGuild) row["Guild"]);
 				}
 
 				guilds = guildsOut;
@@ -3177,16 +2977,16 @@ namespace RazorEnhanced
 
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
 				{
-					if ((string)row["Description"] == listname)
-					{
-						includepartyOut = (bool)row["IncludeParty"];
-						preventattackOut = (bool)row["PreventAttack"];
-						autoacceptpartyOut = (bool)row["AutoacceptParty"];
-						slfriendOut = (bool)row["SLFrinedCheckBox"];
-						tbfriendOut = (bool)row["TBFrinedCheckBox"];
-						comfriendOut = (bool)row["COMFrinedCheckBox"];
-						minfriendOut = (bool)row["MINFrinedCheckBox"];
-					}
+					if ((string) row["Description"] != listname)
+						continue;
+
+					includepartyOut = (bool)row["IncludeParty"];
+					preventattackOut = (bool)row["PreventAttack"];
+					autoacceptpartyOut = (bool)row["AutoacceptParty"];
+					slfriendOut = (bool)row["SLFrinedCheckBox"];
+					tbfriendOut = (bool)row["TBFrinedCheckBox"];
+					comfriendOut = (bool)row["COMFrinedCheckBox"];
+					minfriendOut = (bool)row["MINFrinedCheckBox"];
 				}
 				includeparty = includepartyOut;
 				preventattack = preventattackOut;
@@ -3206,13 +3006,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ListExists(string description)
 			{
-				foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
-				{
-					if (((string)row["Description"]).ToLower() == description.ToLower())
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["RESTOCK_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
 			internal static void ListInsert(string description, int delay, int source, int destination)
@@ -3235,15 +3029,7 @@ namespace RazorEnhanced
 
 			internal static void ListUpdate(string description, int delay, int source, int destination, bool selected)
 			{
-				bool found = false;
-				foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
-				{
-					if ((string)row["Description"] == description)
-					{
-						found = true;
-						break;
-					}
-				}
+				bool found = m_Dataset.Tables["RESTOCK_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
 				if (found)
 				{
@@ -3317,13 +3103,7 @@ namespace RazorEnhanced
 
 			internal static bool ItemExists(string list, RazorEnhanced.Restock.RestockItem item)
 			{
-				foreach (DataRow row in m_Dataset.Tables["RESTOCK_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list && (RazorEnhanced.Restock.RestockItem)row["Item"] == item)
-						return true;
-				}
-
-				return false;
+				return m_Dataset.Tables["RESTOCK_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.Restock.RestockItem) row["Item"] == item);
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.Restock.RestockItem item)
@@ -3427,15 +3207,7 @@ namespace RazorEnhanced
 		{
 			internal static List<RazorEnhanced.Filters.GraphChangeData> ReadAll()
 			{
-				List<RazorEnhanced.Filters.GraphChangeData> graphdatalist = new List<RazorEnhanced.Filters.GraphChangeData>();
-
-				foreach (DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows)
-				{
-					RazorEnhanced.Filters.GraphChangeData graphdata = (RazorEnhanced.Filters.GraphChangeData)row["Graph"];
-					graphdatalist.Add(graphdata);
-				}
-
-				return graphdatalist;
+				return (from DataRow row in m_Dataset.Tables["FILTER_GRAPH"].Rows select (RazorEnhanced.Filters.GraphChangeData) row["Graph"]).ToList();
 			}
 
 			internal static void Insert(int graphreal, int graphnew)
@@ -3502,24 +3274,12 @@ namespace RazorEnhanced
 		{
 			internal static List<TargetGUI.TargetGUIObjectList> ReadAll()
 			{
-				List<TargetGUI.TargetGUIObjectList> list = new List<TargetGUI.TargetGUIObjectList>();
-				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-				{
-					string name = (string)row["Name"];
-					TargetGUI.TargetGUIObject target = (TargetGUI.TargetGUIObject)row["TargetGUIObject"];
-					list.Add(new TargetGUI.TargetGUIObjectList(name, target));
-				}
-				return list;
+				return (from DataRow row in m_Dataset.Tables["TARGETS"].Rows let name = (string) row["Name"] let target = (TargetGUI.TargetGUIObject) row["TargetGUIObject"] select new TargetGUI.TargetGUIObjectList(name, target)).ToList();
 			}
 
 			internal static bool TargetExist(string targetid)
 			{
-				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-				{
-					if ((string)row["Name"] == targetid)
-						return true;
-				}
-				return false;
+				return m_Dataset.Tables["TARGETS"].Rows.Cast<DataRow>().Any(row => (string) row["Name"] == targetid);
 			}
 
 			internal static void TargetReplace(string targetid, TargetGUI.TargetGUIObject target, Keys k, bool pass)
@@ -3572,12 +3332,7 @@ namespace RazorEnhanced
 
 			internal static TargetGUI.TargetGUIObject TargetRead(string targetid)
 			{
-				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-				{
-					if ((string)row["Name"] == targetid)
-						return (TargetGUI.TargetGUIObject)row["TargetGUIObject"];
-				}
-				return null;
+				return (from DataRow row in m_Dataset.Tables["TARGETS"].Rows where (string) row["Name"] == targetid select (TargetGUI.TargetGUIObject) row["TargetGUIObject"]).FirstOrDefault();
 			}
 		}
 
@@ -3588,14 +3343,7 @@ namespace RazorEnhanced
 		{
 			internal static List<RazorEnhanced.ToolBar.ToolBarItem> ReadItems()
 			{
-				List<RazorEnhanced.ToolBar.ToolBarItem> itemsOut = new List<RazorEnhanced.ToolBar.ToolBarItem>();
-
-				foreach (DataRow row in m_Dataset.Tables["TOOLBAR_ITEMS"].Rows)
-				{
-					RazorEnhanced.ToolBar.ToolBarItem item = (RazorEnhanced.ToolBar.ToolBarItem)row["Item"];
-					itemsOut.Add(item);
-				}
-				return itemsOut;
+				return (from DataRow row in m_Dataset.Tables["TOOLBAR_ITEMS"].Rows select (RazorEnhanced.ToolBar.ToolBarItem) row["Item"]).ToList();
 			}
 
 			internal static RazorEnhanced.ToolBar.ToolBarItem ReadSelectedItem(int index)
@@ -3650,14 +3398,7 @@ namespace RazorEnhanced
 		{
 			internal static List<RazorEnhanced.SpellGrid.SpellGridItem> ReadItems()
 			{
-				List<RazorEnhanced.SpellGrid.SpellGridItem> itemsOut = new List<RazorEnhanced.SpellGrid.SpellGridItem>();
-
-				foreach (DataRow row in m_Dataset.Tables["SPELLGRID_ITEMS"].Rows)
-				{
-					RazorEnhanced.SpellGrid.SpellGridItem item = (RazorEnhanced.SpellGrid.SpellGridItem)row["Item"];
-					itemsOut.Add(item);
-				}
-				return itemsOut;
+				return (from DataRow row in m_Dataset.Tables["SPELLGRID_ITEMS"].Rows select (RazorEnhanced.SpellGrid.SpellGridItem) row["Item"]).ToList();
 			}
 
 			internal static RazorEnhanced.SpellGrid.SpellGridItem ReadSelectedItem(int index)
@@ -3733,42 +3474,17 @@ namespace RazorEnhanced
 
 			internal static List<RazorEnhanced.HotKey.HotKeyData> ReadTarget()
 			{
-				List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
-
-				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-				{
-					string name = (string)row["Name"];
-					Keys key = (Keys)row["HotKey"];
-					keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
-				}
-				return keydataOut;
+				return (from DataRow row in m_Dataset.Tables["TARGETS"].Rows let name = (string) row["Name"] let key = (Keys) row["HotKey"] select new RazorEnhanced.HotKey.HotKeyData(name, key)).ToList();
 			}
 
 			internal static List<RazorEnhanced.HotKey.HotKeyData> ReadScript()
 			{
-				List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
-
-				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
-				{
-					string name = (string)row["Filename"];
-					Keys key = (Keys)row["HotKey"];
-					keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
-				}
-				return keydataOut;
+				return (from DataRow row in m_Dataset.Tables["SCRIPTING"].Rows let name = (string) row["Filename"] let key = (Keys) row["HotKey"] select new RazorEnhanced.HotKey.HotKeyData(name, key)).ToList();
 			}
 
 			internal static List<RazorEnhanced.HotKey.HotKeyData> ReadDress()
 			{
-				List<RazorEnhanced.HotKey.HotKeyData> keydataOut = new List<RazorEnhanced.HotKey.HotKeyData>();
-
-				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
-				{
-					string name = (string)row["Description"];
-					Keys key = (Keys)row["HotKey"];
-
-					keydataOut.Add(new RazorEnhanced.HotKey.HotKeyData(name, key));
-				}
-				return keydataOut;
+				return (from DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows let name = (string) row["Description"] let key = (Keys) row["HotKey"] select new RazorEnhanced.HotKey.HotKeyData(name, key)).ToList();
 			}
 
 			internal static void UpdateKey(string name, Keys key, bool passkey)
@@ -3880,36 +3596,24 @@ namespace RazorEnhanced
 
 			internal static bool AssignedKey(Keys key)
 			{
-				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+				if (m_Dataset.Tables["HOTKEYS"].Rows.Cast<DataRow>().Any(row => (Keys)row["Key"] == key))
 				{
-					if ((Keys)row["Key"] == key)
-					{
-						return true;
-					}
+					return true;
 				}
 
-				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
+				if (m_Dataset.Tables["TARGETS"].Rows.Cast<DataRow>().Any(row => (Keys)row["HotKey"] == key))
 				{
-					if ((Keys)row["HotKey"] == key)
-					{
-						return true;
-					}
+					return true;
 				}
 
-				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+				if (m_Dataset.Tables["SCRIPTING"].Rows.Cast<DataRow>().Any(row => (Keys)row["HotKey"] == key))
 				{
-					if ((Keys)row["HotKey"] == key)
-					{
-						return true;
-					}
+					return true;
 				}
 
-				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
+				if (m_Dataset.Tables["DRESS_LISTS"].Rows.Cast<DataRow>().Any(row => (Keys)row["HotKey"] == key))
 				{
-					if ((Keys)row["HotKey"] == key)
-					{
-						return true;
-					}
+					return true;
 				}
 
 				if (RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey") == key)
@@ -3977,28 +3681,12 @@ namespace RazorEnhanced
 
 			internal static string FindString(Keys key)
 			{
-				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
-				{
-					if ((Keys)row["Key"] == key)
-					{
-						return (String)row["Name"];
-					}
-				}
-
-				return null;
+				return (from DataRow row in m_Dataset.Tables["HOTKEYS"].Rows where (Keys) row["Key"] == key select (String) row["Name"]).FirstOrDefault();
 			}
 
 			internal static string FindTargetString(Keys key)
 			{
-				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
-				{
-					if ((Keys)row["HotKey"] == key)
-					{
-						return (String)row["Name"];
-					}
-				}
-
-				return null;
+				return (from DataRow row in m_Dataset.Tables["TARGETS"].Rows where (Keys) row["HotKey"] == key select (String) row["Name"]).FirstOrDefault();
 			}
 
 			internal static void FindTargetData(string name, out Keys k, out bool pass)
@@ -4019,28 +3707,12 @@ namespace RazorEnhanced
 
 			internal static string FindScript(Keys key)
 			{
-				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
-				{
-					if ((Keys)row["HotKey"] == key)
-					{
-						return (String)row["Filename"];
-					}
-				}
-
-				return null;
+				return (from DataRow row in m_Dataset.Tables["SCRIPTING"].Rows where (Keys) row["HotKey"] == key select (String) row["Filename"]).FirstOrDefault();
 			}
 
 			internal static string FindDress(Keys key)
 			{
-				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
-				{
-					if ((Keys)row["HotKey"] == key)
-					{
-						return (String)row["Description"];
-					}
-				}
-
-				return null;
+				return (from DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows where (Keys) row["HotKey"] == key select (String) row["Description"]).FirstOrDefault();
 			}
 
 			internal static void FindGroup(Keys key, out string outgroup, out bool outpass)

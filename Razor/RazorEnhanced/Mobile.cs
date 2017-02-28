@@ -337,14 +337,7 @@ namespace RazorEnhanced
 					if (filter.Name != "")
 					{
 						Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
-						List<Assistant.Mobile> list = new List<Assistant.Mobile>();
-						foreach (Assistant.Mobile i in assistantMobiles)
-						{
-							if (rgx.IsMatch(i.Name))
-							{
-								list.Add(i);
-							}
-						}
+						List<Assistant.Mobile> list = assistantMobiles.Where(i => rgx.IsMatch(i.Name)).ToList();
 						assistantMobiles = list;
 					}
 
@@ -465,11 +458,11 @@ namespace RazorEnhanced
 
 							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
 
-							if (dist < closestDist || closest == null)
-							{
-								closestDist = dist;
-								closest = m;
-							}
+							if (!(dist < closestDist) && closest != null)
+								continue;
+
+							closestDist = dist;
+							closest = m;
 						}
 						result = closest;
 						break;
@@ -485,11 +478,11 @@ namespace RazorEnhanced
 
 							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
 
-							if (dist > farthestDist || farthest == null)
-							{
-								farthestDist = dist;
-								farthest = m;
-							}
+							if (!(dist > farthestDist) && farthest != null)
+								continue;
+
+							farthestDist = dist;
+							farthest = m;
 						}
 						result = farthest;
 						break;
@@ -499,17 +492,16 @@ namespace RazorEnhanced
 						if (weakest != null)
 						{
 							int minHits = weakest.Hits;
-							for (int i = 0; i < mobiles.Count; i++)
+							foreach (Mobile t in mobiles)
 							{
-								Mobile mob = mobiles[i] as Mobile;
-								if (mob != null)
+								if (t == null)
+									continue;
+
+								int wounds = t.Hits;
+								if (wounds < minHits)
 								{
-									int wounds = mob.Hits;
-									if (wounds < minHits)
-									{
-										weakest = mob;
-										minHits = wounds;
-									}
+									weakest = t;
+									minHits = wounds;
 								}
 							}
 							result = weakest;
@@ -521,18 +513,17 @@ namespace RazorEnhanced
 						if (strongest != null)
 						{
 							int maxHits = strongest.Hits;
-							for (int i = 0; i < mobiles.Count; i++)
+							foreach (Mobile t in mobiles)
 							{
-								Mobile mob = mobiles[i] as Mobile;
-								if (mob != null)
-								{
-									int wounds = mob.Hits;
-									if (wounds > maxHits)
-									{
-										strongest = mob;
-										maxHits = wounds;
-									}
-								}
+								if (t == null)
+									continue;
+
+								int wounds = t.Hits;
+								if (wounds <= maxHits)
+									continue;
+
+								strongest = t;
+								maxHits = wounds;
 							}
 							result = strongest;
 						}
@@ -622,18 +613,18 @@ namespace RazorEnhanced
 			if (m == null)
 				return;
 
-			if (!m.PropsUpdated)
-			{
-				ClientCommunication.SendToServerWait(new QueryProperties(m.Serial));
-				int subdelay = delay;
+			if (m.PropsUpdated)
+				return;
 
-				while (!m.PropsUpdated)
-				{
-					Thread.Sleep(2);
-					subdelay -= 2;
-					if (subdelay <= 0)
-						break;
-				}
+			ClientCommunication.SendToServerWait(new QueryProperties(m.Serial));
+			int subdelay = delay;
+
+			while (!m.PropsUpdated)
+			{
+				Thread.Sleep(2);
+				subdelay -= 2;
+				if (subdelay <= 0)
+					break;
 			}
 		}
 
@@ -642,13 +633,13 @@ namespace RazorEnhanced
 			List<string> propstringlist = new List<string>();
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
-			if (assistantMobile != null)
+			if (assistantMobile == null)
+				return propstringlist;
+
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 			{
-				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
-				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
-				{
-					propstringlist.Add(prop.ToString());
-				}
+				propstringlist.Add(prop.ToString());
 			}
 			return propstringlist;
 		}
@@ -663,12 +654,12 @@ namespace RazorEnhanced
 			string propstring = "";
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
-			if (assistantMobile != null)
-			{
-				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
-				if (props.Count > index)
-					propstring = props[index].ToString();
-			}
+			if (assistantMobile == null)
+				return propstring;
+
+			List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+			if (props.Count > index)
+				propstring = props[index].ToString();
 			return propstring;
 		}
 
@@ -688,43 +679,44 @@ namespace RazorEnhanced
 				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 				{
 					RazorEnhanced.Misc.SendMessage(prop.Args);
-					if (prop.ToString().ToLower().Contains(name.ToLower()))
+
+					if (!prop.ToString().ToLower().Contains(name.ToLower()))
+						continue;
+
+					if (prop.Args == null)  // Props esiste ma non ha valore
+						return 1;
+
+					string propstring = prop.Args;
+					bool subprops = false;
+					int i = 0;
+
+					if (propstring.Length > 7)
+						subprops = true;
+
+					try  // Etraggo il valore
 					{
-						if (prop.Args == null)  // Props esiste ma non ha valore
-							return 1;
-
-						string propstring = prop.Args;
-						bool subprops = false;
-						int i = 0;
-
-						if (propstring.Length > 7)
-							subprops = true;
-
-						try  // Etraggo il valore
+						string number = string.Empty;
+						foreach (char str in propstring)
 						{
-							string number = string.Empty;
-							foreach (char str in propstring)
+							if (subprops)
 							{
-								if (subprops)
-								{
-									if (i > 7)
-										if (char.IsDigit(str))
-											number += str.ToString();
-								}
-								else
-								{
+								if (i > 7)
 									if (char.IsDigit(str))
 										number += str.ToString();
-								}
-
-								i++;
 							}
-							return (Convert.ToInt32(number));
+							else
+							{
+								if (char.IsDigit(str))
+									number += str.ToString();
+							}
+
+							i++;
 						}
-						catch
-						{
-							return 1;  // errore di conversione ma esiste
-						}
+						return (Convert.ToInt32(number));
+					}
+					catch
+					{
+						return 1;  // errore di conversione ma esiste
 					}
 				}
 			}

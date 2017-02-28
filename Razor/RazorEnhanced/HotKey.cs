@@ -1458,9 +1458,9 @@ namespace RazorEnhanced
 
 		private static bool UseItemById(Assistant.Item cont, ushort find)
 		{
-			for (int i = 0; i < cont.Contains.Count; i++)
+			foreach (Assistant.Item t in cont.Contains)
 			{
-				Assistant.Item item = (Assistant.Item)cont.Contains[i];
+				Assistant.Item item = (Assistant.Item)t;
 
 				if (item.ItemID == find)
 				{
@@ -1478,9 +1478,9 @@ namespace RazorEnhanced
 
 		private static bool UseItemByIdHue(Assistant.Item cont, ushort find, ushort hue)
 		{
-			for (int i = 0; i < cont.Contains.Count; i++)
+			foreach (Assistant.Item t in cont.Contains)
 			{
-				Assistant.Item item = (Assistant.Item)cont.Contains[i];
+				Assistant.Item item = (Assistant.Item)t;
 
 				if (item.ItemID == find && item.Hue == hue)
 				{

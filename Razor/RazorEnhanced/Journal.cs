@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Linq;
 
 namespace RazorEnhanced
 {
@@ -40,12 +41,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
-				{
-					if (entrys.Text.Contains(text))
-						return true;
-				}
-				return false;
+				return World.Player.Journal.Any(entrys => entrys.Text.Contains(text));
 			}
 			catch
 			{
@@ -57,13 +53,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
-				{
-					if (entrys.Name == name)
-						if (entrys.Text.Contains(text))
-							return true;
-				}
-				return false;
+				return World.Player.Journal.Where(entrys => entrys.Name == name).Any(entrys => entrys.Text.Contains(text));
 			}
 			catch
 			{
@@ -75,13 +65,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
-				{
-					if (entrys.Color == color)
-						if (entrys.Text.Contains(text))
-							return true;
-				}
-				return false;
+				return World.Player.Journal.Where(entrys => entrys.Color == color).Any(entrys => entrys.Text.Contains(text));
 			}
 			catch
 			{
@@ -93,13 +77,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
-				{
-					if (entrys.Type.ToString() == type)
-						if (entrys.Text.Contains(text))
-							return true;
-				}
-				return false;
+				return World.Player.Journal.Where(entrys => entrys.Type.ToString() == type).Any(entrys => entrys.Text.Contains(text));
 			}
 			catch
 			{
@@ -130,11 +108,7 @@ namespace RazorEnhanced
 			List<string> result = new List<string>();
 			try
 			{
-				foreach (JournalEntry entrys in World.Player.Journal)
-				{
-					if (entrys.Name != null && entrys.Name != "")
-						result.Add(entrys.Name);
-                }
+				result.AddRange(from entrys in World.Player.Journal where !string.IsNullOrEmpty(entrys.Name) select entrys.Name);
 				return result;
 			}
 			catch

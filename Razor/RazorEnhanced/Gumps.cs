@@ -1,5 +1,6 @@
 using Assistant;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace RazorEnhanced
@@ -149,12 +150,7 @@ namespace RazorEnhanced
 		{
 			try
 			{
-				foreach (string stext in World.Player.CurrentGumpStrings)
-				{
-					if (stext.Contains(text))
-						return true;
-				}
-				return false;
+				return World.Player.CurrentGumpStrings.Any(stext => stext.Contains(text));
 			}
 			catch
 			{
@@ -173,10 +169,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					if (World.Player.CurrentGumpStrings[line].Contains(text))
-						return true;
-					else
-						return false;
+					return World.Player.CurrentGumpStrings[line].Contains(text);
 				}
 			}
 			catch
