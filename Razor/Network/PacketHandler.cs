@@ -199,21 +199,21 @@ namespace Assistant
 		{
 			m_Args.Reinit();
 
-			if (list != null)
-			{
-				for (int i = 0; i < list.Count; i++)
-				{
-					p.MoveToData();
+			if (list == null)
+				return m_Args.Block;
 
-					try
-					{
-						list[i](p, m_Args);
-					}
-					catch (Exception e)
-					{
-						Engine.LogCrash(e);
-						new MessageDialog("WARNING: Packet viewer exception!", true, e.ToString()).Show();
-					}
+			foreach (PacketViewerCallback t in list)
+			{
+				p.MoveToData();
+
+				try
+				{
+					t(p, m_Args);
+				}
+				catch (Exception e)
+				{
+					Engine.LogCrash(e);
+					new MessageDialog("WARNING: Packet viewer exception!", true, e.ToString()).Show();
 				}
 			}
 
@@ -224,21 +224,21 @@ namespace Assistant
 		{
 			m_Args.Reinit();
 
-			if (list != null)
-			{
-				for (int i = 0; i < list.Count; i++)
-				{
-					p.MoveToData();
+			if (list == null)
+				return m_Args.Block;
 
-					try
-					{
-						list[i](p, m_Args);
-					}
-					catch (Exception e)
-					{
-						Engine.LogCrash(e);
-						new MessageDialog("WARNING: Packet filter exception!", true, e.ToString()).Show();
-					}
+			foreach (PacketFilterCallback t in list)
+			{
+				p.MoveToData();
+
+				try
+				{
+					t(p, m_Args);
+				}
+				catch (Exception e)
+				{
+					Engine.LogCrash(e);
+					new MessageDialog("WARNING: Packet filter exception!", true, e.ToString()).Show();
 				}
 			}
 

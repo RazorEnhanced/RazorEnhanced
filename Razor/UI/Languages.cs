@@ -444,9 +444,7 @@ namespace Assistant
 		{
 			string value;
 			m_Strings.TryGetValue(key, out value);
-			if (value == null)
-				value = String.Format("LanguageString \"{0}\" not found!", key);//throw new MissingFieldException( String.Format( "Razor requested Language Pack string '{0}', but it does not exist in the current language pack.", key ) );
-			return value;
+			return value ?? (value = String.Format("LanguageString \"{0}\" not found!", key));
 		}
 
 		internal static string GetString(int key)
@@ -458,9 +456,7 @@ namespace Assistant
 			else if (m_CliLoc != null)
 				value = m_CliLoc.GetString(key);
 
-			if (value == null)
-				value = String.Format("LanguageString \"{0}\" not found!", key);
-			return value;
+			return value ?? (value = String.Format("LanguageString \"{0}\" not found!", key));
 		}
 
 		internal static string Format(int key, params object[] args)
@@ -622,8 +618,8 @@ namespace Assistant
 				StringBuilder sb = new StringBuilder();
 
 				sb.AppendFormat("Razor enountered errors on the following lines while loading the file '{0}'\r\n", filename);
-				for (int i = 0; i < errors.Count; i++)
-					sb.AppendFormat("Line {0}\r\n", errors[i]);
+				foreach (int t in errors)
+					sb.AppendFormat("Line {0}\r\n", t);
 
 				new MessageDialog("Language Pack Load Errors", true, sb.ToString()).Show();
 			}
@@ -700,10 +696,7 @@ namespace Assistant
 					result += element + '\t';
 			}
 
-			if (result[result.Length - 1] == '\t')
-				return result.Substring(0, result.Length - 1);
-			else
-				return result;
+			return result[result.Length - 1] == '\t' ? result.Substring(0, result.Length - 1) : result;
 		}
 
 		internal static string GetCliloc(int num)
@@ -713,10 +706,7 @@ namespace Assistant
 
 			StringEntry se = m_CliLoc.GetEntry(num);
 
-			if (se != null)
-				return se.Format();
-			else
-				return string.Empty;
+			return se != null ? se.Format() : string.Empty;
 		}
 
 		internal static string ClilocFormat(int num, string argstr)
@@ -726,10 +716,7 @@ namespace Assistant
 
 			StringEntry se = m_CliLoc.GetEntry(num);
 
-			if (se != null)
-				return se.SplitFormat(argstr);
-			else
-				return string.Empty;
+			return se != null ? se.SplitFormat(argstr) : string.Empty;
 		}
 
 		internal static string ClilocFormat(int num, params object[] args)
@@ -739,10 +726,7 @@ namespace Assistant
 
 			StringEntry se = m_CliLoc.GetEntry(num);
 
-			if (se != null)
-				return se.Format(args);
-			else
-				return string.Empty;
+			return se != null ? se.Format(args) : string.Empty;
 		}
 
 		private static void LoadControls(string name, System.Windows.Forms.Control.ControlCollection controls)

@@ -394,10 +394,10 @@ namespace Assistant
 
 			StringBuilder sb = new StringBuilder(s.Length);
 
-			for (int i = 0; i < s.Length; ++i)
+			foreach (char t in s)
 			{
-				if (IsSafeChar((int)s[i]))
-					sb.Append(s[i]);
+				if (IsSafeChar(t))
+					sb.Append(t);
 			}
 
 			return sb.ToString();
@@ -437,10 +437,10 @@ namespace Assistant
 
 			StringBuilder sb = new StringBuilder(s.Length);
 
-			for (int i = 0; i < s.Length; ++i)
+			foreach (char t in s)
 			{
-				if (IsSafeChar((int)s[i]))
-					sb.Append(s[i]);
+				if (IsSafeChar(t))
+					sb.Append(t);
 			}
 
 			return sb.ToString();
@@ -851,7 +851,6 @@ namespace Assistant
 			return m_Pos;
 		}
 
-		// ZIPPY REV 80		internal byte *Data { get { return m_Data; } }
 		internal int Length { get { return m_Length; } }
 
 		internal bool DynamicLength { get { return m_Dyn; } }
@@ -1054,10 +1053,10 @@ namespace Assistant
 
 			StringBuilder sb = new StringBuilder(s.Length);
 
-			for (int i = 0; i < s.Length; ++i)
+			foreach (char t in s)
 			{
-				if (IsSafeChar((int)s[i]))
-					sb.Append(s[i]);
+				if (IsSafeChar(t))
+					sb.Append(t);
 			}
 
 			return sb.ToString();
@@ -1097,10 +1096,10 @@ namespace Assistant
 
 			StringBuilder sb = new StringBuilder(s.Length);
 
-			for (int i = 0; i < s.Length; ++i)
+			foreach (char t in s)
 			{
-				if (IsSafeChar((int)s[i]))
-					sb.Append(s[i]);
+				if (IsSafeChar(t))
+					sb.Append(t);
 			}
 
 			return sb.ToString();

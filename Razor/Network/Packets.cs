@@ -392,7 +392,7 @@ namespace Assistant
 		internal UnicodeMessage(Serial serial, int graphic, MessageType type, int hue, int font, string lang, string name, string text)
 			: base(0xAE)
 		{
-			if (lang == null || lang == "") lang = "ENU";
+			if (string.IsNullOrEmpty(lang)) lang = "ENU";
 			if (name == null) name = "";
 			if (text == null) text = "";
 
@@ -417,7 +417,7 @@ namespace Assistant
 		internal ClientUniMessage(MessageType type, int hue, int font, string lang, List<ushort> keys, string text)
 			: base(0xAD)
 		{
-			if (lang == null || lang == "") lang = "ENU";
+			if (string.IsNullOrEmpty(lang)) lang = "ENU";
 			if (text == null) text = "";
 
 			this.EnsureCapacity(50 + (text.Length * 2) + (keys == null ? 0 : keys.Count + 1));
@@ -696,12 +696,12 @@ namespace Assistant
 			Write((int)bid);
 
 			Write((int)switches.Length);
-			for (int i = 0; i < switches.Length; i++)
-				Write((int)switches[i]);
+			foreach (int t in switches)
+				Write((int)t);
 			Write((int)entries.Length);
-			for (int i = 0; i < entries.Length; i++)
+			foreach (GumpTextEntry t in entries)
 			{
-				GumpTextEntry gte = (GumpTextEntry)entries[i];
+				GumpTextEntry gte = (GumpTextEntry)t;
 				Write((ushort)gte.EntryID);
 				Write((ushort)(gte.Text.Length * 2));
 				WriteBigUniFixed(gte.Text, gte.Text.Length);
@@ -746,10 +746,7 @@ namespace Assistant
 			: base(0x12)
 		{
 			string cmd;
-			if (book.IsItem)
-				cmd = String.Format("{0} {1}", spell, book.Value);
-			else
-				cmd = String.Format("{0}", spell);
+			cmd = book.IsItem ? String.Format("{0} {1}", spell, book.Value) : String.Format("{0}", spell);
 			EnsureCapacity(3 + 1 + cmd.Length + 1);
 			Write((byte)0x27);
 			WriteAsciiNull(cmd);
@@ -947,9 +944,8 @@ namespace Assistant
 			Write(vendor);
 			Write((byte)0x02); // flag
 
-			for (int i = 0; i < list.Count; i++)
+			foreach (VendorBuyItem vbi in list)
 			{
-				VendorBuyItem vbi = list[i];
 				Write((byte)0x1A); // layer?
 				Write(vbi.Serial);
 				Write((ushort)vbi.Amount);
@@ -1202,19 +1198,9 @@ namespace Assistant
 
 			Write((int)(patches.Length / 2));
 
-			for (int i = 0; i < patches.Length; i++)
-				Write((int)patches[i]);
-			/*Write( (int) Ultima.Map.Felucca.Tiles.Patch.StaticBlocks );
-			Write( (int) Ultima.Map.Felucca.Tiles.Patch.LandBlocks );
-
-			Write( (int) Ultima.Map.Trammel.Tiles.Patch.StaticBlocks );
-			Write( (int) Ultima.Map.Trammel.Tiles.Patch.LandBlocks );
-
-			Write( (int) Ultima.Map.Ilshenar.Tiles.Patch.StaticBlocks );
-			Write( (int) Ultima.Map.Ilshenar.Tiles.Patch.LandBlocks );
-
-			Write( (int) Ultima.Map.Malas.Tiles.Patch.StaticBlocks );
-			Write( (int) Ultima.Map.Malas.Tiles.Patch.LandBlocks );*/
+			foreach (int t in patches)
+				Write((int)t);
+			
 		}
 	}
 
@@ -1499,9 +1485,8 @@ namespace Assistant
 
 			int totalStairsUsed = 0;
 
-			for (int i = 0; i < tiles.Length; ++i)
+			foreach (MultiTileEntry mte in tiles)
 			{
-				MultiTileEntry mte = tiles[i];
 				int x = mte.m_OffsetX - xMin;
 				int y = mte.m_OffsetY - yMin;
 				int z = mte.m_OffsetZ;
@@ -1523,23 +1508,23 @@ namespace Assistant
 					case 47: plane = 3; break;
 					case 67: plane = 4; break;
 					default:
-						{
-							int stairBufferIndex = (totalStairsUsed / MaxItemsPerStairBuffer);
-							byte[] stairBuffer = m_StairBuffers[stairBufferIndex];
+					{
+						int stairBufferIndex = (totalStairsUsed / MaxItemsPerStairBuffer);
+						byte[] stairBuffer = m_StairBuffers[stairBufferIndex];
 
-							int byteIndex = (totalStairsUsed % MaxItemsPerStairBuffer) * 5;
+						int byteIndex = (totalStairsUsed % MaxItemsPerStairBuffer) * 5;
 
-							stairBuffer[byteIndex++] = (byte)((mte.m_ItemID >> 8) & 0x3F);
-							stairBuffer[byteIndex++] = (byte)mte.m_ItemID;
+						stairBuffer[byteIndex++] = (byte)((mte.m_ItemID >> 8) & 0x3F);
+						stairBuffer[byteIndex++] = (byte)mte.m_ItemID;
 
-							stairBuffer[byteIndex++] = (byte)mte.m_OffsetX;
-							stairBuffer[byteIndex++] = (byte)mte.m_OffsetY;
-							stairBuffer[byteIndex++] = (byte)mte.m_OffsetZ;
+						stairBuffer[byteIndex++] = (byte)mte.m_OffsetX;
+						stairBuffer[byteIndex++] = (byte)mte.m_OffsetY;
+						stairBuffer[byteIndex++] = (byte)mte.m_OffsetZ;
 
-							++totalStairsUsed;
+						++totalStairsUsed;
 
-							continue;
-						}
+						continue;
+					}
 				}
 
 				if (plane == 0)
@@ -1825,7 +1810,7 @@ namespace Assistant
 			Write((uint)promptid);
 			Write((uint)operation);
 
-			if (lang == null || lang == "")
+			if (string.IsNullOrEmpty(lang))
 				lang = "ENU";
 
 			WriteAsciiFixed(lang.ToUpper(), 4);

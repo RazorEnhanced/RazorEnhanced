@@ -143,7 +143,7 @@ namespace Assistant
 				}
 				string str = sb.ToString();
 				ushort atom = 0;
-				if (str != null && str.Length > 0)
+				if (!string.IsNullOrEmpty(str))
 					atom = GlobalAddAtom(str);
 				PostMessage(hWnd, Msg, (IntPtr)atom, IntPtr.Zero);
 			}
@@ -290,7 +290,7 @@ namespace Assistant
 					}
 				case UOAMessage.GET_SHARDNAME:
 					{
-						if (World.ShardName != null && World.ShardName.Length > 0)
+						if (!string.IsNullOrEmpty(World.ShardName))
 							return GlobalAddAtom(World.ShardName);
 						else
 							return 0;
@@ -368,11 +368,10 @@ namespace Assistant
 			if (pos == IntPtr.Zero)
 				return;
 
-			for (int i = 0; i < m_WndReg.Count; i++)
+			foreach (WndRegEnt t in m_WndReg)
 			{
-				WndRegEnt wnd = (WndRegEnt)m_WndReg[i];
-				if (wnd.Type == 1)
-					PostMessage((IntPtr)wnd.Handle, (uint)UOAMessage.REM_MULTI, pos, (IntPtr)item.ItemID.Value);
+				if (t.Type == 1)
+					PostMessage((IntPtr)t.Handle, (uint)UOAMessage.REM_MULTI, pos, (IntPtr)item.ItemID.Value);
 			}
 		}
 
@@ -383,11 +382,10 @@ namespace Assistant
 			if (pos == IntPtr.Zero)
 				return;
 
-			for (int i = 0; i < m_WndReg.Count; i++)
+			foreach (WndRegEnt t in m_WndReg)
 			{
-				WndRegEnt wnd = (WndRegEnt)m_WndReg[i];
-				if (wnd.Type == 1)
-					PostMessage((IntPtr)wnd.Handle, (uint)UOAMessage.ADD_MULTI, pos, (IntPtr)iid.Value);
+				if (t.Type == 1)
+					PostMessage((IntPtr)t.Handle, (uint)UOAMessage.ADD_MULTI, pos, (IntPtr)iid.Value);
 			}
 		}
 
@@ -420,21 +418,21 @@ namespace Assistant
 		private static void PostToWndReg(uint Msg, IntPtr wParam, IntPtr lParam)
 		{
 			List<WndRegEnt> rem = null;
-			for (int i = 0; i < m_WndReg.Count; i++)
+			foreach (WndRegEnt t in m_WndReg)
 			{
-				if (PostMessage((IntPtr)(m_WndReg[i]).Handle, Msg, wParam, lParam) == 0)
-				{
-					if (rem == null)
-						rem = new List<WndRegEnt>(1);
-					rem.Add(m_WndReg[i]);
-				}
+				if (PostMessage((IntPtr) (t).Handle, Msg, wParam, lParam) != 0)
+					continue;
+
+				if (rem == null)
+					rem = new List<WndRegEnt>(1);
+				rem.Add(t);
 			}
 
-			if (rem != null)
-			{
-				for (int i = 0; i < rem.Count; i++)
-					m_WndReg.Remove(rem[i]);
-			}
+			if (rem == null)
+				return;
+
+			foreach (WndRegEnt t in rem)
+				m_WndReg.Remove(t);
 		}
 
 		internal const int WM_UONETEVENT = WM_USER + 1;
@@ -604,10 +602,7 @@ namespace Assistant
 		{
 			int len = 1024;
 			StringBuilder sb = new StringBuilder(len);
-			if (GetUserNameA(sb, &len) != 0)
-				return sb.ToString();
-			else
-				return "";
+			return GetUserNameA(sb, &len) != 0 ? sb.ToString() : "";
 		}
 
 		private static ConcurrentQueue<Packet> m_SendQueue;
@@ -734,10 +729,7 @@ namespace Assistant
 				}
 			}
 
-			if (ClientProc == null)
-				return Loader_Error.UNKNOWN_ERROR;
-			else
-				return err;
+			return ClientProc == null ? Loader_Error.UNKNOWN_ERROR : err;
 		}
 
 		private static bool m_ClientEnc = false;
@@ -789,8 +781,7 @@ namespace Assistant
 
 			SetServer(m_ServerIP, m_ServerPort);
 
-			CommMutex = new Mutex();
-			CommMutex.SafeWaitHandle = (new SafeWaitHandle(GetCommMutex(), true));
+			CommMutex = new Mutex {SafeWaitHandle = (new SafeWaitHandle(GetCommMutex(), true))};
 
 			// ZIPPY REV 80			FwdMutex = new Mutex( false, String.Format( "UONetFwd_{0:X}", ClientProc.Id ) );
 			// ZIPPY REV 80			m_FwdWnd = IntPtr.Zero;
@@ -798,7 +789,7 @@ namespace Assistant
 			try
 			{
 				string path = Ultima.Files.GetFilePath("art.mul");
-				if (path != null && path != string.Empty)
+				if (!string.IsNullOrEmpty(path))
 					SetDataPath(Path.GetDirectoryName(path));
 				else
 					SetDataPath(Path.GetDirectoryName(Ultima.Files.Directory));
@@ -921,8 +912,8 @@ namespace Assistant
 				PacketHandlers.Party.Clear();
 
 				Engine.MainWindow.UpdateTitle();
-				for (int i = 0; i < m_WndReg.Count; i++)
-					PostMessage((IntPtr)((WndRegEnt)m_WndReg[i]).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
+				foreach (WndRegEnt t in m_WndReg)
+					PostMessage((IntPtr)((WndRegEnt)t).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnStart = DateTime.MinValue;
 			}
 
@@ -1216,15 +1207,6 @@ namespace Assistant
 			{
 				if (DateTime.Now > exittime)
 				{
-					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(0);
-					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
-					caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
-					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
-					caller = (new System.Diagnostics.StackTrace()).GetFrame(2);
-					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED server send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					break;
 				}
 			}
@@ -1259,15 +1241,6 @@ namespace Assistant
 			{
 				if (DateTime.Now > exittime)
 				{
-					StackFrame caller = (new System.Diagnostics.StackTrace()).GetFrame(0);
-					string methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
-					caller = (new System.Diagnostics.StackTrace()).GetFrame(1);
-					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
-					caller = (new System.Diagnostics.StackTrace()).GetFrame(2);
-					methodName = caller.GetMethod().Name;
-					Engine.LogCrash(new Exception("LOCK DETECTED client send: " + methodName + " Current Time: " + DateTime.Now + "Met: " + caller.ToString()));
 					break;
 				}
 			}
@@ -1356,23 +1329,6 @@ namespace Assistant
 			memcpy(to, from, new UIntPtr((uint)len));
 			buffer->Length += len;
 		}
-
-		// ZIPPY REV 80
-		/*
-				internal static void ForwardPacket( byte *data, int len )
-				{
-					if ( length > 0 )
-					{
-						int total = 0;
-						FwdMutex.WaitOne();
-						CopyToBuffer( m_OutFwd, data, len );
-						total = m_OutFwd->Length;
-						FwdMutex.ReleaseMutex();
-
-						PostMessage( m_FwdWnd, WM_FWDPACKET, (IntPtr)len, (IntPtr)total );
-					}
-				}
-		*/
 
 		internal static Packet MakePacketFrom(PacketReader pr)
 		{
@@ -1464,15 +1420,15 @@ namespace Assistant
 				}
 
 				while (queue.Count > 0)
-				{	
-					if (queue.TryDequeue(out p))
+				{
+					if (!queue.TryDequeue(out p))
+						continue;
+
+					byte[] data = p.Compile();
+					fixed (byte* ptr = data)
 					{
-						byte[] data = p.Compile();
-						fixed (byte* ptr = data)
-						{
-							CopyToBuffer(outBuff, ptr, data.Length);
-							//Packet.Log((PacketPath)(((int)path) + 1), ptr, data.Length);
-						}
+						CopyToBuffer(outBuff, ptr, data.Length);
+						//Packet.Log((PacketPath)(((int)path) + 1), ptr, data.Length);
 					}
 				}
 			}
