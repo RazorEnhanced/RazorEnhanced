@@ -151,43 +151,40 @@ namespace RazorEnhanced
 
 		internal static void Close()
 		{
-			if (m_form != null)
-			{
-				Settings.General.WriteInt("PosXGrid", m_form.Location.X);
-				Settings.General.WriteInt("PosYGrid", m_form.Location.Y);
-				m_form.Close();
-				m_form = null;
-				m_hslot = m_vslot = 0;
-			}
+			if (m_form == null)
+				return;
+
+			Settings.General.WriteInt("PosXGrid", m_form.Location.X);
+			Settings.General.WriteInt("PosYGrid", m_form.Location.Y);
+			m_form.Close();
+			m_form = null;
+			m_hslot = m_vslot = 0;
 		}
 
 		internal static void Open()
 		{
-			if (Assistant.World.Player != null)
-			{
-				m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
-				m_hslot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
-				if (m_form == null)
-					DrawSpellGrid();
+			if (Assistant.World.Player == null)
+				return;
 
-				UpdatePanelImage();
-				ClientCommunication.ShowWindow(m_form.Handle, 8);
-				m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
-				ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
-			}
+			m_vslot = RazorEnhanced.Settings.General.ReadInt("GridVSlot");
+			m_hslot = RazorEnhanced.Settings.General.ReadInt("GridHSlot");
+			if (m_form == null)
+				DrawSpellGrid();
+
+			UpdatePanelImage();
+			ClientCommunication.ShowWindow(m_form.Handle, 8);
+			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
+			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
 		}
 
 		internal static void LockUnlock()
 		{
-			if (m_form != null)
-			{
-				if (m_lock)
-					m_lock = false;
-				else
-					m_lock = true;
-				m_form.ContextMenu = GeneraMenu();
-				m_form.Refresh();
-			}
+			if (m_form == null)
+				return;
+
+			m_lock = !m_lock;
+			m_form.ContextMenu = GeneraMenu();
+			m_form.Refresh();
 		}
 
 		internal static void UpdateBox()
@@ -207,10 +204,7 @@ namespace RazorEnhanced
 					break;
 			}
 
-			if (oldindex < i)
-				Engine.MainWindow.GridSlotComboBox.SelectedIndex = oldindex;
-			else
-				Engine.MainWindow.GridSlotComboBox.SelectedIndex = 0;
+			Engine.MainWindow.GridSlotComboBox.SelectedIndex = oldindex < i ? oldindex : 0;
 
 		}
 
@@ -223,25 +217,25 @@ namespace RazorEnhanced
 
 		internal static void SpellGrid_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (!m_lock)
-			{
-				m_mouseDown = true;
-				m_lastLocation = e.Location;
-			}
+			if (m_lock)
+				return;
+
+			m_mouseDown = true;
+			m_lastLocation = e.Location;
 		}
 
 		internal static void SpellGrid_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (!m_lock)
-			{
-				if (m_mouseDown)
-				{
-					m_form.Location = new Point(
-						(m_form.Location.X - m_lastLocation.X) + e.X, (m_form.Location.Y - m_lastLocation.Y) + e.Y);
+			if (m_lock)
+				return;
 
-					m_form.Update();
-				}
-			}
+			if (!m_mouseDown)
+				return;
+
+			m_form.Location = new Point(
+				(m_form.Location.X - m_lastLocation.X) + e.X, (m_form.Location.Y - m_lastLocation.Y) + e.Y);
+
+			m_form.Update();
 		}
 
 		internal static void SpellGrid_MouseUp(object sender, MouseEventArgs e)
@@ -318,9 +312,11 @@ namespace RazorEnhanced
 		internal static void DrawSpellGrid()
 		{
 			m_panellist = new List<PanelGrid>();
-			m_form = new SpellGridForm();
+			m_form = new SpellGridForm
+			{
+				ClientSize = new System.Drawing.Size(m_hslot * 44 + m_hslot * 3, m_vslot * 44 + m_vslot * 3)
+			};
 
-			m_form.ClientSize = new System.Drawing.Size(m_hslot * 44 + m_hslot * 3, m_vslot * 44 + m_vslot * 3);
 			int paneloffsetX = 1;
 			int paneloffsetY = 1;
 			for (int i = 0; i < m_vslot; i += 1)
@@ -328,14 +324,16 @@ namespace RazorEnhanced
 				for (int x = 0; x < m_hslot; x += 1)
 				{
 					// Aggiungo panel dinamici
-					PanelGrid paneltemp = new PanelGrid();
+					PanelGrid paneltemp = new PanelGrid
+					{
+						BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
+						Location = new System.Drawing.Point(paneloffsetX, paneloffsetY),
+						Margin = new System.Windows.Forms.Padding(0),
+						Size = new System.Drawing.Size(44, 44),
+						TabIndex = i,
+						BackColor = Color.Transparent
+					};
 
-					paneltemp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-					paneltemp.Location = new System.Drawing.Point(paneloffsetX, paneloffsetY);
-					paneltemp.Margin = new System.Windows.Forms.Padding(0);
-					paneltemp.Size = new System.Drawing.Size(44, 44);
-					paneltemp.TabIndex = i;
-					paneltemp.BackColor = Color.Transparent;
 
 					m_panellist.Add(paneltemp);
 					m_form.Controls.Add(paneltemp);

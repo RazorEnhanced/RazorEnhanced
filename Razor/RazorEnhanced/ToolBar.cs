@@ -131,135 +131,126 @@ namespace RazorEnhanced
 
 		internal static void UpdateHits(int maxhits, int hits)
 		{
-			if (m_form != null)
-			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
-				{
-					int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
+			if (m_form == null)
+				return;
 
-						m_labelTextHitsBHV.Text = "Hits: " + hits.ToString() + " / " + maxhits.ToString();
-						if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-							m_labelBarHitsBHV.Size = new System.Drawing.Size(percent, 10);
-						else
-							m_labelBarHitsBHV.Size = new System.Drawing.Size(percent, 5);
-						m_labelBarHitsBHV.BackColor = GetColor(percent);
-				} 
+			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			{
+				int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
+
+				m_labelTextHitsBHV.Text = "Hits: " + hits.ToString() + " / " + maxhits.ToString();
+				m_labelBarHitsBHV.Size = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new System.Drawing.Size(percent, 10) : new System.Drawing.Size(percent, 5);
+				m_labelBarHitsBHV.BackColor = GetColor(percent);
+			} 
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				{
+					m_strlabelSV.Text = "S: " + maxhits.ToString();
+					m_hitlabelSV.Text = "H: " + hits.ToString();
+				}
 				else
 				{
-					if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-					{
-							m_strlabelSV.Text = "S: " + maxhits.ToString();
-							m_hitlabelSV.Text = "H: " + hits.ToString();
-					}
-					else
-					{
-							m_hitslabelSH.Text = "H: " + hits.ToString() + " / " + maxhits.ToString();
-					}
-                }
-            }
+					m_hitslabelSH.Text = "H: " + hits.ToString() + " / " + maxhits.ToString();
+				}
+			}
 		}
 
 		internal static void UpdateStam(int maxstam, int stam)
 		{
-			if (m_form != null)
-			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
-				{
-					int percent = (int)(stam * 100 / (maxstam == 0 ? (ushort)1 : maxstam));
+			if (m_form == null)
+				return;
 
-						m_labelTextStaminaBHV.Text = "Stam: " + stam.ToString() + " / " + maxstam.ToString();
-						if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-							m_labelBarStaminaBHV.Size = new System.Drawing.Size(percent, 10);
-						else
-							m_labelBarStaminaBHV.Size = new System.Drawing.Size(percent, 5);
-						m_labelBarStaminaBHV.BackColor = GetColor(percent);
+			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			{
+				int percent = (int)(stam * 100 / (maxstam == 0 ? (ushort)1 : maxstam));
+
+				m_labelTextStaminaBHV.Text = "Stam: " + stam.ToString() + " / " + maxstam.ToString();
+				m_labelBarStaminaBHV.Size = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new System.Drawing.Size(percent, 10) : new System.Drawing.Size(percent, 5);
+				m_labelBarStaminaBHV.BackColor = GetColor(percent);
+			}
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				{
+					m_dexlabelSV.Text = "D: " + maxstam.ToString();
+					m_stamlabelSV.Text = "S: " + stam.ToString();
 				}
 				else
 				{
-					if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-					{
-							m_dexlabelSV.Text = "D: " + maxstam.ToString();
-							m_stamlabelSV.Text = "S: " + stam.ToString();
-					}
-					else
-					{
-							m_staminalabelSH.Text = "S: " + stam.ToString() + " / " + maxstam.ToString();
-					}
+					m_staminalabelSH.Text = "S: " + stam.ToString() + " / " + maxstam.ToString();
 				}
 			}
 		}
 
 		internal static void UpdateMana(int maxmana, int mana)
 		{
-			if (m_form != null)
-			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
-				{
-					int percent = (int)(mana * 100 / (maxmana == 0 ? (ushort)1 : maxmana));
+			if (m_form == null)
+				return;
 
-						m_labelTextManaBHV.Text = "Mana: " + mana.ToString() + " / " + maxmana.ToString();
-						if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-							m_labelBarManaBHV.Size = new System.Drawing.Size(percent, 10);
-						else
-							m_labelBarManaBHV.Size = new System.Drawing.Size(percent, 5);
-						m_labelBarManaBHV.BackColor = GetColor(percent);
+			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			{
+				int percent = (int)(mana * 100 / (maxmana == 0 ? (ushort)1 : maxmana));
+
+				m_labelTextManaBHV.Text = "Mana: " + mana.ToString() + " / " + maxmana.ToString();
+				m_labelBarManaBHV.Size = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new System.Drawing.Size(percent, 10) : new System.Drawing.Size(percent, 5);
+				m_labelBarManaBHV.BackColor = GetColor(percent);
+			}
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				{
+					m_intlabelSV.Text = "I: " + maxmana.ToString();
+					m_manalabelSV.Text = "M: " + mana.ToString();
 				}
 				else
 				{
-					if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-					{
-							m_intlabelSV.Text = "I: " + maxmana.ToString();
-							m_manalabelSV.Text = "M: " + mana.ToString();
-					}
-					else
-					{
-							m_manalabelSH.Text = "M: " + mana.ToString() + " / " + maxmana.ToString();
-					}
+					m_manalabelSH.Text = "M: " + mana.ToString() + " / " + maxmana.ToString();
 				}
 			}
 		}
 
 		internal static void UpdateWeight(int maxweight, int weight)
 		{
-			if (m_form != null)
+			if (m_form == null)
+				return;
+
+			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+				m_labelTextWeightBHV.Text = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
+			}
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
-						m_labelTextWeightBHV.Text = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
+					m_weightlabelSV.Text = "W: " + weight.ToString();
+					m_weightmaxlabelSV.Text = "L: " + maxweight.ToString();
 				}
 				else
 				{
-					if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-					{
-							m_weightlabelSV.Text = "W: " + weight.ToString();
-							m_weightmaxlabelSV.Text = "L: " + maxweight.ToString();
-					}
-					else
-					{
-							m_weightlabelSH.Text = "W: " + weight.ToString() + " / " + maxweight.ToString();
-					}
+					m_weightlabelSH.Text = "W: " + weight.ToString() + " / " + maxweight.ToString();
 				}
 			}
 		}
 
 		internal static void UpdateFollower()
 		{
-			if (m_form != null)
+			if (m_form == null)
+				return;
+
+			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+				m_labelTextFollowerBHV.Text = "Follower: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
+			}
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
-						m_labelTextFollowerBHV.Text = "Follower: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
+					m_followerlabelSV.Text = "F: " + World.Player.Followers.ToString();
 				}
 				else
 				{
-					if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
-					{
-							m_followerlabelSV.Text = "F: " + World.Player.Followers.ToString();
-					}
-					else
-					{
-							m_followerlabelSH.Text = "F: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
-					}
+					m_followerlabelSH.Text = "F: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
 				}
 			}
 		}
@@ -283,43 +274,40 @@ namespace RazorEnhanced
 
 		internal static void Close()
 		{
-			if (m_form != null)
-			{
-				Settings.General.WriteInt("PosXToolBar", m_form.Location.X);
-				Settings.General.WriteInt("PosYToolBar", m_form.Location.Y);
-				m_form.Close();
-				m_form = null;
-				m_slot = 0;
-            }
-        }
+			if (m_form == null)
+				return;
+
+			Settings.General.WriteInt("PosXToolBar", m_form.Location.X);
+			Settings.General.WriteInt("PosYToolBar", m_form.Location.Y);
+			m_form.Close();
+			m_form = null;
+			m_slot = 0;
+		}
 
 		internal static void LockUnlock()
 		{
-			if (m_form != null)
-			{
-				if (m_lock)
-					m_lock = false;
-				else
-					m_lock = true;
-				m_form.ContextMenu = GeneraMenu();
-				m_form.Refresh();
-			}
+			if (m_form == null)
+				return;
+
+			m_lock = !m_lock;
+			m_form.ContextMenu = GeneraMenu();
+			m_form.Refresh();
 		}
 
 		internal static void Open()
 		{
-			if (Assistant.World.Player != null)
-			{
-                if (m_form == null)
-					DrawToolBar();
+			if (Assistant.World.Player == null)
+				return;
 
-				UpdateAll();
-				UpdatePanelImage();
-				UpdateCount();
-				ClientCommunication.ShowWindow(m_form.Handle, 8);
-				m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-				ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
-			}
+			if (m_form == null)
+				DrawToolBar();
+
+			UpdateAll();
+			UpdatePanelImage();
+			UpdateCount();
+			ClientCommunication.ShowWindow(m_form.Handle, 8);
+			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
 		}
 
 		internal static void UptateToolBarComboBox(int index)
@@ -384,34 +372,34 @@ namespace RazorEnhanced
 
 		internal static void UpdateCount()
 		{
-			if (Assistant.World.Player != null && m_form != null)
-			{
-				List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+			if (Assistant.World.Player == null || m_form == null)
+				return;
 
-				for (int x = 0; x < m_slot; x++)
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+
+			for (int x = 0; x < m_slot; x++)
+			{
+				if (items[x].Graphics == 0)
+					continue;
+
+				int amount = Items.BackpackCount(items[x].Graphics, items[x].Color);
+				int oldamount = Convert.ToInt32(m_panelcount[x].Text);
+				m_panelcount[x].Text = amount.ToString();
+
+				if (!items[x].Warning)
+					continue;
+
+				if (amount <= items[x].WarningLimit)
 				{
-					if (items[x].Graphics != 0)
+					m_panellist[x].BackColor = Color.Orange;
+					if (amount < oldamount)
 					{
-						int amount = Items.BackpackCount(items[x].Graphics, items[x].Color);
-						int oldamount = Convert.ToInt32(m_panelcount[x].Text);
-    					m_panelcount[x].Text = amount.ToString();
-						if (items[x].Warning)
-						{
-							if (amount <= items[x].WarningLimit)
-							{
-								m_panellist[x].BackColor = Color.Orange;
-								if (amount < oldamount)
-								{
-									RazorEnhanced.Misc.SendMessage("COUNTER WARNING: Item: " + items[x].Name + " under limit left: " + amount.ToString());
-								}
-							}
-							else
-							{
-							m_panellist[x].BackColor = SystemColors.Control;
-							}
-						}
+						RazorEnhanced.Misc.SendMessage("COUNTER WARNING: Item: " + items[x].Name + " under limit left: " + amount.ToString());
 					}
-						
+				}
+				else
+				{
+					m_panellist[x].BackColor = SystemColors.Control;
 				}
 			}
 		}
@@ -548,25 +536,25 @@ namespace RazorEnhanced
 
 		internal static void ToolbarForm_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (!m_lock)
-			{
-				m_mouseDown = true;
-				m_lastLocation = e.Location;
-			}
+			if (m_lock)
+				return;
+
+			m_mouseDown = true;
+			m_lastLocation = e.Location;
 		}
 
 		internal static void ToolbarForm_MouseMove(object sender, MouseEventArgs e)
 		{
-			if (!m_lock)
-			{
-				if (m_mouseDown)
-				{
-					ToolBarForm.Location = new Point(
-						(ToolBarForm.Location.X - m_lastLocation.X) + e.X, (ToolBarForm.Location.Y - m_lastLocation.Y) + e.Y);
+			if (m_lock)
+				return;
 
-					ToolBarForm.Update();
-				}
-			}
+			if (!m_mouseDown)
+				return;
+
+			ToolBarForm.Location = new Point(
+				(ToolBarForm.Location.X - m_lastLocation.X) + e.X, (ToolBarForm.Location.Y - m_lastLocation.Y) + e.Y);
+
+			ToolBarForm.Update();
 		}
 
 		internal static void ToolbarForm_MouseUp(object sender, MouseEventArgs e)
@@ -749,16 +737,20 @@ namespace RazorEnhanced
 				// Aggiungo panel dinamici
 				Panel paneltemp1 = new Panel();
 				Panel paneltemp2 = new Panel();
-				Label labeltemp1 = new Label();
-				Label labeltemp2 = new Label();
+				Label labeltemp1 = new Label
+				{
+					AutoSize = true,
+					Location = new System.Drawing.Point(0, 29),
+					Font =
+						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+					Name = "panel" + i + "count",
+					Size = new System.Drawing.Size(25, 13),
+					TabIndex = 1,
+					Text = "000"
+				};
 
-				labeltemp1.AutoSize = true;
-				labeltemp1.Location = new System.Drawing.Point(0, 29);
-				labeltemp1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				labeltemp1.Name = "panel" + i + "count";
-				labeltemp1.Size = new System.Drawing.Size(25, 13);
-				labeltemp1.TabIndex = 1;
-				labeltemp1.Text = "000";
+
 				labeltemp1.SuspendLayout();
 
 				paneltemp1.BackColor = Color.Transparent;
@@ -770,6 +762,7 @@ namespace RazorEnhanced
 				paneltemp1.Size = new System.Drawing.Size(42, 42);
 				paneltemp1.TabIndex = 10;
 
+				Label labeltemp2 = new Label();
 				labeltemp2.AutoSize = true;
 				labeltemp2.Location = new System.Drawing.Point(0, 29);
 				labeltemp2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -830,8 +823,7 @@ namespace RazorEnhanced
 
 
 			// Genero Sfondo
-			Bitmap sfondotemporaneo;
-			sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro;
+			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro;
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox") || RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox") || RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox") ||
 				RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox") || RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
@@ -954,16 +946,20 @@ namespace RazorEnhanced
 				// Aggiungo panel dinamici
 				Panel paneltemp1 = new Panel();
 				Panel paneltemp2 = new Panel();
-				Label labeltemp1 = new Label();
-				Label labeltemp2 = new Label();
 
-				labeltemp1.AutoSize = true;
-				labeltemp1.Location = new System.Drawing.Point(0, 29);
-				labeltemp1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				labeltemp1.Name = "panel" + i + "count";
-				labeltemp1.Size = new System.Drawing.Size(25, 13);
-				labeltemp1.TabIndex = 1;
-				labeltemp1.Text = "000";
+				Label labeltemp1 = new Label
+				{
+					AutoSize = true,
+					Location = new System.Drawing.Point(0, 29),
+					Font =
+						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+					Name = "panel" + i + "count",
+					Size = new System.Drawing.Size(25, 13),
+					TabIndex = 1,
+					Text = "000"
+				};
+
 				labeltemp1.SuspendLayout();
 
 				paneltemp1.BackColor = Color.Transparent;
@@ -975,13 +971,19 @@ namespace RazorEnhanced
 				paneltemp1.Size = new System.Drawing.Size(42, 42);
 				paneltemp1.TabIndex = 10;
 
-				labeltemp2.AutoSize = true;
-				labeltemp2.Location = new System.Drawing.Point(0, 29);
-				labeltemp2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				labeltemp2.Name = "panel" + i + "count";
-				labeltemp2.Size = new System.Drawing.Size(25, 13);
-				labeltemp2.TabIndex = 1;
-				labeltemp2.Text = "000";
+				Label labeltemp2 = new Label
+				{
+					AutoSize = true,
+					Location = new System.Drawing.Point(0, 29),
+					Font =
+						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+					Name = "panel" + i + "count",
+					Size = new System.Drawing.Size(25, 13),
+					TabIndex = 1,
+					Text = "000"
+				};
+
 				labeltemp2.SuspendLayout();
 
 				paneltemp2.BackColor = Color.Transparent;
@@ -1175,15 +1177,19 @@ namespace RazorEnhanced
 
 				// Aggiungo panel dinamici
 				Panel paneltemp = new Panel();
-				Label labeltemp = new Label();
+				Label labeltemp = new Label
+				{
+					AutoSize = true,
+					Location = new System.Drawing.Point(0, 18),
+					Font =
+						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+					Name = "panel" + i + "count",
+					Size = new System.Drawing.Size(10, 20),
+					TabIndex = 1,
+					Text = "000"
+				};
 
-				labeltemp.AutoSize = true;
-				labeltemp.Location = new System.Drawing.Point(0, 18);
-				labeltemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				labeltemp.Name = "panel" + i + "count";
-				labeltemp.Size = new System.Drawing.Size(10, 20);
-				labeltemp.TabIndex = 1;
-				labeltemp.Text = "000";
 				labeltemp.SuspendLayout();
 
 				paneltemp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -1228,8 +1234,7 @@ namespace RazorEnhanced
 			int paneloffset = 11;
 
 			// Genero Sfondo
-			Bitmap sfondotemporaneo;
-			sfondotemporaneo = Assistant.Properties.Resources.BarraOrizzontaBordoSinistro;
+			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraOrizzontaBordoSinistro;
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
 			{
@@ -1332,16 +1337,20 @@ namespace RazorEnhanced
 
 				// Aggiungo panel dinamici
 				Panel paneltemp = new Panel();
-				Label labeltemp = new Label();
+				Label labeltemp = new Label
+				{
+					AutoSize = true,
+					Location = new System.Drawing.Point(0, 18),
+					Font =
+						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
+							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+					Name = "panel" + i + "count",
+					Size = new System.Drawing.Size(10, 20),
+					TabIndex = 1,
+					Text = "000"
+				};
 
-				labeltemp.AutoSize = true;
-				labeltemp.Location = new System.Drawing.Point(0, 18);
-				labeltemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				labeltemp.Name = "panel" + i + "count";
-				labeltemp.Size = new System.Drawing.Size(10, 20);
-				labeltemp.TabIndex = 1;
-				labeltemp.Text = "000";
-				
+
 				labeltemp.SuspendLayout();
 
 				paneltemp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
