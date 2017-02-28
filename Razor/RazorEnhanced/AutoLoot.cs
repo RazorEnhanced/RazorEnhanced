@@ -177,7 +177,7 @@ namespace RazorEnhanced
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
 
-			AutoLootList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			AutoLootList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
 				return;
 
@@ -373,32 +373,32 @@ namespace RazorEnhanced
 
 						if (autoLootItem.Color == -1)          // Colore ALL
 						{
-							if (oggettoContenuto.ItemID == autoLootItem.Graphics)
-							{
-								bool grabItem = true;
-								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
-									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-										grabItem = false;
+							if (oggettoContenuto.ItemID != autoLootItem.Graphics)
+								continue;
 
-								if (grabItem)
-								{
-									GrabItem(autoLootItem, oggettoContenuto, mseconds);
-								}
+							bool grabItem = true;
+							if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
+								if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
+									grabItem = false;
+
+							if (grabItem)
+							{
+								GrabItem(autoLootItem, oggettoContenuto, mseconds);
 							}
 						}
 						else
 						{
-							if (oggettoContenuto.ItemID == autoLootItem.Graphics && oggettoContenuto.Hue == autoLootItem.Color)
-							{
-								bool grabItem = true;
-								if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
-									if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-										grabItem = false;
+							if (oggettoContenuto.ItemID != autoLootItem.Graphics || oggettoContenuto.Hue != autoLootItem.Color)
+								continue;
 
-								if (grabItem)
-								{
-									GrabItem(autoLootItem, oggettoContenuto, mseconds);
-								}
+							bool grabItem = true;
+							if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
+								if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
+									grabItem = false;
+
+							if (grabItem)
+							{
+								GrabItem(autoLootItem, oggettoContenuto, mseconds);
 							}
 						}
 					}
@@ -421,22 +421,22 @@ namespace RazorEnhanced
 				RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
 				Items.WaitForProps(oggettoContenuto, 1000);
 
-				bool propsOK = false;
+				bool propsOk = false;
 				foreach (AutoLootItem.Property props in autoLoootItem.Properties) // Scansione e verifica props
 				{
-					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropValue(oggettoContenuto, props.Name);
-					if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+					int propsSuItemDaLootare = RazorEnhanced.Items.GetPropValue(oggettoContenuto, props.Name);
+					if (propsSuItemDaLootare >= props.Minimum && propsSuItemDaLootare <= props.Maximum)
 					{
-						propsOK = true;
+						propsOk = true;
 					}
 					else
 					{
-						propsOK = false;
+						propsOk = false;
 						break; // alla prima fallita esce non ha senso controllare le altre
 					}
 				}
 
-				if (propsOK) // Tutte le props match OK
+				if (propsOk) // Tutte le props match OK
 				{
 					DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
 				}
@@ -453,15 +453,15 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
-			int exit = Int32.MinValue;
-
 			// Genero filtro per corpi
-			Items.Filter corpseFilter = new Items.Filter();
-			corpseFilter.RangeMax = 2;
-			corpseFilter.Movable = false;
-			corpseFilter.IsCorpse = 1;
-			corpseFilter.OnGround = 1;
-			corpseFilter.Enabled = true;
+			Items.Filter corpseFilter = new Items.Filter
+			{
+				RangeMax = 2,
+				Movable = false,
+				IsCorpse = 1,
+				OnGround = 1,
+				Enabled = true
+			};
 
 			// Check bag
 			Assistant.Item bag = Assistant.World.FindItem(AutoLootBag);
@@ -486,7 +486,7 @@ namespace RazorEnhanced
 			List<AutoLoot.AutoLootItem> items;
 			string list = AutoLoot.AutoLootListName;
 			RazorEnhanced.Settings.AutoLoot.ItemsRead(list, out items);
-			exit = Engine(items, AutoLootDelay, corpseFilter);
+			Engine(items, AutoLootDelay, corpseFilter);
 		}
 
 		// Funzioni di controllo da script
@@ -500,7 +500,7 @@ namespace RazorEnhanced
 
 		public static int RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
-			int exit = Int32.MinValue;
+			int exit = int.MinValue;
 
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 			{
