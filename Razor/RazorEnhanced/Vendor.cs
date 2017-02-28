@@ -109,7 +109,7 @@ namespace RazorEnhanced
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.SellListView.Items.Clear();
 
-			SellAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			SellAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.SellListSelect.Text)
 				return;
 
@@ -239,11 +239,9 @@ namespace RazorEnhanced
 		{
 			if (colorDaLista == -1)         // Wildcard colore
 				return true;
-			else
-				if (colorDaLista == colorDaVendor)      // Match OK
+			if (colorDaLista == colorDaVendor)      // Match OK
 				return true;
-			else            // Match fallito
-				return false;
+			return false;
 		}
 
 		private static void OnVendorSell(PacketReader pvSrc, PacketHandlerEventArgs args)
@@ -292,78 +290,78 @@ namespace RazorEnhanced
 					if (!sellItem.Selected)
 						continue;
 
-					if (gfx == sellItem.Graphics && (item != null && item != bag && item.IsChildOf(bag)) && RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue)) // match sulla grafica fra lista agent e lista vendor e hotbag
+					if (gfx != sellItem.Graphics || (item == null || item == bag || !item.IsChildOf(bag)) || !RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue))
+						continue;
+
+					int amountLeft = 60000;
+					int index = 0;
+					bool alreadySold = false;
+
+					for (int y = 0; y < templist.Count; y++) // Controllo che non ho gia venduto item simili
 					{
-						int amountLeft = 60000;
-						int index = 0;
-						bool alreadySold = false;
+						if (templist[y].Graphics != gfx || !RazorEnhanced.SellAgent.ColorCheck(templist[y].Color, hue))
+							continue;
 
-						for (int y = 0; y < templist.Count; y++) // Controllo che non ho gia venduto item simili
+						alreadySold = true;
+						amountLeft = templist[y].Amount;
+						index = y;
+					}
+
+					if (amountLeft == 60000) // Valore limite e inizzializzazione
+						amountLeft = sellItem.Amount;
+
+					if (amountLeft <= 0)
+						continue;
+
+					if (alreadySold) // Gia venduto oggetto stessa grafica
+					{
+						AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount);
+						if (amount < amountLeft)        // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
 						{
-							if (templist[y].Graphics == gfx && RazorEnhanced.SellAgent.ColorCheck(templist[y].Color, hue))
-							{
-								alreadySold = true;
-								amountLeft = templist[y].Amount;
-								index = y;
-							}
+							int amountTemp = amountLeft - amount;
+							list.Add(new SellListItem(ser, amount));            // Lista processo vendita
+							templist.RemoveAt(index);
+							templist.Insert(index, new SellAgentItem(sellItem.Name, gfx, amountTemp, sellItem.Color, sellItem.Selected));
+							total += amount * price;
+							sold += amount;
 						}
-
-						if (amountLeft == 60000) // Valore limite e inizzializzazione
-							amountLeft = sellItem.Amount;
-
-						if (amountLeft > 0) // Controlla se mancano da vendere
+						else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante
 						{
-							if (alreadySold) // Gia venduto oggetto stessa grafica
-							{
-								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount);
-								if (amount < amountLeft)        // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
-								{
-									int amountTemp = amountLeft - amount;
-									list.Add(new SellListItem(ser, amount));            // Lista processo vendita
-									templist.RemoveAt(index);
-									templist.Insert(index, new SellAgentItem(sellItem.Name, gfx, amountTemp, sellItem.Color, sellItem.Selected));
-									total += amount * price;
-									sold += amount;
-								}
-								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante
-								{
-									list.Add(new SellListItem(ser, Convert.ToUInt16(amountLeft)));  // Lista processo vendita
-									templist.RemoveAt(index);
-									templist.Insert(index, new SellAgentItem(sellItem.Name, gfx, 0, sellItem.Color, sellItem.Selected));
-									total += amountLeft * price;
-									sold += amountLeft;
-								}
-							}
-							else // Mai venduto oggetto stessa grafica
-							{
-								AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount);
-								if (amount < sellItem.Amount) // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
-								{
-									list.Add(new SellListItem(ser, amount));  // Lista processo vendita
-									templist.Add(new SellAgentItem(sellItem.Name, gfx, (sellItem.Amount - amount), sellItem.Color, sellItem.Selected));
-									total += amount * price;
-									sold += amount;
-								}
-								else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante
-								{
-									list.Add(new SellListItem(ser, Convert.ToUInt16(sellItem.Amount)));  // Lista processo vendita
-									templist.Add(new SellAgentItem(sellItem.Name, gfx, 0, sellItem.Color, sellItem.Selected));
-									total += sellItem.Amount * price;
-									sold += sellItem.Amount;
-								}
-							}
+							list.Add(new SellListItem(ser, Convert.ToUInt16(amountLeft)));  // Lista processo vendita
+							templist.RemoveAt(index);
+							templist.Insert(index, new SellAgentItem(sellItem.Name, gfx, 0, sellItem.Color, sellItem.Selected));
+							total += amountLeft * price;
+							sold += amountLeft;
+						}
+					}
+					else // Mai venduto oggetto stessa grafica
+					{
+						AddLog("Item match: 0x" + sellItem.Graphics.ToString("X4") + " - Amount: " + sellItem.Amount);
+						if (amount < sellItem.Amount) // In caso che quella listata nel vendor sia minore di quella che voglio vendere vendo il massimo possibile
+						{
+							list.Add(new SellListItem(ser, amount));  // Lista processo vendita
+							templist.Add(new SellAgentItem(sellItem.Name, gfx, (sellItem.Amount - amount), sellItem.Color, sellItem.Selected));
+							total += amount * price;
+							sold += amount;
+						}
+						else // Caso che quella listata nel vendor sia maggiore vendo solo quella mancante
+						{
+							list.Add(new SellListItem(ser, Convert.ToUInt16(sellItem.Amount)));  // Lista processo vendita
+							templist.Add(new SellAgentItem(sellItem.Name, gfx, 0, sellItem.Color, sellItem.Selected));
+							total += sellItem.Amount * price;
+							sold += sellItem.Amount;
 						}
 					}
 				}
 			}
 
-			if (list.Count > 0)
-			{
-				ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
-				AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
-				World.Player.SendMessage("Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
-				args.Block = true;
-			}
+			if (list.Count <= 0)
+				return;
+
+			ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
+			AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
+			World.Player.SendMessage("Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
+			args.Block = true;
 		}
 
 		// Funzioni da script
@@ -497,7 +495,7 @@ namespace RazorEnhanced
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.BuyListView.Items.Clear();
 
-			BuyAgentList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			BuyAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.BuyListSelect.Text)
 				return;
 
@@ -653,9 +651,9 @@ namespace RazorEnhanced
 			int cost = 0;
 			List<Assistant.VendorBuyItem> buyList = new List<Assistant.VendorBuyItem>(); // Lista definita altrove (non rimuovere se si fa pulizia in giro)
 
-			for (int i = 0; i < pack.Contains.Count; i++) // Scan item lista oggetti in vendita
+			foreach (Assistant.Item t in pack.Contains)
 			{
-				Assistant.Item item = (Assistant.Item)pack.Contains[i];
+				Assistant.Item item = (Assistant.Item)t;
 				if (item == null)
 					continue;
 
@@ -667,33 +665,33 @@ namespace RazorEnhanced
 					if (!buyItem.Selected)
 						continue;
 
-					if (buyItem.Graphics == item.ItemID && RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, item.Hue)) // Verifica match fra lista e oggetti presenti del vendor
+					if (buyItem.Graphics != item.ItemID || !RazorEnhanced.BuyAgent.ColorCheck(buyItem.Color, item.Hue))
+						continue;
+
+					if (item.Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
 					{
-						if (item.Amount >= buyItem.Amount) // Caso che il vendor abbia piu' item di quelli richiesti
-						{
-							AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + buyItem.Amount);
-							buyList.Add(new VendorBuyItem(item.Serial, buyItem.Amount, item.Price));
-							total += buyItem.Amount;
-							cost += item.Price * buyItem.Amount;
-						}
-						else // Caso che il vendor ne abbia di meno (Li compro tutti)
-						{
-							AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + item.Amount);
-							buyList.Add(new VendorBuyItem(item.Serial, item.Amount, item.Price));
-							total += item.Amount;
-							cost += item.Price * item.Amount;
-						}
+						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + buyItem.Amount);
+						buyList.Add(new VendorBuyItem(item.Serial, buyItem.Amount, item.Price));
+						total += buyItem.Amount;
+						cost += item.Price * buyItem.Amount;
+					}
+					else // Caso che il vendor ne abbia di meno (Li compro tutti)
+					{
+						AddLog("Item match: 0x" + buyItem.Graphics.ToString("X4") + " - Amount: " + item.Amount + " - Buyed: " + item.Amount);
+						buyList.Add(new VendorBuyItem(item.Serial, item.Amount, item.Price));
+						total += item.Amount;
+						cost += item.Price * item.Amount;
 					}
 				}
 			}
 
-			if (buyList.Count > 0)
-			{
-				args.Block = true;
-				ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
-				AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
-				World.Player.SendMessage("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
-			}
+			if (buyList.Count <= 0)
+				return;
+
+			args.Block = true;
+			ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
+			AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
+			World.Player.SendMessage("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 		}
 
 		// Funzioni da script
