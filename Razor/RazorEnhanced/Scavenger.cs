@@ -158,7 +158,7 @@ namespace RazorEnhanced
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
 
-			ScavengerList selectedList = lists.Where(l => l.Selected).FirstOrDefault();
+			ScavengerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.ScavengerListSelect.Text)
 				return;
 
@@ -340,22 +340,22 @@ namespace RazorEnhanced
 
 				RazorEnhanced.Scavenger.AddLog("- Item Match found scan props");
 
-				bool propsOK = false;
+				bool propsOk = false;
 				foreach (ScavengerItem.Property props in scavengerItem.Properties) // Scansione e verifica props
 				{
-					int PropsSuItemDaLootare = RazorEnhanced.Items.GetPropValue(itemGround, props.Name);
-					if (PropsSuItemDaLootare >= props.Minimum && PropsSuItemDaLootare <= props.Maximum)
+					int propsSuItemDaLootare = RazorEnhanced.Items.GetPropValue(itemGround, props.Name);
+					if (propsSuItemDaLootare >= props.Minimum && propsSuItemDaLootare <= props.Maximum)
 					{
-						propsOK = true;
+						propsOk = true;
 					}
 					else
 					{
-						propsOK = false;
+						propsOk = false;
 						break; // alla prima fallita esce non ha senso controllare le altre
 					}
 				}
 
-				if (propsOK) // Tutte le props match OK
+				if (propsOk) // Tutte le props match OK
 				{
 					DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
 				}
@@ -377,14 +377,14 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
-			int exit = Int32.MinValue;
-
 			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter();
-			itemFilter.RangeMax = 2;
-			itemFilter.Movable = true;
-			itemFilter.OnGround = 1;
-			itemFilter.Enabled = true;
+			Items.Filter itemFilter = new Items.Filter
+			{
+				RangeMax = 2,
+				Movable = true,
+				OnGround = 1,
+				Enabled = true
+			};
 
 			// Check bag
 			Assistant.Item bag = Assistant.World.FindItem(ScavengerBag);
@@ -410,7 +410,7 @@ namespace RazorEnhanced
 			string list = Scavenger.ScavengerListName;
 			RazorEnhanced.Settings.Scavenger.ItemsRead(list, out items);
 
-			exit = Engine(items, ScavengerDelay, itemFilter);
+			Engine(items, ScavengerDelay, itemFilter);
 		}
 
 		// Funzioni da script
