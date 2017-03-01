@@ -252,10 +252,7 @@ namespace Assistant
 		{
 			Spell s = null;
 
-			if (World.Player.Poisoned)
-				s = Get(2, 3); // cure
-			else
-				s = Get(1, 4); // mini heal
+			s = World.Player.Poisoned ? Get(2, 3) : Get(1, 4);
 
 			if (RazorEnhanced.Settings.General.ReadBool("BlockMiniHealCheckBox"))
 			{
@@ -287,10 +284,7 @@ namespace Assistant
 		{
 			Spell s = null;
 
-			if (World.Player.Poisoned)
-				s = Get(20, 1); // cure
-			else
-				s = Get(20, 2); // mini heal
+			s = Get(20, World.Player.Poisoned ? 1 : 2);
 
 			if (RazorEnhanced.Settings.General.ReadBool("BlockChivalryHealCheckBox"))
 			{

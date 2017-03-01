@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Assistant
@@ -103,9 +104,9 @@ namespace Assistant
 				}
 				else
 				{
-					for (int s = 0; s < m_DefaultStringNums.Length; s++)
+					foreach (int t in m_DefaultStringNums)
 					{
-						if (ent.Number == m_DefaultStringNums[s])
+						if (ent.Number == t)
 						{
 							ent.Number = GetStringNumber();
 							break;
@@ -224,24 +225,20 @@ namespace Assistant
 				if (ent == null)
 					continue;
 
-				if (ent.Number == number)
+				if (ent.Number != number)
+					continue;
+
+				if (m_DefaultStringNums.Any(num => num == ent.Number))
 				{
-					foreach (int num in m_DefaultStringNums)
-					{
-						if (num == ent.Number)
-						{
-							m_StringNums.Insert(0, ent.Number);
-							break;
-						}
-					}
-
-					m_Content.RemoveAt(i);
-					AddHash(ent.Number);
-					if (ent.Args != null && ent.Args != "")
-						AddHash(ent.Args.GetHashCode());
-
-					return true;
+					m_StringNums.Insert(0, ent.Number);
 				}
+
+				m_Content.RemoveAt(i);
+				AddHash(ent.Number);
+				if (!string.IsNullOrEmpty(ent.Args))
+					AddHash(ent.Args.GetHashCode());
+
+				return true;
 			}
 
 			for (int i = 0; i < m_CustomContent.Count; i++)
@@ -250,25 +247,21 @@ namespace Assistant
 				if (ent == null)
 					continue;
 
-				if (ent.Number == number)
-				{
-					foreach (int num in m_DefaultStringNums)
-					{
-						if (num == ent.Number)
-						{
-							m_StringNums.Insert(0, ent.Number);
-							break;
-						}
-					}
+				if (ent.Number != number)
+					continue;
 
-					m_CustomContent.RemoveAt(i);
-					AddHash(ent.Number);
-					if (ent.Args != null && ent.Args != "")
-						AddHash(ent.Args.GetHashCode());
-					if (m_CustomContent.Count == 0)
-						m_CustomHash = 0;
-					return true;
+				if (m_DefaultStringNums.Any(num => num == ent.Number))
+				{
+					m_StringNums.Insert(0, ent.Number);
 				}
+
+				m_CustomContent.RemoveAt(i);
+				AddHash(ent.Number);
+				if (!string.IsNullOrEmpty(ent.Args))
+					AddHash(ent.Args.GetHashCode());
+				if (m_CustomContent.Count == 0)
+					m_CustomHash = 0;
+				return true;
 			}
 			return false;
 		}
@@ -305,19 +298,16 @@ namespace Assistant
 				if (ent == null)
 					continue;
 
-				foreach (int num in m_DefaultStringNums)
+				if (m_DefaultStringNums.Any(num => ent.Number == num && (ent.Args == htmlStr || ent.Args == str)))
 				{
-					if (ent.Number == num && (ent.Args == htmlStr || ent.Args == str))
-					{
-						m_StringNums.Insert(0, ent.Number);
+					m_StringNums.Insert(0, ent.Number);
 
-						m_CustomContent.RemoveAt(i);
+					m_CustomContent.RemoveAt(i);
 
-						AddHash(ent.Number);
-						if (ent.Args != null && ent.Args != "")
-							AddHash(ent.Args.GetHashCode());
-						return true;
-					}
+					AddHash(ent.Number);
+					if (!string.IsNullOrEmpty(ent.Args))
+						AddHash(ent.Args.GetHashCode());
+					return true;
 				}
 			}
 
@@ -338,25 +328,25 @@ namespace Assistant
 
 			foreach (OPLEntry ent in m_Content)
 			{
-				if (ent != null && ent.Number != 0)
+				if (ent == null || ent.Number == 0)
+					continue;
+
+				p.Write((int)ent.Number);
+				if (!string.IsNullOrEmpty(ent.Args))
 				{
-					p.Write((int)ent.Number);
-					if (ent.Args != null && ent.Args != "")
-					{
-						int byteCount = Encoding.Unicode.GetByteCount(ent.Args);
+					int byteCount = Encoding.Unicode.GetByteCount(ent.Args);
 
-						if (byteCount > m_Buffer.Length)
-							m_Buffer = new byte[byteCount];
+					if (byteCount > m_Buffer.Length)
+						m_Buffer = new byte[byteCount];
 
-						byteCount = Encoding.Unicode.GetBytes(ent.Args, 0, ent.Args.Length, m_Buffer, 0);
+					byteCount = Encoding.Unicode.GetBytes(ent.Args, 0, ent.Args.Length, m_Buffer, 0);
 
-						p.Write((short)byteCount);
-						p.Write(m_Buffer, 0, byteCount);
-					}
-					else
-					{
-						p.Write((short)0);
-					}
+					p.Write((short)byteCount);
+					p.Write(m_Buffer, 0, byteCount);
+				}
+				else
+				{
+					p.Write((short)0);
 				}
 			}
 
@@ -364,32 +354,32 @@ namespace Assistant
 			{
 				try
 				{
-					if (ent != null && ent.Number != 0)
+					if (ent == null || ent.Number == 0)
+						continue;
+
+					string arguments = ent.Args;
+
+					p.Write((int)ent.Number);
+
+					if (string.IsNullOrEmpty(arguments))
+						arguments = " ";
+					arguments += "\t ";
+
+					if (!string.IsNullOrEmpty(arguments))
 					{
-						string arguments = ent.Args;
+						int byteCount = Encoding.Unicode.GetByteCount(arguments);
 
-						p.Write((int)ent.Number);
+						if (byteCount > m_Buffer.Length)
+							m_Buffer = new byte[byteCount];
 
-						if (arguments == null || arguments == "")
-							arguments = " ";
-						arguments += "\t ";
+						byteCount = Encoding.Unicode.GetBytes(arguments, 0, arguments.Length, m_Buffer, 0);
 
-						if (arguments != null && arguments != "")
-						{
-							int byteCount = Encoding.Unicode.GetByteCount(arguments);
-
-							if (byteCount > m_Buffer.Length)
-								m_Buffer = new byte[byteCount];
-
-							byteCount = Encoding.Unicode.GetBytes(arguments, 0, arguments.Length, m_Buffer, 0);
-
-							p.Write((short)byteCount);
-							p.Write(m_Buffer, 0, byteCount);
-						}
-						else
-						{
-							p.Write((short)0);
-						}
+						p.Write((short)byteCount);
+						p.Write(m_Buffer, 0, byteCount);
+					}
+					else
+					{
+						p.Write((short)0);
 					}
 				}
 				catch

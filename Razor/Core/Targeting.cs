@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Assistant
 {
@@ -175,12 +176,12 @@ namespace Assistant
 
 		internal static void TargetSetLastTarget()
 		{
-			if (World.Player != null)
-			{
-				m_LTWasSet = false;
-				OneTimeTarget(false, new TargetResponseCallback(OnSetLastTarget), new CancelTargetCallback(OnSLTCancel));
-				World.Player.SendMessage(MsgLevel.Force, LocString.TargSetLT);
-			}
+			if (World.Player == null)
+				return;
+
+			m_LTWasSet = false;
+			OneTimeTarget(false, new TargetResponseCallback(OnSetLastTarget), new CancelTargetCallback(OnSLTCancel));
+			World.Player.SendMessage(MsgLevel.Force, LocString.TargSetLT);
 		}
 
 		private static void OnSLTCancel()
@@ -221,93 +222,93 @@ namespace Assistant
 
 		private static void RemoveTextFlags(UOEntity m)
 		{
-			if (m != null)
-			{
-				bool oplchanged = false;
+			if (m == null)
+				return;
 
-				oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.LastTarget));
-				oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.HarmfulTarget));
-				oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.BeneficialTarget));
+			bool oplchanged = false;
 
-				if (oplchanged)
-					m.OPLChanged();
-			}
+			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.LastTarget));
+			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.HarmfulTarget));
+			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.BeneficialTarget));
+
+			if (oplchanged)
+				m.OPLChanged();
 		}
 
 		private static void AddTextFlags(UOEntity m)
 		{
-			if (m != null)
+			if (m == null)
+				return;
+
+			bool oplchanged = false;
+
+			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 			{
-				bool oplchanged = false;
-
-				if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
-				{
-					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
-					{
-						oplchanged = true;
-						m.ObjPropList.Add(Language.GetString(LocString.HarmfulTarget));
-					}
-
-					if (m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial)
-					{
-						oplchanged = true;
-						m.ObjPropList.Add(Language.GetString(LocString.BeneficialTarget));
-					}
-				}
-
-				if (!oplchanged && m_LastTarget != null && m_LastTarget.Serial == m.Serial)
+				if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
 				{
 					oplchanged = true;
-					m.ObjPropList.Add(Language.GetString(LocString.LastTarget));
+					m.ObjPropList.Add(Language.GetString(LocString.HarmfulTarget));
 				}
 
-				if (oplchanged)
-					m.OPLChanged();
+				if (m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial)
+				{
+					oplchanged = true;
+					m.ObjPropList.Add(Language.GetString(LocString.BeneficialTarget));
+				}
 			}
+
+			if (!oplchanged && m_LastTarget != null && m_LastTarget.Serial == m.Serial)
+			{
+				oplchanged = true;
+				m.ObjPropList.Add(Language.GetString(LocString.LastTarget));
+			}
+
+			if (oplchanged)
+				m.OPLChanged();
 		}
 
 		private static void LastTargetChanged()
 		{
-			if (m_LastTarget != null)
+			if (m_LastTarget == null)
+				return;
+
+			bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
+
+			if (m_OldLT.IsItem)
 			{
-				bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
-
-				if (m_OldLT.IsItem)
-				{
-					RemoveTextFlags(World.FindItem(m_OldLT));
-				}
-				else
-				{
-					Mobile m = World.FindMobile(m_OldLT);
-					if (m != null)
-					{
-						if (lth)
-							ClientCommunication.SendToClient(new MobileIncoming(m));
-
-						RemoveTextFlags(m);
-					}
-				}
-
-				if (m_LastTarget.Serial.IsItem)
-				{
-					AddTextFlags(World.FindItem(m_LastTarget.Serial));
-				}
-				else
-				{
-					Mobile m = World.FindMobile(m_LastTarget.Serial);
-					if (m != null)
-					{
-						if (IsLastTarget(m) && lth)
-							ClientCommunication.SendToClient(new MobileIncoming(m));
-
-						CheckLastTargetRange(m);
-
-						AddTextFlags(m);
-					}
-				}
-
-				m_OldLT = m_LastTarget.Serial;
+				RemoveTextFlags(World.FindItem(m_OldLT));
 			}
+			else
+			{
+				Mobile m = World.FindMobile(m_OldLT);
+				if (m != null)
+				{
+					if (lth)
+						ClientCommunication.SendToClient(new MobileIncoming(m));
+
+					RemoveTextFlags(m);
+				}
+			}
+
+			if (m_LastTarget.Serial.IsItem)
+			{
+				AddTextFlags(World.FindItem(m_LastTarget.Serial));
+			}
+			else
+			{
+				Mobile m = World.FindMobile(m_LastTarget.Serial);
+				if (m != null)
+				{
+					if (IsLastTarget(m) && lth)
+						ClientCommunication.SendToClient(new MobileIncoming(m));
+
+					CheckLastTargetRange(m);
+
+					AddTextFlags(m);
+				}
+			}
+
+			m_OldLT = m_LastTarget.Serial;
 		}
 
 		internal static bool LTWasSet { get { return m_LTWasSet; } }
@@ -330,10 +331,7 @@ namespace Assistant
 				m_LastHarmTarg = m_LastBeneTarg = targ;
 
 			targ.Type = 0;
-			if (m_HasTarget)
-				targ.Flags = m_CurFlags;
-			else
-				targ.Flags = flagType;
+			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
 
 			targ.Gfx = m.Body;
 			targ.Serial = m.Serial;
@@ -367,10 +365,7 @@ namespace Assistant
 				m_LastHarmTarg = m_LastBeneTarg = targ;
 
 			targ.Type = 0;
-			if (m_HasTarget)
-				targ.Flags = m_CurFlags;
-			else
-				targ.Flags = flagType;
+			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
 
 			targ.Gfx = m.Body;
 			targ.Serial = m.Serial;
@@ -398,10 +393,7 @@ namespace Assistant
 				m_LastHarmTarg = m_LastBeneTarg = targ;
 
 			targ.Type = 0;
-			if (m_HasTarget)
-				targ.Flags = m_CurFlags;
-			else
-				targ.Flags = flagType;
+			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
 
 			targ.Gfx = m.Body;
 			targ.Serial = m.Serial;
@@ -634,21 +626,21 @@ namespace Assistant
 			OnClearQueue();
 			CancelClientTarget();
 
-			if (m_HasTarget)
-			{
-				ClientCommunication.SendToServer(new TargetCancelResponse(m_CurrentID));
-				m_HasTarget = false;
-			}
+			if (!m_HasTarget)
+				return;
+
+			ClientCommunication.SendToServer(new TargetCancelResponse(m_CurrentID));
+			m_HasTarget = false;
 		}
 
 		internal static void CancelClientTarget()
 		{
-			if (m_ClientTarget)
-			{
-				m_FilterCancel.Add((uint)m_CurrentID);
-				ClientCommunication.SendToClient(new CancelTarget(m_CurrentID));
-				m_ClientTarget = false;
-			}
+			if (!m_ClientTarget)
+				return;
+
+			m_FilterCancel.Add((uint)m_CurrentID);
+			ClientCommunication.SendToClient(new CancelTarget(m_CurrentID));
+			m_ClientTarget = false;
 		}
 
 		internal static void CancelClientTargetByScript()
@@ -697,42 +689,48 @@ namespace Assistant
 
 		internal static void Target(Point3D pt)
 		{
-			TargetInfo info = new TargetInfo();
-			info.Type = 1;
-			info.Flags = 0;
-			info.Serial = 0;
-			info.X = pt.X;
-			info.Y = pt.Y;
-			info.Z = pt.Z;
-			info.Gfx = 0;
+			TargetInfo info = new TargetInfo
+			{
+				Type = 1,
+				Flags = 0,
+				Serial = 0,
+				X = pt.X,
+				Y = pt.Y,
+				Z = pt.Z,
+				Gfx = 0
+			};
 
 			Target(info);
 		}
 
 		internal static void TargetByScript(Point3D pt)
 		{
-			TargetInfo info = new TargetInfo();
-			info.Type = 1;
-			info.Flags = 0;
-			info.Serial = 0;
-			info.X = pt.X;
-			info.Y = pt.Y;
-			info.Z = pt.Z;
-			info.Gfx = 0;
+			TargetInfo info = new TargetInfo
+			{
+				Type = 1,
+				Flags = 0,
+				Serial = 0,
+				X = pt.X,
+				Y = pt.Y,
+				Z = pt.Z,
+				Gfx = 0
+			};
 
 			TargetByScript(info);
 		}
 
 		internal static void TargetByScript(Point3D pt, int gfx)
 		{
-			TargetInfo info = new TargetInfo();
-			info.Type = 1;
-			info.Flags = 0;
-			info.Serial = 0;
-			info.X = pt.X;
-			info.Y = pt.Y;
-			info.Z = pt.Z;
-			info.Gfx = (ushort)(gfx & 0x3FFF);
+			TargetInfo info = new TargetInfo
+			{
+				Type = 1,
+				Flags = 0,
+				Serial = 0,
+				X = pt.X,
+				Y = pt.Y,
+				Z = pt.Z,
+				Gfx = (ushort) (gfx & 0x3FFF)
+			};
 
 			TargetByScript(info);
 		}
@@ -753,10 +751,12 @@ namespace Assistant
 
 		internal static void Target(Serial s)
 		{
-			TargetInfo info = new TargetInfo();
-			info.Type = 0;
-			info.Flags = 0;
-			info.Serial = s;
+			TargetInfo info = new TargetInfo
+			{
+				Type = 0,
+				Flags = 0,
+				Serial = s
+			};
 
 			if (s.IsItem)
 			{
@@ -786,10 +786,12 @@ namespace Assistant
 
 		internal static void TargetByScript(Serial s)
 		{
-			TargetInfo info = new TargetInfo();
-			info.Type = 0;
-			info.Flags = 0;
-			info.Serial = s;
+			TargetInfo info = new TargetInfo
+			{
+				Type = 0,
+				Flags = 0,
+				Serial = s
+			};
 
 			if (s.IsItem)
 			{
@@ -822,27 +824,31 @@ namespace Assistant
 			if (o is Item)
 			{
 				Item item = (Item)o;
-				TargetInfo info = new TargetInfo();
-				info.Type = 0;
-				info.Flags = 0;
-				info.Serial = item.Serial;
-				info.X = item.Position.X;
-				info.Y = item.Position.Y;
-				info.Z = item.Position.Z;
-				info.Gfx = item.ItemID;
+				TargetInfo info = new TargetInfo
+				{
+					Type = 0,
+					Flags = 0,
+					Serial = item.Serial,
+					X = item.Position.X,
+					Y = item.Position.Y,
+					Z = item.Position.Z,
+					Gfx = item.ItemID
+				};
 				TargetByScript(info);
 			}
 			else if (o is Mobile)
 			{
 				Mobile m = (Mobile)o;
-				TargetInfo info = new TargetInfo();
-				info.Type = 0;
-				info.Flags = 0;
-				info.Serial = m.Serial;
-				info.X = m.Position.X;
-				info.Y = m.Position.Y;
-				info.Z = m.Position.Z;
-				info.Gfx = m.Body;
+				TargetInfo info = new TargetInfo
+				{
+					Type = 0,
+					Flags = 0,
+					Serial = m.Serial,
+					X = m.Position.X,
+					Y = m.Position.Y,
+					Z = m.Position.Z,
+					Gfx = m.Body
+				};
 				TargetByScript(info);
 			}
 			else if (o is Serial)
@@ -860,27 +866,31 @@ namespace Assistant
 			if (o is Item)
 			{
 				Item item = (Item)o;
-				TargetInfo info = new TargetInfo();
-				info.Type = 0;
-				info.Flags = 0;
-				info.Serial = item.Serial;
-				info.X = item.Position.X;
-				info.Y = item.Position.Y;
-				info.Z = item.Position.Z;
-				info.Gfx = item.ItemID;
+				TargetInfo info = new TargetInfo
+				{
+					Type = 0,
+					Flags = 0,
+					Serial = item.Serial,
+					X = item.Position.X,
+					Y = item.Position.Y,
+					Z = item.Position.Z,
+					Gfx = item.ItemID
+				};
 				Target(info);
 			}
 			else if (o is Mobile)
 			{
 				Mobile m = (Mobile)o;
-				TargetInfo info = new TargetInfo();
-				info.Type = 0;
-				info.Flags = 0;
-				info.Serial = m.Serial;
-				info.X = m.Position.X;
-				info.Y = m.Position.Y;
-				info.Z = m.Position.Z;
-				info.Gfx = m.Body;
+				TargetInfo info = new TargetInfo
+				{
+					Type = 0,
+					Flags = 0,
+					Serial = m.Serial,
+					X = m.Position.X,
+					Y = m.Position.Y,
+					Z = m.Position.Z,
+					Gfx = m.Body
+				};
 				Target(info);
 			}
 			else if (o is Serial)
@@ -911,18 +921,18 @@ namespace Assistant
 
 		internal static bool IsLastTarget(Mobile m)
 		{
-			if (m != null)
+			if (m == null)
+				return false;
+
+			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
-				{
-					if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
-						return true;
-				}
-				else
-				{
-					if (m_LastTarget != null && m_LastTarget.Serial == m.Serial)
-						return true;
-				}
+				if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
+					return true;
+			}
+			else
+			{
+				if (m_LastTarget != null && m_LastTarget.Serial == m.Serial)
+					return true;
 			}
 
 			return false;
@@ -997,13 +1007,7 @@ namespace Assistant
 		internal static void NextTargetHumanoid()
 		{
 			List<Mobile> mobiles = World.MobilesInRange(12);
-			List<Mobile> list = new List<Mobile>();
-
-			foreach (Mobile mob in mobiles)
-			{
-				if (mob.Body == 0x0190 || mob.Body == 0x0191 || mob.Body == 0x025D || mob.Body == 0x025E)
-					list.Add(mob);
-			}
+			List<Mobile> list = mobiles.Where(mob => mob.Body == 0x0190 || mob.Body == 0x0191 || mob.Body == 0x025D || mob.Body == 0x025E).ToList();
 
 			if (list.Count <= 0)
 			{
@@ -1111,15 +1115,17 @@ namespace Assistant
 
 		private static void TargetResponse(PacketReader p, PacketHandlerEventArgs args)
 		{
-			TargetInfo info = new TargetInfo();
-			info.Type = p.ReadByte();
-			info.TargID = p.ReadUInt32();
-			info.Flags = p.ReadByte();
-			info.Serial = p.ReadUInt32();
-			info.X = p.ReadUInt16();
-			info.Y = p.ReadUInt16();
-			info.Z = p.ReadInt16();
-			info.Gfx = p.ReadUInt16();
+			TargetInfo info = new TargetInfo
+			{
+				Type = p.ReadByte(),
+				TargID = p.ReadUInt32(),
+				Flags = p.ReadByte(),
+				Serial = p.ReadUInt32(),
+				X = p.ReadUInt16(),
+				Y = p.ReadUInt16(),
+				Z = p.ReadInt16(),
+				Gfx = p.ReadUInt16()
+			};
 
 			m_ClientTarget = false;
 

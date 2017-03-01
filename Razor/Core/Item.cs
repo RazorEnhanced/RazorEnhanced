@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Assistant
 {
@@ -198,9 +199,9 @@ namespace Assistant
 
 		internal Item FindItemByID(ItemID id, bool recurse)
 		{
-			for (int i = 0; i < m_Items.Count; i++)
+			foreach (Item t in m_Items)
 			{
-				Item item = (Item)m_Items[i];
+				Item item = t;
 				if (item.ItemID == id)
 				{
 					return item;
@@ -299,9 +300,8 @@ namespace Assistant
 						PacketHandlers.IgnoreGumps.Add(this);
 						PlayerData.DoubleClick(this);
 
-						for (int c = 0; c < Contains.Count; c++)
+						foreach (Item icheck in Contains)
 						{
-							Item icheck = Contains[c];
 							if (icheck.IsContainer && (!icheck.IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")))
 							{
 								PacketHandlers.IgnoreGumps.Add(icheck);
@@ -404,10 +404,9 @@ namespace Assistant
 
 		private void AddItem(Item item)
 		{
-			foreach (Item i in m_Items)
+			if (m_Items.Any(i => i == item))
 			{
-				if (i == item)
-					return;
+				return;
 			}
 			m_Items.Add(item);
 		}

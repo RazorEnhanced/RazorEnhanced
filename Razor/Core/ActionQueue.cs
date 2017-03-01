@@ -20,21 +20,21 @@ namespace Assistant
 
 		private static void Log(string str, params object[] args)
 		{
-			if (Debug)
+			if (!Debug)
+				return;
+
+			try
 			{
-				try
+				using (StreamWriter w = new StreamWriter("DragDrop.log", true))
 				{
-					using (StreamWriter w = new StreamWriter("DragDrop.log", true))
-					{
-						w.Write(DateTime.Now.ToString("HH:mm:ss.fff"));
-						w.Write(":: ");
-						w.WriteLine(str, args);
-						w.Flush();
-					}
+					w.Write(DateTime.Now.ToString("HH:mm:ss.fff"));
+					w.Write(":: ");
+					w.WriteLine(str, args);
+					w.Flush();
 				}
-				catch
-				{
-				}
+			}
+			catch
+			{
 			}
 		}
 
@@ -386,9 +386,6 @@ namespace Assistant
 
 		internal static bool EndHolding(Serial s)
 		{
-			//if ( m_Pending == s )
-			//	return false;
-
 			if (m_Holding == s)
 			{
 				m_Holding = Serial.Zero;
@@ -400,16 +397,15 @@ namespace Assistant
 
 		private static DropReq DequeueDropFor(Serial s)
 		{
-			DropReq dr = null;
+			if (!m_DropReqs.ContainsKey(s))
+				return null;
 
-			if (m_DropReqs.ContainsKey(s))
-			{
-				Queue<DropReq> q = m_DropReqs[s];
-				if (q.Count > 0)
-					dr = q.Dequeue();
-				if (q.Count <= 0)
-					m_DropReqs.Remove(s);
-			}
+			DropReq dr = null;
+			Queue<DropReq> q = m_DropReqs[s];
+			if (q.Count > 0)
+				dr = q.Dequeue();
+			if (q.Count <= 0)
+				m_DropReqs.Remove(s);
 			return dr;
 		}
 
@@ -417,13 +413,13 @@ namespace Assistant
 		{
 			m_Front = m_Back = 0;
 
-			if (m_Pending.IsValid)
-			{
-				Queue<DropReq> o = m_DropReqs[m_Pending];
-				m_DropReqs.Clear();
+			if (!m_Pending.IsValid)
+				return;
 
-				m_DropReqs.Add(m_Pending, o);
-			}
+			Queue<DropReq> o = m_DropReqs[m_Pending];
+			m_DropReqs.Clear();
+
+			m_DropReqs.Add(m_Pending, o);
 		}
 
 		internal static ProcStatus ProcessNext(int numPending)
@@ -528,22 +524,22 @@ namespace Assistant
 
 		internal static void DoubleClick(bool silent, Serial s)
 		{
-			if (s != Serial.Zero)
+			if (s == Serial.Zero)
+				return;
+
+			if (m_Last != s)
 			{
-				if (m_Last != s)
-				{
-					m_Queue.Enqueue(s);
-					m_Last = s;
-					m_Total++;
-					if (m_Queue.Count == 1 && !m_Timer.Running)
-						m_Timer.StartMe();
-					else if (!silent && m_Total > 1)
-						World.Player.SendMessage(LocString.ActQueued, m_Queue.Count, TimeLeft);
-				}
-				else if (!silent)
-				{
-					World.Player.SendMessage(LocString.QueueIgnore);
-				}
+				m_Queue.Enqueue(s);
+				m_Last = s;
+				m_Total++;
+				if (m_Queue.Count == 1 && !m_Timer.Running)
+					m_Timer.StartMe();
+				else if (!silent && m_Total > 1)
+					World.Player.SendMessage(LocString.ActQueued, m_Queue.Count, TimeLeft);
+			}
+			else if (!silent)
+			{
+				World.Player.SendMessage(LocString.QueueIgnore);
 			}
 		}
 

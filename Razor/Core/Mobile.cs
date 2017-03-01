@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Assistant
 {
@@ -308,12 +309,7 @@ namespace Assistant
 
 		internal Item GetItemOnLayer(Layer layer)
 		{
-			foreach (Item item in m_Items)
-			{
-				if (item.Layer == layer)
-					return item;
-			}
-			return null;
+			return m_Items.FirstOrDefault(item => item.Layer == layer);
 		}
 
 		internal Item Backpack
@@ -339,12 +335,7 @@ namespace Assistant
 
 		internal Item FindItemByID(ItemID id)
 		{
-			foreach (Item item in this.Contains)
-			{
-				if (item.ItemID == id)
-					return item;
-			}
-			return null;
+			return this.Contains.FirstOrDefault(item => item.ItemID == id);
 		}
 
 		internal int GetPacketFlags()

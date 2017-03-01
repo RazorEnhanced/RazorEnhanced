@@ -90,8 +90,7 @@ namespace Assistant
 			if (capacity < 2)
 				capacity = 2;
 			m_Size = 0;
-			m_List = new List<IComparable>(capacity);
-			m_List.Add(null);
+			m_List = new List<IComparable>(capacity) {null};
 		}
 
 		internal void Add(IComparable o)
@@ -110,21 +109,21 @@ namespace Assistant
 
 		internal void AddMultiple(ICollection<IComparable> col)
 		{
-			if (col != null && col.Count > 0)
+			if (col == null || col.Count <= 0)
+				return;
+
+			foreach (IComparable o in col)
 			{
-				foreach (IComparable o in col)
-				{
-					int hole = ++m_Size;
+				int hole = ++m_Size;
 
-					// Grow the list as needed
-					while (m_List.Count <= m_Size)
-						m_List.Add(null);
+				// Grow the list as needed
+				while (m_List.Count <= m_Size)
+					m_List.Add(null);
 
-					m_List[hole] = o;
-				}
-
-				Heapify();
+				m_List[hole] = o;
 			}
+
+			Heapify();
 		}
 
 		internal int Count { get { return m_Size; } }
@@ -190,12 +189,12 @@ namespace Assistant
 
 		internal void Stop()
 		{
-			if (m_Running)
-			{
-				m_Running = false;
-				m_Heap.Remove(this);
-				//ChangedNextTick();
-			}
+			if (!m_Running)
+				return;
+
+			m_Running = false;
+			m_Heap.Remove(this);
+			//ChangedNextTick();
 		}
 
 		public int CompareTo(object obj)

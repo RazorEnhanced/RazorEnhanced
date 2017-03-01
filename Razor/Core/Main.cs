@@ -264,7 +264,7 @@ namespace Assistant
 
 			List<RazorEnhanced.Shard> shards;
 			RazorEnhanced.Shard.Read(out shards);
-			RazorEnhanced.Shard selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
+			RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);
 
 			if (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null)
 			{
@@ -284,7 +284,7 @@ namespace Assistant
 					else
 					{
 						RazorEnhanced.Shard.Read(out shards);
-						selected = shards.Where(s => s.Selected).FirstOrDefault<RazorEnhanced.Shard>();
+						selected = shards.FirstOrDefault(s => s.Selected);
 						Start(selected);
 					}
 				}
@@ -411,9 +411,9 @@ namespace Assistant
 		{
 			Type[] types = a.GetTypes();
 
-			for (int i = 0; i < types.Length; i++)
+			foreach (Type t in types)
 			{
-				MethodInfo init = types[i].GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
+				MethodInfo init = t.GetMethod("Initialize", BindingFlags.Static | BindingFlags.Public);
 
 				if (init != null)
 					init.Invoke(null, null);
@@ -424,7 +424,7 @@ namespace Assistant
 		{
 			IPAddress ipAddr = IPAddress.None;
 
-			if (addr == null || addr == string.Empty)
+			if (string.IsNullOrEmpty(addr))
 				return ipAddr;
 
 			try

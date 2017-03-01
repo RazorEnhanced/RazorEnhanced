@@ -67,8 +67,8 @@ namespace Assistant
 		private static void Echo(string[] param)
 		{
 			StringBuilder sb = new StringBuilder("Note To Self: ");
-			for (int i = 0; i < param.Length; i++)
-				sb.Append(param[i]);
+			foreach (string t in param)
+				sb.Append(t);
 			ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x3B2, 3, Language.CliLocName, "System", sb.ToString()));
 		}
 
@@ -141,16 +141,16 @@ namespace Assistant
 
 		private static void PlayScript(string[] param)
 		{
-			if (param[0] != null)
+			if (param[0] == null)
+				return;
+
+			RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(param[0]);
+			if (script != null)
 			{
-				RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(param[0]);
-				if (script != null)
-				{
-					script.Run = true;
-				}
-				else
-					RazorEnhanced.Misc.SendMessage("Script not exist");
+				script.Run = true;
 			}
+			else
+				RazorEnhanced.Misc.SendMessage("Script not exist");
 		}
 	}
 
@@ -210,8 +210,7 @@ namespace Assistant
 			{
 				int value = pvSrc.ReadInt16();
 				int count = (value & 0xFFF0) >> 4;
-				keys = new List<ushort>();
-				keys.Add((ushort)value);
+				keys = new List<ushort> {(ushort) value};
 
 				for (int i = 0; i < count; ++i)
 				{
@@ -243,7 +242,9 @@ namespace Assistant
 
 			text = text.Trim();
 
-			if (text.Length > 1)
+			if (text.Length <= 1)
+				return;
+
 			{
 				if (text[0] == '-' && text[1] != '-')
 				{
@@ -267,7 +268,7 @@ namespace Assistant
 				{
 					args.Block = true;
 					ClientCommunication.PostTextSend(text.Substring(2));
-                }
+				}
 			}
 		}
 	}

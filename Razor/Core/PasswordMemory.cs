@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text;
 
@@ -54,9 +55,9 @@ namespace Assistant
 				return String.Empty;
 			StringBuilder sb = new StringBuilder(source.Length * 2 + 2);
 			sb.Append("1+");
-			for (int i = 0; i < buff.Length; i++)
+			foreach (byte t in buff)
 			{
-				sb.AppendFormat("{0:X2}", (byte)(buff[i] ^ ((byte)key[kidx++])));
+				sb.AppendFormat("{0:X2}", (byte)(t ^ ((byte)key[kidx++])));
 				if (kidx >= key.Length)
 					kidx = 0;
 			}
@@ -128,12 +129,7 @@ namespace Assistant
 
 		internal static void Save()
 		{
-			List<PasswordData> pdata = new List<PasswordData>();
-			foreach (Entry e in m_List)
-			{
-				if (e.Pass != String.Empty)
-					pdata.Add(new PasswordData(e.Address.ToString(), e.User, e.Pass));
-			}
+			List<PasswordData> pdata = (from e in m_List where e.Pass != String.Empty select new PasswordData(e.Address.ToString(), e.User, e.Pass)).ToList();
 
 			RazorEnhanced.Settings.Password.Insert(pdata);
 		}
@@ -149,9 +145,8 @@ namespace Assistant
 				return;
 
 			user = user.ToLower();
-			for (int i = 0; i < m_List.Count; i++)
+			foreach (Entry e in m_List)
 			{
-				Entry e = m_List[i];
 				if (e.User == user && e.Address.Equals(addr))
 				{
 					e.Pass = Encrypt(pass);
@@ -165,9 +160,8 @@ namespace Assistant
 		internal static string Find(string user, IPAddress addr)
 		{
 			user = user.ToLower();
-			for (int i = 0; i < m_List.Count; i++)
+			foreach (Entry e in m_List)
 			{
-				Entry e = m_List[i];
 				if (e.User == user && e.Address.Equals(addr))
 					return Decrypt(e.Pass);
 			}

@@ -733,20 +733,18 @@ namespace Assistant
 		internal override void OnMapChange(byte old, byte cur)
 		{
 			List<Mobile> list = new List<Mobile>(World.Mobiles.Values);
-			for (int i = 0; i < list.Count; i++)
+			foreach (Mobile t in list)
 			{
-				Mobile m = (Mobile)list[i];
-				if (m != this && m.Map != cur)
-					m.Remove();
+				if (t != this && t.Map != cur)
+					t.Remove();
 			}
 
 			World.Items.Clear();
 			//Counter.Reset();
-			for (int i = 0; i < Contains.Count; i++)
+			foreach (Item t in Contains)
 			{
-				Item item = (Item)Contains[i];
-				World.AddItem(item);
-				item.Contains.Clear();
+				World.AddItem(t);
+				t.Contains.Clear();
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
@@ -853,27 +851,27 @@ namespace Assistant
 
 		internal void SendMessage(MsgLevel lvl, string text)
 		{
-			if (lvl >= (MsgLevel)RazorEnhanced.Settings.General.ReadInt("MessageLevel") && text.Length > 0)
+			if (lvl < (MsgLevel) RazorEnhanced.Settings.General.ReadInt("MessageLevel") || text.Length <= 0)
+				return;
+
+			int hue;
+			switch (lvl)
 			{
-				int hue;
-				switch (lvl)
-				{
-					case MsgLevel.Error:
-					case MsgLevel.Warning:
-						hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
-						break;
+				case MsgLevel.Error:
+				case MsgLevel.Warning:
+					hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
+					break;
 
-					default:
-						hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
-						break;
-				}
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
-
-				PacketHandlers.SysMessages.Add(text.ToLower());
-
-				if (PacketHandlers.SysMessages.Count >= 25)
-					PacketHandlers.SysMessages.RemoveRange(0, 10);
+				default:
+					hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
+					break;
 			}
+			ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));
+
+			PacketHandlers.SysMessages.Add(text.ToLower());
+
+			if (PacketHandlers.SysMessages.Count >= 25)
+				PacketHandlers.SysMessages.RemoveRange(0, 10);
 		}
 
 		internal uint CurrentGumpS, CurrentGumpI;
@@ -958,41 +956,41 @@ namespace Assistant
 			else
 				s = Serial.Zero;
 
-			if (s != Serial.Zero)
+			if (s == Serial.Zero)
+				return false;
+
+			Item free = null, pack = World.Player.Backpack;
+			if (s.IsItem && pack != null && RazorEnhanced.Settings.General.ReadBool("PotionEquip"))
 			{
-				Item free = null, pack = World.Player.Backpack;
-				if (s.IsItem && pack != null && RazorEnhanced.Settings.General.ReadBool("PotionEquip"))
+				Item i = World.FindItem(s);
+				if (i != null && i.IsPotion && i.ItemID != 3853) // dont unequip for exploison potions
 				{
-					Item i = World.FindItem(s);
-					if (i != null && i.IsPotion && i.ItemID != 3853) // dont unequip for exploison potions
+					// dont worry about uneqipping RuneBooks or SpellBooks
+					Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
+					Item right = World.Player.GetItemOnLayer(Layer.RightHand);
+
+					if (left != null && (right != null || left.IsTwoHanded))
+						free = left;
+					else if (right != null && right.IsTwoHanded)
+						free = right;
+
+					if (free != null)
 					{
-						// dont worry about uneqipping RuneBooks or SpellBooks
-						Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
-						Item right = World.Player.GetItemOnLayer(Layer.RightHand);
-
-						if (left != null && (right != null || left.IsTwoHanded))
-							free = left;
-						else if (right != null && right.IsTwoHanded)
-							free = right;
-
-						if (free != null)
-						{
-							if (DragDropManager.HasDragFor(free.Serial))
-								free = null;
-							else
-								DragDropManager.DragDrop(free, pack);
-						}
+						if (DragDropManager.HasDragFor(free.Serial))
+							free = null;
+						else
+							DragDropManager.DragDrop(free, pack);
 					}
 				}
-
-				ActionQueue.DoubleClick(silent, s);
-
-				if (free != null)
-					DragDropManager.DragDrop(free, World.Player, free.Layer, true);
-
-				if (s.IsItem)
-					World.Player.m_LastObj = s;
 			}
+
+			ActionQueue.DoubleClick(silent, s);
+
+			if (free != null)
+				DragDropManager.DragDrop(free, World.Player, free.Layer, true);
+
+			if (s.IsItem)
+				World.Player.m_LastObj = s;
 
 			return false;
 		}

@@ -29,25 +29,29 @@ namespace Assistant
 
 		internal static int Parse(string name)
 		{
-			if (name == null || name == "")
+			if (string.IsNullOrEmpty(name))
 				return 0;
 
 			name = name.ToLower();
 
-			if (name == "felucca")
-				return 0;
-			else if (name == "trammel")
-				return 1;
-			else if (name == "ilshenar")
-				return 2;
-			else if (name == "malas")
-				return 3;
-			else if (name == "samurai" || name == "tokuno")
-				return 4;
-			else if (name == "termur")
-				return 5;
-			else
-				return 0;
+			switch (name)
+			{
+				case "felucca":
+					return 0;
+				case "trammel":
+					return 1;
+				case "ilshenar":
+					return 2;
+				case "malas":
+					return 3;
+				case "samurai":
+				case "tokuno":
+					return 4;
+				case "termur":
+					return 5;
+				default:
+					return 0;
+			}
 		}
 
 		internal static HuedTile GetTileNear(int mapNum, int x, int y, int z)
