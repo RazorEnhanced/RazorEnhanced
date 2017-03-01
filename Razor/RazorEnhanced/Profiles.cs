@@ -326,10 +326,12 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.LoadSettings();
 
 			// Riapro toollbar se le condizioni lo permettono
-			RazorEnhanced.ToolBar.Open();
+			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox"))
+				RazorEnhanced.ToolBar.Open();
 
 			// Riapro la spellgrid se le condizioni lo permettono
-			RazorEnhanced.SpellGrid.Open();
+			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox"))
+				RazorEnhanced.SpellGrid.Open();
 		}
 
 		internal static void Save()
