@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Assistant.Filters
 {
 	internal class SoundFilter : Filter
@@ -42,13 +44,10 @@ namespace Assistant.Filters
 			p.ReadByte(); // flags
 
 			ushort sound = p.ReadUInt16();
-			for (int i = 0; i < m_Sounds.Length; i++)
+			if (m_Sounds.Any(t => t == sound))
 			{
-				if (m_Sounds[i] == sound)
-				{
-					args.Block = true;
-					return;
-				}
+				args.Block = true;
+				return;
 			}
 		}
 	}

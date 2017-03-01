@@ -18,25 +18,25 @@ namespace Assistant.Filters
 		internal override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
 		{
 			args.Block = true;
-			if (World.Player != null)
-			{
-				World.Player.LocalLightLevel = 0;
-				World.Player.GlobalLightLevel = 0;
-			}
+			if (World.Player == null)
+				return;
+
+			World.Player.LocalLightLevel = 0;
+			World.Player.GlobalLightLevel = 0;
 		}
 
 		internal override void OnEnable()
 		{
 			base.OnEnable();
 
-			if (World.Player != null)
-			{
-				World.Player.LocalLightLevel = 0;
-				World.Player.GlobalLightLevel = 0;
+			if (World.Player == null)
+				return;
 
-				ClientCommunication.SendToClient(new GlobalLightLevel(0));
-				ClientCommunication.SendToClient(new PersonalLightLevel(World.Player));
-			}
+			World.Player.LocalLightLevel = 0;
+			World.Player.GlobalLightLevel = 0;
+
+			ClientCommunication.SendToClient(new GlobalLightLevel(0));
+			ClientCommunication.SendToClient(new PersonalLightLevel(World.Player));
 		}
 	}
 }

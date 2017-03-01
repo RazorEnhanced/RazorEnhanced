@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Assistant.Filters
 {
 	internal class AsciiMessageFilter : Filter
@@ -34,13 +36,10 @@ namespace Assistant.Filters
 			string name = p.ReadStringSafe(30);
 			string text = p.ReadStringSafe();
 
-			for (int i = 0; i < m_Strings.Length; i++)
+			if (m_Strings.Any(t => text.IndexOf(t) != -1))
 			{
-				if (text.IndexOf(m_Strings[i]) != -1)
-				{
-					args.Block = true;
-					return;
-				}
+				args.Block = true;
+				return;
 			}
 		}
 	}
@@ -83,13 +82,10 @@ namespace Assistant.Filters
 			if (type != m_Type)
 				return;
 
-			for (int i = 0; i < m_Nums.Length; i++)
+			if (m_Nums.Any(t => num == t))
 			{
-				if (num == m_Nums[i])
-				{
-					args.Block = true;
-					return;
-				}
+				args.Block = true;
+				return;
 			}
 		}
 	}

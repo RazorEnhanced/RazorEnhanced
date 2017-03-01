@@ -16,9 +16,8 @@ namespace Assistant.Filters
 		internal static void Load()
 		{
 			DisableAll();
-			for (int i = 0; i < m_Filters.Count; i++)
+			foreach (Filter f in m_Filters)
 			{
-				Filter f = m_Filters[i];
 				if (RazorEnhanced.Settings.General.ReadBool(((int)f.Name).ToString()))
 					f.OnEnable();
 			}
@@ -26,15 +25,14 @@ namespace Assistant.Filters
 
 		internal static void DisableAll()
 		{
-			for (int i = 0; i < m_Filters.Count; i++)
-				m_Filters[i].OnDisable();
+			foreach (Filter t in m_Filters)
+				t.OnDisable();
 		}
 
 		internal static void Save()
 		{
-			for (int i = 0; i < m_Filters.Count; i++)
+			foreach (Filter f in m_Filters)
 			{
-				Filter f = m_Filters[i];
 				if (f.Enabled)
 				{
 					RazorEnhanced.Settings.General.WriteBool(((int)f.Name).ToString(), f.Enabled);
@@ -79,15 +77,15 @@ namespace Assistant.Filters
 		internal virtual void OnEnable()
 		{
 			m_Enabled = true;
-			for (int i = 0; i < PacketIDs.Length; i++)
-				PacketHandler.RegisterServerToClientViewer(PacketIDs[i], m_Callback);
+			foreach (byte t in PacketIDs)
+				PacketHandler.RegisterServerToClientViewer(t, m_Callback);
 		}
 
 		internal virtual void OnDisable()
 		{
 			m_Enabled = false;
-			for (int i = 0; i < PacketIDs.Length; i++)
-				PacketHandler.RemoveServerToClientViewer(PacketIDs[i], m_Callback);
+			foreach (byte t in PacketIDs)
+				PacketHandler.RemoveServerToClientViewer(t, m_Callback);
 		}
 
 		internal void OnCheckChanged(CheckState newValue)

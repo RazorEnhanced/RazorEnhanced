@@ -66,13 +66,13 @@ namespace Assistant.Filters
 		{
 			base.OnEnable();
 
-			if (World.Player != null)
+			if (World.Player == null)
+				return;
+
+			foreach (Item i in World.Items.Values)
 			{
-				foreach (Item i in World.Items.Values)
-				{
-					if (IsStaffItem(i))
-						ClientCommunication.SendToClient(new RemoveObject(i));
-				}
+				if (IsStaffItem(i))
+					ClientCommunication.SendToClient(new RemoveObject(i));
 			}
 		}
 
@@ -80,13 +80,13 @@ namespace Assistant.Filters
 		{
 			base.OnDisable();
 
-			if (World.Player != null)
+			if (World.Player == null)
+				return;
+
+			foreach (Item i in World.Items.Values)
 			{
-				foreach (Item i in World.Items.Values)
-				{
-					if (IsStaffItem(i))
-						ClientCommunication.SendToClient(new WorldItem(i));
-				}
+				if (IsStaffItem(i))
+					ClientCommunication.SendToClient(new WorldItem(i));
 			}
 		}
 	}
