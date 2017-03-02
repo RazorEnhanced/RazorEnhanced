@@ -174,7 +174,6 @@ namespace RazorEnhanced
 			UpdatePanelImage();
 			ClientCommunication.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
-			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
 		}
 
 		internal static void LockUnlock()

@@ -1515,7 +1515,7 @@ namespace Assistant
 			this.profilesRenameButton.Name = "profilesRenameButton";
 			this.profilesRenameButton.Size = new System.Drawing.Size(63, 20);
 			this.profilesRenameButton.TabIndex = 8;
-			this.profilesRenameButton.Text = "Raname";
+			this.profilesRenameButton.Text = "Rename";
 			this.profilesRenameButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.profilesRenameButton.Click += new System.EventHandler(this.profilesRenameButton_Click);
 			// 
@@ -7464,8 +7464,8 @@ namespace Assistant
 			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
 
 			txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
-			msglvl.SelectedIndex = 0;
-			msglvl.Enabled = false;
+			//msglvl.SelectedIndex = 0;
+			//msglvl.Enabled = false;
 
 			showscriptmessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox");
 		}
@@ -11920,6 +11920,9 @@ namespace Assistant
 			toolboxcountGraphTextBox.Text = "0x" + item.Graphics.ToString("X4");
 			toolboxcountHueWarningCheckBox.Checked = item.Warning;
 			toolboxcountWarningTextBox.Text = item.WarningLimit.ToString();
+
+			if (toolboxcountComboBox.Focused)
+				RazorEnhanced.ToolBar.Open();
 		}
 
 		private void toolboxcountNameTextBox_TextChanged(object sender, EventArgs e)
@@ -11929,6 +11932,7 @@ namespace Assistant
 				int index = toolboxcountComboBox.SelectedIndex;
 				RazorEnhanced.Settings.Toolbar.UpdateItem(index, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
 				RazorEnhanced.ToolBar.UptateToolBarComboBox(index);
+				RazorEnhanced.ToolBar.Open();
 			}
 		}
 
@@ -11939,6 +11943,7 @@ namespace Assistant
 				RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
 				RazorEnhanced.ToolBar.UpdatePanelImage();
 				RazorEnhanced.ToolBar.UpdateCount();
+				RazorEnhanced.ToolBar.Open();
 			}
 		}
 

@@ -307,7 +307,6 @@ namespace RazorEnhanced
 			UpdateCount();
 			ClientCommunication.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
 		}
 
 		internal static void UptateToolBarComboBox(int index)
