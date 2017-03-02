@@ -3903,6 +3903,8 @@ namespace RazorEnhanced
 
 				if (Assistant.Engine.MainWindowY > 0)
 					WriteInt("WindowY", Assistant.Engine.MainWindowY);
+
+				PasswordMemory.Save();
 			}
 		}
 

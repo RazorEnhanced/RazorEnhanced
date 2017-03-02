@@ -223,9 +223,6 @@ namespace RazorEnhanced
 
 		internal static void ProfileChange(string name)
 		{
-			// Salvo password memory
-			PasswordMemory.Save();
-
 			// Salvo parametri di uscita
 			RazorEnhanced.Settings.General.SaveExitData();
 
@@ -298,7 +295,6 @@ namespace RazorEnhanced
 				RazorEnhanced.Settings.ProfileFiles = "RazorEnhanced." + name + ".settings";
 
 			// Rimuovo cache password e disabilito vecchi filtri
-			PasswordMemory.ClearAll();
 			Assistant.Filters.Filter.DisableAll();
 
 			// Chiuto toolbar
