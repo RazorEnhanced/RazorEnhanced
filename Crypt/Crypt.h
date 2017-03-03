@@ -150,7 +150,7 @@ void MemoryPatch(unsigned long, int, int);
 void MemoryPatch(unsigned long, const void *, int);
 void RedrawTitleBar(HWND, bool);
 void CheckTitlebarAttr(HWND);
-void FreeArt();
+//void FreeArt();
 //void InitThemes();
 bool PatchStatusBar(BOOL preAOS);
 

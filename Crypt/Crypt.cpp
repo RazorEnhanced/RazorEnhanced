@@ -1102,7 +1102,7 @@ void CloseSharedMemory()
 	hWndProcRetHook = NULL;
 	hGetMsgHook = NULL;
 
-	FreeArt();
+	//FreeArt();
 
 	delete ClientCrypt;
 	delete ClientLogin;

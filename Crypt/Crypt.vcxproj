@@ -156,7 +156,6 @@
       </PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="uo_huffman.cpp" />
-    <ClCompile Include="UOArt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Checksum.h">
