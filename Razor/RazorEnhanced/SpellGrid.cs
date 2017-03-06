@@ -174,6 +174,7 @@ namespace RazorEnhanced
 			UpdatePanelImage();
 			ClientCommunication.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
+			m_form.Opacity =((double)RazorEnhanced.Settings.General.ReadInt("GridOpacity")) / 100.0;  ;
 		}
 
 		internal static void LockUnlock()

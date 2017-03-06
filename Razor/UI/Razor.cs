@@ -543,7 +543,6 @@ namespace Assistant
 		private RazorButton toolbarremoveslotButton;
 		private RazorButton toolbaraddslotButton;
 		private RazorCheckBox autoLootnoopenCheckBox;
-		private TabControl tabControl2;
 		private TabPage tabPage2;
 		private TabPage tabPage3;
 		private GroupBox groupBox37;
@@ -570,6 +569,13 @@ namespace Assistant
 		private Label gridlocation_label;
 		private RazorButton gridclose_button;
 		private RazorButton gridopen_button;
+		private GroupBox groupBox39;
+		private TrackBar toolbar_trackBar;
+		private Label toolbar_opacity_label;
+		private GroupBox groupBox38;
+		private TrackBar spellgrid_trackBar;
+		private Label spellgrid_opacity_label;
+		private TabControl toolbarstab;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -914,8 +920,11 @@ namespace Assistant
 			this.boneCutterrazorButton = new RazorEnhanced.UI.RazorButton();
 			this.bonecutterCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.toolbarTab = new System.Windows.Forms.TabPage();
-			this.tabControl2 = new System.Windows.Forms.TabControl();
+			this.toolbarstab = new System.Windows.Forms.TabControl();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.groupBox39 = new System.Windows.Forms.GroupBox();
+			this.toolbar_trackBar = new System.Windows.Forms.TrackBar();
+			this.toolbar_opacity_label = new System.Windows.Forms.Label();
 			this.groupBox25 = new System.Windows.Forms.GroupBox();
 			this.lockToolBarCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.autoopenToolBarCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -951,6 +960,9 @@ namespace Assistant
 			this.label18 = new System.Windows.Forms.Label();
 			this.toolboxcountComboBox = new RazorEnhanced.UI.RazorComboBox();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.groupBox38 = new System.Windows.Forms.GroupBox();
+			this.spellgrid_trackBar = new System.Windows.Forms.TrackBar();
+			this.spellgrid_opacity_label = new System.Windows.Forms.Label();
 			this.groupBox37 = new System.Windows.Forms.GroupBox();
 			this.gridhslotremove_button = new RazorEnhanced.UI.RazorButton();
 			this.gridhslotadd_button = new RazorEnhanced.UI.RazorButton();
@@ -1338,12 +1350,16 @@ namespace Assistant
 			this.groupBox10.SuspendLayout();
 			this.groupBox9.SuspendLayout();
 			this.toolbarTab.SuspendLayout();
-			this.tabControl2.SuspendLayout();
+			this.toolbarstab.SuspendLayout();
 			this.tabPage2.SuspendLayout();
+			this.groupBox39.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.toolbar_trackBar)).BeginInit();
 			this.groupBox25.SuspendLayout();
 			this.groupBox4.SuspendLayout();
 			this.groupBox26.SuspendLayout();
 			this.tabPage3.SuspendLayout();
+			this.groupBox38.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spellgrid_trackBar)).BeginInit();
 			this.groupBox37.SuspendLayout();
 			this.groupBox36.SuspendLayout();
 			this.groupBox35.SuspendLayout();
@@ -2781,26 +2797,27 @@ namespace Assistant
 			// 
 			// toolbarTab
 			// 
-			this.toolbarTab.Controls.Add(this.tabControl2);
+			this.toolbarTab.Controls.Add(this.toolbarstab);
 			this.toolbarTab.Location = new System.Drawing.Point(4, 40);
 			this.toolbarTab.Name = "toolbarTab";
 			this.toolbarTab.Size = new System.Drawing.Size(666, 366);
 			this.toolbarTab.TabIndex = 1;
 			this.toolbarTab.Text = "Enhanced Toolbars";
 			// 
-			// tabControl2
+			// toolbarstab
 			// 
-			this.tabControl2.Controls.Add(this.tabPage2);
-			this.tabControl2.Controls.Add(this.tabPage3);
-			this.tabControl2.Location = new System.Drawing.Point(3, 3);
-			this.tabControl2.Name = "tabControl2";
-			this.tabControl2.SelectedIndex = 0;
-			this.tabControl2.Size = new System.Drawing.Size(660, 363);
-			this.tabControl2.TabIndex = 62;
+			this.toolbarstab.Controls.Add(this.tabPage2);
+			this.toolbarstab.Controls.Add(this.tabPage3);
+			this.toolbarstab.Location = new System.Drawing.Point(3, 3);
+			this.toolbarstab.Name = "toolbarstab";
+			this.toolbarstab.SelectedIndex = 0;
+			this.toolbarstab.Size = new System.Drawing.Size(660, 363);
+			this.toolbarstab.TabIndex = 62;
 			// 
 			// tabPage2
 			// 
 			this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
+			this.tabPage2.Controls.Add(this.groupBox39);
 			this.tabPage2.Controls.Add(this.groupBox25);
 			this.tabPage2.Controls.Add(this.groupBox4);
 			this.tabPage2.Controls.Add(this.groupBox26);
@@ -2810,6 +2827,40 @@ namespace Assistant
 			this.tabPage2.Size = new System.Drawing.Size(652, 337);
 			this.tabPage2.TabIndex = 0;
 			this.tabPage2.Text = "Counter / Stat Bar";
+			// 
+			// groupBox39
+			// 
+			this.groupBox39.Controls.Add(this.toolbar_trackBar);
+			this.groupBox39.Controls.Add(this.toolbar_opacity_label);
+			this.groupBox39.Location = new System.Drawing.Point(351, 159);
+			this.groupBox39.Name = "groupBox39";
+			this.groupBox39.Size = new System.Drawing.Size(295, 50);
+			this.groupBox39.TabIndex = 65;
+			this.groupBox39.TabStop = false;
+			this.groupBox39.Text = "Opacity";
+			// 
+			// toolbar_trackBar
+			// 
+			this.toolbar_trackBar.AutoSize = false;
+			this.toolbar_trackBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
+			this.toolbar_trackBar.Location = new System.Drawing.Point(54, 24);
+			this.toolbar_trackBar.Maximum = 100;
+			this.toolbar_trackBar.Minimum = 10;
+			this.toolbar_trackBar.Name = "toolbar_trackBar";
+			this.toolbar_trackBar.Size = new System.Drawing.Size(235, 16);
+			this.toolbar_trackBar.TabIndex = 62;
+			this.toolbar_trackBar.TickFrequency = 0;
+			this.toolbar_trackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.toolbar_trackBar.Value = 100;
+			this.toolbar_trackBar.Scroll += new System.EventHandler(this.toolbar_trackBar_Scroll);
+			// 
+			// toolbar_opacity_label
+			// 
+			this.toolbar_opacity_label.Location = new System.Drawing.Point(8, 24);
+			this.toolbar_opacity_label.Name = "toolbar_opacity_label";
+			this.toolbar_opacity_label.Size = new System.Drawing.Size(40, 16);
+			this.toolbar_opacity_label.TabIndex = 63;
+			this.toolbar_opacity_label.Text = "100%";
 			// 
 			// groupBox25
 			// 
@@ -3190,6 +3241,7 @@ namespace Assistant
 			// tabPage3
 			// 
 			this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
+			this.tabPage3.Controls.Add(this.groupBox38);
 			this.tabPage3.Controls.Add(this.groupBox37);
 			this.tabPage3.Controls.Add(this.groupBox36);
 			this.tabPage3.Controls.Add(this.groupBox35);
@@ -3199,6 +3251,40 @@ namespace Assistant
 			this.tabPage3.Size = new System.Drawing.Size(652, 337);
 			this.tabPage3.TabIndex = 1;
 			this.tabPage3.Text = "Spell Grid";
+			// 
+			// groupBox38
+			// 
+			this.groupBox38.Controls.Add(this.spellgrid_trackBar);
+			this.groupBox38.Controls.Add(this.spellgrid_opacity_label);
+			this.groupBox38.Location = new System.Drawing.Point(427, 103);
+			this.groupBox38.Name = "groupBox38";
+			this.groupBox38.Size = new System.Drawing.Size(219, 48);
+			this.groupBox38.TabIndex = 66;
+			this.groupBox38.TabStop = false;
+			this.groupBox38.Text = "Opacity";
+			// 
+			// spellgrid_trackBar
+			// 
+			this.spellgrid_trackBar.AutoSize = false;
+			this.spellgrid_trackBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
+			this.spellgrid_trackBar.Location = new System.Drawing.Point(43, 20);
+			this.spellgrid_trackBar.Maximum = 100;
+			this.spellgrid_trackBar.Minimum = 10;
+			this.spellgrid_trackBar.Name = "spellgrid_trackBar";
+			this.spellgrid_trackBar.Size = new System.Drawing.Size(170, 16);
+			this.spellgrid_trackBar.TabIndex = 62;
+			this.spellgrid_trackBar.TickFrequency = 0;
+			this.spellgrid_trackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.spellgrid_trackBar.Value = 100;
+			this.spellgrid_trackBar.Scroll += new System.EventHandler(this.spellgrid_trackBar_Scroll);
+			// 
+			// spellgrid_opacity_label
+			// 
+			this.spellgrid_opacity_label.Location = new System.Drawing.Point(6, 20);
+			this.spellgrid_opacity_label.Name = "spellgrid_opacity_label";
+			this.spellgrid_opacity_label.Size = new System.Drawing.Size(36, 16);
+			this.spellgrid_opacity_label.TabIndex = 63;
+			this.spellgrid_opacity_label.Text = "100%";
 			// 
 			// groupBox37
 			// 
@@ -7156,8 +7242,10 @@ namespace Assistant
 			this.groupBox9.ResumeLayout(false);
 			this.groupBox9.PerformLayout();
 			this.toolbarTab.ResumeLayout(false);
-			this.tabControl2.ResumeLayout(false);
+			this.toolbarstab.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
+			this.groupBox39.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.toolbar_trackBar)).EndInit();
 			this.groupBox25.ResumeLayout(false);
 			this.groupBox25.PerformLayout();
 			this.groupBox4.ResumeLayout(false);
@@ -7165,6 +7253,8 @@ namespace Assistant
 			this.groupBox26.ResumeLayout(false);
 			this.groupBox26.PerformLayout();
 			this.tabPage3.ResumeLayout(false);
+			this.groupBox38.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.spellgrid_trackBar)).EndInit();
 			this.groupBox37.ResumeLayout(false);
 			this.groupBox37.PerformLayout();
 			this.groupBox36.ResumeLayout(false);
@@ -7357,10 +7447,12 @@ namespace Assistant
 
 			// ------------------ ENHANCED TOOLBAR --------------------
 			RazorEnhanced.ToolBar.LoadSettings();
+			toolbar_trackBar.Value = RazorEnhanced.Settings.General.ReadInt("ToolBarOpacity");
 
 			// ------------------ ENHANCED SPELLGRID --------------------
 			RazorEnhanced.SpellGrid.LoadSettings();
-			
+			spellgrid_trackBar.Value = RazorEnhanced.Settings.General.ReadInt("GridOpacity");
+
 			// ------------------ TARGETS --------------------
 			RazorEnhanced.TargetGUI.RefreshTarget();
 
@@ -12127,7 +12219,22 @@ namespace Assistant
 			}
 		}
 
+		private void toolbar_trackBar_Scroll(object sender, EventArgs e)
+		{
+			int o = toolbar_trackBar.Value;
 
+			if (toolbar_trackBar.Focused)
+			{
+				RazorEnhanced.Settings.General.WriteInt("ToolBarOpacity", o);
+                if (RazorEnhanced.ToolBar.ToolBarForm != null)
+				{
+					RazorEnhanced.ToolBar.ToolBarForm.Show();
+                    RazorEnhanced.ToolBar.ToolBarForm.Opacity = ((double) o) / 100.0;
+				}
+			}
+
+			toolbar_opacity_label.Text = String.Format("{0}%", o);
+		}
 		// ---------------- TOOLBAR END ----------------
 
 		// ----------------- HOT KEY -----------------------
@@ -12735,6 +12842,24 @@ namespace Assistant
 				RazorEnhanced.SpellGrid.Open();
 			}
 		}
+
+		private void spellgrid_trackBar_Scroll(object sender, EventArgs e)
+		{
+			int o = spellgrid_trackBar.Value;
+
+			if (spellgrid_trackBar.Focused)
+			{
+				RazorEnhanced.Settings.General.WriteInt("GridOpacity", o);
+				if (RazorEnhanced.SpellGrid.SpellGridForm != null)
+				{
+					RazorEnhanced.SpellGrid.SpellGridForm.Opacity = ((double) o) / 100.0;
+					RazorEnhanced.SpellGrid.SpellGridForm.Show();
+                }
+			}
+
+			spellgrid_opacity_label.Text = String.Format("{0}%", o);
+		}
+
 		// ----------------- GRID END -------------------
 	}
 }

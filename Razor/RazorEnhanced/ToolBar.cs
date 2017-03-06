@@ -307,6 +307,7 @@ namespace RazorEnhanced
 			UpdateCount();
 			ClientCommunication.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+			m_form.Opacity = ((double)RazorEnhanced.Settings.General.ReadInt("ToolBarOpacity")) / 100.0; ;
 		}
 
 		internal static void UptateToolBarComboBox(int index)
