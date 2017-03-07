@@ -11,6 +11,19 @@ namespace Assistant
 		[DllImport("User32.dll")]
 		static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
+		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+		static extern int lstrlen(string lpString);
+
+		[DllImport("kernel32", SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		static extern bool WriteProcessMemory(
+			IntPtr hProcess,
+			IntPtr baseAddress,
+			string bufferToWrite,
+			uint numBytesToWrite,
+			out uint numBytesWritten
+		);
+
 		[DllImport("kernel32.dll")]
 		public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 
@@ -24,17 +37,13 @@ namespace Assistant
 		static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress,
 			uint dwSize, uint flAllocationType, uint flProtect);
 
-		[DllImport("kernel32.dll", SetLastError = true)]
-		static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize,
-			out UIntPtr lpNumberOfBytesWritten);
-
 		[DllImport("kernel32.dll")]
 		static extern IntPtr CreateRemoteThread(IntPtr hProcess,
 			IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags,
 			IntPtr lpThreadId);
 
 		[DllImport("user32.dll", SetLastError = true)]
-		static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+		static extern IntPtr FindWindow(string lpClassName, [MarshalAs(UnmanagedType.LPWStr)]string lpWindowName);
 
 
 		// privileges
@@ -49,14 +58,14 @@ namespace Assistant
 		const uint MEM_RESERVE = 0x00002000;
 		const uint PAGE_READWRITE = 4;
 
-		private static void InjectUoMod()
+		internal static void InjectUoMod()
 		{
 
-			Thread.Sleep(7000);
-			IntPtr hwnd = ClientCommunication.FindUOWindow();
-			String path = Application.ExecutablePath + "\\UOMod.dll";
+			Thread.Sleep(5000);
+			IntPtr hwnd = ClientCommunication.ClientProcess.Handle;
+			String path = AppDomain.CurrentDomain.BaseDirectory + "UOMod.dll";
 
-
+			MessageBox.Show(path);
 			uint processID = 0;
 			GetWindowThreadProcessId(hwnd, out processID);
 			IntPtr hp =
@@ -85,7 +94,7 @@ namespace Assistant
 						return;
 					}
 
-					int cch = 1 + path.Length;
+					int cch = 1 + lstrlen(path);
 					int cb = cch * sizeof(char);
 
 					pszLibFileRemote = VirtualAllocEx(hProcess, IntPtr.Zero, (uint) cb, MEM_COMMIT, PAGE_READWRITE);
@@ -98,16 +107,24 @@ namespace Assistant
 
 					// Copy the DLL's pathname to the remote process's address space
 					byte[] array = Encoding.ASCII.GetBytes(path);
-					UIntPtr writestatus;
-					if (!WriteProcessMemory(hProcess, pszLibFileRemote, array, (uint) cb, out writestatus))
+					uint writestatus;
+					if (!WriteProcessMemory(hProcess, pszLibFileRemote, path, (uint) cb, out writestatus))
 					{
 
 						MessageBox.Show("Failed to write string in to the memory.");
 						return;
 					}
-
+					
 
 					IntPtr pfnThreadRtn = GetProcAddress(GetModuleHandle("Kernel32"), "LoadLibraryW");
+
+					if (pfnThreadRtn == IntPtr.Zero)
+					{
+
+						MessageBox.Show("kernel error");
+						return;
+					}
+
 					hThread = CreateRemoteThread(hProcess, IntPtr.Zero, 0, pfnThreadRtn, pszLibFileRemote, 0, IntPtr.Zero);
 
 					if (hThread == IntPtr.Zero)
@@ -126,7 +143,7 @@ namespace Assistant
 			Thread.Sleep(500);
 
 			// Qui sta il problema torna nullo
-			IntPtr dllWindow = FindWindow("UOModWindow_" + hwnd.ToString("x8"), null);
+			IntPtr dllWindow = FindWindow("UOModWindow_" + hwnd.ToString("x8").ToUpper(), null);
 
 			MessageBox.Show(dllWindow.ToString());
 		}
