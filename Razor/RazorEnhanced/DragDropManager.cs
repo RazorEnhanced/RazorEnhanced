@@ -165,7 +165,7 @@ namespace RazorEnhanced
 		{
 			int diff = x - y;
 
-			if (diff < -4 || diff > 4)
+			if (diff < -8 || diff > 8)
 				return false;
 			else
 				return true;
