@@ -162,13 +162,14 @@
     <Compile Include="Core\Geometry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Network\UoMod.cs" />
     <Compile Include="Network\UoNet.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
     <Compile Include="RazorEnhanced\Multi.cs" />
     <Compile Include="RazorEnhanced\SpellGrid.cs">
-      <SubType>Form</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\Statics.cs" />
     <Compile Include="RazorEnhanced\DragDropManager.cs" />
