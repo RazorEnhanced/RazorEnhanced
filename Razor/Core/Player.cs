@@ -170,7 +170,7 @@ namespace Assistant
 			internal bool FilterAck;
 		}
 
-		internal int VisRange = 18;
+		internal int VisRange = 31;
 		internal int MultiVisRange { get { return VisRange + 5; } }
 
 		private int m_MaxWeight = -1;

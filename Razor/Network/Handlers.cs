@@ -109,8 +109,7 @@ namespace Assistant
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
 		{
-			if (World.Player != null)
-				World.Player.VisRange = p.ReadByte();
+			args.Block = true;
 		}
 
 		private static void EncodedPacket(PacketReader p, PacketHandlerEventArgs args)
