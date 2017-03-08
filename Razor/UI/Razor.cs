@@ -576,6 +576,8 @@ namespace Assistant
 		private TrackBar spellgrid_trackBar;
 		private Label spellgrid_opacity_label;
 		private TabControl toolbarstab;
+		private GroupBox groupBox40;
+		private RazorCheckBox razorCheckBox1;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1336,6 +1338,8 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+			this.groupBox40 = new System.Windows.Forms.GroupBox();
+			this.razorCheckBox1 = new RazorEnhanced.UI.RazorCheckBox();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1407,6 +1411,7 @@ namespace Assistant
 			this.groupBox8.SuspendLayout();
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
+			this.groupBox40.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -2355,6 +2360,7 @@ namespace Assistant
 			// 
 			// enhancedFilterTab
 			// 
+			this.enhancedFilterTab.Controls.Add(this.groupBox40);
 			this.enhancedFilterTab.Controls.Add(this.groupBox32);
 			this.enhancedFilterTab.Controls.Add(this.groupBox24);
 			this.enhancedFilterTab.Controls.Add(this.groupBox23);
@@ -7204,6 +7210,25 @@ namespace Assistant
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
 			// 
+			// groupBox40
+			// 
+			this.groupBox40.Controls.Add(this.razorCheckBox1);
+			this.groupBox40.Location = new System.Drawing.Point(192, 266);
+			this.groupBox40.Name = "groupBox40";
+			this.groupBox40.Size = new System.Drawing.Size(283, 65);
+			this.groupBox40.TabIndex = 69;
+			this.groupBox40.TabStop = false;
+			this.groupBox40.Text = "UoMod";
+			// 
+			// razorCheckBox1
+			// 
+			this.razorCheckBox1.Location = new System.Drawing.Point(6, 19);
+			this.razorCheckBox1.Name = "razorCheckBox1";
+			this.razorCheckBox1.Size = new System.Drawing.Size(145, 22);
+			this.razorCheckBox1.TabIndex = 59;
+			this.razorCheckBox1.Text = "FPS Patch";
+			this.razorCheckBox1.CheckedChanged += new System.EventHandler(this.razorCheckBox1_CheckedChanged);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7321,6 +7346,7 @@ namespace Assistant
 			this.groupBox28.PerformLayout();
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
+			this.groupBox40.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -12861,5 +12887,19 @@ namespace Assistant
 		}
 
 		// ----------------- GRID END -------------------
+
+		// ----------------- UO MOD START -------------------
+		private void razorCheckBox1_CheckedChanged(object sender, EventArgs e)
+		{
+			if (razorCheckBox1.Focused)
+			{
+				if (razorCheckBox1.Checked)
+					UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_FPS);
+                else
+					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_FPS);
+			}
+		}
+		// ----------------- UO MOD END -------------------
+
 	}
 }

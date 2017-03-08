@@ -7,6 +7,38 @@ namespace Assistant
 {
 	internal class UoMod
 	{
+		internal enum PATCH_TYPE
+		{
+			PT_FPS = 1,
+			PT_STAMINA,
+			PT_ALWAYS_LIGHT,
+			PT_PAPERDOLL_SLOTS,
+			PT_SPLASH_SCREEN,
+			PT_RESOLUTION,
+			PT_OPTIONS_NOTIFICATION,
+			PT_MULTI_UO,
+			PT_NO_CRYPT,
+			PT_GLOBAL_SOUND,
+			PT_VIEW_RANGE,
+			PT_COUNT
+		};
+
+		internal enum PATCH_STATE
+		{
+			PS_DISABLE = 0,
+			PS_ENABLE,
+			PS_NOT_FOUND
+		};
+
+		internal enum PATCH_MESSAGES
+		{
+			PM_INSTALL = ClientCommunication.WM_USER + 666,
+			PM_INFO,
+			PM_ENABLE,
+			PM_DISABLE,
+			PM_VIEW_RANGE_VALUE
+		};
+
 		private static IntPtr m_modhandle;
 
 		internal static IntPtr Handle
@@ -14,6 +46,9 @@ namespace Assistant
 			get { return m_modhandle; }
 			set { m_modhandle = value; }
 		}
+
+		[DllImport("User32.dll")]
+		public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, int lParam);
 
 		[DllImport("kernel32.dll", SetLastError = true)]
 		static extern UInt32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);
@@ -145,6 +180,14 @@ namespace Assistant
 				Thread.Sleep(1500);
 				Handle = FindWindow("UOModWindow_" + ClientCommunication.FindUOWindow().ToString("x8").ToUpper(), null);
             }).Start();
+		}
+
+		internal static void EnableDisable(bool enable, int patch)
+		{
+			if (enable)
+				SendMessage(Handle, (int)PATCH_MESSAGES.PM_ENABLE, 0, patch);
+			else
+				SendMessage(Handle, (int)PATCH_MESSAGES.PM_DISABLE, 0, patch);
 		}
 	}
 
