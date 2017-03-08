@@ -1010,7 +1010,7 @@ namespace Assistant
 					{
 						SetDataPath("");
 					}
-
+					UoMod.InjectUoMod();
 					m_Ready = true;
 					break;
 
