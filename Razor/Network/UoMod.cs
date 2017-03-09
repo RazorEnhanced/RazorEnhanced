@@ -39,13 +39,7 @@ namespace Assistant
 			PM_VIEW_RANGE_VALUE
 		};
 
-		private static IntPtr m_modhandle;
-
-		internal static IntPtr Handle
-		{
-			get { return m_modhandle; }
-			set { m_modhandle = value; }
-		}
+		private static IntPtr m_modhandle = IntPtr.Zero;
 
 		[DllImport("User32.dll")]
 		public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, int lParam);
@@ -178,17 +172,52 @@ namespace Assistant
 			{
 				Thread.CurrentThread.IsBackground = true;
 				Thread.Sleep(1500);
-				Handle = FindWindow("UOModWindow_" + ClientCommunication.FindUOWindow().ToString("x8").ToUpper(), null);
+				m_modhandle = FindWindow("UOModWindow_" + ClientCommunication.FindUOWindow().ToString("x8").ToUpper(), null);
+
+				if (m_modhandle != IntPtr.Zero)
+					EnableOnStartMod();
+
             }).Start();
 		}
 
 		internal static void EnableDisable(bool enable, int patch)
 		{
-			if (enable)
-				SendMessage(Handle, (int)PATCH_MESSAGES.PM_ENABLE, 0, patch);
+			if (m_modhandle == IntPtr.Zero)
+				return;
+
+            if (enable)
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, patch);
 			else
-				SendMessage(Handle, (int)PATCH_MESSAGES.PM_DISABLE, 0, patch);
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, patch);
 		}
+
+		internal static void EnableOnStartMod()
+		{
+			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
+			{
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
+				ClientCommunication.SendToClient(new SetUpdateRange(31));
+			}
+
+			if (RazorEnhanced.Settings.General.ReadBool("UoModFPS"))
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_FPS);
+
+			if (RazorEnhanced.Settings.General.ReadBool("UoModPaperdool"))
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+
+			if (RazorEnhanced.Settings.General.ReadBool("UoModSound"))
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+		}
+
+		internal static void DisableAllPatch()
+		{
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_FPS);
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+		}
+
 	}
 
 }

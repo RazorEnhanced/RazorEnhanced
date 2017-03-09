@@ -226,7 +226,8 @@ namespace RazorEnhanced
 			// Salvo parametri di uscita
 			RazorEnhanced.Settings.General.SaveExitData();
 
-			// Stop forzato di tutti gli script
+			// Rimuovo patch attive UoMod	
+			UoMod.DisableAllPatch();
 
 			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
@@ -307,6 +308,9 @@ namespace RazorEnhanced
 			
 			// Carico save profilo
 			RazorEnhanced.Settings.Load();
+
+			// Abilito patch UOMod
+			UoMod.EnableOnStartMod();
 
 			// Refresh list 
 			Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = -1;

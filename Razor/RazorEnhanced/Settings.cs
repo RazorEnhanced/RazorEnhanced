@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 27;
+		private static int SettingVersion = 28;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1495,6 +1495,11 @@ namespace RazorEnhanced
 				general.Columns.Add("EMountDelay", typeof(int));
 				general.Columns.Add("RemountCheckbox", typeof(bool));
 
+				// Parametri UoMod
+				general.Columns.Add("UoModFPS", typeof(bool));
+				general.Columns.Add("UoModPaperdool", typeof(bool));
+				general.Columns.Add("UoModSound", typeof(bool));
+
 				// Parametri finestra script
 				general.Columns.Add("ShowScriptMessageCheckBox", typeof(bool));
 
@@ -1545,8 +1550,11 @@ namespace RazorEnhanced
                      // Versione Corrente
                      SettingVersion,
 
-                     // Versione Corrente
+                     // Parametri AutoRemount
                      0, 1000, 1000, false,
+
+                     // Parametri UoMod
+                     false, false, false,
 
 					 // Parametri finestra script
                      true
@@ -3787,7 +3795,6 @@ namespace RazorEnhanced
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
 					return (bool)row[name];
 				}
-
 				return false;
 			}
 
@@ -4777,6 +4784,21 @@ namespace RazorEnhanced
 
 				realVersion = 27;
 				General.WriteInt("SettingVersion", 27);
+			}
+
+			if (realVersion == 27)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("UoModFPS", typeof(bool));
+				General.WriteBool("UoModFPS", false);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("UoModPaperdool", typeof(bool));
+				General.WriteBool("UoModPaperdool", false);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("UoModSound", typeof(bool));
+				General.WriteBool("UoModSound", false);
+
+				realVersion = 28;
+				General.WriteInt("SettingVersion", 28);
 			}
 
 			Save();
