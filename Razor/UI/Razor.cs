@@ -7434,14 +7434,6 @@ namespace Assistant
 			m_Tip.Active = true;
 			SplashScreen.End();
 
-			// Init mappe ultima.dll
-			Ultima.Map.InitializeMap("Felucca");
-			Ultima.Map.InitializeMap("Trammel");
-			Ultima.Map.InitializeMap("Ilshenar");
-			Ultima.Map.InitializeMap("Malas");
-			Ultima.Map.InitializeMap("Tokuno");
-			Ultima.Map.InitializeMap("TerMur");
-
 			// Avvio thread version check
 			VersionCheck = new Thread(VersionCheckWorker);
 			VersionCheck.Start();
@@ -7612,8 +7604,16 @@ namespace Assistant
 		{
 			m_Initializing = true;
 			PasswordMemory.Load();
-			//LoadSettings();
+			LoadSettings();
 			RazorEnhanced.Profiles.Refresh();
+			
+			// Init mappe ultima.dll
+			Ultima.Map.InitializeMap("Felucca");
+			Ultima.Map.InitializeMap("Trammel");
+			Ultima.Map.InitializeMap("Ilshenar");
+			Ultima.Map.InitializeMap("Malas");
+			Ultima.Map.InitializeMap("Tokuno");
+			Ultima.Map.InitializeMap("TerMur");
 
 			m_Initializing = false;
 		}
@@ -12367,9 +12367,15 @@ namespace Assistant
 
 		private void profilesComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Profiles.SetLast(profilesComboBox.Text);
+			if (profilesComboBox.Focused)
+			{
+				if (RazorEnhanced.Profiles.LastUsed() != profilesComboBox.Text)
+				{
+					RazorEnhanced.Profiles.SetLast(profilesComboBox.Text);
+					RazorEnhanced.Profiles.ProfileChange(profilesComboBox.Text);
+				}
+			}
 			profilelinklabel.Text = "Linked to: " + RazorEnhanced.Profiles.GetLinkName(profilesComboBox.Text);
-			RazorEnhanced.Profiles.ProfileChange(profilesComboBox.Text);
 		}
 
 		private void profilesLinkButton_Click(object sender, EventArgs e)
