@@ -7599,6 +7599,12 @@ namespace Assistant
 		}
 
 		private bool m_Initializing = false;
+		internal bool Initializing
+		{
+			get { return m_Initializing; }
+			set { m_Initializing = value; }
+		}
+
 
 		internal void InitConfig()
 		{
@@ -7614,7 +7620,7 @@ namespace Assistant
 			Ultima.Map.InitializeMap("Malas");
 			Ultima.Map.InitializeMap("Tokuno");
 			Ultima.Map.InitializeMap("TerMur");
-
+			
 			m_Initializing = false;
 		}
 
@@ -12371,7 +12377,6 @@ namespace Assistant
 			{
 				if (RazorEnhanced.Profiles.LastUsed() != profilesComboBox.Text)
 				{
-					RazorEnhanced.Profiles.SetLast(profilesComboBox.Text);
 					RazorEnhanced.Profiles.ProfileChange(profilesComboBox.Text);
 				}
 			}
