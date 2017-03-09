@@ -243,7 +243,7 @@ namespace Assistant
 			DateTime local = DateTime.Now;
 			if (local > m_ExpireDate)
 			{
-				MessageBox.Show("This Razor installation has expired!", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				MessageBox.Show("This Razor installation has expired!, Download new version from: http://www.razorenhanced.org/", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
 
