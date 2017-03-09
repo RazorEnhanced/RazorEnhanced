@@ -111,7 +111,6 @@ namespace Assistant
 		private RazorButton buttonScriptUp;
 		private RazorButton buttonScriptDown;
 		private RazorButton buttonScriptEditor;
-		private Label labelFeatures;
 		private Label labelStatus;
 		private Panel panelUODlogo;
 		private RazorButton razorButtonVisitUOD;
@@ -1052,7 +1051,6 @@ namespace Assistant
 			this.labelUOD = new System.Windows.Forms.Label();
 			this.panelUODlogo = new System.Windows.Forms.Panel();
 			this.labelStatus = new System.Windows.Forms.Label();
-			this.labelFeatures = new System.Windows.Forms.Label();
 			this.razorButtonWiki = new RazorEnhanced.UI.RazorButton();
 			this.razorButtonCreateUODAccount = new RazorEnhanced.UI.RazorButton();
 			this.razorButtonVisitUOD = new RazorEnhanced.UI.RazorButton();
@@ -4085,7 +4083,6 @@ namespace Assistant
 			this.statusTab.Controls.Add(this.labelUOD);
 			this.statusTab.Controls.Add(this.panelUODlogo);
 			this.statusTab.Controls.Add(this.labelStatus);
-			this.statusTab.Controls.Add(this.labelFeatures);
 			this.statusTab.Controls.Add(this.razorButtonWiki);
 			this.statusTab.Controls.Add(this.razorButtonCreateUODAccount);
 			this.statusTab.Controls.Add(this.razorButtonVisitUOD);
@@ -4130,13 +4127,6 @@ namespace Assistant
 			this.labelStatus.Name = "labelStatus";
 			this.labelStatus.Size = new System.Drawing.Size(175, 268);
 			this.labelStatus.TabIndex = 1;
-			// 
-			// labelFeatures
-			// 
-			this.labelFeatures.Location = new System.Drawing.Point(8, 291);
-			this.labelFeatures.Name = "labelFeatures";
-			this.labelFeatures.Size = new System.Drawing.Size(650, 70);
-			this.labelFeatures.TabIndex = 0;
 			// 
 			// razorButtonWiki
 			// 
@@ -7660,48 +7650,13 @@ namespace Assistant
 			if (!ClientCommunication.ClientRunning)
 				Close();
 
+			if (tabs.SelectedTab != statusTab)
+				return;
+
 			uint ps = m_OutPrev;
 			uint pr = m_InPrev;
 			m_OutPrev = ClientCommunication.TotalOut();
 			m_InPrev = ClientCommunication.TotalIn();
-
-			if (PacketHandlers.PlayCharTime < DateTime.Now && PacketHandlers.PlayCharTime + TimeSpan.FromSeconds(30) > DateTime.Now)
-			{
-				if (RazorEnhanced.Settings.General.ReadBool("Negotiate"))
-				{
-					bool allAllowed = true;
-					StringBuilder text = new StringBuilder();
-
-					text.Append(Language.GetString(LocString.NegotiateTitle) + " ");
-
-					for (uint i = 0; i < FeatureBit.MaxBit; i++)
-					{
-						if (!ClientCommunication.AllowBit(i))
-						{
-							allAllowed = false;
-
-							text.Append(Language.GetString((LocString)(((int)LocString.FeatureDescBase) + i)));
-							text.Append(" ");
-							text.Append(Language.GetString(LocString.NotAllowed));
-							text.Append(" - ");
-						}
-					}
-					text = text.Remove(text.Length - 3, 3);
-
-					if (allAllowed)
-						text.Append(Language.GetString(LocString.AllFeaturesEnabled));
-
-					labelFeatures.Visible = true;
-					labelFeatures.Text = text.ToString();
-				}
-				else
-				{
-					labelFeatures.Visible = false;
-				}
-			}
-
-			if (tabs.SelectedTab != statusTab)
-				return;
 
 			int time = 0;
 			if (ClientCommunication.ConnectionStart != DateTime.MinValue)
