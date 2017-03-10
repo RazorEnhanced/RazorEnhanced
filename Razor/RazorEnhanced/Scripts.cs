@@ -12,6 +12,8 @@ namespace RazorEnhanced
 {
 	internal class Scripts
 	{
+		internal static Thread ScriptEditorThread;
+
 		internal enum RunMode
 		{
 			None,

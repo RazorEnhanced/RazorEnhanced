@@ -21,7 +21,7 @@ namespace RazorEnhanced.UI
 	{
 		private delegate void SetHighlightLineDelegate(int iline, Color color);
 
-		private delegate void SetStatusLabelDelegate(string text);
+		private delegate void SetStatusLabelDelegate(string text, Color color);
 
 		private delegate string GetFastTextBoxTextDelegate();
 
@@ -36,8 +36,6 @@ namespace RazorEnhanced.UI
 			Breakpoint
 		}
 
-		private static Thread m_Thread;
-
 		private static EnhancedScriptEditor m_EnhancedScriptEditor;
 		internal static FastColoredTextBox EnhancedScriptEditorTextArea { get { return m_EnhancedScriptEditor.fastColoredTextBoxEditor; } }
 		private static ConcurrentQueue<Command> m_Queue = new ConcurrentQueue<Command>();
@@ -47,8 +45,6 @@ namespace RazorEnhanced.UI
 		private const string m_Title = "Enhanced Script Editor";
 		private string m_Filename = "";
 		private string m_Filepath = "";
-		private static bool m_OnClosing = false;
-		private static bool m_OnRecord = false;
 
 		private ScriptEngine m_Engine;
 		private ScriptSource m_Source;
@@ -76,15 +72,10 @@ namespace RazorEnhanced.UI
 		{
 			if (m_EnhancedScriptEditor != null)
 			{
-				m_OnClosing = true;
-				if (m_OnRecord)
-				{
-					m_OnRecord = false;
+				if (ScriptRecorder.OnRecord)
 					ScriptRecorder.OnRecord = false;
-				}
+
 				m_EnhancedScriptEditor.Stop();
-				//m_EnhancedScriptEditor.Close();
-				//m_EnhancedScriptEditor.Dispose();
 			}
 		}
 
@@ -1139,7 +1130,7 @@ namespace RazorEnhanced.UI
 
 		private void TracebackCall()
 		{
-			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Call {0}", m_CurrentCode.co_name));
+			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Call {0}", m_CurrentCode.co_name), Color.YellowGreen);
 			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightGreen);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
@@ -1147,7 +1138,7 @@ namespace RazorEnhanced.UI
 
 		private void TracebackReturn()
 		{
-			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Return {0}", m_CurrentCode.co_name));
+			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Return {0}", m_CurrentCode.co_name), Color.YellowGreen);
 			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.LightBlue);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
@@ -1155,7 +1146,7 @@ namespace RazorEnhanced.UI
 
 		private void TracebackLine()
 		{
-			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Line {0}", (int)m_CurrentFrame.f_lineno));
+			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Line {0}", (int)m_CurrentFrame.f_lineno), Color.YellowGreen);
 			SetHighlightLine((int)m_CurrentFrame.f_lineno - 1, Color.Yellow);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
@@ -1163,7 +1154,7 @@ namespace RazorEnhanced.UI
 
 		private void TracebackBreakpoint()
 		{
-			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Breakpoint at line {0}", (int)m_CurrentFrame.f_lineno));
+			SetStatusLabel("DEBUGGER ACTIVE - " + string.Format("Breakpoint at line {0}", (int)m_CurrentFrame.f_lineno), Color.YellowGreen);
 			string locals = GetLocalsText(m_CurrentFrame);
 			SetTraceback(locals);
 		}
@@ -1191,28 +1182,36 @@ namespace RazorEnhanced.UI
 
 		private void Start(bool debug)
 		{
-			if (m_Thread == null ||
-					(m_Thread != null && m_Thread.ThreadState != ThreadState.Running &&
-					m_Thread.ThreadState != ThreadState.Unstarted &&
-					m_Thread.ThreadState != ThreadState.WaitSleepJoin)
+			if (Scripts.ScriptEditorThread == null ||
+					(Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Running &&
+					Scripts.ScriptEditorThread.ThreadState != ThreadState.Unstarted &&
+					Scripts.ScriptEditorThread.ThreadState != ThreadState.WaitSleepJoin)
 				)
 			{
-				m_Thread = new Thread(() => AsyncStart(debug));
-				m_Thread.Start();
+				Scripts.ScriptEditorThread = new Thread(() => AsyncStart(debug));
+                Scripts.ScriptEditorThread.Start();
 			}
+			else
+				SetErrorBox("Starting ERROR: Can't start script if another editor is running.");
 		}
 
 		private void AsyncStart(bool debug)
 		{
+			if (ScriptRecorder.OnRecord)
+			{
+				SetErrorBox("Starting ERROR: Can't start script if record mode is ON.");
+				return;
+			}
+
 			if (debug)
 			{
 				SetErrorBox("Starting Script in debug mode: " + m_Filename);
-				SetStatusLabel("DEBUGGER ACTIVE");
+				SetStatusLabel("DEBUGGER ACTIVE", Color.YellowGreen);
 			}
 			else
 			{
 				SetErrorBox("Starting Script: " + m_Filename);
-				SetStatusLabel("");
+				SetStatusLabel("SCRIPT RUNNING", Color.Green);
 			}
 
 			try
@@ -1234,32 +1233,29 @@ namespace RazorEnhanced.UI
 				m_Engine.SetTrace(m_EnhancedScriptEditor.OnTraceback);
 				m_Source.Execute(m_Scope);
 				SetErrorBox("Script " + m_Filename + " run completed!");
+				SetStatusLabel("IDLE", Color.DarkTurquoise);
 			}
 			catch (Exception ex)
 			{
-				if (!m_OnClosing)
+				if (ex is SyntaxErrorException)
 				{
-					if (ex is SyntaxErrorException)
-					{
-						SyntaxErrorException se = ex as SyntaxErrorException;
-						SetErrorBox("Syntax Error:");
-						SetErrorBox("--> LINE: " + se.Line);
-						SetErrorBox("--> COLUMN: " + se.Column);
-						SetErrorBox("--> SEVERITY: " + se.Severity);
-						SetErrorBox("--> MESSAGE: " + se.Message);
-						//MessageBox.Show("LINE: " + se.Line + "\nCOLUMN: " + se.Column + "\nSEVERITY: " + se.Severity + "\nMESSAGE: " + ex.Message, "Syntax Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					}
-					else
-					{
-						SetErrorBox("Generic Error:");
-						SetErrorBox("--> MESSAGE: " + ex.Message);
-						//MessageBox.Show("MESSAGE: " + ex.Message, "Exception!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-					}
+					SyntaxErrorException se = ex as SyntaxErrorException;
+					SetErrorBox("Syntax Error:");
+					SetErrorBox("--> LINE: " + se.Line);
+					SetErrorBox("--> COLUMN: " + se.Column);
+					SetErrorBox("--> SEVERITY: " + se.Severity);
+					SetErrorBox("--> MESSAGE: " + se.Message);
 				}
-
-				if (m_Thread != null)
-					m_Thread.Abort();
+				else
+				{
+					SetErrorBox("Generic Error:");
+					SetErrorBox("--> MESSAGE: " + ex.Message);
+				}
+				SetStatusLabel("IDLE", Color.DarkTurquoise);
 			}
+
+			if (Scripts.ScriptEditorThread != null)
+				Scripts.ScriptEditorThread.Abort();
 		}
 
 		private void Stop()
@@ -1274,15 +1270,15 @@ namespace RazorEnhanced.UI
 			}
 			fastColoredTextBoxEditor.Invalidate();
 
-			SetStatusLabel("");
+			SetStatusLabel("IDLE", Color.DarkTurquoise);
 			SetTraceback("");
 
-			if (m_Thread != null && m_Thread.ThreadState != ThreadState.Stopped)
+			if (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Stopped)
 			{
-				m_Thread.Abort();
-				m_Thread = null;
+				Scripts.ScriptEditorThread.Abort();
 				SetErrorBox("Script stopped: " + m_Filename);
-			}
+				Scripts.ScriptEditorThread = null;
+            }
 		}
 
 		private void SetHighlightLine(int iline, Color background)
@@ -1307,16 +1303,21 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		private void SetStatusLabel(string text)
+		private void SetStatusLabel(string text, Color color)
 		{
+			if (statusStrip1 == null)
+				return;
+
 			if (this.InvokeRequired)
 			{
 				SetStatusLabelDelegate d = new SetStatusLabelDelegate(SetStatusLabel);
-				this.Invoke(d, new object[] { text });
+				this.Invoke(d, new object[] { text, color });
 			}
 			else
 			{
-				this.toolStripStatusLabelScript.Text = text;
+				this.toolStripStatusLabelScript.Text = "--> " + text;
+				this.statusStrip1.BackColor = color;
+
 			}
 		}
 
@@ -1355,7 +1356,7 @@ namespace RazorEnhanced.UI
 
 		private void SetTraceback(string text)
 		{
-			if (m_OnClosing)
+			if (textBoxDebug == null)
 				return;
 
 			if (this.textBoxDebug.InvokeRequired)
@@ -1371,7 +1372,7 @@ namespace RazorEnhanced.UI
 
 		private void SetErrorBox(string text)
 		{
-			if (m_OnClosing)
+			if (listBox1 == null)
 				return;
 
 			if (this.listBox1.InvokeRequired)
@@ -1381,15 +1382,15 @@ namespace RazorEnhanced.UI
 			}
 			else
 			{
-				this.listBox1.Items.Add("- " + text);
+				this.listBox1.Items.Add("["+DateTime.Now.ToString("HH:mm:ss")+"] - " + text);
 				this.listBox1.SelectedIndex = this.listBox1.Items.Count - 1;
 			}
 		}
 
 		private void EnhancedScriptEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			End();
 			Stop();
+			End();
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
@@ -1664,32 +1665,30 @@ namespace RazorEnhanced.UI
 
 		private void ScriptRecord()
 		{
-			if (ScriptRecorder.OnRecord && !m_OnRecord)
+			if (ScriptRecorder.OnRecord)
 			{
-				SetErrorBox("RECORDER ERROR: Other Editor are on Record");
+				SetErrorBox("RECORDER ERROR: Record Engine busy!");
 				return;
 			}
 
-			if (m_Thread == null ||
-					(m_Thread != null && m_Thread.ThreadState != ThreadState.Running &&
-					m_Thread.ThreadState != ThreadState.Unstarted &&
-					m_Thread.ThreadState != ThreadState.WaitSleepJoin)
+			if (Scripts.ScriptEditorThread == null ||
+					(Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Running &&
+					Scripts.ScriptEditorThread.ThreadState != ThreadState.Unstarted &&
+					Scripts.ScriptEditorThread.ThreadState != ThreadState.WaitSleepJoin)
 				)
 			{
-				if (m_OnRecord)
+				if (ScriptRecorder.OnRecord)
 				{
 					SetErrorBox("RECORDER: Stop Record");
-					m_OnRecord = false;
 					ScriptRecorder.OnRecord = false;
-					SetStatusLabel("");
+					SetStatusLabel("IDLE", Color.DarkTurquoise);
 					return;
 				}
 				else
 				{
 					SetErrorBox("RECORDER: Start Record");
-					m_OnRecord = true;
 					ScriptRecorder.OnRecord = true;
-					SetStatusLabel("ON RECORD");
+					SetStatusLabel("ON RECORD", Color.Red);
 					return;
 				}
 			}
@@ -1699,12 +1698,6 @@ namespace RazorEnhanced.UI
 			}
 		}
 
-		/// <summary>
-		/// Function to Shortcut with keyboard
-		/// </summary>
-		/// <param name="msg"></param>
-		/// <param name="keyData"></param>
-		/// <returns></returns>
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
 			switch (keyData)
@@ -1795,9 +1788,9 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedScriptEditor_Load(object sender, EventArgs e)
 		{
-			m_OnClosing = false;
-			m_OnRecord = false;
-		}
+			toolStripStatusLabelScript.Width = this.Width - 20;
+			SetStatusLabel("IDLE", Color.DarkTurquoise);
+        }
 	}
 
 	public class ToolTipDescriptions
