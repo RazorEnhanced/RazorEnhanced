@@ -580,6 +580,7 @@ namespace Assistant
 		private RazorCheckBox uomodFPSCheckBox;
 		private RazorCheckBox uomodpaperdoolCheckBox;
 		private RazorCheckBox uomodglobalsoundCheckBox;
+		private Label labelHotride;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1344,6 +1345,7 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+			this.labelHotride = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -4081,6 +4083,7 @@ namespace Assistant
 			// 
 			// statusTab
 			// 
+			this.statusTab.Controls.Add(this.labelHotride);
 			this.statusTab.Controls.Add(this.panelLogo);
 			this.statusTab.Controls.Add(this.labelUOD);
 			this.statusTab.Controls.Add(this.panelUODlogo);
@@ -7252,6 +7255,17 @@ namespace Assistant
 			this.timerupdatestatus.Enabled = true;
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
+			// 
+			// labelHotride
+			// 
+			this.labelHotride.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelHotride.Location = new System.Drawing.Point(8, 291);
+			this.labelHotride.Name = "labelHotride";
+			this.labelHotride.Size = new System.Drawing.Size(650, 38);
+			this.labelHotride.TabIndex = 8;
+			this.labelHotride.Text = "Many thanks to Hotride for his  FPS multiclient patch! Hotride is the author of O" +
+    "penGL OrionUO Client project (you can point your browser to the link http://foru" +
+    "m.orion-client.online for more info)";
 			// 
 			// MainForm
 			// 

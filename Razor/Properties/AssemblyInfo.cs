@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Razor Enhanced")]
 [assembly: AssemblyDescription("The bleeding edge UO tool")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("www.uodreams.com")]
+[assembly: AssemblyCompany("www.razorenhanced.org")]
 [assembly: AssemblyProduct("Razor Enhanced")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("0.5.0.0")]
+[assembly: AssemblyVersion("0.6.0.0")]
 
 //
 // In order to sign your assembly you must specify a key to use. Refer to the
