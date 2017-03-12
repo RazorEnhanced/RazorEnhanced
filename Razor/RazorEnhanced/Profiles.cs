@@ -226,6 +226,8 @@ namespace RazorEnhanced
 			// Salvo parametri di uscita
 			RazorEnhanced.Settings.General.SaveExitData();
 
+			Assistant.Engine.MainWindow.Initializing = true;
+			
 			// Rimuovo patch attive UoMod	
 			UoMod.DisableAllPatch();
 
@@ -305,7 +307,7 @@ namespace RazorEnhanced
 			// Chiuto toolbar
 			if (RazorEnhanced.SpellGrid.SpellGridForm != null)
 				RazorEnhanced.SpellGrid.SpellGridForm.Close();
-			
+
 			// Carico save profilo
 			RazorEnhanced.Settings.Load();
 
@@ -332,6 +334,9 @@ namespace RazorEnhanced
 			// Riapro la spellgrid se le condizioni lo permettono
 			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox"))
 				RazorEnhanced.SpellGrid.Open();
+
+			Assistant.Engine.MainWindow.Initializing = false;
+			SetLast(name);
 		}
 
 		internal static void Save()

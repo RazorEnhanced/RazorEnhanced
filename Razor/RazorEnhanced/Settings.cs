@@ -3921,6 +3921,12 @@ namespace RazorEnhanced
 
 		internal static void Save()
 		{
+			if (Engine.MainWindow != null)
+			{
+				if (Assistant.Engine.MainWindow.Initializing)
+					return;
+			}
+
 			try
 			{
 				m_Dataset.AcceptChanges();
@@ -4802,7 +4808,6 @@ namespace RazorEnhanced
 			}
 
 			Save();
-
 		}
 
 		// *************************************************************************

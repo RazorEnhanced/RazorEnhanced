@@ -379,9 +379,6 @@ namespace Assistant
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
 
-			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
-				Assistant.Engine.MainWindow.ScavengerCheckBox.Checked = false;
-
 			if (Assistant.Engine.MainWindow.OrganizerStop.Enabled == true)
 				Assistant.Engine.MainWindow.OrganizerStop.PerformClick();
 
@@ -392,11 +389,6 @@ namespace Assistant
 				Assistant.Engine.MainWindow.RestockStop.PerformClick();
 
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
-
-			// Stop forzato di tutti i thread agent
-			RazorEnhanced.AutoLoot.AutoMode = false;
-			RazorEnhanced.Scavenger.AutoMode = false;
-			RazorEnhanced.BandageHeal.AutoMode = false;
 
 			ClientCommunication.Close();
 		}
