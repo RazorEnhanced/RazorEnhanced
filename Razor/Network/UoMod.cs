@@ -40,6 +40,10 @@ namespace Assistant
 		};
 
 		private static IntPtr m_modhandle = IntPtr.Zero;
+		private static bool m_soundpatch = false;
+		private static bool m_fpspatch = false;
+		private static bool m_paperdoolpatch = false;
+		private static bool m_viewrangepatch = false;
 
 		[DllImport("User32.dll")]
 		public static extern int SendMessage(IntPtr hWnd, int uMsg, int wParam, int lParam);
@@ -185,10 +189,29 @@ namespace Assistant
 			if (m_modhandle == IntPtr.Zero)
 				return;
 
-            if (enable)
-				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, patch);
+			int m_enable = 0;
+			if (enable)
+				m_enable = (int)PATCH_MESSAGES.PM_ENABLE;
 			else
-				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, patch);
+				m_enable = (int)PATCH_MESSAGES.PM_DISABLE;
+
+			switch (patch)
+			{
+				case (int)PATCH_TYPE.PT_FPS:
+					SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_FPS);
+					m_fpspatch = true;
+					break;
+                case (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS:
+					SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+					m_paperdoolpatch = true;
+					break;
+				case (int)PATCH_TYPE.PT_GLOBAL_SOUND:
+					SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+					m_paperdoolpatch = true;
+					break;
+				default:
+					break;
+			}
 		}
 
 		internal static void EnableOnStartMod()
@@ -198,23 +221,41 @@ namespace Assistant
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
 				ClientCommunication.SendToClient(new SetUpdateRange(31));
+				m_viewrangepatch = true;
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("UoModFPS"))
+			{
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_FPS);
+				m_fpspatch = true;
+            }
 
 			if (RazorEnhanced.Settings.General.ReadBool("UoModPaperdool"))
+			{
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+				m_paperdoolpatch = true;
+			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("UoModSound"))
+			{
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+				m_paperdoolpatch = true;
+			}
+
 		}
 
 		internal static void DisableAllPatch()
 		{
+			if (m_viewrangepatch)
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
+
+			if (m_fpspatch)
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_FPS);
+
+			if (m_paperdoolpatch)
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+
+			if (m_soundpatch)
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
 		}
 
