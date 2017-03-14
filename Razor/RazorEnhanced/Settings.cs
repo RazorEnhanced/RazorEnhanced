@@ -3921,11 +3921,17 @@ namespace RazorEnhanced
 
 		internal static void Save()
 		{
-			if (Engine.MainWindow != null)
-			{
-				if (Assistant.Engine.MainWindow.Initializing)
-					return;
-			}
+			Save(false);
+        }
+
+		internal static void Save(bool force)
+		{
+			if (!force)
+				if (Engine.MainWindow != null)
+				{
+					if (Assistant.Engine.MainWindow.Initializing)
+						return;
+				}
 
 			try
 			{
@@ -4807,7 +4813,7 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", 28);
 			}
 
-			Save();
+			Save(true);
 		}
 
 		// *************************************************************************

@@ -1115,7 +1115,10 @@ namespace Assistant
 			// Carico profili se linkati
 			string profilename = RazorEnhanced.Profiles.IsLinked(serial);
 			if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)
+			{
+				RazorEnhanced.Profiles.ProfileChange(profilename);
 				Engine.MainWindow.ProfilesComboBox.SelectedIndex = Engine.MainWindow.ProfilesComboBox.FindString(profilename);
+			}
 
 			// Apertura automatica toolbar se abilitata
 			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox") && RazorEnhanced.ToolBar.ToolBarForm == null)
