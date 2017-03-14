@@ -101,7 +101,6 @@ namespace Assistant
 		#endregion Class Variables
 
 		private RazorCheckBox negotiate;
-		private System.Windows.Forms.PictureBox lockBox;
 		private RazorCheckBox preAOSstatbar;
 		private RazorComboBox clientPrio;
 		private System.Windows.Forms.Label label9;
@@ -816,7 +815,6 @@ namespace Assistant
 			this.gameSize = new RazorEnhanced.UI.RazorCheckBox();
 			this.rememberPwds = new RazorEnhanced.UI.RazorCheckBox();
 			this.clientPrio = new RazorEnhanced.UI.RazorComboBox();
-			this.lockBox = new System.Windows.Forms.PictureBox();
 			this.systray = new RazorEnhanced.UI.RazorRadioButton();
 			this.taskbar = new RazorEnhanced.UI.RazorRadioButton();
 			this.smartCPU = new RazorEnhanced.UI.RazorCheckBox();
@@ -1345,7 +1343,6 @@ namespace Assistant
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.lockBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.opacity)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.moreOptTab.SuspendLayout();
@@ -1448,7 +1445,6 @@ namespace Assistant
 			this.generalTab.Controls.Add(this.gameSize);
 			this.generalTab.Controls.Add(this.rememberPwds);
 			this.generalTab.Controls.Add(this.clientPrio);
-			this.generalTab.Controls.Add(this.lockBox);
 			this.generalTab.Controls.Add(this.systray);
 			this.generalTab.Controls.Add(this.taskbar);
 			this.generalTab.Controls.Add(this.smartCPU);
@@ -1681,19 +1677,6 @@ namespace Assistant
 			this.clientPrio.Size = new System.Drawing.Size(88, 22);
 			this.clientPrio.TabIndex = 60;
 			this.clientPrio.SelectedIndexChanged += new System.EventHandler(this.clientPrio_SelectedIndexChanged);
-			// 
-			// lockBox
-			// 
-			this.lockBox.Cursor = System.Windows.Forms.Cursors.Help;
-			this.lockBox.Image = ((System.Drawing.Image)(resources.GetObject("lockBox.Image")));
-			this.lockBox.Location = new System.Drawing.Point(211, 334);
-			this.lockBox.Name = "lockBox";
-			this.lockBox.Size = new System.Drawing.Size(16, 16);
-			this.lockBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.lockBox.TabIndex = 56;
-			this.lockBox.TabStop = false;
-			this.lockBox.Visible = false;
-			this.lockBox.Click += new System.EventHandler(this.lockBox_Click);
 			// 
 			// systray
 			// 
@@ -7266,7 +7249,6 @@ namespace Assistant
 			this.generalTab.PerformLayout();
 			this.groupBox29.ResumeLayout(false);
 			this.groupBox29.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.lockBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.opacity)).EndInit();
 			this.groupBox1.ResumeLayout(false);
 			this.moreOptTab.ResumeLayout(false);
@@ -8734,11 +8716,6 @@ namespace Assistant
 					RazorEnhanced.Settings.General.WriteBool("Negotiate", negotiate.Checked);
 				ClientCommunication.SetNegotiate(negotiate.Checked);
 			}
-		}
-
-		private void lockBox_Click(object sender, System.EventArgs e)
-		{
-			MessageBox.Show(this, Language.GetString(LocString.FeatureDisabledText), Language.GetString(LocString.FeatureDisabled), MessageBoxButtons.OK, MessageBoxIcon.Stop);
 		}
 
 		[System.Runtime.InteropServices.DllImport("user32.dll")]
