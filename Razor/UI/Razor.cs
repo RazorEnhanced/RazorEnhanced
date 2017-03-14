@@ -243,7 +243,6 @@ namespace Assistant
 		private RazorComboBox sellListSelect;
 		private RazorButton sellExportListButton;
 		private Label label26;
-		private RazorButton razorButton1;
 		private Label sellBagLabel;
 		private RazorButton sellSetBagButton;
 		private ColumnHeader columnHeader22;
@@ -1048,6 +1047,7 @@ namespace Assistant
 			this.screenPrev = new System.Windows.Forms.PictureBox();
 			this.dispTime = new RazorEnhanced.UI.RazorCheckBox();
 			this.statusTab = new System.Windows.Forms.TabPage();
+			this.labelHotride = new System.Windows.Forms.Label();
 			this.panelLogo = new System.Windows.Forms.Panel();
 			this.labelUOD = new System.Windows.Forms.Label();
 			this.panelUODlogo = new System.Windows.Forms.Panel();
@@ -1188,7 +1188,6 @@ namespace Assistant
 			this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.buyExportListButton = new RazorEnhanced.UI.RazorButton();
 			this.VendorSell = new System.Windows.Forms.TabPage();
-			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
 			this.sellBagLabel = new System.Windows.Forms.Label();
 			this.groupBox19 = new System.Windows.Forms.GroupBox();
 			this.sellEditButton = new RazorEnhanced.UI.RazorButton();
@@ -1343,7 +1342,6 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-			this.labelHotride = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -4095,6 +4093,17 @@ namespace Assistant
 			this.statusTab.TabIndex = 9;
 			this.statusTab.Text = "Help / Status";
 			// 
+			// labelHotride
+			// 
+			this.labelHotride.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.labelHotride.Location = new System.Drawing.Point(8, 291);
+			this.labelHotride.Name = "labelHotride";
+			this.labelHotride.Size = new System.Drawing.Size(650, 38);
+			this.labelHotride.TabIndex = 8;
+			this.labelHotride.Text = "Many thanks to Hotride for his  FPS multiclient patch! Hotride is the author of O" +
+    "penGL OrionUO Client project (you can point your browser to the link http://foru" +
+    "m.orion-client.online for more info)";
+			// 
 			// panelLogo
 			// 
 			this.panelLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelLogo.BackgroundImage")));
@@ -4707,11 +4716,11 @@ namespace Assistant
 			// autolootContainerButton
 			// 
 			this.autolootContainerButton.ColorTable = office2010BlueTheme1;
-			this.autolootContainerButton.Location = new System.Drawing.Point(545, 58);
+			this.autolootContainerButton.Location = new System.Drawing.Point(559, 58);
 			this.autolootContainerButton.Name = "autolootContainerButton";
-			this.autolootContainerButton.Size = new System.Drawing.Size(103, 20);
+			this.autolootContainerButton.Size = new System.Drawing.Size(89, 20);
 			this.autolootContainerButton.TabIndex = 49;
-			this.autolootContainerButton.Text = "Target Container";
+			this.autolootContainerButton.Text = "Set Bag";
 			this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click);
 			// 
@@ -4934,11 +4943,11 @@ namespace Assistant
 			// scavengerButtonSetContainer
 			// 
 			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(552, 56);
+			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(558, 56);
 			this.scavengerButtonSetContainer.Name = "scavengerButtonSetContainer";
-			this.scavengerButtonSetContainer.Size = new System.Drawing.Size(96, 20);
+			this.scavengerButtonSetContainer.Size = new System.Drawing.Size(90, 20);
 			this.scavengerButtonSetContainer.TabIndex = 66;
-			this.scavengerButtonSetContainer.Text = "Target Container";
+			this.scavengerButtonSetContainer.Text = "Set Bag";
 			this.scavengerButtonSetContainer.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonSetContainer.Click += new System.EventHandler(this.scavengerSetContainer_Click);
 			// 
@@ -5226,7 +5235,7 @@ namespace Assistant
 			this.organizerSetDestinationB.Name = "organizerSetDestinationB";
 			this.organizerSetDestinationB.Size = new System.Drawing.Size(90, 20);
 			this.organizerSetDestinationB.TabIndex = 69;
-			this.organizerSetDestinationB.Text = "Destination Cont";
+			this.organizerSetDestinationB.Text = "Destination Bag";
 			this.organizerSetDestinationB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestination_Click);
 			// 
@@ -5237,7 +5246,7 @@ namespace Assistant
 			this.organizerSetSourceB.Name = "organizerSetSourceB";
 			this.organizerSetSourceB.Size = new System.Drawing.Size(90, 20);
 			this.organizerSetSourceB.TabIndex = 66;
-			this.organizerSetSourceB.Text = "Source Cont";
+			this.organizerSetSourceB.Text = "Source Bag";
 			this.organizerSetSourceB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSource_Click);
 			// 
@@ -5570,7 +5579,6 @@ namespace Assistant
 			// 
 			// VendorSell
 			// 
-			this.VendorSell.Controls.Add(this.razorButton1);
 			this.VendorSell.Controls.Add(this.sellBagLabel);
 			this.VendorSell.Controls.Add(this.groupBox19);
 			this.VendorSell.Controls.Add(this.groupBox20);
@@ -5591,20 +5599,9 @@ namespace Assistant
 			this.VendorSell.Text = "Vendor Sell";
 			this.VendorSell.UseVisualStyleBackColor = true;
 			// 
-			// razorButton1
-			// 
-			this.razorButton1.ColorTable = office2010BlueTheme1;
-			this.razorButton1.Location = new System.Drawing.Point(553, 102);
-			this.razorButton1.Name = "razorButton1";
-			this.razorButton1.Size = new System.Drawing.Size(95, 20);
-			this.razorButton1.TabIndex = 87;
-			this.razorButton1.Text = "Clear Container";
-			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButton1.Click += new System.EventHandler(this.resetSellBag_Click);
-			// 
 			// sellBagLabel
 			// 
-			this.sellBagLabel.Location = new System.Drawing.Point(567, 81);
+			this.sellBagLabel.Location = new System.Drawing.Point(570, 83);
 			this.sellBagLabel.Name = "sellBagLabel";
 			this.sellBagLabel.Size = new System.Drawing.Size(72, 19);
 			this.sellBagLabel.TabIndex = 86;
@@ -5688,11 +5685,11 @@ namespace Assistant
 			// sellSetBagButton
 			// 
 			this.sellSetBagButton.ColorTable = office2010BlueTheme1;
-			this.sellSetBagButton.Location = new System.Drawing.Point(551, 58);
+			this.sellSetBagButton.Location = new System.Drawing.Point(558, 58);
 			this.sellSetBagButton.Name = "sellSetBagButton";
-			this.sellSetBagButton.Size = new System.Drawing.Size(100, 20);
+			this.sellSetBagButton.Size = new System.Drawing.Size(90, 20);
 			this.sellSetBagButton.TabIndex = 85;
-			this.sellSetBagButton.Text = "Target Container";
+			this.sellSetBagButton.Text = "Sell Bag";
 			this.sellSetBagButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellSetBagButton.Click += new System.EventHandler(this.sellSetBag_Click);
 			// 
@@ -5866,7 +5863,7 @@ namespace Assistant
 			// 
 			// dressBagLabel
 			// 
-			this.dressBagLabel.Location = new System.Drawing.Point(566, 154);
+			this.dressBagLabel.Location = new System.Drawing.Point(570, 154);
 			this.dressBagLabel.Name = "dressBagLabel";
 			this.dressBagLabel.Size = new System.Drawing.Size(82, 19);
 			this.dressBagLabel.TabIndex = 89;
@@ -6511,7 +6508,7 @@ namespace Assistant
 			// 
 			// restockDestinationLabel
 			// 
-			this.restockDestinationLabel.Location = new System.Drawing.Point(564, 126);
+			this.restockDestinationLabel.Location = new System.Drawing.Point(567, 126);
 			this.restockDestinationLabel.Name = "restockDestinationLabel";
 			this.restockDestinationLabel.Size = new System.Drawing.Size(82, 19);
 			this.restockDestinationLabel.TabIndex = 80;
@@ -6519,7 +6516,7 @@ namespace Assistant
 			// 
 			// restockSourceLabel
 			// 
-			this.restockSourceLabel.Location = new System.Drawing.Point(564, 82);
+			this.restockSourceLabel.Location = new System.Drawing.Point(568, 82);
 			this.restockSourceLabel.Name = "restockSourceLabel";
 			this.restockSourceLabel.Size = new System.Drawing.Size(82, 19);
 			this.restockSourceLabel.TabIndex = 77;
@@ -6604,7 +6601,7 @@ namespace Assistant
 			this.restockSetDestinationButton.Name = "restockSetDestinationButton";
 			this.restockSetDestinationButton.Size = new System.Drawing.Size(90, 20);
 			this.restockSetDestinationButton.TabIndex = 79;
-			this.restockSetDestinationButton.Text = "Destination Cont";
+			this.restockSetDestinationButton.Text = "Destination Bag";
 			this.restockSetDestinationButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockSetDestinationButton.Click += new System.EventHandler(this.restockSetDestinationButton_Click);
 			// 
@@ -6615,7 +6612,7 @@ namespace Assistant
 			this.restockSetSourceButton.Name = "restockSetSourceButton";
 			this.restockSetSourceButton.Size = new System.Drawing.Size(90, 20);
 			this.restockSetSourceButton.TabIndex = 76;
-			this.restockSetSourceButton.Text = "Source Cont";
+			this.restockSetSourceButton.Text = "Source Bag";
 			this.restockSetSourceButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockSetSourceButton.Click += new System.EventHandler(this.restockSetSourceButton_Click);
 			// 
@@ -7245,17 +7242,6 @@ namespace Assistant
 			this.timerupdatestatus.Enabled = true;
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
-			// 
-			// labelHotride
-			// 
-			this.labelHotride.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.labelHotride.Location = new System.Drawing.Point(8, 291);
-			this.labelHotride.Name = "labelHotride";
-			this.labelHotride.Size = new System.Drawing.Size(650, 38);
-			this.labelHotride.TabIndex = 8;
-			this.labelHotride.Text = "Many thanks to Hotride for his  FPS multiclient patch! Hotride is the author of O" +
-    "penGL OrionUO Client project (you can point your browser to the link http://foru" +
-    "m.orion-client.online for more info)";
 			// 
 			// MainForm
 			// 
@@ -10402,17 +10388,6 @@ namespace Assistant
 				sellEnableCheckBox.Checked = false;
 				RazorEnhanced.SellAgent.AddLog("You are not logged in game!");
 			}
-		}
-
-		private void resetSellBag_Click(object sender, EventArgs e)
-		{
-			if (sellListSelect.Text != "")
-			{
-				RazorEnhanced.SellAgent.SellBag = 0;
-				RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, 0, true);
-			}
-			else
-				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellSetBag_Click(object sender, EventArgs e)
