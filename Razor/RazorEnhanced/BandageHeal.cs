@@ -128,6 +128,21 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static int MaxRange
+		{
+			get
+			{
+				int range = 1;
+				Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text, out range)));
+				return range;
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text = value.ToString()));
+			}
+		}
+
 		internal static bool DexFormula
 		{
 			get
@@ -219,6 +234,7 @@ namespace RazorEnhanced
 			bool BandageHealdexformulaCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
 			int BandageHealdelayTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
 			int BandageHealhpTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
+			int BandageHealMaxRangeTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox");
 			bool BandageHealpoisonCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
 			bool BandageHealmortalCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
 			bool BandageHealhiddedCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
@@ -233,7 +249,8 @@ namespace RazorEnhanced
 			PoisonBlock = BandageHealpoisonCheckBox;
 			HpLimit = BandageHealhpTextBox;
 			CustomDelay = BandageHealdelayTextBox;
-			DexFormula = BandageHealdexformulaCheckBox;
+			MaxRange = BandageHealMaxRangeTextBox;
+            DexFormula = BandageHealdexformulaCheckBox;
 			if (DexFormula)
 				Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = false;
 			else
@@ -421,7 +438,7 @@ namespace RazorEnhanced
 				target = Assistant.World.FindMobile(TargetSerial);
 				if (target == null)         // Verifica se il target è valido
 					return;
-				if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), 1)) // Verifica distanza
+				if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), MaxRange)) // Verifica distanza
 					return;
 			}
 

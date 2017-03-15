@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 28;
+		private static int SettingVersion = 29;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1320,6 +1320,7 @@ namespace RazorEnhanced
 				general.Columns.Add("BandageHealpoisonCheckBox", typeof(bool));
 				general.Columns.Add("BandageHealmortalCheckBox", typeof(bool));
 				general.Columns.Add("BandageHealhiddedCheckBox", typeof(bool));
+				general.Columns.Add("BandageHealMaxRangeTextBox", typeof(int));
 
 				// Parametri Tab (Enhanced Filters)
 				general.Columns.Add("HighlightTargetCheckBox", typeof(bool));
@@ -1506,7 +1507,7 @@ namespace RazorEnhanced
 				// Composizione Parematri base primo avvio
 				object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
-                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false,
+                    false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1,
 
                     // Parametri primo avvio per tab Enhanced Filters
                     false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true,
@@ -4811,6 +4812,16 @@ namespace RazorEnhanced
 
 				realVersion = 28;
 				General.WriteInt("SettingVersion", 28);
+			}
+
+			if (realVersion == 28)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("BandageHealMaxRangeTextBox", typeof(int));
+				General.WriteInt("BandageHealMaxRangeTextBox", 1);
+
+
+				realVersion = 29;
+				General.WriteInt("SettingVersion", 29);
 			}
 
 			Save(true);

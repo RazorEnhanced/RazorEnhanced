@@ -334,8 +334,6 @@ namespace Assistant
 		private Label label33;
 		private RazorTextBox bandagehealhpTextBox;
 		private Label label32;
-		private RazorTextBox bandagehealdelayTextBox;
-		private Label label31;
 		private RazorCheckBox bandagehealdexformulaCheckBox;
 		private RazorTextBox bandagehealcustomcolorTextBox;
 		private Label label30;
@@ -578,6 +576,10 @@ namespace Assistant
 		private RazorCheckBox uomodpaperdoolCheckBox;
 		private RazorCheckBox uomodglobalsoundCheckBox;
 		private Label labelHotride;
+		private RazorTextBox bandagehealmaxrangeTextBox;
+		private Label label46;
+		private RazorTextBox bandagehealdelayTextBox;
+		private Label label31;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -697,6 +699,7 @@ namespace Assistant
 		internal RazorCheckBox BandageHealdexformulaCheckBox { get { return bandagehealdexformulaCheckBox; } }
 		internal RazorTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
 		internal RazorTextBox BandageHealhpTextBox { get { return bandagehealhpTextBox; } }
+		internal RazorTextBox BandageHealMaxRangeTextBox { get { return bandagehealmaxrangeTextBox; } }
 		internal RazorCheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
 		internal RazorCheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
 		internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
@@ -1296,6 +1299,8 @@ namespace Assistant
 			this.restockExportListB = new RazorEnhanced.UI.RazorButton();
 			this.bandageheal = new System.Windows.Forms.TabPage();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
+			this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.label46 = new System.Windows.Forms.Label();
 			this.bandagehealcountdownCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.bandagehealhiddedCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.bandagehealmortalCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -6725,6 +6730,8 @@ namespace Assistant
 			// 
 			// groupBox6
 			// 
+			this.groupBox6.Controls.Add(this.bandagehealmaxrangeTextBox);
+			this.groupBox6.Controls.Add(this.label46);
 			this.groupBox6.Controls.Add(this.bandagehealcountdownCheckBox);
 			this.groupBox6.Controls.Add(this.bandagehealhiddedCheckBox);
 			this.groupBox6.Controls.Add(this.bandagehealmortalCheckBox);
@@ -6751,6 +6758,30 @@ namespace Assistant
 			this.groupBox6.TabIndex = 74;
 			this.groupBox6.TabStop = false;
 			this.groupBox6.Text = "Settings";
+			// 
+			// bandagehealmaxrangeTextBox
+			// 
+			this.bandagehealmaxrangeTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.bandagehealmaxrangeTextBox.BackColor = System.Drawing.Color.White;
+			this.bandagehealmaxrangeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.bandagehealmaxrangeTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.bandagehealmaxrangeTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			this.bandagehealmaxrangeTextBox.Location = new System.Drawing.Point(77, 270);
+			this.bandagehealmaxrangeTextBox.Name = "bandagehealmaxrangeTextBox";
+			this.bandagehealmaxrangeTextBox.Size = new System.Drawing.Size(29, 20);
+			this.bandagehealmaxrangeTextBox.TabIndex = 91;
+			this.bandagehealmaxrangeTextBox.TextChanged += new System.EventHandler(this.bandagehealmaxrangeTextBox_TextChanged);
+			// 
+			// label46
+			// 
+			this.label46.AutoSize = true;
+			this.label46.Location = new System.Drawing.Point(7, 273);
+			this.label46.Name = "label46";
+			this.label46.Size = new System.Drawing.Size(65, 13);
+			this.label46.TabIndex = 90;
+			this.label46.Text = "Max Range:";
 			// 
 			// bandagehealcountdownCheckBox
 			// 
@@ -11626,6 +11657,12 @@ namespace Assistant
 		{
 			if (bandagehealcountdownCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("BandageHealcountdownCheckBox", bandagehealcountdownCheckBox.Checked);
+		}
+
+		private void bandagehealmaxrangeTextBox_TextChanged(object sender, EventArgs e)
+		{
+			if (bandagehealmaxrangeTextBox.Focused)
+				RazorEnhanced.Settings.General.WriteInt("BandageHealMaxRangeTextBox", RazorEnhanced.BandageHeal.MaxRange);
 		}
 
 		// ---------------- HEAL BANDAGE END ----------------
