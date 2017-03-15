@@ -58,6 +58,7 @@ namespace RazorEnhanced.UI
 		private List<int> m_Breakpoints = new List<int>();
 
 		private volatile bool m_Breaktrace = false;
+		private bool m_onclosing = false;
 
 		private FastColoredTextBoxNS.AutocompleteMenu m_popupMenu;
 
@@ -1283,6 +1284,9 @@ namespace RazorEnhanced.UI
 
 		private void SetHighlightLine(int iline, Color background)
 		{
+			if (this.m_onclosing)
+				return;
+
 			if (this.fastColoredTextBoxEditor.InvokeRequired)
 			{
 				SetHighlightLineDelegate d = new SetHighlightLineDelegate(SetHighlightLine);
@@ -1305,7 +1309,7 @@ namespace RazorEnhanced.UI
 
 		private void SetStatusLabel(string text, Color color)
 		{
-			if (statusStrip1 == null)
+			if (this.m_onclosing)
 				return;
 
 			if (this.InvokeRequired)
@@ -1356,7 +1360,7 @@ namespace RazorEnhanced.UI
 
 		private void SetTraceback(string text)
 		{
-			if (textBoxDebug == null)
+			if (this.m_onclosing)
 				return;
 
 			if (this.textBoxDebug.InvokeRequired)
@@ -1372,25 +1376,32 @@ namespace RazorEnhanced.UI
 
 		private void SetErrorBox(string text)
 		{
-			if (listBox1 == null)
+			if (this.m_onclosing)
 				return;
 
-			if (this.listBox1.InvokeRequired)
+			try
 			{
-				SetTracebackDelegate d = new SetTracebackDelegate(SetErrorBox);
-				this.Invoke(d, new object[] { text });
+				if (this.listBox1.InvokeRequired)
+				{
+					SetTracebackDelegate d = new SetTracebackDelegate(SetErrorBox);
+					this.Invoke(d, new object[] { text });
+				}
+				else
+				{
+					this.listBox1.Items.Add("[" + DateTime.Now.ToString("HH:mm:ss") + "] - " + text);
+					this.listBox1.SelectedIndex = this.listBox1.Items.Count - 1;
+				}
 			}
-			else
-			{
-				this.listBox1.Items.Add("["+DateTime.Now.ToString("HH:mm:ss")+"] - " + text);
-				this.listBox1.SelectedIndex = this.listBox1.Items.Count - 1;
-			}
+			catch
+			{ }
 		}
 
 		private void EnhancedScriptEditor_FormClosing(object sender, FormClosingEventArgs e)
 		{
+			m_EnhancedScriptEditor.m_onclosing = true;
 			Stop();
 			End();
+			m_EnhancedScriptEditor.m_onclosing = false;
 		}
 
 		private void toolStripButtonPlay_Click(object sender, EventArgs e)
@@ -1665,12 +1676,6 @@ namespace RazorEnhanced.UI
 
 		private void ScriptRecord()
 		{
-			if (ScriptRecorder.OnRecord)
-			{
-				SetErrorBox("RECORDER ERROR: Record Engine busy!");
-				return;
-			}
-
 			if (Scripts.ScriptEditorThread == null ||
 					(Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Running &&
 					Scripts.ScriptEditorThread.ThreadState != ThreadState.Unstarted &&
