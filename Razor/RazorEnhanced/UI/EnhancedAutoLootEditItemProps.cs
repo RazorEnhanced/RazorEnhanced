@@ -25,7 +25,6 @@ namespace RazorEnhanced.UI
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
-			RazorEnhanced.AutoLoot.RefreshItems();
 			this.Close();
 		}
 
