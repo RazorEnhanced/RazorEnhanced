@@ -319,9 +319,20 @@ namespace RazorEnhanced
 			if (RazorEnhanced.Settings.Friend.ListExists(selection))
 			{
 				if (!RazorEnhanced.Settings.Friend.PlayerExists(selection, player))
+				{
+					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+						RazorEnhanced.Misc.SendMessage("Friend added: " + name);
+					RazorEnhanced.Friend.AddLog("Friend added: " + name);
 					RazorEnhanced.Settings.Friend.PlayerInsert(selection, player);
+					RazorEnhanced.Friend.RefreshPlayers();
+				}
+				else
+				{
+					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+						RazorEnhanced.Misc.SendMessage(name + " is already in friend list");
+					RazorEnhanced.Friend.AddLog(name + " is already in friend list");
+				}
 			}
-			RazorEnhanced.Friend.RefreshPlayers();
 		}
 
 		internal static void AddGuildToList(string name)

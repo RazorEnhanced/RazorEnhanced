@@ -11045,9 +11045,6 @@ namespace Assistant
 			Assistant.Mobile friendplayer = Assistant.World.FindMobile(serial);
 			if (friendplayer != null && friendplayer.Serial.IsMobile && friendplayer.Serial != World.Player.Serial)
 			{
-				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Friend player added: " + friendplayer.Name.ToString());
-				RazorEnhanced.Friend.AddLog("Friend player added: " + friendplayer.Name.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Friend.AddPlayerToList(friendplayer.Name, friendplayer.Serial); });
 			}
 			else
