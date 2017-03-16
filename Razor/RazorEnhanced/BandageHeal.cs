@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace RazorEnhanced
 {
@@ -225,54 +226,27 @@ namespace RazorEnhanced
 
 		internal static void LoadSettings()
 		{
-			bool BandageHealcountdownCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
+			ShowCountdown = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
 			string BandageHealtargetComboBox = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
-			int BandageHealtargetLabel = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
-			bool BandageHealcustomCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
-			int BandageHealcustomIDTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
-			int BandageHealcustomcolorTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox");
-			bool BandageHealdexformulaCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
-			int BandageHealdelayTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
-			int BandageHealhpTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
-			int BandageHealMaxRangeTextBox = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox");
-			bool BandageHealpoisonCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
-			bool BandageHealmortalCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
-			bool BandageHealhiddedCheckBox = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
+			TargetSerial = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
+			Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Enabled = Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Enabled = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
+			CustomID = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
+			CustomColor = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox");
+			Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+			CustomDelay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
+			HpLimit = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
+			MaxRange = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox");
+			PoisonBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox");
+			MortalBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox");
+			HiddenBlock = RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox");
 
 			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Clear();
 			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Self");
 			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Target");
+			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Items.Add("Friend");
+			Assistant.Engine.MainWindow.BandageHealtargetComboBox.Text = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
 
-			ShowCountdown = BandageHealcountdownCheckBox;
-			HiddenBlock = BandageHealhiddedCheckBox;
-			MortalBlock = BandageHealmortalCheckBox;
-			PoisonBlock = BandageHealpoisonCheckBox;
-			HpLimit = BandageHealhpTextBox;
-			CustomDelay = BandageHealdelayTextBox;
-			MaxRange = BandageHealMaxRangeTextBox;
-            DexFormula = BandageHealdexformulaCheckBox;
-			if (DexFormula)
-				Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = false;
-			else
-				Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = true;
-
-			CustomColor = BandageHealcustomcolorTextBox;
-			CustomID = BandageHealcustomIDTextBox;
-			CustomCheckBox = BandageHealcustomCheckBox;
-			if (CustomCheckBox)
-			{
-				Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Enabled = true;
-				Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Enabled = true;
-			}
-			else
-			{
-				Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Enabled = false;
-				Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Enabled = false;
-			}
-
-			TargetSerial = BandageHealtargetLabel;
-			TargetType = BandageHealtargetComboBox;
-			if (TargetType == "Target")
+			if (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox") == "Target")
 			{
 				Assistant.Engine.MainWindow.BandageHealsettargetButton.Enabled = true;
 				Assistant.Engine.MainWindow.BandageHealtargetLabel.Enabled = true;
@@ -427,20 +401,31 @@ namespace RazorEnhanced
 			if (World.Player.IsGhost)
 				return;
 
-			Assistant.Mobile target;
+			Assistant.Mobile target = null;
 
-			if (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox") == "Self")
+			switch (RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox"))
 			{
-				target = World.Player;
+				case "Self":
+					target = World.Player;
+					break;
+				case "Target":
+					target = Assistant.World.FindMobile(TargetSerial);
+					break;
+				case "Friend":
+					RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter();
+					targfilter.Enabled = true;
+					targfilter.Friend = 1;
+					targfilter.RangeMax = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox");
+					Mobile targ = RazorEnhanced.Mobiles.Select(RazorEnhanced.Mobiles.ApplyFilter(targfilter), "Weakest");
+					if (targ != null)
+						target = Assistant.World.FindMobile(targ.Serial);
+					break;
 			}
-			else
-			{
-				target = Assistant.World.FindMobile(TargetSerial);
-				if (target == null)         // Verifica se il target è valido
-					return;
-				if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), MaxRange)) // Verifica distanza
-					return;
-			}
+
+			if (target == null)         // Verifica se il target è valido
+				return;
+			if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox"))) // Verifica distanza
+				return;
 
 			exit = EngineRun(target);
 		}
