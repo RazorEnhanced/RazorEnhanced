@@ -266,6 +266,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedChangeLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedChangeLog.Designer.cs">
+      <DependentUpon>EnhancedChangeLog.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -547,6 +553,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedChangeLog.resx">
+      <DependentUpon>EnhancedChangeLog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddGuildManual.resx">
       <DependentUpon>EnhancedFriendAddGuildManual.cs</DependentUpon>
