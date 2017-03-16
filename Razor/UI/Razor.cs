@@ -12938,7 +12938,7 @@ namespace Assistant
 				else
 					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_PAPERDOLL_SLOTS);
 
-				RazorEnhanced.Settings.General.WriteBool("UoModPaperdool", uomodFPSCheckBox.Checked);
+				RazorEnhanced.Settings.General.WriteBool("UoModPaperdool", uomodpaperdoolCheckBox.Checked);
 			}
 		}
 
@@ -12951,7 +12951,7 @@ namespace Assistant
 				else
 					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_GLOBAL_SOUND);
 
-				RazorEnhanced.Settings.General.WriteBool("UoModSound", uomodFPSCheckBox.Checked);
+				RazorEnhanced.Settings.General.WriteBool("UoModSound", uomodglobalsoundCheckBox.Checked);
 			}
 		}
 
