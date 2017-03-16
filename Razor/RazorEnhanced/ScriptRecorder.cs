@@ -311,7 +311,7 @@ namespace RazorEnhanced
 
 		internal static void Record_Target(TargetInfo info)
 		{
-			AddLog("Target.WaitForTarget(10000)");
+			AddLog("Target.WaitForTarget(10000, False)");
 			if (info.X == 0xFFFF && info.X == 0xFFFF && (info.Serial <= 0 || info.Serial >= 0x80000000))
 			{
 				AddLog("Target.Cancel( )");
