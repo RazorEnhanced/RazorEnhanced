@@ -28,7 +28,8 @@ namespace Assistant
 
 		private static bool m_Intercept;
 		private static volatile bool m_HasTarget;
-		private static bool m_ClientTarget;
+		private static volatile bool m_NoShowTarget;
+        private static bool m_ClientTarget;
 		private static TargetInfo m_LastTarget;
 		private static TargetInfo m_LastGroundTarg;
 		private static TargetInfo m_LastBeneTarg;
@@ -57,6 +58,8 @@ namespace Assistant
 		private static List<uint> m_FilterCancel = new List<uint>();
 
 		internal static bool HasTarget { get { return m_HasTarget; } }
+
+		internal static bool NoShowTarget { get { return m_NoShowTarget; } set { m_NoShowTarget = value; } }
 
 		internal static uint GetLastTarger
 		{
@@ -1260,6 +1263,11 @@ namespace Assistant
 				ClearQueue();
 				args.Block = true;
 			}
+			else
+			{
+				if (m_NoShowTarget)
+					args.Block = true;
+			}	
 
 			if (args.Block)
 			{

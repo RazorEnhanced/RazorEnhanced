@@ -144,7 +144,7 @@ namespace RazorEnhanced
 					if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 1) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 					{
 						Items.UseItem(Items.FindBySerial(Filters.AutoCarverBlade));
-						Target.WaitForTarget(1000);
+						Target.WaitForTarget(1000, true);
 						Target.TargetExecute(item.Serial);
 						Items.Message(item.Serial, 10, "*Cutting*");
 

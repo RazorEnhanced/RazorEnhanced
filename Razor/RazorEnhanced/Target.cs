@@ -27,6 +27,25 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static void WaitForTarget(int delay, bool noshow) 
+		{
+			if (!noshow)
+				WaitForTarget(delay);
+			else
+			{
+				int subdelay = delay;
+				Assistant.Targeting.NoShowTarget = true;
+				while (Assistant.Targeting.HasTarget == false)
+				{
+					Thread.Sleep(2);
+					subdelay -= 2;
+					if (subdelay <= 0)
+						break;
+				}
+				Assistant.Targeting.NoShowTarget = false;
+			}
+		}
+
 		public static void TargetExecute(int serial)
 		{
 			if (!CheckHealPoisonTarg(serial))

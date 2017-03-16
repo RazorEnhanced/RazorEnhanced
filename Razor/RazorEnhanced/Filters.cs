@@ -225,7 +225,7 @@ namespace RazorEnhanced
 			{
 				Target.Cancel();
 				Items.UseItem(Items.FindBySerial(BoneCutterBlade));
-				Target.WaitForTarget(1000);
+				Target.WaitForTarget(1000, true);
 				Target.TargetExecute(bone.Serial);
 				Thread.Sleep(100);			
             }

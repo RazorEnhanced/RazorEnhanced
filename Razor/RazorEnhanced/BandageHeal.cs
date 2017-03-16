@@ -324,7 +324,7 @@ namespace RazorEnhanced
 				if (bandagefound)        // Cerca le bende
 				{
 					AddLog("Using bandage!");
-					Target.WaitForTarget(1000);
+					Target.WaitForTarget(1000, true);
 					AddLog("Targetting: " + target.Serial.ToString());
 					Assistant.Targeting.Target(target);
 
