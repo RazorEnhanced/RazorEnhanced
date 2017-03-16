@@ -115,6 +115,9 @@ namespace Assistant
 
 		internal static void InjectUoMod()
 		{
+			if (Engine.ClientMajor < 7)
+				return;
+
 			String path = AppDomain.CurrentDomain.BaseDirectory + "\\UOMod.dll";
 
 			IntPtr hp = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, true, ClientCommunication.GetUOProcId());
@@ -186,6 +189,9 @@ namespace Assistant
 
 		internal static void EnableDisable(bool enable, int patch)
 		{
+			if (Engine.ClientMajor < 7)
+				return;
+
 			if (m_modhandle == IntPtr.Zero)
 				return;
 
@@ -207,7 +213,7 @@ namespace Assistant
 					break;
 				case (int)PATCH_TYPE.PT_GLOBAL_SOUND:
 					SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
-					m_paperdoolpatch = true;
+					m_soundpatch = true;
 					break;
 				default:
 					break;
@@ -216,7 +222,13 @@ namespace Assistant
 
 		internal static void EnableOnStartMod()
 		{
-			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
+			if (Engine.ClientMajor < 7)
+				return;
+
+			if (m_modhandle == IntPtr.Zero)
+				return;
+
+			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled") && Engine.ClientBuild < 49)
 			{
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
@@ -239,13 +251,19 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("UoModSound"))
 			{
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
-				m_paperdoolpatch = true;
+				m_soundpatch = true;
 			}
 
 		}
 
 		internal static void DisableAllPatch()
 		{
+			if (Engine.ClientMajor < 7)
+				return;
+
+			if (m_modhandle == IntPtr.Zero)
+				return;
+
 			if (m_viewrangepatch)
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
 

@@ -92,6 +92,9 @@ namespace Assistant
 			}
 		}
 
+		internal static int ClientBuild = 50;
+		internal static int ClientMajor = 6;
+
 		internal static bool UseNewMobileIncoming
 		{
 			get
@@ -346,6 +349,9 @@ namespace Assistant
 				SplashScreen.End();
 				return;
 			}
+
+			ClientBuild = FileVersionInfo.GetVersionInfo(clientPath).FileBuildPart;
+			ClientMajor = FileVersionInfo.GetVersionInfo(clientPath).FileMajorPart;
 
 			SplashScreen.Start();
 			m_ActiveWnd = SplashScreen.Instance;

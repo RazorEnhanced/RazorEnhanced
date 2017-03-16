@@ -7553,9 +7553,20 @@ namespace Assistant
 
 			this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
 			rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");
-			forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
-			forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
-			gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
+
+			if (Engine.ClientMajor == 7 && Engine.ClientBuild > 49)
+			{
+				forceSizeX.Enabled = false;
+				forceSizeY.Enabled = false;
+				gameSize.Enabled = false;
+			}
+			else
+			{
+				forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
+				forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
+				gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
+			}
+
 			notshowlauncher.Checked = RazorEnhanced.Settings.General.ReadBool("NotShowLauncher");
 			forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
 			taskbar.Checked = !(systray.Checked = RazorEnhanced.Settings.General.ReadBool("Systray"));
@@ -7639,9 +7650,18 @@ namespace Assistant
 			showscriptmessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox");
 
 			// UoMod
-			uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
-			uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
-			uomodglobalsoundCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModSound");
+			if (Engine.ClientMajor >= 7)
+			{
+				uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
+				uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
+				uomodglobalsoundCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModSound");
+			}
+			else
+			{
+				uomodFPSCheckBox.Enabled = false;
+				uomodpaperdoolCheckBox.Enabled = false;
+				uomodglobalsoundCheckBox.Enabled = false;
+			}
 		}
 
 		private bool m_Initializing = false;
@@ -8688,6 +8708,9 @@ namespace Assistant
 
 		private static void ForceSize()
 		{
+			if (Engine.ClientMajor == 7 && Engine.ClientBuild > 49)
+				return;
+
 			int x, y;
 
 			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
@@ -8701,9 +8724,12 @@ namespace Assistant
 					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 			}
 		}
-
+		
 		private void gameSize_CheckedChanged(object sender, System.EventArgs e)
 		{
+			if (Engine.ClientMajor == 7 && Engine.ClientBuild > 49)
+				return;
+
 			if (gameSize.Focused)
 				RazorEnhanced.Settings.General.WriteBool("ForceSizeEnabled", gameSize.Checked);
 
