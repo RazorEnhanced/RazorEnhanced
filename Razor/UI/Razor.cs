@@ -9572,9 +9572,13 @@ namespace Assistant
 		{
 			if (autolootListSelect.Text != "")
 			{
-				RazorEnhanced.AutoLoot.AddLog("Autoloot list " + autolootListSelect.Text + " removed!");
-				RazorEnhanced.AutoLoot.AutoLootBag = 0;
-				RazorEnhanced.AutoLoot.RemoveList(autolootListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this AutoLoot list: " + autolootListSelect.Text, "Delete AutoLoot List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.AutoLoot.AddLog("Autoloot list " + autolootListSelect.Text + " removed!");
+					RazorEnhanced.AutoLoot.AutoLootBag = 0;
+					RazorEnhanced.AutoLoot.RemoveList(autolootListSelect.Text);
+				}
 			}
 		}
 
@@ -9770,9 +9774,13 @@ namespace Assistant
 		{
 			if (scavengerListSelect.Text != "")
 			{
-				RazorEnhanced.Scavenger.AddLog("Scavenger list " + scavengerListSelect.Text + " removed!");
-				RazorEnhanced.Scavenger.ScavengerBag = 0;
-				RazorEnhanced.Scavenger.RemoveList(scavengerListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Scavenger list: " + autolootListSelect.Text, "Delete Scavenger List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.Scavenger.AddLog("Scavenger list " + scavengerListSelect.Text + " removed!");
+					RazorEnhanced.Scavenger.ScavengerBag = 0;
+					RazorEnhanced.Scavenger.RemoveList(scavengerListSelect.Text);
+				}
 			}
 		}
 
@@ -9954,11 +9962,15 @@ namespace Assistant
 		{
 			if (organizerListSelect.Text != "")
 			{
-				RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
-				RazorEnhanced.Organizer.OrganizerSource = 0;
-				RazorEnhanced.Organizer.OrganizerDestination = 0;
-				RazorEnhanced.Organizer.OrganizerDelay = 100;
-				RazorEnhanced.Organizer.RemoveList(organizerListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Organizer list: " + autolootListSelect.Text, "Delete Organizer List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
+					RazorEnhanced.Organizer.OrganizerSource = 0;
+					RazorEnhanced.Organizer.OrganizerDestination = 0;
+					RazorEnhanced.Organizer.OrganizerDelay = 100;
+					RazorEnhanced.Organizer.RemoveList(organizerListSelect.Text);
+				}
 			}
 		}
 
@@ -10297,8 +10309,12 @@ namespace Assistant
 		{
 			if (sellListSelect.Text != "")
 			{
-				RazorEnhanced.SellAgent.AddLog("Sell Agent list " + sellListSelect.Text + " removed!");
-				RazorEnhanced.SellAgent.RemoveList(sellListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Sell list: " + autolootListSelect.Text, "Delete Vendor Sell List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.SellAgent.AddLog("Sell Agent list " + sellListSelect.Text + " removed!");
+					RazorEnhanced.SellAgent.RemoveList(sellListSelect.Text);
+				}
 			}
 		}
 
@@ -10539,8 +10555,12 @@ namespace Assistant
 		{
 			if (buyListSelect.Text != "")
 			{
-				RazorEnhanced.BuyAgent.AddLog("Buy Agent list " + buyListSelect.Text + " removed!");
-				RazorEnhanced.BuyAgent.RemoveList(buyListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Buy list: " + autolootListSelect.Text, "Delete Vendor Buy List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.BuyAgent.AddLog("Buy Agent list " + buyListSelect.Text + " removed!");
+					RazorEnhanced.BuyAgent.RemoveList(buyListSelect.Text);
+				}
 			}
 		}
 
@@ -10733,11 +10753,15 @@ namespace Assistant
 		{
 			if (dressListSelect.Text != "")
 			{
-				RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");
-				RazorEnhanced.Dress.DressBag = 0;
-				RazorEnhanced.Dress.DressDelay = 100;
-				RazorEnhanced.Dress.DressConflict = false;
-				RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Dress list: " + autolootListSelect.Text, "Delete Dress List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");
+					RazorEnhanced.Dress.DressBag = 0;
+					RazorEnhanced.Dress.DressDelay = 100;
+					RazorEnhanced.Dress.DressConflict = false;
+					RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
+				}
 			}
 		}
 
@@ -11017,11 +11041,15 @@ namespace Assistant
 		{
 			if (friendListSelect.Text != "")
 			{
-				RazorEnhanced.Friend.AddLog("Friends list " + friendListSelect.Text + " removed!");
-				RazorEnhanced.Friend.AutoacceptParty = false;
-				RazorEnhanced.Friend.IncludeParty = false;
-				RazorEnhanced.Friend.PreventAttack = false;
-				RazorEnhanced.Friend.RemoveList(friendListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Friend list: " + autolootListSelect.Text, "Delete Friend List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.Friend.AddLog("Friends list " + friendListSelect.Text + " removed!");
+					RazorEnhanced.Friend.AutoacceptParty = false;
+					RazorEnhanced.Friend.IncludeParty = false;
+					RazorEnhanced.Friend.PreventAttack = false;
+					RazorEnhanced.Friend.RemoveList(friendListSelect.Text);
+				}
 			}
 		}
 
@@ -11245,11 +11273,15 @@ namespace Assistant
 		{
 			if (restockListSelect.Text != "")
 			{
-				RazorEnhanced.Restock.AddLog("Restock list " + restockListSelect.Text + " removed!");
-				RazorEnhanced.Restock.RestockSource = 0;
-				RazorEnhanced.Restock.RestockDestination = 0;
-				RazorEnhanced.Restock.RestockDelay = 100;
-				RazorEnhanced.Restock.RemoveList(restockListSelect.Text);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Restock list: " + autolootListSelect.Text, "Delete Restock List?", MessageBoxButtons.YesNo);
+				if (dialogResult == DialogResult.Yes)
+				{
+					RazorEnhanced.Restock.AddLog("Restock list " + restockListSelect.Text + " removed!");
+					RazorEnhanced.Restock.RestockSource = 0;
+					RazorEnhanced.Restock.RestockDestination = 0;
+					RazorEnhanced.Restock.RestockDelay = 100;
+					RazorEnhanced.Restock.RemoveList(restockListSelect.Text);
+				}
 			}
 		}
 
@@ -12408,26 +12440,30 @@ namespace Assistant
 		{
 			string profiletodelete = profilesComboBox.Text;
 
-			if (profiletodelete == "default")
+			DialogResult dialogResult = MessageBox.Show("Are you sure to delete this profile: " + profiletodelete, "Delete Profile?", MessageBoxButtons.YesNo);
+			if (dialogResult == DialogResult.Yes)
 			{
-				MessageBox.Show("Can't delete default profile",
-				"Can't delete default profile!",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Exclamation,
-				MessageBoxDefaultButton.Button1);
-			}
-			else
-			{
-				RazorEnhanced.Profiles.SetLast("default");
-				RazorEnhanced.Profiles.Delete(profiletodelete);
-				RazorEnhanced.Profiles.Refresh();
-				RazorEnhanced.Profiles.ProfileChange("default");
-				try
+				if (profiletodelete == "default")
 				{
-					File.Delete(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced." + profiletodelete + ".settings"));
+					MessageBox.Show("Can't delete default profile",
+					"Can't delete default profile!",
+					MessageBoxButtons.OK,
+					MessageBoxIcon.Exclamation,
+					MessageBoxDefaultButton.Button1);
 				}
-				catch
-				{ }
+				else
+				{
+					RazorEnhanced.Profiles.SetLast("default");
+					RazorEnhanced.Profiles.Delete(profiletodelete);
+					RazorEnhanced.Profiles.Refresh();
+					RazorEnhanced.Profiles.ProfileChange("default");
+					try
+					{
+						File.Delete(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "RazorEnhanced." + profiletodelete + ".settings"));
+					}
+					catch
+					{ }
+				}
 			}
 		}
 
