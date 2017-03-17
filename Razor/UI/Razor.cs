@@ -7574,6 +7574,7 @@ namespace Assistant
 			opacity.AutoSize = false;
 			opacity.Value = RazorEnhanced.Settings.General.ReadInt("Opacity");
 			this.Opacity = ((float)opacity.Value) / 100.0;
+			opacityLabel.Text = String.Format("Opacity: {0}%", opacity.Value);
 
 			this.Location = new System.Drawing.Point(RazorEnhanced.Settings.General.ReadInt("WindowX"), RazorEnhanced.Settings.General.ReadInt("WindowY"));
 			Assistant.Engine.MainWindowX = RazorEnhanced.Settings.General.ReadInt("WindowX");
