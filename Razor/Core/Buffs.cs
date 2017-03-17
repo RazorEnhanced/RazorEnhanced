@@ -125,5 +125,5 @@
 		SwingSpeed = 1123,
 		WraithForm = 1124,
 		CityTradeDeal = 1126
-	}
+	}  
 }
