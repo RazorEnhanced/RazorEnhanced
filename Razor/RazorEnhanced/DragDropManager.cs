@@ -6,8 +6,23 @@ namespace RazorEnhanced
 {
 	public class DragDropManager
 	{
+		public class AutoLootSerialToGrab
+		{
+			private int m_corpseserial;
+			public int CorpseSerial { get { return m_corpseserial; } }
+
+			private int m_itemserial;
+			public int ItemSerial { get { return m_itemserial; } }
+
+			public AutoLootSerialToGrab(int itemserial, int corpseserial)
+			{
+				m_corpseserial = corpseserial;
+				m_itemserial = itemserial;
+			}
+		}
+
 		internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
-		internal static ConcurrentQueue<int> AutoLootSerialToGrab = new ConcurrentQueue<int>();
+		internal static ConcurrentQueue<AutoLootSerialToGrab> AutoLootSerialToGrabList = new ConcurrentQueue<AutoLootSerialToGrab>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
 
@@ -52,13 +67,13 @@ namespace RazorEnhanced
 				catch { }
 			}
 
-			if (AutoLootSerialToGrab.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && Player.Visible)
+			if (AutoLootSerialToGrabList.Count > 0 && Assistant.Engine.MainWindow.AutolootCheckBox.Checked && Player.Visible)
 			{
 				try
 				{
-					int itemserial = 0;
-					AutoLootSerialToGrab.TryDequeue(out itemserial);
-					Assistant.Item item = Assistant.World.FindItem(itemserial);
+					AutoLootSerialToGrab data;
+					AutoLootSerialToGrabList.TryDequeue(out data);
+					Assistant.Item item = Assistant.World.FindItem(data.ItemSerial);
 
 					if (item == null)
 						return;
@@ -66,13 +81,12 @@ namespace RazorEnhanced
 					if (item.RootContainer == World.Player)
 						return;
 
-					Assistant.Item corpse = null;
-					corpse = item.Container as Assistant.Item;
+					Assistant.Item corpse = Assistant.World.FindItem(data.CorpseSerial);
 
 					if (corpse == null)
 						return;
 
-					if ((Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 2) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z)) || corpse.ItemID == 0x0E75)
+					if ((Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 2) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z)))
 					{
 						if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 						{

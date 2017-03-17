@@ -307,6 +307,21 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.AutoLoot.ItemReplace(list, index, item);
 		}
 
+		private static void RefreshCorpse(Item corpo)
+		{
+			if (!NoOpenCorpse)
+			{
+				if (!m_IgnoreCorpseList.Contains(corpo.Serial))
+				{
+					DragDropManager.AutoLootSerialCorpseRefresh.Enqueue(corpo.Serial);
+					m_IgnoreCorpseList.Enqueue(corpo.Serial);
+				}
+
+				if (m_IgnoreCorpseList.Count > 100)
+					m_IgnoreCorpseList.Dequeue();
+			}
+
+		}
 		internal static int Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
@@ -320,52 +335,40 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Item corpo in corpi)
 			{
-				if (!NoOpenCorpse)
-				{
-					if (!m_IgnoreCorpseList.Contains(corpo.Serial))
-					{
-						DragDropManager.AutoLootSerialCorpseRefresh.Enqueue(corpo.Serial);
-						m_IgnoreCorpseList.Enqueue(corpo.Serial);
-					}
+				RazorEnhanced.Item m_sharedcont = null;
+				RazorEnhanced.Item m_OSIcont = null;
 
-					if (m_IgnoreCorpseList.Count > 100)
-						m_IgnoreCorpseList.Dequeue();
-				}
+				RefreshCorpse(corpo);
 
 				foreach (RazorEnhanced.Item oggettoContenuto in corpo.Contains)
 				{
 					// Blocco shared
 					if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0) // Attende l'arrivo delle props
 					{
-						if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties[0].ToString() == "Instanced loot container")  // Rilevato backpack possibile shared loot verifico props
+						if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties[0].ToString() == "Instanced loot container")  // Rilevato backpack possibile shared loot verifico props UODREAMS
 						{
-							foreach (RazorEnhanced.Item oggettoContenutoShard in oggettoContenuto.Contains)
-							{
-								foreach (AutoLootItem autoLootItem in autoLootList)
-								{
-									if (!autoLootItem.Selected)
-										continue;
-
-									if (autoLootItem.Color == -1)
-									{
-										if (oggettoContenutoShard.ItemID == autoLootItem.Graphics)
-										{
-											GrabItem(autoLootItem, oggettoContenutoShard, mseconds);
-										}
-									}
-									else
-									{
-										if (oggettoContenutoShard.ItemID == autoLootItem.Graphics && oggettoContenutoShard.Hue == autoLootItem.Color)
-										{
-											GrabItem(autoLootItem, oggettoContenutoShard, mseconds);
-										}
-									}
-								}
-							}
+							m_sharedcont = oggettoContenuto;
+							break;
 						}
 					}
-					//fine Blocco shared
+					if (oggettoContenuto.IsCorpse)  // Rilevato contenitore OSI
+					{
+						m_OSIcont = oggettoContenuto;
+						break;
+					}
+				}
 
+				RazorEnhanced.Item m_cont = null;
+
+				if (m_sharedcont != null)
+					m_cont = m_sharedcont;
+				else if (m_OSIcont != null)
+					m_cont = m_OSIcont;
+				else
+					m_cont = corpo;
+
+				foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
+				{
 					foreach (AutoLootItem autoLootItem in autoLootList)
 					{
 						if (!autoLootItem.Selected)
@@ -375,31 +378,13 @@ namespace RazorEnhanced
 						{
 							if (oggettoContenuto.ItemID != autoLootItem.Graphics)
 								continue;
-
-							bool grabItem = true;
-							if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
-								if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-									grabItem = false;
-
-							if (grabItem)
-							{
-								GrabItem(autoLootItem, oggettoContenuto, mseconds);
-							}
+							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial, mseconds);
 						}
 						else
 						{
 							if (oggettoContenuto.ItemID != autoLootItem.Graphics || oggettoContenuto.Hue != autoLootItem.Color)
 								continue;
-
-							bool grabItem = true;
-							if (oggettoContenuto.ItemID == 0x0E75 && oggettoContenuto.Properties.Count > 0)  // se zaino Attende l'arrivo delle props
-								if (oggettoContenuto.Properties[0].ToString() == "Instanced loot container") // Controllo in caso siano presenti backpack nella lista di item interessati al loot
-									grabItem = false;
-
-							if (grabItem)
-							{
-								GrabItem(autoLootItem, oggettoContenuto, mseconds);
-							}
+							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial, mseconds);
 						}
 					}
 				}
@@ -408,12 +393,13 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int mseconds)
+		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int corpseserial, int mseconds)
 		{
+			DragDropManager.AutoLootSerialToGrab data = new DragDropManager.AutoLootSerialToGrab(oggettoContenuto.Serial, corpseserial);
 			if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
 				return;
 
-			if (DragDropManager.AutoLootSerialToGrab.Contains(oggettoContenuto.Serial))
+			if (DragDropManager.AutoLootSerialToGrabList.Contains(data))
 				return;
 
 			if (autoLoootItem.Properties.Count > 0) // Item con props
@@ -438,7 +424,7 @@ namespace RazorEnhanced
 
 				if (propsOk) // Tutte le props match OK
 				{
-					DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+					DragDropManager.AutoLootSerialToGrabList.Enqueue(data);
 				}
 				else
 				{
@@ -447,7 +433,7 @@ namespace RazorEnhanced
 			}
 			else // Item Senza props
 			{
-				DragDropManager.AutoLootSerialToGrab.Enqueue(oggettoContenuto.Serial);
+				DragDropManager.AutoLootSerialToGrabList.Enqueue(data);
 			}
 		}
 
@@ -493,7 +479,7 @@ namespace RazorEnhanced
 		public static void ResetIgnore()
 		{
 			m_IgnoreCorpseList.Clear();
-			DragDropManager.AutoLootSerialToGrab = new ConcurrentQueue<int>();
+			DragDropManager.AutoLootSerialToGrabList = new ConcurrentQueue<DragDropManager.AutoLootSerialToGrab>();
 			DragDropManager.AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
 			Scavenger.ResetIgnore();
 		}
