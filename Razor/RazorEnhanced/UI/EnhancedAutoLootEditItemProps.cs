@@ -106,7 +106,7 @@ namespace RazorEnhanced.UI
 			comboboxProp.Items.Add("Mana Regeneration");
 			comboboxProp.Items.Add("Physical Resist");
 			comboboxProp.Items.Add("Poison Resist");
-			comboboxProp.Items.Add("Nighr Sight");
+			comboboxProp.Items.Add("Night Sight");
 			comboboxProp.Items.Add("Spell Channeling");
 			comboboxProp.Items.Add("Spell Damage Increase");
 			comboboxProp.Items.Add("Splintering Weapon");
