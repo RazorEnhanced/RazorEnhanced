@@ -581,6 +581,7 @@ namespace Assistant
 		private RazorTextBox bandagehealdelayTextBox;
 		private Label label31;
 		private RazorButton openchangelogButton;
+		private RazorButton discordrazorButton;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -800,9 +801,9 @@ namespace Assistant
 			this.components = new System.ComponentModel.Container();
 			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			RazorEnhanced.UI.Colortable colortable1 = new RazorEnhanced.UI.Colortable();
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
+			this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
 			this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox29 = new System.Windows.Forms.GroupBox();
 			this.profilesExportButton = new RazorEnhanced.UI.RazorButton();
@@ -1050,6 +1051,7 @@ namespace Assistant
 			this.screenPrev = new System.Windows.Forms.PictureBox();
 			this.dispTime = new RazorEnhanced.UI.RazorCheckBox();
 			this.statusTab = new System.Windows.Forms.TabPage();
+			this.discordrazorButton = new RazorEnhanced.UI.RazorButton();
 			this.labelHotride = new System.Windows.Forms.Label();
 			this.panelLogo = new System.Windows.Forms.Panel();
 			this.labelUOD = new System.Windows.Forms.Label();
@@ -1347,7 +1349,6 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
-			this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1469,6 +1470,35 @@ namespace Assistant
 			this.generalTab.TabIndex = 0;
 			this.generalTab.Text = "General";
 			// 
+			// openchangelogButton
+			// 
+			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+			this.openchangelogButton.ColorTable = office2010BlueTheme1;
+			this.openchangelogButton.Location = new System.Drawing.Point(542, 24);
+			this.openchangelogButton.Name = "openchangelogButton";
+			this.openchangelogButton.Size = new System.Drawing.Size(95, 23);
+			this.openchangelogButton.TabIndex = 68;
+			this.openchangelogButton.Text = "Changelog";
+			this.openchangelogButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.openchangelogButton.UseVisualStyleBackColor = true;
+			this.openchangelogButton.Click += new System.EventHandler(this.openchangelogButton_Click);
+			// 
 			// notshowlauncher
 			// 
 			this.notshowlauncher.Location = new System.Drawing.Point(253, 124);
@@ -1499,23 +1529,6 @@ namespace Assistant
 			// 
 			// profilesExportButton
 			// 
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
 			this.profilesExportButton.ColorTable = office2010BlueTheme1;
 			this.profilesExportButton.Location = new System.Drawing.Point(321, 70);
 			this.profilesExportButton.Name = "profilesExportButton";
@@ -4071,6 +4084,7 @@ namespace Assistant
 			// 
 			// statusTab
 			// 
+			this.statusTab.Controls.Add(this.discordrazorButton);
 			this.statusTab.Controls.Add(this.labelHotride);
 			this.statusTab.Controls.Add(this.panelLogo);
 			this.statusTab.Controls.Add(this.labelUOD);
@@ -4084,6 +4098,18 @@ namespace Assistant
 			this.statusTab.Size = new System.Drawing.Size(666, 366);
 			this.statusTab.TabIndex = 9;
 			this.statusTab.Text = "Help / Status";
+			// 
+			// discordrazorButton
+			// 
+			this.discordrazorButton.ColorTable = office2010BlueTheme1;
+			this.discordrazorButton.Location = new System.Drawing.Point(304, 198);
+			this.discordrazorButton.Name = "discordrazorButton";
+			this.discordrazorButton.Size = new System.Drawing.Size(145, 28);
+			this.discordrazorButton.TabIndex = 9;
+			this.discordrazorButton.Text = "Razor Enhanced Discord";
+			this.discordrazorButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.discordrazorButton.UseVisualStyleBackColor = true;
+			this.discordrazorButton.Click += new System.EventHandler(this.discordrazorButton_Click);
 			// 
 			// labelHotride
 			// 
@@ -4100,7 +4126,7 @@ namespace Assistant
 			// 
 			this.panelLogo.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panelLogo.BackgroundImage")));
 			this.panelLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.panelLogo.Location = new System.Drawing.Point(250, 155);
+			this.panelLogo.Location = new System.Drawing.Point(250, 171);
 			this.panelLogo.Name = "panelLogo";
 			this.panelLogo.Size = new System.Drawing.Size(48, 49);
 			this.panelLogo.TabIndex = 7;
@@ -7261,35 +7287,6 @@ namespace Assistant
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
 			// 
-			// openchangelogButton
-			// 
-			colortable1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			colortable1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			colortable1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			colortable1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			colortable1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			colortable1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			colortable1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			colortable1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			colortable1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			colortable1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			colortable1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			colortable1.TextColor = System.Drawing.Color.White;
-			this.openchangelogButton.ColorTable = colortable1;
-			this.openchangelogButton.Location = new System.Drawing.Point(542, 24);
-			this.openchangelogButton.Name = "openchangelogButton";
-			this.openchangelogButton.Size = new System.Drawing.Size(95, 23);
-			this.openchangelogButton.TabIndex = 68;
-			this.openchangelogButton.Text = "Changelog";
-			this.openchangelogButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.openchangelogButton.UseVisualStyleBackColor = true;
-			this.openchangelogButton.Click += new System.EventHandler(this.openchangelogButton_Click);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -9252,8 +9249,16 @@ namespace Assistant
 			System.Diagnostics.Process.Start("http://razorenhanced.org/");
 		}
 
-		private void groupBox12_Enter(object sender, EventArgs e)
+		private void discordrazorButton_Click(object sender, EventArgs e)
 		{
+			System.Diagnostics.Process.Start("https://discord.gg/P3Q7mKT");
+		}
+
+		private void openchangelogButton_Click(object sender, EventArgs e)
+		{
+			EnhancedChangeLog changelogform = new EnhancedChangeLog();
+			changelogform.TopMost = true;
+			changelogform.Show();
 		}
 
 		// ------------ AUTOLOOT ----------------
@@ -13019,12 +13024,5 @@ namespace Assistant
 		}
 
 		// ----------------- UO MOD END -------------------
-
-		private void openchangelogButton_Click(object sender, EventArgs e)
-		{
-			EnhancedChangeLog changelogform = new EnhancedChangeLog();
-			changelogform.TopMost = true;
-			changelogform.Show();
-		}
 	}
 }
