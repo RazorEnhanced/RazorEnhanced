@@ -724,6 +724,118 @@ namespace RazorEnhanced
 					}
 					break;
 
+				case "Potion Shatter":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F0D, 0x003C))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Potion Parasitic":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F0A, 0x017C))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Potion Supernova":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F09, 0x000D))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Potion Confusion Blast":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x048D))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Potion Conflagration":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x0489))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Potion Invisibility":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x0132))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Potion Exploding Tar":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F0D, 0x0455))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Fear Essence":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F0D, 0x0005))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Darkglow Poison":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F0A, 0x0096))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Kurak Ambusher's Essence":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x04EC))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Potion Sakkhra Prophylaxis":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x09E3))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Jukari Burn Poultice":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x0AA7))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Barako Draft Of Might":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x0430))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
+				case "Urali Trance Tonic":
+					if (pack != null)
+					{
+						if (!UseItemByIdHue(pack, 0x0F06, 0x044A))
+							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
+					}
+					break;
+
 				default:
 					break;
 			}
@@ -763,8 +875,7 @@ namespace RazorEnhanced
 				case "Rose Of Trinsic":
 					if (pack != null)
 					{
-						World.Player.SendMessage("Da implementare");
-						if (!UseItemByIdHue(pack, 13848, 0))
+						if (!UseItemByIdHue(pack, 0x234B, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
@@ -772,8 +883,7 @@ namespace RazorEnhanced
 				case "Smoke Bomb":
 					if (pack != null)
 					{
-						World.Player.SendMessage("Da implementare");
-						if (!UseItemByIdHue(pack, 13848, 0))
+						if (!UseItemByIdHue(pack, 0x23A9, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
@@ -781,8 +891,7 @@ namespace RazorEnhanced
 				case "Spell Stone":
 					if (pack != null)
 					{
-						World.Player.SendMessage("Da implementare");
-						if (!UseItemByIdHue(pack, 13848, 0))
+						if (!UseItemByIdHue(pack, 0x4079, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
@@ -790,8 +899,7 @@ namespace RazorEnhanced
 				case "Healing Stone":
 					if (pack != null)
 					{
-						World.Player.SendMessage("Da implementare");
-						if (!UseItemByIdHue(pack, 13848, 0))
+						if (!UseItemByIdHue(pack, 0x4078, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;

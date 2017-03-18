@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 30;
+		private static int SettingVersion = 31;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -488,6 +488,62 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Nightsight", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Shatter", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Parasitic", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Supernova", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Confusion Blast", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Conflagration", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Invisibility", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Exploding Tar", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Fear Essence", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Darkglow Poison", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Kurak Ambusher's Essence", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Potion Sakkhra Prophylaxis", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Jukari Burn Poultice", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Barako Draft Of Might", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Potions", "Urali Trance Tonic", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -4839,6 +4895,110 @@ namespace RazorEnhanced
 
 				realVersion = 30;
 				General.WriteInt("SettingVersion", 30);
+			}
+
+			if (realVersion == 30)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Shatter";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Parasitic";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Supernova";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Confusion Blast";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Conflagration";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Invisibility";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Exploding Tar";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Fear Essence";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Darkglow Poison";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Kurak Ambusher's Essence";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Potion Sakkhra Prophylaxis";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Jukari Burn Poultice";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Barako Draft Of Might";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Potions";
+				newRow["Name"] = "Urali Trance Tonic";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				realVersion = 31;
+				General.WriteInt("SettingVersion", 31);
 			}
 
 			Save(true);
