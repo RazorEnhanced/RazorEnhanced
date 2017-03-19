@@ -53,88 +53,12 @@ namespace Assistant
 				}
 				else if (Circle == 70) // Mastery
 				{
-					switch (Number)
-					{
-						case 1:
-							return 1115612;
-						case 2:
-							return 1115613;
-						case 3:
-							return 1115614;
-						case 4:
-							return 1115615;
-						case 5:
-							return 1115616;
-						case 6:
-							return 1115617;
-						case 7:
-							return 1155896;
-						case 8:
-							return 1155897;
-						case 9:
-							return 1155898;
-						case 10:
-							return 1155899;
-						case 11:
-							return 1155900;
-						case 12:
-							return 1155901;
-						case 13:
-							return 1155902;
-						case 14:
-							return 1155903;
-						case 15:
-							return 1155905;
-						case 16:
-							return 1155906;
-						case 17:
-							return 1155908;
-						case 18:
-							return 1155909;
-						case 19:
-							return 1155910;
-						case 20:
-							return 1155911;
-						case 21:
-							return 1155912;
-						case 22:
-							return 1155913;
-						case 23:
-							return 1155914;
-						case 24:
-							return 1155915;
-						case 25:
-							return 1155916;
-						case 26:
-							return 1155917;
-						case 27:
-							return 1155918;
-						case 28:
-							return 1155919;
-						case 29:
-							return 1155920;
-						case 30:
-							return 1155921;
-						case 31:
-							return 1155923;
-						case 32:
-							return 1155924;
-						case 33:
-							return 1155925;
-						case 34:
-							return 1155926;
-						case 35:
-							return 1155927;
-						case 36:
-							return 1155929;
-						case 37:
-							return 1155930;
-						case 38:
-							return 1155932;
-						case 39:
-							return 1155939;
-					}
-					return -1;
+					if (Number >= 1 && Number <= 5)
+						return 1115612 + Number -1 ;
+					else if (Number >= 7 && Number <= 45)
+						return 1155896 + Number - 7;
+	                else
+						return -1;
 				}
                 else
 					return -1;

@@ -752,104 +752,128 @@ namespace RazorEnhanced
 					s = Spell.Get(714);
 					break;
 
-				case "Anticipate Hit":
+				case "Enchanted Summoning":
 					s = Spell.Get(715);
 					break;
 
-				case "Warcry":
+				case "Anticipate Hit":
 					s = Spell.Get(716);
 					break;
 
-				case "Rejuvenate":
+				case "Warcry":
 					s = Spell.Get(717);
 					break;
 
-				case "Holy Fist":
+				case "Intuition":
 					s = Spell.Get(718);
 					break;
 
-				case "Shadow":
+				case "Rejuvenate":
 					s = Spell.Get(719);
 					break;
 
-				case "White Tiger Form":
+				case "Holy Fist":
 					s = Spell.Get(720);
 					break;
 
-				case "Flaming Shot":
+				case "Shadow":
 					s = Spell.Get(721);
 					break;
 
-				case "Playing The Odds":
+				case "White Tiger Form":
 					s = Spell.Get(722);
 					break;
 
-				case "Thrust":
+				case "Flaming Shot":
 					s = Spell.Get(723);
 					break;
 
-				case "Pierce":
+				case "Playing The Odds":
 					s = Spell.Get(724);
 					break;
 
-				case "Stagger":
+				case "Thrust":
 					s = Spell.Get(725);
 					break;
 
-				case "Toughness":
+				case "Pierce":
 					s = Spell.Get(726);
 					break;
 
-				case "Onslaught":
+				case "Stagger":
 					s = Spell.Get(727);
 					break;
 
-				case "Focused Eye":
+				case "Toughness":
 					s = Spell.Get(728);
 					break;
 
-				case "Elemental Fury":
+				case "Onslaught":
 					s = Spell.Get(729);
 					break;
 
-				case "Calledshot":
+				case "Focused Eye":
 					s = Spell.Get(730);
 					break;
 
-				case "Shield Bash":
+				case "Elemental Fury":
 					s = Spell.Get(731);
 					break;
 
-				case "Bodyguard":
+				case "Called Shot":
 					s = Spell.Get(732);
 					break;
 
-				case "Heighten Senses":
+				case "Saving Throw":
 					s = Spell.Get(733);
 					break;
 
-				case "Tolerance":
+				case "Shield Bash":
 					s = Spell.Get(734);
 					break;
 
-				case "Injected Strike":
+				case "Bodyguard":
 					s = Spell.Get(735);
 					break;
 
-				case "Rampage":
+				case "Heighten Senses":
 					s = Spell.Get(736);
 					break;
 
-				case "Fists Of Fury":
+				case "Tolerance":
 					s = Spell.Get(737);
 					break;
 
-				case "Whispering":
+				case "Injected Strike":
 					s = Spell.Get(738);
 					break;
 
-				case "Combat Training":
+				case "Potency":
 					s = Spell.Get(739);
+					break;
+
+				case "Rampage":
+					s = Spell.Get(740);
+					break;
+
+				case "Fists Of Fury":
+					s = Spell.Get(741);
+					break;
+
+				case "Knockout":
+					s = Spell.Get(742);
+					break;
+
+				case "Whispering":
+					s = Spell.Get(743);
+					break;
+
+				case "Combat Training":
+					s = Spell.Get(744);
+					break;
+
+				case "Boarding":
+					s = Spell.Get(745);
 					break;
 
 				default:
@@ -927,104 +951,128 @@ namespace RazorEnhanced
 					s = Spell.Get(714);
 					break;
 
-				case "Anticipate Hit":
+				case "Enchanted Summoning":
 					s = Spell.Get(715);
 					break;
 
-				case "Warcry":
+				case "Anticipate Hit":
 					s = Spell.Get(716);
 					break;
 
-				case "Rejuvenate":
+				case "Warcry":
 					s = Spell.Get(717);
 					break;
 
-				case "Holy Fist":
+				case "Intuition":
 					s = Spell.Get(718);
 					break;
 
-				case "Shadow":
+				case "Rejuvenate":
 					s = Spell.Get(719);
 					break;
 
-				case "White Tiger Form":
+				case "Holy Fist":
 					s = Spell.Get(720);
 					break;
 
-				case "Flaming Shot":
+				case "Shadow":
 					s = Spell.Get(721);
 					break;
 
-				case "Playing The Odds":
+				case "White Tiger Form":
 					s = Spell.Get(722);
 					break;
 
-				case "Thrust":
+				case "Flaming Shot":
 					s = Spell.Get(723);
 					break;
 
-				case "Pierce":
+				case "Playing The Odds":
 					s = Spell.Get(724);
 					break;
 
-				case "Stagger":
+				case "Thrust":
 					s = Spell.Get(725);
 					break;
 
-				case "Toughness":
+				case "Pierce":
 					s = Spell.Get(726);
 					break;
 
-				case "Onslaught":
+				case "Stagger":
 					s = Spell.Get(727);
 					break;
 
-				case "Focused Eye":
+				case "Toughness":
 					s = Spell.Get(728);
 					break;
 
-				case "Elemental Fury":
+				case "Onslaught":
 					s = Spell.Get(729);
 					break;
 
-				case "Calledshot":
+				case "Focused Eye":
 					s = Spell.Get(730);
 					break;
 
-				case "Shield Bash":
+				case "Elemental Fury":
 					s = Spell.Get(731);
 					break;
 
-				case "Bodyguard":
+				case "Called Shot":
 					s = Spell.Get(732);
 					break;
 
-				case "Heighten Senses":
+				case "Saving Throw":
 					s = Spell.Get(733);
 					break;
 
-				case "Tolerance":
+				case "Shield Bash":
 					s = Spell.Get(734);
 					break;
 
-				case "Injected Strike":
+				case "Bodyguard":
 					s = Spell.Get(735);
 					break;
 
-				case "Rampage":
+				case "Heighten Senses":
 					s = Spell.Get(736);
 					break;
 
-				case "Fists Of Fury":
+				case "Tolerance":
 					s = Spell.Get(737);
 					break;
 
-				case "Whispering":
+				case "Injected Strike":
 					s = Spell.Get(738);
 					break;
 
-				case "Combat Training":
+				case "Potency":
 					s = Spell.Get(739);
+					break;
+
+				case "Rampage":
+					s = Spell.Get(740);
+					break;
+
+				case "Fists Of Fury":
+					s = Spell.Get(741);
+					break;
+
+				case "Knockout":
+					s = Spell.Get(742);
+					break;
+
+				case "Whispering":
+					s = Spell.Get(743);
+					break;
+
+				case "Combat Training":
+					s = Spell.Get(744);
+					break;
+
+				case "Boarding":
+					s = Spell.Get(745);
 					break;
 
 				default:

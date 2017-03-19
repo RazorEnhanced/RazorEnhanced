@@ -169,9 +169,15 @@ namespace RazorEnhanced
 					AddLog("Spells.CastSpellweaving(\"" + Language.GetString(s.Name) + "\")");
 				else if (id >= 678 && id <= 693)
 					AddLog("Spells.CastMysticism(\"" + Language.GetString(s.Name) + "\")");
-				else if (id >= 701 && id <= 738)
+				else if (id >= 701 && id <= 745)
 				{
-					AddLog("Spells.Mastery(\"" + Language.GetString(s.Name) + "\")");
+					if (id == 728)
+						AddLog("Spells.CastMastery(\"Called Shot\")");
+					else if (id == 715)
+						AddLog("Spells.CastMastery(\"Enchanted Summoning\")");
+					else
+						AddLog("Spells.CastMastery(\"" + Language.GetString(s.Name) + "\")");
+
 					AddLog("DEBUG: " + id);
 				}
 				else
