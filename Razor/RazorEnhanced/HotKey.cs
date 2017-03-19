@@ -227,8 +227,8 @@ namespace RazorEnhanced
 						RazorEnhanced.Spells.CastChivalryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
-					case "SpellsBard":
-						RazorEnhanced.Spells.CastBardHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+					case "SpellsMastery":
+						RazorEnhanced.Spells.CastMasteryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
 						break;
 
 					case "Target":

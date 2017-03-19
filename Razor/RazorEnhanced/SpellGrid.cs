@@ -259,7 +259,7 @@ namespace RazorEnhanced
 						Assistant.SpecialMoves.SetSecondaryAbility();
 					break;
 				case "Bardic":
-					RazorEnhanced.Spells.CastBardHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastMasteryHotKey(pl.Spell);
 					break;
 				case "Bushido":
 					RazorEnhanced.Spells.CastBushidoHotKey(pl.Spell);

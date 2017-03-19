@@ -687,7 +687,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void CastBard(string SpellName)
+		public static void CastMastery(string SpellName)
 		{
 			if (World.Player == null)
 				return;
@@ -717,11 +717,143 @@ namespace RazorEnhanced
 					break;
 
 				case "Despair":
-					s = Spell.Get(705);
+					s = Spell.Get(706);
+					break;
+
+				case "Death Ray":
+					s = Spell.Get(707);
+					break;
+
+				case "Ethereal Blast":
+					s = Spell.Get(708);
+					break;
+
+				case "Nether Blast":
+					s = Spell.Get(709);
+					break;
+
+				case "Mystic Weapon":
+					s = Spell.Get(710);
+					break;
+
+				case "Command Undead":
+					s = Spell.Get(711);
+					break;
+
+				case "Conduit":
+					s = Spell.Get(712);
+					break;
+
+				case "Mana Shield":
+					s = Spell.Get(713);
+					break;
+
+				case "Summon Reaper":
+					s = Spell.Get(714);
+					break;
+
+				case "Anticipate Hit":
+					s = Spell.Get(715);
+					break;
+
+				case "Warcry":
+					s = Spell.Get(716);
+					break;
+
+				case "Rejuvenate":
+					s = Spell.Get(717);
+					break;
+
+				case "Holy Fist":
+					s = Spell.Get(718);
+					break;
+
+				case "Shadow":
+					s = Spell.Get(719);
+					break;
+
+				case "White Tiger Form":
+					s = Spell.Get(720);
+					break;
+
+				case "Flaming Shot":
+					s = Spell.Get(721);
+					break;
+
+				case "Playing The Odds":
+					s = Spell.Get(722);
+					break;
+
+				case "Thrust":
+					s = Spell.Get(723);
+					break;
+
+				case "Pierce":
+					s = Spell.Get(724);
+					break;
+
+				case "Stagger":
+					s = Spell.Get(725);
+					break;
+
+				case "Toughness":
+					s = Spell.Get(726);
+					break;
+
+				case "Onslaught":
+					s = Spell.Get(727);
+					break;
+
+				case "Focused Eye":
+					s = Spell.Get(728);
+					break;
+
+				case "Elemental Fury":
+					s = Spell.Get(729);
+					break;
+
+				case "Calledshot":
+					s = Spell.Get(730);
+					break;
+
+				case "Shield Bash":
+					s = Spell.Get(731);
+					break;
+
+				case "Bodyguard":
+					s = Spell.Get(732);
+					break;
+
+				case "Heighten Senses":
+					s = Spell.Get(733);
+					break;
+
+				case "Tolerance":
+					s = Spell.Get(734);
+					break;
+
+				case "Injected Strike":
+					s = Spell.Get(735);
+					break;
+
+				case "Rampage":
+					s = Spell.Get(736);
+					break;
+
+				case "Fists Of Fury":
+					s = Spell.Get(737);
+					break;
+
+				case "Whispering":
+					s = Spell.Get(738);
+					break;
+
+				case "Combat Training":
+					s = Spell.Get(739);
 					break;
 
 				default:
-					Scripts.SendMessageScriptError("Script Error: CastBard: Invalid spell name: " + SpellName);
+					Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)
@@ -730,7 +862,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void CastBardHotKey(string SpellName)
+		public static void CastMasteryHotKey(string SpellName)
 		{
 			if (World.Player == null)
 				return;
@@ -760,11 +892,143 @@ namespace RazorEnhanced
 					break;
 
 				case "Despair":
-					s = Spell.Get(705);
+					s = Spell.Get(706);
+					break;
+
+				case "Death Ray":
+					s = Spell.Get(707);
+					break;
+
+				case "Ethereal Blast":
+					s = Spell.Get(708);
+					break;
+
+				case "Nether Blast":
+					s = Spell.Get(709);
+					break;
+
+				case "Mystic Weapon":
+					s = Spell.Get(710);
+					break;
+
+				case "Command Undead":
+					s = Spell.Get(711);
+					break;
+
+				case "Conduit":
+					s = Spell.Get(712);
+					break;
+
+				case "Mana Shield":
+					s = Spell.Get(713);
+					break;
+
+				case "Summon Reaper":
+					s = Spell.Get(714);
+					break;
+
+				case "Anticipate Hit":
+					s = Spell.Get(715);
+					break;
+
+				case "Warcry":
+					s = Spell.Get(716);
+					break;
+
+				case "Rejuvenate":
+					s = Spell.Get(717);
+					break;
+
+				case "Holy Fist":
+					s = Spell.Get(718);
+					break;
+
+				case "Shadow":
+					s = Spell.Get(719);
+					break;
+
+				case "White Tiger Form":
+					s = Spell.Get(720);
+					break;
+
+				case "Flaming Shot":
+					s = Spell.Get(721);
+					break;
+
+				case "Playing The Odds":
+					s = Spell.Get(722);
+					break;
+
+				case "Thrust":
+					s = Spell.Get(723);
+					break;
+
+				case "Pierce":
+					s = Spell.Get(724);
+					break;
+
+				case "Stagger":
+					s = Spell.Get(725);
+					break;
+
+				case "Toughness":
+					s = Spell.Get(726);
+					break;
+
+				case "Onslaught":
+					s = Spell.Get(727);
+					break;
+
+				case "Focused Eye":
+					s = Spell.Get(728);
+					break;
+
+				case "Elemental Fury":
+					s = Spell.Get(729);
+					break;
+
+				case "Calledshot":
+					s = Spell.Get(730);
+					break;
+
+				case "Shield Bash":
+					s = Spell.Get(731);
+					break;
+
+				case "Bodyguard":
+					s = Spell.Get(732);
+					break;
+
+				case "Heighten Senses":
+					s = Spell.Get(733);
+					break;
+
+				case "Tolerance":
+					s = Spell.Get(734);
+					break;
+
+				case "Injected Strike":
+					s = Spell.Get(735);
+					break;
+
+				case "Rampage":
+					s = Spell.Get(736);
+					break;
+
+				case "Fists Of Fury":
+					s = Spell.Get(737);
+					break;
+
+				case "Whispering":
+					s = Spell.Get(738);
+					break;
+
+				case "Combat Training":
+					s = Spell.Get(739);
 					break;
 
 				default:
-					Scripts.SendMessageScriptError("Script Error: CastBard: Invalid spell name: " + SpellName);
+					Scripts.SendMessageScriptError("Script Error: CastMastery: Invalid spell name: " + SpellName);
 					break;
 			}
 			if (s != null)

@@ -174,11 +174,44 @@ N | 92 | 60 | Nether Cyclone | Grav Hur
 N | 93 | 60 | Rising Colossus | Kal Vas Xen Corp Ylem
 
 #
-# Bard
+# Mastery
 #
 B | 1 | 70 | Inspire | Uus Por
 B | 2 | 70 | Invigorate | An Zu
 B | 3 | 70 | Resilience | Kal Mani Tym
 B | 4 | 70 | Perseverance | Uus Jux Sanct
-H | 5 | 70 | Tribulation | In Jux Hur Rel
-H | 6 | 70 | Despair | Kal Des Mani Tym
+B | 5 | 70 | Tribulation | In Jux Hur Rel
+B | 6 | 70 | Despair | Kal Des Mani Tym
+H | 7 | 70 | Death Ray | In Grav Corp
+B | 8 | 70 | Ethereal Blast | Uus Ort Grav
+H | 9 | 70 | Nether Blast | In Vas Xen Por
+B | 10 | 70 | Mystic Weapon | Vas Ylem Wis
+B | 11 | 70 | Command Undead | In Corp Xen Por
+B | 12 | 70 | Conduit | Uus Corp Grav
+B | 13 | 70 | Mana Shield | Faerkulggen
+B | 14 | 70 | Summon Reaper | Lartarisstree
+B | 15 | 70 | Anticipate Hit
+B | 16 | 70 | Warcry
+B | 17 | 70 | Rejuvenate
+H | 18 | 70 | Holy Fist
+B | 19 | 70 | Shadow
+B | 20 | 70 | White Tiger Form
+H | 21 | 70 | Flaming Shot
+B | 22 | 70 | Playing The Odds
+B | 23 | 70 | Thrust
+H | 24 | 70 | Pierce
+B | 25 | 70 | Stagger
+B | 26 | 70 | Toughness
+H | 27 | 70 | Onslaught
+B | 28 | 70 | Focused Eye
+B | 29 | 70 | Elemental Fury
+B | 30 | 70 | Calledshot
+H | 31 | 70 | Shield Bash
+B | 32 | 70 | Bodyguard
+B | 33 | 70 | Heighten Senses
+B | 34 | 70 | Tolerance
+B | 35 | 70 | Injected Strike
+B | 36 | 70 | Rampage
+H | 37 | 70 | Fists Of Fury
+B | 38 | 70 | Whispering
+B | 39 | 70 | Combat Training
