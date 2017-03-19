@@ -30,13 +30,12 @@ namespace RazorEnhanced.UI
 
 		private void razorButton3_Click(object sender, EventArgs e)
 		{
-			for (int i = m_Item.Properties.Count - 1; i >= 0; i--)
+			int x = 0;
+			foreach (ListViewItem item in listViewProps.Items)
 			{
-				AutoLoot.AutoLootItem.Property prop = m_Item.Properties[i];
-				if (comboboxProp.Text == prop.Name)
-				{
-					m_Item.Properties.RemoveAt(i);
-				}
+				if (item.Selected)
+					m_Item.Properties.RemoveAt(x);
+				x++;
 			}
 
 			RefreshGUI();
@@ -164,7 +163,7 @@ namespace RazorEnhanced.UI
 			bool fail = false;
 			int Min = 0;
 			int Max = 0;
-			if (comboboxProp.Text == "")
+			if (comboboxProp.Text == "" && custompropnameTextBox.Text == "")
 			{
 				MessageBox.Show("Props name is not valid.",
 				"Props name Error",
@@ -204,9 +203,23 @@ namespace RazorEnhanced.UI
 
 			if (!fail)
 			{
-				RazorEnhanced.AutoLoot.AddPropToItem(m_List, m_Index, m_Item, comboboxProp.Text, Min, Max);
+				if (custompropnameTextBox.Text != "")
+					RazorEnhanced.AutoLoot.AddPropToItem(m_List, m_Index, m_Item, custompropnameTextBox.Text, Min, Max);
+				else
+					RazorEnhanced.AutoLoot.AddPropToItem(m_List, m_Index, m_Item, comboboxProp.Text, Min, Max);
+
 				RefreshGUI();
 			}
+		}
+
+		private void comboboxProp_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			custompropnameTextBox.Text = "";
+        }
+
+		private void custompropnameTextBox_Enter(object sender, EventArgs e)
+		{
+			comboboxProp.SelectedIndex = -1;
 		}
 	}
 }
