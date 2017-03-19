@@ -175,7 +175,7 @@ namespace Assistant
 
 		private int m_MaxWeight = -1;
 
-		private byte m_Expansion = 0;
+		private byte m_Expansion = 4;
 		private int m_Race;
 
 		private short m_FireResist, m_ColdResist, m_PoisonResist, m_EnergyResist, m_Luck;
