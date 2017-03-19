@@ -1492,8 +1492,7 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (World.Player.Expansion > 3)
-					ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1616,8 +1615,7 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (World.Player.Expansion > 3)
-					ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1736,8 +1734,7 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (World.Player.Expansion > 3)
-					ClientCommunication.SendToServer(new QueryProperties(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -2690,8 +2687,7 @@ namespace Assistant
 							{
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
-								if (World.Player.Expansion > 3)
-									ClientCommunication.SendToServer(new QueryProperties(mobile.Serial));
+								ClientCommunication.SendToServer(new QueryProperties(mobile.Serial));
 								ClientCommunication.SendToServer(new StatusQuery(mobile.Serial));
 							}
 
