@@ -171,17 +171,15 @@ namespace RazorEnhanced
 					AddLog("Spells.CastMysticism(\"" + Language.GetString(s.Name) + "\")");
 				else if (id >= 701 && id <= 745)
 				{
-					if (id == 728)
+					if (id == 732)
 						AddLog("Spells.CastMastery(\"Called Shot\")");
 					else if (id == 715)
 						AddLog("Spells.CastMastery(\"Enchanted Summoning\")");
 					else
 						AddLog("Spells.CastMastery(\"" + Language.GetString(s.Name) + "\")");
-
-					AddLog("DEBUG: " + id);
 				}
 				else
-					AddLog("DEBUG: " + id);
+					AddLog("ERROR Spell not listed");
 			}
 			else // InvokeVirtue
 			{

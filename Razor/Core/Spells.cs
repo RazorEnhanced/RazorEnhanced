@@ -53,7 +53,7 @@ namespace Assistant
 				}
 				else if (Circle == 70) // Mastery
 				{
-					if (Number >= 1 && Number <= 5)
+					if (Number >= 1 && Number <= 6)
 						return 1115612 + Number -1 ;
 					else if (Number >= 7 && Number <= 45)
 						return 1155896 + Number - 7;
