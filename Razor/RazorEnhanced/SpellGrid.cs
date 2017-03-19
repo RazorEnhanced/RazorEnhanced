@@ -124,7 +124,7 @@ namespace RazorEnhanced
 		private static bool m_dicloaded = false;
 		internal static Dictionary<string, int> SpellIconAbilities = new Dictionary<string, int>();
 		internal static Dictionary<string, int> SpellIconMagery = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconBardic = new Dictionary<string, int>();
+		internal static Dictionary<string, int> SpellIconMastery = new Dictionary<string, int>();
 		internal static Dictionary<string, int> SpellIconBushido = new Dictionary<string, int>();
 		internal static Dictionary<string, int> SpellIconChivalry = new Dictionary<string, int>();
 		internal static Dictionary<string, int> SpellIconNecromancy = new Dictionary<string, int>();
@@ -366,8 +366,8 @@ namespace RazorEnhanced
 					case "Abilities":
 						SpellIconAbilities.TryGetValue(items[x].Spell, out imageid);
 						break;
-					case "Bardic":
-						SpellIconBardic.TryGetValue(items[x].Spell, out imageid);
+					case "Mastery":
+						SpellIconMastery.TryGetValue(items[x].Spell, out imageid);
 						break;
 					case "Bushido":
 						SpellIconBushido.TryGetValue(items[x].Spell, out imageid);
@@ -491,15 +491,54 @@ namespace RazorEnhanced
 				SpellIconAbilities.Add("Secondary", 0x5206);
 
 				// Bardic
-				SpellIconBardic.Add("Inspire", 0x945);
-				SpellIconBardic.Add("Invigorate", 0x946);
-				SpellIconBardic.Add("Resilience", 0x947);
-				SpellIconBardic.Add("Perseverance", 0x948);
-				SpellIconBardic.Add("Tribulation", 0x949);
-				SpellIconBardic.Add("Despair", 0x946A);
+				SpellIconMastery.Add("Inspire", 0x945);
+				SpellIconMastery.Add("Invigorate", 0x946);
+				SpellIconMastery.Add("Resilience", 0x947);
+				SpellIconMastery.Add("Perseverance", 0x948);
+				SpellIconMastery.Add("Tribulation", 0x949);
+				SpellIconMastery.Add("Despair", 0x946A);
+				SpellIconMastery.Add("Death Ray", 0x9B8B);
+				SpellIconMastery.Add("Ethereal Blast", 0x9B8C);
+				SpellIconMastery.Add("Nether Blast", 0x9B8D);
+				SpellIconMastery.Add("Mystic Weapon", 0x9B8E);
+				SpellIconMastery.Add("Command Undead", 0x9B8F);
+				SpellIconMastery.Add("Conduit", 0x9B90);
+				SpellIconMastery.Add("Mana Shield", 0x9B91);
+				SpellIconMastery.Add("Summon Reaper", 0x9B92);
+				SpellIconMastery.Add("Enchanted Summoning", 0x9B93);
+				SpellIconMastery.Add("Anticipate Hit", 0x9B94);
+				SpellIconMastery.Add("Warcry", 0x9B95);
+				SpellIconMastery.Add("Intuition", 0x9B96);
+				SpellIconMastery.Add("Rejuvenate", 0x9B97);
+				SpellIconMastery.Add("Holy Fist", 0x9B98);
+				SpellIconMastery.Add("Shadow", 0x9B99);
+				SpellIconMastery.Add("White Tiger Form", 0x9B9A);
+				SpellIconMastery.Add("Flaming Shot", 0x9B9B);
+				SpellIconMastery.Add("Playing The Odds", 0x9B9C);
+				SpellIconMastery.Add("Thrust", 0x9B9D);
+				SpellIconMastery.Add("Pierce", 0x9B9E);
+				SpellIconMastery.Add("Stagger", 0x9B9F);
+				SpellIconMastery.Add("Toughness", 0x9BA0);
+				SpellIconMastery.Add("Onslaught", 0x9BA1);
+				SpellIconMastery.Add("Focused Eye", 0x9BA2);
+				SpellIconMastery.Add("Elemental Fury", 0x9BA3);
+				SpellIconMastery.Add("Called Shot", 0x9BA4);
+				SpellIconMastery.Add("Saving Throw", 0x9BA5);
+				SpellIconMastery.Add("Shield Bash", 0x9BA6);
+				SpellIconMastery.Add("Bodyguard", 0x9BA7);
+				SpellIconMastery.Add("Heighten Senses", 0x9BA8);
+				SpellIconMastery.Add("Tolerance", 0x9BA9);
+				SpellIconMastery.Add("Injected Strike", 0x9BAA);
+				SpellIconMastery.Add("Potency", 0x9BAB);
+				SpellIconMastery.Add("Rampage", 0x9BAC);
+				SpellIconMastery.Add("Fists Of Fury", 0x9BAD);
+				SpellIconMastery.Add("Knockout", 0x9BAE);
+				SpellIconMastery.Add("Whispering", 0x9BAF);
+				SpellIconMastery.Add("Combat Training", 0x9BB0);
+				SpellIconMastery.Add("Boarding", 0x9BB1);
 
 				// Mysticism
-				SpellIconMysticism.Add("Nether Bolt | In Corp Ylem", 0x5DC0);
+				SpellIconMysticism.Add("Nether Bolt", 0x5DC0);
                 SpellIconMysticism.Add("Healing Stone", 0x5DC1);
 				SpellIconMysticism.Add("Purge Magic", 0x5DC2);
 				SpellIconMysticism.Add("Enchant", 0x5DC3);

@@ -12810,10 +12810,10 @@ namespace Assistant
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
-				case "Bardic":
+				case "Mastery":
 					{
 						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconBardic.Keys)
+						foreach (string spell in SpellGrid.SpellIconMastery.Keys)
 							gridspell_ComboBox.Items.Add(spell);
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
