@@ -60,6 +60,23 @@ namespace RazorEnhanced
 			}
 		}
 
+		public class SerialToGrab
+		{
+			private int m_corpseserial;
+			public int CorpseSerial { get { return m_corpseserial; } }
+
+			private int m_itemserial;
+			public int ItemSerial { get { return m_itemserial; } }
+
+			public SerialToGrab(int itemserial, int corpseserial)
+			{
+				m_corpseserial = corpseserial;
+				m_itemserial = itemserial;
+			}
+		}
+
+		internal static ConcurrentQueue<SerialToGrab> SerialToGrabList = new ConcurrentQueue<SerialToGrab>();
+
 		internal class AutoLootList
 		{
 			private string m_Description;
@@ -395,12 +412,14 @@ namespace RazorEnhanced
 
 		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int corpseserial, int mseconds)
 		{
-			DragDropManager.AutoLootSerialToGrab data = new DragDropManager.AutoLootSerialToGrab(oggettoContenuto.Serial, corpseserial);
+			foreach (SerialToGrab item in SerialToGrabList)
+				if (item.ItemSerial == oggettoContenuto.Serial)
+					return;
+
 			if (!oggettoContenuto.Movable || !oggettoContenuto.Visible)
 				return;
 
-			if (DragDropManager.AutoLootSerialToGrabList.Contains(data))
-				return;
+			SerialToGrab data = new SerialToGrab(oggettoContenuto.Serial, corpseserial);
 
 			if (autoLoootItem.Properties.Count > 0) // Item con props
 			{
@@ -423,18 +442,12 @@ namespace RazorEnhanced
 				}
 
 				if (propsOk) // Tutte le props match OK
-				{
-					DragDropManager.AutoLootSerialToGrabList.Enqueue(data);
-				}
+					SerialToGrabList.Enqueue(data);
 				else
-				{
 					RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
-				}
 			}
 			else // Item Senza props
-			{
-				DragDropManager.AutoLootSerialToGrabList.Enqueue(data);
-			}
+				SerialToGrabList.Enqueue(data);
 		}
 
 		internal static void AutoRun()
@@ -479,7 +492,7 @@ namespace RazorEnhanced
 		public static void ResetIgnore()
 		{
 			m_IgnoreCorpseList.Clear();
-			DragDropManager.AutoLootSerialToGrabList = new ConcurrentQueue<DragDropManager.AutoLootSerialToGrab>();
+			AutoLoot.SerialToGrabList = new ConcurrentQueue<SerialToGrab>();
 			DragDropManager.AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
 			Scavenger.ResetIgnore();
 		}
