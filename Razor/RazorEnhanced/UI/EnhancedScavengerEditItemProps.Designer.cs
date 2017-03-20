@@ -32,7 +32,7 @@
 			System.Windows.Forms.ColumnHeader columnHeader8;
 			System.Windows.Forms.ColumnHeader columnHeader12;
 			System.Windows.Forms.ColumnHeader columnHeader16;
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedScavengerEditItemProps));
 			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -67,6 +67,9 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.comboboxProp = new RazorEnhanced.UI.RazorComboBox();
 			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
+			this.custompropnameTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
 			ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -151,9 +154,9 @@
 			// listViewProps
 			// 
 			this.listViewProps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-			this.columnHeader17,
-			this.columnHeader18,
-			this.columnHeader19});
+            this.columnHeader17,
+            this.columnHeader18,
+            this.columnHeader19});
 			this.listViewProps.Location = new System.Drawing.Point(6, 19);
 			this.listViewProps.Name = "listViewProps";
 			this.listViewProps.Size = new System.Drawing.Size(596, 153);
@@ -257,6 +260,9 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.custompropnameTextBox);
+			this.groupBox3.Controls.Add(this.label7);
+			this.groupBox3.Controls.Add(this.label6);
 			this.groupBox3.Controls.Add(this.bRemoveProp);
 			this.groupBox3.Controls.Add(this.bAddProp);
 			this.groupBox3.Controls.Add(this.tMax);
@@ -273,25 +279,25 @@
 			// 
 			// bRemoveProp
 			// 
-			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.TextColor = System.Drawing.Color.White;
-			this.bRemoveProp.ColorTable = office2010BlueTheme;
-			this.bRemoveProp.Location = new System.Drawing.Point(291, 65);
+			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+			this.bRemoveProp.ColorTable = office2010BlueTheme1;
+			this.bRemoveProp.Location = new System.Drawing.Point(298, 75);
 			this.bRemoveProp.Name = "bRemoveProp";
 			this.bRemoveProp.Size = new System.Drawing.Size(75, 23);
 			this.bRemoveProp.TabIndex = 7;
@@ -302,8 +308,8 @@
 			// 
 			// bAddProp
 			// 
-			this.bAddProp.ColorTable = office2010BlueTheme;
-			this.bAddProp.Location = new System.Drawing.Point(203, 65);
+			this.bAddProp.ColorTable = office2010BlueTheme1;
+			this.bAddProp.Location = new System.Drawing.Point(210, 75);
 			this.bAddProp.Name = "bAddProp";
 			this.bAddProp.Size = new System.Drawing.Size(75, 23);
 			this.bAddProp.TabIndex = 6;
@@ -314,14 +320,14 @@
 			// 
 			// tMax
 			// 
-			this.tMax.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tMax.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tMax.BackColor = System.Drawing.Color.White;
 			this.tMax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tMax.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.tMax.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.tMax.Location = new System.Drawing.Point(139, 67);
+			this.tMax.Location = new System.Drawing.Point(139, 77);
 			this.tMax.Name = "tMax";
 			this.tMax.Size = new System.Drawing.Size(43, 20);
 			this.tMax.TabIndex = 4;
@@ -329,7 +335,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(110, 70);
+			this.label5.Location = new System.Drawing.Point(110, 80);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(30, 13);
 			this.label5.TabIndex = 3;
@@ -337,14 +343,14 @@
 			// 
 			// tMin
 			// 
-			this.tMin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			this.tMin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tMin.BackColor = System.Drawing.Color.White;
 			this.tMin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tMin.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.tMin.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.tMin.Location = new System.Drawing.Point(45, 67);
+			this.tMin.Location = new System.Drawing.Point(45, 77);
 			this.tMin.Name = "tMin";
 			this.tMin.Size = new System.Drawing.Size(43, 20);
 			this.tMin.TabIndex = 2;
@@ -352,7 +358,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(18, 70);
+			this.label4.Location = new System.Drawing.Point(18, 80);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(27, 13);
 			this.label4.TabIndex = 1;
@@ -362,14 +368,15 @@
 			// 
 			this.comboboxProp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboboxProp.FormattingEnabled = true;
-			this.comboboxProp.Location = new System.Drawing.Point(21, 21);
+			this.comboboxProp.Location = new System.Drawing.Point(100, 15);
 			this.comboboxProp.Name = "comboboxProp";
-			this.comboboxProp.Size = new System.Drawing.Size(345, 24);
+			this.comboboxProp.Size = new System.Drawing.Size(273, 24);
 			this.comboboxProp.TabIndex = 0;
+			this.comboboxProp.SelectedIndexChanged += new System.EventHandler(this.comboboxProp_SelectedIndexChanged);
 			// 
 			// razorButton1
 			// 
-			this.razorButton1.ColorTable = office2010BlueTheme;
+			this.razorButton1.ColorTable = office2010BlueTheme1;
 			this.razorButton1.Location = new System.Drawing.Point(275, 325);
 			this.razorButton1.Name = "razorButton1";
 			this.razorButton1.Size = new System.Drawing.Size(75, 23);
@@ -378,6 +385,39 @@
 			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButton1.UseVisualStyleBackColor = true;
 			this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
+			// 
+			// custompropnameTextBox
+			// 
+			this.custompropnameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.custompropnameTextBox.BackColor = System.Drawing.Color.White;
+			this.custompropnameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.custompropnameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.custompropnameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			this.custompropnameTextBox.Location = new System.Drawing.Point(118, 48);
+			this.custompropnameTextBox.Name = "custompropnameTextBox";
+			this.custompropnameTextBox.Size = new System.Drawing.Size(255, 20);
+			this.custompropnameTextBox.TabIndex = 13;
+			this.custompropnameTextBox.Enter += new System.EventHandler(this.custompropnameTextBox_Enter);
+			// 
+			// label7
+			// 
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(12, 50);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(101, 13);
+			this.label7.TabIndex = 12;
+			this.label7.Text = "Custom Prop Name:";
+			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(12, 22);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(82, 13);
+			this.label6.TabIndex = 11;
+			this.label6.Text = "Prop Name List:";
 			// 
 			// EnhancedScavengerEditItemProps
 			// 
@@ -391,7 +431,7 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "EnhancedScavengerEditItemProps";
-			this.Text = "Enhanced Autoloot Edit Item Props";
+			this.Text = "Enhanced Scavenger Edit Item Props";
 			this.Load += new System.EventHandler(this.EnhancedScavengerEditItemProps_Load);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox2.ResumeLayout(false);
@@ -437,7 +477,8 @@
 		private System.Windows.Forms.Label lColor;
 		private System.Windows.Forms.Label lGraphics;
 		private System.Windows.Forms.Label lName;
-
-
+		private RazorTextBox custompropnameTextBox;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label6;
 	}
 }

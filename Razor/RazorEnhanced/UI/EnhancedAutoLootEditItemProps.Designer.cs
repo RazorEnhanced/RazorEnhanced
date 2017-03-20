@@ -59,17 +59,17 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.custompropnameTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
-			this.custompropnameTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.bRemoveProp = new RazorEnhanced.UI.RazorButton();
 			this.bAddProp = new RazorEnhanced.UI.RazorButton();
 			this.tMax = new RazorEnhanced.UI.RazorTextBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.tMin = new RazorEnhanced.UI.RazorTextBox();
+			this.label4 = new System.Windows.Forms.Label();
 			this.comboboxProp = new RazorEnhanced.UI.RazorComboBox();
+			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
 			ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -277,6 +277,21 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Add / Remove ";
 			// 
+			// custompropnameTextBox
+			// 
+			this.custompropnameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.custompropnameTextBox.BackColor = System.Drawing.Color.White;
+			this.custompropnameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.custompropnameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			this.custompropnameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			this.custompropnameTextBox.Location = new System.Drawing.Point(113, 48);
+			this.custompropnameTextBox.Name = "custompropnameTextBox";
+			this.custompropnameTextBox.Size = new System.Drawing.Size(253, 20);
+			this.custompropnameTextBox.TabIndex = 10;
+			this.custompropnameTextBox.Enter += new System.EventHandler(this.custompropnameTextBox_Enter);
+			// 
 			// label7
 			// 
 			this.label7.AutoSize = true;
@@ -294,51 +309,6 @@
 			this.label6.Size = new System.Drawing.Size(82, 13);
 			this.label6.TabIndex = 8;
 			this.label6.Text = "Prop Name List:";
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(110, 80);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(30, 13);
-			this.label5.TabIndex = 3;
-			this.label5.Text = "Max:";
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(18, 80);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(27, 13);
-			this.label4.TabIndex = 1;
-			this.label4.Text = "Min:";
-			// 
-			// razorButton1
-			// 
-			this.razorButton1.ColorTable = office2010BlueTheme1;
-			this.razorButton1.Location = new System.Drawing.Point(275, 325);
-			this.razorButton1.Name = "razorButton1";
-			this.razorButton1.Size = new System.Drawing.Size(75, 23);
-			this.razorButton1.TabIndex = 5;
-			this.razorButton1.Text = "Close";
-			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButton1.UseVisualStyleBackColor = true;
-			this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
-			// 
-			// custompropnameTextBox
-			// 
-			this.custompropnameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.custompropnameTextBox.BackColor = System.Drawing.Color.White;
-			this.custompropnameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.custompropnameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.custompropnameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.custompropnameTextBox.Location = new System.Drawing.Point(113, 48);
-			this.custompropnameTextBox.Name = "custompropnameTextBox";
-			this.custompropnameTextBox.Size = new System.Drawing.Size(253, 20);
-			this.custompropnameTextBox.TabIndex = 10;
-			this.custompropnameTextBox.Enter += new System.EventHandler(this.custompropnameTextBox_Enter);
 			// 
 			// bRemoveProp
 			// 
@@ -395,6 +365,15 @@
 			this.tMax.Size = new System.Drawing.Size(43, 20);
 			this.tMax.TabIndex = 4;
 			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(110, 80);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(30, 13);
+			this.label5.TabIndex = 3;
+			this.label5.Text = "Max:";
+			// 
 			// tMin
 			// 
 			this.tMin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -409,6 +388,15 @@
 			this.tMin.Size = new System.Drawing.Size(43, 20);
 			this.tMin.TabIndex = 2;
 			// 
+			// label4
+			// 
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(18, 80);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(27, 13);
+			this.label4.TabIndex = 1;
+			this.label4.Text = "Min:";
+			// 
 			// comboboxProp
 			// 
 			this.comboboxProp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -418,6 +406,18 @@
 			this.comboboxProp.Size = new System.Drawing.Size(272, 24);
 			this.comboboxProp.TabIndex = 0;
 			this.comboboxProp.SelectedIndexChanged += new System.EventHandler(this.comboboxProp_SelectedIndexChanged);
+			// 
+			// razorButton1
+			// 
+			this.razorButton1.ColorTable = office2010BlueTheme1;
+			this.razorButton1.Location = new System.Drawing.Point(275, 325);
+			this.razorButton1.Name = "razorButton1";
+			this.razorButton1.Size = new System.Drawing.Size(75, 23);
+			this.razorButton1.TabIndex = 5;
+			this.razorButton1.Text = "Close";
+			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.razorButton1.UseVisualStyleBackColor = true;
+			this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
 			// 
 			// EnhancedAutolootEditItemProps
 			// 
