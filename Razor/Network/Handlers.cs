@@ -507,8 +507,11 @@ namespace Assistant
 
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			int reason = p.ReadByte();
-			args.Block = true;
+			p.ReadByte();
+			if (!DragDropManager.LiftReject())
+			{
+				args.Block = true;
+			}
 		}
 
 		private static void EquipRequest(PacketReader p, PacketHandlerEventArgs args)
