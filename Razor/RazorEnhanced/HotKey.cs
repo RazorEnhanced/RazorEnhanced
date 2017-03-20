@@ -1332,9 +1332,9 @@ namespace RazorEnhanced
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(a);
 			}
 
-			// Spells -- > Bard
-			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Bard");
-			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsBard");
+			// Spells -- > Mastery
+			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add("Mastery");
+			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMastery");
 			foreach (HotKeyData keydata in keylist)
 			{
 				TreeNode a = new TreeNode();
