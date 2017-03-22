@@ -12154,7 +12154,11 @@ namespace Assistant
 		private void toolboxcountHueTextBox_TextChanged(object sender, EventArgs e)
 		{
 			if (toolboxcountHueTextBox.Focused)
+			{
 				RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+				RazorEnhanced.ToolBar.UpdatePanelImage();
+				RazorEnhanced.ToolBar.Open();
+			}
 		}
 
 		private void toolboxcountHueWarningCheckBox_CheckedChanged(object sender, EventArgs e)

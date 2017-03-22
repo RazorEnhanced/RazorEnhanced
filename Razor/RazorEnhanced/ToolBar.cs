@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using Assistant;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 
 namespace RazorEnhanced
 {
@@ -334,13 +340,22 @@ namespace RazorEnhanced
 			{
 				if (items[x].Graphics != 0)
 				{
+					Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(items[x].Graphics));
 					if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
-						m_panellist[x].BackgroundImage = Ultima.Art.GetStatic(items[x].Graphics);
-					else
 					{
-						Bitmap temp = Ultima.Art.GetStatic(items[x].Graphics);
-						m_panellist[x].BackgroundImage = ResizeImage(temp, Convert.ToInt16(temp.Width / 1.5), Convert.ToInt16(temp.Height / 1.5));
-					}
+						if (items[x].Color > 0)
+						{
+							int hue = items[x].Color;
+							bool onlyHueGrayPixels = (hue & 0x8000) != 0;
+							hue = (hue & 0x3FFF) - 1;
+							Ultima.Hue m_hue = Ultima.Hues.GetHue(hue);
+							m_hue.ApplyTo(m_itemimage, onlyHueGrayPixels);
+						}
+						m_panellist[x].BackgroundImage = m_itemimage;
+                    }
+					else
+						m_panellist[x].BackgroundImage = ResizeImage(m_itemimage, Convert.ToInt16(m_itemimage.Width / 1.5), Convert.ToInt16(m_itemimage.Height / 1.5));
+
 
 					m_panellist[x].Enabled = true;
 					m_panelcount[x].Text = "0";
