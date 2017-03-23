@@ -510,6 +510,7 @@ namespace Assistant
 			p.ReadByte();
 			if (!DragDropManager.LiftReject())
 			{
+				DragDropManager.Clear();
 				args.Block = true;
 			}
 		}
