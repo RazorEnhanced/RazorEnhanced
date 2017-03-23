@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedItemInspector : Form
 	{
-		private const string m_Title = "Enhanced Item Inspect";
 		private Thread m_ProcessInfo;
 		private Assistant.Item m_itemTarg;
 
@@ -125,6 +125,47 @@ namespace RazorEnhanced.UI
 			lAmount.Text = m_itemTarg.Amount.ToString();
 			lLayer.Text = m_itemTarg.Layer.ToString();
 
+			// Flag
+			containerflaglabel.Text = (m_itemTarg.IsContainer) ? "Yes" : "No";
+			containerflaglabel.ForeColor = (m_itemTarg.IsContainer) ? Color.Green : Color.Red;
+
+			corpseflaglabel.Text = (m_itemTarg.IsCorpse) ? "Yes" : "No";
+			corpseflaglabel.ForeColor = (m_itemTarg.IsCorpse) ? Color.Green : Color.Red;
+
+			doorflaglabel.Text = (m_itemTarg.IsDoor) ? "Yes" : "No";
+			doorflaglabel.ForeColor = (m_itemTarg.IsDoor) ? Color.Green : Color.Red;
+
+			multiflaglabel.Text = (m_itemTarg.IsMulti) ? "Yes" : "No";
+			multiflaglabel.ForeColor = (m_itemTarg.IsMulti) ? Color.Green : Color.Red;
+
+			potionflaglabel.Text = (m_itemTarg.IsPotion) ? "Yes" : "No";
+			potionflaglabel.ForeColor = (m_itemTarg.IsPotion) ? Color.Green : Color.Red;
+
+			movableflaglabel.Text = (m_itemTarg.Movable) ? "Yes" : "No";
+			movableflaglabel.ForeColor = (m_itemTarg.Movable) ? Color.Green : Color.Red;
+
+			twohandflaglabel.Text = (m_itemTarg.IsTwoHanded) ? "Yes" : "No";
+			twohandflaglabel.ForeColor = (m_itemTarg.IsTwoHanded) ? Color.Green : Color.Red;
+
+			groudflaglabel.Text = (m_itemTarg.OnGround) ? "Yes" : "No";
+			groudflaglabel.ForeColor = (m_itemTarg.OnGround) ? Color.Green : Color.Red;
+
+			visibleflaglabel.Text = (m_itemTarg.Visible) ? "Yes" : "No";
+			visibleflaglabel.ForeColor = (m_itemTarg.Visible) ? Color.Green : Color.Red;
+
+			// Immagine
+			Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(m_itemTarg.ItemID));
+			{
+				if (m_itemTarg.Hue > 0)
+				{
+					int hue = m_itemTarg.Hue;
+					bool onlyHueGrayPixels = (hue & 0x8000) != 0;
+					hue = (hue & 0x3FFF) - 1;
+					Ultima.Hue m_hue = Ultima.Hues.GetHue(hue);
+					m_hue.ApplyTo(m_itemimage, onlyHueGrayPixels);
+				}
+				imagepanel.BackgroundImage = m_itemimage;
+			}
 			// Attributes
 			m_ProcessInfo = new Thread(ProcessInfoThread);
 			m_ProcessInfo.Start();

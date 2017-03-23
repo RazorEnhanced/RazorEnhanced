@@ -20,10 +20,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedItemInspector));
 			this.bNameCopy = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.imagepanel = new System.Windows.Forms.Panel();
 			this.lName = new System.Windows.Forms.Label();
 			this.lSerial = new System.Windows.Forms.Label();
 			this.lItemID = new System.Windows.Forms.Label();
@@ -56,10 +57,30 @@
 			this.bContainerCopy = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
 			this.listBoxAttributes = new System.Windows.Forms.ListBox();
+			this.groupBox4 = new System.Windows.Forms.GroupBox();
+			this.visibleflaglabel = new System.Windows.Forms.Label();
+			this.groudflaglabel = new System.Windows.Forms.Label();
+			this.twohandflaglabel = new System.Windows.Forms.Label();
+			this.containerflaglabel = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.label15 = new System.Windows.Forms.Label();
+			this.movableflaglabel = new System.Windows.Forms.Label();
+			this.label17 = new System.Windows.Forms.Label();
+			this.potionflaglabel = new System.Windows.Forms.Label();
+			this.label16 = new System.Windows.Forms.Label();
+			this.multiflaglabel = new System.Windows.Forms.Label();
+			this.doorflaglabel = new System.Windows.Forms.Label();
+			this.corpseflaglabel = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.label11 = new System.Windows.Forms.Label();
 			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.groupBox4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// bNameCopy
@@ -75,6 +96,7 @@
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Controls.Add(this.imagepanel);
 			this.groupBox1.Controls.Add(this.lName);
 			this.groupBox1.Controls.Add(this.lSerial);
 			this.groupBox1.Controls.Add(this.lItemID);
@@ -96,6 +118,14 @@
 			this.groupBox1.TabIndex = 1;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "General";
+			// 
+			// imagepanel
+			// 
+			this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.imagepanel.Location = new System.Drawing.Point(178, 64);
+			this.imagepanel.Name = "imagepanel";
+			this.imagepanel.Size = new System.Drawing.Size(132, 103);
+			this.imagepanel.TabIndex = 18;
 			// 
 			// lName
 			// 
@@ -403,7 +433,7 @@
 			// groupBox3
 			// 
 			this.groupBox3.Controls.Add(this.listBoxAttributes);
-			this.groupBox3.Location = new System.Drawing.Point(348, 13);
+			this.groupBox3.Location = new System.Drawing.Point(467, 13);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(316, 373);
 			this.groupBox3.TabIndex = 9;
@@ -418,27 +448,216 @@
 			this.listBoxAttributes.Size = new System.Drawing.Size(289, 329);
 			this.listBoxAttributes.TabIndex = 0;
 			// 
+			// groupBox4
+			// 
+			this.groupBox4.Controls.Add(this.visibleflaglabel);
+			this.groupBox4.Controls.Add(this.groudflaglabel);
+			this.groupBox4.Controls.Add(this.twohandflaglabel);
+			this.groupBox4.Controls.Add(this.containerflaglabel);
+			this.groupBox4.Controls.Add(this.label19);
+			this.groupBox4.Controls.Add(this.label18);
+			this.groupBox4.Controls.Add(this.label15);
+			this.groupBox4.Controls.Add(this.movableflaglabel);
+			this.groupBox4.Controls.Add(this.label17);
+			this.groupBox4.Controls.Add(this.potionflaglabel);
+			this.groupBox4.Controls.Add(this.label16);
+			this.groupBox4.Controls.Add(this.multiflaglabel);
+			this.groupBox4.Controls.Add(this.doorflaglabel);
+			this.groupBox4.Controls.Add(this.corpseflaglabel);
+			this.groupBox4.Controls.Add(this.label14);
+			this.groupBox4.Controls.Add(this.label13);
+			this.groupBox4.Controls.Add(this.label12);
+			this.groupBox4.Controls.Add(this.label11);
+			this.groupBox4.Location = new System.Drawing.Point(334, 12);
+			this.groupBox4.Name = "groupBox4";
+			this.groupBox4.Size = new System.Drawing.Size(127, 302);
+			this.groupBox4.TabIndex = 11;
+			this.groupBox4.TabStop = false;
+			this.groupBox4.Text = "Flags";
+			// 
+			// visibleflaglabel
+			// 
+			this.visibleflaglabel.AutoSize = true;
+			this.visibleflaglabel.Location = new System.Drawing.Point(87, 273);
+			this.visibleflaglabel.Name = "visibleflaglabel";
+			this.visibleflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.visibleflaglabel.TabIndex = 36;
+			this.visibleflaglabel.Text = "0";
+			// 
+			// groudflaglabel
+			// 
+			this.groudflaglabel.AutoSize = true;
+			this.groudflaglabel.Location = new System.Drawing.Point(87, 243);
+			this.groudflaglabel.Name = "groudflaglabel";
+			this.groudflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.groudflaglabel.TabIndex = 35;
+			this.groudflaglabel.Text = "0";
+			// 
+			// twohandflaglabel
+			// 
+			this.twohandflaglabel.AutoSize = true;
+			this.twohandflaglabel.Location = new System.Drawing.Point(87, 213);
+			this.twohandflaglabel.Name = "twohandflaglabel";
+			this.twohandflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.twohandflaglabel.TabIndex = 34;
+			this.twohandflaglabel.Text = "0";
+			// 
+			// containerflaglabel
+			// 
+			this.containerflaglabel.AutoSize = true;
+			this.containerflaglabel.Location = new System.Drawing.Point(87, 35);
+			this.containerflaglabel.Name = "containerflaglabel";
+			this.containerflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.containerflaglabel.TabIndex = 33;
+			this.containerflaglabel.Text = "0";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.Location = new System.Drawing.Point(6, 273);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(40, 13);
+			this.label19.TabIndex = 32;
+			this.label19.Text = "Visible:";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(6, 243);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(45, 13);
+			this.label18.TabIndex = 31;
+			this.label18.Text = "Ground:";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(6, 213);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(60, 13);
+			this.label15.TabIndex = 30;
+			this.label15.Text = "Two Hand:";
+			// 
+			// movableflaglabel
+			// 
+			this.movableflaglabel.AutoSize = true;
+			this.movableflaglabel.Location = new System.Drawing.Point(87, 183);
+			this.movableflaglabel.Name = "movableflaglabel";
+			this.movableflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.movableflaglabel.TabIndex = 29;
+			this.movableflaglabel.Text = "0";
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.Location = new System.Drawing.Point(6, 183);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(51, 13);
+			this.label17.TabIndex = 28;
+			this.label17.Text = "Movable:";
+			// 
+			// potionflaglabel
+			// 
+			this.potionflaglabel.AutoSize = true;
+			this.potionflaglabel.Location = new System.Drawing.Point(87, 153);
+			this.potionflaglabel.Name = "potionflaglabel";
+			this.potionflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.potionflaglabel.TabIndex = 27;
+			this.potionflaglabel.Text = "0";
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.Location = new System.Drawing.Point(6, 153);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(40, 13);
+			this.label16.TabIndex = 26;
+			this.label16.Text = "Potion:";
+			// 
+			// multiflaglabel
+			// 
+			this.multiflaglabel.AutoSize = true;
+			this.multiflaglabel.Location = new System.Drawing.Point(87, 123);
+			this.multiflaglabel.Name = "multiflaglabel";
+			this.multiflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.multiflaglabel.TabIndex = 25;
+			this.multiflaglabel.Text = "0";
+			// 
+			// doorflaglabel
+			// 
+			this.doorflaglabel.AutoSize = true;
+			this.doorflaglabel.Location = new System.Drawing.Point(87, 93);
+			this.doorflaglabel.Name = "doorflaglabel";
+			this.doorflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.doorflaglabel.TabIndex = 24;
+			this.doorflaglabel.Text = "0";
+			// 
+			// corpseflaglabel
+			// 
+			this.corpseflaglabel.AutoSize = true;
+			this.corpseflaglabel.Location = new System.Drawing.Point(87, 63);
+			this.corpseflaglabel.Name = "corpseflaglabel";
+			this.corpseflaglabel.Size = new System.Drawing.Size(13, 13);
+			this.corpseflaglabel.TabIndex = 23;
+			this.corpseflaglabel.Text = "0";
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Location = new System.Drawing.Point(6, 123);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(32, 13);
+			this.label14.TabIndex = 21;
+			this.label14.Text = "Multi:";
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(6, 93);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(33, 13);
+			this.label13.TabIndex = 20;
+			this.label13.Text = "Door:";
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.Location = new System.Drawing.Point(6, 63);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(43, 13);
+			this.label12.TabIndex = 19;
+			this.label12.Text = "Corpse:";
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(6, 35);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(55, 13);
+			this.label11.TabIndex = 18;
+			this.label11.Text = "Container:";
+			// 
 			// razorButton1
 			// 
-			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.TextColor = System.Drawing.Color.White;
-			this.razorButton1.ColorTable = office2010BlueTheme;
-			this.razorButton1.Location = new System.Drawing.Point(307, 392);
+			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+			this.razorButton1.ColorTable = office2010BlueTheme1;
+			this.razorButton1.Location = new System.Drawing.Point(361, 397);
 			this.razorButton1.Name = "razorButton1";
 			this.razorButton1.Size = new System.Drawing.Size(75, 23);
 			this.razorButton1.TabIndex = 10;
@@ -449,7 +668,8 @@
 			// 
 			// EnhancedItemInspector
 			// 
-			this.ClientSize = new System.Drawing.Size(676, 423);
+			this.ClientSize = new System.Drawing.Size(798, 423);
+			this.Controls.Add(this.groupBox4);
 			this.Controls.Add(this.razorButton1);
 			this.Controls.Add(this.groupBox3);
 			this.Controls.Add(this.groupBox2);
@@ -466,6 +686,8 @@
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
+			this.groupBox4.ResumeLayout(false);
+			this.groupBox4.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -507,7 +729,25 @@
 		private System.Windows.Forms.Label lLayer;
 		private System.Windows.Forms.Label lAmount;
 		private System.Windows.Forms.Label lRootContainer;
-
-
+		private System.Windows.Forms.GroupBox groupBox4;
+		private System.Windows.Forms.Label movableflaglabel;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.Label potionflaglabel;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.Label multiflaglabel;
+		private System.Windows.Forms.Label doorflaglabel;
+		private System.Windows.Forms.Label corpseflaglabel;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.Label containerflaglabel;
+		private System.Windows.Forms.Label visibleflaglabel;
+		private System.Windows.Forms.Label groudflaglabel;
+		private System.Windows.Forms.Label twohandflaglabel;
+		private System.Windows.Forms.Panel imagepanel;
 	}
 }
