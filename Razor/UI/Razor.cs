@@ -9568,7 +9568,7 @@ namespace Assistant
 
 		private void autoLootButtonAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAutoLootAddList AddItemList = new EnhancedAutoLootAddList();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(1);
 			AddItemList.TopMost = true;
 			AddItemList.Show();
 		}
@@ -9770,7 +9770,7 @@ namespace Assistant
 
 		private void scavengerAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedScavengerAddList AddItemList = new EnhancedScavengerAddList();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(2);
 			AddItemList.TopMost = true;
 			AddItemList.Show();
 		}
@@ -9779,7 +9779,7 @@ namespace Assistant
 		{
 			if (scavengerListSelect.Text != "")
 			{
-				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Scavenger list: " + autolootListSelect.Text, "Delete Scavenger List?", MessageBoxButtons.YesNo);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Scavenger list: " + scavengerListSelect.Text, "Delete Scavenger List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.Scavenger.AddLog("Scavenger list " + scavengerListSelect.Text + " removed!");
@@ -9958,16 +9958,16 @@ namespace Assistant
 
 		private void organizerAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedOrganizerAddList addItemList = new EnhancedOrganizerAddList();
-			addItemList.TopMost = true;
-			addItemList.Show();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(3);
+			AddItemList.TopMost = true;
+			AddItemList.Show();
 		}
 
 		private void organizerRemoveList_Click(object sender, EventArgs e)
 		{
 			if (organizerListSelect.Text != "")
 			{
-				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Organizer list: " + autolootListSelect.Text, "Delete Organizer List?", MessageBoxButtons.YesNo);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Organizer list: " + organizerListSelect.Text, "Delete Organizer List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.Organizer.AddLog("Organizer list " + organizerListSelect.Text + " removed!");
@@ -10305,16 +10305,16 @@ namespace Assistant
 
 		private void sellAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedSellAgentAddList addItemList = new EnhancedSellAgentAddList();
-			addItemList.TopMost = true;
-			addItemList.Show();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(5);
+			AddItemList.TopMost = true;
+			AddItemList.Show();
 		}
 
 		private void sellRemoveList_Click(object sender, EventArgs e)
 		{
 			if (sellListSelect.Text != "")
 			{
-				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Sell list: " + autolootListSelect.Text, "Delete Vendor Sell List?", MessageBoxButtons.YesNo);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Sell list: " + sellListSelect.Text, "Delete Vendor Sell List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.SellAgent.AddLog("Sell Agent list " + sellListSelect.Text + " removed!");
@@ -10551,7 +10551,7 @@ namespace Assistant
 
 		private void buyAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedBuyAgentAddList AddItemList = new EnhancedBuyAgentAddList();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(4);
 			AddItemList.TopMost = true;
 			AddItemList.Show();
 		}
@@ -10560,7 +10560,7 @@ namespace Assistant
 		{
 			if (buyListSelect.Text != "")
 			{
-				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Buy list: " + autolootListSelect.Text, "Delete Vendor Buy List?", MessageBoxButtons.YesNo);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Buy list: " + buyListSelect.Text, "Delete Vendor Buy List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.BuyAgent.AddLog("Buy Agent list " + buyListSelect.Text + " removed!");
@@ -10749,7 +10749,7 @@ namespace Assistant
 
 		private void dressAddListB_Click(object sender, EventArgs e)
 		{
-			EnhancedDressAddList AddItemList = new EnhancedDressAddList();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(6);
 			AddItemList.TopMost = true;
 			AddItemList.Show();
 		}
@@ -10758,7 +10758,7 @@ namespace Assistant
 		{
 			if (dressListSelect.Text != "")
 			{
-				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Dress list: " + autolootListSelect.Text, "Delete Dress List?", MessageBoxButtons.YesNo);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Dress list: " + dressListSelect.Text, "Delete Dress List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.Dress.AddLog("Dress list " + dressListSelect.Text + " removed!");
@@ -11037,16 +11037,16 @@ namespace Assistant
 		// --------------- FRIENDS START ---------
 		private void friendButtonAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedFriendAddList AddPlayerList = new EnhancedFriendAddList();
-			AddPlayerList.TopMost = true;
-			AddPlayerList.Show();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(7);
+			AddItemList.TopMost = true;
+			AddItemList.Show();
 		}
 
 		private void friendButtonRemoveList_Click(object sender, EventArgs e)
 		{
 			if (friendListSelect.Text != "")
 			{
-				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Friend list: " + autolootListSelect.Text, "Delete Friend List?", MessageBoxButtons.YesNo);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Friend list: " + friendListSelect.Text, "Delete Friend List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.Friend.AddLog("Friends list " + friendListSelect.Text + " removed!");
@@ -11269,16 +11269,16 @@ namespace Assistant
 
 		private void restockAddListB_Click(object sender, EventArgs e)
 		{
-			EnhancedRestockAddList addItemList = new EnhancedRestockAddList();
-			addItemList.TopMost = true;
-			addItemList.Show();
+			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(8);
+			AddItemList.TopMost = true;
+			AddItemList.Show();
 		}
 
 		private void restockRemoveListB_Click(object sender, EventArgs e)
 		{
 			if (restockListSelect.Text != "")
 			{
-				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Restock list: " + autolootListSelect.Text, "Delete Restock List?", MessageBoxButtons.YesNo);
+				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Restock list: " + restockListSelect.Text, "Delete Restock List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
 				{
 					RazorEnhanced.Restock.AddLog("Restock list " + restockListSelect.Text + " removed!");

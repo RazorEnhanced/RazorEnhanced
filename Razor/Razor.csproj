@@ -266,6 +266,12 @@
     <Compile Include="RazorEnhanced\Gumps.cs" />
     <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
+    <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.Designer.cs">
+      <DependentUpon>EnhancedAgentAddList.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedChangeLog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -326,35 +332,17 @@
     <Compile Include="RazorEnhanced\UI\EnhancedFriendAddPlayerManual.Designer.cs">
       <DependentUpon>EnhancedFriendAddPlayerManual.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedFriendAddList.Designer.cs">
-      <DependentUpon>EnhancedFriendAddList.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.Designer.cs">
       <DependentUpon>EnhancedDressAddUndressLayer.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedDressAddList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedDressAddList.designer.cs">
-      <DependentUpon>EnhancedDressAddList.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.Designer.cs">
       <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.Designer.cs">
-      <DependentUpon>EnhancedBuyAgentAddIList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.cs">
       <SubType>Form</SubType>
@@ -392,12 +380,6 @@
     <Compile Include="RazorEnhanced\UI\EnhancedRestockManualAdd.Designer.cs">
       <DependentUpon>EnhancedRestockManualAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedRestockAddList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedRestockAddList.Designer.cs">
-      <DependentUpon>EnhancedRestockAddList.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -427,23 +409,11 @@
     <Compile Include="RazorEnhanced\UI\Controls.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddIList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentAddIList.Designer.cs">
-      <DependentUpon>EnhancedSellAgentAddIList.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.Designer.cs">
       <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedOrganizerAddList.Designer.cs">
-      <DependentUpon>EnhancedOrganizerAddList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedOrganizerManualAdd.cs">
       <SubType>Form</SubType>
@@ -468,18 +438,6 @@
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItem.Designer.cs">
       <DependentUpon>EnhancedScavengerEditItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedScavengerAddList.Designer.cs">
-      <DependentUpon>EnhancedScavengerAddList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddList.Designer.cs">
-      <DependentUpon>EnhancedAutoLootAddList.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItemProps.cs">
       <SubType>Form</SubType>
@@ -554,6 +512,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAgentAddList.resx">
+      <DependentUpon>EnhancedAgentAddList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedChangeLog.resx">
       <DependentUpon>EnhancedChangeLog.cs</DependentUpon>
     </EmbeddedResource>
@@ -584,20 +545,11 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddPlayerManual.resx">
       <DependentUpon>EnhancedFriendAddPlayerManual.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedFriendAddList.resx">
-      <DependentUpon>EnhancedFriendAddList.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedDressAddUndressLayer.resx">
       <DependentUpon>EnhancedDressAddUndressLayer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedDressAddList.resx">
-      <DependentUpon>EnhancedDressAddList.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGumpInspector.resx">
       <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentAddIList.resx">
-      <DependentUpon>EnhancedBuyAgentAddIList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.resx">
       <DependentUpon>EnhancedBuyAgentEditItem.cs</DependentUpon>
@@ -617,23 +569,14 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedRestockManualAdd.resx">
       <DependentUpon>EnhancedRestockManualAdd.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedRestockAddList.resx">
-      <DependentUpon>EnhancedRestockAddList.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.resx">
       <DependentUpon>EnhancedSellAgentManualAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.resx">
       <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentAddIList.resx">
-      <DependentUpon>EnhancedSellAgentAddIList.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.resx">
       <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerAddList.resx">
-      <DependentUpon>EnhancedOrganizerAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerManualAdd.resx">
       <DependentUpon>EnhancedOrganizerManualAdd.cs</DependentUpon>
@@ -646,12 +589,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerEditItem.resx">
       <DependentUpon>EnhancedScavengerEditItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerAddList.resx">
-      <DependentUpon>EnhancedScavengerAddList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootAddList.resx">
-      <DependentUpon>EnhancedAutoLootAddList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootEditItemProps.resx">
       <DependentUpon>EnhancedAutoLootEditItemProps.cs</DependentUpon>
