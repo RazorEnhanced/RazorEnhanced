@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Threading;
+using System.Drawing;
 
 namespace RazorEnhanced.UI
 {
 	internal partial class EnhancedMobileInspector : Form
 	{
-		private const string m_Title = "Enhanced Mobile Inspect";
 		private Thread m_ProcessInfo;
 		private Assistant.Mobile m_mobile;
 
@@ -507,11 +507,10 @@ namespace RazorEnhanced.UI
 			lMobileID.Text = "0x" + m_mobile.Body.ToString("X4");
 			lColor.Text = "0x" + m_mobile.Hue.ToString("X4");
 			lPosition.Text = m_mobile.Position.ToString();
+
 			// Details
-			if (m_mobile.Female)
-				lSex.Text = "Female";
-			else
-				lSex.Text = "Male";
+			lSex.Text = (m_mobile.Female) ? "Female" : "Male";
+
 			lHits.Text = m_mobile.Hits.ToString();
 			lMaxHits.Text = m_mobile.Hits.ToString();
 			lNotoriety.Text = m_mobile.Notoriety.ToString();
@@ -529,35 +528,34 @@ namespace RazorEnhanced.UI
 				default: lDirection.Text = "Undefined"; break;
 			}
 
-			if (m_mobile.Poisoned)
-				lFlagPoisoned.Text = "Yes";
-			else
-				lFlagPoisoned.Text = "No";
+			// Flag
+			lFlagPoisoned.Text = (m_mobile.Poisoned) ? "Yes" : "No";
+			lFlagPoisoned.ForeColor = (m_mobile.Poisoned) ? Color.Green : Color.Red;
 
-			if (m_mobile.Warmode)
-				lFlagWar.Text = "Yes";
-			else
-				lFlagWar.Text = "No";
+			lFlagWar.Text = (m_mobile.Warmode) ? "Yes" : "No";
+			lFlagWar.ForeColor = (m_mobile.Warmode) ? Color.Green : Color.Red;
 
-			if (m_mobile.Visible)
-				lFlagHidden.Text = "No";
-			else
-				lFlagHidden.Text = "Yes";
+			lFlagHidden.Text = (m_mobile.Visible) ? "No" : "Yes";
+			lFlagHidden.ForeColor = (m_mobile.Visible) ? Color.Red : Color.Green;
 
-			if (m_mobile.IsGhost)
-				lFlagGhost.Text = "Yes";
-			else
-				lFlagGhost.Text = "No";
+			lFlagGhost.Text = (m_mobile.IsGhost) ? "Yes" : "No";
+			lFlagGhost.ForeColor = (m_mobile.IsGhost) ? Color.Green : Color.Red;
 
-			if (m_mobile.Blessed)     // Yellow Hits
-				lFlagBlessed.Text = "Yes";
-			else
-				lFlagBlessed.Text = "No";
+			lFlagBlessed.Text = (m_mobile.Blessed) ? "Yes" : "No";
+			lFlagBlessed.ForeColor = (m_mobile.Blessed) ? Color.Green : Color.Red;
 
-			if (m_mobile.Paralized)
-				lFlagParalized.Text = "Yes";
-			else
-				lFlagParalized.Text = "No";
+			lFlagParalized.Text = (m_mobile.Paralized) ? "Yes" : "No";
+			lFlagParalized.ForeColor = (m_mobile.Paralized) ? Color.Green : Color.Red;
+
+			// Immagine
+			try
+			{
+				int m_hue = m_mobile.Hue;
+				Ultima.Frame[] m_animationframe = Ultima.Animations.GetAnimation(m_mobile.Body, 0, 1, ref m_hue, false, true);
+				imagepanel.BackgroundImage = m_animationframe[0].Bitmap;
+			}
+			catch
+			{ }
 
 			for (int i = 0; i < m_mobile.ObjPropList.Content.Count; i++)
 			{
