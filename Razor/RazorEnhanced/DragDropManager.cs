@@ -35,7 +35,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 2) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+						if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 3) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 						{
 							RazorEnhanced.Items.WaitForContents(Items.FindBySerial(itemserial), 1000);
 							AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
@@ -82,7 +82,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if ((Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 2) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z)))
+						if ((Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 3) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z)))
 						{
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{
