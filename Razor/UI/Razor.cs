@@ -1199,11 +1199,6 @@ namespace Assistant
 			this.label50 = new System.Windows.Forms.Label();
 			this.sellBagLabel = new System.Windows.Forms.Label();
 			this.vendorsellGridView = new System.Windows.Forms.DataGridView();
-			this.X = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Graphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Color = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.sellAddTargerButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox20 = new System.Windows.Forms.GroupBox();
 			this.sellLogBox = new System.Windows.Forms.ListBox();
@@ -1350,6 +1345,11 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.X = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Graphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Color = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -5681,44 +5681,6 @@ namespace Assistant
 			this.vendorsellGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.vendorsellGridView_DataError);
 			this.vendorsellGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.vendorsellGridView_DefaultValuesNeeded);
 			// 
-			// X
-			// 
-			this.X.FalseValue = "False";
-			this.X.HeaderText = "X";
-			this.X.Name = "X";
-			this.X.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.X.ToolTipText = "Check This for enable item in list";
-			this.X.TrueValue = "True";
-			this.X.Width = 22;
-			// 
-			// ItemName
-			// 
-			this.ItemName.HeaderText = "Item Name";
-			this.ItemName.Name = "ItemName";
-			this.ItemName.ToolTipText = "Here the item name";
-			this.ItemName.Width = 168;
-			// 
-			// Graphics
-			// 
-			this.Graphics.HeaderText = "Graphics";
-			this.Graphics.Name = "Graphics";
-			this.Graphics.ToolTipText = "Here Graphics item ID";
-			this.Graphics.Width = 54;
-			// 
-			// Amount
-			// 
-			this.Amount.HeaderText = "Amount";
-			this.Amount.Name = "Amount";
-			this.Amount.ToolTipText = "Here Item Amount to sell";
-			this.Amount.Width = 54;
-			// 
-			// Color
-			// 
-			this.Color.HeaderText = "Color";
-			this.Color.Name = "Color";
-			this.Color.ToolTipText = "Here item color, use -1 for all color";
-			this.Color.Width = 54;
-			// 
 			// sellAddTargerButton
 			// 
 			this.sellAddTargerButton.ColorTable = office2010BlueTheme1;
@@ -7289,6 +7251,52 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
+			// 
+			// X
+			// 
+			this.X.FalseValue = "False";
+			this.X.HeaderText = "X";
+			this.X.Name = "X";
+			this.X.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.X.ToolTipText = "Check This for enable item in list";
+			this.X.TrueValue = "True";
+			this.X.Width = 22;
+			// 
+			// ItemName
+			// 
+			this.ItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ItemName.HeaderText = "Item Name";
+			this.ItemName.Name = "ItemName";
+			this.ItemName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.ItemName.ToolTipText = "Here the item name";
+			this.ItemName.Width = 153;
+			// 
+			// Graphics
+			// 
+			this.Graphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.Graphics.HeaderText = "Graphics";
+			this.Graphics.Name = "Graphics";
+			this.Graphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.Graphics.ToolTipText = "Here Graphics item ID";
+			this.Graphics.Width = 54;
+			// 
+			// Amount
+			// 
+			this.Amount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.Amount.HeaderText = "Amount";
+			this.Amount.Name = "Amount";
+			this.Amount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.Amount.ToolTipText = "Here Item Amount to sell";
+			this.Amount.Width = 54;
+			// 
+			// Color
+			// 
+			this.Color.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.Color.HeaderText = "Color";
+			this.Color.Name = "Color";
+			this.Color.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.Color.ToolTipText = "Here item color, use -1 for all color";
+			this.Color.Width = 54;
 			// 
 			// MainForm
 			// 

@@ -171,7 +171,7 @@ namespace RazorEnhanced
 						if (item.Color != -1)
 							color = "0x" + item.Color.ToString("X4");
 							
-						Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected, item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
+						Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
 					}
 
 					break;
@@ -200,7 +200,7 @@ namespace RazorEnhanced
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { false, name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
+			Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
 			CopyTable();
 		}
 
