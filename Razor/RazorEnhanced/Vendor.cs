@@ -3,11 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
+using System.Data;
 
 namespace RazorEnhanced
 {
 	public class SellAgent
 	{
+		private static DataTable m_selllistitem = new DataTable("SellListItem");
+
 		[Serializable]
 		public class SellAgentItem
 		{
@@ -106,9 +110,6 @@ namespace RazorEnhanced
 			List<SellAgentList> lists;
 			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
-			if (lists.Count == 0)
-				Assistant.Engine.MainWindow.SellListView.Items.Clear();
-
 			SellAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.SellListSelect.Text)
 				return;
@@ -126,12 +127,37 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshItems()
+		internal static void CopyTable()
+		{
+			Settings.SellAgent.ClearList(Assistant.Engine.MainWindow.SellListSelect.Text); // Rimuove vecchi dati dal save
+
+			foreach (DataGridViewRow row in Engine.MainWindow.VendorSellGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[4].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+
+				bool check = false;
+				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+
+				Settings.SellAgent.ItemInsert(Assistant.Engine.MainWindow.SellListSelect.Text, new SellAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
+			}
+
+			Settings.Save(); // Salvo dati
+		}
+
+        internal static void InitGrid()
 		{
 			List<SellAgentList> lists;
 			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
 
-			Assistant.Engine.MainWindow.SellListView.Items.Clear();
+			Engine.MainWindow.VendorSellGridView.Rows.Clear();
+
 			foreach (SellAgentList l in lists)
 			{
 				if (l.Selected)
@@ -139,54 +165,26 @@ namespace RazorEnhanced
 					List<SellAgent.SellAgentItem> items;
 					RazorEnhanced.Settings.SellAgent.ItemsRead(l.Description, out items);
 
-					foreach (SellAgentItem item in items)
+                    foreach (SellAgentItem item in items)
 					{
-						ListViewItem listitem = new ListViewItem();
-
-						listitem.Checked = item.Selected;
-
-						listitem.SubItems.Add(item.Name);
-						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-
-						listitem.SubItems.Add(item.Amount.ToString());
-
-						if (item.Color == -1)
-							listitem.SubItems.Add("All");
-						else
-							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-
-						Assistant.Engine.MainWindow.SellListView.Items.Add(listitem);
+						string color = "All";
+						if (item.Color != -1)
+							color = "0x" + item.Color.ToString("X4");
+							
+						Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected, item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
 					}
+
+					break;
 				}
 			}
 		}
-
-		internal static void UpdateSelectedItems(int i)
-		{
-			List<SellAgentItem> items;
-			RazorEnhanced.Settings.SellAgent.ItemsRead(SellListName, out items);
-
-			if (items.Count != Assistant.Engine.MainWindow.SellListView.Items.Count)
-			{
-				return;
-			}
-
-			ListViewItem lvi = Assistant.Engine.MainWindow.SellListView.Items[i];
-			SellAgentItem old = items[i];
-
-			if (lvi != null && old != null)
-			{
-				SellAgentItem item = new SellAgent.SellAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
-				RazorEnhanced.Settings.SellAgent.ItemReplace(RazorEnhanced.SellAgent.SellListName, i, item);
-			}
-		}
-
+		
 		internal static void AddList(string newList)
 		{
 			RazorEnhanced.Settings.SellAgent.ListInsert(newList, 0);
 
 			RazorEnhanced.SellAgent.RefreshLists();
-			RazorEnhanced.SellAgent.RefreshItems();
+			RazorEnhanced.SellAgent.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
@@ -197,37 +195,13 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.SellAgent.RefreshLists();
-			RazorEnhanced.SellAgent.RefreshItems();
+			RazorEnhanced.SellAgent.InitGrid();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			SellAgentItem item = new SellAgentItem(name, graphics, amount, color, false);
-
-			string selection = Assistant.Engine.MainWindow.SellListSelect.Text;
-
-			if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
-			{
-				if (!RazorEnhanced.Settings.SellAgent.ItemExists(selection, item))
-					RazorEnhanced.Settings.SellAgent.ItemInsert(selection, item);
-			}
-
-			RazorEnhanced.SellAgent.RefreshItems();
-		}
-
-		internal static void ModifyItemInList(string name, int graphics, int amount, int color, bool selected, SellAgentItem old, int index)
-		{
-			SellAgentItem item = new SellAgentItem(name, graphics, amount, color, selected);
-
-			string selection = Assistant.Engine.MainWindow.SellListSelect.Text;
-
-			if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
-			{
-				if (RazorEnhanced.Settings.SellAgent.ItemExists(selection, old))
-					RazorEnhanced.Settings.SellAgent.ItemReplace(selection, index, item);
-			}
-
-			RazorEnhanced.SellAgent.RefreshItems();
+			Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { false, name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
+			CopyTable();
 		}
 
 		internal static void EnableSellFilter()

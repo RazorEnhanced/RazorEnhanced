@@ -15,6 +15,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
+using System.Drawing;
 
 namespace Assistant
 {
@@ -223,19 +224,10 @@ namespace Assistant
 		private RazorComboBox buyListSelect;
 		private RazorButton buyExportListButton;
 		private Label label25;
-		private GroupBox groupBox19;
-		private RazorButton sellEditButton;
 		private RazorButton sellAddTargerButton;
-		private RazorButton sellRemoveButton;
-		private RazorButton sellAddManualButton;
 		private GroupBox groupBox20;
 		private ListBox sellLogBox;
 		private RazorCheckBox sellEnableCheckBox;
-		private ListView sellListView;
-		private ColumnHeader columnHeader18;
-		private ColumnHeader columnHeader19;
-		private ColumnHeader columnHeader20;
-		private ColumnHeader columnHeader21;
 		private RazorButton sellRemoveListButton;
 		private RazorButton sellAddListButton;
 		private RazorButton sellImportListButton;
@@ -244,7 +236,6 @@ namespace Assistant
 		private Label label26;
 		private Label sellBagLabel;
 		private RazorButton sellSetBagButton;
-		private ColumnHeader columnHeader22;
 		private ColumnHeader columnHeader23;
 		private TabPage Dress;
 		private RazorCheckBox dressConflictCheckB;
@@ -523,16 +514,16 @@ namespace Assistant
 		private RazorCheckBox showagentmessageCheckBox;
 		private RazorCheckBox showmessagefieldCheckBox;
 		private RazorCheckBox showscriptmessageCheckBox;
-        private Button buttonScriptRefresh;
-        private RazorButton FriendGuildRemoveButton;
-        private RazorButton FriendGuildAddButton;
-        private ListView friendguildListView;
-        private ColumnHeader columnHeader63;
-        private ColumnHeader columnHeader64;
-        private RazorCheckBox MINfriendCheckBox;
-        private RazorCheckBox COMfriendCheckBox;
-        private RazorCheckBox TBfriendCheckBox;
-        private RazorCheckBox SLfriendCheckBox;
+		private Button buttonScriptRefresh;
+		private RazorButton FriendGuildRemoveButton;
+		private RazorButton FriendGuildAddButton;
+		private ListView friendguildListView;
+		private ColumnHeader columnHeader63;
+		private ColumnHeader columnHeader64;
+		private RazorCheckBox MINfriendCheckBox;
+		private RazorCheckBox COMfriendCheckBox;
+		private RazorCheckBox TBfriendCheckBox;
+		private RazorCheckBox SLfriendCheckBox;
 		private GroupBox groupBox34;
 		private GroupBox groupBox33;
 		private RazorButton toolbarremoveslotButton;
@@ -582,6 +573,16 @@ namespace Assistant
 		private Label label31;
 		private RazorButton openchangelogButton;
 		private RazorButton discordrazorButton;
+		private DataGridView vendorsellGridView;
+		private ContextMenuStrip datagridMenuStrip;
+		private ToolStripMenuItem deleteRowToolStripMenuItem;
+		private Label label50;
+		private GroupBox groupBox19;
+		private DataGridViewCheckBoxColumn X;
+		private DataGridViewTextBoxColumn ItemName;
+		private DataGridViewTextBoxColumn Graphics;
+		private DataGridViewTextBoxColumn Amount;
+		private DataGridViewTextBoxColumn Color;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -645,7 +646,6 @@ namespace Assistant
 		internal Label SellBagLabel { get { return sellBagLabel; } }
 		internal RazorCheckBox SellCheckBox { get { return sellEnableCheckBox; } }
 		internal ListBox SellLogBox { get { return sellLogBox; } }
-		internal ListView SellListView { get { return sellListView; } }
 		internal RazorComboBox SellListSelect { get { return sellListSelect; } }
 
 		// Buy Agent
@@ -653,6 +653,7 @@ namespace Assistant
 		internal ListBox BuyLogBox { get { return buyLogBox; } }
 		internal ListView BuyListView { get { return buyListView; } }
 		internal RazorComboBox BuyListSelect { get { return buyListSelect; } }
+		internal DataGridView VendorSellGridView { get { return vendorsellGridView; } }
 
 		// Dress Agent
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
@@ -673,12 +674,12 @@ namespace Assistant
 		internal RazorCheckBox FriendPartyCheckBox { get { return friendPartyCheckBox; } }
 		internal RazorCheckBox FriendAttackCheckBox { get { return friendAttackCheckBox; } }
 		internal RazorCheckBox FriendIncludePartyCheckBox { get { return friendIncludePartyCheckBox; } }
-        internal RazorCheckBox FriendSLCheckBox {  get { return SLfriendCheckBox; } }
-        internal RazorCheckBox FriendTBCheckBox {  get { return TBfriendCheckBox; } }
-        internal RazorCheckBox FriendCOMCheckBox {  get { return COMfriendCheckBox; } }
-        internal RazorCheckBox FriendMINCheckBox {  get { return MINfriendCheckBox; } }
+		internal RazorCheckBox FriendSLCheckBox { get { return SLfriendCheckBox; } }
+		internal RazorCheckBox FriendTBCheckBox { get { return TBfriendCheckBox; } }
+		internal RazorCheckBox FriendCOMCheckBox { get { return COMfriendCheckBox; } }
+		internal RazorCheckBox FriendMINCheckBox { get { return MINfriendCheckBox; } }
 
-        internal ListView FriendGuildListView { get { return friendguildListView; } }
+		internal ListView FriendGuildListView { get { return friendguildListView; } }
 
 		// Restock
 		internal RazorTextBox RestockDragDelay { get { return restockDragDelay; } }
@@ -1193,22 +1194,20 @@ namespace Assistant
 			this.buyListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.buyExportListButton = new RazorEnhanced.UI.RazorButton();
 			this.VendorSell = new System.Windows.Forms.TabPage();
-			this.sellBagLabel = new System.Windows.Forms.Label();
 			this.groupBox19 = new System.Windows.Forms.GroupBox();
-			this.sellEditButton = new RazorEnhanced.UI.RazorButton();
+			this.sellSetBagButton = new RazorEnhanced.UI.RazorButton();
+			this.label50 = new System.Windows.Forms.Label();
+			this.sellBagLabel = new System.Windows.Forms.Label();
+			this.vendorsellGridView = new System.Windows.Forms.DataGridView();
+			this.X = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Graphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Color = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.sellAddTargerButton = new RazorEnhanced.UI.RazorButton();
-			this.sellRemoveButton = new RazorEnhanced.UI.RazorButton();
-			this.sellAddManualButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox20 = new System.Windows.Forms.GroupBox();
 			this.sellLogBox = new System.Windows.Forms.ListBox();
-			this.sellSetBagButton = new RazorEnhanced.UI.RazorButton();
 			this.sellEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.sellListView = new System.Windows.Forms.ListView();
-			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label26 = new System.Windows.Forms.Label();
 			this.sellRemoveListButton = new RazorEnhanced.UI.RazorButton();
 			this.sellAddListButton = new RazorEnhanced.UI.RazorButton();
@@ -1349,6 +1348,8 @@ namespace Assistant
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
+			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1401,6 +1402,7 @@ namespace Assistant
 			this.groupBox18.SuspendLayout();
 			this.VendorSell.SuspendLayout();
 			this.groupBox19.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.vendorsellGridView)).BeginInit();
 			this.groupBox20.SuspendLayout();
 			this.Dress.SuspendLayout();
 			this.groupBox22.SuspendLayout();
@@ -1420,6 +1422,7 @@ namespace Assistant
 			this.groupBox8.SuspendLayout();
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
+			this.datagridMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -5597,12 +5600,11 @@ namespace Assistant
 			// 
 			// VendorSell
 			// 
-			this.VendorSell.Controls.Add(this.sellBagLabel);
 			this.VendorSell.Controls.Add(this.groupBox19);
+			this.VendorSell.Controls.Add(this.vendorsellGridView);
+			this.VendorSell.Controls.Add(this.sellAddTargerButton);
 			this.VendorSell.Controls.Add(this.groupBox20);
-			this.VendorSell.Controls.Add(this.sellSetBagButton);
 			this.VendorSell.Controls.Add(this.sellEnableCheckBox);
-			this.VendorSell.Controls.Add(this.sellListView);
 			this.VendorSell.Controls.Add(this.label26);
 			this.VendorSell.Controls.Add(this.sellRemoveListButton);
 			this.VendorSell.Controls.Add(this.sellAddListButton);
@@ -5617,77 +5619,123 @@ namespace Assistant
 			this.VendorSell.Text = "Vendor Sell";
 			this.VendorSell.UseVisualStyleBackColor = true;
 			// 
+			// groupBox19
+			// 
+			this.groupBox19.Controls.Add(this.sellSetBagButton);
+			this.groupBox19.Controls.Add(this.label50);
+			this.groupBox19.Controls.Add(this.sellBagLabel);
+			this.groupBox19.Location = new System.Drawing.Point(6, 42);
+			this.groupBox19.Name = "groupBox19";
+			this.groupBox19.Size = new System.Drawing.Size(255, 42);
+			this.groupBox19.TabIndex = 89;
+			this.groupBox19.TabStop = false;
+			this.groupBox19.Text = "Sell Bag";
+			// 
+			// sellSetBagButton
+			// 
+			this.sellSetBagButton.ColorTable = office2010BlueTheme1;
+			this.sellSetBagButton.Location = new System.Drawing.Point(157, 14);
+			this.sellSetBagButton.Name = "sellSetBagButton";
+			this.sellSetBagButton.Size = new System.Drawing.Size(90, 20);
+			this.sellSetBagButton.TabIndex = 85;
+			this.sellSetBagButton.Text = "Set Bag";
+			this.sellSetBagButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellSetBagButton.Click += new System.EventHandler(this.sellSetBag_Click);
+			// 
+			// label50
+			// 
+			this.label50.AutoSize = true;
+			this.label50.Location = new System.Drawing.Point(6, 19);
+			this.label50.Name = "label50";
+			this.label50.Size = new System.Drawing.Size(36, 13);
+			this.label50.TabIndex = 88;
+			this.label50.Text = "Serial:";
+			// 
 			// sellBagLabel
 			// 
-			this.sellBagLabel.Location = new System.Drawing.Point(570, 83);
+			this.sellBagLabel.Location = new System.Drawing.Point(47, 19);
 			this.sellBagLabel.Name = "sellBagLabel";
 			this.sellBagLabel.Size = new System.Drawing.Size(72, 19);
 			this.sellBagLabel.TabIndex = 86;
 			this.sellBagLabel.Text = "0x00000000";
 			// 
-			// groupBox19
+			// vendorsellGridView
 			// 
-			this.groupBox19.Controls.Add(this.sellEditButton);
-			this.groupBox19.Controls.Add(this.sellAddTargerButton);
-			this.groupBox19.Controls.Add(this.sellRemoveButton);
-			this.groupBox19.Controls.Add(this.sellAddManualButton);
-			this.groupBox19.Location = new System.Drawing.Point(553, 128);
-			this.groupBox19.Name = "groupBox19";
-			this.groupBox19.Size = new System.Drawing.Size(100, 125);
-			this.groupBox19.TabIndex = 84;
-			this.groupBox19.TabStop = false;
-			this.groupBox19.Text = "Item List";
+			this.vendorsellGridView.AllowUserToResizeRows = false;
+			this.vendorsellGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.vendorsellGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.X,
+            this.ItemName,
+            this.Graphics,
+            this.Amount,
+            this.Color});
+			this.vendorsellGridView.Location = new System.Drawing.Point(6, 90);
+			this.vendorsellGridView.Name = "vendorsellGridView";
+			this.vendorsellGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			this.vendorsellGridView.RowHeadersVisible = false;
+			this.vendorsellGridView.Size = new System.Drawing.Size(357, 238);
+			this.vendorsellGridView.TabIndex = 87;
+			this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellContentClick);
+			this.vendorsellGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellEndEdit);
+			this.vendorsellGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.vendorsellGridView_CellMouseUp);
+			this.vendorsellGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.vendorsellGridView_DataError);
+			this.vendorsellGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.vendorsellGridView_DefaultValuesNeeded);
 			// 
-			// sellEditButton
+			// X
 			// 
-			this.sellEditButton.ColorTable = office2010BlueTheme1;
-			this.sellEditButton.Location = new System.Drawing.Point(5, 68);
-			this.sellEditButton.Name = "sellEditButton";
-			this.sellEditButton.Size = new System.Drawing.Size(90, 20);
-			this.sellEditButton.TabIndex = 48;
-			this.sellEditButton.Text = "Edit";
-			this.sellEditButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellEditButton.Click += new System.EventHandler(this.sellEdit_Click);
+			this.X.FalseValue = "False";
+			this.X.HeaderText = "X";
+			this.X.Name = "X";
+			this.X.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.X.ToolTipText = "Check This for enable item in list";
+			this.X.TrueValue = "True";
+			this.X.Width = 22;
+			// 
+			// ItemName
+			// 
+			this.ItemName.HeaderText = "Item Name";
+			this.ItemName.Name = "ItemName";
+			this.ItemName.ToolTipText = "Here the item name";
+			this.ItemName.Width = 168;
+			// 
+			// Graphics
+			// 
+			this.Graphics.HeaderText = "Graphics";
+			this.Graphics.Name = "Graphics";
+			this.Graphics.ToolTipText = "Here Graphics item ID";
+			this.Graphics.Width = 54;
+			// 
+			// Amount
+			// 
+			this.Amount.HeaderText = "Amount";
+			this.Amount.Name = "Amount";
+			this.Amount.ToolTipText = "Here Item Amount to sell";
+			this.Amount.Width = 54;
+			// 
+			// Color
+			// 
+			this.Color.HeaderText = "Color";
+			this.Color.Name = "Color";
+			this.Color.ToolTipText = "Here item color, use -1 for all color";
+			this.Color.Width = 54;
 			// 
 			// sellAddTargerButton
 			// 
 			this.sellAddTargerButton.ColorTable = office2010BlueTheme1;
-			this.sellAddTargerButton.Location = new System.Drawing.Point(5, 43);
+			this.sellAddTargerButton.Location = new System.Drawing.Point(561, 46);
 			this.sellAddTargerButton.Name = "sellAddTargerButton";
 			this.sellAddTargerButton.Size = new System.Drawing.Size(90, 20);
 			this.sellAddTargerButton.TabIndex = 47;
-			this.sellAddTargerButton.Text = "Add Target";
+			this.sellAddTargerButton.Text = "Add Item";
 			this.sellAddTargerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.sellAddTargerButton.Click += new System.EventHandler(this.sellAddTarget_Click);
-			// 
-			// sellRemoveButton
-			// 
-			this.sellRemoveButton.ColorTable = office2010BlueTheme1;
-			this.sellRemoveButton.Location = new System.Drawing.Point(5, 94);
-			this.sellRemoveButton.Name = "sellRemoveButton";
-			this.sellRemoveButton.Size = new System.Drawing.Size(90, 20);
-			this.sellRemoveButton.TabIndex = 46;
-			this.sellRemoveButton.Text = "Remove";
-			this.sellRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellRemoveButton.Click += new System.EventHandler(this.sellRemove_Click);
-			// 
-			// sellAddManualButton
-			// 
-			this.sellAddManualButton.ColorTable = office2010BlueTheme1;
-			this.sellAddManualButton.Location = new System.Drawing.Point(5, 18);
-			this.sellAddManualButton.Name = "sellAddManualButton";
-			this.sellAddManualButton.Size = new System.Drawing.Size(90, 20);
-			this.sellAddManualButton.TabIndex = 45;
-			this.sellAddManualButton.Text = "Add Manual";
-			this.sellAddManualButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellAddManualButton.Click += new System.EventHandler(this.sellAddManual_Click);
 			// 
 			// groupBox20
 			// 
 			this.groupBox20.Controls.Add(this.sellLogBox);
-			this.groupBox20.Location = new System.Drawing.Point(267, 84);
+			this.groupBox20.Location = new System.Drawing.Point(373, 72);
 			this.groupBox20.Name = "groupBox20";
-			this.groupBox20.Size = new System.Drawing.Size(278, 251);
+			this.groupBox20.Size = new System.Drawing.Size(278, 261);
 			this.groupBox20.TabIndex = 83;
 			this.groupBox20.TabStop = false;
 			this.groupBox20.Text = "Sell Log";
@@ -5697,76 +5745,17 @@ namespace Assistant
 			this.sellLogBox.FormattingEnabled = true;
 			this.sellLogBox.Location = new System.Drawing.Point(7, 18);
 			this.sellLogBox.Name = "sellLogBox";
-			this.sellLogBox.Size = new System.Drawing.Size(265, 225);
+			this.sellLogBox.Size = new System.Drawing.Size(265, 238);
 			this.sellLogBox.TabIndex = 0;
-			// 
-			// sellSetBagButton
-			// 
-			this.sellSetBagButton.ColorTable = office2010BlueTheme1;
-			this.sellSetBagButton.Location = new System.Drawing.Point(558, 58);
-			this.sellSetBagButton.Name = "sellSetBagButton";
-			this.sellSetBagButton.Size = new System.Drawing.Size(90, 20);
-			this.sellSetBagButton.TabIndex = 85;
-			this.sellSetBagButton.Text = "Sell Bag";
-			this.sellSetBagButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellSetBagButton.Click += new System.EventHandler(this.sellSetBag_Click);
 			// 
 			// sellEnableCheckBox
 			// 
-			this.sellEnableCheckBox.Location = new System.Drawing.Point(274, 58);
+			this.sellEnableCheckBox.Location = new System.Drawing.Point(273, 49);
 			this.sellEnableCheckBox.Name = "sellEnableCheckBox";
 			this.sellEnableCheckBox.Size = new System.Drawing.Size(105, 22);
 			this.sellEnableCheckBox.TabIndex = 82;
 			this.sellEnableCheckBox.Text = "Enable Sell List";
 			this.sellEnableCheckBox.CheckedChanged += new System.EventHandler(this.sellEnableCheck_CheckedChanged);
-			// 
-			// sellListView
-			// 
-			this.sellListView.CheckBoxes = true;
-			this.sellListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader18,
-            this.columnHeader19,
-            this.columnHeader20,
-            this.columnHeader21,
-            this.columnHeader22});
-			this.sellListView.FullRowSelect = true;
-			this.sellListView.GridLines = true;
-			this.sellListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.sellListView.HideSelection = false;
-			this.sellListView.LabelWrap = false;
-			this.sellListView.Location = new System.Drawing.Point(6, 51);
-			this.sellListView.MultiSelect = false;
-			this.sellListView.Name = "sellListView";
-			this.sellListView.Size = new System.Drawing.Size(255, 284);
-			this.sellListView.TabIndex = 81;
-			this.sellListView.UseCompatibleStateImageBehavior = false;
-			this.sellListView.View = System.Windows.Forms.View.Details;
-			this.sellListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.sellagentListView_ItemChecked);
-			// 
-			// columnHeader18
-			// 
-			this.columnHeader18.Text = "X";
-			this.columnHeader18.Width = 22;
-			// 
-			// columnHeader19
-			// 
-			this.columnHeader19.Text = "Item Name";
-			this.columnHeader19.Width = 78;
-			// 
-			// columnHeader20
-			// 
-			this.columnHeader20.Text = "Graphics";
-			this.columnHeader20.Width = 54;
-			// 
-			// columnHeader21
-			// 
-			this.columnHeader21.Text = "Amount";
-			this.columnHeader21.Width = 50;
-			// 
-			// columnHeader22
-			// 
-			this.columnHeader22.Text = "Color";
-			this.columnHeader22.Width = 50;
 			// 
 			// label26
 			// 
@@ -7287,6 +7276,20 @@ namespace Assistant
 			this.timerupdatestatus.Interval = 1000;
 			this.timerupdatestatus.Tick += new System.EventHandler(this.timerupdatestatus_Tick);
 			// 
+			// datagridMenuStrip
+			// 
+			this.datagridMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteRowToolStripMenuItem});
+			this.datagridMenuStrip.Name = "datagridMenuStrip";
+			this.datagridMenuStrip.Size = new System.Drawing.Size(134, 26);
+			this.datagridMenuStrip.Click += new System.EventHandler(this.datagridMenuStrip_Click);
+			// 
+			// deleteRowToolStripMenuItem
+			// 
+			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
+			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+			this.deleteRowToolStripMenuItem.Text = "Delete Row";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7378,6 +7381,8 @@ namespace Assistant
 			this.VendorSell.ResumeLayout(false);
 			this.VendorSell.PerformLayout();
 			this.groupBox19.ResumeLayout(false);
+			this.groupBox19.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.vendorsellGridView)).EndInit();
 			this.groupBox20.ResumeLayout(false);
 			this.Dress.ResumeLayout(false);
 			this.Dress.PerformLayout();
@@ -7404,6 +7409,7 @@ namespace Assistant
 			this.groupBox28.PerformLayout();
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
+			this.datagridMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -7643,7 +7649,7 @@ namespace Assistant
 			InitPreviewHue(lblNeuHue, "NeutralSpellHue");
 
 			txtSpellFormat.Text = RazorEnhanced.Settings.General.ReadString("SpellFormat");
-				
+
 			// Script
 			showscriptmessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowScriptMessageCheckBox");
 
@@ -7676,7 +7682,7 @@ namespace Assistant
 			PasswordMemory.Load();
 			LoadSettings();
 			RazorEnhanced.Profiles.Refresh();
-			
+
 			// Init mappe ultima.dll
 			Ultima.Map.InitializeMap("Felucca");
 			Ultima.Map.InitializeMap("Trammel");
@@ -7684,7 +7690,7 @@ namespace Assistant
 			Ultima.Map.InitializeMap("Malas");
 			Ultima.Map.InitializeMap("Tokuno");
 			Ultima.Map.InitializeMap("TerMur");
-			
+
 			m_Initializing = false;
 		}
 
@@ -8131,7 +8137,7 @@ namespace Assistant
 			}
 
 			if (ctrl.Name != "mapChatColorlabel")
-				ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
+				ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? System.Drawing.Color.White : System.Drawing.Color.Black);
 		}
 
 		private bool SetHue(Control ctrl, string cfg)
@@ -8152,13 +8158,13 @@ namespace Assistant
 				else
 				{
 					if (ctrl.Name == "mapChatColorlabel")
-						ctrl.ForeColor = Color.White;
+						ctrl.ForeColor = System.Drawing.Color.White;
 					else
-						ctrl.BackColor = Color.White;
+						ctrl.BackColor = System.Drawing.Color.White;
 				}
 
 				if (ctrl.Name != "mapChatColorlabel")
-					ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? Color.White : Color.Black);
+					ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? System.Drawing.Color.White : System.Drawing.Color.Black);
 
 				return true;
 			}
@@ -8722,7 +8728,7 @@ namespace Assistant
 					MessageBox.Show(Engine.MainWindow, Language.GetString(LocString.ForceSizeBad), "Bad Size", MessageBoxButtons.OK, MessageBoxIcon.Stop);
 			}
 		}
-		
+
 		private void gameSize_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (Engine.ClientMajor == 7 && Engine.ClientBuild > 49)
@@ -8862,7 +8868,7 @@ namespace Assistant
 		}
 
 		private void LoadAndInitializeScripts()
-		{ 
+		{
 			foreach (Scripts.EnhancedScript script in Scripts.EnhancedScripts.Values.ToList())
 			{
 				script.Stop();
@@ -8949,11 +8955,11 @@ namespace Assistant
 		private void MoveDown()
 		{
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
-			{ 
+			{
 				int rowCount = scriptlistView.Items.Count;
 				int index = scriptlistView.SelectedItems[0].Index;
 
-				if (index >= rowCount -1)
+				if (index >= rowCount - 1)
 				{
 					return;
 				}
@@ -9027,7 +9033,7 @@ namespace Assistant
 			if (scriptlistView.Items.Count > 0)
 			{
 				scriptlistView.BeginUpdate();
-                foreach (ListViewItem litem in scriptlistView.Items)
+				foreach (ListViewItem litem in scriptlistView.Items)
 				{
 					string filename = litem.SubItems[1].Text;
 					Scripts.EnhancedScript script = Scripts.Search(filename);
@@ -9047,7 +9053,7 @@ namespace Assistant
 				}
 				scriptlistView.EndUpdate();
 			}
-			
+
 		}
 
 		private void RunCurrentScript(bool run)
@@ -9089,42 +9095,42 @@ namespace Assistant
 			}
 		}
 
-        private void buttonScriptRefresh_Click(object sender, EventArgs e)
-        {
-            if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
-            {
-                DataRow row = scriptTable.Rows[scriptlistView.SelectedItems[0].Index];
-                string scriptname = row[0].ToString();
-                Scripts.EnhancedScript script = Scripts.Search(scriptname);
-                if (script != null)
-                {
-                    string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts",
-                        scriptname);
+		private void buttonScriptRefresh_Click(object sender, EventArgs e)
+		{
+			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
+			{
+				DataRow row = scriptTable.Rows[scriptlistView.SelectedItems[0].Index];
+				string scriptname = row[0].ToString();
+				Scripts.EnhancedScript script = Scripts.Search(scriptname);
+				if (script != null)
+				{
+					string fullpath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts",
+						scriptname);
 
-                    if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))
-                    {
-                        string text = File.ReadAllText(fullpath);
-                        bool loop = script.Loop;
-                        bool wait = script.Wait;
-                        bool run = script.Run;
-                        bool isRunning = script.IsRunning;
+					if (File.Exists(fullpath) && Scripts.EnhancedScripts.ContainsKey(scriptname))
+					{
+						string text = File.ReadAllText(fullpath);
+						bool loop = script.Loop;
+						bool wait = script.Wait;
+						bool run = script.Run;
+						bool isRunning = script.IsRunning;
 
-                        if (isRunning)
-                            script.Stop();
+						if (isRunning)
+							script.Stop();
 
-                        Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
-                            loop, run);
-                        reloaded.Create(null);
-                        Scripts.EnhancedScripts[scriptname] = reloaded;
+						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
+							loop, run);
+						reloaded.Create(null);
+						Scripts.EnhancedScripts[scriptname] = reloaded;
 
-                        if (isRunning)
-                            reloaded.Start();
-                    }
-                }
-            }
-        }
+						if (isRunning)
+							reloaded.Start();
+					}
+				}
+			}
+		}
 
-        private void buttonScriptRemove_Click(object sender, EventArgs e)
+		private void buttonScriptRemove_Click(object sender, EventArgs e)
 		{
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
@@ -10197,12 +10203,12 @@ namespace Assistant
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("ORGANIZER: Engine Start...");
 				OrganizerStartWork();
-            }
+			}
 			else
 			{
 				RazorEnhanced.Organizer.AddLog("You are not logged in game!");
 				OrganizerFinishWork();
-            }
+			}
 		}
 
 		private void organizerStop_Click(object sender, EventArgs e)
@@ -10218,7 +10224,7 @@ namespace Assistant
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 				RazorEnhanced.Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
 			OrganizerFinishWork();
-        }
+		}
 
 		private delegate void OrganizerStartWorkCallback();
 
@@ -10254,7 +10260,7 @@ namespace Assistant
 		internal void OrganizerFinishWork()
 		{
 			if (organizerStopButton.InvokeRequired ||
-                organizerExecuteButton.InvokeRequired ||
+				organizerExecuteButton.InvokeRequired ||
 				organizerListSelect.InvokeRequired ||
 				organizerAddListB.InvokeRequired ||
 				organizerRemoveListB.InvokeRequired ||
@@ -10298,7 +10304,7 @@ namespace Assistant
 		{
 			RazorEnhanced.SellAgent.SellBag = RazorEnhanced.Settings.SellAgent.BagRead(sellListSelect.Text);
 			RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
-			RazorEnhanced.SellAgent.RefreshItems();
+			RazorEnhanced.SellAgent.InitGrid();
 			if (sellListSelect.Text != "")
 				RazorEnhanced.SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
 		}
@@ -10321,18 +10327,6 @@ namespace Assistant
 					RazorEnhanced.SellAgent.RemoveList(sellListSelect.Text);
 				}
 			}
-		}
-
-		private void sellAddManual_Click(object sender, EventArgs e)
-		{
-			if (sellListSelect.Text != "")
-			{
-				EnhancedSellAgentManualAdd ManualAddItem = new EnhancedSellAgentManualAdd();
-				ManualAddItem.TopMost = true;
-				ManualAddItem.Show();
-			}
-			else
-				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellAddTarget_Click(object sender, EventArgs e)
@@ -10359,58 +10353,6 @@ namespace Assistant
 					RazorEnhanced.Misc.SendMessage("Invalid target");
 				RazorEnhanced.SellAgent.AddLog("Invalid target");
 			}
-		}
-
-		private void sellEdit_Click(object sender, EventArgs e)
-		{
-			if (sellListSelect.Text != "")
-			{
-				if (sellListView.SelectedItems.Count == 1)
-				{
-					int index = sellListView.SelectedItems[0].Index;
-					string selection = sellListSelect.Text;
-
-					if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
-					{
-						List<RazorEnhanced.SellAgent.SellAgentItem> items;
-						RazorEnhanced.Settings.SellAgent.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.SellAgent.SellAgentItem item = items[index];
-							EnhancedSellAgentEditItem editItem = new EnhancedSellAgentEditItem(selection, index, item);
-							editItem.TopMost = true;
-							editItem.Show();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
-		}
-
-		private void sellRemove_Click(object sender, EventArgs e)
-		{
-			if (sellListSelect.Text != "")
-			{
-				if (sellListView.SelectedItems.Count == 1)
-				{
-					int index = sellListView.SelectedItems[0].Index;
-					string selection = sellListSelect.Text;
-
-					if (RazorEnhanced.Settings.SellAgent.ListExists(selection))
-					{
-						List<RazorEnhanced.SellAgent.SellAgentItem> items;
-						RazorEnhanced.Settings.SellAgent.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.Settings.SellAgent.ItemDelete(selection, items[index]);
-							RazorEnhanced.SellAgent.RefreshItems();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
 		}
 
 		private void sellEnableCheck_CheckedChanged(object sender, EventArgs e)
@@ -10513,15 +10455,6 @@ namespace Assistant
 			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.RefreshLists(); });
 		}
 
-		private void sellagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			if (sellListView.FocusedItem != null)
-			{
-				ListViewItem item = e.Item as ListViewItem;
-				RazorEnhanced.SellAgent.UpdateSelectedItems(item.Index);
-			}
-		}
-
 		private void sellImportListButton_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.ImportExport.ImportSell();
@@ -10533,6 +10466,98 @@ namespace Assistant
 				RazorEnhanced.ImportExport.ExportSell(sellListSelect.Text);
 			else
 				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
+		}
+
+		private void vendorsellGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = vendorsellGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 4)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int color = 0;
+					try
+					{
+						color = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (color > 65535)
+						color = 65535;
+
+					cell.Value = "0x" + color.ToString("X4");
+				}
+			}
+			else if (e.ColumnIndex == 3)
+			{
+				int amount = 0;
+				Int32.TryParse(cell.Value.ToString(), out amount);
+
+				if (amount < 0 || amount > 999)
+					amount = 999;
+
+				cell.Value = amount.ToString();
+			}
+			else if (e.ColumnIndex == 2)
+			{
+				int itemid = 0;
+				try
+				{
+					itemid = Convert.ToInt32((string)cell.Value, 16);
+				}
+				catch { }
+
+				if (itemid > 65535)
+					itemid = 65535;
+
+				cell.Value = "0x" + itemid.ToString("X4");
+			}
+			RazorEnhanced.SellAgent.CopyTable();
+		}
+		
+		private void vendorsellGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "New Item";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = 999;
+			e.Row.Cells[4].Value = "0x0000";
+		}
+
+		private void vendorsellGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void vendorsellGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (!vendorsellGridView.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			{
+                RazorEnhanced.SellAgent.CopyTable();
+			}
+		}
+
+		private void vendorsellGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				vendorsellGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = 5;
+				vendorsellGridView.CurrentCell = this.vendorsellGridView.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(this.vendorsellGridView, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+
 		}
 
 		// ------------------ SELL AGENT END--------------------------
@@ -10923,12 +10948,12 @@ namespace Assistant
 					RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
 
 				UndressStartWork();
-            }
+			}
 			else
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
 				UndressFinishWork();
-            }
+			}
 		}
 
 		private delegate void UndressFinishWorkCallback();
@@ -11014,7 +11039,7 @@ namespace Assistant
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
 				UndressFinishWork();
-            }
+			}
 		}
 
 		private void dressStopButton_Click(object sender, EventArgs e)
@@ -11030,7 +11055,7 @@ namespace Assistant
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 				RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...");
 			UndressFinishWork();
-        }
+		}
 
 		// --------------- DRESS END ---------
 
@@ -11483,7 +11508,7 @@ namespace Assistant
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("RESTOCK: Engine Start...");
 				RestockStartWork();
-            }
+			}
 			else
 			{
 				RazorEnhanced.Restock.AddLog("You are not logged in game!");
@@ -11504,7 +11529,7 @@ namespace Assistant
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 				RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...");
 			RestockFinishWork();
-        }
+		}
 
 		private delegate void RestockFinishWorkCallback();
 
@@ -12073,7 +12098,7 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.AutoRemountSerial = serial;
 				RazorEnhanced.Settings.General.WriteInt("MountSerial", serial);
-			} 
+			}
 		}
 
 		// ---------------- FILTERS END ----------------
@@ -12268,19 +12293,19 @@ namespace Assistant
 		{
 			int slot = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox");
 			if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
-				if (slot -2 < 2)
+				if (slot - 2 < 2)
 					slot = 2;
 				else
 					slot -= 2;
 			else
 				if (slot - 1 < 1)
-					slot = 1;
-				else
-					slot -= 1;
+				slot = 1;
+			else
+				slot -= 1;
 
 			toolbarslot_label.Text = slot.ToString();
-            RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
-			
+			RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
+
 			RazorEnhanced.ToolBar.Close();
 			RazorEnhanced.ToolBar.Open();
 		}
@@ -12342,10 +12367,10 @@ namespace Assistant
 			if (toolbar_trackBar.Focused)
 			{
 				RazorEnhanced.Settings.General.WriteInt("ToolBarOpacity", o);
-                if (RazorEnhanced.ToolBar.ToolBarForm != null)
+				if (RazorEnhanced.ToolBar.ToolBarForm != null)
 				{
 					RazorEnhanced.ToolBar.ToolBarForm.Show();
-                    RazorEnhanced.ToolBar.ToolBarForm.Opacity = ((double) o) / 100.0;
+					RazorEnhanced.ToolBar.ToolBarForm.Opacity = ((double)o) / 100.0;
 				}
 			}
 
@@ -12563,7 +12588,7 @@ namespace Assistant
 				autoLootCheckBox.Checked = false;
 				if (RazorEnhanced.AutoLoot.Status())
 					RazorEnhanced.AutoLoot.Stop();
-            }
+			}
 			else
 			{
 				if (!autoLootCheckBox.Enabled)
@@ -12587,13 +12612,13 @@ namespace Assistant
 			{
 				autoOpenDoors.Checked = false;
 				autoOpenDoors.Enabled = false;
-				Settings.General.WriteBoolNoSave("AutoOpenDoors", false);	
+				Settings.General.WriteBoolNoSave("AutoOpenDoors", false);
 			}
 			else
 			{
 				if (!autoOpenDoors.Enabled)
 					autoOpenDoors.Enabled = true;
-            }
+			}
 
 
 			if (!ClientCommunication.AllowBit(FeatureBit.UnequipBeforeCast))
@@ -12765,14 +12790,14 @@ namespace Assistant
 			gridgroup_ComboBox.SelectedIndex = gridgroup_ComboBox.Items.IndexOf(item.Group);
 			if (item.Group != "Empty")
 			{
-                gridspell_ComboBox.SelectedIndex = gridspell_ComboBox.Items.IndexOf(item.Spell);
+				gridspell_ComboBox.SelectedIndex = gridspell_ComboBox.Items.IndexOf(item.Spell);
 				gridborder_ComboBox.SelectedIndex = gridborder_ComboBox.Items.IndexOf(item.Color.Name);
-                gridspell_ComboBox.Enabled = true;
+				gridspell_ComboBox.Enabled = true;
 				gridborder_ComboBox.Enabled = true;
 			}
 			else
 			{
-				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.Transparent);
 				gridspell_ComboBox.SelectedIndex = -1;
 				gridborder_ComboBox.SelectedIndex = -1;
 				gridspell_ComboBox.Enabled = false;
@@ -12780,7 +12805,7 @@ namespace Assistant
 			}
 
 			if (gridslot_ComboBox.Focused)
-                SpellGrid.Open();
+				SpellGrid.Open();
 		}
 
 		private void gridgroup_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -12882,16 +12907,16 @@ namespace Assistant
 			}
 			if (gridgroup_ComboBox.Focused)
 			{
-				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.Transparent);
 				SpellGrid.Open();
-            }
+			}
 		}
 
 		private void gridspell_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (gridspell_ComboBox.Focused)
 			{
-				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.Transparent);
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.Transparent);
 				SpellGrid.Open();
 			}
 		}
@@ -12900,7 +12925,7 @@ namespace Assistant
 		{
 			if (gridborder_ComboBox.Focused)
 			{
-				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, Color.FromName(gridborder_ComboBox.SelectedItem.ToString()));
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.FromName(gridborder_ComboBox.SelectedItem.ToString()));
 				SpellGrid.SpellGridForm.Refresh();
 				SpellGrid.Open();
 			}
@@ -12916,9 +12941,9 @@ namespace Assistant
 
 			RazorEnhanced.Settings.General.WriteInt("GridVSlot", slot);
 			RazorEnhanced.SpellGrid.VSlot = slot;
-            gridvslot_textbox.Text = slot.ToString();
+			gridvslot_textbox.Text = slot.ToString();
 			RazorEnhanced.SpellGrid.UpdateBox();
-            RazorEnhanced.SpellGrid.Close();
+			RazorEnhanced.SpellGrid.Close();
 			RazorEnhanced.SpellGrid.Open();
 		}
 
@@ -12977,9 +13002,9 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteInt("GridOpacity", o);
 				if (RazorEnhanced.SpellGrid.SpellGridForm != null)
 				{
-					RazorEnhanced.SpellGrid.SpellGridForm.Opacity = ((double) o) / 100.0;
+					RazorEnhanced.SpellGrid.SpellGridForm.Opacity = ((double)o) / 100.0;
 					RazorEnhanced.SpellGrid.SpellGridForm.Show();
-                }
+				}
 			}
 
 			spellgrid_opacity_label.Text = String.Format("{0}%", o);
@@ -12994,7 +13019,7 @@ namespace Assistant
 			{
 				if (uomodFPSCheckBox.Checked)
 					UoMod.EnableDisable(true, (int)UoMod.PATCH_TYPE.PT_FPS);
-                else
+				else
 					UoMod.EnableDisable(false, (int)UoMod.PATCH_TYPE.PT_FPS);
 
 				RazorEnhanced.Settings.General.WriteBool("UoModFPS", uomodFPSCheckBox.Checked);
@@ -13026,7 +13051,28 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("UoModSound", uomodglobalsoundCheckBox.Checked);
 			}
 		}
-
 		// ----------------- UO MOD END -------------------
+
+		// ----------------- START AGENT GESTIONE MENU TENDINA -------------------
+
+		private static int agentrowindex = 0;
+		private static int agenttype = 0;
+
+		private void datagridMenuStrip_Click(object sender, EventArgs e)
+		{
+			switch (agenttype)
+			{
+				case 5:
+					if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
+					{
+						vendorsellGridView.Rows.RemoveAt(agentrowindex);
+						RazorEnhanced.SellAgent.CopyTable();
+					}
+					break;
+			}
+		}
+
+		// ----------------- END AGENT GESTIONE MENU TENDINA -------------------
 	}
+
 }

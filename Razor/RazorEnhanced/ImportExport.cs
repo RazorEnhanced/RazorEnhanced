@@ -435,7 +435,7 @@ namespace RazorEnhanced
 								itemlist.Add((RazorEnhanced.SellAgent.SellAgentItem)row["Item"]);
 							}
 							RazorEnhanced.Settings.SellAgent.ItemInsertFromImport(m_Dataset.Tables["SELL_ITEMS"].Rows[0]["List"].ToString(), itemlist);
-							RazorEnhanced.SellAgent.RefreshItems();
+							RazorEnhanced.SellAgent.InitGrid();
 							SellAgent.AddLog("List: " + m_Dataset.Tables["SELL_ITEMS"].Rows[0]["List"].ToString() + " imported!");
 						}
 					}

@@ -2415,14 +2415,7 @@ namespace RazorEnhanced
 
 			internal static void ListDelete(string description)
 			{
-				for (int i = m_Dataset.Tables["SELL_ITEMS"].Rows.Count - 1; i >= 0; i--)
-				{
-					DataRow row = m_Dataset.Tables["SELL_ITEMS"].Rows[i];
-					if ((string)row["List"] == description)
-					{
-						row.Delete();
-					}
-				}
+				ClearList(description);
 
 				for (int i = m_Dataset.Tables["SELL_LISTS"].Rows.Count - 1; i >= 0; i--)
 				{
@@ -2455,11 +2448,6 @@ namespace RazorEnhanced
 				lists = listsOut;
 			}
 
-			internal static bool ItemExists(string list, RazorEnhanced.SellAgent.SellAgentItem item)
-			{
-				return m_Dataset.Tables["SELL_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.SellAgent.SellAgentItem) row["Item"] == item);
-			}
-
 			internal static int BagRead(string listname)
 			{
 				return (from DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows where (string) row["Description"] == listname select (int) row["Bag"]).FirstOrDefault();
@@ -2471,8 +2459,6 @@ namespace RazorEnhanced
 				row["List"] = list;
 				row["Item"] = item;
 				m_Dataset.Tables["SELL_ITEMS"].Rows.Add(row);
-
-				Save();
 			}
 
 			internal static void ItemInsertFromImport(string list, List<RazorEnhanced.SellAgent.SellAgentItem> itemlist)
@@ -2487,37 +2473,14 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemReplace(string list, int index, RazorEnhanced.SellAgent.SellAgentItem item)
-			{
-				int count = -1;
-				foreach (DataRow row in m_Dataset.Tables["SELL_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list)
-					{
-						count++;
-						if (count == index)
-						{
-							row["Item"] = item;
-						}
-					}
-				}
-
-				Save();
-			}
-
-			internal static void ItemDelete(string list, RazorEnhanced.SellAgent.SellAgentItem item)
+			internal static void ClearList(string list)
 			{
 				for (int i = m_Dataset.Tables["SELL_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["SELL_ITEMS"].Rows[i];
-					if ((string)row["List"] == list && (RazorEnhanced.SellAgent.SellAgentItem)row["Item"] == item)
-					{
+					if ((string)row["List"] == list)
 						row.Delete();
-						break;
-					}
 				}
-
-				Save();
 			}
 
 			internal static void ItemsRead(string list, out List<RazorEnhanced.SellAgent.SellAgentItem> items)
@@ -2534,7 +2497,6 @@ namespace RazorEnhanced
 						}
 					}
 				}
-
 				items = itemsOut;
 			}
 		}

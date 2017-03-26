@@ -380,18 +380,6 @@
     <Compile Include="RazorEnhanced\UI\EnhancedRestockManualAdd.Designer.cs">
       <DependentUpon>EnhancedRestockManualAdd.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.Designer.cs">
-      <DependentUpon>EnhancedSellAgentManualAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.Designer.cs">
-      <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\Friend.cs" />
     <Compile Include="RazorEnhanced\Vendor.cs" />
     <Compile Include="RazorEnhanced\Organizer.cs" />
@@ -568,12 +556,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedRestockManualAdd.resx">
       <DependentUpon>EnhancedRestockManualAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentManualAdd.resx">
-      <DependentUpon>EnhancedSellAgentManualAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedSellAgentEditItem.resx">
-      <DependentUpon>EnhancedSellAgentEditItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedOrganizerEditItem.resx">
       <DependentUpon>EnhancedOrganizerEditItem.cs</DependentUpon>
