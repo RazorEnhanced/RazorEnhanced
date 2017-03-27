@@ -164,17 +164,8 @@ namespace Assistant
 		private Label scavengerContainerLabel;
 		private RazorButton scavengerButtonSetContainer;
 		private RazorCheckBox scavengerCheckBox;
-		private ListView scavengerListView;
-		private ColumnHeader columnHeader5;
-		private ColumnHeader columnHeader6;
-		private ColumnHeader columnHeader7;
-		private ColumnHeader columnHeader8;
-		private GroupBox groupBox14;
 		private RazorButton scavengerButtonEditProps;
-		private RazorButton scavengerButtonEditItem;
 		private RazorButton scavengerButtonAddTarget;
-		private RazorButton scavengerButtonRemoveItem;
-		private RazorButton scavengerButtonAddManual;
 		private TabPage Organizer;
 		private RazorButton organizerStopButton;
 		private RazorButton organizerExecuteButton;
@@ -412,8 +403,6 @@ namespace Assistant
 		private RazorCheckBox blocktraderequestCheckBox;
 		private RazorButton autolootMoveDownButton;
 		private RazorButton autolootMoveUpButton;
-		private RazorButton scavengerMoveDownButton;
-		private RazorButton scavengerMoveUpButton;
 		private RazorButton openToolBarButton;
 		private GroupBox groupBox25;
 		private RazorCheckBox lockToolBarCheckBox;
@@ -578,11 +567,19 @@ namespace Assistant
 		private ToolStripMenuItem deleteRowToolStripMenuItem;
 		private Label label50;
 		private GroupBox groupBox19;
-		private DataGridViewCheckBoxColumn X;
-		private DataGridViewTextBoxColumn ItemName;
-		private DataGridViewTextBoxColumn Graphics;
-		private DataGridViewTextBoxColumn Amount;
-		private DataGridViewTextBoxColumn Color;
+		private DataGridView scavengerdataGridView;
+		private DataGridViewCheckBoxColumn VendorSellX;
+		private DataGridViewTextBoxColumn VendorSellItemName;
+		private DataGridViewTextBoxColumn VendorSellGraphics;
+		private DataGridViewTextBoxColumn VendorSellAmount;
+		private DataGridViewTextBoxColumn VendorSellColor;
+		private GroupBox groupBox41;
+		private Label label54;
+		private DataGridViewCheckBoxColumn ScavengerX;
+		private DataGridViewTextBoxColumn ScavengerItemName;
+		private DataGridViewTextBoxColumn ScavenerGraphics;
+		private DataGridViewTextBoxColumn ScavengerColor;
+		private DataGridViewTextBoxColumn ScavengerProp;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -629,8 +626,8 @@ namespace Assistant
 		internal RazorTextBox ScavengerDragDelay { get { return scavengerDragDelay; } }
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
 		internal ListBox ScavengerLogBox { get { return scavengerLogBox; } }
-		internal ListView ScavengerListView { get { return scavengerListView; } }
 		internal RazorComboBox ScavengerListSelect { get { return scavengerListSelect; } }
+		internal DataGridView ScavengerDataGridView { get { return scavengerdataGridView; } }
 
 		// Organizer
 		internal RazorTextBox OrganizerDragDelay { get { return organizerDragDelay; } }
@@ -647,13 +644,14 @@ namespace Assistant
 		internal RazorCheckBox SellCheckBox { get { return sellEnableCheckBox; } }
 		internal ListBox SellLogBox { get { return sellLogBox; } }
 		internal RazorComboBox SellListSelect { get { return sellListSelect; } }
+		internal DataGridView VendorSellGridView { get { return vendorsellGridView; } }
 
 		// Buy Agent
 		internal RazorCheckBox BuyCheckBox { get { return buyEnableCheckBox; } }
 		internal ListBox BuyLogBox { get { return buyLogBox; } }
 		internal ListView BuyListView { get { return buyListView; } }
 		internal RazorComboBox BuyListSelect { get { return buyListSelect; } }
-		internal DataGridView VendorSellGridView { get { return vendorsellGridView; } }
+		
 
 		// Dress Agent
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
@@ -1118,26 +1116,18 @@ namespace Assistant
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.escavenger = new System.Windows.Forms.TabPage();
-			this.groupBox14 = new System.Windows.Forms.GroupBox();
-			this.scavengerMoveDownButton = new RazorEnhanced.UI.RazorButton();
-			this.scavengerMoveUpButton = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
-			this.scavengerButtonEditItem = new RazorEnhanced.UI.RazorButton();
+			this.groupBox41 = new System.Windows.Forms.GroupBox();
+			this.label54 = new System.Windows.Forms.Label();
+			this.scavengerContainerLabel = new System.Windows.Forms.Label();
+			this.scavengerButtonSetContainer = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
-			this.scavengerButtonRemoveItem = new RazorEnhanced.UI.RazorButton();
-			this.scavengerButtonAddManual = new RazorEnhanced.UI.RazorButton();
+			this.scavengerdataGridView = new System.Windows.Forms.DataGridView();
 			this.groupBox12 = new System.Windows.Forms.GroupBox();
 			this.scavengerLogBox = new System.Windows.Forms.ListBox();
 			this.label23 = new System.Windows.Forms.Label();
-			this.scavengerContainerLabel = new System.Windows.Forms.Label();
 			this.scavengerDragDelay = new RazorEnhanced.UI.RazorTextBox();
-			this.scavengerButtonSetContainer = new RazorEnhanced.UI.RazorButton();
 			this.scavengerCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.scavengerListView = new System.Windows.Forms.ListView();
-			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label22 = new System.Windows.Forms.Label();
 			this.scavengerButtonRemoveList = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddList = new RazorEnhanced.UI.RazorButton();
@@ -1199,6 +1189,11 @@ namespace Assistant
 			this.label50 = new System.Windows.Forms.Label();
 			this.sellBagLabel = new System.Windows.Forms.Label();
 			this.vendorsellGridView = new System.Windows.Forms.DataGridView();
+			this.VendorSellX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.VendorSellItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.VendorSellGraphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.VendorSellAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.VendorSellColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.sellAddTargerButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox20 = new System.Windows.Forms.GroupBox();
 			this.sellLogBox = new System.Windows.Forms.ListBox();
@@ -1345,11 +1340,11 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.X = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.ItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Graphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Amount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavengerX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ScavengerItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavenerGraphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavengerColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavengerProp = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1392,7 +1387,8 @@ namespace Assistant
 			this.groupBox13.SuspendLayout();
 			this.groupBox11.SuspendLayout();
 			this.escavenger.SuspendLayout();
-			this.groupBox14.SuspendLayout();
+			this.groupBox41.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).BeginInit();
 			this.groupBox12.SuspendLayout();
 			this.Organizer.SuspendLayout();
 			this.groupBox16.SuspendLayout();
@@ -4796,14 +4792,14 @@ namespace Assistant
 			// 
 			// escavenger
 			// 
-			this.escavenger.Controls.Add(this.groupBox14);
+			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
+			this.escavenger.Controls.Add(this.groupBox41);
+			this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
+			this.escavenger.Controls.Add(this.scavengerdataGridView);
 			this.escavenger.Controls.Add(this.groupBox12);
 			this.escavenger.Controls.Add(this.label23);
-			this.escavenger.Controls.Add(this.scavengerContainerLabel);
 			this.escavenger.Controls.Add(this.scavengerDragDelay);
-			this.escavenger.Controls.Add(this.scavengerButtonSetContainer);
 			this.escavenger.Controls.Add(this.scavengerCheckBox);
-			this.escavenger.Controls.Add(this.scavengerListView);
 			this.escavenger.Controls.Add(this.label22);
 			this.escavenger.Controls.Add(this.scavengerButtonRemoveList);
 			this.escavenger.Controls.Add(this.scavengerButtonAddList);
@@ -4818,48 +4814,10 @@ namespace Assistant
 			this.escavenger.Text = "Scavenger";
 			this.escavenger.UseVisualStyleBackColor = true;
 			// 
-			// groupBox14
-			// 
-			this.groupBox14.Controls.Add(this.scavengerMoveDownButton);
-			this.groupBox14.Controls.Add(this.scavengerMoveUpButton);
-			this.groupBox14.Controls.Add(this.scavengerButtonEditProps);
-			this.groupBox14.Controls.Add(this.scavengerButtonEditItem);
-			this.groupBox14.Controls.Add(this.scavengerButtonAddTarget);
-			this.groupBox14.Controls.Add(this.scavengerButtonRemoveItem);
-			this.groupBox14.Controls.Add(this.scavengerButtonAddManual);
-			this.groupBox14.Location = new System.Drawing.Point(553, 104);
-			this.groupBox14.Name = "groupBox14";
-			this.groupBox14.Size = new System.Drawing.Size(100, 199);
-			this.groupBox14.TabIndex = 71;
-			this.groupBox14.TabStop = false;
-			this.groupBox14.Text = "Item List";
-			// 
-			// scavengerMoveDownButton
-			// 
-			this.scavengerMoveDownButton.ColorTable = office2010BlueTheme1;
-			this.scavengerMoveDownButton.Location = new System.Drawing.Point(5, 171);
-			this.scavengerMoveDownButton.Name = "scavengerMoveDownButton";
-			this.scavengerMoveDownButton.Size = new System.Drawing.Size(90, 20);
-			this.scavengerMoveDownButton.TabIndex = 51;
-			this.scavengerMoveDownButton.Text = "Move Down";
-			this.scavengerMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerMoveDownButton.Click += new System.EventHandler(this.scavengerMoveDownButton_Click);
-			// 
-			// scavengerMoveUpButton
-			// 
-			this.scavengerMoveUpButton.ColorTable = office2010BlueTheme1;
-			this.scavengerMoveUpButton.Location = new System.Drawing.Point(5, 145);
-			this.scavengerMoveUpButton.Name = "scavengerMoveUpButton";
-			this.scavengerMoveUpButton.Size = new System.Drawing.Size(90, 20);
-			this.scavengerMoveUpButton.TabIndex = 50;
-			this.scavengerMoveUpButton.Text = "Move Up";
-			this.scavengerMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerMoveUpButton.Click += new System.EventHandler(this.scavengerMoveUpButton_Click);
-			// 
 			// scavengerButtonEditProps
 			// 
 			this.scavengerButtonEditProps.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonEditProps.Location = new System.Drawing.Point(5, 94);
+			this.scavengerButtonEditProps.Location = new System.Drawing.Point(563, 68);
 			this.scavengerButtonEditProps.Name = "scavengerButtonEditProps";
 			this.scavengerButtonEditProps.Size = new System.Drawing.Size(90, 20);
 			this.scavengerButtonEditProps.TabIndex = 49;
@@ -4867,56 +4825,85 @@ namespace Assistant
 			this.scavengerButtonEditProps.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonEditProps.Click += new System.EventHandler(this.scavengerEditProps_Click);
 			// 
-			// scavengerButtonEditItem
+			// groupBox41
 			// 
-			this.scavengerButtonEditItem.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonEditItem.Location = new System.Drawing.Point(5, 68);
-			this.scavengerButtonEditItem.Name = "scavengerButtonEditItem";
-			this.scavengerButtonEditItem.Size = new System.Drawing.Size(90, 20);
-			this.scavengerButtonEditItem.TabIndex = 48;
-			this.scavengerButtonEditItem.Text = "Edit";
-			this.scavengerButtonEditItem.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerButtonEditItem.Click += new System.EventHandler(this.scavengerEditItem_Click);
+			this.groupBox41.Controls.Add(this.label54);
+			this.groupBox41.Controls.Add(this.scavengerContainerLabel);
+			this.groupBox41.Controls.Add(this.scavengerButtonSetContainer);
+			this.groupBox41.Location = new System.Drawing.Point(9, 42);
+			this.groupBox41.Name = "groupBox41";
+			this.groupBox41.Size = new System.Drawing.Size(257, 47);
+			this.groupBox41.TabIndex = 73;
+			this.groupBox41.TabStop = false;
+			this.groupBox41.Text = "Scavenger Bag";
+			// 
+			// label54
+			// 
+			this.label54.AutoSize = true;
+			this.label54.Location = new System.Drawing.Point(6, 21);
+			this.label54.Name = "label54";
+			this.label54.Size = new System.Drawing.Size(36, 13);
+			this.label54.TabIndex = 89;
+			this.label54.Text = "Serial:";
+			// 
+			// scavengerContainerLabel
+			// 
+			this.scavengerContainerLabel.Location = new System.Drawing.Point(48, 21);
+			this.scavengerContainerLabel.Name = "scavengerContainerLabel";
+			this.scavengerContainerLabel.Size = new System.Drawing.Size(82, 19);
+			this.scavengerContainerLabel.TabIndex = 67;
+			this.scavengerContainerLabel.Text = "0x00000000";
+			// 
+			// scavengerButtonSetContainer
+			// 
+			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(161, 16);
+			this.scavengerButtonSetContainer.Name = "scavengerButtonSetContainer";
+			this.scavengerButtonSetContainer.Size = new System.Drawing.Size(90, 20);
+			this.scavengerButtonSetContainer.TabIndex = 66;
+			this.scavengerButtonSetContainer.Text = "Set Bag";
+			this.scavengerButtonSetContainer.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.scavengerButtonSetContainer.Click += new System.EventHandler(this.scavengerSetContainer_Click);
 			// 
 			// scavengerButtonAddTarget
 			// 
 			this.scavengerButtonAddTarget.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonAddTarget.Location = new System.Drawing.Point(5, 43);
+			this.scavengerButtonAddTarget.Location = new System.Drawing.Point(563, 42);
 			this.scavengerButtonAddTarget.Name = "scavengerButtonAddTarget";
 			this.scavengerButtonAddTarget.Size = new System.Drawing.Size(90, 20);
 			this.scavengerButtonAddTarget.TabIndex = 47;
-			this.scavengerButtonAddTarget.Text = "Add Target";
+			this.scavengerButtonAddTarget.Text = "Add Item";
 			this.scavengerButtonAddTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonAddTarget.Click += new System.EventHandler(this.scavengerAddItemTarget_Click);
 			// 
-			// scavengerButtonRemoveItem
+			// scavengerdataGridView
 			// 
-			this.scavengerButtonRemoveItem.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonRemoveItem.Location = new System.Drawing.Point(5, 119);
-			this.scavengerButtonRemoveItem.Name = "scavengerButtonRemoveItem";
-			this.scavengerButtonRemoveItem.Size = new System.Drawing.Size(90, 20);
-			this.scavengerButtonRemoveItem.TabIndex = 46;
-			this.scavengerButtonRemoveItem.Text = "Remove";
-			this.scavengerButtonRemoveItem.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerButtonRemoveItem.Click += new System.EventHandler(this.scavengerRemoveItem_Click);
-			// 
-			// scavengerButtonAddManual
-			// 
-			this.scavengerButtonAddManual.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonAddManual.Location = new System.Drawing.Point(5, 18);
-			this.scavengerButtonAddManual.Name = "scavengerButtonAddManual";
-			this.scavengerButtonAddManual.Size = new System.Drawing.Size(90, 20);
-			this.scavengerButtonAddManual.TabIndex = 45;
-			this.scavengerButtonAddManual.Text = "Add Manual";
-			this.scavengerButtonAddManual.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerButtonAddManual.Click += new System.EventHandler(this.scavengerAdItemdManual_Click);
+			this.scavengerdataGridView.AllowUserToResizeRows = false;
+			this.scavengerdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.scavengerdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ScavengerX,
+            this.ScavengerItemName,
+            this.ScavenerGraphics,
+            this.ScavengerColor,
+            this.ScavengerProp});
+			this.scavengerdataGridView.Location = new System.Drawing.Point(9, 95);
+			this.scavengerdataGridView.Name = "scavengerdataGridView";
+			this.scavengerdataGridView.RowHeadersVisible = false;
+			this.scavengerdataGridView.Size = new System.Drawing.Size(356, 238);
+			this.scavengerdataGridView.TabIndex = 72;
+			this.scavengerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerdataGridView_CellContentClick);
+			this.scavengerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerdataGridView_CellEndEdit);
+			this.scavengerdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.scavengerdataGridView_CellMouseUp);
+			this.scavengerdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.scavengerdataGridView_CurrentCellDirtyStateChanged);
+			this.scavengerdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.scavengerdataGridView_DataError);
+			this.scavengerdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.scavengerdataGridView_DefaultValuesNeeded);
 			// 
 			// groupBox12
 			// 
 			this.groupBox12.Controls.Add(this.scavengerLogBox);
-			this.groupBox12.Location = new System.Drawing.Point(267, 84);
+			this.groupBox12.Location = new System.Drawing.Point(371, 94);
 			this.groupBox12.Name = "groupBox12";
-			this.groupBox12.Size = new System.Drawing.Size(278, 251);
+			this.groupBox12.Size = new System.Drawing.Size(278, 239);
 			this.groupBox12.TabIndex = 70;
 			this.groupBox12.TabStop = false;
 			this.groupBox12.Text = "Scavenger Log";
@@ -4926,7 +4913,7 @@ namespace Assistant
 			this.scavengerLogBox.FormattingEnabled = true;
 			this.scavengerLogBox.Location = new System.Drawing.Point(7, 18);
 			this.scavengerLogBox.Name = "scavengerLogBox";
-			this.scavengerLogBox.Size = new System.Drawing.Size(265, 225);
+			this.scavengerLogBox.Size = new System.Drawing.Size(265, 212);
 			this.scavengerLogBox.TabIndex = 0;
 			// 
 			// label23
@@ -4937,14 +4924,6 @@ namespace Assistant
 			this.label23.Size = new System.Drawing.Size(82, 13);
 			this.label23.TabIndex = 69;
 			this.label23.Text = "Drag Delay (ms)";
-			// 
-			// scavengerContainerLabel
-			// 
-			this.scavengerContainerLabel.Location = new System.Drawing.Point(572, 82);
-			this.scavengerContainerLabel.Name = "scavengerContainerLabel";
-			this.scavengerContainerLabel.Size = new System.Drawing.Size(82, 19);
-			this.scavengerContainerLabel.TabIndex = 67;
-			this.scavengerContainerLabel.Text = "0x00000000";
 			// 
 			// scavengerDragDelay
 			// 
@@ -4961,17 +4940,6 @@ namespace Assistant
 			this.scavengerDragDelay.TabIndex = 68;
 			this.scavengerDragDelay.TextChanged += new System.EventHandler(this.scavengerDragDelay_TextChanged);
 			// 
-			// scavengerButtonSetContainer
-			// 
-			this.scavengerButtonSetContainer.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonSetContainer.Location = new System.Drawing.Point(558, 56);
-			this.scavengerButtonSetContainer.Name = "scavengerButtonSetContainer";
-			this.scavengerButtonSetContainer.Size = new System.Drawing.Size(90, 20);
-			this.scavengerButtonSetContainer.TabIndex = 66;
-			this.scavengerButtonSetContainer.Text = "Set Bag";
-			this.scavengerButtonSetContainer.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerButtonSetContainer.Click += new System.EventHandler(this.scavengerSetContainer_Click);
-			// 
 			// scavengerCheckBox
 			// 
 			this.scavengerCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4981,46 +4949,6 @@ namespace Assistant
 			this.scavengerCheckBox.TabIndex = 65;
 			this.scavengerCheckBox.Text = "Enable scavenger";
 			this.scavengerCheckBox.CheckedChanged += new System.EventHandler(this.scavengerEnableCheck_CheckedChanged);
-			// 
-			// scavengerListView
-			// 
-			this.scavengerListView.CheckBoxes = true;
-			this.scavengerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader6,
-            this.columnHeader7,
-            this.columnHeader8});
-			this.scavengerListView.FullRowSelect = true;
-			this.scavengerListView.GridLines = true;
-			this.scavengerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.scavengerListView.HideSelection = false;
-			this.scavengerListView.LabelWrap = false;
-			this.scavengerListView.Location = new System.Drawing.Point(6, 51);
-			this.scavengerListView.MultiSelect = false;
-			this.scavengerListView.Name = "scavengerListView";
-			this.scavengerListView.Size = new System.Drawing.Size(255, 284);
-			this.scavengerListView.TabIndex = 64;
-			this.scavengerListView.UseCompatibleStateImageBehavior = false;
-			this.scavengerListView.View = System.Windows.Forms.View.Details;
-			this.scavengerListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.scavengerListView_ItemChecked);
-			// 
-			// columnHeader5
-			// 
-			this.columnHeader5.Text = "X";
-			this.columnHeader5.Width = 22;
-			// 
-			// columnHeader6
-			// 
-			this.columnHeader6.Text = "Item Name";
-			this.columnHeader6.Width = 105;
-			// 
-			// columnHeader7
-			// 
-			this.columnHeader7.Text = "Graphics";
-			// 
-			// columnHeader8
-			// 
-			this.columnHeader8.Text = "Color";
 			// 
 			// label22
 			// 
@@ -5664,11 +5592,11 @@ namespace Assistant
 			this.vendorsellGridView.AllowUserToResizeRows = false;
 			this.vendorsellGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.vendorsellGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.X,
-            this.ItemName,
-            this.Graphics,
-            this.Amount,
-            this.Color});
+            this.VendorSellX,
+            this.VendorSellItemName,
+            this.VendorSellGraphics,
+            this.VendorSellAmount,
+            this.VendorSellColor});
 			this.vendorsellGridView.Location = new System.Drawing.Point(6, 90);
 			this.vendorsellGridView.Name = "vendorsellGridView";
 			this.vendorsellGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
@@ -5678,8 +5606,56 @@ namespace Assistant
 			this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellContentClick);
 			this.vendorsellGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellEndEdit);
 			this.vendorsellGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.vendorsellGridView_CellMouseUp);
+			this.vendorsellGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.vendorsellGridView_CurrentCellDirtyStateChanged);
 			this.vendorsellGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.vendorsellGridView_DataError);
 			this.vendorsellGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.vendorsellGridView_DefaultValuesNeeded);
+			// 
+			// VendorSellX
+			// 
+			this.VendorSellX.FalseValue = "False";
+			this.VendorSellX.HeaderText = "X";
+			this.VendorSellX.IndeterminateValue = "False";
+			this.VendorSellX.Name = "VendorSellX";
+			this.VendorSellX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.VendorSellX.ToolTipText = "Check This for enable item in list";
+			this.VendorSellX.TrueValue = "True";
+			this.VendorSellX.Width = 22;
+			// 
+			// VendorSellItemName
+			// 
+			this.VendorSellItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.VendorSellItemName.HeaderText = "Item Name";
+			this.VendorSellItemName.Name = "VendorSellItemName";
+			this.VendorSellItemName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.VendorSellItemName.ToolTipText = "Here the item name";
+			this.VendorSellItemName.Width = 153;
+			// 
+			// VendorSellGraphics
+			// 
+			this.VendorSellGraphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.VendorSellGraphics.HeaderText = "Graphics";
+			this.VendorSellGraphics.Name = "VendorSellGraphics";
+			this.VendorSellGraphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.VendorSellGraphics.ToolTipText = "Here Graphics item ID";
+			this.VendorSellGraphics.Width = 54;
+			// 
+			// VendorSellAmount
+			// 
+			this.VendorSellAmount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.VendorSellAmount.HeaderText = "Amount";
+			this.VendorSellAmount.Name = "VendorSellAmount";
+			this.VendorSellAmount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.VendorSellAmount.ToolTipText = "Here Item Amount to sell";
+			this.VendorSellAmount.Width = 54;
+			// 
+			// VendorSellColor
+			// 
+			this.VendorSellColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.VendorSellColor.HeaderText = "Color";
+			this.VendorSellColor.Name = "VendorSellColor";
+			this.VendorSellColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.VendorSellColor.ToolTipText = "Here item color, use -1 for all color";
+			this.VendorSellColor.Width = 54;
 			// 
 			// sellAddTargerButton
 			// 
@@ -7252,51 +7228,45 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
 			// 
-			// X
+			// ScavengerX
 			// 
-			this.X.FalseValue = "False";
-			this.X.HeaderText = "X";
-			this.X.Name = "X";
-			this.X.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.X.ToolTipText = "Check This for enable item in list";
-			this.X.TrueValue = "True";
-			this.X.Width = 22;
+			this.ScavengerX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavengerX.FalseValue = "False";
+			this.ScavengerX.HeaderText = "X";
+			this.ScavengerX.IndeterminateValue = "False";
+			this.ScavengerX.Name = "ScavengerX";
+			this.ScavengerX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavengerX.TrueValue = "True";
+			this.ScavengerX.Width = 22;
 			// 
-			// ItemName
+			// ScavengerItemName
 			// 
-			this.ItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.ItemName.HeaderText = "Item Name";
-			this.ItemName.Name = "ItemName";
-			this.ItemName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.ItemName.ToolTipText = "Here the item name";
-			this.ItemName.Width = 153;
+			this.ScavengerItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavengerItemName.HeaderText = "Item Name";
+			this.ScavengerItemName.Name = "ScavengerItemName";
+			this.ScavengerItemName.Width = 206;
 			// 
-			// Graphics
+			// ScavenerGraphics
 			// 
-			this.Graphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.Graphics.HeaderText = "Graphics";
-			this.Graphics.Name = "Graphics";
-			this.Graphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.Graphics.ToolTipText = "Here Graphics item ID";
-			this.Graphics.Width = 54;
+			this.ScavenerGraphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavenerGraphics.HeaderText = "Graphics";
+			this.ScavenerGraphics.Name = "ScavenerGraphics";
+			this.ScavenerGraphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavenerGraphics.Width = 54;
 			// 
-			// Amount
+			// ScavengerColor
 			// 
-			this.Amount.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.Amount.HeaderText = "Amount";
-			this.Amount.Name = "Amount";
-			this.Amount.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.Amount.ToolTipText = "Here Item Amount to sell";
-			this.Amount.Width = 54;
+			this.ScavengerColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavengerColor.HeaderText = "Color";
+			this.ScavengerColor.Name = "ScavengerColor";
+			this.ScavengerColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavengerColor.Width = 54;
 			// 
-			// Color
+			// ScavengerProp
 			// 
-			this.Color.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.Color.HeaderText = "Color";
-			this.Color.Name = "Color";
-			this.Color.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.Color.ToolTipText = "Here item color, use -1 for all color";
-			this.Color.Width = 54;
+			this.ScavengerProp.HeaderText = "Prop";
+			this.ScavengerProp.Name = "ScavengerProp";
+			this.ScavengerProp.Visible = false;
 			// 
 			// MainForm
 			// 
@@ -7376,7 +7346,9 @@ namespace Assistant
 			this.groupBox11.ResumeLayout(false);
 			this.escavenger.ResumeLayout(false);
 			this.escavenger.PerformLayout();
-			this.groupBox14.ResumeLayout(false);
+			this.groupBox41.ResumeLayout(false);
+			this.groupBox41.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).EndInit();
 			this.groupBox12.ResumeLayout(false);
 			this.Organizer.ResumeLayout(false);
 			this.Organizer.PerformLayout();
@@ -9631,80 +9603,15 @@ namespace Assistant
 		// ------------ AUTOLOOT END ----------------
 
 		// ------------ SCAVENGER ----------------
-		private void scavengerRemoveItem_Click(object sender, EventArgs e)
-		{
-			if (scavengerListSelect.Text != "")
-			{
-				if (scavengerListView.SelectedItems.Count == 1)
-				{
-					int index = scavengerListView.SelectedItems[0].Index;
-					string selection = scavengerListSelect.Text;
-
-					if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-					{
-						List<Scavenger.ScavengerItem> items;
-						RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.Settings.Scavenger.ItemDelete(selection, items[index]);
-							RazorEnhanced.Scavenger.RefreshItems();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
-		}
-
+		
 		private void scavengerEditProps_Click(object sender, EventArgs e)
 		{
 			if (scavengerListSelect.Text != "")
 			{
-				if (scavengerListView.SelectedItems.Count == 1)
-				{
-					int index = scavengerListView.SelectedItems[0].Index;
-					string selection = ScavengerListSelect.Text;
-
-					if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-					{
-						List<Scavenger.ScavengerItem> items;
-						RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							Scavenger.ScavengerItem item = items[index];
-							EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(selection, index, item);
-							editProp.TopMost = true;
-							editProp.Show();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
-		}
-
-		private void scavengerEditItem_Click(object sender, EventArgs e)
-		{
-			if (scavengerListSelect.Text != "")
-			{
-				if (scavengerListView.SelectedItems.Count == 1)
-				{
-					int index = scavengerListView.SelectedItems[0].Index;
-					string selection = scavengerListSelect.Text;
-
-					if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-					{
-						List<Scavenger.ScavengerItem> items;
-						RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							Scavenger.ScavengerItem item = items[index];
-							EnhancedScavengerEditItem editItem = new EnhancedScavengerEditItem(selection, index, item);
-							editItem.TopMost = true;
-							editItem.Show();
-						}
-					}
-				}
+				DataGridViewRow row = scavengerdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
+				EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(ref row);
+				editProp.TopMost = true;
+				editProp.Show();
 			}
 			else
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
@@ -9720,13 +9627,13 @@ namespace Assistant
 
 		private void ScavengerItemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Assistant.Item autoLootItem = Assistant.World.FindItem(serial);
-			if (autoLootItem != null && autoLootItem.Serial.IsItem)
+			Assistant.Item scavengerItem = Assistant.World.FindItem(serial);
+			if (scavengerItem != null && scavengerItem.Serial.IsItem)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
-				RazorEnhanced.Scavenger.AddLog("Autoloot item added: " + autoLootItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
+					RazorEnhanced.Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString());
+				RazorEnhanced.Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
+				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
 			}
 			else
 			{
@@ -9734,18 +9641,6 @@ namespace Assistant
 					RazorEnhanced.Misc.SendMessage("Invalid target");
 				RazorEnhanced.Scavenger.AddLog("Invalid target");
 			}
-		}
-
-		private void scavengerAdItemdManual_Click(object sender, EventArgs e)
-		{
-			if (scavengerListSelect.Text != "")
-			{
-				EnhancedScavengerManualAdd manualAddItem = new EnhancedScavengerManualAdd();
-				manualAddItem.TopMost = true;
-				manualAddItem.Show();
-			}
-			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
 		private void scavengerSetContainer_Click(object sender, EventArgs e)
@@ -9812,7 +9707,7 @@ namespace Assistant
 			RazorEnhanced.Scavenger.ScavengerDelay = delay;
 
 			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, RazorEnhanced.Scavenger.ScavengerBag, true);
-			RazorEnhanced.Scavenger.RefreshItems();
+			RazorEnhanced.Scavenger.InitGrid();
 
 			if (scavengerListSelect.Text != "")
 				RazorEnhanced.Scavenger.AddLog("Scavenger list changed to: " + scavengerListSelect.Text);
@@ -9892,15 +9787,6 @@ namespace Assistant
 			}
 		}
 
-		private void scavengerListView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			if (scavengerListView.FocusedItem != null)
-			{
-				ListViewItem item = e.Item as ListViewItem;
-				RazorEnhanced.Scavenger.UpdateSelectedItems(item.Index);
-			}
-		}
-
 		private void scavengerButtonImport_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.ImportExport.ImportScavenger();
@@ -9914,56 +9800,95 @@ namespace Assistant
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
-		private void scavengerMoveUpButton_Click(object sender, EventArgs e)
+		private void scavengerdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (scavengerListSelect.Text != "")
+			if (!scavengerdataGridView.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
 			{
-				if (scavengerListView.SelectedItems.Count == 1)
-				{
-					int index = scavengerListView.SelectedItems[0].Index;
-					if (index != 0)
-					{
-						string selection = scavengerListSelect.Text;
-						List<Scavenger.ScavengerItem> items;
-						RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-						Scavenger.ScavengerItem itemUp = items[index];
-						Scavenger.ScavengerItem itemDown = items[index - 1];
-						RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index - 1, itemUp);
-						RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index, itemDown);
-						RazorEnhanced.Scavenger.RefreshItems();
-						scavengerListView.Items[index - 1].Selected = true;
-						scavengerListView.Focus();
-					}
-				}
+				RazorEnhanced.Scavenger.CopyTable();
 			}
-			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
-		private void scavengerMoveDownButton_Click(object sender, EventArgs e)
+		private void scavengerdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
 		{
-			if (scavengerListSelect.Text != "")
+			if (!scavengerdataGridView.Focused)
+				return;
+
+			if (scavengerdataGridView.IsCurrentCellDirty)
+				scavengerdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+		}
+
+		private void scavengerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = scavengerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 3)
 			{
-				if (scavengerListView.SelectedItems.Count == 1)
+				if (cell.Value.ToString() == "-1")
 				{
-					int index = scavengerListView.SelectedItems[0].Index;
-					if (index != scavengerListView.Items.Count - 1)
-					{
-						string selection = scavengerListSelect.Text;
-						List<Scavenger.ScavengerItem> items;
-						RazorEnhanced.Settings.Scavenger.ItemsRead(selection, out items);
-						Scavenger.ScavengerItem itemDown = items[index];
-						Scavenger.ScavengerItem itemUp = items[index + 1];
-						RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index + 1, itemDown);
-						RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index, itemUp);
-						RazorEnhanced.Scavenger.RefreshItems();
-						scavengerListView.Items[index + 1].Selected = true;
-						scavengerListView.Focus();
-					}
+					cell.Value = "All";
 				}
+				else
+				{
+					int color = 0;
+					try
+					{
+						color = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (color > 65535)
+						color = 65535;
+
+					cell.Value = "0x" + color.ToString("X4");
+				}
+			}	
+			else if (e.ColumnIndex == 2)
+			{
+				int itemid = 0;
+				try
+				{
+					itemid = Convert.ToInt32((string)cell.Value, 16);
+				}
+				catch { }
+
+				if (itemid > 65535)
+					itemid = 65535;
+
+				cell.Value = "0x" + itemid.ToString("X4");
 			}
-			else
-				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
+			RazorEnhanced.Scavenger.CopyTable();
+		}
+
+		private void scavengerdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				scavengerdataGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = 2;
+				scavengerdataGridView.CurrentCell = scavengerdataGridView.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(scavengerdataGridView, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+
+		}
+
+		private void scavengerdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void scavengerdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "New Item";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = "0x0000";
+			e.Row.Cells[4].Value = null;
 		}
 
 		// ------------ SCAVENGER END ----------------
@@ -10566,6 +10491,15 @@ namespace Assistant
 				datagridMenuStrip.Show(Cursor.Position);
 			}
 
+		}
+
+		private void vendorsellGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+		{
+			if (!vendorsellGridView.Focused)
+				return;
+
+			if (vendorsellGridView.IsCurrentCellDirty)
+				vendorsellGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
 		}
 
 		// ------------------ SELL AGENT END--------------------------
@@ -13070,6 +13004,13 @@ namespace Assistant
 		{
 			switch (agenttype)
 			{
+				case 2:
+					if (!scavengerdataGridView.Rows[agentrowindex].IsNewRow)
+					{
+						scavengerdataGridView.Rows.RemoveAt(agentrowindex);
+						RazorEnhanced.Scavenger.CopyTable();
+					}
+					break;
 				case 5:
 					if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
 					{
@@ -13079,7 +13020,6 @@ namespace Assistant
 					break;
 			}
 		}
-
 		// ----------------- END AGENT GESTIONE MENU TENDINA -------------------
 	}
 

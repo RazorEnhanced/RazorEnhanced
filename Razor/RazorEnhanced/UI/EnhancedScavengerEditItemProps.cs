@@ -1,66 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace RazorEnhanced.UI
 {
 	public partial class EnhancedScavengerEditItemProps : Form
 	{
-		private const string m_Title = "Enhanced Scavenger Edit Item Props";
-
-		private string m_List;
-		private int m_Index;
-		private Scavenger.ScavengerItem m_Item;
-
-		public EnhancedScavengerEditItemProps(string list, int index, Scavenger.ScavengerItem item)
+		private List<Scavenger.ScavengerItem.Property> m_proplist = new List<Scavenger.ScavengerItem.Property>();
+		private string m_name;
+		private string m_graphics;
+		private string m_color;
+		DataGridViewRow m_row;
+		public EnhancedScavengerEditItemProps(ref DataGridViewRow row)
 		{
-			InitializeComponent();
+			m_row = row;
+            InitializeComponent();
 			MaximizeBox = false;
+			if (row != null)
+			{
+				m_name = (string)row.Cells[1].Value;
+				m_graphics = (string)row.Cells[2].Value;
+				m_color = (string)row.Cells[3].Value;
 
-			this.Text = m_Title;
-
-			this.m_List = list;
-			this.m_Index = index;
-			this.m_Item = item;
+				m_proplist = (List<Scavenger.ScavengerItem.Property>)row.Cells[4].Value;
+            }
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
 			this.Close();
 		}
-
-		private void razorButton3_Click(object sender, EventArgs e)
-		{
-			int x = 0;
-			foreach (ListViewItem item in listViewProps.Items)
-			{
-				if (item.Selected)
-					m_Item.Properties.RemoveAt(x);
-				x++;
-			}
-
-			RefreshGUI();
-		}
-
-		private void RefreshGUI()
-		{
-			listViewProps.Items.Clear();
-
-			foreach (Scavenger.ScavengerItem.Property prop in m_Item.Properties)
-			{
-				ListViewItem listitem = new ListViewItem(prop.Name);
-				listitem.SubItems.Add(prop.Minimum.ToString());
-				listitem.SubItems.Add(prop.Maximum.ToString());
-				listViewProps.Items.Add(listitem);
-			}
-
-			RazorEnhanced.Settings.Scavenger.ItemReplace(m_List, m_Index, m_Item);
-		}
-
 		private void EnhancedScavengerEditItemProps_Load(object sender, EventArgs e)
 		{
-			tMax.Text = "1";
-			tMin.Text = "1";
-
 			// Popola combobox props
 			comboboxProp.Items.Add("Balanced");
 			comboboxProp.Items.Add("Cold Resist");
@@ -151,76 +123,116 @@ namespace RazorEnhanced.UI
 			comboboxProp.Items.Add("Greater Healing Charges");
 			comboboxProp.Items.Add("Fireball Charges");
 
-			lName.Text = m_Item.Name;
-			lGraphics.Text = "0x" + m_Item.Graphics.ToString("X4");
-			lColor.Text = "0x" + m_Item.Color.ToString("X4");
+			lName.Text = m_name;
+			lGraphics.Text = m_graphics;
+            lColor.Text = m_color;
 
-			RefreshGUI();
+			int color = 0;
+            int itemid = Convert.ToInt32(m_graphics, 16);
+            if (m_color != "All")
+				color = Convert.ToInt32(m_color, 16);
+
+			foreach (Scavenger.ScavengerItem.Property prop in m_proplist)
+			{
+				scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Minimum.ToString()});
+			}
+
+			// Immagine
+			Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(itemid));
+			{
+				if (color > 0)
+				{
+					bool onlyHueGrayPixels = (color & 0x8000) != 0;
+					color = (color & 0x3FFF) - 1;
+					Ultima.Hue m_hue = Ultima.Hues.GetHue(color);
+					m_hue.ApplyTo(m_itemimage, onlyHueGrayPixels);
+				}
+				imagepanel.BackgroundImage = m_itemimage;
+			}
+
+		}
+
+		private void scavengerpropGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = scavengerpropGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
+			{
+				int propvalue = 0;
+				Int32.TryParse(cell.Value.ToString(), out propvalue);
+
+				if (propvalue < 0 || propvalue > 999)
+					propvalue =0;
+
+				cell.Value = propvalue.ToString();
+			}
+
+			SaveData();
+		}
+
+		private void scavengerpropGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				scavengerpropGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				scavengerpropGridView.CurrentCell = scavengerpropGridView.Rows[e.RowIndex].Cells[1];
+				contextMenuStrip1.Show(scavengerpropGridView, e.Location);
+				contextMenuStrip1.Show(Cursor.Position);
+			}
+		}
+
+		private void scavengerpropGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void scavengerpropGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = "New Prop";
+			e.Row.Cells[1].Value = "0";
+            e.Row.Cells[2].Value = "0";
+        }
+
+		private void SaveData()
+		{
+			List<Scavenger.ScavengerItem.Property> propslist = new List<Scavenger.ScavengerItem.Property>();
+			foreach (DataGridViewRow row in scavengerpropGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+				int min = Convert.ToInt32((string)row.Cells[1].Value);
+				int max = Convert.ToInt32((string)row.Cells[2].Value);
+                propslist.Add(new Scavenger.ScavengerItem.Property(row.Cells[0].Value.ToString(),min ,max));
+            }
+			m_row.Cells[4].Value = propslist;
+			Scavenger.CopyTable();
 		}
 
 		private void bAddProp_Click(object sender, EventArgs e)
 		{
-			bool fail = false;
-			int Min = 0;
-			int Max = 0;
-			if (comboboxProp.Text == "" && custompropnameTextBox.Text == "")
-			{
-				MessageBox.Show("Props name is not valid.",
-				"Props name Error",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Exclamation,
-				MessageBoxDefaultButton.Button1);
-				fail = true;
-			}
 
-			try
+			if (comboboxProp.Text != "")
 			{
-				Min = Convert.ToInt32(tMin.Text);
-			}
-			catch
-			{
-				MessageBox.Show("Minimum props value in not valid.",
-				"Props minimum value error",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Exclamation,
-				MessageBoxDefaultButton.Button1);
-				fail = true;
-			}
-
-			try
-			{
-				Max = Convert.ToInt32(tMax.Text);
-			}
-			catch
-			{
-				MessageBox.Show("Maxumum props value in not valid.",
-				"Props Maxumum value error",
-				MessageBoxButtons.OK,
-				MessageBoxIcon.Exclamation,
-				MessageBoxDefaultButton.Button1);
-				fail = true;
-			}
-
-			if (!fail)
-			{
-				if (custompropnameTextBox.Text != "")
-					RazorEnhanced.Scavenger.AddPropToItem(m_List, m_Index, m_Item, custompropnameTextBox.Text, Min, Max);
-				else
-					RazorEnhanced.Scavenger.AddPropToItem(m_List, m_Index, m_Item, comboboxProp.Text, Min, Max);
-				if (!fail)
-
-					RefreshGUI();
+				scavengerpropGridView.Rows.Add(new object[] { comboboxProp.Text, "1", "1" });
+				SaveData();
 			}
 		}
 
-		private void custompropnameTextBox_Enter(object sender, EventArgs e)
+		// ----------------- GESTIONE MENU TENDINA -------------------
+
+		private static int agentrowindex = 0;
+
+		private void deleteRowToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			comboboxProp.SelectedIndex = -1;
+			if (!scavengerpropGridView.Rows[agentrowindex].IsNewRow)
+			{
+				scavengerpropGridView.Rows.RemoveAt(agentrowindex);
+				SaveData();
+			}
 		}
 
-		private void comboboxProp_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			custompropnameTextBox.Text = "";
-        }
+		// ----------------- END GESTIONE MENU TENDINA -------------------
 	}
 }

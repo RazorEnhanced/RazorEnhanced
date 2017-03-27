@@ -155,9 +155,6 @@ namespace RazorEnhanced
 			List<ScavengerList> lists;
 			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
 
-			if (lists.Count == 0)
-				Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
-
 			ScavengerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.ScavengerListSelect.Text)
 				return;
@@ -176,12 +173,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshItems()
+		internal static void InitGrid()
 		{
 			List<ScavengerList> lists;
 			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
 
-			Assistant.Engine.MainWindow.ScavengerListView.Items.Clear();
+			Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Clear();
+
 			foreach (ScavengerList l in lists)
 			{
 				if (l.Selected)
@@ -191,42 +189,43 @@ namespace RazorEnhanced
 
 					foreach (ScavengerItem item in items)
 					{
-						ListViewItem listitem = new ListViewItem();
+						string color = "All";
+						if (item.Color != -1)
+							color = "0x" + item.Color.ToString("X4");
 
-						listitem.Checked = item.Selected;
-
-						listitem.SubItems.Add(item.Name);
-						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-
-						if (item.Color == -1)
-							listitem.SubItems.Add("All");
-						else
-							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-
-						Assistant.Engine.MainWindow.ScavengerListView.Items.Add(listitem);
+						Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.Properties });
 					}
+
+					break;
 				}
 			}
 		}
 
-		internal static void UpdateSelectedItems(int i)
+		internal static void CopyTable()
 		{
-			List<ScavengerItem> items;
-			RazorEnhanced.Settings.Scavenger.ItemsRead(ScavengerListName, out items);
+			Settings.Scavenger.ClearList(Assistant.Engine.MainWindow.ScavengerListSelect.Text); // Rimuove vecchi dati dal save
 
-			if (items.Count != Assistant.Engine.MainWindow.ScavengerListView.Items.Count)
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.ScavengerDataGridView.Rows)
 			{
-				return;
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				bool check = false;
+				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+
+                if (row.Cells[4].Value != null)
+					Settings.Scavenger.ItemInsert(Assistant.Engine.MainWindow.ScavengerListSelect.Text, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<ScavengerItem.Property>)row.Cells[4].Value));
+				else
+					Settings.Scavenger.ItemInsert(Assistant.Engine.MainWindow.ScavengerListSelect.Text, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<ScavengerItem.Property>()));
 			}
 
-			ListViewItem lvi = Assistant.Engine.MainWindow.ScavengerListView.Items[i];
-			ScavengerItem old = items[i];
-
-			if (lvi != null && old != null)
-			{
-				ScavengerItem item = new Scavenger.ScavengerItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
-				RazorEnhanced.Settings.Scavenger.ItemReplace(RazorEnhanced.Scavenger.ScavengerListName, i, item);
-			}
+			Settings.Save(); // Salvo dati
 		}
 
 		internal static void AddList(string newList)
@@ -234,7 +233,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.Scavenger.ListInsert(newList, RazorEnhanced.Scavenger.ScavengerDelay, 0);
 
 			RazorEnhanced.Scavenger.RefreshLists();
-			RazorEnhanced.Scavenger.RefreshItems();
+			RazorEnhanced.Scavenger.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
@@ -245,46 +244,13 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.Scavenger.RefreshLists();
-			RazorEnhanced.Scavenger.RefreshItems();
+			RazorEnhanced.Scavenger.InitGrid();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int color)
 		{
-			List<ScavengerItem.Property> propsList = new List<ScavengerItem.Property>();
-			ScavengerItem item = new ScavengerItem(name, graphics, color, false, propsList);
-
-			string selection = Assistant.Engine.MainWindow.ScavengerListSelect.Text;
-
-			if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-			{
-				if (!RazorEnhanced.Settings.Scavenger.ItemExists(selection, item))
-					RazorEnhanced.Settings.Scavenger.ItemInsert(selection, item);
-			}
-
-			RazorEnhanced.Scavenger.RefreshItems();
-		}
-
-		internal static void ModifyItemInList(string name, int graphics, int color, bool selected, ScavengerItem old, int index)
-		{
-			List<ScavengerItem.Property> propsList = old.Properties;
-			ScavengerItem item = new ScavengerItem(name, graphics, color, selected, propsList);
-
-			string selection = Assistant.Engine.MainWindow.ScavengerListSelect.Text;
-
-			if (RazorEnhanced.Settings.Scavenger.ListExists(selection))
-			{
-				if (RazorEnhanced.Settings.Scavenger.ItemExists(selection, old))
-					RazorEnhanced.Settings.Scavenger.ItemReplace(selection, index, item);
-			}
-
-			RazorEnhanced.Scavenger.RefreshItems();
-		}
-
-		internal static void AddPropToItem(string list, int index, Scavenger.ScavengerItem item, string propName, int propMin, int propMax)
-		{
-			ScavengerItem.Property prop = new ScavengerItem.Property(propName, propMin, propMax);
-			item.Properties.Add(prop);
-			RazorEnhanced.Settings.Scavenger.ItemReplace(list, index, item);
+			Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), new List<ScavengerItem.Property>()});
+			CopyTable();
 		}
 
 		internal static int Engine(List<ScavengerItem> scavengerItemList, int mseconds, Items.Filter filter)

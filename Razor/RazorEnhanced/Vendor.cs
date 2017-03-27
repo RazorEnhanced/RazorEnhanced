@@ -3,15 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Data;
 
 namespace RazorEnhanced
 {
 	public class SellAgent
 	{
-		private static DataTable m_selllistitem = new DataTable("SellListItem");
-
 		[Serializable]
 		public class SellAgentItem
 		{

@@ -185,7 +185,7 @@ namespace RazorEnhanced
 								itemlist.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
 							}
 							RazorEnhanced.Settings.Scavenger.ItemInsertFromImport(m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[0]["List"].ToString(), itemlist);
-							RazorEnhanced.Scavenger.RefreshItems();
+							RazorEnhanced.Scavenger.InitGrid();
 							Scavenger.AddLog("List: " + m_Dataset.Tables["SCAVENGER_ITEMS"].Rows[0]["List"].ToString() + " imported!");
 						}
 					}
