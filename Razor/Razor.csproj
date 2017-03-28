@@ -350,18 +350,6 @@
     <Compile Include="RazorEnhanced\UI\EnhancedGumpInspector.Designer.cs">
       <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.Designer.cs">
-      <DependentUpon>EnhancedBuyAgentEditItem.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.Designer.cs">
-      <DependentUpon>EnhancedBuyAgentManualAdd.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedLauncher.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -517,12 +505,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGumpInspector.resx">
       <DependentUpon>EnhancedGumpInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentEditItem.resx">
-      <DependentUpon>EnhancedBuyAgentEditItem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedBuyAgentManualAdd.resx">
-      <DependentUpon>EnhancedBuyAgentManualAdd.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedLauncher.resx">
       <DependentUpon>EnhancedLauncher.cs</DependentUpon>

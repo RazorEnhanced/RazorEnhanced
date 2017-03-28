@@ -130,19 +130,10 @@ namespace Assistant
 		private Label autolootContainerLabel;
 		private RazorButton autoLootButtonListImport;
 		private RazorButton autoLootButtonListExport;
-		private GroupBox groupBox11;
 		private RazorButton autolootItemPropsB;
-		private RazorButton autolootItemEditB;
 		private RazorButton autolootAddItemBTarget;
-		private RazorButton autolootRemoveItemB;
-		private RazorButton autolootAddItemBManual;
 		private RazorButton autolootContainerButton;
 		private RazorCheckBox autoLootCheckBox;
-		private ListView autolootlistView;
-		private ColumnHeader columnHeader4;
-		private ColumnHeader columnHeader1;
-		private ColumnHeader columnHeader2;
-		private ColumnHeader ColumnHeader3;
 		private TabPage escavenger;
 		private Label label21;
 		private RazorTextBox autoLootTextBoxDelay;
@@ -150,7 +141,6 @@ namespace Assistant
 		private RazorButton autolootButtonAddList;
 		private RazorComboBox autolootListSelect;
 		private Label label20;
-		private RazorButton razorButtonResetIgnore;
 		private RazorButton scavengerButtonRemoveList;
 		private RazorButton scavengerButtonAddList;
 		private RazorButton scavengerButtonImport;
@@ -196,19 +186,10 @@ namespace Assistant
 		private Label label24;
 		private TabPage VendorBuy;
 		private TabPage VendorSell;
-		private GroupBox groupBox17;
-		private RazorButton buyEditB;
 		private RazorButton buyAddTargetB;
-		private RazorButton buyRemoveB;
-		private RazorButton buyAddManualB;
 		private GroupBox groupBox18;
 		private ListBox buyLogBox;
 		private RazorCheckBox buyEnableCheckBox;
-		private ListView buyListView;
-		private ColumnHeader columnHeader14;
-		private ColumnHeader columnHeader15;
-		private ColumnHeader columnHeader16;
-		private ColumnHeader columnHeader17;
 		private RazorButton buyRemoveListButton;
 		private RazorButton buyAddListButton;
 		private RazorButton buyImportListButton;
@@ -227,7 +208,6 @@ namespace Assistant
 		private Label label26;
 		private Label sellBagLabel;
 		private RazorButton sellSetBagButton;
-		private ColumnHeader columnHeader23;
 		private TabPage Dress;
 		private RazorCheckBox dressConflictCheckB;
 		private Label dressBagLabel;
@@ -401,8 +381,6 @@ namespace Assistant
 		private GroupBox groupBox24;
 		private RazorCheckBox blockpartyinviteCheckBox;
 		private RazorCheckBox blocktraderequestCheckBox;
-		private RazorButton autolootMoveDownButton;
-		private RazorButton autolootMoveUpButton;
 		private RazorButton openToolBarButton;
 		private GroupBox groupBox25;
 		private RazorCheckBox lockToolBarCheckBox;
@@ -580,6 +558,20 @@ namespace Assistant
 		private DataGridViewTextBoxColumn ScavenerGraphics;
 		private DataGridViewTextBoxColumn ScavengerColor;
 		private DataGridViewTextBoxColumn ScavengerProp;
+		private DataGridView autolootdataGridView;
+		private GroupBox groupBox14;
+		private Label label55;
+		private DataGridViewCheckBoxColumn AutolootColumnX;
+		private DataGridViewTextBoxColumn AutolootColumnItemName;
+		private DataGridViewTextBoxColumn AutolootColumnItemID;
+		private DataGridViewTextBoxColumn AutolootColumnColor;
+		private DataGridViewTextBoxColumn AutolootColumnProps;
+		private DataGridView vendorbuydataGridView;
+		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -617,9 +609,10 @@ namespace Assistant
 		internal RazorTextBox AutolootLabelDelay { get { return autoLootTextBoxDelay; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
-		internal ListView AutoLootListView { get { return autolootlistView; } }
 		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
 		internal CheckBox AutoLootNoOpenCheckBox { get { return autoLootnoopenCheckBox; } }
+		
+		internal DataGridView AutoLootDataGridView { get { return autolootdataGridView; } }
 
 		// Scavenger
 		internal RazorCheckBox ScavengerCheckBox { get { return scavengerCheckBox; } }
@@ -649,9 +642,8 @@ namespace Assistant
 		// Buy Agent
 		internal RazorCheckBox BuyCheckBox { get { return buyEnableCheckBox; } }
 		internal ListBox BuyLogBox { get { return buyLogBox; } }
-		internal ListView BuyListView { get { return buyListView; } }
 		internal RazorComboBox BuyListSelect { get { return buyListSelect; } }
-		
+		internal DataGridView VendorBuyDataGridView { get { return vendorbuydataGridView; } }
 
 		// Dress Agent
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
@@ -798,8 +790,9 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
+			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
 			this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
@@ -1087,8 +1080,19 @@ namespace Assistant
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
+			this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
+			this.groupBox14 = new System.Windows.Forms.GroupBox();
+			this.label55 = new System.Windows.Forms.Label();
+			this.autolootContainerLabel = new System.Windows.Forms.Label();
+			this.autolootContainerButton = new RazorEnhanced.UI.RazorButton();
+			this.autolootAddItemBTarget = new RazorEnhanced.UI.RazorButton();
+			this.autolootdataGridView = new System.Windows.Forms.DataGridView();
+			this.AutolootColumnX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.AutolootColumnItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.AutolootColumnItemID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.AutolootColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.autoLootnoopenCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.razorButtonResetIgnore = new RazorEnhanced.UI.RazorButton();
 			this.label21 = new System.Windows.Forms.Label();
 			this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.autoLootButtonRemoveList = new RazorEnhanced.UI.RazorButton();
@@ -1099,22 +1103,7 @@ namespace Assistant
 			this.label20 = new System.Windows.Forms.Label();
 			this.groupBox13 = new System.Windows.Forms.GroupBox();
 			this.autolootLogBox = new System.Windows.Forms.ListBox();
-			this.autolootContainerLabel = new System.Windows.Forms.Label();
-			this.groupBox11 = new System.Windows.Forms.GroupBox();
-			this.autolootMoveDownButton = new RazorEnhanced.UI.RazorButton();
-			this.autolootMoveUpButton = new RazorEnhanced.UI.RazorButton();
-			this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
-			this.autolootItemEditB = new RazorEnhanced.UI.RazorButton();
-			this.autolootAddItemBTarget = new RazorEnhanced.UI.RazorButton();
-			this.autolootRemoveItemB = new RazorEnhanced.UI.RazorButton();
-			this.autolootAddItemBManual = new RazorEnhanced.UI.RazorButton();
-			this.autolootContainerButton = new RazorEnhanced.UI.RazorButton();
 			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.autolootlistView = new System.Windows.Forms.ListView();
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.escavenger = new System.Windows.Forms.TabPage();
 			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
 			this.groupBox41 = new System.Windows.Forms.GroupBox();
@@ -1123,6 +1112,11 @@ namespace Assistant
 			this.scavengerButtonSetContainer = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
 			this.scavengerdataGridView = new System.Windows.Forms.DataGridView();
+			this.ScavengerX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.ScavengerItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavenerGraphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavengerColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavengerProp = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox12 = new System.Windows.Forms.GroupBox();
 			this.scavengerLogBox = new System.Windows.Forms.ListBox();
 			this.label23 = new System.Windows.Forms.Label();
@@ -1163,20 +1157,16 @@ namespace Assistant
 			this.organizerListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.organizerExportListB = new RazorEnhanced.UI.RazorButton();
 			this.VendorBuy = new System.Windows.Forms.TabPage();
-			this.groupBox17 = new System.Windows.Forms.GroupBox();
-			this.buyEditB = new RazorEnhanced.UI.RazorButton();
-			this.buyAddTargetB = new RazorEnhanced.UI.RazorButton();
-			this.buyRemoveB = new RazorEnhanced.UI.RazorButton();
-			this.buyAddManualB = new RazorEnhanced.UI.RazorButton();
+			this.vendorbuydataGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox18 = new System.Windows.Forms.GroupBox();
 			this.buyLogBox = new System.Windows.Forms.ListBox();
+			this.buyAddTargetB = new RazorEnhanced.UI.RazorButton();
 			this.buyEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.buyListView = new System.Windows.Forms.ListView();
-			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label25 = new System.Windows.Forms.Label();
 			this.buyRemoveListButton = new RazorEnhanced.UI.RazorButton();
 			this.buyAddListButton = new RazorEnhanced.UI.RazorButton();
@@ -1340,11 +1330,6 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.ScavengerX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.ScavengerItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ScavenerGraphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ScavengerColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ScavengerProp = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1384,8 +1369,9 @@ namespace Assistant
 			this.EnhancedAgent.SuspendLayout();
 			this.tabControl1.SuspendLayout();
 			this.eautoloot.SuspendLayout();
+			this.groupBox14.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.autolootdataGridView)).BeginInit();
 			this.groupBox13.SuspendLayout();
-			this.groupBox11.SuspendLayout();
 			this.escavenger.SuspendLayout();
 			this.groupBox41.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).BeginInit();
@@ -1394,7 +1380,7 @@ namespace Assistant
 			this.groupBox16.SuspendLayout();
 			this.groupBox15.SuspendLayout();
 			this.VendorBuy.SuspendLayout();
-			this.groupBox17.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.vendorbuydataGridView)).BeginInit();
 			this.groupBox18.SuspendLayout();
 			this.VendorSell.SuspendLayout();
 			this.groupBox19.SuspendLayout();
@@ -1471,24 +1457,7 @@ namespace Assistant
 			// 
 			// openchangelogButton
 			// 
-			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.openchangelogButton.ColorTable = office2010BlueTheme1;
+			this.openchangelogButton.ColorTable = office2010BlueTheme2;
 			this.openchangelogButton.Location = new System.Drawing.Point(542, 24);
 			this.openchangelogButton.Name = "openchangelogButton";
 			this.openchangelogButton.Size = new System.Drawing.Size(95, 23);
@@ -4229,7 +4198,7 @@ namespace Assistant
 			// buttonScriptRefresh
 			// 
 			this.buttonScriptRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonScriptRefresh.Image = global::Assistant.Properties.Resources.media_playback_loop;
+			this.buttonScriptRefresh.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptRefresh.Image")));
 			this.buttonScriptRefresh.Location = new System.Drawing.Point(53, 130);
 			this.buttonScriptRefresh.Name = "buttonScriptRefresh";
 			this.buttonScriptRefresh.Size = new System.Drawing.Size(73, 27);
@@ -4327,7 +4296,7 @@ namespace Assistant
 			// buttonScriptStop
 			// 
 			this.buttonScriptStop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonScriptStop.Image = global::Assistant.Properties.Resources.media_playback_stop_3;
+			this.buttonScriptStop.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptStop.Image")));
 			this.buttonScriptStop.Location = new System.Drawing.Point(53, 163);
 			this.buttonScriptStop.Name = "buttonScriptStop";
 			this.buttonScriptStop.Size = new System.Drawing.Size(73, 27);
@@ -4340,7 +4309,7 @@ namespace Assistant
 			// buttonScriptPlay
 			// 
 			this.buttonScriptPlay.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.buttonScriptPlay.Image = global::Assistant.Properties.Resources.media_playback_start_3;
+			this.buttonScriptPlay.Image = ((System.Drawing.Image)(resources.GetObject("buttonScriptPlay.Image")));
 			this.buttonScriptPlay.Location = new System.Drawing.Point(53, 97);
 			this.buttonScriptPlay.Name = "buttonScriptPlay";
 			this.buttonScriptPlay.Size = new System.Drawing.Size(73, 27);
@@ -4480,8 +4449,11 @@ namespace Assistant
 			// 
 			// eautoloot
 			// 
+			this.eautoloot.Controls.Add(this.autolootItemPropsB);
+			this.eautoloot.Controls.Add(this.groupBox14);
+			this.eautoloot.Controls.Add(this.autolootAddItemBTarget);
+			this.eautoloot.Controls.Add(this.autolootdataGridView);
 			this.eautoloot.Controls.Add(this.autoLootnoopenCheckBox);
-			this.eautoloot.Controls.Add(this.razorButtonResetIgnore);
 			this.eautoloot.Controls.Add(this.label21);
 			this.eautoloot.Controls.Add(this.autoLootTextBoxDelay);
 			this.eautoloot.Controls.Add(this.autoLootButtonRemoveList);
@@ -4491,11 +4463,7 @@ namespace Assistant
 			this.eautoloot.Controls.Add(this.autoLootButtonListExport);
 			this.eautoloot.Controls.Add(this.label20);
 			this.eautoloot.Controls.Add(this.groupBox13);
-			this.eautoloot.Controls.Add(this.autolootContainerLabel);
-			this.eautoloot.Controls.Add(this.groupBox11);
-			this.eautoloot.Controls.Add(this.autolootContainerButton);
 			this.eautoloot.Controls.Add(this.autoLootCheckBox);
-			this.eautoloot.Controls.Add(this.autolootlistView);
 			this.eautoloot.Location = new System.Drawing.Point(4, 22);
 			this.eautoloot.Name = "eautoloot";
 			this.eautoloot.Padding = new System.Windows.Forms.Padding(3);
@@ -4503,6 +4471,131 @@ namespace Assistant
 			this.eautoloot.TabIndex = 0;
 			this.eautoloot.Text = "Autoloot";
 			this.eautoloot.UseVisualStyleBackColor = true;
+			// 
+			// autolootItemPropsB
+			// 
+			this.autolootItemPropsB.ColorTable = office2010BlueTheme1;
+			this.autolootItemPropsB.Location = new System.Drawing.Point(558, 66);
+			this.autolootItemPropsB.Name = "autolootItemPropsB";
+			this.autolootItemPropsB.Size = new System.Drawing.Size(90, 20);
+			this.autolootItemPropsB.TabIndex = 49;
+			this.autolootItemPropsB.Text = "Edit Props";
+			this.autolootItemPropsB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.autolootItemPropsB.Click += new System.EventHandler(this.autoLootItemProps_Click);
+			// 
+			// groupBox14
+			// 
+			this.groupBox14.Controls.Add(this.label55);
+			this.groupBox14.Controls.Add(this.autolootContainerLabel);
+			this.groupBox14.Controls.Add(this.autolootContainerButton);
+			this.groupBox14.Location = new System.Drawing.Point(9, 42);
+			this.groupBox14.Name = "groupBox14";
+			this.groupBox14.Size = new System.Drawing.Size(252, 47);
+			this.groupBox14.TabIndex = 63;
+			this.groupBox14.TabStop = false;
+			this.groupBox14.Text = "AutoLoot Bag";
+			// 
+			// label55
+			// 
+			this.label55.AutoSize = true;
+			this.label55.Location = new System.Drawing.Point(6, 21);
+			this.label55.Name = "label55";
+			this.label55.Size = new System.Drawing.Size(36, 13);
+			this.label55.TabIndex = 90;
+			this.label55.Text = "Serial:";
+			// 
+			// autolootContainerLabel
+			// 
+			this.autolootContainerLabel.Location = new System.Drawing.Point(48, 21);
+			this.autolootContainerLabel.Name = "autolootContainerLabel";
+			this.autolootContainerLabel.Size = new System.Drawing.Size(82, 19);
+			this.autolootContainerLabel.TabIndex = 50;
+			this.autolootContainerLabel.Text = "0x00000000";
+			// 
+			// autolootContainerButton
+			// 
+			this.autolootContainerButton.ColorTable = office2010BlueTheme1;
+			this.autolootContainerButton.Location = new System.Drawing.Point(157, 16);
+			this.autolootContainerButton.Name = "autolootContainerButton";
+			this.autolootContainerButton.Size = new System.Drawing.Size(89, 20);
+			this.autolootContainerButton.TabIndex = 49;
+			this.autolootContainerButton.Text = "Set Bag";
+			this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click);
+			// 
+			// autolootAddItemBTarget
+			// 
+			this.autolootAddItemBTarget.ColorTable = office2010BlueTheme1;
+			this.autolootAddItemBTarget.Location = new System.Drawing.Point(558, 40);
+			this.autolootAddItemBTarget.Name = "autolootAddItemBTarget";
+			this.autolootAddItemBTarget.Size = new System.Drawing.Size(90, 20);
+			this.autolootAddItemBTarget.TabIndex = 47;
+			this.autolootAddItemBTarget.Text = "Add Item";
+			this.autolootAddItemBTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.autolootAddItemBTarget.Click += new System.EventHandler(this.autoLootAddItemTarget_Click);
+			// 
+			// autolootdataGridView
+			// 
+			this.autolootdataGridView.AllowUserToResizeRows = false;
+			this.autolootdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.autolootdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.AutolootColumnX,
+            this.AutolootColumnItemName,
+            this.AutolootColumnItemID,
+            this.AutolootColumnColor,
+            this.AutolootColumnProps});
+			this.autolootdataGridView.Location = new System.Drawing.Point(9, 95);
+			this.autolootdataGridView.Name = "autolootdataGridView";
+			this.autolootdataGridView.RowHeadersVisible = false;
+			this.autolootdataGridView.Size = new System.Drawing.Size(356, 238);
+			this.autolootdataGridView.TabIndex = 62;
+			this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellContentClick);
+			this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
+			this.autolootdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.autolootdataGridView_CellMouseUp);
+			this.autolootdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.autolootdataGridView_CurrentCellDirtyStateChanged);
+			this.autolootdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.autolootdataGridView_DataError);
+			this.autolootdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.autolootdataGridView_DefaultValuesNeeded);
+			// 
+			// AutolootColumnX
+			// 
+			this.AutolootColumnX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.AutolootColumnX.FalseValue = "False";
+			this.AutolootColumnX.HeaderText = "X";
+			this.AutolootColumnX.IndeterminateValue = "False";
+			this.AutolootColumnX.Name = "AutolootColumnX";
+			this.AutolootColumnX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.AutolootColumnX.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.AutolootColumnX.TrueValue = "True";
+			this.AutolootColumnX.Width = 22;
+			// 
+			// AutolootColumnItemName
+			// 
+			this.AutolootColumnItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.AutolootColumnItemName.HeaderText = "Item Name";
+			this.AutolootColumnItemName.Name = "AutolootColumnItemName";
+			this.AutolootColumnItemName.Width = 206;
+			// 
+			// AutolootColumnItemID
+			// 
+			this.AutolootColumnItemID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.AutolootColumnItemID.HeaderText = "Graphics";
+			this.AutolootColumnItemID.Name = "AutolootColumnItemID";
+			this.AutolootColumnItemID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.AutolootColumnItemID.Width = 54;
+			// 
+			// AutolootColumnColor
+			// 
+			this.AutolootColumnColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.AutolootColumnColor.HeaderText = "Color";
+			this.AutolootColumnColor.Name = "AutolootColumnColor";
+			this.AutolootColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.AutolootColumnColor.Width = 54;
+			// 
+			// AutolootColumnProps
+			// 
+			this.AutolootColumnProps.HeaderText = "Props";
+			this.AutolootColumnProps.Name = "AutolootColumnProps";
+			this.AutolootColumnProps.Visible = false;
 			// 
 			// autoLootnoopenCheckBox
 			// 
@@ -4512,17 +4605,6 @@ namespace Assistant
 			this.autoLootnoopenCheckBox.TabIndex = 61;
 			this.autoLootnoopenCheckBox.Text = "No Open Corpse";
 			this.autoLootnoopenCheckBox.CheckedChanged += new System.EventHandler(this.autoLootnoopenCheckBox_CheckedChanged);
-			// 
-			// razorButtonResetIgnore
-			// 
-			this.razorButtonResetIgnore.ColorTable = office2010BlueTheme1;
-			this.razorButtonResetIgnore.Location = new System.Drawing.Point(558, 310);
-			this.razorButtonResetIgnore.Name = "razorButtonResetIgnore";
-			this.razorButtonResetIgnore.Size = new System.Drawing.Size(90, 20);
-			this.razorButtonResetIgnore.TabIndex = 60;
-			this.razorButtonResetIgnore.Text = "Reset Ignore";
-			this.razorButtonResetIgnore.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.razorButtonResetIgnore.Click += new System.EventHandler(this.razorButtonResetIgnore_Click);
 			// 
 			// label21
 			// 
@@ -4614,7 +4696,7 @@ namespace Assistant
 			// groupBox13
 			// 
 			this.groupBox13.Controls.Add(this.autolootLogBox);
-			this.groupBox13.Location = new System.Drawing.Point(267, 96);
+			this.groupBox13.Location = new System.Drawing.Point(371, 94);
 			this.groupBox13.Name = "groupBox13";
 			this.groupBox13.Size = new System.Drawing.Size(278, 239);
 			this.groupBox13.TabIndex = 53;
@@ -4629,118 +4711,6 @@ namespace Assistant
 			this.autolootLogBox.Size = new System.Drawing.Size(265, 212);
 			this.autolootLogBox.TabIndex = 0;
 			// 
-			// autolootContainerLabel
-			// 
-			this.autolootContainerLabel.Location = new System.Drawing.Point(569, 84);
-			this.autolootContainerLabel.Name = "autolootContainerLabel";
-			this.autolootContainerLabel.Size = new System.Drawing.Size(82, 19);
-			this.autolootContainerLabel.TabIndex = 50;
-			this.autolootContainerLabel.Text = "0x00000000";
-			// 
-			// groupBox11
-			// 
-			this.groupBox11.Controls.Add(this.autolootMoveDownButton);
-			this.groupBox11.Controls.Add(this.autolootMoveUpButton);
-			this.groupBox11.Controls.Add(this.autolootItemPropsB);
-			this.groupBox11.Controls.Add(this.autolootItemEditB);
-			this.groupBox11.Controls.Add(this.autolootAddItemBTarget);
-			this.groupBox11.Controls.Add(this.autolootRemoveItemB);
-			this.groupBox11.Controls.Add(this.autolootAddItemBManual);
-			this.groupBox11.Location = new System.Drawing.Point(553, 104);
-			this.groupBox11.Name = "groupBox11";
-			this.groupBox11.Size = new System.Drawing.Size(100, 197);
-			this.groupBox11.TabIndex = 51;
-			this.groupBox11.TabStop = false;
-			this.groupBox11.Text = "Loot List";
-			// 
-			// autolootMoveDownButton
-			// 
-			this.autolootMoveDownButton.ColorTable = office2010BlueTheme1;
-			this.autolootMoveDownButton.Location = new System.Drawing.Point(6, 171);
-			this.autolootMoveDownButton.Name = "autolootMoveDownButton";
-			this.autolootMoveDownButton.Size = new System.Drawing.Size(90, 20);
-			this.autolootMoveDownButton.TabIndex = 51;
-			this.autolootMoveDownButton.Text = "Move Down";
-			this.autolootMoveDownButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootMoveDownButton.Click += new System.EventHandler(this.autolootMoveDownButton_Click);
-			// 
-			// autolootMoveUpButton
-			// 
-			this.autolootMoveUpButton.ColorTable = office2010BlueTheme1;
-			this.autolootMoveUpButton.Location = new System.Drawing.Point(5, 145);
-			this.autolootMoveUpButton.Name = "autolootMoveUpButton";
-			this.autolootMoveUpButton.Size = new System.Drawing.Size(90, 20);
-			this.autolootMoveUpButton.TabIndex = 50;
-			this.autolootMoveUpButton.Text = "Move Up";
-			this.autolootMoveUpButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootMoveUpButton.Click += new System.EventHandler(this.autolootMoveUpButton_Click);
-			// 
-			// autolootItemPropsB
-			// 
-			this.autolootItemPropsB.ColorTable = office2010BlueTheme1;
-			this.autolootItemPropsB.Location = new System.Drawing.Point(5, 94);
-			this.autolootItemPropsB.Name = "autolootItemPropsB";
-			this.autolootItemPropsB.Size = new System.Drawing.Size(90, 20);
-			this.autolootItemPropsB.TabIndex = 49;
-			this.autolootItemPropsB.Text = "Edit Props";
-			this.autolootItemPropsB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootItemPropsB.Click += new System.EventHandler(this.autoLootItemProps_Click);
-			// 
-			// autolootItemEditB
-			// 
-			this.autolootItemEditB.ColorTable = office2010BlueTheme1;
-			this.autolootItemEditB.Location = new System.Drawing.Point(5, 68);
-			this.autolootItemEditB.Name = "autolootItemEditB";
-			this.autolootItemEditB.Size = new System.Drawing.Size(90, 20);
-			this.autolootItemEditB.TabIndex = 48;
-			this.autolootItemEditB.Text = "Edit";
-			this.autolootItemEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootItemEditB.Click += new System.EventHandler(this.autoLootItemEdit_Click);
-			// 
-			// autolootAddItemBTarget
-			// 
-			this.autolootAddItemBTarget.ColorTable = office2010BlueTheme1;
-			this.autolootAddItemBTarget.Location = new System.Drawing.Point(5, 43);
-			this.autolootAddItemBTarget.Name = "autolootAddItemBTarget";
-			this.autolootAddItemBTarget.Size = new System.Drawing.Size(90, 20);
-			this.autolootAddItemBTarget.TabIndex = 47;
-			this.autolootAddItemBTarget.Text = "Add Target";
-			this.autolootAddItemBTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootAddItemBTarget.Click += new System.EventHandler(this.autoLootAddItemTarget_Click);
-			// 
-			// autolootRemoveItemB
-			// 
-			this.autolootRemoveItemB.ColorTable = office2010BlueTheme1;
-			this.autolootRemoveItemB.Location = new System.Drawing.Point(5, 119);
-			this.autolootRemoveItemB.Name = "autolootRemoveItemB";
-			this.autolootRemoveItemB.Size = new System.Drawing.Size(90, 20);
-			this.autolootRemoveItemB.TabIndex = 46;
-			this.autolootRemoveItemB.Text = "Remove";
-			this.autolootRemoveItemB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootRemoveItemB.Click += new System.EventHandler(this.autoLootRemoveItem_Click);
-			// 
-			// autolootAddItemBManual
-			// 
-			this.autolootAddItemBManual.ColorTable = office2010BlueTheme1;
-			this.autolootAddItemBManual.Location = new System.Drawing.Point(5, 18);
-			this.autolootAddItemBManual.Name = "autolootAddItemBManual";
-			this.autolootAddItemBManual.Size = new System.Drawing.Size(90, 20);
-			this.autolootAddItemBManual.TabIndex = 45;
-			this.autolootAddItemBManual.Text = "Add Manual";
-			this.autolootAddItemBManual.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootAddItemBManual.Click += new System.EventHandler(this.autoLootAddItemManual_Click);
-			// 
-			// autolootContainerButton
-			// 
-			this.autolootContainerButton.ColorTable = office2010BlueTheme1;
-			this.autolootContainerButton.Location = new System.Drawing.Point(559, 58);
-			this.autolootContainerButton.Name = "autolootContainerButton";
-			this.autolootContainerButton.Size = new System.Drawing.Size(89, 20);
-			this.autolootContainerButton.TabIndex = 49;
-			this.autolootContainerButton.Text = "Set Bag";
-			this.autolootContainerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.autolootContainerButton.Click += new System.EventHandler(this.autolootContainerButton_Click);
-			// 
 			// autoLootCheckBox
 			// 
 			this.autoLootCheckBox.Location = new System.Drawing.Point(275, 42);
@@ -4749,46 +4719,6 @@ namespace Assistant
 			this.autoLootCheckBox.TabIndex = 48;
 			this.autoLootCheckBox.Text = "Enable autoloot";
 			this.autoLootCheckBox.CheckedChanged += new System.EventHandler(this.autoLootEnable_CheckedChanged);
-			// 
-			// autolootlistView
-			// 
-			this.autolootlistView.CheckBoxes = true;
-			this.autolootlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader1,
-            this.columnHeader2,
-            this.ColumnHeader3});
-			this.autolootlistView.FullRowSelect = true;
-			this.autolootlistView.GridLines = true;
-			this.autolootlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.autolootlistView.HideSelection = false;
-			this.autolootlistView.LabelWrap = false;
-			this.autolootlistView.Location = new System.Drawing.Point(6, 51);
-			this.autolootlistView.MultiSelect = false;
-			this.autolootlistView.Name = "autolootlistView";
-			this.autolootlistView.Size = new System.Drawing.Size(255, 284);
-			this.autolootlistView.TabIndex = 47;
-			this.autolootlistView.UseCompatibleStateImageBehavior = false;
-			this.autolootlistView.View = System.Windows.Forms.View.Details;
-			this.autolootlistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.autolootlistView_ItemChecked);
-			// 
-			// columnHeader4
-			// 
-			this.columnHeader4.Text = "X";
-			this.columnHeader4.Width = 22;
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Text = "Item Name";
-			this.columnHeader1.Width = 105;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Text = "Graphics";
-			// 
-			// ColumnHeader3
-			// 
-			this.ColumnHeader3.Text = "Color";
 			// 
 			// escavenger
 			// 
@@ -4897,6 +4827,46 @@ namespace Assistant
 			this.scavengerdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.scavengerdataGridView_CurrentCellDirtyStateChanged);
 			this.scavengerdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.scavengerdataGridView_DataError);
 			this.scavengerdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.scavengerdataGridView_DefaultValuesNeeded);
+			// 
+			// ScavengerX
+			// 
+			this.ScavengerX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavengerX.FalseValue = "False";
+			this.ScavengerX.HeaderText = "X";
+			this.ScavengerX.IndeterminateValue = "False";
+			this.ScavengerX.Name = "ScavengerX";
+			this.ScavengerX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavengerX.TrueValue = "True";
+			this.ScavengerX.Width = 22;
+			// 
+			// ScavengerItemName
+			// 
+			this.ScavengerItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavengerItemName.HeaderText = "Item Name";
+			this.ScavengerItemName.Name = "ScavengerItemName";
+			this.ScavengerItemName.Width = 206;
+			// 
+			// ScavenerGraphics
+			// 
+			this.ScavenerGraphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavenerGraphics.HeaderText = "Graphics";
+			this.ScavenerGraphics.Name = "ScavenerGraphics";
+			this.ScavenerGraphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavenerGraphics.Width = 54;
+			// 
+			// ScavengerColor
+			// 
+			this.ScavengerColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ScavengerColor.HeaderText = "Color";
+			this.ScavengerColor.Name = "ScavengerColor";
+			this.ScavengerColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavengerColor.Width = 54;
+			// 
+			// ScavengerProp
+			// 
+			this.ScavengerProp.HeaderText = "Prop";
+			this.ScavengerProp.Name = "ScavengerProp";
+			this.ScavengerProp.Visible = false;
 			// 
 			// groupBox12
 			// 
@@ -5312,10 +5282,10 @@ namespace Assistant
 			// 
 			// VendorBuy
 			// 
-			this.VendorBuy.Controls.Add(this.groupBox17);
+			this.VendorBuy.Controls.Add(this.vendorbuydataGridView);
 			this.VendorBuy.Controls.Add(this.groupBox18);
+			this.VendorBuy.Controls.Add(this.buyAddTargetB);
 			this.VendorBuy.Controls.Add(this.buyEnableCheckBox);
-			this.VendorBuy.Controls.Add(this.buyListView);
 			this.VendorBuy.Controls.Add(this.label25);
 			this.VendorBuy.Controls.Add(this.buyRemoveListButton);
 			this.VendorBuy.Controls.Add(this.buyAddListButton);
@@ -5330,69 +5300,82 @@ namespace Assistant
 			this.VendorBuy.Text = "Vendor Buy";
 			this.VendorBuy.UseVisualStyleBackColor = true;
 			// 
-			// groupBox17
+			// vendorbuydataGridView
 			// 
-			this.groupBox17.Controls.Add(this.buyEditB);
-			this.groupBox17.Controls.Add(this.buyAddTargetB);
-			this.groupBox17.Controls.Add(this.buyRemoveB);
-			this.groupBox17.Controls.Add(this.buyAddManualB);
-			this.groupBox17.Location = new System.Drawing.Point(553, 84);
-			this.groupBox17.Name = "groupBox17";
-			this.groupBox17.Size = new System.Drawing.Size(100, 125);
-			this.groupBox17.TabIndex = 74;
-			this.groupBox17.TabStop = false;
-			this.groupBox17.Text = "Item List";
+			this.vendorbuydataGridView.AllowUserToResizeRows = false;
+			this.vendorbuydataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.vendorbuydataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn1,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2,
+            this.dataGridViewTextBoxColumn3,
+            this.dataGridViewTextBoxColumn4});
+			this.vendorbuydataGridView.Location = new System.Drawing.Point(6, 54);
+			this.vendorbuydataGridView.Name = "vendorbuydataGridView";
+			this.vendorbuydataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			this.vendorbuydataGridView.RowHeadersVisible = false;
+			this.vendorbuydataGridView.Size = new System.Drawing.Size(357, 274);
+			this.vendorbuydataGridView.TabIndex = 88;
+			this.vendorbuydataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorbuydataGridView_CellContentClick);
+			this.vendorbuydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorbuydataGridView_CellEndEdit);
+			this.vendorbuydataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.vendorbuydataGridView_CellMouseUp);
+			this.vendorbuydataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.vendorbuydataGridView_CurrentCellDirtyStateChanged);
+			this.vendorbuydataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.vendorbuydataGridView_DataError);
+			this.vendorbuydataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.vendorbuydataGridView_DefaultValuesNeeded);
 			// 
-			// buyEditB
+			// dataGridViewCheckBoxColumn1
 			// 
-			this.buyEditB.ColorTable = office2010BlueTheme1;
-			this.buyEditB.Location = new System.Drawing.Point(5, 68);
-			this.buyEditB.Name = "buyEditB";
-			this.buyEditB.Size = new System.Drawing.Size(90, 20);
-			this.buyEditB.TabIndex = 48;
-			this.buyEditB.Text = "Edit";
-			this.buyEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyEditB.Click += new System.EventHandler(this.buyEdit_Click);
+			this.dataGridViewCheckBoxColumn1.FalseValue = "False";
+			this.dataGridViewCheckBoxColumn1.HeaderText = "X";
+			this.dataGridViewCheckBoxColumn1.IndeterminateValue = "False";
+			this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+			this.dataGridViewCheckBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewCheckBoxColumn1.ToolTipText = "Check This for enable item in list";
+			this.dataGridViewCheckBoxColumn1.TrueValue = "True";
+			this.dataGridViewCheckBoxColumn1.Width = 22;
 			// 
-			// buyAddTargetB
+			// dataGridViewTextBoxColumn1
 			// 
-			this.buyAddTargetB.ColorTable = office2010BlueTheme1;
-			this.buyAddTargetB.Location = new System.Drawing.Point(5, 43);
-			this.buyAddTargetB.Name = "buyAddTargetB";
-			this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
-			this.buyAddTargetB.TabIndex = 47;
-			this.buyAddTargetB.Text = "Add Target";
-			this.buyAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyAddTargetB.Click += new System.EventHandler(this.buyAddTarget_Click);
+			this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn1.HeaderText = "Item Name";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.dataGridViewTextBoxColumn1.ToolTipText = "Here the item name";
+			this.dataGridViewTextBoxColumn1.Width = 153;
 			// 
-			// buyRemoveB
+			// dataGridViewTextBoxColumn2
 			// 
-			this.buyRemoveB.ColorTable = office2010BlueTheme1;
-			this.buyRemoveB.Location = new System.Drawing.Point(5, 94);
-			this.buyRemoveB.Name = "buyRemoveB";
-			this.buyRemoveB.Size = new System.Drawing.Size(90, 20);
-			this.buyRemoveB.TabIndex = 46;
-			this.buyRemoveB.Text = "Remove";
-			this.buyRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyRemoveB.Click += new System.EventHandler(this.buyRemoveItem_Click);
+			this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn2.HeaderText = "Graphics";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn2.ToolTipText = "Here Graphics item ID";
+			this.dataGridViewTextBoxColumn2.Width = 54;
 			// 
-			// buyAddManualB
+			// dataGridViewTextBoxColumn3
 			// 
-			this.buyAddManualB.ColorTable = office2010BlueTheme1;
-			this.buyAddManualB.Location = new System.Drawing.Point(5, 18);
-			this.buyAddManualB.Name = "buyAddManualB";
-			this.buyAddManualB.Size = new System.Drawing.Size(90, 20);
-			this.buyAddManualB.TabIndex = 45;
-			this.buyAddManualB.Text = "Add Manual";
-			this.buyAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.buyAddManualB.Click += new System.EventHandler(this.buyAddManual_Click);
+			this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn3.HeaderText = "Amount";
+			this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+			this.dataGridViewTextBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn3.ToolTipText = "Here Item Amount to sell";
+			this.dataGridViewTextBoxColumn3.Width = 54;
+			// 
+			// dataGridViewTextBoxColumn4
+			// 
+			this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn4.HeaderText = "Color";
+			this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+			this.dataGridViewTextBoxColumn4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn4.ToolTipText = "Here item color, use -1 for all color";
+			this.dataGridViewTextBoxColumn4.Width = 54;
 			// 
 			// groupBox18
 			// 
 			this.groupBox18.Controls.Add(this.buyLogBox);
-			this.groupBox18.Location = new System.Drawing.Point(267, 84);
+			this.groupBox18.Location = new System.Drawing.Point(373, 72);
 			this.groupBox18.Name = "groupBox18";
-			this.groupBox18.Size = new System.Drawing.Size(278, 251);
+			this.groupBox18.Size = new System.Drawing.Size(278, 256);
 			this.groupBox18.TabIndex = 73;
 			this.groupBox18.TabStop = false;
 			this.groupBox18.Text = "Buy Log";
@@ -5405,63 +5388,43 @@ namespace Assistant
 			this.buyLogBox.Size = new System.Drawing.Size(265, 225);
 			this.buyLogBox.TabIndex = 0;
 			// 
+			// buyAddTargetB
+			// 
+			office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme2.TextColor = System.Drawing.Color.White;
+			this.buyAddTargetB.ColorTable = office2010BlueTheme2;
+			this.buyAddTargetB.Location = new System.Drawing.Point(561, 40);
+			this.buyAddTargetB.Name = "buyAddTargetB";
+			this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
+			this.buyAddTargetB.TabIndex = 45;
+			this.buyAddTargetB.Text = "Add Item";
+			this.buyAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.buyAddTargetB.Click += new System.EventHandler(this.buyAddTarget_Click);
+			// 
 			// buyEnableCheckBox
 			// 
 			this.buyEnableCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.buyEnableCheckBox.Location = new System.Drawing.Point(274, 58);
+			this.buyEnableCheckBox.Location = new System.Drawing.Point(373, 44);
 			this.buyEnableCheckBox.Name = "buyEnableCheckBox";
-			this.buyEnableCheckBox.Size = new System.Drawing.Size(185, 22);
+			this.buyEnableCheckBox.Size = new System.Drawing.Size(135, 22);
 			this.buyEnableCheckBox.TabIndex = 72;
 			this.buyEnableCheckBox.Text = "Enable Buy List";
 			this.buyEnableCheckBox.CheckedChanged += new System.EventHandler(this.buyEnableCheckB_CheckedChanged);
-			// 
-			// buyListView
-			// 
-			this.buyListView.CheckBoxes = true;
-			this.buyListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader14,
-            this.columnHeader15,
-            this.columnHeader16,
-            this.columnHeader17,
-            this.columnHeader23});
-			this.buyListView.FullRowSelect = true;
-			this.buyListView.GridLines = true;
-			this.buyListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.buyListView.HideSelection = false;
-			this.buyListView.LabelWrap = false;
-			this.buyListView.Location = new System.Drawing.Point(6, 51);
-			this.buyListView.MultiSelect = false;
-			this.buyListView.Name = "buyListView";
-			this.buyListView.Size = new System.Drawing.Size(255, 284);
-			this.buyListView.TabIndex = 70;
-			this.buyListView.UseCompatibleStateImageBehavior = false;
-			this.buyListView.View = System.Windows.Forms.View.Details;
-			this.buyListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.buyagentListView_ItemChecked);
-			// 
-			// columnHeader14
-			// 
-			this.columnHeader14.Text = "X";
-			this.columnHeader14.Width = 21;
-			// 
-			// columnHeader15
-			// 
-			this.columnHeader15.Text = "Item Name";
-			this.columnHeader15.Width = 75;
-			// 
-			// columnHeader16
-			// 
-			this.columnHeader16.Text = "Graphics";
-			this.columnHeader16.Width = 54;
-			// 
-			// columnHeader17
-			// 
-			this.columnHeader17.Text = "Amount";
-			this.columnHeader17.Width = 49;
-			// 
-			// columnHeader23
-			// 
-			this.columnHeader23.Text = "Color";
-			this.columnHeader23.Width = 50;
 			// 
 			// label25
 			// 
@@ -5673,7 +5636,7 @@ namespace Assistant
 			this.groupBox20.Controls.Add(this.sellLogBox);
 			this.groupBox20.Location = new System.Drawing.Point(373, 72);
 			this.groupBox20.Name = "groupBox20";
-			this.groupBox20.Size = new System.Drawing.Size(278, 261);
+			this.groupBox20.Size = new System.Drawing.Size(278, 256);
 			this.groupBox20.TabIndex = 83;
 			this.groupBox20.TabStop = false;
 			this.groupBox20.Text = "Sell Log";
@@ -5683,7 +5646,7 @@ namespace Assistant
 			this.sellLogBox.FormattingEnabled = true;
 			this.sellLogBox.Location = new System.Drawing.Point(7, 18);
 			this.sellLogBox.Name = "sellLogBox";
-			this.sellLogBox.Size = new System.Drawing.Size(265, 238);
+			this.sellLogBox.Size = new System.Drawing.Size(265, 225);
 			this.sellLogBox.TabIndex = 0;
 			// 
 			// sellEnableCheckBox
@@ -7228,46 +7191,6 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
 			// 
-			// ScavengerX
-			// 
-			this.ScavengerX.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.ScavengerX.FalseValue = "False";
-			this.ScavengerX.HeaderText = "X";
-			this.ScavengerX.IndeterminateValue = "False";
-			this.ScavengerX.Name = "ScavengerX";
-			this.ScavengerX.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.ScavengerX.TrueValue = "True";
-			this.ScavengerX.Width = 22;
-			// 
-			// ScavengerItemName
-			// 
-			this.ScavengerItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.ScavengerItemName.HeaderText = "Item Name";
-			this.ScavengerItemName.Name = "ScavengerItemName";
-			this.ScavengerItemName.Width = 206;
-			// 
-			// ScavenerGraphics
-			// 
-			this.ScavenerGraphics.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.ScavenerGraphics.HeaderText = "Graphics";
-			this.ScavenerGraphics.Name = "ScavenerGraphics";
-			this.ScavenerGraphics.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.ScavenerGraphics.Width = 54;
-			// 
-			// ScavengerColor
-			// 
-			this.ScavengerColor.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.ScavengerColor.HeaderText = "Color";
-			this.ScavengerColor.Name = "ScavengerColor";
-			this.ScavengerColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.ScavengerColor.Width = 54;
-			// 
-			// ScavengerProp
-			// 
-			this.ScavengerProp.HeaderText = "Prop";
-			this.ScavengerProp.Name = "ScavengerProp";
-			this.ScavengerProp.Visible = false;
-			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7342,8 +7265,10 @@ namespace Assistant
 			this.tabControl1.ResumeLayout(false);
 			this.eautoloot.ResumeLayout(false);
 			this.eautoloot.PerformLayout();
+			this.groupBox14.ResumeLayout(false);
+			this.groupBox14.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.autolootdataGridView)).EndInit();
 			this.groupBox13.ResumeLayout(false);
-			this.groupBox11.ResumeLayout(false);
 			this.escavenger.ResumeLayout(false);
 			this.escavenger.PerformLayout();
 			this.groupBox41.ResumeLayout(false);
@@ -7356,7 +7281,7 @@ namespace Assistant
 			this.groupBox15.ResumeLayout(false);
 			this.VendorBuy.ResumeLayout(false);
 			this.VendorBuy.PerformLayout();
-			this.groupBox17.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.vendorbuydataGridView)).EndInit();
 			this.groupBox18.ResumeLayout(false);
 			this.VendorSell.ResumeLayout(false);
 			this.VendorSell.PerformLayout();
@@ -9248,18 +9173,7 @@ namespace Assistant
 		}
 
 		// ------------ AUTOLOOT ----------------
-		private void autoLootAddItemManual_Click(object sender, EventArgs e)
-		{
-			if (autolootListSelect.Text != "")
-			{
-				EnhancedAutoLootAddItemManual ManualAddItem = new EnhancedAutoLootAddItemManual();
-				ManualAddItem.TopMost = true;
-				ManualAddItem.Show();
-			}
-			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		}
-
+	
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
 			if (autolootListSelect.Text != "")
@@ -9319,132 +9233,14 @@ namespace Assistant
 			}
 		}
 
-		private void autoLootRemoveItem_Click(object sender, EventArgs e)
-		{
-			if (autolootListSelect.Text != "")
-			{
-				if (autolootlistView.SelectedItems.Count == 1)
-				{
-					int index = autolootlistView.SelectedItems[0].Index;
-					string selection = autolootListSelect.Text;
-
-					if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-					{
-						List<AutoLoot.AutoLootItem> items;
-						RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.Settings.AutoLoot.ItemDelete(selection, items[index]);
-							RazorEnhanced.AutoLoot.RefreshItems();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		}
-
-		private void autolootMoveUpButton_Click(object sender, EventArgs e)
-		{
-			if (autolootListSelect.Text != "")
-			{
-				if (autolootlistView.SelectedItems.Count == 1)
-				{
-					int index = autolootlistView.SelectedItems[0].Index;
-					if (index != 0)
-					{
-						string selection = autolootListSelect.Text;
-						List<AutoLoot.AutoLootItem> items;
-						RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-						AutoLoot.AutoLootItem itemUp = items[index];
-						AutoLoot.AutoLootItem itemDown = items[index - 1];
-						RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index - 1, itemUp);
-						RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index, itemDown);
-						RazorEnhanced.AutoLoot.RefreshItems();
-						autolootlistView.Items[index - 1].Selected = true;
-						autolootlistView.Focus();
-					}
-				}
-			}
-			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		}
-
-		private void autolootMoveDownButton_Click(object sender, EventArgs e)
-		{
-			if (autolootListSelect.Text != "")
-			{
-				if (autolootlistView.SelectedItems.Count == 1)
-				{
-					int index = autolootlistView.SelectedItems[0].Index;
-					if (index != autolootlistView.Items.Count - 1)
-					{
-						string selection = autolootListSelect.Text;
-						List<AutoLoot.AutoLootItem> items;
-						RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-						AutoLoot.AutoLootItem itemDown = items[index];
-						AutoLoot.AutoLootItem itemUp = items[index + 1];
-						RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index + 1, itemDown);
-						RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index, itemUp);
-						RazorEnhanced.AutoLoot.RefreshItems();
-						autolootlistView.Items[index + 1].Selected = true;
-						autolootlistView.Focus();
-					}
-				}
-			}
-			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		}
-
-		private void autoLootItemEdit_Click(object sender, EventArgs e)
-		{
-			if (autolootListSelect.Text != "")
-			{
-				if (autolootlistView.SelectedItems.Count == 1)
-				{
-					int index = autolootlistView.SelectedItems[0].Index;
-					string selection = autolootListSelect.Text;
-
-					if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-					{
-						List<AutoLoot.AutoLootItem> items;
-						RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							AutoLoot.AutoLootItem item = items[index];
-							EnhancedAutolootEditItem editItem = new EnhancedAutolootEditItem(selection, index, item);
-							editItem.TopMost = true;
-							editItem.Show();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
-		}
-
 		private void autoLootItemProps_Click(object sender, EventArgs e)
 		{
 			if (autolootListSelect.Text != "")
 			{
-				if (autolootlistView.SelectedItems.Count == 1)
-				{
-					int index = autolootlistView.SelectedItems[0].Index;
-					string selection = autolootListSelect.Text;
-
-					if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-					{
-						List<AutoLoot.AutoLootItem> items;
-						RazorEnhanced.Settings.AutoLoot.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							AutoLoot.AutoLootItem item = items[index];
-							EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(selection, index, item);
-							editProp.TopMost = true;
-							editProp.Show();
-						}
-					}
-				}
+				DataGridViewRow row = autolootdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
+				EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row);
+				editProp.TopMost = true;
+				editProp.Show();
 			}
 			else
 				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
@@ -9528,7 +9324,7 @@ namespace Assistant
 			RazorEnhanced.AutoLoot.NoOpenCorpse = noopencorpse;
 
 			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse);
-			RazorEnhanced.AutoLoot.RefreshItems();
+			RazorEnhanced.AutoLoot.InitGrid();
 
 			if (autolootListSelect.Text != "")
 				RazorEnhanced.AutoLoot.AddLog("Autoloot list changed to: " + autolootListSelect.Text);
@@ -9573,20 +9369,6 @@ namespace Assistant
 			}
 		}
 
-		private void autolootlistView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			if (autolootlistView.FocusedItem != null)
-			{
-				ListViewItem item = e.Item as ListViewItem;
-				RazorEnhanced.AutoLoot.UpdateSelectedItems(item.Index);
-			}
-		}
-
-		private void razorButtonResetIgnore_Click(object sender, EventArgs e)
-		{
-			RazorEnhanced.AutoLoot.ResetIgnore();
-		}
-
 		private void autoLootButtonListExport_Click(object sender, EventArgs e)
 		{
 			if (autolootListSelect.Text != "")
@@ -9600,10 +9382,104 @@ namespace Assistant
 			RazorEnhanced.ImportExport.ImportAutoloot();
 		}
 
+		private void autolootdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (!autolootdataGridView.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			{
+				RazorEnhanced.AutoLoot.CopyTable();
+			}
+		}
+
+		private void autolootdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+		{
+			if (!autolootdataGridView.Focused)
+				return;
+
+			if (autolootdataGridView.IsCurrentCellDirty)
+				autolootdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+		}
+
+		private void autolootdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = autolootdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 3)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int color = 0;
+					if (!cell.Value.ToString().Contains("-"))
+					{
+						try
+						{
+							color = Convert.ToInt32((string)cell.Value, 16);
+						}
+						catch { }
+
+						if (color > 65535)
+							color = 65535;
+					}
+					cell.Value = "0x" + color.ToString("X4");
+				}
+			}
+			else if (e.ColumnIndex == 2)
+			{
+				int itemid = 0;
+				if (!cell.Value.ToString().Contains("-"))
+				{
+					try
+					{
+						itemid = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (itemid > 65535)
+						itemid = 65535;
+				}
+				cell.Value = "0x" + itemid.ToString("X4");
+			}
+			RazorEnhanced.AutoLoot.CopyTable();
+		}
+
+		private void autolootdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				autolootdataGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = 1;
+				autolootdataGridView.CurrentCell = autolootdataGridView.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(autolootdataGridView, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+		}
+
+		private void autolootdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void autolootdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "New Item";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = "0x0000";
+			e.Row.Cells[4].Value = null;
+		}
+
 		// ------------ AUTOLOOT END ----------------
 
 		// ------------ SCAVENGER ----------------
-		
+
 		private void scavengerEditProps_Click(object sender, EventArgs e)
 		{
 			if (scavengerListSelect.Text != "")
@@ -9833,30 +9709,34 @@ namespace Assistant
 				else
 				{
 					int color = 0;
-					try
+					if (!cell.Value.ToString().Contains("-"))
 					{
-						color = Convert.ToInt32((string)cell.Value, 16);
+						try
+						{
+							color = Convert.ToInt32((string)cell.Value, 16);
+						}
+						catch { }
+
+						if (color > 65535)
+							color = 65535;
 					}
-					catch { }
-
-					if (color > 65535)
-						color = 65535;
-
 					cell.Value = "0x" + color.ToString("X4");
 				}
 			}	
 			else if (e.ColumnIndex == 2)
 			{
 				int itemid = 0;
-				try
+				if (!cell.Value.ToString().Contains("-"))
 				{
-					itemid = Convert.ToInt32((string)cell.Value, 16);
+					try
+					{
+						itemid = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (itemid > 65535)
+						itemid = 65535;
 				}
-				catch { }
-
-				if (itemid > 65535)
-					itemid = 65535;
-
 				cell.Value = "0x" + itemid.ToString("X4");
 			}
 			RazorEnhanced.Scavenger.CopyTable();
@@ -10414,15 +10294,17 @@ namespace Assistant
 				else
 				{
 					int color = 0;
-					try
+					if (!cell.Value.ToString().Contains("-"))
 					{
-						color = Convert.ToInt32((string)cell.Value, 16);
+						try
+						{
+							color = Convert.ToInt32((string)cell.Value, 16);
+						}
+						catch { }
+
+						if (color > 65535)
+							color = 65535;
 					}
-					catch { }
-
-					if (color > 65535)
-						color = 65535;
-
 					cell.Value = "0x" + color.ToString("X4");
 				}
 			}
@@ -10439,15 +10321,17 @@ namespace Assistant
 			else if (e.ColumnIndex == 2)
 			{
 				int itemid = 0;
-				try
+				if (!cell.Value.ToString().Contains("-"))
 				{
-					itemid = Convert.ToInt32((string)cell.Value, 16);
+					try
+					{
+						itemid = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (itemid > 65535)
+						itemid = 65535;
 				}
-				catch { }
-
-				if (itemid > 65535)
-					itemid = 65535;
-
 				cell.Value = "0x" + itemid.ToString("X4");
 			}
 			RazorEnhanced.SellAgent.CopyTable();
@@ -10505,10 +10389,11 @@ namespace Assistant
 		// ------------------ SELL AGENT END--------------------------
 
 		// ------------------ BUY AGENT --------------------------
+
 		private void buyListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			RazorEnhanced.Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
-			RazorEnhanced.BuyAgent.RefreshItems();
+			RazorEnhanced.BuyAgent.InitGrid();
 
 			if (sellListSelect.Text != "")
 				RazorEnhanced.BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
@@ -10534,18 +10419,6 @@ namespace Assistant
 					RazorEnhanced.BuyAgent.RemoveList(buyListSelect.Text);
 				}
 			}
-		}
-
-		private void buyAddManual_Click(object sender, EventArgs e)
-		{
-			if (buyListSelect.Text != "")
-			{
-				EnhancedBuyAgentManualAdd manualAddItem = new EnhancedBuyAgentManualAdd();
-				manualAddItem.TopMost = true;
-				manualAddItem.Show();
-			}
-			else
-				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void buyAddTarget_Click(object sender, EventArgs e)
@@ -10574,58 +10447,6 @@ namespace Assistant
 					RazorEnhanced.Misc.SendMessage("Invalid target");
 				RazorEnhanced.BuyAgent.AddLog("Invalid target");
 			}
-		}
-
-		private void buyEdit_Click(object sender, EventArgs e)
-		{
-			if (buyListSelect.Text != "")
-			{
-				if (buyListView.SelectedItems.Count == 1)
-				{
-					int index = buyListView.SelectedItems[0].Index;
-					string selection = buyListSelect.Text;
-
-					if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
-					{
-						List<RazorEnhanced.BuyAgent.BuyAgentItem> items;
-						RazorEnhanced.Settings.BuyAgent.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.BuyAgent.BuyAgentItem item = items[index];
-							EnhancedBuyAgentEditItem editItem = new EnhancedBuyAgentEditItem(selection, index, item);
-							editItem.TopMost = true;
-							editItem.Show();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
-		}
-
-		private void buyRemoveItem_Click(object sender, EventArgs e)
-		{
-			if (buyListSelect.Text != "")
-			{
-				if (buyListView.SelectedItems.Count == 1 && buyListSelect.Text != "")
-				{
-					int index = buyListView.SelectedItems[0].Index;
-					string selection = buyListSelect.Text;
-
-					if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
-					{
-						List<RazorEnhanced.BuyAgent.BuyAgentItem> items;
-						RazorEnhanced.Settings.BuyAgent.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.Settings.BuyAgent.ItemDelete(selection, items[index]);
-							RazorEnhanced.BuyAgent.RefreshItems();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
 		}
 
 		private void buyEnableCheckB_CheckedChanged(object sender, EventArgs e)
@@ -10673,15 +10494,6 @@ namespace Assistant
 			}
 		}
 
-		private void buyagentListView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			if (buyListView.FocusedItem != null)
-			{
-				ListViewItem item = e.Item as ListViewItem;
-				RazorEnhanced.BuyAgent.UpdateSelectedItems(item.Index);
-			}
-		}
-
 		private void buyImportListButton_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.ImportExport.ImportBuy();
@@ -10693,6 +10505,110 @@ namespace Assistant
 				RazorEnhanced.ImportExport.ExportBuy(buyListSelect.Text);
 			else
 				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
+		}
+
+		private void vendorbuydataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = vendorbuydataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 4)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int color = 0;
+					if (!cell.Value.ToString().Contains("-"))
+					{
+						try
+						{
+							color = Convert.ToInt32((string)cell.Value, 16);
+						}
+						catch { }
+
+						if (color > 65535)
+							color = 65535;
+					}
+					cell.Value = "0x" + color.ToString("X4");
+				}
+			}
+			else if (e.ColumnIndex == 3)
+			{
+				int amount = 0;
+				Int32.TryParse(cell.Value.ToString(), out amount);
+
+				if (amount < 0 || amount > 999)
+					amount = 999;
+
+				cell.Value = amount.ToString();
+			}
+			else if (e.ColumnIndex == 2)
+			{
+				int itemid = 0;
+				if (!cell.Value.ToString().Contains("-"))
+				{
+					try
+					{
+						itemid = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (itemid > 65535)
+						itemid = 65535;
+				}
+				cell.Value = "0x" + itemid.ToString("X4");
+			}
+			RazorEnhanced.BuyAgent.CopyTable();
+		}
+
+		private void vendorbuydataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "New Item";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = 999;
+			e.Row.Cells[4].Value = "0x0000";
+		}
+
+		private void vendorbuydataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void vendorbuydataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (!vendorbuydataGridView.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			{
+				RazorEnhanced.BuyAgent.CopyTable();
+			}
+		}
+
+		private void vendorbuydataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				vendorbuydataGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = 4;
+				vendorbuydataGridView.CurrentCell = vendorbuydataGridView.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(vendorbuydataGridView, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+		}
+
+		private void vendorbuydataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+		{
+			if (!vendorbuydataGridView.Focused)
+				return;
+
+			if (vendorbuydataGridView.IsCurrentCellDirty)
+				vendorbuydataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
 		}
 
 		// --------------- BUY AGENT END ---------
@@ -13004,11 +12920,25 @@ namespace Assistant
 		{
 			switch (agenttype)
 			{
+				case 1:
+					if (!autolootdataGridView.Rows[agentrowindex].IsNewRow)
+					{
+						autolootdataGridView.Rows.RemoveAt(agentrowindex);
+						RazorEnhanced.AutoLoot.CopyTable();
+					}
+					break;
 				case 2:
 					if (!scavengerdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						scavengerdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Scavenger.CopyTable();
+					}
+					break;
+				case 4:
+					if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
+					{
+						vendorbuydataGridView.Rows.RemoveAt(agentrowindex);
+						RazorEnhanced.BuyAgent.CopyTable();
 					}
 					break;
 				case 5:

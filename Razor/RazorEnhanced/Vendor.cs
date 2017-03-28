@@ -462,9 +462,6 @@ namespace RazorEnhanced
 			List<BuyAgentList> lists;
 			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
 
-			if (lists.Count == 0)
-				Assistant.Engine.MainWindow.BuyListView.Items.Clear();
-
 			BuyAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.BuyListSelect.Text)
 				return;
@@ -481,12 +478,37 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshItems()
+		internal static void CopyTable()
+		{
+			Settings.BuyAgent.ClearList(Assistant.Engine.MainWindow.BuyListSelect.Text); // Rimuove vecchi dati dal save
+
+			foreach (DataGridViewRow row in Engine.MainWindow.VendorSellGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[4].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
+
+				bool check = false;
+				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+
+				Settings.BuyAgent.ItemInsert(Assistant.Engine.MainWindow.SellListSelect.Text, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
+			}
+
+			Settings.Save(); // Salvo dati
+		}
+
+		internal static void InitGrid()
 		{
 			List<BuyAgentList> lists;
 			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
 
-			Assistant.Engine.MainWindow.BuyListView.Items.Clear();
+			Engine.MainWindow.VendorBuyDataGridView.Rows.Clear();
+
 			foreach (BuyAgentList l in lists)
 			{
 				if (l.Selected)
@@ -496,43 +518,15 @@ namespace RazorEnhanced
 
 					foreach (BuyAgentItem item in items)
 					{
-						ListViewItem listitem = new ListViewItem();
+						string color = "All";
+						if (item.Color != -1)
+							color = "0x" + item.Color.ToString("X4");
 
-						listitem.Checked = item.Selected;
-
-						listitem.SubItems.Add(item.Name);
-						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-
-						listitem.SubItems.Add(item.Amount.ToString());
-
-						if (item.Color == -1)
-							listitem.SubItems.Add("All");
-						else
-							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-
-						Assistant.Engine.MainWindow.BuyListView.Items.Add(listitem);
+						Assistant.Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
 					}
+
+					break;
 				}
-			}
-		}
-
-		internal static void UpdateSelectedItems(int i)
-		{
-			List<BuyAgentItem> items;
-			RazorEnhanced.Settings.BuyAgent.ItemsRead(BuyListName, out items);
-
-			if (items.Count != Assistant.Engine.MainWindow.BuyListView.Items.Count)
-			{
-				return;
-			}
-
-			ListViewItem lvi = Assistant.Engine.MainWindow.BuyListView.Items[i];
-			BuyAgentItem old = items[i];
-
-			if (lvi != null && old != null)
-			{
-				BuyAgentItem item = new BuyAgent.BuyAgentItem(old.Name, old.Graphics, old.Amount, old.Color, lvi.Checked);
-				RazorEnhanced.Settings.BuyAgent.ItemReplace(RazorEnhanced.BuyAgent.BuyListName, i, item);
 			}
 		}
 
@@ -541,7 +535,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.BuyAgent.ListInsert(newList);
 
 			RazorEnhanced.BuyAgent.RefreshLists();
-			RazorEnhanced.BuyAgent.RefreshItems();
+			RazorEnhanced.BuyAgent.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
@@ -552,37 +546,13 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.BuyAgent.RefreshLists();
-			RazorEnhanced.BuyAgent.RefreshItems();
+			RazorEnhanced.BuyAgent.InitGrid();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			BuyAgentItem item = new BuyAgentItem(name, graphics, amount, color, false);
-
-			string selection = Assistant.Engine.MainWindow.BuyListSelect.Text;
-
-			if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
-			{
-				if (!RazorEnhanced.Settings.BuyAgent.ItemExists(selection, item))
-					RazorEnhanced.Settings.BuyAgent.ItemInsert(selection, item);
-			}
-
-			RazorEnhanced.BuyAgent.RefreshItems();
-		}
-
-		internal static void ModifyItemInList(string name, int graphics, int amount, int color, bool selected, BuyAgentItem old, int index)
-		{
-			BuyAgentItem item = new BuyAgentItem(name, graphics, amount, color, selected);
-
-			string selection = Assistant.Engine.MainWindow.BuyListSelect.Text;
-
-			if (RazorEnhanced.Settings.BuyAgent.ListExists(selection))
-			{
-				if (RazorEnhanced.Settings.BuyAgent.ItemExists(selection, old))
-					RazorEnhanced.Settings.BuyAgent.ItemReplace(selection, index, item);
-			}
-
-			RazorEnhanced.BuyAgent.RefreshItems();
+			Assistant.Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
+			CopyTable();
 		}
 
 		internal static void EnableBuyFilter()

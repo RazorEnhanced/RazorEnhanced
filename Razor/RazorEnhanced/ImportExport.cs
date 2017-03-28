@@ -559,7 +559,7 @@ namespace RazorEnhanced
 								itemlist.Add((RazorEnhanced.BuyAgent.BuyAgentItem)row["Item"]);
 							}
 							RazorEnhanced.Settings.BuyAgent.ItemInsertFromImport(m_Dataset.Tables["BUY_ITEMS"].Rows[0]["List"].ToString(), itemlist);
-							RazorEnhanced.BuyAgent.RefreshItems();
+							RazorEnhanced.BuyAgent.InitGrid();
 							BuyAgent.AddLog("List: " + m_Dataset.Tables["BUY_ITEMS"].Rows[0]["List"].ToString() + " imported!");
 						}
 					}
