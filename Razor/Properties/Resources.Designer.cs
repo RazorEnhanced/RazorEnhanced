@@ -461,6 +461,16 @@ namespace Assistant.Properties {
         }
         
         /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap playagent {
+            get {
+                object obj = ResourceManager.GetObject("playagent", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Icon simile a (Icona).
         /// </summary>
         internal static System.Drawing.Icon razor_enhanced_ico {
@@ -566,6 +576,16 @@ namespace Assistant.Properties {
         internal static System.Drawing.Bitmap RoundButton {
             get {
                 object obj = ResourceManager.GetObject("RoundButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stopagent {
+            get {
+                object obj = ResourceManager.GetObject("stopagent", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

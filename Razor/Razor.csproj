@@ -1109,6 +1109,7 @@
     <None Include="RazorEnhanced\Resources\map-deadIn.png" />
     <None Include="RazorEnhanced\Resources\map-deadOut.png" />
     <Content Include="RazorEnhanced\Resources\loop.png" />
+    <None Include="RazorEnhanced\Resources\playagent.png" />
     <Content Include="RazorEnhanced\Resources\razor-enhanced-splash.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
@@ -1120,6 +1121,7 @@
     <None Include="RazorEnhanced\Resources\RoundButton.png" />
     <None Include="RazorEnhanced\Resources\uod_logo.png" />
     <None Include="RazorEnhanced\Resources\toolbar.png" />
+    <None Include="RazorEnhanced\Resources\stopagent.png" />
     <Content Include="RazorEnhanced\Resources\yellow.png" />
     <Content Include="UI\Lock.ico" />
     <Content Include="UI\UOPS.ico" />
