@@ -191,9 +191,6 @@ namespace RazorEnhanced
 			List<AutoLootList> lists;
 			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
 
-			if (lists.Count == 0)
-				Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
-
 			AutoLootList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
 				return;
@@ -213,12 +210,13 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshItems()
+		internal static void InitGrid()
 		{
 			List<AutoLootList> lists;
 			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
 
-			Assistant.Engine.MainWindow.AutoLootListView.Items.Clear();
+			Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Clear();
+
 			foreach (AutoLootList l in lists)
 			{
 				if (l.Selected)
@@ -228,42 +226,43 @@ namespace RazorEnhanced
 
 					foreach (AutoLootItem item in items)
 					{
-						ListViewItem listitem = new ListViewItem();
+						string color = "All";
+						if (item.Color != -1)
+							color = "0x" + item.Color.ToString("X4");
 
-						listitem.Checked = item.Selected;
-
-						listitem.SubItems.Add(item.Name);
-						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-
-						if (item.Color == -1)
-							listitem.SubItems.Add("All");
-						else
-							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-
-						Assistant.Engine.MainWindow.AutoLootListView.Items.Add(listitem);
+						Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.Properties });
 					}
+
+					break;
 				}
 			}
 		}
 
-		internal static void UpdateSelectedItems(int i)
+		internal static void CopyTable()
 		{
-			List<AutoLootItem> items;
-			RazorEnhanced.Settings.AutoLoot.ItemsRead(AutoLootListName, out items);
+			Settings.AutoLoot.ClearList(Assistant.Engine.MainWindow.AutoLootListSelect.Text); // Rimuove vecchi dati dal save
 
-			if (items.Count != Assistant.Engine.MainWindow.AutoLootListView.Items.Count)
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.AutoLootDataGridView.Rows)
 			{
-				return;
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				bool check = false;
+				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+
+				if (row.Cells[4].Value != null)
+					Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<AutoLootItem.Property>)row.Cells[4].Value));
+				else
+					Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<AutoLootItem.Property>()));
 			}
 
-			ListViewItem lvi = Assistant.Engine.MainWindow.AutoLootListView.Items[i];
-			AutoLootItem old = items[i];
-
-			if (lvi != null && old != null)
-			{
-				AutoLootItem item = new AutoLoot.AutoLootItem(old.Name, old.Graphics, old.Color, lvi.Checked, old.Properties);
-				RazorEnhanced.Settings.AutoLoot.ItemReplace(RazorEnhanced.AutoLoot.AutoLootListName, i, item);
-			}
+			Settings.Save(); // Salvo dati
 		}
 
 		internal static void AddList(string newList)
@@ -271,7 +270,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0, RazorEnhanced.AutoLoot.NoOpenCorpse);
 
 			RazorEnhanced.AutoLoot.RefreshLists();
-			RazorEnhanced.AutoLoot.RefreshItems();
+			RazorEnhanced.AutoLoot.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
@@ -282,46 +281,13 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.AutoLoot.RefreshLists();
-			RazorEnhanced.AutoLoot.RefreshItems();
+			RazorEnhanced.AutoLoot.InitGrid();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int color)
 		{
-			List<AutoLootItem.Property> propsList = new List<AutoLootItem.Property>();
-			AutoLootItem item = new AutoLootItem(name, graphics, color, false, propsList);
-
-			string selection = Assistant.Engine.MainWindow.AutoLootListSelect.Text;
-
-			if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-			{
-				if (!RazorEnhanced.Settings.AutoLoot.ItemExists(selection, item))
-					RazorEnhanced.Settings.AutoLoot.ItemInsert(selection, item);
-			}
-
-			RazorEnhanced.AutoLoot.RefreshItems();
-		}
-
-		internal static void ModifyItemInList(string name, int graphics, int color, bool selected, AutoLootItem old, int index)
-		{
-			List<AutoLootItem.Property> propsList = old.Properties;
-			AutoLootItem item = new AutoLootItem(name, graphics, color, selected, propsList);
-
-			string selection = Assistant.Engine.MainWindow.AutoLootListSelect.Text;
-
-			if (RazorEnhanced.Settings.AutoLoot.ListExists(selection))
-			{
-				if (RazorEnhanced.Settings.AutoLoot.ItemExists(selection, old))
-					RazorEnhanced.Settings.AutoLoot.ItemReplace(selection, index, item);
-			}
-
-			RazorEnhanced.AutoLoot.RefreshItems();
-		}
-
-		internal static void AddPropToItem(string list, int index, AutoLoot.AutoLootItem item, string propName, int propMin, int propMax)
-		{
-			AutoLootItem.Property prop = new AutoLootItem.Property(propName, propMin, propMax);
-			item.Properties.Add(prop);
-			RazorEnhanced.Settings.AutoLoot.ItemReplace(list, index, item);
+			Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), new List<AutoLootItem.Property>() });
+			CopyTable();
 		}
 
 		private static void RefreshCorpse(Item corpo)

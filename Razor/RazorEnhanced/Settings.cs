@@ -1838,16 +1838,19 @@ namespace RazorEnhanced
 				}
 			}
 
-			internal static void ListDelete(string description)
+			internal static void ClearList(string list)
 			{
 				for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
-					if ((string)row["List"] == description)
-					{
+					if ((string)row["List"] == list)
 						row.Delete();
-					}
 				}
+			}
+
+			internal static void ListDelete(string description)
+			{
+				ClearList(description);
 
 				for (int i = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Count - 1; i >= 0; i--)
 				{
@@ -1882,19 +1885,12 @@ namespace RazorEnhanced
 				lists = listsOut;
 			}
 
-			internal static bool ItemExists(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
-			{
-				return m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Cast<DataRow>().Any(row => (string) row["List"] == list && (RazorEnhanced.AutoLoot.AutoLootItem) row["Item"] == item);
-			}
-
 			internal static void ItemInsert(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
 			{
 				DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].NewRow();
 				row["List"] = list;
 				row["Item"] = item;
 				m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Add(row);
-
-				Save();
 			}
 
 			internal static void ItemInsertFromImport(string list, List<RazorEnhanced.AutoLoot.AutoLootItem> itemlist)
@@ -1906,39 +1902,6 @@ namespace RazorEnhanced
 					row["Item"] = item;
 					m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Add(row);
 				}
-				Save();
-			}
-
-			internal static void ItemReplace(string list, int index, RazorEnhanced.AutoLoot.AutoLootItem item)
-			{
-				int count = -1;
-				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
-				{
-					if ((string)row["List"] == list)
-					{
-						count++;
-						if (count == index)
-						{
-							row["Item"] = item;
-						}
-					}
-				}
-
-				Save();
-			}
-
-			internal static void ItemDelete(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
-			{
-				for (int i = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows.Count - 1; i >= 0; i--)
-				{
-					DataRow row = m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[i];
-					if ((string)row["List"] == list && (RazorEnhanced.AutoLoot.AutoLootItem)row["Item"] == item)
-					{
-						row.Delete();
-						break;
-					}
-				}
-
 				Save();
 			}
 

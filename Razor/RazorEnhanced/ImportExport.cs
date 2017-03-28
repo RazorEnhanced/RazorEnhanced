@@ -60,7 +60,7 @@ namespace RazorEnhanced
 								itemlist.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
 							}
 							RazorEnhanced.Settings.AutoLoot.ItemInsertFromImport(m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[0]["List"].ToString(), itemlist);
-							RazorEnhanced.AutoLoot.RefreshItems();
+							RazorEnhanced.AutoLoot.InitGrid();
 							AutoLoot.AddLog("List: " + m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows[0]["List"].ToString() + " imported!");
 						}
 					}

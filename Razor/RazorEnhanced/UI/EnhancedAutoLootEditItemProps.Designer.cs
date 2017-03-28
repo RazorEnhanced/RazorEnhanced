@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.ColumnHeader ColumnHeader3;
 			System.Windows.Forms.ColumnHeader columnHeader8;
 			System.Windows.Forms.ColumnHeader columnHeader12;
@@ -46,12 +47,13 @@
 			this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader14 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.listViewProps = new System.Windows.Forms.ListView();
-			this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.autolootpropGridView = new System.Windows.Forms.DataGridView();
+			this.ScavengerPropsName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavengerMinPropsValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ScavengerMaxPropValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.imagepanel = new System.Windows.Forms.Panel();
 			this.lColor = new System.Windows.Forms.Label();
 			this.lGraphics = new System.Windows.Forms.Label();
 			this.lName = new System.Windows.Forms.Label();
@@ -59,24 +61,21 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.custompropnameTextBox = new RazorEnhanced.UI.RazorTextBox();
-			this.label7 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
-			this.bRemoveProp = new RazorEnhanced.UI.RazorButton();
 			this.bAddProp = new RazorEnhanced.UI.RazorButton();
-			this.tMax = new RazorEnhanced.UI.RazorTextBox();
-			this.label5 = new System.Windows.Forms.Label();
-			this.tMin = new RazorEnhanced.UI.RazorTextBox();
-			this.label4 = new System.Windows.Forms.Label();
 			this.comboboxProp = new RazorEnhanced.UI.RazorComboBox();
+			this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.razorButton1 = new RazorEnhanced.UI.RazorButton();
 			ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.groupBox1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.autolootpropGridView)).BeginInit();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
+			this.contextMenuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// ColumnHeader3
@@ -151,37 +150,9 @@
 			// 
 			this.columnHeader15.Text = "Graphics";
 			// 
-			// listViewProps
-			// 
-			this.listViewProps.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader17,
-            this.columnHeader18,
-            this.columnHeader19});
-			this.listViewProps.Location = new System.Drawing.Point(6, 19);
-			this.listViewProps.Name = "listViewProps";
-			this.listViewProps.Size = new System.Drawing.Size(596, 153);
-			this.listViewProps.TabIndex = 1;
-			this.listViewProps.UseCompatibleStateImageBehavior = false;
-			this.listViewProps.View = System.Windows.Forms.View.Details;
-			// 
-			// columnHeader17
-			// 
-			this.columnHeader17.Text = "Prop Name";
-			this.columnHeader17.Width = 437;
-			// 
-			// columnHeader18
-			// 
-			this.columnHeader18.Text = "Min";
-			this.columnHeader18.Width = 80;
-			// 
-			// columnHeader19
-			// 
-			this.columnHeader19.Text = "Max";
-			this.columnHeader19.Width = 70;
-			// 
 			// groupBox1
 			// 
-			this.groupBox1.Controls.Add(this.listViewProps);
+			this.groupBox1.Controls.Add(this.autolootpropGridView);
 			this.groupBox1.Location = new System.Drawing.Point(12, 123);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(608, 185);
@@ -189,8 +160,47 @@
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Propreties List";
 			// 
+			// autolootpropGridView
+			// 
+			this.autolootpropGridView.AllowUserToResizeRows = false;
+			this.autolootpropGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.autolootpropGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ScavengerPropsName,
+            this.ScavengerMinPropsValue,
+            this.ScavengerMaxPropValue});
+			this.autolootpropGridView.Location = new System.Drawing.Point(9, 20);
+			this.autolootpropGridView.Name = "autolootpropGridView";
+			this.autolootpropGridView.RowHeadersVisible = false;
+			this.autolootpropGridView.Size = new System.Drawing.Size(588, 150);
+			this.autolootpropGridView.TabIndex = 0;
+			this.autolootpropGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootpropGridView_CellEndEdit);
+			this.autolootpropGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.autolootpropGridView_CellMouseUp);
+			this.autolootpropGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.autolootpropGridView_DataError);
+			this.autolootpropGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.autolootpropGridView_DefaultValuesNeeded);
+			// 
+			// ScavengerPropsName
+			// 
+			this.ScavengerPropsName.HeaderText = "Props Name";
+			this.ScavengerPropsName.Name = "ScavengerPropsName";
+			this.ScavengerPropsName.Width = 488;
+			// 
+			// ScavengerMinPropsValue
+			// 
+			this.ScavengerMinPropsValue.HeaderText = "Min";
+			this.ScavengerMinPropsValue.Name = "ScavengerMinPropsValue";
+			this.ScavengerMinPropsValue.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavengerMinPropsValue.Width = 40;
+			// 
+			// ScavengerMaxPropValue
+			// 
+			this.ScavengerMaxPropValue.HeaderText = "Max";
+			this.ScavengerMaxPropValue.Name = "ScavengerMaxPropValue";
+			this.ScavengerMaxPropValue.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ScavengerMaxPropValue.Width = 40;
+			// 
 			// groupBox2
 			// 
+			this.groupBox2.Controls.Add(this.imagepanel);
 			this.groupBox2.Controls.Add(this.lColor);
 			this.groupBox2.Controls.Add(this.lGraphics);
 			this.groupBox2.Controls.Add(this.lName);
@@ -203,6 +213,14 @@
 			this.groupBox2.TabIndex = 3;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Item";
+			// 
+			// imagepanel
+			// 
+			this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.imagepanel.Location = new System.Drawing.Point(128, 50);
+			this.imagepanel.Name = "imagepanel";
+			this.imagepanel.Size = new System.Drawing.Size(60, 49);
+			this.imagepanel.TabIndex = 6;
 			// 
 			// lColor
 			// 
@@ -260,57 +278,26 @@
 			// 
 			// groupBox3
 			// 
-			this.groupBox3.Controls.Add(this.custompropnameTextBox);
-			this.groupBox3.Controls.Add(this.label7);
 			this.groupBox3.Controls.Add(this.label6);
-			this.groupBox3.Controls.Add(this.bRemoveProp);
 			this.groupBox3.Controls.Add(this.bAddProp);
-			this.groupBox3.Controls.Add(this.tMax);
-			this.groupBox3.Controls.Add(this.label5);
-			this.groupBox3.Controls.Add(this.tMin);
-			this.groupBox3.Controls.Add(this.label4);
 			this.groupBox3.Controls.Add(this.comboboxProp);
 			this.groupBox3.Location = new System.Drawing.Point(236, 12);
 			this.groupBox3.Name = "groupBox3";
 			this.groupBox3.Size = new System.Drawing.Size(384, 105);
 			this.groupBox3.TabIndex = 4;
 			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Add / Remove ";
-			// 
-			// custompropnameTextBox
-			// 
-			this.custompropnameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.custompropnameTextBox.BackColor = System.Drawing.Color.White;
-			this.custompropnameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.custompropnameTextBox.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.custompropnameTextBox.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.custompropnameTextBox.Location = new System.Drawing.Point(113, 48);
-			this.custompropnameTextBox.Name = "custompropnameTextBox";
-			this.custompropnameTextBox.Size = new System.Drawing.Size(253, 20);
-			this.custompropnameTextBox.TabIndex = 10;
-			this.custompropnameTextBox.Enter += new System.EventHandler(this.custompropnameTextBox_Enter);
-			// 
-			// label7
-			// 
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(6, 50);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(101, 13);
-			this.label7.TabIndex = 9;
-			this.label7.Text = "Custom Prop Name:";
+			this.groupBox3.Text = "Props Editing";
 			// 
 			// label6
 			// 
 			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(6, 24);
+			this.label6.Location = new System.Drawing.Point(12, 35);
 			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(82, 13);
-			this.label6.TabIndex = 8;
-			this.label6.Text = "Prop Name List:";
+			this.label6.Size = new System.Drawing.Size(74, 13);
+			this.label6.TabIndex = 11;
+			this.label6.Text = "Default Props:";
 			// 
-			// bRemoveProp
+			// bAddProp
 			// 
 			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
@@ -329,20 +316,8 @@
 			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
 			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
 			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
-			this.bRemoveProp.ColorTable = office2010BlueTheme1;
-			this.bRemoveProp.Location = new System.Drawing.Point(291, 75);
-			this.bRemoveProp.Name = "bRemoveProp";
-			this.bRemoveProp.Size = new System.Drawing.Size(75, 23);
-			this.bRemoveProp.TabIndex = 7;
-			this.bRemoveProp.Text = "Remove";
-			this.bRemoveProp.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.bRemoveProp.UseVisualStyleBackColor = true;
-			this.bRemoveProp.Click += new System.EventHandler(this.razorButton3_Click);
-			// 
-			// bAddProp
-			// 
 			this.bAddProp.ColorTable = office2010BlueTheme1;
-			this.bAddProp.Location = new System.Drawing.Point(203, 75);
+			this.bAddProp.Location = new System.Drawing.Point(298, 65);
 			this.bAddProp.Name = "bAddProp";
 			this.bAddProp.Size = new System.Drawing.Size(75, 23);
 			this.bAddProp.TabIndex = 6;
@@ -351,61 +326,28 @@
 			this.bAddProp.UseVisualStyleBackColor = true;
 			this.bAddProp.Click += new System.EventHandler(this.bAddProp_Click);
 			// 
-			// tMax
-			// 
-			this.tMax.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tMax.BackColor = System.Drawing.Color.White;
-			this.tMax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tMax.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tMax.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.tMax.Location = new System.Drawing.Point(139, 77);
-			this.tMax.Name = "tMax";
-			this.tMax.Size = new System.Drawing.Size(43, 20);
-			this.tMax.TabIndex = 4;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(110, 80);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(30, 13);
-			this.label5.TabIndex = 3;
-			this.label5.Text = "Max:";
-			// 
-			// tMin
-			// 
-			this.tMin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.tMin.BackColor = System.Drawing.Color.White;
-			this.tMin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tMin.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tMin.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.tMin.Location = new System.Drawing.Point(45, 77);
-			this.tMin.Name = "tMin";
-			this.tMin.Size = new System.Drawing.Size(43, 20);
-			this.tMin.TabIndex = 2;
-			// 
-			// label4
-			// 
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(18, 80);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(27, 13);
-			this.label4.TabIndex = 1;
-			this.label4.Text = "Min:";
-			// 
 			// comboboxProp
 			// 
 			this.comboboxProp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.comboboxProp.FormattingEnabled = true;
-			this.comboboxProp.Location = new System.Drawing.Point(94, 19);
+			this.comboboxProp.Location = new System.Drawing.Point(100, 30);
 			this.comboboxProp.Name = "comboboxProp";
-			this.comboboxProp.Size = new System.Drawing.Size(272, 24);
+			this.comboboxProp.Size = new System.Drawing.Size(273, 24);
 			this.comboboxProp.TabIndex = 0;
-			this.comboboxProp.SelectedIndexChanged += new System.EventHandler(this.comboboxProp_SelectedIndexChanged);
+			// 
+			// contextMenuStrip1
+			// 
+			this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteRowToolStripMenuItem});
+			this.contextMenuStrip1.Name = "contextMenuStrip1";
+			this.contextMenuStrip1.Size = new System.Drawing.Size(134, 26);
+			// 
+			// deleteRowToolStripMenuItem
+			// 
+			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
+			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+			this.deleteRowToolStripMenuItem.Text = "Delete Row";
+			this.deleteRowToolStripMenuItem.Click += new System.EventHandler(this.deleteRowToolStripMenuItem_Click);
 			// 
 			// razorButton1
 			// 
@@ -431,13 +373,15 @@
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "EnhancedAutolootEditItemProps";
-			this.Text = "Enhanced Autoloot Edit Item Props";
-			this.Load += new System.EventHandler(this.EnhancedAutolootEditItemProps_Load);
+			this.Text = "Enhanced AutoLoot Edit Item Props";
+			this.Load += new System.EventHandler(this.EnhancedScavengerEditItemProps_Load);
 			this.groupBox1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.autolootpropGridView)).EndInit();
 			this.groupBox2.ResumeLayout(false);
 			this.groupBox2.PerformLayout();
 			this.groupBox3.ResumeLayout(false);
 			this.groupBox3.PerformLayout();
+			this.contextMenuStrip1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -456,9 +400,6 @@
 		private System.Windows.Forms.ColumnHeader columnHeader13;
 		private System.Windows.Forms.ColumnHeader columnHeader14;
 		private System.Windows.Forms.ColumnHeader columnHeader15;
-		public System.Windows.Forms.ColumnHeader columnHeader17;
-		public System.Windows.Forms.ColumnHeader columnHeader18;
-		private System.Windows.Forms.ColumnHeader columnHeader19;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.GroupBox groupBox2;
 		private System.Windows.Forms.Label label3;
@@ -466,19 +407,18 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.GroupBox groupBox3;
 		private RazorButton razorButton1;
-		private RazorButton bRemoveProp;
 		private RazorButton bAddProp;
-		private RazorTextBox tMax;
-		private System.Windows.Forms.Label label5;
-		private RazorTextBox tMin;
-		private System.Windows.Forms.Label label4;
 		private RazorComboBox comboboxProp;
 		private System.Windows.Forms.Label lColor;
 		private System.Windows.Forms.Label lGraphics;
 		private System.Windows.Forms.Label lName;
-		private System.Windows.Forms.ListView listViewProps;
-		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label6;
-		private RazorTextBox custompropnameTextBox;
+		private System.Windows.Forms.DataGridView autolootpropGridView;
+		private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+		private System.Windows.Forms.ToolStripMenuItem deleteRowToolStripMenuItem;
+		private System.Windows.Forms.Panel imagepanel;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ScavengerPropsName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ScavengerMinPropsValue;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ScavengerMaxPropValue;
 	}
 }

@@ -314,6 +314,12 @@
     <Compile Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.Designer.cs">
       <DependentUpon>EnhancedGraphFilterAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.Designer.cs">
+      <DependentUpon>EnhancedAutolootEditItemProps.cs</DependentUpon>
+    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedTargetEdit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -415,18 +421,6 @@
     <Compile Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.Designer.cs">
       <DependentUpon>EnhancedScavengerEditItemProps.cs</DependentUpon>
     </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItemProps.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItemProps.Designer.cs">
-      <DependentUpon>EnhancedAutoLootEditItemProps.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItem.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootEditItem.Designer.cs">
-      <DependentUpon>EnhancedAutoLootEditItem.cs</DependentUpon>
-    </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedItemInspector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -438,12 +432,6 @@
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedMobileInspector.Designer.cs">
       <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddItemManual.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RazorEnhanced\UI\EnhancedAutoLootAddItemManual.Designer.cs">
-      <DependentUpon>EnhancedAutoLootAddItemManual.cs</DependentUpon>
     </Compile>
     <Compile Include="RazorEnhanced\UI\EnhancedScriptEditor.cs">
       <SubType>Form</SubType>
@@ -512,6 +500,9 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedGraphFilterAdd.resx">
       <DependentUpon>EnhancedGraphFilterAdd.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutolootEditItemProps.resx">
+      <DependentUpon>EnhancedAutolootEditItemProps.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedTargetEdit.resx">
       <DependentUpon>EnhancedTargetEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -554,20 +545,11 @@
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScavengerEditItemProps.resx">
       <DependentUpon>EnhancedScavengerEditItemProps.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootEditItemProps.resx">
-      <DependentUpon>EnhancedAutoLootEditItemProps.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootEditItem.resx">
-      <DependentUpon>EnhancedAutoLootEditItem.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedItemInspector.resx">
       <DependentUpon>EnhancedItemInspector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedMobileInspector.resx">
       <DependentUpon>EnhancedMobileInspector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="RazorEnhanced\UI\EnhancedAutoLootAddItemManual.resx">
-      <DependentUpon>EnhancedAutoLootAddItemManual.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RazorEnhanced\UI\EnhancedScriptEditor.resx">
       <DependentUpon>EnhancedScriptEditor.cs</DependentUpon>
