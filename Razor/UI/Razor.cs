@@ -157,8 +157,6 @@ namespace Assistant
 		private RazorButton scavengerButtonEditProps;
 		private RazorButton scavengerButtonAddTarget;
 		private TabPage Organizer;
-		private RazorButton organizerStopButton;
-		private RazorButton organizerExecuteButton;
 		private GroupBox groupBox16;
 		private ListBox organizerLogBox;
 		private Label label27;
@@ -166,18 +164,8 @@ namespace Assistant
 		private Label organizerDestinationLabel;
 		private RazorButton organizerSetDestinationB;
 		private Label organizerSourceLabel;
-		private GroupBox groupBox15;
-		private RazorButton organizerEditB;
 		private RazorButton organizerAddTargetB;
-		private RazorButton organizerRemoveB;
-		private RazorButton organizerAddManualB;
 		private RazorButton organizerSetSourceB;
-		private ListView organizerListView;
-		private ColumnHeader columnHeader9;
-		private ColumnHeader columnHeader10;
-		private ColumnHeader columnHeader11;
-		private ColumnHeader columnHeader12;
-		private ColumnHeader columnHeader13;
 		private RazorButton organizerRemoveListB;
 		private RazorButton organizerAddListB;
 		private RazorButton organizerImportListB;
@@ -572,6 +560,17 @@ namespace Assistant
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
 		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+		private DataGridView organizerdataGridView;
+		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn2;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
+		private Button organizerStopButton;
+		private GroupBox groupBox11;
+		private Label label57;
+		private Label label56;
+		private Button organizerExecuteButton;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -627,7 +626,7 @@ namespace Assistant
 		internal Label OrganizerSourceLabel { get { return organizerSourceLabel; } }
 		internal Label OrganizerDestinationLabel { get { return organizerDestinationLabel; } }
 		internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
-		internal ListView OrganizerListView { get { return organizerListView; } }
+		internal DataGridView OrganizerDataGridView { get { return organizerdataGridView; } }
 		internal RazorComboBox OrganizerListSelect { get { return organizerListSelect; } }
 		internal Button OrganizerExecute { get { return organizerExecuteButton; } }
 		internal Button OrganizerStop { get { return organizerStopButton; } }
@@ -790,9 +789,8 @@ namespace Assistant
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme2 = new RazorEnhanced.UI.Office2010BlueTheme();
 			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme1 = new RazorEnhanced.UI.Office2010BlueTheme();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
 			this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
@@ -1129,27 +1127,26 @@ namespace Assistant
 			this.scavengerListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.scavengerButtonExport = new RazorEnhanced.UI.RazorButton();
 			this.Organizer = new System.Windows.Forms.TabPage();
-			this.organizerStopButton = new RazorEnhanced.UI.RazorButton();
-			this.organizerExecuteButton = new RazorEnhanced.UI.RazorButton();
+			this.organizerExecuteButton = new System.Windows.Forms.Button();
+			this.organizerStopButton = new System.Windows.Forms.Button();
+			this.groupBox11 = new System.Windows.Forms.GroupBox();
+			this.label57 = new System.Windows.Forms.Label();
+			this.label56 = new System.Windows.Forms.Label();
+			this.organizerSetSourceB = new RazorEnhanced.UI.RazorButton();
+			this.organizerSetDestinationB = new RazorEnhanced.UI.RazorButton();
+			this.organizerSourceLabel = new System.Windows.Forms.Label();
+			this.organizerDestinationLabel = new System.Windows.Forms.Label();
+			this.organizerdataGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewCheckBoxColumn2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.organizerAddTargetB = new RazorEnhanced.UI.RazorButton();
 			this.groupBox16 = new System.Windows.Forms.GroupBox();
 			this.organizerLogBox = new System.Windows.Forms.ListBox();
 			this.label27 = new System.Windows.Forms.Label();
-			this.organizerDestinationLabel = new System.Windows.Forms.Label();
-			this.organizerSourceLabel = new System.Windows.Forms.Label();
-			this.groupBox15 = new System.Windows.Forms.GroupBox();
-			this.organizerEditB = new RazorEnhanced.UI.RazorButton();
-			this.organizerAddTargetB = new RazorEnhanced.UI.RazorButton();
-			this.organizerRemoveB = new RazorEnhanced.UI.RazorButton();
-			this.organizerAddManualB = new RazorEnhanced.UI.RazorButton();
 			this.organizerDragDelay = new RazorEnhanced.UI.RazorTextBox();
-			this.organizerSetDestinationB = new RazorEnhanced.UI.RazorButton();
-			this.organizerSetSourceB = new RazorEnhanced.UI.RazorButton();
-			this.organizerListView = new System.Windows.Forms.ListView();
-			this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader12 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader13 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label24 = new System.Windows.Forms.Label();
 			this.organizerRemoveListB = new RazorEnhanced.UI.RazorButton();
 			this.organizerAddListB = new RazorEnhanced.UI.RazorButton();
@@ -1377,8 +1374,9 @@ namespace Assistant
 			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).BeginInit();
 			this.groupBox12.SuspendLayout();
 			this.Organizer.SuspendLayout();
+			this.groupBox11.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.organizerdataGridView)).BeginInit();
 			this.groupBox16.SuspendLayout();
-			this.groupBox15.SuspendLayout();
 			this.VendorBuy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.vendorbuydataGridView)).BeginInit();
 			this.groupBox18.SuspendLayout();
@@ -1457,7 +1455,24 @@ namespace Assistant
 			// 
 			// openchangelogButton
 			// 
-			this.openchangelogButton.ColorTable = office2010BlueTheme2;
+			office2010BlueTheme1.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
+			office2010BlueTheme1.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
+			office2010BlueTheme1.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
+			office2010BlueTheme1.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
+			office2010BlueTheme1.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
+			office2010BlueTheme1.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
+			office2010BlueTheme1.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
+			office2010BlueTheme1.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
+			office2010BlueTheme1.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
+			office2010BlueTheme1.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
+			office2010BlueTheme1.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
+			office2010BlueTheme1.TextColor = System.Drawing.Color.White;
+			this.openchangelogButton.ColorTable = office2010BlueTheme1;
 			this.openchangelogButton.Location = new System.Drawing.Point(542, 24);
 			this.openchangelogButton.Name = "openchangelogButton";
 			this.openchangelogButton.Size = new System.Drawing.Size(95, 23);
@@ -4985,17 +5000,14 @@ namespace Assistant
 			// 
 			// Organizer
 			// 
-			this.Organizer.Controls.Add(this.organizerStopButton);
 			this.Organizer.Controls.Add(this.organizerExecuteButton);
+			this.Organizer.Controls.Add(this.organizerStopButton);
+			this.Organizer.Controls.Add(this.groupBox11);
+			this.Organizer.Controls.Add(this.organizerdataGridView);
+			this.Organizer.Controls.Add(this.organizerAddTargetB);
 			this.Organizer.Controls.Add(this.groupBox16);
 			this.Organizer.Controls.Add(this.label27);
-			this.Organizer.Controls.Add(this.organizerDestinationLabel);
-			this.Organizer.Controls.Add(this.organizerSourceLabel);
-			this.Organizer.Controls.Add(this.groupBox15);
 			this.Organizer.Controls.Add(this.organizerDragDelay);
-			this.Organizer.Controls.Add(this.organizerSetDestinationB);
-			this.Organizer.Controls.Add(this.organizerSetSourceB);
-			this.Organizer.Controls.Add(this.organizerListView);
 			this.Organizer.Controls.Add(this.label24);
 			this.Organizer.Controls.Add(this.organizerRemoveListB);
 			this.Organizer.Controls.Add(this.organizerAddListB);
@@ -5010,32 +5022,184 @@ namespace Assistant
 			this.Organizer.Text = "Organizer";
 			this.Organizer.UseVisualStyleBackColor = true;
 			// 
-			// organizerStopButton
-			// 
-			this.organizerStopButton.ColorTable = office2010BlueTheme1;
-			this.organizerStopButton.Location = new System.Drawing.Point(334, 58);
-			this.organizerStopButton.Name = "organizerStopButton";
-			this.organizerStopButton.Size = new System.Drawing.Size(61, 20);
-			this.organizerStopButton.TabIndex = 75;
-			this.organizerStopButton.Text = "Stop";
-			this.organizerStopButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerStopButton.Click += new System.EventHandler(this.organizerStop_Click);
-			// 
 			// organizerExecuteButton
 			// 
-			this.organizerExecuteButton.ColorTable = office2010BlueTheme1;
-			this.organizerExecuteButton.Location = new System.Drawing.Point(268, 58);
+			this.organizerExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
+			this.organizerExecuteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.organizerExecuteButton.Location = new System.Drawing.Point(284, 46);
 			this.organizerExecuteButton.Name = "organizerExecuteButton";
-			this.organizerExecuteButton.Size = new System.Drawing.Size(61, 20);
-			this.organizerExecuteButton.TabIndex = 74;
-			this.organizerExecuteButton.Text = "Execute";
-			this.organizerExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.organizerExecuteButton.Size = new System.Drawing.Size(30, 30);
+			this.organizerExecuteButton.TabIndex = 91;
+			this.organizerExecuteButton.UseVisualStyleBackColor = true;
 			this.organizerExecuteButton.Click += new System.EventHandler(this.organizerExecute_Click);
+			// 
+			// organizerStopButton
+			// 
+			this.organizerStopButton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
+			this.organizerStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.organizerStopButton.Location = new System.Drawing.Point(320, 46);
+			this.organizerStopButton.Name = "organizerStopButton";
+			this.organizerStopButton.Size = new System.Drawing.Size(30, 30);
+			this.organizerStopButton.TabIndex = 1;
+			this.organizerStopButton.UseVisualStyleBackColor = true;
+			this.organizerStopButton.Click += new System.EventHandler(this.organizerStop_Click);
+			// 
+			// groupBox11
+			// 
+			this.groupBox11.Controls.Add(this.label57);
+			this.groupBox11.Controls.Add(this.label56);
+			this.groupBox11.Controls.Add(this.organizerSetSourceB);
+			this.groupBox11.Controls.Add(this.organizerSetDestinationB);
+			this.groupBox11.Controls.Add(this.organizerSourceLabel);
+			this.groupBox11.Controls.Add(this.organizerDestinationLabel);
+			this.groupBox11.Location = new System.Drawing.Point(9, 42);
+			this.groupBox11.Name = "groupBox11";
+			this.groupBox11.Size = new System.Drawing.Size(252, 65);
+			this.groupBox11.TabIndex = 90;
+			this.groupBox11.TabStop = false;
+			this.groupBox11.Text = "Organizer Bags";
+			// 
+			// label57
+			// 
+			this.label57.AutoSize = true;
+			this.label57.Location = new System.Drawing.Point(6, 41);
+			this.label57.Name = "label57";
+			this.label57.Size = new System.Drawing.Size(63, 13);
+			this.label57.TabIndex = 91;
+			this.label57.Text = "Destination:";
+			// 
+			// label56
+			// 
+			this.label56.AutoSize = true;
+			this.label56.Location = new System.Drawing.Point(6, 17);
+			this.label56.Name = "label56";
+			this.label56.Size = new System.Drawing.Size(44, 13);
+			this.label56.TabIndex = 90;
+			this.label56.Text = "Source:";
+			// 
+			// organizerSetSourceB
+			// 
+			this.organizerSetSourceB.ColorTable = office2010BlueTheme1;
+			this.organizerSetSourceB.Location = new System.Drawing.Point(156, 12);
+			this.organizerSetSourceB.Name = "organizerSetSourceB";
+			this.organizerSetSourceB.Size = new System.Drawing.Size(90, 20);
+			this.organizerSetSourceB.TabIndex = 66;
+			this.organizerSetSourceB.Text = "Set Bag";
+			this.organizerSetSourceB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSource_Click);
+			// 
+			// organizerSetDestinationB
+			// 
+			this.organizerSetDestinationB.ColorTable = office2010BlueTheme1;
+			this.organizerSetDestinationB.Location = new System.Drawing.Point(156, 37);
+			this.organizerSetDestinationB.Name = "organizerSetDestinationB";
+			this.organizerSetDestinationB.Size = new System.Drawing.Size(90, 20);
+			this.organizerSetDestinationB.TabIndex = 69;
+			this.organizerSetDestinationB.Text = "Set Bag";
+			this.organizerSetDestinationB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestination_Click);
+			// 
+			// organizerSourceLabel
+			// 
+			this.organizerSourceLabel.Location = new System.Drawing.Point(75, 17);
+			this.organizerSourceLabel.Name = "organizerSourceLabel";
+			this.organizerSourceLabel.Size = new System.Drawing.Size(82, 19);
+			this.organizerSourceLabel.TabIndex = 67;
+			this.organizerSourceLabel.Text = "0x00000000";
+			// 
+			// organizerDestinationLabel
+			// 
+			this.organizerDestinationLabel.Location = new System.Drawing.Point(75, 41);
+			this.organizerDestinationLabel.Name = "organizerDestinationLabel";
+			this.organizerDestinationLabel.Size = new System.Drawing.Size(82, 19);
+			this.organizerDestinationLabel.TabIndex = 70;
+			this.organizerDestinationLabel.Text = "0x00000000";
+			// 
+			// organizerdataGridView
+			// 
+			this.organizerdataGridView.AllowUserToResizeRows = false;
+			this.organizerdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.organizerdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn2,
+            this.dataGridViewTextBoxColumn5,
+            this.dataGridViewTextBoxColumn6,
+            this.dataGridViewTextBoxColumn8,
+            this.dataGridViewTextBoxColumn7});
+			this.organizerdataGridView.Location = new System.Drawing.Point(9, 113);
+			this.organizerdataGridView.Name = "organizerdataGridView";
+			this.organizerdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			this.organizerdataGridView.RowHeadersVisible = false;
+			this.organizerdataGridView.Size = new System.Drawing.Size(357, 220);
+			this.organizerdataGridView.TabIndex = 89;
+			this.organizerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.organizerdataGridView_CellContentClick);
+			this.organizerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.organizerdataGridView_CellEndEdit);
+			this.organizerdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.organizerdataGridView_CellMouseUp);
+			this.organizerdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.organizerdataGridView_CurrentCellDirtyStateChanged);
+			this.organizerdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.organizerdataGridView_DataError);
+			this.organizerdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.organizerdataGridView_DefaultValuesNeeded);
+			// 
+			// dataGridViewCheckBoxColumn2
+			// 
+			this.dataGridViewCheckBoxColumn2.FalseValue = "False";
+			this.dataGridViewCheckBoxColumn2.HeaderText = "X";
+			this.dataGridViewCheckBoxColumn2.IndeterminateValue = "False";
+			this.dataGridViewCheckBoxColumn2.Name = "dataGridViewCheckBoxColumn2";
+			this.dataGridViewCheckBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewCheckBoxColumn2.ToolTipText = "Check This for enable item in list";
+			this.dataGridViewCheckBoxColumn2.TrueValue = "True";
+			this.dataGridViewCheckBoxColumn2.Width = 22;
+			// 
+			// dataGridViewTextBoxColumn5
+			// 
+			this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn5.HeaderText = "Item Name";
+			this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+			this.dataGridViewTextBoxColumn5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.dataGridViewTextBoxColumn5.ToolTipText = "Here the item name";
+			this.dataGridViewTextBoxColumn5.Width = 153;
+			// 
+			// dataGridViewTextBoxColumn6
+			// 
+			this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn6.HeaderText = "Graphics";
+			this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+			this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn6.ToolTipText = "Here Graphics item ID";
+			this.dataGridViewTextBoxColumn6.Width = 54;
+			// 
+			// dataGridViewTextBoxColumn8
+			// 
+			this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn8.HeaderText = "Color";
+			this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+			this.dataGridViewTextBoxColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn8.ToolTipText = "Here item color, use -1 for all color";
+			this.dataGridViewTextBoxColumn8.Width = 54;
+			// 
+			// dataGridViewTextBoxColumn7
+			// 
+			this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn7.HeaderText = "Amount";
+			this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+			this.dataGridViewTextBoxColumn7.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn7.ToolTipText = "Here amount to move, use -1 for all item";
+			this.dataGridViewTextBoxColumn7.Width = 54;
+			// 
+			// organizerAddTargetB
+			// 
+			this.organizerAddTargetB.ColorTable = office2010BlueTheme1;
+			this.organizerAddTargetB.Location = new System.Drawing.Point(561, 49);
+			this.organizerAddTargetB.Name = "organizerAddTargetB";
+			this.organizerAddTargetB.Size = new System.Drawing.Size(90, 20);
+			this.organizerAddTargetB.TabIndex = 47;
+			this.organizerAddTargetB.Text = "Add Item";
+			this.organizerAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTarget_Click);
 			// 
 			// groupBox16
 			// 
 			this.groupBox16.Controls.Add(this.organizerLogBox);
-			this.groupBox16.Location = new System.Drawing.Point(267, 84);
+			this.groupBox16.Location = new System.Drawing.Point(373, 84);
 			this.groupBox16.Name = "groupBox16";
 			this.groupBox16.Size = new System.Drawing.Size(278, 251);
 			this.groupBox16.TabIndex = 73;
@@ -5045,7 +5209,7 @@ namespace Assistant
 			// organizerLogBox
 			// 
 			this.organizerLogBox.FormattingEnabled = true;
-			this.organizerLogBox.Location = new System.Drawing.Point(7, 18);
+			this.organizerLogBox.Location = new System.Drawing.Point(6, 19);
 			this.organizerLogBox.Name = "organizerLogBox";
 			this.organizerLogBox.Size = new System.Drawing.Size(265, 225);
 			this.organizerLogBox.TabIndex = 0;
@@ -5053,84 +5217,11 @@ namespace Assistant
 			// label27
 			// 
 			this.label27.AutoSize = true;
-			this.label27.Location = new System.Drawing.Point(446, 61);
+			this.label27.Location = new System.Drawing.Point(415, 54);
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(105, 13);
 			this.label27.TabIndex = 72;
 			this.label27.Text = "Drag Item Delay (ms)";
-			// 
-			// organizerDestinationLabel
-			// 
-			this.organizerDestinationLabel.Location = new System.Drawing.Point(564, 126);
-			this.organizerDestinationLabel.Name = "organizerDestinationLabel";
-			this.organizerDestinationLabel.Size = new System.Drawing.Size(82, 19);
-			this.organizerDestinationLabel.TabIndex = 70;
-			this.organizerDestinationLabel.Text = "0x00000000";
-			// 
-			// organizerSourceLabel
-			// 
-			this.organizerSourceLabel.Location = new System.Drawing.Point(564, 82);
-			this.organizerSourceLabel.Name = "organizerSourceLabel";
-			this.organizerSourceLabel.Size = new System.Drawing.Size(82, 19);
-			this.organizerSourceLabel.TabIndex = 67;
-			this.organizerSourceLabel.Text = "0x00000000";
-			// 
-			// groupBox15
-			// 
-			this.groupBox15.Controls.Add(this.organizerEditB);
-			this.groupBox15.Controls.Add(this.organizerAddTargetB);
-			this.groupBox15.Controls.Add(this.organizerRemoveB);
-			this.groupBox15.Controls.Add(this.organizerAddManualB);
-			this.groupBox15.Location = new System.Drawing.Point(553, 158);
-			this.groupBox15.Name = "groupBox15";
-			this.groupBox15.Size = new System.Drawing.Size(100, 123);
-			this.groupBox15.TabIndex = 68;
-			this.groupBox15.TabStop = false;
-			this.groupBox15.Text = "Item List";
-			// 
-			// organizerEditB
-			// 
-			this.organizerEditB.ColorTable = office2010BlueTheme1;
-			this.organizerEditB.Location = new System.Drawing.Point(5, 68);
-			this.organizerEditB.Name = "organizerEditB";
-			this.organizerEditB.Size = new System.Drawing.Size(90, 20);
-			this.organizerEditB.TabIndex = 48;
-			this.organizerEditB.Text = "Edit";
-			this.organizerEditB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerEditB.Click += new System.EventHandler(this.organizerEdit_Click);
-			// 
-			// organizerAddTargetB
-			// 
-			this.organizerAddTargetB.ColorTable = office2010BlueTheme1;
-			this.organizerAddTargetB.Location = new System.Drawing.Point(5, 43);
-			this.organizerAddTargetB.Name = "organizerAddTargetB";
-			this.organizerAddTargetB.Size = new System.Drawing.Size(90, 20);
-			this.organizerAddTargetB.TabIndex = 47;
-			this.organizerAddTargetB.Text = "Add Target";
-			this.organizerAddTargetB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTarget_Click);
-			// 
-			// organizerRemoveB
-			// 
-			this.organizerRemoveB.ColorTable = office2010BlueTheme1;
-			this.organizerRemoveB.Location = new System.Drawing.Point(5, 94);
-			this.organizerRemoveB.Name = "organizerRemoveB";
-			this.organizerRemoveB.Size = new System.Drawing.Size(90, 20);
-			this.organizerRemoveB.TabIndex = 46;
-			this.organizerRemoveB.Text = "Remove";
-			this.organizerRemoveB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerRemoveB.Click += new System.EventHandler(this.organizerRemoveItem_Click);
-			// 
-			// organizerAddManualB
-			// 
-			this.organizerAddManualB.ColorTable = office2010BlueTheme1;
-			this.organizerAddManualB.Location = new System.Drawing.Point(5, 18);
-			this.organizerAddManualB.Name = "organizerAddManualB";
-			this.organizerAddManualB.Size = new System.Drawing.Size(90, 20);
-			this.organizerAddManualB.TabIndex = 45;
-			this.organizerAddManualB.Text = "Add Manual";
-			this.organizerAddManualB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerAddManualB.Click += new System.EventHandler(this.organizerAddManual_Click);
 			// 
 			// organizerDragDelay
 			// 
@@ -5141,81 +5232,11 @@ namespace Assistant
 			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.organizerDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.organizerDragDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.organizerDragDelay.Location = new System.Drawing.Point(400, 58);
+			this.organizerDragDelay.Location = new System.Drawing.Point(369, 51);
 			this.organizerDragDelay.Name = "organizerDragDelay";
 			this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.organizerDragDelay.TabIndex = 71;
 			this.organizerDragDelay.TextChanged += new System.EventHandler(this.organizerDragDelay_TextChanged);
-			// 
-			// organizerSetDestinationB
-			// 
-			this.organizerSetDestinationB.ColorTable = office2010BlueTheme1;
-			this.organizerSetDestinationB.Location = new System.Drawing.Point(558, 104);
-			this.organizerSetDestinationB.Name = "organizerSetDestinationB";
-			this.organizerSetDestinationB.Size = new System.Drawing.Size(90, 20);
-			this.organizerSetDestinationB.TabIndex = 69;
-			this.organizerSetDestinationB.Text = "Destination Bag";
-			this.organizerSetDestinationB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestination_Click);
-			// 
-			// organizerSetSourceB
-			// 
-			this.organizerSetSourceB.ColorTable = office2010BlueTheme1;
-			this.organizerSetSourceB.Location = new System.Drawing.Point(558, 60);
-			this.organizerSetSourceB.Name = "organizerSetSourceB";
-			this.organizerSetSourceB.Size = new System.Drawing.Size(90, 20);
-			this.organizerSetSourceB.TabIndex = 66;
-			this.organizerSetSourceB.Text = "Source Bag";
-			this.organizerSetSourceB.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSource_Click);
-			// 
-			// organizerListView
-			// 
-			this.organizerListView.CheckBoxes = true;
-			this.organizerListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11,
-            this.columnHeader12,
-            this.columnHeader13});
-			this.organizerListView.FullRowSelect = true;
-			this.organizerListView.GridLines = true;
-			this.organizerListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.organizerListView.HideSelection = false;
-			this.organizerListView.LabelWrap = false;
-			this.organizerListView.Location = new System.Drawing.Point(6, 51);
-			this.organizerListView.MultiSelect = false;
-			this.organizerListView.Name = "organizerListView";
-			this.organizerListView.Size = new System.Drawing.Size(255, 284);
-			this.organizerListView.TabIndex = 65;
-			this.organizerListView.UseCompatibleStateImageBehavior = false;
-			this.organizerListView.View = System.Windows.Forms.View.Details;
-			this.organizerListView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.organizerListView_ItemChecked);
-			// 
-			// columnHeader9
-			// 
-			this.columnHeader9.Text = "X";
-			this.columnHeader9.Width = 22;
-			// 
-			// columnHeader10
-			// 
-			this.columnHeader10.Text = "Item Name";
-			this.columnHeader10.Width = 73;
-			// 
-			// columnHeader11
-			// 
-			this.columnHeader11.Text = "Graphics";
-			this.columnHeader11.Width = 55;
-			// 
-			// columnHeader12
-			// 
-			this.columnHeader12.Text = "Color";
-			this.columnHeader12.Width = 44;
-			// 
-			// columnHeader13
-			// 
-			this.columnHeader13.Text = "Amount";
-			this.columnHeader13.Width = 55;
 			// 
 			// label24
 			// 
@@ -5390,24 +5411,7 @@ namespace Assistant
 			// 
 			// buyAddTargetB
 			// 
-			office2010BlueTheme2.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme2.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme2.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme2.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme2.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme2.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme2.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme2.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme2.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme2.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme2.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme2.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme2.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme2.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme2.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme2.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme2.TextColor = System.Drawing.Color.White;
-			this.buyAddTargetB.ColorTable = office2010BlueTheme2;
+			this.buyAddTargetB.ColorTable = office2010BlueTheme1;
 			this.buyAddTargetB.Location = new System.Drawing.Point(561, 40);
 			this.buyAddTargetB.Name = "buyAddTargetB";
 			this.buyAddTargetB.Size = new System.Drawing.Size(90, 20);
@@ -7277,8 +7281,10 @@ namespace Assistant
 			this.groupBox12.ResumeLayout(false);
 			this.Organizer.ResumeLayout(false);
 			this.Organizer.PerformLayout();
+			this.groupBox11.ResumeLayout(false);
+			this.groupBox11.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.organizerdataGridView)).EndInit();
 			this.groupBox16.ResumeLayout(false);
-			this.groupBox15.ResumeLayout(false);
 			this.VendorBuy.ResumeLayout(false);
 			this.VendorBuy.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.vendorbuydataGridView)).EndInit();
@@ -9797,71 +9803,7 @@ namespace Assistant
 				}
 			}
 		}
-
-		private void organizerAddManual_Click(object sender, EventArgs e)
-		{
-			if (organizerListSelect.Text != "")
-			{
-				EnhancedOrganizerManualAdd manualAddItem = new EnhancedOrganizerManualAdd();
-				manualAddItem.TopMost = true;
-				manualAddItem.Show();
-			}
-			else
-				RazorEnhanced.Organizer.AddLog("Item list not selected!");
-		}
-
-		private void organizerEdit_Click(object sender, EventArgs e)
-		{
-			if (organizerListSelect.Text != "")
-			{
-				if (organizerListView.SelectedItems.Count == 1)
-				{
-					int index = organizerListView.SelectedItems[0].Index;
-					string selection = organizerListSelect.Text;
-
-					if (RazorEnhanced.Settings.Organizer.ListExists(selection))
-					{
-						List<Organizer.OrganizerItem> items;
-						RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							Organizer.OrganizerItem item = items[index];
-							EnhancedOrganizerEditItem editItem = new EnhancedOrganizerEditItem(selection, index, item);
-							editItem.TopMost = true;
-							editItem.Show();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.Organizer.AddLog("Item list not selected!");
-		}
-
-		private void organizerRemoveItem_Click(object sender, EventArgs e)
-		{
-			if (organizerListSelect.Text != "")
-			{
-				if (organizerListView.SelectedItems.Count == 1)
-				{
-					int index = organizerListView.SelectedItems[0].Index;
-					string selection = organizerListSelect.Text;
-
-					if (RazorEnhanced.Settings.Organizer.ListExists(selection))
-					{
-						List<Organizer.OrganizerItem> items;
-						RazorEnhanced.Settings.Organizer.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.Settings.Organizer.ItemDelete(selection, items[index]);
-							RazorEnhanced.Organizer.RefreshItems();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.Organizer.AddLog("Item list not selected!");
-		}
-
+  
 		private void organizerSetSource_Click(object sender, EventArgs e)
 		{
 			if (organizerListSelect.Text != "")
@@ -9952,7 +9894,7 @@ namespace Assistant
 			RazorEnhanced.Organizer.OrganizerDestination = bagdestination;
 
 			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
-			RazorEnhanced.Organizer.RefreshItems();
+			RazorEnhanced.Organizer.InitGrid();
 
 			if (organizerListSelect.Text != "")
 				RazorEnhanced.Organizer.AddLog("Organizer list changed to: " + organizerListSelect.Text);
@@ -9990,15 +9932,6 @@ namespace Assistant
 			{
 				RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 				RazorEnhanced.Organizer.RefreshLists();
-			}
-		}
-
-		private void organizerListView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			if (organizerListView.FocusedItem != null)
-			{
-				ListViewItem item = e.Item as ListViewItem;
-				RazorEnhanced.Organizer.UpdateSelectedItems(item.Index);
 			}
 		}
 
@@ -12934,6 +12867,13 @@ namespace Assistant
 						RazorEnhanced.Scavenger.CopyTable();
 					}
 					break;
+				case 3:
+					if (!organizerdataGridView.Rows[agentrowindex].IsNewRow)
+					{
+						organizerdataGridView.Rows.RemoveAt(agentrowindex);
+						RazorEnhanced.Organizer.CopyTable();
+					}
+					break;
 				case 4:
 					if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
 					{
@@ -12949,7 +12889,120 @@ namespace Assistant
 					}
 					break;
 			}
+
 		}
+
+		private void organizerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = organizerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 3)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int color = 0;
+					if (!cell.Value.ToString().Contains("-"))
+					{
+						try
+						{
+							color = Convert.ToInt32((string)cell.Value, 16);
+						}
+						catch { }
+
+						if (color > 65535)
+							color = 65535;
+					}
+					cell.Value = "0x" + color.ToString("X4");
+				}
+			}
+			else if (e.ColumnIndex == 4)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int amount = 0;
+					Int32.TryParse(cell.Value.ToString(), out amount);
+
+					if (amount < 0 || amount > 9999)
+						amount = 9999;
+
+					cell.Value = amount.ToString();
+				}
+			}
+			else if (e.ColumnIndex == 2)
+			{
+				int itemid = 0;
+				if (!cell.Value.ToString().Contains("-"))
+				{
+					try
+					{
+						itemid = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (itemid > 65535)
+						itemid = 65535;
+				}
+				cell.Value = "0x" + itemid.ToString("X4");
+			}
+			RazorEnhanced.Organizer.CopyTable();
+		}
+
+		private void organizerdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "New Item";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = "0x0000";
+			e.Row.Cells[4].Value = "1";
+		}
+
+		private void organizerdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void organizerdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (!organizerdataGridView.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			{
+				RazorEnhanced.Organizer.CopyTable();
+			}
+		}
+
+		private void organizerdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				organizerdataGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = 3;
+				organizerdataGridView.CurrentCell = organizerdataGridView.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(organizerdataGridView, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+		}
+
+		private void organizerdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+		{
+			if (!organizerdataGridView.Focused)
+				return;
+
+			if (organizerdataGridView.IsCurrentCellDirty)
+				organizerdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+		}
+
 		// ----------------- END AGENT GESTIONE MENU TENDINA -------------------
 	}
 

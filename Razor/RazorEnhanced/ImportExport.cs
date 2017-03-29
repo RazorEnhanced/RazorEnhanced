@@ -310,7 +310,7 @@ namespace RazorEnhanced
 								itemlist.Add((RazorEnhanced.Organizer.OrganizerItem)row["Item"]);
 							}
 							RazorEnhanced.Settings.Organizer.ItemInsertFromImport(m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[0]["List"].ToString(), itemlist);
-							RazorEnhanced.Organizer.RefreshItems();
+							RazorEnhanced.Organizer.InitGrid();
 							Organizer.AddLog("List: " + m_Dataset.Tables["ORGANIZER_ITEMS"].Rows[0]["List"].ToString() + " imported!");
 						}
 					}

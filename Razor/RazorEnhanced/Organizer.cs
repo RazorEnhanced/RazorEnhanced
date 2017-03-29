@@ -153,9 +153,6 @@ namespace RazorEnhanced
 			List<OrganizerList> lists;
 			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
 
-			if (lists.Count == 0)
-				Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
-
 			OrganizerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
 				return;
@@ -175,61 +172,65 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshItems()
+		internal static void CopyTable()
+		{
+			Settings.Organizer.ClearList(Assistant.Engine.MainWindow.OrganizerListSelect.Text); // Rimuove vecchi dati dal save
+
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.OrganizerDataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				int amount = 0;
+				if ((string)row.Cells[4].Value == "All")
+					amount = -1;
+				else
+					amount = Convert.ToInt32((string)row.Cells[4].Value);
+
+				bool check = false;
+				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+
+				Settings.Organizer.ItemInsert(Assistant.Engine.MainWindow.OrganizerListSelect.Text, new OrganizerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, amount, check));
+			}
+
+			Settings.Save(); // Salvo dati
+		}
+
+		internal static void InitGrid()
 		{
 			List<OrganizerList> lists;
 			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
 
-			Assistant.Engine.MainWindow.OrganizerListView.Items.Clear();
+			Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Clear();
+
 			foreach (OrganizerList l in lists)
 			{
-				if (!l.Selected)
-					continue;
-
-				List<Organizer.OrganizerItem> items;
-				RazorEnhanced.Settings.Organizer.ItemsRead(l.Description, out items);
-
-				foreach (OrganizerItem item in items)
+				if (l.Selected)
 				{
-					ListViewItem listitem = new ListViewItem();
+					List<Organizer.OrganizerItem> items;
+					RazorEnhanced.Settings.Organizer.ItemsRead(l.Description, out items);
 
-					listitem.Checked = item.Selected;
+					foreach (OrganizerItem item in items)
+					{
+						string color = "All";
+						if (item.Color != -1)
+							color = "0x" + item.Color.ToString("X4");
 
-					listitem.SubItems.Add(item.Name);
-					listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
+						string amount = "All";
+						if (item.Amount != -1)
+							amount = item.Amount.ToString();
 
-					if (item.Color == -1)
-						listitem.SubItems.Add("All");
-					else
-						listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
+						Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, amount });
+					}
 
-					if (item.Amount == -1)
-						listitem.SubItems.Add("All");
-					else
-						listitem.SubItems.Add(item.Amount.ToString());
-
-					Assistant.Engine.MainWindow.OrganizerListView.Items.Add(listitem);
+					break;
 				}
-			}
-		}
-
-		internal static void UpdateSelectedItems(int i)
-		{
-			List<OrganizerItem> items;
-			RazorEnhanced.Settings.Organizer.ItemsRead(OrganizerListName, out items);
-
-			if (items.Count != Assistant.Engine.MainWindow.OrganizerListView.Items.Count)
-			{
-				return;
-			}
-
-			ListViewItem lvi = Assistant.Engine.MainWindow.OrganizerListView.Items[i];
-			OrganizerItem old = items[i];
-
-			if (lvi != null && old != null)
-			{
-				OrganizerItem item = new Organizer.OrganizerItem(old.Name, old.Graphics, old.Color, old.Amount, lvi.Checked);
-				RazorEnhanced.Settings.Organizer.ItemReplace(RazorEnhanced.Organizer.OrganizerListName, i, item);
 			}
 		}
 
@@ -238,7 +239,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.Organizer.ListInsert(newList, RazorEnhanced.Organizer.OrganizerDelay, 0, 0);
 
 			RazorEnhanced.Organizer.RefreshLists();
-			RazorEnhanced.Organizer.RefreshItems();
+			RazorEnhanced.Organizer.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
@@ -249,37 +250,13 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.Organizer.RefreshLists();
-			RazorEnhanced.Organizer.RefreshItems();
+			RazorEnhanced.Organizer.InitGrid();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			OrganizerItem item = new OrganizerItem(name, graphics, color, amount, false);
-
-			string selection = Assistant.Engine.MainWindow.OrganizerListSelect.Text;
-
-			if (RazorEnhanced.Settings.Organizer.ListExists(selection))
-			{
-				if (!RazorEnhanced.Settings.Organizer.ItemExists(selection, item))
-					RazorEnhanced.Settings.Organizer.ItemInsert(selection, item);
-			}
-
-			RazorEnhanced.Organizer.RefreshItems();
-		}
-
-		internal static void ModifyItemInList(string name, int graphics, int color, int amount, bool selected, OrganizerItem old, int index)
-		{
-			OrganizerItem item = new OrganizerItem(name, graphics, color, amount, selected);
-
-			string selection = Assistant.Engine.MainWindow.OrganizerListSelect.Text;
-
-			if (RazorEnhanced.Settings.Organizer.ListExists(selection))
-			{
-				if (RazorEnhanced.Settings.Organizer.ItemExists(selection, old))
-					RazorEnhanced.Settings.Organizer.ItemReplace(selection, index, item);
-			}
-
-			RazorEnhanced.Organizer.RefreshItems();
+			Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), amount });
+			CopyTable();
 		}
 
 		private static bool ColorCheck(int colorDaLista, int colorDaItem)
