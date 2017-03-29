@@ -421,7 +421,7 @@ namespace RazorEnhanced
 			// Genero filtro per corpi
 			Items.Filter corpseFilter = new Items.Filter
 			{
-				RangeMax = 2,
+				RangeMax = DragDropManager.LootRange,
 				Movable = false,
 				IsCorpse = 1,
 				OnGround = 1,

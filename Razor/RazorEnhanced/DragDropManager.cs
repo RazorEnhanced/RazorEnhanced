@@ -9,8 +9,11 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
-
+		
 		internal static int LastAutolootItem = 0;
+
+		internal static int LootRange = 3;
+		internal static int ScavengerRange = 2;
 
 		internal static void AutoRun()
 		{
@@ -35,7 +38,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 3) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= LootRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 						{
 							RazorEnhanced.Items.WaitForContents(Items.FindBySerial(itemserial), 1000);
 							AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
@@ -82,7 +85,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if ((Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(corpse.Position.X, corpse.Position.Y), 3) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z)))
+						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, corpse.Position.X, corpse.Position.Y) <= LootRange) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
 						{
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{
@@ -131,7 +134,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if (Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), 2) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= ScavengerRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 						{
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{

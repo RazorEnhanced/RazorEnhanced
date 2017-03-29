@@ -346,7 +346,7 @@ namespace RazorEnhanced
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter
 			{
-				RangeMax = 2,
+				RangeMax = DragDropManager.ScavengerRange,
 				Movable = true,
 				OnGround = 1,
 				Enabled = true
