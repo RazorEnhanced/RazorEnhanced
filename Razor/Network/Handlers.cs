@@ -2001,8 +2001,9 @@ namespace Assistant
 						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
 					return;
 				case 0x3915:
-				case 0x3922:
-					args.Block = true;
+				case 0x3920:
+                case 0x3922:
+                    args.Block = true;
 					item.ItemID = 0x28A8;
 					item.Hue = 0x016A;
 					ClientCommunication.SendToClient(new WorldItem(item));
@@ -2013,10 +2014,19 @@ namespace Assistant
 				case 0x3979:
 					args.Block = true;
 					item.ItemID = 0x28A8;
-					item.Hue = 0x0060;
+					item.Hue = 0x00DA;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
 						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+					return;
+				case 0x3946:
+				case 0x3956:
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x0125;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Energy Field]");
 					return;
 			}
 		}
@@ -2160,6 +2170,7 @@ namespace Assistant
 						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
 					return;
 				case 0x3915:
+				case 0x3920:
 				case 0x3922:
 					args.Block = true;
 					item.ItemID = 0x28A8;
@@ -2172,10 +2183,19 @@ namespace Assistant
 				case 0x3979:
 					args.Block = true;
 					item.ItemID = 0x28A8;
-					item.Hue = 0x0060;
+					item.Hue = 0x00DA;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
 						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+					return;
+				case 0x3946:
+				case 0x3956:
+					args.Block = true;
+					item.ItemID = 0x28A8;
+					item.Hue = 0x0125;
+					ClientCommunication.SendToClient(new WorldItem(item));
+					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
+						RazorEnhanced.Items.Message(item.Serial, 10, "[Energy Field]");
 					return;
 			}
 		}
