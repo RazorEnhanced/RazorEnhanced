@@ -151,9 +151,6 @@ namespace RazorEnhanced
 			List<RestockList> lists;
 			RazorEnhanced.Settings.Restock.ListsRead(out lists);
 
-			if (lists.Count == 0)
-				Assistant.Engine.MainWindow.RestockListView.Items.Clear();
-
 			RestockList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.RestockListSelect.Text)
 				return;
@@ -173,12 +170,37 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void RefreshItems()
+		internal static void CopyTable()
+		{
+			Settings.Restock.ClearList(Assistant.Engine.MainWindow.RestockListSelect.Text); // Rimuove vecchi dati dal save
+
+			foreach (DataGridViewRow row in Assistant.Engine.MainWindow.RestockDataGridView.Rows)
+			{
+				if (row.IsNewRow)
+					continue;
+
+				int color = 0;
+				if ((string)row.Cells[3].Value == "All")
+					color = -1;
+				else
+					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
+
+				bool check = false;
+				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+
+				Settings.Restock.ItemInsert(Assistant.Engine.MainWindow.RestockListSelect.Text, new RestockItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, Convert.ToInt32((string)row.Cells[4].Value), check));
+			}
+
+			Settings.Save(); // Salvo dati
+		}
+
+		internal static void InitGrid()
 		{
 			List<RestockList> lists;
 			RazorEnhanced.Settings.Restock.ListsRead(out lists);
 
-			Assistant.Engine.MainWindow.RestockListView.Items.Clear();
+			Assistant.Engine.MainWindow.RestockDataGridView.Rows.Clear();
+
 			foreach (RestockList l in lists)
 			{
 				if (l.Selected)
@@ -188,43 +210,15 @@ namespace RazorEnhanced
 
 					foreach (RestockItem item in items)
 					{
-						ListViewItem listitem = new ListViewItem();
+						string color = "All";
+						if (item.Color != -1)
+							color = "0x" + item.Color.ToString("X4");
 
-						listitem.Checked = item.Selected;
-
-						listitem.SubItems.Add(item.Name);
-						listitem.SubItems.Add("0x" + item.Graphics.ToString("X4"));
-
-						if (item.Color == -1)
-							listitem.SubItems.Add("All");
-						else
-							listitem.SubItems.Add("0x" + item.Color.ToString("X4"));
-
-						listitem.SubItems.Add(item.AmountLimit.ToString());
-
-						Assistant.Engine.MainWindow.RestockListView.Items.Add(listitem);
+						Assistant.Engine.MainWindow.RestockDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), color, item.AmountLimit.ToString() });
 					}
+
+					break;
 				}
-			}
-		}
-
-		internal static void UpdateSelectedItems(int i)
-		{
-			List<RestockItem> items;
-			RazorEnhanced.Settings.Restock.ItemsRead(RestockListName, out items);
-
-			if (items.Count != Assistant.Engine.MainWindow.RestockListView.Items.Count)
-			{
-				return;
-			}
-
-			ListViewItem lvi = Assistant.Engine.MainWindow.RestockListView.Items[i];
-			RestockItem old = items[i];
-
-			if (lvi != null && old != null)
-			{
-				RestockItem item = new Restock.RestockItem(old.Name, old.Graphics, old.Color, old.AmountLimit, lvi.Checked);
-				RazorEnhanced.Settings.Restock.ItemReplace(RazorEnhanced.Restock.RestockListName, i, item);
 			}
 		}
 
@@ -233,7 +227,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.Restock.ListInsert(newList, RazorEnhanced.Restock.RestockDelay, 0, 0);
 
 			RazorEnhanced.Restock.RefreshLists();
-			RazorEnhanced.Restock.RefreshItems();
+			RazorEnhanced.Restock.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
@@ -244,37 +238,13 @@ namespace RazorEnhanced
 			}
 
 			RazorEnhanced.Restock.RefreshLists();
-			RazorEnhanced.Restock.RefreshItems();
+			RazorEnhanced.Restock.InitGrid();
 		}
 
-		internal static void AddItemToList(string name, int graphics, int amountlimit, int color)
+		internal static void AddItemToList(string name, int graphics, int color)
 		{
-			RestockItem item = new RestockItem(name, graphics, color, amountlimit, false);
-
-			string selection = Assistant.Engine.MainWindow.RestockListSelect.Text;
-
-			if (RazorEnhanced.Settings.Restock.ListExists(selection))
-			{
-				if (!RazorEnhanced.Settings.Restock.ItemExists(selection, item))
-					RazorEnhanced.Settings.Restock.ItemInsert(selection, item);
-			}
-
-			RazorEnhanced.Restock.RefreshItems();
-		}
-
-		internal static void ModifyItemInList(string name, int graphics, int color, int amountlimit, bool selected, RestockItem old, int index)
-		{
-			RestockItem item = new RestockItem(name, graphics, color, amountlimit, selected);
-
-			string selection = Assistant.Engine.MainWindow.RestockListSelect.Text;
-
-			if (RazorEnhanced.Settings.Restock.ListExists(selection))
-			{
-				if (RazorEnhanced.Settings.Restock.ItemExists(selection, old))
-					RazorEnhanced.Settings.Restock.ItemReplace(selection, index, item);
-			}
-
-			RazorEnhanced.Restock.RefreshItems();
+			Assistant.Engine.MainWindow.RestockDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), "0x" + color.ToString("X4"), "1" });
+			CopyTable();
 		}
 
 		private static bool ColorCheck(int colorDaLista, int colorDaItem)

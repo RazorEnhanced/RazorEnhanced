@@ -931,7 +931,7 @@ namespace RazorEnhanced
 								itemlist.Add((RazorEnhanced.Restock.RestockItem)row["Item"]);
 							}
 							RazorEnhanced.Settings.Restock.ItemInsertFromImport(m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString(), itemlist);
-							RazorEnhanced.Restock.RefreshItems();
+							RazorEnhanced.Restock.InitGrid();
 							Restock.AddLog("List: " + m_Dataset.Tables["RESTOCK_ITEMS"].Rows[0]["List"].ToString() + " imported!");
 						}
 					}

@@ -14,7 +14,8 @@ namespace RazorEnhanced.UI
 		// 5- Sell 
 		// 6- Dress
 		// 7- Friend
-		
+		// 8- Friend
+
 		int m_agentid = 0;
 		public EnhancedAgentAddList(int agentid)
 		{

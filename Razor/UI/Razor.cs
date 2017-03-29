@@ -248,8 +248,6 @@ namespace Assistant
 		private RazorButton friendRemoveButton;
 		private RazorButton friendAddButton;
 		private TabPage restock;
-		private RazorButton restockStopButton;
-		private RazorButton restockExecuteButton;
 		private GroupBox groupBox2;
 		private ListBox restockLogBox;
 		private Label label13;
@@ -257,18 +255,8 @@ namespace Assistant
 		private Label restockDestinationLabel;
 		private RazorButton restockSetDestinationButton;
 		private Label restockSourceLabel;
-		private GroupBox groupBox3;
-		private RazorButton restockEditButton;
 		private RazorButton restockAddTargetButton;
-		private RazorButton restockRemoveButton;
-		private RazorButton restockAddManualButton;
 		private RazorButton restockSetSourceButton;
-		private ListView restocklistView;
-		private ColumnHeader columnHeader31;
-		private ColumnHeader columnHeader32;
-		private ColumnHeader columnHeader33;
-		private ColumnHeader columnHeader34;
-		private ColumnHeader columnHeader35;
 		private RazorButton restockRemoveListB;
 		private RazorButton restockAddListB;
 		private RazorButton restockImportListB;
@@ -571,6 +559,17 @@ namespace Assistant
 		private Label label57;
 		private Label label56;
 		private Button organizerExecuteButton;
+		private DataGridView restockdataGridView;
+		private DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn3;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn10;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn11;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn12;
+		private GroupBox groupBox3;
+		private Label label59;
+		private Label label58;
+		private Button restockExecuteButton;
+		private Button restockStopButton;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -675,7 +674,7 @@ namespace Assistant
 		internal Label RestockSourceLabel { get { return restockSourceLabel; } }
 		internal Label RestockDestinationLabel { get { return restockDestinationLabel; } }
 		internal ListBox RestockLogBox { get { return restockLogBox; } }
-		internal ListView RestockListView { get { return restocklistView; } }
+		internal DataGridView RestockDataGridView { get { return restockdataGridView; } }
 		internal RazorComboBox RestockListSelect { get { return restockListSelect; } }
 		internal Button RestockExecute { get { return restockExecuteButton; } }
 		internal Button RestockStop { get { return restockStopButton; } }
@@ -1108,7 +1107,6 @@ namespace Assistant
 			this.label54 = new System.Windows.Forms.Label();
 			this.scavengerContainerLabel = new System.Windows.Forms.Label();
 			this.scavengerButtonSetContainer = new RazorEnhanced.UI.RazorButton();
-			this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
 			this.scavengerdataGridView = new System.Windows.Forms.DataGridView();
 			this.ScavengerX = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.ScavengerItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1118,9 +1116,10 @@ namespace Assistant
 			this.groupBox12 = new System.Windows.Forms.GroupBox();
 			this.scavengerLogBox = new System.Windows.Forms.ListBox();
 			this.label23 = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
 			this.scavengerDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.scavengerCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.label22 = new System.Windows.Forms.Label();
 			this.scavengerButtonRemoveList = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddList = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonImport = new RazorEnhanced.UI.RazorButton();
@@ -1162,9 +1161,9 @@ namespace Assistant
 			this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.groupBox18 = new System.Windows.Forms.GroupBox();
 			this.buyLogBox = new System.Windows.Forms.ListBox();
+			this.label25 = new System.Windows.Forms.Label();
 			this.buyAddTargetB = new RazorEnhanced.UI.RazorButton();
 			this.buyEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.label25 = new System.Windows.Forms.Label();
 			this.buyRemoveListButton = new RazorEnhanced.UI.RazorButton();
 			this.buyAddListButton = new RazorEnhanced.UI.RazorButton();
 			this.buyImportListButton = new RazorEnhanced.UI.RazorButton();
@@ -1181,11 +1180,11 @@ namespace Assistant
 			this.VendorSellGraphics = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.VendorSellAmount = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.VendorSellColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.sellAddTargerButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox20 = new System.Windows.Forms.GroupBox();
 			this.sellLogBox = new System.Windows.Forms.ListBox();
-			this.sellEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.label26 = new System.Windows.Forms.Label();
+			this.sellAddTargerButton = new RazorEnhanced.UI.RazorButton();
+			this.sellEnableCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.sellRemoveListButton = new RazorEnhanced.UI.RazorButton();
 			this.sellAddListButton = new RazorEnhanced.UI.RazorButton();
 			this.sellImportListButton = new RazorEnhanced.UI.RazorButton();
@@ -1250,27 +1249,21 @@ namespace Assistant
 			this.friendListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.friendButtonExportList = new RazorEnhanced.UI.RazorButton();
 			this.restock = new System.Windows.Forms.TabPage();
-			this.restockStopButton = new RazorEnhanced.UI.RazorButton();
-			this.restockExecuteButton = new RazorEnhanced.UI.RazorButton();
+			this.restockdataGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewCheckBoxColumn3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.restockAddTargetButton = new RazorEnhanced.UI.RazorButton();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.restockLogBox = new System.Windows.Forms.ListBox();
 			this.label13 = new System.Windows.Forms.Label();
 			this.restockDestinationLabel = new System.Windows.Forms.Label();
 			this.restockSourceLabel = new System.Windows.Forms.Label();
-			this.groupBox3 = new System.Windows.Forms.GroupBox();
-			this.restockEditButton = new RazorEnhanced.UI.RazorButton();
-			this.restockAddTargetButton = new RazorEnhanced.UI.RazorButton();
-			this.restockRemoveButton = new RazorEnhanced.UI.RazorButton();
-			this.restockAddManualButton = new RazorEnhanced.UI.RazorButton();
 			this.restockDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.restockSetDestinationButton = new RazorEnhanced.UI.RazorButton();
 			this.restockSetSourceButton = new RazorEnhanced.UI.RazorButton();
-			this.restocklistView = new System.Windows.Forms.ListView();
-			this.columnHeader31 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader32 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader33 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader34 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader35 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label7 = new System.Windows.Forms.Label();
 			this.restockRemoveListB = new RazorEnhanced.UI.RazorButton();
 			this.restockAddListB = new RazorEnhanced.UI.RazorButton();
@@ -1327,6 +1320,11 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.label58 = new System.Windows.Forms.Label();
+			this.label59 = new System.Windows.Forms.Label();
+			this.restockExecuteButton = new System.Windows.Forms.Button();
+			this.restockStopButton = new System.Windows.Forms.Button();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1393,8 +1391,8 @@ namespace Assistant
 			this.friendGroupBox.SuspendLayout();
 			this.friendloggroupBox.SuspendLayout();
 			this.restock.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.restockdataGridView)).BeginInit();
 			this.groupBox2.SuspendLayout();
-			this.groupBox3.SuspendLayout();
 			this.bandageheal.SuspendLayout();
 			this.groupBox6.SuspendLayout();
 			this.groupBox5.SuspendLayout();
@@ -1403,6 +1401,7 @@ namespace Assistant
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
 			this.datagridMenuStrip.SuspendLayout();
+			this.groupBox3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -4739,13 +4738,13 @@ namespace Assistant
 			// 
 			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
 			this.escavenger.Controls.Add(this.groupBox41);
-			this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
 			this.escavenger.Controls.Add(this.scavengerdataGridView);
 			this.escavenger.Controls.Add(this.groupBox12);
 			this.escavenger.Controls.Add(this.label23);
+			this.escavenger.Controls.Add(this.label22);
+			this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
 			this.escavenger.Controls.Add(this.scavengerDragDelay);
 			this.escavenger.Controls.Add(this.scavengerCheckBox);
-			this.escavenger.Controls.Add(this.label22);
 			this.escavenger.Controls.Add(this.scavengerButtonRemoveList);
 			this.escavenger.Controls.Add(this.scavengerButtonAddList);
 			this.escavenger.Controls.Add(this.scavengerButtonImport);
@@ -4809,17 +4808,6 @@ namespace Assistant
 			this.scavengerButtonSetContainer.Text = "Set Bag";
 			this.scavengerButtonSetContainer.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.scavengerButtonSetContainer.Click += new System.EventHandler(this.scavengerSetContainer_Click);
-			// 
-			// scavengerButtonAddTarget
-			// 
-			this.scavengerButtonAddTarget.ColorTable = office2010BlueTheme1;
-			this.scavengerButtonAddTarget.Location = new System.Drawing.Point(563, 42);
-			this.scavengerButtonAddTarget.Name = "scavengerButtonAddTarget";
-			this.scavengerButtonAddTarget.Size = new System.Drawing.Size(90, 20);
-			this.scavengerButtonAddTarget.TabIndex = 47;
-			this.scavengerButtonAddTarget.Text = "Add Item";
-			this.scavengerButtonAddTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.scavengerButtonAddTarget.Click += new System.EventHandler(this.scavengerAddItemTarget_Click);
 			// 
 			// scavengerdataGridView
 			// 
@@ -4910,6 +4898,26 @@ namespace Assistant
 			this.label23.TabIndex = 69;
 			this.label23.Text = "Drag Delay (ms)";
 			// 
+			// label22
+			// 
+			this.label22.AutoSize = true;
+			this.label22.Location = new System.Drawing.Point(6, 18);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(81, 13);
+			this.label22.TabIndex = 60;
+			this.label22.Text = "Scavenger List:";
+			// 
+			// scavengerButtonAddTarget
+			// 
+			this.scavengerButtonAddTarget.ColorTable = office2010BlueTheme1;
+			this.scavengerButtonAddTarget.Location = new System.Drawing.Point(563, 42);
+			this.scavengerButtonAddTarget.Name = "scavengerButtonAddTarget";
+			this.scavengerButtonAddTarget.Size = new System.Drawing.Size(90, 20);
+			this.scavengerButtonAddTarget.TabIndex = 47;
+			this.scavengerButtonAddTarget.Text = "Add Item";
+			this.scavengerButtonAddTarget.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.scavengerButtonAddTarget.Click += new System.EventHandler(this.scavengerAddItemTarget_Click);
+			// 
 			// scavengerDragDelay
 			// 
 			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -4934,15 +4942,6 @@ namespace Assistant
 			this.scavengerCheckBox.TabIndex = 65;
 			this.scavengerCheckBox.Text = "Enable scavenger";
 			this.scavengerCheckBox.CheckedChanged += new System.EventHandler(this.scavengerEnableCheck_CheckedChanged);
-			// 
-			// label22
-			// 
-			this.label22.AutoSize = true;
-			this.label22.Location = new System.Drawing.Point(6, 18);
-			this.label22.Name = "label22";
-			this.label22.Size = new System.Drawing.Size(81, 13);
-			this.label22.TabIndex = 60;
-			this.label22.Text = "Scavenger List:";
 			// 
 			// scavengerButtonRemoveList
 			// 
@@ -5026,7 +5025,9 @@ namespace Assistant
 			// 
 			this.organizerExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
 			this.organizerExecuteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.organizerExecuteButton.Location = new System.Drawing.Point(284, 46);
+			this.organizerExecuteButton.FlatAppearance.BorderSize = 0;
+			this.organizerExecuteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.organizerExecuteButton.Location = new System.Drawing.Point(283, 58);
 			this.organizerExecuteButton.Name = "organizerExecuteButton";
 			this.organizerExecuteButton.Size = new System.Drawing.Size(30, 30);
 			this.organizerExecuteButton.TabIndex = 91;
@@ -5037,7 +5038,9 @@ namespace Assistant
 			// 
 			this.organizerStopButton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
 			this.organizerStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.organizerStopButton.Location = new System.Drawing.Point(320, 46);
+			this.organizerStopButton.FlatAppearance.BorderSize = 0;
+			this.organizerStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.organizerStopButton.Location = new System.Drawing.Point(319, 58);
 			this.organizerStopButton.Name = "organizerStopButton";
 			this.organizerStopButton.Size = new System.Drawing.Size(30, 30);
 			this.organizerStopButton.TabIndex = 1;
@@ -5305,9 +5308,9 @@ namespace Assistant
 			// 
 			this.VendorBuy.Controls.Add(this.vendorbuydataGridView);
 			this.VendorBuy.Controls.Add(this.groupBox18);
+			this.VendorBuy.Controls.Add(this.label25);
 			this.VendorBuy.Controls.Add(this.buyAddTargetB);
 			this.VendorBuy.Controls.Add(this.buyEnableCheckBox);
-			this.VendorBuy.Controls.Add(this.label25);
 			this.VendorBuy.Controls.Add(this.buyRemoveListButton);
 			this.VendorBuy.Controls.Add(this.buyAddListButton);
 			this.VendorBuy.Controls.Add(this.buyImportListButton);
@@ -5409,6 +5412,15 @@ namespace Assistant
 			this.buyLogBox.Size = new System.Drawing.Size(265, 225);
 			this.buyLogBox.TabIndex = 0;
 			// 
+			// label25
+			// 
+			this.label25.AutoSize = true;
+			this.label25.Location = new System.Drawing.Point(3, 18);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(65, 13);
+			this.label25.TabIndex = 66;
+			this.label25.Text = "Vendor Buy:";
+			// 
 			// buyAddTargetB
 			// 
 			this.buyAddTargetB.ColorTable = office2010BlueTheme1;
@@ -5429,15 +5441,6 @@ namespace Assistant
 			this.buyEnableCheckBox.TabIndex = 72;
 			this.buyEnableCheckBox.Text = "Enable Buy List";
 			this.buyEnableCheckBox.CheckedChanged += new System.EventHandler(this.buyEnableCheckB_CheckedChanged);
-			// 
-			// label25
-			// 
-			this.label25.AutoSize = true;
-			this.label25.Location = new System.Drawing.Point(3, 18);
-			this.label25.Name = "label25";
-			this.label25.Size = new System.Drawing.Size(65, 13);
-			this.label25.TabIndex = 66;
-			this.label25.Text = "Vendor Buy:";
 			// 
 			// buyRemoveListButton
 			// 
@@ -5497,10 +5500,10 @@ namespace Assistant
 			// 
 			this.VendorSell.Controls.Add(this.groupBox19);
 			this.VendorSell.Controls.Add(this.vendorsellGridView);
-			this.VendorSell.Controls.Add(this.sellAddTargerButton);
 			this.VendorSell.Controls.Add(this.groupBox20);
-			this.VendorSell.Controls.Add(this.sellEnableCheckBox);
 			this.VendorSell.Controls.Add(this.label26);
+			this.VendorSell.Controls.Add(this.sellAddTargerButton);
+			this.VendorSell.Controls.Add(this.sellEnableCheckBox);
 			this.VendorSell.Controls.Add(this.sellRemoveListButton);
 			this.VendorSell.Controls.Add(this.sellAddListButton);
 			this.VendorSell.Controls.Add(this.sellImportListButton);
@@ -5624,17 +5627,6 @@ namespace Assistant
 			this.VendorSellColor.ToolTipText = "Here item color, use -1 for all color";
 			this.VendorSellColor.Width = 54;
 			// 
-			// sellAddTargerButton
-			// 
-			this.sellAddTargerButton.ColorTable = office2010BlueTheme1;
-			this.sellAddTargerButton.Location = new System.Drawing.Point(561, 46);
-			this.sellAddTargerButton.Name = "sellAddTargerButton";
-			this.sellAddTargerButton.Size = new System.Drawing.Size(90, 20);
-			this.sellAddTargerButton.TabIndex = 47;
-			this.sellAddTargerButton.Text = "Add Item";
-			this.sellAddTargerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.sellAddTargerButton.Click += new System.EventHandler(this.sellAddTarget_Click);
-			// 
 			// groupBox20
 			// 
 			this.groupBox20.Controls.Add(this.sellLogBox);
@@ -5653,15 +5645,6 @@ namespace Assistant
 			this.sellLogBox.Size = new System.Drawing.Size(265, 225);
 			this.sellLogBox.TabIndex = 0;
 			// 
-			// sellEnableCheckBox
-			// 
-			this.sellEnableCheckBox.Location = new System.Drawing.Point(273, 49);
-			this.sellEnableCheckBox.Name = "sellEnableCheckBox";
-			this.sellEnableCheckBox.Size = new System.Drawing.Size(105, 22);
-			this.sellEnableCheckBox.TabIndex = 82;
-			this.sellEnableCheckBox.Text = "Enable Sell List";
-			this.sellEnableCheckBox.CheckedChanged += new System.EventHandler(this.sellEnableCheck_CheckedChanged);
-			// 
 			// label26
 			// 
 			this.label26.AutoSize = true;
@@ -5670,6 +5653,26 @@ namespace Assistant
 			this.label26.Size = new System.Drawing.Size(64, 13);
 			this.label26.TabIndex = 77;
 			this.label26.Text = "Vendor Sell:";
+			// 
+			// sellAddTargerButton
+			// 
+			this.sellAddTargerButton.ColorTable = office2010BlueTheme1;
+			this.sellAddTargerButton.Location = new System.Drawing.Point(561, 46);
+			this.sellAddTargerButton.Name = "sellAddTargerButton";
+			this.sellAddTargerButton.Size = new System.Drawing.Size(90, 20);
+			this.sellAddTargerButton.TabIndex = 47;
+			this.sellAddTargerButton.Text = "Add Item";
+			this.sellAddTargerButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.sellAddTargerButton.Click += new System.EventHandler(this.sellAddTarget_Click);
+			// 
+			// sellEnableCheckBox
+			// 
+			this.sellEnableCheckBox.Location = new System.Drawing.Point(273, 49);
+			this.sellEnableCheckBox.Name = "sellEnableCheckBox";
+			this.sellEnableCheckBox.Size = new System.Drawing.Size(105, 22);
+			this.sellEnableCheckBox.TabIndex = 82;
+			this.sellEnableCheckBox.Text = "Enable Sell List";
+			this.sellEnableCheckBox.CheckedChanged += new System.EventHandler(this.sellEnableCheck_CheckedChanged);
 			// 
 			// sellRemoveListButton
 			// 
@@ -6344,17 +6347,14 @@ namespace Assistant
 			// 
 			// restock
 			// 
-			this.restock.Controls.Add(this.restockStopButton);
 			this.restock.Controls.Add(this.restockExecuteButton);
+			this.restock.Controls.Add(this.restockStopButton);
+			this.restock.Controls.Add(this.groupBox3);
+			this.restock.Controls.Add(this.restockdataGridView);
+			this.restock.Controls.Add(this.restockAddTargetButton);
 			this.restock.Controls.Add(this.groupBox2);
 			this.restock.Controls.Add(this.label13);
-			this.restock.Controls.Add(this.restockDestinationLabel);
-			this.restock.Controls.Add(this.restockSourceLabel);
-			this.restock.Controls.Add(this.groupBox3);
 			this.restock.Controls.Add(this.restockDragDelay);
-			this.restock.Controls.Add(this.restockSetDestinationButton);
-			this.restock.Controls.Add(this.restockSetSourceButton);
-			this.restock.Controls.Add(this.restocklistView);
 			this.restock.Controls.Add(this.label7);
 			this.restock.Controls.Add(this.restockRemoveListB);
 			this.restock.Controls.Add(this.restockAddListB);
@@ -6369,32 +6369,91 @@ namespace Assistant
 			this.restock.Text = "Restock";
 			this.restock.UseVisualStyleBackColor = true;
 			// 
-			// restockStopButton
+			// restockdataGridView
 			// 
-			this.restockStopButton.ColorTable = office2010BlueTheme1;
-			this.restockStopButton.Location = new System.Drawing.Point(334, 58);
-			this.restockStopButton.Name = "restockStopButton";
-			this.restockStopButton.Size = new System.Drawing.Size(61, 20);
-			this.restockStopButton.TabIndex = 85;
-			this.restockStopButton.Text = "Stop";
-			this.restockStopButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.restockStopButton.Click += new System.EventHandler(this.restockStopButton_Click);
+			this.restockdataGridView.AllowUserToResizeRows = false;
+			this.restockdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.restockdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn3,
+            this.dataGridViewTextBoxColumn9,
+            this.dataGridViewTextBoxColumn10,
+            this.dataGridViewTextBoxColumn11,
+            this.dataGridViewTextBoxColumn12});
+			this.restockdataGridView.Location = new System.Drawing.Point(9, 113);
+			this.restockdataGridView.Name = "restockdataGridView";
+			this.restockdataGridView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+			this.restockdataGridView.RowHeadersVisible = false;
+			this.restockdataGridView.Size = new System.Drawing.Size(357, 220);
+			this.restockdataGridView.TabIndex = 90;
+			this.restockdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.restockdataGridView_CellContentClick);
+			this.restockdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.restockdataGridView_CellEndEdit);
+			this.restockdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.restockdataGridView_CellMouseUp);
+			this.restockdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.restockdataGridView_CurrentCellDirtyStateChanged);
+			this.restockdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.restockdataGridView_DataError);
+			this.restockdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.restockdataGridView_DefaultValuesNeeded);
 			// 
-			// restockExecuteButton
+			// dataGridViewCheckBoxColumn3
 			// 
-			this.restockExecuteButton.ColorTable = office2010BlueTheme1;
-			this.restockExecuteButton.Location = new System.Drawing.Point(268, 58);
-			this.restockExecuteButton.Name = "restockExecuteButton";
-			this.restockExecuteButton.Size = new System.Drawing.Size(61, 20);
-			this.restockExecuteButton.TabIndex = 84;
-			this.restockExecuteButton.Text = "Execute";
-			this.restockExecuteButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.restockExecuteButton.Click += new System.EventHandler(this.restockExecuteButton_Click);
+			this.dataGridViewCheckBoxColumn3.FalseValue = "False";
+			this.dataGridViewCheckBoxColumn3.HeaderText = "X";
+			this.dataGridViewCheckBoxColumn3.IndeterminateValue = "False";
+			this.dataGridViewCheckBoxColumn3.Name = "dataGridViewCheckBoxColumn3";
+			this.dataGridViewCheckBoxColumn3.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewCheckBoxColumn3.ToolTipText = "Check This for enable item in list";
+			this.dataGridViewCheckBoxColumn3.TrueValue = "True";
+			this.dataGridViewCheckBoxColumn3.Width = 22;
+			// 
+			// dataGridViewTextBoxColumn9
+			// 
+			this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn9.HeaderText = "Item Name";
+			this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+			this.dataGridViewTextBoxColumn9.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.dataGridViewTextBoxColumn9.ToolTipText = "Here the item name";
+			this.dataGridViewTextBoxColumn9.Width = 153;
+			// 
+			// dataGridViewTextBoxColumn10
+			// 
+			this.dataGridViewTextBoxColumn10.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn10.HeaderText = "Graphics";
+			this.dataGridViewTextBoxColumn10.Name = "dataGridViewTextBoxColumn10";
+			this.dataGridViewTextBoxColumn10.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn10.ToolTipText = "Here Graphics item ID";
+			this.dataGridViewTextBoxColumn10.Width = 54;
+			// 
+			// dataGridViewTextBoxColumn11
+			// 
+			this.dataGridViewTextBoxColumn11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn11.HeaderText = "Color";
+			this.dataGridViewTextBoxColumn11.Name = "dataGridViewTextBoxColumn11";
+			this.dataGridViewTextBoxColumn11.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn11.ToolTipText = "Here item color, use -1 for all color";
+			this.dataGridViewTextBoxColumn11.Width = 54;
+			// 
+			// dataGridViewTextBoxColumn12
+			// 
+			this.dataGridViewTextBoxColumn12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn12.HeaderText = "Limit";
+			this.dataGridViewTextBoxColumn12.Name = "dataGridViewTextBoxColumn12";
+			this.dataGridViewTextBoxColumn12.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn12.ToolTipText = "Here amount limit to move";
+			this.dataGridViewTextBoxColumn12.Width = 54;
+			// 
+			// restockAddTargetButton
+			// 
+			this.restockAddTargetButton.ColorTable = office2010BlueTheme1;
+			this.restockAddTargetButton.Location = new System.Drawing.Point(558, 49);
+			this.restockAddTargetButton.Name = "restockAddTargetButton";
+			this.restockAddTargetButton.Size = new System.Drawing.Size(90, 20);
+			this.restockAddTargetButton.TabIndex = 47;
+			this.restockAddTargetButton.Text = "Add Item";
+			this.restockAddTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+			this.restockAddTargetButton.Click += new System.EventHandler(this.restockAddTargetButton_Click);
 			// 
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.restockLogBox);
-			this.groupBox2.Location = new System.Drawing.Point(267, 84);
+			this.groupBox2.Location = new System.Drawing.Point(373, 84);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(278, 251);
 			this.groupBox2.TabIndex = 83;
@@ -6412,7 +6471,7 @@ namespace Assistant
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(446, 61);
+			this.label13.Location = new System.Drawing.Point(415, 54);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(105, 13);
 			this.label13.TabIndex = 82;
@@ -6420,7 +6479,7 @@ namespace Assistant
 			// 
 			// restockDestinationLabel
 			// 
-			this.restockDestinationLabel.Location = new System.Drawing.Point(567, 126);
+			this.restockDestinationLabel.Location = new System.Drawing.Point(71, 42);
 			this.restockDestinationLabel.Name = "restockDestinationLabel";
 			this.restockDestinationLabel.Size = new System.Drawing.Size(82, 19);
 			this.restockDestinationLabel.TabIndex = 80;
@@ -6428,68 +6487,11 @@ namespace Assistant
 			// 
 			// restockSourceLabel
 			// 
-			this.restockSourceLabel.Location = new System.Drawing.Point(568, 82);
+			this.restockSourceLabel.Location = new System.Drawing.Point(71, 18);
 			this.restockSourceLabel.Name = "restockSourceLabel";
 			this.restockSourceLabel.Size = new System.Drawing.Size(82, 19);
 			this.restockSourceLabel.TabIndex = 77;
 			this.restockSourceLabel.Text = "0x00000000";
-			// 
-			// groupBox3
-			// 
-			this.groupBox3.Controls.Add(this.restockEditButton);
-			this.groupBox3.Controls.Add(this.restockAddTargetButton);
-			this.groupBox3.Controls.Add(this.restockRemoveButton);
-			this.groupBox3.Controls.Add(this.restockAddManualButton);
-			this.groupBox3.Location = new System.Drawing.Point(553, 158);
-			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(100, 123);
-			this.groupBox3.TabIndex = 78;
-			this.groupBox3.TabStop = false;
-			this.groupBox3.Text = "Item List";
-			// 
-			// restockEditButton
-			// 
-			this.restockEditButton.ColorTable = office2010BlueTheme1;
-			this.restockEditButton.Location = new System.Drawing.Point(5, 68);
-			this.restockEditButton.Name = "restockEditButton";
-			this.restockEditButton.Size = new System.Drawing.Size(90, 20);
-			this.restockEditButton.TabIndex = 48;
-			this.restockEditButton.Text = "Edit";
-			this.restockEditButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.restockEditButton.Click += new System.EventHandler(this.restockEditButton_Click);
-			// 
-			// restockAddTargetButton
-			// 
-			this.restockAddTargetButton.ColorTable = office2010BlueTheme1;
-			this.restockAddTargetButton.Location = new System.Drawing.Point(5, 43);
-			this.restockAddTargetButton.Name = "restockAddTargetButton";
-			this.restockAddTargetButton.Size = new System.Drawing.Size(90, 20);
-			this.restockAddTargetButton.TabIndex = 47;
-			this.restockAddTargetButton.Text = "Add Target";
-			this.restockAddTargetButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.restockAddTargetButton.Click += new System.EventHandler(this.restockAddTargetButton_Click);
-			// 
-			// restockRemoveButton
-			// 
-			this.restockRemoveButton.ColorTable = office2010BlueTheme1;
-			this.restockRemoveButton.Location = new System.Drawing.Point(5, 94);
-			this.restockRemoveButton.Name = "restockRemoveButton";
-			this.restockRemoveButton.Size = new System.Drawing.Size(90, 20);
-			this.restockRemoveButton.TabIndex = 46;
-			this.restockRemoveButton.Text = "Remove";
-			this.restockRemoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.restockRemoveButton.Click += new System.EventHandler(this.restockRemoveButton_Click);
-			// 
-			// restockAddManualButton
-			// 
-			this.restockAddManualButton.ColorTable = office2010BlueTheme1;
-			this.restockAddManualButton.Location = new System.Drawing.Point(5, 18);
-			this.restockAddManualButton.Name = "restockAddManualButton";
-			this.restockAddManualButton.Size = new System.Drawing.Size(90, 20);
-			this.restockAddManualButton.TabIndex = 45;
-			this.restockAddManualButton.Text = "Add Manual";
-			this.restockAddManualButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
-			this.restockAddManualButton.Click += new System.EventHandler(this.restockAddManualButton_Click);
 			// 
 			// restockDragDelay
 			// 
@@ -6500,7 +6502,7 @@ namespace Assistant
 			this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.restockDragDelay.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
 			this.restockDragDelay.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			this.restockDragDelay.Location = new System.Drawing.Point(400, 58);
+			this.restockDragDelay.Location = new System.Drawing.Point(369, 51);
 			this.restockDragDelay.Name = "restockDragDelay";
 			this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.restockDragDelay.TabIndex = 81;
@@ -6509,72 +6511,24 @@ namespace Assistant
 			// restockSetDestinationButton
 			// 
 			this.restockSetDestinationButton.ColorTable = office2010BlueTheme1;
-			this.restockSetDestinationButton.Location = new System.Drawing.Point(558, 104);
+			this.restockSetDestinationButton.Location = new System.Drawing.Point(156, 38);
 			this.restockSetDestinationButton.Name = "restockSetDestinationButton";
 			this.restockSetDestinationButton.Size = new System.Drawing.Size(90, 20);
 			this.restockSetDestinationButton.TabIndex = 79;
-			this.restockSetDestinationButton.Text = "Destination Bag";
+			this.restockSetDestinationButton.Text = "Set Bag";
 			this.restockSetDestinationButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockSetDestinationButton.Click += new System.EventHandler(this.restockSetDestinationButton_Click);
 			// 
 			// restockSetSourceButton
 			// 
 			this.restockSetSourceButton.ColorTable = office2010BlueTheme1;
-			this.restockSetSourceButton.Location = new System.Drawing.Point(558, 60);
+			this.restockSetSourceButton.Location = new System.Drawing.Point(156, 12);
 			this.restockSetSourceButton.Name = "restockSetSourceButton";
 			this.restockSetSourceButton.Size = new System.Drawing.Size(90, 20);
 			this.restockSetSourceButton.TabIndex = 76;
-			this.restockSetSourceButton.Text = "Source Bag";
+			this.restockSetSourceButton.Text = "Set Bag";
 			this.restockSetSourceButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.restockSetSourceButton.Click += new System.EventHandler(this.restockSetSourceButton_Click);
-			// 
-			// restocklistView
-			// 
-			this.restocklistView.CheckBoxes = true;
-			this.restocklistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader31,
-            this.columnHeader32,
-            this.columnHeader33,
-            this.columnHeader34,
-            this.columnHeader35});
-			this.restocklistView.FullRowSelect = true;
-			this.restocklistView.GridLines = true;
-			this.restocklistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-			this.restocklistView.HideSelection = false;
-			this.restocklistView.LabelWrap = false;
-			this.restocklistView.Location = new System.Drawing.Point(6, 51);
-			this.restocklistView.MultiSelect = false;
-			this.restocklistView.Name = "restocklistView";
-			this.restocklistView.Size = new System.Drawing.Size(255, 284);
-			this.restocklistView.TabIndex = 70;
-			this.restocklistView.UseCompatibleStateImageBehavior = false;
-			this.restocklistView.View = System.Windows.Forms.View.Details;
-			this.restocklistView.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.restocklistView_ItemChecked);
-			// 
-			// columnHeader31
-			// 
-			this.columnHeader31.Text = "X";
-			this.columnHeader31.Width = 22;
-			// 
-			// columnHeader32
-			// 
-			this.columnHeader32.Text = "Item Name";
-			this.columnHeader32.Width = 85;
-			// 
-			// columnHeader33
-			// 
-			this.columnHeader33.Text = "Graphics";
-			this.columnHeader33.Width = 55;
-			// 
-			// columnHeader34
-			// 
-			this.columnHeader34.Text = "Color";
-			this.columnHeader34.Width = 44;
-			// 
-			// columnHeader35
-			// 
-			this.columnHeader35.Text = "Limit";
-			this.columnHeader35.Width = 43;
 			// 
 			// label7
 			// 
@@ -7195,6 +7149,65 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
 			// 
+			// groupBox3
+			// 
+			this.groupBox3.Controls.Add(this.label59);
+			this.groupBox3.Controls.Add(this.label58);
+			this.groupBox3.Controls.Add(this.restockSetSourceButton);
+			this.groupBox3.Controls.Add(this.restockSourceLabel);
+			this.groupBox3.Controls.Add(this.restockDestinationLabel);
+			this.groupBox3.Controls.Add(this.restockSetDestinationButton);
+			this.groupBox3.Location = new System.Drawing.Point(9, 42);
+			this.groupBox3.Name = "groupBox3";
+			this.groupBox3.Size = new System.Drawing.Size(252, 65);
+			this.groupBox3.TabIndex = 91;
+			this.groupBox3.TabStop = false;
+			this.groupBox3.Text = "Restock Bags";
+			// 
+			// label58
+			// 
+			this.label58.AutoSize = true;
+			this.label58.Location = new System.Drawing.Point(6, 18);
+			this.label58.Name = "label58";
+			this.label58.Size = new System.Drawing.Size(44, 13);
+			this.label58.TabIndex = 91;
+			this.label58.Text = "Source:";
+			// 
+			// label59
+			// 
+			this.label59.AutoSize = true;
+			this.label59.Location = new System.Drawing.Point(6, 42);
+			this.label59.Name = "label59";
+			this.label59.Size = new System.Drawing.Size(63, 13);
+			this.label59.TabIndex = 92;
+			this.label59.Text = "Destination:";
+			// 
+			// restockExecuteButton
+			// 
+			this.restockExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
+			this.restockExecuteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.restockExecuteButton.FlatAppearance.BorderSize = 0;
+			this.restockExecuteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.restockExecuteButton.Location = new System.Drawing.Point(283, 58);
+			this.restockExecuteButton.Name = "restockExecuteButton";
+			this.restockExecuteButton.Size = new System.Drawing.Size(30, 30);
+			this.restockExecuteButton.TabIndex = 93;
+			this.restockExecuteButton.UseVisualStyleBackColor = true;
+			this.restockExecuteButton.Click += new System.EventHandler(this.restockExecuteButton_Click);
+			// 
+			// restockStopButton
+			// 
+			this.restockStopButton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
+			this.restockStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.restockStopButton.FlatAppearance.BorderSize = 0;
+			this.restockStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.restockStopButton.Location = new System.Drawing.Point(319, 58);
+			this.restockStopButton.Name = "restockStopButton";
+			this.restockStopButton.Size = new System.Drawing.Size(30, 30);
+			this.restockStopButton.TabIndex = 92;
+			this.restockStopButton.UseVisualStyleBackColor = true;
+			this.restockStopButton.Click += new System.EventHandler(this.restockStopButton_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7307,8 +7320,8 @@ namespace Assistant
 			this.friendloggroupBox.ResumeLayout(false);
 			this.restock.ResumeLayout(false);
 			this.restock.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.restockdataGridView)).EndInit();
 			this.groupBox2.ResumeLayout(false);
-			this.groupBox3.ResumeLayout(false);
 			this.bandageheal.ResumeLayout(false);
 			this.groupBox6.ResumeLayout(false);
 			this.groupBox6.PerformLayout();
@@ -7321,6 +7334,8 @@ namespace Assistant
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
 			this.datagridMenuStrip.ResumeLayout(false);
+			this.groupBox3.ResumeLayout(false);
+			this.groupBox3.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -9243,7 +9258,7 @@ namespace Assistant
 		{
 			if (autolootListSelect.Text != "")
 			{
-				DataGridViewRow row = autolootdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
+				DataGridViewRow row = autolootdataGridView.Rows[autolootdataGridView.CurrentCell.RowIndex];
 				EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row);
 				editProp.TopMost = true;
 				editProp.Show();
@@ -10042,7 +10057,116 @@ namespace Assistant
 			else
 				RazorEnhanced.Organizer.AddLog("Item list not selected!");
 		}
+		private void organizerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = organizerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
+			if (e.ColumnIndex == 3)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int color = 0;
+					if (!cell.Value.ToString().Contains("-"))
+					{
+						try
+						{
+							color = Convert.ToInt32((string)cell.Value, 16);
+						}
+						catch { }
+
+						if (color > 65535)
+							color = 65535;
+					}
+					cell.Value = "0x" + color.ToString("X4");
+				}
+			}
+			else if (e.ColumnIndex == 4)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int amount = 0;
+					Int32.TryParse(cell.Value.ToString(), out amount);
+
+					if (amount < 0 || amount > 9999)
+						amount = 9999;
+
+					cell.Value = amount.ToString();
+				}
+			}
+			else if (e.ColumnIndex == 2)
+			{
+				int itemid = 0;
+				if (!cell.Value.ToString().Contains("-"))
+				{
+					try
+					{
+						itemid = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (itemid > 65535)
+						itemid = 65535;
+				}
+				cell.Value = "0x" + itemid.ToString("X4");
+			}
+			RazorEnhanced.Organizer.CopyTable();
+		}
+
+		private void organizerdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "New Item";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = "0x0000";
+			e.Row.Cells[4].Value = "1";
+		}
+
+		private void organizerdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void organizerdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (!organizerdataGridView.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			{
+				RazorEnhanced.Organizer.CopyTable();
+			}
+		}
+
+		private void organizerdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				organizerdataGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = 3;
+				organizerdataGridView.CurrentCell = organizerdataGridView.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(organizerdataGridView, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+		}
+
+		private void organizerdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+		{
+			if (!organizerdataGridView.Focused)
+				return;
+
+			if (organizerdataGridView.IsCurrentCellDirty)
+				organizerdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
+		}
 		// ------------------ ORGANIZER END--------------------------
 
 		// ------------------ SELL AGENT --------------------------
@@ -11077,7 +11201,7 @@ namespace Assistant
 			RazorEnhanced.Restock.RestockDestination = bagdestination;
 
 			RazorEnhanced.Settings.Restock.ListUpdate(restockListSelect.Text, RazorEnhanced.Restock.RestockDelay, RazorEnhanced.Restock.RestockSource, RazorEnhanced.Restock.RestockDestination, true);
-			RazorEnhanced.Restock.RefreshItems();
+			RazorEnhanced.Restock.InitGrid();
 
 			if (restockListSelect.Text != "")
 				RazorEnhanced.Restock.AddLog("Restock list changed to: " + restockListSelect.Text);
@@ -11203,85 +11327,12 @@ namespace Assistant
 			});
 		}
 
-		private void restockAddManualButton_Click(object sender, EventArgs e)
-		{
-			if (restockListSelect.Text != "")
-			{
-				EnhancedRestockManualAdd manualAddItem = new EnhancedRestockManualAdd();
-				manualAddItem.TopMost = true;
-				manualAddItem.Show();
-			}
-			else
-				RazorEnhanced.Restock.AddLog("Item list not selected!");
-		}
-
 		private void restockDragDelay_TextChanged(object sender, EventArgs e)
 		{
 			if (restockDragDelay.Focused)
 			{
 				RazorEnhanced.Settings.Restock.ListUpdate(restockListSelect.Text, RazorEnhanced.Restock.RestockDelay, RazorEnhanced.Restock.RestockSource, RazorEnhanced.Restock.RestockDestination, true);
 				RazorEnhanced.Restock.RefreshLists();
-			}
-		}
-
-		private void restockEditButton_Click(object sender, EventArgs e)
-		{
-			if (restockListSelect.Text != "")
-			{
-				if (restocklistView.SelectedItems.Count == 1)
-				{
-					int index = restocklistView.SelectedItems[0].Index;
-					string selection = restockListSelect.Text;
-
-					if (RazorEnhanced.Settings.Restock.ListExists(selection))
-					{
-						List<Restock.RestockItem> items;
-						RazorEnhanced.Settings.Restock.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							Restock.RestockItem item = items[index];
-							EnhancedRestockEditItem editItem = new EnhancedRestockEditItem(selection, index, item);
-							editItem.TopMost = true;
-							editItem.Show();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.Restock.AddLog("Item list not selected!");
-		}
-
-		private void restockRemoveButton_Click(object sender, EventArgs e)
-		{
-			if (restockListSelect.Text != "")
-			{
-				if (restocklistView.SelectedItems.Count == 1)
-				{
-					int index = restocklistView.SelectedItems[0].Index;
-					string selection = restockListSelect.Text;
-
-					if (RazorEnhanced.Settings.Restock.ListExists(selection))
-					{
-						List<Restock.RestockItem> items;
-						RazorEnhanced.Settings.Restock.ItemsRead(selection, out items);
-						if (index <= items.Count - 1)
-						{
-							RazorEnhanced.Settings.Restock.ItemDelete(selection, items[index]);
-							RazorEnhanced.Restock.RefreshItems();
-						}
-					}
-				}
-			}
-			else
-				RazorEnhanced.Restock.AddLog("Item list not selected!");
-		}
-
-		private void restocklistView_ItemChecked(object sender, ItemCheckedEventArgs e)
-		{
-			if (restocklistView.FocusedItem != null)
-			{
-				ListViewItem item = e.Item as ListViewItem;
-				RazorEnhanced.Restock.UpdateSelectedItems(item.Index);
 			}
 		}
 
@@ -11396,7 +11447,7 @@ namespace Assistant
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString());
 				RazorEnhanced.Restock.AddLog("Restock item added: " + restockItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, 0, restockItem.Hue); });
+				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, restockItem.Hue); });
 			}
 			else
 			{
@@ -11404,6 +11455,110 @@ namespace Assistant
 					RazorEnhanced.Misc.SendMessage("Invalid target");
 				RazorEnhanced.Restock.AddLog("Invalid target");
 			}
+		}
+
+		private void restockdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridViewCell cell = restockdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+			if (e.ColumnIndex == 3)
+			{
+				if (cell.Value.ToString() == "-1")
+				{
+					cell.Value = "All";
+				}
+				else
+				{
+					int color = 0;
+					if (!cell.Value.ToString().Contains("-"))
+					{
+						try
+						{
+							color = Convert.ToInt32((string)cell.Value, 16);
+						}
+						catch { }
+
+						if (color > 65535)
+							color = 65535;
+					}
+					cell.Value = "0x" + color.ToString("X4");
+				}
+			}
+			else if (e.ColumnIndex == 4)
+			{
+				int limit = 0;
+				Int32.TryParse(cell.Value.ToString(), out limit);
+
+				if (limit < 0 || limit > 9999)
+					limit = 0;
+
+				cell.Value = limit.ToString();
+			}
+			else if (e.ColumnIndex == 2)
+			{
+				int itemid = 0;
+				if (!cell.Value.ToString().Contains("-"))
+				{
+					try
+					{
+						itemid = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (itemid > 65535)
+						itemid = 65535;
+				}
+				cell.Value = "0x" + itemid.ToString("X4");
+			}
+			RazorEnhanced.Restock.CopyTable();
+		}
+
+		private void restockdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
+		{
+			e.Row.Cells[0].Value = false;
+			e.Row.Cells[1].Value = "New Item";
+			e.Row.Cells[2].Value = "0x0000";
+			e.Row.Cells[3].Value = "0x0000";
+			e.Row.Cells[4].Value = "1";
+		}
+
+		private void restockdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void restockdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (!restockdataGridView.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			{
+				RazorEnhanced.Restock.CopyTable();
+			}
+		}
+
+		private void restockdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				restockdataGridView.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = 8;
+				restockdataGridView.CurrentCell = restockdataGridView.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(restockdataGridView, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+		}
+
+		private void restockdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+		{
+			if (!restockdataGridView.Focused)
+				return;
+
+			if (restockdataGridView.IsCurrentCellDirty)
+				restockdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
 		}
 
 		// --------------- RESTOCK END -------------
@@ -12888,121 +13043,16 @@ namespace Assistant
 						RazorEnhanced.SellAgent.CopyTable();
 					}
 					break;
-			}
-
-		}
-
-		private void organizerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-		{
-			DataGridViewCell cell = organizerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
-			if (e.ColumnIndex == 3)
-			{
-				if (cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					int color = 0;
-					if (!cell.Value.ToString().Contains("-"))
+				case 8:
+					if (!restockdataGridView.Rows[agentrowindex].IsNewRow)
 					{
-						try
-						{
-							color = Convert.ToInt32((string)cell.Value, 16);
-						}
-						catch { }
-
-						if (color > 65535)
-							color = 65535;
+						restockdataGridView.Rows.RemoveAt(agentrowindex);
+						RazorEnhanced.Restock.CopyTable();
 					}
-					cell.Value = "0x" + color.ToString("X4");
-				}
+					break;
 			}
-			else if (e.ColumnIndex == 4)
-			{
-				if (cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					int amount = 0;
-					Int32.TryParse(cell.Value.ToString(), out amount);
 
-					if (amount < 0 || amount > 9999)
-						amount = 9999;
-
-					cell.Value = amount.ToString();
-				}
-			}
-			else if (e.ColumnIndex == 2)
-			{
-				int itemid = 0;
-				if (!cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						itemid = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
-
-					if (itemid > 65535)
-						itemid = 65535;
-				}
-				cell.Value = "0x" + itemid.ToString("X4");
-			}
-			RazorEnhanced.Organizer.CopyTable();
 		}
-
-		private void organizerdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
-		{
-			e.Row.Cells[0].Value = false;
-			e.Row.Cells[1].Value = "New Item";
-			e.Row.Cells[2].Value = "0x0000";
-			e.Row.Cells[3].Value = "0x0000";
-			e.Row.Cells[4].Value = "1";
-		}
-
-		private void organizerdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			e.ThrowException = false;
-			e.Cancel = false;
-		}
-
-		private void organizerdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (!organizerdataGridView.Focused)
-				return;
-
-			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
-			{
-				RazorEnhanced.Organizer.CopyTable();
-			}
-		}
-
-		private void organizerdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				organizerdataGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = 3;
-				organizerdataGridView.CurrentCell = organizerdataGridView.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(organizerdataGridView, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
-			}
-		}
-
-		private void organizerdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (!organizerdataGridView.Focused)
-				return;
-
-			if (organizerdataGridView.IsCurrentCellDirty)
-				organizerdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-		}
-
 		// ----------------- END AGENT GESTIONE MENU TENDINA -------------------
 	}
 
