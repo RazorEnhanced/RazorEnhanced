@@ -9916,7 +9916,7 @@ namespace Assistant
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 					RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
 				RazorEnhanced.Organizer.AddLog("Organizer item added: " + organizerItem.ToString());
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, -1, -1); });
+				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Hue); });
 			}
 			else
 			{

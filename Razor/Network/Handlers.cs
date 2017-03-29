@@ -109,7 +109,8 @@ namespace Assistant
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
 		{
-			args.Block = true;
+			if (Engine.ClientMajor >= 7 && Engine.ClientBuild < 49)
+				args.Block = true;
 		}
 
 		private static void EncodedPacket(PacketReader p, PacketHandlerEventArgs args)
