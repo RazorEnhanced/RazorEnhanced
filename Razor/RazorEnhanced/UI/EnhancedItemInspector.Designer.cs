@@ -85,11 +85,13 @@
 			// 
 			// bNameCopy
 			// 
-			this.bNameCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bNameCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bNameCopy.Location = new System.Drawing.Point(8, 30);
+			this.bNameCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bNameCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bNameCopy.FlatAppearance.BorderSize = 0;
+			this.bNameCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bNameCopy.Location = new System.Drawing.Point(10, 32);
 			this.bNameCopy.Name = "bNameCopy";
-			this.bNameCopy.Size = new System.Drawing.Size(25, 25);
+			this.bNameCopy.Size = new System.Drawing.Size(20, 20);
 			this.bNameCopy.TabIndex = 0;
 			this.bNameCopy.UseVisualStyleBackColor = true;
 			this.bNameCopy.Click += new System.EventHandler(this.bNameCopy_Click);
@@ -192,22 +194,26 @@
 			// 
 			// bPositionCopy
 			// 
-			this.bPositionCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bPositionCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bPositionCopy.Location = new System.Drawing.Point(8, 150);
+			this.bPositionCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bPositionCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bPositionCopy.FlatAppearance.BorderSize = 0;
+			this.bPositionCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bPositionCopy.Location = new System.Drawing.Point(10, 152);
 			this.bPositionCopy.Name = "bPositionCopy";
-			this.bPositionCopy.Size = new System.Drawing.Size(25, 25);
+			this.bPositionCopy.Size = new System.Drawing.Size(20, 20);
 			this.bPositionCopy.TabIndex = 6;
 			this.bPositionCopy.UseVisualStyleBackColor = true;
 			this.bPositionCopy.Click += new System.EventHandler(this.bPositionCopy_Click);
 			// 
 			// bColorCopy
 			// 
-			this.bColorCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bColorCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bColorCopy.Location = new System.Drawing.Point(8, 120);
+			this.bColorCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bColorCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bColorCopy.FlatAppearance.BorderSize = 0;
+			this.bColorCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bColorCopy.Location = new System.Drawing.Point(10, 122);
 			this.bColorCopy.Name = "bColorCopy";
-			this.bColorCopy.Size = new System.Drawing.Size(25, 25);
+			this.bColorCopy.Size = new System.Drawing.Size(20, 20);
 			this.bColorCopy.TabIndex = 5;
 			this.bColorCopy.UseVisualStyleBackColor = true;
 			this.bColorCopy.Click += new System.EventHandler(this.bColorCopy_Click);
@@ -223,11 +229,13 @@
 			// 
 			// bItemIdCopy
 			// 
-			this.bItemIdCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bItemIdCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bItemIdCopy.Location = new System.Drawing.Point(8, 90);
+			this.bItemIdCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bItemIdCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bItemIdCopy.FlatAppearance.BorderSize = 0;
+			this.bItemIdCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bItemIdCopy.Location = new System.Drawing.Point(10, 92);
 			this.bItemIdCopy.Name = "bItemIdCopy";
-			this.bItemIdCopy.Size = new System.Drawing.Size(25, 25);
+			this.bItemIdCopy.Size = new System.Drawing.Size(20, 20);
 			this.bItemIdCopy.TabIndex = 4;
 			this.bItemIdCopy.UseVisualStyleBackColor = true;
 			this.bItemIdCopy.Click += new System.EventHandler(this.bItemIdCopy_Click);
@@ -243,11 +251,14 @@
 			// 
 			// bSerialCopy
 			// 
-			this.bSerialCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bSerialCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bSerialCopy.Location = new System.Drawing.Point(8, 60);
+			this.bSerialCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bSerialCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bSerialCopy.FlatAppearance.BorderColor = System.Drawing.Color.Blue;
+			this.bSerialCopy.FlatAppearance.BorderSize = 0;
+			this.bSerialCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bSerialCopy.Location = new System.Drawing.Point(10, 62);
 			this.bSerialCopy.Name = "bSerialCopy";
-			this.bSerialCopy.Size = new System.Drawing.Size(25, 25);
+			this.bSerialCopy.Size = new System.Drawing.Size(20, 20);
 			this.bSerialCopy.TabIndex = 2;
 			this.bSerialCopy.UseVisualStyleBackColor = true;
 			this.bSerialCopy.Click += new System.EventHandler(this.bSerialCopy_Click);
@@ -350,24 +361,29 @@
 			// 
 			// bOwnedCopy
 			// 
-			this.bOwnedCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bOwnedCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bOwnedCopy.Location = new System.Drawing.Point(8, 150);
+			this.bOwnedCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bOwnedCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bOwnedCopy.FlatAppearance.BorderSize = 0;
+			this.bOwnedCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bOwnedCopy.Location = new System.Drawing.Point(10, 152);
 			this.bOwnedCopy.Name = "bOwnedCopy";
-			this.bOwnedCopy.Size = new System.Drawing.Size(25, 25);
+			this.bOwnedCopy.Size = new System.Drawing.Size(20, 20);
 			this.bOwnedCopy.TabIndex = 6;
 			this.bOwnedCopy.UseVisualStyleBackColor = true;
 			this.bOwnedCopy.Click += new System.EventHandler(this.bOwnedCopy_Click);
 			// 
 			// bLayerCopy
 			// 
-			this.bLayerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bLayerCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bLayerCopy.Location = new System.Drawing.Point(8, 120);
+			this.bLayerCopy.BackColor = System.Drawing.SystemColors.Control;
+			this.bLayerCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bLayerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bLayerCopy.FlatAppearance.BorderSize = 0;
+			this.bLayerCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bLayerCopy.Location = new System.Drawing.Point(10, 122);
 			this.bLayerCopy.Name = "bLayerCopy";
-			this.bLayerCopy.Size = new System.Drawing.Size(25, 25);
+			this.bLayerCopy.Size = new System.Drawing.Size(20, 20);
 			this.bLayerCopy.TabIndex = 5;
-			this.bLayerCopy.UseVisualStyleBackColor = true;
+			this.bLayerCopy.UseVisualStyleBackColor = false;
 			this.bLayerCopy.Click += new System.EventHandler(this.bLayerCopy_Click);
 			// 
 			// label8
@@ -381,13 +397,16 @@
 			// 
 			// bAmountCopy
 			// 
-			this.bAmountCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bAmountCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bAmountCopy.Location = new System.Drawing.Point(8, 90);
+			this.bAmountCopy.BackColor = System.Drawing.SystemColors.Control;
+			this.bAmountCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bAmountCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bAmountCopy.FlatAppearance.BorderSize = 0;
+			this.bAmountCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bAmountCopy.Location = new System.Drawing.Point(10, 92);
 			this.bAmountCopy.Name = "bAmountCopy";
-			this.bAmountCopy.Size = new System.Drawing.Size(25, 25);
+			this.bAmountCopy.Size = new System.Drawing.Size(20, 20);
 			this.bAmountCopy.TabIndex = 4;
-			this.bAmountCopy.UseVisualStyleBackColor = true;
+			this.bAmountCopy.UseVisualStyleBackColor = false;
 			this.bAmountCopy.Click += new System.EventHandler(this.bAmountCopy_Click);
 			// 
 			// label9
@@ -401,11 +420,13 @@
 			// 
 			// bRContainerCopy
 			// 
-			this.bRContainerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bRContainerCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bRContainerCopy.Location = new System.Drawing.Point(8, 60);
+			this.bRContainerCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bRContainerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bRContainerCopy.FlatAppearance.BorderSize = 0;
+			this.bRContainerCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bRContainerCopy.Location = new System.Drawing.Point(10, 62);
 			this.bRContainerCopy.Name = "bRContainerCopy";
-			this.bRContainerCopy.Size = new System.Drawing.Size(25, 25);
+			this.bRContainerCopy.Size = new System.Drawing.Size(20, 20);
 			this.bRContainerCopy.TabIndex = 2;
 			this.bRContainerCopy.UseVisualStyleBackColor = true;
 			this.bRContainerCopy.Click += new System.EventHandler(this.bRContainerCopy_Click);
@@ -421,11 +442,13 @@
 			// 
 			// bContainerCopy
 			// 
-			this.bContainerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.bContainerCopy.Image = global::Assistant.Properties.Resources.RoundButton;
-			this.bContainerCopy.Location = new System.Drawing.Point(8, 30);
+			this.bContainerCopy.BackgroundImage = global::Assistant.Properties.Resources.RoundButton;
+			this.bContainerCopy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.bContainerCopy.FlatAppearance.BorderSize = 0;
+			this.bContainerCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.bContainerCopy.Location = new System.Drawing.Point(10, 32);
 			this.bContainerCopy.Name = "bContainerCopy";
-			this.bContainerCopy.Size = new System.Drawing.Size(25, 25);
+			this.bContainerCopy.Size = new System.Drawing.Size(20, 20);
 			this.bContainerCopy.TabIndex = 0;
 			this.bContainerCopy.UseVisualStyleBackColor = true;
 			this.bContainerCopy.Click += new System.EventHandler(this.bContainerCopy_Click);
