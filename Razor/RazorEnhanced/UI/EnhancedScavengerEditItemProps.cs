@@ -132,10 +132,11 @@ namespace RazorEnhanced.UI
             if (m_color != "All")
 				color = Convert.ToInt32(m_color, 16);
 
-			foreach (Scavenger.ScavengerItem.Property prop in m_proplist)
-			{
-				scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Maximum.ToString()});
-			}
+			if (m_proplist != null)
+				foreach (Scavenger.ScavengerItem.Property prop in m_proplist)
+				{
+					scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Maximum.ToString()});
+				}
 
 			// Immagine
 			Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(itemid));
