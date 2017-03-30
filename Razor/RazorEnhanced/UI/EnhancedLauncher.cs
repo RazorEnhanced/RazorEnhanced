@@ -168,6 +168,7 @@ namespace RazorEnhanced.UI
 
 		private void okay_Click(object sender, EventArgs e)
 		{
+
 			UpdateGUI();
 
 			// Genero Login.cfg
