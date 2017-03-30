@@ -9,11 +9,6 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> AutoLootSerialCorpseRefresh = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
-		
-		internal static int LastAutolootItem = 0;
-
-		internal static int LootRange = 3;
-		internal static int ScavengerRange = 2;
 
 		internal static void AutoRun()
 		{
@@ -38,7 +33,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= LootRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= AutoLoot.LootRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 						{
 							RazorEnhanced.Items.WaitForContents(Items.FindBySerial(itemserial), 1000);
 							AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
@@ -85,7 +80,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, corpse.Position.X, corpse.Position.Y) <= LootRange) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
+						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, corpse.Position.X, corpse.Position.Y) <= AutoLoot.LootRange) && CheckZLevel(corpse.Position.Z, World.Player.Position.Z))
 						{
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{
@@ -98,7 +93,6 @@ namespace RazorEnhanced
 								RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
 								Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
 								Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, AutoLoot.AutoLootBag));
-								LastAutolootItem = item.Serial;
 								Thread.Sleep(AutoLoot.AutoLootDelay);
 								AutoLoot.SerialToGrabList.TryDequeue(out data);
 							}
@@ -134,7 +128,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= ScavengerRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= Scavenger.ScavengerRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 						{
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{

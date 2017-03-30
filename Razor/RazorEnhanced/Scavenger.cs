@@ -10,6 +10,8 @@ namespace RazorEnhanced
 {
 	public class Scavenger
 	{
+		internal static int ScavengerRange = 2;
+
 		[Serializable]
 		public class ScavengerItem
 		{
@@ -304,8 +306,6 @@ namespace RazorEnhanced
 			{
 				Items.WaitForProps(itemGround, 1000);
 
-				RazorEnhanced.Scavenger.AddLog("- Item Match found scan props");
-
 				bool propsOk = false;
 				foreach (ScavengerItem.Property props in scavengerItem.Properties) // Scansione e verifica props
 				{
@@ -322,13 +322,7 @@ namespace RazorEnhanced
 				}
 
 				if (propsOk) // Tutte le props match OK
-				{
 					DragDropManager.ScavengerSerialToGrab.Enqueue(itemGround.Serial);
-				}
-				else
-				{
-					RazorEnhanced.Scavenger.AddLog("- Props Match fail!");
-				}
 			}
 			else // Item Senza props
 			{
@@ -346,7 +340,7 @@ namespace RazorEnhanced
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter
 			{
-				RangeMax = DragDropManager.ScavengerRange,
+				RangeMax = ScavengerRange,
 				Movable = true,
 				OnGround = 1,
 				Enabled = true

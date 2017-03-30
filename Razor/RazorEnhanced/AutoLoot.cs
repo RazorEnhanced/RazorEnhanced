@@ -12,6 +12,8 @@ namespace RazorEnhanced
 	{
 		private static Queue<int> m_IgnoreCorpseList = new Queue<int>();
 
+		internal static int LootRange = 3;
+
 		[Serializable]
 		public class AutoLootItem
 		{
@@ -389,7 +391,6 @@ namespace RazorEnhanced
 
 			if (autoLoootItem.Properties.Count > 0) // Item con props
 			{
-				RazorEnhanced.AutoLoot.AddLog("- Item Match found scan props");
 				Items.WaitForProps(oggettoContenuto, 1000);
 
 				bool propsOk = false;
@@ -409,8 +410,6 @@ namespace RazorEnhanced
 
 				if (propsOk) // Tutte le props match OK
 					SerialToGrabList.Enqueue(data);
-				else
-					RazorEnhanced.AutoLoot.AddLog("- Props Match fail!");
 			}
 			else // Item Senza props
 				SerialToGrabList.Enqueue(data);
@@ -421,7 +420,7 @@ namespace RazorEnhanced
 			// Genero filtro per corpi
 			Items.Filter corpseFilter = new Items.Filter
 			{
-				RangeMax = DragDropManager.LootRange,
+				RangeMax = LootRange,
 				Movable = false,
 				IsCorpse = 1,
 				OnGround = 1,
