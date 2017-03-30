@@ -538,6 +538,10 @@ namespace RazorEnhanced
 					description = "Psychic Attack";
 					break;
 
+				case BuffIcon.ConsecrateWeapon:
+					description = "Consecrate Weapon";
+					break;
+
 				case BuffIcon.Rage:
 					description = "Rage";
 					break;
