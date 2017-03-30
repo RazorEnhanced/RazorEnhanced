@@ -134,7 +134,7 @@ namespace RazorEnhanced.UI
 
 			foreach (AutoLoot.AutoLootItem.Property prop in m_proplist)
 			{
-				autolootpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Minimum.ToString()});
+				autolootpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Maximum.ToString()});
 			}
 
 			// Immagine

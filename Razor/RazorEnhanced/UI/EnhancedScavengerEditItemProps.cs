@@ -134,7 +134,7 @@ namespace RazorEnhanced.UI
 
 			foreach (Scavenger.ScavengerItem.Property prop in m_proplist)
 			{
-				scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Minimum.ToString()});
+				scavengerpropGridView.Rows.Add(new object[] { prop.Name, prop.Minimum.ToString(), prop.Maximum.ToString()});
 			}
 
 			// Immagine
