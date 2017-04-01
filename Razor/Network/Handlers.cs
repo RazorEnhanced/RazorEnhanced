@@ -1425,15 +1425,10 @@ namespace Assistant
 
 		private static void SAMobileStatus(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-            Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile((Serial)p.ReadUInt32());
 
 			if (m == null)
-			{
-				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
-			}
+				return;
 
 			UseNewStatus = true;
 
@@ -1463,15 +1458,10 @@ namespace Assistant
 
 		private static void NewMobileStatus(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-            Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile((Serial)p.ReadUInt32());
 
 			if (m == null)
-			{
-				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
-			}
+				return;
 
 			UseNewStatus = true;
 
