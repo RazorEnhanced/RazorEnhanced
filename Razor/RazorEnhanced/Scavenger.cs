@@ -296,9 +296,6 @@ namespace RazorEnhanced
 
 		internal static void GrabItem(ScavengerItem scavengerItem, Item itemGround, int mseconds)
 		{
-			if (!itemGround.Movable || !itemGround.Visible)
-				return;
-
 			if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
 				return;
 
