@@ -10,6 +10,24 @@ namespace RazorEnhanced.UI
 	{
 		public RazorRadioButton()
 		{
+			this.SetStyle(ControlStyles.UserPaint, true);
+			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+		}
+
+		protected override void OnPaint(PaintEventArgs pevent)
+		{
+			base.OnPaint(pevent);
+			pevent.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+			pevent.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			pevent.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+			if (this.Checked)
+			{
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorRadioButton_On, 0, 2, 16, 17);
+			}
+			else
+			{
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorRadioButton_Off, 0, 2, 16, 17);
+			}
 		}
 	}
 
@@ -17,30 +35,120 @@ namespace RazorEnhanced.UI
 	{
 		public RazorTextBox()
 		{
-		
+			BorderStyle = BorderStyle.FixedSingle;
+			Location = new Point(-1, -1);
+			Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+
+			DefaultBorderColor = Color.FromArgb(31, 72, 161);
+			FocusedBorderColor = Color.FromArgb(236, 199, 87);
+			BackColor = Color.White;
+			Padding = new Padding(1);
 		}
 
 		public Color DefaultBorderColor { get; set; }
 		public Color FocusedBorderColor { get; set; }
 
+		protected override void OnEnter(EventArgs e)
+		{
+			base.OnEnter(e);
+		}
+
+		protected override void OnLeave(EventArgs e)
+		{
+			base.OnLeave(e);
+		}
 	}
 
 	public class RazorComboBox : ComboBox
 	{
 		public RazorComboBox()
 		{
-
+			//	this.DropDownStyle = ComboBoxStyle.DropDownList;
+			this.SetStyle(ControlStyles.UserPaint, true);
 		}
 
+		protected override void OnDrawItem(DrawItemEventArgs e)
+		{
+			e.DrawBackground();
+			var index = e.Index;
+			if (index < 0 || index >= Items.Count) return;
+			using (var brush = new SolidBrush(e.ForeColor))
+			{
+				Rectangle rec = new Rectangle(e.Bounds.Left, e.Bounds.Top + ((e.Bounds.Height - ItemHeight) / 2), e.Bounds.Width, ItemHeight - 1);
+				e.Graphics.DrawString(this.Items[e.Index].ToString(), e.Font, new SolidBrush(this.ForeColor), rec);
+			}
+			e.DrawFocusRectangle();
+		}
+
+		protected override void OnPaint(PaintEventArgs pevent)
+		{
+			base.OnPaint(pevent);
+
+			Pen Colore1Pen = new Pen(Color.FromArgb(31, 72, 161));
+			Colore1Pen.Width = 1;
+			Pen Colore2Pen = new Pen(Color.FromArgb(68, 135, 228));
+			Colore2Pen.Width = 1;
+
+			//Freccia selezione
+			if (this.DropDownStyle == ComboBoxStyle.DropDown)
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorComboBox_Arrow, Width - 15, 2, 15, 22);
+			else
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorComboBox_Arrow, Width - 15, 2, 15, 21);
+			//angoli
+			pevent.Graphics.DrawLine(Colore1Pen, 0, 2, 2, 0);
+			pevent.Graphics.DrawLine(Colore2Pen, 1, 2, 2, 1);
+
+			pevent.Graphics.DrawLine(Colore1Pen, 0, Height - 3, 2, Height - 1);
+			pevent.Graphics.DrawLine(Colore2Pen, 1, Height - 2, 2, Height - 2);
+
+			pevent.Graphics.DrawLine(Colore1Pen, Width - 2, 0, Width, 2);
+			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, 1, Width - 1, 2);
+
+			pevent.Graphics.DrawLine(Colore1Pen, Width - 2, Height - 1, Width, Height - 3);
+			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, Height - 2, Width - 1, Height - 2);
+
+			//Verticale sinistra e destra
+			pevent.Graphics.DrawLine(Colore1Pen, 0, 3, 0, Height - 3);
+			pevent.Graphics.DrawLine(Colore2Pen, 1, 3, 1, Height - 3);
+
+			pevent.Graphics.DrawLine(Colore1Pen, Width - 1, 3, Width - 1, Height - 3);
+			pevent.Graphics.DrawLine(Colore2Pen, Width - 2, 2, Width - 2, Height - 3);
+
+			//Orizzontale sopra e sotto
+			pevent.Graphics.DrawLine(Colore1Pen, 3, 0, Width - 3, 0);
+			pevent.Graphics.DrawLine(Colore2Pen, 3, 1, Width - 3, 1);
+
+			pevent.Graphics.DrawLine(Colore1Pen, 3, Height - 1, Width - 3, Height - 1);
+			pevent.Graphics.DrawLine(Colore2Pen, 3, Height - 2, Width - 3, Height - 2);
+
+			pevent.Graphics.DrawString(Text, this.Font, new SolidBrush(this.ForeColor), 3, 3, StringFormat.GenericDefault);
+			base.OnPaint(pevent);
+		}
 	}
 
 	public class RazorCheckBox : CheckBox
 	{
 		public RazorCheckBox()
 		{
-			
+			this.SetStyle(ControlStyles.UserPaint, true);
+			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
 		}
 
+		protected override void OnPaint(PaintEventArgs pevent)
+		{
+			base.OnPaint(pevent);
+			pevent.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+			pevent.Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			pevent.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+			if (this.Checked)
+			{
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorCheckBox_On, 0, 2, 16, 17);
+			}
+			else
+			{
+				pevent.Graphics.DrawImage(Assistant.Properties.Resources.RazorCheckBox_Off, 0, 2, 16, 17);
+			}
+		}
 	}
 
 	public partial class RazorButton : Button
