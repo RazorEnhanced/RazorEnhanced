@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedFriendAddGuildManual));
 			this.label1 = new System.Windows.Forms.Label();
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
@@ -64,44 +63,23 @@
 			// 
 			// bClose
 			// 
-			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.TextColor = System.Drawing.Color.White;
-			this.bClose.ColorTable = office2010BlueTheme;
 			this.bClose.Location = new System.Drawing.Point(241, 45);
 			this.bClose.Margin = new System.Windows.Forms.Padding(2);
 			this.bClose.Name = "bClose";
 			this.bClose.Size = new System.Drawing.Size(57, 19);
 			this.bClose.TabIndex = 3;
 			this.bClose.Text = "Close";
-			this.bClose.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.bClose.UseVisualStyleBackColor = true;
 			this.bClose.Click += new System.EventHandler(this.bClose_Click);
 			// 
 			// bAddPlayer
 			// 
-			this.bAddPlayer.ColorTable = office2010BlueTheme;
 			this.bAddPlayer.Location = new System.Drawing.Point(241, 20);
 			this.bAddPlayer.Margin = new System.Windows.Forms.Padding(2);
 			this.bAddPlayer.Name = "bAddPlayer";
 			this.bAddPlayer.Size = new System.Drawing.Size(57, 19);
 			this.bAddPlayer.TabIndex = 2;
 			this.bAddPlayer.Text = "Add";
-			this.bAddPlayer.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.bAddPlayer.UseVisualStyleBackColor = true;
 			this.bAddPlayer.Click += new System.EventHandler(this.bAddPlayer_Click);
 			// 
@@ -112,8 +90,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tName.BackColor = System.Drawing.Color.White;
 			this.tName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tName.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tName.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.tName.Location = new System.Drawing.Point(58, 21);
 			this.tName.Margin = new System.Windows.Forms.Padding(2);
 			this.tName.Name = "tName";

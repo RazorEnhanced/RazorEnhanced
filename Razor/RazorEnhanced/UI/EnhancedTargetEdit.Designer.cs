@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedTargetEdit));
 			this.label1 = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -480,31 +479,12 @@
 			// 
 			// razorButton1
 			// 
-			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.TextColor = System.Drawing.Color.White;
-			this.razorButton1.ColorTable = office2010BlueTheme;
 			this.razorButton1.Location = new System.Drawing.Point(271, 421);
 			this.razorButton1.Margin = new System.Windows.Forms.Padding(2);
 			this.razorButton1.Name = "razorButton1";
 			this.razorButton1.Size = new System.Drawing.Size(74, 19);
 			this.razorButton1.TabIndex = 7;
 			this.razorButton1.Text = "Close";
-			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButton1.UseVisualStyleBackColor = true;
 			this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click);
 			// 
@@ -535,8 +515,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tName.BackColor = System.Drawing.Color.White;
 			this.tName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tName.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tName.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.tName.Location = new System.Drawing.Point(6, 22);
 			this.tName.Margin = new System.Windows.Forms.Padding(2);
 			this.tName.Name = "tName";
@@ -545,14 +523,12 @@
 			// 
 			// razorButton2
 			// 
-			this.razorButton2.ColorTable = office2010BlueTheme;
 			this.razorButton2.Location = new System.Drawing.Point(365, 421);
 			this.razorButton2.Margin = new System.Windows.Forms.Padding(2);
 			this.razorButton2.Name = "razorButton2";
 			this.razorButton2.Size = new System.Drawing.Size(74, 19);
 			this.razorButton2.TabIndex = 6;
 			this.razorButton2.Text = "Save";
-			this.razorButton2.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButton2.UseVisualStyleBackColor = true;
 			this.razorButton2.Click += new System.EventHandler(this.razorButton2_Click);
 			// 
@@ -608,27 +584,23 @@
 			// 
 			// notoremoveButton
 			// 
-			this.notoremoveButton.ColorTable = office2010BlueTheme;
 			this.notoremoveButton.Location = new System.Drawing.Point(104, 95);
 			this.notoremoveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.notoremoveButton.Name = "notoremoveButton";
 			this.notoremoveButton.Size = new System.Drawing.Size(109, 19);
 			this.notoremoveButton.TabIndex = 3;
 			this.notoremoveButton.Text = "Remove";
-			this.notoremoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.notoremoveButton.UseVisualStyleBackColor = true;
 			this.notoremoveButton.Click += new System.EventHandler(this.notoremoveButton_Click);
 			// 
 			// notoaddButton
 			// 
-			this.notoaddButton.ColorTable = office2010BlueTheme;
 			this.notoaddButton.Location = new System.Drawing.Point(104, 57);
 			this.notoaddButton.Margin = new System.Windows.Forms.Padding(2);
 			this.notoaddButton.Name = "notoaddButton";
 			this.notoaddButton.Size = new System.Drawing.Size(109, 19);
 			this.notoaddButton.TabIndex = 2;
 			this.notoaddButton.Text = "Add";
-			this.notoaddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.notoaddButton.UseVisualStyleBackColor = true;
 			this.notoaddButton.Click += new System.EventHandler(this.notoaddButton_Click);
 			// 
@@ -665,14 +637,12 @@
 			// 
 			// hueremoveButton
 			// 
-			this.hueremoveButton.ColorTable = office2010BlueTheme;
 			this.hueremoveButton.Location = new System.Drawing.Point(104, 95);
 			this.hueremoveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.hueremoveButton.Name = "hueremoveButton";
 			this.hueremoveButton.Size = new System.Drawing.Size(74, 19);
 			this.hueremoveButton.TabIndex = 3;
 			this.hueremoveButton.Text = "Remove";
-			this.hueremoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hueremoveButton.UseVisualStyleBackColor = true;
 			this.hueremoveButton.Click += new System.EventHandler(this.hueremoveButton_Click);
 			// 
@@ -683,8 +653,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tAddHue.BackColor = System.Drawing.Color.White;
 			this.tAddHue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tAddHue.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tAddHue.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.tAddHue.Location = new System.Drawing.Point(104, 19);
 			this.tAddHue.Margin = new System.Windows.Forms.Padding(2);
 			this.tAddHue.Name = "tAddHue";
@@ -693,14 +661,12 @@
 			// 
 			// hueaddButton
 			// 
-			this.hueaddButton.ColorTable = office2010BlueTheme;
 			this.hueaddButton.Location = new System.Drawing.Point(104, 57);
 			this.hueaddButton.Margin = new System.Windows.Forms.Padding(2);
 			this.hueaddButton.Name = "hueaddButton";
 			this.hueaddButton.Size = new System.Drawing.Size(74, 19);
 			this.hueaddButton.TabIndex = 2;
 			this.hueaddButton.Text = "Add";
-			this.hueaddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.hueaddButton.UseVisualStyleBackColor = true;
 			this.hueaddButton.Click += new System.EventHandler(this.hueaddButton_Click);
 			// 
@@ -751,8 +717,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tRangeMax.BackColor = System.Drawing.Color.White;
 			this.tRangeMax.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tRangeMax.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tRangeMax.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.tRangeMax.Location = new System.Drawing.Point(43, 45);
 			this.tRangeMax.Name = "tRangeMax";
 			this.tRangeMax.Size = new System.Drawing.Size(51, 20);
@@ -774,8 +738,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tRangeMin.BackColor = System.Drawing.Color.White;
 			this.tRangeMin.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tRangeMin.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tRangeMin.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.tRangeMin.Location = new System.Drawing.Point(43, 19);
 			this.tRangeMin.Name = "tRangeMin";
 			this.tRangeMin.Size = new System.Drawing.Size(51, 20);
@@ -806,14 +768,12 @@
 			// 
 			// bodyremoveButton
 			// 
-			this.bodyremoveButton.ColorTable = office2010BlueTheme;
 			this.bodyremoveButton.Location = new System.Drawing.Point(104, 95);
 			this.bodyremoveButton.Margin = new System.Windows.Forms.Padding(2);
 			this.bodyremoveButton.Name = "bodyremoveButton";
 			this.bodyremoveButton.Size = new System.Drawing.Size(74, 19);
 			this.bodyremoveButton.TabIndex = 3;
 			this.bodyremoveButton.Text = "Remove";
-			this.bodyremoveButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.bodyremoveButton.UseVisualStyleBackColor = true;
 			this.bodyremoveButton.Click += new System.EventHandler(this.bodyremoveButton_Click);
 			// 
@@ -824,8 +784,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tAddBody.BackColor = System.Drawing.Color.White;
 			this.tAddBody.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tAddBody.DefaultBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			this.tAddBody.FocusedBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
 			this.tAddBody.Location = new System.Drawing.Point(104, 19);
 			this.tAddBody.Margin = new System.Windows.Forms.Padding(2);
 			this.tAddBody.Name = "tAddBody";
@@ -834,14 +792,13 @@
 			// 
 			// bodyaddButton
 			// 
-			this.bodyaddButton.ColorTable = office2010BlueTheme;
 			this.bodyaddButton.Location = new System.Drawing.Point(104, 57);
 			this.bodyaddButton.Margin = new System.Windows.Forms.Padding(2);
 			this.bodyaddButton.Name = "bodyaddButton";
 			this.bodyaddButton.Size = new System.Drawing.Size(74, 19);
 			this.bodyaddButton.TabIndex = 2;
 			this.bodyaddButton.Text = "Add";
-			this.bodyaddButton.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
+
 			this.bodyaddButton.UseVisualStyleBackColor = true;
 			this.bodyaddButton.Click += new System.EventHandler(this.bodyaddButton_Click);
 			// 

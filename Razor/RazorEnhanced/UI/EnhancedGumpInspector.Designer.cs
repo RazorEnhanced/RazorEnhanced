@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			RazorEnhanced.UI.Office2010BlueTheme office2010BlueTheme = new RazorEnhanced.UI.Office2010BlueTheme();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EnhancedGumpInspector));
 			this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
 			this.close = new RazorEnhanced.UI.RazorButton();
@@ -41,42 +40,21 @@
 			// 
 			// close
 			// 
-			office2010BlueTheme.BorderColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.BorderColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonMouseOverColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonMouseOverColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonMouseOverColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(225)))), ((int)(((byte)(137)))));
-			office2010BlueTheme.ButtonMouseOverColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(251)))), ((int)(((byte)(249)))), ((int)(((byte)(224)))));
-			office2010BlueTheme.ButtonNormalColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(31)))), ((int)(((byte)(72)))), ((int)(((byte)(161)))));
-			office2010BlueTheme.ButtonNormalColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(135)))), ((int)(((byte)(228)))));
-			office2010BlueTheme.ButtonNormalColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(97)))), ((int)(((byte)(181)))));
-			office2010BlueTheme.ButtonNormalColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(125)))), ((int)(((byte)(219)))));
-			office2010BlueTheme.ButtonSelectedColor1 = System.Drawing.Color.FromArgb(((int)(((byte)(236)))), ((int)(((byte)(199)))), ((int)(((byte)(87)))));
-			office2010BlueTheme.ButtonSelectedColor2 = System.Drawing.Color.FromArgb(((int)(((byte)(252)))), ((int)(((byte)(243)))), ((int)(((byte)(215)))));
-			office2010BlueTheme.ButtonSelectedColor3 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(229)))), ((int)(((byte)(117)))));
-			office2010BlueTheme.ButtonSelectedColor4 = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(216)))), ((int)(((byte)(107)))));
-			office2010BlueTheme.HoverTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.SelectedTextColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
-			office2010BlueTheme.TextColor = System.Drawing.Color.White;
-			this.close.ColorTable = office2010BlueTheme;
 			this.close.Location = new System.Drawing.Point(533, 357);
 			this.close.Name = "close";
 			this.close.Size = new System.Drawing.Size(75, 23);
 			this.close.TabIndex = 2;
 			this.close.Text = "Close";
-			this.close.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.close.UseVisualStyleBackColor = true;
 			this.close.Click += new System.EventHandler(this.closeGumpInspector_Click);
 			// 
 			// clear
 			// 
-			this.clear.ColorTable = office2010BlueTheme;
 			this.clear.Location = new System.Drawing.Point(19, 19);
 			this.clear.Name = "clear";
 			this.clear.Size = new System.Drawing.Size(75, 23);
 			this.clear.TabIndex = 4;
 			this.clear.Text = "Clear";
-			this.clear.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.clear.UseVisualStyleBackColor = true;
 			this.clear.Click += new System.EventHandler(this.razorButton1_Click);
 			// 
@@ -102,13 +80,11 @@
 			// 
 			// razorButton1
 			// 
-			this.razorButton1.ColorTable = office2010BlueTheme;
 			this.razorButton1.Location = new System.Drawing.Point(19, 48);
 			this.razorButton1.Name = "razorButton1";
 			this.razorButton1.Size = new System.Drawing.Size(75, 32);
 			this.razorButton1.TabIndex = 5;
 			this.razorButton1.Text = "Copy value to Clipboard";
-			this.razorButton1.Theme = RazorEnhanced.UI.Theme.MSOffice2010_BLUE;
 			this.razorButton1.UseVisualStyleBackColor = true;
 			this.razorButton1.Click += new System.EventHandler(this.razorButton1_Click_1);
 			// 
