@@ -15,7 +15,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
-using System.Drawing;
 
 namespace Assistant
 {
