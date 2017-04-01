@@ -73,10 +73,10 @@ namespace RazorEnhanced.UI
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
-			EnhancedLauncherAddShard AddShard = new EnhancedLauncherAddShard();
-			AddShard.FormClosed += new FormClosedEventHandler(addshard_refresh);
-			AddShard.TopMost = true;
-			AddShard.Show();
+			EnhancedAgentAddList addshard = new EnhancedAgentAddList(9);
+			addshard.FormClosed += new FormClosedEventHandler(addshard_refresh);
+			addshard.TopMost = true;
+			addshard.Show();
 		}
 
 		private void addshard_refresh(object sender, EventArgs e)

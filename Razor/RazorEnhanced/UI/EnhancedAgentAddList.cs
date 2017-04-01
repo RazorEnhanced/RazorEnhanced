@@ -15,6 +15,7 @@ namespace RazorEnhanced.UI
 		// 6- Dress
 		// 7- Friend
 		// 8- Friend
+		// 9- Shard
 
 		int m_agentid = 0;
 		public EnhancedAgentAddList(int agentid)
@@ -47,6 +48,9 @@ namespace RazorEnhanced.UI
 					break;
 				case 8:
 					Text = "Restock Add List";
+					break;
+				case 9:
+					Text = "Launcher Add Shard";
 					break;
 			}
 		}
@@ -103,6 +107,10 @@ namespace RazorEnhanced.UI
 					if (Settings.Restock.ListExists(newList))
 						fail = true;
 					break;
+				case 9:
+					if (RazorEnhanced.Shard.Exists(newList))
+						fail = true;
+					break;
 			}
 
 
@@ -142,6 +150,9 @@ namespace RazorEnhanced.UI
 						break;
 					case 8:
 						Restock.AddList(newList);
+						break;
+					case 9:
+						RazorEnhanced.Shard.Insert(newList, "Not set", "Not Set", "0.0.0.0", "0", false, false);
 						break;
 				}
 

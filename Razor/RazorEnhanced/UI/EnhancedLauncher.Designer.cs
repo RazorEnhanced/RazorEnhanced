@@ -87,9 +87,9 @@
 			// 
 			// removeShard
 			// 
-			this.removeShard.Location = new System.Drawing.Point(300, 19);
+			this.removeShard.Location = new System.Drawing.Point(307, 19);
 			this.removeShard.Name = "removeShard";
-			this.removeShard.Size = new System.Drawing.Size(60, 23);
+			this.removeShard.Size = new System.Drawing.Size(60, 21);
 			this.removeShard.TabIndex = 3;
 			this.removeShard.Text = "Remove";
 			this.removeShard.UseVisualStyleBackColor = true;
@@ -99,7 +99,7 @@
 			// 
 			this.addShard.Location = new System.Drawing.Point(242, 19);
 			this.addShard.Name = "addShard";
-			this.addShard.Size = new System.Drawing.Size(52, 23);
+			this.addShard.Size = new System.Drawing.Size(60, 21);
 			this.addShard.TabIndex = 2;
 			this.addShard.Text = "Add";
 			this.addShard.UseVisualStyleBackColor = true;
@@ -111,7 +111,7 @@
 			this.shardlistCombobox.FormattingEnabled = true;
 			this.shardlistCombobox.Location = new System.Drawing.Point(51, 19);
 			this.shardlistCombobox.Name = "shardlistCombobox";
-			this.shardlistCombobox.Size = new System.Drawing.Size(185, 24);
+			this.shardlistCombobox.Size = new System.Drawing.Size(185, 21);
 			this.shardlistCombobox.TabIndex = 1;
 			this.shardlistCombobox.SelectedIndexChanged += new System.EventHandler(this.shardlistCombobox_SelectedIndexChanged);
 			// 
@@ -264,7 +264,7 @@
 			this.quit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.quit.Location = new System.Drawing.Point(283, 199);
 			this.quit.Name = "quit";
-			this.quit.Size = new System.Drawing.Size(84, 20);
+			this.quit.Size = new System.Drawing.Size(84, 21);
 			this.quit.TabIndex = 9;
 			this.quit.Text = "Exit";
 			this.quit.Click += new System.EventHandler(this.quit_Click);
@@ -274,7 +274,7 @@
 			this.okay.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.okay.Location = new System.Drawing.Point(30, 199);
 			this.okay.Name = "okay";
-			this.okay.Size = new System.Drawing.Size(84, 20);
+			this.okay.Size = new System.Drawing.Size(84, 21);
 			this.okay.TabIndex = 8;
 			this.okay.Text = "Launch";
 			this.okay.Click += new System.EventHandler(this.okay_Click);
@@ -283,7 +283,7 @@
 			// 
 			this.checkupdatebutton.Location = new System.Drawing.Point(157, 199);
 			this.checkupdatebutton.Name = "checkupdatebutton";
-			this.checkupdatebutton.Size = new System.Drawing.Size(84, 20);
+			this.checkupdatebutton.Size = new System.Drawing.Size(84, 21);
 			this.checkupdatebutton.TabIndex = 10;
 			this.checkupdatebutton.Text = "Check Update";
 			this.checkupdatebutton.Click += new System.EventHandler(this.checkupdatebutton_Click);
