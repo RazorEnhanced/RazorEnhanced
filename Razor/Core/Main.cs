@@ -357,7 +357,6 @@ namespace Assistant
 			m_ActiveWnd = SplashScreen.Instance;
 
 			ClientCommunication.SetConnectionInfo(ip, port);
-			ClientCommunication.SetConnectionInfo(IPAddress.Any, 0);
 
 			Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
