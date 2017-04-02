@@ -111,6 +111,8 @@ namespace Assistant
 		{
 			if (Engine.ClientMajor >= 7 && Engine.ClientBuild < 49)
 				args.Block = true;
+			else
+				World.Player.VisRange = (int)p.ReadByte();
 		}
 
 		private static void EncodedPacket(PacketReader p, PacketHandlerEventArgs args)
@@ -132,11 +134,11 @@ namespace Assistant
 							}
 
 							item.ReadPropertyList(p);
-							if (item.ModifiedOPL)
+						/*	if (item.ModifiedOPL)
 							{
 								args.Block = true;
 								ClientCommunication.SendToClient(item.ObjPropList.BuildPacket());
-							}
+							}*/
 
 							item.PropsUpdated = true;
 						}
@@ -147,11 +149,11 @@ namespace Assistant
 								World.AddMobile(m = new Mobile(s));
 
 							m.ReadPropertyList(p);
-							if (m.ModifiedOPL)
+						/*	if (m.ModifiedOPL)
 							{
 								args.Block = true;
 								ClientCommunication.SendToClient(m.ObjPropList.BuildPacket());
-							}
+							}*/
 
 							m.PropsUpdated = true;
 						}
@@ -162,7 +164,7 @@ namespace Assistant
 
 		private static void ServOPLHash(Packet p, PacketHandlerEventArgs args)
 		{
-			Serial s = p.ReadUInt32();
+		/*	Serial s = p.ReadUInt32();
 			int hash = p.ReadInt32();
 
 			if (s.IsItem)
@@ -184,7 +186,7 @@ namespace Assistant
 					p.Seek(-4, SeekOrigin.Current);
 					p.Write((uint)m.OPLHash);
 				}
-			}
+			}*/
 		}
 
 		private static void ClientSingleClick(PacketReader p, PacketHandlerEventArgs args)
@@ -260,10 +262,10 @@ namespace Assistant
 							RazorEnhanced.ScriptRecorder.Record_SAStun();
 						break;
 					}
-				case 0x10: // query object properties
+			/*	case 0x10: // query object properties
 					{
 						break;
-					}
+					}*/
 				case 0x15: // context menu response
 					{
 						UOEntity ent = null;
@@ -304,7 +306,7 @@ namespace Assistant
 						}
 						break;
 					}
-				case 0x24:
+			/*	case 0x24:
 					{
 						// for the cheatx0r part 2...  anything outside this range indicates some haxing, just hide it with 0x30s
 						byte b = p.ReadByte();
@@ -316,7 +318,7 @@ namespace Assistant
 						//using ( StreamWriter w = new StreamWriter( "bf24.txt", true ) )
 						//	w.WriteLine( "{0} : 0x{1:X2}", DateTime.Now.ToString( "HH:mm:ss.ffff" ), b );
 						break;
-					}
+					}*/
 			}
 		}
 
@@ -1094,24 +1096,10 @@ namespace Assistant
 			m.Direction = (Direction)p.ReadByte();
 			m.Resync();
 
-			//	ClientCommunication.SendToServer( new SkillsQuery( m ) );
 			ClientCommunication.SendToServer(new StatusQuery(m.Serial));
 
 			ClientCommunication.PostLogin((int)serial.Value);
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
-
-			/*
-			//the rest of the packet: (total length: 37)
-			m_Stream.Write( (byte) 0 );
-			m_Stream.Write( (int) -1 );
-
-			m_Stream.Write( (short) 0 );
-			m_Stream.Write( (short) 0 );
-			m_Stream.Write( (short) (map==null?6144:map.Width) );
-			m_Stream.Write( (short) (map==null?4096:map.Height) );
-
-			Stream.Fill();
-			*/
 			ClientCommunication.BeginCalibratePosition();
 
 			// Salvo password
@@ -2286,7 +2274,6 @@ namespace Assistant
 					if (!string.IsNullOrEmpty(newText) && newText != text)
 					{
 						ClientCommunication.SendToClient(new AsciiMessage(ser, body, MessageType.Spell, s.GetHue(hue), font, name, newText));
-						//ClientCommunication.SendToClient( new UnicodeMessage( ser, body, MessageType.Spell, s.GetHue( hue ), font, Language.CliLocName, name, newText ) );
 						replaced = true;
 						args.Block = true;
 					}
@@ -2304,14 +2291,9 @@ namespace Assistant
 			else if (ser.IsMobile && type == MessageType.Label)
 			{
 				Mobile m = World.FindMobile(ser);
-				if (m != null /*&& ( m.Name == null || m.Name == "" || m.Name == "(Not Seen)" )*/&& m.Name.IndexOf(text) != 5 && m != World.Player && !(text.StartsWith("(") && text.EndsWith(")")))
+				if (m != null && m.Name.IndexOf(text) != 5 && m != World.Player && !(text.StartsWith("(") && text.EndsWith(")")))
 					m.Name = text;
 			}
-			/*else if ( Spell.Get( text.Trim() ) != null )
-			{ // send fake spells to bottom left
-				p.Seek( 3, SeekOrigin.Begin );
-				p.Write( (uint)0xFFFFFFFF );
-			}*/
 			else
 			{
 				if (ser == Serial.MinusOne && name == "System")
