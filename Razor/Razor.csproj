@@ -1047,6 +1047,9 @@
     <None Include="RazorEnhanced\Resources\BarraVerticaleSlot.png" />
     <None Include="RazorEnhanced\Resources\BarraVerticaleSpazioStat.png" />
     <None Include="RazorEnhanced\Resources\bug_go.png" />
+    <None Include="RazorEnhanced\Resources\aggiungi.png" />
+    <None Include="RazorEnhanced\Resources\cancella.png" />
+    <None Include="RazorEnhanced\Resources\esporta.png" />
     <Content Include="RazorEnhanced\Resources\green.png" />
     <None Include="RazorEnhanced\Resources\media-playback-start.png" />
     <None Include="RazorEnhanced\Resources\media-playback-stop-3.png" />
@@ -1063,6 +1066,7 @@
     <None Include="RazorEnhanced\Resources\map-paralized.gif" />
     <None Include="RazorEnhanced\Resources\map-deadIn.png" />
     <None Include="RazorEnhanced\Resources\map-deadOut.png" />
+    <None Include="RazorEnhanced\Resources\importa.png" />
     <Content Include="RazorEnhanced\Resources\loop.png" />
     <None Include="RazorEnhanced\Resources\playagent.png" />
     <Content Include="RazorEnhanced\Resources\razor-enhanced-splash.png" />
