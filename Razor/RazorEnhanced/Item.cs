@@ -990,7 +990,17 @@ namespace RazorEnhanced
 			return count;
 		}
 
-		public static int BackpackCount(int itemid, int color)
+		public static void Hide(Item item)
+		{
+			Hide(item.Serial);
+		}
+
+		public static void Hide(int serial)
+		{
+			ClientCommunication.SendToClientWait(new RemoveObject(serial));
+		}
+
+        public static int BackpackCount(int itemid, int color)
 		{
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter();
