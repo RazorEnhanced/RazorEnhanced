@@ -73,6 +73,16 @@ namespace Assistant.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap aggiungi {
+            get {
+                object obj = ResourceManager.GetObject("aggiungi", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap applications_utilities {
             get {
                 object obj = ResourceManager.GetObject("applications_utilities", resourceCulture);
@@ -293,6 +303,16 @@ namespace Assistant.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap cancella {
+            get {
+                object obj = ResourceManager.GetObject("cancella", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap document_close_2 {
             get {
                 object obj = ResourceManager.GetObject("document_close_2", resourceCulture);
@@ -323,6 +343,16 @@ namespace Assistant.Properties {
         /// <summary>
         ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap esporta {
+            get {
+                object obj = ResourceManager.GetObject("esporta", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap green {
             get {
                 object obj = ResourceManager.GetObject("green", resourceCulture);
@@ -336,6 +366,16 @@ namespace Assistant.Properties {
         internal static System.Drawing.Bitmap gump {
             get {
                 object obj = ResourceManager.GetObject("gump", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una risorsa localizzata di tipo System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap importa {
+            get {
+                object obj = ResourceManager.GetObject("importa", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
