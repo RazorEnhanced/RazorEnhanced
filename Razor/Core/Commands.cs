@@ -18,6 +18,7 @@ namespace Assistant
 			Command.Register("getserial", new CommandCallback(GetSerial));
 			Command.Register("inspect", new CommandCallback(GetInfo));
 			Command.Register("playscript", new CommandCallback(PlayScript));
+			Command.Register("hideitem", new CommandCallback(HideItem));
 		}
 
 		private static void GetSerial(string[] param)
@@ -62,6 +63,19 @@ namespace Assistant
 					});
 				}
 			}
+		}
+
+		private static void HideItem(string[] param)
+		{
+			ClientCommunication.ForceSendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 0x25, 3, Language.CliLocName, "System", "Target a item to hide."));
+			Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(HideItem_Callback));
+		}
+
+		private static void HideItem_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
+			if (assistantItem != null && assistantItem.Serial.IsItem)
+				ClientCommunication.SendToClient(new RemoveObject(serial));
 		}
 
 		private static void Echo(string[] param)
