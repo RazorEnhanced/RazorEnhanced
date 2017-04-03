@@ -440,7 +440,7 @@ namespace Assistant
 		private RazorCheckBox blockchivalryhealCheckBox;
 		private RazorCheckBox blockbighealCheckBox;
 		private RazorCheckBox blockminihealCheckBox;
-		private ListView scriptlistView;
+		private ScriptListView scriptlistView;
 		private ColumnHeader columnHeader56;
 		private ColumnHeader columnHeader57;
 		private ColumnHeader columnHeader58;
@@ -1064,8 +1064,8 @@ namespace Assistant
 			this.scriptwaitmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptloopmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptfilelabel = new System.Windows.Forms.Label();
-			this.scriptlistView = new System.Windows.Forms.ListView();
-			this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
+            this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader57 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader58 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -8647,25 +8647,31 @@ namespace Assistant
 			if (scriptlistView.Items.Count > 0)
 			{
 				scriptlistView.BeginUpdate();
-				foreach (ListViewItem litem in scriptlistView.Items)
+				try
 				{
-					string filename = litem.SubItems[1].Text;
-					Scripts.EnhancedScript script = Scripts.Search(filename);
+					foreach (ListViewItem litem in scriptlistView.Items)
 					{
-						if (script != null)
+						string filename = litem.SubItems[1].Text;
+						Scripts.EnhancedScript script = Scripts.Search(filename);
 						{
-							if (script.Run)
+							if (script != null)
 							{
-								litem.SubItems[2].Text = "Running";
-							}
-							else
-							{
-								litem.SubItems[2].Text = "Stopped";
+								if (script.Run)
+								{
+									litem.SubItems[2].Text = "Running";
+								}
+								else
+								{
+									litem.SubItems[2].Text = "Stopped";
+								}
 							}
 						}
 					}
 				}
-				scriptlistView.EndUpdate();
+				finally
+				{
+					scriptlistView.EndUpdate();
+				}
 			}
 
 		}
