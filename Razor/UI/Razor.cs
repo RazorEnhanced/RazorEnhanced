@@ -1625,7 +1625,6 @@ namespace Assistant
 			// 
 			// clientPrio
 			// 
-			this.clientPrio.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.clientPrio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.clientPrio.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.clientPrio.Items.AddRange(new object[] {
@@ -1637,7 +1636,7 @@ namespace Assistant
             "Realtime"});
 			this.clientPrio.Location = new System.Drawing.Point(363, 186);
 			this.clientPrio.Name = "clientPrio";
-			this.clientPrio.Size = new System.Drawing.Size(88, 22);
+			this.clientPrio.Size = new System.Drawing.Size(88, 23);
 			this.clientPrio.TabIndex = 60;
 			this.clientPrio.SelectedIndexChanged += new System.EventHandler(this.clientPrio_SelectedIndexChanged);
 			// 
@@ -2004,7 +2003,6 @@ namespace Assistant
 			// 
 			// msglvl
 			// 
-			this.msglvl.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.msglvl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.msglvl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.msglvl.Items.AddRange(new object[] {
@@ -2014,7 +2012,7 @@ namespace Assistant
             "None"});
 			this.msglvl.Location = new System.Drawing.Point(106, 246);
 			this.msglvl.Name = "msglvl";
-			this.msglvl.Size = new System.Drawing.Size(88, 22);
+			this.msglvl.Size = new System.Drawing.Size(88, 23);
 			this.msglvl.TabIndex = 69;
 			this.msglvl.SelectedIndexChanged += new System.EventHandler(this.msglvl_SelectedIndexChanged);
 			// 
@@ -7193,6 +7191,7 @@ namespace Assistant
 			opacity.Value = RazorEnhanced.Settings.General.ReadInt("Opacity");
 			this.Opacity = ((float)opacity.Value) / 100.0;
 			opacityLabel.Text = String.Format("Opacity: {0}%", opacity.Value);
+			msglvl.SelectedIndex = RazorEnhanced.Settings.General.ReadInt("MessageLevel");
 
 			this.Location = new System.Drawing.Point(RazorEnhanced.Settings.General.ReadInt("WindowX"), RazorEnhanced.Settings.General.ReadInt("WindowY"));
 			Assistant.Engine.MainWindowX = RazorEnhanced.Settings.General.ReadInt("WindowX");
