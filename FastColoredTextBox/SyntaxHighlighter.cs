@@ -1289,7 +1289,7 @@ namespace FastColoredTextBoxNS
 			RazorClassKeywordRegex = new Regex(@"\b(Player|Spells|Mobile|Mobiles|Item|Items|Misc|Target|Gumps|Journal|AutoLoot|Scavenger|Organizer|Restock|SellAgent|BuyAgent|Dress|Friend|BandageHeal|Statics)\b", RegexCompiledOption);
 
 			string GenericProps = "Serial|Hue|Position|X|Y|Z|Contains|Weight";
-			string PlayerProps = "Str|Int|Dex|StatCap|AR|FireResistance|ColdResistance|EnergyResistance|PoisonResistance|Buffs|IsGhost|Gold|Luck|Followers|FollowersMax|MaxWeight";
+			string PlayerProps = "Str|Int|Dex|StatCap|AR|FireResistance|ColdResistance|EnergyResistance|PoisonResistance|Buffs|IsGhost|Gold|Luck|Followers|FollowersMax|MaxWeight|HasSpecial";
 			string MobileProps = "Name|Body|Color|Direction|Visible|Poisoned|YellowHits|Paralized|Human|WarMode|Female|Hits|HitsMax|Stam|StamMax|Mana|ManaMax|Backpack|Mount|Quiver|Notoriety|Map|InParty|Properties";
 			string ItemsProps = "Amount|IsBagOfSending|IsContainer|IsCorpse|IsDoor|IsInBank|Movable|OnGround|ItemID|RootContainer|Durability|MaxDurability";
 		    string StaticProps = "StaticID|StaticHue|StaticZ";
@@ -1299,7 +1299,7 @@ namespace FastColoredTextBoxNS
 			string PlayerFunctions = "BuffsExist|GetBuffDescription|HeadMessage|InRangeMobile|InRangeItem|UnEquipItemByLayer|EquipItem|CheckLayer|GetSkillValue|GetSkillCap|GetSkillStatus|UseSkill|ChatSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyLeave|KickMember|InvokeVirtue|Walk|PathFindTo|PathFindToPacket|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA";
 			string SpellsFunctions = "CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism|CastBard";
 			string MobileFunctions = "UseMobile";
-			string ItemsFunctions = "DistanceTo|Move|MoveOnGround|DropItemGroundSelf|UseItem|WaitForContents|BackpackCount|ContainerCount|GetPropByCliloc|GetPropByString|UseItemByID";
+			string ItemsFunctions = "DistanceTo|Move|MoveOnGround|DropItemGroundSelf|UseItem|WaitForContents|BackpackCount|ContainerCount|GetPropByCliloc|GetPropByString|UseItemByID|Hide";
 			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContains|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse|NoOperation|ScriptRun|ScriptStop|ScriptStatus|PetRename";
 			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList|PromptTarget";
 		    string GumpsFunctions = "CurrentGump|HasGump|CloseGump|ResetGump|WaitForGump|SendAction|SendAdvancedAction|LastGump|LastGumpGetLineList|LastGumpTextExist|LastGumpTextExistByLine";

@@ -127,7 +127,7 @@ namespace RazorEnhanced.UI
 				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
 				"Player.Walk", "Player.PathFindTo", "Player.PathFindToPacket", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
-				"Player.WeaponStunSA", "Player.WeaponDisarmSA"
+				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial"
 			};
 
 			string[] methodsSpells =
@@ -146,7 +146,7 @@ namespace RazorEnhanced.UI
 			{
 				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
-				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID"
+				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID, Items.Hide"
 			};
 
 			string[] methodsMisc =
@@ -264,7 +264,7 @@ namespace RazorEnhanced.UI
 				"Player.StatCap", "Player.AR", "Player.FireResistance", "Player.ColdResistance", "Player.EnergyResistance",
 				"Player.PoisonResistance",
 				"Player.Buffs", "Player.IsGhost", "Player.Female", "Player.Name", "Player.Bank",
-				"Player.Gold", "Player.Luck", "Player.Body",
+				"Player.Gold", "Player.Luck", "Player.Body", "Player.HasSpecial",
 				"Player.Followers", "Player.FollowersMax", "Player.MaxWeight", "Player.Str", "Player.Dex", "Player.Int"
 			};
 
@@ -548,7 +548,9 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Items.UseItemByID(int, int)", new string[] { "int ItemID", "int Color" }, "void", "Use item whit specific ID\n\tColor -1 is wildcard for all color");
 			descriptionItems.Add("Items.UseItemByID", tooltip);
 
-			
+			tooltip = new ToolTipDescriptions("Items.Hide(int or item)", new string[] { "int serial or item itemtohide"}, "void", "Use to hide a item in screen");
+			descriptionItems.Add("Items.Hide", tooltip);
+
 			#endregion
 
 			#region Description Misc
