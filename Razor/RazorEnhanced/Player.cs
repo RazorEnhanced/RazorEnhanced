@@ -60,6 +60,7 @@ namespace RazorEnhanced
 		public static bool Visible { get { return Assistant.World.Player.Visible; } }
 		public static bool WarMode { get { return Assistant.World.Player.Warmode; } }
 		public static bool Paralized { get { return Assistant.World.Player.Paralized; } }
+		public static bool HasSpecial { get { return Assistant.World.Player.HasSpecial; } }
 
 		// Self
 		public static bool Female { get { return Assistant.World.Player.Female; } }

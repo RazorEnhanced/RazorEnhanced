@@ -2674,6 +2674,11 @@ namespace Assistant
 							i.HouseRevision = p.ReadInt32();
 						break;
 					}
+				case 0x21: // Special ability execute
+					{
+						World.Player.HasSpecial = false;
+						break;
+					}
 			}
 		}
 
@@ -2854,7 +2859,10 @@ namespace Assistant
 					{
 						int ability = 0;
 						if (p.ReadByte() == 0)
+						{
 							ability = p.ReadInt32();
+							World.Player.HasSpecial = true;
+						}
 						break;
 					}
 			}

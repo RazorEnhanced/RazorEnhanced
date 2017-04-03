@@ -292,6 +292,7 @@ namespace Assistant
 
 			if (a != AOSAbility.Invalid)
 			{
+				World.Player.HasSpecial = true;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
@@ -315,6 +316,7 @@ namespace Assistant
 
 			if (a != AOSAbility.Invalid)
 			{
+				World.Player.HasSpecial = true;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
@@ -323,6 +325,7 @@ namespace Assistant
 
 		internal static void ClearAbilities()
 		{
+			World.Player.HasSpecial = false;
 			ClientCommunication.SendToServer(new UseAbility(AOSAbility.Clear));
 			ClientCommunication.SendToClient(ClearAbility.Instance);
 			World.Player.SendMessage(LocString.AOSAbCleared);

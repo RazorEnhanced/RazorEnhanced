@@ -891,6 +891,9 @@ namespace Assistant
 		internal bool HasMenu;
 		internal string MenuQuestionText;
 
+		// Special ability
+		internal volatile bool HasSpecial = false;
+
 		internal class MenuItem
 		{
 			private ushort m_modelID;
