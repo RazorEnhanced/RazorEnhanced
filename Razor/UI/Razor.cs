@@ -1065,7 +1065,7 @@ namespace Assistant
 			this.scriptloopmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptfilelabel = new System.Windows.Forms.Label();
 			this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
-            this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader57 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader58 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -4839,7 +4839,6 @@ namespace Assistant
 			this.organizerExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
 			this.organizerExecuteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.organizerExecuteButton.FlatAppearance.BorderSize = 0;
-			this.organizerExecuteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.organizerExecuteButton.Location = new System.Drawing.Point(283, 58);
 			this.organizerExecuteButton.Name = "organizerExecuteButton";
 			this.organizerExecuteButton.Size = new System.Drawing.Size(30, 30);
@@ -4852,7 +4851,6 @@ namespace Assistant
 			this.organizerStopButton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
 			this.organizerStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.organizerStopButton.FlatAppearance.BorderSize = 0;
-			this.organizerStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.organizerStopButton.Location = new System.Drawing.Point(319, 58);
 			this.organizerStopButton.Name = "organizerStopButton";
 			this.organizerStopButton.Size = new System.Drawing.Size(30, 30);
@@ -6105,7 +6103,6 @@ namespace Assistant
 			this.restockExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
 			this.restockExecuteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.restockExecuteButton.FlatAppearance.BorderSize = 0;
-			this.restockExecuteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.restockExecuteButton.Location = new System.Drawing.Point(283, 58);
 			this.restockExecuteButton.Name = "restockExecuteButton";
 			this.restockExecuteButton.Size = new System.Drawing.Size(30, 30);
@@ -6118,7 +6115,6 @@ namespace Assistant
 			this.restockStopButton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
 			this.restockStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.restockStopButton.FlatAppearance.BorderSize = 0;
-			this.restockStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.restockStopButton.Location = new System.Drawing.Point(319, 58);
 			this.restockStopButton.Name = "restockStopButton";
 			this.restockStopButton.Size = new System.Drawing.Size(30, 30);
