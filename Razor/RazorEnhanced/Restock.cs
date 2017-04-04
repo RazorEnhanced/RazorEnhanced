@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Assistant;
 
 namespace RazorEnhanced
 {
@@ -287,14 +288,13 @@ namespace RazorEnhanced
 						if (oggettoContenuto.Amount > left)
 						{
 							AddLog("Moving:" + left + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " to destination bag.");
-							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, left);
-							Thread.Sleep(mseconds);
+
+							Move(oggettoContenuto, destinationBag, left, mseconds);
 						}
 						else
 						{
 							AddLog("Moving:" + oggettoContenuto.Amount + " Item: 0x" + oggettoDaLista.Graphics.ToString("X4") + " to destination bag.");
-							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
-							Thread.Sleep(mseconds);
+							Move(oggettoContenuto, destinationBag, oggettoContenuto.Amount, mseconds);
 						}
 					}
 					else
@@ -309,6 +309,21 @@ namespace RazorEnhanced
 				RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!", 945);
 			Assistant.Engine.MainWindow.RestockFinishWork();
 			return 0;
+		}
+
+		private static void Move(Item soruce, Item destination, int amount, int delay)
+		{
+			if (Settings.General.ReadBool("QueueActions"))
+			{
+				Assistant.DragDropManager.DragDrop(World.FindItem(soruce.Serial), amount, World.FindItem(destination.Serial));
+				Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+			}
+			else
+			{
+				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(soruce.Serial, amount));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(soruce.Serial, Assistant.Point3D.MinusOne, destination.Serial));
+				Thread.Sleep(delay);
+			}
 		}
 
 		internal static void Engine()

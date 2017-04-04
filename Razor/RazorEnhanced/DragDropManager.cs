@@ -35,9 +35,19 @@ namespace RazorEnhanced
 
 						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= AutoLoot.LootRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 						{
-							RazorEnhanced.Items.WaitForContents(Items.FindBySerial(itemserial), 1000);
 							AutoLoot.AddLog("- Refresh Corpse: 0x" + itemserial.ToString("X8"));
-							Thread.Sleep(AutoLoot.AutoLootDelay);
+
+							if (Settings.General.ReadBool("QueueActions"))
+							{
+								PlayerData.DoubleClick(item);
+								Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+							}
+							else
+							{
+								Thread.Sleep(AutoLoot.AutoLootDelay);
+								Items.UseItem(item.Serial);
+							}
+
 							if (item.Updated)
 								AutoLootSerialCorpseRefresh.TryDequeue(out itemserial);
 						}
@@ -91,10 +101,20 @@ namespace RazorEnhanced
 							else
 							{
 								RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
-								Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-								Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, AutoLoot.AutoLootBag));
-								Thread.Sleep(AutoLoot.AutoLootDelay);
-								AutoLoot.SerialToGrabList.TryDequeue(out data);
+								if (Settings.General.ReadBool("QueueActions"))
+								{
+									Assistant.Item bag = Assistant.World.FindItem(AutoLoot.AutoLootBag);
+									Assistant.DragDropManager.DragDrop(item, bag);
+                                    Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+                                }
+								else
+								{
+									Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+									Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, AutoLoot.AutoLootBag));
+									Thread.Sleep(AutoLoot.AutoLootDelay);
+								}
+															
+                                AutoLoot.SerialToGrabList.TryDequeue(out data);
 							}
 						}
 						else
@@ -139,9 +159,18 @@ namespace RazorEnhanced
 							else
 							{
 								RazorEnhanced.Scavenger.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Grabbing");
-								Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-								Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, Scavenger.ScavengerBag));
-								Thread.Sleep(Scavenger.ScavengerDelay);
+								if (Settings.General.ReadBool("QueueActions"))
+								{
+									Assistant.Item bag = Assistant.World.FindItem(Scavenger.ScavengerBag);
+									Assistant.DragDropManager.DragDrop(item, bag);
+									Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+								}
+								else
+								{
+									Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+									Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, Scavenger.ScavengerBag));
+									Thread.Sleep(Scavenger.ScavengerDelay);
+								}
 								ScavengerSerialToGrab.TryDequeue(out itemserial);
 							}
 						}

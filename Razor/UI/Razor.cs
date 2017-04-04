@@ -1065,7 +1065,7 @@ namespace Assistant
 			this.scriptloopmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptfilelabel = new System.Windows.Forms.Label();
 			this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
-            this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader57 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader58 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -4839,7 +4839,6 @@ namespace Assistant
 			this.organizerExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
 			this.organizerExecuteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.organizerExecuteButton.FlatAppearance.BorderSize = 0;
-			this.organizerExecuteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.organizerExecuteButton.Location = new System.Drawing.Point(283, 58);
 			this.organizerExecuteButton.Name = "organizerExecuteButton";
 			this.organizerExecuteButton.Size = new System.Drawing.Size(30, 30);
@@ -4852,7 +4851,6 @@ namespace Assistant
 			this.organizerStopButton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
 			this.organizerStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.organizerStopButton.FlatAppearance.BorderSize = 0;
-			this.organizerStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.organizerStopButton.Location = new System.Drawing.Point(319, 58);
 			this.organizerStopButton.Name = "organizerStopButton";
 			this.organizerStopButton.Size = new System.Drawing.Size(30, 30);
@@ -6105,7 +6103,6 @@ namespace Assistant
 			this.restockExecuteButton.BackgroundImage = global::Assistant.Properties.Resources.playagent;
 			this.restockExecuteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.restockExecuteButton.FlatAppearance.BorderSize = 0;
-			this.restockExecuteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.restockExecuteButton.Location = new System.Drawing.Point(283, 58);
 			this.restockExecuteButton.Name = "restockExecuteButton";
 			this.restockExecuteButton.Size = new System.Drawing.Size(30, 30);
@@ -6118,7 +6115,6 @@ namespace Assistant
 			this.restockStopButton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
 			this.restockStopButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.restockStopButton.FlatAppearance.BorderSize = 0;
-			this.restockStopButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.restockStopButton.Location = new System.Drawing.Point(319, 58);
 			this.restockStopButton.Name = "restockStopButton";
 			this.restockStopButton.Size = new System.Drawing.Size(30, 30);
@@ -7218,6 +7214,9 @@ namespace Assistant
 			dispDelta.Checked = RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges");
 			actionStatusMsg.Checked = RazorEnhanced.Settings.General.ReadBool("ActionStatusMsg");
 			QueueActions.Checked = RazorEnhanced.Settings.General.ReadBool("QueueActions");
+			if (QueueActions.Checked)
+				autoLootTextBoxDelay.Enabled = scavengerDragDelay.Enabled = organizerDragDelay.Enabled = dressDragDelay.Enabled = restockDragDelay.Enabled = false;
+
 			txtObjDelay.Text = RazorEnhanced.Settings.General.ReadInt("ObjectDelay").ToString();
 			smartLT.Checked = RazorEnhanced.Settings.General.ReadBool("SmartLastTarget");
 			ltRange.Enabled = rangeCheckLT.Checked = RazorEnhanced.Settings.General.ReadBool("RangeCheckLT");
@@ -7832,7 +7831,13 @@ namespace Assistant
 		private void QueueActions_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (QueueActions.Focused)
+			{
 				RazorEnhanced.Settings.General.WriteBool("QueueActions", QueueActions.Checked);
+				if (QueueActions.Checked)
+					autoLootTextBoxDelay.Enabled = scavengerDragDelay.Enabled = organizerDragDelay.Enabled = dressDragDelay.Enabled = restockDragDelay.Enabled = false;
+				else
+					autoLootTextBoxDelay.Enabled = scavengerDragDelay.Enabled = organizerDragDelay.Enabled = dressDragDelay.Enabled = restockDragDelay.Enabled = true;
+			}
 		}
 
 		private void txtObjDelay_TextChanged(object sender, System.EventArgs e)
@@ -8975,7 +8980,9 @@ namespace Assistant
 						autoLootButtonListExport.Enabled = false;
 						autoLootButtonListImport.Enabled = false;
 						autoLootButtonRemoveList.Enabled = false;
-						autoLootTextBoxDelay.Enabled = false;
+						if (!Settings.General.ReadBool("QueueActions"))
+							autoLootTextBoxDelay.Enabled = false;
+
 						try
 						{
 							delay = Convert.ToInt32(autoLootTextBoxDelay.Text);
@@ -9006,7 +9013,8 @@ namespace Assistant
 						autoLootButtonListExport.Enabled = true;
 						autoLootButtonListImport.Enabled = true;
 						autoLootButtonRemoveList.Enabled = true;
-						autoLootTextBoxDelay.Enabled = true;
+						if (!Settings.General.ReadBool("QueueActions"))
+							autoLootTextBoxDelay.Enabled = true;
 
 						// Stop autoloot
 						RazorEnhanced.AutoLoot.AutoMode = false;
@@ -9318,7 +9326,8 @@ namespace Assistant
 						scavengerButtonRemoveList.Enabled = false;
 						scavengerButtonExport.Enabled = false;
 						scavengerButtonImport.Enabled = false;
-						scavengerDragDelay.Enabled = false;
+						if (!Settings.General.ReadBool("QueueActions"))
+							scavengerDragDelay.Enabled = false;
 						try
 						{
 							delay = Convert.ToInt32(scavengerDragDelay.Text);
@@ -9348,7 +9357,8 @@ namespace Assistant
 						scavengerButtonRemoveList.Enabled = true;
 						scavengerButtonExport.Enabled = true;
 						scavengerButtonImport.Enabled = true;
-						scavengerDragDelay.Enabled = true;
+						if (!Settings.General.ReadBool("QueueActions"))
+							scavengerDragDelay.Enabled = true;
 
 						RazorEnhanced.Scavenger.AutoMode = false;
 						RazorEnhanced.Scavenger.AddLog("Scavenger Engine Stop...");
@@ -9706,7 +9716,8 @@ namespace Assistant
 				organizerRemoveListB.Enabled = false;
 				organizerExportListB.Enabled = false;
 				organizerImportListB.Enabled = false;
-				organizerDragDelay.Enabled = false;
+				if (!Settings.General.ReadBool("QueueActions"))
+					organizerDragDelay.Enabled = false;
 			}
 		}
 
@@ -9735,7 +9746,8 @@ namespace Assistant
 				organizerRemoveListB.Enabled = true;
 				organizerExportListB.Enabled = true;
 				organizerImportListB.Enabled = true;
-				organizerDragDelay.Enabled = true;
+				if (!Settings.General.ReadBool("QueueActions"))
+					organizerDragDelay.Enabled = true;
 			}
 		}
 
@@ -11092,7 +11104,8 @@ namespace Assistant
 				restockRemoveListB.Enabled = true;
 				restockExportListB.Enabled = true;
 				restockImportListB.Enabled = true;
-				restockDragDelay.Enabled = true;
+				if (!Settings.General.ReadBool("QueueActions"))
+					restockDragDelay.Enabled = true;
 			}
 		}
 
@@ -11121,7 +11134,8 @@ namespace Assistant
 				restockRemoveListB.Enabled = false;
 				restockExportListB.Enabled = false;
 				restockImportListB.Enabled = false;
-				restockDragDelay.Enabled = false;
+				if (!Settings.General.ReadBool("QueueActions"))
+					restockDragDelay.Enabled = false;
 			}
 		}
 

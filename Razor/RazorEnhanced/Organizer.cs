@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using Assistant;
 
 namespace RazorEnhanced
 {
@@ -296,27 +297,23 @@ namespace RazorEnhanced
 					{
 						RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
 						RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move: All ");
-						RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
+						Move(oggettoContenuto, destinationBag, oggettoContenuto.Amount, mseconds);
 						Thread.Sleep(mseconds);
 					}
 					else   // Caso con limite quantita'
 					{
 						if (oggettoContenuto.Amount <= oggettoDaLista.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti
 						{
-							RazorEnhanced.Organizer.AddLog("n");
-
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
-							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
+							Move(oggettoContenuto, destinationBag, oggettoContenuto.Amount, mseconds);
 							Thread.Sleep(mseconds);
 						}
 						else  // Caso che lo stack sia superiore (sposta solo un blocco)
 						{
-							RazorEnhanced.Organizer.AddLog("s");
-
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
-							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, oggettoDaLista.Amount);
+							Move(oggettoContenuto, destinationBag, oggettoDaLista.Amount, mseconds);
 							Thread.Sleep(mseconds);
 						}
 					}
@@ -328,6 +325,21 @@ namespace RazorEnhanced
 				RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!", 945);
 			Assistant.Engine.MainWindow.OrganizerFinishWork();
 			return 0;
+		}
+
+		private static void Move(Item soruce, Item destination, int amount, int delay)
+		{
+			if (Settings.General.ReadBool("QueueActions"))
+			{
+				Assistant.DragDropManager.DragDrop(World.FindItem(soruce.Serial), amount, World.FindItem(destination.Serial));
+				Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+			}
+			else
+			{
+				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(soruce.Serial, amount));
+				Assistant.ClientCommunication.SendToServerWait(new DropRequest(soruce.Serial, Assistant.Point3D.MinusOne, destination.Serial));
+				Thread.Sleep(delay);
+			}
 		}
 
 		internal static void Engine()
