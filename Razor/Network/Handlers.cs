@@ -55,6 +55,8 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x24, new PacketViewerCallback(BeginContainerContent));
 			PacketHandler.RegisterServerToClientFilter(0x25, new PacketFilterCallback(ContainerContentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x27, new PacketViewerCallback(LiftReject));
+			PacketHandler.RegisterServerToClientViewer(0x28, new PacketViewerCallback(DropReject));
+			PacketHandler.RegisterServerToClientViewer(0x29, new PacketViewerCallback(DropAccepted));
 			PacketHandler.RegisterServerToClientViewer(0x2D, new PacketViewerCallback(MobileStatInfo));
 			PacketHandler.RegisterServerToClientFilter(0x2E, new PacketFilterCallback(EquipmentUpdate));
 			PacketHandler.RegisterServerToClientViewer(0x3A, new PacketViewerCallback(Skills));
@@ -495,6 +497,7 @@ namespace Assistant
 			if (item != null)
 				iid = item.ItemID.Value;
 
+			RazorEnhanced.DragDropManager.HoldingItem = true;
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 			{
 				if (item == null)
@@ -510,12 +513,21 @@ namespace Assistant
 
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
 		{
-			p.ReadByte();
+			RazorEnhanced.DragDropManager.HoldingItem = false;
 			if (!DragDropManager.LiftReject())
 			{
-				DragDropManager.Clear();
 				args.Block = true;
 			}
+		}
+
+		private static void DropReject(PacketReader p, PacketHandlerEventArgs args)
+		{
+			RazorEnhanced.DragDropManager.HoldingItem = false;
+		}
+
+		private static void DropAccepted(PacketReader p, PacketHandlerEventArgs args)
+		{
+			RazorEnhanced.DragDropManager.HoldingItem = false;
 		}
 
 		private static void EquipRequest(PacketReader p, PacketHandlerEventArgs args)
@@ -536,6 +548,8 @@ namespace Assistant
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_EquipRequest(item, layer, m);
 
+			RazorEnhanced.DragDropManager.HoldingItem = false;
+
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(item, m, layer);
 		}
@@ -554,6 +568,8 @@ namespace Assistant
 
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_DropRequest(iser, dser);
+
+			RazorEnhanced.DragDropManager.HoldingItem = false;
 
 			Item i = World.FindItem(iser);
 			if (i == null)

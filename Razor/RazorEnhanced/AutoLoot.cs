@@ -359,6 +359,9 @@ namespace RazorEnhanced
 						if (!autoLootItem.Selected)
 							continue;
 
+						if (DragDropManager.HoldingItem)
+							continue;
+
 						if (autoLootItem.Color == -1)          // Colore ALL
 						{
 							if (oggettoContenuto.ItemID != autoLootItem.Graphics)

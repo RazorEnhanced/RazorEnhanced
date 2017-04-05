@@ -258,15 +258,24 @@ namespace RazorEnhanced
 		internal static int Engine(List<ScavengerItem> scavengerItemList, int mseconds, Items.Filter filter)
 		{
 			List<Item> itemsOnGround = RazorEnhanced.Items.ApplyFilter(filter);
+			if (ClientCommunication.ServerEncrypted)
+			{
+				Items.Filter osifilter = filter;
+				osifilter.Movable = false;
+                itemsOnGround.AddRange(RazorEnhanced.Items.ApplyFilter(osifilter));
+            }
 
 			foreach (RazorEnhanced.Item itemGround in itemsOnGround)
 			{
-				if (World.Player.IsGhost)
+                if (World.Player.IsGhost)
 				{
 					ResetIgnore();
 					Thread.Sleep(2000);
 					return 0;
 				}
+
+				if (DragDropManager.HoldingItem)
+					continue;
 
 				foreach (ScavengerItem scavengerItem in scavengerItemList)
 				{

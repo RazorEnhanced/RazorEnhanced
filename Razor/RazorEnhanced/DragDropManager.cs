@@ -10,6 +10,8 @@ namespace RazorEnhanced
 		internal static ConcurrentQueue<int> ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		internal static ConcurrentQueue<int> CorpseToCutSerial = new ConcurrentQueue<int>();
 
+		internal static volatile bool HoldingItem = false;
+
 		internal static void AutoRun()
 		{
 			if (World.Player.IsGhost)
@@ -91,8 +93,7 @@ namespace RazorEnhanced
 							else
 							{
 								RazorEnhanced.AutoLoot.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Looting");
-								Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-								Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, AutoLoot.AutoLootBag));
+								RazorEnhanced.Items.Move(item.Serial, AutoLoot.AutoLootBag, 0);
 								Thread.Sleep(AutoLoot.AutoLootDelay);
 								AutoLoot.SerialToGrabList.TryDequeue(out data);
 							}
@@ -139,8 +140,7 @@ namespace RazorEnhanced
 							else
 							{
 								RazorEnhanced.Scavenger.AddLog("- Item Match found (" + item.Serial.ToString() + ") ... Grabbing");
-								Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-								Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, Scavenger.ScavengerBag));
+								RazorEnhanced.Items.Move(item.Serial, Scavenger.ScavengerBag, 0);
 								Thread.Sleep(Scavenger.ScavengerDelay);
 								ScavengerSerialToGrab.TryDequeue(out itemserial);
 							}
