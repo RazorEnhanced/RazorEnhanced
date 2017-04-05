@@ -303,8 +303,6 @@ namespace RazorEnhanced
 					{
 						if (oggettoContenuto.Amount <= oggettoDaLista.Amount)     // Caso che lo stack da spostare sia minore del limite di oggetti
 						{
-							RazorEnhanced.Organizer.AddLog("n");
-
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
 							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, 0);
@@ -312,8 +310,6 @@ namespace RazorEnhanced
 						}
 						else  // Caso che lo stack sia superiore (sposta solo un blocco)
 						{
-							RazorEnhanced.Organizer.AddLog("s");
-
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount in Source container: " + oggettoContenuto.Amount);
 							RazorEnhanced.Organizer.AddLog("- Item (0x" + oggettoContenuto.ItemID.ToString("X4") + ") Amount to move " + oggettoDaLista.Amount);
 							RazorEnhanced.Items.Move(oggettoContenuto, destinationBag, oggettoDaLista.Amount);
