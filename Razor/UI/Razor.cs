@@ -155,7 +155,7 @@ namespace Assistant
 		private RazorCheckBox scavengerCheckBox;
 		private RazorButton scavengerButtonEditProps;
 		private RazorButton scavengerButtonAddTarget;
-		private TabPage Organizer;
+		private TabPage organizer;
 		private GroupBox groupBox16;
 		private ListBox organizerLogBox;
 		private Label label27;
@@ -1123,7 +1123,7 @@ namespace Assistant
 			this.scavengerButtonImport = new RazorEnhanced.UI.RazorButton();
 			this.scavengerListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.scavengerButtonExport = new RazorEnhanced.UI.RazorButton();
-			this.Organizer = new System.Windows.Forms.TabPage();
+			this.organizer = new System.Windows.Forms.TabPage();
 			this.organizerExecuteButton = new System.Windows.Forms.Button();
 			this.organizerStopButton = new System.Windows.Forms.Button();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
@@ -1369,7 +1369,7 @@ namespace Assistant
 			this.groupBox41.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).BeginInit();
 			this.groupBox12.SuspendLayout();
-			this.Organizer.SuspendLayout();
+			this.organizer.SuspendLayout();
 			this.groupBox11.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.organizerdataGridView)).BeginInit();
 			this.groupBox16.SuspendLayout();
@@ -4293,7 +4293,7 @@ namespace Assistant
 			// 
 			this.tabControl1.Controls.Add(this.eautoloot);
 			this.tabControl1.Controls.Add(this.escavenger);
-			this.tabControl1.Controls.Add(this.Organizer);
+			this.tabControl1.Controls.Add(this.organizer);
 			this.tabControl1.Controls.Add(this.VendorBuy);
 			this.tabControl1.Controls.Add(this.VendorSell);
 			this.tabControl1.Controls.Add(this.Dress);
@@ -4389,6 +4389,7 @@ namespace Assistant
 			// 
 			// autolootdataGridView
 			// 
+			this.autolootdataGridView.AllowDrop = true;
 			this.autolootdataGridView.AllowUserToResizeRows = false;
 			this.autolootdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.autolootdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -4402,12 +4403,16 @@ namespace Assistant
 			this.autolootdataGridView.RowHeadersVisible = false;
 			this.autolootdataGridView.Size = new System.Drawing.Size(356, 238);
 			this.autolootdataGridView.TabIndex = 62;
-			this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellContentClick);
+			this.autolootdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
 			this.autolootdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.autolootdataGridView_CellEndEdit);
-			this.autolootdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.autolootdataGridView_CellMouseUp);
-			this.autolootdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.autolootdataGridView_CurrentCellDirtyStateChanged);
-			this.autolootdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.autolootdataGridView_DataError);
+			this.autolootdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.autolootdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.autolootdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
 			this.autolootdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.autolootdataGridView_DefaultValuesNeeded);
+			this.autolootdataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.autolootdataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.autolootdataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.autolootdataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
 			// 
 			// AutolootColumnX
 			// 
@@ -4636,6 +4641,7 @@ namespace Assistant
 			// 
 			// scavengerdataGridView
 			// 
+			this.scavengerdataGridView.AllowDrop = true;
 			this.scavengerdataGridView.AllowUserToResizeRows = false;
 			this.scavengerdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.scavengerdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -4649,12 +4655,16 @@ namespace Assistant
 			this.scavengerdataGridView.RowHeadersVisible = false;
 			this.scavengerdataGridView.Size = new System.Drawing.Size(356, 238);
 			this.scavengerdataGridView.TabIndex = 72;
-			this.scavengerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerdataGridView_CellContentClick);
+			this.scavengerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
 			this.scavengerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.scavengerdataGridView_CellEndEdit);
-			this.scavengerdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.scavengerdataGridView_CellMouseUp);
-			this.scavengerdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.scavengerdataGridView_CurrentCellDirtyStateChanged);
-			this.scavengerdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.scavengerdataGridView_DataError);
+			this.scavengerdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.scavengerdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.scavengerdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
 			this.scavengerdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.scavengerdataGridView_DefaultValuesNeeded);
+			this.scavengerdataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.scavengerdataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.scavengerdataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.scavengerdataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
 			// 
 			// ScavengerX
 			// 
@@ -4810,29 +4820,29 @@ namespace Assistant
 			this.scavengerButtonExport.Text = "Export";
 			this.scavengerButtonExport.Click += new System.EventHandler(this.scavengerButtonExport_Click);
 			// 
-			// Organizer
+			// organizer
 			// 
-			this.Organizer.Controls.Add(this.organizerExecuteButton);
-			this.Organizer.Controls.Add(this.organizerStopButton);
-			this.Organizer.Controls.Add(this.groupBox11);
-			this.Organizer.Controls.Add(this.organizerdataGridView);
-			this.Organizer.Controls.Add(this.groupBox16);
-			this.Organizer.Controls.Add(this.label27);
-			this.Organizer.Controls.Add(this.label24);
-			this.Organizer.Controls.Add(this.organizerAddTargetB);
-			this.Organizer.Controls.Add(this.organizerDragDelay);
-			this.Organizer.Controls.Add(this.organizerRemoveListB);
-			this.Organizer.Controls.Add(this.organizerAddListB);
-			this.Organizer.Controls.Add(this.organizerImportListB);
-			this.Organizer.Controls.Add(this.organizerListSelect);
-			this.Organizer.Controls.Add(this.organizerExportListB);
-			this.Organizer.Location = new System.Drawing.Point(4, 22);
-			this.Organizer.Name = "Organizer";
-			this.Organizer.Padding = new System.Windows.Forms.Padding(3);
-			this.Organizer.Size = new System.Drawing.Size(659, 341);
-			this.Organizer.TabIndex = 2;
-			this.Organizer.Text = "Organizer";
-			this.Organizer.UseVisualStyleBackColor = true;
+			this.organizer.Controls.Add(this.organizerExecuteButton);
+			this.organizer.Controls.Add(this.organizerStopButton);
+			this.organizer.Controls.Add(this.groupBox11);
+			this.organizer.Controls.Add(this.organizerdataGridView);
+			this.organizer.Controls.Add(this.groupBox16);
+			this.organizer.Controls.Add(this.label27);
+			this.organizer.Controls.Add(this.label24);
+			this.organizer.Controls.Add(this.organizerAddTargetB);
+			this.organizer.Controls.Add(this.organizerDragDelay);
+			this.organizer.Controls.Add(this.organizerRemoveListB);
+			this.organizer.Controls.Add(this.organizerAddListB);
+			this.organizer.Controls.Add(this.organizerImportListB);
+			this.organizer.Controls.Add(this.organizerListSelect);
+			this.organizer.Controls.Add(this.organizerExportListB);
+			this.organizer.Location = new System.Drawing.Point(4, 22);
+			this.organizer.Name = "organizer";
+			this.organizer.Padding = new System.Windows.Forms.Padding(3);
+			this.organizer.Size = new System.Drawing.Size(659, 341);
+			this.organizer.TabIndex = 2;
+			this.organizer.Text = "Organizer";
+			this.organizer.UseVisualStyleBackColor = true;
 			// 
 			// organizerExecuteButton
 			// 
@@ -4927,6 +4937,7 @@ namespace Assistant
 			// 
 			// organizerdataGridView
 			// 
+			this.organizerdataGridView.AllowDrop = true;
 			this.organizerdataGridView.AllowUserToResizeRows = false;
 			this.organizerdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.organizerdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -4941,12 +4952,16 @@ namespace Assistant
 			this.organizerdataGridView.RowHeadersVisible = false;
 			this.organizerdataGridView.Size = new System.Drawing.Size(357, 220);
 			this.organizerdataGridView.TabIndex = 89;
-			this.organizerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.organizerdataGridView_CellContentClick);
+			this.organizerdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
 			this.organizerdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.organizerdataGridView_CellEndEdit);
-			this.organizerdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.organizerdataGridView_CellMouseUp);
-			this.organizerdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.organizerdataGridView_CurrentCellDirtyStateChanged);
-			this.organizerdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.organizerdataGridView_DataError);
+			this.organizerdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.organizerdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.organizerdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
 			this.organizerdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.organizerdataGridView_DefaultValuesNeeded);
+			this.organizerdataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.organizerdataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.organizerdataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.organizerdataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
 			// 
 			// dataGridViewCheckBoxColumn2
 			// 
@@ -5121,6 +5136,7 @@ namespace Assistant
 			// 
 			// vendorbuydataGridView
 			// 
+			this.vendorbuydataGridView.AllowDrop = true;
 			this.vendorbuydataGridView.AllowUserToResizeRows = false;
 			this.vendorbuydataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.vendorbuydataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -5135,12 +5151,16 @@ namespace Assistant
 			this.vendorbuydataGridView.RowHeadersVisible = false;
 			this.vendorbuydataGridView.Size = new System.Drawing.Size(357, 274);
 			this.vendorbuydataGridView.TabIndex = 88;
-			this.vendorbuydataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorbuydataGridView_CellContentClick);
+			this.vendorbuydataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
 			this.vendorbuydataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorbuydataGridView_CellEndEdit);
-			this.vendorbuydataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.vendorbuydataGridView_CellMouseUp);
-			this.vendorbuydataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.vendorbuydataGridView_CurrentCellDirtyStateChanged);
-			this.vendorbuydataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.vendorbuydataGridView_DataError);
+			this.vendorbuydataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.vendorbuydataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.vendorbuydataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
 			this.vendorbuydataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.vendorbuydataGridView_DefaultValuesNeeded);
+			this.vendorbuydataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.vendorbuydataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.vendorbuydataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.vendorbuydataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
 			// 
 			// dataGridViewCheckBoxColumn1
 			// 
@@ -5342,6 +5362,7 @@ namespace Assistant
 			// 
 			// vendorsellGridView
 			// 
+			this.vendorsellGridView.AllowDrop = true;
 			this.vendorsellGridView.AllowUserToResizeRows = false;
 			this.vendorsellGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.vendorsellGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -5356,12 +5377,16 @@ namespace Assistant
 			this.vendorsellGridView.RowHeadersVisible = false;
 			this.vendorsellGridView.Size = new System.Drawing.Size(357, 238);
 			this.vendorsellGridView.TabIndex = 87;
-			this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellContentClick);
+			this.vendorsellGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
 			this.vendorsellGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.vendorsellGridView_CellEndEdit);
-			this.vendorsellGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.vendorsellGridView_CellMouseUp);
-			this.vendorsellGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.vendorsellGridView_CurrentCellDirtyStateChanged);
-			this.vendorsellGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.vendorsellGridView_DataError);
+			this.vendorsellGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.vendorsellGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.vendorsellGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
 			this.vendorsellGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.vendorsellGridView_DefaultValuesNeeded);
+			this.vendorsellGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.vendorsellGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.vendorsellGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.vendorsellGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
 			// 
 			// VendorSellX
 			// 
@@ -6191,6 +6216,7 @@ namespace Assistant
 			// 
 			// restockdataGridView
 			// 
+			this.restockdataGridView.AllowDrop = true;
 			this.restockdataGridView.AllowUserToResizeRows = false;
 			this.restockdataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.restockdataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -6205,12 +6231,16 @@ namespace Assistant
 			this.restockdataGridView.RowHeadersVisible = false;
 			this.restockdataGridView.Size = new System.Drawing.Size(357, 220);
 			this.restockdataGridView.TabIndex = 90;
-			this.restockdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.restockdataGridView_CellContentClick);
+			this.restockdataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridView_CellContentClick);
 			this.restockdataGridView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.restockdataGridView_CellEndEdit);
-			this.restockdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.restockdataGridView_CellMouseUp);
-			this.restockdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.restockdataGridView_CurrentCellDirtyStateChanged);
-			this.restockdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.restockdataGridView_DataError);
+			this.restockdataGridView.CellMouseUp += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.GridView_CellMouseUp);
+			this.restockdataGridView.CurrentCellDirtyStateChanged += new System.EventHandler(this.GridView_CurrentCellDirtyStateChanged);
+			this.restockdataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.GridView_DataError);
 			this.restockdataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.restockdataGridView_DefaultValuesNeeded);
+			this.restockdataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.GridView_DragDrop);
+			this.restockdataGridView.DragOver += new System.Windows.Forms.DragEventHandler(this.GridView_DragOver);
+			this.restockdataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseDown);
+			this.restockdataGridView.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GridView_MouseMove);
 			// 
 			// dataGridViewCheckBoxColumn3
 			// 
@@ -6975,8 +7005,8 @@ namespace Assistant
 			this.groupBox41.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).EndInit();
 			this.groupBox12.ResumeLayout(false);
-			this.Organizer.ResumeLayout(false);
-			this.Organizer.PerformLayout();
+			this.organizer.ResumeLayout(false);
+			this.organizer.PerformLayout();
 			this.groupBox11.ResumeLayout(false);
 			this.groupBox11.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.organizerdataGridView)).EndInit();
@@ -9093,26 +9123,6 @@ namespace Assistant
 			RazorEnhanced.ImportExport.ImportAutoloot();
 		}
 
-		private void autolootdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (!autolootdataGridView.Focused)
-				return;
-
-			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
-			{
-				RazorEnhanced.AutoLoot.CopyTable();
-			}
-		}
-
-		private void autolootdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (!autolootdataGridView.Focused)
-				return;
-
-			if (autolootdataGridView.IsCurrentCellDirty)
-				autolootdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-		}
-
 		private void autolootdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
 			DataGridViewCell cell = autolootdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
@@ -9157,25 +9167,6 @@ namespace Assistant
 				cell.Value = "0x" + itemid.ToString("X4");
 			}
 			RazorEnhanced.AutoLoot.CopyTable();
-		}
-
-		private void autolootdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				autolootdataGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = 1;
-				autolootdataGridView.CurrentCell = autolootdataGridView.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(autolootdataGridView, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
-			}
-		}
-
-		private void autolootdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			e.ThrowException = false;
-			e.Cancel = false;
 		}
 
 		private void autolootdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
@@ -9387,26 +9378,6 @@ namespace Assistant
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
-		private void scavengerdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (!scavengerdataGridView.Focused)
-				return;
-
-			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
-			{
-				RazorEnhanced.Scavenger.CopyTable();
-			}
-		}
-
-		private void scavengerdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (!scavengerdataGridView.Focused)
-				return;
-
-			if (scavengerdataGridView.IsCurrentCellDirty)
-				scavengerdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-		}
-
 		private void scavengerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
 			DataGridViewCell cell = scavengerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
@@ -9451,26 +9422,6 @@ namespace Assistant
 				cell.Value = "0x" + itemid.ToString("X4");
 			}
 			RazorEnhanced.Scavenger.CopyTable();
-		}
-
-		private void scavengerdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				scavengerdataGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = 2;
-				scavengerdataGridView.CurrentCell = scavengerdataGridView.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(scavengerdataGridView, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
-			}
-
-		}
-
-		private void scavengerdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			e.ThrowException = false;
-			e.Cancel = false;
 		}
 
 		private void scavengerdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
@@ -9819,44 +9770,7 @@ namespace Assistant
 			e.Row.Cells[4].Value = "1";
 		}
 
-		private void organizerdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			e.ThrowException = false;
-			e.Cancel = false;
-		}
 
-		private void organizerdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (!organizerdataGridView.Focused)
-				return;
-
-			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
-			{
-				RazorEnhanced.Organizer.CopyTable();
-			}
-		}
-
-		private void organizerdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				organizerdataGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = 3;
-				organizerdataGridView.CurrentCell = organizerdataGridView.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(organizerdataGridView, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
-			}
-		}
-
-		private void organizerdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (!organizerdataGridView.Focused)
-				return;
-
-			if (organizerdataGridView.IsCurrentCellDirty)
-				organizerdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-		}
 		// ------------------ ORGANIZER END--------------------------
 
 		// ------------------ SELL AGENT --------------------------
@@ -10093,46 +10007,6 @@ namespace Assistant
 			e.Row.Cells[4].Value = "0x0000";
 		}
 
-		private void vendorsellGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			e.ThrowException = false;
-			e.Cancel = false;
-		}
-
-		private void vendorsellGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (!vendorsellGridView.Focused)
-				return;
-
-			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
-			{
-                RazorEnhanced.SellAgent.CopyTable();
-			}
-		}
-
-		private void vendorsellGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				vendorsellGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = 5;
-				vendorsellGridView.CurrentCell = this.vendorsellGridView.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(this.vendorsellGridView, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
-			}
-
-		}
-
-		private void vendorsellGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (!vendorsellGridView.Focused)
-				return;
-
-			if (vendorsellGridView.IsCurrentCellDirty)
-				vendorsellGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
-		}
-
 		// ------------------ SELL AGENT END--------------------------
 
 		// ------------------ BUY AGENT --------------------------
@@ -10317,45 +10191,6 @@ namespace Assistant
 			e.Row.Cells[2].Value = "0x0000";
 			e.Row.Cells[3].Value = 999;
 			e.Row.Cells[4].Value = "0x0000";
-		}
-
-		private void vendorbuydataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			e.ThrowException = false;
-			e.Cancel = false;
-		}
-
-		private void vendorbuydataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (!vendorbuydataGridView.Focused)
-				return;
-
-			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
-			{
-				RazorEnhanced.BuyAgent.CopyTable();
-			}
-		}
-
-		private void vendorbuydataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				vendorbuydataGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = 4;
-				vendorbuydataGridView.CurrentCell = vendorbuydataGridView.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(vendorbuydataGridView, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
-			}
-		}
-
-		private void vendorbuydataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (!vendorbuydataGridView.Focused)
-				return;
-
-			if (vendorbuydataGridView.IsCurrentCellDirty)
-				vendorbuydataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
 		}
 
 		// --------------- BUY AGENT END ---------
@@ -11210,45 +11045,6 @@ namespace Assistant
 			e.Row.Cells[2].Value = "0x0000";
 			e.Row.Cells[3].Value = "0x0000";
 			e.Row.Cells[4].Value = "1";
-		}
-
-		private void restockdataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
-			e.ThrowException = false;
-			e.Cancel = false;
-		}
-
-		private void restockdataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-			if (!restockdataGridView.Focused)
-				return;
-
-			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
-			{
-				RazorEnhanced.Restock.CopyTable();
-			}
-		}
-
-		private void restockdataGridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right)
-			{
-				restockdataGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = 8;
-				restockdataGridView.CurrentCell = restockdataGridView.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(restockdataGridView, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
-			}
-		}
-
-		private void restockdataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
-		{
-			if (!restockdataGridView.Focused)
-				return;
-
-			if (restockdataGridView.IsCurrentCellDirty)
-				restockdataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
 		}
 
 		// --------------- RESTOCK END -------------
@@ -12692,49 +12488,49 @@ namespace Assistant
 		// ----------------- START AGENT GESTIONE MENU TENDINA -------------------
 
 		private static int agentrowindex = 0;
-		private static int agenttype = 0;
+		private static string agenttype = "";
 
 		private void datagridMenuStrip_Click(object sender, EventArgs e)
 		{
 			switch (agenttype)
 			{
-				case 1:
-					if (!autolootdataGridView.Rows[agentrowindex].IsNewRow)
+				case "autolootdataGridView":
+                    if (!autolootdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						autolootdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.AutoLoot.CopyTable();
 					}
 					break;
-				case 2:
+				case "scavengerdataGridView":
 					if (!scavengerdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						scavengerdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Scavenger.CopyTable();
 					}
 					break;
-				case 3:
-					if (!organizerdataGridView.Rows[agentrowindex].IsNewRow)
+				case "organizerdataGridView":
+                    if (!organizerdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						organizerdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Organizer.CopyTable();
 					}
 					break;
-				case 4:
-					if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
+				case "vendorbuydataGridView":
+                    if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						vendorbuydataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.BuyAgent.CopyTable();
 					}
 					break;
-				case 5:
-					if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
+				case "vendorsellGridView":
+                    if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
 					{
 						vendorsellGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.SellAgent.CopyTable();
 					}
 					break;
-				case 8:
-					if (!restockdataGridView.Rows[agentrowindex].IsNewRow)
+				case "restockdataGridView":
+                    if (!restockdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						restockdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Restock.CopyTable();
@@ -12743,7 +12539,165 @@ namespace Assistant
 			}
 
 		}
+
 		// ----------------- END AGENT GESTIONE MENU TENDINA -------------------
+
+		// ----------------- START AGENT GESTIONE DRAG DROP -------------------
+		private Rectangle dragBoxFromMouseDown;
+		private int rowIndexFromMouseDown;
+		private int rowIndexOfItemUnderMouseToDrop;
+
+		private void GridView_MouseMove(object sender, MouseEventArgs e)
+		{
+			if ((e.Button & MouseButtons.Left) == MouseButtons.Left)
+			{
+				DataGridView grid = (DataGridView)sender;
+				if (dragBoxFromMouseDown != Rectangle.Empty &&
+					!dragBoxFromMouseDown.Contains(e.X, e.Y))
+				{
+					DragDropEffects dropEffect = grid.DoDragDrop(
+					grid.Rows[rowIndexFromMouseDown],
+					DragDropEffects.Move);
+				}
+			}
+		}
+
+		private void GridView_MouseDown(object sender, MouseEventArgs e)
+		{
+			DataGridView grid = (DataGridView)sender;
+			rowIndexFromMouseDown = grid.HitTest(e.X, e.Y).RowIndex;
+			if (rowIndexFromMouseDown != -1)
+			{           
+				Size dragSize = SystemInformation.DragSize;
+				dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2),
+															   e.Y - (dragSize.Height / 2)),
+									dragSize);
+			}
+			else
+				dragBoxFromMouseDown = Rectangle.Empty;
+		}
+
+		private void GridView_DragOver(object sender, DragEventArgs e)
+		{
+			e.Effect = DragDropEffects.Move;
+		}
+
+		private void GridView_DragDrop(object sender, DragEventArgs e)
+		{
+			DataGridView grid = (DataGridView)sender;
+			Point clientPoint = grid.PointToClient(new Point(e.X, e.Y));
+
+			rowIndexOfItemUnderMouseToDrop = grid.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
+
+			if (e.Effect == DragDropEffects.Move)
+			{
+				DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
+				grid.Rows.RemoveAt(rowIndexFromMouseDown);
+				grid.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
+				switch (grid.Name)
+				{
+					case "autolootdataGridView":
+						AutoLoot.CopyTable();
+						break;
+
+					case "scavengerdataGridView":
+						Scavenger.CopyTable();
+						break;
+
+					case "organizerdataGridView":
+						Organizer.CopyTable();
+						break;
+
+					case "vendorbuydataGridView":
+						BuyAgent.CopyTable();
+						break;
+
+					case "vendorsellGridView":
+						SellAgent.CopyTable();
+						break;
+
+					case "restockdataGridView":
+						Restock.CopyTable();
+						break;
+				}
+			}
+
+		}
+		// ----------------- END AGENT GESTIONE DRAG DROP -------------------
+
+		// ----------------- START AGENT EVENTI COMUNI DATAGRID -------------------
+
+		private void GridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+		{
+			DataGridView grid = (DataGridView)sender;
+
+			if (!grid.Focused)
+				return;
+
+			if (grid.IsCurrentCellDirty)
+				grid.CommitEdit(DataGridViewDataErrorContexts.Commit);
+		}
+
+		private void GridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			e.ThrowException = false;
+			e.Cancel = false;
+		}
+
+		private void GridView_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				DataGridView grid = (DataGridView)sender;
+
+				grid.Rows[e.RowIndex].Selected = true;
+				agentrowindex = e.RowIndex;
+				agenttype = grid.Name;
+				grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
+				datagridMenuStrip.Show(grid, e.Location);
+				datagridMenuStrip.Show(Cursor.Position);
+			}
+
+		}
+
+		private void GridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			DataGridView grid = (DataGridView)sender;
+			if (!grid.Focused)
+				return;
+
+			if (e.ColumnIndex == 0) // Checkbox cambiate di stato genera save
+			{
+				switch (grid.Name)
+				{
+					case "autolootdataGridView":
+						AutoLoot.CopyTable();
+						break;
+
+					case "scavengerdataGridView":
+						Scavenger.CopyTable();
+						break;
+
+					case "organizerdataGridView":
+						Organizer.CopyTable();
+						break;
+
+					case "vendorbuydataGridView":
+						BuyAgent.CopyTable();
+						break;
+
+					case "vendorsellGridView":
+						SellAgent.CopyTable();
+						break;
+
+					case "restockdataGridView":
+						Restock.CopyTable();
+						break;
+				}
+			}
+		}
+		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
+
 	}
 
 }
