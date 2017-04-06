@@ -265,22 +265,21 @@ namespace RazorEnhanced
                 itemsOnGround.AddRange(RazorEnhanced.Items.ApplyFilter(osifilter));
             }
 
-			foreach (RazorEnhanced.Item itemGround in itemsOnGround)
+			foreach (ScavengerItem scavengerItem in scavengerItemList)
 			{
-                if (World.Player.IsGhost)
+				if (World.Player.IsGhost)
 				{
 					ResetIgnore();
 					Thread.Sleep(2000);
 					return 0;
 				}
 
-				if (DragDropManager.HoldingItem)
+				if (!scavengerItem.Selected)
 					continue;
 
-				foreach (ScavengerItem scavengerItem in scavengerItemList)
+				foreach (RazorEnhanced.Item itemGround in itemsOnGround)
 				{
-
-					if (!scavengerItem.Selected)
+					if (DragDropManager.HoldingItem)
 						continue;
 
 					if (scavengerItem.Color == -1)          // Colore ALL

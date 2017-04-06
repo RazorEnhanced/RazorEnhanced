@@ -352,13 +352,13 @@ namespace RazorEnhanced
 				else
 					m_cont = corpo;
 
-				foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
+				foreach (AutoLootItem autoLootItem in autoLootList)
 				{
-					foreach (AutoLootItem autoLootItem in autoLootList)
-					{
-						if (!autoLootItem.Selected)
-							continue;
+					if (!autoLootItem.Selected)
+						continue;
 
+					foreach (RazorEnhanced.Item oggettoContenuto in m_cont.Contains)
+					{
 						if (DragDropManager.HoldingItem)
 							continue;
 
