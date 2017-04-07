@@ -12587,6 +12587,9 @@ namespace Assistant
 
 			rowIndexOfItemUnderMouseToDrop = grid.HitTest(clientPoint.X, clientPoint.Y).RowIndex;
 
+			if (rowIndexOfItemUnderMouseToDrop == -1)
+				return;
+
 			if (e.Effect == DragDropEffects.Move)
 			{
 				DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
