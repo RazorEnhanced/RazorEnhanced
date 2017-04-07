@@ -64,7 +64,7 @@ namespace RazorEnhanced.UI
 			comboboxProp.Items.Add("Hit Physical Area");
 			comboboxProp.Items.Add("Hit Mana Leech");
 			comboboxProp.Items.Add("Hit Magic Arrow");
-			comboboxProp.Items.Add("Hit Lower Defence");
+			comboboxProp.Items.Add("Hit Lower Defense");
 			comboboxProp.Items.Add("Hit Lower Attack");
 			comboboxProp.Items.Add("Hit Lightning");
 			comboboxProp.Items.Add("Hit Harm");
