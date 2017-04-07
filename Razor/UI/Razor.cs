@@ -7085,8 +7085,6 @@ namespace Assistant
 
 		private void MainForm_Load(object sender, System.EventArgs e)
 		{
-			//ClientCommunication.SetCustomNotoHue( 0x2 );
-
 			m_SystemTimer = new System.Timers.Timer(5);
 			m_SystemTimer.Elapsed += new System.Timers.ElapsedEventHandler(OnTimedEvent);
 			Timer.SystemTimer = m_SystemTimer;
@@ -12648,14 +12646,17 @@ namespace Assistant
 		{
 			if (e.Button == MouseButtons.Right)
 			{
-				DataGridView grid = (DataGridView)sender;
+				if (e.RowIndex != -1)
+				{
+					DataGridView grid = (DataGridView)sender;
 
-				grid.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				agenttype = grid.Name;
-				grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
-				datagridMenuStrip.Show(grid, e.Location);
-				datagridMenuStrip.Show(Cursor.Position);
+					grid.Rows[e.RowIndex].Selected = true;
+					agentrowindex = e.RowIndex;
+					agenttype = grid.Name;
+					grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
+					datagridMenuStrip.Show(grid, e.Location);
+					datagridMenuStrip.Show(Cursor.Position);
+				}
 			}
 
 		}

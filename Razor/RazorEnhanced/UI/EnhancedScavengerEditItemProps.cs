@@ -175,11 +175,14 @@ namespace RazorEnhanced.UI
 		{
 			if (e.Button == MouseButtons.Right)
 			{
-				scavengerpropGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				scavengerpropGridView.CurrentCell = scavengerpropGridView.Rows[e.RowIndex].Cells[1];
-				contextMenuStrip1.Show(scavengerpropGridView, e.Location);
-				contextMenuStrip1.Show(Cursor.Position);
+				if (e.RowIndex != -1)
+				{
+					scavengerpropGridView.Rows[e.RowIndex].Selected = true;
+					agentrowindex = e.RowIndex;
+					scavengerpropGridView.CurrentCell = scavengerpropGridView.Rows[e.RowIndex].Cells[1];
+					contextMenuStrip1.Show(scavengerpropGridView, e.Location);
+					contextMenuStrip1.Show(Cursor.Position);
+				}
 			}
 		}
 

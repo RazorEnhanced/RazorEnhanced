@@ -175,11 +175,14 @@ namespace RazorEnhanced.UI
 		{
 			if (e.Button == MouseButtons.Right)
 			{
-				autolootpropGridView.Rows[e.RowIndex].Selected = true;
-				agentrowindex = e.RowIndex;
-				autolootpropGridView.CurrentCell = autolootpropGridView.Rows[e.RowIndex].Cells[1];
-				contextMenuStrip1.Show(autolootpropGridView, e.Location);
-				contextMenuStrip1.Show(Cursor.Position);
+				if (e.RowIndex != -1)
+				{
+					autolootpropGridView.Rows[e.RowIndex].Selected = true;
+					agentrowindex = e.RowIndex;
+					autolootpropGridView.CurrentCell = autolootpropGridView.Rows[e.RowIndex].Cells[1];
+					contextMenuStrip1.Show(autolootpropGridView, e.Location);
+					contextMenuStrip1.Show(Cursor.Position);
+				}
 			}
 		}
 
