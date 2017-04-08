@@ -15,6 +15,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
+using System.Management;
 
 namespace Assistant
 {
@@ -12164,9 +12165,27 @@ namespace Assistant
 		// ----------------- FEATURE END -------------------
 
 		// ----------------- CHECK UPDATE START -------------------
+
+		private static string UniqueMachineId()
+		{
+			string cpuInfo = string.Empty;
+			ManagementClass mc = new ManagementClass("win32_processor");
+			ManagementObjectCollection moc = mc.GetInstances();
+
+			foreach (ManagementObject mo in moc)
+			{
+				cpuInfo = mo.Properties["processorID"].Value.ToString();
+				break;
+			}
+			return cpuInfo;
+        }
+
+
 		internal static void VersionCheckWorker()
 		{
 			WebClient client = new WebClient();
+
+			// Controllo versione
 			try // Try catch in caso che il server sia irraggiungibile
 			{
 				string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
@@ -12183,6 +12202,16 @@ namespace Assistant
 			catch
 			{
 			}
+
+			// Utilizzo
+			try // Try catch in caso che il server sia irraggiungibile
+			{
+				string reply = client.DownloadString("http://razorenhanced.org/use.php?Serial=" + UniqueMachineId());
+			}
+			catch
+			{
+			}
+
 		}
 		// ----------------- CHECK UPDATE END -------------------
 
