@@ -17,19 +17,6 @@ namespace Assistant
 	{
 		private static DateTime m_ExpireDate = new DateTime(2017, 9, 1);
 
-		private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-		{
-			if (e.IsTerminating)
-			{
-				ClientCommunication.Close();
-				m_Running = false;
-
-				new MessageDialog("Unhandled Exception", !e.IsTerminating, e.ExceptionObject.ToString()).ShowDialog(Engine.ActiveWindow);
-			}
-
-			LogCrash(e.ExceptionObject as Exception);
-		}
-
 		internal static void LogCrash(object exception)
 		{
 			if (exception == null || (exception is ThreadAbortException))
