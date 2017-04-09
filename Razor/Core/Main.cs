@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
+using CrashReporterDotNET;
 
 namespace Assistant
 {
@@ -237,6 +238,11 @@ namespace Assistant
 		[STAThread]
 		public static void Main(string[] Args)
 		{
+			Application.ThreadException += ApplicationThreadException;
+
+			AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
+
+
 			m_Running = true;
 			Thread.CurrentThread.Name = "Razor Main Thread";
 
@@ -452,5 +458,26 @@ namespace Assistant
 				return new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
 			}
 		}
+		private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
+		{
+			ReportCrash((Exception)unhandledExceptionEventArgs.ExceptionObject);
+			Environment.Exit(0);
+		}
+
+		private static void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
+		{
+			ReportCrash(e.Exception);
+		}
+
+		private static void ReportCrash(Exception exception)
+		{
+			var reportCrash = new ReportCrash
+			{
+				ToEmail = "dna.volpe@libero.it"
+			};
+
+			reportCrash.Send(exception);
+		}
+
 	}
 }
