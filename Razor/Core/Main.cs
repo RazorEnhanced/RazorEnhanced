@@ -15,7 +15,7 @@ namespace Assistant
 {
 	internal class Engine
 	{
-		private static DateTime m_ExpireDate = new DateTime(2017, 9, 1);
+		private static DateTime m_ExpireDate = new DateTime(2017, 10, 1);
 
 		internal static void LogCrash(object exception)
 		{
