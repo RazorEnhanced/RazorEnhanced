@@ -95,7 +95,7 @@
             this.toolStripButtonGumps});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(1201, 25);
+			this.toolStrip1.Size = new System.Drawing.Size(1224, 25);
 			this.toolStrip1.TabIndex = 1;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -269,7 +269,7 @@
 			this.toolStripButtonGumps.Image = global::Assistant.Properties.Resources.record;
 			this.toolStripButtonGumps.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButtonGumps.Name = "toolStripButtonGumps";
-			this.toolStripButtonGumps.Size = new System.Drawing.Size(64, 20);
+			this.toolStripButtonGumps.Size = new System.Drawing.Size(64, 22);
 			this.toolStripButtonGumps.Text = "Record";
 			this.toolStripButtonGumps.ToolTipText = "Record ( CTRL + R )";
 			this.toolStripButtonGumps.Click += new System.EventHandler(this.toolStripRecord_Click);
@@ -281,7 +281,7 @@
             this.toolStripStatusLabel1});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 610);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(1201, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(1224, 22);
 			this.statusStrip1.TabIndex = 2;
 			// 
 			// toolStripStatusLabelScript
@@ -308,8 +308,8 @@
 			// splitContainer1.Panel2
 			// 
 			this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-			this.splitContainer1.Size = new System.Drawing.Size(1201, 585);
-			this.splitContainer1.SplitterDistance = 893;
+			this.splitContainer1.Size = new System.Drawing.Size(1224, 585);
+			this.splitContainer1.SplitterDistance = 910;
 			this.splitContainer1.TabIndex = 3;
 			// 
 			// fastColoredTextBoxEditor
@@ -333,6 +333,7 @@
 			this.fastColoredTextBoxEditor.Cursor = System.Windows.Forms.Cursors.IBeam;
 			this.fastColoredTextBoxEditor.DisabledColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))), ((int)(((byte)(180)))));
 			this.fastColoredTextBoxEditor.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.fastColoredTextBoxEditor.Font = new System.Drawing.Font("Courier New", 9.75F);
 			this.fastColoredTextBoxEditor.IsReplaceMode = false;
 			this.fastColoredTextBoxEditor.Language = FastColoredTextBoxNS.Language.Python;
 			this.fastColoredTextBoxEditor.LeftBracket = '(';
@@ -344,7 +345,7 @@
 			this.fastColoredTextBoxEditor.RightBracket2 = ']';
 			this.fastColoredTextBoxEditor.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.fastColoredTextBoxEditor.ServiceColors = ((FastColoredTextBoxNS.ServiceColors)(resources.GetObject("fastColoredTextBoxEditor.ServiceColors")));
-			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(893, 464);
+			this.fastColoredTextBoxEditor.Size = new System.Drawing.Size(910, 464);
 			this.fastColoredTextBoxEditor.TabIndex = 0;
 			this.fastColoredTextBoxEditor.Zoom = 100;
 			// 
@@ -354,7 +355,7 @@
 			this.listBox1.FormattingEnabled = true;
 			this.listBox1.Location = new System.Drawing.Point(0, 464);
 			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(893, 121);
+			this.listBox1.Size = new System.Drawing.Size(910, 121);
 			this.listBox1.TabIndex = 1;
 			// 
 			// splitContainer2
@@ -370,7 +371,7 @@
 			this.splitContainer2.Panel1.Controls.Add(this.textBoxDebug);
 			this.splitContainer2.Panel1MinSize = 0;
 			this.splitContainer2.Panel2MinSize = 0;
-			this.splitContainer2.Size = new System.Drawing.Size(304, 585);
+			this.splitContainer2.Size = new System.Drawing.Size(310, 585);
 			this.splitContainer2.SplitterDistance = 556;
 			this.splitContainer2.TabIndex = 0;
 			// 
@@ -382,7 +383,7 @@
 			this.textBoxDebug.Name = "textBoxDebug";
 			this.textBoxDebug.ReadOnly = true;
 			this.textBoxDebug.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-			this.textBoxDebug.Size = new System.Drawing.Size(304, 556);
+			this.textBoxDebug.Size = new System.Drawing.Size(310, 556);
 			this.textBoxDebug.TabIndex = 0;
 			// 
 			// imageList2
@@ -400,7 +401,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1201, 632);
+			this.ClientSize = new System.Drawing.Size(1224, 632);
 			this.Controls.Add(this.splitContainer1);
 			this.Controls.Add(this.statusStrip1);
 			this.Controls.Add(this.toolStrip1);
