@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 32;
+		private static int SettingVersion = 33;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -95,6 +95,7 @@ namespace RazorEnhanced
 				DataTable autoloot_lists = new DataTable("AUTOLOOT_LISTS");
 				autoloot_lists.Columns.Add("Description", typeof(string));
 				autoloot_lists.Columns.Add("Delay", typeof(int));
+				autoloot_lists.Columns.Add("Range", typeof(int));
 				autoloot_lists.Columns.Add("Bag", typeof(int));
 				autoloot_lists.Columns.Add("Selected", typeof(bool));
 				autoloot_lists.Columns.Add("NoOpenCorpse", typeof(bool));
@@ -109,6 +110,7 @@ namespace RazorEnhanced
 				DataTable scavenger_lists = new DataTable("SCAVENGER_LISTS");
 				scavenger_lists.Columns.Add("Description", typeof(string));
 				scavenger_lists.Columns.Add("Delay", typeof(int));
+				scavenger_lists.Columns.Add("Range", typeof(int));
 				scavenger_lists.Columns.Add("Bag", typeof(int));
 				scavenger_lists.Columns.Add("Selected", typeof(bool));
 				m_Dataset.Tables.Add(scavenger_lists);
@@ -5250,6 +5252,26 @@ namespace RazorEnhanced
 
 				realVersion = 32;
 				General.WriteInt("SettingVersion", 32);
+			}
+
+			if (realVersion == 32)
+			{
+				m_Dataset.Tables["AUTOLOOT_LISTS"].Columns.Add("Range", typeof(int));
+
+				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
+				{
+					row["Range"] = 1;
+				}
+
+				m_Dataset.Tables["SCAVENGER_LISTS"].Columns.Add("Range", typeof(int));
+
+				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
+				{
+					row["Range"] = 1;
+				}
+
+				realVersion = 33;
+				General.WriteInt("SettingVersion", 33);
 			}
 
 			Save(true);
