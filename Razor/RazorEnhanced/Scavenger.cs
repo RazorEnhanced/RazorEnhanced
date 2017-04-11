@@ -10,8 +10,6 @@ namespace RazorEnhanced
 {
 	public class Scavenger
 	{
-		internal static int ScavengerRange = 2;
-
 		[Serializable]
 		public class ScavengerItem
 		{
@@ -68,18 +66,22 @@ namespace RazorEnhanced
 			private int m_Delay;
 			internal int Delay { get { return m_Delay; } }
 
+			private int m_Range;
+			internal int Range { get { return m_Range; } }
+
 			private int m_Bag;
 			internal int Bag { get { return m_Bag; } }
 
 			private bool m_Selected;
 			internal bool Selected { get { return m_Selected; } }
 
-			public ScavengerList(string description, int delay, int bag, bool selected)
+			public ScavengerList(string description, int delay, int bag, bool selected, int range)
 			{
 				m_Description = description;
 				m_Delay = delay;
 				m_Bag = bag;
 				m_Selected = selected;
+				m_Range = range;
 			}
 		}
 
@@ -116,6 +118,21 @@ namespace RazorEnhanced
 			set
 			{
 				Assistant.Engine.MainWindow.ScavengerDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerDragDelay.Text = value.ToString()));
+			}
+		}
+
+		internal static int MaxRange
+		{
+			get
+			{
+				int range = 100;
+				Assistant.Engine.MainWindow.ScavengerRange.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.ScavengerRange.Text, out range)));
+				return range;
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.ScavengerRange.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerRange.Text = value.ToString()));
 			}
 		}
 
@@ -232,21 +249,21 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.Scavenger.ListInsert(newList, RazorEnhanced.Scavenger.ScavengerDelay, 0);
+			Settings.Scavenger.ListInsert(newList, ScavengerDelay, 0, MaxRange);
 
-			RazorEnhanced.Scavenger.RefreshLists();
-			RazorEnhanced.Scavenger.InitGrid();
+			RefreshLists();
+			InitGrid();
 		}
 
 		internal static void RemoveList(string list)
 		{
-			if (RazorEnhanced.Settings.Scavenger.ListExists(list))
+			if (Settings.Scavenger.ListExists(list))
 			{
-				RazorEnhanced.Settings.Scavenger.ListDelete(list);
+				Settings.Scavenger.ListDelete(list);
 			}
 
-			RazorEnhanced.Scavenger.RefreshLists();
-			RazorEnhanced.Scavenger.InitGrid();
+			RefreshLists();
+			InitGrid();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int color)
@@ -345,7 +362,7 @@ namespace RazorEnhanced
 			// Genero filtro item
 			Items.Filter itemFilter = new Items.Filter
 			{
-				RangeMax = ScavengerRange,
+				RangeMax = MaxRange,
 				Movable = true,
 				OnGround = 1,
 				Enabled = true

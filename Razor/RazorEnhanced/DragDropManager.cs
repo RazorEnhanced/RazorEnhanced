@@ -129,7 +129,7 @@ namespace RazorEnhanced
 							return;
 						}
 
-						if ((Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) <= Scavenger.ScavengerRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
+						if (Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), Scavenger.MaxRange) && CheckZLevel(item.Position.Z, World.Player.Position.Z))
 						{
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{

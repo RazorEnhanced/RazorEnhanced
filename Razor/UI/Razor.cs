@@ -614,12 +614,12 @@ namespace Assistant
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
 		internal CheckBox AutoLootNoOpenCheckBox { get { return autoLootnoopenCheckBox; } }
-		
 		internal DataGridView AutoLootDataGridView { get { return autolootdataGridView; } }
 
 		// Scavenger
 		internal RazorCheckBox ScavengerCheckBox { get { return scavengerCheckBox; } }
 		internal RazorTextBox ScavengerDragDelay { get { return scavengerDragDelay; } }
+		internal RazorTextBox ScavengerRange { get { return scavengerRange; } }
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
 		internal ListBox ScavengerLogBox { get { return scavengerLogBox; } }
 		internal RazorComboBox ScavengerListSelect { get { return scavengerListSelect; } }
@@ -4648,6 +4648,7 @@ namespace Assistant
 			this.scavengerRange.Name = "scavengerRange";
 			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
 			this.scavengerRange.TabIndex = 74;
+			this.scavengerRange.TextChanged += new System.EventHandler(this.scavengerRange_TextChanged);
 			// 
 			// scavengerButtonEditProps
 			// 
@@ -9317,7 +9318,7 @@ namespace Assistant
 				Scavenger.ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, serial, true); });
+			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, serial, true, Scavenger.MaxRange); });
 			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.RefreshLists(); });
 		}
 
@@ -9346,15 +9347,17 @@ namespace Assistant
 		{
 			int bag = 0;
 			int delay = 0;
-			RazorEnhanced.Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out bag, out delay);
-			RazorEnhanced.Scavenger.ScavengerBag = bag;
-			RazorEnhanced.Scavenger.ScavengerDelay = delay;
+			int range = 0;
+			Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out bag, out delay, out range);
+			Scavenger.ScavengerBag = bag;
+			Scavenger.ScavengerDelay = delay;
+			Scavenger.MaxRange = range;
 
-			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, RazorEnhanced.Scavenger.ScavengerBag, true);
-			RazorEnhanced.Scavenger.InitGrid();
+			Settings.Scavenger.ListUpdate(scavengerListSelect.Text, delay, bag, true, range);
+			Scavenger.InitGrid();
 
 			if (scavengerListSelect.Text != "")
-				RazorEnhanced.Scavenger.AddLog("Scavenger list changed to: " + scavengerListSelect.Text);
+				Scavenger.AddLog("Scavenger list changed to: " + scavengerListSelect.Text);
 		}
 
 		private void scavengerEnableCheck_CheckedChanged(object sender, EventArgs e)
@@ -9426,7 +9429,7 @@ namespace Assistant
 		{
 			if (scavengerDragDelay.Focused)
 			{
-				RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, RazorEnhanced.Scavenger.ScavengerDelay, RazorEnhanced.Scavenger.ScavengerBag, true);
+				RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
 				RazorEnhanced.Scavenger.RefreshLists();
 			}
 		}
@@ -12794,6 +12797,15 @@ namespace Assistant
 						Restock.CopyTable();
 						break;
 				}
+			}
+		}
+
+		private void scavengerRange_TextChanged(object sender, EventArgs e)
+		{
+			if (scavengerRange.Focused)
+			{
+				Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
+				Scavenger.RefreshLists();
 			}
 		}
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------

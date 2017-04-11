@@ -1956,7 +1956,7 @@ namespace RazorEnhanced
 				return m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
-			internal static void ListInsert(string description, int delay, int bag)
+			internal static void ListInsert(string description, int delay, int bag, int range)
 			{
 				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
@@ -1968,12 +1968,13 @@ namespace RazorEnhanced
 				newRow["Delay"] = delay;
 				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
+				newRow["Range"] = range;
 				m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Add(newRow);
 
 				Save();
 			}
 
-			internal static void ListUpdate(string description, int delay, int bag, bool selected)
+			internal static void ListUpdate(string description, int delay, int bag, bool selected, int range)
 			{
 				bool found = m_Dataset.Tables["SCAVENGER_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
@@ -1994,6 +1995,7 @@ namespace RazorEnhanced
 							row["Delay"] = delay;
 							row["Bag"] = bag;
 							row["Selected"] = selected;
+							row["Range"] = range;
 							break;
 						}
 					}
@@ -2040,8 +2042,9 @@ namespace RazorEnhanced
 					int delay = (int)row["Delay"];
 					int bag = (int)row["Bag"];
 					bool selected = (bool)row["Selected"];
+					int range = (int)row["Range"];
 
-					RazorEnhanced.Scavenger.ScavengerList list = new RazorEnhanced.Scavenger.ScavengerList(description, delay, bag, selected);
+					RazorEnhanced.Scavenger.ScavengerList list = new RazorEnhanced.Scavenger.ScavengerList(description, delay, bag, selected, range);
 					listsOut.Add(list);
 				}
 
@@ -2080,20 +2083,23 @@ namespace RazorEnhanced
 				items = itemsOut;
 			}
 
-			internal static void ListDetailsRead(string listname, out int bag, out int delay)
+			internal static void ListDetailsRead(string listname, out int bag, out int delay, out int range)
 			{
 				int bagOut = 0;
 				int delayOut = 0;
+				int rangeOut = 0;
 				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == listname)
 					{
 						bagOut = (int)row["Bag"];
 						delayOut = (int)row["Delay"];
+						rangeOut = (int)row["Range"];
 					}
 				}
 				bag = bagOut;
 				delay = delayOut;
+				range = rangeOut;
 			}
 		}
 
