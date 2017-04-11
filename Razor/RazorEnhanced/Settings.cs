@@ -1792,7 +1792,7 @@ namespace RazorEnhanced
 				return m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Cast<DataRow>().Any(row => ((string) row["Description"]).ToLower() == description.ToLower());
 			}
 
-			internal static void ListInsert(string description, int delay, int bag, bool noopencorpse)
+			internal static void ListInsert(string description, int delay, int bag, bool noopencorpse, int maxrange)
 			{
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
@@ -1805,12 +1805,13 @@ namespace RazorEnhanced
 				newRow["Bag"] = bag;
 				newRow["Selected"] = true;
 				newRow["NoOpenCorpse"] = noopencorpse;
-                m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
+				newRow["Range"] = maxrange;
+				m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Add(newRow);
 
 				Save();
 			}
 
-			internal static void ListUpdate(string description, int delay, int bag, bool selected, bool noopencorpse)
+			internal static void ListUpdate(string description, int delay, int bag, bool selected, bool noopencorpse, int maxrange)
 			{
 				bool found = m_Dataset.Tables["AUTOLOOT_LISTS"].Rows.Cast<DataRow>().Any(row => (string) row["Description"] == description);
 
@@ -1832,6 +1833,7 @@ namespace RazorEnhanced
 							row["Bag"] = bag;
 							row["Selected"] = selected;
 							row["NoOpenCorpse"] = noopencorpse;
+							row["Range"] = maxrange;
 							break;
 						}
 					}
@@ -1879,8 +1881,9 @@ namespace RazorEnhanced
 					int bag = (int)row["Bag"];
 					bool selected = (bool)row["Selected"];
 					bool noopencorspe = (bool)row["NoOpenCorpse"];
+					int range = (int)row["Range"];
 
-					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected, noopencorspe);
+					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected, noopencorspe, range);
 					listsOut.Add(list);
 				}
 
@@ -1919,10 +1922,11 @@ namespace RazorEnhanced
 				items = itemsOut;
 			}
 
-			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse)
+			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse, out int range)
 			{
 				int bagOut = 0;
 				int delayOut = 0;
+				int rangeOut = 0;
 				bool noopencorpseOut = false;
 
                 foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
@@ -1932,11 +1936,13 @@ namespace RazorEnhanced
 						bagOut = (int)row["Bag"];
 						delayOut = (int)row["Delay"];
 						noopencorpseOut = (bool)row["NoOpenCorpse"];
+						rangeOut = (int)row["Range"];
 					}
 				}
 				bag = bagOut;
 				delay = delayOut;
 				noopencorpse = noopencorpseOut;
+				range = rangeOut;
 			}
 		}
 

@@ -12,8 +12,6 @@ namespace RazorEnhanced
 	{
 		private static Queue<int> m_IgnoreCorpseList = new Queue<int>();
 
-		internal static int LootRange = 3;
-
 		[Serializable]
 		public class AutoLootItem
 		{
@@ -87,6 +85,9 @@ namespace RazorEnhanced
 			private int m_Delay;
 			internal int Delay { get { return m_Delay; } }
 
+			private int m_Range;
+			internal int Range { get { return m_Range; } }
+
 			private int m_Bag;
 			internal int Bag { get { return m_Bag; } }
 
@@ -96,13 +97,14 @@ namespace RazorEnhanced
 			private bool m_Noopencorpse;
 			internal bool NoOpenCorpse { get { return m_Noopencorpse; } }
 
-			public AutoLootList(string description, int delay, int bag, bool selected, bool noopencorpse)
+			public AutoLootList(string description, int delay, int bag, bool selected, bool noopencorpse, int range)
 			{
 				m_Description = description;
 				m_Delay = delay;
 				m_Bag = bag;
 				m_Selected = selected;
 				m_Noopencorpse = noopencorpse;
+				m_Range = range;
             }
 		}
 
@@ -124,6 +126,21 @@ namespace RazorEnhanced
 			set
 			{
 				Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.Text = value));
+			}
+		}
+
+		internal static int MaxRange
+		{
+			get
+			{
+				int range = 2;
+				Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text, out range)));
+				return range;
+			}
+
+			set
+			{
+				Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text = value.ToString()));
 			}
 		}
 
@@ -269,7 +286,7 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0, RazorEnhanced.AutoLoot.NoOpenCorpse);
+			RazorEnhanced.Settings.AutoLoot.ListInsert(newList, RazorEnhanced.AutoLoot.AutoLootDelay, (int)0, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
 
 			RazorEnhanced.AutoLoot.RefreshLists();
 			RazorEnhanced.AutoLoot.InitGrid();
@@ -423,7 +440,7 @@ namespace RazorEnhanced
 			// Genero filtro per corpi
 			Items.Filter corpseFilter = new Items.Filter
 			{
-				RangeMax = LootRange,
+				RangeMax = MaxRange,
 				Movable = false,
 				IsCorpse = 1,
 				OnGround = 1,

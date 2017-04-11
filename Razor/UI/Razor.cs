@@ -570,6 +570,10 @@ namespace Assistant
 		private Label label58;
 		private Button restockExecuteButton;
 		private Button restockStopButton;
+		private Label label60;
+		private RazorTextBox autoLootTextBoxMaxRange;
+		private Label label61;
+		private RazorTextBox scavengerRange;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -605,6 +609,7 @@ namespace Assistant
 		// AutoLoot
 		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
 		internal RazorTextBox AutolootLabelDelay { get { return autoLootTextBoxDelay; } }
+		internal RazorTextBox AutoLootTextBoxMaxRange { get { return autoLootTextBoxMaxRange; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
@@ -1076,6 +1081,8 @@ namespace Assistant
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
+			this.label60 = new System.Windows.Forms.Label();
+			this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorTextBox();
 			this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
 			this.groupBox14 = new System.Windows.Forms.GroupBox();
 			this.label55 = new System.Windows.Forms.Label();
@@ -1101,6 +1108,8 @@ namespace Assistant
 			this.autolootLogBox = new System.Windows.Forms.ListBox();
 			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.escavenger = new System.Windows.Forms.TabPage();
+			this.label61 = new System.Windows.Forms.Label();
+			this.scavengerRange = new RazorEnhanced.UI.RazorTextBox();
 			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
 			this.groupBox41 = new System.Windows.Forms.GroupBox();
 			this.label54 = new System.Windows.Forms.Label();
@@ -4309,6 +4318,8 @@ namespace Assistant
 			// 
 			// eautoloot
 			// 
+			this.eautoloot.Controls.Add(this.label60);
+			this.eautoloot.Controls.Add(this.autoLootTextBoxMaxRange);
 			this.eautoloot.Controls.Add(this.autolootItemPropsB);
 			this.eautoloot.Controls.Add(this.groupBox14);
 			this.eautoloot.Controls.Add(this.autolootAddItemBTarget);
@@ -4331,6 +4342,28 @@ namespace Assistant
 			this.eautoloot.TabIndex = 0;
 			this.eautoloot.Text = "Autoloot";
 			this.eautoloot.UseVisualStyleBackColor = true;
+			// 
+			// label60
+			// 
+			this.label60.AutoSize = true;
+			this.label60.Location = new System.Drawing.Point(464, 68);
+			this.label60.Name = "label60";
+			this.label60.Size = new System.Drawing.Size(62, 13);
+			this.label60.TabIndex = 65;
+			this.label60.Text = "Max Range";
+			// 
+			// autoLootTextBoxMaxRange
+			// 
+			this.autoLootTextBoxMaxRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.autoLootTextBoxMaxRange.BackColor = System.Drawing.Color.White;
+			this.autoLootTextBoxMaxRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.autoLootTextBoxMaxRange.Location = new System.Drawing.Point(411, 65);
+			this.autoLootTextBoxMaxRange.Name = "autoLootTextBoxMaxRange";
+			this.autoLootTextBoxMaxRange.Size = new System.Drawing.Size(45, 20);
+			this.autoLootTextBoxMaxRange.TabIndex = 64;
+			this.autoLootTextBoxMaxRange.TextChanged += new System.EventHandler(this.autoLootTextBoxMaxRange_TextChanged);
 			// 
 			// autolootItemPropsB
 			// 
@@ -4458,9 +4491,9 @@ namespace Assistant
 			// 
 			// autoLootnoopenCheckBox
 			// 
-			this.autoLootnoopenCheckBox.Location = new System.Drawing.Point(275, 68);
+			this.autoLootnoopenCheckBox.Location = new System.Drawing.Point(275, 65);
 			this.autoLootnoopenCheckBox.Name = "autoLootnoopenCheckBox";
-			this.autoLootnoopenCheckBox.Size = new System.Drawing.Size(153, 22);
+			this.autoLootnoopenCheckBox.Size = new System.Drawing.Size(126, 22);
 			this.autoLootnoopenCheckBox.TabIndex = 61;
 			this.autoLootnoopenCheckBox.Text = "No Open Corpse";
 			this.autoLootnoopenCheckBox.CheckedChanged += new System.EventHandler(this.autoLootnoopenCheckBox_CheckedChanged);
@@ -4468,11 +4501,11 @@ namespace Assistant
 			// label21
 			// 
 			this.label21.AutoSize = true;
-			this.label21.Location = new System.Drawing.Point(436, 45);
+			this.label21.Location = new System.Drawing.Point(464, 44);
 			this.label21.Name = "label21";
-			this.label21.Size = new System.Drawing.Size(80, 13);
+			this.label21.Size = new System.Drawing.Size(56, 13);
 			this.label21.TabIndex = 59;
-			this.label21.Text = "Loot Delay (ms)";
+			this.label21.Text = "Delay (ms)";
 			// 
 			// autoLootTextBoxDelay
 			// 
@@ -4481,7 +4514,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
 			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.autoLootTextBoxDelay.Location = new System.Drawing.Point(383, 42);
+			this.autoLootTextBoxDelay.Location = new System.Drawing.Point(411, 41);
 			this.autoLootTextBoxDelay.Name = "autoLootTextBoxDelay";
 			this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
 			this.autoLootTextBoxDelay.TabIndex = 58;
@@ -4564,13 +4597,15 @@ namespace Assistant
 			// 
 			this.autoLootCheckBox.Location = new System.Drawing.Point(275, 42);
 			this.autoLootCheckBox.Name = "autoLootCheckBox";
-			this.autoLootCheckBox.Size = new System.Drawing.Size(103, 22);
+			this.autoLootCheckBox.Size = new System.Drawing.Size(126, 22);
 			this.autoLootCheckBox.TabIndex = 48;
 			this.autoLootCheckBox.Text = "Enable autoloot";
 			this.autoLootCheckBox.CheckedChanged += new System.EventHandler(this.autoLootEnable_CheckedChanged);
 			// 
 			// escavenger
 			// 
+			this.escavenger.Controls.Add(this.label61);
+			this.escavenger.Controls.Add(this.scavengerRange);
 			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
 			this.escavenger.Controls.Add(this.groupBox41);
 			this.escavenger.Controls.Add(this.scavengerdataGridView);
@@ -4592,6 +4627,27 @@ namespace Assistant
 			this.escavenger.TabIndex = 1;
 			this.escavenger.Text = "Scavenger";
 			this.escavenger.UseVisualStyleBackColor = true;
+			// 
+			// label61
+			// 
+			this.label61.AutoSize = true;
+			this.label61.Location = new System.Drawing.Point(469, 71);
+			this.label61.Name = "label61";
+			this.label61.Size = new System.Drawing.Size(62, 13);
+			this.label61.TabIndex = 75;
+			this.label61.Text = "Max Range";
+			// 
+			// scavengerRange
+			// 
+			this.scavengerRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerRange.BackColor = System.Drawing.Color.White;
+			this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.scavengerRange.Location = new System.Drawing.Point(416, 68);
+			this.scavengerRange.Name = "scavengerRange";
+			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
+			this.scavengerRange.TabIndex = 74;
 			// 
 			// scavengerButtonEditProps
 			// 
@@ -4728,11 +4784,11 @@ namespace Assistant
 			// label23
 			// 
 			this.label23.AutoSize = true;
-			this.label23.Location = new System.Drawing.Point(446, 59);
+			this.label23.Location = new System.Drawing.Point(469, 45);
 			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size(82, 13);
+			this.label23.Size = new System.Drawing.Size(56, 13);
 			this.label23.TabIndex = 69;
-			this.label23.Text = "Drag Delay (ms)";
+			this.label23.Text = "Delay (ms)";
 			// 
 			// label22
 			// 
@@ -4759,7 +4815,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
 			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.scavengerDragDelay.Location = new System.Drawing.Point(396, 56);
+			this.scavengerDragDelay.Location = new System.Drawing.Point(416, 42);
 			this.scavengerDragDelay.Name = "scavengerDragDelay";
 			this.scavengerDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.scavengerDragDelay.TabIndex = 68;
@@ -8943,7 +8999,7 @@ namespace Assistant
 				RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
 				AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
-			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true, RazorEnhanced.AutoLoot.NoOpenCorpse); });
+			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, serial, true, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange); });
 			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.RefreshLists(); });
 		}
 
@@ -9057,13 +9113,15 @@ namespace Assistant
 		{
 			int bag = 0;
 			int delay = 0;
+			int maxrange = 0;
 			bool noopencorpse = false;
-			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay, out noopencorpse);
+			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay, out noopencorpse, out maxrange);
 			RazorEnhanced.AutoLoot.AutoLootBag = bag;
 			RazorEnhanced.AutoLoot.AutoLootDelay = delay;
 			RazorEnhanced.AutoLoot.NoOpenCorpse = noopencorpse;
+			RazorEnhanced.AutoLoot.MaxRange = maxrange;
 
-			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse);
+			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, delay, bag, true, noopencorpse, maxrange);
 			RazorEnhanced.AutoLoot.InitGrid();
 
 			if (autolootListSelect.Text != "")
@@ -9074,7 +9132,7 @@ namespace Assistant
 		{
 			if (autoLootTextBoxDelay.Focused)
 			{
-				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse);
+				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
 				RazorEnhanced.AutoLoot.RefreshLists();
 			}
 		}
@@ -9083,7 +9141,7 @@ namespace Assistant
 		{
 			if (autoLootnoopenCheckBox.Focused)
 			{
-				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse);
+				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
 				RazorEnhanced.AutoLoot.RefreshLists();
 			}
 		}
@@ -9120,6 +9178,15 @@ namespace Assistant
 		private void autoLootImport_Click(object sender, EventArgs e)
 		{
 			RazorEnhanced.ImportExport.ImportAutoloot();
+		}
+
+		private void autoLootTextBoxMaxRange_TextChanged(object sender, EventArgs e)
+		{
+			if (autoLootTextBoxMaxRange.Focused)
+			{
+				RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, RazorEnhanced.AutoLoot.AutoLootDelay, RazorEnhanced.AutoLoot.AutoLootBag, true, RazorEnhanced.AutoLoot.NoOpenCorpse, RazorEnhanced.AutoLoot.MaxRange);
+				RazorEnhanced.AutoLoot.RefreshLists();
+			}
 		}
 
 		private void autolootdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
