@@ -1098,6 +1098,10 @@ namespace Assistant
 			PlayerData m = new PlayerData(serial);
 			m.Name = World.OrigPlayerName;
 
+			Mobile test = World.FindMobile(serial);
+			if (test != null)
+				test.Remove();
+
 			World.AddMobile(World.Player = m);
 
 			PlayerData.ExternalZ = false;
@@ -1142,88 +1146,77 @@ namespace Assistant
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-
-			Mobile m = World.FindMobile(serial);
-			if (m == null)
+			Mobile mobile = World.FindMobile(p.ReadUInt32());
+			if (mobile != null)
 			{
-				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
-			}
+				mobile.Body = p.ReadUInt16();
 
-			m.Body = p.ReadUInt16();
-
-			// Blocco filtro graph mobs
-			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-			{
-				List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
-				foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+				// Blocco filtro graph mobs
+				if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
 				{
-					if (m.Body != graphdata.GraphReal)
-						continue;
-
-					p.Seek(-2, SeekOrigin.Current);
-					p.Write((ushort)(graphdata.GraphNew));
-					break;
-				}
-			}
-
-			m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
-
-		/*	if (World.Player != null && !Utility.InRange(World.Player.Position, m.Position, World.Player.VisRange))
-			{
-				m.Remove();
-				return;
-			*/
-
-			Targeting.CheckLastTargetRange(m);
-
-			m.Direction = (Direction)p.ReadByte();
-
-			m.Hue = p.ReadUInt16();
-			m.ProcessPacketFlags(p.ReadByte());
-
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-			if (ltHue != 0 && Targeting.IsLastTarget(m))
-			{
-				p.Seek(-3, SeekOrigin.Current);
-				p.Write((short)(ltHue));
-				p.Seek(+1, SeekOrigin.Current);
-
-			}
-			else
-			{
-				// Blocco Color Highlight flag
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-				{
-					if (m.Poisoned)
+					List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
+					foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
 					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-					else if (m.Paralized)
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
-						p.Seek(+1, SeekOrigin.Current);
-					}
+						if (mobile.Body != graphdata.GraphReal)
+							continue;
 
-					else if (m.Blessed) // Mortal
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
-						p.Seek(+1, SeekOrigin.Current);
+						p.Seek(-2, SeekOrigin.Current);
+						p.Write((ushort)(graphdata.GraphNew));
+						break;
 					}
 				}
-			}
 
-			m.Notoriety = p.ReadByte();
+				mobile.Position = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadSByte());
+				if (World.Player != null && !Utility.InRange(World.Player.Position, mobile.Position, World.Player.VisRange))
+				{
+					mobile.Remove();
+					return;
+				}
+				Targeting.CheckLastTargetRange(mobile);
+				mobile.Direction = (Direction)p.ReadByte();
+				mobile.Hue = p.ReadUInt16();
 
-			if (m == World.Player)
-			{
-				ClientCommunication.BeginCalibratePosition();
+				mobile.ProcessPacketFlags(p.ReadByte());
+
+				int lth = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+				if (lth != 0 && Targeting.IsLastTarget(mobile))
+				{
+					p.Seek(-3, SeekOrigin.Current);
+					p.Write((short)(lth | 32768));
+					p.Seek(+1, SeekOrigin.Current);
+				}
+				else
+				{
+					// Blocco Color Highlight flag
+					if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+					{
+						if (mobile.Poisoned)
+						{
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[0] | 32768));
+							p.Seek(+1, SeekOrigin.Current);
+						}
+						else if (mobile.Paralized)
+						{
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[1] | 32768));
+							p.Seek(+1, SeekOrigin.Current);
+						}
+
+						else if (mobile.Blessed) // Mortal
+						{
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[2] | 32768));
+							p.Seek(+1, SeekOrigin.Current);
+						}
+					}
+				}
+
+				mobile.Notoriety = p.ReadByte();
+				if (mobile == World.Player)
+				{
+					ClientCommunication.BeginCalibratePosition();
+				}
 			}
 		}
 
@@ -1278,11 +1271,10 @@ namespace Assistant
 
 		private static void HitsUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-			Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
+				return;
 
 			int oldPercent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
 
@@ -1321,11 +1313,10 @@ namespace Assistant
 
 		private static void StamUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-			Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
+				return;
 
 			int oldPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 
@@ -1364,11 +1355,10 @@ namespace Assistant
 
 		private static void ManaUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-			Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
+				return;
 
 			int oldPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
 
@@ -1407,12 +1397,9 @@ namespace Assistant
 
 		private static void MobileStatInfo(PacketReader pvSrc, PacketHandlerEventArgs args)
 		{
-			uint serial = pvSrc.ReadUInt32();
-			Mobile m = World.FindMobile(serial);
-
+			Mobile m = World.FindMobile(pvSrc.ReadUInt32());
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
-
+				return;
 			PlayerData p = World.Player;
 
 			m.HitsMax = pvSrc.ReadUInt16();
@@ -1442,6 +1429,7 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1479,6 +1467,7 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1629,107 +1618,87 @@ namespace Assistant
 		}
 
 		private static void MobileUpdate(Packet p, PacketHandlerEventArgs args)
-		{
-			if (World.Player == null)
-				return;
-
-			Serial serial = p.ReadUInt32();
-			Mobile m = World.FindMobile(serial);
-
-			if (m == null)
 			{
-				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
-			}
-
-			bool wasHidden = !m.Visible;
-
-			m.Body = (ushort)(p.ReadUInt16() + p.ReadSByte());
-
-			// Blocco filtro graph mobs
-			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-			{
-				List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
-				foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+				if (World.Player == null)
 				{
-					if (m.Body == graphdata.GraphReal)
+					return;
+				}
+
+				Serial serial = p.ReadUInt32();
+				Mobile mobile = World.FindMobile(serial);
+				if (mobile == null)
+				{
+					World.AddMobile(mobile = new Mobile(serial));
+				}
+				bool flag = !mobile.Visible;
+				mobile.Body = (ushort)(p.ReadUInt16() + p.ReadSByte());
+
+				mobile.Hue = p.ReadUInt16();
+				int lth = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+				mobile.ProcessPacketFlags(p.ReadByte());
+
+				if (lth != 0 && Targeting.IsLastTarget(mobile))
+				{
+					p.Seek(-3, SeekOrigin.Current);
+					p.Write((ushort)(lth | 32768));
+					p.Seek(+1, SeekOrigin.Current);
+				}
+				else
+				{
+					//Blocco Color Highlight flag
+					if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((ushort)(graphdata.GraphNew));
-						break;
+						if (mobile.Poisoned)
+						{
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[0] | 32768));
+							p.Seek(+1, SeekOrigin.Current);
+						}
+						else if (mobile.Paralized)
+						{
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[1] | 32768));
+							p.Seek(+1, SeekOrigin.Current);
+						}
+
+						else if (mobile.Blessed) // Mortal
+						{
+							p.Seek(-3, SeekOrigin.Current);
+							p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[2] | 32768));
+							p.Seek(+1, SeekOrigin.Current);
+						}
 					}
 				}
-			}
-
-			m.Hue = p.ReadUInt16();
-			m.ProcessPacketFlags(p.ReadByte());
-
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-
-			if (ltHue != 0 && Targeting.IsLastTarget(m))
-			{
-				p.Seek(-3, SeekOrigin.Current);
-				p.Write((ushort)(ltHue));
-				p.Seek(+1, SeekOrigin.Current);
-			}
-			else
-			{
-				//Blocco Color Highlight flag
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				if (mobile == World.Player)
 				{
-					if (m.Poisoned)
+					ClientCommunication.BeginCalibratePosition();
+					World.Player.Resync();
+					if (!flag && !mobile.Visible)
 					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
-						p.Seek(+1, SeekOrigin.Current);
+						if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
+						{
+							StealthSteps.Hide();
+						}
 					}
-					else if (m.Paralized)
+					else if (flag && mobile.Visible)
 					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-
-					else if (m.Blessed) // Mortal
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
-						p.Seek(+1, SeekOrigin.Current);
+						StealthSteps.Unhide();
 					}
 				}
+				ushort x = p.ReadUInt16();
+				ushort y = p.ReadUInt16();
+				p.ReadUInt16();
+				mobile.Direction = (Direction)p.ReadByte();
+				mobile.Position = new Point3D((int)x, (int)y, (int)p.ReadSByte());
+				Item.UpdateContainers();
 			}
-
-			if (m == World.Player)
-			{
-				ClientCommunication.BeginCalibratePosition();
-
-				World.Player.Resync();
-
-				if (!wasHidden && !m.Visible)
-				{
-					if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
-						StealthSteps.Hide();
-				}
-				else if (wasHidden && m.Visible)
-				{
-					StealthSteps.Unhide();
-				}
-			}
-
-			ushort x = p.ReadUInt16();
-			ushort y = p.ReadUInt16();
-			p.ReadUInt16(); //always 0?
-			m.Direction = (Direction)p.ReadByte();
-			m.Position = new Point3D(x, y, p.ReadSByte());
-			Item.UpdateContainers();
-		}
 
 		private static void MobileIncoming(Packet p, PacketHandlerEventArgs args)
 		{
 			if (World.Player == null)
+			{
 				return;
-
+			}
 			Serial serial = p.ReadUInt32();
 			ushort body = p.ReadUInt16();
 
@@ -1749,42 +1718,40 @@ namespace Assistant
 				}
 			}
 
-			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
-
-			//if (World.Player.Position != Point3D.Zero && !Utility.InRange(World.Player.Position, position, World.Player.VisRange))
-			//	return;
-
-			Mobile m = World.FindMobile(serial);
-			if (m == null)
+			Point3D point3D = new Point3D((int)p.ReadUInt16(), (int)p.ReadUInt16(), (int)p.ReadSByte());
+			if (World.Player.Position != Point3D.Zero && !Utility.InRange(World.Player.Position, point3D, World.Player.VisRange))
 			{
-				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
+				return;
 			}
-
-			bool wasHidden = !m.Visible;
-
-			if (m != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowMobNames"))
-				ClientCommunication.SendToServer(new SingleClick(m));
+			Mobile mobile = World.FindMobile(serial);
+			if (mobile == null)
+			{
+				World.AddMobile(mobile = new Mobile(serial));
+			}
+			bool visflag = !mobile.Visible;
+			if (mobile != World.Player && RazorEnhanced.Settings.General.ReadBool("ShowMobNames"))
+			{
+				ClientCommunication.SendToServer(new SingleClick(mobile));
+			}
 			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
-				Targeting.CheckTextFlags(m);
+			{
+				Targeting.CheckTextFlags(mobile);
+			}
+			int lth = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			bool uselth = lth != 0 && Targeting.IsLastTarget(mobile);
+			mobile.Body = body;
+			if (mobile != World.Player || World.Player.OutstandingMoveReqs == 0)
+			{
+				mobile.Position = point3D;
+			}
+			mobile.Direction = (Direction)p.ReadByte();
+			mobile.Hue = p.ReadUInt16();
+			mobile.ProcessPacketFlags(p.ReadByte());
 
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-			bool isLT = ltHue != 0 && Targeting.IsLastTarget(m);
-
-			m.Body = body;
-
-			if (m != World.Player || World.Player.OutstandingMoveReqs == 0)
-				m.Position = position;
-			m.Direction = (Direction)p.ReadByte();
-
-			m.Hue = p.ReadUInt16();
-			m.ProcessPacketFlags(p.ReadByte());
-
-			if (isLT)
+			if (uselth)
 			{
 				p.Seek(-3, SeekOrigin.Current);
-				p.Write((short)(ltHue));
+				p.Write((short)(lth | 32768));
 				p.Seek(+1, SeekOrigin.Current);
 			}
 			else
@@ -1792,51 +1759,51 @@ namespace Assistant
 				// Blocco Color Highlight flag
 				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
 				{
-					if (m.Poisoned)
+					if (mobile.Poisoned)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
+						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[0] | 32768));
 						p.Seek(+1, SeekOrigin.Current);
 					}
-					else if (m.Paralized)
+					else if (mobile.Paralized)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
+						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[1] | 32768));
 						p.Seek(+1, SeekOrigin.Current);
 					}
 
-					else if (m.Blessed) // Mortal
+					else if (mobile.Blessed) // Mortal
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
+						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[2] | 32768));
 						p.Seek(+1, SeekOrigin.Current);
 					}
 				}
 			}
 
-			m.Notoriety = p.ReadByte();
-
-			if (m == World.Player)
+			byte notoriety = mobile.Notoriety;
+			if (mobile == World.Player)
 			{
 				ClientCommunication.BeginCalibratePosition();
-
-				if (!wasHidden && !m.Visible)
+				if (!visflag && !mobile.Visible)
 				{
 					if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
+					{
 						StealthSteps.Hide();
+					}
 				}
-				else if (wasHidden && m.Visible)
+				else if (visflag && mobile.Visible)
 				{
 					StealthSteps.Unhide();
 				}
 			}
-
 			while (true)
 			{
 				serial = p.ReadUInt32();
 				if (!serial.IsItem)
+				{
 					break;
-
+				}
 				Item item = World.FindItem(serial);
 				bool isNew = false;
 				if (item == null)
@@ -1844,52 +1811,45 @@ namespace Assistant
 					isNew = true;
 					World.AddItem(item = new Item(serial));
 				}
-
-				if (!DragDropManager.EndHolding(serial))
-					continue;
-
-				item.Container = m;
-
-				item.ItemID = p.ReadUInt16();
-
-				item.Layer = (Layer)p.ReadByte();
-
-				if (Engine.UseNewMobileIncoming)
+				if (DragDropManager.EndHolding(serial))
 				{
-					item.Hue = p.ReadUInt16();
-					if (isLT)
+					item.Container = mobile;
+					ushort num = p.ReadUInt16();
+					if (Engine.UseNewMobileIncoming)
 					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)ltHue);
+						item.ItemID = num;
 					}
-				}
-				else
-				{
-					if ((item.ItemID & 0x8000) != 0)
+					else
+					{
+						item.ItemID = (ushort)(num & 16383);
+					}
+					item.Layer = (Layer)p.ReadByte();
+					if (Engine.UseNewMobileIncoming || (num & 32768) != 0)
 					{
 						item.Hue = p.ReadUInt16();
-						if (isLT)
+						if (uselth)
 						{
 							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)ltHue);
+							p.Write((short)(lth & 16383));
 						}
 					}
 					else
 					{
 						item.Hue = 0;
-						if (isLT)
-							ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)ltHue, m.Serial));
+						if (uselth)
+						{
+							ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)(lth & 16383), mobile.Serial));
+						}
 					}
-				}
-
-				if (item.Layer == Layer.Backpack && isNew && m == World.Player && m != null) //  && RazorEnhanced.Settings.General.ReadBool("AutoSearch")
-				{
-					m_IgnoreGumps.Add(item);
-					PlayerData.DoubleClick(item);
+					if ((item.Layer == Layer.Backpack & isNew) && mobile == World.Player && mobile != null)
+					{
+						PacketHandlers.m_IgnoreGumps.Add(item);
+						PlayerData.DoubleClick(item);
+					}
 				}
 			}
 			Item.UpdateContainers();
-			RazorEnhanced.Filters.ProcessMessage(m);
+			RazorEnhanced.Filters.ProcessMessage(mobile);
 		}
 
 		private static void RemoveObject(PacketReader p, PacketHandlerEventArgs args)
@@ -2792,7 +2752,7 @@ namespace Assistant
 						if (World.Player != null)
 						{
 							Mobile rem = World.FindMobile(remSerial);
-							if (rem != null)// && !Utility.InRange(World.Player.Position, rem.Position, World.Player.VisRange))
+							if (rem != null && !Utility.InRange(World.Player.Position, rem.Position, World.Player.VisRange))
 								rem.Remove();
 						}
 
