@@ -1170,12 +1170,11 @@ namespace Assistant
 
 			m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
-		/*	if (World.Player != null && !Utility.InRange(World.Player.Position, m.Position, World.Player.VisRange))
+			if (World.Player != null && !Utility.InRange(World.Player.Position, m.Position, World.Player.VisRange))
 			{
 				m.Remove();
 				return;
 			}
-			*/
 
 			Targeting.CheckLastTargetRange(m);
 
@@ -1278,11 +1277,10 @@ namespace Assistant
 
 		private static void HitsUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-			Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
+				return;
 
 			int oldPercent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
 
@@ -1321,11 +1319,10 @@ namespace Assistant
 
 		private static void StamUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-			Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
+				return;
 
 			int oldPercent = (int)(m.Stam * 100 / (m.StamMax == 0 ? (ushort)1 : m.StamMax));
 
@@ -1364,11 +1361,10 @@ namespace Assistant
 
 		private static void ManaUpdate(PacketReader p, PacketHandlerEventArgs args)
 		{
-			uint serial = p.ReadUInt32();
-            Mobile m = World.FindMobile(serial);
+			Mobile m = World.FindMobile(p.ReadUInt32());
 
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
+				return;
 
 			int oldPercent = (int)(m.Mana * 100 / (m.ManaMax == 0 ? (ushort)1 : m.ManaMax));
 
@@ -1407,12 +1403,9 @@ namespace Assistant
 
 		private static void MobileStatInfo(PacketReader pvSrc, PacketHandlerEventArgs args)
 		{
-			uint serial = pvSrc.ReadUInt32();
-            Mobile m = World.FindMobile(serial);
-
+			Mobile m = World.FindMobile(pvSrc.ReadUInt32());
 			if (m == null)
-				World.AddMobile(m = new Mobile(serial));
-
+				return;
 			PlayerData p = World.Player;
 
 			m.HitsMax = pvSrc.ReadUInt16();
@@ -1442,6 +1435,7 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1479,6 +1473,7 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
@@ -1751,8 +1746,8 @@ namespace Assistant
 
 			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
-		//	if (World.Player.Position != Point3D.Zero && !Utility.InRange(World.Player.Position, position, World.Player.VisRange))
-			//	return;
+			if (World.Player.Position != Point3D.Zero && !Utility.InRange(World.Player.Position, position, World.Player.VisRange))
+				return;
 
 			Mobile m = World.FindMobile(serial);
 			if (m == null)
