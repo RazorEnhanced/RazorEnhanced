@@ -383,13 +383,13 @@ namespace RazorEnhanced
 						{
 							if (oggettoContenuto.ItemID != autoLootItem.Graphics)
 								continue;
-							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial, mseconds);
+							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
 						}
 						else
 						{
 							if (oggettoContenuto.ItemID != autoLootItem.Graphics || oggettoContenuto.Hue != autoLootItem.Color)
 								continue;
-							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial, mseconds);
+							GrabItem(autoLootItem, oggettoContenuto, corpo.Serial);
 						}
 					}
 				}
@@ -398,7 +398,7 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int corpseserial, int mseconds)
+		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int corpseserial)
 		{
 			foreach (SerialToGrab item in SerialToGrabList)
 				if (item.ItemSerial == oggettoContenuto.Serial)

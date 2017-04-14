@@ -303,14 +303,14 @@ namespace RazorEnhanced
 					{
 						if (itemGround.ItemID == scavengerItem.Graphics)
 						{
-							GrabItem(scavengerItem, itemGround, mseconds);
+							GrabItem(scavengerItem, itemGround);
 						}
 					}
 					else
 					{
 						if (itemGround.ItemID == scavengerItem.Graphics && itemGround.Hue == scavengerItem.Color)
 						{
-							GrabItem(scavengerItem, itemGround, mseconds);
+							GrabItem(scavengerItem, itemGround);
 						}
 					}
 				}
@@ -319,7 +319,7 @@ namespace RazorEnhanced
 			return 0;
 		}
 
-		internal static void GrabItem(ScavengerItem scavengerItem, Item itemGround, int mseconds)
+		internal static void GrabItem(ScavengerItem scavengerItem, Item itemGround)
 		{
 			if (DragDropManager.ScavengerSerialToGrab.Contains(itemGround.Serial))
 				return;
