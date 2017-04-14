@@ -96,33 +96,53 @@ namespace RazorEnhanced.UI
 			// Details
 			Assistant.PlayerData tempdata;
 			Assistant.Item tempdata2;
-			if (m_itemTarg.Container is Assistant.PlayerData)
+			if (m_itemTarg.OnGround)
 			{
-				tempdata = (Assistant.PlayerData)m_itemTarg.Container;
-				lContainer.Text = tempdata.Serial.ToString();
+				lContainer.Text = "None";
+				lRootContainer.Text = "None";
 			}
-			if (m_itemTarg.Container is Assistant.Item)
+			else
 			{
-				tempdata2 = (Assistant.Item)m_itemTarg.Container;
-				lContainer.Text = tempdata2.Serial.ToString();
+				if (m_itemTarg.Container is Assistant.PlayerData)
+				{
+					tempdata = (Assistant.PlayerData)m_itemTarg.Container;
+					lContainer.Text = tempdata.Serial.ToString();
+				}
+				if (m_itemTarg.Container is Assistant.Item)
+				{
+					tempdata2 = (Assistant.Item)m_itemTarg.Container;
+					lContainer.Text = tempdata2.Serial.ToString();
+				}
+
+				if (m_itemTarg.RootContainer is Assistant.PlayerData)
+				{
+					tempdata = (Assistant.PlayerData)m_itemTarg.RootContainer;
+					lRootContainer.Text = tempdata.Serial.ToString();
+					if (tempdata.Serial == Assistant.World.Player.Serial)
+						lOwned.Text = "Yes";
+				}
+				if (m_itemTarg.RootContainer is Assistant.Item)
+				{
+					tempdata2 = (Assistant.Item)m_itemTarg.RootContainer;
+					lRootContainer.Text = tempdata2.Serial.ToString();
+					if (tempdata2.Serial == Assistant.World.Player.Backpack.Serial)
+						lOwned.Text = "Yes";
+				}
 			}
 
-			if (m_itemTarg.RootContainer is Assistant.PlayerData)
+			// Su OSI il valore amount viene usato per altro se un item è dichiarato non stackabile nei files.
+			if ((Ultima.TileData.ItemTable[m_itemTarg.ItemID].Flags & Ultima.TileFlag.Generic) != 0)
 			{
-				tempdata = (Assistant.PlayerData)m_itemTarg.RootContainer;
-				lRootContainer.Text = tempdata.Serial.ToString();
-				if (tempdata.Serial == Assistant.World.Player.Serial)
-					lOwned.Text = "Yes";
+				if (m_itemTarg.Amount !=0)
+					lAmount.Text = m_itemTarg.Amount.ToString();
+				else
+					lAmount.Text = "1";
 			}
-			if (m_itemTarg.RootContainer is Assistant.Item)
+			else
 			{
-				tempdata2 = (Assistant.Item)m_itemTarg.RootContainer;
-				lRootContainer.Text = tempdata2.Serial.ToString();
-				if (tempdata2.Serial == Assistant.World.Player.Backpack.Serial)
-					lOwned.Text = "Yes";
-			}
-
-			lAmount.Text = m_itemTarg.Amount.ToString();
+				lAmount.Text = "1";
+            }
+			
 			lLayer.Text = m_itemTarg.Layer.ToString();
 
 			// Flag
