@@ -265,16 +265,28 @@ namespace Assistant
 				return;
 
 			if (m_viewrangepatch)
+			{
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
+				m_viewrangepatch = false;
+            }
 
 			if (m_fpspatch)
+			{ 
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_FPS);
+				m_fpspatch = false;
+			}
 
 			if (m_paperdoolpatch)
-				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+			{
+                SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+				m_paperdoolpatch = false;
+            }
 
 			if (m_soundpatch)
+			{
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+				m_soundpatch = false;
+			}
 		}
 
 	}
