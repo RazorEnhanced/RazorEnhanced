@@ -172,6 +172,10 @@ namespace RazorEnhanced.UI
 			attrib = GetAttribute("Insured");
 			if (attrib > 0)
 				AddAttributesToList("Insured: " + attrib);
+
+			attrib = GetAttribute("Luck");
+			if (attrib > 0)
+				AddAttributesToList("Luck: " + attrib);
 		}
 
 		private void AddAttributesToList(string value)
