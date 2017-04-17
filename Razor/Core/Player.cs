@@ -592,24 +592,21 @@ namespace Assistant
 
 			e.Position = Position;
 
-			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors"))
+			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors") && CheckHiddedOpenDoor())
 			{
-				if (!Visible && !RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors"))
-				{
 					int x = Position.X, y = Position.Y;
 					Utility.Offset(e.Dir, ref x, ref y);
 
 					int z = CalcZ;
 
-					foreach (Item i in World.Items.Values)
+				foreach (Item i in World.Items.Values)
+				{
+					if (i.Position.X == x && i.Position.Y == y && i.IsDoor && i.Position.Z - 15 <= z && i.Position.Z + 15 >= z && (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now))
 					{
-						if (i.Position.X == x && i.Position.Y == y && i.IsDoor && i.Position.Z - 15 <= z && i.Position.Z + 15 >= z && (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now))
-						{
-							m_LastDoor = i.Serial;
-							m_LastDoorTime = DateTime.Now;
-							m_OpenDoorReq.Start();
-							break;
-						}
+						m_LastDoor = i.Serial;
+						m_LastDoorTime = DateTime.Now;
+						m_OpenDoorReq.Start();
+						break;
 					}
 				}
 			}
@@ -617,6 +614,19 @@ namespace Assistant
 			e.FilterAck = false;
 
 			m_WalkSeq = (byte)(seq >= 255 ? 1 : seq + 1);
+		}
+
+		internal bool CheckHiddedOpenDoor()
+		{
+			if (Visible)
+				return true;
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors"))
+					return false;
+				else
+					return true;
+			}
 		}
 
 		internal void ProcessMove(Direction dir)
