@@ -574,6 +574,7 @@ namespace Assistant
 		private RazorTextBox autoLootTextBoxMaxRange;
 		private Label label61;
 		private RazorTextBox scavengerRange;
+		private RazorCheckBox hiddedAutoOpenDoors;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -825,6 +826,7 @@ namespace Assistant
 			this.opacityLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.moreOptTab = new System.Windows.Forms.TabPage();
+			this.hiddedAutoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
 			this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
@@ -1747,6 +1749,7 @@ namespace Assistant
 			// 
 			// moreOptTab
 			// 
+			this.moreOptTab.Controls.Add(this.hiddedAutoOpenDoors);
 			this.moreOptTab.Controls.Add(this.chkPartyOverhead);
 			this.moreOptTab.Controls.Add(this.label10);
 			this.moreOptTab.Controls.Add(this.label8);
@@ -1805,6 +1808,15 @@ namespace Assistant
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
 			// 
+			// hiddedAutoOpenDoors
+			// 
+			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 294);
+			this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
+			this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
+			this.hiddedAutoOpenDoors.TabIndex = 74;
+			this.hiddedAutoOpenDoors.Text = "Disable if hidded";
+			this.hiddedAutoOpenDoors.CheckedChanged += new System.EventHandler(this.hiddedAutoOpenDoors_CheckedChanged);
+			// 
 			// chkPartyOverhead
 			// 
 			this.chkPartyOverhead.Location = new System.Drawing.Point(437, 203);
@@ -1824,7 +1836,7 @@ namespace Assistant
 			// 
 			// label8
 			// 
-			this.label8.Location = new System.Drawing.Point(457, 121);
+			this.label8.Location = new System.Drawing.Point(453, 121);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(37, 18);
 			this.label8.TabIndex = 72;
@@ -1956,7 +1968,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ltRange.BackColor = System.Drawing.Color.White;
 			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ltRange.Location = new System.Drawing.Point(495, 119);
+			this.ltRange.Location = new System.Drawing.Point(491, 119);
 			this.ltRange.Name = "ltRange";
 			this.ltRange.Size = new System.Drawing.Size(32, 20);
 			this.ltRange.TabIndex = 41;
@@ -2028,7 +2040,7 @@ namespace Assistant
 			// 
 			// potionEquip
 			// 
-			this.potionEquip.Location = new System.Drawing.Point(204, 318);
+			this.potionEquip.Location = new System.Drawing.Point(437, 249);
 			this.potionEquip.Name = "potionEquip";
 			this.potionEquip.Size = new System.Drawing.Size(214, 22);
 			this.potionEquip.TabIndex = 67;
@@ -2037,7 +2049,7 @@ namespace Assistant
 			// 
 			// spellUnequip
 			// 
-			this.spellUnequip.Location = new System.Drawing.Point(204, 296);
+			this.spellUnequip.Location = new System.Drawing.Point(437, 227);
 			this.spellUnequip.Name = "spellUnequip";
 			this.spellUnequip.Size = new System.Drawing.Size(214, 22);
 			this.spellUnequip.TabIndex = 39;
@@ -7321,7 +7333,8 @@ namespace Assistant
 			incomingCorpse.Checked = RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames");
 			chkStealth.Checked = RazorEnhanced.Settings.General.ReadBool("CountStealthSteps");
 			alwaysStealth.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysStealth");
-			autoOpenDoors.Checked = RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors");
+			autoOpenDoors.Checked = hiddedAutoOpenDoors.Enabled = RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors");
+			hiddedAutoOpenDoors.Checked = RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors");
 			spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
 			potionEquip.Checked = RazorEnhanced.Settings.General.ReadBool("PotionEquip");
 
@@ -8389,6 +8402,15 @@ namespace Assistant
 		{
 			if (autoOpenDoors.Focused)
 				RazorEnhanced.Settings.General.WriteBool("AutoOpenDoors", autoOpenDoors.Checked);
+
+			hiddedAutoOpenDoors.Enabled = autoOpenDoors.Checked;
+        }
+
+
+		private void hiddedAutoOpenDoors_CheckedChanged(object sender, EventArgs e)
+		{
+			if (hiddedAutoOpenDoors.Focused)
+				RazorEnhanced.Settings.General.WriteBool("HiddedAutoOpenDoors", hiddedAutoOpenDoors.Checked);
 		}
 
 		private void msglvl_SelectedIndexChanged(object sender, System.EventArgs e)
@@ -12812,6 +12834,7 @@ namespace Assistant
 				Scavenger.RefreshLists();
 			}
 		}
+
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
 	}

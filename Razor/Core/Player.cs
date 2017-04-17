@@ -594,19 +594,22 @@ namespace Assistant
 
 			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors"))
 			{
-				int x = Position.X, y = Position.Y;
-				Utility.Offset(e.Dir, ref x, ref y);
-
-				int z = CalcZ;
-
-				foreach (Item i in World.Items.Values)
+				if (!Visible && !RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors"))
 				{
-					if (i.Position.X == x && i.Position.Y == y && i.IsDoor && i.Position.Z - 15 <= z && i.Position.Z + 15 >= z && (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now))
+					int x = Position.X, y = Position.Y;
+					Utility.Offset(e.Dir, ref x, ref y);
+
+					int z = CalcZ;
+
+					foreach (Item i in World.Items.Values)
 					{
-						m_LastDoor = i.Serial;
-						m_LastDoorTime = DateTime.Now;
-						m_OpenDoorReq.Start();
-						break;
+						if (i.Position.X == x && i.Position.Y == y && i.IsDoor && i.Position.Z - 15 <= z && i.Position.Z + 15 >= z && (m_LastDoor != i.Serial || m_LastDoorTime + TimeSpan.FromSeconds(1) < DateTime.Now))
+						{
+							m_LastDoor = i.Serial;
+							m_LastDoorTime = DateTime.Now;
+							m_OpenDoorReq.Start();
+							break;
+						}
 					}
 				}
 			}
