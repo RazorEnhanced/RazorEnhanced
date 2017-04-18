@@ -11,17 +11,80 @@ namespace Assistant.Filters
 		{
 		}
 
-		internal override byte[] PacketIDs { get { return new byte[] { 0x1A, 0xF3 }; } }
+		internal override byte[] PacketIDs { get { return new byte[] { 0x20, 0x78, 0x77 }; } }
 
 		internal override LocString Name { get { return LocString.StaffOnlyNpcs; } }
 
 		internal override void OnFilter(PacketReader p, PacketHandlerEventArgs args)
 		{
-			if (p.PacketID == 0xF3) 
+			if (p.PacketID == 0x20) // Mobile update
 			{
-				
+				bool visible = true;
+				uint serial = p.ReadUInt32(); // Serial
+
+				if (serial == World.Player.Serial)
+					return;
+
+				p.ReadUInt16();
+				p.ReadSByte();  // Body
+
+				p.ReadUInt16(); // Hue
+
+				byte flags = p.ReadByte();
+				visible = (flags & 0x80) == 0;
+
+				if (!visible)
+					args.Block = true;
 			}
-			
+			else if (p.PacketID == 0x78)  // Mobile Incoming
+			{
+				bool visible = true;
+				uint serial = p.ReadUInt32(); // Serial
+
+				if (serial == World.Player.Serial)
+					return;
+
+				p.ReadUInt16(); // Body
+
+				p.ReadUInt16(); //x
+				p.ReadUInt16(); //y
+				p.ReadSByte(); //z
+
+				p.ReadByte(); // Direction
+
+				p.ReadUInt16(); // Hue
+
+				byte flags = p.ReadByte();
+				visible = (flags & 0x80) == 0;
+
+				if (!visible)
+					args.Block = true;
+			}
+			else if (p.PacketID == 0x77)  // Mobile Moving
+			{
+				bool visible = true;
+
+				uint serial = p.ReadUInt32(); // Serial
+
+				if (serial == World.Player.Serial)
+					return;
+
+				p.ReadUInt16(); // Body
+
+				p.ReadUInt16(); //x
+				p.ReadUInt16(); //y
+				p.ReadSByte(); //z
+
+				p.ReadByte(); // Direction
+
+				p.ReadUInt16(); // Hue
+
+				byte flags = p.ReadByte();
+				visible = (flags & 0x80) == 0;
+
+				if (!visible)
+					args.Block = true;
+			}
 		}
 
 		internal override void OnEnable()
