@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.Threading;
 using System.Drawing;
+using System.Collections.Generic;
 
 namespace RazorEnhanced.UI
 {
@@ -9,6 +10,7 @@ namespace RazorEnhanced.UI
 	{
 		private Thread m_ProcessInfo;
 		private Assistant.Mobile m_mobile;
+		private List<string> m_props = new List<string>();
 
 		internal EnhancedMobileInspector(Assistant.Mobile mobileTarg)
 		{
@@ -19,163 +21,14 @@ namespace RazorEnhanced.UI
 
 		private void ProcessInfoThread()
 		{
-			int attrib = 0;
+			foreach (string prop in m_props)
+			{
+				int attrib = 0;
 
-			attrib = GetAttribute("Fire Resist");
-            if (attrib > 0)
-				AddAttributesToList("Fire Resist: " + attrib);
-
-			attrib = GetAttribute("Cold Resist");
-			if (attrib > 0)
-				AddAttributesToList("Cold Resist: " + attrib);
-
-			attrib = GetAttribute("Poison Resist");
-			if (attrib > 0)
-				AddAttributesToList("Poison Resist: " + attrib);
-
-			attrib = GetAttribute("Energy Resist");
-			if (attrib > 0)
-				AddAttributesToList("Energy Resist: " + attrib);
-
-			attrib = GetAttribute("Physical Resist");
-			if (attrib > 0)
-				AddAttributesToList("Physical Resist: " + attrib);
-
-			attrib = GetAttribute("Swing Speed Increase");
-			if (attrib > 0)
-				AddAttributesToList("Luck: " + attrib);
-
-			attrib = GetAttribute("Swing Speed Increase");
-			if (attrib > 0)
-				AddAttributesToList("Swing Speed Increase: " + attrib);
-
-			attrib = GetAttribute("Damage Chance Increase");
-			if (attrib > 0)
-				AddAttributesToList("Damage Chance Increase: " + attrib);
-
-			attrib = GetAttribute("Damage Increase");
-			if (attrib > 0)
-				AddAttributesToList("Damage Increase: " + attrib);
-
-			attrib = GetAttribute("Hit Fireball");
-			if (attrib > 0)
-				AddAttributesToList("Hit Fireball: " + attrib);
-
-			attrib = GetAttribute("Hit Chance Increase");
-			if (attrib > 0)
-				AddAttributesToList("Hit Chance Increase: " + attrib);
-
-			attrib = GetAttribute("Mage Armor");
-			if (attrib > 0)
-				AddAttributesToList("Mage Armor: " + attrib);
-
-			attrib = GetAttribute("Lower Reagent Cost");
-			if (attrib > 0)
-				AddAttributesToList("Lower Reagent Cost: " + attrib);
-
-			attrib = GetAttribute("Hit Point Increase");
-			if (attrib > 0)
-				AddAttributesToList("Hit Point Increase: " + attrib);
-
-			attrib = GetAttribute("Hit Points Regeneration");
-			if (attrib > 0)
-				AddAttributesToList("Hit Points Regeneration: " + attrib);
-
-			attrib = GetAttribute("Stamina Regeneration");
-			if (attrib > 0)
-				AddAttributesToList("Stamina Regeneration: " + attrib);
-
-			attrib = GetAttribute("Mana Regeneration");
-			if (attrib > 0)
-				AddAttributesToList("Mana Regeneration: " + attrib);
-
-			attrib = GetAttribute("Reflect Physical Damage");
-			if (attrib > 0)
-				AddAttributesToList("Reflect Physical Damage: " + attrib);
-
-			attrib = GetAttribute("Enhance Potions");
-			if (attrib > 0)
-				AddAttributesToList("Enhance Potions: " + attrib);
-
-			attrib = GetAttribute("Defense Chance Increase");
-			if (attrib > 0)
-				AddAttributesToList("Defense Chance Increase: " + attrib);
-
-			attrib = GetAttribute("Spell Damage Increase");
-			if (attrib > 0)
-				AddAttributesToList("Spell Damage Increase: " + attrib);
-
-			attrib = GetAttribute("Faster Cast Recovery");
-			if (attrib > 0)
-				AddAttributesToList("Faster Cast Recovery: " + attrib);
-
-			attrib = GetAttribute("Faster Casting");
-			if (attrib > 0)
-				AddAttributesToList("Faster Casting: " + attrib);
-
-			attrib = GetAttribute("Lower Mana Cost");
-			if (attrib > 0)
-				AddAttributesToList("Lower Mana Cost: " + attrib);
-
-			attrib = GetAttribute("Strength Increase");
-			if (attrib > 0)
-				AddAttributesToList("Strength Increase: " + attrib);
-
-			attrib = GetAttribute("Dexterity Increase");
-			if (attrib > 0)
-				AddAttributesToList("Dexterity Increase: " + attrib);
-
-			attrib = GetAttribute("Dexterity Bonus");
-			if (attrib > 0)
-				AddAttributesToList("Dexterity Bonus: " + attrib);
-
-			attrib = GetAttribute("Intelligence Bonus");
-			if (attrib > 0)
-				AddAttributesToList("Intelligence Bonus: " + attrib);
-
-			attrib = GetAttribute("Strength Bonus");
-			if (attrib > 0)
-				AddAttributesToList("Strength Bonus: " + attrib);
-
-			attrib = GetAttribute("Intelligence Increase");
-			if (attrib > 0)
-				AddAttributesToList("Intelligence Increase: " + attrib);
-
-			attrib = GetAttribute("Hit Points Increase");
-			if (attrib > 0)
-				AddAttributesToList("Hit Points Increase: " + attrib);
-
-			attrib = GetAttribute("Stamina Increase");
-			if (attrib > 0)
-				AddAttributesToList("Stamina Increase: " + attrib);
-
-			attrib = GetAttribute("Mana Increase");
-			if (attrib > 0)
-				AddAttributesToList("Mana Increase: " + attrib);
-
-			attrib = GetAttribute("Maximum Hit Points Increase");
-			if (attrib > 0)
-				AddAttributesToList("Maximum Hit PointsIncrease: " + attrib);
-
-			attrib = GetAttribute("Maximum Stamina Increase");
-			if (attrib > 0)
-				AddAttributesToList("Maximum Stamina Increase: " + attrib);
-
-			attrib = GetAttribute("Maximum Mana Increase");
-			if (attrib > 0)
-				AddAttributesToList("Maximum Mana Increase: " + attrib);
-
-			attrib = GetAttribute("Self Repair");
-			if (attrib > 0)
-				AddAttributesToList("Self Repair: " + attrib);
-
-			attrib = GetAttribute("Insured");
-			if (attrib > 0)
-				AddAttributesToList("Insured: " + attrib);
-
-			attrib = GetAttribute("Luck");
-			if (attrib > 0)
-				AddAttributesToList("Luck: " + attrib);
+				attrib = GetAttribute(prop);
+				if (attrib > 0)
+					AddAttributesToList(prop + attrib);
+			}
 		}
 
 		private void AddAttributesToList(string value)
@@ -187,10 +40,7 @@ namespace RazorEnhanced.UI
 					listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(value)));
 				}
 			}
-			catch (Exception ex)
-			{ MessageBox.Show(ex.ToString()); }
-
-
+			catch { }
 		}
 
 		private int GetAttribute(string attributename)
@@ -505,6 +355,53 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedMobileInspector_Load(object sender, EventArgs e)
 		{
+			// Genero lista props da leggere
+			m_props.Add("Fire Resist");
+			m_props.Add("Cold Resist");
+			m_props.Add("Poison Resist");
+			m_props.Add("Energy Resist");
+			m_props.Add("Physical Resist");
+			m_props.Add("Swing Speed Increase");
+			m_props.Add("Damage Chance Increase");
+			m_props.Add("Damage Increase");
+			m_props.Add("Hit Fireball");
+			m_props.Add("Hit Chance Increase");
+			m_props.Add("Mage Armor");
+			m_props.Add("Lower Reagent Cost");
+			m_props.Add("Hit Point Increase");
+			m_props.Add("Hit Points Regeneration");
+			m_props.Add("Stamina Regeneration");
+			m_props.Add("Mana Regeneration");
+			m_props.Add("Reflect Physical Damage");
+			m_props.Add("Enhance Potions");
+			m_props.Add("Defense Chance Increase");
+			m_props.Add("Spell Damage Increase");
+			m_props.Add("Faster Cast Recovery");
+			m_props.Add("Faster Casting");
+			m_props.Add("Lower Mana Cost");
+			m_props.Add("Strength Increase");
+			m_props.Add("Dexterity Increase");
+			m_props.Add("Dexterity Bonus");
+			m_props.Add("Intelligence Bonus");
+			m_props.Add("Strength Bonus");
+			m_props.Add("Intelligence Increase");
+			m_props.Add("Hit Points Increase");
+			m_props.Add("Stamina Increase");
+			m_props.Add("Mana Increase");
+			m_props.Add("Maximum Hit Points Increase");
+			m_props.Add("Maximum Stamina Increase");
+			m_props.Add("Maximum Mana Increase");
+			m_props.Add("Self Repair");
+			m_props.Add("Luck");
+			m_props.Add("Hit Lower Defense");
+			// Sa props
+			m_props.Add("Casting Focus");
+			m_props.Add("Fire Eater");
+			m_props.Add("Energy Eaters");
+			m_props.Add("Cold Eaters");
+			m_props.Add("Poison Eater");
+			m_props.Add("Damage Eater");
+
 			// general
 			lName.Text = m_mobile.Name.ToString();
 			lSerial.Text = "0x" + m_mobile.Serial.Value.ToString("X8");
