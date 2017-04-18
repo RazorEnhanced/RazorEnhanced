@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
+using System.Net.NetworkInformation;
 
 namespace Assistant
 {
@@ -13,6 +15,7 @@ namespace Assistant
 			Command.Register("ping", new CommandCallback(Ping));
 			Command.Register("reducecpu", new CommandCallback(ReNice));
 			Command.Register("renice", new CommandCallback(ReNice));
+			Command.Register("help", new CommandCallback(Command.ListCommands));
 			Command.Register("listcommand", new CommandCallback(Command.ListCommands));
 			Command.Register("echo", new CommandCallback(Echo));
 			Command.Register("getserial", new CommandCallback(GetSerial));
@@ -147,10 +150,43 @@ namespace Assistant
 
 		private static void Ping(string[] param)
 		{
-			int count = 5;
-			if (param.Length > 0)
-				count = Utility.ToInt32(param[0], 5);
-			Assistant.Ping.StartPing(count);
+			new Thread(() =>
+			{
+				int max = int.MinValue;
+                int min = int.MaxValue;
+				int total = 0;
+
+				System.Net.NetworkInformation.Ping pingSender = new System.Net.NetworkInformation.Ping();
+				PingOptions options = new PingOptions();
+				options.DontFragment = true;
+
+				// Create a buffer of 32 bytes of data to be transmitted.
+				string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+				byte[] buffer = Encoding.ASCII.GetBytes(data);
+				int timeout = 120;
+				RazorEnhanced.Misc.SendMessage("Address: " + ClientCommunication.LastConnection.ToString(), 33);
+				for (int i = 0; i < 5; i++)
+				{
+					PingReply reply = pingSender.Send(ClientCommunication.LastConnection, timeout, buffer, options);
+					if (reply.Status == IPStatus.Success)
+					{
+						total += (int)reply.RoundtripTime;
+                        RazorEnhanced.Misc.SendMessage("- RoundTrip time: " + reply.RoundtripTime +"ms", 33);
+						if (reply.RoundtripTime > max)
+							max = (int)reply.RoundtripTime;
+						if (reply.RoundtripTime < min)
+							min = (int)reply.RoundtripTime;
+					}
+					else
+					if (reply.Status == IPStatus.Success)
+					{
+						RazorEnhanced.Misc.SendMessage("Ping Failed", 33);
+					}
+				}
+				RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / 4).ToString() + "ms - Min: " + min + "ms", 33);
+
+
+			}).Start();
 		}
 
 		private static void PlayScript(string[] param)
@@ -164,7 +200,7 @@ namespace Assistant
 				script.Run = true;
 			}
 			else
-				RazorEnhanced.Misc.SendMessage("Script not exist");
+				RazorEnhanced.Misc.SendMessage("Script not exist",33);
 		}
 	}
 
@@ -182,10 +218,10 @@ namespace Assistant
 
 		internal static void ListCommands(string[] param)
 		{
-			RazorEnhanced.Misc.SendMessage("Command List:");
+			RazorEnhanced.Misc.SendMessage("Command List:", 33);
 			foreach (string cmd in m_List.Keys)
 			{
-				RazorEnhanced.Misc.SendMessage("-" + cmd);
+				RazorEnhanced.Misc.SendMessage("-" + cmd, 33);
 			}
 		}
 
