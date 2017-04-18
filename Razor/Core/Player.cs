@@ -656,7 +656,7 @@ namespace Assistant
 
 			Direction = dir;
 			Position = pos;
-			Resync();
+			//Resync();
 		}
 
 		internal bool MoveAck(byte seq)
