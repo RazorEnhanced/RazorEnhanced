@@ -19,7 +19,10 @@ namespace Assistant.Filters
 		{
 			if (p.PacketID == 0x20) // Mobile update
 			{
-				bool visible = true;
+				if (World.Player == null)
+					return;
+
+                bool visible = true;
 				uint serial = p.ReadUInt32(); // Serial
 
 				if (serial == World.Player.Serial)
@@ -38,6 +41,9 @@ namespace Assistant.Filters
 			}
 			else if (p.PacketID == 0x78)  // Mobile Incoming
 			{
+				if (World.Player == null)
+					return;
+
 				bool visible = true;
 				uint serial = p.ReadUInt32(); // Serial
 
@@ -62,6 +68,9 @@ namespace Assistant.Filters
 			}
 			else if (p.PacketID == 0x77)  // Mobile Moving
 			{
+				if (World.Player == null)
+					return;
+
 				bool visible = true;
 
 				uint serial = p.ReadUInt32(); // Serial
