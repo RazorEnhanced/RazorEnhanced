@@ -369,7 +369,7 @@ namespace RazorEnhanced.UI
 			m_props.Add("Mage Armor");
 			m_props.Add("Lower Reagent Cost");
 			m_props.Add("Hit Point Increase");
-			m_props.Add("Hit Points Regeneration");
+			m_props.Add("Hit Point Regeneration");
 			m_props.Add("Stamina Regeneration");
 			m_props.Add("Mana Regeneration");
 			m_props.Add("Reflect Physical Damage");
@@ -385,10 +385,10 @@ namespace RazorEnhanced.UI
 			m_props.Add("Intelligence Bonus");
 			m_props.Add("Strength Bonus");
 			m_props.Add("Intelligence Increase");
-			m_props.Add("Hit Points Increase");
+			m_props.Add("Hit Point Increase");
 			m_props.Add("Stamina Increase");
 			m_props.Add("Mana Increase");
-			m_props.Add("Maximum Hit Points Increase");
+			m_props.Add("Maximum Hit Point Increase");
 			m_props.Add("Maximum Stamina Increase");
 			m_props.Add("Maximum Mana Increase");
 			m_props.Add("Self Repair");
@@ -401,6 +401,7 @@ namespace RazorEnhanced.UI
 			m_props.Add("Cold Eaters");
 			m_props.Add("Poison Eater");
 			m_props.Add("Damage Eater");
+			m_props.Add("Kinetic Eater");
 
 			// general
 			lName.Text = m_mobile.Name.ToString();
