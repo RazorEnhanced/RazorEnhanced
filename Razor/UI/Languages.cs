@@ -404,6 +404,7 @@ namespace Assistant
 
 		Mysticism = 1600,
 		EnhancedMacroError = 1601,
+		StaffOnlyNpcs,
 
 		__End = 1800
 	}

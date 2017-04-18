@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 34;
+		private static int SettingVersion = 35;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1600,6 +1600,7 @@ namespace RazorEnhanced
 				general.Columns.Add("1507", typeof(bool));
 				general.Columns.Add("1478", typeof(bool));
 				general.Columns.Add("1009", typeof(bool));
+				general.Columns.Add("1602", typeof(bool));
 
 				// Parametri Tab (General)
 				general.Columns.Add("SmartCPU", typeof(bool));
@@ -1737,7 +1738,7 @@ namespace RazorEnhanced
                     Path.GetDirectoryName(Application.ExecutablePath), "jpg", false, false, false,
 
                     // Parametri primo avvio per vecchi filtri
-                    false, false, false, false, false, false, false, false, false, false, false, false, false,
+                    false, false, false, false, false, false, false, false, false, false, false, false, false, false,
 
                     // Parametri primo avvio tab general
                     false, false, false, false, false, 800, 600, "Normal", 100, 400, 400, false,
@@ -5296,6 +5297,14 @@ namespace RazorEnhanced
 				General.WriteInt("SettingVersion", 34);
 			}
 
+			if (realVersion == 34)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("1602", typeof(bool));
+				General.WriteBool("1602", false);
+
+				realVersion = 35;
+				General.WriteInt("SettingVersion", 35);
+			}
 			Save(true);
 		}
 
