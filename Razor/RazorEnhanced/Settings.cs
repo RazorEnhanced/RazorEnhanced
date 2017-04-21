@@ -1753,7 +1753,7 @@ namespace RazorEnhanced
                     (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
 
                     // Parametri primo avvio tab HotKey
-                    false, Keys.None,
+                    true, Keys.None,
 
                     // Parametri primo avvio interni
                     "[{0}% / {1}%]", 0, "", false, false, true,
