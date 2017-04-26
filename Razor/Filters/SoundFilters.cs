@@ -6,8 +6,8 @@ namespace Assistant.Filters
 	{
 		public static void Initialize()
 		{
-			Filter.Register(new SoundFilter(LocString.BardMusic, 0x38, 0x39, 0x43, 0x44, 0x45, 0x46, 0x4C, 0x4D, 0x52, 0x53));
-			Filter.Register(new SoundFilter(LocString.DogSounds, GetRange(0x85, 0x89)));
+			Filter.Register(new SoundFilter(LocString.BardMusic, 0x38, 0x39, 0x43, 0x44, 0x45, 0x46, 0x4C, 0x4D, 0x52, 0x53, 0x17F, 0x182, 0x503, 0x504)); 
+            Filter.Register(new SoundFilter(LocString.DogSounds, GetRange(0x85, 0x89)));
 			Filter.Register(new SoundFilter(LocString.CatSounds, GetRange(0x69, 0x6D)));
 			Filter.Register(new SoundFilter(LocString.HorseSounds, GetRange(0xA8, 0xAC)));
 			Filter.Register(new SoundFilter(LocString.SheepSounds, GetRange(0xD6, 0xDA)));
