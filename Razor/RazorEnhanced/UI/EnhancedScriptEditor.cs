@@ -127,7 +127,7 @@ namespace RazorEnhanced.UI
 				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
 				"Player.Walk", "Player.PathFindTo", "Player.PathFindToPacket", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
-				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial"
+				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial", "Player.Flying"
 			};
 
 			string[] methodsSpells =
@@ -139,7 +139,7 @@ namespace RazorEnhanced.UI
 			{
 				"Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
 				"Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
-				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList"
+				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying"
 			};
 
 			string[] methodsItems =
@@ -281,7 +281,7 @@ namespace RazorEnhanced.UI
 				"Human", "WarMode", "Female", "Hits", "HitsMax", "Stam", "StamMax", "Mana", "ManaMax", "Backpack", "Mount",
 				"Quiver", "Notoriety", "Map", "InParty", "Properties", "Amount", "IsBagOfSending", "IsContainer", "IsCorpse",
 				"IsDoor", "IsInBank", "Movable", "OnGround", "ItemID", "RootContainer", "Durability", "MaxDurability",
-				"Contains", "Weight", "Position", "StaticID", "StaticHue", "StaticZ"
+				"Contains", "Weight", "Position", "StaticID", "StaticHue", "StaticZ", "Flying"
 			};
 
 			string[] props = propsGeneric;
@@ -424,6 +424,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Player.WeaponDisarmSA()", new string[] { "none" }, "void", "Set on No Weapon Disarm");
 			descriptionPlayer.Add("Player.WeaponDisarmSA", tooltip);
+
+			tooltip = new ToolTipDescriptions("Player.Fly()", new string[] { "bool OnOF" }, "void", "Enable or disable Gargoyle Fly");
+			descriptionPlayer.Add("Player.Fly", tooltip);
 
 			#endregion
 
