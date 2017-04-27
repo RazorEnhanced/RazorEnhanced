@@ -688,7 +688,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 	mf.AddEntry("intro.bik", 10);
 	mf.AddEntry("osilogo.bik", 12);
 	mf.AddEntry("\x80\x02\x00\x00\xE0\x01\x00\x00", 8, 0x00500000); // current screen size
-	mf.AddEntry("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16); // resize screen function
+	mf.AddEntry("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16, 0x00400000); // resize screen function
 	mf.AddEntry("\x57\x56\x6A\x00\x6A\x00\xE8", 7); // redraw screen/edge function
 	mf.AddEntry(PACKET_TBL_STR, PACKET_TS_LEN, 10, 0x00500000);
 	mf.AddEntry(CRYPT_KEY_STR, CRYPT_KEY_LEN);
