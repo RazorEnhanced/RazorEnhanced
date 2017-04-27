@@ -373,11 +373,10 @@ namespace Assistant
 		internal void ProcessPacketFlags(byte flags)
 		{
 			if (!PacketHandlers.UseNewStatus)
-			{
-				m_Poisoned = (flags & 0x04) != 0;
-				m_Blessed = (flags & 0x08) != 0;
-			}
-			m_Flying = (flags & 0x04) != 0;
+				m_Poisoned = (flags & 0x04) != 0;			
+			else
+				m_Flying = (flags & 0x04) != 0;
+
 			m_Blessed = (flags & 0x08) != 0;
 			m_Female = (flags & 0x02) != 0;
 			m_Warmode = (flags & 0x40) != 0;

@@ -1088,7 +1088,10 @@ namespace Assistant
 			World.Items.Clear();
 			World.Mobiles.Clear();
 
-			UseNewStatus = false;
+			if (Engine.ClientMajor >= 7)
+				UseNewStatus = true;
+			else
+				UseNewStatus = false;
 
 			Serial serial = p.ReadUInt32();
 
