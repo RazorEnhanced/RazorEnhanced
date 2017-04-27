@@ -258,8 +258,8 @@ namespace RazorEnhanced
 
 		internal static void Record_ContextMenuResponse(int serial, ushort idx)
 		{
-			AddLog("Misc.WaitForContext(" + idx + ", 10000)");
-			AddLog("Misc.ContextReply(" + serial.ToString("X8") + ", " + idx + ")");
+			AddLog("Misc.WaitForContext(0x" + serial.ToString("X8") + ", 10000)");
+			AddLog("Misc.ContextReply(0x" + serial.ToString("X8") + ", " + idx + ")");
 		}
 
 		internal static void Record_ResponseStringQuery(byte yesno, string text)

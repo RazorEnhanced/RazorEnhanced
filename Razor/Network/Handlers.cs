@@ -279,12 +279,9 @@ namespace Assistant
 						else if (ser.IsItem)
 							ent = World.FindItem(ser);
 
-						if (ent != null && ent.ContextMenu != null && ent.ContextMenu.ContainsKey(idx))
-						{
-							ushort menu = ent.ContextMenu[idx];
-							if (RazorEnhanced.ScriptRecorder.OnRecord)
-								RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, menu);
-						}
+						if (RazorEnhanced.ScriptRecorder.OnRecord)
+							RazorEnhanced.ScriptRecorder.Record_ContextMenuResponse(ser, idx);
+
 						World.Player.HasContext = false;
 						World.Player.ContextID = 0;
 
