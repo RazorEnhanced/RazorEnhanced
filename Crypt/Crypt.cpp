@@ -759,7 +759,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 				int i;
 				DWORD origAddr = addr;
 
-				VirtualProtect((void*)origAddr, 128, PAGE_EXECUTE_READWRITE, &oldProt);
+				VirtualProtect((void*)origAddr, 0xC8, PAGE_EXECUTE_READWRITE, &oldProt);
 				for (i = 16; i < 200; i++)
 				{
 					if (*((BYTE*)(addr + i)) == 233 || *((BYTE*)(addr + i)) == 232)
