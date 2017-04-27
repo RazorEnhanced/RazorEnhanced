@@ -332,11 +332,8 @@ namespace RazorEnhanced
 		{
 			switch (function)
 			{
-				case "Unmount":
-					if (World.Player.GetItemOnLayer(Layer.Mount) != null)
-						ActionQueue.DoubleClick(true, World.Player.Serial);
-					else
-						World.Player.SendMessage("You are not mounted.");
+				case "Fly ON/OFF":
+					ClientCommunication.SendToServer(new ToggleFly());
 					break;
 
 				case "Grab Item":

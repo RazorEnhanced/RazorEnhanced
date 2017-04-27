@@ -1761,6 +1761,18 @@ namespace Assistant
 		}
 	}
 
+	internal sealed class ToggleFly : Packet
+	{
+		internal ToggleFly()
+			: base(0xBF)
+		{
+			EnsureCapacity(2 + 2 + 2 + 4);
+			Write((ushort)0x32);   // Command
+			Write((ushort)0x01);       
+			Write((int)0x00);
+		}
+	}
+
 	internal sealed class QuestButton : Packet
 	{
 		internal QuestButton(uint serial)

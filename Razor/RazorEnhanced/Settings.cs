@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 35;
+		private static int SettingVersion = 36;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -285,15 +285,15 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
-				hotkeyrow.ItemArray = new object[] { "Actions", "Unmount", Keys.None, true };
-				hotkey.Rows.Add(hotkeyrow);
-
-				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Actions", "Grab Item", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Actions", "Drop Item", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Actions", "Fly ON/OFF", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -5305,6 +5305,26 @@ namespace RazorEnhanced
 				realVersion = 35;
 				General.WriteInt("SettingVersion", 35);
 			}
+
+			if (realVersion == 35)
+			{
+				foreach (DataRow row in m_Dataset.Tables["HOTKEYS"].Rows)
+					if ((string)row["Name"] == "Unmount")
+					{
+						row.Delete();
+						break;
+					}
+
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Actions";
+				newRow["Name"] = "Fly ON/OFF";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+				realVersion = 36;
+				General.WriteInt("SettingVersion", 36);
+			}
+
 			Save(true);
 		}
 

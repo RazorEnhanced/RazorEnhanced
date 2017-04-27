@@ -1694,6 +1694,20 @@ namespace RazorEnhanced
 			PathFindToPacket(loc);
         }
 
+		// Fly
+		public static void Fly(bool on)
+		{
+			if (on)
+			{
+				if (!World.Player.Flying)
+					ClientCommunication.SendToServerWait(new ToggleFly());
+			}
+			else
+			{
+				if (World.Player.Flying)
+					ClientCommunication.SendToServerWait(new ToggleFly());
+			}
+		}
 
 		// Message
 
