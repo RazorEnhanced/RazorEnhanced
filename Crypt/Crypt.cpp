@@ -708,7 +708,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 
 	const BYTE defaultCheatKey[] = { 0x98, 0x5B, 0x51, 0x7E, 0x11, 0x0C, 0x3D, 0x77, 0x2D, 0x28, 0x41, 0x22, 0x74, 0xAD, 0x5B, 0x39 };
 	memcpy(pShared->CheatKey, defaultCheatKey, 16);
-
+	bool newclient = true;
 	mf.Execute();
 
 	SizePtr = (SIZE*)mf.GetAddress("\x80\x02\x00\x00\xE0\x01\x00\x00", 8);
@@ -740,10 +740,48 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 					*((BYTE*)addr) = 0xE8;
 					*((DWORD*)(addr + 1)) = ((DWORD)OnSetUOWindowSize) - (addr + 5);
 					addr += 5;
+					newclient = false;
 					break;
 				}
 			}
 			VirtualProtect((void*)origAddr, 128, oldProt, &oldProt);
+		}
+	}
+
+	if (newclient)
+	{
+		SizePtr = (SIZE*)mf.GetAddress("\x80\x02\x00\x00\xE0\x01\x00\x00", 8);
+		if (SizePtr)
+		{
+			addr = mf.GetAddress("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16);
+			if (addr)
+			{
+				int i;
+				DWORD origAddr = addr;
+
+				VirtualProtect((void*)origAddr, 128, PAGE_EXECUTE_READWRITE, &oldProt);
+				for (i = 16; i < 200; i++)
+				{
+					if (*((BYTE*)(addr + i)) == 233 || *((BYTE*)(addr + i)) == 232)
+					{
+						memset((void*)addr, 0x90, i); // nop
+
+						memset((void*)addr, 112, i);
+						*((BYTE*)(addr + 0)) = -117;
+						*((BYTE*)(addr + 1)) = 68;
+						*((BYTE*)(addr + 2)) = 36;
+						*((BYTE*)(addr + 3)) = 4;
+						addr += 4;
+						*((BYTE*)addr) = 80;
+						addr++;
+						*((BYTE*)addr) = -24;
+						*((DWORD*)(addr + 1)) = ((DWORD)OnSetUOWindowSize) - (addr + 5);
+						addr += 5;
+						break;
+					}
+				}
+				VirtualProtect((void*)origAddr, 0xC8, oldProt, &oldProt);
+			}
 		}
 	}
 

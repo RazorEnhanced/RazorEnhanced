@@ -7264,18 +7264,9 @@ namespace Assistant
 			this.TopMost = alwaysTop.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop");
 			rememberPwds.Checked = RazorEnhanced.Settings.General.ReadBool("RememberPwds");
 
-			if (Engine.ClientMajor == 7 && Engine.ClientBuild > 49)
-			{
-				forceSizeX.Enabled = false;
-				forceSizeY.Enabled = false;
-				gameSize.Enabled = false;
-			}
-			else
-			{
-				forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
-				forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
-				gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
-			}
+			forceSizeX.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeX").ToString();
+			forceSizeY.Text = RazorEnhanced.Settings.General.ReadInt("ForceSizeY").ToString();
+			gameSize.Checked = RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled");
 
 			notshowlauncher.Checked = RazorEnhanced.Settings.General.ReadBool("NotShowLauncher");
 			forceSizeX.Enabled = forceSizeY.Enabled = gameSize.Checked;
@@ -8430,9 +8421,6 @@ namespace Assistant
 
 		private static void ForceSize()
 		{
-			if (Engine.ClientMajor == 7 && Engine.ClientBuild > 49)
-				return;
-
 			int x, y;
 
 			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
@@ -8449,9 +8437,6 @@ namespace Assistant
 
 		private void gameSize_CheckedChanged(object sender, System.EventArgs e)
 		{
-			if (Engine.ClientMajor == 7 && Engine.ClientBuild > 49)
-				return;
-
 			if (gameSize.Focused)
 				RazorEnhanced.Settings.General.WriteBool("ForceSizeEnabled", gameSize.Checked);
 
