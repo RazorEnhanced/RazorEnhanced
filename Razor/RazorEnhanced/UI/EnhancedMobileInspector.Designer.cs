@@ -70,6 +70,8 @@
 			this.lFlagGhost = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.listBoxAttributes = new System.Windows.Forms.ListBox();
+			this.label15 = new System.Windows.Forms.Label();
+			this.lFlagFlying = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -446,6 +448,8 @@
 			// 
 			// groupBox3
 			// 
+			this.groupBox3.Controls.Add(this.lFlagFlying);
+			this.groupBox3.Controls.Add(this.label15);
 			this.groupBox3.Controls.Add(this.lFlagParalized);
 			this.groupBox3.Controls.Add(this.label17);
 			this.groupBox3.Controls.Add(this.lFlagBlessed);
@@ -459,7 +463,7 @@
 			this.groupBox3.Controls.Add(this.label11);
 			this.groupBox3.Location = new System.Drawing.Point(348, 13);
 			this.groupBox3.Name = "groupBox3";
-			this.groupBox3.Size = new System.Drawing.Size(127, 217);
+			this.groupBox3.Size = new System.Drawing.Size(127, 238);
 			this.groupBox3.TabIndex = 9;
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Flags";
@@ -600,6 +604,24 @@
 			this.listBoxAttributes.Size = new System.Drawing.Size(289, 329);
 			this.listBoxAttributes.TabIndex = 0;
 			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(6, 210);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(37, 13);
+			this.label15.TabIndex = 30;
+			this.label15.Text = "Flying:";
+			// 
+			// lFlagFlying
+			// 
+			this.lFlagFlying.AutoSize = true;
+			this.lFlagFlying.Location = new System.Drawing.Point(87, 210);
+			this.lFlagFlying.Name = "lFlagFlying";
+			this.lFlagFlying.Size = new System.Drawing.Size(13, 13);
+			this.lFlagFlying.TabIndex = 31;
+			this.lFlagFlying.Text = "0";
+			// 
 			// EnhancedMobileInspector
 			// 
 			this.ClientSize = new System.Drawing.Size(809, 423);
@@ -679,5 +701,7 @@
 		private System.Windows.Forms.Label lFlagParalized;
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.Panel imagepanel;
+		private System.Windows.Forms.Label lFlagFlying;
+		private System.Windows.Forms.Label label15;
 	}
 }

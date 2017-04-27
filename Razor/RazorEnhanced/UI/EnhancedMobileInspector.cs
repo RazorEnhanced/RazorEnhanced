@@ -449,6 +449,9 @@ namespace RazorEnhanced.UI
 			lFlagParalized.Text = (m_mobile.Paralized) ? "Yes" : "No";
 			lFlagParalized.ForeColor = (m_mobile.Paralized) ? Color.Green : Color.Red;
 
+			lFlagFlying.Text = (m_mobile.Flying) ? "Yes" : "No";
+			lFlagFlying.ForeColor = (m_mobile.Flying) ? Color.Green : Color.Red;
+
 			// Immagine
 			try
 			{

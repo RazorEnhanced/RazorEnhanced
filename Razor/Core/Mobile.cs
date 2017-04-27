@@ -37,6 +37,7 @@ namespace Assistant
 		private bool m_Blessed; // Yellow Hits
 		private bool m_Warmode;
 		private bool m_Paralized;
+		private bool m_Flying;
 
 		private bool m_PropsUpdated;
 
@@ -168,6 +169,12 @@ namespace Assistant
 		{
 			get { return m_Paralized; }
 			set { m_Paralized = value; }
+		}
+
+		internal bool Flying
+		{
+			get { return m_Flying; }
+			set { m_Flying = value; }
 		}
 
 		internal byte Notoriety
@@ -370,6 +377,8 @@ namespace Assistant
 				m_Poisoned = (flags & 0x04) != 0;
 				m_Blessed = (flags & 0x08) != 0;
 			}
+			m_Flying = (flags & 0x04) != 0;
+			m_Blessed = (flags & 0x08) != 0;
 			m_Female = (flags & 0x02) != 0;
 			m_Warmode = (flags & 0x40) != 0;
 			m_Visible = (flags & 0x80) == 0;

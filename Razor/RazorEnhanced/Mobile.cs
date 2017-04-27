@@ -33,6 +33,8 @@ namespace RazorEnhanced
 
 		public bool Paralized { get { return m_AssistantMobile.Paralized; } }
 
+		public bool Flying { get { return m_AssistantMobile.Flying; } }
+
 		public bool IsHuman { get { return m_AssistantMobile.IsHuman; } }
 
 		public bool IsGhost { get { return m_AssistantMobile.IsGhost; } }
