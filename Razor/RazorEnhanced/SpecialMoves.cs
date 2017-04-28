@@ -179,9 +179,9 @@ namespace Assistant
 		private static int[] ShortbladeID = new int[] { 0x0907, 0x4076 };
 		private static int[] TekagiID = new int[] { 0x27AB, 0x27F6 };
 		private static int[] WarCleaverID = new int[] { 0x2D23, 0x2D2F };
-		private static int[] BoomerangID = new int[] { 0x4067 };
-		private static int[] CycloneID = new int[] { 0x406C };
-		private static int[] SoulGlaiveID = new int[] { 0x406B };
+		private static int[] BoomerangID = new int[] { 0x4067, 0x08FF };
+		private static int[] CycloneID = new int[] { 0x406C, 0x0901 };
+		private static int[] SoulGlaiveID = new int[] { 0x406B, 0x090A };
 
 
 		private static AbilityInfo[] m_Primary = new AbilityInfo[]
@@ -217,8 +217,8 @@ namespace Assistant
 			new AbilityInfo( AOSAbility.ArmorPeirce, SaiID ),
 			new AbilityInfo( AOSAbility.ArmorIgnore, LargeBattleAxeID, BroadswordID, KatanaID, GargishKatanaID, LeafbladeID ),
 			new AbilityInfo( AOSAbility.Bladeweave, ElvenMacheteID, RadiantScimitarID, RuneBladeID, WarCleaverID ),
-			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID, ElvenSpellbladeID ),
-			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID, BoomerangID),
+			new AbilityInfo( AOSAbility.BleedAttack, WarMaceID, WarAxeID, ElvenSpellbladeID, BoomerangID ),
+			new AbilityInfo( AOSAbility.ConcussionBlow, LongSwordID, BattleAxeID, HalberdID, MaulID, QuarterStaffID, LanceID, GargishBattleAxeID, DreadSwordID, GargishMaulID, GargishLanceID),
 			new AbilityInfo( AOSAbility.CrushingBlow, WarHammerID, OrnateAxeID, DiamondMaceID, GargishWarHammerID ),
 			new AbilityInfo( AOSAbility.DefenseMastery, KamaID ),
 			new AbilityInfo( AOSAbility.Disarm, ButcherKnifeID, PickaxeID, SkinningKnifeID, HatchetID, WandID, ShepherdsCrookID, MaceID, WarForkID, GargishButcherKnifeID, DiscMaceID, DualPointedSpearID, GargishWarForkID ),
@@ -292,6 +292,7 @@ namespace Assistant
 
 			if (a != AOSAbility.Invalid)
 			{
+
 				World.Player.HasSpecial = true;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
@@ -316,6 +317,16 @@ namespace Assistant
 
 			if (a != AOSAbility.Invalid)
 			{
+				if (right != null)	// Fix per arma con special differente se in volo o meno gargoyle
+				{
+					if (right.ItemID == 0x0901)
+					{
+						if (World.Player.Flying)
+							a = AOSAbility.ParalyzingBlow;
+						else
+							a = AOSAbility.Dismount;
+					}
+				}
 				World.Player.HasSpecial = true;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
