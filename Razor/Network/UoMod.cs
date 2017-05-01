@@ -228,8 +228,8 @@ namespace Assistant
 			if (m_modhandle == IntPtr.Zero)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled") && Engine.ClientBuild < 49)
-			{
+			if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled") && Engine.ClientBuild < 49 && Assistant.Engine.IP != Engine.Resolve("37.143.10.137"))
+            {
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
 				ClientCommunication.SendToClient(new SetUpdateRange(31));

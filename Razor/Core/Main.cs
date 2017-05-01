@@ -17,6 +17,13 @@ namespace Assistant
 	{
 		private static DateTime m_ExpireDate = new DateTime(2017, 10, 1);
 
+		private static IPAddress m_ip;
+
+		internal static IPAddress IP
+		{
+			get { return m_ip; }
+		}
+
 		internal static void LogCrash(object exception)
 		{
 			if (exception == null || (exception is ThreadAbortException))
@@ -335,8 +342,8 @@ namespace Assistant
 			}
 
 			// if these are null then the registry entry does not exist (old razor version)
-			IPAddress ip = Resolve(addr);
-			if (ip == IPAddress.None || port == 0)
+			m_ip = Resolve(addr);
+			if (m_ip == IPAddress.None || port == 0)
 			{
 				MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				SplashScreen.End();
@@ -349,7 +356,7 @@ namespace Assistant
 			SplashScreen.Start();
 			m_ActiveWnd = SplashScreen.Instance;
 
-			ClientCommunication.SetConnectionInfo(ip, port);
+			ClientCommunication.SetConnectionInfo(m_ip, port);
 
 			Ultima.Multis.PostHSFormat = UsePostHSChanges;
 
@@ -410,7 +417,7 @@ namespace Assistant
 			}
 		}
 
-		private static IPAddress Resolve(string addr)
+		internal static IPAddress Resolve(string addr)
 		{
 			IPAddress ipAddr = IPAddress.None;
 
