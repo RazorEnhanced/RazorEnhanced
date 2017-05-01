@@ -511,6 +511,10 @@ namespace Assistant
 		private static void LiftReject(PacketReader p, PacketHandlerEventArgs args)
 		{
 			RazorEnhanced.DragDropManager.HoldingItem = false;
+
+			if (RazorEnhanced.AutoLoot.AutoMode)
+				args.Block = true;
+
 			if (!DragDropManager.LiftReject())
 			{
 				args.Block = true;
