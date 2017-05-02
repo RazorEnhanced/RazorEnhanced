@@ -205,15 +205,15 @@ namespace Assistant
 			{
 				case (int)PATCH_TYPE.PT_FPS:
 					SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_FPS);
-					m_fpspatch = true;
+					m_fpspatch = enable;
 					break;
                 case (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS:
 					SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
-					m_paperdoolpatch = true;
+					m_paperdoolpatch = enable;
 					break;
 				case (int)PATCH_TYPE.PT_GLOBAL_SOUND:
 					SendMessage(m_modhandle, m_enable, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
-					m_soundpatch = true;
+					m_soundpatch = enable;
 					break;
 				default:
 					break;
