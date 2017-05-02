@@ -1122,9 +1122,6 @@ namespace Assistant
 			Engine.MainWindow.UpdateTitle(); // update player name & shard name
 			ClientCommunication.BeginCalibratePosition();
 
-			// Salvo password
-			PasswordMemory.Save();
-
 			// Carico profili se linkati
 			string profilename = RazorEnhanced.Profiles.IsLinked(serial);
 			if (profilename != null && RazorEnhanced.Profiles.LastUsed() != profilename)
@@ -2876,7 +2873,7 @@ namespace Assistant
 
 			if (string.IsNullOrEmpty(pass))
 			{
-				pass = PasswordMemory.Find(World.AccountName, ClientCommunication.LastConnection);
+				pass = RazorEnhanced.Settings.Password.GetPassword(World.AccountName, ClientCommunication.LastConnection.ToString());
 				if (!string.IsNullOrEmpty(pass))
 				{
 					p.Seek(31, SeekOrigin.Begin);
@@ -2886,7 +2883,7 @@ namespace Assistant
 			}
 			else
 			{
-				PasswordMemory.Add(World.AccountName, pass, ClientCommunication.LastConnection);
+				RazorEnhanced.Settings.Password.AddUpdateUser(World.AccountName, pass, ClientCommunication.LastConnection.ToString());
 			}
 		}
 

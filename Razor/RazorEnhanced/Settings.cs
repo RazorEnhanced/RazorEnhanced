@@ -3435,7 +3435,45 @@ namespace RazorEnhanced
 		// ------------- PASSWORD START -----------------
 		internal class Password
 		{
-			internal static void Insert(List<PasswordMemory.PasswordData> pdatalist)
+			internal static void AddUpdateUser(string user, string password, string IP)
+			{
+				bool found = false;
+
+				foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)  // Cerco e aggiorno se esiste
+				{
+					if ((string)row["User"] == user && (string)row["IP"] == IP)
+					{
+						row["Password"] = password;
+						found = true;
+                        break;
+					}
+				}
+
+				if (!found)
+				{
+					DataRow newRow = m_Dataset.Tables["PASSWORD"].NewRow();
+					newRow["IP"] = IP;
+					newRow["User"] = user;
+					newRow["Password"] = password;
+					m_Dataset.Tables["PASSWORD"].Rows.Add(newRow);
+				}
+				Save();
+			}
+
+			internal static string GetPassword(string user, string IP)
+			{
+				foreach (DataRow row in m_Dataset.Tables["PASSWORD"].Rows)  // Cerco 
+				{
+					if ((string)row["User"] == user && (string)row["IP"] == IP)
+					{
+						return (string)row["Password"];
+					}
+				}
+
+				return "";
+			}
+
+			internal static void InsertAll(List<PasswordMemory.PasswordData> pdatalist)
 			{
 				m_Dataset.Tables["PASSWORD"].Rows.Clear();
 
@@ -3449,6 +3487,7 @@ namespace RazorEnhanced
 				}
 				Save();
 			}
+			
 
 			internal static List<Assistant.PasswordMemory.PasswordData> RealAll()
 			{
@@ -3918,8 +3957,6 @@ namespace RazorEnhanced
 
 				if (Assistant.Engine.MainWindowY > 0)
 					WriteInt("WindowY", Assistant.Engine.MainWindowY);
-
-				PasswordMemory.Save();
 			}
 		}
 

@@ -965,7 +965,6 @@ namespace Assistant
 
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
-			PasswordMemory.Save();
 		}
 
 		internal static bool OnMessage(MainForm razor, uint wParam, int lParam)

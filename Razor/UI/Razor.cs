@@ -7298,8 +7298,6 @@ namespace Assistant
 			if (!onScreen)
 				this.Location = Point.Empty;
 
-			PasswordMemory.Load();
-
 			dispDelta.Checked = RazorEnhanced.Settings.General.ReadBool("DisplaySkillChanges");
 			actionStatusMsg.Checked = RazorEnhanced.Settings.General.ReadBool("ActionStatusMsg");
 			QueueActions.Checked = RazorEnhanced.Settings.General.ReadBool("QueueActions");
@@ -7379,7 +7377,6 @@ namespace Assistant
 		internal void InitConfig()
 		{
 			m_Initializing = true;
-			PasswordMemory.Load();
 			LoadSettings();
 			RazorEnhanced.Profiles.Refresh();
 

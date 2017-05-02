@@ -225,8 +225,8 @@ namespace RazorEnhanced
 		{
 			// Salvo parametri di uscita
 			RazorEnhanced.Settings.General.SaveExitData();
-
-			Assistant.Engine.MainWindow.Initializing = true;
+		    PasswordMemory.ProfileChangeInit();
+            Assistant.Engine.MainWindow.Initializing = true;
 			
 			// Rimuovo patch attive UoMod	
 			UoMod.DisableAllPatch();
@@ -337,6 +337,8 @@ namespace RazorEnhanced
 
 			Assistant.Engine.MainWindow.Initializing = false;
 			SetLast(name);
+
+			PasswordMemory.ProfileChangeEnd();
 		}
 
 		internal static void Save()
