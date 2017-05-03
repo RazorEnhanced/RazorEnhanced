@@ -253,10 +253,9 @@ namespace Assistant
 				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
 				m_soundpatch = true;
 			}
-
 		}
 
-		internal static void DisableAllPatch()
+		internal static void ProfileChange()
 		{
 			if (Engine.ClientMajor < 7)
 				return;
@@ -264,31 +263,78 @@ namespace Assistant
 			if (m_modhandle == IntPtr.Zero)
 				return;
 
-			if (m_viewrangepatch)
+			// ViewRange
+			if (Engine.ClientBuild < 49 && Assistant.Engine.IP != Engine.Resolve("37.143.10.137"))
 			{
-				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
-				m_viewrangepatch = false;
-            }
-
-			if (m_fpspatch)
-			{ 
-				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_FPS);
-				m_fpspatch = false;
+				if (RazorEnhanced.Settings.General.ReadBool("ForceSizeEnabled"))
+				{
+					if (!m_viewrangepatch)
+					{
+						SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
+						SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
+						ClientCommunication.SendToClient(new SetUpdateRange(31));
+					}
+				}
+				else
+				{
+					if (m_viewrangepatch)
+					{
+						SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
+						m_viewrangepatch = false;
+					}
+				}
 			}
 
-			if (m_paperdoolpatch)
+			// FPS
+			if (RazorEnhanced.Settings.General.ReadBool("UoModFPS"))
 			{
-                SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
-				m_paperdoolpatch = false;
-            }
+				if (!m_fpspatch)
+				{
+					SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_FPS);
+					m_fpspatch = true;
+				}
+			}
+			else
+			{
+				if (m_fpspatch)
+				{
+					SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_FPS);
+					m_fpspatch = false;
+				}
+			}
 
-			if (m_soundpatch)
+			// Paperdool
+			if (RazorEnhanced.Settings.General.ReadBool("UoModPaperdool"))
 			{
-				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
-				m_soundpatch = false;
+				if (!m_paperdoolpatch)
+				{
+					SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+					m_paperdoolpatch = true;
+				}
+			}
+			else
+			{
+				if (m_paperdoolpatch)
+				{
+					SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_PAPERDOLL_SLOTS);
+					m_paperdoolpatch = false;
+				}
+			}
+
+			//Global Sound
+			if (RazorEnhanced.Settings.General.ReadBool("UoModSound"))
+			{
+				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+				m_soundpatch = true;
+			}
+			else
+			{
+				if (m_soundpatch)
+				{
+					SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_DISABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+					m_soundpatch = false;
+				}
 			}
 		}
-
 	}
-
 }

@@ -228,9 +228,6 @@ namespace RazorEnhanced
 		    PasswordMemory.ProfileChangeInit();
             Assistant.Engine.MainWindow.Initializing = true;
 			
-			// Rimuovo patch attive UoMod	
-			UoMod.DisableAllPatch();
-
 			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
@@ -312,7 +309,7 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.Load();
 
 			// Abilito patch UOMod
-			UoMod.EnableOnStartMod();
+			UoMod.ProfileChange();
 
 			// Refresh list 
 			Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = -1;
