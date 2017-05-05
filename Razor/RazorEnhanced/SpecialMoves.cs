@@ -319,7 +319,7 @@ namespace Assistant
 			{
 				if (right != null)	// Fix per arma con special differente se in volo o meno gargoyle
 				{
-					if (right.ItemID == 0x0901)
+					if (right.ItemID == 0x0901 || right.ItemID == 0x406C)
 					{
 						if (World.Player.Flying)
 							a = AOSAbility.ParalyzingBlow;
