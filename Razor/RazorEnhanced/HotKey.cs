@@ -23,12 +23,11 @@ namespace RazorEnhanced
 		}
 
 		internal static Keys m_key;
-
 		internal static Keys m_Masterkey;
 
 		internal static void OnMouse(int button, int wheel)
 		{
-			if (World.Player == null)
+            if (World.Player == null)
 				return;
 
 			switch (button)
@@ -36,28 +35,28 @@ namespace RazorEnhanced
 				case 0:
 					{
 						if (wheel == -1)
-							KeyDown((Keys)501);
+							KeyDown((Keys)501 | Control.ModifierKeys);
 						else
-							KeyDown((Keys)502);
+							KeyDown((Keys)502 | Control.ModifierKeys);
 						break;
 					}
 				case 1:
-					KeyDown((Keys)500);
+					KeyDown((Keys)500 | Control.ModifierKeys);
 					break;
 
 				case 2:
-					KeyDown((Keys)503);
+					KeyDown((Keys)503 | Control.ModifierKeys);
 					break;
 
 				case 3:
-					KeyDown((Keys)504);
+					KeyDown((Keys)504 | Control.ModifierKeys);
 					break;
 			}
 		}
 
 		internal static bool GameKeyDown(Keys k)
 		{
-			return KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto;
+            return KeyDown(k | Control.ModifierKeys);              // Aggiunta modificatori in quanto il passaggio key dal client non li supporta in modo diretto;
 		}
 
 		internal static bool KeyDown(Keys k)
@@ -128,7 +127,53 @@ namespace RazorEnhanced
 				case (Keys)504:
 					return "X Button 2";
 
-				default:
+				// Mouse piu tasti
+				case (Keys)131572:
+					return "Wheel Click, Control";
+
+				case (Keys)131573:
+					return "Wheel Down, Control";
+
+				case (Keys)131574:
+					return "Wheel Up, Control";
+
+				case (Keys)131575:
+					return "X Button 1, Control";
+
+				case (Keys)131576:
+					return "X Button 2, Control";
+
+				case (Keys)66036:
+					return "Wheel Click, Shift";
+
+				case (Keys)66037:
+					return "Wheel Down, Shift";
+
+				case (Keys)66038:
+					return "Wheel Up, Shift";
+
+				case (Keys)66039:
+					return "X Button 1, Shift";
+
+				case (Keys)66040:
+					return "X Button 2, Shift";
+
+				case (Keys)262644:
+					return "Wheel Click, Alt";
+
+				case (Keys)262645:
+					return "Wheel Down, Alt";
+
+				case (Keys)262646:
+					return "Wheel Up, Alt";
+
+				case (Keys)262647:
+					return "X Button 1, Alt";
+
+				case (Keys)262648:
+					return "X Button 2, Alt";
+
+            default:
 					return k.ToString();
 			}
 		}
@@ -304,7 +349,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Ping Server":
-					Assistant.Ping.StartPing(4);
+					Assistant.Commands.Ping(null);
 					break;
 
 				case "Accept Party":

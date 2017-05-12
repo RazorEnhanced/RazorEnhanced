@@ -6811,6 +6811,7 @@ namespace Assistant
 			this.hotkeyKeyMasterTextBox.Size = new System.Drawing.Size(104, 20);
 			this.hotkeyKeyMasterTextBox.TabIndex = 5;
 			this.hotkeyKeyMasterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
+			this.hotkeyKeyMasterTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyUp);
 			this.hotkeyKeyMasterTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
 			// 
@@ -6949,6 +6950,7 @@ namespace Assistant
 			this.hotkeytextbox.Size = new System.Drawing.Size(104, 20);
 			this.hotkeytextbox.TabIndex = 1;
 			this.hotkeytextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
+			this.hotkeytextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyUp);
 			this.hotkeytextbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeytextbox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
 			// 
@@ -8272,28 +8274,39 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("RememberPwds", rememberPwds.Checked);
 		}
 
-		private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private bool m_isKeyPressed;
+		private Keys m_lastKey;
+        private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
-			RazorEnhanced.HotKey.KeyDown(e.KeyData);
-			e.SuppressKeyPress = true;
+			if (!m_isKeyPressed || m_lastKey != e.KeyData)
+				RazorEnhanced.HotKey.KeyDown(e.KeyData);
+			m_isKeyPressed = true;
+			m_lastKey = e.KeyData;
+            e.SuppressKeyPress = true;
 		}
+
+		private void HotKey_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			m_isKeyPressed = false;
+			m_lastKey = Keys.None;
+        }
 
 		private void HotKey_MouseRoll(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			if (e.Delta > 0)
-				RazorEnhanced.HotKey.KeyDown((Keys)502);
+				RazorEnhanced.HotKey.KeyDown((Keys)502 | Control.ModifierKeys);
 			else if (e.Delta < 0)
-				RazorEnhanced.HotKey.KeyDown((Keys)501);
+				RazorEnhanced.HotKey.KeyDown((Keys)501 | Control.ModifierKeys);
 		}
 
 		private void HotKey_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Middle)
-				RazorEnhanced.HotKey.KeyDown((Keys)500);
+				RazorEnhanced.HotKey.KeyDown((Keys)500 | Control.ModifierKeys);
 			else if (e.Button == MouseButtons.XButton1)
-				RazorEnhanced.HotKey.KeyDown((Keys)503);
+				RazorEnhanced.HotKey.KeyDown((Keys)503 | Control.ModifierKeys);
 			else if (e.Button == MouseButtons.XButton2)
-				RazorEnhanced.HotKey.KeyDown((Keys)504);
+				RazorEnhanced.HotKey.KeyDown((Keys)504 | Control.ModifierKeys);
 		}
 
 		private void spellUnequip_CheckedChanged(object sender, System.EventArgs e)

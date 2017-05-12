@@ -148,7 +148,7 @@ namespace Assistant
 			World.Player.SendMessage(MsgLevel.Force, LocString.CurLoc, World.Player.Position, mapStr);
 		}
 
-		private static void Ping(string[] param)
+		internal static void Ping(string[] param)
 		{
 			new Thread(() =>
 			{
