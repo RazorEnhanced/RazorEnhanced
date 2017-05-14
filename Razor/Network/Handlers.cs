@@ -1090,7 +1090,7 @@ namespace Assistant
 		private static void LoginConfirm(PacketReader p, PacketHandlerEventArgs args)
 		{
 			World.Items.Clear();
-			World.Mobiles.Clear();
+			World.Mobiles.Clear(); 
 
 			if (Engine.ClientMajor >= 7)
 				UseNewStatus = true;
@@ -1509,7 +1509,6 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
 			}
 
 			m.Name = p.ReadString(30);
@@ -1732,8 +1731,6 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
 			}
 
 			bool wasHidden = !m.Visible;
