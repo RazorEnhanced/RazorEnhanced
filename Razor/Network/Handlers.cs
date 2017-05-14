@@ -1143,7 +1143,7 @@ namespace Assistant
 				RazorEnhanced.UoNet.UO.Lock_Item = new object();
 				RazorEnhanced.UoNet.UOHandler = new RazorEnhanced.UoNet.UO();
 			}
-		}
+        }
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
 		{
@@ -1436,8 +1436,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 			}
 
 			UseNewStatus = true;
@@ -1474,8 +1474,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
 				ClientCommunication.SendToServer(new StatusQuery(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 			}
 
 			UseNewStatus = true;
@@ -1513,7 +1513,6 @@ namespace Assistant
 			{
 				World.AddMobile(m = new Mobile(serial));
 				ClientCommunication.SendToServer(new QueryProperties(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			m.Name = p.ReadString(30);
@@ -1737,6 +1736,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
+				ClientCommunication.SendToServer(new StatusQuery(serial));
+				ClientCommunication.SendToServer(new QueryProperties(serial));
 			}
 
 			bool wasHidden = !m.Visible;
@@ -2701,7 +2702,8 @@ namespace Assistant
 							{
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
-								ClientCommunication.SendToServer(new QueryProperties(mobile.Serial));
+								if (!mobile.PropsUpdated)
+									ClientCommunication.SendToServer(new QueryProperties(mobile.Serial));
 								ClientCommunication.SendToServer(new StatusQuery(mobile.Serial));
 							}
 
