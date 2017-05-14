@@ -745,6 +745,7 @@ namespace Assistant
 
 		internal override void OnMapChange(byte old, byte cur)
 		{
+			RazorEnhanced.ToolBar.ChangingMap = true;
 			List<Mobile> list = new List<Mobile>(World.Mobiles.Values);
 			foreach (Mobile t in list)
 			{
@@ -765,6 +766,7 @@ namespace Assistant
 			*/
 
 			ClientCommunication.PostMapChange(cur);
+			RazorEnhanced.ToolBar.ChangingMap = false;
 		}
 
 		/*public override void OnMapChange( byte old, byte cur )

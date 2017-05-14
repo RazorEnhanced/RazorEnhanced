@@ -43,33 +43,27 @@ namespace RazorEnhanced
 	{  
 		private static int m_slot = 0;
 
+		private static bool m_changingmap = false;
+		internal static bool ChangingMap
+		{
+			get { return m_changingmap; }
+			set { m_changingmap = value; }
+		}
+
 		private static bool m_lock = false;
 		internal static bool Lock
 		{
-			get
-			{
-				return m_lock;
-			}
-
-			set
-			{
-				m_lock = value;
-			}
+			get { return m_lock; }
+			set { m_lock = value; }
 		}
 
 		private static Form m_form;
 		internal static Form ToolBarForm
 		{
-			get
-			{
-				return m_form;
-			}
-
-			set
-			{
-				m_form = value;
-            }
+			get	{ return m_form; }
+			set { m_form = value; }
 		}
+
 		// Piccola Orizzontale
 		private static Label m_hitslabelSH = new System.Windows.Forms.Label();
 		private static Label m_manalabelSH = new System.Windows.Forms.Label();
@@ -381,7 +375,7 @@ namespace RazorEnhanced
 
 		internal static void UpdateCount()
 		{
-			if (Assistant.World.Player == null || m_form == null)
+			if (Assistant.World.Player == null || m_form == null || m_changingmap)
 				return;
 
 			List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();

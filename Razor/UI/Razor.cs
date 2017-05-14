@@ -11629,8 +11629,7 @@ namespace Assistant
 		{
 			UpdateRazorStatus();
 			UpdateScriptGrid();
-			if (RazorEnhanced.ToolBar.ToolBarForm != null && Assistant.World.Player != null)
-				RazorEnhanced.ToolBar.UpdateCount();
+			RazorEnhanced.ToolBar.UpdateCount();
 		}
 
 		// ---------------- TOOLBAR START ----------------
