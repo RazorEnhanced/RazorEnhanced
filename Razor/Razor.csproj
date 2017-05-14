@@ -223,9 +223,6 @@
     <Compile Include="Core\PasswordMemory.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Core\Ping.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Core\Player.cs">
       <SubType>Code</SubType>
     </Compile>

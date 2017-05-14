@@ -65,7 +65,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0x4F, new PacketViewerCallback(GlobalLight));
 			PacketHandler.RegisterServerToClientViewer(0x6F, new PacketViewerCallback(TradeRequest));
 			PacketHandler.RegisterServerToClientViewer(0x72, new PacketViewerCallback(ServerSetWarMode));
-			PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
+			//PacketHandler.RegisterServerToClientViewer(0x73, new PacketViewerCallback(PingResponse));
 			PacketHandler.RegisterServerToClientViewer(0x76, new PacketViewerCallback(ServerChange));
 			PacketHandler.RegisterServerToClientFilter(0x77, new PacketFilterCallback(MobileMoving));
 			PacketHandler.RegisterServerToClientFilter(0x78, new PacketFilterCallback(MobileIncoming));
@@ -2835,12 +2835,6 @@ namespace Assistant
 		private static void PartyAutoDecline()
 		{
 			PartyLeader = Serial.Zero;
-		}
-
-		private static void PingResponse(PacketReader p, PacketHandlerEventArgs args)
-		{
-			if (Ping.Response(p.ReadByte()))
-				args.Block = true;
 		}
 
 		private static void ClientEncodedPacket(PacketReader p, PacketHandlerEventArgs args)
