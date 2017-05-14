@@ -760,8 +760,9 @@ namespace Assistant
 				t.Contains.Clear();
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
+			/*if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
+			*/
 
 			ClientCommunication.PostMapChange(cur);
 		}
