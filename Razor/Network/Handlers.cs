@@ -1291,8 +1291,7 @@ namespace Assistant
 			if (m == World.Player)
 			{
 				// Update hits toolbar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-					RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
+				RazorEnhanced.ToolBar.UpdateHits(m.HitsMax, m.Hits);
 
 				ClientCommunication.PostHitsUpdate();
 			}
@@ -1333,8 +1332,7 @@ namespace Assistant
 			if (m == World.Player)
 			{
 				// Update Stam Toolbar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-					RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
+				RazorEnhanced.ToolBar.UpdateStam(m.StamMax, m.Stam);
 
 				ClientCommunication.PostStamUpdate();
 			}
@@ -1375,8 +1373,7 @@ namespace Assistant
 			if (m == World.Player)
 			{
 				// Update Mana toolbar
-				if (RazorEnhanced.ToolBar.ToolBarForm != null)
-					RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
+				RazorEnhanced.ToolBar.UpdateMana(m.ManaMax, m.Mana);
 
 				ClientCommunication.PostManaUpdate();
 			}
@@ -1613,8 +1610,7 @@ namespace Assistant
 			}
 
 			// Update All toolbar
-			if (RazorEnhanced.ToolBar.ToolBarForm != null)
-				RazorEnhanced.ToolBar.UpdateAll();
+			RazorEnhanced.ToolBar.UpdateAll();
 
 			ClientCommunication.PostHitsUpdate();
 			ClientCommunication.PostStamUpdate();

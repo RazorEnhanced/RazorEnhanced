@@ -359,18 +359,17 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void UpdateAll()
+     	internal static void UpdateAll()
 		{
-			if (Assistant.World.Player != null && m_form != null)
+			if (Assistant.World.Player != null)
 			{
 				UpdateHits(Assistant.World.Player.HitsMax, Assistant.World.Player.Hits);
 				UpdateStam(Assistant.World.Player.StamMax, Assistant.World.Player.Stam);
 				UpdateMana(Assistant.World.Player.ManaMax, Assistant.World.Player.Mana);
 				UpdateWeight(Assistant.World.Player.MaxWeight, Assistant.World.Player.Weight);
 				UpdateFollower();
-            }
-
-			UpdateCount();
+				UpdateCount();
+			}
 		}
 
 		internal static void UpdateCount()
