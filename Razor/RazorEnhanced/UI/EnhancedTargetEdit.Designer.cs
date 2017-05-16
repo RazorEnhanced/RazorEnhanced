@@ -120,9 +120,9 @@
 			this.label1.Location = new System.Drawing.Point(4, 27);
 			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(55, 13);
+			this.label1.Size = new System.Drawing.Size(72, 13);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Target ID:";
+			this.label1.Text = "Target Name:";
 			// 
 			// groupBox1
 			// 
@@ -471,7 +471,7 @@
 			// tTargetID
 			// 
 			this.tTargetID.AutoSize = true;
-			this.tTargetID.Location = new System.Drawing.Point(65, 27);
+			this.tTargetID.Location = new System.Drawing.Point(80, 27);
 			this.tTargetID.Name = "tTargetID";
 			this.tTargetID.Size = new System.Drawing.Size(23, 13);
 			this.tTargetID.TabIndex = 13;
@@ -548,7 +548,7 @@
 			this.SelectorComboBox.FormattingEnabled = true;
 			this.SelectorComboBox.Location = new System.Drawing.Point(6, 21);
 			this.SelectorComboBox.Name = "SelectorComboBox";
-			this.SelectorComboBox.Size = new System.Drawing.Size(182, 24);
+			this.SelectorComboBox.Size = new System.Drawing.Size(182, 21);
 			this.SelectorComboBox.TabIndex = 11;
 			// 
 			// notocolorComboBox
@@ -557,7 +557,7 @@
 			this.notocolorComboBox.FormattingEnabled = true;
 			this.notocolorComboBox.Location = new System.Drawing.Point(111, 258);
 			this.notocolorComboBox.Name = "notocolorComboBox";
-			this.notocolorComboBox.Size = new System.Drawing.Size(109, 24);
+			this.notocolorComboBox.Size = new System.Drawing.Size(109, 21);
 			this.notocolorComboBox.TabIndex = 9;
 			// 
 			// groupBox6
@@ -798,7 +798,6 @@
 			this.bodyaddButton.Size = new System.Drawing.Size(74, 19);
 			this.bodyaddButton.TabIndex = 2;
 			this.bodyaddButton.Text = "Add";
-
 			this.bodyaddButton.UseVisualStyleBackColor = true;
 			this.bodyaddButton.Click += new System.EventHandler(this.bodyaddButton_Click);
 			// 

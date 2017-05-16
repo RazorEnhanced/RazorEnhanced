@@ -117,12 +117,12 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(4, 27);
+			this.label1.Location = new System.Drawing.Point(4, 28);
 			this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(55, 13);
+			this.label1.Size = new System.Drawing.Size(72, 13);
 			this.label1.TabIndex = 0;
-			this.label1.Text = "Target ID:";
+			this.label1.Text = "Target Name:";
 			// 
 			// groupBox1
 			// 
@@ -217,7 +217,7 @@
 			this.SelectorComboBox.FormattingEnabled = true;
 			this.SelectorComboBox.Location = new System.Drawing.Point(6, 21);
 			this.SelectorComboBox.Name = "SelectorComboBox";
-			this.SelectorComboBox.Size = new System.Drawing.Size(182, 24);
+			this.SelectorComboBox.Size = new System.Drawing.Size(182, 21);
 			this.SelectorComboBox.TabIndex = 11;
 			// 
 			// groupBox6
@@ -279,7 +279,7 @@
 			this.notocolorComboBox.FormattingEnabled = true;
 			this.notocolorComboBox.Location = new System.Drawing.Point(105, 19);
 			this.notocolorComboBox.Name = "notocolorComboBox";
-			this.notocolorComboBox.Size = new System.Drawing.Size(109, 24);
+			this.notocolorComboBox.Size = new System.Drawing.Size(109, 21);
 			this.notocolorComboBox.TabIndex = 9;
 			// 
 			// groupBox5
@@ -807,7 +807,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tTargetID.BackColor = System.Drawing.Color.White;
 			this.tTargetID.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tTargetID.Location = new System.Drawing.Point(67, 23);
+			this.tTargetID.Location = new System.Drawing.Point(81, 25);
 			this.tTargetID.Margin = new System.Windows.Forms.Padding(2);
 			this.tTargetID.Name = "tTargetID";
 			this.tTargetID.Size = new System.Drawing.Size(214, 20);
