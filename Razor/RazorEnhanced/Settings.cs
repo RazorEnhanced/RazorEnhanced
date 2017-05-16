@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 36;
+		private static int SettingVersion = 37;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1653,6 +1653,7 @@ namespace RazorEnhanced
 				general.Columns.Add("SpellFormat", typeof(string));
 				general.Columns.Add("MessageLevel", typeof(int));
 				general.Columns.Add("HiddedAutoOpenDoors", typeof(bool));
+				general.Columns.Add("UO3DEquipUnEquip", typeof(bool));
 
 				// Parametri Tab (Options -> Hues)
 				general.Columns.Add("LTHilight", typeof(int));
@@ -5360,6 +5361,15 @@ namespace RazorEnhanced
 				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
 				realVersion = 36;
 				General.WriteInt("SettingVersion", 36);
+			}
+
+			if (realVersion == 36)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("UO3DEquipUnEquip", typeof(bool));
+				General.WriteBool("UO3DEquipUnEquip", false);
+
+				realVersion = 37;
+				General.WriteInt("SettingVersion", 37);
 			}
 
 			Save(true);

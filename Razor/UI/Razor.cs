@@ -575,6 +575,7 @@ namespace Assistant
 		private Label label61;
 		private RazorTextBox scavengerRange;
 		private RazorCheckBox hiddedAutoOpenDoors;
+		private RazorCheckBox uo3dEquipUnEquip;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -826,6 +827,7 @@ namespace Assistant
 			this.opacityLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.moreOptTab = new System.Windows.Forms.TabPage();
+			this.uo3dEquipUnEquip = new RazorEnhanced.UI.RazorCheckBox();
 			this.hiddedAutoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
 			this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
 			this.label10 = new System.Windows.Forms.Label();
@@ -1749,6 +1751,7 @@ namespace Assistant
 			// 
 			// moreOptTab
 			// 
+			this.moreOptTab.Controls.Add(this.uo3dEquipUnEquip);
 			this.moreOptTab.Controls.Add(this.hiddedAutoOpenDoors);
 			this.moreOptTab.Controls.Add(this.chkPartyOverhead);
 			this.moreOptTab.Controls.Add(this.label10);
@@ -1808,6 +1811,15 @@ namespace Assistant
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
 			// 
+			// uo3dEquipUnEquip
+			// 
+			this.uo3dEquipUnEquip.Location = new System.Drawing.Point(437, 274);
+			this.uo3dEquipUnEquip.Name = "uo3dEquipUnEquip";
+			this.uo3dEquipUnEquip.Size = new System.Drawing.Size(214, 22);
+			this.uo3dEquipUnEquip.TabIndex = 75;
+			this.uo3dEquipUnEquip.Text = "Use UO3D Equip and UnEquip";
+			this.uo3dEquipUnEquip.CheckedChanged += new System.EventHandler(this.uo3dEquipUnEquip_CheckedChanged);
+			// 
 			// hiddedAutoOpenDoors
 			// 
 			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 294);
@@ -1819,16 +1831,16 @@ namespace Assistant
 			// 
 			// chkPartyOverhead
 			// 
-			this.chkPartyOverhead.Location = new System.Drawing.Point(437, 203);
+			this.chkPartyOverhead.Location = new System.Drawing.Point(437, 209);
 			this.chkPartyOverhead.Name = "chkPartyOverhead";
-			this.chkPartyOverhead.Size = new System.Drawing.Size(226, 22);
+			this.chkPartyOverhead.Size = new System.Drawing.Size(226, 21);
 			this.chkPartyOverhead.TabIndex = 72;
 			this.chkPartyOverhead.Text = "Show mana/stam above party members";
 			this.chkPartyOverhead.CheckedChanged += new System.EventHandler(this.chkPartyOverhead_CheckedChanged);
 			// 
 			// label10
 			// 
-			this.label10.Location = new System.Drawing.Point(453, 184);
+			this.label10.Location = new System.Drawing.Point(453, 188);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(80, 17);
 			this.label10.TabIndex = 73;
@@ -1937,7 +1949,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.healthFmt.BackColor = System.Drawing.Color.White;
 			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.healthFmt.Location = new System.Drawing.Point(539, 181);
+			this.healthFmt.Location = new System.Drawing.Point(539, 185);
 			this.healthFmt.Name = "healthFmt";
 			this.healthFmt.Size = new System.Drawing.Size(46, 20);
 			this.healthFmt.TabIndex = 71;
@@ -2040,7 +2052,7 @@ namespace Assistant
 			// 
 			// potionEquip
 			// 
-			this.potionEquip.Location = new System.Drawing.Point(437, 249);
+			this.potionEquip.Location = new System.Drawing.Point(437, 252);
 			this.potionEquip.Name = "potionEquip";
 			this.potionEquip.Size = new System.Drawing.Size(214, 22);
 			this.potionEquip.TabIndex = 67;
@@ -2049,7 +2061,7 @@ namespace Assistant
 			// 
 			// spellUnequip
 			// 
-			this.spellUnequip.Location = new System.Drawing.Point(437, 227);
+			this.spellUnequip.Location = new System.Drawing.Point(437, 230);
 			this.spellUnequip.Name = "spellUnequip";
 			this.spellUnequip.Size = new System.Drawing.Size(214, 22);
 			this.spellUnequip.TabIndex = 39;
@@ -7328,6 +7340,7 @@ namespace Assistant
 			hiddedAutoOpenDoors.Checked = RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors");
 			spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
 			potionEquip.Checked = RazorEnhanced.Settings.General.ReadBool("PotionEquip");
+			uo3dEquipUnEquip.Checked = RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip");
 
 			chkForceSpeechHue.Checked = setSpeechHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue");
 			chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpellHue");
@@ -8513,6 +8526,12 @@ namespace Assistant
 		{
 			if (potionEquip.Focused)
 				RazorEnhanced.Settings.General.WriteBool("PotionEquip", potionEquip.Checked);
+		}
+
+		private void uo3dEquipUnEquip_CheckedChanged(object sender, EventArgs e)
+		{
+			if (uo3dEquipUnEquip.Focused)
+				RazorEnhanced.Settings.General.WriteBool("UO3DEquipUnEquip", uo3dEquipUnEquip.Checked);
 		}
 
 		private void negotiate_CheckedChanged(object sender, System.EventArgs e)
@@ -12828,7 +12847,6 @@ namespace Assistant
 				Scavenger.RefreshLists();
 			}
 		}
-
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
 	}
