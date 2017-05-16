@@ -1841,4 +1841,31 @@ namespace Assistant
 			WriteAsciiFixed(name, 30);
 		}
 	}
+
+	internal sealed class EquipItemMacro : Packet
+	{
+		internal EquipItemMacro(List<uint>serials)
+			: base(0xEC)
+		{
+			EnsureCapacity(2 + 2 + (serials.Count * 4));
+
+			Write((byte)serials.Count);
+			foreach (uint serial in serials)
+				Write((uint)serial);
+		}
+	}
+
+	internal sealed class UnEquipItemMacro : Packet
+	{
+		internal UnEquipItemMacro(List<ushort> layers)
+			: base(0xED)
+		{
+			EnsureCapacity(2 + 2 + (layers.Count * 2));
+
+			Write((byte)layers.Count);
+			foreach (ushort layer in layers)
+				Write((ushort)layer);
+		}
+	}
+
 }
