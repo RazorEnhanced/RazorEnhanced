@@ -324,8 +324,11 @@ namespace Assistant
 			//Global Sound
 			if (RazorEnhanced.Settings.General.ReadBool("UoModSound"))
 			{
-				SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
-				m_soundpatch = true;
+				if (!m_soundpatch)
+				{
+					SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_GLOBAL_SOUND);
+					m_soundpatch = true;
+				}
 			}
 			else
 			{
