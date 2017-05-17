@@ -76,9 +76,7 @@ namespace Assistant
 
 		private static void HideItem_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
-			Assistant.Item assistantItem = Assistant.World.FindItem(serial);
-			if (assistantItem != null && assistantItem.Serial.IsItem)
-				ClientCommunication.SendToClient(new RemoveObject(serial));
+			RazorEnhanced.Items.Hide(serial);
 		}
 
 		private static void Echo(string[] param)

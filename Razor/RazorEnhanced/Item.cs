@@ -1006,7 +1006,12 @@ namespace RazorEnhanced
 
 		public static void Hide(int serial)
 		{
-			ClientCommunication.SendToClientWait(new RemoveObject(serial));
+			Assistant.Item item = World.FindItem(serial);
+			if (item != null)
+			{
+				item.Visible = false;
+				ClientCommunication.SendToClientWait(new RemoveObject(serial));
+			}
 		}
 
         public static int BackpackCount(int itemid, int color)
