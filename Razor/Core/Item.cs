@@ -295,7 +295,7 @@ namespace Assistant
 					if (m_AutoStack)
 						AutoStackResource();
 
-				/*	if (IsContainer && (!IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")) && RazorEnhanced.Settings.General.ReadBool("AutoSearch"))
+					if (IsContainer && (!IsPouch || !RazorEnhanced.Settings.General.ReadBool("NoSearchPouches")) && RazorEnhanced.Settings.General.ReadBool("AutoSearch"))
 					{
 						PacketHandlers.IgnoreGumps.Add(this);
 						PlayerData.DoubleClick(this);
@@ -308,7 +308,7 @@ namespace Assistant
 								PlayerData.DoubleClick(icheck);
 							}
 						}
-					}*/
+					}
 				}
 			}
 			m_AutoStack = m_IsNew = false;

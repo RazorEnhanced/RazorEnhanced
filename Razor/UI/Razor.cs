@@ -576,6 +576,8 @@ namespace Assistant
 		private RazorTextBox scavengerRange;
 		private RazorCheckBox hiddedAutoOpenDoors;
 		private RazorCheckBox uo3dEquipUnEquip;
+		private RazorCheckBox nosearchpouches;
+		private RazorCheckBox autosearchcontainers;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -827,6 +829,8 @@ namespace Assistant
 			this.opacityLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.moreOptTab = new System.Windows.Forms.TabPage();
+			this.nosearchpouches = new RazorEnhanced.UI.RazorCheckBox();
+			this.autosearchcontainers = new RazorEnhanced.UI.RazorCheckBox();
 			this.uo3dEquipUnEquip = new RazorEnhanced.UI.RazorCheckBox();
 			this.hiddedAutoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
 			this.chkPartyOverhead = new RazorEnhanced.UI.RazorCheckBox();
@@ -1751,6 +1755,8 @@ namespace Assistant
 			// 
 			// moreOptTab
 			// 
+			this.moreOptTab.Controls.Add(this.nosearchpouches);
+			this.moreOptTab.Controls.Add(this.autosearchcontainers);
 			this.moreOptTab.Controls.Add(this.uo3dEquipUnEquip);
 			this.moreOptTab.Controls.Add(this.hiddedAutoOpenDoors);
 			this.moreOptTab.Controls.Add(this.chkPartyOverhead);
@@ -1810,6 +1816,24 @@ namespace Assistant
 			this.moreOptTab.Size = new System.Drawing.Size(666, 366);
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
+			// 
+			// nosearchpouches
+			// 
+			this.nosearchpouches.Location = new System.Drawing.Point(455, 316);
+			this.nosearchpouches.Name = "nosearchpouches";
+			this.nosearchpouches.Size = new System.Drawing.Size(185, 22);
+			this.nosearchpouches.TabIndex = 77;
+			this.nosearchpouches.Text = "Ignore pouches";
+			this.nosearchpouches.CheckedChanged += new System.EventHandler(this.nosearchpouches_CheckedChanged);
+			// 
+			// autosearchcontainers
+			// 
+			this.autosearchcontainers.Location = new System.Drawing.Point(437, 296);
+			this.autosearchcontainers.Name = "autosearchcontainers";
+			this.autosearchcontainers.Size = new System.Drawing.Size(214, 22);
+			this.autosearchcontainers.TabIndex = 76;
+			this.autosearchcontainers.Text = "Auto search new containers";
+			this.autosearchcontainers.CheckedChanged += new System.EventHandler(this.autosearchcontainers_CheckedChanged);
 			// 
 			// uo3dEquipUnEquip
 			// 
@@ -7341,6 +7365,8 @@ namespace Assistant
 			spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
 			potionEquip.Checked = RazorEnhanced.Settings.General.ReadBool("PotionEquip");
 			uo3dEquipUnEquip.Checked = RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip");
+			autosearchcontainers.Checked = RazorEnhanced.Settings.General.ReadBool("AutoSearch");
+			nosearchpouches.Checked = RazorEnhanced.Settings.General.ReadBool("NoSearchPouches");
 
 			chkForceSpeechHue.Checked = setSpeechHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue");
 			chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpellHue");
@@ -8532,6 +8558,18 @@ namespace Assistant
 		{
 			if (uo3dEquipUnEquip.Focused)
 				RazorEnhanced.Settings.General.WriteBool("UO3DEquipUnEquip", uo3dEquipUnEquip.Checked);
+		}
+
+		private void autosearchcontainers_CheckedChanged(object sender, EventArgs e)
+		{
+			if (autosearchcontainers.Focused)
+				RazorEnhanced.Settings.General.WriteBool("AutoSearch", autosearchcontainers.Checked);
+		}
+
+		private void nosearchpouches_CheckedChanged(object sender, EventArgs e)
+		{
+			if (nosearchpouches.Focused)
+				RazorEnhanced.Settings.General.WriteBool("NoSearchPouches", nosearchpouches.Checked);
 		}
 
 		private void negotiate_CheckedChanged(object sender, System.EventArgs e)
@@ -12847,6 +12885,9 @@ namespace Assistant
 				Scavenger.RefreshLists();
 			}
 		}
+
+
+
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
 	}
