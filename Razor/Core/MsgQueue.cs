@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+using System.Collections.Concurrent;
 namespace Assistant
 {
 	internal class MessageQueue
@@ -29,7 +29,7 @@ namespace Assistant
 			if (m_Table.Count <= 0)
 				return;
 
-			List<KeyValuePair<string, MsgInfo>> list = new List<KeyValuePair<string, MsgInfo>>(m_Table);
+			ConcurrentBag<KeyValuePair<string, MsgInfo>> list = new ConcurrentBag<KeyValuePair<string, MsgInfo>>(m_Table);
 			foreach (KeyValuePair<string, MsgInfo> pair in list)
 			{
 				string txt = pair.Key.ToString();
@@ -49,13 +49,14 @@ namespace Assistant
 				}
 				else
 				{
-					m_Table.Remove(pair.Key);
+					MsgInfo removed;
+                    m_Table.TryRemove(pair.Key, out removed);
 				}
 			}
 		}
 
 		private static System.Threading.Timer m_Timer = new System.Threading.Timer(new System.Threading.TimerCallback(OnTick), null, TimeSpan.FromSeconds(0.1), TimeSpan.FromSeconds(0.1));
-		private static Dictionary<string, MsgInfo> m_Table = new Dictionary<string, MsgInfo>();
+		private static ConcurrentDictionary<string, MsgInfo> m_Table = new ConcurrentDictionary<string, MsgInfo>();
 
 		internal static bool Enqueue(Serial ser, ushort body, MessageType type, ushort hue, ushort font, string lang, string name, string text)
 		{
