@@ -1973,7 +1973,7 @@ namespace Assistant
 					item.Hue = 0x3B1;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Wall Of Stone]"));
 					return;
 				case 0x3996:
 				case 0x398C:
@@ -1982,7 +1982,7 @@ namespace Assistant
 					item.Hue = 0x0845;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Fire Field]"));
 					return;
 				case 0x3915:
 				case 0x3920:
@@ -1992,7 +1992,7 @@ namespace Assistant
 					item.Hue = 0x016A;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Poison Field]"));
 					return;
 				case 0x3967:
 				case 0x3979:
@@ -2001,7 +2001,7 @@ namespace Assistant
 					item.Hue = 0x00DA;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Paralyze Field]"));
 					return;
 				case 0x3946:
 				case 0x3956:
@@ -2010,7 +2010,7 @@ namespace Assistant
 					item.Hue = 0x0125;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Energy Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Energy Field]"));
 					return;
 			}
 		}
@@ -2142,7 +2142,7 @@ namespace Assistant
 					item.Hue = 0x3B1;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Wall Of Stone]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Wall Of Stone]"));
 					return;
 				case 0x3996:
 				case 0x398C:
@@ -2151,7 +2151,7 @@ namespace Assistant
 					item.Hue = 0x0845;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Fire Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Fire Field]"));
 					return;
 				case 0x3915:
 				case 0x3920:
@@ -2161,7 +2161,7 @@ namespace Assistant
 					item.Hue = 0x016A;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Poison Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Poison Field]"));
 					return;
 				case 0x3967:
 				case 0x3979:
@@ -2170,7 +2170,7 @@ namespace Assistant
 					item.Hue = 0x00DA;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Paralyze Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Paralyze Field]"));
 					return;
 				case 0x3946:
 				case 0x3956:
@@ -2179,7 +2179,7 @@ namespace Assistant
 					item.Hue = 0x0125;
 					ClientCommunication.SendToClient(new WorldItem(item));
 					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						RazorEnhanced.Items.Message(item.Serial, 10, "[Energy Field]");
+						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Energy Field]"));
 					return;
 			}
 		}
