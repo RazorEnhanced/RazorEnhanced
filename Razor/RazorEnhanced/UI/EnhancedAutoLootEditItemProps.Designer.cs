@@ -312,7 +312,7 @@
 			this.comboboxProp.FormattingEnabled = true;
 			this.comboboxProp.Location = new System.Drawing.Point(100, 30);
 			this.comboboxProp.Name = "comboboxProp";
-			this.comboboxProp.Size = new System.Drawing.Size(273, 24);
+			this.comboboxProp.Size = new System.Drawing.Size(273, 21);
 			this.comboboxProp.TabIndex = 0;
 			// 
 			// contextMenuStrip1

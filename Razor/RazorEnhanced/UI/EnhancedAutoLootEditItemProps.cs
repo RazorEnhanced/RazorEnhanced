@@ -211,7 +211,7 @@ namespace RazorEnhanced.UI
                 propslist.Add(new AutoLoot.AutoLootItem.Property(row.Cells[0].Value.ToString(),min ,max));
             }
 			m_row.Cells[4].Value = propslist;
-			Scavenger.CopyTable();
+			AutoLoot.CopyTable();
 		}
 
 		private void bAddProp_Click(object sender, EventArgs e)
@@ -236,7 +236,6 @@ namespace RazorEnhanced.UI
 				SaveData();
 			}
 		}
-
 		// ----------------- END GESTIONE MENU TENDINA -------------------
 	}
 }
