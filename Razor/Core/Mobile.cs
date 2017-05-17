@@ -143,6 +143,9 @@ namespace Assistant
 		{
 			get
 			{
+				if (m_Hits == 0)
+					return true;
+
 				return m_Body == 402
 					|| m_Body == 403
 					|| m_Body == 607
