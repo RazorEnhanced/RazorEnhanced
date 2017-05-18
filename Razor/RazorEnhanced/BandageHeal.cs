@@ -262,7 +262,7 @@ namespace RazorEnhanced
 
 		internal static int EngineRun(Assistant.Mobile target)
 		{
-			if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < HpLimit || target.Poisoned)       // Check HP se bendare o meno.
+			if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox") || target.Poisoned)       // Check HP se bendare o meno.
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
 				{
