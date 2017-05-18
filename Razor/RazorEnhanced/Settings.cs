@@ -5386,7 +5386,12 @@ namespace RazorEnhanced
 				Directory.CreateDirectory(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup");
             }
 
-			File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), true);
+			try
+			{
+				File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), true);
+			}
+			catch { }
+
 		}
 
 		internal static void RestoreBackup(string filename)
@@ -5403,7 +5408,15 @@ namespace RazorEnhanced
                 Application.Exit();
 			}
 
-			File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), true);
+			try
+			{
+				File.Copy(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath) + "\\Backup", filename), Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), filename), true);
+			}
+			catch
+			{
+				MessageBox.Show("BackUp of: " + filename + " Impossible to restore!");
+				Application.Exit();
+			}
 		}
 	}
 }
