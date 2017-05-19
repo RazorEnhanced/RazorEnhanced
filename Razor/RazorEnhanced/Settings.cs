@@ -2232,17 +2232,17 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemsRead(string list, out List<RazorEnhanced.Organizer.OrganizerItem> items)
+			internal static List<RazorEnhanced.Organizer.OrganizerItem> ItemsRead(string list)
 			{
-				List<RazorEnhanced.Organizer.OrganizerItem> itemsOut = new List<RazorEnhanced.Organizer.OrganizerItem>();
+				List<RazorEnhanced.Organizer.OrganizerItem> items = new List<RazorEnhanced.Organizer.OrganizerItem>();
 
 				if (ListExists(list))
 				{
-					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Organizer.OrganizerItem) row["Item"]);
+					items.AddRange(from DataRow row in m_Dataset.Tables["ORGANIZER_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Organizer.OrganizerItem) row["Item"]);
 				}
 
-				items = itemsOut;
-			}
+				return items;
+            }
 
 			internal static void ListDetailsRead(string listname, out int bags, out int bagd, out int delay)
 			{
@@ -2389,9 +2389,9 @@ namespace RazorEnhanced
 				}
 			}
 
-			internal static void ItemsRead(string list, out List<RazorEnhanced.SellAgent.SellAgentItem> items)
+			internal static List<RazorEnhanced.SellAgent.SellAgentItem> ItemsRead(string list)
 			{
-				List<RazorEnhanced.SellAgent.SellAgentItem> itemsOut = new List<RazorEnhanced.SellAgent.SellAgentItem>();
+				List<RazorEnhanced.SellAgent.SellAgentItem> items = new List<RazorEnhanced.SellAgent.SellAgentItem>();
 
 				if (ListExists(list))
 				{
@@ -2399,12 +2399,12 @@ namespace RazorEnhanced
 					{
 						if ((string)row["List"] == list)
 						{
-							itemsOut.Add((RazorEnhanced.SellAgent.SellAgentItem)row["Item"]);
+							items.Add((RazorEnhanced.SellAgent.SellAgentItem)row["Item"]);
 						}
 					}
 				}
-				items = itemsOut;
-			}
+				return items;
+            }
 		}
 
 		// ------------- SELL AGENT END-----------------
@@ -2515,16 +2515,16 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemsRead(string list, out List<RazorEnhanced.BuyAgent.BuyAgentItem> items)
+			internal static List<RazorEnhanced.BuyAgent.BuyAgentItem> ItemsRead(string list)
 			{
-				List<RazorEnhanced.BuyAgent.BuyAgentItem> itemsOut = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
+				List<RazorEnhanced.BuyAgent.BuyAgentItem> items = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
 
 				if (ListExists(list))
 				{
-					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.BuyAgent.BuyAgentItem) row["Item"]);
+					items.AddRange(from DataRow row in m_Dataset.Tables["BUY_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.BuyAgent.BuyAgentItem) row["Item"]);
 				}
 
-				items = itemsOut;
+				return items;
 			}
 		}
 
@@ -2633,17 +2633,17 @@ namespace RazorEnhanced
 				lists = listsOut;
 			}
 
-			internal static void ItemsRead(string list, out List<RazorEnhanced.Dress.DressItem> items)
+			internal static List<RazorEnhanced.Dress.DressItem> ItemsRead(string list)
 			{
-				List<RazorEnhanced.Dress.DressItem> itemsOut = new List<RazorEnhanced.Dress.DressItem>();
+				List<RazorEnhanced.Dress.DressItem> items = new List<RazorEnhanced.Dress.DressItem>();
 
 				if (ListExists(list))
 				{
-					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Dress.DressItem) row["Item"]);
+					items.AddRange(from DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Dress.DressItem) row["Item"]);
 				}
 
-				items = itemsOut;
-			}
+				return items;
+            }
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool conflict)
 			{
@@ -3178,9 +3178,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemsRead(string list, out List<RazorEnhanced.Restock.RestockItem> items)
+			internal static List<RazorEnhanced.Restock.RestockItem> ItemsRead(string list)
 			{
-				List<RazorEnhanced.Restock.RestockItem> itemsOut = new List<RazorEnhanced.Restock.RestockItem>();
+				List<RazorEnhanced.Restock.RestockItem> items = new List<RazorEnhanced.Restock.RestockItem>();
 
 				if (ListExists(list))
 				{
@@ -3188,13 +3188,13 @@ namespace RazorEnhanced
 					{
 						if ((string)row["List"] == list)
 						{
-							itemsOut.Add((RazorEnhanced.Restock.RestockItem)row["Item"]);
+							items.Add((RazorEnhanced.Restock.RestockItem)row["Item"]);
 						}
 					}
 				}
 
-				items = itemsOut;
-			}
+				return items;
+            }
 
 			internal static void ListDetailsRead(string listname, out int bags, out int bagd, out int delay)
 			{

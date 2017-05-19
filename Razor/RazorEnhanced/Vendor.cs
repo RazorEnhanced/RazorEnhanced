@@ -158,8 +158,7 @@ namespace RazorEnhanced
 			{
 				if (l.Selected)
 				{
-					List<SellAgent.SellAgentItem> items;
-					RazorEnhanced.Settings.SellAgent.ItemsRead(l.Description, out items);
+					List<SellAgent.SellAgentItem> items = Settings.SellAgent.ItemsRead(l.Description);
 
                     foreach (SellAgentItem item in items)
 					{
@@ -252,8 +251,7 @@ namespace RazorEnhanced
 
 				Assistant.Item item = Assistant.World.FindItem(ser);
 
-				List<SellAgent.SellAgentItem> items;
-				RazorEnhanced.Settings.SellAgent.ItemsRead(SellListName, out items);
+				List<SellAgent.SellAgentItem> items = Settings.SellAgent.ItemsRead(SellListName);
 
 				foreach (SellAgentItem sellItem in items) // Scansione item presenti in lista agent item
 				{
@@ -513,8 +511,7 @@ namespace RazorEnhanced
 			{
 				if (l.Selected)
 				{
-					List<BuyAgent.BuyAgentItem> items;
-					RazorEnhanced.Settings.BuyAgent.ItemsRead(l.Description, out items);
+					List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(l.Description);
 
 					foreach (BuyAgentItem item in items)
 					{
@@ -597,8 +594,7 @@ namespace RazorEnhanced
 				if (item == null)
 					continue;
 
-				List<BuyAgent.BuyAgentItem> items;
-				RazorEnhanced.Settings.BuyAgent.ItemsRead(BuyListName, out items);
+				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(BuyListName);
 
 				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item
 				{

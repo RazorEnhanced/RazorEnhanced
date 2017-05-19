@@ -345,8 +345,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(organizer_items);
 				m_Dataset.AcceptChanges();
 
-				List<Organizer.OrganizerItem> items;
-				RazorEnhanced.Settings.Organizer.ItemsRead(listname, out items);
+				List<Organizer.OrganizerItem> items = RazorEnhanced.Settings.Organizer.ItemsRead(listname);
 
 				foreach (RazorEnhanced.Organizer.OrganizerItem item in items)
 				{
@@ -470,8 +469,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(sell_items);
 				m_Dataset.AcceptChanges();
 
-				List<SellAgent.SellAgentItem> items;
-				RazorEnhanced.Settings.SellAgent.ItemsRead(listname, out items);
+				List<SellAgent.SellAgentItem> items = Settings.SellAgent.ItemsRead(listname);
 
 				foreach (RazorEnhanced.SellAgent.SellAgentItem item in items)
 				{
@@ -594,8 +592,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(buy_items);
 				m_Dataset.AcceptChanges();
 
-				List<BuyAgent.BuyAgentItem> items;
-				RazorEnhanced.Settings.BuyAgent.ItemsRead(listname, out items);
+				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(listname);
 
 				foreach (RazorEnhanced.BuyAgent.BuyAgentItem item in items)
 				{
@@ -718,8 +715,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(dress_items);
 				m_Dataset.AcceptChanges();
 
-				List<Dress.DressItem> items;
-				RazorEnhanced.Settings.Dress.ItemsRead(listname, out items);
+				List<Dress.DressItem> items = Settings.Dress.ItemsRead(listname);
 
 				foreach (RazorEnhanced.Dress.DressItem item in items)
 				{
@@ -966,8 +962,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(friend_player);
 				m_Dataset.AcceptChanges();
 
-				List<Restock.RestockItem> items;
-				RazorEnhanced.Settings.Restock.ItemsRead(listname, out items);
+				List<Restock.RestockItem> items = Settings.Restock.ItemsRead(listname);
 
 				foreach (RazorEnhanced.Restock.RestockItem item in items)
 				{

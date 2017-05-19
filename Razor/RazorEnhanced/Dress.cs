@@ -178,8 +178,7 @@ namespace RazorEnhanced
 
 		internal static void UpdateSelectedItems(int i)
 		{
-			List<DressItem> items;
-			RazorEnhanced.Settings.Dress.ItemsRead(DressListName, out items);
+			List<DressItem> items = RazorEnhanced.Settings.Dress.ItemsRead(DressListName);
 
 			if (items.Count != Assistant.Engine.MainWindow.DressListView.Items.Count)
 			{
@@ -207,8 +206,8 @@ namespace RazorEnhanced
 				if (!l.Selected)
 					continue;
 
-				List<Dress.DressItem> items;
-				RazorEnhanced.Settings.Dress.ItemsRead(l.Description, out items);
+				List<Dress.DressItem> items = RazorEnhanced.Settings.Dress.ItemsRead(l.Description);
+
 				foreach (DressItem item in items)
 				{
 					ListViewItem listitem = new ListViewItem();
@@ -992,8 +991,7 @@ namespace RazorEnhanced
 
 		internal static void DressEngine()
 		{
-			List<Dress.DressItem> items;
-			RazorEnhanced.Settings.Dress.ItemsRead(Dress.DressListName, out items);
+			List<Dress.DressItem> items = Settings.Dress.ItemsRead(Dress.DressListName);
 
 			// Check bag
 			Assistant.Item bag = Assistant.World.FindItem(DressBag);

@@ -205,8 +205,7 @@ namespace RazorEnhanced
 			{
 				if (l.Selected)
 				{
-					List<Restock.RestockItem> items;
-					RazorEnhanced.Settings.Restock.ItemsRead(l.Description, out items);
+					List<Restock.RestockItem> items = Settings.Restock.ItemsRead(l.Description);
 
 					foreach (RestockItem item in items)
 					{
@@ -333,11 +332,7 @@ namespace RazorEnhanced
 				return;
 			}
 
-			List<Restock.RestockItem> items;
-			string list = Restock.RestockListName;
-			RazorEnhanced.Settings.Restock.ItemsRead(list, out items);
-
-			int exit = Engine(items, RestockDelay, RestockSource, RestockDestination);
+			int exit = Engine(Settings.Restock.ItemsRead(RestockListName), RestockDelay, RestockSource, RestockDestination);
 		}
 
 		private static Thread m_RestockThread;

@@ -213,8 +213,7 @@ namespace RazorEnhanced
 			{
 				if (l.Selected)
 				{
-					List<Organizer.OrganizerItem> items;
-					RazorEnhanced.Settings.Organizer.ItemsRead(l.Description, out items);
+					List<Organizer.OrganizerItem> items = Settings.Organizer.ItemsRead(l.Description);
 
 					foreach (OrganizerItem item in items)
 					{
@@ -348,11 +347,7 @@ namespace RazorEnhanced
 				return;
 			}
 
-			List<Organizer.OrganizerItem> items;
-			string list = Organizer.OrganizerListName;
-			RazorEnhanced.Settings.Organizer.ItemsRead(list, out items);
-
-			int exit = Engine(items, OrganizerDelay, OrganizerSource, OrganizerDestination);
+			int exit = Engine(Settings.Organizer.ItemsRead(OrganizerListName), OrganizerDelay, OrganizerSource, OrganizerDestination);
 		}
 
 		private static Thread m_OrganizerThread;
