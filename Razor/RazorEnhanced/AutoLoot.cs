@@ -240,8 +240,7 @@ namespace RazorEnhanced
 			{
 				if (l.Selected)
 				{
-					List<AutoLoot.AutoLootItem> items;
-					RazorEnhanced.Settings.AutoLoot.ItemsRead(l.Description, out items);
+					List<AutoLoot.AutoLootItem> items = Settings.AutoLoot.ItemsRead(l.Description);
 
 					foreach (AutoLootItem item in items)
 					{
@@ -435,17 +434,17 @@ namespace RazorEnhanced
 				SerialToGrabList.Enqueue(data);
 		}
 
+		private static Items.Filter m_corpsefilter = new Items.Filter
+		{
+			Movable = false,
+			IsCorpse = 1,
+			OnGround = 1,
+			Enabled = true
+		};
+
 		internal static void AutoRun()
 		{
-			// Genero filtro per corpi
-			Items.Filter corpseFilter = new Items.Filter
-			{
-				RangeMax = MaxRange,
-				Movable = false,
-				IsCorpse = 1,
-				OnGround = 1,
-				Enabled = true
-			};
+			m_corpsefilter.RangeMax = MaxRange;
 
 			// Check bag
 			Assistant.Item bag = Assistant.World.FindItem(AutoLootBag);
@@ -466,11 +465,7 @@ namespace RazorEnhanced
 				AddLog("Invalid Bag, Switch to backpack");
 				AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
-
-			List<AutoLoot.AutoLootItem> items;
-			string list = AutoLoot.AutoLootListName;
-			RazorEnhanced.Settings.AutoLoot.ItemsRead(list, out items);
-			Engine(items, AutoLootDelay, corpseFilter);
+			Engine(Settings.AutoLoot.ItemsRead(AutoLootListName), AutoLootDelay, m_corpsefilter);
 		}
 
 		// Funzioni di controllo da script

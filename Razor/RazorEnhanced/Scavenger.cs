@@ -203,8 +203,7 @@ namespace RazorEnhanced
 			{
 				if (l.Selected)
 				{
-					List<Scavenger.ScavengerItem> items;
-					RazorEnhanced.Settings.Scavenger.ItemsRead(l.Description, out items);
+					List<Scavenger.ScavengerItem> items = Settings.Scavenger.ItemsRead(l.Description);
 
 					foreach (ScavengerItem item in items)
 					{
@@ -357,16 +356,17 @@ namespace RazorEnhanced
 			DragDropManager.ScavengerSerialToGrab = new ConcurrentQueue<int>();
 		}
 
+		private static Items.Filter m_itemfilter = new Items.Filter
+		{
+			Movable = true,
+			OnGround = 1,
+			Enabled = true
+		};
+
 		internal static void AutoRun()
 		{
 			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter
-			{
-				RangeMax = MaxRange,
-				Movable = true,
-				OnGround = 1,
-				Enabled = true
-			};
+			m_itemfilter.RangeMax = MaxRange;
 
 			// Check bag
 			Assistant.Item bag = Assistant.World.FindItem(ScavengerBag);
@@ -388,11 +388,7 @@ namespace RazorEnhanced
 				ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			List<Scavenger.ScavengerItem> items;
-			string list = Scavenger.ScavengerListName;
-			RazorEnhanced.Settings.Scavenger.ItemsRead(list, out items);
-
-			Engine(items, ScavengerDelay, itemFilter);
+			Engine(Settings.Scavenger.ItemsRead(ScavengerListName), ScavengerDelay, m_itemfilter);
 		}
 
 		// Funzioni da script

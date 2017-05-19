@@ -1913,17 +1913,17 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemsRead(string list, out List<RazorEnhanced.AutoLoot.AutoLootItem> items)
+			internal static List<RazorEnhanced.AutoLoot.AutoLootItem> ItemsRead(string list)
 			{
-				List<RazorEnhanced.AutoLoot.AutoLootItem> itemsOut = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
+				List<RazorEnhanced.AutoLoot.AutoLootItem> items = new List<RazorEnhanced.AutoLoot.AutoLootItem>();
 
 				if (ListExists(list))
 				{
-					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.AutoLoot.AutoLootItem) row["Item"]);
+					items.AddRange(from DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.AutoLoot.AutoLootItem) row["Item"]);
 				}
 
-				items = itemsOut;
-			}
+				return items;
+            }
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse, out int range)
 			{
@@ -2074,17 +2074,17 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemsRead(string list, out List<RazorEnhanced.Scavenger.ScavengerItem> items)
+			internal static List<RazorEnhanced.Scavenger.ScavengerItem> ItemsRead(string list)
 			{
-				List<RazorEnhanced.Scavenger.ScavengerItem> itemsOut = new List<RazorEnhanced.Scavenger.ScavengerItem>();
+				List<RazorEnhanced.Scavenger.ScavengerItem> items = new List<RazorEnhanced.Scavenger.ScavengerItem>();
 
 				if (ListExists(list))
 				{
-					itemsOut.AddRange(from DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Scavenger.ScavengerItem) row["Item"]);
+					items.AddRange(from DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Scavenger.ScavengerItem) row["Item"]);
 				}
 
-				items = itemsOut;
-			}
+				return items;
+            }
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out int range)
 			{

@@ -97,8 +97,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(autoloot_items);
 				m_Dataset.AcceptChanges();
 
-				List<AutoLoot.AutoLootItem> items;
-				RazorEnhanced.Settings.AutoLoot.ItemsRead(listname, out items);
+				List<AutoLoot.AutoLootItem> items = Settings.AutoLoot.ItemsRead(listname);
 
 				foreach (RazorEnhanced.AutoLoot.AutoLootItem item in items)
 				{
@@ -222,8 +221,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(scavenger_items);
 				m_Dataset.AcceptChanges();
 
-				List<Scavenger.ScavengerItem> items;
-				RazorEnhanced.Settings.Scavenger.ItemsRead(listname, out items);
+				List<Scavenger.ScavengerItem> items = Settings.Scavenger.ItemsRead(listname);
 
 				foreach (RazorEnhanced.Scavenger.ScavengerItem item in items)
 				{
