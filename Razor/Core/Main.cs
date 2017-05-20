@@ -218,10 +218,6 @@ namespace Assistant
 		private static int m_GridY;
 		private static int m_MainWindowX;
 		private static int m_MainWindowY;
-		private static int m_MapWindowW;
-		private static int m_MapWindowH;
-		private static int m_MapWindowX;
-		private static int m_MapWindowY;
 
 		private static string m_Version;
 
