@@ -3941,18 +3941,6 @@ namespace RazorEnhanced
 				if (Assistant.Engine.ToolBarY > 0)
 					WriteInt("PosYToolBar", Assistant.Engine.ToolBarY);
 
-				if (Assistant.Engine.MapWindowX > 0)
-					WriteInt("MapX", Assistant.Engine.MapWindowX);
-
-				if (Assistant.Engine.MapWindowY > 0)
-					WriteInt("MapY", Assistant.Engine.MapWindowY);
-
-				if (Assistant.Engine.MapWindowH > 0)
-					WriteInt("MapH", Assistant.Engine.MapWindowH);
-
-				if (Assistant.Engine.MapWindowW > 0)
-					WriteInt("MapW", Assistant.Engine.MapWindowW);
-
 				if (Assistant.Engine.MainWindowX > 0)
 					WriteInt("WindowX", Assistant.Engine.MainWindowX);
 

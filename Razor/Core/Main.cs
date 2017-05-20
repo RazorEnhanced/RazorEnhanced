@@ -192,10 +192,6 @@ namespace Assistant
 		internal static int ToolBarY { get { return m_ToolBarY; } set { m_ToolBarY = value; } }
 		internal static int GridX { get { return m_GridX; } set { m_GridX = value; } }
 		internal static int GridY { get { return m_GridY; } set { m_GridY = value; } }
-		internal static int MapWindowX { get { return m_MapWindowX; } set { m_MapWindowX = value; } }
-		internal static int MapWindowY { get { return m_MapWindowY; } set { m_MapWindowY = value; } }
-		internal static int MapWindowW { get { return m_MapWindowW; } set { m_MapWindowW = value; } }
-		internal static int MapWindowH { get { return m_MapWindowH; } set { m_MapWindowH = value; } }
 
 		internal static string Version
 		{
