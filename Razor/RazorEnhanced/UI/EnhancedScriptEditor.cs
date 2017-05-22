@@ -121,7 +121,7 @@ namespace RazorEnhanced.UI
 				"Player.HeadMessage", "Player.InRangeMobile", "Player.InRangeItem", "Player.GetItemOnLayer",
 				"Player.UnEquipItemByLayer", "Player.EquipItem", "Player.CheckLayer", "Player.GetAssistantLayer",
 				"Player.GetSkillValue", "Player.GetSkillCap", "Player.GetSkillStatus", "Player.UseSkill", "Player.ChatSay",
-				"Player.ChatEmote", "Player.ChatWhisper",
+				"Player.ChatEmote", "Player.ChatWhisper","Player.ChatChannel",
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
 				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
@@ -346,6 +346,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Player.ChatWhisper(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Send a message in wishper with a specific color");
 			descriptionPlayer.Add("Player.ChatWhisper", tooltip);
+
+			tooltip = new ToolTipDescriptions("Player.ChatChannel(string)", new string[] { "string Message" }, "void", "Send a message in chat channel.");
+			descriptionPlayer.Add("Player.ChatChannel", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.ChatYell(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Send a message in yell with a specific color");
 			descriptionPlayer.Add("Player.ChatYell", tooltip);
