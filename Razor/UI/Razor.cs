@@ -3727,7 +3727,7 @@ namespace Assistant
 			// 
 			// dispDelta
 			// 
-			this.dispDelta.Location = new System.Drawing.Point(527, 144);
+			this.dispDelta.Location = new System.Drawing.Point(517, 144);
 			this.dispDelta.Name = "dispDelta";
 			this.dispDelta.Size = new System.Drawing.Size(113, 22);
 			this.dispDelta.TabIndex = 11;
@@ -3736,25 +3736,25 @@ namespace Assistant
 			// 
 			// skillCopyAll
 			// 
-			this.skillCopyAll.Location = new System.Drawing.Point(527, 109);
+			this.skillCopyAll.Location = new System.Drawing.Point(517, 109);
 			this.skillCopyAll.Name = "skillCopyAll";
-			this.skillCopyAll.Size = new System.Drawing.Size(115, 20);
+			this.skillCopyAll.Size = new System.Drawing.Size(131, 20);
 			this.skillCopyAll.TabIndex = 9;
 			this.skillCopyAll.Text = "Copy All";
 			this.skillCopyAll.Click += new System.EventHandler(this.skillCopyAll_Click);
 			// 
 			// skillCopySel
 			// 
-			this.skillCopySel.Location = new System.Drawing.Point(527, 81);
+			this.skillCopySel.Location = new System.Drawing.Point(517, 81);
 			this.skillCopySel.Name = "skillCopySel";
-			this.skillCopySel.Size = new System.Drawing.Size(115, 21);
+			this.skillCopySel.Size = new System.Drawing.Size(131, 21);
 			this.skillCopySel.TabIndex = 8;
 			this.skillCopySel.Text = "Copy Selected";
 			this.skillCopySel.Click += new System.EventHandler(this.skillCopySel_Click);
 			// 
 			// baseTotal
 			// 
-			this.baseTotal.Location = new System.Drawing.Point(596, 174);
+			this.baseTotal.Location = new System.Drawing.Point(586, 175);
 			this.baseTotal.Name = "baseTotal";
 			this.baseTotal.ReadOnly = true;
 			this.baseTotal.Size = new System.Drawing.Size(44, 20);
@@ -3762,7 +3762,7 @@ namespace Assistant
 			// 
 			// label1
 			// 
-			this.label1.Location = new System.Drawing.Point(526, 179);
+			this.label1.Location = new System.Drawing.Point(516, 179);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(65, 15);
 			this.label1.TabIndex = 6;
@@ -3770,21 +3770,20 @@ namespace Assistant
 			// 
 			// locks
 			// 
-			this.locks.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.locks.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.locks.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.locks.Items.AddRange(new object[] {
             "Up",
             "Down",
             "Locked"});
-			this.locks.Location = new System.Drawing.Point(608, 45);
+			this.locks.Location = new System.Drawing.Point(598, 45);
 			this.locks.Name = "locks";
-			this.locks.Size = new System.Drawing.Size(37, 22);
+			this.locks.Size = new System.Drawing.Size(50, 23);
 			this.locks.TabIndex = 5;
 			// 
 			// setlocks
 			// 
-			this.setlocks.Location = new System.Drawing.Point(527, 46);
+			this.setlocks.Location = new System.Drawing.Point(517, 46);
 			this.setlocks.Name = "setlocks";
 			this.setlocks.Size = new System.Drawing.Size(76, 20);
 			this.setlocks.TabIndex = 4;
@@ -3793,9 +3792,9 @@ namespace Assistant
 			// 
 			// resetDelta
 			// 
-			this.resetDelta.Location = new System.Drawing.Point(527, 13);
+			this.resetDelta.Location = new System.Drawing.Point(517, 13);
 			this.resetDelta.Name = "resetDelta";
-			this.resetDelta.Size = new System.Drawing.Size(115, 20);
+			this.resetDelta.Size = new System.Drawing.Size(131, 20);
 			this.resetDelta.TabIndex = 3;
 			this.resetDelta.Text = "Reset  +/-";
 			this.resetDelta.Click += new System.EventHandler(this.OnResetSkillDelta);
@@ -3870,7 +3869,6 @@ namespace Assistant
 			// 
 			// imgFmt
 			// 
-			this.imgFmt.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
 			this.imgFmt.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.imgFmt.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.imgFmt.Items.AddRange(new object[] {
@@ -3884,7 +3882,7 @@ namespace Assistant
             "emf"});
 			this.imgFmt.Location = new System.Drawing.Point(94, 202);
 			this.imgFmt.Name = "imgFmt";
-			this.imgFmt.Size = new System.Drawing.Size(71, 22);
+			this.imgFmt.Size = new System.Drawing.Size(71, 23);
 			this.imgFmt.TabIndex = 11;
 			this.imgFmt.SelectedIndexChanged += new System.EventHandler(this.imgFmt_SelectedIndexChanged);
 			// 
@@ -10450,8 +10448,7 @@ namespace Assistant
 
 					if (RazorEnhanced.Settings.Dress.ListExists(selection))
 					{
-						List<Dress.DressItem> items;
-						RazorEnhanced.Settings.Dress.ItemsRead(selection, out items);
+						List<Dress.DressItem> items = Settings.Dress.ItemsRead(selection);
 						if (index <= items.Count - 1)
 						{
 							RazorEnhanced.Settings.Dress.ItemDelete(selection, items[index]);
@@ -12885,9 +12882,6 @@ namespace Assistant
 				Scavenger.RefreshLists();
 			}
 		}
-
-
-
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
 	}
