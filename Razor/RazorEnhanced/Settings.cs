@@ -3930,7 +3930,7 @@ namespace RazorEnhanced
 			internal static void SaveExitData()
 			{
 				if (Assistant.Engine.GridX > 0)
-					WriteInt("PosXGrid", Assistant.Engine.GridX	);
+					WriteInt("PosXGrid", Assistant.Engine.GridX);
 
 				if (Assistant.Engine.GridY > 0)
 					WriteInt("PosYGrid", Assistant.Engine.GridY);

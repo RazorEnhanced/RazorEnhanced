@@ -97,7 +97,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (string)Assistant.Engine.MainWindow.ScavengerListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.ScavengerListSelect.Text));
+				return Assistant.Engine.MainWindow.ScavengerListSelect.Text;
 			}
 
 			set
@@ -110,9 +110,9 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int delay = 100;
-				Assistant.Engine.MainWindow.ScavengerDragDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.ScavengerDragDelay.Text, out delay)));
-				return delay;
+					int delay = 100;
+					Int32.TryParse(Assistant.Engine.MainWindow.ScavengerDragDelay.Text, out delay);
+					return delay;
 			}
 
 			set
@@ -126,7 +126,7 @@ namespace RazorEnhanced
 			get
 			{
 				int range = 100;
-				Assistant.Engine.MainWindow.ScavengerRange.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.ScavengerRange.Text, out range)));
+				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerRange.Text, out range);
 				return range;
 			}
 
@@ -271,7 +271,7 @@ namespace RazorEnhanced
 			CopyTable();
 		}
 
-		internal static int Engine(List<ScavengerItem> scavengerItemList, int mseconds, Items.Filter filter)
+		internal static void Engine(List<ScavengerItem> scavengerItemList, int mseconds, Items.Filter filter)
 		{
 			List<Item> itemsOnGround = RazorEnhanced.Items.ApplyFilter(filter);
 			if (ClientCommunication.ServerEncrypted)
@@ -287,7 +287,7 @@ namespace RazorEnhanced
 				{
 					ResetIgnore();
 					Thread.Sleep(2000);
-					return 0;
+					return;
 				}
 
 				if (!scavengerItem.Selected)
@@ -314,8 +314,6 @@ namespace RazorEnhanced
 					}
 				}
 			}
-
-			return 0;
 		}
 
 		internal static void GrabItem(ScavengerItem scavengerItem, Item itemGround)
@@ -365,6 +363,9 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
+			if (!Assistant.Engine.Running)
+				return;
+
 			// Genero filtro item
 			m_itemfilter.RangeMax = MaxRange;
 
@@ -392,20 +393,16 @@ namespace RazorEnhanced
 		}
 
 		// Funzioni da script
-		public static int RunOnce(List<ScavengerItem> scavengerList, int mseconds, Items.Filter filter)
+		public static void RunOnce(List<ScavengerItem> scavengerList, int mseconds, Items.Filter filter)
 		{
-			int exit = Int32.MinValue;
-
 			if (Assistant.Engine.MainWindow.ScavengerCheckBox.Checked == true)
 			{
 				Scripts.SendMessageScriptError("Script Error: Scavenger.Start: Scavenger already running");
 			}
 			else
 			{
-				exit = Engine(scavengerList, mseconds, filter);
+				Engine(scavengerList, mseconds, filter);
 			}
-
-			return exit;
 		}
 
 		public static void Start()

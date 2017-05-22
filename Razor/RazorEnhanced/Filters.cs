@@ -163,13 +163,16 @@ namespace RazorEnhanced
 			set { m_AutoCarver = value; }
 		}
 
-		internal static int AutoCarverEngine(Items.Filter filter)
+		internal static void AutoCarverEngine(Items.Filter filter)
 		{
+			if (!Assistant.Engine.Running)
+				return;
+
 			if (World.Player == null)       // Esce se non loggato
-				return 0;
+				return;
 
 			if (AutoCarverBlade == 0)       // Esce in caso di errore lettura blade
-				return 0;
+				return;
 
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
@@ -181,22 +184,20 @@ namespace RazorEnhanced
 					m_IgnoreCutCorpiQueue.Enqueue(corpo.Serial);
                 }			
 			}
-			return 0;
 		}
+
+		private static Items.Filter m_corpsefilter = new Items.Filter
+		{
+			RangeMax = 3,
+			Movable = false,
+			IsCorpse = 1,
+			OnGround = 1,
+			Enabled = true
+		};
 
 		internal static void CarveAutoRun()
 		{
-			// Genero filtro per corpi
-			Items.Filter corpseFilter = new Items.Filter
-			{
-				RangeMax = 3,
-				Movable = false,
-				IsCorpse = 1,
-				OnGround = 1,
-				Enabled = true
-			};
-
-			AutoCarverEngine(corpseFilter);
+			AutoCarverEngine(m_corpsefilter);
 		}
 
 		//////////////// AUTOCARVER STOP ////////////////
@@ -211,13 +212,16 @@ namespace RazorEnhanced
 			set { m_BoneCutter = value; }
 		}
 
-		internal static int BoneCutterEngine(Items.Filter filter)
+		internal static void BoneCutterEngine(Items.Filter filter)
 		{
+			if (!Assistant.Engine.Running)
+				return;
+
 			if (World.Player == null)       // Esce se non loggato
-				return 0;
+				return;
 
 			if (BoneCutterBlade == 0)       // Esce in caso di errore lettura blade
-				return 0;
+				return;
 
 			List<Item> bones = RazorEnhanced.Items.ApplyFilter(filter);
 
@@ -229,21 +233,24 @@ namespace RazorEnhanced
 				Target.TargetExecute(bone.Serial);
 				Thread.Sleep(100);			
             }
-			return 0;
 		}
+
+		private static Items.Filter m_bonefilter = new Items.Filter
+		{
+			Graphics = new List<int> { 0x3968, 0x0ECA, 0x0ECB, 0x0ECC, 0x0ECD, 0x0ECE, 0x0ECF, 0x0ED0, 0x0ED1, 0x0ED2 },
+			RangeMax = 1,
+			Movable = false,
+			IsCorpse = -1,
+			OnGround = 1,
+			Enabled = true
+		};
 
 		internal static void BoneCutterRun()
 		{
-			// Genero filtro per ossa
-			Items.Filter bonesFilter = new Items.Filter();
-			bonesFilter.Graphics.Add(0x3968);
-			bonesFilter.RangeMax = 1;
-			bonesFilter.Movable = false;
-			bonesFilter.IsCorpse = -1;
-			bonesFilter.OnGround = 1;
-			bonesFilter.Enabled = true;
+			if (ClientCommunication.ServerEncrypted)
+				m_bonefilter.Movable = true;
 
-			BoneCutterEngine(bonesFilter);
+			BoneCutterEngine(m_bonefilter);
 		}
 
 		//////////////// BONE CUTTER STOP ////////////////
@@ -255,7 +262,7 @@ namespace RazorEnhanced
 			get
 			{
 				int delay = 100;
-				Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out delay)));
+				Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out delay);
 				return delay;
 			}
 
@@ -270,7 +277,7 @@ namespace RazorEnhanced
 			get
 			{
 				int delay = 100;
-				Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out delay)));
+				Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out delay);
 				return delay;
 			}
 

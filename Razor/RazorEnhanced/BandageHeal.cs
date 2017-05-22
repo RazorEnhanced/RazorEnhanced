@@ -32,7 +32,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (string)Assistant.Engine.MainWindow.BandageHealtargetComboBox.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.BandageHealtargetComboBox.Text));
+				return Assistant.Engine.MainWindow.BandageHealtargetComboBox.Text;
 			}
 
 			set
@@ -65,7 +65,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (bool)Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Invoke(new Func<bool>(() => Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Checked));
+				return Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Checked;
 			}
 
 			set
@@ -119,7 +119,7 @@ namespace RazorEnhanced
 			get
 			{
 				int delay = 1000;
-				Assistant.Engine.MainWindow.BandageHealdelayTextBox.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text, out delay)));
+				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text, out delay);
 				return delay;
 			}
 
@@ -134,7 +134,7 @@ namespace RazorEnhanced
 			get
 			{
 				int range = 1;
-				Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text, out range)));
+				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text, out range);
 				return range;
 			}
 
@@ -148,7 +148,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (bool)Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Invoke(new Func<bool>(() => Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Checked));
+				return Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Checked;
 			}
 
 			set
@@ -162,7 +162,7 @@ namespace RazorEnhanced
 			get
 			{
 				int hplimit = 100;
-				Assistant.Engine.MainWindow.BandageHealhpTextBox.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.BandageHealhpTextBox.Text, out hplimit)));
+				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealhpTextBox.Text, out hplimit);
 				return hplimit;
 			}
 
@@ -176,7 +176,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (bool)Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Invoke(new Func<bool>(() => Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Checked));
+				return Assistant.Engine.MainWindow.BandageHealpoisonCheckBox.Checked;
 			}
 
 			set
@@ -189,7 +189,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (bool)Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Invoke(new Func<bool>(() => Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Checked));
+				return Assistant.Engine.MainWindow.BandageHealmortalCheckBox.Checked;
 			}
 
 			set
@@ -202,7 +202,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (bool)Assistant.Engine.MainWindow.BandageHealhiddedCheckBox.Invoke(new Func<bool>(() => Assistant.Engine.MainWindow.BandageHealhiddedCheckBox.Checked));
+				return Assistant.Engine.MainWindow.BandageHealhiddedCheckBox.Checked;
 			}
 
 			set
@@ -215,7 +215,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (bool)Assistant.Engine.MainWindow.BandageHealcountdownCheckBox.Invoke(new Func<bool>(() => Assistant.Engine.MainWindow.BandageHealcountdownCheckBox.Checked));
+				return Assistant.Engine.MainWindow.BandageHealcountdownCheckBox.Checked;
 			}
 
 			set
@@ -260,26 +260,26 @@ namespace RazorEnhanced
 
 		// Core
 
-		internal static int EngineRun(Assistant.Mobile target)
+		internal static void EngineRun(Assistant.Mobile target)
 		{
 			if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox") || target.Poisoned)       // Check HP se bendare o meno.
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
 				{
 					if (!World.Player.Visible)  // Esce se attivo blocco hidded
-						return 0;
+						return;
 				}
 
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealpoisonCheckBox"))
 				{
 					if (target.Poisoned) // Esce se attivo blocco poison
-						return 0;
+						return;
 				}
 
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealmortalCheckBox"))                // Esce se attivo blocco mortal
 				{
 					if (Player.BuffsExist("Mortal Strike"))
-						return 0;
+						return;
 				}
 
 				if (Targeting.HasTarget)
@@ -388,12 +388,12 @@ namespace RazorEnhanced
 					Thread.Sleep(5000);
 				}
 			}
-			return 0;
 		}
 
 		internal static void AutoRun()
 		{
-			int exit = Int32.MinValue;
+			if (!Assistant.Engine.Running)
+				return;
 
 			if (World.Player == null)
 				return;
@@ -427,7 +427,7 @@ namespace RazorEnhanced
 			if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox"))) // Verifica distanza
 				return;
 
-			exit = EngineRun(target);
+			EngineRun(target);
 		}
 
 		// Funzioni da script

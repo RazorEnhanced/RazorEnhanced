@@ -120,7 +120,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (string)Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.AutoLootListSelect.Text));
+				return Assistant.Engine.MainWindow.AutoLootListSelect.Text;
 			}
 
 			set
@@ -134,7 +134,7 @@ namespace RazorEnhanced
 			get
 			{
 				int range = 2;
-				Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text, out range)));
+				Int32.TryParse(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text, out range);
 				return range;
 			}
 
@@ -149,7 +149,7 @@ namespace RazorEnhanced
 			get
 			{
 				int delay = 100;
-				Assistant.Engine.MainWindow.AutolootLabelDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.AutolootLabelDelay.Text, out delay)));
+				Int32.TryParse(Assistant.Engine.MainWindow.AutolootLabelDelay.Text, out delay);
 				return delay;
 			}
 
@@ -323,7 +323,7 @@ namespace RazorEnhanced
 			}
 
 		}
-		internal static int Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
+		internal static void Engine(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
 
@@ -331,7 +331,7 @@ namespace RazorEnhanced
 			{
 				Thread.Sleep(2000);
 				ResetIgnore();
-				return 0;
+				return;
 			}
 
 			foreach (RazorEnhanced.Item corpo in corpi)
@@ -393,8 +393,6 @@ namespace RazorEnhanced
 					}
 				}
 			}
-
-			return 0;
 		}
 
 		internal static void GrabItem(AutoLootItem autoLoootItem, Item oggettoContenuto, int corpseserial)
@@ -444,6 +442,9 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
+			if (!Assistant.Engine.Running)
+				return;
+
 			m_corpsefilter.RangeMax = MaxRange;
 
 			// Check bag
@@ -477,20 +478,16 @@ namespace RazorEnhanced
 			Scavenger.ResetIgnore();
 		}
 
-		public static int RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
+		public static void RunOnce(List<AutoLootItem> autoLootList, int mseconds, Items.Filter filter)
 		{
-			int exit = int.MinValue;
-
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 			{
 					Scripts.SendMessageScriptError("Script Error: Autoloot.Start: Autoloot already running");
 			}
 			else
 			{
-				exit = Engine(autoLootList, mseconds, filter);
+				Engine(autoLootList, mseconds, filter);
 			}
-
-			return exit;
 		}
 
 		public static void Start()
