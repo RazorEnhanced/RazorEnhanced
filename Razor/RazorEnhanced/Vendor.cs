@@ -480,7 +480,7 @@ namespace RazorEnhanced
 		{
 			Settings.BuyAgent.ClearList(Assistant.Engine.MainWindow.BuyListSelect.Text); // Rimuove vecchi dati dal save
 
-			foreach (DataGridViewRow row in Engine.MainWindow.VendorSellGridView.Rows)
+			foreach (DataGridViewRow row in Engine.MainWindow.VendorBuyDataGridView.Rows)
 			{
 				if (row.IsNewRow)
 					continue;
@@ -494,7 +494,7 @@ namespace RazorEnhanced
 				bool check = false;
 				bool.TryParse(row.Cells[0].Value.ToString(), out check);
 
-				Settings.BuyAgent.ItemInsert(Assistant.Engine.MainWindow.SellListSelect.Text, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
+				Settings.BuyAgent.ItemInsert(Assistant.Engine.MainWindow.BuyListSelect.Text, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
 
 			Settings.Save(); // Salvo dati
