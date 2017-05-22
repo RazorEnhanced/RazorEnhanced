@@ -148,12 +148,6 @@ namespace Assistant
 
 		internal static void Ping(string[] param)
 		{
-			if (ClientCommunication.ServerEncrypted)
-			{
-				RazorEnhanced.Misc.SendMessage("Ping not supported on OSI shard!", 33);
-				return;
-			}
-
 			new Thread(() =>
 			{
 				int max = int.MinValue;
@@ -187,7 +181,10 @@ namespace Assistant
 						RazorEnhanced.Misc.SendMessage("Ping Failed", 33);
 					}
 				}
-				RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / 4).ToString() + "ms - Min: " + min + "ms", 33);
+				if (max == int.MinValue)
+					RazorEnhanced.Misc.SendMessage("Server not respond to ping request", 33);
+				else
+					RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / 4).ToString() + "ms - Min: " + min + "ms", 33);
 
 
 			}).Start();
