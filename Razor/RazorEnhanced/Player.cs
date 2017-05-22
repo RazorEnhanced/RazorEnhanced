@@ -1490,6 +1490,11 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
 		}
 
+		public static void ChatChannel(string msg)
+		{
+			ClientCommunication.SendToServerWait(new ChatAction(0x61, Language.CliLocName, msg));
+		}
+		
 		// attack
 		public static void SetWarMode(bool warflag)
 		{

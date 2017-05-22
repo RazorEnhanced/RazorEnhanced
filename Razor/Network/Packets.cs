@@ -1868,4 +1868,21 @@ namespace Assistant
 		}
 	}
 
+
+	internal sealed class ChatAction : Packet
+	{
+		internal ChatAction(ushort action, string lang, string text) // Channel message 0x61
+			: base(0xB3)
+		{
+			if (string.IsNullOrEmpty(lang)) lang = "ENU";
+			if (text == null) text = "";
+
+			this.EnsureCapacity(2 + 4 + 2 + (text.Length * 2));
+
+			WriteAsciiFixed(lang.ToUpper(), 4);
+			Write(action);
+			WriteBigUniNull(text);
+		}
+	}
+
 }
