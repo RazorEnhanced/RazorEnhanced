@@ -161,7 +161,7 @@ namespace Assistant
 				// Create a buffer of 32 bytes of data to be transmitted.
 				string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 				byte[] buffer = Encoding.ASCII.GetBytes(data);
-				int timeout = 120;
+				int timeout = 1000;
 				RazorEnhanced.Misc.SendMessage("Address: " + ClientCommunication.LastConnection.ToString(), 33);
 				for (int i = 0; i < 5; i++)
 				{
