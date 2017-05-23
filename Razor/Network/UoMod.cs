@@ -118,6 +118,9 @@ namespace Assistant
 			if (Engine.ClientMajor < 7)
 				return;
 
+			if (Engine.ClientBuild > 49)
+				return;
+
 			String path = AppDomain.CurrentDomain.BaseDirectory + "\\UOMod.dll";
 
 			IntPtr hp = OpenProcess(PROCESS_CREATE_THREAD | PROCESS_VM_OPERATION | PROCESS_VM_WRITE | PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, true, ClientCommunication.GetUOProcId());
@@ -220,7 +223,7 @@ namespace Assistant
 			}
 		}
 
-		internal static void EnableOnStartMod()
+		private static void EnableOnStartMod()
 		{
 			if (Engine.ClientMajor < 7)
 				return;
@@ -258,6 +261,9 @@ namespace Assistant
 		internal static void ProfileChange()
 		{
 			if (Engine.ClientMajor < 7)
+				return;
+
+			if (Engine.ClientBuild > 49)
 				return;
 
 			if (m_modhandle == IntPtr.Zero)

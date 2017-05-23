@@ -505,7 +505,7 @@ namespace Assistant
 		private TrackBar spellgrid_trackBar;
 		private Label spellgrid_opacity_label;
 		private TabControl toolbarstab;
-		private GroupBox groupBox40;
+		private GroupBox uomodgroupbox;
 		private RazorCheckBox uomodFPSCheckBox;
 		private RazorCheckBox uomodpaperdoolCheckBox;
 		private RazorCheckBox uomodglobalsoundCheckBox;
@@ -886,7 +886,7 @@ namespace Assistant
 			this.chkForceSpellHue = new RazorEnhanced.UI.RazorCheckBox();
 			this.chkForceSpeechHue = new RazorEnhanced.UI.RazorCheckBox();
 			this.enhancedFilterTab = new System.Windows.Forms.TabPage();
-			this.groupBox40 = new System.Windows.Forms.GroupBox();
+			this.uomodgroupbox = new System.Windows.Forms.GroupBox();
 			this.uomodpaperdoolCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.uomodglobalsoundCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.uomodFPSCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1348,7 +1348,7 @@ namespace Assistant
 			this.groupBox1.SuspendLayout();
 			this.moreOptTab.SuspendLayout();
 			this.enhancedFilterTab.SuspendLayout();
-			this.groupBox40.SuspendLayout();
+			this.uomodgroupbox.SuspendLayout();
 			this.groupBox32.SuspendLayout();
 			this.groupBox24.SuspendLayout();
 			this.groupBox23.SuspendLayout();
@@ -2338,7 +2338,7 @@ namespace Assistant
 			// 
 			// enhancedFilterTab
 			// 
-			this.enhancedFilterTab.Controls.Add(this.groupBox40);
+			this.enhancedFilterTab.Controls.Add(this.uomodgroupbox);
 			this.enhancedFilterTab.Controls.Add(this.groupBox32);
 			this.enhancedFilterTab.Controls.Add(this.groupBox24);
 			this.enhancedFilterTab.Controls.Add(this.groupBox23);
@@ -2350,17 +2350,17 @@ namespace Assistant
 			this.enhancedFilterTab.TabIndex = 10;
 			this.enhancedFilterTab.Text = "Enhanced Filters";
 			// 
-			// groupBox40
+			// uomodgroupbox
 			// 
-			this.groupBox40.Controls.Add(this.uomodpaperdoolCheckBox);
-			this.groupBox40.Controls.Add(this.uomodglobalsoundCheckBox);
-			this.groupBox40.Controls.Add(this.uomodFPSCheckBox);
-			this.groupBox40.Location = new System.Drawing.Point(192, 266);
-			this.groupBox40.Name = "groupBox40";
-			this.groupBox40.Size = new System.Drawing.Size(283, 65);
-			this.groupBox40.TabIndex = 69;
-			this.groupBox40.TabStop = false;
-			this.groupBox40.Text = "UoMod";
+			this.uomodgroupbox.Controls.Add(this.uomodpaperdoolCheckBox);
+			this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
+			this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
+			this.uomodgroupbox.Location = new System.Drawing.Point(192, 266);
+			this.uomodgroupbox.Name = "uomodgroupbox";
+			this.uomodgroupbox.Size = new System.Drawing.Size(283, 65);
+			this.uomodgroupbox.TabIndex = 69;
+			this.uomodgroupbox.TabStop = false;
+			this.uomodgroupbox.Text = "UoMod (Client < 7.0.50.x)";
 			// 
 			// uomodpaperdoolCheckBox
 			// 
@@ -7055,7 +7055,7 @@ namespace Assistant
 			this.moreOptTab.ResumeLayout(false);
 			this.moreOptTab.PerformLayout();
 			this.enhancedFilterTab.ResumeLayout(false);
-			this.groupBox40.ResumeLayout(false);
+			this.uomodgroupbox.ResumeLayout(false);
 			this.groupBox32.ResumeLayout(false);
 			this.groupBox32.PerformLayout();
 			this.groupBox24.ResumeLayout(false);
@@ -7393,9 +7393,14 @@ namespace Assistant
 			// UoMod
 			if (Engine.ClientMajor >= 7)
 			{
-				uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
-				uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
-				uomodglobalsoundCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModSound");
+				if (Engine.ClientBuild < 49)
+				{
+					uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
+					uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
+					uomodglobalsoundCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModSound");
+				}
+				else
+					uomodgroupbox.Enabled = false;
 			}
 			else
 			{
