@@ -12524,6 +12524,7 @@ namespace Assistant
 		{
 			if (gridspell_ComboBox.Focused)
 			{
+				gridborder_ComboBox.SelectedIndex = 0;
 				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.Transparent);
 				SpellGrid.Open();
 			}
@@ -12534,7 +12535,6 @@ namespace Assistant
 			if (gridborder_ComboBox.Focused)
 			{
 				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.FromName(gridborder_ComboBox.SelectedItem.ToString()));
-				SpellGrid.SpellGridForm.Refresh();
 				SpellGrid.Open();
 			}
 		}

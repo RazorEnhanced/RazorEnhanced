@@ -174,8 +174,9 @@ namespace RazorEnhanced
 			UpdatePanelImage();
 			ClientCommunication.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
-			m_form.Opacity =((double)RazorEnhanced.Settings.General.ReadInt("GridOpacity")) / 100.0;  ;
-		}
+			m_form.Opacity =((double)RazorEnhanced.Settings.General.ReadInt("GridOpacity")) / 100.0;
+			m_form.Refresh();
+        }
 
 		internal static void LockUnlock()
 		{
@@ -257,9 +258,6 @@ namespace RazorEnhanced
 						Assistant.SpecialMoves.SetPrimaryAbility();
 					else
 						Assistant.SpecialMoves.SetSecondaryAbility();
-					break;
-				case "Bardic":
-					RazorEnhanced.Spells.CastMasteryHotKey(pl.Spell);
 					break;
 				case "Bushido":
 					RazorEnhanced.Spells.CastBushidoHotKey(pl.Spell);
@@ -471,7 +469,6 @@ namespace RazorEnhanced
 			Engine.MainWindow.GridGroupComboBox.Items.Clear();
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Empty");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Abilities");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Bardic");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Bushido");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Chivalry");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Necromancy");
@@ -490,7 +487,7 @@ namespace RazorEnhanced
 				SpellIconAbilities.Add("Primary", 0x5204);
 				SpellIconAbilities.Add("Secondary", 0x5206);
 
-				// Bardic
+				// Mastery
 				SpellIconMastery.Add("Inspire", 0x945);
 				SpellIconMastery.Add("Invigorate", 0x946);
 				SpellIconMastery.Add("Resilience", 0x947);
