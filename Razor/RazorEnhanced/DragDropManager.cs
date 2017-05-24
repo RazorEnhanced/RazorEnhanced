@@ -177,7 +177,7 @@ namespace RazorEnhanced
 							Target.TargetExecute(item.Serial);
 							Items.Message(item.Serial, 10, "*Cutting*");
 							CorpseToCutSerial.TryDequeue(out itemserial);
-							Thread.Sleep(800);
+							Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
 						}
 						else
 						{

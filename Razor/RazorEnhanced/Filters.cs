@@ -231,7 +231,7 @@ namespace RazorEnhanced
 				Items.UseItem(Items.FindBySerial(BoneCutterBlade));
 				Target.WaitForTarget(1000, true);
 				Target.TargetExecute(bone.Serial);
-				Thread.Sleep(100);			
+				Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));			
             }
 		}
 
