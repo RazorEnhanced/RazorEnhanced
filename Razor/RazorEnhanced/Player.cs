@@ -802,10 +802,11 @@ namespace RazorEnhanced
 
 		public static void EquipUO3D(List<int> serials)
 		{
-			List<ushort> serialstoequip = new List<ushort>();
+			List<uint> serialstoequip = new List<uint>(); 
 			foreach (int serial in serials)
-				serialstoequip.Add((ushort)serial);
-			ClientCommunication.SendToServerWait(new UnEquipItemMacro(serialstoequip));
+				serialstoequip.Add((uint)serial);
+
+			ClientCommunication.SendToServerWait(new EquipItemMacro(serialstoequip));
 
 		}
 		public static bool CheckLayer(String layer)
