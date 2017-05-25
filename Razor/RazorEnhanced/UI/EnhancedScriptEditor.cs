@@ -119,7 +119,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player.BuffsExist", "Player.GetBuffDescription",
 				"Player.HeadMessage", "Player.InRangeMobile", "Player.InRangeItem", "Player.GetItemOnLayer",
-				"Player.UnEquipItemByLayer", "Player.EquipItem", "Player.CheckLayer", "Player.GetAssistantLayer",
+				"Player.UnEquipItemByLayer", "Player.EquipItem", "Player.CheckLayer", "Player.GetAssistantLayer", "Player.EquipUO3D",
 				"Player.GetSkillValue", "Player.GetSkillCap", "Player.GetSkillStatus", "Player.UseSkill", "Player.ChatSay",
 				"Player.ChatEmote", "Player.ChatWhisper","Player.ChatChannel",
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
@@ -319,6 +319,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Player.EquipItem(Item or int)", new string[] { "Item ItemInstance or int SerialItem" }, "void", "Equip an item on a layer");
 			descriptionPlayer.Add("Player.EquipItem", tooltip);
+
+			tooltip = new ToolTipDescriptions("Player.EquipUO3D(List<int>)", new string[] { "List<int> SerialtoEquip" }, "void", "Equip a list o item by UO3D Packet");
+			descriptionPlayer.Add("Player.EquipUO3D", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.CheckLayer(string)", new string[] { "string LayerName" }, "bool", "Retrieves current status of a certain layer\n\tTrue: busy, False: free\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.CheckLayer", tooltip);

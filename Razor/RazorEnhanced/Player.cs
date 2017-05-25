@@ -800,6 +800,14 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.AssistantLayer)); // Equippa
 		}
 
+		public static void EquipUO3D(List<int> serials)
+		{
+			List<ushort> serialstoequip = new List<ushort>();
+			foreach (int serial in serials)
+				serialstoequip.Add((ushort)serial);
+			ClientCommunication.SendToServerWait(new UnEquipItemMacro(serialstoequip));
+
+		}
 		public static bool CheckLayer(String layer)
 		{
 			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
