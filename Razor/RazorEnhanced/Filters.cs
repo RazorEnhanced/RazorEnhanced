@@ -228,10 +228,13 @@ namespace RazorEnhanced
 			foreach (RazorEnhanced.Item bone in bones)
 			{
 				Target.Cancel();
-				Items.UseItem(Items.FindBySerial(BoneCutterBlade));
-				Target.WaitForTarget(1000, true);
-				Target.TargetExecute(bone.Serial);
-				Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));			
+                if (Items.FindBySerial(BoneCutterBlade) != null)
+				{
+					Items.UseItem(Items.FindBySerial(BoneCutterBlade));
+					Target.WaitForTarget(1000, true);
+					Target.TargetExecute(bone.Serial);
+					Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+				}
             }
 		}
 
