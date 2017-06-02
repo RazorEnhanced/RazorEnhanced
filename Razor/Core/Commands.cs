@@ -228,7 +228,8 @@ namespace Assistant
 
 		internal static void Register(string cmd, CommandCallback callback)
 		{
-			m_List.Add(cmd, callback);
+			if (!m_List.ContainsKey(cmd))
+				m_List.Add(cmd, callback);
 		}
 
 		internal static CommandCallback FindCommand(string cmd)
