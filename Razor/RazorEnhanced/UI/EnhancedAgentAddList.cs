@@ -144,6 +144,7 @@ namespace RazorEnhanced.UI
 						break;
 					case 6:
 						Dress.AddList(newList);
+						HotKey.Init();
 						break;
 					case 7:
 						Friend.AddList(newList);
