@@ -10381,6 +10381,7 @@ namespace Assistant
 					RazorEnhanced.Dress.DressDelay = 100;
 					RazorEnhanced.Dress.DressConflict = false;
 					RazorEnhanced.Dress.RemoveList(dressListSelect.Text);
+					HotKey.Init();
 				}
 			}
 		}
