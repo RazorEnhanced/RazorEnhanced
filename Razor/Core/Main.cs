@@ -301,6 +301,7 @@ namespace Assistant
 			{
 				SplashScreen.End();
 				MessageBox.Show("Unable to load required file Language/Razor_lang.enu", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
 				return;
 			}
 
@@ -311,6 +312,7 @@ namespace Assistant
 			else
 			{
 				MessageBox.Show("Unable to find the Data Folder " + dataDir, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
 				return;
 			}
 
@@ -330,6 +332,7 @@ namespace Assistant
 				else
 					MessageBox.Show(SplashScreen.Instance, "Unable to launch the client " + clientPath, "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				SplashScreen.End();
+				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
 				return;
 			}
 
@@ -339,6 +342,7 @@ namespace Assistant
 			{
 				MessageBox.Show(Language.GetString(LocString.BadServerAddr), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				SplashScreen.End();
+				RazorEnhanced.Settings.General.WriteBool("NotShowLauncher", false);
 				return;
 			}
 
