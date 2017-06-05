@@ -236,7 +236,7 @@ namespace RazorEnhanced
 					break;
 
 				case BuffIcon.BloodOathCaster:
-					description = "Bloath Oath (caster)";
+					description = "Bload Oath (caster)";
 					break;
 
 				case BuffIcon.BloodOathCurse:
