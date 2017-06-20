@@ -286,6 +286,8 @@ namespace RazorEnhanced
 			m_lock = !m_lock;
 			m_form.ContextMenu = GeneraMenu();
 			m_form.Refresh();
+			Settings.General.WriteInt("PosXToolBar", m_form.Location.X);
+			Settings.General.WriteInt("PosYToolBar", m_form.Location.Y);
 		}
 
 		internal static void Open()

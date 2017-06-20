@@ -186,6 +186,8 @@ namespace RazorEnhanced
 			m_lock = !m_lock;
 			m_form.ContextMenu = GeneraMenu();
 			m_form.Refresh();
+			Settings.General.WriteInt("PosXGrid", m_form.Location.X);
+			Settings.General.WriteInt("PosYGrid", m_form.Location.Y);
 		}
 
 		internal static void UpdateBox()
