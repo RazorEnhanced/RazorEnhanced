@@ -1454,6 +1454,10 @@ namespace RazorEnhanced
 					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Anatomy)));
 					break;
 
+				case "Imbuing":
+					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Imbuing)));
+					break;
+					
 				default:
 					Scripts.SendMessageScriptError("Script Error: UseSkill: Invalid skill name: " + skillname);
 					break;
