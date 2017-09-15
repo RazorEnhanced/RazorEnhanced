@@ -463,8 +463,8 @@ namespace Assistant
 		{
 			var reportCrash = new ReportCrash
 			{
-				ToEmail = "dna.volpe@libero.it"
-			};
+				ToEmail = "razorenhanced@gmail.com"
+            };
 
 			reportCrash.Send(exception);
 		}
