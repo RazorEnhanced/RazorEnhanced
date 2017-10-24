@@ -593,7 +593,7 @@ namespace RazorEnhanced
 				// Chivalry
 				SpellIconChivalry.Add("Cleanse By Fire", 0x5100);
                 SpellIconChivalry.Add("Close Wounds", 0x5101);
-				SpellIconChivalry.Add("Consecrate Weapon", 0x5100);
+				SpellIconChivalry.Add("Consecrate Weapon", 0x5102);
 				SpellIconChivalry.Add("Dispel Evil", 0x5103);
 				SpellIconChivalry.Add("Divine Fury", 0x5104);
 				SpellIconChivalry.Add("Enemy Of One", 0x5105);
