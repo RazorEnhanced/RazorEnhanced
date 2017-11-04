@@ -902,6 +902,7 @@ namespace RazorEnhanced
 					if (!prop.ToString().ToLower().Contains(name.ToLower()))
 						continue;
 
+
 					if (prop.Args == null)  // Props esiste ma non ha valore
 						return 1;
 
@@ -926,7 +927,11 @@ namespace RazorEnhanced
 							else
 							{
 								if (char.IsDigit(str))
+								{
 									number += str.ToString();
+								}
+								else
+									break;
 							}
 
 							i++;
