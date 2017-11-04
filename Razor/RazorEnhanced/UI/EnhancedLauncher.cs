@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -47,10 +48,20 @@ namespace RazorEnhanced.UI
 				okay.Enabled = false;
 		}
 
+		private static string RemoveSpace(string input)
+		{
+			return new string(input.ToCharArray()
+				.Where(c => !Char.IsWhiteSpace(c))
+				.ToArray());
+		}
+
 		internal void UpdateGUI()
 		{
+			portLabel.Text = RemoveSpace(portLabel.Text);
 			int port = 2593;
 			Int32.TryParse(portLabel.Text, out port);
+
+			hostLabel.Text = RemoveSpace(hostLabel.Text);
 
 			RazorEnhanced.Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
 
