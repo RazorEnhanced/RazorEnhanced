@@ -139,14 +139,15 @@ namespace RazorEnhanced.UI
 			{
 				"Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
 				"Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
-				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying"
+				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist"
 			};
 
 			string[] methodsItems =
 			{
 				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
-				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID, Items.Hide"
+				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID, Items.Hide",
+				"Items.ContextExist"
 			};
 
 			string[] methodsMisc =
@@ -500,6 +501,9 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Mobiles.GetPropStringList(Mobile or int)", new string[] { "Mobile MobileIstance or int MobileSerial" }, "List<string>", "Get list of all properties name of a specific mobile, if list is empty, returns empty");
 			descriptionMobiles.Add("Mobiles.GetPropStringList", tooltip);
 
+			tooltip = new ToolTipDescriptions("Mobiles.ContextExist(serial or mobile, string)", new string[] { "int serial or mobile, string nametosearch" }, "int", "Check if mobile have this context. Return Context ID or -1 if not valid item or not present");
+			descriptionMobiles.Add("Mobiles.ContextExist", tooltip);
+
 			#endregion
 
 			#region Description Items
@@ -559,6 +563,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Items.Hide(int or item)", new string[] { "int serial or item itemtohide"}, "void", "Use to hide a item in screen");
 			descriptionItems.Add("Items.Hide", tooltip);
+
+			tooltip = new ToolTipDescriptions("Items.ContextExist(serial or item, string)", new string[] { "int serial or item, string nametosearch" }, "int", "Check if item have this context. Return Context ID or -1 if not valid item or not present");
+			descriptionItems.Add("Items.ContextExist", tooltip);
 
 			#endregion
 
