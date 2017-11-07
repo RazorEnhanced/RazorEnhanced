@@ -1582,6 +1582,8 @@ namespace Assistant
 
 				if (type > 0x05)        // KR Data
 				{
+
+
 					player.HitChanceIncrease = p.ReadInt16();
 					player.SwingSpeedIncrease = p.ReadInt16();
 					player.DamageChanceIncrease = p.ReadInt16();
@@ -2591,7 +2593,8 @@ namespace Assistant
 					}
 				case 0x14: // context menu
 					{
-						p.ReadInt16(); // 0x01
+						p.ReadByte(); // unknown, always 0x00
+						int subcommand = p.ReadByte(); // 0x01 for 2D, 0x02 for KR
 						UOEntity ent = null;
 						Serial ser = p.ReadUInt32();
 						if (ser.IsMobile)
@@ -2609,15 +2612,25 @@ namespace Assistant
 
 								for (int i = 0; i < count; i++)
 								{
-									ushort idx = p.ReadUInt16();
-									ushort num = p.ReadUInt16();
-									ushort flags = p.ReadUInt16();
-									ushort color = 0;
+									if (subcommand == 2)
+									{
+										int num = p.ReadInt32();
+										ushort idx = p.ReadUInt16();
+										p.ReadUInt16(); // Flags 0x00 = enabled, 0x01 = disabled, 0x04 = highlighted
+										ent.ContextMenu.Add(idx, num);
+									}
+									else
+									{
+										ushort idx = p.ReadUInt16();
+										ushort num = p.ReadUInt16();
+										ushort flags = p.ReadUInt16();
+										ushort color = 0;
 
-									if ((flags & 0x02) != 0)
-										color = p.ReadUInt16();
+										if ((flags & 0x02) != 0)
+											color = p.ReadUInt16();
 
-									ent.ContextMenu.Add(idx, num);
+										ent.ContextMenu.Add(idx, num);
+									}
 								}
 							}
 							catch
@@ -2983,7 +2996,7 @@ namespace Assistant
 				World.Player.Resync();
 		}
 
-	    private static void Features(PacketReader p, PacketHandlerEventArgs args)
+		private static void Features(PacketReader p, PacketHandlerEventArgs args)
 		{
 			if (World.Player != null)
 				World.Player.Features = p.ReadUInt16();

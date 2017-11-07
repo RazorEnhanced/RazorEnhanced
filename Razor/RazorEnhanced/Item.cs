@@ -1040,5 +1040,33 @@ namespace RazorEnhanced
 
 			return amount;
 		}
+
+		// Context
+
+		public static int ContextExist(Item i, string name)
+		{
+			return ContextExist(i.Serial, name);
+		}
+
+		public static int ContextExist(int serial, string name)
+		{
+			Assistant.Item item = World.FindItem(serial);
+			if (item == null) // Se item non valido
+				return -1;
+
+			Misc.WaitForContext(serial, 1500);
+
+			foreach (KeyValuePair<ushort, int> entry in item.ContextMenu)
+			{
+				string menuname = string.Empty;
+				menuname = Language.GetCliloc(entry.Value);
+				if (menuname.ToLower() == name.ToLower())
+				{
+					return entry.Key;
+				}
+			}
+
+			return -1; // Se non trovata
+		}
 	}
 }
