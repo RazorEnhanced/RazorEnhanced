@@ -785,6 +785,19 @@ namespace Assistant
 		}
 	}
 
+	internal sealed class UseItemOnTarget : Packet
+	{
+		internal UseItemOnTarget(int iserial, int tserial)
+			: base(0xBF)
+		{
+			EnsureCapacity(12);
+			Write((ushort)0x2C); // Command
+			Write((uint)iserial);
+			Write((uint)tserial);
+
+		}
+	}
+
 	internal sealed class CloseGump : Packet
 	{
 		internal CloseGump(uint typeID, uint buttonID)

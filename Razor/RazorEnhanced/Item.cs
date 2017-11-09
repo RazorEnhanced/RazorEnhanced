@@ -753,6 +753,28 @@ namespace RazorEnhanced
 			DropItemGroundSelf(i, amount);
         }
 
+		// Use item
+		public static void UseItemOnMobile(Item i, Mobile m)
+		{
+			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(i.Serial, m.Serial));
+		}
+
+		public static void UseItemOnMobile(int itemserial, Mobile m)
+		{
+			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(itemserial, m.Serial));
+		}
+
+		public static void UseItemOnMobile(Item i, int targetserial)
+		{
+			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(i.Serial, targetserial));
+		}
+
+		public static void UseItemOnMobile(int itemserial, int targetserial)
+		{
+			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(itemserial, targetserial));
+		}
+
+
 		public static void UseItem(Item item)
 		{
 			Assistant.ClientCommunication.SendToServerWait(new DoubleClick((Assistant.Serial)item.Serial));
