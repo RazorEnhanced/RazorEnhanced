@@ -665,30 +665,24 @@ namespace RazorEnhanced
 				case "Self":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3617))
-						{
+						int bandageserial = BandageHeal.SearchBandage(3617, -1);
+
+						if (bandageserial == 0)
 							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
-						}
 						else
-						{
-							Targeting.ClearQueue();
-							Targeting.TargetSelf(true);
-						}
+							Items.UseItemOnMobile(bandageserial, World.Player.Serial);
 					}
 					break;
 
 				case "Last":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3617))
-						{
+						int bandageserial = BandageHeal.SearchBandage(3617, -1);
+
+						if (bandageserial == 0)
 							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
-						}
 						else
-						{
-							Targeting.ClearQueue();
-							Targeting.LastTarget(true);
-						}
+							Items.UseItemOnMobile(bandageserial, Target.GetLast());
 					}
 					break;
 
