@@ -146,8 +146,8 @@ namespace RazorEnhanced.UI
 			{
 				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
-				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID, Items.Hide",
-				"Items.ContextExist"
+				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID", "Items.Hide",
+				"Items.ContextExist", "Items.UseItemOnTarget"
 			};
 
 			string[] methodsMisc =
@@ -560,6 +560,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Items.UseItemByID(int, int)", new string[] { "int ItemID", "int Color" }, "void", "Use item whit specific ID\n\tColor -1 is wildcard for all color");
 			descriptionItems.Add("Items.UseItemByID", tooltip);
+
+			tooltip = new ToolTipDescriptions("Items.UseItemOnTarget(int, int)", new string[] { "int itemserial", "int targetserial" }, "void", "Use a item on target direct whitout using target system.");
+			descriptionItems.Add("Items.UseItemOnTarget", tooltip);
 
 			tooltip = new ToolTipDescriptions("Items.Hide(int or item)", new string[] { "int serial or item itemtohide"}, "void", "Use to hide a item in screen");
 			descriptionItems.Add("Items.Hide", tooltip);
