@@ -1074,7 +1074,7 @@ namespace Assistant
 					}
 					else
 					{
-						if (lParam == 0)
+						if (lParam == 0 || lParam == 2097153) //2097153 riduzione a icona da win10 non perde il focus ma riduce
 						{
 							if (RazorEnhanced.ToolBar.ToolBarForm != null)
 							{
