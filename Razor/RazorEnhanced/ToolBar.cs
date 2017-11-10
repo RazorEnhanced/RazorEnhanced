@@ -43,13 +43,6 @@ namespace RazorEnhanced
 	{  
 		private static int m_slot = 0;
 
-		private static bool m_changingmap = false;
-		internal static bool ChangingMap
-		{
-			get { return m_changingmap; }
-			set { m_changingmap = value; }
-		}
-
 		private static bool m_lock = false;
 		internal static bool Lock
 		{
@@ -376,7 +369,7 @@ namespace RazorEnhanced
 
 		internal static void UpdateCount()
 		{
-			if (Assistant.World.Player == null || m_form == null || m_changingmap)
+			if (Assistant.World.Player == null || m_form == null) // || m_changingmap)
 				return;
 
 			List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();

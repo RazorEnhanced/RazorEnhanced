@@ -745,7 +745,7 @@ namespace Assistant
 
 		internal override void OnMapChange(byte old, byte cur)
 		{
-			RazorEnhanced.ToolBar.ChangingMap = true;
+		//	RazorEnhanced.ToolBar.ChangingMap = true;
 			List<Mobile> list = new List<Mobile>(World.Mobiles.Values);
 			foreach (Mobile t in list)
 			{
@@ -753,20 +753,29 @@ namespace Assistant
 					t.Remove();
 			}
 
-			World.Items.Clear();
-			//Counter.Reset();
-			foreach (Item t in Contains)
+			List<Item> itemlist = new List<Item>(World.Items.Values);
+
+			foreach (Item i in itemlist)
 			{
-				World.AddItem(t);
-				t.Contains.Clear();
+				if (i.RootContainer != World.Player)
+					i.Remove();
 			}
+
+			//			World.Items.Clear();
+
+			//Counter.Reset();
+		//	foreach (Item t in Contains)
+		//	{
+			//	World.AddItem(t);
+				//t.Contains.Clear();
+		//	}
 
 			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
 			
 
 			ClientCommunication.PostMapChange(cur);
-			RazorEnhanced.ToolBar.ChangingMap = false;
+			//RazorEnhanced.ToolBar.ChangingMap = false;
 		}
 
 		/*public override void OnMapChange( byte old, byte cur )
