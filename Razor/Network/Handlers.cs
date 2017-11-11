@@ -3045,8 +3045,9 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-			World.Player.HasGump = true;
 			List<string> stringlist = new List<string>();
+			World.Player.HasGump = true;
+			
 			World.Player.CurrentGumpS = p.ReadUInt32();
 			World.Player.CurrentGumpI = p.ReadUInt32();
 			try
@@ -3078,18 +3079,99 @@ namespace Assistant
 
 				PacketReader pComp = p.GetCompressedReader();
 				int len = 0;
-				
+				int x1 = 0;
+				string[] stringlistparse = new string[numStrings];
+
 				while (!pComp.AtEnd && (len = pComp.ReadInt16()) > 0)
 				{
 					string tempstring = pComp.ReadUnicodeString(len);
-					stringlist.Add(tempstring);
+					stringlistparse[x1] = tempstring;
 					World.Player.CurrentGumpStrings.Add(tempstring);
+					x1++;
 				}
+
+				if (TryParseGump(layout, out string[] gumpPieces))
+				{
+					stringlist.AddRange(ParseGumpString(gumpPieces, stringlistparse));
+				}
+
 			}
-			catch
+			catch (Exception ex)
 			{
+				//System.Windows.Forms.MessageBox.Show(ex.ToString());
 			}
 			RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+		}
+
+		private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)
+		{
+			List <string> testipresenti = new List<string>();
+			for (int i = 0; i < gumpPieces.Length; i++)
+			{
+				string[] gumpParams = Regex.Split(gumpPieces[i], @"\s+");
+				switch (gumpParams[0].ToLower())
+				{
+
+					case "croppedtext":
+						testipresenti.Add(gumpLines[int.Parse(gumpParams[6])]);
+						//RazorEnhanced.AutoLoot.AddLog("croppedtext " + gumpLines[int.Parse(gumpParams[6])]);
+						// CroppedText [x] [y] [width] [height] [color] [text-id]
+						// Adds a text field to the gump. gump is similar to the text command, but the text is cropped to the defined area.
+						//gump.AddControl(new CroppedText(gump, gumpParams, gumpLines), currentGUMPPage);
+						//(gump.LastControl as CroppedText).Hue = 1;
+						break;
+
+					case "htmlgump":
+						testipresenti.Add(gumpLines[int.Parse(gumpParams[5])]);
+						RazorEnhanced.AutoLoot.AddLog("htmlgump " + gumpLines[int.Parse(gumpParams[5])]);
+						// HtmlGump [x] [y] [width] [height] [text-id] [background] [scrollbar]
+						// Defines a text-area where Html-commands are allowed.
+						// [background] and [scrollbar] can be 0 or 1 and define whether the background is transparent and a scrollbar is displayed.
+						//	gump.AddControl(new HtmlGumpling(gump, gumpParams, gumpLines), currentGUMPPage);
+						break;
+
+					case "text":
+						testipresenti.Add(gumpLines[int.Parse(gumpParams[4])]);
+						RazorEnhanced.AutoLoot.AddLog("text " + gumpLines[int.Parse(gumpParams[4])]);
+						// Text [x] [y] [color] [text-id]
+						// Defines the position and color of a text (data) entry.
+						//gump.AddControl(new TextLabel(gump, gumpParams, gumpLines), currentGUMPPage);
+						break;
+				}
+			}
+
+			return testipresenti;
+		}
+
+		private static bool TryParseGump(string gumpData, out string[] pieces)
+		{
+			List<string> i = new List<string>();
+			int dataIndex = 0;
+			while (dataIndex < gumpData.Length)
+			{
+				if (gumpData.Substring(dataIndex) == "\0")
+				{
+					break;
+				}
+				else
+				{
+					int begin = gumpData.IndexOf("{", dataIndex);
+					int end = gumpData.IndexOf("}", dataIndex + 1);
+					if ((begin != -1) && (end != -1))
+					{
+						string sub = gumpData.Substring(begin + 1, end - begin - 1).Trim();
+						i.Add(sub);
+						dataIndex = end;
+					}
+					else
+					{
+						break;
+					}
+				}
+			}
+
+			pieces = i.ToArray();
+			return (pieces.Length > 0);
 		}
 
 		private static void BuffDebuff(PacketReader p, PacketHandlerEventArgs args)
