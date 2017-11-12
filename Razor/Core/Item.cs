@@ -520,6 +520,9 @@ namespace Assistant
 				if (IsCorpse)
 					return false;
 
+				if (m_Items.Count > 0)
+					return true;
+
 				if (ContainerDataTable.Table.Contains(m_ItemID.Value))
 					return true;
 				else
