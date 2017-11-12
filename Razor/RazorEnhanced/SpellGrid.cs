@@ -279,6 +279,9 @@ namespace RazorEnhanced
 				case "Spellweaving":
 					RazorEnhanced.Spells.CastSpellweavingHotKey(pl.Spell);
 					break;
+				case "Mastery":
+					RazorEnhanced.Spells.CastMasteryHotKey(pl.Spell);
+					break;
 				default:
 					break;
 			}
@@ -478,11 +481,12 @@ namespace RazorEnhanced
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Magery");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Mysticism");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Spellweaving");
+			Engine.MainWindow.GridGroupComboBox.Items.Add("Mastery");
 
 			//////////////////////////////////////////////////////////////
 			// Dizionari
 			//////////////////////////////////////////////////////////////
-			
+
 			if (!m_dicloaded)
 			{
 				// Abilities
