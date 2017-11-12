@@ -486,7 +486,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Mobiles.ApplyFilter(Filter)", new string[] { "Filter MobileFilter" }, "List<Mobile>", "Search mobiles by filter");
 			descriptionMobiles.Add("Mobiles.ApplyFilter", tooltip);
 
-			tooltip = new ToolTipDescriptions("Mobiles.Message(Mobile or int, int string)", new string[] { "Mobile MobileIstance or int MobileSerial", "int ColorMessage", "string Message" }, "void", "Display a message with a certain color over a specified mobile");
+			tooltip = new ToolTipDescriptions("Mobiles.Message(Mobile or int, int, string)", new string[] { "Mobile MobileIstance or int MobileSerial", "int ColorMessage", "string Message" }, "void", "Display a message with a certain color over a specified mobile");
 			descriptionMobiles.Add("Mobiles.Message", tooltip);
 
 			tooltip = new ToolTipDescriptions("Mobiles.WaitForProps(Mobile or int, int)", new string[] { "Mobile MobileIstance or int MobileSerial", "int TimeoutProps" }, "void", "Wait to retrieves properties of a specific mobile within a certain time");
