@@ -230,9 +230,9 @@ namespace Assistant
 
 			bool oplchanged = false;
 
-			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.LastTarget));
-			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.HarmfulTarget));
-			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.BeneficialTarget));
+		//	oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.LastTarget));
+		//	oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.HarmfulTarget));
+		//	oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.BeneficialTarget));
 
 			if (oplchanged)
 				m.OPLChanged();

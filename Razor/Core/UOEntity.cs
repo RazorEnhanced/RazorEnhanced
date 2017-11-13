@@ -90,7 +90,7 @@ namespace Assistant
 			}
 		}
 
-		internal bool ModifiedOPL { get { return m_ObjPropList.Customized; } }
+	//	internal bool ModifiedOPL { get { return m_ObjPropList.Customized; } }
 
 		internal void ReadPropertyList(PacketReader p)
 		{
@@ -105,7 +105,7 @@ namespace Assistant
 		internal void OPLChanged()
 		{
 			//ClientCommunication.SendToClient( m_ObjPropList.BuildPacket() );
-			ClientCommunication.SendToClient(new OPLInfo(Serial, OPLHash));
+			//ClientCommunication.SendToClient(new OPLInfo(Serial, OPLHash));
 		}
 	}
 }

@@ -206,7 +206,7 @@ namespace RazorEnhanced.UI
 							else
 								lName.Invoke(new Action(() => lName.Text = ent.ToString()));
 						string content = ent.ToString();
-						listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(content)));
+						listBoxAttributes.Invoke(new Action(() => listBoxAttributes.Items.Add(Assistant.Utility.CapitalizeAllWords(content))));
 					}
 				}
 				else

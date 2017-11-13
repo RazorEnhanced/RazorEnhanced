@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Linq;
+
 
 namespace Assistant
 {
@@ -65,6 +67,25 @@ namespace Assistant
 			}
 		}
 
+		internal static string CapitalizeAllWords(string str)
+		{
+			if (str == null || str == string.Empty)
+				return string.Empty;
+			if (str.Length == 1)
+				return char.ToUpper(str[0]).ToString();
+
+			StringBuilder sb = new StringBuilder();
+			bool capitalizeNext = true;
+			for (int i = 0; i < str.Length; i++)
+			{
+				if (capitalizeNext)
+					sb.Append(char.ToUpper(str[i]));
+				else
+					sb.Append(str[i]);
+				capitalizeNext = (" .,;!".Contains(str[i]));
+			}
+			return sb.ToString();
+		}
 		internal static void FormatBuffer(TextWriter output, Stream input, int length)
 		{
 			output.WriteLine("        0  1  2  3  4  5  6  7   8  9  A  B  C  D  E  F");
