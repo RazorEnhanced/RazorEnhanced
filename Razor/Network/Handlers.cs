@@ -2622,7 +2622,7 @@ namespace Assistant
 									else
 									{
 										ushort idx = p.ReadUInt16();
-										ushort num = p.ReadUInt16();
+										int num = p.ReadUInt16() + 3000000;
 										ushort flags = p.ReadUInt16();
 										ushort color = 0;
 
