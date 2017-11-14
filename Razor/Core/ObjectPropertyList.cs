@@ -89,11 +89,14 @@ namespace Assistant
 				m_StringNums.Remove(num);
 
 				short bytes = p.ReadInt16();
-				string args = null;
+				string args = string.Empty;
 				if (bytes > 0)
 					args = p.ReadUnicodeStringBE(bytes >> 1);
 
-				m_Content.Add(new OPLEntry(num, args));
+				if (m_Content.Any(e => e.Number == num))
+					continue;
+				else
+					m_Content.Add(new OPLEntry(num, args));
 			}
 
 			foreach (OPLEntry ent in m_CustomContent)
@@ -116,16 +119,6 @@ namespace Assistant
 			}
 		}
 
-		internal void Add(int number)
-		{
-			if (number == 0)
-				return;
-
-			AddHash(number);
-
-			m_CustomContent.Add(new OPLEntry(number));
-		}
-
 		private static byte[] m_Buffer = new byte[0];
 
 		internal void AddHash(int val)
@@ -143,25 +136,6 @@ namespace Assistant
 			m_CustomContent.Add(new OPLEntry(number, arguments));
 		}
 
-		internal void Add(int number, string format, object arg0)
-		{
-			Add(number, String.Format(format, arg0));
-		}
-
-		internal void Add(int number, string format, object arg0, object arg1)
-		{
-			Add(number, String.Format(format, arg0, arg1));
-		}
-
-		internal void Add(int number, string format, object arg0, object arg1, object arg2)
-		{
-			Add(number, String.Format(format, arg0, arg1, arg2));
-		}
-
-		internal void Add(int number, string format, params object[] args)
-		{
-			Add(number, String.Format(format, args));
-		}
 
 		private static int[] m_DefaultStringNums = new int[]
 		{
@@ -197,74 +171,6 @@ namespace Assistant
 			Add(GetStringNumber(), String.Format(RazorHTMLFormat, text));
 		}
 
-		internal void Add(string format, string arg0)
-		{
-			Add(GetStringNumber(), String.Format(format, arg0));
-		}
-
-		internal void Add(string format, string arg0, string arg1)
-		{
-			Add(GetStringNumber(), String.Format(format, arg0, arg1));
-		}
-
-		internal void Add(string format, string arg0, string arg1, string arg2)
-		{
-			Add(GetStringNumber(), String.Format(format, arg0, arg1, arg2));
-		}
-
-		internal void Add(string format, params object[] args)
-		{
-			Add(GetStringNumber(), String.Format(format, args));
-		}
-
-		internal bool Remove(int number)
-		{
-			for (int i = 0; i < m_Content.Count; i++)
-			{
-				OPLEntry ent = (OPLEntry)m_Content[i];
-				if (ent == null)
-					continue;
-
-				if (ent.Number != number)
-					continue;
-
-				if (m_DefaultStringNums.Any(num => num == ent.Number))
-				{
-					m_StringNums.Insert(0, ent.Number);
-				}
-
-				m_Content.RemoveAt(i);
-				AddHash(ent.Number);
-				if (!string.IsNullOrEmpty(ent.Args))
-					AddHash(ent.Args.GetHashCode());
-
-				return true;
-			}
-
-			for (int i = 0; i < m_CustomContent.Count; i++)
-			{
-				OPLEntry ent = m_CustomContent[i];
-				if (ent == null)
-					continue;
-
-				if (ent.Number != number)
-					continue;
-
-				if (m_DefaultStringNums.Any(num => num == ent.Number))
-				{
-					m_StringNums.Insert(0, ent.Number);
-				}
-
-				m_CustomContent.RemoveAt(i);
-				AddHash(ent.Number);
-				if (!string.IsNullOrEmpty(ent.Args))
-					AddHash(ent.Args.GetHashCode());
-				if (m_CustomContent.Count == 0)
-					m_CustomHash = 0;
-				return true;
-			}
-			return false;
-		}
 
 		internal bool Remove(string str)
 		{
@@ -312,84 +218,6 @@ namespace Assistant
 			}
 
 			return false;
-		}
-
-		internal Packet BuildPacket()
-		{
-			Packet p = new Packet(0xD6);
-
-			p.EnsureCapacity(128);
-
-			p.Write((short)0x01);
-			p.Write((uint)(m_Owner != null ? m_Owner.Serial : Serial.Zero));
-			p.Write((byte)0);
-			p.Write((byte)0);
-			p.Write((uint)(m_Hash ^ m_CustomHash));
-
-			foreach (OPLEntry ent in m_Content)
-			{
-				if (ent == null || ent.Number == 0)
-					continue;
-
-				p.Write((int)ent.Number);
-				if (!string.IsNullOrEmpty(ent.Args))
-				{
-					int byteCount = Encoding.Unicode.GetByteCount(ent.Args);
-
-					if (byteCount > m_Buffer.Length)
-						m_Buffer = new byte[byteCount];
-
-					byteCount = Encoding.Unicode.GetBytes(ent.Args, 0, ent.Args.Length, m_Buffer, 0);
-
-					p.Write((short)byteCount);
-					p.Write(m_Buffer, 0, byteCount);
-				}
-				else
-				{
-					p.Write((short)0);
-				}
-			}
-
-			foreach (OPLEntry ent in m_CustomContent)
-			{
-				try
-				{
-					if (ent == null || ent.Number == 0)
-						continue;
-
-					string arguments = ent.Args;
-
-					p.Write((int)ent.Number);
-
-					if (string.IsNullOrEmpty(arguments))
-						arguments = " ";
-					arguments += "\t ";
-
-					if (!string.IsNullOrEmpty(arguments))
-					{
-						int byteCount = Encoding.Unicode.GetByteCount(arguments);
-
-						if (byteCount > m_Buffer.Length)
-							m_Buffer = new byte[byteCount];
-
-						byteCount = Encoding.Unicode.GetBytes(arguments, 0, arguments.Length, m_Buffer, 0);
-
-						p.Write((short)byteCount);
-						p.Write(m_Buffer, 0, byteCount);
-					}
-					else
-					{
-						p.Write((short)0);
-					}
-				}
-				catch
-				{
-				}
-			}
-
-			p.Write((int)0);
-
-			return p;
 		}
 	}
 
