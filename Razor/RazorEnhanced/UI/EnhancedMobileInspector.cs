@@ -27,7 +27,7 @@ namespace RazorEnhanced.UI
 
 				attrib = GetAttribute(prop);
 				if (attrib > 0)
-					AddAttributesToList(Assistant.Utility.CapitalizeAllWords(prop) + ": "+ attrib);
+					AddAttributesToList(prop + ": "+ attrib);
 			}
 		}
 
