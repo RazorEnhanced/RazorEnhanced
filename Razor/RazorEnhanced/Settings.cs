@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 38;
+		private static int SettingVersion = 39;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1722,6 +1722,15 @@ namespace RazorEnhanced
 				general.Columns.Add("UoModPaperdool", typeof(bool));
 				general.Columns.Add("UoModSound", typeof(bool));
 
+				// Parametri Video Recorder
+				general.Columns.Add("VideoPath", typeof(string));
+				general.Columns.Add("VideoFPS", typeof(int));
+				general.Columns.Add("VideoResolution", typeof(string));
+				general.Columns.Add("VideoFormat", typeof(int));
+				general.Columns.Add("VideoCompression", typeof(int));
+				general.Columns.Add("VideoFlipV", typeof(bool));
+				general.Columns.Add("VideoFlipH", typeof(bool));
+
 				// Parametri finestra script
 				general.Columns.Add("ShowScriptMessageCheckBox", typeof(bool));
 
@@ -1777,6 +1786,9 @@ namespace RazorEnhanced
 
                      // Parametri UoMod
                      false, false, false,
+
+					 // Parametri Video Recorder
+                     Path.GetDirectoryName(Application.ExecutablePath), 25, "Full Size", 1, 100, false, false,
 
 					 // Parametri finestra script
                      true
@@ -5375,6 +5387,33 @@ namespace RazorEnhanced
 
 				realVersion = 38;
 				General.WriteInt("SettingVersion", 38);
+			}
+
+			if (realVersion == 38)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoPath", typeof(string));
+				General.WriteString("VideoPath", Path.GetDirectoryName(Application.ExecutablePath));
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFPS", typeof(int));
+				General.WriteInt("VideoFPS", 25);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoResolution", typeof(string));
+				General.WriteString("VideoResolution", "Full Size");
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFormat", typeof(int));
+				General.WriteInt("VideoFormat", 0);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoCompression", typeof(int));
+				General.WriteInt("VideoCompression", 1);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFlipV", typeof(bool));
+				General.WriteBool("VideoFlipV", false);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFlipH", typeof(bool));
+				General.WriteBool("VideoFlipH", false);
+
+				realVersion = 39;
+				General.WriteInt("SettingVersion", 39);
 			}
 
 			Save(true);

@@ -1356,29 +1356,29 @@ namespace Assistant
 			this.hotkeytextbox = new RazorEnhanced.UI.RazorTextBox();
 			this.hotkeytreeView = new System.Windows.Forms.TreeView();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.videoPathTextBox = new RazorEnhanced.UI.RazorTextBox();
-			this.videoPathButton = new RazorEnhanced.UI.RazorButton();
+			this.groupBox40 = new System.Windows.Forms.GroupBox();
+			this.groupBox17 = new System.Windows.Forms.GroupBox();
+			this.videoFlipHCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.videoFlipVCheckBox = new RazorEnhanced.UI.RazorCheckBox();
+			this.button1 = new System.Windows.Forms.Button();
+			this.button2 = new System.Windows.Forms.Button();
+			this.videoCompressiontrackBar = new System.Windows.Forms.TrackBar();
+			this.label65 = new System.Windows.Forms.Label();
+			this.videoFormatcomboBox = new System.Windows.Forms.ComboBox();
+			this.videoResolutioncomboBox = new System.Windows.Forms.ComboBox();
+			this.label64 = new System.Windows.Forms.Label();
+			this.label63 = new System.Windows.Forms.Label();
+			this.label62 = new System.Windows.Forms.Label();
+			this.videoFPSTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.groupBox15 = new System.Windows.Forms.GroupBox();
 			this.videolistBox = new System.Windows.Forms.ListBox();
+			this.videoPathButton = new RazorEnhanced.UI.RazorButton();
+			this.videoPathTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.label62 = new System.Windows.Forms.Label();
-			this.videoFPSTextBox = new RazorEnhanced.UI.RazorTextBox();
-			this.groupBox15 = new System.Windows.Forms.GroupBox();
-			this.groupBox17 = new System.Windows.Forms.GroupBox();
-			this.label63 = new System.Windows.Forms.Label();
-			this.label64 = new System.Windows.Forms.Label();
-			this.videoResolutioncomboBox = new System.Windows.Forms.ComboBox();
-			this.videoFormatcomboBox = new System.Windows.Forms.ComboBox();
-			this.label65 = new System.Windows.Forms.Label();
-			this.videoCompressiontrackBar = new System.Windows.Forms.TrackBar();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
-			this.videoFlipVCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.videoFlipHCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.groupBox40 = new System.Windows.Forms.GroupBox();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1456,10 +1456,10 @@ namespace Assistant
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
 			this.tabPage1.SuspendLayout();
-			this.datagridMenuStrip.SuspendLayout();
-			this.groupBox15.SuspendLayout();
 			this.groupBox17.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).BeginInit();
+			this.groupBox15.SuspendLayout();
+			this.datagridMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -7052,6 +7052,191 @@ namespace Assistant
 			this.tabPage1.TabIndex = 16;
 			this.tabPage1.Text = "Video Recorder";
 			// 
+			// groupBox40
+			// 
+			this.groupBox40.Location = new System.Drawing.Point(259, 6);
+			this.groupBox40.Name = "groupBox40";
+			this.groupBox40.Size = new System.Drawing.Size(399, 352);
+			this.groupBox40.TabIndex = 64;
+			this.groupBox40.TabStop = false;
+			this.groupBox40.Text = "Playback";
+			// 
+			// groupBox17
+			// 
+			this.groupBox17.Controls.Add(this.videoFlipHCheckBox);
+			this.groupBox17.Controls.Add(this.videoFlipVCheckBox);
+			this.groupBox17.Controls.Add(this.button1);
+			this.groupBox17.Controls.Add(this.button2);
+			this.groupBox17.Controls.Add(this.videoCompressiontrackBar);
+			this.groupBox17.Controls.Add(this.label65);
+			this.groupBox17.Controls.Add(this.videoFormatcomboBox);
+			this.groupBox17.Controls.Add(this.videoResolutioncomboBox);
+			this.groupBox17.Controls.Add(this.label64);
+			this.groupBox17.Controls.Add(this.label63);
+			this.groupBox17.Controls.Add(this.label62);
+			this.groupBox17.Controls.Add(this.videoFPSTextBox);
+			this.groupBox17.Location = new System.Drawing.Point(10, 210);
+			this.groupBox17.Name = "groupBox17";
+			this.groupBox17.Size = new System.Drawing.Size(243, 148);
+			this.groupBox17.TabIndex = 63;
+			this.groupBox17.TabStop = false;
+			this.groupBox17.Text = "Video Settings";
+			// 
+			// videoFlipHCheckBox
+			// 
+			this.videoFlipHCheckBox.Location = new System.Drawing.Point(9, 122);
+			this.videoFlipHCheckBox.Name = "videoFlipHCheckBox";
+			this.videoFlipHCheckBox.Size = new System.Drawing.Size(103, 22);
+			this.videoFlipHCheckBox.TabIndex = 95;
+			this.videoFlipHCheckBox.Text = "Flip Horizontal";
+			this.videoFlipHCheckBox.CheckedChanged += new System.EventHandler(this.videoFlipHCheckBox_CheckedChanged);
+			// 
+			// videoFlipVCheckBox
+			// 
+			this.videoFlipVCheckBox.Location = new System.Drawing.Point(9, 99);
+			this.videoFlipVCheckBox.Name = "videoFlipVCheckBox";
+			this.videoFlipVCheckBox.Size = new System.Drawing.Size(103, 22);
+			this.videoFlipVCheckBox.TabIndex = 94;
+			this.videoFlipVCheckBox.Text = "Flip Vertical";
+			this.videoFlipVCheckBox.CheckedChanged += new System.EventHandler(this.videoFlipVCheckBox_CheckedChanged);
+			// 
+			// button1
+			// 
+			this.button1.BackgroundImage = global::Assistant.Properties.Resources.record;
+			this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.button1.FlatAppearance.BorderSize = 0;
+			this.button1.Location = new System.Drawing.Point(166, 105);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(30, 30);
+			this.button1.TabIndex = 93;
+			this.button1.UseVisualStyleBackColor = true;
+			// 
+			// button2
+			// 
+			this.button2.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
+			this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.button2.FlatAppearance.BorderSize = 0;
+			this.button2.Location = new System.Drawing.Point(202, 105);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(30, 30);
+			this.button2.TabIndex = 92;
+			this.button2.UseVisualStyleBackColor = true;
+			// 
+			// videoCompressiontrackBar
+			// 
+			this.videoCompressiontrackBar.AutoSize = false;
+			this.videoCompressiontrackBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
+			this.videoCompressiontrackBar.Location = new System.Drawing.Point(76, 77);
+			this.videoCompressiontrackBar.Maximum = 100;
+			this.videoCompressiontrackBar.Name = "videoCompressiontrackBar";
+			this.videoCompressiontrackBar.Size = new System.Drawing.Size(156, 16);
+			this.videoCompressiontrackBar.TabIndex = 69;
+			this.videoCompressiontrackBar.TickFrequency = 0;
+			this.videoCompressiontrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
+			this.videoCompressiontrackBar.Value = 100;
+			this.videoCompressiontrackBar.Scroll += new System.EventHandler(this.videoCompressiontrackBar_Scroll);
+			// 
+			// label65
+			// 
+			this.label65.AutoSize = true;
+			this.label65.Location = new System.Drawing.Point(7, 77);
+			this.label65.Name = "label65";
+			this.label65.Size = new System.Drawing.Size(70, 13);
+			this.label65.TabIndex = 68;
+			this.label65.Text = "Compression:";
+			// 
+			// videoFormatcomboBox
+			// 
+			this.videoFormatcomboBox.FormattingEnabled = true;
+			this.videoFormatcomboBox.Location = new System.Drawing.Point(54, 47);
+			this.videoFormatcomboBox.Name = "videoFormatcomboBox";
+			this.videoFormatcomboBox.Size = new System.Drawing.Size(178, 21);
+			this.videoFormatcomboBox.TabIndex = 67;
+			// 
+			// videoResolutioncomboBox
+			// 
+			this.videoResolutioncomboBox.FormattingEnabled = true;
+			this.videoResolutioncomboBox.Items.AddRange(new object[] {
+            "Full Size",
+            "3/4",
+            "1/2",
+            "1/4"});
+			this.videoResolutioncomboBox.Location = new System.Drawing.Point(147, 18);
+			this.videoResolutioncomboBox.Name = "videoResolutioncomboBox";
+			this.videoResolutioncomboBox.Size = new System.Drawing.Size(85, 21);
+			this.videoResolutioncomboBox.TabIndex = 66;
+			this.videoResolutioncomboBox.SelectedIndexChanged += new System.EventHandler(this.videoResolutioncomboBox_SelectedIndexChanged);
+			// 
+			// label64
+			// 
+			this.label64.AutoSize = true;
+			this.label64.Location = new System.Drawing.Point(6, 50);
+			this.label64.Name = "label64";
+			this.label64.Size = new System.Drawing.Size(42, 13);
+			this.label64.TabIndex = 65;
+			this.label64.Text = "Format:";
+			// 
+			// label63
+			// 
+			this.label63.AutoSize = true;
+			this.label63.Location = new System.Drawing.Point(81, 21);
+			this.label63.Name = "label63";
+			this.label63.Size = new System.Drawing.Size(60, 13);
+			this.label63.TabIndex = 64;
+			this.label63.Text = "Resolution:";
+			// 
+			// label62
+			// 
+			this.label62.AutoSize = true;
+			this.label62.Location = new System.Drawing.Point(7, 21);
+			this.label62.Name = "label62";
+			this.label62.Size = new System.Drawing.Size(33, 13);
+			this.label62.TabIndex = 61;
+			this.label62.Text = "FPS: ";
+			// 
+			// videoFPSTextBox
+			// 
+			this.videoFPSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.videoFPSTextBox.BackColor = System.Drawing.Color.White;
+			this.videoFPSTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.videoFPSTextBox.Location = new System.Drawing.Point(42, 18);
+			this.videoFPSTextBox.Name = "videoFPSTextBox";
+			this.videoFPSTextBox.Size = new System.Drawing.Size(33, 20);
+			this.videoFPSTextBox.TabIndex = 60;
+			this.videoFPSTextBox.TextChanged += new System.EventHandler(this.videoFPSTextBox_TextChanged);
+			// 
+			// groupBox15
+			// 
+			this.groupBox15.Controls.Add(this.videolistBox);
+			this.groupBox15.Controls.Add(this.videoPathButton);
+			this.groupBox15.Controls.Add(this.videoPathTextBox);
+			this.groupBox15.Location = new System.Drawing.Point(8, 6);
+			this.groupBox15.Name = "groupBox15";
+			this.groupBox15.Size = new System.Drawing.Size(245, 198);
+			this.groupBox15.TabIndex = 62;
+			this.groupBox15.TabStop = false;
+			this.groupBox15.Text = "File";
+			// 
+			// videolistBox
+			// 
+			this.videolistBox.IntegralHeight = false;
+			this.videolistBox.Location = new System.Drawing.Point(11, 41);
+			this.videolistBox.Name = "videolistBox";
+			this.videolistBox.Size = new System.Drawing.Size(223, 147);
+			this.videolistBox.Sorted = true;
+			this.videolistBox.TabIndex = 8;
+			// 
+			// videoPathButton
+			// 
+			this.videoPathButton.Location = new System.Drawing.Point(212, 17);
+			this.videoPathButton.Name = "videoPathButton";
+			this.videoPathButton.Size = new System.Drawing.Size(22, 17);
+			this.videoPathButton.TabIndex = 9;
+			this.videoPathButton.Text = "...";
+			this.videoPathButton.Click += new System.EventHandler(this.videoPathButton_Click);
+			// 
 			// videoPathTextBox
 			// 
 			this.videoPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -7063,24 +7248,6 @@ namespace Assistant
 			this.videoPathTextBox.Name = "videoPathTextBox";
 			this.videoPathTextBox.Size = new System.Drawing.Size(195, 20);
 			this.videoPathTextBox.TabIndex = 10;
-			this.videoPathTextBox.TextChanged += new System.EventHandler(this.razorTextBox1_TextChanged);
-			// 
-			// videoPathButton
-			// 
-			this.videoPathButton.Location = new System.Drawing.Point(212, 17);
-			this.videoPathButton.Name = "videoPathButton";
-			this.videoPathButton.Size = new System.Drawing.Size(22, 17);
-			this.videoPathButton.TabIndex = 9;
-			this.videoPathButton.Text = "...";
-			// 
-			// videolistBox
-			// 
-			this.videolistBox.IntegralHeight = false;
-			this.videolistBox.Location = new System.Drawing.Point(11, 41);
-			this.videolistBox.Name = "videolistBox";
-			this.videolistBox.Size = new System.Drawing.Size(223, 147);
-			this.videolistBox.Sorted = true;
-			this.videolistBox.TabIndex = 8;
 			// 
 			// m_NotifyIcon
 			// 
@@ -7112,164 +7279,6 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
-			// 
-			// label62
-			// 
-			this.label62.AutoSize = true;
-			this.label62.Location = new System.Drawing.Point(7, 21);
-			this.label62.Name = "label62";
-			this.label62.Size = new System.Drawing.Size(33, 13);
-			this.label62.TabIndex = 61;
-			this.label62.Text = "FPS: ";
-			// 
-			// videoFPSTextBox
-			// 
-			this.videoFPSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.videoFPSTextBox.BackColor = System.Drawing.Color.White;
-			this.videoFPSTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.videoFPSTextBox.Location = new System.Drawing.Point(42, 18);
-			this.videoFPSTextBox.Name = "videoFPSTextBox";
-			this.videoFPSTextBox.Size = new System.Drawing.Size(33, 20);
-			this.videoFPSTextBox.TabIndex = 60;
-			// 
-			// groupBox15
-			// 
-			this.groupBox15.Controls.Add(this.videolistBox);
-			this.groupBox15.Controls.Add(this.videoPathButton);
-			this.groupBox15.Controls.Add(this.videoPathTextBox);
-			this.groupBox15.Location = new System.Drawing.Point(8, 6);
-			this.groupBox15.Name = "groupBox15";
-			this.groupBox15.Size = new System.Drawing.Size(245, 198);
-			this.groupBox15.TabIndex = 62;
-			this.groupBox15.TabStop = false;
-			this.groupBox15.Text = "File";
-			// 
-			// groupBox17
-			// 
-			this.groupBox17.Controls.Add(this.videoFlipHCheckBox);
-			this.groupBox17.Controls.Add(this.videoFlipVCheckBox);
-			this.groupBox17.Controls.Add(this.button1);
-			this.groupBox17.Controls.Add(this.button2);
-			this.groupBox17.Controls.Add(this.videoCompressiontrackBar);
-			this.groupBox17.Controls.Add(this.label65);
-			this.groupBox17.Controls.Add(this.videoFormatcomboBox);
-			this.groupBox17.Controls.Add(this.videoResolutioncomboBox);
-			this.groupBox17.Controls.Add(this.label64);
-			this.groupBox17.Controls.Add(this.label63);
-			this.groupBox17.Controls.Add(this.label62);
-			this.groupBox17.Controls.Add(this.videoFPSTextBox);
-			this.groupBox17.Location = new System.Drawing.Point(10, 210);
-			this.groupBox17.Name = "groupBox17";
-			this.groupBox17.Size = new System.Drawing.Size(243, 148);
-			this.groupBox17.TabIndex = 63;
-			this.groupBox17.TabStop = false;
-			this.groupBox17.Text = "Video Settings";
-			// 
-			// label63
-			// 
-			this.label63.AutoSize = true;
-			this.label63.Location = new System.Drawing.Point(81, 21);
-			this.label63.Name = "label63";
-			this.label63.Size = new System.Drawing.Size(60, 13);
-			this.label63.TabIndex = 64;
-			this.label63.Text = "Resolution:";
-			// 
-			// label64
-			// 
-			this.label64.AutoSize = true;
-			this.label64.Location = new System.Drawing.Point(6, 50);
-			this.label64.Name = "label64";
-			this.label64.Size = new System.Drawing.Size(42, 13);
-			this.label64.TabIndex = 65;
-			this.label64.Text = "Format:";
-			// 
-			// videoResolutioncomboBox
-			// 
-			this.videoResolutioncomboBox.FormattingEnabled = true;
-			this.videoResolutioncomboBox.Location = new System.Drawing.Point(147, 18);
-			this.videoResolutioncomboBox.Name = "videoResolutioncomboBox";
-			this.videoResolutioncomboBox.Size = new System.Drawing.Size(85, 21);
-			this.videoResolutioncomboBox.TabIndex = 66;
-			// 
-			// videoFormatcomboBox
-			// 
-			this.videoFormatcomboBox.FormattingEnabled = true;
-			this.videoFormatcomboBox.Location = new System.Drawing.Point(54, 47);
-			this.videoFormatcomboBox.Name = "videoFormatcomboBox";
-			this.videoFormatcomboBox.Size = new System.Drawing.Size(178, 21);
-			this.videoFormatcomboBox.TabIndex = 67;
-			// 
-			// label65
-			// 
-			this.label65.AutoSize = true;
-			this.label65.Location = new System.Drawing.Point(7, 77);
-			this.label65.Name = "label65";
-			this.label65.Size = new System.Drawing.Size(70, 13);
-			this.label65.TabIndex = 68;
-			this.label65.Text = "Compression:";
-			// 
-			// videoCompressiontrackBar
-			// 
-			this.videoCompressiontrackBar.AutoSize = false;
-			this.videoCompressiontrackBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
-			this.videoCompressiontrackBar.Location = new System.Drawing.Point(76, 77);
-			this.videoCompressiontrackBar.Maximum = 100;
-			this.videoCompressiontrackBar.Minimum = 10;
-			this.videoCompressiontrackBar.Name = "videoCompressiontrackBar";
-			this.videoCompressiontrackBar.Size = new System.Drawing.Size(156, 16);
-			this.videoCompressiontrackBar.TabIndex = 69;
-			this.videoCompressiontrackBar.TickFrequency = 0;
-			this.videoCompressiontrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
-			this.videoCompressiontrackBar.Value = 100;
-			// 
-			// button1
-			// 
-			this.button1.BackgroundImage = global::Assistant.Properties.Resources.playagent;
-			this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.button1.FlatAppearance.BorderSize = 0;
-			this.button1.Location = new System.Drawing.Point(166, 105);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(30, 30);
-			this.button1.TabIndex = 93;
-			this.button1.UseVisualStyleBackColor = true;
-			// 
-			// button2
-			// 
-			this.button2.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
-			this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.button2.FlatAppearance.BorderSize = 0;
-			this.button2.Location = new System.Drawing.Point(202, 105);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(30, 30);
-			this.button2.TabIndex = 92;
-			this.button2.UseVisualStyleBackColor = true;
-			// 
-			// videoFlipVCheckBox
-			// 
-			this.videoFlipVCheckBox.Location = new System.Drawing.Point(9, 99);
-			this.videoFlipVCheckBox.Name = "videoFlipVCheckBox";
-			this.videoFlipVCheckBox.Size = new System.Drawing.Size(103, 22);
-			this.videoFlipVCheckBox.TabIndex = 94;
-			this.videoFlipVCheckBox.Text = "Flip Vertical";
-			// 
-			// videoFlipHCheckBox
-			// 
-			this.videoFlipHCheckBox.Location = new System.Drawing.Point(9, 122);
-			this.videoFlipHCheckBox.Name = "videoFlipHCheckBox";
-			this.videoFlipHCheckBox.Size = new System.Drawing.Size(103, 22);
-			this.videoFlipHCheckBox.TabIndex = 95;
-			this.videoFlipHCheckBox.Text = "Flip Horizontal";
-			// 
-			// groupBox40
-			// 
-			this.groupBox40.Location = new System.Drawing.Point(259, 6);
-			this.groupBox40.Name = "groupBox40";
-			this.groupBox40.Size = new System.Drawing.Size(399, 352);
-			this.groupBox40.TabIndex = 64;
-			this.groupBox40.TabStop = false;
-			this.groupBox40.Text = "Playback";
 			// 
 			// MainForm
 			// 
@@ -7399,12 +7408,12 @@ namespace Assistant
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
 			this.tabPage1.ResumeLayout(false);
-			this.datagridMenuStrip.ResumeLayout(false);
-			this.groupBox15.ResumeLayout(false);
-			this.groupBox15.PerformLayout();
 			this.groupBox17.ResumeLayout(false);
 			this.groupBox17.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).EndInit();
+			this.groupBox15.ResumeLayout(false);
+			this.groupBox15.PerformLayout();
+			this.datagridMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -7658,6 +7667,16 @@ namespace Assistant
 				uomodpaperdoolCheckBox.Enabled = false;
 				uomodglobalsoundCheckBox.Enabled = false;
 			}
+
+			// Video Recorder
+			videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
+			videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
+			videoResolutioncomboBox.Text = Settings.General.ReadString("VideoResolution");
+			//videoFormatcomboBox.SelectedText = Settings.General.ReadString("");
+			videoCompressiontrackBar.AutoSize = false;
+			videoCompressiontrackBar.Value = RazorEnhanced.Settings.General.ReadInt("VideoCompression");
+			videoFlipVCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("VideoFlipV");
+			videoFlipHCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("VideoFlipH");
 		}
 
 		private bool m_Initializing = false;
@@ -13138,13 +13157,69 @@ namespace Assistant
 				Scavenger.RefreshLists();
 			}
 		}
-
-		private void razorTextBox1_TextChanged(object sender, EventArgs e)
-		{
-
-		}
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
-	}
+		// ----------------- START VIDEO RECORDER -------------------
+		private void videoFlipVCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (videoFlipVCheckBox.Focused)
+				Settings.General.WriteBool("VideoFlipV", videoFlipVCheckBox.Checked);
+		}
 
+		private void videoFlipHCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (videoFlipHCheckBox.Focused)
+				Settings.General.WriteBool("VideoFlipH", videoFlipHCheckBox.Checked);
+		}
+
+		private void videoFPSTextBox_TextChanged(object sender, EventArgs e)
+		{
+			if (videoFPSTextBox.Focused)
+			{
+				int fps = 25;
+
+				if (!Int32.TryParse(videoFPSTextBox.Text, out fps))
+					videoFPSTextBox.Text = "25";
+
+				Settings.General.WriteInt("VideoFPS", fps);
+			}
+		}
+
+		private void videoResolutioncomboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (videoResolutioncomboBox.Focused)
+				Settings.General.WriteString("VideoResolution", videoResolutioncomboBox.Text);
+		}
+
+		private void videoCompressiontrackBar_Scroll(object sender, EventArgs e)
+		{
+			if (videoCompressiontrackBar.Focused)
+				RazorEnhanced.Settings.General.WriteInt("VideoCompression", videoCompressiontrackBar.Value);
+		}
+
+		private void videoPathButton_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog folder = new FolderBrowserDialog();
+			folder.Description = "Select a folder to store Razor video file";
+			folder.SelectedPath = RazorEnhanced.Settings.General.ReadString("VideoPath");
+			folder.ShowNewFolderButton = true;
+
+			if (folder.ShowDialog(this) == DialogResult.OK)
+			{
+				RazorEnhanced.Settings.General.WriteString("VideoPath", folder.SelectedPath);
+				videoPathTextBox.Text = folder.SelectedPath;
+				ReloadVideoList();
+			}
+		}
+
+		internal void ReloadVideoList()
+		{
+			VideoCapture.DisplayTo(videolistBox);
+
+			/*if (screenPrev.Image != null) // TODO: Video preview
+			{
+				
+			}*/
+		}
+	}
 }
