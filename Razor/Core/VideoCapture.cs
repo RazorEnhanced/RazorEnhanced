@@ -27,7 +27,7 @@ namespace Assistant
 
 			list.Items.Clear();
 			AddFiles(list, path, "avi");
-
+			AddFiles(list, path, "mp4");
 		}
 
 		internal static void AddFiles(ListBox list, string path, string ext)

@@ -578,7 +578,7 @@ namespace Assistant
 		private RazorCheckBox uo3dEquipUnEquip;
 		private RazorCheckBox nosearchpouches;
 		private RazorCheckBox autosearchcontainers;
-		private TabPage tabPage1;
+		private TabPage videoTab;
 		private RazorTextBox videoPathTextBox;
 		private RazorButton videoPathButton;
 		private ListBox videolistBox;
@@ -597,6 +597,7 @@ namespace Assistant
 		private Label label62;
 		private RazorTextBox videoFPSTextBox;
 		private GroupBox groupBox15;
+		private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1136,8 +1137,6 @@ namespace Assistant
 			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.escavenger = new System.Windows.Forms.TabPage();
 			this.label61 = new System.Windows.Forms.Label();
-			this.scavengerRange = new RazorEnhanced.UI.RazorTextBox();
-			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
 			this.groupBox41 = new System.Windows.Forms.GroupBox();
 			this.label54 = new System.Windows.Forms.Label();
 			this.scavengerContainerLabel = new System.Windows.Forms.Label();
@@ -1152,6 +1151,8 @@ namespace Assistant
 			this.scavengerLogBox = new System.Windows.Forms.ListBox();
 			this.label23 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
+			this.scavengerRange = new RazorEnhanced.UI.RazorTextBox();
+			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
 			this.scavengerDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.scavengerCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1355,8 +1356,9 @@ namespace Assistant
 			this.label39 = new System.Windows.Forms.Label();
 			this.hotkeytextbox = new RazorEnhanced.UI.RazorTextBox();
 			this.hotkeytreeView = new System.Windows.Forms.TreeView();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.videoTab = new System.Windows.Forms.TabPage();
 			this.groupBox40 = new System.Windows.Forms.GroupBox();
+			this.axWindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
 			this.groupBox17 = new System.Windows.Forms.GroupBox();
 			this.videoFlipHCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.videoFlipVCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1455,7 +1457,9 @@ namespace Assistant
 			this.groupBox8.SuspendLayout();
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
-			this.tabPage1.SuspendLayout();
+			this.videoTab.SuspendLayout();
+			this.groupBox40.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).BeginInit();
 			this.groupBox17.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).BeginInit();
 			this.groupBox15.SuspendLayout();
@@ -1475,7 +1479,7 @@ namespace Assistant
 			this.tabs.Controls.Add(this.scriptingTab);
 			this.tabs.Controls.Add(this.EnhancedAgent);
 			this.tabs.Controls.Add(this.enhancedHotKeytabPage);
-			this.tabs.Controls.Add(this.tabPage1);
+			this.tabs.Controls.Add(this.videoTab);
 			this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabs.Location = new System.Drawing.Point(0, 0);
 			this.tabs.Multiline = true;
@@ -4694,13 +4698,13 @@ namespace Assistant
 			// escavenger
 			// 
 			this.escavenger.Controls.Add(this.label61);
-			this.escavenger.Controls.Add(this.scavengerRange);
-			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
 			this.escavenger.Controls.Add(this.groupBox41);
 			this.escavenger.Controls.Add(this.scavengerdataGridView);
 			this.escavenger.Controls.Add(this.groupBox12);
 			this.escavenger.Controls.Add(this.label23);
 			this.escavenger.Controls.Add(this.label22);
+			this.escavenger.Controls.Add(this.scavengerRange);
+			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
 			this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
 			this.escavenger.Controls.Add(this.scavengerDragDelay);
 			this.escavenger.Controls.Add(this.scavengerCheckBox);
@@ -4725,28 +4729,6 @@ namespace Assistant
 			this.label61.Size = new System.Drawing.Size(62, 13);
 			this.label61.TabIndex = 75;
 			this.label61.Text = "Max Range";
-			// 
-			// scavengerRange
-			// 
-			this.scavengerRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.scavengerRange.BackColor = System.Drawing.Color.White;
-			this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.scavengerRange.Location = new System.Drawing.Point(416, 68);
-			this.scavengerRange.Name = "scavengerRange";
-			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
-			this.scavengerRange.TabIndex = 74;
-			this.scavengerRange.TextChanged += new System.EventHandler(this.scavengerRange_TextChanged);
-			// 
-			// scavengerButtonEditProps
-			// 
-			this.scavengerButtonEditProps.Location = new System.Drawing.Point(563, 66);
-			this.scavengerButtonEditProps.Name = "scavengerButtonEditProps";
-			this.scavengerButtonEditProps.Size = new System.Drawing.Size(90, 21);
-			this.scavengerButtonEditProps.TabIndex = 49;
-			this.scavengerButtonEditProps.Text = "Edit Props";
-			this.scavengerButtonEditProps.Click += new System.EventHandler(this.scavengerEditProps_Click);
 			// 
 			// groupBox41
 			// 
@@ -4888,6 +4870,28 @@ namespace Assistant
 			this.label22.Size = new System.Drawing.Size(81, 13);
 			this.label22.TabIndex = 60;
 			this.label22.Text = "Scavenger List:";
+			// 
+			// scavengerRange
+			// 
+			this.scavengerRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerRange.BackColor = System.Drawing.Color.White;
+			this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.scavengerRange.Location = new System.Drawing.Point(416, 68);
+			this.scavengerRange.Name = "scavengerRange";
+			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
+			this.scavengerRange.TabIndex = 74;
+			this.scavengerRange.TextChanged += new System.EventHandler(this.scavengerRange_TextChanged);
+			// 
+			// scavengerButtonEditProps
+			// 
+			this.scavengerButtonEditProps.Location = new System.Drawing.Point(563, 66);
+			this.scavengerButtonEditProps.Name = "scavengerButtonEditProps";
+			this.scavengerButtonEditProps.Size = new System.Drawing.Size(90, 21);
+			this.scavengerButtonEditProps.TabIndex = 49;
+			this.scavengerButtonEditProps.Text = "Edit Props";
+			this.scavengerButtonEditProps.Click += new System.EventHandler(this.scavengerEditProps_Click);
 			// 
 			// scavengerButtonAddTarget
 			// 
@@ -7039,27 +7043,37 @@ namespace Assistant
 			this.hotkeytreeView.TabIndex = 0;
 			this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
 			// 
-			// tabPage1
+			// videoTab
 			// 
-			this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
-			this.tabPage1.Controls.Add(this.groupBox40);
-			this.tabPage1.Controls.Add(this.groupBox17);
-			this.tabPage1.Controls.Add(this.groupBox15);
-			this.tabPage1.Location = new System.Drawing.Point(4, 40);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(666, 366);
-			this.tabPage1.TabIndex = 16;
-			this.tabPage1.Text = "Video Recorder";
+			this.videoTab.BackColor = System.Drawing.SystemColors.Control;
+			this.videoTab.Controls.Add(this.groupBox40);
+			this.videoTab.Controls.Add(this.groupBox17);
+			this.videoTab.Controls.Add(this.groupBox15);
+			this.videoTab.Location = new System.Drawing.Point(4, 40);
+			this.videoTab.Name = "videoTab";
+			this.videoTab.Padding = new System.Windows.Forms.Padding(3);
+			this.videoTab.Size = new System.Drawing.Size(666, 366);
+			this.videoTab.TabIndex = 16;
+			this.videoTab.Text = "Video Recorder";
 			// 
 			// groupBox40
 			// 
+			this.groupBox40.Controls.Add(this.axWindowsMediaPlayer);
 			this.groupBox40.Location = new System.Drawing.Point(259, 6);
 			this.groupBox40.Name = "groupBox40";
 			this.groupBox40.Size = new System.Drawing.Size(399, 352);
 			this.groupBox40.TabIndex = 64;
 			this.groupBox40.TabStop = false;
 			this.groupBox40.Text = "Playback";
+			// 
+			// axWindowsMediaPlayer
+			// 
+			this.axWindowsMediaPlayer.Enabled = true;
+			this.axWindowsMediaPlayer.Location = new System.Drawing.Point(6, 19);
+			this.axWindowsMediaPlayer.Name = "axWindowsMediaPlayer";
+			this.axWindowsMediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer.OcxState")));
+			this.axWindowsMediaPlayer.Size = new System.Drawing.Size(387, 327);
+			this.axWindowsMediaPlayer.TabIndex = 0;
 			// 
 			// groupBox17
 			// 
@@ -7227,6 +7241,8 @@ namespace Assistant
 			this.videolistBox.Size = new System.Drawing.Size(223, 147);
 			this.videolistBox.Sorted = true;
 			this.videolistBox.TabIndex = 8;
+			this.videolistBox.SelectedIndexChanged += new System.EventHandler(this.videoList_SelectedIndexChanged);
+			this.videolistBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoList_MouseDown);
 			// 
 			// videoPathButton
 			// 
@@ -7407,7 +7423,9 @@ namespace Assistant
 			this.groupBox28.PerformLayout();
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
-			this.tabPage1.ResumeLayout(false);
+			this.videoTab.ResumeLayout(false);
+			this.groupBox40.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).EndInit();
 			this.groupBox17.ResumeLayout(false);
 			this.groupBox17.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).EndInit();
@@ -7723,6 +7741,10 @@ namespace Assistant
 			else if (tabs.SelectedTab == scriptingTab)
 			{
 				UpdateScriptGrid();
+			}
+			else if (tabs.SelectedTab == videoTab)
+			{
+				ReloadVideoList();
 			}
 		}
 
@@ -13214,12 +13236,94 @@ namespace Assistant
 
 		internal void ReloadVideoList()
 		{
+			axWindowsMediaPlayer.URL = null;
 			VideoCapture.DisplayTo(videolistBox);
+		}
 
-			/*if (screenPrev.Image != null) // TODO: Video preview
+		private void videoList_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			axWindowsMediaPlayer.URL = null;
+
+			if (videolistBox.SelectedIndex == -1)
+				return;
+
+			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), videolistBox.SelectedItem.ToString());
+			if (!File.Exists(file))
 			{
-				
-			}*/
+				MessageBox.Show(this, Language.Format(LocString.FileNotFoundA1, file), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				videolistBox.Items.RemoveAt(videolistBox.SelectedIndex);
+				videolistBox.SelectedIndex = -1;
+				return;
+			}
+			axWindowsMediaPlayer.URL = file;
+		}
+
+		private void videoList_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right && e.Clicks == 1)
+			{
+				ContextMenu menu = new ContextMenu();
+				menu.MenuItems.Add("Delete", new EventHandler(DeleteVideoFile));
+				if (videolistBox.SelectedIndex == -1)
+					menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
+				menu.MenuItems.Add("Delete ALL", new EventHandler(ClearVideoDirectory));
+				menu.Show(videolistBox, new Point(e.X, e.Y));
+			}
+		}
+
+		private void DeleteVideoFile(object sender, System.EventArgs e)
+		{
+
+			int sel = videolistBox.SelectedIndex;
+			if (sel == -1)
+				return;
+
+			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), (string)videolistBox.SelectedItem);
+			if (MessageBox.Show(this, Language.Format(LocString.DelConf, file), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				return;
+
+			videolistBox.SelectedIndex = -1;
+
+			try
+			{
+				axWindowsMediaPlayer.URL = null;
+				File.Delete(file);
+				videolistBox.Items.RemoveAt(sel);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(this, ex.Message, "Unable to Delete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			ReloadVideoList();
+		}
+
+		private void ClearVideoDirectory(object sender, System.EventArgs e)
+		{
+			string dir = RazorEnhanced.Settings.General.ReadString("VideoPath");
+			if (MessageBox.Show(this, Language.Format(LocString.Confirm, dir), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				return;
+
+			axWindowsMediaPlayer.URL = null;
+			string[] files = Directory.GetFiles(dir, "*.avi");
+			StringBuilder sb = new StringBuilder();
+			int failed = 0;
+			for (int i = 0; i < files.Length; i++)
+			{
+				try
+				{
+					File.Delete(files[i]);
+				}
+				catch
+				{
+					sb.AppendFormat("{0}\n", files[i]);
+					failed++;
+				}
+			}
+
+			if (failed > 0)
+				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : "", sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			ReloadVideoList();
 		}
 	}
 }
