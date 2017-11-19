@@ -17,6 +17,7 @@ namespace Assistant
 		private static AVIFile m_Avi;
 		private static Timer m_RecTimer;
 		private static int m_ResX, m_ResY;
+		private static bool m_stoprequest = false;
 
 		private static RotateFlipType m_Flip = RotateFlipType.RotateNoneFlipNone;
 
@@ -89,7 +90,8 @@ namespace Assistant
 				return false;
 
 			UpdateFlip();
-			
+
+			m_stoprequest = false;
 			m_RecTimer = new RecordTimer( fps );
 			m_RecTimer.Start();
 
@@ -98,13 +100,7 @@ namespace Assistant
 
 		public static void Stop()
 		{
-			if ( m_RecTimer != null )
-				m_RecTimer.Stop();
-			m_RecTimer = null;
-
-			if ( m_Avi != null )
-				m_Avi.Close();
-			m_Avi = null;
+			m_stoprequest = true;
 		}
 
 		private class RecordTimer : Timer
@@ -164,6 +160,7 @@ namespace Assistant
 				}
 				catch
 				{
+
 					ok = false;
 				}
 
@@ -171,6 +168,14 @@ namespace Assistant
 				{
 					VideoCapture.Stop();
 					throw new Exception( "There was an error writing a frame." );
+				}
+
+				if (m_stoprequest)
+				{
+					if (m_Avi != null)
+						m_Avi.Close();
+					m_Avi = null;
+					m_RecTimer.Stop();
 				}
 			}
 		}
@@ -250,19 +255,16 @@ namespace Assistant
 			int hr;
 			AVICOMPRESSOPTIONS opts = new AVICOMPRESSOPTIONS();
 			AVICOMPRESSOPTIONS *pOpts = &opts;
-			/*
-			opts.fccType           = mmioFOURCC('v','i','d','s');
-			opts.fccHandler        = 0;//cvid? iv50?
-			opts.dwQuality         = 0;  // 0 .. 10000
-			opts.dwFlags           = 0;  // AVICOMRPESSF_KEYFRAMES = 4
-			*/
+			
+			// Static Video settings for better performance
+			opts.fccType = 0;
+			opts.fccHandler = 1668707181;
+			opts.dwKeyFrameEvery = 0;
+			opts.dwQuality = (uint)RazorEnhanced.Settings.General.ReadInt("VideoCompression") * 100;
+			opts.dwBytesPerSecond = 0;
+			opts.dwFlags = 8;
 
-			hr = AVISaveOptions( Engine.MainWindow.Handle, 3, 1, ref m_pStream, &pOpts );
-			if (hr != 1) 
-				return false;
 
-			// TODO: AVISaveOptionsFree(...)
-    
 			hr = AVIMakeCompressedStream( out m_pCompStream, m_pStream, ref opts, 0 );
 			if (hr != 0) 
 				return false;
