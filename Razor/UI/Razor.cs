@@ -596,6 +596,9 @@ namespace Assistant
 		private RazorTextBox videoFPSTextBox;
 		private GroupBox groupBox15;
 		private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer;
+		private RazorCheckBox videoTimestampCheckBox;
+		private Label videoRecStatuslabel;
+		private Label label64;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1358,6 +1361,7 @@ namespace Assistant
 			this.groupBox40 = new System.Windows.Forms.GroupBox();
 			this.axWindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
 			this.videosettinggroupBox = new System.Windows.Forms.GroupBox();
+			this.videoTimestampCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.videoFlipHCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.videoFlipVCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.videoCompressiontrackBar = new System.Windows.Forms.TrackBar();
@@ -1377,6 +1381,8 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.label64 = new System.Windows.Forms.Label();
+			this.videoRecStatuslabel = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -7042,6 +7048,8 @@ namespace Assistant
 			// videoTab
 			// 
 			this.videoTab.BackColor = System.Drawing.SystemColors.Control;
+			this.videoTab.Controls.Add(this.videoRecStatuslabel);
+			this.videoTab.Controls.Add(this.label64);
 			this.videoTab.Controls.Add(this.groupBox40);
 			this.videoTab.Controls.Add(this.videosettinggroupBox);
 			this.videoTab.Controls.Add(this.videorecbutton);
@@ -7075,6 +7083,7 @@ namespace Assistant
 			// 
 			// videosettinggroupBox
 			// 
+			this.videosettinggroupBox.Controls.Add(this.videoTimestampCheckBox);
 			this.videosettinggroupBox.Controls.Add(this.videoFlipHCheckBox);
 			this.videosettinggroupBox.Controls.Add(this.videoFlipVCheckBox);
 			this.videosettinggroupBox.Controls.Add(this.videoCompressiontrackBar);
@@ -7085,14 +7094,23 @@ namespace Assistant
 			this.videosettinggroupBox.Controls.Add(this.videoFPSTextBox);
 			this.videosettinggroupBox.Location = new System.Drawing.Point(10, 210);
 			this.videosettinggroupBox.Name = "videosettinggroupBox";
-			this.videosettinggroupBox.Size = new System.Drawing.Size(243, 108);
+			this.videosettinggroupBox.Size = new System.Drawing.Size(243, 119);
 			this.videosettinggroupBox.TabIndex = 63;
 			this.videosettinggroupBox.TabStop = false;
 			this.videosettinggroupBox.Text = "Video Settings";
 			// 
+			// videoTimestampCheckBox
+			// 
+			this.videoTimestampCheckBox.Location = new System.Drawing.Point(9, 89);
+			this.videoTimestampCheckBox.Name = "videoTimestampCheckBox";
+			this.videoTimestampCheckBox.Size = new System.Drawing.Size(180, 22);
+			this.videoTimestampCheckBox.TabIndex = 96;
+			this.videoTimestampCheckBox.Text = "Include Timestamp on video";
+			this.videoTimestampCheckBox.CheckedChanged += new System.EventHandler(this.videoTimestampCheckBox_CheckedChanged);
+			// 
 			// videoFlipHCheckBox
 			// 
-			this.videoFlipHCheckBox.Location = new System.Drawing.Point(129, 76);
+			this.videoFlipHCheckBox.Location = new System.Drawing.Point(129, 69);
 			this.videoFlipHCheckBox.Name = "videoFlipHCheckBox";
 			this.videoFlipHCheckBox.Size = new System.Drawing.Size(103, 22);
 			this.videoFlipHCheckBox.TabIndex = 95;
@@ -7101,7 +7119,7 @@ namespace Assistant
 			// 
 			// videoFlipVCheckBox
 			// 
-			this.videoFlipVCheckBox.Location = new System.Drawing.Point(9, 76);
+			this.videoFlipVCheckBox.Location = new System.Drawing.Point(9, 69);
 			this.videoFlipVCheckBox.Name = "videoFlipVCheckBox";
 			this.videoFlipVCheckBox.Size = new System.Drawing.Size(103, 22);
 			this.videoFlipVCheckBox.TabIndex = 94;
@@ -7181,7 +7199,7 @@ namespace Assistant
 			this.videorecbutton.BackgroundImage = global::Assistant.Properties.Resources.record;
 			this.videorecbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.videorecbutton.FlatAppearance.BorderSize = 0;
-			this.videorecbutton.Location = new System.Drawing.Point(96, 324);
+			this.videorecbutton.Location = new System.Drawing.Point(37, 331);
 			this.videorecbutton.Name = "videorecbutton";
 			this.videorecbutton.Size = new System.Drawing.Size(30, 30);
 			this.videorecbutton.TabIndex = 93;
@@ -7193,7 +7211,7 @@ namespace Assistant
 			this.videostopbutton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
 			this.videostopbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.videostopbutton.FlatAppearance.BorderSize = 0;
-			this.videostopbutton.Location = new System.Drawing.Point(132, 324);
+			this.videostopbutton.Location = new System.Drawing.Point(73, 331);
 			this.videostopbutton.Name = "videostopbutton";
 			this.videostopbutton.Size = new System.Drawing.Size(30, 30);
 			this.videostopbutton.TabIndex = 92;
@@ -7274,6 +7292,25 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
+			// 
+			// label64
+			// 
+			this.label64.AutoSize = true;
+			this.label64.Location = new System.Drawing.Point(114, 340);
+			this.label64.Name = "label64";
+			this.label64.Size = new System.Drawing.Size(63, 13);
+			this.label64.TabIndex = 94;
+			this.label64.Text = "Rec Status:";
+			// 
+			// videoRecStatuslabel
+			// 
+			this.videoRecStatuslabel.AutoSize = true;
+			this.videoRecStatuslabel.ForeColor = System.Drawing.Color.Green;
+			this.videoRecStatuslabel.Location = new System.Drawing.Point(179, 340);
+			this.videoRecStatuslabel.Name = "videoRecStatuslabel";
+			this.videoRecStatuslabel.Size = new System.Drawing.Size(24, 13);
+			this.videoRecStatuslabel.TabIndex = 95;
+			this.videoRecStatuslabel.Text = "Idle";
 			// 
 			// MainForm
 			// 
@@ -7403,6 +7440,7 @@ namespace Assistant
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
 			this.videoTab.ResumeLayout(false);
+			this.videoTab.PerformLayout();
 			this.groupBox40.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).EndInit();
 			this.videosettinggroupBox.ResumeLayout(false);
@@ -13323,6 +13361,9 @@ namespace Assistant
 				RazorEnhanced.Misc.SendMessage("Already on Record");
 				return;
 			}
+			RazorEnhanced.Misc.SendMessage("Start Video Record");
+			Engine.MainWindow.videoRecStatuslabel.Text = "Recording";
+			Engine.MainWindow.videoRecStatuslabel.ForeColor = Color.Red;
 
 			Engine.MainWindow.videosettinggroupBox.Enabled = false;
 			int fps = 30;
@@ -13342,9 +13383,18 @@ namespace Assistant
 
 		internal static void StopVideoRecorder()
 		{
+			RazorEnhanced.Misc.SendMessage("Stop Video Record");
+			Engine.MainWindow.videoRecStatuslabel.Text = "Idle";
+			Engine.MainWindow.videoRecStatuslabel.ForeColor = Color.Green;
 			VideoCapture.Stop();
 			Engine.MainWindow.ReloadVideoList();
 			Engine.MainWindow.videosettinggroupBox.Enabled = true;
+		}
+
+		private void videoTimestampCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (videoTimestampCheckBox.Focused)
+				Settings.General.WriteBool("VideoTimestamp", videoTimestampCheckBox.Checked);
 		}
 
 		// ----------------- STOP VIDEO RECORDER -------------------

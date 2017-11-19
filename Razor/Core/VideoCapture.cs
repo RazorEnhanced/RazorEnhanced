@@ -111,35 +111,38 @@ namespace Assistant
 
 			protected override void OnTick()
 			{
+				string timestamp = string.Empty;
 				if ( !Recording )
 					return;
-
-				StringBuilder sb = new StringBuilder();
-				if ( m_Avi.FrameCount < 15 )
+				if (RazorEnhanced.Settings.General.ReadBool("VideoTimestamp"))
 				{
-					if ( World.Player != null && World.Player.Name != null )
+					StringBuilder sb = new StringBuilder();
+					if (m_Avi.FrameCount < 15)
 					{
-						sb.Append( World.Player.Name );
-						sb.Append( " " );
+						if (World.Player != null && World.Player.Name != null)
+						{
+							sb.Append(World.Player.Name);
+							sb.Append(" ");
+						}
+
+						if (World.ShardName != null && World.ShardName != "")
+						{
+							sb.Append('(');
+							sb.Append(World.ShardName);
+							sb.Append(") ");
+						}
+
+						if (sb.Length > 0)
+							sb.Append("- ");
+
+						sb.Append(DateTime.Now.ToString(@"M/dd/yy - HH:mm:ss"));
+						timestamp = sb.ToString();
 					}
-
-					if ( World.ShardName != null && World.ShardName != "" )
-					{
-						sb.Append( '(' );
-						sb.Append( World.ShardName );
-						sb.Append( ") " );
-					}
-
-					if ( sb.Length > 0 )
-						sb.Append( "- " );
-
-					sb.Append( DateTime.Now.ToString( @"M/dd/yy - HH:mm:ss" ) );
 				}
-
 				bool ok = false;
 				try
 				{
-					IntPtr hBmp = ClientCommunication.CaptureScreen( false, sb.ToString() );
+					IntPtr hBmp = ClientCommunication.CaptureScreen( false, timestamp);
 					using ( Bitmap bmp = Bitmap.FromHbitmap( hBmp ) )
 					{
 						if ( bmp.Width != m_ResX )
@@ -167,7 +170,7 @@ namespace Assistant
 				if ( !ok )
 				{
 					VideoCapture.Stop();
-					throw new Exception( "There was an error writing a frame." );
+					//throw new Exception( "There was an error writing a frame." );
 				}
 
 				if (m_stoprequest)

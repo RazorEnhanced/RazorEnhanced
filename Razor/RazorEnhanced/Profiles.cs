@@ -227,7 +227,10 @@ namespace RazorEnhanced
 			RazorEnhanced.Settings.General.SaveExitData();
 		    PasswordMemory.ProfileChangeInit();
             Assistant.Engine.MainWindow.Initializing = true;
-			
+
+			// Stop video recorder
+			Assistant.MainForm.StopVideoRecorder();
+
 			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;

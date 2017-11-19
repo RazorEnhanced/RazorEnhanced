@@ -918,6 +918,7 @@ namespace Assistant
 			}
 
 			// Stop forzato di tutti i thread agent
+			Assistant.MainForm.StopVideoRecorder();
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;

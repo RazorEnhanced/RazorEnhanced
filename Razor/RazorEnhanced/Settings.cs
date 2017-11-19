@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 40;
+		private static int SettingVersion = 41;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1742,6 +1742,7 @@ namespace RazorEnhanced
 				general.Columns.Add("VideoCompression", typeof(int));
 				general.Columns.Add("VideoFlipV", typeof(bool));
 				general.Columns.Add("VideoFlipH", typeof(bool));
+				general.Columns.Add("VideoTimestamp", typeof(bool));
 
 				// Parametri finestra script
 				general.Columns.Add("ShowScriptMessageCheckBox", typeof(bool));
@@ -1800,7 +1801,7 @@ namespace RazorEnhanced
                      false, false, false,
 
 					 // Parametri Video Recorder
-                     Path.GetDirectoryName(Application.ExecutablePath), 25, "Full Size", 1, 100, false, false,
+                     Path.GetDirectoryName(Application.ExecutablePath), 25, "Full Size", 1, 100, false, false, false,
 
 					 // Parametri finestra script
                      true
@@ -5454,6 +5455,16 @@ namespace RazorEnhanced
 				realVersion = 40;
 				General.WriteInt("SettingVersion", 40);
 			}
+
+			if (realVersion == 40)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoTimestamp", typeof(bool));
+				General.WriteBool("VideoTimestamp", false);
+
+				realVersion = 41;
+				General.WriteInt("SettingVersion", 41);
+			}
+
 
 			Save(true);
 		}
