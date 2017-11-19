@@ -583,7 +583,7 @@ namespace Assistant
 		private RazorButton videoPathButton;
 		private ListBox videolistBox;
 		private GroupBox groupBox40;
-		private GroupBox groupBox17;
+		private GroupBox videosettinggroupBox;
 		private RazorCheckBox videoFlipHCheckBox;
 		private RazorCheckBox videoFlipVCheckBox;
 		private Button videorecbutton;
@@ -1357,17 +1357,17 @@ namespace Assistant
 			this.videoTab = new System.Windows.Forms.TabPage();
 			this.groupBox40 = new System.Windows.Forms.GroupBox();
 			this.axWindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
-			this.groupBox17 = new System.Windows.Forms.GroupBox();
+			this.videosettinggroupBox = new System.Windows.Forms.GroupBox();
 			this.videoFlipHCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.videoFlipVCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.videorecbutton = new System.Windows.Forms.Button();
-			this.videostopbutton = new System.Windows.Forms.Button();
 			this.videoCompressiontrackBar = new System.Windows.Forms.TrackBar();
 			this.label65 = new System.Windows.Forms.Label();
 			this.videoResolutioncomboBox = new System.Windows.Forms.ComboBox();
 			this.label63 = new System.Windows.Forms.Label();
 			this.label62 = new System.Windows.Forms.Label();
 			this.videoFPSTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.videorecbutton = new System.Windows.Forms.Button();
+			this.videostopbutton = new System.Windows.Forms.Button();
 			this.groupBox15 = new System.Windows.Forms.GroupBox();
 			this.videolistBox = new System.Windows.Forms.ListBox();
 			this.videoPathButton = new RazorEnhanced.UI.RazorButton();
@@ -1456,7 +1456,7 @@ namespace Assistant
 			this.videoTab.SuspendLayout();
 			this.groupBox40.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).BeginInit();
-			this.groupBox17.SuspendLayout();
+			this.videosettinggroupBox.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).BeginInit();
 			this.groupBox15.SuspendLayout();
 			this.datagridMenuStrip.SuspendLayout();
@@ -7043,7 +7043,9 @@ namespace Assistant
 			// 
 			this.videoTab.BackColor = System.Drawing.SystemColors.Control;
 			this.videoTab.Controls.Add(this.groupBox40);
-			this.videoTab.Controls.Add(this.groupBox17);
+			this.videoTab.Controls.Add(this.videosettinggroupBox);
+			this.videoTab.Controls.Add(this.videorecbutton);
+			this.videoTab.Controls.Add(this.videostopbutton);
 			this.videoTab.Controls.Add(this.groupBox15);
 			this.videoTab.Location = new System.Drawing.Point(4, 40);
 			this.videoTab.Name = "videoTab";
@@ -7071,24 +7073,22 @@ namespace Assistant
 			this.axWindowsMediaPlayer.Size = new System.Drawing.Size(387, 327);
 			this.axWindowsMediaPlayer.TabIndex = 0;
 			// 
-			// groupBox17
+			// videosettinggroupBox
 			// 
-			this.groupBox17.Controls.Add(this.videoFlipHCheckBox);
-			this.groupBox17.Controls.Add(this.videoFlipVCheckBox);
-			this.groupBox17.Controls.Add(this.videorecbutton);
-			this.groupBox17.Controls.Add(this.videostopbutton);
-			this.groupBox17.Controls.Add(this.videoCompressiontrackBar);
-			this.groupBox17.Controls.Add(this.label65);
-			this.groupBox17.Controls.Add(this.videoResolutioncomboBox);
-			this.groupBox17.Controls.Add(this.label63);
-			this.groupBox17.Controls.Add(this.label62);
-			this.groupBox17.Controls.Add(this.videoFPSTextBox);
-			this.groupBox17.Location = new System.Drawing.Point(10, 210);
-			this.groupBox17.Name = "groupBox17";
-			this.groupBox17.Size = new System.Drawing.Size(243, 148);
-			this.groupBox17.TabIndex = 63;
-			this.groupBox17.TabStop = false;
-			this.groupBox17.Text = "Video Settings";
+			this.videosettinggroupBox.Controls.Add(this.videoFlipHCheckBox);
+			this.videosettinggroupBox.Controls.Add(this.videoFlipVCheckBox);
+			this.videosettinggroupBox.Controls.Add(this.videoCompressiontrackBar);
+			this.videosettinggroupBox.Controls.Add(this.label65);
+			this.videosettinggroupBox.Controls.Add(this.videoResolutioncomboBox);
+			this.videosettinggroupBox.Controls.Add(this.label63);
+			this.videosettinggroupBox.Controls.Add(this.label62);
+			this.videosettinggroupBox.Controls.Add(this.videoFPSTextBox);
+			this.videosettinggroupBox.Location = new System.Drawing.Point(10, 210);
+			this.videosettinggroupBox.Name = "videosettinggroupBox";
+			this.videosettinggroupBox.Size = new System.Drawing.Size(243, 108);
+			this.videosettinggroupBox.TabIndex = 63;
+			this.videosettinggroupBox.TabStop = false;
+			this.videosettinggroupBox.Text = "Video Settings";
 			// 
 			// videoFlipHCheckBox
 			// 
@@ -7108,38 +7108,14 @@ namespace Assistant
 			this.videoFlipVCheckBox.Text = "Flip Vertical";
 			this.videoFlipVCheckBox.CheckedChanged += new System.EventHandler(this.videoFlipVCheckBox_CheckedChanged);
 			// 
-			// videorecbutton
-			// 
-			this.videorecbutton.BackgroundImage = global::Assistant.Properties.Resources.record;
-			this.videorecbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.videorecbutton.FlatAppearance.BorderSize = 0;
-			this.videorecbutton.Location = new System.Drawing.Point(75, 109);
-			this.videorecbutton.Name = "videorecbutton";
-			this.videorecbutton.Size = new System.Drawing.Size(30, 30);
-			this.videorecbutton.TabIndex = 93;
-			this.videorecbutton.UseVisualStyleBackColor = true;
-			this.videorecbutton.Click += new System.EventHandler(this.videorecbutton_Click);
-			// 
-			// videostopbutton
-			// 
-			this.videostopbutton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
-			this.videostopbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.videostopbutton.FlatAppearance.BorderSize = 0;
-			this.videostopbutton.Location = new System.Drawing.Point(111, 109);
-			this.videostopbutton.Name = "videostopbutton";
-			this.videostopbutton.Size = new System.Drawing.Size(30, 30);
-			this.videostopbutton.TabIndex = 92;
-			this.videostopbutton.UseVisualStyleBackColor = true;
-			this.videostopbutton.Click += new System.EventHandler(this.videostopbutton_Click);
-			// 
 			// videoCompressiontrackBar
 			// 
 			this.videoCompressiontrackBar.AutoSize = false;
 			this.videoCompressiontrackBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
-			this.videoCompressiontrackBar.Location = new System.Drawing.Point(76, 51);
+			this.videoCompressiontrackBar.Location = new System.Drawing.Point(55, 51);
 			this.videoCompressiontrackBar.Maximum = 100;
 			this.videoCompressiontrackBar.Name = "videoCompressiontrackBar";
-			this.videoCompressiontrackBar.Size = new System.Drawing.Size(156, 16);
+			this.videoCompressiontrackBar.Size = new System.Drawing.Size(177, 16);
 			this.videoCompressiontrackBar.TabIndex = 69;
 			this.videoCompressiontrackBar.TickFrequency = 0;
 			this.videoCompressiontrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
@@ -7151,9 +7127,9 @@ namespace Assistant
 			this.label65.AutoSize = true;
 			this.label65.Location = new System.Drawing.Point(7, 51);
 			this.label65.Name = "label65";
-			this.label65.Size = new System.Drawing.Size(70, 13);
+			this.label65.Size = new System.Drawing.Size(42, 13);
 			this.label65.TabIndex = 68;
-			this.label65.Text = "Compression:";
+			this.label65.Text = "Quality:";
 			// 
 			// videoResolutioncomboBox
 			// 
@@ -7163,7 +7139,7 @@ namespace Assistant
             "3/4",
             "1/2",
             "1/4"});
-			this.videoResolutioncomboBox.Location = new System.Drawing.Point(147, 18);
+			this.videoResolutioncomboBox.Location = new System.Drawing.Point(147, 23);
 			this.videoResolutioncomboBox.Name = "videoResolutioncomboBox";
 			this.videoResolutioncomboBox.Size = new System.Drawing.Size(85, 21);
 			this.videoResolutioncomboBox.TabIndex = 66;
@@ -7172,7 +7148,7 @@ namespace Assistant
 			// label63
 			// 
 			this.label63.AutoSize = true;
-			this.label63.Location = new System.Drawing.Point(81, 21);
+			this.label63.Location = new System.Drawing.Point(81, 26);
 			this.label63.Name = "label63";
 			this.label63.Size = new System.Drawing.Size(60, 13);
 			this.label63.TabIndex = 64;
@@ -7181,7 +7157,7 @@ namespace Assistant
 			// label62
 			// 
 			this.label62.AutoSize = true;
-			this.label62.Location = new System.Drawing.Point(7, 21);
+			this.label62.Location = new System.Drawing.Point(7, 26);
 			this.label62.Name = "label62";
 			this.label62.Size = new System.Drawing.Size(33, 13);
 			this.label62.TabIndex = 61;
@@ -7194,11 +7170,35 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.videoFPSTextBox.BackColor = System.Drawing.Color.White;
 			this.videoFPSTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.videoFPSTextBox.Location = new System.Drawing.Point(42, 18);
+			this.videoFPSTextBox.Location = new System.Drawing.Point(42, 23);
 			this.videoFPSTextBox.Name = "videoFPSTextBox";
 			this.videoFPSTextBox.Size = new System.Drawing.Size(33, 20);
 			this.videoFPSTextBox.TabIndex = 60;
 			this.videoFPSTextBox.TextChanged += new System.EventHandler(this.videoFPSTextBox_TextChanged);
+			// 
+			// videorecbutton
+			// 
+			this.videorecbutton.BackgroundImage = global::Assistant.Properties.Resources.record;
+			this.videorecbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.videorecbutton.FlatAppearance.BorderSize = 0;
+			this.videorecbutton.Location = new System.Drawing.Point(96, 324);
+			this.videorecbutton.Name = "videorecbutton";
+			this.videorecbutton.Size = new System.Drawing.Size(30, 30);
+			this.videorecbutton.TabIndex = 93;
+			this.videorecbutton.UseVisualStyleBackColor = true;
+			this.videorecbutton.Click += new System.EventHandler(this.videorecbutton_Click);
+			// 
+			// videostopbutton
+			// 
+			this.videostopbutton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
+			this.videostopbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.videostopbutton.FlatAppearance.BorderSize = 0;
+			this.videostopbutton.Location = new System.Drawing.Point(132, 324);
+			this.videostopbutton.Name = "videostopbutton";
+			this.videostopbutton.Size = new System.Drawing.Size(30, 30);
+			this.videostopbutton.TabIndex = 92;
+			this.videostopbutton.UseVisualStyleBackColor = true;
+			this.videostopbutton.Click += new System.EventHandler(this.videostopbutton_Click);
 			// 
 			// groupBox15
 			// 
@@ -7405,8 +7405,8 @@ namespace Assistant
 			this.videoTab.ResumeLayout(false);
 			this.groupBox40.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).EndInit();
-			this.groupBox17.ResumeLayout(false);
-			this.groupBox17.PerformLayout();
+			this.videosettinggroupBox.ResumeLayout(false);
+			this.videosettinggroupBox.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).EndInit();
 			this.groupBox15.ResumeLayout(false);
 			this.groupBox15.PerformLayout();
@@ -8588,20 +8588,20 @@ namespace Assistant
 
 		private bool m_isKeyPressed;
 		private Keys m_lastKey;
-        private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if (!m_isKeyPressed || m_lastKey != e.KeyData)
 				RazorEnhanced.HotKey.KeyDown(e.KeyData);
 			m_isKeyPressed = true;
 			m_lastKey = e.KeyData;
-            e.SuppressKeyPress = true;
+			e.SuppressKeyPress = true;
 		}
 
 		private void HotKey_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			m_isKeyPressed = false;
 			m_lastKey = Keys.None;
-        }
+		}
 
 		private void HotKey_MouseRoll(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
@@ -8717,7 +8717,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("AutoOpenDoors", autoOpenDoors.Checked);
 
 			hiddedAutoOpenDoors.Enabled = autoOpenDoors.Checked;
-        }
+		}
 
 
 		private void hiddedAutoOpenDoors_CheckedChanged(object sender, EventArgs e)
@@ -9317,7 +9317,7 @@ namespace Assistant
 		}
 
 		// ------------ AUTOLOOT ----------------
-	
+
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
 			if (autolootListSelect.Text != "")
@@ -9824,7 +9824,7 @@ namespace Assistant
 					}
 					cell.Value = "0x" + color.ToString("X4");
 				}
-			}	
+			}
 			else if (e.ColumnIndex == 2)
 			{
 				int itemid = 0;
@@ -9879,7 +9879,7 @@ namespace Assistant
 				}
 			}
 		}
-  
+
 		private void organizerSetSource_Click(object sender, EventArgs e)
 		{
 			if (organizerListSelect.Text != "")
@@ -10417,7 +10417,7 @@ namespace Assistant
 			}
 			RazorEnhanced.SellAgent.CopyTable();
 		}
-		
+
 		private void vendorsellGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
 		{
 			e.Row.Cells[0].Value = false;
@@ -12598,7 +12598,7 @@ namespace Assistant
 				break;
 			}
 			return cpuInfo;
-        }
+		}
 
 
 		internal static void VersionCheckWorker()
@@ -12942,7 +12942,7 @@ namespace Assistant
 			switch (agenttype)
 			{
 				case "autolootdataGridView":
-                    if (!autolootdataGridView.Rows[agentrowindex].IsNewRow)
+					if (!autolootdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						autolootdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.AutoLoot.CopyTable();
@@ -12956,28 +12956,28 @@ namespace Assistant
 					}
 					break;
 				case "organizerdataGridView":
-                    if (!organizerdataGridView.Rows[agentrowindex].IsNewRow)
+					if (!organizerdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						organizerdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Organizer.CopyTable();
 					}
 					break;
 				case "vendorbuydataGridView":
-                    if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
+					if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						vendorbuydataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.BuyAgent.CopyTable();
 					}
 					break;
 				case "vendorsellGridView":
-                    if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
+					if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
 					{
 						vendorsellGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.SellAgent.CopyTable();
 					}
 					break;
 				case "restockdataGridView":
-                    if (!restockdataGridView.Rows[agentrowindex].IsNewRow)
+					if (!restockdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						restockdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Restock.CopyTable();
@@ -13014,7 +13014,7 @@ namespace Assistant
 			DataGridView grid = (DataGridView)sender;
 			rowIndexFromMouseDown = grid.HitTest(e.X, e.Y).RowIndex;
 			if (rowIndexFromMouseDown != -1)
-			{           
+			{
 				Size dragSize = SystemInformation.DragSize;
 				dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2),
 															   e.Y - (dragSize.Height / 2)),
@@ -13308,26 +13308,45 @@ namespace Assistant
 
 		private void videorecbutton_Click(object sender, EventArgs e)
 		{
+			StartVideoRecorder();
+		}
+
+		private void videostopbutton_Click(object sender, EventArgs e)
+		{
+			StopVideoRecorder();
+		}
+
+		internal static void StartVideoRecorder()
+		{
+			if (VideoCapture.Recording) // already on record
+			{
+				RazorEnhanced.Misc.SendMessage("Already on Record");
+				return;
+			}
+
+			Engine.MainWindow.videosettinggroupBox.Enabled = false;
 			int fps = 30;
 			if (Settings.General.ReadInt("VideoFPS") < 30)
 				fps = Settings.General.ReadInt("VideoFPS");
 
 			double res = 1.00;
-			switch (videoResolutioncomboBox.SelectedIndex)
+			switch (Engine.MainWindow.videoResolutioncomboBox.SelectedIndex)
 			{
 				case 1: res = 0.75; break;
 				case 2: res = 0.50; break;
 				case 3: res = 0.25; break;
 			}
 
-			if (!VideoCapture.Recording)
-				VideoCapture.Record(fps, res);
+			VideoCapture.Record(fps, res);
 		}
 
-		private void videostopbutton_Click(object sender, EventArgs e)
+		internal static void StopVideoRecorder()
 		{
 			VideoCapture.Stop();
-			ReloadVideoList();
+			Engine.MainWindow.ReloadVideoList();
+			Engine.MainWindow.videosettinggroupBox.Enabled = true;
 		}
+
+		// ----------------- STOP VIDEO RECORDER -------------------
 	}
 }

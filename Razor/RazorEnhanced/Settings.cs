@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 39;
+		private static int SettingVersion = 40;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -273,6 +273,14 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "Start Video Record", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "Stop Video Record", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "General", "Ping Server", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
@@ -362,6 +370,10 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Pet Commands", "Dismount", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Pet Commands", "Mount / Dismount", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -5414,6 +5426,33 @@ namespace RazorEnhanced
 
 				realVersion = 39;
 				General.WriteInt("SettingVersion", 39);
+			}
+
+			if (realVersion == 39)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Pet Commands";
+				newRow["Name"] = "Mount / Dismount";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "Start Video Record";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "Stop Video Record";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				realVersion = 40;
+				General.WriteInt("SettingVersion", 40);
 			}
 
 			Save(true);
