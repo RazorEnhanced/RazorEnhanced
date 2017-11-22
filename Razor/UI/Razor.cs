@@ -584,19 +584,12 @@ namespace Assistant
 		private ListBox videolistBox;
 		private GroupBox groupBox40;
 		private GroupBox videosettinggroupBox;
-		private RazorCheckBox videoFlipHCheckBox;
-		private RazorCheckBox videoFlipVCheckBox;
 		private Button videorecbutton;
 		private Button videostopbutton;
-		private TrackBar videoCompressiontrackBar;
-		private Label label65;
-		private ComboBox videoResolutioncomboBox;
-		private Label label63;
 		private Label label62;
 		private RazorTextBox videoFPSTextBox;
 		private GroupBox groupBox15;
 		private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer;
-		private RazorCheckBox videoTimestampCheckBox;
 		private Label videoRecStatuslabel;
 		private Label label64;
 		private System.Drawing.Point windowspt;
@@ -1358,16 +1351,11 @@ namespace Assistant
 			this.hotkeytextbox = new RazorEnhanced.UI.RazorTextBox();
 			this.hotkeytreeView = new System.Windows.Forms.TreeView();
 			this.videoTab = new System.Windows.Forms.TabPage();
+			this.videoRecStatuslabel = new System.Windows.Forms.Label();
+			this.label64 = new System.Windows.Forms.Label();
 			this.groupBox40 = new System.Windows.Forms.GroupBox();
 			this.axWindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
 			this.videosettinggroupBox = new System.Windows.Forms.GroupBox();
-			this.videoTimestampCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.videoFlipHCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.videoFlipVCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.videoCompressiontrackBar = new System.Windows.Forms.TrackBar();
-			this.label65 = new System.Windows.Forms.Label();
-			this.videoResolutioncomboBox = new System.Windows.Forms.ComboBox();
-			this.label63 = new System.Windows.Forms.Label();
 			this.label62 = new System.Windows.Forms.Label();
 			this.videoFPSTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.videorecbutton = new System.Windows.Forms.Button();
@@ -1381,8 +1369,6 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.label64 = new System.Windows.Forms.Label();
-			this.videoRecStatuslabel = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1463,7 +1449,6 @@ namespace Assistant
 			this.groupBox40.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).BeginInit();
 			this.videosettinggroupBox.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).BeginInit();
 			this.groupBox15.SuspendLayout();
 			this.datagridMenuStrip.SuspendLayout();
 			this.SuspendLayout();
@@ -7062,6 +7047,25 @@ namespace Assistant
 			this.videoTab.TabIndex = 16;
 			this.videoTab.Text = "Video Recorder";
 			// 
+			// videoRecStatuslabel
+			// 
+			this.videoRecStatuslabel.AutoSize = true;
+			this.videoRecStatuslabel.ForeColor = System.Drawing.Color.Green;
+			this.videoRecStatuslabel.Location = new System.Drawing.Point(179, 340);
+			this.videoRecStatuslabel.Name = "videoRecStatuslabel";
+			this.videoRecStatuslabel.Size = new System.Drawing.Size(24, 13);
+			this.videoRecStatuslabel.TabIndex = 95;
+			this.videoRecStatuslabel.Text = "Idle";
+			// 
+			// label64
+			// 
+			this.label64.AutoSize = true;
+			this.label64.Location = new System.Drawing.Point(114, 340);
+			this.label64.Name = "label64";
+			this.label64.Size = new System.Drawing.Size(63, 13);
+			this.label64.TabIndex = 94;
+			this.label64.Text = "Rec Status:";
+			// 
 			// groupBox40
 			// 
 			this.groupBox40.Controls.Add(this.axWindowsMediaPlayer);
@@ -7083,13 +7087,6 @@ namespace Assistant
 			// 
 			// videosettinggroupBox
 			// 
-			this.videosettinggroupBox.Controls.Add(this.videoTimestampCheckBox);
-			this.videosettinggroupBox.Controls.Add(this.videoFlipHCheckBox);
-			this.videosettinggroupBox.Controls.Add(this.videoFlipVCheckBox);
-			this.videosettinggroupBox.Controls.Add(this.videoCompressiontrackBar);
-			this.videosettinggroupBox.Controls.Add(this.label65);
-			this.videosettinggroupBox.Controls.Add(this.videoResolutioncomboBox);
-			this.videosettinggroupBox.Controls.Add(this.label63);
 			this.videosettinggroupBox.Controls.Add(this.label62);
 			this.videosettinggroupBox.Controls.Add(this.videoFPSTextBox);
 			this.videosettinggroupBox.Location = new System.Drawing.Point(10, 210);
@@ -7098,79 +7095,6 @@ namespace Assistant
 			this.videosettinggroupBox.TabIndex = 63;
 			this.videosettinggroupBox.TabStop = false;
 			this.videosettinggroupBox.Text = "Video Settings";
-			// 
-			// videoTimestampCheckBox
-			// 
-			this.videoTimestampCheckBox.Location = new System.Drawing.Point(9, 89);
-			this.videoTimestampCheckBox.Name = "videoTimestampCheckBox";
-			this.videoTimestampCheckBox.Size = new System.Drawing.Size(180, 22);
-			this.videoTimestampCheckBox.TabIndex = 96;
-			this.videoTimestampCheckBox.Text = "Include Timestamp on video";
-			this.videoTimestampCheckBox.CheckedChanged += new System.EventHandler(this.videoTimestampCheckBox_CheckedChanged);
-			// 
-			// videoFlipHCheckBox
-			// 
-			this.videoFlipHCheckBox.Location = new System.Drawing.Point(129, 69);
-			this.videoFlipHCheckBox.Name = "videoFlipHCheckBox";
-			this.videoFlipHCheckBox.Size = new System.Drawing.Size(103, 22);
-			this.videoFlipHCheckBox.TabIndex = 95;
-			this.videoFlipHCheckBox.Text = "Flip Horizontal";
-			this.videoFlipHCheckBox.CheckedChanged += new System.EventHandler(this.videoFlipHCheckBox_CheckedChanged);
-			// 
-			// videoFlipVCheckBox
-			// 
-			this.videoFlipVCheckBox.Location = new System.Drawing.Point(9, 69);
-			this.videoFlipVCheckBox.Name = "videoFlipVCheckBox";
-			this.videoFlipVCheckBox.Size = new System.Drawing.Size(103, 22);
-			this.videoFlipVCheckBox.TabIndex = 94;
-			this.videoFlipVCheckBox.Text = "Flip Vertical";
-			this.videoFlipVCheckBox.CheckedChanged += new System.EventHandler(this.videoFlipVCheckBox_CheckedChanged);
-			// 
-			// videoCompressiontrackBar
-			// 
-			this.videoCompressiontrackBar.AutoSize = false;
-			this.videoCompressiontrackBar.Cursor = System.Windows.Forms.Cursors.SizeWE;
-			this.videoCompressiontrackBar.Location = new System.Drawing.Point(55, 51);
-			this.videoCompressiontrackBar.Maximum = 100;
-			this.videoCompressiontrackBar.Name = "videoCompressiontrackBar";
-			this.videoCompressiontrackBar.Size = new System.Drawing.Size(177, 16);
-			this.videoCompressiontrackBar.TabIndex = 69;
-			this.videoCompressiontrackBar.TickFrequency = 0;
-			this.videoCompressiontrackBar.TickStyle = System.Windows.Forms.TickStyle.None;
-			this.videoCompressiontrackBar.Value = 100;
-			this.videoCompressiontrackBar.Scroll += new System.EventHandler(this.videoCompressiontrackBar_Scroll);
-			// 
-			// label65
-			// 
-			this.label65.AutoSize = true;
-			this.label65.Location = new System.Drawing.Point(7, 51);
-			this.label65.Name = "label65";
-			this.label65.Size = new System.Drawing.Size(42, 13);
-			this.label65.TabIndex = 68;
-			this.label65.Text = "Quality:";
-			// 
-			// videoResolutioncomboBox
-			// 
-			this.videoResolutioncomboBox.FormattingEnabled = true;
-			this.videoResolutioncomboBox.Items.AddRange(new object[] {
-            "Full Size",
-            "3/4",
-            "1/2",
-            "1/4"});
-			this.videoResolutioncomboBox.Location = new System.Drawing.Point(147, 23);
-			this.videoResolutioncomboBox.Name = "videoResolutioncomboBox";
-			this.videoResolutioncomboBox.Size = new System.Drawing.Size(85, 21);
-			this.videoResolutioncomboBox.TabIndex = 66;
-			this.videoResolutioncomboBox.SelectedIndexChanged += new System.EventHandler(this.videoResolutioncomboBox_SelectedIndexChanged);
-			// 
-			// label63
-			// 
-			this.label63.AutoSize = true;
-			this.label63.Location = new System.Drawing.Point(81, 26);
-			this.label63.Name = "label63";
-			this.label63.Size = new System.Drawing.Size(60, 13);
-			this.label63.TabIndex = 64;
-			this.label63.Text = "Resolution:";
 			// 
 			// label62
 			// 
@@ -7292,25 +7216,6 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
-			// 
-			// label64
-			// 
-			this.label64.AutoSize = true;
-			this.label64.Location = new System.Drawing.Point(114, 340);
-			this.label64.Name = "label64";
-			this.label64.Size = new System.Drawing.Size(63, 13);
-			this.label64.TabIndex = 94;
-			this.label64.Text = "Rec Status:";
-			// 
-			// videoRecStatuslabel
-			// 
-			this.videoRecStatuslabel.AutoSize = true;
-			this.videoRecStatuslabel.ForeColor = System.Drawing.Color.Green;
-			this.videoRecStatuslabel.Location = new System.Drawing.Point(179, 340);
-			this.videoRecStatuslabel.Name = "videoRecStatuslabel";
-			this.videoRecStatuslabel.Size = new System.Drawing.Size(24, 13);
-			this.videoRecStatuslabel.TabIndex = 95;
-			this.videoRecStatuslabel.Text = "Idle";
 			// 
 			// MainForm
 			// 
@@ -7445,7 +7350,6 @@ namespace Assistant
 			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).EndInit();
 			this.videosettinggroupBox.ResumeLayout(false);
 			this.videosettinggroupBox.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.videoCompressiontrackBar)).EndInit();
 			this.groupBox15.ResumeLayout(false);
 			this.groupBox15.PerformLayout();
 			this.datagridMenuStrip.ResumeLayout(false);
@@ -7706,12 +7610,6 @@ namespace Assistant
 			// Video Recorder
 			videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
 			videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
-			videoResolutioncomboBox.Text = Settings.General.ReadString("VideoResolution");
-			//videoFormatcomboBox.SelectedText = Settings.General.ReadString("");
-			videoCompressiontrackBar.AutoSize = false;
-			videoCompressiontrackBar.Value = RazorEnhanced.Settings.General.ReadInt("VideoCompression");
-			videoFlipVCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("VideoFlipV");
-			videoFlipHCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("VideoFlipH");
 		}
 
 		private bool m_Initializing = false;
@@ -13199,18 +13097,6 @@ namespace Assistant
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
 		// ----------------- START VIDEO RECORDER -------------------
-		private void videoFlipVCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (videoFlipVCheckBox.Focused)
-				Settings.General.WriteBool("VideoFlipV", videoFlipVCheckBox.Checked);
-		}
-
-		private void videoFlipHCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (videoFlipHCheckBox.Focused)
-				Settings.General.WriteBool("VideoFlipH", videoFlipHCheckBox.Checked);
-		}
-
 		private void videoFPSTextBox_TextChanged(object sender, EventArgs e)
 		{
 			if (videoFPSTextBox.Focused)
@@ -13222,18 +13108,6 @@ namespace Assistant
 
 				Settings.General.WriteInt("VideoFPS", fps);
 			}
-		}
-
-		private void videoResolutioncomboBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			if (videoResolutioncomboBox.Focused)
-				Settings.General.WriteString("VideoResolution", videoResolutioncomboBox.Text);
-		}
-
-		private void videoCompressiontrackBar_Scroll(object sender, EventArgs e)
-		{
-			if (videoCompressiontrackBar.Focused)
-				RazorEnhanced.Settings.General.WriteInt("VideoCompression", videoCompressiontrackBar.Value);
 		}
 
 		private void videoPathButton_Click(object sender, EventArgs e)
@@ -13370,15 +13244,7 @@ namespace Assistant
 			if (Settings.General.ReadInt("VideoFPS") < 30)
 				fps = Settings.General.ReadInt("VideoFPS");
 
-			double res = 1.00;
-			switch (Engine.MainWindow.videoResolutioncomboBox.SelectedIndex)
-			{
-				case 1: res = 0.75; break;
-				case 2: res = 0.50; break;
-				case 3: res = 0.25; break;
-			}
-
-			VideoCapture.Record(fps, res);
+			VideoCapture.Record(fps);
 		}
 
 		internal static void StopVideoRecorder()
@@ -13390,13 +13256,6 @@ namespace Assistant
 			Engine.MainWindow.ReloadVideoList();
 			Engine.MainWindow.videosettinggroupBox.Enabled = true;
 		}
-
-		private void videoTimestampCheckBox_CheckedChanged(object sender, EventArgs e)
-		{
-			if (videoTimestampCheckBox.Focused)
-				Settings.General.WriteBool("VideoTimestamp", videoTimestampCheckBox.Checked);
-		}
-
 		// ----------------- STOP VIDEO RECORDER -------------------
 	}
 }
