@@ -92,11 +92,10 @@ namespace Assistant
 			}
 			while (File.Exists(filename));
 
-			m_recording = true;
-			m_filewriter = new VideoFileWriter();
-
 			try
 			{
+				m_recording = true;
+				m_filewriter = new VideoFileWriter();
 				m_filewriter.Open(filename, m_ResX, m_ResY, fps, (VideoCodec)codec);
 
 				// create screen capture video source
@@ -105,34 +104,35 @@ namespace Assistant
 				m_videostream.NewFrame += new NewFrameEventHandler(video_NewFrame);
 				// start the video source
 				m_videostream.Start();
+				return true;
 			}
 			catch
 			{
 				MessageBox.Show("Video Codec not installed on your system.");
+				return false;
 			}
-
-		
-			return true; 
 		}
 
 		private static void video_NewFrame(object sender, NewFrameEventArgs eventArgs)
 		{
-			try
-			{
-					m_filewriter.WriteVideoFrame(eventArgs.Frame);
-			}
-			catch { }
+			m_filewriter.WriteVideoFrame(eventArgs.Frame);
 		}
 
 		public static void Stop()
 		{
+			if (m_videostream != null)
+			{
+				m_videostream.SignalToStop();
+				m_videostream.WaitForStop();	
+			}
+			
+
 			if (m_filewriter != null && m_filewriter.IsOpen)
 			{
 				m_filewriter.Close();
 				m_filewriter.Dispose();
 			}
-			if (m_videostream != null)
-				m_videostream.SignalToStop();
+	
 
 			m_recording = false;
 		}
