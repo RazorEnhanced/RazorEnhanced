@@ -6711,6 +6711,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.bandagehealcustomcolorTextBox.Enabled = false;
 			this.bandagehealcustomcolorTextBox.Location = new System.Drawing.Point(286, 76);
 			this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
 			this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
@@ -6733,6 +6734,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.bandagehealcustomIDTextBox.Enabled = false;
 			this.bandagehealcustomIDTextBox.Location = new System.Drawing.Point(180, 75);
 			this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
 			this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);

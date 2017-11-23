@@ -28,19 +28,6 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.BandageHealLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealLogBox.Items.Clear()));
 		}
 
-		internal static string TargetType
-		{
-			get
-			{
-				return Assistant.Engine.MainWindow.BandageHealtargetComboBox.Text;
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.BandageHealtargetComboBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealtargetComboBox.Text = value));
-			}
-		}
-
 		internal static int TargetSerial
 		{
 			get
@@ -58,19 +45,6 @@ namespace RazorEnhanced
 			set
 			{
 				Assistant.Engine.MainWindow.BandageHealtargetLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealtargetLabel.Text = "0x" + value.ToString("X8")));
-			}
-		}
-
-		internal static bool CustomCheckBox
-		{
-			get
-			{
-				return Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Checked;
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Checked = value));
 			}
 		}
 
@@ -120,6 +94,9 @@ namespace RazorEnhanced
 			{
 				int delay = 1000;
 				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text, out delay);
+				if (delay < 1)
+					delay = 1000;
+
 				return delay;
 			}
 
@@ -141,19 +118,6 @@ namespace RazorEnhanced
 			set
 			{
 				Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text = value.ToString()));
-			}
-		}
-
-		internal static bool DexFormula
-		{
-			get
-			{
-				return Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Checked;
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = value));
 			}
 		}
 
@@ -229,10 +193,10 @@ namespace RazorEnhanced
 			ShowCountdown = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
 			string BandageHealtargetComboBox = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
 			TargetSerial = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
-			Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Enabled = Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Enabled = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
+			Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
 			CustomID = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
 			CustomColor = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomcolorTextBox");
-			Assistant.Engine.MainWindow.BandageHealdelayTextBox.Enabled = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
+			Assistant.Engine.MainWindow.BandageHealdexformulaCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox");
 			CustomDelay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
 			HpLimit = RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox");
 			MaxRange = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox");
@@ -282,12 +246,6 @@ namespace RazorEnhanced
 						return;
 				}
 
-				if (Targeting.HasTarget)
-				{
-					Target.Cancel();
-					Thread.Sleep(100);
-				}
-
 				// Id base bende
 				int bandageamount = 0;
 				int bandageid = 0x0E21;
@@ -332,7 +290,6 @@ namespace RazorEnhanced
 							while (first > 0)
 							{
 								Player.HeadMessage(10, (first / 1000).ToString());
-								AddLog("Delay counting....");
 								first = first - 1000;
 								Thread.Sleep(1000);
 							}
@@ -359,8 +316,7 @@ namespace RazorEnhanced
 
 							while (first > 0)
 							{
-								Player.HeadMessage(10, (first / 1000).ToString());
-								AddLog("Delay counting....");
+								Player.HeadMessage(10, first.ToString());
 								first--;
 								Thread.Sleep(1000);
 							}
