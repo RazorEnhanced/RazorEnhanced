@@ -15,7 +15,7 @@ namespace Assistant
 		private static extern IntPtr DeleteObject( IntPtr hGdiObj );
 
 		public static bool Recording { get { return m_recording; } }
-		private static bool m_recording, m_isresized;
+		private static bool m_recording;
 		private static int m_ResX, m_ResY;
 		private static ScreenCaptureStream m_videostream;
 		private static VideoFileWriter m_filewriter;
@@ -54,7 +54,7 @@ namespace Assistant
 		}
 
 
-		public static bool Record(int fps)
+		public static bool Record(int fps, int codec)
 		{
 			GetWindowRect(ClientCommunication.FindUOWindow(), out RECT lpRect);
 			Rectangle screenArea = new Rectangle(lpRect.Left, lpRect.Top, (lpRect.Right - lpRect.Left), (lpRect.Bottom - lpRect.Top));
@@ -64,14 +64,14 @@ namespace Assistant
 				screenArea = Rectangle.Union(screenArea, screen.Bounds);
 			}
 
-			m_ResX = (lpRect.Right - lpRect.Left);
-			m_ResY = (lpRect.Bottom - lpRect.Top);
+			m_ResX = (lpRect.Right - lpRect.Left)-5;
+			m_ResY = (lpRect.Bottom - lpRect.Top)-5;
 
 			if (m_ResX % 2 != 0)
-				m_ResX++;
+				m_ResX--;
 
 			if (m_ResY % 2 != 0)
-				m_ResY++;
+				m_ResY--;
 
 			string filename;
 			string name = "Unknown";
@@ -95,15 +95,21 @@ namespace Assistant
 			m_recording = true;
 			m_filewriter = new VideoFileWriter();
 
-			
-			m_filewriter.Open(filename, m_ResX, m_ResY, fps, VideoCodec.MPEG4);
+			try
+			{
+				m_filewriter.Open(filename, m_ResX, m_ResY, fps, (VideoCodec)codec);
 
-			// create screen capture video source
-			m_videostream = new ScreenCaptureStream(screenArea, fps);
-			// set NewFrame event handler
-			m_videostream.NewFrame += new NewFrameEventHandler(video_NewFrame);
-			// start the video source
-			m_videostream.Start();
+				// create screen capture video source
+				m_videostream = new ScreenCaptureStream(screenArea, fps);
+				// set NewFrame event handler
+				m_videostream.NewFrame += new NewFrameEventHandler(video_NewFrame);
+				// start the video source
+				m_videostream.Start();
+			}
+			catch
+			{
+				MessageBox.Show("Video Codec not installed on your system.");
+			}
 
 		
 			return true; 

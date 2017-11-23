@@ -592,6 +592,8 @@ namespace Assistant
 		private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer;
 		private Label videoRecStatuslabel;
 		private Label label64;
+		private RazorComboBox videoCodecComboBox;
+		private Label label63;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1356,6 +1358,8 @@ namespace Assistant
 			this.groupBox40 = new System.Windows.Forms.GroupBox();
 			this.axWindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
 			this.videosettinggroupBox = new System.Windows.Forms.GroupBox();
+			this.videoCodecComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.label63 = new System.Windows.Forms.Label();
 			this.label62 = new System.Windows.Forms.Label();
 			this.videoFPSTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.videorecbutton = new System.Windows.Forms.Button();
@@ -7051,7 +7055,7 @@ namespace Assistant
 			// 
 			this.videoRecStatuslabel.AutoSize = true;
 			this.videoRecStatuslabel.ForeColor = System.Drawing.Color.Green;
-			this.videoRecStatuslabel.Location = new System.Drawing.Point(179, 340);
+			this.videoRecStatuslabel.Location = new System.Drawing.Point(185, 334);
 			this.videoRecStatuslabel.Name = "videoRecStatuslabel";
 			this.videoRecStatuslabel.Size = new System.Drawing.Size(24, 13);
 			this.videoRecStatuslabel.TabIndex = 95;
@@ -7060,7 +7064,7 @@ namespace Assistant
 			// label64
 			// 
 			this.label64.AutoSize = true;
-			this.label64.Location = new System.Drawing.Point(114, 340);
+			this.label64.Location = new System.Drawing.Point(120, 334);
 			this.label64.Name = "label64";
 			this.label64.Size = new System.Drawing.Size(63, 13);
 			this.label64.TabIndex = 94;
@@ -7087,19 +7091,57 @@ namespace Assistant
 			// 
 			// videosettinggroupBox
 			// 
+			this.videosettinggroupBox.Controls.Add(this.videoCodecComboBox);
+			this.videosettinggroupBox.Controls.Add(this.label63);
 			this.videosettinggroupBox.Controls.Add(this.label62);
 			this.videosettinggroupBox.Controls.Add(this.videoFPSTextBox);
-			this.videosettinggroupBox.Location = new System.Drawing.Point(10, 210);
+			this.videosettinggroupBox.Location = new System.Drawing.Point(10, 250);
 			this.videosettinggroupBox.Name = "videosettinggroupBox";
-			this.videosettinggroupBox.Size = new System.Drawing.Size(243, 119);
+			this.videosettinggroupBox.Size = new System.Drawing.Size(243, 66);
 			this.videosettinggroupBox.TabIndex = 63;
 			this.videosettinggroupBox.TabStop = false;
 			this.videosettinggroupBox.Text = "Video Settings";
 			// 
+			// videoCodecComboBox
+			// 
+			this.videoCodecComboBox.FormattingEnabled = true;
+			this.videoCodecComboBox.Items.AddRange(new object[] {
+            "Default",
+            "MPEG4",
+            "WMV1",
+            "WMV2",
+            "MSMPEG4v2",
+            "MSMPEG4v3",
+            "H263P",
+            "FLV1",
+            "MPEG2",
+            "Raw",
+            "FFV1",
+            "FFVHUFF",
+            "H264",
+            "H265",
+            "Theora",
+            "VP8",
+            "VP9"});
+			this.videoCodecComboBox.Location = new System.Drawing.Point(122, 27);
+			this.videoCodecComboBox.Name = "videoCodecComboBox";
+			this.videoCodecComboBox.Size = new System.Drawing.Size(110, 21);
+			this.videoCodecComboBox.TabIndex = 63;
+			this.videoCodecComboBox.SelectedIndexChanged += new System.EventHandler(this.videoCodecComboBox_SelectedIndexChanged);
+			// 
+			// label63
+			// 
+			this.label63.AutoSize = true;
+			this.label63.Location = new System.Drawing.Point(81, 31);
+			this.label63.Name = "label63";
+			this.label63.Size = new System.Drawing.Size(41, 13);
+			this.label63.TabIndex = 62;
+			this.label63.Text = "Codec:";
+			// 
 			// label62
 			// 
 			this.label62.AutoSize = true;
-			this.label62.Location = new System.Drawing.Point(7, 26);
+			this.label62.Location = new System.Drawing.Point(7, 31);
 			this.label62.Name = "label62";
 			this.label62.Size = new System.Drawing.Size(33, 13);
 			this.label62.TabIndex = 61;
@@ -7112,7 +7154,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.videoFPSTextBox.BackColor = System.Drawing.Color.White;
 			this.videoFPSTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.videoFPSTextBox.Location = new System.Drawing.Point(42, 23);
+			this.videoFPSTextBox.Location = new System.Drawing.Point(42, 28);
 			this.videoFPSTextBox.Name = "videoFPSTextBox";
 			this.videoFPSTextBox.Size = new System.Drawing.Size(33, 20);
 			this.videoFPSTextBox.TabIndex = 60;
@@ -7123,7 +7165,7 @@ namespace Assistant
 			this.videorecbutton.BackgroundImage = global::Assistant.Properties.Resources.record;
 			this.videorecbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.videorecbutton.FlatAppearance.BorderSize = 0;
-			this.videorecbutton.Location = new System.Drawing.Point(37, 331);
+			this.videorecbutton.Location = new System.Drawing.Point(43, 325);
 			this.videorecbutton.Name = "videorecbutton";
 			this.videorecbutton.Size = new System.Drawing.Size(30, 30);
 			this.videorecbutton.TabIndex = 93;
@@ -7135,7 +7177,7 @@ namespace Assistant
 			this.videostopbutton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
 			this.videostopbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.videostopbutton.FlatAppearance.BorderSize = 0;
-			this.videostopbutton.Location = new System.Drawing.Point(73, 331);
+			this.videostopbutton.Location = new System.Drawing.Point(79, 325);
 			this.videostopbutton.Name = "videostopbutton";
 			this.videostopbutton.Size = new System.Drawing.Size(30, 30);
 			this.videostopbutton.TabIndex = 92;
@@ -7149,7 +7191,7 @@ namespace Assistant
 			this.groupBox15.Controls.Add(this.videoPathTextBox);
 			this.groupBox15.Location = new System.Drawing.Point(8, 6);
 			this.groupBox15.Name = "groupBox15";
-			this.groupBox15.Size = new System.Drawing.Size(245, 198);
+			this.groupBox15.Size = new System.Drawing.Size(245, 238);
 			this.groupBox15.TabIndex = 62;
 			this.groupBox15.TabStop = false;
 			this.groupBox15.Text = "File";
@@ -7159,7 +7201,7 @@ namespace Assistant
 			this.videolistBox.IntegralHeight = false;
 			this.videolistBox.Location = new System.Drawing.Point(11, 41);
 			this.videolistBox.Name = "videolistBox";
-			this.videolistBox.Size = new System.Drawing.Size(223, 147);
+			this.videolistBox.Size = new System.Drawing.Size(223, 183);
 			this.videolistBox.Sorted = true;
 			this.videolistBox.TabIndex = 8;
 			this.videolistBox.SelectedIndexChanged += new System.EventHandler(this.videoList_SelectedIndexChanged);
@@ -7610,6 +7652,7 @@ namespace Assistant
 			// Video Recorder
 			videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
 			videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
+			videoCodecComboBox.SelectedIndex = Settings.General.ReadInt("VideoFormat");
 		}
 
 		private bool m_Initializing = false;
@@ -13244,7 +13287,7 @@ namespace Assistant
 			if (Settings.General.ReadInt("VideoFPS") < 30)
 				fps = Settings.General.ReadInt("VideoFPS");
 
-			VideoCapture.Record(fps);
+			VideoCapture.Record(fps, Engine.MainWindow.videoCodecComboBox.SelectedIndex);
 		}
 
 		internal static void StopVideoRecorder()
@@ -13255,6 +13298,14 @@ namespace Assistant
 			VideoCapture.Stop();
 			Engine.MainWindow.ReloadVideoList();
 			Engine.MainWindow.videosettinggroupBox.Enabled = true;
+		}
+
+		private void videoCodecComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (videoCodecComboBox.Focused)
+			{
+				Settings.General.WriteInt("VideoFormat", videoCodecComboBox.SelectedIndex);
+			}
 		}
 		// ----------------- STOP VIDEO RECORDER -------------------
 	}
