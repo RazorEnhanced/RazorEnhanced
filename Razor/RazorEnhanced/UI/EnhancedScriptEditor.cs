@@ -1282,6 +1282,9 @@ namespace RazorEnhanced.UI
 
 		private void Stop()
 		{
+			if (ScriptRecorder.OnRecord)
+				return;
+
 			m_Breaktrace = false;
 			m_Queue = new ConcurrentQueue<Command>();
 			m_Breakpoints.Clear();
