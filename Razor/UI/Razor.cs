@@ -768,6 +768,11 @@ namespace Assistant
 		// Version check
 		internal Thread VersionCheck;
 
+		// General
+		internal TextBox ScreenPath { get { return screenPath; } }
+		internal TextBox VideoPathTextBox { get { return videoPathTextBox; } }
+		
+
 		internal MainForm()
 		{
 			m_Tip = new ToolTip();
@@ -8312,7 +8317,7 @@ namespace Assistant
 			}
 		}
 
-		internal void ReloadScreenShotsList()
+		internal void ReloadScreenShotsList() 
 		{
 			ScreenCapManager.DisplayTo(screensList);
 			if (screenPrev.Image != null)

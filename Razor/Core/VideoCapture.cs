@@ -23,7 +23,12 @@ namespace Assistant
 		internal static void DisplayTo(ListBox list)
 		{
 			string path = RazorEnhanced.Settings.General.ReadString("VideoPath");
-			Engine.EnsureDirectory(path);
+			if (!Directory.Exists(path))
+			{
+				path = Path.GetDirectoryName(Application.ExecutablePath);
+				RazorEnhanced.Settings.General.WriteString("VideoPath", path);
+				Assistant.Engine.MainWindow.VideoPathTextBox.Text = path;
+			}
 
 			list.Items.Clear();
 			AddFiles(list, path, "avi");
@@ -77,13 +82,20 @@ namespace Assistant
 			string name = "Unknown";
 			string path = RazorEnhanced.Settings.General.ReadString("VideoPath");
 
+			if (!Directory.Exists(path))
+			{
+				path = Path.GetDirectoryName(Application.ExecutablePath);
+				RazorEnhanced.Settings.General.WriteString("VideoPath", path);
+				Assistant.Engine.MainWindow.VideoPathTextBox.Text = path;
+			}
+
 			if (World.Player != null)
 				name = World.Player.Name;
 			if (name == null || name.Trim() == "" || name.IndexOfAny(Path.GetInvalidPathChars()) != -1)
 				name = "Unknown";
 
 			name = String.Format("{0}_{1}", name, DateTime.Now.ToString("M-d_HH.mm"));
-			Engine.EnsureDirectory(path);
+
 			int count = 0;
 			do
 			{
@@ -96,7 +108,7 @@ namespace Assistant
 			{
 				m_recording = true;
 				m_filewriter = new VideoFileWriter();
-				m_filewriter.Open(filename, m_ResX, m_ResY, fps, (VideoCodec)codec);
+				m_filewriter.Open(filename, m_ResX, m_ResY, fps, (VideoCodec)codec, 30000000);
 
 				// create screen capture video source
 				m_videostream = new ScreenCaptureStream(screenArea, fps);

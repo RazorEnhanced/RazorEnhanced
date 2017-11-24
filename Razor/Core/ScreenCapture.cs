@@ -41,23 +41,15 @@ namespace Assistant
 				timestamp = "";
 
 			name = String.Format("{0}_{1}", name, DateTime.Now.ToString("M-d_HH.mm"));
-			try
-			{
-				Engine.EnsureDirectory(path);
-			}
-			catch
-			{
-				try
-				{
-					path = Path.GetDirectoryName(Application.ExecutablePath);
-					RazorEnhanced.Settings.General.WriteString("CapPath", path);
-				}
-				catch
-				{
-					path = "";
-				}
-			}
 
+			if (!Directory.Exists(path))
+			{
+				path = Path.GetDirectoryName(Application.ExecutablePath);
+				RazorEnhanced.Settings.General.WriteString("CapPath", path);
+				Assistant.Engine.MainWindow.ScreenPath.Text = path;
+			}
+			
+		
 			int count = 0;
 			do
 			{
@@ -106,8 +98,12 @@ namespace Assistant
 		internal static void DisplayTo(ListBox list)
 		{
 			string path = RazorEnhanced.Settings.General.ReadString("CapPath");
-			Engine.EnsureDirectory(path);
-
+			if (!Directory.Exists(path))
+			{
+				path = Path.GetDirectoryName(Application.ExecutablePath);
+				RazorEnhanced.Settings.General.WriteString("CapPath", path);
+				Assistant.Engine.MainWindow.ScreenPath.Text = path;
+			}
 			//list.BeginUpdate();
 			list.Items.Clear();
 

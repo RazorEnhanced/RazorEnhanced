@@ -228,7 +228,6 @@ namespace Assistant
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
-
 			m_Running = true;
 			Thread.CurrentThread.Name = "Razor Main Thread";
 
@@ -392,12 +391,6 @@ namespace Assistant
 			RazorEnhanced.UI.EnhancedScriptEditor.End();
 
 			ClientCommunication.Close();
-		}
-
-		internal static void EnsureDirectory(string dir)
-		{
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
 		}
 
 		private static void Initialize(Assembly a)
