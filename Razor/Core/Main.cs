@@ -454,12 +454,12 @@ namespace Assistant
 		private static void ReportCrash(Exception exception)
 		{
 			ReportCrash reportCrash = new ReportCrash("razorenhanced@gmail.com");
-
+			reportCrash.CaptureScreen = true;
+			reportCrash.IncludeScreenshot = true;
 			reportCrash.DoctorDumpSettings = new DoctorDumpSettings
 			{
 				ApplicationID = new Guid("87af7b0b-2407-4944-b572-caee9d031325"),
 			};
-
 			reportCrash.Send(exception);
 		}
 
