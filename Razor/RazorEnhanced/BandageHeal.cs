@@ -278,6 +278,9 @@ namespace RazorEnhanced
 					if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
 					{
 						double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS
+						if (delay < 1) // Limite per evitare che si vada in negativo
+							delay = 100;
+
 						if (RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox"))          // Se deve mostrare il cooldown
 						{
 							int second = 0;
