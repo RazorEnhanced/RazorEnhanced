@@ -279,7 +279,6 @@
     <Compile Include="RazorEnhanced\Dress.cs" />
     <Compile Include="RazorEnhanced\GumpInspector.cs" />
     <Compile Include="RazorEnhanced\Gumps.cs" />
-    <Compile Include="RazorEnhanced\NTPClient.cs" />
     <Compile Include="RazorEnhanced\Shards.cs" />
     <Compile Include="RazorEnhanced\UI\EnhancedAgentAddList.cs">
       <SubType>Form</SubType>

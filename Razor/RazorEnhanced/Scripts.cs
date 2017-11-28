@@ -505,10 +505,7 @@ namespace RazorEnhanced
 			foreach (EnhancedScript script in m_EnhancedScripts.Values.ToList())
 			{
 				if (!script.IsRunning && script.AutoStart)
-				{
 					script.Start();
-					RazorEnhanced.AutoLoot.AddLog(script.Filename);
-				}
 			}
 		}
 	}
