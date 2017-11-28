@@ -160,7 +160,8 @@ namespace RazorEnhanced.UI
 			if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
 			{
 				int propvalue = 0;
-				Int32.TryParse(cell.Value.ToString(), out propvalue);
+				if (cell.Value != null)
+					Int32.TryParse(cell.Value.ToString(), out propvalue);
 
 				if (propvalue < 0 || propvalue > 999)
 					propvalue =0;
@@ -208,7 +209,11 @@ namespace RazorEnhanced.UI
 					continue;
 				int min = Convert.ToInt32((string)row.Cells[1].Value);
 				int max = Convert.ToInt32((string)row.Cells[2].Value);
-                propslist.Add(new AutoLoot.AutoLootItem.Property(row.Cells[0].Value.ToString(),min ,max));
+				string propname = string.Empty;
+				if (row.Cells[0].Value != null)
+					propname = row.Cells[0].Value.ToString();
+
+				propslist.Add(new AutoLoot.AutoLootItem.Property(propname, min ,max));
             }
 			m_row.Cells[4].Value = propslist;
 			AutoLoot.CopyTable();
