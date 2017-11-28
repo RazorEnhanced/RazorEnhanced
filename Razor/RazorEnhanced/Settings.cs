@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 41;
+		private static int SettingVersion = 42;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -89,6 +89,7 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Wait", typeof(bool));
 				scripting.Columns.Add("HotKey", typeof(Keys));
 				scripting.Columns.Add("HotKeyPass", typeof(bool));
+				scripting.Columns.Add("AutoStart", typeof(bool));
 				m_Dataset.Tables.Add(scripting);
 
 				// -------- AUTOLOOT ------------
@@ -5463,6 +5464,19 @@ namespace RazorEnhanced
 
 				realVersion = 41;
 				General.WriteInt("SettingVersion", 41);
+			}
+
+			if (realVersion == 41)
+			{
+				m_Dataset.Tables["SCRIPTING"].Columns.Add("AutoStart", typeof(bool));
+
+				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+				{
+					row["AutoStart"] = false;
+				}
+
+				realVersion = 42;
+				General.WriteInt("SettingVersion", 42);
 			}
 
 

@@ -1175,6 +1175,9 @@ namespace Assistant
 				RazorEnhanced.UoNet.UO.Lock_Item = new object();
 				RazorEnhanced.UoNet.UOHandler = new RazorEnhanced.UoNet.UO();
 			}
+
+			// Avvio automatico script selezionati come autostart
+			RazorEnhanced.Scripts.AutoStart();
         }
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)

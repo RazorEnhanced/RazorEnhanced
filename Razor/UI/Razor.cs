@@ -442,12 +442,12 @@ namespace Assistant
 		private RazorCheckBox blockbighealCheckBox;
 		private RazorCheckBox blockminihealCheckBox;
 		private ScriptListView scriptlistView;
-		private ColumnHeader columnHeader56;
-		private ColumnHeader columnHeader57;
-		private ColumnHeader columnHeader58;
-		private ColumnHeader columnHeader59;
-		private ColumnHeader columnHeader60;
-		private ColumnHeader columnHeader61;
+		private ColumnHeader filename;
+		private ColumnHeader status;
+		private ColumnHeader loop;
+		private ColumnHeader wait;
+		private ColumnHeader hotkey;
+		private ColumnHeader heypass;
 		private ColumnHeader columnHeader62;
 		private GroupBox groupBox30;
 		private RazorCheckBox scriptwaitmodecheckbox;
@@ -594,6 +594,8 @@ namespace Assistant
 		private Label label64;
 		private RazorComboBox videoCodecComboBox;
 		private Label label63;
+		private RazorCheckBox scriptautostartcheckbox;
+		private ColumnHeader autostart;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1096,17 +1098,19 @@ namespace Assistant
 			this.buttonScriptStop = new System.Windows.Forms.Button();
 			this.buttonScriptPlay = new System.Windows.Forms.Button();
 			this.groupBox30 = new System.Windows.Forms.GroupBox();
+			this.scriptautostartcheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptwaitmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptloopmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptfilelabel = new System.Windows.Forms.Label();
 			this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
 			this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader57 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader58 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader59 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader60 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader61 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.loop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.autostart = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.wait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.hotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
@@ -4279,6 +4283,7 @@ namespace Assistant
 			// 
 			// groupBox30
 			// 
+			this.groupBox30.Controls.Add(this.scriptautostartcheckbox);
 			this.groupBox30.Controls.Add(this.scriptwaitmodecheckbox);
 			this.groupBox30.Controls.Add(this.scriptloopmodecheckbox);
 			this.groupBox30.Controls.Add(this.scriptfilelabel);
@@ -4289,9 +4294,18 @@ namespace Assistant
 			this.groupBox30.TabStop = false;
 			this.groupBox30.Text = "Script Info";
 			// 
+			// scriptautostartcheckbox
+			// 
+			this.scriptautostartcheckbox.Location = new System.Drawing.Point(6, 76);
+			this.scriptautostartcheckbox.Name = "scriptautostartcheckbox";
+			this.scriptautostartcheckbox.Size = new System.Drawing.Size(138, 22);
+			this.scriptautostartcheckbox.TabIndex = 51;
+			this.scriptautostartcheckbox.Text = "AutoStart at Login";
+			this.scriptautostartcheckbox.CheckedChanged += new System.EventHandler(this.scriptautostartcheckbox_CheckedChanged);
+			// 
 			// scriptwaitmodecheckbox
 			// 
-			this.scriptwaitmodecheckbox.Location = new System.Drawing.Point(6, 64);
+			this.scriptwaitmodecheckbox.Location = new System.Drawing.Point(6, 56);
 			this.scriptwaitmodecheckbox.Name = "scriptwaitmodecheckbox";
 			this.scriptwaitmodecheckbox.Size = new System.Drawing.Size(138, 22);
 			this.scriptwaitmodecheckbox.TabIndex = 50;
@@ -4300,7 +4314,7 @@ namespace Assistant
 			// 
 			// scriptloopmodecheckbox
 			// 
-			this.scriptloopmodecheckbox.Location = new System.Drawing.Point(6, 39);
+			this.scriptloopmodecheckbox.Location = new System.Drawing.Point(6, 36);
 			this.scriptloopmodecheckbox.Name = "scriptloopmodecheckbox";
 			this.scriptloopmodecheckbox.Size = new System.Drawing.Size(103, 22);
 			this.scriptloopmodecheckbox.TabIndex = 49;
@@ -4320,12 +4334,13 @@ namespace Assistant
 			// 
 			this.scriptlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader62,
-            this.columnHeader56,
-            this.columnHeader57,
-            this.columnHeader58,
-            this.columnHeader59,
-            this.columnHeader60,
-            this.columnHeader61});
+            this.filename,
+            this.status,
+            this.loop,
+            this.autostart,
+            this.wait,
+            this.hotkey,
+            this.heypass});
 			this.scriptlistView.FullRowSelect = true;
 			this.scriptlistView.GridLines = true;
 			this.scriptlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4345,37 +4360,44 @@ namespace Assistant
 			this.columnHeader62.Text = "";
 			this.columnHeader62.Width = 0;
 			// 
-			// columnHeader56
+			// filename
 			// 
-			this.columnHeader56.Text = "Filename";
-			this.columnHeader56.Width = 163;
+			this.filename.Text = "Filename";
+			this.filename.Width = 150;
 			// 
-			// columnHeader57
+			// status
 			// 
-			this.columnHeader57.Text = "Status";
-			this.columnHeader57.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader57.Width = 67;
+			this.status.Text = "Status";
+			this.status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.status.Width = 67;
 			// 
-			// columnHeader58
+			// loop
 			// 
-			this.columnHeader58.Text = "Loop";
-			this.columnHeader58.Width = 37;
+			this.loop.Text = "Loop";
+			this.loop.Width = 37;
 			// 
-			// columnHeader59
+			// autostart
 			// 
-			this.columnHeader59.Text = "Wait";
-			this.columnHeader59.Width = 37;
+			this.autostart.DisplayIndex = 5;
+			this.autostart.Text = "A.S.";
+			this.autostart.Width = 37;
 			// 
-			// columnHeader60
+			// wait
 			// 
-			this.columnHeader60.Text = "HotKey";
-			this.columnHeader60.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader60.Width = 99;
+			this.wait.DisplayIndex = 4;
+			this.wait.Text = "Wait";
+			this.wait.Width = 37;
 			// 
-			// columnHeader61
+			// hotkey
 			// 
-			this.columnHeader61.Text = "KeyPass";
-			this.columnHeader61.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.hotkey.Text = "HotKey";
+			this.hotkey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.hotkey.Width = 80;
+			// 
+			// heypass
+			// 
+			this.heypass.Text = "KeyPass";
+			this.heypass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// EnhancedAgent
 			// 
@@ -8865,7 +8887,7 @@ namespace Assistant
 
 		// ------------------- SCRIPTING ----------------------------
 
-		private static string LoadFromFile(string filename, bool wait, bool loop, bool run)
+		private static string LoadFromFile(string filename, bool wait, bool loop, bool run, bool autostart)
 		{
 			string status = "Loaded";
 			string classname = Path.GetFileNameWithoutExtension(filename);
@@ -8881,7 +8903,7 @@ namespace Assistant
 				return "ERROR: file not found";
 			}
 
-			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run);
+			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
 			string result = script.Create(null);
 
 			if (result == "Created")
@@ -8917,12 +8939,13 @@ namespace Assistant
 				string status = (string)row["Status"];
 				bool passkey = (bool)row["HotKeyPass"];
 				Keys key = (Keys)row["HotKey"];
+				bool autostart = (bool)row["AutoStart"];
 
 				bool run = false;
 				if (status == "Running")
 					run = true;
 
-				string result = LoadFromFile(filename, wait, loop, run);
+				string result = LoadFromFile(filename, wait, loop, run, autostart);
 
 				if (result == "Loaded")
 				{
@@ -8937,10 +8960,16 @@ namespace Assistant
 					else
 						listitem.SubItems.Add("No");
 
+					if (autostart)
+						listitem.SubItems.Add("Yes");
+					else
+						listitem.SubItems.Add("No");
+
 					if (wait)
 						listitem.SubItems.Add("Yes");
 					else
 						listitem.SubItems.Add("No");
+
 
 					listitem.SubItems.Add(key.ToString());
 
@@ -9148,13 +9177,14 @@ namespace Assistant
 						bool loop = script.Loop;
 						bool wait = script.Wait;
 						bool run = script.Run;
+						bool autostart = script.AutoStart;
 						bool isRunning = script.IsRunning;
 
 						if (isRunning)
 							script.Stop();
 
 						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
-							loop, run);
+							loop, run, autostart);
 						reloaded.Create(null);
 						Scripts.EnhancedScripts[scriptname] = reloaded;
 
@@ -9237,14 +9267,30 @@ namespace Assistant
 
 				if (scriptlistView.SelectedItems[0].SubItems[3].Text == "Yes")
 					scriptloopmodecheckbox.Checked = true;
-
 				else
 					scriptloopmodecheckbox.Checked = false;
 
 				if (scriptlistView.SelectedItems[0].SubItems[4].Text == "Yes")
+					scriptautostartcheckbox.Checked = true;
+				else
+					scriptautostartcheckbox.Checked = false;
+
+				if (scriptlistView.SelectedItems[0].SubItems[5].Text == "Yes")
 					scriptwaitmodecheckbox.Checked = true;
 				else
 					scriptwaitmodecheckbox.Checked = false;
+			}
+		}
+
+		private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (scriptautostartcheckbox.Focused && scriptlistView.SelectedItems.Count == 1)
+			{
+				if (scriptautostartcheckbox.Checked)
+					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = true;
+				else
+					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = false;
+				ReloadScriptTable();
 			}
 		}
 
