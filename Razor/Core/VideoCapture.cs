@@ -132,19 +132,22 @@ namespace Assistant
 
 		public static void Stop()
 		{
-			if (m_videostream != null)
+			try
 			{
-				m_videostream.SignalToStop();
-				m_videostream.WaitForStop();	
-			}
-			
+				if (m_videostream != null)
+				{
+					m_videostream.SignalToStop();
+					m_videostream.WaitForStop();
+				}
 
-			if (m_filewriter != null && m_filewriter.IsOpen)
-			{
-				m_filewriter.Close();
-				m_filewriter.Dispose();
+
+				if (m_filewriter != null && m_filewriter.IsOpen)
+				{
+					m_filewriter.Close();
+					m_filewriter.Dispose();
+				}
 			}
-	
+			catch { }
 
 			m_recording = false;
 		}
