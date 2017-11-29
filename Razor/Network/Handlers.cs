@@ -3129,13 +3129,9 @@ namespace Assistant
 				{
 					stringlist.AddRange(ParseGumpString(gumpPieces, stringlistparse));
 				}
-
+				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
 			}
-			catch (Exception ex)
-			{
-				//System.Windows.Forms.MessageBox.Show(ex.ToString());
-			}
-			RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+			catch { }
 		}
 
 		private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)

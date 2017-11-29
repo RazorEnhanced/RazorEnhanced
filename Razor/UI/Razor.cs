@@ -599,7 +599,6 @@ namespace Assistant
 		private RazorCheckBox scriptautostartcheckbox;
 		private ColumnHeader autostart;
 		private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
-		private System.Windows.Forms.Timer videoPlayerTimer;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1386,7 +1385,6 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.videoPlayerTimer = new System.Windows.Forms.Timer(this.components);
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -7291,11 +7289,6 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
-			// 
-			// videoPlayerTimer
-			// 
-			this.videoPlayerTimer.Interval = 1000;
-			this.videoPlayerTimer.Tick += new System.EventHandler(this.timer_Tick);
 			// 
 			// MainForm
 			// 
@@ -13369,7 +13362,6 @@ namespace Assistant
 			}
 		}
 
-		private Stopwatch stopWatch = null;
 
 		private void CloseCurrentVideoSource()
 		{
@@ -13394,42 +13386,8 @@ namespace Assistant
 			videoSourcePlayer.VideoSource = source;
 			videoSourcePlayer.Start();
 
-			// reset stop watch
-			stopWatch = null;
-
-			// start timer
-			videoPlayerTimer.Start();
-
 			this.Cursor = Cursors.Default;
 		}
-
-		private void timer_Tick(object sender, EventArgs e)
-		{
-			IVideoSource videoSource = videoSourcePlayer.VideoSource;
-
-			if (videoSource != null)
-			{
-				// get number of frames since the last timer tick
-				int framesReceived = videoSource.FramesReceived;
-
-				if (stopWatch == null)
-				{
-					stopWatch = new Stopwatch();
-					stopWatch.Start();
-				}
-				else
-				{
-					stopWatch.Stop();
-
-					float fps = 1000.0f * framesReceived / stopWatch.ElapsedMilliseconds;
-					//fpsLabel.Text = fps.ToString("F2") + " fps";
-
-					stopWatch.Reset();
-					stopWatch.Start();
-				}
-			}
-		}
-
 		// ----------------- STOP VIDEO RECORDER -------------------
 	}
 }
