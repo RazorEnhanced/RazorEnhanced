@@ -16,6 +16,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
+using Accord.Video;
+using Accord.Video.DirectShow;
+
 
 namespace Assistant
 {
@@ -589,13 +592,14 @@ namespace Assistant
 		private Label label62;
 		private RazorTextBox videoFPSTextBox;
 		private GroupBox groupBox15;
-		private AxWMPLib.AxWindowsMediaPlayer axWindowsMediaPlayer;
 		private Label videoRecStatuslabel;
 		private Label label64;
 		private RazorComboBox videoCodecComboBox;
 		private Label label63;
 		private RazorCheckBox scriptautostartcheckbox;
 		private ColumnHeader autostart;
+		private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
+		private System.Windows.Forms.Timer videoPlayerTimer;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -1365,7 +1369,7 @@ namespace Assistant
 			this.videoRecStatuslabel = new System.Windows.Forms.Label();
 			this.label64 = new System.Windows.Forms.Label();
 			this.groupBox40 = new System.Windows.Forms.GroupBox();
-			this.axWindowsMediaPlayer = new AxWMPLib.AxWindowsMediaPlayer();
+			this.videoSourcePlayer = new Accord.Controls.VideoSourcePlayer();
 			this.videosettinggroupBox = new System.Windows.Forms.GroupBox();
 			this.videoCodecComboBox = new RazorEnhanced.UI.RazorComboBox();
 			this.label63 = new System.Windows.Forms.Label();
@@ -1382,6 +1386,7 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.videoPlayerTimer = new System.Windows.Forms.Timer(this.components);
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1460,7 +1465,6 @@ namespace Assistant
 			this.groupBox27.SuspendLayout();
 			this.videoTab.SuspendLayout();
 			this.groupBox40.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).BeginInit();
 			this.videosettinggroupBox.SuspendLayout();
 			this.groupBox15.SuspendLayout();
 			this.datagridMenuStrip.SuspendLayout();
@@ -7101,7 +7105,7 @@ namespace Assistant
 			// 
 			// groupBox40
 			// 
-			this.groupBox40.Controls.Add(this.axWindowsMediaPlayer);
+			this.groupBox40.Controls.Add(this.videoSourcePlayer);
 			this.groupBox40.Location = new System.Drawing.Point(259, 6);
 			this.groupBox40.Name = "groupBox40";
 			this.groupBox40.Size = new System.Drawing.Size(399, 352);
@@ -7109,14 +7113,14 @@ namespace Assistant
 			this.groupBox40.TabStop = false;
 			this.groupBox40.Text = "Playback";
 			// 
-			// axWindowsMediaPlayer
+			// videoSourcePlayer
 			// 
-			this.axWindowsMediaPlayer.Enabled = true;
-			this.axWindowsMediaPlayer.Location = new System.Drawing.Point(6, 19);
-			this.axWindowsMediaPlayer.Name = "axWindowsMediaPlayer";
-			this.axWindowsMediaPlayer.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer.OcxState")));
-			this.axWindowsMediaPlayer.Size = new System.Drawing.Size(387, 327);
-			this.axWindowsMediaPlayer.TabIndex = 0;
+			this.videoSourcePlayer.Location = new System.Drawing.Point(7, 20);
+			this.videoSourcePlayer.Name = "videoSourcePlayer";
+			this.videoSourcePlayer.Size = new System.Drawing.Size(386, 321);
+			this.videoSourcePlayer.TabIndex = 0;
+			this.videoSourcePlayer.Text = "videoSourcePlayer";
+			this.videoSourcePlayer.VideoSource = null;
 			// 
 			// videosettinggroupBox
 			// 
@@ -7288,6 +7292,11 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
 			// 
+			// videoPlayerTimer
+			// 
+			this.videoPlayerTimer.Interval = 1000;
+			this.videoPlayerTimer.Tick += new System.EventHandler(this.timer_Tick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7418,7 +7427,6 @@ namespace Assistant
 			this.videoTab.ResumeLayout(false);
 			this.videoTab.PerformLayout();
 			this.groupBox40.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer)).EndInit();
 			this.videosettinggroupBox.ResumeLayout(false);
 			this.videosettinggroupBox.PerformLayout();
 			this.groupBox15.ResumeLayout(false);
@@ -13223,7 +13231,7 @@ namespace Assistant
 
 		internal void ReloadVideoList()
 		{
-			axWindowsMediaPlayer.URL = null;
+			CloseCurrentVideoSource();
 			VideoCapture.DisplayTo(videolistBox);
 		}
 
@@ -13231,7 +13239,7 @@ namespace Assistant
 		{
 			if (videolistBox.Focused)
 			{
-				axWindowsMediaPlayer.URL = null;
+				CloseCurrentVideoSource();
 
 				if (videolistBox.SelectedIndex == -1)
 					return;
@@ -13244,7 +13252,7 @@ namespace Assistant
 					videolistBox.SelectedIndex = -1;
 					return;
 				}
-				axWindowsMediaPlayer.URL = file;
+				OpenVideoSource(file);
 			}
 		}
 
@@ -13263,6 +13271,7 @@ namespace Assistant
 
 		private void DeleteVideoFile(object sender, System.EventArgs e)
 		{
+			CloseCurrentVideoSource();
 			int sel = videolistBox.SelectedIndex;
 			if (sel == -1)
 				return;
@@ -13275,7 +13284,6 @@ namespace Assistant
 
 			try
 			{
-				axWindowsMediaPlayer.URL = null;
 				File.Delete(file);
 				videolistBox.Items.RemoveAt(sel);
 			}
@@ -13360,6 +13368,68 @@ namespace Assistant
 				Settings.General.WriteInt("VideoFormat", videoCodecComboBox.SelectedIndex);
 			}
 		}
+
+		private Stopwatch stopWatch = null;
+
+		private void CloseCurrentVideoSource()
+		{
+			if (videoSourcePlayer.VideoSource != null)
+			{
+				videoSourcePlayer.SignalToStop();
+				videoSourcePlayer.WaitForStop();
+				videoSourcePlayer.VideoSource = null;
+			}
+		}
+		// Open video source
+		private void OpenVideoSource(string file)
+		{
+			FileVideoSource source = new FileVideoSource(file);
+			// set busy cursor
+			this.Cursor = Cursors.WaitCursor;
+
+			// stop current video source
+			CloseCurrentVideoSource();
+
+			// start new video source
+			videoSourcePlayer.VideoSource = source;
+			videoSourcePlayer.Start();
+
+			// reset stop watch
+			stopWatch = null;
+
+			// start timer
+			videoPlayerTimer.Start();
+
+			this.Cursor = Cursors.Default;
+		}
+
+		private void timer_Tick(object sender, EventArgs e)
+		{
+			IVideoSource videoSource = videoSourcePlayer.VideoSource;
+
+			if (videoSource != null)
+			{
+				// get number of frames since the last timer tick
+				int framesReceived = videoSource.FramesReceived;
+
+				if (stopWatch == null)
+				{
+					stopWatch = new Stopwatch();
+					stopWatch.Start();
+				}
+				else
+				{
+					stopWatch.Stop();
+
+					float fps = 1000.0f * framesReceived / stopWatch.ElapsedMilliseconds;
+					//fpsLabel.Text = fps.ToString("F2") + " fps";
+
+					stopWatch.Reset();
+					stopWatch.Start();
+				}
+			}
+		}
+
 		// ----------------- STOP VIDEO RECORDER -------------------
 	}
 }
