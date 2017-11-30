@@ -1,3 +1,8 @@
 .vs/
 **/obj/**
+*.pdb
+*.dll
+/packages
+*.user
+**/obj/**
 /FastColoredTextBox/FastColoredTextBox.csproj.user
