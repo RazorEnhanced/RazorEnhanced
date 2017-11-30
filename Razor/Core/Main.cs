@@ -231,9 +231,6 @@ namespace Assistant
 			m_Running = true;
 			Thread.CurrentThread.Name = "Razor Main Thread";
 
-			if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
-				throw new InvalidOperationException("This Razor installation is corrupted.");
-
 			DateTime local = DateTime.Now;
 			if (local > m_ExpireDate)
 			{
@@ -259,7 +256,11 @@ namespace Assistant
 			RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
 			RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);
 
-			if (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null)
+            // remove this later!!! It is a stub!!
+            MainWnd = new MainForm();
+            Application.Run(MainWnd);
+            // remove this later!!! It is a stub!!
+            /*if (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null)
 			{
 				Start(selected);
 			}
@@ -281,10 +282,10 @@ namespace Assistant
 						Start(selected);
 					}
 				}
-			}
-		}
+			}*/
+        }
 
-		internal static void Start(RazorEnhanced.Shard selected)
+        internal static void Start(RazorEnhanced.Shard selected)
 		{
 			ClientCommunication.ClientEncrypted = selected.PatchEnc;
 			ClientCommunication.ServerEncrypted = selected.OSIEnc;

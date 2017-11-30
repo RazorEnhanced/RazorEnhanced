@@ -740,7 +740,7 @@ namespace Assistant
 
 		internal static bool InstallHooks(IntPtr mainWindow)
 		{
-			InitError error;
+			/*InitError error;
 			int flags = 0;
 
 			if (RazorEnhanced.Settings.General.ReadBool("Negotiate"))
@@ -753,7 +753,7 @@ namespace Assistant
 				flags |= 0x10;
 
 			//ClientProc.WaitForInputIdle();
-			WaitForWindow(ClientProc.Id);
+			//WaitForWindow(ClientProc.Id);
 
 			error = (InitError)InstallLibrary(mainWindow, ClientProc.Id, flags);
 
@@ -773,7 +773,7 @@ namespace Assistant
 			m_OutSend = (Buffer*)(baseAddr+sizeof(Buffer)*4);
 			m_TitleStr = (byte*)(baseAddr+sizeof(Buffer)*5);*/
 
-			m_InRecv = (Buffer*)baseAddr;
+			/*m_InRecv = (Buffer*)baseAddr;
 			m_OutRecv = (Buffer*)(baseAddr + sizeof(Buffer));
 			m_InSend = (Buffer*)(baseAddr + sizeof(Buffer) * 2);
 			m_OutSend = (Buffer*)(baseAddr + sizeof(Buffer) * 3);
@@ -801,7 +801,7 @@ namespace Assistant
 
 			if (RazorEnhanced.Settings.General.ReadBool("OldStatBar"))
 				ClientCommunication.RequestStatbarPatch(true);
-
+            */
 			return true;
 		}
 
@@ -822,7 +822,7 @@ namespace Assistant
 
 		internal static void SetNegotiate(bool negotiate)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
+			//PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
 		}
 
 		internal static bool Attach(int pid)
@@ -834,7 +834,7 @@ namespace Assistant
 
 		internal static void Close()
 		{
-			Shutdown(true);
+			//Shutdown(true);
 			if (ClientProc != null && !ClientProc.HasExited)
 				ClientProc.CloseMainWindow();
 			ClientProc = null;
@@ -842,11 +842,11 @@ namespace Assistant
 
 		internal static int GetZ(int x, int y, int z)
 		{
-			if (IsCalibrated())
+			/*if (IsCalibrated())
 			{
 				if (GetPosition(null, null, &z))
 					return z;
-			}
+			}*/
 
 			return Facet.ZTop(World.Player.Map, x, y, z);
 		}
@@ -864,7 +864,7 @@ namespace Assistant
 
 			if (pos != Point3D.Zero && m_CalPos == pos)
 			{
-				CalibratePosition(pos.X, pos.Y, pos.Z);
+				//CalibratePosition(pos.X, pos.Y, pos.Z);
 				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(0.1));
 			}
 
@@ -879,7 +879,7 @@ namespace Assistant
 
 		internal static void BeginCalibratePosition()
 		{
-			if (World.Player == null || IsCalibrated())
+			if (World.Player == null /*|| IsCalibrated()*/)
 				return;
 
 			if (m_CalTimer != null)
@@ -983,7 +983,7 @@ namespace Assistant
 							StringBuilder sb = new StringBuilder(256);
 							if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
 								return false;
-							BringToFront(FindUOWindow());
+							//BringToFront(FindUOWindow());
 							//PacketPlayer.Open(sb.ToString());
 							Engine.MainWindow.ShowMe();
 						}
@@ -1004,11 +1004,11 @@ namespace Assistant
 
 					try
 					{
-						SetDataPath(Ultima.Files.Directory);
+						//SetDataPath(Ultima.Files.Directory);
 					}
 					catch
 					{
-						SetDataPath("");
+						//SetDataPath("");
 					}
 					UoMod.InjectUoMod();
 					m_Ready = true;
@@ -1103,7 +1103,7 @@ namespace Assistant
 							if (RazorEnhanced.SpellGrid.SpellGridForm != null)
 								ShowWindow(RazorEnhanced.SpellGrid.SpellGridForm.Handle, 8);
 
-							SetForegroundWindow(FindUOWindow());
+							//SetForegroundWindow(FindUOWindow());
 						}
 					}
 
@@ -1136,7 +1136,7 @@ namespace Assistant
 						if (lParam != 0 && !razor.TopMost)
 						{
 							razor.TopMost = true;
-							SetForegroundWindow(FindUOWindow());
+							//SetForegroundWindow(FindUOWindow());
 						}
 						else if (lParam == 0 && razor.TopMost)
 						{
@@ -1315,8 +1315,8 @@ namespace Assistant
 
 		private static void InitSendFlush()
 		{
-			if (m_OutSend->Length == 0)
-				PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
+			//if (m_OutSend->Length == 0)
+			//	PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
 		}
 
 		private static void CopyToBuffer(Buffer* buffer, byte* data, int len)
@@ -1343,7 +1343,7 @@ namespace Assistant
 			{
 				byte* buff = (&inBuff->Buff0) + inBuff->Start;
 
-				int len = GetPacketLength(buff, inBuff->Length);
+                int len = 0;//GetPacketLength(buff, inBuff->Length);
 				if (len > inBuff->Length || len <= 0)
 					break;
 
@@ -1370,7 +1370,7 @@ namespace Assistant
 				PacketReader pr = null;
 				if (viewer)
 				{
-					pr = new PacketReader(buff, len, IsDynLength(buff[0]));
+					pr = new PacketReader(buff, len, false/*IsDynLength(buff[0])*/);
 					if (filter)
 						p = MakePacketFrom(pr);
 				}
@@ -1383,7 +1383,7 @@ namespace Assistant
 						IntPtr from = (IntPtr)buff;
 						memcpy(to, from, new UIntPtr((uint)len));
 					}
-					p = new Packet(temp, len, IsDynLength(buff[0]));
+					p = new Packet(temp, len, false/*IsDynLength(buff[0])*/);
 				}
 
 				bool blocked = false;
