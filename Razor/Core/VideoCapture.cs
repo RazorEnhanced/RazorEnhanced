@@ -138,6 +138,7 @@ namespace Assistant
 				{
 					m_videostream.SignalToStop();
 					m_videostream.WaitForStop();
+					m_videostream = null;
 				}
 
 
@@ -145,6 +146,7 @@ namespace Assistant
 				{
 					m_filewriter.Close();
 					m_filewriter.Dispose();
+					m_filewriter = null;
 				}
 			}
 			catch { }
