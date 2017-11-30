@@ -8997,6 +8997,8 @@ namespace Assistant
 
 					listitem.SubItems.Add("No");
 
+					listitem.SubItems.Add("No");
+
 					listitem.SubItems.Add(key.ToString());
 
 					listitem.SubItems.Add("No");
@@ -9149,7 +9151,7 @@ namespace Assistant
 					Scripts.EnhancedScript script = Scripts.Search(filename);
 					if (script == null)
 					{
-						scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, Keys.None, true);
+						scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false);
 						ReloadScriptTable();
 					}
 				}
