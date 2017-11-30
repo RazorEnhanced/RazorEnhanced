@@ -21,6 +21,9 @@ namespace Assistant.Filters
 			if (World.Player == null)
 				return;
 
+			if (!ClientCommunication.AllowBit(FeatureBit.LightFilter))
+				return;
+
 			World.Player.LocalLightLevel = 0;
 			World.Player.GlobalLightLevel = 0;
 		}
@@ -31,6 +34,12 @@ namespace Assistant.Filters
 
 			if (World.Player == null)
 				return;
+
+			if (!ClientCommunication.AllowBit(FeatureBit.LightFilter))
+			{
+				World.Player.SendMessage("Light filter NOT Allowed");
+				return;
+			}
 
 			World.Player.LocalLightLevel = 0;
 			World.Player.GlobalLightLevel = 0;
