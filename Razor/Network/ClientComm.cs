@@ -301,7 +301,7 @@ namespace Assistant
 					}
 				case UOAMessage.GET_UO_HWND:
 					{
-						return FindUOWindow().ToInt32();
+                        return 0;//FindUOWindow().ToInt32();
 					}
 				case UOAMessage.GET_POISON:
 					{
@@ -471,7 +471,7 @@ namespace Assistant
 			internal byte Buff0;
 		}
 
-		[DllImport("Crypt.dll")]
+		/*[DllImport("Crypt.dll")]
 		private static unsafe extern int InstallLibrary(IntPtr thisWnd, int procid, int features);
 
 		[DllImport("Crypt.dll")]
@@ -544,7 +544,7 @@ namespace Assistant
 		internal static unsafe extern bool HandleNegotiate(ulong word);
 
 		[DllImport("Crypt.dll")]
-		internal static unsafe extern IntPtr GetUOVersion();
+		internal static unsafe extern IntPtr GetUOVersion();*/
 
 		internal enum Loader_Error
 		{
@@ -651,7 +651,7 @@ namespace Assistant
 				}
 				catch
 				{
-					return ClientProc != null && FindUOWindow() != IntPtr.Zero;
+                    return ClientProc != null;// && FindUOWindow() != IntPtr.Zero;
 				}
 			}
 		}
@@ -678,22 +678,22 @@ namespace Assistant
 			{
 				return;
 			}
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
+			//PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
 		}
      
 		internal static void SetMapWndHandle(Form mapWnd)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
+			//PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
 		}
 
 		internal static void RequestStatbarPatch(bool preAOS)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
+			//PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
 		}
 
 		internal static void SetCustomNotoHue(int hue)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
+			//PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
 		}
 
 		internal static void SetSmartCPU(bool enabled)
@@ -702,12 +702,12 @@ namespace Assistant
 				try { ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
 				catch { }
 
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
+			//PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
 		}
 
 		internal static void SetGameSize(int x, int y)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
+			//PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
 		}
 
 		internal static Loader_Error LaunchClient(string client)
