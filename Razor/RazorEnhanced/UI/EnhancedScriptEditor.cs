@@ -1282,6 +1282,9 @@ namespace RazorEnhanced.UI
 
 		private void Stop()
 		{
+			if (ScriptRecorder.OnRecord)
+				return;
+
 			m_Breaktrace = false;
 			m_Queue = new ConcurrentQueue<Command>();
 			m_Breakpoints.Clear();
@@ -1568,12 +1571,13 @@ namespace RazorEnhanced.UI
 						bool loop = script.Loop;
 						bool wait = script.Wait;
 						bool run = script.Run;
+						bool autostart = script.AutoStart;
 						bool isRunning = script.IsRunning;
 
 						if (isRunning)
 							script.Stop();
 
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename + ".py", text, wait, loop, run);
+						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(m_Filename + ".py", text, wait, loop, run, autostart);
 						reloaded.Create(null);
 						Scripts.EnhancedScripts[m_Filename + ".py"] = reloaded;
 
@@ -1614,11 +1618,12 @@ namespace RazorEnhanced.UI
 						bool wait = script.Wait;
 						bool run = script.Run;
 						bool isRunning = script.IsRunning;
+						bool autostart = script.AutoStart;
 
 						if (isRunning)
 							script.Stop();
 
-						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(filename, text, wait, loop, run);
+						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
 						reloaded.Create(null);
 						Scripts.EnhancedScripts[filename] = reloaded;
 

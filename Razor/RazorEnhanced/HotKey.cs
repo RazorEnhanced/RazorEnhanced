@@ -348,6 +348,14 @@ namespace RazorEnhanced
 					ScreenCapManager.CaptureNow();
 					break;
 
+				case "Start Video Record":
+					Assistant.MainForm.StartVideoRecorder();
+					break;
+
+				case "Stop Video Record":
+					Assistant.MainForm.StopVideoRecorder();
+					break;
+
 				case "Ping Server":
 					Assistant.Commands.Ping(null);
 					break;
@@ -502,6 +510,7 @@ namespace RazorEnhanced
 
 		private static void ProcessPet(string function)
 		{
+			
 			if (function == "Mount")
 			{
 				if (Filters.AutoRemountSerial != 0)
@@ -510,6 +519,13 @@ namespace RazorEnhanced
 			else if (function == "Dismount")
 			{
 				Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
+			}
+			else if (function == "Mount / Dismount")
+			{
+				if (Player.Mount == null)
+					Assistant.ClientCommunication.SendToServer(new DoubleClick(Filters.AutoRemountSerial));
+				else
+					Assistant.ClientCommunication.SendToServer(new DoubleClick(World.Player.Serial));
 			}
 			else
 			{

@@ -96,7 +96,10 @@ namespace RazorEnhanced
 				if (m.Poisoned)
 					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Poisoned]");
 				if (m.IsGhost)
-					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Dead]");
+				{
+					if (m.PropsUpdated)
+						RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Dead]");
+				}
 				if (m.Paralized)
 					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Paralized]");
 				if (m.Blessed)

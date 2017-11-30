@@ -152,9 +152,7 @@ namespace RazorEnhanced
 					}
 
 				}
-				catch (Exception ex)
-				{
-				}
+				catch { }
 			}
 
 			internal static bool Open()
@@ -180,7 +178,7 @@ namespace RazorEnhanced
 					Lock_Item = new object();
 					return true;
 				}
-				catch (Exception ex)
+				catch
 				{
 					return false;
 				}

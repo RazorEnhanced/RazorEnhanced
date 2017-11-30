@@ -76,6 +76,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA3, new PacketViewerCallback(StamUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA8, new PacketViewerCallback(ServerList));
+			PacketHandler.RegisterServerToClientViewer(0xA9, new PacketViewerCallback(CharList));
 			PacketHandler.RegisterServerToClientViewer(0xAB, new PacketViewerCallback(DisplayStringQuery));
 			PacketHandler.RegisterServerToClientViewer(0xAF, new PacketViewerCallback(DeathAnimation));
 			PacketHandler.RegisterServerToClientFilter(0xAE, new PacketFilterCallback(UnicodeSpeech));
@@ -458,6 +459,37 @@ namespace Assistant
 				p.ReadSByte(); // time zone
 				p.ReadUInt32(); // ip
 			}
+		}
+
+		private static void CharList(PacketReader p, PacketHandlerEventArgs args)
+		{
+		/*	byte ccount = p.ReadByte();
+			for (int i = 0; i < ccount; ++i)
+			{
+				string name = p.ReadString(30);
+				p.ReadString(30); // pass
+				//RazorEnhanced.AutoLoot.AddLog(name);
+			}
+			byte cicount = p.ReadByte();
+			for (int i = 0; i < cicount; ++i)
+			{
+				p.ReadByte(); // index
+				string name = p.ReadString(32);
+				p.ReadString(32); // build name
+				p.ReadUInt32(); //x
+				p.ReadUInt32(); //y
+				p.ReadUInt32(); // z
+				p.ReadUInt32(); // map
+				p.ReadUInt32(); // cliloc
+				p.ReadUInt32(); // 0
+			//	RazorEnhanced.AutoLoot.AddLog(name);
+			}
+			uint flags = p.ReadUInt32();
+			RazorEnhanced.AutoLoot.AddLog(flags.ToString("X4"));
+			if ((flags & 0x08) != 0)
+			{
+				RazorEnhanced.AutoLoot.AddLog("presente");
+			}*/
 		}
 
 		private static void PlayServer(PacketReader p, PacketHandlerEventArgs args)
@@ -1143,6 +1175,9 @@ namespace Assistant
 				RazorEnhanced.UoNet.UO.Lock_Item = new object();
 				RazorEnhanced.UoNet.UOHandler = new RazorEnhanced.UoNet.UO();
 			}
+
+			// Avvio automatico script selezionati come autostart
+			RazorEnhanced.Scripts.AutoStart();
         }
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
@@ -3094,13 +3129,9 @@ namespace Assistant
 				{
 					stringlist.AddRange(ParseGumpString(gumpPieces, stringlistparse));
 				}
-
+				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
 			}
-			catch (Exception ex)
-			{
-				//System.Windows.Forms.MessageBox.Show(ex.ToString());
-			}
-			RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+			catch { }
 		}
 
 		private static List<string> ParseGumpString(string[] gumpPieces, string[] gumpLines)
@@ -3123,7 +3154,7 @@ namespace Assistant
 
 					case "htmlgump":
 						testipresenti.Add(gumpLines[int.Parse(gumpParams[5])]);
-						RazorEnhanced.AutoLoot.AddLog("htmlgump " + gumpLines[int.Parse(gumpParams[5])]);
+						//RazorEnhanced.AutoLoot.AddLog("htmlgump " + gumpLines[int.Parse(gumpParams[5])]);
 						// HtmlGump [x] [y] [width] [height] [text-id] [background] [scrollbar]
 						// Defines a text-area where Html-commands are allowed.
 						// [background] and [scrollbar] can be 0 or 1 and define whether the background is transparent and a scrollbar is displayed.
@@ -3132,7 +3163,7 @@ namespace Assistant
 
 					case "text":
 						testipresenti.Add(gumpLines[int.Parse(gumpParams[4])]);
-						RazorEnhanced.AutoLoot.AddLog("text " + gumpLines[int.Parse(gumpParams[4])]);
+						//RazorEnhanced.AutoLoot.AddLog("text " + gumpLines[int.Parse(gumpParams[4])]);
 						// Text [x] [y] [color] [text-id]
 						// Defines the position and color of a text (data) entry.
 						//gump.AddControl(new TextLabel(gump, gumpParams, gumpLines), currentGUMPPage);

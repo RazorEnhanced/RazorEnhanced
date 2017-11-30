@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading;
 using System.Windows.Forms;
-using CrashReporterDotNET;
+using CrashReporterDotNET; 
 
 namespace Assistant
 {
@@ -228,7 +228,6 @@ namespace Assistant
 
 			AppDomain.CurrentDomain.UnhandledException += CurrentDomainOnUnhandledException;
 
-
 			m_Running = true;
 			Thread.CurrentThread.Name = "Razor Main Thread";
 
@@ -257,8 +256,7 @@ namespace Assistant
 			RazorEnhanced.Settings.Load();
 
 
-			List<RazorEnhanced.Shard> shards;
-			RazorEnhanced.Shard.Read(out shards);
+			RazorEnhanced.Shard.Read(out List<RazorEnhanced.Shard> shards);
 			RazorEnhanced.Shard selected = shards.FirstOrDefault(s => s.Selected);
 
 			if (RazorEnhanced.Settings.General.ReadBool("NotShowLauncher") && File.Exists(selected.ClientPath) && Directory.Exists(selected.ClientFolder) && selected != null)
@@ -394,12 +392,6 @@ namespace Assistant
 			ClientCommunication.Close();
 		}
 
-		internal static void EnsureDirectory(string dir)
-		{
-			if (!Directory.Exists(dir))
-				Directory.CreateDirectory(dir);
-		}
-
 		private static void Initialize(Assembly a)
 		{
 			Type[] types = a.GetTypes();
@@ -461,11 +453,13 @@ namespace Assistant
 
 		private static void ReportCrash(Exception exception)
 		{
-			var reportCrash = new ReportCrash
+			ReportCrash reportCrash = new ReportCrash("razorenhanced@gmail.com");
+			reportCrash.CaptureScreen = true;
+			reportCrash.IncludeScreenshot = true;
+			reportCrash.DoctorDumpSettings = new DoctorDumpSettings
 			{
-				ToEmail = "razorenhanced@gmail.com"
-            };
-
+				ApplicationID = new Guid("87af7b0b-2407-4944-b572-caee9d031325"),
+			};
 			reportCrash.Send(exception);
 		}
 

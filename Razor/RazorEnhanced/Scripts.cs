@@ -154,6 +154,25 @@ namespace RazorEnhanced
 				}
 			}
 
+			private bool m_AutoStart;
+			internal bool AutoStart
+			{
+				get
+				{
+					lock (m_Lock)
+					{
+						return m_AutoStart;
+					}
+				}
+				set
+				{
+					lock (m_Lock)
+					{
+						m_AutoStart = value;
+					}
+				}
+			}
+
 			private bool m_Run;
 			internal bool Run
 			{
@@ -221,14 +240,14 @@ namespace RazorEnhanced
 			private ScriptScope m_Scope;
 			private ScriptSource m_Source;
 
-			internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run)
+			internal EnhancedScript(string filename, string text, bool wait, bool loop, bool run, bool autostart)
 			{
 				m_Filename = filename;
 				m_Text = text;
 				m_Wait = wait;
 				m_Loop = loop;
 				m_Run = run;
-
+				m_AutoStart = autostart;
 				m_Thread = new Thread(AsyncStart);
 			}
 
@@ -478,6 +497,16 @@ namespace RazorEnhanced
 			}
 
 			return null;
+		}
+
+		// Autostart
+		internal static void AutoStart()
+		{
+			foreach (EnhancedScript script in m_EnhancedScripts.Values.ToList())
+			{
+				if (!script.IsRunning && script.AutoStart)
+					script.Start();
+			}
 		}
 	}
 }

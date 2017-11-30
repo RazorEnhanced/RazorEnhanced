@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 38;
+		private static int SettingVersion = 42;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -39,9 +39,10 @@ namespace RazorEnhanced
 
 			if (File.Exists(filename))
 			{
-				Stream stream = File.Open(filename, FileMode.Open);
+				
 				try
 				{
+					Stream stream = File.Open(filename, FileMode.Open);
 					m_Dataset.RemotingFormat = SerializationFormat.Binary;
 					m_Dataset.SchemaSerializationMode = SchemaSerializationMode.IncludeSchema;
 					GZipStream decompress = new GZipStream(stream, CompressionMode.Decompress);
@@ -53,7 +54,6 @@ namespace RazorEnhanced
 				}
 				catch
 				{
-					stream.Close();
 					MessageBox.Show("Error loading " + m_Save + ", Try to restore from backup!");
 					Settings.RestoreBackup(m_Save);
 					Load();
@@ -89,6 +89,7 @@ namespace RazorEnhanced
 				scripting.Columns.Add("Wait", typeof(bool));
 				scripting.Columns.Add("HotKey", typeof(Keys));
 				scripting.Columns.Add("HotKeyPass", typeof(bool));
+				scripting.Columns.Add("AutoStart", typeof(bool));
 				m_Dataset.Tables.Add(scripting);
 
 				// -------- AUTOLOOT ------------
@@ -273,6 +274,14 @@ namespace RazorEnhanced
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "Start Video Record", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "Stop Video Record", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "General", "Ping Server", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
@@ -362,6 +371,10 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "Pet Commands", "Dismount", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "Pet Commands", "Mount / Dismount", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -1722,6 +1735,16 @@ namespace RazorEnhanced
 				general.Columns.Add("UoModPaperdool", typeof(bool));
 				general.Columns.Add("UoModSound", typeof(bool));
 
+				// Parametri Video Recorder
+				general.Columns.Add("VideoPath", typeof(string));
+				general.Columns.Add("VideoFPS", typeof(int));
+				general.Columns.Add("VideoResolution", typeof(string));
+				general.Columns.Add("VideoFormat", typeof(int));
+				general.Columns.Add("VideoCompression", typeof(int));
+				general.Columns.Add("VideoFlipV", typeof(bool));
+				general.Columns.Add("VideoFlipH", typeof(bool));
+				general.Columns.Add("VideoTimestamp", typeof(bool));
+
 				// Parametri finestra script
 				general.Columns.Add("ShowScriptMessageCheckBox", typeof(bool));
 
@@ -1777,6 +1800,9 @@ namespace RazorEnhanced
 
                      // Parametri UoMod
                      false, false, false,
+
+					 // Parametri Video Recorder
+                     Path.GetDirectoryName(Application.ExecutablePath), 25, "Full Size", 1, 100, false, false, false,
 
 					 // Parametri finestra script
                      true
@@ -5376,6 +5402,83 @@ namespace RazorEnhanced
 				realVersion = 38;
 				General.WriteInt("SettingVersion", 38);
 			}
+
+			if (realVersion == 38)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoPath", typeof(string));
+				General.WriteString("VideoPath", Path.GetDirectoryName(Application.ExecutablePath));
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFPS", typeof(int));
+				General.WriteInt("VideoFPS", 25);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoResolution", typeof(string));
+				General.WriteString("VideoResolution", "Full Size");
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFormat", typeof(int));
+				General.WriteInt("VideoFormat", 0);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoCompression", typeof(int));
+				General.WriteInt("VideoCompression", 1);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFlipV", typeof(bool));
+				General.WriteBool("VideoFlipV", false);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoFlipH", typeof(bool));
+				General.WriteBool("VideoFlipH", false);
+
+				realVersion = 39;
+				General.WriteInt("SettingVersion", 39);
+			}
+
+			if (realVersion == 39)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "Pet Commands";
+				newRow["Name"] = "Mount / Dismount";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "Start Video Record";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "Stop Video Record";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				realVersion = 40;
+				General.WriteInt("SettingVersion", 40);
+			}
+
+			if (realVersion == 40)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("VideoTimestamp", typeof(bool));
+				General.WriteBool("VideoTimestamp", false);
+
+				realVersion = 41;
+				General.WriteInt("SettingVersion", 41);
+			}
+
+			if (realVersion == 41)
+			{
+				m_Dataset.Tables["SCRIPTING"].Columns.Add("AutoStart", typeof(bool));
+
+				foreach (DataRow row in m_Dataset.Tables["SCRIPTING"].Rows)
+				{
+					row["AutoStart"] = false;
+				}
+
+				realVersion = 42;
+				General.WriteInt("SettingVersion", 42);
+			}
+
 
 			Save(true);
 		}

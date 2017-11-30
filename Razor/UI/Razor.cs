@@ -16,6 +16,9 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
+using Accord.Video;
+using Accord.Video.DirectShow;
+
 
 namespace Assistant
 {
@@ -442,12 +445,12 @@ namespace Assistant
 		private RazorCheckBox blockbighealCheckBox;
 		private RazorCheckBox blockminihealCheckBox;
 		private ScriptListView scriptlistView;
-		private ColumnHeader columnHeader56;
-		private ColumnHeader columnHeader57;
-		private ColumnHeader columnHeader58;
-		private ColumnHeader columnHeader59;
-		private ColumnHeader columnHeader60;
-		private ColumnHeader columnHeader61;
+		private ColumnHeader filename;
+		private ColumnHeader status;
+		private ColumnHeader loop;
+		private ColumnHeader wait;
+		private ColumnHeader hotkey;
+		private ColumnHeader heypass;
 		private ColumnHeader columnHeader62;
 		private GroupBox groupBox30;
 		private RazorCheckBox scriptwaitmodecheckbox;
@@ -578,6 +581,24 @@ namespace Assistant
 		private RazorCheckBox uo3dEquipUnEquip;
 		private RazorCheckBox nosearchpouches;
 		private RazorCheckBox autosearchcontainers;
+		private TabPage videoTab;
+		private RazorTextBox videoPathTextBox;
+		private RazorButton videoPathButton;
+		private ListBox videolistBox;
+		private GroupBox groupBox40;
+		private GroupBox videosettinggroupBox;
+		private Button videorecbutton;
+		private Button videostopbutton;
+		private Label label62;
+		private RazorTextBox videoFPSTextBox;
+		private GroupBox groupBox15;
+		private Label videoRecStatuslabel;
+		private Label label64;
+		private RazorComboBox videoCodecComboBox;
+		private Label label63;
+		private RazorCheckBox scriptautostartcheckbox;
+		private ColumnHeader autostart;
+		private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -751,6 +772,11 @@ namespace Assistant
 
 		// Version check
 		internal Thread VersionCheck;
+
+		// General
+		internal TextBox ScreenPath { get { return screenPath; } }
+		internal TextBox VideoPathTextBox { get { return videoPathTextBox; } }
+		
 
 		internal MainForm()
 		{
@@ -1075,17 +1101,19 @@ namespace Assistant
 			this.buttonScriptStop = new System.Windows.Forms.Button();
 			this.buttonScriptPlay = new System.Windows.Forms.Button();
 			this.groupBox30 = new System.Windows.Forms.GroupBox();
+			this.scriptautostartcheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptwaitmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptloopmodecheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scriptfilelabel = new System.Windows.Forms.Label();
 			this.scriptlistView = new RazorEnhanced.UI.ScriptListView();
 			this.columnHeader62 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader56 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader57 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader58 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader59 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader60 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader61 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.filename = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.loop = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.autostart = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.wait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.hotkey = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.heypass = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
@@ -1117,8 +1145,6 @@ namespace Assistant
 			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.escavenger = new System.Windows.Forms.TabPage();
 			this.label61 = new System.Windows.Forms.Label();
-			this.scavengerRange = new RazorEnhanced.UI.RazorTextBox();
-			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
 			this.groupBox41 = new System.Windows.Forms.GroupBox();
 			this.label54 = new System.Windows.Forms.Label();
 			this.scavengerContainerLabel = new System.Windows.Forms.Label();
@@ -1133,6 +1159,8 @@ namespace Assistant
 			this.scavengerLogBox = new System.Windows.Forms.ListBox();
 			this.label23 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
+			this.scavengerRange = new RazorEnhanced.UI.RazorTextBox();
+			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
 			this.scavengerDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.scavengerCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1336,6 +1364,22 @@ namespace Assistant
 			this.label39 = new System.Windows.Forms.Label();
 			this.hotkeytextbox = new RazorEnhanced.UI.RazorTextBox();
 			this.hotkeytreeView = new System.Windows.Forms.TreeView();
+			this.videoTab = new System.Windows.Forms.TabPage();
+			this.videoRecStatuslabel = new System.Windows.Forms.Label();
+			this.label64 = new System.Windows.Forms.Label();
+			this.groupBox40 = new System.Windows.Forms.GroupBox();
+			this.videoSourcePlayer = new Accord.Controls.VideoSourcePlayer();
+			this.videosettinggroupBox = new System.Windows.Forms.GroupBox();
+			this.videoCodecComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.label63 = new System.Windows.Forms.Label();
+			this.label62 = new System.Windows.Forms.Label();
+			this.videoFPSTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.videorecbutton = new System.Windows.Forms.Button();
+			this.videostopbutton = new System.Windows.Forms.Button();
+			this.groupBox15 = new System.Windows.Forms.GroupBox();
+			this.videolistBox = new System.Windows.Forms.ListBox();
+			this.videoPathButton = new RazorEnhanced.UI.RazorButton();
+			this.videoPathTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
@@ -1417,6 +1461,10 @@ namespace Assistant
 			this.groupBox8.SuspendLayout();
 			this.groupBox28.SuspendLayout();
 			this.groupBox27.SuspendLayout();
+			this.videoTab.SuspendLayout();
+			this.groupBox40.SuspendLayout();
+			this.videosettinggroupBox.SuspendLayout();
+			this.groupBox15.SuspendLayout();
 			this.datagridMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -1433,6 +1481,7 @@ namespace Assistant
 			this.tabs.Controls.Add(this.scriptingTab);
 			this.tabs.Controls.Add(this.EnhancedAgent);
 			this.tabs.Controls.Add(this.enhancedHotKeytabPage);
+			this.tabs.Controls.Add(this.videoTab);
 			this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabs.Location = new System.Drawing.Point(0, 0);
 			this.tabs.Multiline = true;
@@ -4236,6 +4285,7 @@ namespace Assistant
 			// 
 			// groupBox30
 			// 
+			this.groupBox30.Controls.Add(this.scriptautostartcheckbox);
 			this.groupBox30.Controls.Add(this.scriptwaitmodecheckbox);
 			this.groupBox30.Controls.Add(this.scriptloopmodecheckbox);
 			this.groupBox30.Controls.Add(this.scriptfilelabel);
@@ -4246,9 +4296,18 @@ namespace Assistant
 			this.groupBox30.TabStop = false;
 			this.groupBox30.Text = "Script Info";
 			// 
+			// scriptautostartcheckbox
+			// 
+			this.scriptautostartcheckbox.Location = new System.Drawing.Point(6, 76);
+			this.scriptautostartcheckbox.Name = "scriptautostartcheckbox";
+			this.scriptautostartcheckbox.Size = new System.Drawing.Size(138, 22);
+			this.scriptautostartcheckbox.TabIndex = 51;
+			this.scriptautostartcheckbox.Text = "AutoStart at Login";
+			this.scriptautostartcheckbox.CheckedChanged += new System.EventHandler(this.scriptautostartcheckbox_CheckedChanged);
+			// 
 			// scriptwaitmodecheckbox
 			// 
-			this.scriptwaitmodecheckbox.Location = new System.Drawing.Point(6, 64);
+			this.scriptwaitmodecheckbox.Location = new System.Drawing.Point(6, 56);
 			this.scriptwaitmodecheckbox.Name = "scriptwaitmodecheckbox";
 			this.scriptwaitmodecheckbox.Size = new System.Drawing.Size(138, 22);
 			this.scriptwaitmodecheckbox.TabIndex = 50;
@@ -4257,7 +4316,7 @@ namespace Assistant
 			// 
 			// scriptloopmodecheckbox
 			// 
-			this.scriptloopmodecheckbox.Location = new System.Drawing.Point(6, 39);
+			this.scriptloopmodecheckbox.Location = new System.Drawing.Point(6, 36);
 			this.scriptloopmodecheckbox.Name = "scriptloopmodecheckbox";
 			this.scriptloopmodecheckbox.Size = new System.Drawing.Size(103, 22);
 			this.scriptloopmodecheckbox.TabIndex = 49;
@@ -4277,12 +4336,13 @@ namespace Assistant
 			// 
 			this.scriptlistView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader62,
-            this.columnHeader56,
-            this.columnHeader57,
-            this.columnHeader58,
-            this.columnHeader59,
-            this.columnHeader60,
-            this.columnHeader61});
+            this.filename,
+            this.status,
+            this.loop,
+            this.autostart,
+            this.wait,
+            this.hotkey,
+            this.heypass});
 			this.scriptlistView.FullRowSelect = true;
 			this.scriptlistView.GridLines = true;
 			this.scriptlistView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -4302,37 +4362,44 @@ namespace Assistant
 			this.columnHeader62.Text = "";
 			this.columnHeader62.Width = 0;
 			// 
-			// columnHeader56
+			// filename
 			// 
-			this.columnHeader56.Text = "Filename";
-			this.columnHeader56.Width = 163;
+			this.filename.Text = "Filename";
+			this.filename.Width = 150;
 			// 
-			// columnHeader57
+			// status
 			// 
-			this.columnHeader57.Text = "Status";
-			this.columnHeader57.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader57.Width = 67;
+			this.status.Text = "Status";
+			this.status.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.status.Width = 67;
 			// 
-			// columnHeader58
+			// loop
 			// 
-			this.columnHeader58.Text = "Loop";
-			this.columnHeader58.Width = 37;
+			this.loop.Text = "Loop";
+			this.loop.Width = 37;
 			// 
-			// columnHeader59
+			// autostart
 			// 
-			this.columnHeader59.Text = "Wait";
-			this.columnHeader59.Width = 37;
+			this.autostart.DisplayIndex = 5;
+			this.autostart.Text = "A.S.";
+			this.autostart.Width = 37;
 			// 
-			// columnHeader60
+			// wait
 			// 
-			this.columnHeader60.Text = "HotKey";
-			this.columnHeader60.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.columnHeader60.Width = 99;
+			this.wait.DisplayIndex = 4;
+			this.wait.Text = "Wait";
+			this.wait.Width = 37;
 			// 
-			// columnHeader61
+			// hotkey
 			// 
-			this.columnHeader61.Text = "KeyPass";
-			this.columnHeader61.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.hotkey.Text = "HotKey";
+			this.hotkey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+			this.hotkey.Width = 80;
+			// 
+			// heypass
+			// 
+			this.heypass.Text = "KeyPass";
+			this.heypass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			// 
 			// EnhancedAgent
 			// 
@@ -4651,13 +4718,13 @@ namespace Assistant
 			// escavenger
 			// 
 			this.escavenger.Controls.Add(this.label61);
-			this.escavenger.Controls.Add(this.scavengerRange);
-			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
 			this.escavenger.Controls.Add(this.groupBox41);
 			this.escavenger.Controls.Add(this.scavengerdataGridView);
 			this.escavenger.Controls.Add(this.groupBox12);
 			this.escavenger.Controls.Add(this.label23);
 			this.escavenger.Controls.Add(this.label22);
+			this.escavenger.Controls.Add(this.scavengerRange);
+			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
 			this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
 			this.escavenger.Controls.Add(this.scavengerDragDelay);
 			this.escavenger.Controls.Add(this.scavengerCheckBox);
@@ -4682,28 +4749,6 @@ namespace Assistant
 			this.label61.Size = new System.Drawing.Size(62, 13);
 			this.label61.TabIndex = 75;
 			this.label61.Text = "Max Range";
-			// 
-			// scavengerRange
-			// 
-			this.scavengerRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.scavengerRange.BackColor = System.Drawing.Color.White;
-			this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.scavengerRange.Location = new System.Drawing.Point(416, 68);
-			this.scavengerRange.Name = "scavengerRange";
-			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
-			this.scavengerRange.TabIndex = 74;
-			this.scavengerRange.TextChanged += new System.EventHandler(this.scavengerRange_TextChanged);
-			// 
-			// scavengerButtonEditProps
-			// 
-			this.scavengerButtonEditProps.Location = new System.Drawing.Point(563, 66);
-			this.scavengerButtonEditProps.Name = "scavengerButtonEditProps";
-			this.scavengerButtonEditProps.Size = new System.Drawing.Size(90, 21);
-			this.scavengerButtonEditProps.TabIndex = 49;
-			this.scavengerButtonEditProps.Text = "Edit Props";
-			this.scavengerButtonEditProps.Click += new System.EventHandler(this.scavengerEditProps_Click);
 			// 
 			// groupBox41
 			// 
@@ -4845,6 +4890,28 @@ namespace Assistant
 			this.label22.Size = new System.Drawing.Size(81, 13);
 			this.label22.TabIndex = 60;
 			this.label22.Text = "Scavenger List:";
+			// 
+			// scavengerRange
+			// 
+			this.scavengerRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.scavengerRange.BackColor = System.Drawing.Color.White;
+			this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.scavengerRange.Location = new System.Drawing.Point(416, 68);
+			this.scavengerRange.Name = "scavengerRange";
+			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
+			this.scavengerRange.TabIndex = 74;
+			this.scavengerRange.TextChanged += new System.EventHandler(this.scavengerRange_TextChanged);
+			// 
+			// scavengerButtonEditProps
+			// 
+			this.scavengerButtonEditProps.Location = new System.Drawing.Point(563, 66);
+			this.scavengerButtonEditProps.Name = "scavengerButtonEditProps";
+			this.scavengerButtonEditProps.Size = new System.Drawing.Size(90, 21);
+			this.scavengerButtonEditProps.TabIndex = 49;
+			this.scavengerButtonEditProps.Text = "Edit Props";
+			this.scavengerButtonEditProps.Click += new System.EventHandler(this.scavengerEditProps_Click);
 			// 
 			// scavengerButtonAddTarget
 			// 
@@ -6673,6 +6740,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomcolorTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomcolorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.bandagehealcustomcolorTextBox.Enabled = false;
 			this.bandagehealcustomcolorTextBox.Location = new System.Drawing.Point(286, 76);
 			this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
 			this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
@@ -6695,6 +6763,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.bandagehealcustomIDTextBox.BackColor = System.Drawing.Color.White;
 			this.bandagehealcustomIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.bandagehealcustomIDTextBox.Enabled = false;
 			this.bandagehealcustomIDTextBox.Location = new System.Drawing.Point(180, 75);
 			this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
 			this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
@@ -6996,6 +7065,200 @@ namespace Assistant
 			this.hotkeytreeView.TabIndex = 0;
 			this.hotkeytreeView.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.hotkeytreeView_AfterSelect);
 			// 
+			// videoTab
+			// 
+			this.videoTab.BackColor = System.Drawing.SystemColors.Control;
+			this.videoTab.Controls.Add(this.videoRecStatuslabel);
+			this.videoTab.Controls.Add(this.label64);
+			this.videoTab.Controls.Add(this.groupBox40);
+			this.videoTab.Controls.Add(this.videosettinggroupBox);
+			this.videoTab.Controls.Add(this.videorecbutton);
+			this.videoTab.Controls.Add(this.videostopbutton);
+			this.videoTab.Controls.Add(this.groupBox15);
+			this.videoTab.Location = new System.Drawing.Point(4, 40);
+			this.videoTab.Name = "videoTab";
+			this.videoTab.Padding = new System.Windows.Forms.Padding(3);
+			this.videoTab.Size = new System.Drawing.Size(666, 366);
+			this.videoTab.TabIndex = 16;
+			this.videoTab.Text = "Video Recorder";
+			// 
+			// videoRecStatuslabel
+			// 
+			this.videoRecStatuslabel.AutoSize = true;
+			this.videoRecStatuslabel.ForeColor = System.Drawing.Color.Green;
+			this.videoRecStatuslabel.Location = new System.Drawing.Point(185, 334);
+			this.videoRecStatuslabel.Name = "videoRecStatuslabel";
+			this.videoRecStatuslabel.Size = new System.Drawing.Size(24, 13);
+			this.videoRecStatuslabel.TabIndex = 95;
+			this.videoRecStatuslabel.Text = "Idle";
+			// 
+			// label64
+			// 
+			this.label64.AutoSize = true;
+			this.label64.Location = new System.Drawing.Point(120, 334);
+			this.label64.Name = "label64";
+			this.label64.Size = new System.Drawing.Size(63, 13);
+			this.label64.TabIndex = 94;
+			this.label64.Text = "Rec Status:";
+			// 
+			// groupBox40
+			// 
+			this.groupBox40.Controls.Add(this.videoSourcePlayer);
+			this.groupBox40.Location = new System.Drawing.Point(259, 6);
+			this.groupBox40.Name = "groupBox40";
+			this.groupBox40.Size = new System.Drawing.Size(399, 352);
+			this.groupBox40.TabIndex = 64;
+			this.groupBox40.TabStop = false;
+			this.groupBox40.Text = "Playback";
+			// 
+			// videoSourcePlayer
+			// 
+			this.videoSourcePlayer.Location = new System.Drawing.Point(7, 20);
+			this.videoSourcePlayer.Name = "videoSourcePlayer";
+			this.videoSourcePlayer.Size = new System.Drawing.Size(386, 321);
+			this.videoSourcePlayer.TabIndex = 0;
+			this.videoSourcePlayer.Text = "videoSourcePlayer";
+			this.videoSourcePlayer.VideoSource = null;
+			// 
+			// videosettinggroupBox
+			// 
+			this.videosettinggroupBox.Controls.Add(this.videoCodecComboBox);
+			this.videosettinggroupBox.Controls.Add(this.label63);
+			this.videosettinggroupBox.Controls.Add(this.label62);
+			this.videosettinggroupBox.Controls.Add(this.videoFPSTextBox);
+			this.videosettinggroupBox.Location = new System.Drawing.Point(10, 250);
+			this.videosettinggroupBox.Name = "videosettinggroupBox";
+			this.videosettinggroupBox.Size = new System.Drawing.Size(243, 66);
+			this.videosettinggroupBox.TabIndex = 63;
+			this.videosettinggroupBox.TabStop = false;
+			this.videosettinggroupBox.Text = "Video Settings";
+			// 
+			// videoCodecComboBox
+			// 
+			this.videoCodecComboBox.FormattingEnabled = true;
+			this.videoCodecComboBox.Items.AddRange(new object[] {
+            "Default",
+            "MPEG4",
+            "WMV1",
+            "WMV2",
+            "MSMPEG4v2",
+            "MSMPEG4v3",
+            "H263P",
+            "FLV1",
+            "MPEG2",
+            "Raw",
+            "FFV1",
+            "FFVHUFF",
+            "H264",
+            "H265",
+            "Theora",
+            "VP8",
+            "VP9"});
+			this.videoCodecComboBox.Location = new System.Drawing.Point(122, 27);
+			this.videoCodecComboBox.Name = "videoCodecComboBox";
+			this.videoCodecComboBox.Size = new System.Drawing.Size(110, 21);
+			this.videoCodecComboBox.TabIndex = 63;
+			this.videoCodecComboBox.SelectedIndexChanged += new System.EventHandler(this.videoCodecComboBox_SelectedIndexChanged);
+			// 
+			// label63
+			// 
+			this.label63.AutoSize = true;
+			this.label63.Location = new System.Drawing.Point(81, 31);
+			this.label63.Name = "label63";
+			this.label63.Size = new System.Drawing.Size(41, 13);
+			this.label63.TabIndex = 62;
+			this.label63.Text = "Codec:";
+			// 
+			// label62
+			// 
+			this.label62.AutoSize = true;
+			this.label62.Location = new System.Drawing.Point(7, 31);
+			this.label62.Name = "label62";
+			this.label62.Size = new System.Drawing.Size(33, 13);
+			this.label62.TabIndex = 61;
+			this.label62.Text = "FPS: ";
+			// 
+			// videoFPSTextBox
+			// 
+			this.videoFPSTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.videoFPSTextBox.BackColor = System.Drawing.Color.White;
+			this.videoFPSTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.videoFPSTextBox.Location = new System.Drawing.Point(42, 28);
+			this.videoFPSTextBox.Name = "videoFPSTextBox";
+			this.videoFPSTextBox.Size = new System.Drawing.Size(33, 20);
+			this.videoFPSTextBox.TabIndex = 60;
+			this.videoFPSTextBox.TextChanged += new System.EventHandler(this.videoFPSTextBox_TextChanged);
+			// 
+			// videorecbutton
+			// 
+			this.videorecbutton.BackgroundImage = global::Assistant.Properties.Resources.record;
+			this.videorecbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.videorecbutton.FlatAppearance.BorderSize = 0;
+			this.videorecbutton.Location = new System.Drawing.Point(43, 325);
+			this.videorecbutton.Name = "videorecbutton";
+			this.videorecbutton.Size = new System.Drawing.Size(30, 30);
+			this.videorecbutton.TabIndex = 93;
+			this.videorecbutton.UseVisualStyleBackColor = true;
+			this.videorecbutton.Click += new System.EventHandler(this.videorecbutton_Click);
+			// 
+			// videostopbutton
+			// 
+			this.videostopbutton.BackgroundImage = global::Assistant.Properties.Resources.stopagent;
+			this.videostopbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.videostopbutton.FlatAppearance.BorderSize = 0;
+			this.videostopbutton.Location = new System.Drawing.Point(79, 325);
+			this.videostopbutton.Name = "videostopbutton";
+			this.videostopbutton.Size = new System.Drawing.Size(30, 30);
+			this.videostopbutton.TabIndex = 92;
+			this.videostopbutton.UseVisualStyleBackColor = true;
+			this.videostopbutton.Click += new System.EventHandler(this.videostopbutton_Click);
+			// 
+			// groupBox15
+			// 
+			this.groupBox15.Controls.Add(this.videolistBox);
+			this.groupBox15.Controls.Add(this.videoPathButton);
+			this.groupBox15.Controls.Add(this.videoPathTextBox);
+			this.groupBox15.Location = new System.Drawing.Point(8, 6);
+			this.groupBox15.Name = "groupBox15";
+			this.groupBox15.Size = new System.Drawing.Size(245, 238);
+			this.groupBox15.TabIndex = 62;
+			this.groupBox15.TabStop = false;
+			this.groupBox15.Text = "File";
+			// 
+			// videolistBox
+			// 
+			this.videolistBox.IntegralHeight = false;
+			this.videolistBox.Location = new System.Drawing.Point(11, 41);
+			this.videolistBox.Name = "videolistBox";
+			this.videolistBox.Size = new System.Drawing.Size(223, 183);
+			this.videolistBox.Sorted = true;
+			this.videolistBox.TabIndex = 8;
+			this.videolistBox.SelectedIndexChanged += new System.EventHandler(this.videoList_SelectedIndexChanged);
+			this.videolistBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.videoList_MouseDown);
+			// 
+			// videoPathButton
+			// 
+			this.videoPathButton.Location = new System.Drawing.Point(212, 17);
+			this.videoPathButton.Name = "videoPathButton";
+			this.videoPathButton.Size = new System.Drawing.Size(22, 17);
+			this.videoPathButton.TabIndex = 9;
+			this.videoPathButton.Text = "...";
+			this.videoPathButton.Click += new System.EventHandler(this.videoPathButton_Click);
+			// 
+			// videoPathTextBox
+			// 
+			this.videoPathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.videoPathTextBox.BackColor = System.Drawing.Color.White;
+			this.videoPathTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.videoPathTextBox.Location = new System.Drawing.Point(11, 15);
+			this.videoPathTextBox.Name = "videoPathTextBox";
+			this.videoPathTextBox.Size = new System.Drawing.Size(195, 20);
+			this.videoPathTextBox.TabIndex = 10;
+			// 
 			// m_NotifyIcon
 			// 
 			this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
@@ -7154,6 +7417,13 @@ namespace Assistant
 			this.groupBox28.PerformLayout();
 			this.groupBox27.ResumeLayout(false);
 			this.groupBox27.PerformLayout();
+			this.videoTab.ResumeLayout(false);
+			this.videoTab.PerformLayout();
+			this.groupBox40.ResumeLayout(false);
+			this.videosettinggroupBox.ResumeLayout(false);
+			this.videosettinggroupBox.PerformLayout();
+			this.groupBox15.ResumeLayout(false);
+			this.groupBox15.PerformLayout();
 			this.datagridMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -7408,6 +7678,11 @@ namespace Assistant
 				uomodpaperdoolCheckBox.Enabled = false;
 				uomodglobalsoundCheckBox.Enabled = false;
 			}
+
+			// Video Recorder
+			videoPathTextBox.Text = Settings.General.ReadString("VideoPath");
+			videoFPSTextBox.Text = Settings.General.ReadInt("VideoFPS").ToString();
+			videoCodecComboBox.SelectedIndex = Settings.General.ReadInt("VideoFormat");
 		}
 
 		private bool m_Initializing = false;
@@ -7454,6 +7729,10 @@ namespace Assistant
 			else if (tabs.SelectedTab == scriptingTab)
 			{
 				UpdateScriptGrid();
+			}
+			else if (tabs.SelectedTab == videoTab)
+			{
+				ReloadVideoList();
 			}
 		}
 
@@ -8061,7 +8340,7 @@ namespace Assistant
 			}
 		}
 
-		internal void ReloadScreenShotsList()
+		internal void ReloadScreenShotsList() 
 		{
 			ScreenCapManager.DisplayTo(screensList);
 			if (screenPrev.Image != null)
@@ -8318,20 +8597,20 @@ namespace Assistant
 
 		private bool m_isKeyPressed;
 		private Keys m_lastKey;
-        private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
+		private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			if (!m_isKeyPressed || m_lastKey != e.KeyData)
 				RazorEnhanced.HotKey.KeyDown(e.KeyData);
 			m_isKeyPressed = true;
 			m_lastKey = e.KeyData;
-            e.SuppressKeyPress = true;
+			e.SuppressKeyPress = true;
 		}
 
 		private void HotKey_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
 		{
 			m_isKeyPressed = false;
 			m_lastKey = Keys.None;
-        }
+		}
 
 		private void HotKey_MouseRoll(object sender, System.Windows.Forms.MouseEventArgs e)
 		{
@@ -8447,7 +8726,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("AutoOpenDoors", autoOpenDoors.Checked);
 
 			hiddedAutoOpenDoors.Enabled = autoOpenDoors.Checked;
-        }
+		}
 
 
 		private void hiddedAutoOpenDoors_CheckedChanged(object sender, EventArgs e)
@@ -8609,7 +8888,7 @@ namespace Assistant
 
 		// ------------------- SCRIPTING ----------------------------
 
-		private static string LoadFromFile(string filename, bool wait, bool loop, bool run)
+		private static string LoadFromFile(string filename, bool wait, bool loop, bool run, bool autostart)
 		{
 			string status = "Loaded";
 			string classname = Path.GetFileNameWithoutExtension(filename);
@@ -8625,7 +8904,7 @@ namespace Assistant
 				return "ERROR: file not found";
 			}
 
-			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run);
+			Scripts.EnhancedScript script = new Scripts.EnhancedScript(filename, text, wait, loop, run, autostart);
 			string result = script.Create(null);
 
 			if (result == "Created")
@@ -8661,12 +8940,13 @@ namespace Assistant
 				string status = (string)row["Status"];
 				bool passkey = (bool)row["HotKeyPass"];
 				Keys key = (Keys)row["HotKey"];
+				bool autostart = (bool)row["AutoStart"];
 
 				bool run = false;
 				if (status == "Running")
 					run = true;
 
-				string result = LoadFromFile(filename, wait, loop, run);
+				string result = LoadFromFile(filename, wait, loop, run, autostart);
 
 				if (result == "Loaded")
 				{
@@ -8681,10 +8961,16 @@ namespace Assistant
 					else
 						listitem.SubItems.Add("No");
 
+					if (autostart)
+						listitem.SubItems.Add("Yes");
+					else
+						listitem.SubItems.Add("No");
+
 					if (wait)
 						listitem.SubItems.Add("Yes");
 					else
 						listitem.SubItems.Add("No");
+
 
 					listitem.SubItems.Add(key.ToString());
 
@@ -8706,6 +8992,8 @@ namespace Assistant
 					listitem.SubItems.Add("File Not Found");
 
 					listitem.SubItems.Add("Error");
+
+					listitem.SubItems.Add("No");
 
 					listitem.SubItems.Add("No");
 
@@ -8863,7 +9151,7 @@ namespace Assistant
 					Scripts.EnhancedScript script = Scripts.Search(filename);
 					if (script == null)
 					{
-						scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, Keys.None, true);
+						scriptTable.Rows.Add(filename, Properties.Resources.red, "Idle", false, false, false, Keys.None, false);
 						ReloadScriptTable();
 					}
 				}
@@ -8892,13 +9180,14 @@ namespace Assistant
 						bool loop = script.Loop;
 						bool wait = script.Wait;
 						bool run = script.Run;
+						bool autostart = script.AutoStart;
 						bool isRunning = script.IsRunning;
 
 						if (isRunning)
 							script.Stop();
 
 						Scripts.EnhancedScript reloaded = new Scripts.EnhancedScript(scriptname, text, wait,
-							loop, run);
+							loop, run, autostart);
 						reloaded.Create(null);
 						Scripts.EnhancedScripts[scriptname] = reloaded;
 
@@ -8981,14 +9270,30 @@ namespace Assistant
 
 				if (scriptlistView.SelectedItems[0].SubItems[3].Text == "Yes")
 					scriptloopmodecheckbox.Checked = true;
-
 				else
 					scriptloopmodecheckbox.Checked = false;
 
 				if (scriptlistView.SelectedItems[0].SubItems[4].Text == "Yes")
+					scriptautostartcheckbox.Checked = true;
+				else
+					scriptautostartcheckbox.Checked = false;
+
+				if (scriptlistView.SelectedItems[0].SubItems[5].Text == "Yes")
 					scriptwaitmodecheckbox.Checked = true;
 				else
 					scriptwaitmodecheckbox.Checked = false;
+			}
+		}
+
+		private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (scriptautostartcheckbox.Focused && scriptlistView.SelectedItems.Count == 1)
+			{
+				if (scriptautostartcheckbox.Checked)
+					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = true;
+				else
+					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = false;
+				ReloadScriptTable();
 			}
 		}
 
@@ -9047,7 +9352,7 @@ namespace Assistant
 		}
 
 		// ------------ AUTOLOOT ----------------
-	
+
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
 			if (autolootListSelect.Text != "")
@@ -9554,7 +9859,7 @@ namespace Assistant
 					}
 					cell.Value = "0x" + color.ToString("X4");
 				}
-			}	
+			}
 			else if (e.ColumnIndex == 2)
 			{
 				int itemid = 0;
@@ -9609,7 +9914,7 @@ namespace Assistant
 				}
 			}
 		}
-  
+
 		private void organizerSetSource_Click(object sender, EventArgs e)
 		{
 			if (organizerListSelect.Text != "")
@@ -10147,7 +10452,7 @@ namespace Assistant
 			}
 			RazorEnhanced.SellAgent.CopyTable();
 		}
-		
+
 		private void vendorsellGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
 		{
 			e.Row.Cells[0].Value = false;
@@ -12328,7 +12633,7 @@ namespace Assistant
 				break;
 			}
 			return cpuInfo;
-        }
+		}
 
 
 		internal static void VersionCheckWorker()
@@ -12672,7 +12977,7 @@ namespace Assistant
 			switch (agenttype)
 			{
 				case "autolootdataGridView":
-                    if (!autolootdataGridView.Rows[agentrowindex].IsNewRow)
+					if (!autolootdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						autolootdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.AutoLoot.CopyTable();
@@ -12686,28 +12991,28 @@ namespace Assistant
 					}
 					break;
 				case "organizerdataGridView":
-                    if (!organizerdataGridView.Rows[agentrowindex].IsNewRow)
+					if (!organizerdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						organizerdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Organizer.CopyTable();
 					}
 					break;
 				case "vendorbuydataGridView":
-                    if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
+					if (!vendorbuydataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						vendorbuydataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.BuyAgent.CopyTable();
 					}
 					break;
 				case "vendorsellGridView":
-                    if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
+					if (!vendorsellGridView.Rows[agentrowindex].IsNewRow)
 					{
 						vendorsellGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.SellAgent.CopyTable();
 					}
 					break;
 				case "restockdataGridView":
-                    if (!restockdataGridView.Rows[agentrowindex].IsNewRow)
+					if (!restockdataGridView.Rows[agentrowindex].IsNewRow)
 					{
 						restockdataGridView.Rows.RemoveAt(agentrowindex);
 						RazorEnhanced.Restock.CopyTable();
@@ -12744,7 +13049,7 @@ namespace Assistant
 			DataGridView grid = (DataGridView)sender;
 			rowIndexFromMouseDown = grid.HitTest(e.X, e.Y).RowIndex;
 			if (rowIndexFromMouseDown != -1)
-			{           
+			{
 				Size dragSize = SystemInformation.DragSize;
 				dragBoxFromMouseDown = new Rectangle(new Point(e.X - (dragSize.Width / 2),
 															   e.Y - (dragSize.Height / 2)),
@@ -12890,6 +13195,201 @@ namespace Assistant
 		}
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
-	}
+		// ----------------- START VIDEO RECORDER -------------------
+		private void videoFPSTextBox_TextChanged(object sender, EventArgs e)
+		{
+			if (videoFPSTextBox.Focused)
+			{
+				int fps = 25;
 
+				if (!Int32.TryParse(videoFPSTextBox.Text, out fps))
+					videoFPSTextBox.Text = "25";
+
+				Settings.General.WriteInt("VideoFPS", fps);
+			}
+		}
+
+		private void videoPathButton_Click(object sender, EventArgs e)
+		{
+			FolderBrowserDialog folder = new FolderBrowserDialog();
+			folder.Description = "Select a folder to store Razor video file";
+			folder.SelectedPath = RazorEnhanced.Settings.General.ReadString("VideoPath");
+			folder.ShowNewFolderButton = true;
+
+			if (folder.ShowDialog(this) == DialogResult.OK)
+			{
+				RazorEnhanced.Settings.General.WriteString("VideoPath", folder.SelectedPath);
+				videoPathTextBox.Text = folder.SelectedPath;
+				ReloadVideoList();
+			}
+		}
+
+		internal void ReloadVideoList()
+		{
+			CloseCurrentVideoSource();
+			VideoCapture.DisplayTo(videolistBox);
+		}
+
+		private void videoList_SelectedIndexChanged(object sender, System.EventArgs e)
+		{
+			if (videolistBox.Focused)
+			{
+				CloseCurrentVideoSource();
+
+				if (videolistBox.SelectedIndex == -1)
+					return;
+
+				string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), videolistBox.SelectedItem.ToString());
+				if (!File.Exists(file))
+				{
+					MessageBox.Show(this, Language.Format(LocString.FileNotFoundA1, file), "File Not Found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					videolistBox.Items.RemoveAt(videolistBox.SelectedIndex);
+					videolistBox.SelectedIndex = -1;
+					return;
+				}
+				OpenVideoSource(file);
+			}
+		}
+
+		private void videoList_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right && e.Clicks == 1)
+			{
+				ContextMenu menu = new ContextMenu();
+				menu.MenuItems.Add("Delete", new EventHandler(DeleteVideoFile));
+				if (videolistBox.SelectedIndex == -1)
+					menu.MenuItems[menu.MenuItems.Count - 1].Enabled = false;
+				menu.MenuItems.Add("Delete ALL", new EventHandler(ClearVideoDirectory));
+				menu.Show(videolistBox, new Point(e.X, e.Y));
+			}
+		}
+
+		private void DeleteVideoFile(object sender, System.EventArgs e)
+		{
+			CloseCurrentVideoSource();
+			int sel = videolistBox.SelectedIndex;
+			if (sel == -1)
+				return;
+
+			string file = Path.Combine(RazorEnhanced.Settings.General.ReadString("VideoPath"), (string)videolistBox.SelectedItem);
+			if (MessageBox.Show(this, Language.Format(LocString.DelConf, file), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				return;
+
+			videolistBox.SelectedIndex = -1;
+
+			try
+			{
+				File.Delete(file);
+				videolistBox.Items.RemoveAt(sel);
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(this, ex.Message, "Unable to Delete", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			ReloadVideoList();
+		}
+
+		private void ClearVideoDirectory(object sender, System.EventArgs e)
+		{
+			string dir = RazorEnhanced.Settings.General.ReadString("VideoPath");
+			if (MessageBox.Show(this, Language.Format(LocString.Confirm, dir), "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+				return;
+
+			string[] files = Directory.GetFiles(dir, "*.avi");
+			StringBuilder sb = new StringBuilder();
+			int failed = 0;
+			for (int i = 0; i < files.Length; i++)
+			{
+				try
+				{
+					File.Delete(files[i]);
+				}
+				catch
+				{
+					sb.AppendFormat("{0}\n", files[i]);
+					failed++;
+				}
+			}
+
+			if (failed > 0)
+				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : "", sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			ReloadVideoList();
+		}
+
+		private void videorecbutton_Click(object sender, EventArgs e)
+		{
+			StartVideoRecorder();
+		}
+
+		private void videostopbutton_Click(object sender, EventArgs e)
+		{
+			StopVideoRecorder();
+		}
+
+		internal static void StartVideoRecorder()
+		{
+			if (VideoCapture.Recording) // already on record
+			{
+				RazorEnhanced.Misc.SendMessage("Already on Record");
+				return;
+			}
+			RazorEnhanced.Misc.SendMessage("Start Video Record");
+			Engine.MainWindow.videoRecStatuslabel.Text = "Recording";
+			Engine.MainWindow.videoRecStatuslabel.ForeColor = Color.Red;
+
+			Engine.MainWindow.videosettinggroupBox.Enabled = false;
+			int fps = 30;
+			if (Settings.General.ReadInt("VideoFPS") < 30)
+				fps = Settings.General.ReadInt("VideoFPS");
+
+			VideoCapture.Record(fps, Engine.MainWindow.videoCodecComboBox.SelectedIndex);
+		}
+
+		internal static void StopVideoRecorder()
+		{
+			RazorEnhanced.Misc.SendMessage("Stop Video Record");
+			Engine.MainWindow.videoRecStatuslabel.Text = "Idle";
+			Engine.MainWindow.videoRecStatuslabel.ForeColor = Color.Green;
+			VideoCapture.Stop();
+			Engine.MainWindow.ReloadVideoList();
+			Engine.MainWindow.videosettinggroupBox.Enabled = true;
+		}
+
+		private void videoCodecComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (videoCodecComboBox.Focused)
+			{
+				Settings.General.WriteInt("VideoFormat", videoCodecComboBox.SelectedIndex);
+			}
+		}
+
+
+		private void CloseCurrentVideoSource()
+		{
+			if (videoSourcePlayer.VideoSource != null)
+			{
+				videoSourcePlayer.SignalToStop();
+				videoSourcePlayer.WaitForStop();
+				videoSourcePlayer.VideoSource = null;
+			}
+		}
+		// Open video source
+		private void OpenVideoSource(string file)
+		{
+			FileVideoSource source = new FileVideoSource(file);
+			// set busy cursor
+			this.Cursor = Cursors.WaitCursor;
+
+			// stop current video source
+			CloseCurrentVideoSource();
+
+			// start new video source
+			videoSourcePlayer.VideoSource = source;
+			videoSourcePlayer.Start();
+
+			this.Cursor = Cursors.Default;
+		}
+		// ----------------- STOP VIDEO RECORDER -------------------
+	}
 }
