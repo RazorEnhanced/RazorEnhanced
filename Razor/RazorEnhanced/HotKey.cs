@@ -245,35 +245,35 @@ namespace RazorEnhanced
 						break;
 
 					case "SpellsMagery":
-						RazorEnhanced.Spells.CastMageryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastMagery(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "SpellsNecro":
-						RazorEnhanced.Spells.CastNecroHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastNecro(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "SpellsBushido":
-						RazorEnhanced.Spells.CastBushidoHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastBushido(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "SpellsNinjitsu":
-						RazorEnhanced.Spells.CastNinjitsuHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "SpellsSpellweaving":
-						RazorEnhanced.Spells.CastSpellweavingHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "SpellsMysticism":
-						RazorEnhanced.Spells.CastMysticismHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastMysticism(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "SpellsChivalry":
-						RazorEnhanced.Spells.CastChivalryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastChivalry(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "SpellsMastery":
-						RazorEnhanced.Spells.CastMasteryHotKey(RazorEnhanced.Settings.HotKey.FindString(k));
+						RazorEnhanced.Spells.CastMastery(RazorEnhanced.Settings.HotKey.FindString(k), true);
 						break;
 
 					case "Target":

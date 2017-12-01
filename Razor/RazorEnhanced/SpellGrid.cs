@@ -253,7 +253,7 @@ namespace RazorEnhanced
 			switch (pl.Group)
 			{
 				case "Magery":
-					RazorEnhanced.Spells.CastMageryHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastMagery(pl.Spell, true);
 					break;
 				case "Abilities":
 					if (pl.Spell == "Primary")
@@ -262,25 +262,25 @@ namespace RazorEnhanced
 						Assistant.SpecialMoves.SetSecondaryAbility();
 					break;
 				case "Bushido":
-					RazorEnhanced.Spells.CastBushidoHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastBushido(pl.Spell, true);
 					break;
 				case "Chivalry":
-					RazorEnhanced.Spells.CastChivalryHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastChivalry(pl.Spell, true);
 					break;
 				case "Necromancy":
-					RazorEnhanced.Spells.CastNecroHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastNecro(pl.Spell, true);
 					break;
 				case "Ninjitsu":
-					RazorEnhanced.Spells.CastNinjitsuHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastNinjitsu(pl.Spell, true);
 					break;
 				case "Mysticism":
-					RazorEnhanced.Spells.CastMysticismHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastMysticism(pl.Spell, true);
 					break;
 				case "Spellweaving":
-					RazorEnhanced.Spells.CastSpellweavingHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastSpellweaving(pl.Spell, true);
 					break;
 				case "Mastery":
-					RazorEnhanced.Spells.CastMasteryHotKey(pl.Spell);
+					RazorEnhanced.Spells.CastMastery(pl.Spell, true);
 					break;
 				default:
 					break;
