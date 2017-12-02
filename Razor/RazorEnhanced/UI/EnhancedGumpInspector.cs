@@ -42,8 +42,11 @@ namespace RazorEnhanced.UI
 
 		private void razorButton1_Click_1(object sender, EventArgs e)
 		{
-			string selected = EnhancedGumpInspectorListBox.SelectedItem.ToString();
-			Clipboard.SetText(selected.Substring(selected.IndexOf(':') + 1));
+			if (EnhancedGumpInspectorListBox.SelectedItem != null)
+			{
+				string selected = EnhancedGumpInspectorListBox.SelectedItem.ToString();
+				Clipboard.SetText(selected.Substring(selected.IndexOf(':') + 1));
+			}
 		}
 	}
 }
