@@ -142,10 +142,10 @@ namespace Assistant
 				}
 
 
-				if (m_filewriter != null && m_filewriter.IsOpen)
+				if (m_filewriter != null)// && m_filewriter.IsOpen)
 				{
 					m_filewriter.Close();
-					m_filewriter.Dispose();
+					//m_filewriter.Dispose();
 					m_filewriter = null;
 				}
 			}
