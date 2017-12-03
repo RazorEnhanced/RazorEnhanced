@@ -909,5 +909,96 @@ namespace RazorEnhanced
 					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
 			}
 		}
+		public static void Interrupt()
+		{
+			Assistant.Item item = FindUsedLayer();
+			if (item != null)
+			{
+				Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item, 1));
+				Assistant.ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
+			}
+		}
+
+		internal static Assistant.Item FindUsedLayer()
+		{
+			Assistant.Item layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shoes);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Pants);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Shirt);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Head);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Gloves);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Ring);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Neck);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Waist);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerTorso);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Bracelet);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.MiddleTorso);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Earrings);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Arms);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Cloak);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterTorso);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.OuterLegs);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.InnerLegs);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.RightHand);
+			if (layeritem != null)
+				return layeritem;
+
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.LeftHand);
+			if (layeritem != null)
+				return layeritem;
+
+			return null;
+		}
 	}
 }

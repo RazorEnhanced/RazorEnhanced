@@ -1017,6 +1017,16 @@ namespace RazorEnhanced
 					Assistant.Spell.HealOrCureSelfChiva();
 					break;
 
+				case "Interrupt":
+					Assistant.Item item = Spells.FindUsedLayer();
+					if (item != null)
+					{
+						Assistant.Point3D loc = Assistant.Point3D.MinusOne;
+						Assistant.ClientCommunication.SendToServer(new LiftRequest(item, 1));
+						Assistant.ClientCommunication.SendToServer(new EquipRequest(item.Serial, Assistant.World.Player, item.Layer)); // Equippa
+					}
+					break;
+
 				default:
 					break;
 			}
@@ -1303,7 +1313,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[3].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(a);
 			}
 
 			// Spells -- > Necro
@@ -1316,7 +1326,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(a);
 			}
 
 			// Spells -- > Bushido
@@ -1329,7 +1339,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(a);
 			}
 
 			// Spells -- > Ninjitsu
@@ -1342,7 +1352,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(a);
 			}
 
 			// Spells -- > Spellweaving
@@ -1355,7 +1365,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(a);
 			}
 
 			// Spells -- > Spellweaving
@@ -1368,7 +1378,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(a);
 			}
 
 			// Spells -- > Chivalry
@@ -1381,7 +1391,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[10].Nodes.Add(a);
 			}
 
 			// Spells -- > Mastery
@@ -1394,7 +1404,7 @@ namespace RazorEnhanced
 				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[10].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[11].Nodes.Add(a);
 			}
 
 			// Target
