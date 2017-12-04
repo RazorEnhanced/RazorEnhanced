@@ -11,9 +11,6 @@ namespace Assistant
 {
 	public class VideoCapture
 	{
-		[System.Runtime.InteropServices.DllImport( "Gdi32.dll" )]
-		private static extern IntPtr DeleteObject( IntPtr hGdiObj );
-
 		public static bool Recording { get { return m_recording; } }
 		private static bool m_recording;
 		private static int m_ResX, m_ResY;
