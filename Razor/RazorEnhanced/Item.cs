@@ -972,6 +972,9 @@ namespace RazorEnhanced
 
 		public static int GetPropValue(Item item, string name)
 		{
+			if (item == null)
+				return 0;
+
 			return GetPropValue(item.Serial, name);
 		}
 
