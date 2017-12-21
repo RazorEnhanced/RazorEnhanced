@@ -233,6 +233,10 @@ namespace RazorEnhanced
 				Assistant.World.AddMobile(vendor = new Assistant.Mobile(serial));
 
 			int count = pvSrc.ReadUInt16();
+
+			if (count == 0) // Il vendor non compra nulla
+				return;
+
 			int sold = 0;
 
 			List<Assistant.SellListItem> list = new List<Assistant.SellListItem>(count); // Lista item checkati per vendita (non so dove sia dichiarata)
@@ -261,7 +265,7 @@ namespace RazorEnhanced
 					if (gfx != sellItem.Graphics || (item == null || item == bag || !item.IsChildOf(bag)) || !RazorEnhanced.SellAgent.ColorCheck(sellItem.Color, hue))
 						continue;
 
-					int amountLeft = 60000;
+					int amountLeft = int.MaxValue;
 					int index = 0;
 					bool alreadySold = false;
 
@@ -275,7 +279,7 @@ namespace RazorEnhanced
 						index = y;
 					}
 
-					if (amountLeft == 60000) // Valore limite e inizzializzazione
+					if (amountLeft == int.MaxValue) // Valore limite e inizzializzazione
 						amountLeft = sellItem.Amount;
 
 					if (amountLeft <= 0)
@@ -328,7 +332,9 @@ namespace RazorEnhanced
 
 			ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
 			AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
-			World.Player.SendMessage("Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
+			string message = "Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins";
+			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor"));          // Journal buffer
+			World.Player.SendMessage(message);
 			args.Block = true;
 		}
 
@@ -626,8 +632,11 @@ namespace RazorEnhanced
 
 			args.Block = true;
 			ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
+
+			string message = "Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins";
+			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor"));          // Journal buffer
+			World.Player.SendMessage(message);
 			AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
-			World.Player.SendMessage("Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 		}
 
 		// Funzioni da script
