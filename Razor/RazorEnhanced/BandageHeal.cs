@@ -274,7 +274,16 @@ namespace RazorEnhanced
 				if (bandageamount != 0)        // Se le bende ci sono
 				{
 					AddLog("Using bandage (0x"+ bandageserial.ToString("X8") +") on Target (" + target.Serial.ToString()+")");
-					Items.UseItemOnMobile(bandageserial, target.Serial);
+
+					if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
+						Items.UseItemOnMobile(bandageserial, target.Serial);
+					else // Vecchi client
+					{
+						Items.UseItem(bandageserial);
+						Target.WaitForTarget(1000, true);
+						Target.TargetExecute(target.Serial);
+					}
+
 					if (RazorEnhanced.Settings.General.ReadBool("BandageHealdexformulaCheckBox"))
 					{
 						double delay = (11 - (Player.Dex - (Player.Dex % 10)) / 20) * 1000;         // Calcolo delay in MS

@@ -686,7 +686,16 @@ namespace RazorEnhanced
 						if (bandageserial == 0)
 							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 						else
-							Items.UseItemOnMobile(bandageserial, World.Player.Serial);
+						{
+							if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
+								Items.UseItemOnMobile(bandageserial, World.Player.Serial);
+							else // Vecchi client
+							{
+								Items.UseItem(bandageserial);
+								Target.WaitForTarget(1000, true);
+								Target.TargetExecute(World.Player.Serial);
+							}
+						}
 					}
 					break;
 
@@ -698,7 +707,17 @@ namespace RazorEnhanced
 						if (bandageserial == 0)
 							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 						else
-							Items.UseItemOnMobile(bandageserial, Target.GetLast());
+						{
+							if (Engine.ClientVersion.Major >= 7) // Uso nuovo packet
+								Items.UseItemOnMobile(bandageserial, Target.GetLast());
+							else // Vecchi client
+							{
+								Items.UseItem(bandageserial);
+								Target.WaitForTarget(1000, true);
+								Target.TargetExecute(Target.GetLast());
+							}
+						}
+						
 					}
 					break;
 
