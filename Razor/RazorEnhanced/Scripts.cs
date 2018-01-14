@@ -492,7 +492,7 @@ namespace RazorEnhanced
 		{
 			foreach (KeyValuePair<string, EnhancedScript> pair in m_EnhancedScripts)
 			{ 
-				if (pair.Key == filename)
+				if (pair.Key.ToLower() == filename.ToLower())
 					return pair.Value;
 			}
 
