@@ -15,7 +15,7 @@ namespace Assistant
 {
 	internal class Engine
 	{
-		private static DateTime m_ExpireDate = new DateTime(2018, 3, 1);
+		private static DateTime m_ExpireDate = new DateTime(2018, 4, 1);
 
 		private static IPAddress m_ip;
 
