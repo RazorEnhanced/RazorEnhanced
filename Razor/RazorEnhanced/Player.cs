@@ -748,6 +748,10 @@ namespace RazorEnhanced
 					result = Assistant.Layer.InnerLegs;
 					break;
 
+				case "Talisman":
+					result = Assistant.Layer.Unused_x9;
+					break;
+
 				default:
 					result = Assistant.Layer.Invalid;
 					break;

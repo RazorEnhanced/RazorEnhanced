@@ -11,9 +11,6 @@ namespace Assistant
 {
 	public class VideoCapture
 	{
-		[System.Runtime.InteropServices.DllImport( "Gdi32.dll" )]
-		private static extern IntPtr DeleteObject( IntPtr hGdiObj );
-
 		public static bool Recording { get { return m_recording; } }
 		private static bool m_recording;
 		private static int m_ResX, m_ResY;
@@ -142,10 +139,10 @@ namespace Assistant
 				}
 
 
-				if (m_filewriter != null && m_filewriter.IsOpen)
+				if (m_filewriter != null)// && m_filewriter.IsOpen)
 				{
 					m_filewriter.Close();
-					m_filewriter.Dispose();
+					//m_filewriter.Dispose();
 					m_filewriter = null;
 				}
 			}

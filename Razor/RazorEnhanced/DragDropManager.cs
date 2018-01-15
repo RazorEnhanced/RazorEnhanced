@@ -14,6 +14,9 @@ namespace RazorEnhanced
 
 		internal static void AutoRun()
 		{
+			if (World.Player == null || !Assistant.Engine.Running)
+				return;
+
 			if (World.Player.IsGhost)
 			{
 				Thread.Sleep(2000);
