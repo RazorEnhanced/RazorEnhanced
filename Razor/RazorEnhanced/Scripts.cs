@@ -351,7 +351,11 @@ namespace RazorEnhanced
 
 							if (script.IsUnstarted)
 							{
-								script.Start();
+								try
+								{
+									script.Start();
+								}
+								catch { }
 							}
 						}
 						else
@@ -362,7 +366,11 @@ namespace RazorEnhanced
 							}
 							else if (script.IsUnstarted)
 							{
-								script.Start();
+								try
+								{
+									script.Start();
+								}
+								catch { }
 							}
 						}
 					}
