@@ -211,6 +211,51 @@ namespace RazorEnhanced
 
 		}
 
+		private static int m_old_primary, m_old_secondary = 0;
+		internal static void UpdateSAIcon()
+		{
+			if (Assistant.World.Player == null || m_form == null)
+				return;
+
+			Assistant.Item wep = null;
+			Assistant.Item right = World.Player.GetItemOnLayer(Layer.RightHand);
+			Assistant.Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
+
+			if (right != null)
+				wep = right;
+			else
+			{
+				if (left != null)
+					wep = left;
+			}
+
+			int primaryicon = SpecialMoves.GetPrimaryIcon(wep);
+			int secondaryicon = SpecialMoves.GetSecondaryIcon(wep);
+
+			foreach (PanelGrid p in m_panellist)
+			{
+				if (p.Group == "Abilities")
+				{
+					if (p.Spell == "Primary")
+					{
+						if (m_old_primary != primaryicon)
+						{
+							m_old_primary = primaryicon;
+							p.BackgroundImage = Ultima.Gumps.GetGump(primaryicon);
+						}
+					}
+					else if (p.Spell == "Secondary")
+					{
+						if (m_old_secondary != secondaryicon)
+						{
+							m_old_secondary = secondaryicon;
+							p.BackgroundImage = Ultima.Gumps.GetGump(secondaryicon);
+						}
+					}
+				}
+			}
+		}
+
 		//////////////////////////////////////////////////////////////
 		// Form Dragmove start
 		//////////////////////////////////////////////////////////////

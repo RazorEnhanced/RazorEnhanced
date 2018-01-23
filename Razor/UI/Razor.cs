@@ -11995,6 +11995,7 @@ namespace Assistant
 			UpdateRazorStatus();
 			UpdateScriptGrid();
 			RazorEnhanced.ToolBar.UpdateCount();
+			RazorEnhanced.SpellGrid.UpdateSAIcon();
 		}
 
 		// ---------------- TOOLBAR START ----------------

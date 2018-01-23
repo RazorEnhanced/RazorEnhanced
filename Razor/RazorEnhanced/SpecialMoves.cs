@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Assistant
 {
@@ -42,6 +43,41 @@ namespace Assistant
 
 	internal class SpecialMoves
 	{
+		internal static List<int> Icon = new List<int> {
+			0,
+			0x5200,
+			0x5201,
+			0x5202,
+			0x5203,
+			0x5204,
+			0x5205,
+			0x5206,
+			0x5207,
+			0x5208,
+			0x5209,
+			0x520A,
+			0x520B,
+			0x520C,
+			0x520D,
+			0x520E,
+			0x520F,
+			0x5210,
+			0x5211,
+			0x5212,
+			0x5213,
+			0x5214,
+			0x5215,
+			0x5216,
+			0x5217,
+			0x5218,
+			0x5219,
+			0x521A,
+			0x521B,
+			0x521C,
+			0x521D,
+			0x521E,
+			0
+		};
 		private class AbilityInfo
 		{
 			private AOSAbility m_Ability;
@@ -332,6 +368,31 @@ namespace Assistant
 				ClientCommunication.SendToClient(ClearAbility.Instance);
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
+		}
+
+		internal static int GetPrimaryIcon(Assistant.Item wep)
+		{
+			if (wep == null)
+				return 0x5204;
+			int icon = Icon[(int)GetAbility(wep.ItemID.Value, m_Primary)];
+
+			if (icon == 0)
+				return 0x5204;
+			else
+				return icon; 
+		}
+
+		internal static int GetSecondaryIcon(Assistant.Item wep)
+		{
+			if (wep == null)
+				return 0x520A;
+
+			int icon = Icon[(int)GetAbility(wep.ItemID.Value, m_Secondary)];
+
+			if (icon == 0)
+				return 0x520A;
+			else
+				return icon;
 		}
 
 		internal static void ClearAbilities()
