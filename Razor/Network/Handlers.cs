@@ -583,6 +583,10 @@ namespace Assistant
 
 			RazorEnhanced.DragDropManager.HoldingItem = false;
 
+			// Aggiornamento icone spellgrid
+			if (item.Layer == Layer.RightHand || item.Layer == Layer.LeftHand || item.Layer == Layer.FirstValid)
+				RazorEnhanced.SpellGrid.UpdateSAIcon();
+
 			if (RazorEnhanced.Settings.General.ReadBool("QueueActions"))
 				args.Block = DragDropManager.Drop(item, m, layer);
 		}
@@ -2720,6 +2724,7 @@ namespace Assistant
 					}
 				case 0x21: // Special ability execute
 					{
+						RazorEnhanced.SpellGrid.UpdateSAHighLight(0);
 						World.Player.HasSpecial = false;
 						break;
 					}
@@ -2900,6 +2905,7 @@ namespace Assistant
 						if (p.ReadByte() == 0)
 						{
 							ability = p.ReadInt32();
+							RazorEnhanced.SpellGrid.UpdateSAHighLight(ability);
 							World.Player.HasSpecial = true;
 						}
 						break;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using Assistant;
 using System.Reflection;
@@ -9,6 +10,20 @@ namespace RazorEnhanced
 {
 	internal partial class PanelGrid : Panel
 	{
+		private bool m_abilityenabled = false;
+		public bool AbilityEnabled
+		{
+			get { return m_abilityenabled; }
+			set { m_abilityenabled = value; }
+		}
+
+		private int m_abilityID = 0;
+		public int AbilityID
+		{
+			get { return m_abilityID; }
+			set { m_abilityID = value; }
+		}
+
 		private string m_spell = "Empty";
 		public string Spell
 		{
@@ -211,7 +226,66 @@ namespace RazorEnhanced
 
 		}
 
-		private static int m_old_primary, m_old_secondary = 0;
+		private static Bitmap ColorizeIcon(Bitmap icon)
+		{
+			Bitmap mImage = new Bitmap(icon.Width, icon.Height);
+			float[][] coeff = new float[][] {
+						new float[] { 0, 0, 0, 0, 0 },
+						new float[] { 0, 1, 0, 0, 0 },
+						new float[] { 0, 0, 1, 0, 0 },
+						new float[] { 0, 0, 0, 1, 0 },
+						new float[] { 1, 0, 0, 0, 1 }};
+			
+
+			ColorMatrix cm = new ColorMatrix(coeff);
+			var ia = new ImageAttributes();
+			ia.SetColorMatrix(new ColorMatrix(coeff));
+			using (var gr = Graphics.FromImage(mImage))
+			{
+				gr.DrawImage(icon, new Rectangle(0, 0, mImage.Width, mImage.Height),
+					0, 0, mImage.Width, mImage.Height, GraphicsUnit.Pixel, ia);
+			}
+			return mImage;
+		}
+
+		internal static void UpdateSAHighLight(int ID)
+		{
+			foreach (PanelGrid p in m_panellist)
+			{
+				if (p.Group == "Abilities")
+				{
+					if (ID == 0)
+					{
+						p.AbilityEnabled = false;
+						if (p.Spell == "Primary")
+							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+						else
+							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+					}
+					else
+					{
+						if (p.AbilityID == ID)
+						{
+							p.AbilityEnabled = true;
+							p.BackgroundImage = ColorizeIcon((Bitmap)p.BackgroundImage);
+						}
+						else
+						{
+							if (p.AbilityEnabled)
+							{
+								if (p.Spell == "Primary")
+									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(p.AbilityID));
+								else
+									p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(p.AbilityID));
+							}
+						}
+
+					}
+
+				}
+			}
+		}
+
 		internal static void UpdateSAIcon()
 		{
 			if (Assistant.World.Player == null || m_form == null)
@@ -229,8 +303,8 @@ namespace RazorEnhanced
 					wep = left;
 			}
 
-			int primaryicon = SpecialMoves.GetPrimaryIcon(wep);
-			int secondaryicon = SpecialMoves.GetSecondaryIcon(wep);
+			int primaryAbilityID = SpecialMoves.GetPrimaryAbility(wep);
+			int secondaryAbilityID = SpecialMoves.GetSecondaryAbility(wep);
 
 			foreach (PanelGrid p in m_panellist)
 			{
@@ -238,18 +312,18 @@ namespace RazorEnhanced
 				{
 					if (p.Spell == "Primary")
 					{
-						if (m_old_primary != primaryicon)
+						if (p.AbilityID != primaryAbilityID)
 						{
-							m_old_primary = primaryicon;
-							p.BackgroundImage = Ultima.Gumps.GetGump(primaryicon);
+							p.AbilityID = primaryAbilityID;
+							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(primaryAbilityID));	
 						}
 					}
 					else if (p.Spell == "Secondary")
 					{
-						if (m_old_secondary != secondaryicon)
+						if (p.AbilityID != secondaryAbilityID)
 						{
-							m_old_secondary = secondaryicon;
-							p.BackgroundImage = Ultima.Gumps.GetGump(secondaryicon);
+							p.AbilityID = secondaryAbilityID;
+							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetSecondaryIcon(secondaryAbilityID));
 						}
 					}
 				}

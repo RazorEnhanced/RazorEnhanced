@@ -328,7 +328,7 @@ namespace Assistant
 
 			if (a != AOSAbility.Invalid)
 			{
-
+				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
 				World.Player.HasSpecial = true;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
@@ -363,36 +363,42 @@ namespace Assistant
 							a = AOSAbility.Dismount;
 					}
 				}
+				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
 				World.Player.HasSpecial = true;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
 		}
-
-		internal static int GetPrimaryIcon(Assistant.Item wep)
+		internal static int GetPrimaryAbility(Assistant.Item wep)
 		{
-			if (wep == null)
-				return 0x5204;
-			int icon = Icon[(int)GetAbility(wep.ItemID.Value, m_Primary)];
-
-			if (icon == 0)
-				return 0x5204;
+			if (wep != null)
+				return (int)GetAbility(wep.ItemID.Value, m_Primary);
 			else
-				return icon; 
+				return 0;
 		}
 
-		internal static int GetSecondaryIcon(Assistant.Item wep)
+		internal static int GetSecondaryAbility(Assistant.Item wep)
 		{
-			if (wep == null)
-				return 0x520A;
+			if (wep != null)
+				return (int)GetAbility(wep.ItemID.Value, m_Secondary);
+			else
+				return 0;
+		}
+		internal static int GetPrimaryIcon(int id)
+		{
+			if (id == 0)
+				return 0x5204;
+			else
+				return Icon[id];
+		}
 
-			int icon = Icon[(int)GetAbility(wep.ItemID.Value, m_Secondary)];
-
-			if (icon == 0)
+		internal static int GetSecondaryIcon(int id)
+		{
+			if (id == 0)
 				return 0x520A;
 			else
-				return icon;
+				return Icon[id];
 		}
 
 		internal static void ClearAbilities()
