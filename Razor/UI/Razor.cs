@@ -12495,8 +12495,11 @@ namespace Assistant
 			}
 
 
-			if (!ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
+		/*	if (ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
 			{
+				RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.LightFilter).ToString());
+
+				//RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors).ToString());
 				autoOpenDoors.Checked = false;
 				autoOpenDoors.Enabled = false;
 				Settings.General.WriteBoolNoSave("AutoOpenDoors", false);
@@ -12505,7 +12508,7 @@ namespace Assistant
 			{
 				if (!autoOpenDoors.Enabled)
 					autoOpenDoors.Enabled = true;
-			}
+			}*/
 
 
 			if (!ClientCommunication.AllowBit(FeatureBit.UnequipBeforeCast))
@@ -12544,7 +12547,7 @@ namespace Assistant
 					blockhealpoisonCheckBox.Enabled = true;
 			}
 
-			if (!ClientCommunication.AllowBit(FeatureBit.SellAgent))
+		/*	if (!ClientCommunication.AllowBit(FeatureBit.SellAgent))
 			{
 				sellEnableCheckBox.Enabled = false;
 				sellEnableCheckBox.Checked = false;
@@ -12553,10 +12556,10 @@ namespace Assistant
 			{
 				if (!sellEnableCheckBox.Enabled)
 					sellEnableCheckBox.Enabled = true;
-			}
+			}*/
 
 
-			if (!ClientCommunication.AllowBit(FeatureBit.BuyAgent))
+			/*if (!ClientCommunication.AllowBit(FeatureBit.BuyAgent))
 			{
 				buyEnableCheckBox.Enabled = false;
 				buyEnableCheckBox.Checked = false;
@@ -12565,7 +12568,7 @@ namespace Assistant
 			{
 				if (!buyEnableCheckBox.Enabled)
 					buyEnableCheckBox.Enabled = true;
-			}
+			}*/
 
 			if (!ClientCommunication.AllowBit(FeatureBit.OverheadHealth))
 			{
