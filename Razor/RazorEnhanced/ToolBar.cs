@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using Assistant;
 
@@ -138,7 +139,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					m_hitslabelSH.Text = "H: " + hits.ToString() + " / " + maxhits.ToString();
+						m_hitslabelSH.Text = hits.ToString() + " / " + maxhits.ToString();
 				}
 			}
 		}
@@ -165,7 +166,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					m_staminalabelSH.Text = "S: " + stam.ToString() + " / " + maxstam.ToString();
+						m_staminalabelSH.Text = stam.ToString() + " / " + maxstam.ToString();
 				}
 			}
 		}
@@ -192,7 +193,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					m_manalabelSH.Text = "M: " + mana.ToString() + " / " + maxmana.ToString();
+						m_manalabelSH.Text = mana.ToString() + " / " + maxmana.ToString();
 				}
 			}
 		}
@@ -215,7 +216,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					m_weightlabelSH.Text = "W: " + weight.ToString() + " / " + maxweight.ToString();
+					m_weightlabelSH.Text = weight.ToString() + " / " + maxweight.ToString();
 				}
 			}
 		}
@@ -237,7 +238,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					m_followerlabelSH.Text = "F: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
+					m_followerlabelSH.Text = World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
 				}
 			}
 		}
@@ -324,22 +325,20 @@ namespace RazorEnhanced
 				if (items[x].Graphics != 0)
 				{
 					Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(items[x].Graphics));
-					if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+					if (items[x].Color > 0)
 					{
-						if (items[x].Color > 0)
-						{
-							int hue = items[x].Color;
-							bool onlyHueGrayPixels = (hue & 0x8000) != 0;
-							hue = (hue & 0x3FFF) - 1;
-							Ultima.Hue m_hue = Ultima.Hues.GetHue(hue);
-							m_hue.ApplyTo(m_itemimage, onlyHueGrayPixels);
-						}
-						m_panellist[x].BackgroundImage = m_itemimage;
-                    }
-					else
-						m_panellist[x].BackgroundImage = ResizeImage(m_itemimage, Convert.ToInt16(m_itemimage.Width / 1.5), Convert.ToInt16(m_itemimage.Height / 1.5));
+						int hue = items[x].Color;
+						bool onlyHueGrayPixels = (hue & 0x8000) != 0;
+						hue = (hue & 0x3FFF) - 1;
+						Ultima.Hue m_hue = Ultima.Hues.GetHue(hue);
+						m_hue.ApplyTo(m_itemimage, onlyHueGrayPixels);
+					}
+					m_itemimage = CropImage(m_itemimage);
+					m_panellist[x].BackgroundImage = m_itemimage;
 
-
+					if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") != "Big")
+						m_panellist[x].BackgroundImageLayout = ImageLayout.None;
+	
 					m_panellist[x].Enabled = true;
 					m_panelcount[x].Text = "0";
 					m_panellist[x].BackColor = SystemColors.Control;
@@ -1223,7 +1222,13 @@ namespace RazorEnhanced
 			m_staminalabelSH = new System.Windows.Forms.Label();
 			m_weightlabelSH = new System.Windows.Forms.Label();
 			m_followerlabelSH = new System.Windows.Forms.Label();
-			
+			Label m_hits_label = new System.Windows.Forms.Label();
+			Label m_follower_label = new System.Windows.Forms.Label();
+			Label m_mana_label = new System.Windows.Forms.Label();
+			Label m_stam_label = new System.Windows.Forms.Label();
+			Label m_weight_label = new System.Windows.Forms.Label();
+
+
 			m_form = new ToolBarForm();
 
 			int width = Assistant.Properties.Resources.BarraOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraOrizzontaBordoSinistro.Width;
@@ -1235,13 +1240,25 @@ namespace RazorEnhanced
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
 			{
+				m_hits_label.AutoSize = false;
+				m_hits_label.Width = 5;
+				m_hits_label.Height = 5;
+				m_hits_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_hits_label.Location = new System.Drawing.Point(offsetstat+16, 3);
+				m_hits_label.Name = "h";
+				m_hits_label.Size = new System.Drawing.Size(20, 12);
+				m_hits_label.TabIndex = 10;
+				m_hits_label.Text = "H";
+				m_hits_label.BackColor = Color.Transparent;
+				m_form.Controls.Add(m_hits_label);
+
 				m_hitslabelSH.AutoSize = true;
 				m_hitslabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 				m_hitslabelSH.Location = new System.Drawing.Point(offsetstat, 14);
 				m_hitslabelSH.Name = "hitslabel";
 				m_hitslabelSH.Size = new System.Drawing.Size(50, 12);
 				m_hitslabelSH.TabIndex = 0;
-				m_hitslabelSH.Text = "H: 999/999";
+				m_hitslabelSH.Text = "999/999";
 
 				m_form.Controls.Add(m_hitslabelSH);
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
@@ -1253,6 +1270,18 @@ namespace RazorEnhanced
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
+				m_mana_label.AutoSize = false;
+				m_mana_label.Width = 5;
+				m_mana_label.Height = 5;
+				m_mana_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_mana_label.Location = new System.Drawing.Point(offsetstat + 16, 3);
+				m_mana_label.Name = "m";
+				m_mana_label.Size = new System.Drawing.Size(20, 12);
+				m_mana_label.TabIndex = 10;
+				m_mana_label.Text = "M";
+				m_mana_label.BackColor = Color.Transparent;
+				m_form.Controls.Add(m_mana_label);
+
 				m_manalabelSH.AutoSize = true;
 				m_manalabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 				m_manalabelSH.Location = new System.Drawing.Point(offsetstat, 14);
@@ -1271,6 +1300,18 @@ namespace RazorEnhanced
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
 			{
+				m_stam_label.AutoSize = false;
+				m_stam_label.Width = 5;
+				m_stam_label.Height = 5;
+				m_stam_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_stam_label.Location = new System.Drawing.Point(offsetstat + 16, 3);
+				m_stam_label.Name = "s";
+				m_stam_label.Size = new System.Drawing.Size(20, 12);
+				m_stam_label.TabIndex = 10;
+				m_stam_label.Text = "S";
+				m_stam_label.BackColor = Color.Transparent;
+				m_form.Controls.Add(m_stam_label);
+
 				m_staminalabelSH.AutoSize = true;
 				m_staminalabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 				m_staminalabelSH.Location = new System.Drawing.Point(offsetstat, 14);
@@ -1289,6 +1330,18 @@ namespace RazorEnhanced
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
+				m_weight_label.AutoSize = false;
+				m_weight_label.Width = 5;
+				m_weight_label.Height = 5;
+				m_weight_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_weight_label.Location = new System.Drawing.Point(offsetstat + 12, 3);
+				m_weight_label.Name = "w";
+				m_weight_label.Size = new System.Drawing.Size(20, 12);
+				m_weight_label.TabIndex = 10;
+				m_weight_label.Text = "W";
+				m_weight_label.BackColor = Color.Transparent;
+				m_form.Controls.Add(m_weight_label);
+
 				m_weightlabelSH.AutoSize = true;
 				m_weightlabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 				m_weightlabelSH.Location = new System.Drawing.Point(offsetstat-5, 14);
@@ -1307,6 +1360,18 @@ namespace RazorEnhanced
 
 			if (RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
+				m_follower_label.AutoSize = false;
+				m_follower_label.Width = 5;
+				m_follower_label.Height = 5;
+				m_follower_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+				m_follower_label.Location = new System.Drawing.Point(offsetstat + 7, 3);
+				m_follower_label.Name = "f";
+				m_follower_label.Size = new System.Drawing.Size(20, 12);
+				m_follower_label.TabIndex = 10;
+				m_follower_label.Text = "F";
+				m_follower_label.BackColor = Color.Transparent;
+				m_form.Controls.Add(m_follower_label);
+
 				m_followerlabelSH.AutoSize = true;
 				m_followerlabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 				m_followerlabelSH.Location = new System.Drawing.Point(offsetstat, 14);
@@ -1427,7 +1492,7 @@ namespace RazorEnhanced
 			return outputImage;
 		}
 
-		public static Bitmap ResizeImage(System.Drawing.Bitmap value, int newWidth, int newHeight)
+		private static Bitmap ResizeImage(System.Drawing.Bitmap value, int newWidth, int newHeight)
 		{
 			Bitmap resizedImage = new System.Drawing.Bitmap(newWidth, newHeight);
 			using (Graphics graphics = Graphics.FromImage(resizedImage))
@@ -1436,6 +1501,46 @@ namespace RazorEnhanced
 			}
 
 			return (resizedImage);
+		}
+
+		
+		public static Bitmap CropImage(Bitmap img)
+		{
+			Point min = new Point(int.MaxValue, int.MaxValue);
+			Point max = new Point(int.MinValue, int.MinValue);
+
+			for (int x = 0; x < img.Width; ++x)
+			{
+				for (int y = 0; y < img.Height; ++y)
+				{
+					Color pixelColor = img.GetPixel(x, y);
+					if (pixelColor.A != 0)
+					{
+						if (x < min.X)
+						{
+							min.X = x;
+						}
+						if (y < min.Y)
+						{ 
+							min.Y = y;
+					}
+
+					if (x > max.X) max.X = x;
+						if (y > max.Y) max.Y = y;
+					}
+				}
+			}
+			max.X += 2;
+			max.Y += 2;
+
+			// Create a new bitmap from the crop rectangle
+			Rectangle cropRectangle = new Rectangle(min.X, min.Y, max.X - min.X, max.Y - min.Y);
+			Bitmap newBitmap = new Bitmap(cropRectangle.Width, cropRectangle.Height);
+			using (Graphics g = Graphics.FromImage(newBitmap))
+			{
+				g.DrawImage(img, 0, 0, cropRectangle, GraphicsUnit.Pixel);
+			}
+			return (newBitmap);
 		}
 	}
 }
