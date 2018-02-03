@@ -9580,13 +9580,19 @@ namespace Assistant
 
 			if (e.ColumnIndex == 3)
 			{
+				int color = 65535;
+				if (cell.Value == null)
+				{
+					cell.Value = "0x" + color.ToString("X4");
+					return;
+				}
+
 				if (cell.Value.ToString() == "-1")
 				{
 					cell.Value = "All";
 				}
 				else
 				{
-					int color = 0;
 					if (!cell.Value.ToString().Contains("-"))
 					{
 						try
@@ -9604,7 +9610,7 @@ namespace Assistant
 			else if (e.ColumnIndex == 2)
 			{
 				int itemid = 0;
-				if (!cell.Value.ToString().Contains("-"))
+				if (cell.Value != null && !cell.Value.ToString().Contains("-"))
 				{
 					try
 					{
@@ -9836,16 +9842,21 @@ namespace Assistant
 		private void scavengerdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
 			DataGridViewCell cell = scavengerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-
 			if (e.ColumnIndex == 3)
 			{
+				int color = 65535;
+				if (cell.Value == null)
+				{
+					cell.Value = "0x" + color.ToString("X4");
+					return;
+				}
+
 				if (cell.Value.ToString() == "-1")
 				{
 					cell.Value = "All";
 				}
 				else
 				{
-					int color = 0;
 					if (!cell.Value.ToString().Contains("-"))
 					{
 						try
@@ -9863,7 +9874,7 @@ namespace Assistant
 			else if (e.ColumnIndex == 2)
 			{
 				int itemid = 0;
-				if (!cell.Value.ToString().Contains("-"))
+				if (cell.Value != null && !cell.Value.ToString().Contains("-"))
 				{
 					try
 					{
@@ -10159,13 +10170,19 @@ namespace Assistant
 
 			if (e.ColumnIndex == 3)
 			{
+				int color = 65535;
+				if (cell.Value == null)
+				{
+					cell.Value = "0x" + color.ToString("X4");
+					return;
+				}
+
 				if (cell.Value.ToString() == "-1")
 				{
 					cell.Value = "All";
 				}
 				else
 				{
-					int color = 0;
 					if (!cell.Value.ToString().Contains("-"))
 					{
 						try
@@ -10182,7 +10199,7 @@ namespace Assistant
 			}
 			else if (e.ColumnIndex == 4)
 			{
-				if (cell.Value.ToString() == "-1")
+				if (cell.Value != null || cell.Value.ToString() == "-1")
 				{
 					cell.Value = "All";
 				}
@@ -10200,7 +10217,7 @@ namespace Assistant
 			else if (e.ColumnIndex == 2)
 			{
 				int itemid = 0;
-				if (!cell.Value.ToString().Contains("-"))
+				if (cell.Value != null || !cell.Value.ToString().Contains("-"))
 				{
 					try
 					{
