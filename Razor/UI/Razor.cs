@@ -10471,7 +10471,7 @@ namespace Assistant
 			RazorEnhanced.Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
 			RazorEnhanced.BuyAgent.InitGrid();
 
-			if (sellListSelect.Text != "")
+			if (buyListSelect.Text != "")
 				RazorEnhanced.BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
 			else
 				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
