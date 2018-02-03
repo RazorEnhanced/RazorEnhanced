@@ -379,7 +379,7 @@ namespace RazorEnhanced
 					continue;
 
 				int amount = Items.BackpackCount(items[x].Graphics, items[x].Color);
-				int oldamount = Convert.ToInt32(m_panelcount[x].Text);
+				Int32.TryParse(m_panelcount[x].Text, out int oldamount);
 				m_panelcount[x].Text = amount.ToString();
 
 				if (!items[x].Warning)
