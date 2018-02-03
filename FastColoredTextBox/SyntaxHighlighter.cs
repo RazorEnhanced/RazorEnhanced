@@ -1340,7 +1340,7 @@ namespace FastColoredTextBoxNS
 
 			string GenericFunctions = "GetItemOnLayer|GetAssistantLayer|FindBySerial|Filter|ApplyFilter|SingleClick|WaitForProps|GetPropValue|GetPropStringByIndex|GetPropStringList|Message";
 			string PlayerFunctions = "BuffsExist|GetBuffDescription|HeadMessage|InRangeMobile|InRangeItem|UnEquipItemByLayer|EquipItem|CheckLayer|GetSkillValue|GetSkillCap|GetSkillStatus|UseSkill|ChatSay|ChatEmote|ChatWhisper|ChatYell|ChatGuild|ChatAlliance|SetWarMode|Attack|AttackLast|InParty|ChatParty|PartyCanLoot|PartyInvite|PartyLeave|KickMember|InvokeVirtue|Walk|PathFindTo|PathFindToPacket|QuestButton|GuildButton|WeaponPrimarySA|WeaponSecondarySA|WeaponClearSA|WeaponStunSA|WeaponDisarmSA|Fly|ChatChannel|EquipUO3D";
-			string SpellsFunctions = "CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism|CastBard";
+			string SpellsFunctions = "CastMagery|CastNecro|CastChivalry|CastBushido|CastNinjitsu|CastSpellweaving|CastMysticism|CastMastery|Interrupt";
 			string MobileFunctions = "UseMobile|ContextExist";
 			string ItemsFunctions = "DistanceTo|Move|MoveOnGround|DropItemGroundSelf|UseItem|WaitForContents|BackpackCount|ContainerCount|GetPropByCliloc|GetPropByString|UseItemByID|Hide|ContextExist|UseItemOnTarget";
 			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContains|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse|NoOperation|ScriptRun|ScriptStop|ScriptStatus|PetRename";

@@ -749,7 +749,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Talisman":
-					result = Assistant.Layer.Unused_x9;
+					result = Assistant.Layer.Talisman;
 					break;
 
 				default:

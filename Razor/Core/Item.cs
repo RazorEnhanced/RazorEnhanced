@@ -19,7 +19,7 @@ namespace Assistant
 		Head = 0x06,
 		Gloves = 0x07,
 		Ring = 0x08,
-		Unused_x9 = 0x09,
+		Talisman = 0x09,
 		Neck = 0x0A,
 		Hair = 0x0B,
 		Waist = 0x0C,

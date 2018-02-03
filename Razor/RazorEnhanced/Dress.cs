@@ -365,7 +365,7 @@ namespace RazorEnhanced
 				RazorEnhanced.Settings.Dress.ItemInsert(Assistant.Engine.MainWindow.DressListSelect.Text, itemtoinsert);
 			}
 
-			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Unused_x9);
+			layeritem = Assistant.World.Player.GetItemOnLayer(Layer.Talisman);
 			if (layeritem != null)
 			{
 				RazorEnhanced.Dress.DressItem itemtoinsert = new DressItem(layeritem.Name, 19, layeritem.Serial, true);
@@ -451,7 +451,7 @@ namespace RazorEnhanced
 					return Assistant.Layer.InnerLegs;
 
 				case 19:
-					return Assistant.Layer.Unused_x9;
+					return Assistant.Layer.Talisman;
 			}
 			return 0;
 		}
@@ -518,7 +518,7 @@ namespace RazorEnhanced
 					return "InnerLegs";
 
 				case 19:
-					return "UpperRight";
+					return "Talisman";
 			}
 			return null;
 		}
@@ -584,7 +584,7 @@ namespace RazorEnhanced
 				case Assistant.Layer.InnerLegs:
 					return 18;
 
-				case Assistant.Layer.Unused_x9:
+				case Assistant.Layer.Talisman:
 					return 19;
 
 				default:
@@ -653,7 +653,7 @@ namespace RazorEnhanced
 				case "InnerLegs":
 					return 18;
 
-				case "UpperRight":
+				case "Talisman":
 					return 19;
 			}
 			return 1;
@@ -799,10 +799,10 @@ namespace RazorEnhanced
 				itemtoundress.Add(itemtomove.Serial);
 			}
 
-			itemtomove = Assistant.World.Player.GetItemOnLayer(Layer.Unused_x9);
+			itemtomove = Assistant.World.Player.GetItemOnLayer(Layer.Talisman);
 			if (itemtomove != null && itemtomove.Movable)
 			{
-				layertoundress.Add((ushort)Layer.Unused_x9);
+				layertoundress.Add((ushort)Layer.Talisman);
 				itemtoundress.Add(itemtomove.Serial);
 			}
 

@@ -247,7 +247,7 @@ namespace RazorEnhanced.UI
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
 
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_x9);
+			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Talisman);
 			if (itemtocheck != null)
 			{
 				if (!itemtocheck.PropsUpdated)
