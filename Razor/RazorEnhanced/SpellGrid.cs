@@ -315,7 +315,9 @@ namespace RazorEnhanced
 						if (p.AbilityID != primaryAbilityID)
 						{
 							p.AbilityID = primaryAbilityID;
-							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(primaryAbilityID));	
+						//	RazorEnhanced.AutoLoot.AddLog("ID" + primaryAbilityID.ToString());
+						//	RazorEnhanced.AutoLoot.AddLog(SpecialMoves.GetPrimaryIcon(primaryAbilityID).ToString());
+							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(primaryAbilityID));
 						}
 					}
 					else if (p.Spell == "Secondary")

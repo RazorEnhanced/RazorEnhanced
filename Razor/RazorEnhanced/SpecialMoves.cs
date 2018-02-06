@@ -387,7 +387,7 @@ namespace Assistant
 		}
 		internal static int GetPrimaryIcon(int id)
 		{
-			if (id == 0)
+			if (id == 0 || id > 31)
 				return 0x5204;
 			else
 				return Icon[id];
@@ -395,7 +395,7 @@ namespace Assistant
 
 		internal static int GetSecondaryIcon(int id)
 		{
-			if (id == 0)
+			if (id == 0 || id > 31)
 				return 0x520A;
 			else
 				return Icon[id];
