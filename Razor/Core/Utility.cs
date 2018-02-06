@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Windows.Forms;
 
 
 namespace Assistant
@@ -328,6 +329,68 @@ namespace Assistant
 				return String.Format("{0:#0}:{1:00}:{2:00}.{3:000}", h, m, s, ms);
 			else
 				return String.Format("{0:00}:{1:00}.{2:000}", m, s, ms);
+		}
+
+		// Datagrid
+		private static int m_maxvalue = 65535;
+		internal static string FormatDatagridAmountCell(DataGridViewCell cell, bool allowall)
+		{
+			if (cell.Value != null && cell.Value.ToString() == "-1" && allowall)
+			{
+				return "All";
+			}
+			else
+			{
+				Int32.TryParse(cell.Value.ToString(), out int amount);
+
+				if (amount < 0 || amount > 9999)
+					amount = 9999;
+
+				return amount.ToString();
+			}
+		}
+		internal static string FormatDatagridItemIDCell(DataGridViewCell cell)
+		{
+			int itemid = m_maxvalue;
+			if (cell.Value != null && !cell.Value.ToString().Contains("-"))
+			{
+				try
+				{
+					itemid = Convert.ToInt32((string)cell.Value, 16);
+				}
+				catch { }
+
+				if (itemid > m_maxvalue)
+					itemid = m_maxvalue;
+			}
+			return "0x" + itemid.ToString("X4");
+		}
+
+		internal static string FormatDatagridColorCell(DataGridViewCell cell)
+		{
+			int color = m_maxvalue;
+			if (cell.Value == null)
+				return "0x" + m_maxvalue.ToString("X4");
+
+			if (cell.Value.ToString() == "-1")
+			{
+				return "All";
+			}
+			else
+			{
+				if (!cell.Value.ToString().Contains("-"))
+				{
+					try
+					{
+						color = Convert.ToInt32((string)cell.Value, 16);
+					}
+					catch { }
+
+					if (color > m_maxvalue)
+						color = m_maxvalue;
+				}
+				return "0x" + color.ToString("X4");
+			}
 		}
 
 		internal static int ToInt32(string str, int def)

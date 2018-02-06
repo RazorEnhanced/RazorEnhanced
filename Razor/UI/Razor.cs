@@ -9228,7 +9228,6 @@ namespace Assistant
 				string filename = scriptlistView.SelectedItems[0].SubItems[1].Text;
 				fullPath = (Process.GetCurrentProcess().MainModule.FileName.Substring(0, Process.GetCurrentProcess().MainModule.FileName.LastIndexOf("\\") + 1) + "Scripts\\") + filename;
 			}
-
 			EnhancedScriptEditor.Init(fullPath);
 		}
 
@@ -9580,48 +9579,11 @@ namespace Assistant
 
 			if (e.ColumnIndex == 3)
 			{
-				int color = 65535;
-				if (cell.Value == null)
-				{
-					cell.Value = "0x" + color.ToString("X4");
-					return;
-				}
-
-				if (cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					if (!cell.Value.ToString().Contains("-"))
-					{
-						try
-						{
-							color = Convert.ToInt32((string)cell.Value, 16);
-						}
-						catch { }
-
-						if (color > 65535)
-							color = 65535;
-					}
-					cell.Value = "0x" + color.ToString("X4");
-				}
+				cell.Value = Utility.FormatDatagridColorCell(cell);
 			}
 			else if (e.ColumnIndex == 2)
 			{
-				int itemid = 0;
-				if (cell.Value != null && !cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						itemid = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
-
-					if (itemid > 65535)
-						itemid = 65535;
-				}
-				cell.Value = "0x" + itemid.ToString("X4");
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
 			}
 			RazorEnhanced.AutoLoot.CopyTable();
 		}
@@ -9844,48 +9806,11 @@ namespace Assistant
 			DataGridViewCell cell = scavengerdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
 			if (e.ColumnIndex == 3)
 			{
-				int color = 65535;
-				if (cell.Value == null)
-				{
-					cell.Value = "0x" + color.ToString("X4");
-					return;
-				}
-
-				if (cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					if (!cell.Value.ToString().Contains("-"))
-					{
-						try
-						{
-							color = Convert.ToInt32((string)cell.Value, 16);
-						}
-						catch { }
-
-						if (color > 65535)
-							color = 65535;
-					}
-					cell.Value = "0x" + color.ToString("X4");
-				}
+				cell.Value = Utility.FormatDatagridColorCell(cell);
 			}
 			else if (e.ColumnIndex == 2)
 			{
-				int itemid = 0;
-				if (cell.Value != null && !cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						itemid = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
-
-					if (itemid > 65535)
-						itemid = 65535;
-				}
-				cell.Value = "0x" + itemid.ToString("X4");
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
 			}
 			RazorEnhanced.Scavenger.CopyTable();
 		}
@@ -10170,65 +10095,15 @@ namespace Assistant
 
 			if (e.ColumnIndex == 3)
 			{
-				int color = 65535;
-				if (cell.Value == null)
-				{
-					cell.Value = "0x" + color.ToString("X4");
-					return;
-				}
-
-				if (cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					if (!cell.Value.ToString().Contains("-"))
-					{
-						try
-						{
-							color = Convert.ToInt32((string)cell.Value, 16);
-						}
-						catch { }
-
-						if (color > 65535)
-							color = 65535;
-					}
-					cell.Value = "0x" + color.ToString("X4");
-				}
+				cell.Value = Utility.FormatDatagridColorCell(cell);
 			}
 			else if (e.ColumnIndex == 4)
 			{
-				if (cell.Value != null || cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					int amount = 0;
-					Int32.TryParse(cell.Value.ToString(), out amount);
-
-					if (amount < 0 || amount > 9999)
-						amount = 9999;
-
-					cell.Value = amount.ToString();
-				}
+				cell.Value = Utility.FormatDatagridAmountCell(cell, true);
 			}
 			else if (e.ColumnIndex == 2)
 			{
-				int itemid = 0;
-				if (cell.Value != null || !cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						itemid = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
-
-					if (itemid > 65535)
-						itemid = 65535;
-				}
-				cell.Value = "0x" + itemid.ToString("X4");
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
 			}
 			RazorEnhanced.Organizer.CopyTable();
 		}
@@ -10420,59 +10295,15 @@ namespace Assistant
 
 			if (e.ColumnIndex == 4)
 			{
-				int color = 65535;
-				if (cell.Value == null)
-				{
-					cell.Value = "0x" + color.ToString("X4");
-					return;
-				}
-
-				if (cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					if (!cell.Value.ToString().Contains("-"))
-					{
-						try
-						{
-							color = Convert.ToInt32((string)cell.Value, 16);
-						}
-						catch { }
-
-						if (color > 65535)
-							color = 65535;
-					}
-					cell.Value = "0x" + color.ToString("X4");
-				}
+				cell.Value = Utility.FormatDatagridColorCell(cell);
 			}
 			else if (e.ColumnIndex == 3)
 			{
-				int amount = 0;
-				if (cell.Value != null)
-					Int32.TryParse(cell.Value.ToString(), out amount);
-
-				if (amount < 0 || amount > 999)
-					amount = 999;
-
-				cell.Value = amount.ToString();
+				cell.Value = Utility.FormatDatagridAmountCell(cell, false);
 			}
 			else if (e.ColumnIndex == 2)
 			{
-				int itemid = 0;
-				if (cell.Value != null || !cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						itemid = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
-
-					if (itemid > 65535)
-						itemid = 65535;
-				}
-				cell.Value = "0x" + itemid.ToString("X4");
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
 			}
 			RazorEnhanced.SellAgent.CopyTable();
 		}
@@ -10482,7 +10313,7 @@ namespace Assistant
 			e.Row.Cells[0].Value = false;
 			e.Row.Cells[1].Value = "New Item";
 			e.Row.Cells[2].Value = "0x0000";
-			e.Row.Cells[3].Value = 999;
+			e.Row.Cells[3].Value = 9999;
 			e.Row.Cells[4].Value = "0x0000";
 		}
 
@@ -10609,66 +10440,21 @@ namespace Assistant
 
 		private void vendorbuydataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
-			DataGridViewCell cell = vendorbuydataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+				DataGridViewCell cell = vendorbuydataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
-			if (e.ColumnIndex == 4)
-			{
-				int color = 65535;
-				if (cell.Value == null)
+				if (e.ColumnIndex == 4)
 				{
-					cell.Value = "0x" + color.ToString("X4");
-					return;
+					cell.Value = Utility.FormatDatagridColorCell(cell);
 				}
-
-				if (cell.Value.ToString() == "-1")
+				else if (e.ColumnIndex == 3)
 				{
-					cell.Value = "All";
+					cell.Value = Utility.FormatDatagridAmountCell(cell, false);
 				}
-				else
+				else if (e.ColumnIndex == 2)
 				{
-					
-					if (!cell.Value.ToString().Contains("-"))
-					{
-						try
-						{
-							color = Convert.ToInt32((string)cell.Value, 16);
-						}
-						catch { }
-
-						if (color > 65535)
-							color = 65535;
-					}
-					cell.Value = "0x" + color.ToString("X4");
+					cell.Value = Utility.FormatDatagridItemIDCell(cell);
 				}
-			}
-			else if (e.ColumnIndex == 3)
-			{
-				int amount = 0;
-				if (cell.Value != null)
-					Int32.TryParse(cell.Value.ToString(), out amount);
-
-				if (amount < 0 || amount > 999)
-					amount = 999;
-
-				cell.Value = amount.ToString();
-			}
-			else if (e.ColumnIndex == 2)
-			{
-				int itemid = 0;
-				if (cell.Value != null || !cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						itemid = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
-
-					if (itemid > 65535)
-						itemid = 65535;
-				}
-				cell.Value = "0x" + itemid.ToString("X4");
-			}
-			RazorEnhanced.BuyAgent.CopyTable();
+				RazorEnhanced.BuyAgent.CopyTable();
 		}
 
 		private void vendorbuydataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
@@ -11475,61 +11261,15 @@ namespace Assistant
 			
 			if (e.ColumnIndex == 3)
 			{
-				int color = 65535;
-
-				if (cell.Value == null)
-				{
-					cell.Value = "0x" + color.ToString("X4");
-					return;
-				}
-
-				if (cell.Value.ToString() == "-1")
-				{
-					cell.Value = "All";
-				}
-				else
-				{
-					
-					if (!cell.Value.ToString().Contains("-"))
-					{
-						try
-						{
-							color = Convert.ToInt32((string)cell.Value, 16);
-						}
-						catch { }
-
-						if (color > 65535)
-							color = 65535;
-					}
-					cell.Value = "0x" + color.ToString("X4");
-				}
+				cell.Value = Utility.FormatDatagridColorCell(cell);
 			}
 			else if (e.ColumnIndex == 4)
 			{
-				int limit = 0;
-				if (cell.Value != null)
-					Int32.TryParse(cell.Value.ToString(), out limit);
-
-				if (limit < 0 || limit > 9999)
-					limit = 0;
-
-				cell.Value = limit.ToString();
+				cell.Value = Utility.FormatDatagridAmountCell(cell, false);
 			}
 			else if (e.ColumnIndex == 2)
 			{
-				int itemid = 0;
-				if (cell.Value != null || !cell.Value.ToString().Contains("-"))
-				{
-					try
-					{
-						itemid = Convert.ToInt32((string)cell.Value, 16);
-					}
-					catch { }
-
-					if (itemid > 65535)
-						itemid = 65535;
-				}
-				cell.Value = "0x" + itemid.ToString("X4");
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
 			}
 			RazorEnhanced.Restock.CopyTable();
 		}

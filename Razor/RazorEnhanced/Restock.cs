@@ -185,8 +185,7 @@ namespace RazorEnhanced
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-				bool check = false;
-				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.Restock.ItemInsert(Assistant.Engine.MainWindow.RestockListSelect.Text, new RestockItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, Convert.ToInt32((string)row.Cells[4].Value), check));
 			}

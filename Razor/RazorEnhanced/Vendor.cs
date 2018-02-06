@@ -496,9 +496,8 @@ namespace RazorEnhanced
 					color = -1;
 				else
 					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
-
-				bool check = false;
-				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+				
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.BuyAgent.ItemInsert(Assistant.Engine.MainWindow.BuyListSelect.Text, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
