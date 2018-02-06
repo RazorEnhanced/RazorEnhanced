@@ -151,7 +151,7 @@ namespace Assistant
 		private static int[] HeavyCrossbowID = new int[] { 0x13FC, 0x13FD };
 		private static int[] TwoHandedAxeID = new int[] { 0x1442, 0x1443 };
 		private static int[] DoubleAxeID = new int[] { 0xF4B, 0xF4C };
-		private static int[] CrescentBladeID = new int[] { 0x26C1, 0x26C2 };
+		private static int[] CrescentBladeID = new int[] { 0x26C1, 0x26CB };
 		private static int[] DoubleBladedStaffID = new int[] { 0x26BF, 0x26C9 };
 		private static int[] RepeatingCrossbowID = new int[] { 0x26C3, 0x26CD };
 		private static int[] DaggerID = new int[] { 0xF51, 0xF52 };
