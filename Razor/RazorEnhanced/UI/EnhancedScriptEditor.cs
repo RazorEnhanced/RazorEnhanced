@@ -1090,7 +1090,7 @@ namespace RazorEnhanced.UI
 			this.m_Engine = engine;
 			this.m_Engine.SetTrace(null);
 
-			if (filename != null)
+			if (filename != null && File.Exists(filename))
 			{
 				m_Filepath = filename;
 				m_Filename = Path.GetFileNameWithoutExtension(filename);
