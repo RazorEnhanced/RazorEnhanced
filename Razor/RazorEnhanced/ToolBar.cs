@@ -322,6 +322,9 @@ namespace RazorEnhanced
 
 			for (int x = 0; x < m_slot; x++)
 			{
+				if (x > (m_panellist.Count - 1))
+					return;
+
 				if (items[x].Graphics != 0)
 				{
 					Bitmap m_itemimage = new Bitmap(Ultima.Art.GetStatic(items[x].Graphics));

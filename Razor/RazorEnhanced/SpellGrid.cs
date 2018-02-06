@@ -478,6 +478,9 @@ namespace RazorEnhanced
 
 			for (int x = 0; x < m_vslot * m_hslot; x++)
 			{
+				if (x > (m_panellist.Count -1))
+					return;
+
 				int imageid = 0;
 
 				m_panellist[x].BorderColor = items[x].Color;
