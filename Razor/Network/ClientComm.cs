@@ -1287,12 +1287,17 @@ namespace Assistant
 		{
 			byte[] data = p.Compile();
 
-			CommMutex.WaitOne();
-			fixed (byte* ptr = data)
+			try  // AbandonedMutexException
 			{
-				//Packet.Log(PacketPath.RazorToClient, ptr, data.Length);
-				CopyToBuffer(m_OutRecv, ptr, data.Length);
+				CommMutex.WaitOne();
+				fixed (byte* ptr = data)
+				{
+					//Packet.Log(PacketPath.RazorToClient, ptr, data.Length);
+					CopyToBuffer(m_OutRecv, ptr, data.Length);
+				}
 			}
+			catch { }
+			
 			CommMutex.ReleaseMutex();
 		}
 
@@ -1303,13 +1308,17 @@ namespace Assistant
 
 			byte[] data = p.Compile();
 
-			CommMutex.WaitOne();
-			InitSendFlush();
-			fixed (byte* ptr = data)
+			try  // AbandonedMutexException
 			{
-				//Packet.Log(PacketPath.RazorToServer, ptr, data.Length);
-				CopyToBuffer(m_OutSend, ptr, data.Length);
+				CommMutex.WaitOne();
+				InitSendFlush();
+				fixed (byte* ptr = data)
+				{
+					//Packet.Log(PacketPath.RazorToServer, ptr, data.Length);
+					CopyToBuffer(m_OutSend, ptr, data.Length);
+				}
 			}
+			catch { }
 			CommMutex.ReleaseMutex();
 		}
 
