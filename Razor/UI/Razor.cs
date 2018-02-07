@@ -9532,9 +9532,17 @@ namespace Assistant
 
 		private void autoLootButtonAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(1);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 1;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(1).Show();
 		}
 
 		private void autoLootButtonRemoveList_Click(object sender, EventArgs e)
@@ -9676,9 +9684,17 @@ namespace Assistant
 
 		private void scavengerAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(2);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 2;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(2).Show();
 		}
 
 		private void scavengerRemoveList_Click(object sender, EventArgs e)
@@ -9830,9 +9846,17 @@ namespace Assistant
 
 		private void organizerAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(3);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 3;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(3).Show();
 		}
 
 		private void organizerRemoveList_Click(object sender, EventArgs e)
@@ -10132,9 +10156,17 @@ namespace Assistant
 
 		private void sellAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(5);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 5;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(5).Show();
 		}
 
 		private void sellRemoveList_Click(object sender, EventArgs e)
@@ -10334,9 +10366,17 @@ namespace Assistant
 
 		private void buyAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(4);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 4;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(4).Show();
 		}
 
 		private void buyRemoveList_Click(object sender, EventArgs e)
@@ -10487,9 +10527,17 @@ namespace Assistant
 
 		private void dressAddListB_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(6);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 6;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(6).Show();
 		}
 
 		private void dressRemoveListB_Click(object sender, EventArgs e)
@@ -10775,9 +10823,17 @@ namespace Assistant
 		// --------------- FRIENDS START ---------
 		private void friendButtonAddList_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(7);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 7;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(7).Show();
 		}
 
 		private void friendButtonRemoveList_Click(object sender, EventArgs e)
@@ -11007,9 +11063,17 @@ namespace Assistant
 
 		private void restockAddListB_Click(object sender, EventArgs e)
 		{
-			EnhancedAgentAddList AddItemList = new EnhancedAgentAddList(8);
-			AddItemList.TopMost = true;
-			AddItemList.Show();
+			foreach (Form f in Application.OpenForms)
+			{
+				if (f is EnhancedAgentAddList)
+				{
+					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
+					af.AgentID = 8;
+					af.Focus();
+					return;
+				}
+			}
+			new EnhancedAgentAddList(8).Show();
 		}
 
 		private void restockRemoveListB_Click(object sender, EventArgs e)

@@ -17,13 +17,14 @@ namespace RazorEnhanced.UI
 		// 8- Friend
 		// 9- Shard
 
-		int m_agentid = 0;
-		public EnhancedAgentAddList(int agentid)
+		private int m_agentid = 0;
+
+		internal int AgentID { get { return m_agentid; } set { SetAgent(value); } }
+
+		internal void SetAgent(int agentid)
 		{
-			InitializeComponent();
-			MaximizeBox = false;
 			m_agentid = agentid;
-            switch (agentid)
+			switch (agentid)
 			{
 				case 1:
 					Text = "Autoloot Add List";
@@ -53,6 +54,12 @@ namespace RazorEnhanced.UI
 					Text = "Launcher Add Shard";
 					break;
 			}
+		}
+		public EnhancedAgentAddList(int agentid)
+		{
+			InitializeComponent();
+			MaximizeBox = false;
+			SetAgent(agentid);
 		}
 
 		private void EnhancedAgentCloseItemList_Click(object sender, EventArgs e)
