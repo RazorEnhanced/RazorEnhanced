@@ -80,6 +80,17 @@ namespace RazorEnhanced.UI
 		private void EnhancedLauncher_Load(object sender, EventArgs e)
 		{
 			RefreshGUI();
+			if (!Assistant.Core.CheckDependency.VCRedist2013())
+			{
+				DialogResult dialogResult = MessageBox.Show("Microsoft Visual C++ 2015 Redistributable is not installed, is necessary for prevent crash or missing function, Want open offical download site?", "Missing Dependency", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+				if (dialogResult == DialogResult.Yes)
+				{
+					if (Environment.Is64BitOperatingSystem)
+						System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x64.exe");
+					else
+						System.Diagnostics.Process.Start("https://download.microsoft.com/download/6/A/A/6AA4EDFF-645B-48C5-81CC-ED5963AEAD48/vc_redist.x86.exe");
+				}
+			}
 		}
 
 		private void razorButton1_Click(object sender, EventArgs e)
@@ -234,7 +245,7 @@ namespace RazorEnhanced.UI
 
 				if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
 				{
-					DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo);
+					DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 					if (dialogResult == DialogResult.Yes)
 					{
 						System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
