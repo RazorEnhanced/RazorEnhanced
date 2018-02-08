@@ -110,8 +110,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerDragDelay.Text, out int delay);
-				return delay;
+				return Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerDragDelay.Text);
 			}
 
 			set
@@ -124,8 +123,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerRange.Text, out int range);
-				return range;
+				return Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerRange.Text);
 			}
 
 			set

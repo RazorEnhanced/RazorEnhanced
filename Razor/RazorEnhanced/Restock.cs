@@ -67,7 +67,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (string)Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.RestockListSelect.Text));
+				return Assistant.Engine.MainWindow.RestockListSelect.Text;
 			}
 
 			set
@@ -80,9 +80,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int delay = 100;
-				Assistant.Engine.MainWindow.RestockDragDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RestockDragDelay.Text, out delay)));
-				return delay;
+				return Convert.ToInt32(Assistant.Engine.MainWindow.RestockDragDelay.Text);
 			}
 
 			set

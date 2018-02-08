@@ -139,7 +139,6 @@ namespace Assistant
 		private RazorCheckBox autoLootCheckBox;
 		private TabPage escavenger;
 		private Label label21;
-		private RazorTextBox autoLootTextBoxDelay;
 		private RazorButton autoLootButtonRemoveList;
 		private RazorButton autolootButtonAddList;
 		private RazorComboBox autolootListSelect;
@@ -153,17 +152,15 @@ namespace Assistant
 		private GroupBox groupBox12;
 		private ListBox scavengerLogBox;
 		private Label label23;
-		private RazorTextBox scavengerDragDelay;
 		private Label scavengerContainerLabel;
 		private RazorButton scavengerButtonSetContainer;
 		private RazorCheckBox scavengerCheckBox;
 		private RazorButton scavengerButtonEditProps;
 		private RazorButton scavengerButtonAddTarget;
-		private TabPage organizer;
+		private TabPage organizerTab;
 		private GroupBox groupBox16;
 		private ListBox organizerLogBox;
 		private Label label27;
-		private RazorTextBox organizerDragDelay;
 		private Label organizerDestinationLabel;
 		private RazorButton organizerSetDestinationB;
 		private Label organizerSourceLabel;
@@ -211,7 +208,6 @@ namespace Assistant
 		private RazorButton dressRemoveB;
 		private RazorButton dressReadB;
 		private Label label29;
-		private RazorTextBox dressDragDelay;
 		private GroupBox groupBox21;
 		private ListBox dressLogBox;
 		private ListView dressListView;
@@ -254,7 +250,6 @@ namespace Assistant
 		private GroupBox groupBox2;
 		private ListBox restockLogBox;
 		private Label label13;
-		private RazorTextBox restockDragDelay;
 		private Label restockDestinationLabel;
 		private RazorButton restockSetDestinationButton;
 		private Label restockSourceLabel;
@@ -574,9 +569,7 @@ namespace Assistant
 		private Button restockExecuteButton;
 		private Button restockStopButton;
 		private Label label60;
-		private RazorTextBox autoLootTextBoxMaxRange;
 		private Label label61;
-		private RazorTextBox scavengerRange;
 		private RazorCheckBox hiddedAutoOpenDoors;
 		private RazorCheckBox uo3dEquipUnEquip;
 		private RazorCheckBox nosearchpouches;
@@ -599,6 +592,13 @@ namespace Assistant
 		private RazorCheckBox scriptautostartcheckbox;
 		private ColumnHeader autostart;
 		private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
+		private MaskedTextBox autoLootTextBoxDelay;
+		private MaskedTextBox autoLootTextBoxMaxRange;
+		private MaskedTextBox scavengerDragDelay;
+		private MaskedTextBox scavengerRange;
+		private MaskedTextBox organizerDragDelay;
+		private MaskedTextBox dressDragDelay;
+		private MaskedTextBox restockDragDelay;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -633,8 +633,8 @@ namespace Assistant
 
 		// AutoLoot
 		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
-		internal RazorTextBox AutolootLabelDelay { get { return autoLootTextBoxDelay; } }
-		internal RazorTextBox AutoLootTextBoxMaxRange { get { return autoLootTextBoxMaxRange; } }
+		internal MaskedTextBox AutolootLabelDelay { get { return autoLootTextBoxDelay; } }
+		internal MaskedTextBox AutoLootTextBoxMaxRange { get { return autoLootTextBoxMaxRange; } }
 		internal Label AutoLootContainerLabel { get { return autolootContainerLabel; } }
 		internal ListBox AutoLootLogBox { get { return autolootLogBox; } }
 		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
@@ -643,15 +643,15 @@ namespace Assistant
 
 		// Scavenger
 		internal RazorCheckBox ScavengerCheckBox { get { return scavengerCheckBox; } }
-		internal RazorTextBox ScavengerDragDelay { get { return scavengerDragDelay; } }
-		internal RazorTextBox ScavengerRange { get { return scavengerRange; } }
+		internal MaskedTextBox ScavengerDragDelay { get { return scavengerDragDelay; } }
+		internal MaskedTextBox ScavengerRange { get { return scavengerRange; } }
 		internal Label ScavengerContainerLabel { get { return scavengerContainerLabel; } }
 		internal ListBox ScavengerLogBox { get { return scavengerLogBox; } }
 		internal RazorComboBox ScavengerListSelect { get { return scavengerListSelect; } }
 		internal DataGridView ScavengerDataGridView { get { return scavengerdataGridView; } }
 
 		// Organizer
-		internal RazorTextBox OrganizerDragDelay { get { return organizerDragDelay; } }
+		internal MaskedTextBox OrganizerDragDelay { get { return organizerDragDelay; } }
 		internal Label OrganizerSourceLabel { get { return organizerSourceLabel; } }
 		internal Label OrganizerDestinationLabel { get { return organizerDestinationLabel; } }
 		internal ListBox OrganizerLogBox { get { return organizerLogBox; } }
@@ -677,7 +677,7 @@ namespace Assistant
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
 		internal ListView DressListView { get { return dressListView; } }
 		internal ListBox DressLogBox { get { return dressLogBox; } }
-		internal RazorTextBox DressDragDelay { get { return dressDragDelay; } }
+		internal MaskedTextBox DressDragDelay { get { return dressDragDelay; } }
 		internal ComboBox DressListSelect { get { return dressListSelect; } }
 		internal Label DressBagLabel { get { return dressBagLabel; } }
 
@@ -700,7 +700,7 @@ namespace Assistant
 		internal ListView FriendGuildListView { get { return friendguildListView; } }
 
 		// Restock
-		internal RazorTextBox RestockDragDelay { get { return restockDragDelay; } }
+		internal MaskedTextBox RestockDragDelay { get { return restockDragDelay; } }
 		internal Label RestockSourceLabel { get { return restockSourceLabel; } }
 		internal Label RestockDestinationLabel { get { return restockDestinationLabel; } }
 		internal ListBox RestockLogBox { get { return restockLogBox; } }
@@ -1117,8 +1117,9 @@ namespace Assistant
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
+			this.autoLootTextBoxMaxRange = new System.Windows.Forms.MaskedTextBox();
+			this.autoLootTextBoxDelay = new System.Windows.Forms.MaskedTextBox();
 			this.label60 = new System.Windows.Forms.Label();
-			this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorTextBox();
 			this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
 			this.groupBox14 = new System.Windows.Forms.GroupBox();
 			this.label55 = new System.Windows.Forms.Label();
@@ -1133,7 +1134,6 @@ namespace Assistant
 			this.AutolootColumnProps = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.autoLootnoopenCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.label21 = new System.Windows.Forms.Label();
-			this.autoLootTextBoxDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.autoLootButtonRemoveList = new RazorEnhanced.UI.RazorButton();
 			this.autolootButtonAddList = new RazorEnhanced.UI.RazorButton();
 			this.autoLootButtonListImport = new RazorEnhanced.UI.RazorButton();
@@ -1144,6 +1144,8 @@ namespace Assistant
 			this.autolootLogBox = new System.Windows.Forms.ListBox();
 			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.escavenger = new System.Windows.Forms.TabPage();
+			this.scavengerDragDelay = new System.Windows.Forms.MaskedTextBox();
+			this.scavengerRange = new System.Windows.Forms.MaskedTextBox();
 			this.label61 = new System.Windows.Forms.Label();
 			this.groupBox41 = new System.Windows.Forms.GroupBox();
 			this.label54 = new System.Windows.Forms.Label();
@@ -1159,17 +1161,16 @@ namespace Assistant
 			this.scavengerLogBox = new System.Windows.Forms.ListBox();
 			this.label23 = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
-			this.scavengerRange = new RazorEnhanced.UI.RazorTextBox();
 			this.scavengerButtonEditProps = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddTarget = new RazorEnhanced.UI.RazorButton();
-			this.scavengerDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.scavengerCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.scavengerButtonRemoveList = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonAddList = new RazorEnhanced.UI.RazorButton();
 			this.scavengerButtonImport = new RazorEnhanced.UI.RazorButton();
 			this.scavengerListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.scavengerButtonExport = new RazorEnhanced.UI.RazorButton();
-			this.organizer = new System.Windows.Forms.TabPage();
+			this.organizerTab = new System.Windows.Forms.TabPage();
+			this.organizerDragDelay = new System.Windows.Forms.MaskedTextBox();
 			this.organizerExecuteButton = new System.Windows.Forms.Button();
 			this.organizerStopButton = new System.Windows.Forms.Button();
 			this.groupBox11 = new System.Windows.Forms.GroupBox();
@@ -1190,7 +1191,6 @@ namespace Assistant
 			this.label27 = new System.Windows.Forms.Label();
 			this.label24 = new System.Windows.Forms.Label();
 			this.organizerAddTargetB = new RazorEnhanced.UI.RazorButton();
-			this.organizerDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.organizerRemoveListB = new RazorEnhanced.UI.RazorButton();
 			this.organizerAddListB = new RazorEnhanced.UI.RazorButton();
 			this.organizerImportListB = new RazorEnhanced.UI.RazorButton();
@@ -1235,6 +1235,7 @@ namespace Assistant
 			this.sellListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.sellExportListButton = new RazorEnhanced.UI.RazorButton();
 			this.Dress = new System.Windows.Forms.TabPage();
+			this.dressDragDelay = new System.Windows.Forms.MaskedTextBox();
 			this.dressStopButton = new RazorEnhanced.UI.RazorButton();
 			this.dressConflictCheckB = new RazorEnhanced.UI.RazorCheckBox();
 			this.dressBagLabel = new System.Windows.Forms.Label();
@@ -1249,7 +1250,6 @@ namespace Assistant
 			this.dressSetBagB = new RazorEnhanced.UI.RazorButton();
 			this.undressExecuteButton = new RazorEnhanced.UI.RazorButton();
 			this.dressExecuteButton = new RazorEnhanced.UI.RazorButton();
-			this.dressDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.dressListView = new System.Windows.Forms.ListView();
 			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1293,6 +1293,7 @@ namespace Assistant
 			this.friendListSelect = new RazorEnhanced.UI.RazorComboBox();
 			this.friendButtonExportList = new RazorEnhanced.UI.RazorButton();
 			this.restock = new System.Windows.Forms.TabPage();
+			this.restockDragDelay = new System.Windows.Forms.MaskedTextBox();
 			this.restockExecuteButton = new System.Windows.Forms.Button();
 			this.restockStopButton = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -1313,7 +1314,6 @@ namespace Assistant
 			this.label13 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.restockAddTargetButton = new RazorEnhanced.UI.RazorButton();
-			this.restockDragDelay = new RazorEnhanced.UI.RazorTextBox();
 			this.restockRemoveListB = new RazorEnhanced.UI.RazorButton();
 			this.restockAddListB = new RazorEnhanced.UI.RazorButton();
 			this.restockImportListB = new RazorEnhanced.UI.RazorButton();
@@ -1431,7 +1431,7 @@ namespace Assistant
 			this.groupBox41.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).BeginInit();
 			this.groupBox12.SuspendLayout();
-			this.organizer.SuspendLayout();
+			this.organizerTab.SuspendLayout();
 			this.groupBox11.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.organizerdataGridView)).BeginInit();
 			this.groupBox16.SuspendLayout();
@@ -4416,7 +4416,7 @@ namespace Assistant
 			// 
 			this.tabControl1.Controls.Add(this.eautoloot);
 			this.tabControl1.Controls.Add(this.escavenger);
-			this.tabControl1.Controls.Add(this.organizer);
+			this.tabControl1.Controls.Add(this.organizerTab);
 			this.tabControl1.Controls.Add(this.VendorBuy);
 			this.tabControl1.Controls.Add(this.VendorSell);
 			this.tabControl1.Controls.Add(this.Dress);
@@ -4431,15 +4431,15 @@ namespace Assistant
 			// 
 			// eautoloot
 			// 
-			this.eautoloot.Controls.Add(this.label60);
 			this.eautoloot.Controls.Add(this.autoLootTextBoxMaxRange);
+			this.eautoloot.Controls.Add(this.autoLootTextBoxDelay);
+			this.eautoloot.Controls.Add(this.label60);
 			this.eautoloot.Controls.Add(this.autolootItemPropsB);
 			this.eautoloot.Controls.Add(this.groupBox14);
 			this.eautoloot.Controls.Add(this.autolootAddItemBTarget);
 			this.eautoloot.Controls.Add(this.autolootdataGridView);
 			this.eautoloot.Controls.Add(this.autoLootnoopenCheckBox);
 			this.eautoloot.Controls.Add(this.label21);
-			this.eautoloot.Controls.Add(this.autoLootTextBoxDelay);
 			this.eautoloot.Controls.Add(this.autoLootButtonRemoveList);
 			this.eautoloot.Controls.Add(this.autolootButtonAddList);
 			this.eautoloot.Controls.Add(this.autoLootButtonListImport);
@@ -4456,6 +4456,27 @@ namespace Assistant
 			this.eautoloot.Text = "Autoloot";
 			this.eautoloot.UseVisualStyleBackColor = true;
 			// 
+			// autoLootTextBoxMaxRange
+			// 
+			this.autoLootTextBoxMaxRange.Location = new System.Drawing.Point(411, 65);
+			this.autoLootTextBoxMaxRange.Mask = "00";
+			this.autoLootTextBoxMaxRange.Name = "autoLootTextBoxMaxRange";
+			this.autoLootTextBoxMaxRange.Size = new System.Drawing.Size(45, 20);
+			this.autoLootTextBoxMaxRange.TabIndex = 67;
+			this.autoLootTextBoxMaxRange.ValidatingType = typeof(int);
+			this.autoLootTextBoxMaxRange.KeyDown += new System.Windows.Forms.KeyEventHandler(this.event_remove_space);
+			// 
+			// autoLootTextBoxDelay
+			// 
+			this.autoLootTextBoxDelay.Location = new System.Drawing.Point(411, 39);
+			this.autoLootTextBoxDelay.Mask = "0000";
+			this.autoLootTextBoxDelay.Name = "autoLootTextBoxDelay";
+			this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
+			this.autoLootTextBoxDelay.TabIndex = 66;
+			this.autoLootTextBoxDelay.ValidatingType = typeof(int);
+			this.autoLootTextBoxDelay.TextChanged += new System.EventHandler(this.autoLootTextBoxDelay_TextChanged);
+			this.autoLootTextBoxDelay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.event_remove_space);
+			// 
 			// label60
 			// 
 			this.label60.AutoSize = true;
@@ -4464,19 +4485,6 @@ namespace Assistant
 			this.label60.Size = new System.Drawing.Size(62, 13);
 			this.label60.TabIndex = 65;
 			this.label60.Text = "Max Range";
-			// 
-			// autoLootTextBoxMaxRange
-			// 
-			this.autoLootTextBoxMaxRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.autoLootTextBoxMaxRange.BackColor = System.Drawing.Color.White;
-			this.autoLootTextBoxMaxRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.autoLootTextBoxMaxRange.Location = new System.Drawing.Point(411, 65);
-			this.autoLootTextBoxMaxRange.Name = "autoLootTextBoxMaxRange";
-			this.autoLootTextBoxMaxRange.Size = new System.Drawing.Size(45, 20);
-			this.autoLootTextBoxMaxRange.TabIndex = 64;
-			this.autoLootTextBoxMaxRange.TextChanged += new System.EventHandler(this.autoLootTextBoxMaxRange_TextChanged);
 			// 
 			// autolootItemPropsB
 			// 
@@ -4620,19 +4628,6 @@ namespace Assistant
 			this.label21.TabIndex = 59;
 			this.label21.Text = "Delay (ms)";
 			// 
-			// autoLootTextBoxDelay
-			// 
-			this.autoLootTextBoxDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.autoLootTextBoxDelay.BackColor = System.Drawing.Color.White;
-			this.autoLootTextBoxDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.autoLootTextBoxDelay.Location = new System.Drawing.Point(411, 41);
-			this.autoLootTextBoxDelay.Name = "autoLootTextBoxDelay";
-			this.autoLootTextBoxDelay.Size = new System.Drawing.Size(45, 20);
-			this.autoLootTextBoxDelay.TabIndex = 58;
-			this.autoLootTextBoxDelay.TextChanged += new System.EventHandler(this.autoLootTextBoxDelay_TextChanged);
-			// 
 			// autoLootButtonRemoveList
 			// 
 			this.autoLootButtonRemoveList.Location = new System.Drawing.Point(366, 12);
@@ -4717,16 +4712,16 @@ namespace Assistant
 			// 
 			// escavenger
 			// 
+			this.escavenger.Controls.Add(this.scavengerDragDelay);
+			this.escavenger.Controls.Add(this.scavengerRange);
 			this.escavenger.Controls.Add(this.label61);
 			this.escavenger.Controls.Add(this.groupBox41);
 			this.escavenger.Controls.Add(this.scavengerdataGridView);
 			this.escavenger.Controls.Add(this.groupBox12);
 			this.escavenger.Controls.Add(this.label23);
 			this.escavenger.Controls.Add(this.label22);
-			this.escavenger.Controls.Add(this.scavengerRange);
 			this.escavenger.Controls.Add(this.scavengerButtonEditProps);
 			this.escavenger.Controls.Add(this.scavengerButtonAddTarget);
-			this.escavenger.Controls.Add(this.scavengerDragDelay);
 			this.escavenger.Controls.Add(this.scavengerCheckBox);
 			this.escavenger.Controls.Add(this.scavengerButtonRemoveList);
 			this.escavenger.Controls.Add(this.scavengerButtonAddList);
@@ -4740,6 +4735,27 @@ namespace Assistant
 			this.escavenger.TabIndex = 1;
 			this.escavenger.Text = "Scavenger";
 			this.escavenger.UseVisualStyleBackColor = true;
+			// 
+			// scavengerDragDelay
+			// 
+			this.scavengerDragDelay.Location = new System.Drawing.Point(416, 42);
+			this.scavengerDragDelay.Mask = "0000";
+			this.scavengerDragDelay.Name = "scavengerDragDelay";
+			this.scavengerDragDelay.Size = new System.Drawing.Size(45, 20);
+			this.scavengerDragDelay.TabIndex = 67;
+			this.scavengerDragDelay.ValidatingType = typeof(int);
+			this.scavengerDragDelay.TextChanged += new System.EventHandler(this.scavengerDragDelay_TextChanged);
+			// 
+			// scavengerRange
+			// 
+			this.scavengerRange.Location = new System.Drawing.Point(416, 68);
+			this.scavengerRange.Mask = "00";
+			this.scavengerRange.Name = "scavengerRange";
+			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
+			this.scavengerRange.TabIndex = 76;
+			this.scavengerRange.ValidatingType = typeof(int);
+			this.scavengerRange.TextChanged += new System.EventHandler(this.scavengerRange_TextChanged);
+			this.scavengerRange.KeyDown += new System.Windows.Forms.KeyEventHandler(this.event_remove_space);
 			// 
 			// label61
 			// 
@@ -4891,19 +4907,6 @@ namespace Assistant
 			this.label22.TabIndex = 60;
 			this.label22.Text = "Scavenger List:";
 			// 
-			// scavengerRange
-			// 
-			this.scavengerRange.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.scavengerRange.BackColor = System.Drawing.Color.White;
-			this.scavengerRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.scavengerRange.Location = new System.Drawing.Point(416, 68);
-			this.scavengerRange.Name = "scavengerRange";
-			this.scavengerRange.Size = new System.Drawing.Size(45, 20);
-			this.scavengerRange.TabIndex = 74;
-			this.scavengerRange.TextChanged += new System.EventHandler(this.scavengerRange_TextChanged);
-			// 
 			// scavengerButtonEditProps
 			// 
 			this.scavengerButtonEditProps.Location = new System.Drawing.Point(563, 66);
@@ -4921,19 +4924,6 @@ namespace Assistant
 			this.scavengerButtonAddTarget.TabIndex = 47;
 			this.scavengerButtonAddTarget.Text = "Add Item";
 			this.scavengerButtonAddTarget.Click += new System.EventHandler(this.scavengerAddItemTarget_Click);
-			// 
-			// scavengerDragDelay
-			// 
-			this.scavengerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.scavengerDragDelay.BackColor = System.Drawing.Color.White;
-			this.scavengerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.scavengerDragDelay.Location = new System.Drawing.Point(416, 42);
-			this.scavengerDragDelay.Name = "scavengerDragDelay";
-			this.scavengerDragDelay.Size = new System.Drawing.Size(45, 20);
-			this.scavengerDragDelay.TabIndex = 68;
-			this.scavengerDragDelay.TextChanged += new System.EventHandler(this.scavengerDragDelay_TextChanged);
 			// 
 			// scavengerCheckBox
 			// 
@@ -4956,11 +4946,14 @@ namespace Assistant
 			// 
 			// scavengerButtonAddList
 			// 
+			this.scavengerButtonAddList.BackColor = System.Drawing.Color.Transparent;
+			this.scavengerButtonAddList.ForeColor = System.Drawing.SystemColors.WindowText;
 			this.scavengerButtonAddList.Location = new System.Drawing.Point(275, 12);
 			this.scavengerButtonAddList.Name = "scavengerButtonAddList";
 			this.scavengerButtonAddList.Size = new System.Drawing.Size(90, 21);
 			this.scavengerButtonAddList.TabIndex = 62;
 			this.scavengerButtonAddList.Text = "Add";
+			this.scavengerButtonAddList.UseVisualStyleBackColor = false;
 			this.scavengerButtonAddList.Click += new System.EventHandler(this.scavengerAddList_Click);
 			// 
 			// scavengerButtonImport
@@ -4991,29 +4984,44 @@ namespace Assistant
 			this.scavengerButtonExport.Text = "Export";
 			this.scavengerButtonExport.Click += new System.EventHandler(this.scavengerButtonExport_Click);
 			// 
-			// organizer
+			// organizerTab
 			// 
-			this.organizer.Controls.Add(this.organizerExecuteButton);
-			this.organizer.Controls.Add(this.organizerStopButton);
-			this.organizer.Controls.Add(this.groupBox11);
-			this.organizer.Controls.Add(this.organizerdataGridView);
-			this.organizer.Controls.Add(this.groupBox16);
-			this.organizer.Controls.Add(this.label27);
-			this.organizer.Controls.Add(this.label24);
-			this.organizer.Controls.Add(this.organizerAddTargetB);
-			this.organizer.Controls.Add(this.organizerDragDelay);
-			this.organizer.Controls.Add(this.organizerRemoveListB);
-			this.organizer.Controls.Add(this.organizerAddListB);
-			this.organizer.Controls.Add(this.organizerImportListB);
-			this.organizer.Controls.Add(this.organizerListSelect);
-			this.organizer.Controls.Add(this.organizerExportListB);
-			this.organizer.Location = new System.Drawing.Point(4, 22);
-			this.organizer.Name = "organizer";
-			this.organizer.Padding = new System.Windows.Forms.Padding(3);
-			this.organizer.Size = new System.Drawing.Size(659, 341);
-			this.organizer.TabIndex = 2;
-			this.organizer.Text = "Organizer";
-			this.organizer.UseVisualStyleBackColor = true;
+			this.organizerTab.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.organizerTab.BackColor = System.Drawing.Color.White;
+			this.organizerTab.Controls.Add(this.organizerDragDelay);
+			this.organizerTab.Controls.Add(this.organizerExecuteButton);
+			this.organizerTab.Controls.Add(this.organizerStopButton);
+			this.organizerTab.Controls.Add(this.groupBox11);
+			this.organizerTab.Controls.Add(this.organizerdataGridView);
+			this.organizerTab.Controls.Add(this.groupBox16);
+			this.organizerTab.Controls.Add(this.label27);
+			this.organizerTab.Controls.Add(this.label24);
+			this.organizerTab.Controls.Add(this.organizerAddTargetB);
+			this.organizerTab.Controls.Add(this.organizerRemoveListB);
+			this.organizerTab.Controls.Add(this.organizerAddListB);
+			this.organizerTab.Controls.Add(this.organizerImportListB);
+			this.organizerTab.Controls.Add(this.organizerListSelect);
+			this.organizerTab.Controls.Add(this.organizerExportListB);
+			this.organizerTab.Location = new System.Drawing.Point(4, 22);
+			this.organizerTab.Name = "organizerTab";
+			this.organizerTab.Padding = new System.Windows.Forms.Padding(3);
+			this.organizerTab.Size = new System.Drawing.Size(659, 341);
+			this.organizerTab.TabIndex = 71;
+			this.organizerTab.Text = "Organizer";
+			this.organizerTab.TextChanged += new System.EventHandler(this.organizerDragDelay_TextChanged);
+			// 
+			// organizerDragDelay
+			// 
+			this.organizerDragDelay.Location = new System.Drawing.Point(375, 51);
+			this.organizerDragDelay.Mask = "0000";
+			this.organizerDragDelay.Name = "organizerDragDelay";
+			this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
+			this.organizerDragDelay.TabIndex = 92;
+			this.organizerDragDelay.ValidatingType = typeof(int);
+			this.organizerDragDelay.TextChanged += new System.EventHandler(this.organizerDragDelay_TextChanged);
+			this.organizerDragDelay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.event_remove_space);
 			// 
 			// organizerExecuteButton
 			// 
@@ -5074,20 +5082,24 @@ namespace Assistant
 			// 
 			// organizerSetSourceB
 			// 
+			this.organizerSetSourceB.BackColor = System.Drawing.Color.Transparent;
 			this.organizerSetSourceB.Location = new System.Drawing.Point(156, 12);
 			this.organizerSetSourceB.Name = "organizerSetSourceB";
 			this.organizerSetSourceB.Size = new System.Drawing.Size(90, 21);
 			this.organizerSetSourceB.TabIndex = 66;
 			this.organizerSetSourceB.Text = "Set Bag";
+			this.organizerSetSourceB.UseVisualStyleBackColor = false;
 			this.organizerSetSourceB.Click += new System.EventHandler(this.organizerSetSource_Click);
 			// 
 			// organizerSetDestinationB
 			// 
+			this.organizerSetDestinationB.BackColor = System.Drawing.Color.Transparent;
 			this.organizerSetDestinationB.Location = new System.Drawing.Point(156, 37);
 			this.organizerSetDestinationB.Name = "organizerSetDestinationB";
 			this.organizerSetDestinationB.Size = new System.Drawing.Size(90, 21);
 			this.organizerSetDestinationB.TabIndex = 69;
 			this.organizerSetDestinationB.Text = "Set Bag";
+			this.organizerSetDestinationB.UseVisualStyleBackColor = false;
 			this.organizerSetDestinationB.Click += new System.EventHandler(this.organizerSetDestination_Click);
 			// 
 			// organizerSourceLabel
@@ -5202,7 +5214,7 @@ namespace Assistant
 			// label27
 			// 
 			this.label27.AutoSize = true;
-			this.label27.Location = new System.Drawing.Point(415, 54);
+			this.label27.Location = new System.Drawing.Point(426, 54);
 			this.label27.Name = "label27";
 			this.label27.Size = new System.Drawing.Size(105, 13);
 			this.label27.TabIndex = 72;
@@ -5219,51 +5231,46 @@ namespace Assistant
 			// 
 			// organizerAddTargetB
 			// 
+			this.organizerAddTargetB.BackColor = System.Drawing.Color.Transparent;
 			this.organizerAddTargetB.Location = new System.Drawing.Point(561, 52);
 			this.organizerAddTargetB.Name = "organizerAddTargetB";
 			this.organizerAddTargetB.Size = new System.Drawing.Size(90, 20);
 			this.organizerAddTargetB.TabIndex = 47;
 			this.organizerAddTargetB.Text = "Add Item";
+			this.organizerAddTargetB.UseVisualStyleBackColor = false;
 			this.organizerAddTargetB.Click += new System.EventHandler(this.organizerAddTarget_Click);
-			// 
-			// organizerDragDelay
-			// 
-			this.organizerDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.organizerDragDelay.BackColor = System.Drawing.Color.White;
-			this.organizerDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.organizerDragDelay.Location = new System.Drawing.Point(369, 51);
-			this.organizerDragDelay.Name = "organizerDragDelay";
-			this.organizerDragDelay.Size = new System.Drawing.Size(45, 20);
-			this.organizerDragDelay.TabIndex = 71;
-			this.organizerDragDelay.TextChanged += new System.EventHandler(this.organizerDragDelay_TextChanged);
 			// 
 			// organizerRemoveListB
 			// 
+			this.organizerRemoveListB.BackColor = System.Drawing.Color.Transparent;
 			this.organizerRemoveListB.Location = new System.Drawing.Point(369, 12);
 			this.organizerRemoveListB.Name = "organizerRemoveListB";
 			this.organizerRemoveListB.Size = new System.Drawing.Size(90, 21);
 			this.organizerRemoveListB.TabIndex = 63;
 			this.organizerRemoveListB.Text = "Remove";
+			this.organizerRemoveListB.UseVisualStyleBackColor = false;
 			this.organizerRemoveListB.Click += new System.EventHandler(this.organizerRemoveList_Click);
 			// 
 			// organizerAddListB
 			// 
+			this.organizerAddListB.BackColor = System.Drawing.Color.Transparent;
 			this.organizerAddListB.Location = new System.Drawing.Point(273, 12);
 			this.organizerAddListB.Name = "organizerAddListB";
 			this.organizerAddListB.Size = new System.Drawing.Size(90, 21);
 			this.organizerAddListB.TabIndex = 62;
 			this.organizerAddListB.Text = "Add";
+			this.organizerAddListB.UseVisualStyleBackColor = false;
 			this.organizerAddListB.Click += new System.EventHandler(this.organizerAddList_Click);
 			// 
 			// organizerImportListB
 			// 
+			this.organizerImportListB.BackColor = System.Drawing.Color.Transparent;
 			this.organizerImportListB.Location = new System.Drawing.Point(465, 12);
 			this.organizerImportListB.Name = "organizerImportListB";
 			this.organizerImportListB.Size = new System.Drawing.Size(90, 21);
 			this.organizerImportListB.TabIndex = 59;
 			this.organizerImportListB.Text = "Import";
+			this.organizerImportListB.UseVisualStyleBackColor = false;
 			this.organizerImportListB.Click += new System.EventHandler(this.organizerImportListB_Click);
 			// 
 			// organizerListSelect
@@ -5278,11 +5285,13 @@ namespace Assistant
 			// 
 			// organizerExportListB
 			// 
+			this.organizerExportListB.BackColor = System.Drawing.Color.Transparent;
 			this.organizerExportListB.Location = new System.Drawing.Point(561, 12);
 			this.organizerExportListB.Name = "organizerExportListB";
 			this.organizerExportListB.Size = new System.Drawing.Size(90, 21);
 			this.organizerExportListB.TabIndex = 58;
 			this.organizerExportListB.Text = "Export";
+			this.organizerExportListB.UseVisualStyleBackColor = false;
 			this.organizerExportListB.Click += new System.EventHandler(this.organizerExportListB_Click);
 			// 
 			// VendorBuy
@@ -5699,6 +5708,7 @@ namespace Assistant
 			// 
 			// Dress
 			// 
+			this.Dress.Controls.Add(this.dressDragDelay);
 			this.Dress.Controls.Add(this.dressStopButton);
 			this.Dress.Controls.Add(this.dressConflictCheckB);
 			this.Dress.Controls.Add(this.dressBagLabel);
@@ -5708,7 +5718,6 @@ namespace Assistant
 			this.Dress.Controls.Add(this.dressSetBagB);
 			this.Dress.Controls.Add(this.undressExecuteButton);
 			this.Dress.Controls.Add(this.dressExecuteButton);
-			this.Dress.Controls.Add(this.dressDragDelay);
 			this.Dress.Controls.Add(this.dressListView);
 			this.Dress.Controls.Add(this.label28);
 			this.Dress.Controls.Add(this.dressRemoveListB);
@@ -5719,10 +5728,21 @@ namespace Assistant
 			this.Dress.Location = new System.Drawing.Point(4, 22);
 			this.Dress.Name = "Dress";
 			this.Dress.Padding = new System.Windows.Forms.Padding(3);
-			this.Dress.Size = new System.Drawing.Size(659, 341);
+			this.Dress.Size = new System.Drawing.Size(192, 74);
 			this.Dress.TabIndex = 5;
 			this.Dress.Text = "Dress / Arm";
 			this.Dress.UseVisualStyleBackColor = true;
+			// 
+			// dressDragDelay
+			// 
+			this.dressDragDelay.Location = new System.Drawing.Point(494, 58);
+			this.dressDragDelay.Mask = "0000";
+			this.dressDragDelay.Name = "dressDragDelay";
+			this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
+			this.dressDragDelay.TabIndex = 93;
+			this.dressDragDelay.ValidatingType = typeof(int);
+			this.dressDragDelay.TextChanged += new System.EventHandler(this.dressDragDelay_TextChanged);
+			this.dressDragDelay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.event_remove_space);
 			// 
 			// dressStopButton
 			// 
@@ -5803,7 +5823,7 @@ namespace Assistant
 			// label29
 			// 
 			this.label29.AutoSize = true;
-			this.label29.Location = new System.Drawing.Point(521, 61);
+			this.label29.Location = new System.Drawing.Point(546, 61);
 			this.label29.Name = "label29";
 			this.label29.Size = new System.Drawing.Size(105, 13);
 			this.label29.TabIndex = 76;
@@ -5853,19 +5873,6 @@ namespace Assistant
 			this.dressExecuteButton.TabIndex = 86;
 			this.dressExecuteButton.Text = "Dress";
 			this.dressExecuteButton.Click += new System.EventHandler(this.dressExecuteButton_Click);
-			// 
-			// dressDragDelay
-			// 
-			this.dressDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.dressDragDelay.BackColor = System.Drawing.Color.White;
-			this.dressDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.dressDragDelay.Location = new System.Drawing.Point(475, 58);
-			this.dressDragDelay.Name = "dressDragDelay";
-			this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
-			this.dressDragDelay.TabIndex = 75;
-			this.dressDragDelay.TextChanged += new System.EventHandler(this.dressDragDelay_TextChanged);
 			// 
 			// dressListView
 			// 
@@ -5983,7 +5990,7 @@ namespace Assistant
 			this.friends.Location = new System.Drawing.Point(4, 22);
 			this.friends.Name = "friends";
 			this.friends.Padding = new System.Windows.Forms.Padding(3);
-			this.friends.Size = new System.Drawing.Size(659, 341);
+			this.friends.Size = new System.Drawing.Size(192, 74);
 			this.friends.TabIndex = 6;
 			this.friends.Text = "Friends";
 			this.friends.UseVisualStyleBackColor = true;
@@ -6272,6 +6279,7 @@ namespace Assistant
 			// 
 			// restock
 			// 
+			this.restock.Controls.Add(this.restockDragDelay);
 			this.restock.Controls.Add(this.restockExecuteButton);
 			this.restock.Controls.Add(this.restockStopButton);
 			this.restock.Controls.Add(this.groupBox3);
@@ -6280,7 +6288,6 @@ namespace Assistant
 			this.restock.Controls.Add(this.label13);
 			this.restock.Controls.Add(this.label7);
 			this.restock.Controls.Add(this.restockAddTargetButton);
-			this.restock.Controls.Add(this.restockDragDelay);
 			this.restock.Controls.Add(this.restockRemoveListB);
 			this.restock.Controls.Add(this.restockAddListB);
 			this.restock.Controls.Add(this.restockImportListB);
@@ -6293,6 +6300,17 @@ namespace Assistant
 			this.restock.TabIndex = 7;
 			this.restock.Text = "Restock";
 			this.restock.UseVisualStyleBackColor = true;
+			// 
+			// restockDragDelay
+			// 
+			this.restockDragDelay.Location = new System.Drawing.Point(373, 50);
+			this.restockDragDelay.Mask = "0000";
+			this.restockDragDelay.Name = "restockDragDelay";
+			this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
+			this.restockDragDelay.TabIndex = 94;
+			this.restockDragDelay.ValidatingType = typeof(int);
+			this.restockDragDelay.TextChanged += new System.EventHandler(this.restockDragDelay_TextChanged);
+			this.restockDragDelay.KeyDown += new System.Windows.Forms.KeyEventHandler(this.event_remove_space);
 			// 
 			// restockExecuteButton
 			// 
@@ -6481,7 +6499,7 @@ namespace Assistant
 			// label13
 			// 
 			this.label13.AutoSize = true;
-			this.label13.Location = new System.Drawing.Point(415, 54);
+			this.label13.Location = new System.Drawing.Point(424, 53);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(105, 13);
 			this.label13.TabIndex = 82;
@@ -6504,19 +6522,6 @@ namespace Assistant
 			this.restockAddTargetButton.TabIndex = 47;
 			this.restockAddTargetButton.Text = "Add Item";
 			this.restockAddTargetButton.Click += new System.EventHandler(this.restockAddTargetButton_Click);
-			// 
-			// restockDragDelay
-			// 
-			this.restockDragDelay.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.restockDragDelay.BackColor = System.Drawing.Color.White;
-			this.restockDragDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.restockDragDelay.Location = new System.Drawing.Point(369, 51);
-			this.restockDragDelay.Name = "restockDragDelay";
-			this.restockDragDelay.Size = new System.Drawing.Size(45, 20);
-			this.restockDragDelay.TabIndex = 81;
-			this.restockDragDelay.TextChanged += new System.EventHandler(this.restockDragDelay_TextChanged);
 			// 
 			// restockRemoveListB
 			// 
@@ -6572,7 +6577,7 @@ namespace Assistant
 			this.bandageheal.Location = new System.Drawing.Point(4, 22);
 			this.bandageheal.Name = "bandageheal";
 			this.bandageheal.Padding = new System.Windows.Forms.Padding(3);
-			this.bandageheal.Size = new System.Drawing.Size(659, 341);
+			this.bandageheal.Size = new System.Drawing.Size(192, 74);
 			this.bandageheal.TabIndex = 8;
 			this.bandageheal.Text = "Bandage Heal";
 			this.bandageheal.UseVisualStyleBackColor = true;
@@ -7374,8 +7379,8 @@ namespace Assistant
 			this.groupBox41.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.scavengerdataGridView)).EndInit();
 			this.groupBox12.ResumeLayout(false);
-			this.organizer.ResumeLayout(false);
-			this.organizer.PerformLayout();
+			this.organizerTab.ResumeLayout(false);
+			this.organizerTab.PerformLayout();
 			this.groupBox11.ResumeLayout(false);
 			this.groupBox11.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.organizerdataGridView)).EndInit();
@@ -7817,8 +7822,10 @@ namespace Assistant
 					items[4] = String.Format("{0:F1}", sk.Cap);
 					items[5] = sk.Lock.ToString()[0].ToString();
 
-					ListViewItem lvi = new ListViewItem(items);
-					lvi.Tag = sk;
+					ListViewItem lvi = new ListViewItem(items)
+					{
+						Tag = sk
+					};
 					skillList.Items.Add(lvi);
 				}
 
@@ -8326,10 +8333,12 @@ namespace Assistant
 
 		private void setScnPath_Click(object sender, System.EventArgs e)
 		{
-			FolderBrowserDialog folder = new FolderBrowserDialog();
-			folder.Description = Language.GetString(LocString.SelSSFolder);
-			folder.SelectedPath = RazorEnhanced.Settings.General.ReadString("CapPath");
-			folder.ShowNewFolderButton = true;
+			FolderBrowserDialog folder = new FolderBrowserDialog
+			{
+				Description = Language.GetString(LocString.SelSSFolder),
+				SelectedPath = RazorEnhanced.Settings.General.ReadString("CapPath"),
+				ShowNewFolderButton = true
+			};
 
 			if (folder.ShowDialog(this) == DialogResult.OK)
 			{
@@ -8743,8 +8752,7 @@ namespace Assistant
 
 		private void screenPrev_Click(object sender, System.EventArgs e)
 		{
-			string file = screensList.SelectedItem as String;
-			if (file != null)
+			if (screensList.SelectedItem is String file)
 				System.Diagnostics.Process.Start(Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), file));
 		}
 
@@ -9249,8 +9257,7 @@ namespace Assistant
 
 		private void textBoxEngineDelay_TextChanged(object sender, EventArgs e)
 		{
-			int millliseconds = 100;
-			Int32.TryParse(textBoxDelay.Text, out millliseconds);
+			Int32.TryParse(textBoxDelay.Text, out int millliseconds);
 			TimeSpan delay = TimeSpan.FromMilliseconds(millliseconds);
 			Scripts.TimerDelay = delay;
 		}
@@ -9345,8 +9352,10 @@ namespace Assistant
 
 		private void openchangelogButton_Click(object sender, EventArgs e)
 		{
-			EnhancedChangeLog changelogform = new EnhancedChangeLog();
-			changelogform.TopMost = true;
+			EnhancedChangeLog changelogform = new EnhancedChangeLog
+			{
+				TopMost = true
+			};
 			changelogform.Show();
 		}
 
@@ -9416,8 +9425,10 @@ namespace Assistant
 			if (autolootListSelect.Text != "")
 			{
 				DataGridViewRow row = autolootdataGridView.Rows[autolootdataGridView.CurrentCell.RowIndex];
-				EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row);
-				editProp.TopMost = true;
+				EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row)
+				{
+					TopMost = true
+				};
 				editProp.Show();
 			}
 			else
@@ -9432,30 +9443,14 @@ namespace Assistant
 				{
 					if (autoLootCheckBox.Checked)
 					{
-						int delay = -1;
 						autolootListSelect.Enabled = false;
 						autolootButtonAddList.Enabled = false;
 						autoLootButtonListExport.Enabled = false;
 						autoLootButtonListImport.Enabled = false;
 						autoLootButtonRemoveList.Enabled = false;
 						autoLootTextBoxDelay.Enabled = false;
-						try
-						{
-							delay = Convert.ToInt32(autoLootTextBoxDelay.Text);
-						}
-						catch
-						{
-							RazorEnhanced.AutoLoot.AutoMode = false;
-							RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
-							return;
-						}
-
-						if (delay < 0)
-						{
-							RazorEnhanced.AutoLoot.AutoMode = false;
-							RazorEnhanced.AutoLoot.AddLog("ERROR: Loot item delay is not valid");
-							return;
-						}
+						autoLootTextBoxMaxRange.Enabled = false;
+	
 						RazorEnhanced.AutoLoot.ResetIgnore();
 						RazorEnhanced.AutoLoot.AutoMode = true;
 						RazorEnhanced.DragDropManager.HoldingItem = false;
@@ -9471,6 +9466,7 @@ namespace Assistant
 						autoLootButtonListImport.Enabled = true;
 						autoLootButtonRemoveList.Enabled = true;
 						autoLootTextBoxDelay.Enabled = true;
+						autoLootTextBoxMaxRange.Enabled = true;
 
 						// Stop autoloot
 						RazorEnhanced.AutoLoot.AutoMode = false;
@@ -9495,11 +9491,7 @@ namespace Assistant
 
 		private void autoLootListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bag = 0;
-			int delay = 0;
-			int maxrange = 0;
-			bool noopencorpse = false;
-			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay, out noopencorpse, out maxrange);
+			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out int bag, out int delay, out bool noopencorpse, out int maxrange);
 			RazorEnhanced.AutoLoot.AutoLootBag = bag;
 			RazorEnhanced.AutoLoot.AutoLootDelay = delay;
 			RazorEnhanced.AutoLoot.NoOpenCorpse = noopencorpse;
@@ -9534,9 +9526,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 1;
 					af.Focus();
 					return;
@@ -9614,8 +9605,10 @@ namespace Assistant
 			if (scavengerListSelect.Text != "")
 			{
 				DataGridViewRow row = scavengerdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
-				EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(ref row);
-				editProp.TopMost = true;
+				EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(ref row)
+				{
+					TopMost = true
+				};
 				editProp.Show();
 			}
 			else
@@ -9656,6 +9649,15 @@ namespace Assistant
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
 		}
 
+		private void scavengerRange_TextChanged(object sender, EventArgs e)
+		{
+			if (scavengerRange.Focused)
+			{
+				Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
+				Scavenger.RefreshLists();
+			}
+		}
+
 		private void ScavengerItemContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
 		{
 			Assistant.Item scavengerBag = Assistant.World.FindItem(serial);
@@ -9686,9 +9688,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 2;
 					af.Focus();
 					return;
@@ -9713,10 +9714,7 @@ namespace Assistant
 
 		private void scavengertListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bag = 0;
-			int delay = 0;
-			int range = 0;
-			Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out bag, out delay, out range);
+			Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out int bag, out int delay, out int range);
 			Scavenger.ScavengerBag = bag;
 			Scavenger.ScavengerDelay = delay;
 			Scavenger.MaxRange = range;
@@ -9736,29 +9734,14 @@ namespace Assistant
 				{
 					if (scavengerCheckBox.Checked)
 					{
-						int delay = -1;
 						ScavengerListSelect.Enabled = false;
 						scavengerButtonAddList.Enabled = false;
 						scavengerButtonRemoveList.Enabled = false;
 						scavengerButtonExport.Enabled = false;
 						scavengerButtonImport.Enabled = false;
 						scavengerDragDelay.Enabled = false;
-						try
-						{
-							delay = Convert.ToInt32(scavengerDragDelay.Text);
-						}
-						catch
-						{
-							RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
-							RazorEnhanced.Scavenger.AutoMode = false;
-							return;
-						}
-						if (delay < 0)
-						{
-							RazorEnhanced.Scavenger.AddLog("ERROR: Drag item delay is not valid");
-							RazorEnhanced.Scavenger.AutoMode = false;
-							return;
-						}
+						scavengerRange.Enabled = false;
+
 						RazorEnhanced.Scavenger.ResetIgnore();
 						RazorEnhanced.Scavenger.AutoMode = true;
 						RazorEnhanced.Scavenger.AddLog("Scavenger Engine Start...");
@@ -9774,6 +9757,7 @@ namespace Assistant
 						scavengerButtonExport.Enabled = true;
 						scavengerButtonImport.Enabled = true;
 						scavengerDragDelay.Enabled = true;
+						scavengerRange.Enabled = true;
 
 						RazorEnhanced.Scavenger.AutoMode = false;
 						RazorEnhanced.Scavenger.AddLog("Scavenger Engine Stop...");
@@ -9848,9 +9832,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 3;
 					af.Focus();
 					return;
@@ -9956,10 +9939,7 @@ namespace Assistant
 
 		private void organizerListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bagsource;
-			int bagdestination;
-			int delay;
-			RazorEnhanced.Settings.Organizer.ListDetailsRead(organizerListSelect.Text, out bagsource, out bagdestination, out delay);
+			RazorEnhanced.Settings.Organizer.ListDetailsRead(organizerListSelect.Text, out int bagsource, out int bagdestination, out int delay);
 			RazorEnhanced.Organizer.OrganizerDelay = delay;
 			RazorEnhanced.Organizer.OrganizerSource = bagsource;
 			RazorEnhanced.Organizer.OrganizerDestination = bagdestination;
@@ -9999,7 +9979,7 @@ namespace Assistant
 
 		private void organizerDragDelay_TextChanged(object sender, EventArgs e)
 		{
-			if (organizerDragDelay.Focused)
+			if (organizerTab.Focused)
 			{
 				RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 				RazorEnhanced.Organizer.RefreshLists();
@@ -10054,7 +10034,7 @@ namespace Assistant
 				organizerRemoveListB.InvokeRequired ||
 				organizerExportListB.InvokeRequired ||
 				organizerImportListB.InvokeRequired ||
-				organizerDragDelay.InvokeRequired)
+				organizerTab.InvokeRequired)
 			{
 				OrganizerStartWorkCallback d = new OrganizerStartWorkCallback(OrganizerStartWork);
 				this.Invoke(d, null);
@@ -10068,7 +10048,7 @@ namespace Assistant
 				organizerRemoveListB.Enabled = false;
 				organizerExportListB.Enabled = false;
 				organizerImportListB.Enabled = false;
-				organizerDragDelay.Enabled = false;
+				organizerTab.Enabled = false;
 			}
 		}
 
@@ -10083,7 +10063,7 @@ namespace Assistant
 				organizerRemoveListB.InvokeRequired ||
 				organizerExportListB.InvokeRequired ||
 				organizerImportListB.InvokeRequired ||
-				organizerDragDelay.InvokeRequired)
+				organizerTab.InvokeRequired)
 			{
 				OrganizerFinishWorkCallback d = new OrganizerFinishWorkCallback(OrganizerFinishWork);
 				this.Invoke(d, null);
@@ -10097,7 +10077,7 @@ namespace Assistant
 				organizerRemoveListB.Enabled = true;
 				organizerExportListB.Enabled = true;
 				organizerImportListB.Enabled = true;
-				organizerDragDelay.Enabled = true;
+				organizerTab.Enabled = true;
 			}
 		}
 
@@ -10158,9 +10138,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 5;
 					af.Focus();
 					return;
@@ -10368,9 +10347,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 4;
 					af.Focus();
 					return;
@@ -10511,10 +10489,7 @@ namespace Assistant
 		// --------------- DRESS START ---------
 		private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bag = 0;
-			int delay = 0;
-			bool conflict = false;
-			RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out bag, out delay, out conflict);
+			RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out int bag, out int delay, out bool conflict);
 			RazorEnhanced.Dress.DressBag = bag;
 			RazorEnhanced.Dress.DressDelay = delay;
 			RazorEnhanced.Dress.DressConflict = conflict;
@@ -10529,9 +10504,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 6;
 					af.Focus();
 					return;
@@ -10672,8 +10646,10 @@ namespace Assistant
 		{
 			if (dressListSelect.Text != "")
 			{
-				EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer();
-				ManualAddLayer.TopMost = true;
+				EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer
+				{
+					TopMost = true
+				};
 				ManualAddLayer.Show();
 			}
 			else
@@ -10729,7 +10705,7 @@ namespace Assistant
 				organizerExportListB.InvokeRequired ||
 				organizerImportListB.InvokeRequired ||
 				dressStopButton.InvokeRequired ||
-				organizerDragDelay.InvokeRequired)
+				organizerTab.InvokeRequired)
 			{
 				UndressFinishWorkCallback d = new UndressFinishWorkCallback(UndressFinishWork);
 				this.Invoke(d, null);
@@ -10760,7 +10736,7 @@ namespace Assistant
 				organizerExportListB.InvokeRequired ||
 				organizerImportListB.InvokeRequired ||
 				dressStopButton.InvokeRequired ||
-				organizerDragDelay.InvokeRequired)
+				organizerTab.InvokeRequired)
 			{
 				UndressStartWorkCallback d = new UndressStartWorkCallback(UndressStartWork);
 				this.Invoke(d, null);
@@ -10825,9 +10801,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 7;
 					af.Focus();
 					return;
@@ -10885,15 +10860,7 @@ namespace Assistant
 
 		private void friendListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			bool includeparty = false;
-			bool preventattack = false;
-			bool autoacceptparty = false;
-			bool slfriend = false;
-			bool tbfriend = false;
-			bool minfriend = false;
-			bool comfriend = false;
-
-			RazorEnhanced.Settings.Friend.ListDetailsRead(friendListSelect.Text, out includeparty, out preventattack, out autoacceptparty, out slfriend, out tbfriend, out comfriend, out minfriend);
+			RazorEnhanced.Settings.Friend.ListDetailsRead(friendListSelect.Text, out bool includeparty, out bool preventattack, out bool autoacceptparty, out bool slfriend, out bool tbfriend, out bool comfriend, out bool minfriend);
 			RazorEnhanced.Friend.IncludeParty = includeparty;
 			RazorEnhanced.Friend.PreventAttack = preventattack;
 			RazorEnhanced.Friend.AutoacceptParty = autoacceptparty;
@@ -10953,8 +10920,7 @@ namespace Assistant
 
 					if (RazorEnhanced.Settings.Friend.ListExists(selection))
 					{
-						List<Friend.FriendPlayer> players;
-						RazorEnhanced.Settings.Friend.PlayersRead(selection, out players);
+						RazorEnhanced.Settings.Friend.PlayersRead(selection, out List<Friend.FriendPlayer> players);
 						if (index <= players.Count - 1)
 						{
 							RazorEnhanced.Settings.Friend.PlayerDelete(selection, players[index]);
@@ -10971,8 +10937,10 @@ namespace Assistant
 		{
 			if (friendListSelect.Text != "")
 			{
-				EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual();
-				ManualAddPlayer.TopMost = true;
+				EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual
+				{
+					TopMost = true
+				};
 				ManualAddPlayer.Show();
 			}
 			else
@@ -10983,8 +10951,10 @@ namespace Assistant
 		{
 			if (friendListSelect.Text != "")
 			{
-				EnhancedFriendAddGuildManual ManualAddGuild = new EnhancedFriendAddGuildManual();
-				ManualAddGuild.TopMost = true;
+				EnhancedFriendAddGuildManual ManualAddGuild = new EnhancedFriendAddGuildManual
+				{
+					TopMost = true
+				};
 				ManualAddGuild.Show();
 			}
 			else
@@ -11024,20 +10994,19 @@ namespace Assistant
 					int index = friendguildListView.SelectedItems[0].Index;
 					string selection = friendListSelect.Text;
 
-					if (RazorEnhanced.Settings.Friend.ListExists(selection))
+					if (Settings.Friend.ListExists(selection))
 					{
-						List<Friend.FriendGuild> guilds;
-						RazorEnhanced.Settings.Friend.GuildRead(selection, out guilds);
+						Settings.Friend.GuildRead(selection, out List<Friend.FriendGuild> guilds);
 						if (index <= guilds.Count - 1)
 						{
-							RazorEnhanced.Settings.Friend.GuildDelete(selection, guilds[index]);
-							RazorEnhanced.Friend.RefreshGuilds();
+							Settings.Friend.GuildDelete(selection, guilds[index]);
+							Friend.RefreshGuilds();
 						}
 					}
 				}
 			}
 			else
-				RazorEnhanced.Friend.AddLog("Friends list not selected!");
+				Friend.AddLog("Friends list not selected!");
 		}
 
 		// --------------- FRIENDS END ---------
@@ -11046,10 +11015,7 @@ namespace Assistant
 
 		private void restockListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bagsource;
-			int bagdestination;
-			int delay;
-			RazorEnhanced.Settings.Restock.ListDetailsRead(restockListSelect.Text, out bagsource, out bagdestination, out delay);
+			RazorEnhanced.Settings.Restock.ListDetailsRead(restockListSelect.Text, out int bagsource, out int bagdestination, out int delay);
 			RazorEnhanced.Restock.RestockDelay = delay;
 			RazorEnhanced.Restock.RestockSource = bagsource;
 			RazorEnhanced.Restock.RestockDestination = bagdestination;
@@ -11065,9 +11031,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 8;
 					af.Focus();
 					return;
@@ -11522,8 +11487,10 @@ namespace Assistant
 
 		private void addTargetButton_Click(object sender, EventArgs e)
 		{
-			EnhancedTargetAdd addtarget = new EnhancedTargetAdd();
-			addtarget.TopMost = true;
+			EnhancedTargetAdd addtarget = new EnhancedTargetAdd
+			{
+				TopMost = true
+			};
 			addtarget.Show();
 		}
 
@@ -11549,8 +11516,10 @@ namespace Assistant
 		{
 			if (targetlistView.SelectedItems.Count == 1)
 			{
-				EnhancedTargetEdit edittarget = new EnhancedTargetEdit(targetlistView.SelectedItems[0].SubItems[1].Text);
-				edittarget.TopMost = true;
+				EnhancedTargetEdit edittarget = new EnhancedTargetEdit(targetlistView.SelectedItems[0].SubItems[1].Text)
+				{
+					TopMost = true
+				};
 				edittarget.Show();
 			}
 		}
@@ -11743,15 +11712,17 @@ namespace Assistant
 				catch
 				{ }
 
-				RazorEnhanced.Settings.GraphFilter.Delete(graph);
+				Settings.GraphFilter.Delete(graph);
 				RazorEnhanced.Filters.RefreshLists();
 			}
 		}
 
 		private void mobfilterAddButton_Click(object sender, EventArgs e)
 		{
-			EnhancedGraphFilterAdd ManualAddGraphFilter = new EnhancedGraphFilterAdd();
-			ManualAddGraphFilter.TopMost = true;
+			EnhancedGraphFilterAdd ManualAddGraphFilter = new EnhancedGraphFilterAdd
+			{
+				TopMost = true
+			};
 			ManualAddGraphFilter.Show();
 		}
 
@@ -11782,8 +11753,7 @@ namespace Assistant
 		{
 			if (remountdelay.Focused)
 			{
-				int delay = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.remountdelay.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.remountdelay.Text, out int delay);
 				RazorEnhanced.Filters.AutoRemountDelay = delay;
 				RazorEnhanced.Settings.General.WriteInt("MountDelay", delay);
 			}
@@ -11793,8 +11763,7 @@ namespace Assistant
 		{
 			if (remountedelay.Focused)
 			{
-				int delay = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.remountedelay.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.remountedelay.Text, out int delay);
 				RazorEnhanced.Filters.AutoRemountEDelay = delay;
 				RazorEnhanced.Settings.General.WriteInt("EMountDelay", delay);
 			}
@@ -11990,8 +11959,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteString("ToolBoxSizeComboBox", toolboxsizeComboBox.Text);
 				if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
 				{
-					int slot = 2;
-					Int32.TryParse(toolbarslot_label.Text, out slot);
+					Int32.TryParse(toolbarslot_label.Text, out int slot);
 					if (slot == 0)
 						slot = 2;
 
@@ -12154,9 +12122,7 @@ namespace Assistant
 		{
 			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
 			{
-				bool passkey = true;
-				Keys k = Keys.None;
-				RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out passkey);
+				RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out Keys k, out bool passkey);
 				hotkeytextbox.Text = HotKey.KeyString(k);
 				hotkeypassCheckBox.Checked = passkey;
 			}
@@ -12197,8 +12163,10 @@ namespace Assistant
 		// ----------------- PROFILES START -------------------
 		private void profilesAddButton_Click(object sender, EventArgs e)
 		{
-			EnhancedProfileAdd addprofile = new EnhancedProfileAdd();
-			addprofile.TopMost = true;
+			EnhancedProfileAdd addprofile = new EnhancedProfileAdd
+			{
+				TopMost = true
+			};
 			addprofile.Show();
 		}
 
@@ -12280,16 +12248,20 @@ namespace Assistant
 			}
 			else
 			{
-				EnhancedProfileRename renameprofile = new EnhancedProfileRename();
-				renameprofile.TopMost = true;
+				EnhancedProfileRename renameprofile = new EnhancedProfileRename
+				{
+					TopMost = true
+				};
 				renameprofile.Show();
 			}
 		}
 
 		private void profilesCloneButton_Click(object sender, EventArgs e)
 		{
-			EnhancedProfileClone cloneprofile = new EnhancedProfileClone();
-			cloneprofile.TopMost = true;
+			EnhancedProfileClone cloneprofile = new EnhancedProfileClone
+			{
+				TopMost = true
+			};
 			cloneprofile.Show();
 		}
 
@@ -12300,8 +12272,10 @@ namespace Assistant
 
 		private void profilesImportButton_Click(object sender, EventArgs e)
 		{
-			EnhancedProfileImport importprofile = new EnhancedProfileImport();
-			importprofile.TopMost = true;
+			EnhancedProfileImport importprofile = new EnhancedProfileImport
+			{
+				TopMost = true
+			};
 			importprofile.Show();
 		}
 
@@ -13033,15 +13007,6 @@ namespace Assistant
 				}
 			}
 		}
-
-		private void scavengerRange_TextChanged(object sender, EventArgs e)
-		{
-			if (scavengerRange.Focused)
-			{
-				Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
-				Scavenger.RefreshLists();
-			}
-		}
 		// ----------------- END AGENT EVENTI COMUNI DATAGRID -------------------
 
 		// ----------------- START VIDEO RECORDER -------------------
@@ -13049,10 +13014,11 @@ namespace Assistant
 		{
 			if (videoFPSTextBox.Focused)
 			{
-				int fps = 25;
-
-				if (!Int32.TryParse(videoFPSTextBox.Text, out fps))
+				if (!Int32.TryParse(videoFPSTextBox.Text, out int fps))
+				{
 					videoFPSTextBox.Text = "25";
+					fps = 25;
+				}
 
 				Settings.General.WriteInt("VideoFPS", fps);
 			}
@@ -13060,10 +13026,12 @@ namespace Assistant
 
 		private void videoPathButton_Click(object sender, EventArgs e)
 		{
-			FolderBrowserDialog folder = new FolderBrowserDialog();
-			folder.Description = "Select a folder to store Razor video file";
-			folder.SelectedPath = RazorEnhanced.Settings.General.ReadString("VideoPath");
-			folder.ShowNewFolderButton = true;
+			FolderBrowserDialog folder = new FolderBrowserDialog
+			{
+				Description = "Select a folder to store Razor video file",
+				SelectedPath = RazorEnhanced.Settings.General.ReadString("VideoPath"),
+				ShowNewFolderButton = true
+			};
 
 			if (folder.ShowDialog(this) == DialogResult.OK)
 			{
@@ -13238,6 +13206,17 @@ namespace Assistant
 			videoSourcePlayer.Start();
 
 			this.Cursor = Cursors.Default;
+		}
+
+		private void event_remove_space(object sender, KeyEventArgs e)
+		{
+			Keys key = e.KeyCode;
+			if (e.KeyCode == Keys.Space)
+			{
+				e.Handled = true;
+				e.SuppressKeyPress = true;
+				return;
+			}
 		}
 		// ----------------- STOP VIDEO RECORDER -------------------
 	}
