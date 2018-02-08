@@ -649,6 +649,21 @@ namespace RazorEnhanced
 				case "Disarm":
 					Assistant.SpecialMoves.OnDisarm();
 					break;
+				case "Cancel":
+					Assistant.SpecialMoves.ClearAbilities();
+					break;
+				case "Primary ON/OFF":
+					if (Player.HasSpecial)
+						Assistant.SpecialMoves.ClearAbilities();
+					else
+						Assistant.SpecialMoves.SetPrimaryAbility();
+					break;
+				case "Secondary ON/OFF":
+					if (Player.HasSpecial)
+						Assistant.SpecialMoves.ClearAbilities();
+					else
+						Assistant.SpecialMoves.SetSecondaryAbility();
+					break;
 				default:
 					break;
 			}
