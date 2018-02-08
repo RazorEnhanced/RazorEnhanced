@@ -70,9 +70,9 @@ namespace RazorEnhanced.UI
 		private void EnhancedAgentAddList_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string newList = "";
+			string newList = String.Empty;
 
-			if (AgentListToAdd.Text == "")
+			if (AgentListToAdd.Text == String.Empty)
 				fail = true;
 
 			if (!Regex.IsMatch(AgentListToAdd.Text, "^[a-zA-Z0-9_]+$"))

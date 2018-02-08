@@ -22,8 +22,7 @@ namespace RazorEnhanced.UI
 
 		private void RefreshGUI()
 		{
-			List<RazorEnhanced.Shard> shards;
-			RazorEnhanced.Shard.Read(out shards);
+			RazorEnhanced.Shard.Read(out List<Shard> shards);
 
 			foreach (Shard shard in shards)
 			{
@@ -65,8 +64,7 @@ namespace RazorEnhanced.UI
 
 			RazorEnhanced.Shard.Update(shardlistCombobox.Text, clientPathLabel.Text, clientFolderLabel.Text, hostLabel.Text, port, patchEnc.Checked, osiEnc.Checked, true);
 
-			List<RazorEnhanced.Shard> shards;
-			RazorEnhanced.Shard.Read(out shards);
+			RazorEnhanced.Shard.Read(out List<Shard> shards);
 
 			shardlistCombobox.Items.Clear();
 			foreach (Shard shard in shards)
@@ -95,8 +93,7 @@ namespace RazorEnhanced.UI
 			int port = 2593;
 			Int32.TryParse(portLabel.Text, out port);
 
-			List<RazorEnhanced.Shard> shards;
-			RazorEnhanced.Shard.Read(out shards);
+			RazorEnhanced.Shard.Read(out List<Shard> shards);
 
 			shardlistCombobox.Items.Clear();
 			foreach (Shard shard in shards)
@@ -110,9 +107,8 @@ namespace RazorEnhanced.UI
 
 		private void shardlistCombobox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			List<RazorEnhanced.Shard> shards;
 			RazorEnhanced.Shard.UpdateLast(shardlistCombobox.Text);
-			RazorEnhanced.Shard.Read(out shards);
+			RazorEnhanced.Shard.Read(out List<Shard> shards);
 
 			foreach (Shard shard in shards)
 			{
@@ -155,11 +151,11 @@ namespace RazorEnhanced.UI
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			FolderBrowserDialog folder = new FolderBrowserDialog();
-
-			folder.Description = "Select a UO Data Directory...";
-
-			folder.ShowNewFolderButton = false;
+			FolderBrowserDialog folder = new FolderBrowserDialog
+			{
+				Description = "Select a UO Data Directory...",
+				ShowNewFolderButton = false
+			};
 			if (folder.ShowDialog() == DialogResult.OK)
 			{
 				clientFolderLabel.Text = folder.SelectedPath;
@@ -218,7 +214,7 @@ namespace RazorEnhanced.UI
 
 		private void razorButton2_Click(object sender, EventArgs e)
 		{
-			if (shardlistCombobox.Text != "")
+			if (shardlistCombobox.Text != String.Empty)
 			{
 				RazorEnhanced.Shard.Delete(shardlistCombobox.Text);
 			}

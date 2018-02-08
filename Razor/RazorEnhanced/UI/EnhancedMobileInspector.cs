@@ -482,7 +482,7 @@ namespace RazorEnhanced.UI
 
 			if (m_mobile == Assistant.World.Player)
 			{
-				listBoxAttributes.Items.Add("");
+				listBoxAttributes.Items.Add(String.Empty);
 				listBoxAttributes.Items.Add("Weight: " + Assistant.World.Player.Weight);
 				if (Assistant.World.Player.Expansion >= 3)
 				{

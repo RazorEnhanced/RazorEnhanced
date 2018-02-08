@@ -24,9 +24,9 @@ namespace RazorEnhanced.UI
 		private void profileadd_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string newprofile = "";
+			string newprofile = String.Empty;
 
-			if (profilename.Text == "")
+			if (profilename.Text == String.Empty)
 				fail = true;
 
 			if (!Regex.IsMatch(profilename.Text, "^[a-zA-Z0-9_]+$"))
@@ -56,10 +56,12 @@ namespace RazorEnhanced.UI
 
 		private void chosefileButton_Click(object sender, EventArgs e)
 		{
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Profiles";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Profiles",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{

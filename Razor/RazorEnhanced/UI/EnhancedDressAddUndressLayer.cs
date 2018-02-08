@@ -23,7 +23,7 @@ namespace RazorEnhanced.UI
 
 		private void bAddItem_Click(object sender, EventArgs e)
 		{
-			if (layerlist.Text != "")
+			if (layerlist.Text != String.Empty)
 			{
 				RazorEnhanced.Dress.DressItem toinsert = new RazorEnhanced.Dress.DressItem("UNDRESS", RazorEnhanced.Dress.LayerStringToInt(layerlist.Text), 0, true);
 				RazorEnhanced.Settings.Dress.ItemInsertByLayer(Assistant.Engine.MainWindow.DressListSelect.Text, toinsert);

@@ -222,7 +222,7 @@ namespace RazorEnhanced.UI
 		private void bAddProp_Click(object sender, EventArgs e)
 		{
 
-			if (comboboxProp.Text != "")
+			if (comboboxProp.Text != String.Empty)
 			{
 				autolootpropGridView.Rows.Add(new object[] { comboboxProp.Text, "1", "1" });
 				SaveData();

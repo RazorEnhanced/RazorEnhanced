@@ -195,7 +195,7 @@ namespace RazorEnhanced.UI
 
 		private void notoaddButton_Click(object sender, EventArgs e)
 		{
-			if (notocolorComboBox.Text != "")
+			if (notocolorComboBox.Text != String.Empty)
 			{
 				if (!notolistBox.Items.Contains(notocolorComboBox.Text))
 				{
@@ -259,13 +259,15 @@ namespace RazorEnhanced.UI
 			}
 
 			// Genero filtro da salvare
-			Mobiles.Filter filtertosave = new Mobiles.Filter();
-			filtertosave.Enabled = true;
-			filtertosave.Bodies = bodylist;
-			filtertosave.Name = tName.Text;
-			filtertosave.Hues = huelist;
-			filtertosave.RangeMax = maxrange;
-			filtertosave.RangeMin = minrange;
+			Mobiles.Filter filtertosave = new Mobiles.Filter
+			{
+				Enabled = true,
+				Bodies = bodylist,
+				Name = tName.Text,
+				Hues = huelist,
+				RangeMax = maxrange,
+				RangeMin = minrange
+			};
 
 			if (poisonedBoth.Checked)
 				filtertosave.Poisoned = -1;

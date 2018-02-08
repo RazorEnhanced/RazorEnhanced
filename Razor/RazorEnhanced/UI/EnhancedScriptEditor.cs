@@ -43,8 +43,8 @@ namespace RazorEnhanced.UI
 		private static AutoResetEvent m_WaitDebug = new AutoResetEvent(false);
 
 		private const string m_Title = "Enhanced Script Editor";
-		private string m_Filename = "";
-		private string m_Filepath = "";
+		private string m_Filename = String.Empty;
+		private string m_Filepath = String.Empty;
 
 		private ScriptEngine m_Engine;
 		private ScriptSource m_Source;
@@ -1021,8 +1021,7 @@ namespace RazorEnhanced.UI
 			Array.Sort(methods);
 			foreach (var item in methods)
 			{
-				ToolTipDescriptions element;
-				descriptionMethods.TryGetValue(item, out element);
+				descriptionMethods.TryGetValue(item, out ToolTipDescriptions element);
 
 				if (element != null)
 				{
@@ -1046,8 +1045,7 @@ namespace RazorEnhanced.UI
 			Array.Sort(methodsGeneric);
 			foreach (var item in methodsGeneric)
 			{
-				ToolTipDescriptions element;
-				descriptionGenerics.TryGetValue(item, out element);
+				descriptionGenerics.TryGetValue(item, out ToolTipDescriptions element);
 
 				if (element != null)
 				{
@@ -1299,7 +1297,7 @@ namespace RazorEnhanced.UI
 			fastColoredTextBoxEditor.Invalidate();
 
 			SetStatusLabel("IDLE", Color.DarkTurquoise);
-			SetTraceback("");
+			SetTraceback(String.Empty);
 
 			if (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Stopped)
 			{
@@ -1367,7 +1365,7 @@ namespace RazorEnhanced.UI
 
 		private string GetLocalsText(TraceBackFrame frame)
 		{
-			string result = "";
+			string result = String.Empty;
 
 			PythonDictionary locals = frame.f_locals as PythonDictionary;
 			if (locals != null)
@@ -1376,7 +1374,7 @@ namespace RazorEnhanced.UI
 				{
 					if (!(pair.Key.ToString().StartsWith("__") && pair.Key.ToString().EndsWith("__")))
 					{
-						string line = pair.Key.ToString() + ": " + (pair.Value != null ? pair.Value.ToString() : "") + "\r\n";
+						string line = pair.Key.ToString() + ": " + (pair.Value != null ? pair.Value.ToString() : String.Empty) + "\r\n";
 						result += line;
 					}
 				}
@@ -1513,8 +1511,10 @@ namespace RazorEnhanced.UI
 			{
 				this.BeginInvoke((MethodInvoker)delegate
 				{
-					EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem);
-					inspector.TopMost = true;
+					EnhancedItemInspector inspector = new EnhancedItemInspector(assistantItem)
+					{
+						TopMost = true
+					};
 					inspector.Show();
 				});
 			}
@@ -1525,8 +1525,10 @@ namespace RazorEnhanced.UI
 				{
 					this.BeginInvoke((MethodInvoker)delegate
 					{
-						EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile);
-						inspector.TopMost = true;
+						EnhancedMobileInspector inspector = new EnhancedMobileInspector(assistantMobile)
+						{
+							TopMost = true
+						};
 						inspector.Show();
 					});
 				}
@@ -1545,9 +1547,11 @@ namespace RazorEnhanced.UI
 
 		private void Open()
 		{
-			OpenFileDialog open = new OpenFileDialog();
-			open.Filter = "Script Files|*.py";
-			open.RestoreDirectory = true;
+			OpenFileDialog open = new OpenFileDialog
+			{
+				Filter = "Script Files|*.py",
+				RestoreDirectory = true
+			};
 			if (open.ShowDialog() == DialogResult.OK)
 			{
 				m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
@@ -1559,7 +1563,7 @@ namespace RazorEnhanced.UI
 
 		private void Save()
 		{
-			if (m_Filename != "")
+			if (m_Filename != String.Empty)
 			{
 				this.Text = m_Title + " - " + m_Filename + ".py";
 				File.WriteAllText(m_Filepath, fastColoredTextBoxEditor.Text);
@@ -1597,9 +1601,11 @@ namespace RazorEnhanced.UI
 
 		private void SaveAs()
 		{
-			SaveFileDialog save = new SaveFileDialog();
-			save.Filter = "Script Files|*.py";
-			save.RestoreDirectory = true;
+			SaveFileDialog save = new SaveFileDialog
+			{
+				Filter = "Script Files|*.py",
+				RestoreDirectory = true
+			};
 
 			if (save.ShowDialog() == DialogResult.OK)
 			{
@@ -1642,24 +1648,26 @@ namespace RazorEnhanced.UI
 			DialogResult res = MessageBox.Show("Save current file?", "WARNING", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
 			if (res == System.Windows.Forms.DialogResult.Yes)
 			{
-				SaveFileDialog save = new SaveFileDialog();
-				save.Filter = "Script Files|*.py";
-				save.FileName = m_Filename;
+				SaveFileDialog save = new SaveFileDialog
+				{
+					Filter = "Script Files|*.py",
+					FileName = m_Filename
+				};
 
 				if (save.ShowDialog() == DialogResult.OK)
 				{
 					File.WriteAllText(save.FileName, fastColoredTextBoxEditor.Text);
 				}
-				fastColoredTextBoxEditor.Text = "";
-				m_Filename = "";
-				m_Filepath = "";
+				fastColoredTextBoxEditor.Text = String.Empty;
+				m_Filename = String.Empty;
+				m_Filepath = String.Empty;
 				this.Text = m_Title;
 			}
 			else if (res == System.Windows.Forms.DialogResult.No)
 			{
-				fastColoredTextBoxEditor.Text = "";
-				m_Filename = "";
-				m_Filepath = "";
+				fastColoredTextBoxEditor.Text = String.Empty;
+				m_Filename = String.Empty;
+				m_Filepath = String.Empty;
 				this.Text = m_Title;
 			}
 		}
@@ -1844,7 +1852,7 @@ namespace RazorEnhanced.UI
 
 		public string ToolTipDescription()
 		{
-			string complete_description = "";
+			string complete_description = String.Empty;
 
 			complete_description += "Parameters: ";
 

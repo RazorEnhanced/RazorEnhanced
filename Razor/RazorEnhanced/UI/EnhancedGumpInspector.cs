@@ -16,12 +16,14 @@ namespace RazorEnhanced.UI
 			InitializeComponent();
 			MaximizeBox = false;
 			this.Text = m_Title;
-			EnhancedGumpInspectorListBox = new System.Windows.Forms.ListBox();
-			EnhancedGumpInspectorListBox.FormattingEnabled = true;
-			EnhancedGumpInspectorListBox.Location = new System.Drawing.Point(6, 19);
-			EnhancedGumpInspectorListBox.Name = "listBox1";
-			EnhancedGumpInspectorListBox.Size = new System.Drawing.Size(484, 342);
-			EnhancedGumpInspectorListBox.TabIndex = 3;
+			EnhancedGumpInspectorListBox = new ListBox
+			{
+				FormattingEnabled = true,
+				Location = new System.Drawing.Point(6, 19),
+				Name = "listBox1",
+				Size = new System.Drawing.Size(484, 342),
+				TabIndex = 3
+			};
 			this.groupBox1.Controls.Add(EnhancedGumpInspectorListBox);
 		}
 

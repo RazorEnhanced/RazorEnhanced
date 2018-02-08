@@ -98,9 +98,8 @@ namespace RazorEnhanced
 			{
 				if (World.Player != null && RazorEnhanced.Settings.General.ReadBool("HotKeyEnable"))
 				{
-					bool passkey = true;
-					string group = "";
-					RazorEnhanced.Settings.HotKey.FindGroup(k, out group, out passkey);
+					string group = string.Empty;
+					RazorEnhanced.Settings.HotKey.FindGroup(k, out group, out bool passkey);
 					ProcessGroup(group, k);
 					return passkey;
 				}
@@ -180,7 +179,7 @@ namespace RazorEnhanced
 
 		private static void ProcessGroup(string group, Keys k)
 		{
-			if (group != "")
+			if (group != string.Empty)
 			{
 				switch (group)
 				{
@@ -657,6 +656,7 @@ namespace RazorEnhanced
 						Assistant.SpecialMoves.ClearAbilities();
 					else
 						Assistant.SpecialMoves.SetPrimaryAbility();
+
 					break;
 				case "Secondary ON/OFF":
 					if (Player.HasSpecial)
@@ -1141,9 +1141,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Actions");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes.Add(a);
@@ -1154,9 +1156,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Use");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[3].Nodes.Add(a);
@@ -1167,9 +1171,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Show Names");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[4].Nodes.Add(a);
@@ -1180,9 +1186,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Pet Commands");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[1].Nodes[5].Nodes.Add(a);
@@ -1193,9 +1201,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Agents");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes.Add(a);
@@ -1206,9 +1216,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadDress();
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[16].Nodes.Add(a);
@@ -1222,9 +1234,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Abilities");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[0].Nodes.Add(a);
@@ -1235,9 +1249,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Attack");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[1].Nodes.Add(a);
@@ -1248,9 +1264,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Bandage");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[2].Nodes.Add(a);
@@ -1264,9 +1282,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Potions");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[0].Nodes.Add(a);
@@ -1277,9 +1297,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Other");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[3].Nodes[1].Nodes.Add(a);
@@ -1290,9 +1312,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Hands");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[4].Nodes.Add(a);
@@ -1303,9 +1327,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Equip Wands");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[3].Nodes[5].Nodes.Add(a);
@@ -1316,9 +1342,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Skills");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[4].Nodes.Add(a);
@@ -1329,9 +1357,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsAgent");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes.Add(a);
@@ -1342,9 +1372,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMagery");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[4].Nodes.Add(a);
@@ -1355,9 +1387,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNecro");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[5].Nodes.Add(a);
@@ -1368,9 +1402,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsBushido");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[6].Nodes.Add(a);
@@ -1381,9 +1417,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsNinjitsu");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[7].Nodes.Add(a);
@@ -1394,9 +1432,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsSpellweaving");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[8].Nodes.Add(a);
@@ -1407,9 +1447,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMysticism");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[9].Nodes.Add(a);
@@ -1420,9 +1462,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsChivalry");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[10].Nodes.Add(a);
@@ -1433,9 +1477,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("SpellsMastery");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[5].Nodes[11].Nodes.Add(a);
@@ -1446,9 +1492,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Target");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes.Add(a);
@@ -1459,9 +1507,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadTarget();
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[6].Nodes[8].Nodes.Add(a);
@@ -1472,9 +1522,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("Script");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add(a);
@@ -1485,9 +1537,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadScript();
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes[1].Nodes.Add(a);
@@ -1498,9 +1552,11 @@ namespace RazorEnhanced
 			keylist = RazorEnhanced.Settings.HotKey.ReadGroup("UseVirtue");
 			foreach (HotKeyData keydata in keylist)
 			{
-				TreeNode a = new TreeNode();
-				a.Name = keydata.Name;
-				a.Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )";
+				TreeNode a = new TreeNode
+				{
+					Name = keydata.Name,
+					Text = keydata.Name + " ( " + KeyString(keydata.Key) + " )"
+				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
 				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[8].Nodes.Add(a);

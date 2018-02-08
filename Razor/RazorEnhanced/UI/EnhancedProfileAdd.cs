@@ -23,9 +23,9 @@ namespace RazorEnhanced.UI
 		private void profileadd_Click(object sender, EventArgs e)
 		{
 			bool fail = false;
-			string newprofile = "";
+			string newprofile = String.Empty;
 
-			if (profilename.Text == "")
+			if (profilename.Text == String.Empty)
 				fail = true;
 
 			if (!Regex.IsMatch(profilename.Text, "^[a-zA-Z0-9_]+$"))
