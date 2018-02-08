@@ -133,8 +133,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<DressList> lists;
-			RazorEnhanced.Settings.Dress.ListsRead(out lists);
+			RazorEnhanced.Settings.Dress.ListsRead(out List<DressList> lists);
 
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.DressListView.Items.Clear();
@@ -197,8 +196,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshItems()
 		{
-			List<DressList> lists;
-			RazorEnhanced.Settings.Dress.ListsRead(out lists);
+			RazorEnhanced.Settings.Dress.ListsRead(out List<DressList> lists);
 
 			Assistant.Engine.MainWindow.DressListView.Items.Clear();
 			foreach (DressList l in lists)
@@ -210,8 +208,10 @@ namespace RazorEnhanced
 
 				foreach (DressItem item in items)
 				{
-					ListViewItem listitem = new ListViewItem();
-					listitem.Checked = item.Selected;
+					ListViewItem listitem = new ListViewItem
+					{
+						Checked = item.Selected
+					};
 					listitem.SubItems.Add(LayerIntToLayerString(item.Layer));
 					if (item.Name != "UNDRESS")
 					{

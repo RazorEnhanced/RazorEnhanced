@@ -133,8 +133,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int range = 2;
-				Int32.TryParse(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text, out range);
+				Int32.TryParse(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text, out int range);
 				return range;
 			}
 
@@ -148,8 +147,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int delay = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.AutolootLabelDelay.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.AutolootLabelDelay.Text, out int delay);
 				return delay;
 			}
 
@@ -207,8 +205,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<AutoLootList> lists;
-			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
+			RazorEnhanced.Settings.AutoLoot.ListsRead(out List<AutoLootList> lists);
 
 			AutoLootList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
@@ -231,8 +228,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			List<AutoLootList> lists;
-			RazorEnhanced.Settings.AutoLoot.ListsRead(out lists);
+			RazorEnhanced.Settings.AutoLoot.ListsRead(out List<AutoLootList> lists);
 
 			Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Clear();
 
@@ -271,8 +267,7 @@ namespace RazorEnhanced
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-				bool check = false;
-				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				if (row.Cells[4].Value != null)
 					Settings.AutoLoot.ItemInsert(Assistant.Engine.MainWindow.AutoLootListSelect.Text, new AutoLootItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<AutoLootItem.Property>)row.Cells[4].Value));

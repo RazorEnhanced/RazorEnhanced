@@ -207,7 +207,7 @@ namespace RazorEnhanced
 		private static string GetPlayerName(int s)
 		{
 			Assistant.Mobile mob = World.FindMobile(s);
-			return mob != null ? mob.Name : "";
+			return mob != null ? mob.Name : string.Empty;
 		}
 
 		private static int[] m_NotoHues = new int[8]

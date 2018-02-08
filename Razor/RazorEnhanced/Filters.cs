@@ -123,9 +123,10 @@ namespace RazorEnhanced
 
 			foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
 			{
-				ListViewItem listitem = new ListViewItem();
-
-				listitem.Checked = graphdata.Selected;
+				ListViewItem listitem = new ListViewItem
+				{
+					Checked = graphdata.Selected
+				};
 
 				listitem.SubItems.Add("0x" + graphdata.GraphReal.ToString("X4"));
 				listitem.SubItems.Add("0x" + graphdata.GraphNew.ToString("X4"));
@@ -267,8 +268,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int delay = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out int delay);
 				return delay;
 			}
 
@@ -282,8 +282,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int delay = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out int delay);
 				return delay;
 			}
 

@@ -150,8 +150,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<OrganizerList> lists;
-			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
+			RazorEnhanced.Settings.Organizer.ListsRead(out List<OrganizerList> lists);
 
 			OrganizerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
@@ -193,8 +192,7 @@ namespace RazorEnhanced
 				else
 					amount = Convert.ToInt32((string)row.Cells[4].Value);
 
-				bool check = false;
-				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.Organizer.ItemInsert(Assistant.Engine.MainWindow.OrganizerListSelect.Text, new OrganizerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, amount, check));
 			}
@@ -204,8 +202,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			List<OrganizerList> lists;
-			RazorEnhanced.Settings.Organizer.ListsRead(out lists);
+			RazorEnhanced.Settings.Organizer.ListsRead(out List<OrganizerList> lists);
 
 			Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Clear();
 

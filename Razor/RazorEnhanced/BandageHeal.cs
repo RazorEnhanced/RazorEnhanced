@@ -92,8 +92,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int delay = 1000;
-				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text, out int delay);
 				if (delay < 1)
 					delay = 1000;
 
@@ -110,8 +109,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int range = 1;
-				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text, out range);
+				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text, out int range);
 				return range;
 			}
 
@@ -125,8 +123,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int hplimit = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealhpTextBox.Text, out hplimit);
+				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealhpTextBox.Text, out int hplimit);
 				return hplimit;
 			}
 
@@ -369,10 +366,12 @@ namespace RazorEnhanced
 					target = Assistant.World.FindMobile(TargetSerial);
 					break;
 				case "Friend":
-					RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter();
-					targfilter.Enabled = true;
-					targfilter.Friend = 1;
-					targfilter.RangeMax = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox");
+					RazorEnhanced.Mobiles.Filter targfilter = new Mobiles.Filter
+					{
+						Enabled = true,
+						Friend = 1,
+						RangeMax = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox")
+					};
 					Mobile targ = RazorEnhanced.Mobiles.Select(RazorEnhanced.Mobiles.ApplyFilter(targfilter), "Weakest");
 					if (targ != null)
 						target = Assistant.World.FindMobile(targ.Serial);
@@ -423,8 +422,10 @@ namespace RazorEnhanced
 		internal static int SearchBandage(int itemid, int color)
 		{
 			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter();
-			itemFilter.Enabled = true;
+			Items.Filter itemFilter = new Items.Filter
+			{
+				Enabled = true
+			};
 			itemFilter.Graphics.Add(itemid);
 
 			if (color != -1)

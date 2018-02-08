@@ -13,7 +13,7 @@ namespace RazorEnhanced
 
 			AddLog("----------- Response Recevied START -----------");
 			AddLog("Gump Operation: " + ser.ToString());
-			AddLog("Gump ID: " + tid.ToString(""));
+			AddLog("Gump ID: " + tid.ToString());
 			AddLog("Gump Button: " + bid.ToString());
 		}
 

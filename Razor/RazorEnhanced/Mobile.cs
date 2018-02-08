@@ -303,7 +303,7 @@ namespace RazorEnhanced
 			public bool Enabled = false;
 			public List<int> Serials = new List<int>();
 			public List<int> Bodies = new List<int>();
-			public string Name = "";
+			public string Name = String.Empty;
 			public List<int> Hues = new List<int>();
 			public double RangeMin = -1;
 			public double RangeMax = -1;
@@ -336,7 +336,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					if (filter.Name != "")
+					if (filter.Name != String.Empty)
 					{
 						Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
 						List<Assistant.Mobile> list = assistantMobiles.Where(i => rgx.IsMatch(i.Name)).ToList();
@@ -653,7 +653,7 @@ namespace RazorEnhanced
 
 		public static string GetPropStringByIndex(int serial, int index)
 		{
-			string propstring = "";
+			string propstring = String.Empty;
 			Assistant.Mobile assistantMobile = Assistant.World.FindMobile((uint)serial);
 
 			if (assistantMobile == null)

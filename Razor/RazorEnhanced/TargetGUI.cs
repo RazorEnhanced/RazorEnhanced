@@ -51,7 +51,7 @@ namespace RazorEnhanced
 				// Body List
 				if (target.TargetObject.Filter.Bodies.Count > 0)
 				{
-					string bodylist = "";
+					string bodylist = String.Empty;
 					foreach (int body in target.TargetObject.Filter.Bodies)
 					{
 						bodylist = bodylist + body.ToString("X4") + " - ";
@@ -64,7 +64,7 @@ namespace RazorEnhanced
 				}
 
 				// Target Name
-				if (target.TargetObject.Filter.Name != "")
+				if (target.TargetObject.Filter.Name != String.Empty)
 					listitem.SubItems.Add(target.TargetObject.Filter.Name);
 				else
 					listitem.SubItems.Add("*");
@@ -72,7 +72,7 @@ namespace RazorEnhanced
 				// Hue List
 				if (target.TargetObject.Filter.Hues.Count > 0)
 				{
-					string huelist = "";
+					string huelist = String.Empty;
 					foreach (int hue in target.TargetObject.Filter.Hues)
 					{
 						huelist = huelist + "0x" + hue.ToString("X4") + " - ";
@@ -163,7 +163,7 @@ namespace RazorEnhanced
 				// NotoColor list
 				if (target.TargetObject.Filter.Notorieties.Count > 0)
 				{
-					string notolist = "";
+					string notolist = String.Empty;
 					foreach (int noto in target.TargetObject.Filter.Notorieties)
 					{
 						notolist = notolist + GetNotoString((byte)noto) + " - ";

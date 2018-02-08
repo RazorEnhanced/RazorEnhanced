@@ -274,7 +274,7 @@ namespace RazorEnhanced
 		internal static void Record_MenuResponse(int index)
 		{
 			AddLog("Misc.WaitForMenu(10000)");
-			string text = "";
+			string text = string.Empty;
             try
 			{
 				text = World.Player.MenuEntry[index].ModelText;

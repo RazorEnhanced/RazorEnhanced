@@ -15,10 +15,12 @@ namespace RazorEnhanced
 		{
 			DataSet m_Dataset = new DataSet();
 			DataTable m_DatasetTable = new DataTable();
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Autoloot List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Autoloot List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -82,11 +84,13 @@ namespace RazorEnhanced
 
 		internal static void ExportAutoloot(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Autoloot List";
-			sd.FileName = "AU." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Autoloot List",
+				FileName = "AU." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -139,10 +143,12 @@ namespace RazorEnhanced
 			DataSet m_Dataset = new DataSet();
 			DataTable m_DatasetTable = new DataTable();
 
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Scavenger List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Scavenger List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -206,11 +212,13 @@ namespace RazorEnhanced
 
 		internal static void ExportScavenger(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Scavenger List";
-			sd.FileName = "SC." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Scavenger List",
+				FileName = "SC." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -263,10 +271,12 @@ namespace RazorEnhanced
 			DataSet m_Dataset = new DataSet();
 			DataTable m_DatasetTable = new DataTable();
 
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Organizer List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Organizer List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -330,11 +340,13 @@ namespace RazorEnhanced
 
 		internal static void ExportOrganizer(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Organizer List";
-			sd.FileName = "OR." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Organizer List",
+				FileName = "OR." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -384,10 +396,12 @@ namespace RazorEnhanced
 		////////////// SELL AGENT START //////////////
 		internal static void ImportSell()
 		{
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Sell Agent List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Sell Agent List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -454,11 +468,13 @@ namespace RazorEnhanced
 
 		internal static void ExportSell(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Sell Agent List";
-			sd.FileName = "SA." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Sell Agent List",
+				FileName = "SA." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -510,10 +526,12 @@ namespace RazorEnhanced
 		{
 			DataSet m_Dataset = new DataSet();
 			DataTable m_DatasetTable = new DataTable();
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Buy Agent List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Buy Agent List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -577,11 +595,13 @@ namespace RazorEnhanced
 
 		internal static void ExportBuy(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Buy Agent List";
-			sd.FileName = "BA." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Buy Agent List",
+				FileName = "BA." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -633,10 +653,12 @@ namespace RazorEnhanced
 		{
 			DataSet m_Dataset = new DataSet();
 			DataTable m_DatasetTable = new DataTable();
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Dress List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Dress List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -700,11 +722,13 @@ namespace RazorEnhanced
 
 		internal static void ExportDress(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Dress List";
-			sd.FileName = "DR." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Dress List",
+				FileName = "DR." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -756,10 +780,12 @@ namespace RazorEnhanced
 		{
 			DataSet m_Dataset = new DataSet();
 			DataTable m_DatasetTable = new DataTable();
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Friends List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Friends List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -823,11 +849,13 @@ namespace RazorEnhanced
 
 		internal static void ExportFriends(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Friend List";
-			sd.FileName = "FL." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Friend List",
+				FileName = "FL." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -838,8 +866,7 @@ namespace RazorEnhanced
 				m_Dataset.Tables.Add(restock_item);
 				m_Dataset.AcceptChanges();
 
-				List<Friend.FriendPlayer> players;
-				RazorEnhanced.Settings.Friend.PlayersRead(listname, out players);
+				RazorEnhanced.Settings.Friend.PlayersRead(listname, out List<Friend.FriendPlayer> players);
 
 				foreach (RazorEnhanced.Friend.FriendPlayer player in players)
 				{
@@ -880,10 +907,12 @@ namespace RazorEnhanced
 		{
 			DataSet m_Dataset = new DataSet();
 			DataTable m_DatasetTable = new DataTable();
-			OpenFileDialog od = new OpenFileDialog();
-			od.Filter = "Enhanced Razor Export|*.raz";
-			od.Title = "Import Restock List";
-			od.RestoreDirectory = true;
+			OpenFileDialog od = new OpenFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Import Restock List",
+				RestoreDirectory = true
+			};
 
 			if (od.ShowDialog() == DialogResult.OK)
 			{
@@ -947,11 +976,13 @@ namespace RazorEnhanced
 
 		internal static void ExportRestock(string listname)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Restock List";
-			sd.FileName = "RR." + listname + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Restock List",
+				FileName = "RR." + listname + ".raz",
+				RestoreDirectory = true
+			};
 
 			if (sd.ShowDialog() == DialogResult.OK)
 			{
@@ -1002,11 +1033,13 @@ namespace RazorEnhanced
 
 		internal static void ExportProfiles(string profilename)
 		{
-			SaveFileDialog sd = new SaveFileDialog();
-			sd.Filter = "Enhanced Razor Export|*.raz";
-			sd.Title = "Export Profile";
-			sd.FileName = "PROF." + profilename + ".raz";
-			sd.RestoreDirectory = true;
+			SaveFileDialog sd = new SaveFileDialog
+			{
+				Filter = "Enhanced Razor Export|*.raz",
+				Title = "Export Profile",
+				FileName = "PROF." + profilename + ".raz",
+				RestoreDirectory = true
+			};
 
 			string oldprofilepath;
 			if (RazorEnhanced.Profiles.LastUsed() == "default")

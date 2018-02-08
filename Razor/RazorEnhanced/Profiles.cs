@@ -166,7 +166,7 @@ namespace RazorEnhanced
 				if ((int)row["PlayerSerial"] == serial)
 				{
 					row["PlayerSerial"] = 0;
-					row["PlayerName"] = "";
+					row["PlayerName"] = String.Empty;
 				}
 			}
 			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)  // Linko nuovo profilo

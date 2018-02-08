@@ -541,8 +541,10 @@ namespace RazorEnhanced
 		internal static ContextMenu GeneraMenu()
 		{
 			ContextMenu cm = new ContextMenu();
-			MenuItem menuItem = new MenuItem();
-			menuItem.Text = "Close";
+			MenuItem menuItem = new MenuItem
+			{
+				Text = "Close"
+			};
 			menuItem.Click += new System.EventHandler(menuItemClose_Click);
 			cm.MenuItems.Add(menuItem);
 

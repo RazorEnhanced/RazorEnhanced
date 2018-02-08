@@ -110,9 +110,8 @@ namespace RazorEnhanced
 		{
 			get
 			{
-					int delay = 100;
-					Int32.TryParse(Assistant.Engine.MainWindow.ScavengerDragDelay.Text, out delay);
-					return delay;
+				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerDragDelay.Text, out int delay);
+				return delay;
 			}
 
 			set
@@ -125,8 +124,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				int range = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerRange.Text, out range);
+				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerRange.Text, out int range);
 				return range;
 			}
 
@@ -171,8 +169,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<ScavengerList> lists;
-			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
+			RazorEnhanced.Settings.Scavenger.ListsRead(out List<ScavengerList> lists);
 
 			ScavengerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.ScavengerListSelect.Text)
@@ -194,8 +191,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			List<ScavengerList> lists;
-			RazorEnhanced.Settings.Scavenger.ListsRead(out lists);
+			RazorEnhanced.Settings.Scavenger.ListsRead(out List<ScavengerList> lists);
 
 			Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Clear();
 
@@ -234,10 +230,9 @@ namespace RazorEnhanced
 				else
 					color = Convert.ToInt32((string)row.Cells[3].Value, 16);
 
-				bool check = false;
-				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
-                if (row.Cells[4].Value != null)
+				if (row.Cells[4].Value != null)
 					Settings.Scavenger.ItemInsert(Assistant.Engine.MainWindow.ScavengerListSelect.Text, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, (List<ScavengerItem.Property>)row.Cells[4].Value));
 				else
 					Settings.Scavenger.ItemInsert(Assistant.Engine.MainWindow.ScavengerListSelect.Text, new ScavengerItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), color, check, new List<ScavengerItem.Property>()));

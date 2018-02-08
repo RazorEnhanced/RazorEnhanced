@@ -27,8 +27,7 @@ namespace RazorEnhanced
 			{
 				try
 				{
-					int itemserial = 0;
-					if (AutoLootSerialCorpseRefresh.TryPeek(out itemserial))
+					if (AutoLootSerialCorpseRefresh.TryPeek(out int itemserial))
 					{
 						Assistant.Item item = Assistant.World.FindItem(itemserial);
 
@@ -60,8 +59,7 @@ namespace RazorEnhanced
 			{
 				try
 				{
-					AutoLoot.SerialToGrab data;
-					if (AutoLoot.SerialToGrabList.TryPeek(out data))
+					if (AutoLoot.SerialToGrabList.TryPeek(out AutoLoot.SerialToGrab data))
 					{
 						Assistant.Item item = Assistant.World.FindItem(data.ItemSerial);
 
@@ -115,8 +113,7 @@ namespace RazorEnhanced
 			{
 				try
 				{
-					int itemserial = 0;
-					if (ScavengerSerialToGrab.TryPeek(out itemserial))
+					if (ScavengerSerialToGrab.TryPeek(out int itemserial))
 					{
 						Assistant.Item item = Assistant.World.FindItem(itemserial);
 
@@ -162,8 +159,7 @@ namespace RazorEnhanced
 			{
 				try
 				{
-					int itemserial = 0;
-					if (CorpseToCutSerial.TryPeek(out itemserial))
+					if (CorpseToCutSerial.TryPeek(out int itemserial))
 					{
 						Assistant.Item item = Assistant.World.FindItem(itemserial);
 

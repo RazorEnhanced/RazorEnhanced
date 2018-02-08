@@ -198,8 +198,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<FriendList> lists;
-			RazorEnhanced.Settings.Friend.ListsRead(out lists);
+			RazorEnhanced.Settings.Friend.ListsRead(out List<FriendList> lists);
 
 			if (lists.Count == 0)
 			{
@@ -239,8 +238,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshPlayers()
 		{
-			List<FriendList> lists;
-			RazorEnhanced.Settings.Friend.ListsRead(out lists);
+			RazorEnhanced.Settings.Friend.ListsRead(out List<FriendList> lists);
 
 			Assistant.Engine.MainWindow.FriendListView.Items.Clear();
 			foreach (FriendList l in lists)
@@ -248,14 +246,14 @@ namespace RazorEnhanced
 				if (!l.Selected)
 					continue;
 
-				List<Friend.FriendPlayer> players;
-				RazorEnhanced.Settings.Friend.PlayersRead(l.Description, out players);
+				RazorEnhanced.Settings.Friend.PlayersRead(l.Description, out List<FriendPlayer> players);
 
 				foreach (FriendPlayer player in players)
 				{
-					ListViewItem listitem = new ListViewItem();
-
-					listitem.Checked = player.Selected;
+					ListViewItem listitem = new ListViewItem
+					{
+						Checked = player.Selected
+					};
 
 					listitem.SubItems.Add(player.Name);
 					listitem.SubItems.Add("0x" + player.Serial.ToString("X8"));
@@ -267,8 +265,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshGuilds()
 		{
-			List<FriendList> lists;
-			RazorEnhanced.Settings.Friend.ListsRead(out lists);
+			RazorEnhanced.Settings.Friend.ListsRead(out List<FriendList> lists);
 
 			Assistant.Engine.MainWindow.FriendGuildListView.Items.Clear();
 			foreach (FriendList l in lists)
@@ -276,14 +273,14 @@ namespace RazorEnhanced
 				if (!l.Selected)
 					continue;
 
-				List<Friend.FriendGuild> guilds;
-				RazorEnhanced.Settings.Friend.GuildRead(l.Description, out guilds);
+				RazorEnhanced.Settings.Friend.GuildRead(l.Description, out List<FriendGuild> guilds);
 
 				foreach (FriendGuild guild in guilds)
 				{
-					ListViewItem listitem = new ListViewItem();
-
-					listitem.Checked = guild.Selected;
+					ListViewItem listitem = new ListViewItem
+					{
+						Checked = guild.Selected
+					};
 
 					listitem.SubItems.Add(guild.Name);
 
@@ -350,8 +347,7 @@ namespace RazorEnhanced
 
 		internal static void UpdateSelectedPlayer(int i)
 		{
-			List<FriendPlayer> players;
-			RazorEnhanced.Settings.Friend.PlayersRead(FriendListName, out players);
+			RazorEnhanced.Settings.Friend.PlayersRead(FriendListName, out List<FriendPlayer> players);
 
 			if (players.Count != Assistant.Engine.MainWindow.FriendListView.Items.Count)
 			{
@@ -370,9 +366,8 @@ namespace RazorEnhanced
 
 		public static bool IsFriend(int serial)
 		{
-            List<Friend.FriendPlayer> players;
-            RazorEnhanced.Settings.Friend.PlayersRead(Friend.FriendListName, out players);
-            foreach (FriendPlayer player in players)        // Ricerca nella friend list normale
+			RazorEnhanced.Settings.Friend.PlayersRead(Friend.FriendListName, out List<FriendPlayer> players);
+			foreach (FriendPlayer player in players)        // Ricerca nella friend list normale
             {
 	            if (!player.Selected)
 					continue;

@@ -148,8 +148,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<RestockList> lists;
-			RazorEnhanced.Settings.Restock.ListsRead(out lists);
+			RazorEnhanced.Settings.Restock.ListsRead(out List<RestockList> lists);
 
 			RestockList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.RestockListSelect.Text)
@@ -195,8 +194,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			List<RestockList> lists;
-			RazorEnhanced.Settings.Restock.ListsRead(out lists);
+			RazorEnhanced.Settings.Restock.ListsRead(out List<RestockList> lists);
 
 			Assistant.Engine.MainWindow.RestockDataGridView.Rows.Clear();
 

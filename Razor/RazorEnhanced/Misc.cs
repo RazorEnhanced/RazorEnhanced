@@ -203,7 +203,7 @@ namespace RazorEnhanced
 
 		public static void CancelPrompt()
 		{
-			ClientCommunication.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, ""));
+			ClientCommunication.SendToServerWait(new PromptResponse(World.Player.PromptSenderSerial, World.Player.PromptID, 0, Language.CliLocName, String.Empty));
 			World.Player.HasPrompt = false;
 		}
 
@@ -233,8 +233,7 @@ namespace RazorEnhanced
 		}
 		public static void RemoveSharedValue(string name)
 		{
-			object data = null;
-			RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.TryRemove(name, out data);
+			RazorEnhanced.Scripts.EnhancedScript.SharedScriptData.TryRemove(name, out object data);
 		}
 
 		public static bool CheckSharedValue(string name)
@@ -280,7 +279,7 @@ namespace RazorEnhanced
 			{
 				return World.Player.MenuQuestionText;
 			}
-			return "";
+			return String.Empty;
 		}
 
 		public static void WaitForMenu(int delay) // Delay in MS

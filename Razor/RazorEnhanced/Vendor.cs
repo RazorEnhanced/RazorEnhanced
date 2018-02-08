@@ -103,8 +103,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<SellAgentList> lists;
-			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
+			RazorEnhanced.Settings.SellAgent.ListsRead(out List<SellAgentList> lists);
 
 			SellAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.SellListSelect.Text)
@@ -138,8 +137,7 @@ namespace RazorEnhanced
 				else
 					color = Convert.ToInt32((string)row.Cells[4].Value, 16);
 
-				bool check = false;
-				bool.TryParse(row.Cells[0].Value.ToString(), out check);
+				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
 				Settings.SellAgent.ItemInsert(Assistant.Engine.MainWindow.SellListSelect.Text, new SellAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
@@ -149,8 +147,7 @@ namespace RazorEnhanced
 
         internal static void InitGrid()
 		{
-			List<SellAgentList> lists;
-			RazorEnhanced.Settings.SellAgent.ListsRead(out lists);
+			RazorEnhanced.Settings.SellAgent.ListsRead(out List<SellAgentList> lists);
 
 			Engine.MainWindow.VendorSellGridView.Rows.Clear();
 
@@ -463,8 +460,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<BuyAgentList> lists;
-			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
+			RazorEnhanced.Settings.BuyAgent.ListsRead(out List<BuyAgentList> lists);
 
 			BuyAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.BuyListSelect.Text)
@@ -507,8 +503,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			List<BuyAgentList> lists;
-			RazorEnhanced.Settings.BuyAgent.ListsRead(out lists);
+			RazorEnhanced.Settings.BuyAgent.ListsRead(out List<BuyAgentList> lists);
 
 			Engine.MainWindow.VendorBuyDataGridView.Rows.Clear();
 

@@ -183,7 +183,7 @@ namespace RazorEnhanced
 
 		internal static string GetBuffDescription(BuffIcon icon)
 		{
-			string description = "";
+			string description = String.Empty;
 
 			switch (icon)
 			{
@@ -1822,7 +1822,7 @@ namespace RazorEnhanced
 
 		public static string GetPropStringByIndex(int index)
 		{
-			string propstring = "";
+			string propstring = String.Empty;
 
 			List<Assistant.ObjectPropertyList.OPLEntry> props = World.Player.ObjPropList.Content;
 			if (props.Count > index)

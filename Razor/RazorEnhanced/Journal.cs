@@ -87,7 +87,7 @@ namespace RazorEnhanced
 
 		public static string GetLineText(string text)
 		{
-			string result = "";
+			string result = string.Empty;
 			try
 			{
 				foreach (JournalEntry entrys in World.Player.Journal)

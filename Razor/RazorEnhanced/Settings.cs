@@ -1800,13 +1800,13 @@ namespace RazorEnhanced
                     true, Keys.None,
 
                     // Parametri primo avvio interni
-                    "[{0}% / {1}%]", 0, "", false, false, true,
+                    "[{0}% / {1}%]", 0, String.Empty, false, false, true,
 
                      // Parametri primo avvio Mappa
                      200,200,200,200,
 
                      // Parametri primo avvio enchanced map
-                     false, false, true, false, false, true, true, true, true, true, false, "--", false, 0, "0.0.0.0", "0", "", "",
+                     false, false, true, false, false, true, true, true, true, true, false, "--", false, 0, "0.0.0.0", "0", String.Empty, String.Empty,
 
                      // Versione Corrente
                      SettingVersion,
@@ -3517,7 +3517,7 @@ namespace RazorEnhanced
 					}
 				}
 
-				return "";
+				return String.Empty;
 			}
 
 			internal static void InsertAll(List<PasswordMemory.PasswordData> pdatalist)
@@ -3819,7 +3819,7 @@ namespace RazorEnhanced
 
 			internal static void FindGroup(Keys key, out string outgroup, out bool outpass)
 			{
-				string group = "";
+				string group = String.Empty;
 				bool pass = true;
 				bool found = false;
 
@@ -3918,7 +3918,7 @@ namespace RazorEnhanced
 					return (string)row[name];
 				}
 
-				return "";
+				return String.Empty;
 			}
 
 			internal static void WriteString(string name, string value)

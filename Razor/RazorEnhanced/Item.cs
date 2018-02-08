@@ -166,7 +166,7 @@ namespace RazorEnhanced
 
 					string Text = property.Args;
 					int step = 0;
-					string Durability = "";
+					string Durability = String.Empty;
 
 					for (int i = 0; i <= Text.Length - 1; i++)
 					{
@@ -211,9 +211,9 @@ namespace RazorEnhanced
 						continue;
 
 					string Text = property.Args;
-					string TempMaxDurability = "";
+					string TempMaxDurability = String.Empty;
 					int step = 0;
-					string MaxDurability = "";
+					string MaxDurability = String.Empty;
 					for (int y = Text.Length - 1; y != 0; y--)
 					{
 						if (step == 0)
@@ -276,7 +276,7 @@ namespace RazorEnhanced
 			public bool Enabled = false;
 			public List<int> Serials = new List<int>();
 			public List<int> Graphics = new List<int>();
-			public string Name = "";
+			public string Name = String.Empty;
 			public List<int> Hues = new List<int>();
 			public double RangeMin = -1;
 			public double RangeMax = -1;
@@ -305,7 +305,7 @@ namespace RazorEnhanced
 				}
 				else
 				{
-					if (filter.Name != "")
+					if (filter.Name != String.Empty)
 					{
 						Regex rgx = new Regex(filter.Name, RegexOptions.IgnoreCase);
 						List<Assistant.Item> list = new List<Assistant.Item>();
@@ -803,8 +803,10 @@ namespace RazorEnhanced
 		public static bool UseItemByID(int itemid, int color)
 		{
 			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter();
-			itemFilter.Enabled = true;
+			Items.Filter itemFilter = new Items.Filter
+			{
+				Enabled = true
+			};
 			itemFilter.Graphics.Add(itemid);
 
 			if (color != -1)
@@ -895,7 +897,7 @@ namespace RazorEnhanced
 
 		public static string GetPropStringByIndex(int serial, int index)
 		{
-			string propstring = "";
+			string propstring = String.Empty;
 			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
 
 			if (assistantItem == null)
@@ -1048,8 +1050,10 @@ namespace RazorEnhanced
         public static int BackpackCount(int itemid, int color)
 		{
 			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter();
-			itemFilter.Enabled = true;
+			Items.Filter itemFilter = new Items.Filter
+			{
+				Enabled = true
+			};
 			itemFilter.Graphics.Add(itemid);
 
 			if (color != -1)

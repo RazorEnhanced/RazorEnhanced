@@ -77,7 +77,7 @@ namespace RazorEnhanced
 
 			internal string Create(TracebackDelegate traceFunc)
 			{
-				string result = "";
+				string result = String.Empty;
 				try
 				{
 					m_Engine = Python.CreateEngine();
