@@ -3663,7 +3663,7 @@ namespace Assistant
 			// 
 			// columnHeader51
 			// 
-			this.columnHeader51.Text = "";
+			this.columnHeader51.Text = String.Empty;
 			this.columnHeader51.Width = 1;
 			// 
 			// columnHeader36
@@ -4359,7 +4359,7 @@ namespace Assistant
 			// 
 			// columnHeader62
 			// 
-			this.columnHeader62.Text = "";
+			this.columnHeader62.Text = String.Empty;
 			this.columnHeader62.Width = 0;
 			// 
 			// filename
@@ -7789,7 +7789,7 @@ namespace Assistant
 				{
 					cur.SubItems[1].Text = String.Format("{0:F1}", skill.Value);
 					cur.SubItems[2].Text = String.Format("{0:F1}", skill.Base);
-					cur.SubItems[3].Text = String.Format("{0}{1:F1}", (skill.Delta > 0 ? "+" : ""), skill.Delta);
+					cur.SubItems[3].Text = String.Format("{0}{1:F1}", (skill.Delta > 0 ? "+" : String.Empty), skill.Delta);
 					cur.SubItems[4].Text = String.Format("{0:F1}", skill.Cap);
 					cur.SubItems[5].Text = skill.Lock.ToString()[0].ToString();
 					SortSkills();
@@ -7813,12 +7813,14 @@ namespace Assistant
 					items[0] = Language.Skill2Str(i);//((SkillName)i).ToString();
 					items[1] = String.Format("{0:F1}", sk.Value);
 					items[2] = String.Format("{0:F1}", sk.Base);
-					items[3] = String.Format("{0}{1:F1}", (sk.Delta > 0 ? "+" : ""), sk.Delta);
+					items[3] = String.Format("{0}{1:F1}", (sk.Delta > 0 ? "+" : String.Empty), sk.Delta);
 					items[4] = String.Format("{0:F1}", sk.Cap);
 					items[5] = sk.Lock.ToString()[0].ToString();
 
-					ListViewItem lvi = new ListViewItem(items);
-					lvi.Tag = sk;
+					ListViewItem lvi = new ListViewItem(items)
+					{
+						Tag = sk
+					};
 					skillList.Items.Add(lvi);
 				}
 
@@ -8068,7 +8070,7 @@ namespace Assistant
 						name,
 						vi.SubItems[1].Text,
 						vi.SubItems[2].Text,
-						Utility.ToInt32(vi.SubItems[3].Text, 0) < 0 ? "" : "+",
+						Utility.ToInt32(vi.SubItems[3].Text, 0) < 0 ? String.Empty : "+",
 						vi.SubItems[3].Text,
 						vi.SubItems[4].Text);
 				}
@@ -8087,7 +8089,7 @@ namespace Assistant
 			for (int i = 0; i < Skill.Count; i++)
 			{
 				Skill sk = World.Player.Skills[i];
-				sb.AppendFormat("{0,-20} {1,-5:F1} {2,-5:F1} {3}{4,-5:F1} {5,-5:F1}\n", (SkillName)i, sk.Value, sk.Base, sk.Delta > 0 ? "+" : "", sk.Delta, sk.Cap);
+				sb.AppendFormat("{0,-20} {1,-5:F1} {2,-5:F1} {3}{4,-5:F1} {5,-5:F1}\n", (SkillName)i, sk.Value, sk.Base, sk.Delta > 0 ? "+" : String.Empty, sk.Delta, sk.Cap);
 			}
 
 			if (sb.Length > 0)
@@ -8326,10 +8328,12 @@ namespace Assistant
 
 		private void setScnPath_Click(object sender, System.EventArgs e)
 		{
-			FolderBrowserDialog folder = new FolderBrowserDialog();
-			folder.Description = Language.GetString(LocString.SelSSFolder);
-			folder.SelectedPath = RazorEnhanced.Settings.General.ReadString("CapPath");
-			folder.ShowNewFolderButton = true;
+			FolderBrowserDialog folder = new FolderBrowserDialog
+			{
+				Description = Language.GetString(LocString.SelSSFolder),
+				SelectedPath = RazorEnhanced.Settings.General.ReadString("CapPath"),
+				ShowNewFolderButton = true
+			};
 
 			if (folder.ShowDialog(this) == DialogResult.OK)
 			{
@@ -8460,7 +8464,7 @@ namespace Assistant
 			}
 
 			if (failed > 0)
-				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : "", sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			ReloadScreenShotsList();
 		}
 
@@ -8506,7 +8510,7 @@ namespace Assistant
 		internal void UpdateTitle()
 		{
 			string str = Language.GetControlText(this.Name);
-			if (str == null || str == "")
+			if (str == null || str == String.Empty)
 				str = "Razor Enhanced {0}";
 
 			str = String.Format(str, Engine.Version);
@@ -8743,8 +8747,7 @@ namespace Assistant
 
 		private void screenPrev_Click(object sender, System.EventArgs e)
 		{
-			string file = screensList.SelectedItem as String;
-			if (file != null)
+			if (screensList.SelectedItem is String file)
 				System.Diagnostics.Process.Start(Path.Combine(RazorEnhanced.Settings.General.ReadString("CapPath"), file));
 		}
 
@@ -9249,8 +9252,7 @@ namespace Assistant
 
 		private void textBoxEngineDelay_TextChanged(object sender, EventArgs e)
 		{
-			int millliseconds = 100;
-			Int32.TryParse(textBoxDelay.Text, out millliseconds);
+			Int32.TryParse(textBoxDelay.Text, out int millliseconds);
 			TimeSpan delay = TimeSpan.FromMilliseconds(millliseconds);
 			Scripts.TimerDelay = delay;
 		}
@@ -9345,8 +9347,10 @@ namespace Assistant
 
 		private void openchangelogButton_Click(object sender, EventArgs e)
 		{
-			EnhancedChangeLog changelogform = new EnhancedChangeLog();
-			changelogform.TopMost = true;
+			EnhancedChangeLog changelogform = new EnhancedChangeLog
+			{
+				TopMost = true
+			};
 			changelogform.Show();
 		}
 
@@ -9354,7 +9358,7 @@ namespace Assistant
 
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
-			if (autolootListSelect.Text != "")
+			if (autolootListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
 			else
 				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
@@ -9387,7 +9391,7 @@ namespace Assistant
 
 		private void autoLootAddItemTarget_Click(object sender, EventArgs e)
 		{
-			if (autolootListSelect.Text != "")
+			if (autolootListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootItemTarget_Callback));
 			else
 				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
@@ -9413,11 +9417,13 @@ namespace Assistant
 
 		private void autoLootItemProps_Click(object sender, EventArgs e)
 		{
-			if (autolootListSelect.Text != "")
+			if (autolootListSelect.Text != String.Empty)
 			{
 				DataGridViewRow row = autolootdataGridView.Rows[autolootdataGridView.CurrentCell.RowIndex];
-				EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row);
-				editProp.TopMost = true;
+				EnhancedAutolootEditItemProps editProp = new EnhancedAutolootEditItemProps(ref row)
+				{
+					TopMost = true
+				};
 				editProp.Show();
 			}
 			else
@@ -9428,7 +9434,7 @@ namespace Assistant
 		{
 			if (World.Player != null)
 			{
-				if (autolootListSelect.Text != "")
+				if (autolootListSelect.Text != String.Empty)
 				{
 					if (autoLootCheckBox.Checked)
 					{
@@ -9495,11 +9501,7 @@ namespace Assistant
 
 		private void autoLootListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bag = 0;
-			int delay = 0;
-			int maxrange = 0;
-			bool noopencorpse = false;
-			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out bag, out delay, out noopencorpse, out maxrange);
+			RazorEnhanced.Settings.AutoLoot.ListDetailsRead(autolootListSelect.Text, out int bag, out int delay, out bool noopencorpse, out int maxrange);
 			RazorEnhanced.AutoLoot.AutoLootBag = bag;
 			RazorEnhanced.AutoLoot.AutoLootDelay = delay;
 			RazorEnhanced.AutoLoot.NoOpenCorpse = noopencorpse;
@@ -9508,7 +9510,7 @@ namespace Assistant
 			RazorEnhanced.Settings.AutoLoot.ListUpdate(autolootListSelect.Text, delay, bag, true, noopencorpse, maxrange);
 			RazorEnhanced.AutoLoot.InitGrid();
 
-			if (autolootListSelect.Text != "")
+			if (autolootListSelect.Text != String.Empty)
 				RazorEnhanced.AutoLoot.AddLog("Autoloot list changed to: " + autolootListSelect.Text);
 		}
 
@@ -9534,9 +9536,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 1;
 					af.Focus();
 					return;
@@ -9547,7 +9548,7 @@ namespace Assistant
 
 		private void autoLootButtonRemoveList_Click(object sender, EventArgs e)
 		{
-			if (autolootListSelect.Text != "")
+			if (autolootListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this AutoLoot list: " + autolootListSelect.Text, "Delete AutoLoot List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -9561,7 +9562,7 @@ namespace Assistant
 
 		private void autoLootButtonListExport_Click(object sender, EventArgs e)
 		{
-			if (autolootListSelect.Text != "")
+			if (autolootListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportAutoloot(autolootListSelect.Text);
 			else
 				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
@@ -9611,11 +9612,13 @@ namespace Assistant
 
 		private void scavengerEditProps_Click(object sender, EventArgs e)
 		{
-			if (scavengerListSelect.Text != "")
+			if (scavengerListSelect.Text != String.Empty)
 			{
 				DataGridViewRow row = scavengerdataGridView.Rows[scavengerdataGridView.CurrentCell.RowIndex];
-				EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(ref row);
-				editProp.TopMost = true;
+				EnhancedScavengerEditItemProps editProp = new EnhancedScavengerEditItemProps(ref row)
+				{
+					TopMost = true
+				};
 				editProp.Show();
 			}
 			else
@@ -9624,7 +9627,7 @@ namespace Assistant
 
 		private void scavengerAddItemTarget_Click(object sender, EventArgs e)
 		{
-			if (scavengerListSelect.Text != "")
+			if (scavengerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemTarget_Callback));
 			else
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
@@ -9650,7 +9653,7 @@ namespace Assistant
 
 		private void scavengerSetContainer_Click(object sender, EventArgs e)
 		{
-			if (scavengerListSelect.Text != "")
+			if (scavengerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(ScavengerItemContainerTarget_Callback));
 			else
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
@@ -9686,9 +9689,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 2;
 					af.Focus();
 					return;
@@ -9699,7 +9701,7 @@ namespace Assistant
 
 		private void scavengerRemoveList_Click(object sender, EventArgs e)
 		{
-			if (scavengerListSelect.Text != "")
+			if (scavengerListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Scavenger list: " + scavengerListSelect.Text, "Delete Scavenger List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -9713,10 +9715,7 @@ namespace Assistant
 
 		private void scavengertListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bag = 0;
-			int delay = 0;
-			int range = 0;
-			Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out bag, out delay, out range);
+			Settings.Scavenger.ListDetailsRead(scavengerListSelect.Text, out int bag, out int delay, out int range);
 			Scavenger.ScavengerBag = bag;
 			Scavenger.ScavengerDelay = delay;
 			Scavenger.MaxRange = range;
@@ -9724,7 +9723,7 @@ namespace Assistant
 			Settings.Scavenger.ListUpdate(scavengerListSelect.Text, delay, bag, true, range);
 			Scavenger.InitGrid();
 
-			if (scavengerListSelect.Text != "")
+			if (scavengerListSelect.Text != String.Empty)
 				Scavenger.AddLog("Scavenger list changed to: " + scavengerListSelect.Text);
 		}
 
@@ -9732,7 +9731,7 @@ namespace Assistant
 		{
 			if (World.Player != null)
 			{
-				if (scavengerListSelect.Text != "")
+				if (scavengerListSelect.Text != String.Empty)
 				{
 					if (scavengerCheckBox.Checked)
 					{
@@ -9811,7 +9810,7 @@ namespace Assistant
 
 		private void scavengerButtonExport_Click(object sender, EventArgs e)
 		{
-			if (scavengerListSelect.Text != "")
+			if (scavengerListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportScavenger(scavengerListSelect.Text);
 			else
 				RazorEnhanced.Scavenger.AddLog("Item list not selected!");
@@ -9848,9 +9847,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 3;
 					af.Focus();
 					return;
@@ -9861,7 +9859,7 @@ namespace Assistant
 
 		private void organizerRemoveList_Click(object sender, EventArgs e)
 		{
-			if (organizerListSelect.Text != "")
+			if (organizerListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Organizer list: " + organizerListSelect.Text, "Delete Organizer List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -9877,7 +9875,7 @@ namespace Assistant
 
 		private void organizerSetSource_Click(object sender, EventArgs e)
 		{
-			if (organizerListSelect.Text != "")
+			if (organizerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerSourceContainerTarget_Callback));
 			else
 				RazorEnhanced.Organizer.AddLog("Item list not selected!");
@@ -9916,7 +9914,7 @@ namespace Assistant
 
 		private void organizerSetDestination_Click(object sender, EventArgs e)
 		{
-			if (organizerListSelect.Text != "")
+			if (organizerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerDestinationContainerTarget_Callback));
 			else
 				RazorEnhanced.Organizer.AddLog("Item list not selected!");
@@ -9956,10 +9954,7 @@ namespace Assistant
 
 		private void organizerListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bagsource;
-			int bagdestination;
-			int delay;
-			RazorEnhanced.Settings.Organizer.ListDetailsRead(organizerListSelect.Text, out bagsource, out bagdestination, out delay);
+			RazorEnhanced.Settings.Organizer.ListDetailsRead(organizerListSelect.Text, out int bagsource, out int bagdestination, out int delay);
 			RazorEnhanced.Organizer.OrganizerDelay = delay;
 			RazorEnhanced.Organizer.OrganizerSource = bagsource;
 			RazorEnhanced.Organizer.OrganizerDestination = bagdestination;
@@ -9967,13 +9962,13 @@ namespace Assistant
 			RazorEnhanced.Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 			RazorEnhanced.Organizer.InitGrid();
 
-			if (organizerListSelect.Text != "")
+			if (organizerListSelect.Text != String.Empty)
 				RazorEnhanced.Organizer.AddLog("Organizer list changed to: " + organizerListSelect.Text);
 		}
 
 		private void organizerAddTarget_Click(object sender, EventArgs e)
 		{
-			if (organizerListSelect.Text != "")
+			if (organizerListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(OrganizerItemTarget_Callback));
 			else
 				RazorEnhanced.Organizer.AddLog("Item list not selected!");
@@ -10108,7 +10103,7 @@ namespace Assistant
 
 		private void organizerExportListB_Click(object sender, EventArgs e)
 		{
-			if (organizerListSelect.Text != "")
+			if (organizerListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportOrganizer(organizerListSelect.Text);
 			else
 				RazorEnhanced.Organizer.AddLog("Item list not selected!");
@@ -10150,7 +10145,7 @@ namespace Assistant
 			RazorEnhanced.SellAgent.SellBag = RazorEnhanced.Settings.SellAgent.BagRead(sellListSelect.Text);
 			RazorEnhanced.Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
 			RazorEnhanced.SellAgent.InitGrid();
-			if (sellListSelect.Text != "")
+			if (sellListSelect.Text != String.Empty)
 				RazorEnhanced.SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
 		}
 
@@ -10158,9 +10153,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 5;
 					af.Focus();
 					return;
@@ -10171,7 +10165,7 @@ namespace Assistant
 
 		private void sellRemoveList_Click(object sender, EventArgs e)
 		{
-			if (sellListSelect.Text != "")
+			if (sellListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Sell list: " + sellListSelect.Text, "Delete Vendor Sell List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -10184,7 +10178,7 @@ namespace Assistant
 
 		private void sellAddTarget_Click(object sender, EventArgs e)
 		{
-			if (sellListSelect.Text != "")
+			if (sellListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(SellAgentItemTarget_Callback));
 			else
 				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
@@ -10214,7 +10208,7 @@ namespace Assistant
 			{
 				if (sellEnableCheckBox.Checked)
 				{
-					if (sellListSelect.Text != "")
+					if (sellListSelect.Text != String.Empty)
 					{
 						Assistant.Item bag = Assistant.World.FindItem(RazorEnhanced.SellAgent.SellBag);
 
@@ -10259,7 +10253,7 @@ namespace Assistant
 					sellRemoveListButton.Enabled = true;
 					sellImportListButton.Enabled = true;
 					sellExportListButton.Enabled = true;
-					if (sellListSelect.Text != "")
+					if (sellListSelect.Text != String.Empty)
 					{
 						RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 						if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
@@ -10276,7 +10270,7 @@ namespace Assistant
 
 		private void sellSetBag_Click(object sender, EventArgs e)
 		{
-			if (sellListSelect.Text != "")
+			if (sellListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(sellBagTarget_Callback));
 			else
 				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
@@ -10315,7 +10309,7 @@ namespace Assistant
 
 		private void sellExportListButton_Click(object sender, EventArgs e)
 		{
-			if (sellListSelect.Text != "")
+			if (sellListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportSell(sellListSelect.Text);
 			else
 				RazorEnhanced.SellAgent.AddLog("Item list not selected!");
@@ -10358,7 +10352,7 @@ namespace Assistant
 			RazorEnhanced.Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
 			RazorEnhanced.BuyAgent.InitGrid();
 
-			if (buyListSelect.Text != "")
+			if (buyListSelect.Text != String.Empty)
 				RazorEnhanced.BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
 			else
 				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
@@ -10368,9 +10362,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 4;
 					af.Focus();
 					return;
@@ -10381,7 +10374,7 @@ namespace Assistant
 
 		private void buyRemoveList_Click(object sender, EventArgs e)
 		{
-			if (buyListSelect.Text != "")
+			if (buyListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Vendor Buy list: " + buyListSelect.Text, "Delete Vendor Buy List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -10394,7 +10387,7 @@ namespace Assistant
 
 		private void buyAddTarget_Click(object sender, EventArgs e)
 		{
-			if (buyListSelect.Text != "")
+			if (buyListSelect.Text != String.Empty)
 			{
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(BuyAgentItemTarget_Callback));
 			}
@@ -10424,7 +10417,7 @@ namespace Assistant
 		{
 			if (World.Player != null)
 			{
-				if (buyListSelect.Text != "")
+				if (buyListSelect.Text != String.Empty)
 				{
 					if (buyEnableCheckBox.Checked)
 					{
@@ -10472,7 +10465,7 @@ namespace Assistant
 
 		private void buyExportListButton_Click(object sender, EventArgs e)
 		{
-			if (buyListSelect.Text != "")
+			if (buyListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportBuy(buyListSelect.Text);
 			else
 				RazorEnhanced.BuyAgent.AddLog("Item list not selected!");
@@ -10511,17 +10504,14 @@ namespace Assistant
 		// --------------- DRESS START ---------
 		private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bag = 0;
-			int delay = 0;
-			bool conflict = false;
-			RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out bag, out delay, out conflict);
+			RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out int bag, out int delay, out bool conflict);
 			RazorEnhanced.Dress.DressBag = bag;
 			RazorEnhanced.Dress.DressDelay = delay;
 			RazorEnhanced.Dress.DressConflict = conflict;
 			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
 			RazorEnhanced.Dress.RefreshItems();
 
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 				RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.Text);
 		}
 
@@ -10529,9 +10519,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 6;
 					af.Focus();
 					return;
@@ -10542,7 +10531,7 @@ namespace Assistant
 
 		private void dressRemoveListB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Dress list: " + dressListSelect.Text, "Delete Dress List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -10574,7 +10563,7 @@ namespace Assistant
 
 		private void dressReadB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 				RazorEnhanced.Dress.ReadPlayerDress();
 			else
 				RazorEnhanced.Dress.AddLog("Item list not selected!");
@@ -10582,7 +10571,7 @@ namespace Assistant
 
 		private void dressSetBagB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemContainerTarget_Callback));
 			else
 				RazorEnhanced.Dress.AddLog("Item list not selected!");
@@ -10616,7 +10605,7 @@ namespace Assistant
 
 		private void dressRemoveB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 			{
 				if (dressListView.SelectedItems.Count == 1)
 				{
@@ -10649,7 +10638,7 @@ namespace Assistant
 
 		private void dressAddTargetB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(DressItemTarget_Callback));
 			else
 				RazorEnhanced.Dress.AddLog("Item list not selected!");
@@ -10670,10 +10659,12 @@ namespace Assistant
 
 		private void dressAddManualB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 			{
-				EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer();
-				ManualAddLayer.TopMost = true;
+				EnhancedDressAddUndressLayer ManualAddLayer = new EnhancedDressAddUndressLayer
+				{
+					TopMost = true
+				};
 				ManualAddLayer.Show();
 			}
 			else
@@ -10687,7 +10678,7 @@ namespace Assistant
 
 		private void dressExportListB_Click(object sender, EventArgs e)
 		{
-			if (dressListSelect.Text != "")
+			if (dressListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportDress(dressListSelect.Text);
 			else
 				RazorEnhanced.Dress.AddLog("Item list not selected!");
@@ -10825,9 +10816,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 7;
 					af.Focus();
 					return;
@@ -10838,7 +10828,7 @@ namespace Assistant
 
 		private void friendButtonRemoveList_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Friend list: " + friendListSelect.Text, "Delete Friend List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -10859,7 +10849,7 @@ namespace Assistant
 
 		private void friendButtonExportList_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportFriends(friendListSelect.Text);
 			else
 				RazorEnhanced.Friend.AddLog("Friend list not selected!");
@@ -10885,15 +10875,8 @@ namespace Assistant
 
 		private void friendListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			bool includeparty = false;
-			bool preventattack = false;
-			bool autoacceptparty = false;
-			bool slfriend = false;
-			bool tbfriend = false;
-			bool minfriend = false;
-			bool comfriend = false;
 
-			RazorEnhanced.Settings.Friend.ListDetailsRead(friendListSelect.Text, out includeparty, out preventattack, out autoacceptparty, out slfriend, out tbfriend, out comfriend, out minfriend);
+			RazorEnhanced.Settings.Friend.ListDetailsRead(friendListSelect.Text, out bool includeparty, out bool preventattack, out bool autoacceptparty, out bool slfriend, out bool tbfriend, out bool comfriend, out bool minfriend);
 			RazorEnhanced.Friend.IncludeParty = includeparty;
 			RazorEnhanced.Friend.PreventAttack = preventattack;
 			RazorEnhanced.Friend.AutoacceptParty = autoacceptparty;
@@ -10906,7 +10889,7 @@ namespace Assistant
 			RazorEnhanced.Friend.RefreshPlayers();
 			RazorEnhanced.Friend.RefreshGuilds();
 
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 				RazorEnhanced.Friend.AddLog("Friends list changed to: " + friendListSelect.Text);
 		}
 
@@ -10921,7 +10904,7 @@ namespace Assistant
 
 		private void friendAddTargetButton_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(FriendPlayerTarget_Callback));
 			else
 				RazorEnhanced.Friend.AddLog("Friends list not selected!");
@@ -10944,7 +10927,7 @@ namespace Assistant
 
 		private void friendRemoveButton_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 			{
 				if (friendlistView.SelectedItems.Count == 1)
 				{
@@ -10953,8 +10936,7 @@ namespace Assistant
 
 					if (RazorEnhanced.Settings.Friend.ListExists(selection))
 					{
-						List<Friend.FriendPlayer> players;
-						RazorEnhanced.Settings.Friend.PlayersRead(selection, out players);
+						RazorEnhanced.Settings.Friend.PlayersRead(selection, out List<Friend.FriendPlayer> players);
 						if (index <= players.Count - 1)
 						{
 							RazorEnhanced.Settings.Friend.PlayerDelete(selection, players[index]);
@@ -10969,10 +10951,12 @@ namespace Assistant
 
 		private void friendAddButton_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 			{
-				EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual();
-				ManualAddPlayer.TopMost = true;
+				EnhancedFriendAddPlayerManual ManualAddPlayer = new EnhancedFriendAddPlayerManual
+				{
+					TopMost = true
+				};
 				ManualAddPlayer.Show();
 			}
 			else
@@ -10981,10 +10965,12 @@ namespace Assistant
 
 		private void FriendGuildAddButton_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 			{
-				EnhancedFriendAddGuildManual ManualAddGuild = new EnhancedFriendAddGuildManual();
-				ManualAddGuild.TopMost = true;
+				EnhancedFriendAddGuildManual ManualAddGuild = new EnhancedFriendAddGuildManual
+				{
+					TopMost = true
+				};
 				ManualAddGuild.Show();
 			}
 			else
@@ -11017,7 +11003,7 @@ namespace Assistant
 
 		private void FriendGuildRemoveButton_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != "")
+			if (friendListSelect.Text != String.Empty)
 			{
 				if (friendguildListView.SelectedItems.Count == 1)
 				{
@@ -11026,8 +11012,7 @@ namespace Assistant
 
 					if (RazorEnhanced.Settings.Friend.ListExists(selection))
 					{
-						List<Friend.FriendGuild> guilds;
-						RazorEnhanced.Settings.Friend.GuildRead(selection, out guilds);
+						RazorEnhanced.Settings.Friend.GuildRead(selection, out List<Friend.FriendGuild> guilds);
 						if (index <= guilds.Count - 1)
 						{
 							RazorEnhanced.Settings.Friend.GuildDelete(selection, guilds[index]);
@@ -11046,10 +11031,7 @@ namespace Assistant
 
 		private void restockListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			int bagsource;
-			int bagdestination;
-			int delay;
-			RazorEnhanced.Settings.Restock.ListDetailsRead(restockListSelect.Text, out bagsource, out bagdestination, out delay);
+			RazorEnhanced.Settings.Restock.ListDetailsRead(restockListSelect.Text, out int bagsource, out int bagdestination, out int delay);
 			RazorEnhanced.Restock.RestockDelay = delay;
 			RazorEnhanced.Restock.RestockSource = bagsource;
 			RazorEnhanced.Restock.RestockDestination = bagdestination;
@@ -11057,7 +11039,7 @@ namespace Assistant
 			RazorEnhanced.Settings.Restock.ListUpdate(restockListSelect.Text, RazorEnhanced.Restock.RestockDelay, RazorEnhanced.Restock.RestockSource, RazorEnhanced.Restock.RestockDestination, true);
 			RazorEnhanced.Restock.InitGrid();
 
-			if (restockListSelect.Text != "")
+			if (restockListSelect.Text != String.Empty)
 				RazorEnhanced.Restock.AddLog("Restock list changed to: " + restockListSelect.Text);
 		}
 
@@ -11065,9 +11047,8 @@ namespace Assistant
 		{
 			foreach (Form f in Application.OpenForms)
 			{
-				if (f is EnhancedAgentAddList)
+				if (f is EnhancedAgentAddList af)
 				{
-					EnhancedAgentAddList af = (EnhancedAgentAddList)f;
 					af.AgentID = 8;
 					af.Focus();
 					return;
@@ -11078,7 +11059,7 @@ namespace Assistant
 
 		private void restockRemoveListB_Click(object sender, EventArgs e)
 		{
-			if (restockListSelect.Text != "")
+			if (restockListSelect.Text != String.Empty)
 			{
 				DialogResult dialogResult = MessageBox.Show("Are you sure to delete this Restock list: " + restockListSelect.Text, "Delete Restock List?", MessageBoxButtons.YesNo);
 				if (dialogResult == DialogResult.Yes)
@@ -11099,7 +11080,7 @@ namespace Assistant
 
 		private void restockExportListB_Click(object sender, EventArgs e)
 		{
-			if (restockListSelect.Text != "")
+			if (restockListSelect.Text != String.Empty)
 				RazorEnhanced.ImportExport.ExportRestock(restockListSelect.Text);
 			else
 				RazorEnhanced.Restock.AddLog("Item list not selected!");
@@ -11107,7 +11088,7 @@ namespace Assistant
 
 		private void restockSetSourceButton_Click(object sender, EventArgs e)
 		{
-			if (restockListSelect.Text != "")
+			if (restockListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockSourceContainerTarget_Callback));
 			else
 				RazorEnhanced.Restock.AddLog("Item list not selected!");
@@ -11149,7 +11130,7 @@ namespace Assistant
 
 		private void restockSetDestinationButton_Click(object sender, EventArgs e)
 		{
-			if (restockListSelect.Text != "")
+			if (restockListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockDestinationContainerTarget_Callback));
 			else
 				RazorEnhanced.Restock.AddLog("Item list not selected!");
@@ -11295,7 +11276,7 @@ namespace Assistant
 
 		private void restockAddTargetButton_Click(object sender, EventArgs e)
 		{
-			if (restockListSelect.Text != "")
+			if (restockListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(RestockItemTarget_Callback));
 			else
 				RazorEnhanced.Restock.AddLog("Item list not selected!");
@@ -11522,8 +11503,10 @@ namespace Assistant
 
 		private void addTargetButton_Click(object sender, EventArgs e)
 		{
-			EnhancedTargetAdd addtarget = new EnhancedTargetAdd();
-			addtarget.TopMost = true;
+			EnhancedTargetAdd addtarget = new EnhancedTargetAdd
+			{
+				TopMost = true
+			};
 			addtarget.Show();
 		}
 
@@ -11549,8 +11532,10 @@ namespace Assistant
 		{
 			if (targetlistView.SelectedItems.Count == 1)
 			{
-				EnhancedTargetEdit edittarget = new EnhancedTargetEdit(targetlistView.SelectedItems[0].SubItems[1].Text);
-				edittarget.TopMost = true;
+				EnhancedTargetEdit edittarget = new EnhancedTargetEdit(targetlistView.SelectedItems[0].SubItems[1].Text)
+				{
+					TopMost = true
+				};
 				edittarget.Show();
 			}
 		}
@@ -11750,8 +11735,10 @@ namespace Assistant
 
 		private void mobfilterAddButton_Click(object sender, EventArgs e)
 		{
-			EnhancedGraphFilterAdd ManualAddGraphFilter = new EnhancedGraphFilterAdd();
-			ManualAddGraphFilter.TopMost = true;
+			EnhancedGraphFilterAdd ManualAddGraphFilter = new EnhancedGraphFilterAdd
+			{
+				TopMost = true
+			};
 			ManualAddGraphFilter.Show();
 		}
 
@@ -11782,8 +11769,7 @@ namespace Assistant
 		{
 			if (remountdelay.Focused)
 			{
-				int delay = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.remountdelay.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.remountdelay.Text, out int delay);
 				RazorEnhanced.Filters.AutoRemountDelay = delay;
 				RazorEnhanced.Settings.General.WriteInt("MountDelay", delay);
 			}
@@ -11793,8 +11779,7 @@ namespace Assistant
 		{
 			if (remountedelay.Focused)
 			{
-				int delay = 100;
-				Int32.TryParse(Assistant.Engine.MainWindow.remountedelay.Text, out delay);
+				Int32.TryParse(Assistant.Engine.MainWindow.remountedelay.Text, out int delay);
 				RazorEnhanced.Filters.AutoRemountEDelay = delay;
 				RazorEnhanced.Settings.General.WriteInt("EMountDelay", delay);
 			}
@@ -11990,8 +11975,7 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteString("ToolBoxSizeComboBox", toolboxsizeComboBox.Text);
 				if (toolboxsizeComboBox.SelectedItem.ToString() == "Big")
 				{
-					int slot = 2;
-					Int32.TryParse(toolbarslot_label.Text, out slot);
+					Int32.TryParse(toolbarslot_label.Text, out int slot);
 					if (slot == 0)
 						slot = 2;
 
@@ -12113,9 +12097,9 @@ namespace Assistant
 		// ----------------- HOT KEY -----------------------
 		private void hotkeySetButton_Click(object sender, EventArgs e)
 		{
-			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null && hotkeytextbox.Text != "" && hotkeytextbox.Text != "None")
+			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null && hotkeytextbox.Text != String.Empty && hotkeytextbox.Text != "None")
 			{
-				if (hotkeytreeView.SelectedNode.Name == "")
+				if (hotkeytreeView.SelectedNode.Name == String.Empty)
 				{
 					return;
 				}
@@ -12138,7 +12122,7 @@ namespace Assistant
 		{
 			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
 			{
-				if (hotkeytreeView.SelectedNode.Name == "")
+				if (hotkeytreeView.SelectedNode.Name == String.Empty)
 				{
 					return;
 				}
@@ -12154,9 +12138,8 @@ namespace Assistant
 		{
 			if (hotkeytreeView.SelectedNode != null && hotkeytreeView.SelectedNode.Name != null)
 			{
-				bool passkey = true;
 				Keys k = Keys.None;
-				RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out passkey);
+				RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out bool passkey);
 				hotkeytextbox.Text = HotKey.KeyString(k);
 				hotkeypassCheckBox.Checked = passkey;
 			}
@@ -12164,10 +12147,10 @@ namespace Assistant
 
 		private void hotkeyMasterSetButton_Click(object sender, EventArgs e)
 		{
-			if (hotkeyKeyMasterTextBox.Text != "" && hotkeyKeyMasterTextBox.Text != "None")
+			if (hotkeyKeyMasterTextBox.Text != String.Empty && hotkeyKeyMasterTextBox.Text != "None")
 			{
 				RazorEnhanced.HotKey.UpdateMaster();
-				hotkeyKeyMasterTextBox.Text = "";
+				hotkeyKeyMasterTextBox.Text = String.Empty;
 			}
 		}
 
@@ -12197,8 +12180,10 @@ namespace Assistant
 		// ----------------- PROFILES START -------------------
 		private void profilesAddButton_Click(object sender, EventArgs e)
 		{
-			EnhancedProfileAdd addprofile = new EnhancedProfileAdd();
-			addprofile.TopMost = true;
+			EnhancedProfileAdd addprofile = new EnhancedProfileAdd
+			{
+				TopMost = true
+			};
 			addprofile.Show();
 		}
 
@@ -12280,16 +12265,20 @@ namespace Assistant
 			}
 			else
 			{
-				EnhancedProfileRename renameprofile = new EnhancedProfileRename();
-				renameprofile.TopMost = true;
+				EnhancedProfileRename renameprofile = new EnhancedProfileRename
+				{
+					TopMost = true
+				};
 				renameprofile.Show();
 			}
 		}
 
 		private void profilesCloneButton_Click(object sender, EventArgs e)
 		{
-			EnhancedProfileClone cloneprofile = new EnhancedProfileClone();
-			cloneprofile.TopMost = true;
+			EnhancedProfileClone cloneprofile = new EnhancedProfileClone
+			{
+				TopMost = true
+			};
 			cloneprofile.Show();
 		}
 
@@ -12300,8 +12289,10 @@ namespace Assistant
 
 		private void profilesImportButton_Click(object sender, EventArgs e)
 		{
-			EnhancedProfileImport importprofile = new EnhancedProfileImport();
-			importprofile.TopMost = true;
+			EnhancedProfileImport importprofile = new EnhancedProfileImport
+			{
+				TopMost = true
+			};
 			importprofile.Show();
 		}
 
@@ -12819,7 +12810,7 @@ namespace Assistant
 		// ----------------- START AGENT GESTIONE MENU TENDINA -------------------
 
 		private static int agentrowindex = 0;
-		private static string agenttype = "";
+		private static string agenttype = String.Empty;
 
 		private void datagridMenuStrip_Click(object sender, EventArgs e)
 		{
@@ -13049,9 +13040,8 @@ namespace Assistant
 		{
 			if (videoFPSTextBox.Focused)
 			{
-				int fps = 25;
 
-				if (!Int32.TryParse(videoFPSTextBox.Text, out fps))
+				if (!Int32.TryParse(videoFPSTextBox.Text, out int fps))
 					videoFPSTextBox.Text = "25";
 
 				Settings.General.WriteInt("VideoFPS", fps);
@@ -13060,10 +13050,12 @@ namespace Assistant
 
 		private void videoPathButton_Click(object sender, EventArgs e)
 		{
-			FolderBrowserDialog folder = new FolderBrowserDialog();
-			folder.Description = "Select a folder to store Razor video file";
-			folder.SelectedPath = RazorEnhanced.Settings.General.ReadString("VideoPath");
-			folder.ShowNewFolderButton = true;
+			FolderBrowserDialog folder = new FolderBrowserDialog
+			{
+				Description = "Select a folder to store Razor video file",
+				SelectedPath = RazorEnhanced.Settings.General.ReadString("VideoPath"),
+				ShowNewFolderButton = true
+			};
 
 			if (folder.ShowDialog(this) == DialogResult.OK)
 			{
@@ -13162,7 +13154,7 @@ namespace Assistant
 			}
 
 			if (failed > 0)
-				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : "", sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				MessageBox.Show(this, Language.Format(LocString.FileDelError, failed, failed != 1 ? "s" : String.Empty, sb.ToString()), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 			ReloadVideoList();
 		}
 
