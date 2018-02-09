@@ -599,6 +599,8 @@ namespace Assistant
 		private RazorCheckBox scriptautostartcheckbox;
 		private ColumnHeader autostart;
 		private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
+		private RazorComboBox gridscript_ComboBox;
+		private Label label65;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -630,6 +632,7 @@ namespace Assistant
 		internal RazorComboBox GridSlotComboBox { get { return gridslot_ComboBox; } }
 		internal RazorComboBox GridGroupComboBox { get { return gridgroup_ComboBox; } }
 		internal RazorComboBox GridBorderComboBox { get { return gridborder_ComboBox; } }
+		internal RazorComboBox GridScriptComboBox { get { return gridscript_ComboBox; } }
 
 		// AutoLoot
 		internal RazorCheckBox AutolootCheckBox { get { return autoLootCheckBox; } }
@@ -1011,6 +1014,8 @@ namespace Assistant
 			this.gridvslot_textbox = new System.Windows.Forms.Label();
 			this.label49 = new System.Windows.Forms.Label();
 			this.groupBox36 = new System.Windows.Forms.GroupBox();
+			this.gridscript_ComboBox = new RazorEnhanced.UI.RazorComboBox();
+			this.label65 = new System.Windows.Forms.Label();
 			this.gridborder_ComboBox = new RazorEnhanced.UI.RazorComboBox();
 			this.label44 = new System.Windows.Forms.Label();
 			this.gridspell_ComboBox = new RazorEnhanced.UI.RazorComboBox();
@@ -3415,6 +3420,8 @@ namespace Assistant
 			// 
 			// groupBox36
 			// 
+			this.groupBox36.Controls.Add(this.gridscript_ComboBox);
+			this.groupBox36.Controls.Add(this.label65);
 			this.groupBox36.Controls.Add(this.gridborder_ComboBox);
 			this.groupBox36.Controls.Add(this.label44);
 			this.groupBox36.Controls.Add(this.gridspell_ComboBox);
@@ -3425,10 +3432,29 @@ namespace Assistant
 			this.groupBox36.Controls.Add(this.gridslot_ComboBox);
 			this.groupBox36.Location = new System.Drawing.Point(133, 6);
 			this.groupBox36.Name = "groupBox36";
-			this.groupBox36.Size = new System.Drawing.Size(288, 145);
+			this.groupBox36.Size = new System.Drawing.Size(288, 177);
 			this.groupBox36.TabIndex = 64;
 			this.groupBox36.TabStop = false;
 			this.groupBox36.Text = "Grid Item";
+			// 
+			// gridscript_ComboBox
+			// 
+			this.gridscript_ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.gridscript_ComboBox.FormattingEnabled = true;
+			this.gridscript_ComboBox.Location = new System.Drawing.Point(75, 136);
+			this.gridscript_ComboBox.Name = "gridscript_ComboBox";
+			this.gridscript_ComboBox.Size = new System.Drawing.Size(202, 21);
+			this.gridscript_ComboBox.TabIndex = 78;
+			this.gridscript_ComboBox.SelectedIndexChanged += new System.EventHandler(this.gridscript_ComboBox_SelectedIndexChanged);
+			// 
+			// label65
+			// 
+			this.label65.AutoSize = true;
+			this.label65.Location = new System.Drawing.Point(6, 141);
+			this.label65.Name = "label65";
+			this.label65.Size = new System.Drawing.Size(34, 13);
+			this.label65.TabIndex = 77;
+			this.label65.Text = "Script";
 			// 
 			// gridborder_ComboBox
 			// 
@@ -3663,7 +3689,7 @@ namespace Assistant
 			// 
 			// columnHeader51
 			// 
-			this.columnHeader51.Text = String.Empty;
+			this.columnHeader51.Text = "";
 			this.columnHeader51.Width = 1;
 			// 
 			// columnHeader36
@@ -4359,7 +4385,7 @@ namespace Assistant
 			// 
 			// columnHeader62
 			// 
-			this.columnHeader62.Text = String.Empty;
+			this.columnHeader62.Text = "";
 			this.columnHeader62.Width = 0;
 			// 
 			// filename
@@ -12547,10 +12573,23 @@ namespace Assistant
 			gridgroup_ComboBox.SelectedIndex = gridgroup_ComboBox.Items.IndexOf(item.Group);
 			if (item.Group != "Empty")
 			{
-				gridspell_ComboBox.SelectedIndex = gridspell_ComboBox.Items.IndexOf(item.Spell);
-				gridborder_ComboBox.SelectedIndex = gridborder_ComboBox.Items.IndexOf(item.Color.Name);
-				gridspell_ComboBox.Enabled = true;
 				gridborder_ComboBox.Enabled = true;
+				
+				gridborder_ComboBox.SelectedIndex = gridborder_ComboBox.Items.IndexOf(item.Color.Name);
+				if (item.Group != "Script")
+				{
+					gridspell_ComboBox.SelectedIndex = gridspell_ComboBox.Items.IndexOf(item.Spell);
+					gridspell_ComboBox.Enabled = true;
+					gridscript_ComboBox.Enabled = false;
+					gridscript_ComboBox.SelectedIndex = -1;
+				}
+				else
+				{
+					gridscript_ComboBox.Enabled = true;
+					gridscript_ComboBox.SelectedIndex = gridscript_ComboBox.Items.IndexOf(item.Spell);
+					gridspell_ComboBox.Enabled = false;
+					gridspell_ComboBox.SelectedIndex = -1;
+				}
 			}
 			else
 			{
@@ -12574,6 +12613,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = false;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = -1;
+						gridscript_ComboBox.Enabled = false;
 						if (gridgroup_ComboBox.Focused)
 							SpellGrid.Close();
 						break;
@@ -12583,6 +12623,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconMagery.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12592,6 +12633,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconAbilities.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12601,6 +12643,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconMastery.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12610,6 +12653,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconBushido.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12619,6 +12663,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconChivalry.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12628,6 +12673,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconNecromancy.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12637,6 +12683,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconNinjitsu.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12646,6 +12693,7 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconMysticism.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
@@ -12655,8 +12703,16 @@ namespace Assistant
 						gridspell_ComboBox.Items.Clear();
 						foreach (string spell in SpellGrid.SpellIconSpellweaving.Keys)
 							gridspell_ComboBox.Items.Add(spell);
+						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
+						break;
+					}
+				case "Script":
+					{
+						gridscript_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.Enabled = false;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = -1;
 						break;
 					}
 				default:
@@ -12664,7 +12720,7 @@ namespace Assistant
 			}
 			if (gridgroup_ComboBox.Focused)
 			{
-				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.Transparent);
+				UpdateGridItem();
 				SpellGrid.Open();
 			}
 		}
@@ -12674,7 +12730,7 @@ namespace Assistant
 			if (gridspell_ComboBox.Focused)
 			{
 				gridborder_ComboBox.SelectedIndex = 0;
-				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.Transparent);
+				UpdateGridItem();
 				SpellGrid.Open();
 			}
 		}
@@ -12683,7 +12739,28 @@ namespace Assistant
 		{
 			if (gridborder_ComboBox.Focused)
 			{
-				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, System.Drawing.Color.FromName(gridborder_ComboBox.SelectedItem.ToString()));
+				UpdateGridItem();
+				SpellGrid.Open();
+			}
+		}
+
+		private void UpdateGridItem()
+		{
+			Color c = Color.Transparent;
+			if (gridborder_ComboBox.SelectedItem != null)
+				c = Color.FromName(gridborder_ComboBox.SelectedItem.ToString());
+
+			if (gridgroup_ComboBox.Text != "Script")
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridspell_ComboBox.Text, c);
+			else
+				Settings.SpellGrid.UpdateItem(gridslot_ComboBox.SelectedIndex, gridgroup_ComboBox.Text, gridscript_ComboBox.Text, c);
+		}
+
+		private void gridscript_ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (gridscript_ComboBox.Focused)
+			{
+				UpdateGridItem();
 				SpellGrid.Open();
 			}
 		}
@@ -13234,6 +13311,8 @@ namespace Assistant
 
 			this.Cursor = Cursors.Default;
 		}
+
+
 		// ----------------- STOP VIDEO RECORDER -------------------
 	}
 }

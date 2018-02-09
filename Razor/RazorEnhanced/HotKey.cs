@@ -1535,8 +1535,11 @@ namespace RazorEnhanced
 			// Script -> List
 			Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[7].Nodes.Add("SList", "List");
 			keylist = RazorEnhanced.Settings.HotKey.ReadScript();
+			Engine.MainWindow.GridScriptComboBox.Items.Clear();
 			foreach (HotKeyData keydata in keylist)
 			{
+				Engine.MainWindow.GridScriptComboBox.Items.Add(keydata.Name); // Aggiorna lista script spellgrid
+
 				TreeNode a = new TreeNode
 				{
 					Name = keydata.Name,

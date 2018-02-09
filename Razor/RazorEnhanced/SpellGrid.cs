@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
 using Assistant;
@@ -315,8 +316,6 @@ namespace RazorEnhanced
 						if (p.AbilityID != primaryAbilityID)
 						{
 							p.AbilityID = primaryAbilityID;
-						//	RazorEnhanced.AutoLoot.AddLog("ID" + primaryAbilityID.ToString());
-						//	RazorEnhanced.AutoLoot.AddLog(SpecialMoves.GetPrimaryIcon(primaryAbilityID).ToString());
 							p.BackgroundImage = Ultima.Gumps.GetGump(SpecialMoves.GetPrimaryIcon(primaryAbilityID));
 						}
 					}
@@ -402,6 +401,9 @@ namespace RazorEnhanced
 					break;
 				case "Mastery":
 					RazorEnhanced.Spells.CastMastery(pl.Spell, true);
+					break;
+				case "Script":
+					RazorEnhanced.Misc.ScriptRun(pl.Spell);
 					break;
 				default:
 					break;
@@ -514,26 +516,54 @@ namespace RazorEnhanced
 					case "Spellweaving":
 						SpellIconSpellweaving.TryGetValue(items[x].Spell, out imageid);
 						break;
+					case "Script":
+						imageid = -1;
+						break;
 					default:
 						imageid = 0;
 						break;
 				}
 
-				if (imageid != 0)
+				if (imageid > 0)
 				{
 					Bitmap image = Ultima.Gumps.GetGump(imageid);
 					m_panellist[x].BackgroundImage = image;
 					m_panellist[x].Enabled = true;
 					m_panellist[x].Spell = items[x].Spell;
 				}
-				else
+				else if (imageid == 0) //empty
+				{
+				//	m_panellist[x].BackgroundImage = null;
 					m_panellist[x].Enabled = false;
-
+				}
+				else // Script -1
+				{
+					m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell);
+					m_panellist[x].Enabled = true;
+					m_panellist[x].Spell = items[x].Spell;
+				}
 				m_panellist[x].Group = items[x].Group;
-				
+
+				AutoLoot.AddLog("Slog " + x + " imageid" + imageid);
 			}
 		}
 
+		internal static Bitmap CreateBitmap(string text)
+		{
+			Bitmap bmp = new Bitmap(44, 44);
+
+			RectangleF rectf = new RectangleF(0, 0, 44, 44);
+			
+			Graphics g = Graphics.FromImage(bmp);
+			g.Clear(Color.Black);
+			g.SmoothingMode = SmoothingMode.AntiAlias;
+			g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+			g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+			g.DrawString(text, new Font("Tahoma", 10), Brushes.Yellow, rectf);
+
+			g.Flush();
+			return bmp;
+		}
 		//////////////////////////////////////////////////////////////
 		// Context Menu
 		//////////////////////////////////////////////////////////////
@@ -608,6 +638,7 @@ namespace RazorEnhanced
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Mysticism");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Spellweaving");
 			Engine.MainWindow.GridGroupComboBox.Items.Add("Mastery");
+			Engine.MainWindow.GridGroupComboBox.Items.Add("Script");
 
 			//////////////////////////////////////////////////////////////
 			// Dizionari
