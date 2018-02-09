@@ -12000,6 +12000,7 @@ namespace Assistant
 			else
 				slot += 1;
 
+			toolbarslot_label.Text = slot.ToString();
 			RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
 			RazorEnhanced.ToolBar.Close();
 			RazorEnhanced.ToolBar.Open();
