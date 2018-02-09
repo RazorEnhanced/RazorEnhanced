@@ -75,7 +75,9 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Convert.ToInt32(Assistant.Engine.MainWindow.DressDragDelay.Text);
+				int delay = 100;
+				Assistant.Engine.MainWindow.DressDragDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.DressDragDelay.Text, out delay)));
+				return delay;
 			}
 			set
 			{
@@ -120,7 +122,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.DressListSelect.Text;
+				return (string)Assistant.Engine.MainWindow.DressListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.DressListSelect.Text));
 			}
 
 			set

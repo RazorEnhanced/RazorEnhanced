@@ -133,7 +133,8 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text);
+				Int32.TryParse(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text, out int range);
+				return range;
 			}
 
 			set
@@ -146,7 +147,8 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Convert.ToInt32(Assistant.Engine.MainWindow.AutolootLabelDelay.Text);
+				Int32.TryParse(Assistant.Engine.MainWindow.AutolootLabelDelay.Text, out int delay);
+				return delay;
 			}
 
 			set

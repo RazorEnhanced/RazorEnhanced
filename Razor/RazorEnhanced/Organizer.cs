@@ -67,7 +67,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.OrganizerListSelect.Text;
+				return (string)Assistant.Engine.MainWindow.OrganizerListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.OrganizerListSelect.Text));
 			}
 
 			set
@@ -80,7 +80,9 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Convert.ToInt32(Assistant.Engine.MainWindow.OrganizerDragDelay.Text);
+				int delay = 100;
+				Assistant.Engine.MainWindow.OrganizerDragDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.OrganizerDragDelay.Text, out delay)));
+				return delay;
 			}
 
 			set
