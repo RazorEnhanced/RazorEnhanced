@@ -59,32 +59,32 @@ namespace RazorEnhanced
 		}
 
 		// Piccola Orizzontale
-		private static Label m_hitslabelSH = new System.Windows.Forms.Label();
-		private static Label m_manalabelSH = new System.Windows.Forms.Label();
-		private static Label m_staminalabelSH = new System.Windows.Forms.Label();
-		private static Label m_weightlabelSH = new System.Windows.Forms.Label();
-		private static Label m_followerlabelSH = new System.Windows.Forms.Label();
+		private static Label m_hitslabelSH = new Label();
+		private static Label m_manalabelSH = new Label();
+		private static Label m_staminalabelSH = new Label();
+		private static Label m_weightlabelSH = new Label();
+		private static Label m_followerlabelSH = new Label();
 
 		// Piccola verticale
-		private static Label m_strlabelSV = new System.Windows.Forms.Label();
-		private static Label m_hitlabelSV = new System.Windows.Forms.Label();
-		private static Label m_dexlabelSV = new System.Windows.Forms.Label();
-		private static Label m_stamlabelSV = new System.Windows.Forms.Label();
-		private static Label m_intlabelSV = new System.Windows.Forms.Label();
-		private static Label m_manalabelSV = new System.Windows.Forms.Label();
-		private static Label m_weightlabelSV = new System.Windows.Forms.Label();
-		private static Label m_weightmaxlabelSV = new System.Windows.Forms.Label();
-		private static Label m_followerlabelSV = new System.Windows.Forms.Label();
+		private static Label m_strlabelSV = new Label();
+		private static Label m_hitlabelSV = new Label();
+		private static Label m_dexlabelSV = new Label();
+		private static Label m_stamlabelSV = new Label();
+		private static Label m_intlabelSV = new Label();
+		private static Label m_manalabelSV = new Label();
+		private static Label m_weightlabelSV = new Label();
+		private static Label m_weightmaxlabelSV = new Label();
+		private static Label m_followerlabelSV = new Label();
 
 		// Grande orizzontale e verticale
-		private static Label m_labelBarHitsBHV = new System.Windows.Forms.Label();
-		private static Label m_labelTextHitsBHV = new System.Windows.Forms.Label();
-		private static Label m_labelTextManaBHV = new System.Windows.Forms.Label();
-		private static Label m_labelBarManaBHV = new System.Windows.Forms.Label();
-		private static Label m_labelBarStaminaBHV = new System.Windows.Forms.Label();
-		private static Label m_labelTextStaminaBHV = new System.Windows.Forms.Label();
-		private static Label m_labelTextWeightBHV = new System.Windows.Forms.Label();
-		private static Label m_labelTextFollowerBHV = new System.Windows.Forms.Label();
+		private static Label m_labelBarHitsBHV = new Label();
+		private static Label m_labelTextHitsBHV = new Label();
+		private static Label m_labelTextManaBHV = new Label();
+		private static Label m_labelBarManaBHV = new Label();
+		private static Label m_labelBarStaminaBHV = new Label();
+		private static Label m_labelTextStaminaBHV = new Label();
+		private static Label m_labelTextWeightBHV = new Label();
+		private static Label m_labelTextFollowerBHV = new Label();
 
 		private static List<Panel> m_panellist = new List<Panel>();
 		private static List<Label> m_panelcount = new List<Label>();
@@ -122,17 +122,17 @@ namespace RazorEnhanced
 			if (m_form == null)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
 				int percent = (int)(hits * 100 / (maxhits == 0 ? (ushort)1 : maxhits));
 
 				m_labelTextHitsBHV.Text = "Hits: " + hits.ToString() + " / " + maxhits.ToString();
-				m_labelBarHitsBHV.Size = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new System.Drawing.Size(percent, 10) : new System.Drawing.Size(percent, 5);
+				m_labelBarHitsBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
 				m_labelBarHitsBHV.BackColor = GetColor(percent);
 			} 
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
 					m_strlabelSV.Text = "S: " + maxhits.ToString();
 					m_hitlabelSV.Text = "H: " + hits.ToString();
@@ -149,17 +149,17 @@ namespace RazorEnhanced
 			if (m_form == null)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
 				int percent = (int)(stam * 100 / (maxstam == 0 ? (ushort)1 : maxstam));
 
 				m_labelTextStaminaBHV.Text = "Stam: " + stam.ToString() + " / " + maxstam.ToString();
-				m_labelBarStaminaBHV.Size = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new System.Drawing.Size(percent, 10) : new System.Drawing.Size(percent, 5);
+				m_labelBarStaminaBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
 				m_labelBarStaminaBHV.BackColor = GetColor(percent);
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
 					m_dexlabelSV.Text = "D: " + maxstam.ToString();
 					m_stamlabelSV.Text = "S: " + stam.ToString();
@@ -176,17 +176,17 @@ namespace RazorEnhanced
 			if (m_form == null)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
 				int percent = (int)(mana * 100 / (maxmana == 0 ? (ushort)1 : maxmana));
 
 				m_labelTextManaBHV.Text = "Mana: " + mana.ToString() + " / " + maxmana.ToString();
-				m_labelBarManaBHV.Size = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new System.Drawing.Size(percent, 10) : new System.Drawing.Size(percent, 5);
+				m_labelBarManaBHV.Size = Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical" ? new Size(percent, 10) : new Size(percent, 5);
 				m_labelBarManaBHV.BackColor = GetColor(percent);
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
 					m_intlabelSV.Text = "I: " + maxmana.ToString();
 					m_manalabelSV.Text = "M: " + mana.ToString();
@@ -203,13 +203,13 @@ namespace RazorEnhanced
 			if (m_form == null)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
 				m_labelTextWeightBHV.Text = "Weight: " + weight.ToString() + " / " + maxweight.ToString();
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
 					m_weightlabelSV.Text = "W: " + weight.ToString();
 					m_weightmaxlabelSV.Text = "L: " + maxweight.ToString();
@@ -226,13 +226,13 @@ namespace RazorEnhanced
 			if (m_form == null)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+			if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
 				m_labelTextFollowerBHV.Text = "Follower: " + World.Player.Followers.ToString() + " / " + World.Player.FollowersMax.ToString();
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
 					m_followerlabelSV.Text = "F: " + World.Player.Followers.ToString();
 				}
@@ -296,19 +296,24 @@ namespace RazorEnhanced
 			UpdatePanelImage();
 			UpdateCount();
 			ClientCommunication.ShowWindow(m_form.Handle, 8);
-			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
-			m_form.Opacity = ((double)RazorEnhanced.Settings.General.ReadInt("ToolBarOpacity")) / 100.0; ;
+			m_form.Location = new Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
+			m_form.Opacity = ((double)Settings.General.ReadInt("ToolBarOpacity")) / 100.0; ;
 		}
 
-		internal static void UptateToolBarComboBox(int index)
+		internal static void UptateToolBarComboBox(int index, int slotlimit = 0)
 		{
-			List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+			if (slotlimit != 0)
+				m_slot = slotlimit;
+
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 			Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
 			int i = 0;
 			foreach (RazorEnhanced.ToolBar.ToolBarItem item in items)
 			{
 				Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Add("Slot " + i + ": " + item.Name);
 				i++;
+				if (i >= m_slot)
+					break;
 			}
 			Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
 		}
@@ -318,7 +323,7 @@ namespace RazorEnhanced
 			if (m_form == null)
 				return;
 
-			List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 
 			for (int x = 0; x < m_slot; x++)
 			{
@@ -339,7 +344,7 @@ namespace RazorEnhanced
 					m_itemimage = CropImage(m_itemimage);
 					m_panellist[x].BackgroundImage = m_itemimage;
 
-					if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") != "Big")
+					if (Settings.General.ReadString("ToolBoxSizeComboBox") != "Big")
 						m_panellist[x].BackgroundImageLayout = ImageLayout.None;
 	
 					m_panellist[x].Enabled = true;
@@ -374,7 +379,7 @@ namespace RazorEnhanced
 			if (Assistant.World.Player == null || m_form == null) // || m_changingmap)
 				return;
 
-			List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 
 			for (int x = 0; x < m_slot; x++)
 			{
@@ -406,7 +411,7 @@ namespace RazorEnhanced
 		//////////////// Load settings ////////////////
 		internal static void LoadSettings()
 		{
-			Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
+		//	Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Clear();
 
 			Assistant.Engine.MainWindow.ToolBoxSizeComboBox.Items.Clear();
 			Assistant.Engine.MainWindow.ToolBoxSizeComboBox.Items.Add("Big");
@@ -416,30 +421,24 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Horizontal");
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Vertical");
 
-			Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = m_lock = RazorEnhanced.Settings.General.ReadBool("LockToolBarCheckBox");
-			Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox");
-			Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + RazorEnhanced.Settings.General.ReadInt("PosXToolBar") + " - Y:" + RazorEnhanced.Settings.General.ReadInt("PosYToolBar");
-			Assistant.Engine.ToolBarX = RazorEnhanced.Settings.General.ReadInt("PosXToolBar");
-			Assistant.Engine.ToolBarY = RazorEnhanced.Settings.General.ReadInt("PosYToolBar");
+			Assistant.Engine.MainWindow.LockToolBarCheckBox.Checked = m_lock = Settings.General.ReadBool("LockToolBarCheckBox");
+			Assistant.Engine.MainWindow.AutoopenToolBarCheckBox.Checked = Settings.General.ReadBool("AutoopenToolBarCheckBox");
+			Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + Settings.General.ReadInt("PosXToolBar") + " - Y:" + Settings.General.ReadInt("PosYToolBar");
+			Assistant.Engine.ToolBarX = Settings.General.ReadInt("PosXToolBar");
+			Assistant.Engine.ToolBarY = Settings.General.ReadInt("PosYToolBar");
 
-			Assistant.Engine.MainWindow.ToolBoxSizeComboBox.SelectedItem = RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox");
-			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.SelectedItem = RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox");
-			Assistant.Engine.MainWindow.ToolBoxSlotsLabel.Text = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox").ToString();
-			Assistant.Engine.MainWindow.ShowHitsToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox");
-			Assistant.Engine.MainWindow.ShowStaminaToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox");
-			Assistant.Engine.MainWindow.ShowManaToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox");
-			Assistant.Engine.MainWindow.ShowWeightToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox");
-			Assistant.Engine.MainWindow.ShowFollowerToolBarCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox");
+			Assistant.Engine.MainWindow.ToolBoxSizeComboBox.SelectedItem = Settings.General.ReadString("ToolBoxSizeComboBox");
+			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.SelectedItem = Settings.General.ReadString("ToolBoxStyleComboBox");
+			Assistant.Engine.MainWindow.ToolBoxSlotsLabel.Text = Settings.General.ReadInt("ToolBoxSlotsTextBox").ToString();
+			m_slot = Settings.General.ReadInt("ToolBoxSlotsTextBox");
+			Assistant.Engine.MainWindow.ShowHitsToolBarCheckBox.Checked = Settings.General.ReadBool("ShowHitsToolBarCheckBox");
+			Assistant.Engine.MainWindow.ShowStaminaToolBarCheckBox.Checked = Settings.General.ReadBool("ShowStaminaToolBarCheckBox");
+			Assistant.Engine.MainWindow.ShowManaToolBarCheckBox.Checked = Settings.General.ReadBool("ShowManaToolBarCheckBox");
+			Assistant.Engine.MainWindow.ShowWeightToolBarCheckBox.Checked = Settings.General.ReadBool("ShowWeightToolBarCheckBox");
+			Assistant.Engine.MainWindow.ShowFollowerToolBarCheckBox.Checked = Settings.General.ReadBool("ShowFollowerToolBarCheckBox");
+			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
 
-			List<RazorEnhanced.ToolBar.ToolBarItem> items = RazorEnhanced.Settings.Toolbar.ReadItems();
-
-			int i = 0;
-			foreach (RazorEnhanced.ToolBar.ToolBarItem item in items)
-			{
-				Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Add("Slot " + i + ": " + item.Name);
-				i++;
-			}
-			Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = 0;
+			UptateToolBarComboBox(0);
 		}
 
 
@@ -449,11 +448,11 @@ namespace RazorEnhanced
 
 		internal static void DrawToolBar()
 		{
-			m_slot = RazorEnhanced.Settings.General.ReadInt("ToolBoxSlotsTextBox");
+			m_slot = Settings.General.ReadInt("ToolBoxSlotsTextBox");
 
-            if (RazorEnhanced.Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
+            if (Settings.General.ReadString("ToolBoxSizeComboBox") == "Big")
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
 					DrawToolBarBV();
 				}
@@ -464,7 +463,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
+				if (Settings.General.ReadString("ToolBoxStyleComboBox") == "Vertical")
 				{
 					DrawToolBarSV();
 				}
@@ -483,8 +482,10 @@ namespace RazorEnhanced
 		internal static ContextMenu GeneraMenu()
 		{
 			ContextMenu cm = new ContextMenu();
-			MenuItem menuItem = new MenuItem();
-			menuItem.Text = "Close";
+			MenuItem menuItem = new MenuItem
+			{
+				Text = "Close"
+			};
 			menuItem.Click += new System.EventHandler(menuItemClose_Click);
             cm.MenuItems.Add(menuItem);
 
@@ -591,16 +592,9 @@ namespace RazorEnhanced
 		{
 			m_panellist = new List<Panel>();
 			m_panelcount = new List<Label>();
-			m_labelBarHitsBHV = new System.Windows.Forms.Label();
-			m_labelTextHitsBHV = new System.Windows.Forms.Label();
-			m_labelTextManaBHV = new System.Windows.Forms.Label();
-			m_labelBarManaBHV = new System.Windows.Forms.Label();
-			m_labelBarStaminaBHV = new System.Windows.Forms.Label();
-			m_labelTextStaminaBHV = new System.Windows.Forms.Label();
-			m_labelTextWeightBHV = new System.Windows.Forms.Label();
-			m_labelTextFollowerBHV = new System.Windows.Forms.Label();
 
 			m_form = new ToolBarForm();
+			m_form.SuspendLayout();
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra;
@@ -609,22 +603,28 @@ namespace RazorEnhanced
 			int paneloffset = 18;
 			height += (m_slot * 60) / 2; // Aggiungo spazio slot
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
 			{
-				m_labelBarHitsBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarHitsBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarHitsBHV.Name = "labelBarHits";
-				m_labelBarHitsBHV.Size = new System.Drawing.Size(100, 10);
-				m_labelBarHitsBHV.TabIndex = 0;
-				m_labelBarHitsBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelBarHitsBHV = new Label
+				{
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+					Location = new Point(12, offsetstat + 16),
+					Name = "labelBarHits",
+					Size = new Size(100, 10),
+					TabIndex = 0,
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
-				m_labelTextHitsBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextHitsBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextHitsBHV.Name = "labelTextHits";
-				m_labelTextHitsBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextHitsBHV.TabIndex = 1;
-				m_labelTextHitsBHV.Text = "Hits: 150/150";
-				m_labelTextHitsBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextHitsBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextHits",
+					Size = new Size(100, 16),
+					TabIndex = 1,
+					Text = "Hits: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelBarHitsBHV);
 				m_form.Controls.Add(m_labelTextHitsBHV);
@@ -636,22 +636,28 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
-				m_labelBarManaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarManaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarManaBHV.Name = "labelBarMana";
-				m_labelBarManaBHV.Size = new System.Drawing.Size(100, 10);
-				m_labelBarManaBHV.TabIndex = 2;
-				m_labelBarManaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelBarManaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+					Location = new Point(12, offsetstat + 16),
+					Name = "labelBarMana",
+					Size = new Size(100, 10),
+					TabIndex = 2,
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
-				m_labelTextManaBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextManaBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextManaBHV.Name = "labelTextMana";
-				m_labelTextManaBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextManaBHV.TabIndex = 3;
-				m_labelTextManaBHV.Text = "Mana: 150/150";
-				m_labelTextManaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextManaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextMana",
+					Size = new Size(100, 16),
+					TabIndex = 3,
+					Text = "Mana: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelBarManaBHV);
 				m_form.Controls.Add(m_labelTextManaBHV);
@@ -663,22 +669,28 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
 			{
-				m_labelBarStaminaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarStaminaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarStaminaBHV.Name = "labelBarStamina";
-				m_labelBarStaminaBHV.Size = new System.Drawing.Size(100, 10);
-				m_labelBarStaminaBHV.TabIndex = 4;
-				m_labelBarStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelBarStaminaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+					Location = new Point(12, offsetstat + 16),
+					Name = "labelBarStamina",
+					Size = new Size(100, 10),
+					TabIndex = 4,
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
-				m_labelTextStaminaBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextStaminaBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextStaminaBHV.Name = "labelTextStamina";
-				m_labelTextStaminaBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextStaminaBHV.TabIndex = 5;
-				m_labelTextStaminaBHV.Text = "Stam: 150/150";
-				m_labelTextStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextStaminaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextStamina",
+					Size = new Size(100, 16),
+					TabIndex = 5,
+					Text = "Stam: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelBarStaminaBHV);
 				m_form.Controls.Add(m_labelTextStaminaBHV);
@@ -690,15 +702,18 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
-				m_labelTextWeightBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextWeightBHV.Location = new System.Drawing.Point(12, offsetstat + 6);
-				m_labelTextWeightBHV.Name = "labelTextWeight";
-				m_labelTextWeightBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextWeightBHV.TabIndex = 5;
-				m_labelTextWeightBHV.Text = "Weight: 150/150";
-				m_labelTextWeightBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextWeightBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat + 6),
+					Name = "labelTextWeight",
+					Size = new Size(100, 16),
+					TabIndex = 5,
+					Text = "Weight: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelTextWeightBHV);
 
@@ -709,15 +724,18 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
-				m_labelTextFollowerBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextFollowerBHV.Location = new System.Drawing.Point(12, offsetstat + 6);
-				m_labelTextFollowerBHV.Name = "labelTextFollower";
-				m_labelTextFollowerBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextFollowerBHV.TabIndex = 5;
-				m_labelTextFollowerBHV.Text = "Follower: 5/5";
-				m_labelTextFollowerBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextFollowerBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat + 6),
+					Name = "labelTextFollower",
+					Size = new Size(100, 16),
+					TabIndex = 5,
+					Text = "Follower: 5/5",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelTextFollowerBHV);
 
@@ -734,68 +752,68 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleSlot);
 
 				// Aggiungo panel dinamici
-				Panel paneltemp1 = new Panel();
-				Panel paneltemp2 = new Panel();
 				Label labeltemp1 = new Label
 				{
 					AutoSize = true,
-					Location = new System.Drawing.Point(0, 29),
+					Location = new Point(0, 29),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
 							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
-					Size = new System.Drawing.Size(25, 13),
+					Size = new Size(25, 13),
 					TabIndex = 1,
 					Text = "000"
 				};
 
+				Panel paneltemp1 = new Panel
+				{
+					BackColor = Color.Transparent,
+					BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
+					Location = new Point(11, paneloffset),
+					Margin = new System.Windows.Forms.Padding(0),
+					Name = "panel" + i + 1,
+					Size = new Size(42, 42),
+					TabIndex = 10,
+				};
+				
+				Label labeltemp2 = new Label
+				{
+					AutoSize = true,
+					Location = new Point(0, 29),
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Name = "panel" + i + "count",
+					Size = new Size(25, 13),
+					TabIndex = 1,
+					Text = "000"
+				};
 
-				labeltemp1.SuspendLayout();
-
-				paneltemp1.BackColor = Color.Transparent;
-				paneltemp1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-				paneltemp1.Controls.Add(labeltemp1);
-				paneltemp1.Location = new System.Drawing.Point(11, paneloffset);
-				paneltemp1.Margin = new System.Windows.Forms.Padding(0);
-				paneltemp1.Name = "panel" + i + 1;
-				paneltemp1.Size = new System.Drawing.Size(42, 42);
-				paneltemp1.TabIndex = 10;
-
-				Label labeltemp2 = new Label();
-				labeltemp2.AutoSize = true;
-				labeltemp2.Location = new System.Drawing.Point(0, 29);
-				labeltemp2.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				labeltemp2.Name = "panel" + i + "count";
-				labeltemp2.Size = new System.Drawing.Size(25, 13);
-				labeltemp2.TabIndex = 1;
-				labeltemp2.Text = "000";
-				labeltemp2.SuspendLayout();
-
-				paneltemp2.BackColor = Color.Transparent;
-				paneltemp2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-				paneltemp2.Controls.Add(labeltemp2);
-				paneltemp2.Location = new System.Drawing.Point(71, paneloffset);
-				paneltemp2.Margin = new System.Windows.Forms.Padding(0);
-				paneltemp2.Name = "panel" + i + 1;
-				paneltemp2.Size = new System.Drawing.Size(42, 42);
-				paneltemp2.TabIndex = 10;
+				Panel paneltemp2 = new Panel
+				{
+					BackColor = Color.Transparent,
+					BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
+					Location = new Point(71, paneloffset),
+					Margin = new System.Windows.Forms.Padding(0),
+					Name = "panel" + i + 1,
+					Size = new Size(42, 42),
+					TabIndex = 10
+				};
 
 				m_panellist.Add(paneltemp1);
+				paneltemp1.Controls.Add(labeltemp1);
 				m_panelcount.Add(labeltemp1);
+
+				paneltemp2.Controls.Add(labeltemp2);
 				m_panellist.Add(paneltemp2);
 				m_panelcount.Add(labeltemp2);
-				m_form.SuspendLayout();
 
-				paneltemp1.SuspendLayout();
 				m_form.Controls.Add(paneltemp1);
-				paneltemp2.SuspendLayout();
 				m_form.Controls.Add(paneltemp2);
 
 				paneloffset += 60;
 			}
 
-			m_form.ClientSize = new System.Drawing.Size(Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra.Width, height);
-
+			m_form.ResumeLayout();
+			m_form.ClientSize = new Size(Assistant.Properties.Resources.BarraGrandeVerticaleBordoSopra.Width, height);
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeVerticaleBordoSotto);
 			InitEvent();
 		}
@@ -805,16 +823,8 @@ namespace RazorEnhanced
 			m_panellist = new List<Panel>();
 			m_panelcount = new List<Label>();
 
-			m_labelBarHitsBHV = new System.Windows.Forms.Label();
-			m_labelTextHitsBHV = new System.Windows.Forms.Label();
-			m_labelTextManaBHV = new System.Windows.Forms.Label();
-			m_labelBarManaBHV = new System.Windows.Forms.Label();
-			m_labelBarStaminaBHV = new System.Windows.Forms.Label();
-			m_labelTextStaminaBHV = new System.Windows.Forms.Label();
-			m_labelTextWeightBHV = new System.Windows.Forms.Label();
-			m_labelTextFollowerBHV = new System.Windows.Forms.Label();
-
 			m_form = new ToolBarForm();
+			m_form.SuspendLayout();
 
 			int width = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro.Width;
 			int offsetstat = 10;
@@ -824,8 +834,8 @@ namespace RazorEnhanced
 			// Genero Sfondo
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraGrandeOrizzontaBordoSinistro;
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox") || RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox") || RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox") ||
-				RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox") || RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowHitsToolBarCheckBox") || Settings.General.ReadBool("ShowStaminaToolBarCheckBox") || Settings.General.ReadBool("ShowManaToolBarCheckBox") ||
+				Settings.General.ReadBool("ShowWeightToolBarCheckBox") || Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeOrizzontaleSpazioStat);
 				width += 106;
@@ -833,22 +843,28 @@ namespace RazorEnhanced
 			}
 
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
 			{
-				m_labelBarHitsBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarHitsBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarHitsBHV.Name = "labelBarHits";
-				m_labelBarHitsBHV.Size = new System.Drawing.Size(100, 5);
-				m_labelBarHitsBHV.TabIndex = 0;
-				m_labelBarHitsBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelBarHitsBHV = new Label
+				{
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+					Location = new Point(12, offsetstat + 16),
+					Name = "labelBarHits",
+					Size = new Size(100, 5),
+					TabIndex = 0,
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
-				m_labelTextHitsBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextHitsBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextHitsBHV.Name = "labelTextHits";
-				m_labelTextHitsBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextHitsBHV.TabIndex = 1;
-				m_labelTextHitsBHV.Text = "Hits: 150/150";
-				m_labelTextHitsBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextHitsBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextHits",
+					Size = new Size(100, 16),
+					TabIndex = 1,
+					Text = "Hits: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelBarHitsBHV);
 				m_form.Controls.Add(m_labelTextHitsBHV);
@@ -856,22 +872,28 @@ namespace RazorEnhanced
 				offsetstat += 23;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
-				m_labelBarManaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarManaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarManaBHV.Name = "labelBarMana";
-				m_labelBarManaBHV.Size = new System.Drawing.Size(100, 5);
-				m_labelBarManaBHV.TabIndex = 0;
-				m_labelBarManaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelBarManaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+					Location = new Point(12, offsetstat + 16),
+					Name = "labelBarMana",
+					Size = new Size(100, 5),
+					TabIndex = 0,
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
-				m_labelTextManaBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextManaBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextManaBHV.Name = "labelTextMana";
-				m_labelTextManaBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextManaBHV.TabIndex = 1;
-				m_labelTextManaBHV.Text = "Mana: 150/150";
-				m_labelTextManaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextManaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextMana",
+					Size = new Size(100, 16),
+					TabIndex = 1,
+					Text = "Mana: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelBarManaBHV);
 				m_form.Controls.Add(m_labelTextManaBHV);
@@ -879,22 +901,28 @@ namespace RazorEnhanced
 				offsetstat += 23;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
 			{
-				m_labelBarStaminaBHV.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-				m_labelBarStaminaBHV.Location = new System.Drawing.Point(12, offsetstat + 16);
-				m_labelBarStaminaBHV.Name = "labelBarStamina";
-				m_labelBarStaminaBHV.Size = new System.Drawing.Size(100, 5);
-				m_labelBarStaminaBHV.TabIndex = 0;
-				m_labelBarStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelBarStaminaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+					Location = new Point(12, offsetstat + 16),
+					Name = "labelBarStamina",
+					Size = new Size(100, 5),
+					TabIndex = 0,
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
-				m_labelTextStaminaBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextStaminaBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextStaminaBHV.Name = "labelTextStamina";
-				m_labelTextStaminaBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextStaminaBHV.TabIndex = 1;
-				m_labelTextStaminaBHV.Text = "Stam: 150/150";
-				m_labelTextStaminaBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextStaminaBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextStamina",
+					Size = new Size(100, 16),
+					TabIndex = 1,
+					Text = "Stam: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelBarStaminaBHV);
 				m_form.Controls.Add(m_labelTextStaminaBHV);
@@ -902,30 +930,36 @@ namespace RazorEnhanced
 				offsetstat += 23;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
-				m_labelTextWeightBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextWeightBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextWeightBHV.Name = "labelTextStamina";
-				m_labelTextWeightBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextWeightBHV.TabIndex = 1;
-				m_labelTextWeightBHV.Text = "Weight: 150/150";
-				m_labelTextWeightBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextWeightBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextStamina",
+					Size = new Size(100, 16),
+					TabIndex = 1,
+					Text = "Weight: 150/150",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelTextWeightBHV);
 
 				offsetstat += 18;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
-				m_labelTextFollowerBHV.BackColor = System.Drawing.Color.Transparent;
-				m_labelTextFollowerBHV.Location = new System.Drawing.Point(12, offsetstat);
-				m_labelTextFollowerBHV.Name = "labelTextFollower";
-				m_labelTextFollowerBHV.Size = new System.Drawing.Size(100, 16);
-				m_labelTextFollowerBHV.TabIndex = 1;
-				m_labelTextFollowerBHV.Text = "Follower: 5/5";
-				m_labelTextFollowerBHV.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+				m_labelTextFollowerBHV = new Label
+				{
+					BackColor = System.Drawing.Color.Transparent,
+					Location = new Point(12, offsetstat),
+					Name = "labelTextFollower",
+					Size = new Size(100, 16),
+					TabIndex = 1,
+					Text = "Follower: 5/5",
+					TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+				};
 
 				m_form.Controls.Add(m_labelTextFollowerBHV);
 
@@ -934,77 +968,72 @@ namespace RazorEnhanced
 
 			width += (m_slot * 60) / 2; // Aggiungo spazio slot
 
-			m_form.ClientSize = new System.Drawing.Size(width, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Height);
+			m_form.ClientSize = new Size(width, Assistant.Properties.Resources.BarraGrandeOrizzontaBordoDestro.Height);
 
 			for (int i = 0; i < m_slot; i += 2)
 			{
 				//Genero sfondo slot
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraGrandeOrizzontaleSlot);
 
-				// Aggiungo panel dinamici
-				// Aggiungo panel dinamici
-				Panel paneltemp1 = new Panel();
-				Panel paneltemp2 = new Panel();
-
 				Label labeltemp1 = new Label
 				{
 					AutoSize = true,
-					Location = new System.Drawing.Point(0, 29),
+					Location = new Point(0, 29),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
 							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
-					Size = new System.Drawing.Size(25, 13),
+					Size = new Size(25, 13),
 					TabIndex = 1,
 					Text = "000"
 				};
 
-				labeltemp1.SuspendLayout();
-
-				paneltemp1.BackColor = Color.Transparent;
-				paneltemp1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+				Panel paneltemp1 = new Panel
+				{
+					BackColor = Color.Transparent,
+					BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
+					Location = new Point(paneloffset, 11),
+					Margin = new System.Windows.Forms.Padding(0),
+					Name = "panel" + i + 1,
+					Size = new Size(42, 42),
+					TabIndex = 10
+				};
 				paneltemp1.Controls.Add(labeltemp1);
-				paneltemp1.Location = new System.Drawing.Point(paneloffset, 11);
-				paneltemp1.Margin = new System.Windows.Forms.Padding(0);
-				paneltemp1.Name = "panel" + i + 1;
-				paneltemp1.Size = new System.Drawing.Size(42, 42);
-				paneltemp1.TabIndex = 10;
 
 				Label labeltemp2 = new Label
 				{
 					AutoSize = true,
-					Location = new System.Drawing.Point(0, 29),
+					Location = new Point(0, 29),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
 							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
-					Size = new System.Drawing.Size(25, 13),
+					Size = new Size(25, 13),
 					TabIndex = 1,
 					Text = "000"
 				};
 
-				labeltemp2.SuspendLayout();
-
-				paneltemp2.BackColor = Color.Transparent;
-				paneltemp2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+				Panel paneltemp2 = new Panel
+				{
+					BackColor = Color.Transparent,
+					BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
+					Location = new Point(paneloffset, 71),
+					Margin = new System.Windows.Forms.Padding(0),
+					Name = "panel" + i + 1,
+					Size = new Size(42, 42),
+					TabIndex = 10
+				};
 				paneltemp2.Controls.Add(labeltemp2);
-				paneltemp2.Location = new System.Drawing.Point(paneloffset, 71);
-				paneltemp2.Margin = new System.Windows.Forms.Padding(0);
-				paneltemp2.Name = "panel" + i + 1;
-				paneltemp2.Size = new System.Drawing.Size(42, 42);
-				paneltemp2.TabIndex = 10;
 
 				m_panellist.Add(paneltemp1);
 				m_panelcount.Add(labeltemp1);
+				m_form.Controls.Add(paneltemp1);
+
 				m_panellist.Add(paneltemp2);
 				m_panelcount.Add(labeltemp2);
-				m_form.SuspendLayout();
-
-				paneltemp1.SuspendLayout();
-				m_form.Controls.Add(paneltemp1);
-				paneltemp2.SuspendLayout();
 				m_form.Controls.Add(paneltemp2);
 
+				m_form.ResumeLayout();
 				paneloffset += 60;
 			}
 
@@ -1017,17 +1046,8 @@ namespace RazorEnhanced
 			m_panellist = new List<Panel>();
 			m_panelcount = new List<Label>();
 
-			m_strlabelSV = new System.Windows.Forms.Label();
-		    m_hitlabelSV = new System.Windows.Forms.Label();
-		    m_dexlabelSV = new System.Windows.Forms.Label();
-		    m_stamlabelSV = new System.Windows.Forms.Label();
-			m_intlabelSV = new System.Windows.Forms.Label();
-			m_manalabelSV = new System.Windows.Forms.Label();
-			m_weightlabelSV = new System.Windows.Forms.Label();
-			m_weightmaxlabelSV = new System.Windows.Forms.Label();
-			m_followerlabelSV = new System.Windows.Forms.Label();
-
 			m_form = new ToolBarForm();
+			m_form.SuspendLayout();
 
 			// Sfondo e parametri offset
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraVerticaleBordoSopra;
@@ -1036,25 +1056,30 @@ namespace RazorEnhanced
 			int paneloffset = 12;
 			height += (m_slot * 36); // Aggiungo spazio slot
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
 			{
-				m_strlabelSV.AutoSize = true;
-				m_strlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_strlabelSV.Location = new System.Drawing.Point(5, offsetstat);
-				m_strlabelSV.Name = "label1";
-				m_strlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_strlabelSV.TabIndex = 0;
-				m_strlabelSV.Text = "S: 999";
-
-				m_hitlabelSV.AutoSize = true;
-				m_hitlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_hitlabelSV.Location = new System.Drawing.Point(5, offsetstat + 13);
-				m_hitlabelSV.Name = "label1";
-				m_hitlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_hitlabelSV.TabIndex = 0;
-				m_hitlabelSV.Text = "H: 999";
-
+				m_strlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "S: 999"
+				};
 				m_form.Controls.Add(m_strlabelSV);
+
+				m_hitlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat + 13),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "H: 999"
+				};
 				m_form.Controls.Add(m_hitlabelSV);
 
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
@@ -1064,26 +1089,30 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
-				m_intlabelSV.AutoSize = true;
-				m_intlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_intlabelSV.Location = new System.Drawing.Point(5, offsetstat);
-				m_intlabelSV.Name = "label1";
-				m_intlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_intlabelSV.TabIndex = 0;
-				m_intlabelSV.Text = "I: 999";
-
-				m_manalabelSV.AutoSize = true;
-				m_manalabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_manalabelSV.Location = new System.Drawing.Point(5, offsetstat + 13);
-				m_manalabelSV.Name = "label1";
-				m_manalabelSV.Size = new System.Drawing.Size(48, 12);
-				m_manalabelSV.TabIndex = 0;
-				m_manalabelSV.Text = "M: 200";
-
-
+				m_intlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "I: 999"
+				};
 				m_form.Controls.Add(m_intlabelSV);
+
+				m_manalabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat + 13),
+					Name = "label1",
+					Size = new Size(48, 12),
+					TabIndex = 0,
+					Text = "M: 200"
+				};
 				m_form.Controls.Add(m_manalabelSV);
 
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
@@ -1093,25 +1122,30 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
 			{
-				m_dexlabelSV.AutoSize = true;
-				m_dexlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_dexlabelSV.Location = new System.Drawing.Point(5, offsetstat);
-				m_dexlabelSV.Name = "label1";
-				m_dexlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_dexlabelSV.TabIndex = 0;
-				m_dexlabelSV.Text = "D: 999";
-
-				m_stamlabelSV.AutoSize = true;
-				m_stamlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_stamlabelSV.Location = new System.Drawing.Point(5, offsetstat + 13);
-				m_stamlabelSV.Name = "label1";
-				m_stamlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_stamlabelSV.TabIndex = 0;
-				m_stamlabelSV.Text = "S: 999";
-
+				m_dexlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "D: 999"
+				};
 				m_form.Controls.Add(m_dexlabelSV);
+
+				m_stamlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat + 13),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "S: 999"
+				};
 				m_form.Controls.Add(m_stamlabelSV);
 
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
@@ -1121,26 +1155,30 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
-				m_weightlabelSV.AutoSize = true;
-				m_weightlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_weightlabelSV.Location = new System.Drawing.Point(5, offsetstat);
-				m_weightlabelSV.Name = "label1";
-				m_weightlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_weightlabelSV.TabIndex = 0;
-				m_weightlabelSV.Text = "W: 999";
-
-				m_weightmaxlabelSV.AutoSize = true;
-				m_weightmaxlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_weightmaxlabelSV.Location = new System.Drawing.Point(5, offsetstat + 13);
-				m_weightmaxlabelSV.Name = "label1";
-				m_weightmaxlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_weightmaxlabelSV.TabIndex = 0;
-				m_weightmaxlabelSV.Text = "W: 999";
-
-
+				m_weightlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "W: 999"
+				};
 				m_form.Controls.Add(m_weightlabelSV);
+
+				m_weightmaxlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat + 13),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "W: 999"
+				};
 				m_form.Controls.Add(m_weightmaxlabelSV);
 
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
@@ -1150,16 +1188,18 @@ namespace RazorEnhanced
 				paneloffset += 29;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
-				m_followerlabelSV.AutoSize = true;
-				m_followerlabelSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_followerlabelSV.Location = new System.Drawing.Point(5, offsetstat + 7);
-				m_followerlabelSV.Name = "label1";
-				m_followerlabelSV.Size = new System.Drawing.Size(50, 12);
-				m_followerlabelSV.TabIndex = 0;
-				m_followerlabelSV.Text = "F: 5";
-
+				m_followerlabelSV = new Label
+				{
+					AutoSize = true,
+					Font = new Font("Microsoft Sans Serif", 6.00F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(5, offsetstat + 7),
+					Name = "label1",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "F: 5"
+				};
 				m_form.Controls.Add(m_followerlabelSV);
 
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSpazioStat);
@@ -1175,41 +1215,41 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleSlot);
 
 				// Aggiungo panel dinamici
-				Panel paneltemp = new Panel();
+				
 				Label labeltemp = new Label
 				{
 					AutoSize = true,
-					Location = new System.Drawing.Point(0, 18),
+					Location = new Point(0, 18),
 					Font =
-						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
-							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
+						new Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
+							GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
-					Size = new System.Drawing.Size(10, 20),
+					Size = new Size(10, 20),
 					TabIndex = 1,
 					Text = "000"
 				};
-
-				labeltemp.SuspendLayout();
-
-				paneltemp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-				paneltemp.BackColor = Color.Transparent;
+				
+				Panel paneltemp = new Panel
+				{
+					BackgroundImageLayout = ImageLayout.Center,
+					BackColor = Color.Transparent,
+					Location = new Point(6, paneloffset),
+					Margin = new Padding(0),
+					Name = "panel" + i,
+					Size = new Size(29, 29),
+					TabIndex = 15
+				};
 				paneltemp.Controls.Add(labeltemp);
-				paneltemp.Location = new System.Drawing.Point(6, paneloffset);
-				paneltemp.Margin = new System.Windows.Forms.Padding(0);
-				paneltemp.Name = "panel" + i;
-				paneltemp.Size = new System.Drawing.Size(29, 29);
-				paneltemp.TabIndex = 15;
 
 				m_panellist.Add(paneltemp);
 				m_panelcount.Add(labeltemp);
-				m_form.SuspendLayout();
-				paneltemp.SuspendLayout();
 				m_form.Controls.Add(paneltemp);
+				m_form.ResumeLayout();
 
 				paneloffset += 36;
 			}
 
-			m_form.ClientSize = new System.Drawing.Size(Assistant.Properties.Resources.BarraVerticaleBordoSopra.Width, height);
+			m_form.ClientSize = new Size(Assistant.Properties.Resources.BarraVerticaleBordoSopra.Width, height);
 
 			m_form.BackgroundImage = BackGroundAddVerticale(sfondotemporaneo, Assistant.Properties.Resources.BarraVerticaleBordoSotto);
 			InitEvent();
@@ -1220,19 +1260,8 @@ namespace RazorEnhanced
 			m_panellist = new List<Panel>();
 			m_panelcount = new List<Label>();
 
-			m_hitslabelSH = new System.Windows.Forms.Label();
-			m_manalabelSH = new System.Windows.Forms.Label();
-			m_staminalabelSH = new System.Windows.Forms.Label();
-			m_weightlabelSH = new System.Windows.Forms.Label();
-			m_followerlabelSH = new System.Windows.Forms.Label();
-			Label m_hits_label = new System.Windows.Forms.Label();
-			Label m_follower_label = new System.Windows.Forms.Label();
-			Label m_mana_label = new System.Windows.Forms.Label();
-			Label m_stam_label = new System.Windows.Forms.Label();
-			Label m_weight_label = new System.Windows.Forms.Label();
-
-
 			m_form = new ToolBarForm();
+			m_form.SuspendLayout();
 
 			int width = Assistant.Properties.Resources.BarraOrizzontaBordoDestro.Width + Assistant.Properties.Resources.BarraOrizzontaBordoSinistro.Width;
 			int offsetstat = 5;
@@ -1241,29 +1270,35 @@ namespace RazorEnhanced
 			// Genero Sfondo
 			Bitmap sfondotemporaneo = Assistant.Properties.Resources.BarraOrizzontaBordoSinistro;
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
 			{
-				m_hits_label.AutoSize = false;
-				m_hits_label.Width = 5;
-				m_hits_label.Height = 5;
-				m_hits_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_hits_label.Location = new System.Drawing.Point(offsetstat+16, 3);
-				m_hits_label.Name = "h";
-				m_hits_label.Size = new System.Drawing.Size(20, 12);
-				m_hits_label.TabIndex = 10;
-				m_hits_label.Text = "H";
-				m_hits_label.BackColor = Color.Transparent;
+				Label m_hits_label = new Label
+				{
+					AutoSize = false,
+					Width = 5,
+					Height = 5,
+					Font = new Font("Microsoft Sans Serif", 6.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat + 16, 3),
+					Name = "h",
+					Size = new Size(20, 12),
+					TabIndex = 10,
+					Text = "H",
+					BackColor = Color.Transparent
+				};
 				m_form.Controls.Add(m_hits_label);
 
-				m_hitslabelSH.AutoSize = true;
-				m_hitslabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_hitslabelSH.Location = new System.Drawing.Point(offsetstat, 14);
-				m_hitslabelSH.Name = "hitslabel";
-				m_hitslabelSH.Size = new System.Drawing.Size(50, 12);
-				m_hitslabelSH.TabIndex = 0;
-				m_hitslabelSH.Text = "999/999";
-
+				m_hitslabelSH = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat, 14),
+					Name = "hitslabel",
+					Size = new Size(50, 12),
+					TabIndex = 0,
+					Text = "999/999"
+				};
 				m_form.Controls.Add(m_hitslabelSH);
+
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
@@ -1271,29 +1306,35 @@ namespace RazorEnhanced
 				paneloffset += 51;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowManaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowManaToolBarCheckBox"))
 			{
-				m_mana_label.AutoSize = false;
-				m_mana_label.Width = 5;
-				m_mana_label.Height = 5;
-				m_mana_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_mana_label.Location = new System.Drawing.Point(offsetstat + 16, 3);
-				m_mana_label.Name = "m";
-				m_mana_label.Size = new System.Drawing.Size(20, 12);
-				m_mana_label.TabIndex = 10;
-				m_mana_label.Text = "M";
-				m_mana_label.BackColor = Color.Transparent;
+				Label m_mana_label = new Label
+				{
+					AutoSize = false,
+					Width = 5,
+					Height = 5,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat + 16, 3),
+					Name = "m",
+					Size = new Size(20, 12),
+					TabIndex = 10,
+					Text = "M",
+					BackColor = Color.Transparent
+				};
 				m_form.Controls.Add(m_mana_label);
 
-				m_manalabelSH.AutoSize = true;
-				m_manalabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_manalabelSH.Location = new System.Drawing.Point(offsetstat, 14);
-				m_manalabelSH.Name = "manalabel";
-				m_manalabelSH.Size = new System.Drawing.Size(52, 12);
-				m_manalabelSH.TabIndex = 1;
-				m_manalabelSH.Text = "M: 999/999";
-
+				m_manalabelSH = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat, 14),
+					Name = "manalabel",
+					Size = new Size(52, 12),
+					TabIndex = 1,
+					Text = "M: 999/999"
+				};
 				m_form.Controls.Add(m_manalabelSH);
+
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
@@ -1301,29 +1342,35 @@ namespace RazorEnhanced
 				paneloffset += 51;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
 			{
-				m_stam_label.AutoSize = false;
-				m_stam_label.Width = 5;
-				m_stam_label.Height = 5;
-				m_stam_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_stam_label.Location = new System.Drawing.Point(offsetstat + 16, 3);
-				m_stam_label.Name = "s";
-				m_stam_label.Size = new System.Drawing.Size(20, 12);
-				m_stam_label.TabIndex = 10;
-				m_stam_label.Text = "S";
-				m_stam_label.BackColor = Color.Transparent;
+				Label m_stam_label = new Label
+				{
+					AutoSize = false,
+					Width = 5,
+					Height = 5,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat + 16, 3),
+					Name = "s",
+					Size = new Size(20, 12),
+					TabIndex = 10,
+					Text = "S",
+					BackColor = Color.Transparent
+				};
 				m_form.Controls.Add(m_stam_label);
 
-				m_staminalabelSH.AutoSize = true;
-				m_staminalabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_staminalabelSH.Location = new System.Drawing.Point(offsetstat, 14);
-				m_staminalabelSH.Name = "stamlabel";
-				m_staminalabelSH.Size = new System.Drawing.Size(49, 12);
-				m_staminalabelSH.TabIndex = 2;
-				m_staminalabelSH.Text = "S: 999/999";
-
+				m_staminalabelSH = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat, 14),
+					Name = "stamlabel",
+					Size = new Size(49, 12),
+					TabIndex = 2,
+					Text = "S: 999/999"
+				};
 				m_form.Controls.Add(m_staminalabelSH);
+
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
@@ -1331,29 +1378,35 @@ namespace RazorEnhanced
 				paneloffset += 51;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
 			{
-				m_weight_label.AutoSize = false;
-				m_weight_label.Width = 5;
-				m_weight_label.Height = 5;
-				m_weight_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_weight_label.Location = new System.Drawing.Point(offsetstat + 12, 3);
-				m_weight_label.Name = "w";
-				m_weight_label.Size = new System.Drawing.Size(20, 12);
-				m_weight_label.TabIndex = 10;
-				m_weight_label.Text = "W";
-				m_weight_label.BackColor = Color.Transparent;
+				Label m_weight_label = new Label
+				{
+					AutoSize = false,
+					Width = 5,
+					Height = 5,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat + 12, 3),
+					Name = "w",
+					Size = new Size(20, 12),
+					TabIndex = 10,
+					Text = "W",
+					BackColor = Color.Transparent
+				};
 				m_form.Controls.Add(m_weight_label);
 
-				m_weightlabelSH.AutoSize = true;
-				m_weightlabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_weightlabelSH.Location = new System.Drawing.Point(offsetstat-5, 14);
-				m_weightlabelSH.Name = "weightlabel";
-				m_weightlabelSH.Size = new System.Drawing.Size(49, 12);
-				m_weightlabelSH.TabIndex = 2;
-				m_weightlabelSH.Text = "W: 999/999";
-
+				m_weightlabelSH = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat - 5, 14),
+					Name = "weightlabel",
+					Size = new Size(49, 12),
+					TabIndex = 2,
+					Text = "W: 999/999"
+				};
 				m_form.Controls.Add(m_weightlabelSH);
+
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
@@ -1361,29 +1414,35 @@ namespace RazorEnhanced
 				paneloffset += 51;
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
 			{
-				m_follower_label.AutoSize = false;
-				m_follower_label.Width = 5;
-				m_follower_label.Height = 5;
-				m_follower_label.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_follower_label.Location = new System.Drawing.Point(offsetstat + 7, 3);
-				m_follower_label.Name = "f";
-				m_follower_label.Size = new System.Drawing.Size(20, 12);
-				m_follower_label.TabIndex = 10;
-				m_follower_label.Text = "F";
-				m_follower_label.BackColor = Color.Transparent;
+				Label m_follower_label = new Label
+				{
+					AutoSize = false,
+					Width = 5,
+					Height = 5,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat + 7, 3),
+					Name = "f",
+					Size = new Size(20, 12),
+					TabIndex = 10,
+					Text = "F",
+					BackColor = Color.Transparent
+				};
 				m_form.Controls.Add(m_follower_label);
 
-				m_followerlabelSH.AutoSize = true;
-				m_followerlabelSH.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-				m_followerlabelSH.Location = new System.Drawing.Point(offsetstat, 14);
-				m_followerlabelSH.Name = "followerlabel";
-				m_followerlabelSH.Size = new System.Drawing.Size(49, 12);
-				m_followerlabelSH.TabIndex = 2;
-				m_followerlabelSH.Text = "F: 5";
-
+				m_followerlabelSH = new Label
+				{
+					AutoSize = true,
+					Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
+					Location = new Point(offsetstat, 14),
+					Name = "followerlabel",
+					Size = new Size(49, 12),
+					TabIndex = 2,
+					Text = "F: 5"
+				};
 				m_form.Controls.Add(m_followerlabelSH);
+
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat);
 
 				width += 51;
@@ -1393,7 +1452,7 @@ namespace RazorEnhanced
 
 			width += (m_slot * 36); // Aggiungo spazio slot
 
-			m_form.ClientSize = new System.Drawing.Size(width, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat.Height);
+			m_form.ClientSize = new Size(width, Assistant.Properties.Resources.BarraOrizzontaleSpazioStat.Height);
 
 			for (int i = 0; i < m_slot; i++)
 			{
@@ -1401,37 +1460,38 @@ namespace RazorEnhanced
 				sfondotemporaneo = BackGroundAddOrizzontale(sfondotemporaneo, Assistant.Properties.Resources.BarraOrizzontaleSlot);
 
 				// Aggiungo panel dinamici
-				Panel paneltemp = new Panel();
+				
 				Label labeltemp = new Label
 				{
 					AutoSize = true,
-					Location = new System.Drawing.Point(0, 18),
+					Location = new Point(0, 18),
 					Font =
 						new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular,
 							System.Drawing.GraphicsUnit.Point, ((byte) (0))),
 					Name = "panel" + i + "count",
-					Size = new System.Drawing.Size(10, 20),
+					Size = new Size(10, 20),
 					TabIndex = 1,
 					Text = "000"
 				};
 
 
-				labeltemp.SuspendLayout();
-
-				paneltemp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+				Panel paneltemp = new Panel
+				{
+					BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center,
+					Location = new Point(paneloffset, 6),
+					Margin = new System.Windows.Forms.Padding(0),
+					Name = "panel" + i,
+					Size = new Size(29, 29),
+					TabIndex = 15,
+					BackColor = Color.Transparent
+				};
 				paneltemp.Controls.Add(labeltemp);
-				paneltemp.Location = new System.Drawing.Point(paneloffset, 6);
-				paneltemp.Margin = new System.Windows.Forms.Padding(0);
-				paneltemp.Name = "panel" + i;
-				paneltemp.Size = new System.Drawing.Size(29, 29);
-				paneltemp.TabIndex = 15;
-				paneltemp.BackColor = Color.Transparent;
 
 				m_panellist.Add(paneltemp);
 				m_panelcount.Add(labeltemp);
-				m_form.SuspendLayout();
-				paneltemp.SuspendLayout();
 				m_form.Controls.Add(paneltemp);
+
+				m_form.ResumeLayout();
 
 				paneloffset += 36;
 			}
@@ -1448,7 +1508,7 @@ namespace RazorEnhanced
 
 		internal static void EnhancedToolbar_Move(object sender, System.EventArgs e)
 		{
-				System.Drawing.Point pt = m_form.Location;
+			Point pt = m_form.Location;
 				if (m_form.WindowState != FormWindowState.Minimized)
 				{
 					Assistant.Engine.MainWindow.LocationToolBarLabel.Text = "X: " + pt.X + " - Y:" + pt.Y;

@@ -11967,7 +11967,7 @@ namespace Assistant
 				RazorEnhanced.ToolBar.Open();
 			}
 		}
-
+		 
 		private void toolboxsizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (toolboxsizeComboBox.Focused)
@@ -11981,6 +11981,7 @@ namespace Assistant
 
 					if (slot % 2 != 0)
 					{
+						slot++;
 						toolbarslot_label.Text = slot.ToString();
 						RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
 					}
@@ -12002,6 +12003,7 @@ namespace Assistant
 
 			toolbarslot_label.Text = slot.ToString();
 			RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
+			RazorEnhanced.ToolBar.UptateToolBarComboBox(toolboxcountComboBox.SelectedIndex, slot);
 			RazorEnhanced.ToolBar.Close();
 			RazorEnhanced.ToolBar.Open();
 		}
@@ -12022,7 +12024,7 @@ namespace Assistant
 
 			toolbarslot_label.Text = slot.ToString();
 			RazorEnhanced.Settings.General.WriteInt("ToolBoxSlotsTextBox", slot);
-
+			RazorEnhanced.ToolBar.UptateToolBarComboBox(toolboxcountComboBox.SelectedIndex, slot);
 			RazorEnhanced.ToolBar.Close();
 			RazorEnhanced.ToolBar.Open();
 		}
