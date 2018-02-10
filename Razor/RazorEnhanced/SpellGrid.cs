@@ -543,8 +543,6 @@ namespace RazorEnhanced
 					m_panellist[x].Spell = items[x].Spell;
 				}
 				m_panellist[x].Group = items[x].Group;
-
-				AutoLoot.AddLog("Slog " + x + " imageid" + imageid);
 			}
 		}
 
