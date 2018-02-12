@@ -8,6 +8,11 @@ namespace RazorEnhanced
 {
 	public class Restock
 	{
+		private static int m_dragdelay;
+		private static int m_sorucebag;
+		private static int m_destinationbag;
+		private static string m_restocklist;
+
 		[Serializable]
 		public class RestockItem
 		{
@@ -65,72 +70,39 @@ namespace RazorEnhanced
 
 		internal static string RestockListName
 		{
-			get
-			{
-				return (string)Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.RestockListSelect.Text));
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockListSelect.Text = value));
-			}
+			get { return m_restocklist; }
+			set { m_restocklist = value; }
 		}
 
 		internal static int RestockDelay
 		{
-			get
-			{
-				int delay = 100;
-				Assistant.Engine.MainWindow.RestockDragDelay.Invoke(new Action(() => Int32.TryParse(Assistant.Engine.MainWindow.RestockDragDelay.Text, out delay)));
-				return delay;
-			}
+			get { return m_dragdelay; }
 
 			set
 			{
+				m_dragdelay = value;
 				Assistant.Engine.MainWindow.RestockDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockDragDelay.Text = value.ToString()));
 			}
 		}
 
 		internal static int RestockSource
 		{
-			get
-			{
-				int serialBag = 0;
-
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.RestockSourceLabel.Text, 16);
-				}
-				catch
-				{ }
-
-				return serialBag;
-			}
+			get { return m_sorucebag; }
 
 			set
 			{
+				m_sorucebag = value;
 				Assistant.Engine.MainWindow.RestockSourceLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockSourceLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
 		internal static int RestockDestination
 		{
-			get
-			{
-				int serialBag = 0;
-
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.RestockDestinationLabel.Text, 16);
-				}
-				catch
-				{ }
-
-				return serialBag;
-			}
+			get { return m_destinationbag; }
 
 			set
 			{
+				m_destinationbag = value;
 				Assistant.Engine.MainWindow.RestockDestinationLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockDestinationLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
@@ -165,6 +137,7 @@ namespace RazorEnhanced
 					RestockDelay = l.Delay;
 					RestockSource = l.Source;
 					RestockDestination = l.Destination;
+					m_restocklist = l.Description;
 				}
 			}
 		}
@@ -220,21 +193,21 @@ namespace RazorEnhanced
 
 		internal static void AddList(string newList)
 		{
-			RazorEnhanced.Settings.Restock.ListInsert(newList, RazorEnhanced.Restock.RestockDelay, 0, 0);
+			Settings.Restock.ListInsert(newList, RazorEnhanced.Restock.RestockDelay, 0, 0);
 
-			RazorEnhanced.Restock.RefreshLists();
-			RazorEnhanced.Restock.InitGrid();
+			Restock.RefreshLists();
+			Restock.InitGrid();
 		}
 
 		internal static void RemoveList(string list)
 		{
-			if (RazorEnhanced.Settings.Restock.ListExists(list))
+			if (Settings.Restock.ListExists(list))
 			{
-				RazorEnhanced.Settings.Restock.ListDelete(list);
+				Settings.Restock.ListDelete(list);
 			}
 
-			RazorEnhanced.Restock.RefreshLists();
-			RazorEnhanced.Restock.InitGrid();
+			Restock.RefreshLists();
+			Restock.InitGrid();
 		}
 
 		internal static void AddItemToList(string name, int graphics, int color)
@@ -248,10 +221,12 @@ namespace RazorEnhanced
 			if (colorDaLista == -1) // Wildcard colore
 				return true;
 			else
+			{
 				if (colorDaLista == colorDaItem) // Match OK
-				return true;
-			else // Match fallito
-				return false;
+					return true;
+				else // Match fallito
+					return false;
+			}
 		}
 
 		internal static int Engine(List<RestockItem> restockItemList, int mseconds, int sourceBagserial, int destinationBagserial)
@@ -310,7 +285,7 @@ namespace RazorEnhanced
 		internal static void Engine()
 		{
 			// Check Bag
-			Assistant.Item sbag = Assistant.World.FindItem(RestockSource);
+			Assistant.Item sbag = Assistant.World.FindItem(m_sorucebag);
 			if (sbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
@@ -319,7 +294,7 @@ namespace RazorEnhanced
 				Assistant.Engine.MainWindow.RestockFinishWork();
 				return;
 			}
-			Assistant.Item dbag = Assistant.World.FindItem(RestockDestination);
+			Assistant.Item dbag = Assistant.World.FindItem(m_destinationbag);
 			if (dbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
@@ -329,7 +304,7 @@ namespace RazorEnhanced
 				return;
 			}
 
-			int exit = Engine(Settings.Restock.ItemsRead(RestockListName), RestockDelay, RestockSource, RestockDestination);
+			int exit = Engine(Settings.Restock.ItemsRead(m_restocklist), m_dragdelay, m_sorucebag, m_destinationbag);
 		}
 
 		private static Thread m_RestockThread;
@@ -389,7 +364,7 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			if (!Assistant.Engine.MainWindow.RestockListSelect.Items.Contains(nomelista))
+			if (!UpdateListParam(nomelista))
 			{
 				Scripts.SendMessageScriptError("Script Error: Restock.ChangeList: Restock list: " + nomelista + " not exist");
 			}
@@ -406,6 +381,20 @@ namespace RazorEnhanced
 					Assistant.Engine.MainWindow.RestockListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.RestockListSelect.SelectedIndex = Assistant.Engine.MainWindow.RestockListSelect.Items.IndexOf(nomelista)));  // cambio lista
 				}
 			}
+		}
+
+		internal static bool UpdateListParam(string nomelista)
+		{
+			if (Settings.Restock.ListExists(nomelista))
+			{
+				Settings.Restock.ListDetailsRead(nomelista, out int bagsource, out int bagdestination, out int delay);
+				Restock.RestockDelay = delay;
+				Restock.RestockSource = bagsource;
+				Restock.RestockDestination = bagdestination;
+				Restock.RestockListName = nomelista;
+				return true;
+			}
+			return false;
 		}
 	}
 }

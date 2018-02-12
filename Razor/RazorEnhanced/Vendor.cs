@@ -8,6 +8,9 @@ namespace RazorEnhanced
 {
 	public class SellAgent
 	{
+		private static string m_listname;
+		private static int m_sellbag;
+
 		[Serializable]
 		public class SellAgentItem
 		{
@@ -57,35 +60,17 @@ namespace RazorEnhanced
 
 		internal static string SellListName
 		{
-			get
-			{
-				return (string)Assistant.Engine.MainWindow.SellListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.SellListSelect.Text));
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.Text = value));
-			}
+			get { return m_listname; }
+			set { m_listname = value; }
 		}
 
 		internal static int SellBag
 		{
-			get
-			{
-				int serialBag = 0;
-
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.SellBagLabel.Text, 16);
-				}
-				catch
-				{ }
-
-				return serialBag;
-			}
+			get { return m_sellbag; }
 
 			set
 			{
+				m_sellbag = value;
 				Assistant.Engine.MainWindow.SellBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
@@ -118,6 +103,7 @@ namespace RazorEnhanced
 				{
 					Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(l.Description);
 					SellBag = l.Bag;
+					m_listname = l.Description;
 				}
 			}
 		}
@@ -369,7 +355,7 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			if (!Assistant.Engine.MainWindow.SellListSelect.Items.Contains(nomelista))
+			if (!UpdateListParam(nomelista))
             {
 				Scripts.SendMessageScriptError("Script Error: Sell.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
@@ -387,10 +373,22 @@ namespace RazorEnhanced
 				}
 			}
 		}
+		internal static bool UpdateListParam(string nomelista)
+		{
+			if (Settings.SellAgent.ListExists(nomelista))
+			{
+				SellAgent.SellBag = Settings.SellAgent.BagRead(nomelista);
+				SellAgent.SellListName = nomelista;
+				return true;
+			}
+			return false;
+		}
 	}
 
 	public class BuyAgent
 	{
+		private static string m_listname;
+
 		[Serializable]
 		public class BuyAgentItem
 		{
@@ -436,15 +434,8 @@ namespace RazorEnhanced
 
 		internal static string BuyListName
 		{
-			get
-			{
-				return (string)Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.BuyListSelect.Text));
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.Text = value));
-			}
+			get { return m_listname; }
+			set { m_listname = value; }
 		}
 
 		internal static void AddLog(string addlog)
@@ -473,6 +464,7 @@ namespace RazorEnhanced
 
 				if (l.Selected)
 				{
+					m_listname = l.Description;
 					Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(l.Description);
 				}
 			}
@@ -594,7 +586,7 @@ namespace RazorEnhanced
 				if (item == null)
 					continue;
 
-				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(BuyListName);
+				List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(m_listname);
 
 				foreach (BuyAgentItem buyItem in items) // Scansione item presenti in lista agent item
 				{
@@ -673,6 +665,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
+				m_listname = nomelista;
 				if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
 				{
 					Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));

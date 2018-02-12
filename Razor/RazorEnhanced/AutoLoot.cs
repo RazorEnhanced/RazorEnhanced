@@ -10,6 +10,11 @@ namespace RazorEnhanced
 {
 	public class AutoLoot
 	{
+		private static int m_lootdelay;
+		private static int m_maxrange;
+		private static int m_autolootbag;
+		private static bool m_noopencorpse;
+		private static string m_autolootlist;
 		private static Queue<int> m_IgnoreCorpseList = new Queue<int>();
 
 		[Serializable]
@@ -116,78 +121,52 @@ namespace RazorEnhanced
 			set { m_AutoMode = value; }
 		}
 
-		internal static string AutoLootListName
+		internal static string ListName
 		{
-			get
-			{
-				return Assistant.Engine.MainWindow.AutoLootListSelect.Text;
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.Text = value));
-			}
+			get { return m_autolootlist; }
+			set { m_autolootlist = value; }
 		}
 
 		internal static int MaxRange
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text, out int range);
-				return range;
-			}
+			get { return m_maxrange; }
 
 			set
 			{
+				m_maxrange = value;
 				Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootTextBoxMaxRange.Text = value.ToString()));
 			}
 		}
 
 		internal static int AutoLootDelay
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.AutolootLabelDelay.Text, out int delay);
-				return delay;
-			}
+			get { return m_lootdelay; }
 
 			set
 			{
+				m_lootdelay = value;
 				Assistant.Engine.MainWindow.AutolootLabelDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootLabelDelay.Text = value.ToString()));
 			}
 		}
 
 		internal static int AutoLootBag
 		{
-			get
-			{
-				int serialBag = 0;
-
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.AutoLootContainerLabel.Text, 16);
-				}
-				catch
-				{ }
-
-				return serialBag;
-			}
+			get	{ return m_autolootbag; }
 
 			set
 			{
+				m_autolootbag = value;
 				Assistant.Engine.MainWindow.AutoLootContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootContainerLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
 		internal static bool NoOpenCorpse
 		{
-			get
-			{
-				return Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Checked;
-			}
+			get { return m_noopencorpse; }
 
 			set
 			{
+				m_noopencorpse = value;
 				Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootNoOpenCheckBox.Checked = value));
 			}
 		}
@@ -222,6 +201,8 @@ namespace RazorEnhanced
 					AutoLootDelay = l.Delay;
 					AutoLootBag = l.Bag;
 					NoOpenCorpse = l.NoOpenCorpse;
+					MaxRange = l.Range;
+					ListName = l.Description;
 				}
 			}
 		}
@@ -305,7 +286,7 @@ namespace RazorEnhanced
 
 		private static void RefreshCorpse(Item corpo)
 		{
-			if (!NoOpenCorpse)
+			if (!m_noopencorpse)
 			{
 				if (!m_IgnoreCorpseList.Contains(corpo.Serial))
 				{
@@ -440,10 +421,10 @@ namespace RazorEnhanced
 			if (!Assistant.Engine.Running)
 				return;
 
-			m_corpsefilter.RangeMax = MaxRange;
+			m_corpsefilter.RangeMax = m_maxrange;
 
 			// Check bag
-			Assistant.Item bag = Assistant.World.FindItem(AutoLootBag);
+			Assistant.Item bag = Assistant.World.FindItem(m_autolootbag);
 			if (bag != null)
 			{
 				if (bag.RootContainer != World.Player)
@@ -461,7 +442,7 @@ namespace RazorEnhanced
 				AddLog("Invalid Bag, Switch to backpack");
 				AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
-			Engine(Settings.AutoLoot.ItemsRead(AutoLootListName), AutoLootDelay, m_corpsefilter);
+			Engine(Settings.AutoLoot.ItemsRead(m_autolootlist), m_lootdelay, m_corpsefilter);
 		}
 
 		// Funzioni di controllo da script
@@ -518,12 +499,13 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			if (!Assistant.Engine.MainWindow.AutoLootListSelect.Items.Contains(nomelista))
+			if (!UpdateListParam(nomelista))
 			{
 				Scripts.SendMessageScriptError("Script Error: Autoloot.ChangeList: Autoloot list: " + nomelista + " not exist");
 			}
 			else
 			{
+				m_autolootlist = nomelista;
 				if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
 				{
 					Assistant.Engine.MainWindow.AutolootCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false));
@@ -535,6 +517,21 @@ namespace RazorEnhanced
 					Assistant.Engine.MainWindow.AutoLootListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoLootListSelect.SelectedIndex = Assistant.Engine.MainWindow.AutoLootListSelect.Items.IndexOf(nomelista)));  // cambio lista
 				}
 			}
+		}
+
+		internal static bool UpdateListParam(string nomelista)
+		{
+			if (Settings.AutoLoot.ListExists(nomelista))
+			{
+				Settings.AutoLoot.ListDetailsRead(nomelista, out int bag, out int delay, out bool noopen, out int range);
+				AutoLoot.AutoLootBag = bag;
+				AutoLoot.AutoLootDelay = delay;
+				AutoLoot.MaxRange = range;
+				AutoLoot.ListName = nomelista;
+				AutoLoot.NoOpenCorpse = noopen;
+				return true;
+			}
+			return false;
 		}
 	}
 }

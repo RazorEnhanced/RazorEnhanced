@@ -192,6 +192,7 @@ namespace Assistant
 		internal static int ToolBarY { get { return m_ToolBarY; } set { m_ToolBarY = value; } }
 		internal static int GridX { get { return m_GridX; } set { m_GridX = value; } }
 		internal static int GridY { get { return m_GridY; } set { m_GridY = value; } }
+		internal static bool CDepPresent { get { return m_cdeppresent; } set { m_cdeppresent = value; } }
 
 		internal static string Version
 		{
@@ -212,6 +213,7 @@ namespace Assistant
 		private static MainForm MainWnd;
 		private static Form m_ActiveWnd;
 		private static bool m_Running;
+		private static bool m_cdeppresent = true;
 		private static int m_ToolBarX;
 		private static int m_ToolBarY;
 		private static int m_GridX;
@@ -240,6 +242,9 @@ namespace Assistant
 				MessageBox.Show("This Razor installation has expired!, Download new version from: http://www.razorenhanced.org/", "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				return;
 			}
+
+			// Test uso videorecorder
+			VideoCapture.Stop();
 
 			// Profili
 			RazorEnhanced.Profiles.Load();
@@ -442,12 +447,23 @@ namespace Assistant
 		}
 		private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
 		{
+			if (unhandledExceptionEventArgs.ExceptionObject is FileNotFoundException)
+			{
+				m_cdeppresent = false;
+				return;
+			}
+
 			ReportCrash((Exception)unhandledExceptionEventArgs.ExceptionObject);
 			Environment.Exit(0);
 		}
 
 		private static void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
 		{
+			if (e.Exception is FileNotFoundException)
+			{
+				m_cdeppresent = false;
+				return;
+			}
 			ReportCrash(e.Exception);
 		}
 

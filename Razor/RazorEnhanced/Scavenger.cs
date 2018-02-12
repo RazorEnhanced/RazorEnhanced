@@ -10,6 +10,11 @@ namespace RazorEnhanced
 {
 	public class Scavenger
 	{
+		private static int m_lootdelay;
+		private static int m_maxrange;
+		private static int m_scavengerbag;
+		private static string m_scavengerlist;
+
 		[Serializable]
 		public class ScavengerItem
 		{
@@ -95,63 +100,39 @@ namespace RazorEnhanced
 
 		internal static string ScavengerListName
 		{
-			get
-			{
-				return Assistant.Engine.MainWindow.ScavengerListSelect.Text;
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.ScavengerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerListSelect.Text = value));
-			}
+			get{ return m_scavengerlist; }
+			set	{ m_scavengerlist = value; }
 		}
 
 		internal static int ScavengerDelay
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerDragDelay.Text, out int delay);
-				return delay;
-			}
+			get	{ return m_lootdelay; }
 
 			set
 			{
+				m_lootdelay = value;
 				Assistant.Engine.MainWindow.ScavengerDragDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerDragDelay.Text = value.ToString()));
 			}
 		}
 
 		internal static int MaxRange
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.ScavengerRange.Text, out int range);
-				return range;
-			}
+			get { return m_maxrange; }
 
 			set
 			{
+				m_maxrange = value;
 				Assistant.Engine.MainWindow.ScavengerRange.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerRange.Text = value.ToString()));
 			}
 		}
 
 		internal static int ScavengerBag
 		{
-			get
-			{
-				int serialBag = 0;
-
-				try
-				{
-					serialBag = Convert.ToInt32(Assistant.Engine.MainWindow.ScavengerContainerLabel.Text, 16);
-				}
-				catch
-				{ }
-
-				return serialBag;
-			}
+			get { return m_scavengerbag; }
 
 			set
 			{
+				m_scavengerbag = value;
 				Assistant.Engine.MainWindow.ScavengerContainerLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerContainerLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
@@ -185,6 +166,8 @@ namespace RazorEnhanced
 					Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(l.Description);
 					ScavengerDelay = l.Delay;
 					ScavengerBag = l.Bag;
+					MaxRange = l.Range;
+					ScavengerListName = l.Description;
 				}
 			}
 		}
@@ -269,12 +252,12 @@ namespace RazorEnhanced
 		internal static void Engine(List<ScavengerItem> scavengerItemList, int mseconds, Items.Filter filter)
 		{
 			List<Item> itemsOnGround = RazorEnhanced.Items.ApplyFilter(filter);
-			if (ClientCommunication.ServerEncrypted)
+
+			if (ClientCommunication.ServerEncrypted) // OSI shard use movable flag for different, item on ground lootable can have both flag
 			{
-				Items.Filter osifilter = filter;
-				osifilter.Movable = false;
-                itemsOnGround.AddRange(RazorEnhanced.Items.ApplyFilter(osifilter));
-            }
+				m_itemfilterOsi.RangeMax = m_maxrange;
+				itemsOnGround.AddRange(RazorEnhanced.Items.ApplyFilter(m_itemfilterOsi));
+			}
 
 			foreach (ScavengerItem scavengerItem in scavengerItemList)
 			{
@@ -356,16 +339,23 @@ namespace RazorEnhanced
 			Enabled = true
 		};
 
+		private static Items.Filter m_itemfilterOsi = new Items.Filter
+		{
+			Movable = false,
+			OnGround = 1,
+			Enabled = true
+		};
+
 		internal static void AutoRun()
 		{
 			if (!Assistant.Engine.Running)
 				return;
 
 			// Genero filtro item
-			m_itemfilter.RangeMax = MaxRange;
+			m_itemfilter.RangeMax = m_maxrange;
 
 			// Check bag
-			Assistant.Item bag = Assistant.World.FindItem(ScavengerBag);
+			Assistant.Item bag = Assistant.World.FindItem(m_scavengerbag);
 			if (bag != null)
 			{
 				if (bag.RootContainer != World.Player)
@@ -384,7 +374,7 @@ namespace RazorEnhanced
 				ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			Engine(Settings.Scavenger.ItemsRead(ScavengerListName), ScavengerDelay, m_itemfilter);
+			Engine(Settings.Scavenger.ItemsRead(m_scavengerlist), m_lootdelay, m_itemfilter);
 		}
 
 		// Funzioni da script
@@ -427,7 +417,7 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			if (!Assistant.Engine.MainWindow.ScavengerListSelect.Items.Contains(nomelista))
+			if (!UpdateListParam(nomelista))
 			{
 				Scripts.SendMessageScriptError("Script Error: Scavenger.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
@@ -444,6 +434,20 @@ namespace RazorEnhanced
 					Assistant.Engine.MainWindow.ScavengerListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.ScavengerListSelect.SelectedIndex = Assistant.Engine.MainWindow.ScavengerListSelect.Items.IndexOf(nomelista)));  // cambio lista
 				}
 			}
+		}
+
+		internal static bool UpdateListParam(string nomelista)
+		{
+			if (Settings.Scavenger.ListExists(nomelista))
+			{
+				Settings.Scavenger.ListDetailsRead(nomelista, out int bag, out int delay, out int range);
+				Scavenger.ScavengerBag = bag;
+				Scavenger.ScavengerDelay = delay;
+				Scavenger.MaxRange = range;
+				Scavenger.ScavengerListName = nomelista;
+				return true;
+			}
+			return false;
 		}
 	}
 }

@@ -58,6 +58,9 @@ namespace Assistant
 
 		public static bool Record(int fps, int codec)
 		{
+			if (!Assistant.Engine.CDepPresent)
+				return false;
+
 			GetWindowRect(ClientCommunication.FindUOWindow(), out RECT lpRect);
 			Rectangle screenArea = new Rectangle(lpRect.Left, lpRect.Top, (lpRect.Right - lpRect.Left), (lpRect.Bottom - lpRect.Top));
 			foreach (System.Windows.Forms.Screen screen in
@@ -129,6 +132,9 @@ namespace Assistant
 
 		public static void Stop()
 		{
+			if (!Assistant.Engine.CDepPresent)
+				return;
+
 			try
 			{
 				if (m_videostream != null)
@@ -138,16 +144,14 @@ namespace Assistant
 					m_videostream = null;
 				}
 
-
-				if (m_filewriter != null)// && m_filewriter.IsOpen)
+				if (m_filewriter != null)
 				{
 					m_filewriter.Close();
-					//m_filewriter.Dispose();
 					m_filewriter = null;
 				}
+
 			}
 			catch { }
-
 			m_recording = false;
 		}
 	}
