@@ -251,6 +251,13 @@ namespace RazorEnhanced
 
 	public class Items
 	{
+		public static void WaitForContents(int serialbag, int delay) // Delay in MS
+		{
+			Item bag = FindBySerial(serialbag);
+			if (bag != null)
+				WaitForContents(bag, delay);
+		}
+
 		public static void WaitForContents(Item bag, int delay) // Delay in MS
 		{
 			if (!bag.IsCorpse && !bag.IsContainer)
