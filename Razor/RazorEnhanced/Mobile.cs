@@ -688,33 +688,9 @@ namespace RazorEnhanced
 					if (prop.Args == null)  // Props esiste ma non ha valore
 						return 1;
 
-					string propstring = prop.Args;
-					bool subprops = false;
-					int i = 0;
-
-					if (propstring.Length > 7)
-						subprops = true;
-
-					try  // Etraggo il valore
+					try
 					{
-						string number = string.Empty;
-						foreach (char str in propstring)
-						{
-							if (subprops)
-							{
-								if (i > 7)
-									if (char.IsDigit(str))
-										number += str.ToString();
-							}
-							else
-							{
-								if (char.IsDigit(str))
-									number += str.ToString();
-							}
-
-							i++;
-						}
-						return (Convert.ToInt32(number));
+						return (Convert.ToInt32(Language.ParsePropsCliloc(prop.Args)));
 					}
 					catch
 					{

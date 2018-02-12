@@ -443,8 +443,7 @@ namespace Assistant
 
 		internal static string GetString(LocString key)
 		{
-			string value;
-			m_Strings.TryGetValue(key, out value);
+			m_Strings.TryGetValue(key, out string value);
 			return value ?? (value = String.Format("LanguageString \"{0}\" not found!", key));
 		}
 
@@ -668,6 +667,38 @@ namespace Assistant
 			}
 		}
 
+		internal static string ParsePropsCliloc(string propstring)
+		{
+			bool subprops = false;
+			int i = 0;
+
+			if (propstring.Length > 7)
+				subprops = true;
+
+			string number = string.Empty;
+
+			foreach (char str in propstring)
+			{
+				if (subprops)
+				{
+					if (i > 7)
+						if (char.IsDigit(str) || str == '-')
+							number += str.ToString();
+				}
+				else
+				{
+					if (char.IsDigit(str) || str == '-')
+					{
+						number += str.ToString();
+					}
+					else
+						break;
+				}
+
+				i++;
+			}
+			return number;
+		}
 		internal static string ParseSubCliloc(string arg)
 		{
 			if (arg == null)
@@ -738,8 +769,7 @@ namespace Assistant
 			foreach (System.Windows.Forms.Control control in controls)
 			{
 				string find = String.Format("{0}::{1}", name, control.Name);
-				string str;
-				m_Controls.TryGetValue(find, out str);
+				m_Controls.TryGetValue(find, out string str);
 				if (str != null)
 					control.Text = str;
 
@@ -765,8 +795,7 @@ namespace Assistant
 #endif
 
 			LoadControls(form.Name, form.Controls);
-			string text;
-			m_Controls.TryGetValue(String.Format("{0}::Text", form.Name), out text);
+			m_Controls.TryGetValue(String.Format("{0}::Text", form.Name), out string text);
 			if (text != null)
 				form.Text = text;
 
