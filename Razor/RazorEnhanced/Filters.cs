@@ -8,83 +8,9 @@ namespace RazorEnhanced
 {
 	public class Filters
 	{
-		[Serializable]
-		public class GraphChangeData
-		{
-			private bool m_Selected;
-			public bool Selected { get { return m_Selected; } }
-
-			private int m_GraphReal;
-			public int GraphReal { get { return m_GraphReal; } }
-
-			private int m_GraphNew;
-			public int GraphNew { get { return m_GraphNew; } }
-
-			public GraphChangeData(bool selected, int graphreal, int graphnew)
-			{
-				m_Selected = selected;
-				m_GraphReal = graphreal;
-				m_GraphNew = graphnew;
-			}
-		}
-
-		internal static int BoneCutterBlade
-		{
-			get
-			{
-				try
-				{
-					int serialblade = Convert.ToInt32(Assistant.Engine.MainWindow.BoneBladeLabel.Text, 16);
-					if (serialblade == 0)
-					{
-						return 0;
-					}
-
-					Assistant.Item blade = World.FindItem(serialblade);
-					if (blade != null && blade.RootContainer == World.Player)
-						return blade.Serial;
-					else
-						return 0;
-				}
-				catch
-				{
-					return 0;
-				}
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.BoneBladeLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BoneBladeLabel.Text = "0x" + value.ToString("X8")));
-			}
-		}
-
-		internal static int AutoCarverBlade
-		{
-			get
-			{
-				try
-				{
-					int serialblade = Convert.ToInt32(Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text, 16);
-					if (serialblade == 0)
-						return 0;
-
-					Assistant.Item blade = World.FindItem(serialblade);
-					if (blade != null && blade.RootContainer == World.Player)
-						return blade.Serial;
-					else
-						return 0;
-				}
-				catch
-				{
-					return 0;
-				}
-			}
-
-			set
-			{
-				Assistant.Engine.MainWindow.AutoCarverBladeLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = "0x" + value.ToString("X8")));
-			}
-		}
+		////////////////////////////////////////////////////////////////
+		/////////////////// START - FLAG HIGHLIGHT /////////////////////
+		////////////////////////////////////////////////////////////////
 
 		internal static void ProcessMessage(Assistant.Mobile m)
 		{
@@ -113,7 +39,41 @@ namespace RazorEnhanced
 			}
 		}
 
-		//////////////// GRAPH FILTER ///////////////////////
+		// COLORI FLAG HIGHLIGHT //
+		internal static int[] PoisonHighLightColor = new int[3]
+		{
+			0x0042, // Poison color
+			0x013C, // Paralized color
+			0x002E, // Blessed COlor
+		};
+
+		////////////////////////////////////////////////////////////////
+		//////////////////// END - FLAG HIGHLIGHT //////////////////////
+		////////////////////////////////////////////////////////////////
+
+
+		////////////////////////////////////////////////////////////////
+		/////////////////// START - GRAPH FILTER ///////////////////////
+		////////////////////////////////////////////////////////////////
+		[Serializable]
+		public class GraphChangeData
+		{
+			private bool m_Selected;
+			public bool Selected { get { return m_Selected; } }
+
+			private int m_GraphReal;
+			public int GraphReal { get { return m_GraphReal; } }
+
+			private int m_GraphNew;
+			public int GraphNew { get { return m_GraphNew; } }
+
+			public GraphChangeData(bool selected, int graphreal, int graphnew)
+			{
+				m_Selected = selected;
+				m_GraphReal = graphreal;
+				m_GraphNew = graphnew;
+			}
+		}
 
 		internal static void RefreshLists()
 		{
@@ -154,12 +114,29 @@ namespace RazorEnhanced
 			}
 		}
 
-		//////////////// GRAPH FILTER END /////////////////////
+		////////////////////////////////////////////////////////////////
+		/////////////////// END - GRAPH FILTER /////////////////////////
+		////////////////////////////////////////////////////////////////
 
-		//////////////// AUTOCARVER START ////////////////
+
+		////////////////////////////////////////////////////////////////
+		///////////////////// START - AUTOCARVER ///////////////////////
+		////////////////////////////////////////////////////////////////
 
 		private static Queue<int> m_IgnoreCutCorpiQueue = new Queue<int>();
 		private static bool m_AutoCarver;
+		private static int m_carverblade;
+
+		internal static int AutoCarverBlade
+		{
+			get{ return m_carverblade; }
+
+			set
+			{
+				m_carverblade = value;
+				Assistant.Engine.MainWindow.AutoCarverBladeLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = "0x" + value.ToString("X8")));
+			}
+		}
 
 		internal static bool AutoCarver
 		{
@@ -175,7 +152,7 @@ namespace RazorEnhanced
 			if (World.Player == null)       // Esce se non loggato
 				return;
 
-			if (AutoCarverBlade == 0)       // Esce in caso di errore lettura blade
+			if (m_carverblade == 0)       // Esce in caso di errore lettura blade
 				return;
 
 			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
@@ -204,11 +181,27 @@ namespace RazorEnhanced
 			AutoCarverEngine(m_corpsefilter);
 		}
 
-		//////////////// AUTOCARVER STOP ////////////////
+		////////////////////////////////////////////////////////////////
+		/////////////////////// END - AUTOCARVER ///////////////////////
+		////////////////////////////////////////////////////////////////
 
-		//////////////// BONE CUTTER START ////////////////
+		////////////////////////////////////////////////////////////////
+		///////////////////// START - BONE CUTTER //////////////////////
+		////////////////////////////////////////////////////////////////
 
 		private static bool m_BoneCutter;
+		private static int m_bonecutterblade;
+
+		internal static int BoneCutterBlade
+		{
+			get { return m_bonecutterblade; }
+
+			set
+			{
+				m_bonecutterblade = value;
+				Assistant.Engine.MainWindow.BoneBladeLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BoneBladeLabel.Text = "0x" + value.ToString("X8")));
+			}
+		}
 
 		internal static bool BoneCutter
 		{
@@ -224,7 +217,7 @@ namespace RazorEnhanced
 			if (World.Player == null)       // Esce se non loggato
 				return;
 
-			if (BoneCutterBlade == 0)       // Esce in caso di errore lettura blade
+			if (m_bonecutterblade == 0)       // Esce in caso di errore lettura blade
 				return;
 
 			List<Item> bones = RazorEnhanced.Items.ApplyFilter(filter);
@@ -260,59 +253,50 @@ namespace RazorEnhanced
 			BoneCutterEngine(m_bonefilter);
 		}
 
-		//////////////// BONE CUTTER STOP ////////////////
+		////////////////////////////////////////////////////////////////
+		/////////////////////// END - BONE CUTTER //////////////////////
+		////////////////////////////////////////////////////////////////
 
-		//////////////// AUTOREMOUNT START ////////////////
+		////////////////////////////////////////////////////////////////
+		///////////////////// START - AUTO REMOUNT /////////////////////
+		////////////////////////////////////////////////////////////////
+		private static bool m_AutoModeRemount;
+		private static int m_autoremountdelay;
+		private static int m_autoremountedelay;
+		private static int m_autoremountserial;
 
 		internal static int AutoRemountDelay
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.RemountDelay.Text, out int delay);
-				return delay;
-			}
+			get { return m_autoremountdelay; }
 
 			set
 			{
+				m_autoremountdelay = value;
 				Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountDelay.Text = value.ToString()));
 			}
 		}
 
 		internal static int AutoRemountEDelay
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.RemountEDelay.Text, out int delay);
-				return delay;
-			}
+			get { return m_autoremountedelay; }
 
 			set
 			{
+				m_autoremountedelay = value;
 				Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountEDelay.Text = value.ToString()));
 			}
 		}
 
 		internal static int AutoRemountSerial
 		{
-			get
-			{
-				int serial = 0;
-				try
-				{
-					serial = Convert.ToInt32(Assistant.Engine.MainWindow.RemountSerialLabel.Text, 16);
-				}
-				catch
-				{ }
-				return serial;
-			}
+			get { return m_autoremountserial; }
 
 			set
 			{
+				m_autoremountserial = value;
 				Assistant.Engine.MainWindow.RemountSerialLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountSerialLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
-
-		private static bool m_AutoModeRemount;
 
 		internal static bool AutoModeRemount
 		{
@@ -325,7 +309,7 @@ namespace RazorEnhanced
 			if (World.Player == null)
 				return;
 
-			if (AutoRemountSerial == 0)
+			if (m_autoremountserial == 0)
 				return;
 
 			if (World.Player.IsGhost)
@@ -334,59 +318,53 @@ namespace RazorEnhanced
 			if (World.Player.GetItemOnLayer(Layer.Mount) != null)   // Gia su mount
 				return;
 
-			Assistant.Item etheralMount = Assistant.World.FindItem(AutoRemountSerial);
+			Assistant.Item etheralMount = Assistant.World.FindItem(m_autoremountserial);
 			if (etheralMount != null && etheralMount.Serial.IsItem)
 			{
-				RazorEnhanced.Items.UseItem(AutoRemountSerial);
-				Thread.Sleep(AutoRemountEDelay);
+				Items.UseItem(m_autoremountserial);
+				Thread.Sleep(m_autoremountedelay);
 			}
 			else
 			{
-				Assistant.Mobile mount = Assistant.World.FindMobile(AutoRemountSerial);
+				Assistant.Mobile mount = Assistant.World.FindMobile(m_autoremountserial);
 				if (mount != null && mount.Serial.IsMobile)
 				{
-					RazorEnhanced.Mobiles.UseMobile(AutoRemountSerial);
-					Thread.Sleep(AutoRemountDelay);
+					RazorEnhanced.Mobiles.UseMobile(m_autoremountserial);
+					Thread.Sleep(m_autoremountdelay);
 				}
 			}
 		}
 
-		//////////////// AUTOREMOUNT STOP ////////////////
-		
-		// COLORI FLAG HIGHLIGHT //
-		internal static int[] PoisonHighLightColor = new int[3]
-		{
-			0x0042, // Poison color
-			0x013C, // Paralized color
-			0x002E, // Blessed COlor
-		};
+		////////////////////////////////////////////////////////////////
+		/////////////////////// END - AUTO REMOUNT /////////////////////
+		////////////////////////////////////////////////////////////////
 
 		//////////////// Load settings ////////////////
 		internal static void LoadSettings()
 		{
-			Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox");
-			Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("FlagsHighlightCheckBox");
-			Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowStaticFieldCheckBox");
-			Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockTradeRequestCheckBox");
-			Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockPartyInviteCheckBox");
-			Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("MobFilterCheckBox");
-			Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("AutoCarverCheckBox");
-			Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BoneCutterCheckBox");
-			Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("AutoCarverBladeLabel").ToString("X8");
-			Assistant.Engine.MainWindow.BoneBladeLabel.Text = RazorEnhanced.Settings.General.ReadInt("BoneBladeLabel").ToString("X8");
-			Assistant.Engine.MainWindow.RemountCheckbox.Checked = RazorEnhanced.Settings.General.ReadBool("RemountCheckbox");
-			Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox");
-			Assistant.Engine.MainWindow.BlockHealPoisonCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockHealPoison");
-			Assistant.Engine.MainWindow.BlockChivalryHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockChivalryHealCheckBox");
-			Assistant.Engine.MainWindow.BlockBigHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockBigHealCheckBox");
-			Assistant.Engine.MainWindow.BlockMiniHealCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BlockMiniHealCheckBox");
-			Assistant.Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox");
-			Assistant.Engine.MainWindow.ShowMessageFieldCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox");
-			Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox");
+			Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = Settings.General.ReadBool("HighlightTargetCheckBox");
+			Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = Settings.General.ReadBool("FlagsHighlightCheckBox");
+			Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked = Settings.General.ReadBool("ShowStaticFieldCheckBox");
+			Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked = Settings.General.ReadBool("BlockTradeRequestCheckBox");
+			Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked = Settings.General.ReadBool("BlockPartyInviteCheckBox");
+			Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = Settings.General.ReadBool("MobFilterCheckBox");
+			Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = Settings.General.ReadBool("AutoCarverCheckBox");
+			Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = Settings.General.ReadBool("BoneCutterCheckBox");
+			AutoCarverBlade = Settings.General.ReadInt("AutoCarverBladeLabel");
+			BoneCutterBlade = Settings.General.ReadInt("BoneBladeLabel");
+			Assistant.Engine.MainWindow.RemountCheckbox.Checked = Settings.General.ReadBool("RemountCheckbox");
+			Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked = Settings.General.ReadBool("ShowHeadTargetCheckBox");
+			Assistant.Engine.MainWindow.BlockHealPoisonCheckBox.Checked = Settings.General.ReadBool("BlockHealPoison");
+			Assistant.Engine.MainWindow.BlockChivalryHealCheckBox.Checked = Settings.General.ReadBool("BlockChivalryHealCheckBox");
+			Assistant.Engine.MainWindow.BlockBigHealCheckBox.Checked = Settings.General.ReadBool("BlockBigHealCheckBox");
+			Assistant.Engine.MainWindow.BlockMiniHealCheckBox.Checked = Settings.General.ReadBool("BlockMiniHealCheckBox");
+			Assistant.Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked = Settings.General.ReadBool("ColorFlagsHighlightCheckBox");
+			Assistant.Engine.MainWindow.ShowMessageFieldCheckBox.Checked = Settings.General.ReadBool("ShowMessageFieldCheckBox");
+			Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked = Settings.General.ReadBool("ShowAgentMessageCheckBox");
 
-			AutoRemountDelay = RazorEnhanced.Settings.General.ReadInt("MountDelay");
-			AutoRemountEDelay = RazorEnhanced.Settings.General.ReadInt("EMountDelay");
-			AutoRemountSerial = RazorEnhanced.Settings.General.ReadInt("MountSerial");
+			AutoRemountDelay = Settings.General.ReadInt("MountDelay");
+			AutoRemountEDelay = Settings.General.ReadInt("EMountDelay");
+			AutoRemountSerial = Settings.General.ReadInt("MountSerial");
 
 			RefreshLists();
 		}
