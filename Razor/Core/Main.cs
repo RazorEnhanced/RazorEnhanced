@@ -243,9 +243,6 @@ namespace Assistant
 				return;
 			}
 
-			// Test uso videorecorder
-			VideoCapture.Stop();
-
 			// Profili
 			RazorEnhanced.Profiles.Load();
 
@@ -288,7 +285,6 @@ namespace Assistant
 				}
 			}
 		}
-
 		internal static void Start(RazorEnhanced.Shard selected)
 		{
 			ClientCommunication.ClientEncrypted = selected.PatchEnc;
@@ -447,12 +443,6 @@ namespace Assistant
 		}
 		private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs unhandledExceptionEventArgs)
 		{
-			if (unhandledExceptionEventArgs.ExceptionObject is FileNotFoundException)
-			{
-				m_cdeppresent = false;
-				return;
-			}
-
 			ReportCrash((Exception)unhandledExceptionEventArgs.ExceptionObject);
 			Environment.Exit(0);
 		}
@@ -460,11 +450,9 @@ namespace Assistant
 		private static void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
 		{
 			if (e.Exception is FileNotFoundException)
-			{
-				m_cdeppresent = false;
-				return;
-			}
-			ReportCrash(e.Exception);
+				Assistant.Engine.MainWindow.DisableRecorder();
+			else
+				ReportCrash(e.Exception);
 		}
 
 		private static void ReportCrash(Exception exception)
@@ -478,6 +466,5 @@ namespace Assistant
 			};
 			reportCrash.Send(exception);
 		}
-
 	}
 }

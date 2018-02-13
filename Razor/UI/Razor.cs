@@ -7525,7 +7525,13 @@ namespace Assistant
 			VersionCheck = new Thread(VersionCheckWorker);
 			VersionCheck.Start();
 
+			// -------------- CHECK c++ lib -------------------//
+			VideoCapture.Stop(); // ttry to run it
+		}
 
+		public void DisableRecorder()
+		{
+			videoTab.Enabled = Assistant.Engine.CDepPresent = false;
 		}
 		public static void DoubleBuffered1(DataGridView dgv, bool setting)
 		{
@@ -7537,9 +7543,6 @@ namespace Assistant
 
 		internal void LoadSettings()
 		{
-			// -------------- CHECK c++ lib -------------------//
-			videoTab.Enabled = Assistant.Engine.CDepPresent;  // Disable video tab if not c++ lib found
-
 			// -------------- SCRIPTING --------------------
 			scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
 			ReloadScriptTable();
