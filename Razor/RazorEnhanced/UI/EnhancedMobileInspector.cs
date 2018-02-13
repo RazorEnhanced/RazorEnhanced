@@ -355,6 +355,9 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedMobileInspector_Load(object sender, EventArgs e)
 		{
+			if (m_mobile == null)
+				this.Close();
+
 			// Genero lista props da leggere
 			m_props.Add("Fire Resist");
 			m_props.Add("Cold Resist");

@@ -88,6 +88,9 @@ namespace RazorEnhanced.UI
 
 		private void EnhancedItemInspector_Load(object sender, EventArgs e)
 		{
+			if (m_itemTarg == null)
+				this.Close();
+
 			// general
 			lSerial.Text = "0x" + m_itemTarg.Serial.Value.ToString("X8");
 			lItemID.Text = "0x" + m_itemTarg.ItemID.Value.ToString("X4");
