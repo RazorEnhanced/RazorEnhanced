@@ -279,6 +279,7 @@ namespace Assistant
 						SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_VIEW_RANGE_VALUE, 0, 30);
 						SendMessage(m_modhandle, (int)PATCH_MESSAGES.PM_ENABLE, 0, (int)PATCH_TYPE.PT_VIEW_RANGE);
 						ClientCommunication.SendToClient(new SetUpdateRange(31));
+						m_viewrangepatch = true;
 					}
 				}
 				else
