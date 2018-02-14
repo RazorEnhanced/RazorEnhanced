@@ -918,7 +918,6 @@ namespace Assistant
 			}
 
 			// Stop forzato di tutti i thread agent
-			Assistant.MainForm.StopVideoRecorder();
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
 			RazorEnhanced.BandageHeal.AutoMode = false;
@@ -966,6 +965,9 @@ namespace Assistant
 
 			PacketHandlers.Party.Clear();
 			PacketHandlers.IgnoreGumps.Clear();
+			
+			//Stop video recorder
+			Assistant.MainForm.StopVideoRecorder();
 		}
 
 		internal static bool OnMessage(MainForm razor, uint wParam, int lParam)

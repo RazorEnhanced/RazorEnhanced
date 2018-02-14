@@ -227,9 +227,6 @@ namespace RazorEnhanced
 		    PasswordMemory.ProfileChangeInit();
             Assistant.Engine.MainWindow.Initializing = true;
 
-			// Stop video recorder
-			Assistant.MainForm.StopVideoRecorder();
-
 			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
@@ -338,6 +335,9 @@ namespace RazorEnhanced
 			SetLast(name);
 
 			PasswordMemory.ProfileChangeEnd();
+
+			// Stop video recorder
+			Assistant.MainForm.StopVideoRecorder();
 		}
 
 		internal static void Save()
