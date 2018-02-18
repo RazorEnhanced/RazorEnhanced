@@ -943,8 +943,7 @@ namespace RazorEnhanced
 				case "Orange Petals":
 					if (pack != null)
 					{
-						World.Player.SendMessage("Da implementare");
-						if (!UseItemByIdHue(pack, 13848, 0))
+						if (!UseItemByIdHue(pack, 0x1021, 0x002B))
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
