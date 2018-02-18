@@ -272,12 +272,12 @@ namespace Assistant
 		private RazorCheckBox bandagehealmortalCheckBox;
 		private RazorCheckBox bandagehealpoisonCheckBox;
 		private Label label33;
-		private RazorTextBox bandagehealhpTextBox;
+		private RazorAgentNumOnlyTextBox bandagehealhpTextBox;
 		private Label label32;
 		private RazorCheckBox bandagehealdexformulaCheckBox;
-		private RazorTextBox bandagehealcustomcolorTextBox;
+		private RazorAgentNumHexTextBox bandagehealcustomcolorTextBox;
 		private Label label30;
-		private RazorTextBox bandagehealcustomIDTextBox;
+		private RazorAgentNumHexTextBox bandagehealcustomIDTextBox;
 		private Label label19;
 		private RazorCheckBox bandagehealcustomCheckBox;
 		private Label bandagehealtargetLabel;
@@ -512,9 +512,9 @@ namespace Assistant
 		private RazorCheckBox uomodpaperdoolCheckBox;
 		private RazorCheckBox uomodglobalsoundCheckBox;
 		private Label labelHotride;
-		private RazorTextBox bandagehealmaxrangeTextBox;
+		private RazorAgentNumOnlyTextBox bandagehealmaxrangeTextBox;
 		private Label label46;
-		private RazorTextBox bandagehealdelayTextBox;
+		private RazorAgentNumOnlyTextBox bandagehealdelayTextBox;
 		private Label label31;
 		private RazorButton openchangelogButton;
 		private RazorButton discordrazorButton;
@@ -717,12 +717,12 @@ namespace Assistant
 		internal RazorComboBox BandageHealtargetComboBox { get { return bandagehealtargetComboBox; } }
 		internal Label BandageHealtargetLabel { get { return bandagehealtargetLabel; } }
 		internal RazorCheckBox BandageHealcustomCheckBox { get { return bandagehealcustomCheckBox; } }
-		internal RazorTextBox BandageHealcustomIDTextBox { get { return bandagehealcustomIDTextBox; } }
-		internal RazorTextBox BandageHealcustomcolorTextBox { get { return bandagehealcustomcolorTextBox; } }
+		internal RazorAgentNumHexTextBox BandageHealcustomIDTextBox { get { return bandagehealcustomIDTextBox; } }
+		internal RazorAgentNumHexTextBox BandageHealcustomcolorTextBox { get { return bandagehealcustomcolorTextBox; } }
 		internal RazorCheckBox BandageHealdexformulaCheckBox { get { return bandagehealdexformulaCheckBox; } }
-		internal RazorTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
-		internal RazorTextBox BandageHealhpTextBox { get { return bandagehealhpTextBox; } }
-		internal RazorTextBox BandageHealMaxRangeTextBox { get { return bandagehealmaxrangeTextBox; } }
+		internal RazorAgentNumOnlyTextBox BandageHealdelayTextBox { get { return bandagehealdelayTextBox; } }
+		internal RazorAgentNumOnlyTextBox BandageHealhpTextBox { get { return bandagehealhpTextBox; } }
+		internal RazorAgentNumOnlyTextBox BandageHealMaxRangeTextBox { get { return bandagehealmaxrangeTextBox; } }
 		internal RazorCheckBox BandageHealpoisonCheckBox { get { return bandagehealpoisonCheckBox; } }
 		internal RazorCheckBox BandageHealmortalCheckBox { get { return bandagehealmortalCheckBox; } }
 		internal RazorCheckBox BandageHealhiddedCheckBox { get { return bandagehealhiddedCheckBox; } }
@@ -1325,21 +1325,21 @@ namespace Assistant
 			this.restockExportListB = new RazorEnhanced.UI.RazorButton();
 			this.bandageheal = new System.Windows.Forms.TabPage();
 			this.groupBox6 = new System.Windows.Forms.GroupBox();
-			this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.bandagehealmaxrangeTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.label46 = new System.Windows.Forms.Label();
 			this.bandagehealcountdownCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.bandagehealhiddedCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.bandagehealmortalCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.bandagehealpoisonCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.label33 = new System.Windows.Forms.Label();
-			this.bandagehealhpTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.bandagehealhpTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.label32 = new System.Windows.Forms.Label();
-			this.bandagehealdelayTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.bandagehealdelayTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.label31 = new System.Windows.Forms.Label();
 			this.bandagehealdexformulaCheckBox = new RazorEnhanced.UI.RazorCheckBox();
-			this.bandagehealcustomcolorTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.bandagehealcustomcolorTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
 			this.label30 = new System.Windows.Forms.Label();
-			this.bandagehealcustomIDTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.bandagehealcustomIDTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
 			this.label19 = new System.Windows.Forms.Label();
 			this.bandagehealcustomCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.bandagehealtargetLabel = new System.Windows.Forms.Label();
@@ -6644,7 +6644,7 @@ namespace Assistant
 			this.bandagehealmaxrangeTextBox.Name = "bandagehealmaxrangeTextBox";
 			this.bandagehealmaxrangeTextBox.Size = new System.Drawing.Size(29, 20);
 			this.bandagehealmaxrangeTextBox.TabIndex = 91;
-			this.bandagehealmaxrangeTextBox.TextChanged += new System.EventHandler(this.bandagehealmaxrangeTextBox_TextChanged);
+			this.bandagehealmaxrangeTextBox.Leave += new System.EventHandler(this.bandagehealmaxrangeTextBox_Leave);
 			// 
 			// label46
 			// 
@@ -6715,7 +6715,7 @@ namespace Assistant
 			this.bandagehealhpTextBox.Name = "bandagehealhpTextBox";
 			this.bandagehealhpTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealhpTextBox.TabIndex = 84;
-			this.bandagehealhpTextBox.TextChanged += new System.EventHandler(this.bandagehealhpTextBox_TextChanged);
+			this.bandagehealhpTextBox.Leave += new System.EventHandler(this.bandagehealhpTextBox_Leave);
 			// 
 			// label32
 			// 
@@ -6737,7 +6737,7 @@ namespace Assistant
 			this.bandagehealdelayTextBox.Name = "bandagehealdelayTextBox";
 			this.bandagehealdelayTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealdelayTextBox.TabIndex = 82;
-			this.bandagehealdelayTextBox.TextChanged += new System.EventHandler(this.bandagehealdelayTextBox_TextChanged);
+			this.bandagehealdelayTextBox.Leave += new System.EventHandler(this.bandagehealdelayTextBox_Leave);
 			// 
 			// label31
 			// 
@@ -6770,7 +6770,7 @@ namespace Assistant
 			this.bandagehealcustomcolorTextBox.Name = "bandagehealcustomcolorTextBox";
 			this.bandagehealcustomcolorTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealcustomcolorTextBox.TabIndex = 79;
-			this.bandagehealcustomcolorTextBox.TextChanged += new System.EventHandler(this.bandagehealcustomcolorTextBox_TextChanged);
+			this.bandagehealcustomcolorTextBox.Leave += new System.EventHandler(this.bandagehealcustomcolorTextBox_Leave);
 			// 
 			// label30
 			// 
@@ -6793,7 +6793,7 @@ namespace Assistant
 			this.bandagehealcustomIDTextBox.Name = "bandagehealcustomIDTextBox";
 			this.bandagehealcustomIDTextBox.Size = new System.Drawing.Size(53, 20);
 			this.bandagehealcustomIDTextBox.TabIndex = 77;
-			this.bandagehealcustomIDTextBox.TextChanged += new System.EventHandler(this.bandagehealcustomIDTextBox_TextChanged);
+			this.bandagehealcustomIDTextBox.Leave += new System.EventHandler(this.bandagehealcustomIDTextBox_Leave);
 			// 
 			// label19
 			// 
@@ -7530,6 +7530,7 @@ namespace Assistant
 		{
 			videoTab.Enabled = Assistant.Engine.CDepPresent = false;
 		}
+
 		public static void DoubleBuffered1(DataGridView dgv, bool setting)
 		{
 			Type dgvType = dgv.GetType();
@@ -9857,7 +9858,6 @@ namespace Assistant
 
 			RazorEnhanced.Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
 			RazorEnhanced.Scavenger.RefreshLists();
-
 		}
 
 		private void scavengerButtonImport_Click(object sender, EventArgs e)
@@ -11500,16 +11500,42 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("BandageHealcustomCheckBox", bandagehealcustomCheckBox.Checked);
 		}
 
-		private void bandagehealcustomIDTextBox_TextChanged(object sender, EventArgs e)
+		private void bandagehealcustomIDTextBox_Leave(object sender, EventArgs e)
 		{
-			if (bandagehealcustomIDTextBox.Focused)
-				RazorEnhanced.Settings.General.WriteInt("BandageHealcustomIDTextBox", RazorEnhanced.BandageHeal.CustomID);
+			int id = -1;
+			try
+			{
+				id = Convert.ToInt32(bandagehealcustomIDTextBox.Text, 16);
+			}
+			catch { }
+
+			if (bandagehealcustomIDTextBox.Text == String.Empty || id == -1)
+			{
+				id = 0;
+				bandagehealcustomIDTextBox.Text = "0x0000";
+			}
+
+			RazorEnhanced.BandageHeal.CustomID = id;
+			RazorEnhanced.Settings.General.WriteInt("BandageHealcustomIDTextBox", id);
 		}
 
-		private void bandagehealcustomcolorTextBox_TextChanged(object sender, EventArgs e)
+		private void bandagehealcustomcolorTextBox_Leave(object sender, EventArgs e)
 		{
-			if (bandagehealcustomcolorTextBox.Focused)
-				RazorEnhanced.Settings.General.WriteInt("BandageHealcustomcolorTextBox", RazorEnhanced.BandageHeal.CustomColor);
+			int color = -1;
+			try
+			{
+				color = Convert.ToInt32(bandagehealcustomcolorTextBox.Text, 16);
+			}
+			catch { }
+
+			if (bandagehealcustomcolorTextBox.Text == String.Empty || color == -1)
+			{
+				color = 0;
+				bandagehealcustomcolorTextBox.Text = "0x0000";
+			}
+
+			RazorEnhanced.BandageHeal.CustomColor = color;
+			RazorEnhanced.Settings.General.WriteInt("BandageHealcustomcolorTextBox", color);
 		}
 
 		private void bandagehealdexformulaCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -11521,18 +11547,6 @@ namespace Assistant
 
 			if (bandagehealdexformulaCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("BandageHealdexformulaCheckBox", bandagehealdexformulaCheckBox.Checked);
-		}
-
-		private void bandagehealdelayTextBox_TextChanged(object sender, EventArgs e)
-		{
-			if (bandagehealdelayTextBox.Focused)
-				RazorEnhanced.Settings.General.WriteInt("BandageHealdelayTextBox", RazorEnhanced.BandageHeal.CustomDelay);
-		}
-
-		private void bandagehealhpTextBox_TextChanged(object sender, EventArgs e)
-		{
-			if (bandagehealhpTextBox.Focused)
-				RazorEnhanced.Settings.General.WriteInt("BandageHealhpTextBox", RazorEnhanced.BandageHeal.HpLimit);
 		}
 
 		private void bandagehealpoisonCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -11559,12 +11573,32 @@ namespace Assistant
 				RazorEnhanced.Settings.General.WriteBool("BandageHealcountdownCheckBox", bandagehealcountdownCheckBox.Checked);
 		}
 
-		private void bandagehealmaxrangeTextBox_TextChanged(object sender, EventArgs e)
+		private void bandagehealdelayTextBox_Leave(object sender, EventArgs e)
 		{
-			if (bandagehealmaxrangeTextBox.Focused)
-				RazorEnhanced.Settings.General.WriteInt("BandageHealMaxRangeTextBox", RazorEnhanced.BandageHeal.MaxRange);
+			if (bandagehealdelayTextBox.Text == String.Empty)
+				bandagehealdelayTextBox.Text = "1000";
+
+			BandageHeal.CustomDelay = Convert.ToInt32(bandagehealdelayTextBox.Text);
+			Settings.General.WriteInt("BandageHealdelayTextBox", BandageHeal.CustomDelay);
 		}
 
+		private void bandagehealhpTextBox_Leave(object sender, EventArgs e)
+		{
+			if (bandagehealhpTextBox.Text == String.Empty)
+				bandagehealhpTextBox.Text = "100";
+
+			BandageHeal.HpLimit = Convert.ToInt32(bandagehealhpTextBox.Text);
+			Settings.General.WriteInt("BandageHealhpTextBox", BandageHeal.HpLimit);
+		}
+
+		private void bandagehealmaxrangeTextBox_Leave(object sender, EventArgs e)
+		{
+			if (bandagehealmaxrangeTextBox.Text == String.Empty)
+				bandagehealmaxrangeTextBox.Text = "1";
+
+			BandageHeal.MaxRange = Convert.ToInt32(bandagehealmaxrangeTextBox.Text);
+			Settings.General.WriteInt("BandageHealMaxRangeTextBox", BandageHeal.MaxRange);
+		}
 		// ---------------- HEAL BANDAGE END ----------------
 
 		// ---------------- TARGETTING START ----------------
@@ -11837,11 +11871,8 @@ namespace Assistant
 			if (remountdelay.Text == String.Empty)
 				remountdelay.Text = "100";
 
-			if (remountdelay.Focused)
-			{
-				RazorEnhanced.Filters.AutoRemountDelay = Convert.ToInt32(remountdelay.Text);
-				Settings.General.WriteInt("MountDelay", RazorEnhanced.Filters.AutoRemountDelay);
-			}
+			RazorEnhanced.Filters.AutoRemountDelay = Convert.ToInt32(remountdelay.Text);
+			Settings.General.WriteInt("MountDelay", RazorEnhanced.Filters.AutoRemountDelay);
 		}
 
 		private void remountedelay_Leave(object sender, EventArgs e)
@@ -11849,11 +11880,8 @@ namespace Assistant
 			if (remountedelay.Text == String.Empty)
 				remountedelay.Text = "100";
 
-			if (remountedelay.Focused)
-			{
-				RazorEnhanced.Filters.AutoRemountEDelay = Convert.ToInt32(remountedelay.Text);
-				Settings.General.WriteInt("EMountDelay", RazorEnhanced.Filters.AutoRemountEDelay);
-			}
+			RazorEnhanced.Filters.AutoRemountEDelay = Convert.ToInt32(remountedelay.Text);
+			Settings.General.WriteInt("EMountDelay", RazorEnhanced.Filters.AutoRemountEDelay);
 		}
 
 		private void remountcheckbox_CheckedChanged(object sender, EventArgs e)
@@ -13286,7 +13314,7 @@ namespace Assistant
 
 		internal static void StartVideoRecorder()
 		{
-			if (Assistant.Engine.CDepPresent) // DIsable mancanza librerie c++
+			if (!Assistant.Engine.CDepPresent) // DIsable mancanza librerie c++
 				return;
 
 			if (VideoCapture.Recording) // already on record
@@ -13308,7 +13336,7 @@ namespace Assistant
 
 		internal static void StopVideoRecorder()
 		{
-			if (Assistant.Engine.CDepPresent) // DIsable mancanza librerie c++
+			if (!Assistant.Engine.CDepPresent) // DIsable mancanza librerie c++
 				return;
 
 			RazorEnhanced.Misc.SendMessage("Stop Video Record");
@@ -13353,7 +13381,6 @@ namespace Assistant
 
 			this.Cursor = Cursors.Default;
 		}
-
 		// ----------------- STOP VIDEO RECORDER -------------------
 	}
 }

@@ -71,13 +71,90 @@ namespace RazorEnhanced.UI
 
 			e.Handled = true;
 		}
-
-
 		public RazorAgentNumOnlyTextBox()
+		{ }
+	}
+
+	public class RazorAgentNumHexTextBox : TextBox
+	{
+		protected override void OnKeyPress(KeyPressEventArgs e)
 		{
+			base.OnKeyPress(e);
 
+			NumberFormatInfo fi = CultureInfo.CurrentCulture.NumberFormat;
 
+			string c = e.KeyChar.ToString();
+			if (char.IsDigit(c, 0))
+			{
+				return;
+			}
+
+			switch (c)
+			{
+				case "x":
+						return;
+				case "X":
+					{
+						e.KeyChar = 'x';
+						return;
+					}
+				case "A":
+						return;
+				case "a":
+					{
+						e.KeyChar = 'A';
+						return;
+					}
+				case "B":
+					return;
+				case "b":
+					{
+						e.KeyChar = 'B';
+						return;
+					}
+				case "C":
+					return;
+				case "c":
+					{
+						e.KeyChar = 'C';
+						return;
+					}
+				case "D":
+					return;
+				case "d":
+					{
+						e.KeyChar = 'D';
+						return;
+					}
+				case "E":
+					return;
+				case "e":
+					{
+						e.KeyChar = 'E';
+						return;
+					}
+				case "F":
+					return;
+				case "f":
+					{
+						e.KeyChar = 'F';
+						return;
+					}
+			}
+		
+			// copy/paste
+			if ((((int)e.KeyChar == 22) || ((int)e.KeyChar == 3))
+				&& ((ModifierKeys & Keys.Control) == Keys.Control))
+				return;
+
+			if (e.KeyChar == '\b')
+				return;
+
+			e.Handled = true;
 		}
+
+		public RazorAgentNumHexTextBox()
+		{ }
 	}
 
 	public class RazorComboBox : ComboBox

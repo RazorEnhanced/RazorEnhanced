@@ -48,87 +48,62 @@ namespace RazorEnhanced
 			}
 		}
 
+		private static int m_customid;
 		internal static int CustomID
 		{
-			get
-			{
-				int ID = 0;
-				try
-				{
-					ID = Convert.ToInt32(Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text, 16);
-				}
-				catch
-				{ }
-				return ID;
-			}
+			get { return m_customid; }
 
 			set
 			{
+				m_customid = value;
 				Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomIDTextBox.Text = "0x" + value.ToString("X4")));
 			}
 		}
 
+		private static int m_customcolor;
 		internal static int CustomColor
 		{
-			get
-			{
-				int color = 0;
-				try
-				{
-					color = Convert.ToInt32(Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text, 16);
-				}
-				catch
-				{ }
-				return color;
-			}
+			get { return m_customcolor; }
 
 			set
 			{
+				m_customcolor = value;
 				Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealcustomcolorTextBox.Text = "0x" + value.ToString("X4")));
 			}
 		}
 
+		private static int m_customdelay;
 		internal static int CustomDelay
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text, out int delay);
-				if (delay < 1)
-					delay = 1000;
-
-				return delay;
-			}
+			get { return m_customdelay; }
 
 			set
 			{
+				m_customdelay = value;
 				Assistant.Engine.MainWindow.BandageHealdelayTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealdelayTextBox.Text = value.ToString()));
 			}
 		}
 
+		private static int m_maxrange;
 		internal static int MaxRange
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text, out int range);
-				return range;
-			}
+			get { return m_maxrange; }
 
 			set
 			{
+				m_maxrange = value;
 				Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealMaxRangeTextBox.Text = value.ToString()));
 			}
 		}
 
+		private static int m_hplimit;
 		internal static int HpLimit
 		{
-			get
-			{
-				Int32.TryParse(Assistant.Engine.MainWindow.BandageHealhpTextBox.Text, out int hplimit);
-				return hplimit;
-			}
+			get { return m_hplimit; }
 
 			set
 			{
+				m_hplimit = value;
 				Assistant.Engine.MainWindow.BandageHealhpTextBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BandageHealhpTextBox.Text = value.ToString()));
 			}
 		}
@@ -188,7 +163,6 @@ namespace RazorEnhanced
 		internal static void LoadSettings()
 		{
 			ShowCountdown = RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox");
-			string BandageHealtargetComboBox = RazorEnhanced.Settings.General.ReadString("BandageHealtargetComboBox");
 			TargetSerial = RazorEnhanced.Settings.General.ReadInt("BandageHealtargetLabel");
 			Assistant.Engine.MainWindow.BandageHealcustomCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("BandageHealcustomCheckBox");
 			CustomID = RazorEnhanced.Settings.General.ReadInt("BandageHealcustomIDTextBox");
@@ -223,7 +197,7 @@ namespace RazorEnhanced
 
 		internal static void EngineRun(Assistant.Mobile target)
 		{
-			if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < RazorEnhanced.Settings.General.ReadInt("BandageHealhpTextBox") || target.Poisoned)       // Check HP se bendare o meno.
+			if ((int)(target.Hits * 100 / (target.HitsMax == 0 ? (ushort)1 : target.HitsMax)) < m_hplimit || target.Poisoned)       // Check HP se bendare o meno.
 			{
 				if (RazorEnhanced.Settings.General.ReadBool("BandageHealhiddedCheckBox"))
 				{
@@ -250,8 +224,8 @@ namespace RazorEnhanced
 
 				if (Settings.General.ReadBool("BandageHealcustomCheckBox"))         // se custom setto ID
 				{
-					bandageid = Settings.General.ReadInt("BandageHealcustomIDTextBox");
-					bandagecolor = Settings.General.ReadInt("BandageHealcustomcolorTextBox");
+					bandageid = m_customid;
+					bandagecolor = m_customcolor;
 				}
 				int bandageserial = SearchBandage(bandageid, bandagecolor); // Get serial bende
 
@@ -311,7 +285,7 @@ namespace RazorEnhanced
 					}
 					else                // Se ho un delay custom
 					{
-						double delay = RazorEnhanced.Settings.General.ReadInt("BandageHealdelayTextBox");
+						double delay = m_customdelay;
 						if (RazorEnhanced.Settings.General.ReadBool("BandageHealcountdownCheckBox"))          // Se deve mostrare il cooldown
 						{
 							double subdelay = delay / 1000;
@@ -370,7 +344,7 @@ namespace RazorEnhanced
 					{
 						Enabled = true,
 						Friend = 1,
-						RangeMax = RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox")
+						RangeMax = m_maxrange
 					};
 					Mobile targ = RazorEnhanced.Mobiles.Select(RazorEnhanced.Mobiles.ApplyFilter(targfilter), "Weakest");
 					if (targ != null)
@@ -380,7 +354,7 @@ namespace RazorEnhanced
 
 			if (target == null)         // Verifica se il target è valido
 				return;
-			if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), RazorEnhanced.Settings.General.ReadInt("BandageHealMaxRangeTextBox"))) // Verifica distanza
+			if (!Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(target.Position.X, target.Position.Y), m_maxrange)) // Verifica distanza
 				return;
 
 			EngineRun(target);
