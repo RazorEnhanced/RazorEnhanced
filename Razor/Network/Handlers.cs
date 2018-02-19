@@ -2725,7 +2725,7 @@ namespace Assistant
 				case 0x21: // Special ability execute
 					{
 						RazorEnhanced.SpellGrid.UpdateSAHighLight(0);
-						World.Player.HasSpecial = false;
+						World.Player.HasSpecial = SpecialMoves.HasPrimary = SpecialMoves.HasSecondary = false;
 						break;
 					}
 			}

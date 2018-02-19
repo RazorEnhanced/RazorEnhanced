@@ -277,7 +277,9 @@ namespace Assistant
             new AbilityInfo( AOSAbility.InfusedThrow, CycloneID )
 		};
 
-		private static void ToggleWarPeace()
+		internal static bool HasPrimary, HasSecondary;
+
+		internal static void ToggleWarPeace()
 		{
 			ClientCommunication.SendToServer(new SetWarMode(!World.Player.Warmode));
 		}
@@ -329,7 +331,8 @@ namespace Assistant
 			if (a != AOSAbility.Invalid)
 			{
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
-				World.Player.HasSpecial = true;
+				World.Player.HasSpecial = HasPrimary = true;
+				HasSecondary = false;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
@@ -364,7 +367,8 @@ namespace Assistant
 					}
 				}
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
-				World.Player.HasSpecial = true;
+				World.Player.HasSpecial = HasSecondary = true;
+				HasPrimary = false;
 				ClientCommunication.SendToServer(new UseAbility(a));
 				ClientCommunication.SendToClient(ClearAbility.Instance);
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
@@ -403,7 +407,7 @@ namespace Assistant
 
 		internal static void ClearAbilities()
 		{
-			World.Player.HasSpecial = false;
+			World.Player.HasSpecial = HasPrimary = HasSecondary = false;
 			ClientCommunication.SendToServer(new UseAbility(AOSAbility.Clear));
 			ClientCommunication.SendToClient(ClearAbility.Instance);
 			World.Player.SendMessage(LocString.AOSAbCleared);
