@@ -13070,6 +13070,13 @@ namespace Assistant
 			if (e.Effect == DragDropEffects.Move)
 			{
 				DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
+
+				if (rowIndexOfItemUnderMouseToDrop >= (grid.RowCount -1)) // Blocca il drag fuori dalle celle salvate
+					return;
+
+				if (rowIndexFromMouseDown >= (grid.RowCount - 1)) // Blocca il drag di una cella non salvata
+					return;
+
 				grid.Rows.RemoveAt(rowIndexFromMouseDown);
 				grid.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
 				switch (grid.Name)
