@@ -480,7 +480,7 @@ namespace RazorEnhanced
 
 			for (int x = 0; x < m_vslot * m_hslot; x++)
 			{
-				if (x > (m_panellist.Count -1))
+				if (x > (m_panellist.Count -1)|| x > (items.Count -1))
 					return;
 
 				int imageid = 0;
