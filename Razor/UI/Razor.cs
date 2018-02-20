@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using Accord.Video.DirectShow;
+using AutoUpdaterDotNET;
 
 
 namespace Assistant
@@ -769,11 +770,7 @@ namespace Assistant
 
 		// Profiles
 		internal RazorComboBox ProfilesComboBox { get { return profilesComboBox; } }
-
 		private DataTable scriptTable;
-
-		// Version check
-		internal Thread VersionCheck;
 
 		// General
 		internal TextBox ScreenPath { get { return screenPath; } }
@@ -7521,9 +7518,53 @@ namespace Assistant
 			m_Tip.Active = true;
 			SplashScreen.End();
 
-			// Avvio thread version check
-			VersionCheck = new Thread(VersionCheckWorker);
-			VersionCheck.Start();
+			// AutoUpdater
+			AutoUpdater.ShowSkipButton = false;
+			AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+			AutoUpdater.ReportErrors = true;
+			AutoUpdater.Start("http://razorenhanced.org/download/RazorAutoUpdater.xml");
+		}
+
+		private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+		{
+			if (args != null)
+			{
+				if (args.IsUpdateAvailable)
+				{
+					DialogResult dialogResult;
+	
+						dialogResult =
+							MessageBox.Show(
+								$@"There is new version {args.CurrentVersion} available. You are using version {
+										args.InstalledVersion
+									}. Do you want to update the application now?", @"Update Available",
+								MessageBoxButtons.YesNo,
+								MessageBoxIcon.Information);
+
+					if (dialogResult.Equals(DialogResult.Yes))
+					{
+						try
+						{
+							if (AutoUpdater.DownloadUpdate())
+							{
+								Application.Exit();
+								Thread.Sleep(2000); // attesa uscita
+							}
+						}
+						catch (Exception exception)
+						{
+							MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
+								MessageBoxIcon.Error);
+						}
+					}
+				}
+			}
+			else
+			{
+				MessageBox.Show(
+						@"There is a problem reaching update server please check your internet connection and try again later.",
+						@"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		public void DisableRecorder()
@@ -12560,57 +12601,6 @@ namespace Assistant
 
 		}
 		// ----------------- FEATURE END -------------------
-
-		// ----------------- CHECK UPDATE START -------------------
-
-		private static string UniqueMachineId()
-		{
-			string cpuInfo = string.Empty;
-			ManagementClass mc = new ManagementClass("win32_processor");
-			ManagementObjectCollection moc = mc.GetInstances();
-
-			foreach (ManagementObject mo in moc)
-			{
-				cpuInfo = mo.Properties["processorID"].Value.ToString();
-				break;
-			}
-			return cpuInfo;
-		}
-
-
-		internal static void VersionCheckWorker()
-		{
-			WebClient client = new WebClient();
-
-			// Controllo versione
-			try // Try catch in caso che il server sia irraggiungibile
-			{
-				string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
-
-				if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
-				{
-					DialogResult dialogResult = MessageBox.Show("A newer version of Razor Enhanced is available! Do you want to open your browser to download it?", "Newer Version Available", MessageBoxButtons.YesNo);
-					if (dialogResult == DialogResult.Yes)
-					{
-						System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
-					}
-				}
-			}
-			catch
-			{
-			}
-
-			// Utilizzo
-			try // Try catch in caso che il server sia irraggiungibile
-			{
-				string reply = client.DownloadString("http://razorenhanced.org/use.php?Serial=" + UniqueMachineId());
-			}
-			catch
-			{
-			}
-
-		}
-		// ----------------- CHECK UPDATE END -------------------
 
 		// ----------------- GRID START -------------------
 
