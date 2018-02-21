@@ -9589,10 +9589,9 @@ namespace Assistant
 			if (autolootListSelect.Focused && autolootListSelect.Text != String.Empty)
 			{
 				AutoLoot.UpdateListParam(autolootListSelect.Text);
-				Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
-
 				AutoLoot.AddLog("Autoloot list changed to: " + autolootListSelect.Text);
 			}
+			Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
 			AutoLoot.InitGrid();
 		}
 		private void autoLootnoopenCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -9815,11 +9814,10 @@ namespace Assistant
 			if (scavengerListSelect.Focused && scavengerListSelect.Text != String.Empty)
 			{
 				Scavenger.UpdateListParam(scavengerListSelect.Text);
-				Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
-
 				Scavenger.AddLog("Scavenger list changed to: " + scavengerListSelect.Text);
 			}
 			Scavenger.InitGrid();
+			Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
 		}
 
 		private void scavengerEnableCheck_CheckedChanged(object sender, EventArgs e)
@@ -10058,10 +10056,9 @@ namespace Assistant
 			if (organizerListSelect.Focused && organizerListSelect.Text != String.Empty)
 			{
 				Organizer.UpdateListParam(organizerListSelect.Text);
-				Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
-
 				Organizer.AddLog("Organizer list changed to: " + organizerListSelect.Text);
 			}
+			Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 			Organizer.InitGrid();
 		}
 
@@ -10250,11 +10247,9 @@ namespace Assistant
 			if (sellListSelect.Focused && sellListSelect.Text != String.Empty)
 			{
 				SellAgent.UpdateListParam(sellListSelect.Text);
-				Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
-
 				SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
 			}
-
+			Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
 			SellAgent.InitGrid();
 		}
 
@@ -10459,11 +10454,10 @@ namespace Assistant
 		{
 			if (buyListSelect.Focused && buyListSelect.Text != String.Empty)
 			{
-				Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
 				BuyAgent.BuyListName = buyListSelect.Text;
-
 				BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
 			}
+			Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
 			RazorEnhanced.BuyAgent.InitGrid();
 		}
 
@@ -11139,10 +11133,9 @@ namespace Assistant
 			if (restockListSelect.Focused && restockListSelect.Text != String.Empty)
 			{
 				Restock.UpdateListParam(restockListSelect.Text);
-				Settings.Restock.ListUpdate(restockListSelect.Text, Restock.RestockDelay, Restock.RestockSource, Restock.RestockDestination, true);
-
 				RazorEnhanced.Restock.AddLog("Restock list changed to: " + restockListSelect.Text);
 			}
+			Settings.Restock.ListUpdate(restockListSelect.Text, Restock.RestockDelay, Restock.RestockSource, Restock.RestockDestination, true);
 			RazorEnhanced.Restock.InitGrid();
 		}
 
