@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace RazorEnhanced
 {
@@ -1602,7 +1603,7 @@ namespace RazorEnhanced
 		}
 
 		// Moving
-		public static void Walk(string direction)
+		public static int Walk(string direction)  // Return 2 se cammino accettato, return 3 se cammino fallito
 		{
 			Direction dir;
 			switch (direction)
@@ -1644,13 +1645,26 @@ namespace RazorEnhanced
 					break;
 			}
 
+			int state = 0;
 			if (dir != Assistant.Direction.ValueMask)
 			{
+				int timeout = 0;
+				World.Player.WalkScriptRequest = 1;
 				ClientCommunication.SendToServer(new WalkRequest(dir, World.Player.WalkSequence));
+				while (World.Player.WalkScriptRequest < 2)
+				{
+					Thread.Sleep(10);
+					timeout += 10;
+					if (timeout > 2000)
+						return 3; // Cammino fallito
+				}
+				state = World.Player.WalkScriptRequest;
+				World.Player.WalkScriptRequest = 0;
 			}
+			return state;
 		}
 
-		public static void Run(string direction)
+		public static int Run(string direction)  // Return 2 se cammino accettato, return 3 se cammino fallito
 		{
 			Direction dir;
 			switch (direction)
@@ -1691,11 +1705,23 @@ namespace RazorEnhanced
 					dir = Assistant.Direction.ValueMask;
 					break;
 			}
-
+			int state = 0;
 			if (dir != Assistant.Direction.ValueMask)
 			{
+				int timeout = 0;
+				World.Player.WalkScriptRequest = 1;
 				ClientCommunication.SendToServer(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
+				while (World.Player.WalkScriptRequest < 2)
+				{
+					Thread.Sleep(10);
+					timeout += 10;
+					if (timeout > 2000)
+						return 3; // Cammino fallito
+				}
+				state = World.Player.WalkScriptRequest;
+				World.Player.WalkScriptRequest = 0;
 			}
+			return state;
 		}
 
 		internal static void PathFindTo(Assistant.Point3D Location)

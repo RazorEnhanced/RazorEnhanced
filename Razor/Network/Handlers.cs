@@ -632,6 +632,9 @@ namespace Assistant
 			sbyte z = p.ReadSByte();
 
 			World.Player.MoveRej(seq, dir, new Point3D(x, y, z));
+
+			if (World.Player.WalkScriptRequest == 1)
+				World.Player.WalkScriptRequest = 2;
 		}
 
 		private static void MovementAck(PacketReader p, PacketHandlerEventArgs args)
@@ -645,6 +648,9 @@ namespace Assistant
 			World.Player.Notoriety = p.ReadByte();
 
 			args.Block |= !World.Player.MoveAck(seq);
+
+			if (World.Player.WalkScriptRequest == 1)
+				World.Player.WalkScriptRequest = 3;
 		}
 
 		private static void MovementRequest(PacketReader p, PacketHandlerEventArgs args)
