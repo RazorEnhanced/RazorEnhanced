@@ -42,6 +42,7 @@ namespace Assistant
 			PacketHandler.RegisterClientToServerViewer(0xF8, new PacketViewerCallback(CreateCharacter));
 
 			//Server -> Client handlers
+			PacketHandler.RegisterServerToClientViewer(0x0B, new PacketViewerCallback(Damage));
 			PacketHandler.RegisterServerToClientViewer(0x11, new PacketViewerCallback(MobileStatus));
 			PacketHandler.RegisterServerToClientViewer(0x16, new PacketViewerCallback(SAMobileStatus));
 			PacketHandler.RegisterServerToClientViewer(0x17, new PacketViewerCallback(NewMobileStatus));
@@ -1545,6 +1546,12 @@ namespace Assistant
 					m.Blessed = (flag != 0);
 					break;
 			}
+		}
+
+		private static void Damage(PacketReader p, PacketHandlerEventArgs args)
+		{
+			if (RazorEnhanced.DPSMeter.Enabled)
+				RazorEnhanced.DPSMeter.AddDamage(p.ReadUInt32(), p.ReadUInt16());
 		}
 
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)

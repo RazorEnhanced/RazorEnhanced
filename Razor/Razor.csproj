@@ -286,6 +286,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\HotKey.cs" />
+    <Compile Include="RazorEnhanced\DPSMeter.cs" />
     <Compile Include="RazorEnhanced\ToolBar.cs">
       <SubType>Form</SubType>
     </Compile>
