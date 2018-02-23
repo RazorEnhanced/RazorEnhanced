@@ -589,14 +589,14 @@ DLLFUNCTION void DoFeatures(int realFeatures, bool fakeversion)
 
 	if (fakeversion)
 	{
-		memcpy(&str[c], DLL_VERSION, strlen(DLL_VERSION));
-		c += (int)strlen(DLL_VERSION);
+		memcpy(&str[c], DLL_VERSION_DEMISE, strlen(DLL_VERSION_DEMISE));
+		c += (int)strlen(DLL_VERSION_DEMISE);
 		str[c++] = 0;
 	}
 	else
 	{
-		memcpy(&str[c], DLL_VERSION_DEMISE, strlen(DLL_VERSION_DEMISE));
-		c += (int)strlen(DLL_VERSION_DEMISE);
+		memcpy(&str[c], DLL_VERSION, strlen(DLL_VERSION));
+		c += (int)strlen(DLL_VERSION);
 		str[c++] = 0;
 	}
 
