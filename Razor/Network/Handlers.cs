@@ -2397,7 +2397,10 @@ namespace Assistant
 				p.Seek(3, SeekOrigin.Begin);
 				p.WriteAsciiFixed("", (int)p.Length - 3);
 
-				ClientCommunication.DoFeatures(World.Player.Features);
+				if (World.ShardName.Contains("Demise"))  // Demise version check
+					ClientCommunication.DoFeatures(World.Player.Features, true);
+				else
+					ClientCommunication.DoFeatures(World.Player.Features, false);
 			}
 			else
 			{
