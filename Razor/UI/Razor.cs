@@ -211,7 +211,7 @@ namespace Assistant
 		private RazorButton dressRemoveB;
 		private RazorButton dressReadB;
 		private Label label29;
-		private RazorTextBox dressDragDelay;
+		private RazorAgentNumOnlyTextBox dressDragDelay;
 		private GroupBox groupBox21;
 		private ListBox dressLogBox;
 		private ListView dressListView;
@@ -702,7 +702,7 @@ namespace Assistant
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
 		internal ListView DressListView { get { return dressListView; } }
 		internal ListBox DressLogBox { get { return dressLogBox; } }
-		internal RazorTextBox DressDragDelay { get { return dressDragDelay; } }
+		internal RazorAgentNumOnlyTextBox DressDragDelay { get { return dressDragDelay; } }
 		internal ComboBox DressListSelect { get { return dressListSelect; } }
 		internal Label DressBagLabel { get { return dressBagLabel; } }
 
@@ -1272,7 +1272,7 @@ namespace Assistant
 			this.dressSetBagB = new RazorEnhanced.UI.RazorButton();
 			this.undressExecuteButton = new RazorEnhanced.UI.RazorButton();
 			this.dressExecuteButton = new RazorEnhanced.UI.RazorButton();
-			this.dressDragDelay = new RazorEnhanced.UI.RazorTextBox();
+			this.dressDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.dressListView = new System.Windows.Forms.ListView();
 			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1405,6 +1405,7 @@ namespace Assistant
 			this.videoPathTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.DPStabPage = new System.Windows.Forms.TabPage();
 			this.filtergroup = new System.Windows.Forms.GroupBox();
+			this.DPSMeterClearFilterButton = new RazorEnhanced.UI.RazorButton();
 			this.DPSMeterApplyFilterButton = new RazorEnhanced.UI.RazorButton();
 			this.DPSmetername = new RazorEnhanced.UI.RazorTextBox();
 			this.label70 = new System.Windows.Forms.Label();
@@ -1429,7 +1430,6 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.DPSMeterClearFilterButton = new RazorEnhanced.UI.RazorButton();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -5935,7 +5935,7 @@ namespace Assistant
 			this.dressDragDelay.Name = "dressDragDelay";
 			this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.dressDragDelay.TabIndex = 75;
-			this.dressDragDelay.TextChanged += new System.EventHandler(this.dressDragDelay_TextChanged);
+			this.dressDragDelay.Leave += new System.EventHandler(this.dressDragDelay_Leave);
 			// 
 			// dressListView
 			// 
@@ -7366,6 +7366,15 @@ namespace Assistant
 			this.filtergroup.TabStop = false;
 			this.filtergroup.Text = "Filter";
 			// 
+			// DPSMeterClearFilterButton
+			// 
+			this.DPSMeterClearFilterButton.Location = new System.Drawing.Point(144, 129);
+			this.DPSMeterClearFilterButton.Name = "DPSMeterClearFilterButton";
+			this.DPSMeterClearFilterButton.Size = new System.Drawing.Size(63, 21);
+			this.DPSMeterClearFilterButton.TabIndex = 68;
+			this.DPSMeterClearFilterButton.Text = "Clear";
+			this.DPSMeterClearFilterButton.Click += new System.EventHandler(this.DPSMeterClearFilterButton_Click);
+			// 
 			// DPSMeterApplyFilterButton
 			// 
 			this.DPSMeterApplyFilterButton.Location = new System.Drawing.Point(213, 129);
@@ -7567,15 +7576,6 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
-			// 
-			// DPSMeterClearFilterButton
-			// 
-			this.DPSMeterClearFilterButton.Location = new System.Drawing.Point(144, 129);
-			this.DPSMeterClearFilterButton.Name = "DPSMeterClearFilterButton";
-			this.DPSMeterClearFilterButton.Size = new System.Drawing.Size(63, 21);
-			this.DPSMeterClearFilterButton.TabIndex = 68;
-			this.DPSMeterClearFilterButton.Text = "Clear";
-			this.DPSMeterClearFilterButton.Click += new System.EventHandler(this.DPSMeterClearFilterButton_Click);
 			// 
 			// MainForm
 			// 
@@ -10878,15 +10878,13 @@ namespace Assistant
 		// --------------- DRESS START ---------
 		private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out int bag, out int delay, out bool conflict);
-			RazorEnhanced.Dress.DressBag = bag;
-			RazorEnhanced.Dress.DressDelay = delay;
-			RazorEnhanced.Dress.DressConflict = conflict;
-			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-			RazorEnhanced.Dress.RefreshItems();
-
-			if (dressListSelect.Text != String.Empty)
+			if (dressListSelect.Focused && dressListSelect.Text != String.Empty)
+			{
 				RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.Text);
+			}
+			RazorEnhanced.Dress.UpdateListParam(dressListSelect.Text);
+			Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshItems();
 		}
 
 		private void dressAddListB_Click(object sender, EventArgs e)
@@ -10920,19 +10918,25 @@ namespace Assistant
 			}
 		}
 
-		private void dressDragDelay_TextChanged(object sender, EventArgs e)
+		private void dressDragDelay_Leave(object sender, EventArgs e)
 		{
-			if (dressDragDelay.Focused)
-			{
-				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-				RazorEnhanced.Dress.RefreshLists();
-			}
+			if (dressDragDelay.Text == String.Empty)
+				dressDragDelay.Text = "100";
+
+			RazorEnhanced.Dress.DressDelay = Convert.ToInt32(dressDragDelay.Text);
+
+			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshLists();
 		}
 
 		private void dressConflictCheckB_CheckedChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-			RazorEnhanced.Dress.RefreshLists();
+			if (dressConflictCheckB.Focused)
+			{
+				RazorEnhanced.Dress.DressConflict = dressConflictCheckB.Checked;
+				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+				RazorEnhanced.Dress.RefreshLists();
+			}
 		}
 
 		private void dressReadB_Click(object sender, EventArgs e)
@@ -10973,8 +10977,10 @@ namespace Assistant
 				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true); });
-			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Dress.RefreshLists(); });
+			this.BeginInvoke((MethodInvoker)delegate {
+				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			    RazorEnhanced.Dress.RefreshLists();
+			});
 		}
 
 		private void dressRemoveB_Click(object sender, EventArgs e)
@@ -11065,21 +11071,26 @@ namespace Assistant
 
 		internal void UndressStart()
 		{
-			if (World.Player != null)
-			{
-				RazorEnhanced.Dress.UndressStart();
-
-				RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
-				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
-
-				UndressStartWork();
-			}
-			else
+			if (World.Player == null) // non loggato
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
 				UndressFinishWork();
+				return;
 			}
+
+			if (dressListSelect.Text == String.Empty)
+			{
+				RazorEnhanced.Dress.AddLog("Item List not selected!");
+				UndressFinishWork();
+				return;
+			}
+
+			UndressStartWork();
+			RazorEnhanced.Dress.UndressStart();
+			RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
+
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
 		}
 
 		private delegate void UndressFinishWorkCallback();
@@ -11151,21 +11162,26 @@ namespace Assistant
 
 		internal void DressStart()
 		{
-			if (World.Player != null)
-			{
-				RazorEnhanced.Dress.DressStart();
-
-				RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
-				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
-
-				UndressStartWork();
-			}
-			else
+			if (World.Player == null) // non loggato
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
 				UndressFinishWork();
+				return;
 			}
+
+			if (dressListSelect.Text == String.Empty)
+			{
+				RazorEnhanced.Dress.AddLog("Item List not selected!");
+				UndressFinishWork();
+				return;
+			}
+
+			UndressStartWork();
+			RazorEnhanced.Dress.DressStart();
+			RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
+
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
 		}
 
 		private void dressStopButton_Click(object sender, EventArgs e)
@@ -13731,6 +13747,8 @@ namespace Assistant
 			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
+
+
 
 		// ----------------- STOP DPS METER -------------------
 	}
