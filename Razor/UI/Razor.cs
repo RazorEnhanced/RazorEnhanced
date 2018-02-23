@@ -721,7 +721,6 @@ namespace Assistant
 		internal RazorCheckBox FriendTBCheckBox { get { return TBfriendCheckBox; } }
 		internal RazorCheckBox FriendCOMCheckBox { get { return COMfriendCheckBox; } }
 		internal RazorCheckBox FriendMINCheckBox { get { return MINfriendCheckBox; } }
-
 		internal ListView FriendGuildListView { get { return friendguildListView; } }
 
 		// Restock
@@ -793,6 +792,11 @@ namespace Assistant
 		// Profiles
 		internal RazorComboBox ProfilesComboBox { get { return profilesComboBox; } }
 		private DataTable scriptTable;
+
+		// DPS Meter
+		internal Button DPSMeterStartB { get { return DPSMeterStartButton; } }
+		internal Button DPSMeterPauseB { get { return DPSMeterPauseButton; } }
+		internal Button DPSMeterStopB { get { return DPSMeterStopButton; } }
 
 		// General
 		internal TextBox ScreenPath { get { return screenPath; } }

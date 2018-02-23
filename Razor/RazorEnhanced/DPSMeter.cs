@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Windows.Forms;
+using System;
 
 namespace RazorEnhanced
 {
@@ -82,5 +83,30 @@ namespace RazorEnhanced
 			ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
 
+		// Parte comandi da script
+
+		public static void Start()
+		{
+			if (Assistant.Engine.MainWindow.DPSMeterStartB.Enabled)
+				Assistant.Engine.MainWindow.DPSMeterStartB.Invoke(new Action(() => Assistant.Engine.MainWindow.DPSMeterStartB.PerformClick()));
+		}
+		public static void Stop()
+		{
+			if (Assistant.Engine.MainWindow.DPSMeterStopB.Enabled)
+				Assistant.Engine.MainWindow.DPSMeterStopB.Invoke(new Action(() => Assistant.Engine.MainWindow.DPSMeterStopB.PerformClick()));
+		}
+		public static void Pause()
+		{
+			if (Assistant.Engine.MainWindow.DPSMeterPauseB.Enabled)
+				Assistant.Engine.MainWindow.DPSMeterPauseB.Invoke(new Action(() => Assistant.Engine.MainWindow.DPSMeterPauseB.PerformClick()));
+		}
+
+		public static int GetDamage(int serial)
+		{
+			if (m_damagedata.ContainsKey((uint)serial))
+				return m_damagedata[(uint)serial].Damage;
+
+			return 0;
+		}
 	}
 }

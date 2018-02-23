@@ -375,6 +375,18 @@ namespace RazorEnhanced
 					}
 					break;
 
+				case "DPS Meter Start":
+					DPSMeter.Start();
+					break;
+
+				case "DPS Meter Pause / Resume":
+					DPSMeter.Pause();
+					break;
+
+				case "DPS Meter Stop":
+					DPSMeter.Stop();
+					break;
+
 				default:
 					break;
 			}

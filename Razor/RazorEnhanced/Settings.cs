@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 45;
+		private static int SettingVersion = 46;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -291,6 +291,18 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "General", "Decline Party", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "DPS Meter Start", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "DPS Meter Pause / Resume", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "DPS Meter Pause", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -5550,6 +5562,33 @@ namespace RazorEnhanced
 
 				realVersion = 45;
 				General.WriteInt("SettingVersion", 45);
+			}
+
+			if (realVersion == 45)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "DPS Meter Start";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "DPS Meter Pause / Resume";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "DPS Meter Stop";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				realVersion = 46;
+				General.WriteInt("SettingVersion", 46);
 			}
 			Save(true);
 		}
