@@ -1575,10 +1575,13 @@ namespace RazorEnhanced.UI
 			};
 			if (open.ShowDialog() == DialogResult.OK)
 			{
-				m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
-				m_Filepath = open.FileName;
-				this.Text = m_Title + " - " + m_Filename + ".py";
-				fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
+				if (open.FileName != null && File.Exists(open.FileName))
+				{
+					m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
+					m_Filepath = open.FileName;
+					this.Text = m_Title + " - " + m_Filename + ".py";
+					fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
+				}
 			}
 		}
 
