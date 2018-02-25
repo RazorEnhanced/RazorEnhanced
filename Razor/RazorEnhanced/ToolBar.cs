@@ -322,7 +322,10 @@ namespace RazorEnhanced
 				if (i >= m_slot)
 					break;
 			}
-			Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
+			if (index > slotlimit)
+				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = slotlimit-1;
+			else
+				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
 		}
 
 		internal static void UpdatePanelImage()
