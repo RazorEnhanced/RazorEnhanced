@@ -23,6 +23,8 @@ namespace RazorEnhanced.UI
 
 		private delegate void SetStatusLabelDelegate(string text, Color color);
 
+		private delegate void SetRecordButtonDelegate(string text);
+
 		private delegate string GetFastTextBoxTextDelegate();
 
 		private delegate void SetTracebackDelegate(string text);
@@ -1353,6 +1355,22 @@ namespace RazorEnhanced.UI
 			}
 		}
 
+		private void SetRecordButton(string text)
+		{
+			if (this.m_onclosing)
+				return;
+
+			if (this.InvokeRequired)
+			{
+				SetRecordButtonDelegate d = new SetRecordButtonDelegate(SetRecordButton);
+				this.Invoke(d, new object[] { text });
+			}
+			else
+			{
+				toolStripButtonGumps.Text = text;
+			}
+		}
+
 		private string GetFastTextBoxText()
 		{
 			if (this.fastColoredTextBoxEditor.InvokeRequired)
@@ -1727,6 +1745,7 @@ namespace RazorEnhanced.UI
 					SetErrorBox("RECORDER: Stop Record");
 					ScriptRecorder.OnRecord = false;
 					SetStatusLabel("IDLE", Color.DarkTurquoise);
+					SetRecordButton("Record");
 					return;
 				}
 				else
@@ -1734,6 +1753,7 @@ namespace RazorEnhanced.UI
 					SetErrorBox("RECORDER: Start Record");
 					ScriptRecorder.OnRecord = true;
 					SetStatusLabel("ON RECORD", Color.Red);
+					SetRecordButton("Stop Record");
 					return;
 				}
 			}
