@@ -626,6 +626,9 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
+			if (World.Player.WalkScriptRequest == 1)
+				World.Player.WalkScriptRequest = 3;
+
 			byte seq = p.ReadByte();
 			int x = p.ReadUInt16();
 			int y = p.ReadUInt16();
@@ -633,9 +636,6 @@ namespace Assistant
 			sbyte z = p.ReadSByte();
 
 			World.Player.MoveRej(seq, dir, new Point3D(x, y, z));
-
-			if (World.Player.WalkScriptRequest == 1)
-				World.Player.WalkScriptRequest = 2;
 		}
 
 		private static void MovementAck(PacketReader p, PacketHandlerEventArgs args)
@@ -643,15 +643,15 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
+			if (World.Player.WalkScriptRequest == 1)
+				World.Player.WalkScriptRequest = 2;
+
 			byte oldNoto = World.Player.Notoriety;
 
 			byte seq = p.ReadByte();
 			World.Player.Notoriety = p.ReadByte();
 
 			args.Block |= !World.Player.MoveAck(seq);
-
-			if (World.Player.WalkScriptRequest == 1)
-				World.Player.WalkScriptRequest = 3;
 		}
 
 		private static void MovementRequest(PacketReader p, PacketHandlerEventArgs args)
