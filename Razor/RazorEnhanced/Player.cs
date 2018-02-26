@@ -1603,7 +1603,7 @@ namespace RazorEnhanced
 		}
 
 		// Moving
-		public static int Walk(string direction)  // Return 2 se cammino accettato, return 3 se cammino fallito
+		public static bool Walk(string direction)  // Return true se walk ok false se rifiutato da server
 		{
 			Direction dir;
 			switch (direction)
@@ -1656,15 +1656,18 @@ namespace RazorEnhanced
 					Thread.Sleep(10);
 					timeout += 10;
 					if (timeout > 2000)
-						return 3; // Cammino fallito
+						break;
 				}
 				state = World.Player.WalkScriptRequest;
 				World.Player.WalkScriptRequest = 0;
 			}
-			return state;
+			if (state == 2)
+				return true;
+			else
+				return false;
 		}
 
-		public static int Run(string direction)  // Return 2 se cammino accettato, return 3 se cammino fallito
+		public static bool Run(string direction)    // Return true se walk ok false se rifiutato da server
 		{
 			Direction dir;
 			switch (direction)
@@ -1716,12 +1719,15 @@ namespace RazorEnhanced
 					Thread.Sleep(10);
 					timeout += 10;
 					if (timeout > 2000)
-						return 3; // Cammino fallito
+						break;
 				}
 				state = World.Player.WalkScriptRequest;
 				World.Player.WalkScriptRequest = 0;
 			}
-			return state;
+			if (state == 2)
+				return true;
+			else
+				return false;
 		}
 
 		internal static void PathFindTo(Assistant.Point3D Location)

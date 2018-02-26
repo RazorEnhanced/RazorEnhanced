@@ -395,10 +395,10 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.InvokeVirtue(string)", new string[] { "string VirtueName" }, "void", "Invoke a chracter virtue by name");
 			descriptionPlayer.Add("Player.InvokeVirtue", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.Walk(string)", new string[] { "string Direction" }, "int", "Move character in a specific direction\n\tCheck the wiki for the possible strings\n\t Return 2 For success move, 3 for fail");
+			tooltip = new ToolTipDescriptions("Player.Walk(string)", new string[] { "string Direction" }, "int", "Move character in a specific direction\n\tCheck the wiki for the possible strings\n\t Return true for success move, false if fail");
 			descriptionPlayer.Add("Player.Walk", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.Run(string)", new string[] { "string Direction" }, "int", "Move character (run speed) in a specific direction\n\tCheck the wiki for the possible strings\n\t Return 2 For success move, 3 for fail");
+			tooltip = new ToolTipDescriptions("Player.Run(string)", new string[] { "string Direction" }, "int", "Move character (run speed) in a specific direction\n\tCheck the wiki for the possible strings\n\t Return true for success move, false if fail");
 			descriptionPlayer.Add("Player.Run", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.PathFindTo(Point3D or (int, int, int))", new string[] { "Point3D Coords or ( int X, int Y, int Z )" }, "void", "Client pathfinder to specific location with Point3D or XYZ coordinates");

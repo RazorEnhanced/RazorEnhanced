@@ -1,5 +1,6 @@
 ﻿using Assistant;
 using System;
+using System.Drawing;
 using System.Media;
 using System.Threading;
 
@@ -389,7 +390,8 @@ namespace RazorEnhanced
 
 		public static void test()
 		{
-			TitleBar.UpdateTitleBar();
+
+
 		}
 
 
