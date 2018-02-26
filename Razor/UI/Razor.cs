@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management;
 using Accord.Video.DirectShow;
+using AutoUpdaterDotNET;
 
 
 namespace Assistant
@@ -210,7 +211,7 @@ namespace Assistant
 		private RazorButton dressRemoveB;
 		private RazorButton dressReadB;
 		private Label label29;
-		private RazorTextBox dressDragDelay;
+		private RazorAgentNumOnlyTextBox dressDragDelay;
 		private GroupBox groupBox21;
 		private ListBox dressLogBox;
 		private ListView dressListView;
@@ -600,6 +601,28 @@ namespace Assistant
 		private Accord.Controls.VideoSourcePlayer videoSourcePlayer;
 		private RazorComboBox gridscript_ComboBox;
 		private Label label65;
+		private TabPage DPStabPage;
+		private RazorButton DPSMeterStopButton;
+		private RazorButton DPSMeterStartButton;
+		private RazorButton DPSMeterClearButton;
+		private Label DPSMeterStatusLabel;
+		private Label label67;
+		private RazorButton DPSMeterPauseButton;
+		private DataGridView DpsMeterGridView;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn13;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn14;
+		private DataGridViewTextBoxColumn dataGridViewTextBoxColumn15;
+		private GroupBox filtergroup;
+		private RazorButton DPSMeterApplyFilterButton;
+		private RazorTextBox DPSmetername;
+		private Label label70;
+		private RazorAgentNumHexTextBox DPSmeterserial;
+		private Label label69;
+		private Label label68;
+		private RazorAgentNumOnlyTextBox DPSmetermaxdamage;
+		private Label label66;
+		private RazorAgentNumOnlyTextBox DPSmetermindamage;
+		private RazorButton DPSMeterClearFilterButton;
 		private System.Drawing.Point windowspt;
 
 		[DllImport("User32.dll")]
@@ -679,7 +702,7 @@ namespace Assistant
 		internal CheckBox DressCheckBox { get { return dressConflictCheckB; } }
 		internal ListView DressListView { get { return dressListView; } }
 		internal ListBox DressLogBox { get { return dressLogBox; } }
-		internal RazorTextBox DressDragDelay { get { return dressDragDelay; } }
+		internal RazorAgentNumOnlyTextBox DressDragDelay { get { return dressDragDelay; } }
 		internal ComboBox DressListSelect { get { return dressListSelect; } }
 		internal Label DressBagLabel { get { return dressBagLabel; } }
 
@@ -698,7 +721,6 @@ namespace Assistant
 		internal RazorCheckBox FriendTBCheckBox { get { return TBfriendCheckBox; } }
 		internal RazorCheckBox FriendCOMCheckBox { get { return COMfriendCheckBox; } }
 		internal RazorCheckBox FriendMINCheckBox { get { return MINfriendCheckBox; } }
-
 		internal ListView FriendGuildListView { get { return friendguildListView; } }
 
 		// Restock
@@ -769,11 +791,12 @@ namespace Assistant
 
 		// Profiles
 		internal RazorComboBox ProfilesComboBox { get { return profilesComboBox; } }
-
 		private DataTable scriptTable;
 
-		// Version check
-		internal Thread VersionCheck;
+		// DPS Meter
+		internal Button DPSMeterStartB { get { return DPSMeterStartButton; } }
+		internal Button DPSMeterPauseB { get { return DPSMeterPauseButton; } }
+		internal Button DPSMeterStopB { get { return DPSMeterStopButton; } }
 
 		// General
 		internal TextBox ScreenPath { get { return screenPath; } }
@@ -1253,7 +1276,7 @@ namespace Assistant
 			this.dressSetBagB = new RazorEnhanced.UI.RazorButton();
 			this.undressExecuteButton = new RazorEnhanced.UI.RazorButton();
 			this.dressExecuteButton = new RazorEnhanced.UI.RazorButton();
-			this.dressDragDelay = new RazorEnhanced.UI.RazorTextBox();
+			this.dressDragDelay = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.dressListView = new System.Windows.Forms.ListView();
 			this.columnHeader24 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.columnHeader25 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -1384,6 +1407,28 @@ namespace Assistant
 			this.videolistBox = new System.Windows.Forms.ListBox();
 			this.videoPathButton = new RazorEnhanced.UI.RazorButton();
 			this.videoPathTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.DPStabPage = new System.Windows.Forms.TabPage();
+			this.filtergroup = new System.Windows.Forms.GroupBox();
+			this.DPSMeterClearFilterButton = new RazorEnhanced.UI.RazorButton();
+			this.DPSMeterApplyFilterButton = new RazorEnhanced.UI.RazorButton();
+			this.DPSmetername = new RazorEnhanced.UI.RazorTextBox();
+			this.label70 = new System.Windows.Forms.Label();
+			this.DPSmeterserial = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
+			this.label69 = new System.Windows.Forms.Label();
+			this.label68 = new System.Windows.Forms.Label();
+			this.DPSmetermaxdamage = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+			this.label66 = new System.Windows.Forms.Label();
+			this.DPSmetermindamage = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
+			this.DpsMeterGridView = new System.Windows.Forms.DataGridView();
+			this.dataGridViewTextBoxColumn13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.DPSMeterStatusLabel = new System.Windows.Forms.Label();
+			this.label67 = new System.Windows.Forms.Label();
+			this.DPSMeterPauseButton = new RazorEnhanced.UI.RazorButton();
+			this.DPSMeterStopButton = new RazorEnhanced.UI.RazorButton();
+			this.DPSMeterStartButton = new RazorEnhanced.UI.RazorButton();
+			this.DPSMeterClearButton = new RazorEnhanced.UI.RazorButton();
 			this.m_NotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
 			this.openFileDialogscript = new System.Windows.Forms.OpenFileDialog();
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
@@ -1469,6 +1514,9 @@ namespace Assistant
 			this.groupBox40.SuspendLayout();
 			this.videosettinggroupBox.SuspendLayout();
 			this.groupBox15.SuspendLayout();
+			this.DPStabPage.SuspendLayout();
+			this.filtergroup.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.DpsMeterGridView)).BeginInit();
 			this.datagridMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -1486,6 +1534,7 @@ namespace Assistant
 			this.tabs.Controls.Add(this.EnhancedAgent);
 			this.tabs.Controls.Add(this.enhancedHotKeytabPage);
 			this.tabs.Controls.Add(this.videoTab);
+			this.tabs.Controls.Add(this.DPStabPage);
 			this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabs.Location = new System.Drawing.Point(0, 0);
 			this.tabs.Multiline = true;
@@ -5890,7 +5939,7 @@ namespace Assistant
 			this.dressDragDelay.Name = "dressDragDelay";
 			this.dressDragDelay.Size = new System.Drawing.Size(45, 20);
 			this.dressDragDelay.TabIndex = 75;
-			this.dressDragDelay.TextChanged += new System.EventHandler(this.dressDragDelay_TextChanged);
+			this.dressDragDelay.Leave += new System.EventHandler(this.dressDragDelay_Leave);
 			// 
 			// dressListView
 			// 
@@ -7284,6 +7333,223 @@ namespace Assistant
 			this.videoPathTextBox.Size = new System.Drawing.Size(195, 20);
 			this.videoPathTextBox.TabIndex = 10;
 			// 
+			// DPStabPage
+			// 
+			this.DPStabPage.Controls.Add(this.filtergroup);
+			this.DPStabPage.Controls.Add(this.DpsMeterGridView);
+			this.DPStabPage.Controls.Add(this.DPSMeterStatusLabel);
+			this.DPStabPage.Controls.Add(this.label67);
+			this.DPStabPage.Controls.Add(this.DPSMeterPauseButton);
+			this.DPStabPage.Controls.Add(this.DPSMeterStopButton);
+			this.DPStabPage.Controls.Add(this.DPSMeterStartButton);
+			this.DPStabPage.Controls.Add(this.DPSMeterClearButton);
+			this.DPStabPage.Location = new System.Drawing.Point(4, 40);
+			this.DPStabPage.Name = "DPStabPage";
+			this.DPStabPage.Padding = new System.Windows.Forms.Padding(3);
+			this.DPStabPage.Size = new System.Drawing.Size(666, 366);
+			this.DPStabPage.TabIndex = 17;
+			this.DPStabPage.Text = "DPS Meter";
+			this.DPStabPage.UseVisualStyleBackColor = true;
+			// 
+			// filtergroup
+			// 
+			this.filtergroup.Controls.Add(this.DPSMeterClearFilterButton);
+			this.filtergroup.Controls.Add(this.DPSMeterApplyFilterButton);
+			this.filtergroup.Controls.Add(this.DPSmetername);
+			this.filtergroup.Controls.Add(this.label70);
+			this.filtergroup.Controls.Add(this.DPSmeterserial);
+			this.filtergroup.Controls.Add(this.label69);
+			this.filtergroup.Controls.Add(this.label68);
+			this.filtergroup.Controls.Add(this.DPSmetermaxdamage);
+			this.filtergroup.Controls.Add(this.label66);
+			this.filtergroup.Controls.Add(this.DPSmetermindamage);
+			this.filtergroup.Location = new System.Drawing.Point(372, 53);
+			this.filtergroup.Name = "filtergroup";
+			this.filtergroup.Size = new System.Drawing.Size(288, 167);
+			this.filtergroup.TabIndex = 66;
+			this.filtergroup.TabStop = false;
+			this.filtergroup.Text = "Filter";
+			// 
+			// DPSMeterClearFilterButton
+			// 
+			this.DPSMeterClearFilterButton.Location = new System.Drawing.Point(144, 129);
+			this.DPSMeterClearFilterButton.Name = "DPSMeterClearFilterButton";
+			this.DPSMeterClearFilterButton.Size = new System.Drawing.Size(63, 21);
+			this.DPSMeterClearFilterButton.TabIndex = 68;
+			this.DPSMeterClearFilterButton.Text = "Clear";
+			this.DPSMeterClearFilterButton.Click += new System.EventHandler(this.DPSMeterClearFilterButton_Click);
+			// 
+			// DPSMeterApplyFilterButton
+			// 
+			this.DPSMeterApplyFilterButton.Location = new System.Drawing.Point(213, 129);
+			this.DPSMeterApplyFilterButton.Name = "DPSMeterApplyFilterButton";
+			this.DPSMeterApplyFilterButton.Size = new System.Drawing.Size(63, 21);
+			this.DPSMeterApplyFilterButton.TabIndex = 67;
+			this.DPSMeterApplyFilterButton.Text = "Apply";
+			this.DPSMeterApplyFilterButton.Click += new System.EventHandler(this.DPSMeterApplyFilterButton_Click);
+			// 
+			// DPSmetername
+			// 
+			this.DPSmetername.Location = new System.Drawing.Point(48, 93);
+			this.DPSmetername.Name = "DPSmetername";
+			this.DPSmetername.Size = new System.Drawing.Size(228, 20);
+			this.DPSmetername.TabIndex = 8;
+			// 
+			// label70
+			// 
+			this.label70.AutoSize = true;
+			this.label70.Location = new System.Drawing.Point(6, 96);
+			this.label70.Name = "label70";
+			this.label70.Size = new System.Drawing.Size(38, 13);
+			this.label70.TabIndex = 7;
+			this.label70.Text = "Name:";
+			// 
+			// DPSmeterserial
+			// 
+			this.DPSmeterserial.Location = new System.Drawing.Point(48, 58);
+			this.DPSmeterserial.Name = "DPSmeterserial";
+			this.DPSmeterserial.Size = new System.Drawing.Size(100, 20);
+			this.DPSmeterserial.TabIndex = 6;
+			// 
+			// label69
+			// 
+			this.label69.AutoSize = true;
+			this.label69.Location = new System.Drawing.Point(6, 61);
+			this.label69.Name = "label69";
+			this.label69.Size = new System.Drawing.Size(36, 13);
+			this.label69.TabIndex = 5;
+			this.label69.Text = "Serial:";
+			// 
+			// label68
+			// 
+			this.label68.AutoSize = true;
+			this.label68.Location = new System.Drawing.Point(144, 26);
+			this.label68.Name = "label68";
+			this.label68.Size = new System.Drawing.Size(73, 13);
+			this.label68.TabIndex = 3;
+			this.label68.Text = "Damage Max:";
+			// 
+			// DPSmetermaxdamage
+			// 
+			this.DPSmetermaxdamage.Location = new System.Drawing.Point(220, 23);
+			this.DPSmetermaxdamage.Name = "DPSmetermaxdamage";
+			this.DPSmetermaxdamage.Size = new System.Drawing.Size(56, 20);
+			this.DPSmetermaxdamage.TabIndex = 2;
+			// 
+			// label66
+			// 
+			this.label66.AutoSize = true;
+			this.label66.Location = new System.Drawing.Point(6, 26);
+			this.label66.Name = "label66";
+			this.label66.Size = new System.Drawing.Size(70, 13);
+			this.label66.TabIndex = 1;
+			this.label66.Text = "Damage Min:";
+			// 
+			// DPSmetermindamage
+			// 
+			this.DPSmetermindamage.Location = new System.Drawing.Point(82, 23);
+			this.DPSmetermindamage.Name = "DPSmetermindamage";
+			this.DPSmetermindamage.Size = new System.Drawing.Size(56, 20);
+			this.DPSmetermindamage.TabIndex = 0;
+			// 
+			// DpsMeterGridView
+			// 
+			this.DpsMeterGridView.AllowDrop = true;
+			this.DpsMeterGridView.AllowUserToResizeRows = false;
+			this.DpsMeterGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.DpsMeterGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn13,
+            this.dataGridViewTextBoxColumn14,
+            this.dataGridViewTextBoxColumn15});
+			this.DpsMeterGridView.Location = new System.Drawing.Point(8, 6);
+			this.DpsMeterGridView.Name = "DpsMeterGridView";
+			this.DpsMeterGridView.RowHeadersVisible = false;
+			this.DpsMeterGridView.Size = new System.Drawing.Size(355, 352);
+			this.DpsMeterGridView.TabIndex = 65;
+			// 
+			// dataGridViewTextBoxColumn13
+			// 
+			this.dataGridViewTextBoxColumn13.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn13.HeaderText = "Serial";
+			this.dataGridViewTextBoxColumn13.Name = "dataGridViewTextBoxColumn13";
+			this.dataGridViewTextBoxColumn13.ReadOnly = true;
+			this.dataGridViewTextBoxColumn13.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn13.Width = 70;
+			// 
+			// dataGridViewTextBoxColumn14
+			// 
+			this.dataGridViewTextBoxColumn14.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn14.HeaderText = "Name";
+			this.dataGridViewTextBoxColumn14.Name = "dataGridViewTextBoxColumn14";
+			this.dataGridViewTextBoxColumn14.ReadOnly = true;
+			this.dataGridViewTextBoxColumn14.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn14.Width = 200;
+			// 
+			// dataGridViewTextBoxColumn15
+			// 
+			this.dataGridViewTextBoxColumn15.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.dataGridViewTextBoxColumn15.HeaderText = "Damage";
+			this.dataGridViewTextBoxColumn15.Name = "dataGridViewTextBoxColumn15";
+			this.dataGridViewTextBoxColumn15.ReadOnly = true;
+			this.dataGridViewTextBoxColumn15.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.dataGridViewTextBoxColumn15.Width = 60;
+			// 
+			// DPSMeterStatusLabel
+			// 
+			this.DPSMeterStatusLabel.AutoSize = true;
+			this.DPSMeterStatusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DPSMeterStatusLabel.ForeColor = System.Drawing.Color.Green;
+			this.DPSMeterStatusLabel.Location = new System.Drawing.Point(409, 343);
+			this.DPSMeterStatusLabel.Name = "DPSMeterStatusLabel";
+			this.DPSMeterStatusLabel.Size = new System.Drawing.Size(28, 13);
+			this.DPSMeterStatusLabel.TabIndex = 64;
+			this.DPSMeterStatusLabel.Text = "Idle";
+			// 
+			// label67
+			// 
+			this.label67.AutoSize = true;
+			this.label67.Location = new System.Drawing.Point(369, 343);
+			this.label67.Name = "label67";
+			this.label67.Size = new System.Drawing.Size(40, 13);
+			this.label67.TabIndex = 63;
+			this.label67.Text = "Status:";
+			// 
+			// DPSMeterPauseButton
+			// 
+			this.DPSMeterPauseButton.Location = new System.Drawing.Point(516, 17);
+			this.DPSMeterPauseButton.Name = "DPSMeterPauseButton";
+			this.DPSMeterPauseButton.Size = new System.Drawing.Size(63, 21);
+			this.DPSMeterPauseButton.TabIndex = 61;
+			this.DPSMeterPauseButton.Text = "Pause";
+			this.DPSMeterPauseButton.Click += new System.EventHandler(this.DPSMeterPauseButton_Click);
+			// 
+			// DPSMeterStopButton
+			// 
+			this.DPSMeterStopButton.Location = new System.Drawing.Point(447, 17);
+			this.DPSMeterStopButton.Name = "DPSMeterStopButton";
+			this.DPSMeterStopButton.Size = new System.Drawing.Size(63, 21);
+			this.DPSMeterStopButton.TabIndex = 60;
+			this.DPSMeterStopButton.Text = "Stop";
+			this.DPSMeterStopButton.Click += new System.EventHandler(this.DPSMeterStopButton_Click);
+			// 
+			// DPSMeterStartButton
+			// 
+			this.DPSMeterStartButton.Location = new System.Drawing.Point(378, 17);
+			this.DPSMeterStartButton.Name = "DPSMeterStartButton";
+			this.DPSMeterStartButton.Size = new System.Drawing.Size(63, 21);
+			this.DPSMeterStartButton.TabIndex = 59;
+			this.DPSMeterStartButton.Text = "Start";
+			this.DPSMeterStartButton.Click += new System.EventHandler(this.DPSMeterStartButton_Click);
+			// 
+			// DPSMeterClearButton
+			// 
+			this.DPSMeterClearButton.Location = new System.Drawing.Point(585, 17);
+			this.DPSMeterClearButton.Name = "DPSMeterClearButton";
+			this.DPSMeterClearButton.Size = new System.Drawing.Size(63, 21);
+			this.DPSMeterClearButton.TabIndex = 58;
+			this.DPSMeterClearButton.Text = "Clear";
+			this.DPSMeterClearButton.Click += new System.EventHandler(this.DPSMeterClearButton_Click);
+			// 
 			// m_NotifyIcon
 			// 
 			this.m_NotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("m_NotifyIcon.Icon")));
@@ -7449,6 +7715,11 @@ namespace Assistant
 			this.videosettinggroupBox.PerformLayout();
 			this.groupBox15.ResumeLayout(false);
 			this.groupBox15.PerformLayout();
+			this.DPStabPage.ResumeLayout(false);
+			this.DPStabPage.PerformLayout();
+			this.filtergroup.ResumeLayout(false);
+			this.filtergroup.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.DpsMeterGridView)).EndInit();
 			this.datagridMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -7521,9 +7792,53 @@ namespace Assistant
 			m_Tip.Active = true;
 			SplashScreen.End();
 
-			// Avvio thread version check
-			VersionCheck = new Thread(VersionCheckWorker);
-			VersionCheck.Start();
+			// AutoUpdater
+			AutoUpdater.ShowSkipButton = false;
+			AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;
+			AutoUpdater.ReportErrors = true;
+			AutoUpdater.Start("http://razorenhanced.org/download/RazorAutoUpdater.xml");
+		}
+
+		private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
+		{
+			if (args != null)
+			{
+				if (args.IsUpdateAvailable)
+				{
+					DialogResult dialogResult;
+
+					dialogResult =
+						MessageBox.Show(
+							$@"There is new version {args.CurrentVersion} available. You are using version {
+									args.InstalledVersion
+								}. Do you want to update the application now?", @"Update Available",
+							MessageBoxButtons.YesNo,
+							MessageBoxIcon.Information);
+
+					if (dialogResult.Equals(DialogResult.Yes))
+					{
+						try
+						{
+							if (AutoUpdater.DownloadUpdate())
+							{
+								Application.Exit();
+								Thread.Sleep(2000); // attesa uscita
+							}
+						}
+						catch (Exception exception)
+						{
+							MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
+								MessageBoxIcon.Error);
+						}
+					}
+				}
+			}
+			else
+			{
+				MessageBox.Show(
+						@"There is a problem reaching update server please check your internet connection and try again later.",
+						@"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 
 		public void DisableRecorder()
@@ -7588,6 +7903,11 @@ namespace Assistant
 
 			// ------------------ HOTKEY --------------------
 			RazorEnhanced.HotKey.Init();
+
+			// ------------------ DPS METER --------------------
+			DPSMeterStopButton.Enabled = DPSMeterPauseButton.Enabled = false;
+			DPSMeter.Clear();
+			DpsMeterGridView.Rows.Clear();
 
 			// ------------------ PARAMETRI GENERALI -------------------
 			imgFmt.SelectedItem = RazorEnhanced.Settings.General.ReadString("ImageFormat");
@@ -9541,17 +9861,16 @@ namespace Assistant
 				AutoLoot.AddLog("Autoloot Engine Stop...");
 			}
 		}
-	
+
 
 		private void autoLootListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (autolootListSelect.Focused && autolootListSelect.Text != String.Empty)
 			{
 				AutoLoot.UpdateListParam(autolootListSelect.Text);
-				Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
-
 				AutoLoot.AddLog("Autoloot list changed to: " + autolootListSelect.Text);
 			}
+			Settings.AutoLoot.ListUpdate(autolootListSelect.Text, AutoLoot.AutoLootDelay, AutoLoot.AutoLootBag, true, AutoLoot.NoOpenCorpse, AutoLoot.MaxRange);
 			AutoLoot.InitGrid();
 		}
 		private void autoLootnoopenCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -9774,11 +10093,10 @@ namespace Assistant
 			if (scavengerListSelect.Focused && scavengerListSelect.Text != String.Empty)
 			{
 				Scavenger.UpdateListParam(scavengerListSelect.Text);
-				Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
-
 				Scavenger.AddLog("Scavenger list changed to: " + scavengerListSelect.Text);
 			}
 			Scavenger.InitGrid();
+			Settings.Scavenger.ListUpdate(scavengerListSelect.Text, Scavenger.ScavengerDelay, Scavenger.ScavengerBag, true, Scavenger.MaxRange);
 		}
 
 		private void scavengerEnableCheck_CheckedChanged(object sender, EventArgs e)
@@ -10017,10 +10335,9 @@ namespace Assistant
 			if (organizerListSelect.Focused && organizerListSelect.Text != String.Empty)
 			{
 				Organizer.UpdateListParam(organizerListSelect.Text);
-				Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
-
 				Organizer.AddLog("Organizer list changed to: " + organizerListSelect.Text);
 			}
+			Settings.Organizer.ListUpdate(organizerListSelect.Text, RazorEnhanced.Organizer.OrganizerDelay, RazorEnhanced.Organizer.OrganizerSource, RazorEnhanced.Organizer.OrganizerDestination, true);
 			Organizer.InitGrid();
 		}
 
@@ -10209,11 +10526,9 @@ namespace Assistant
 			if (sellListSelect.Focused && sellListSelect.Text != String.Empty)
 			{
 				SellAgent.UpdateListParam(sellListSelect.Text);
-				Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
-
 				SellAgent.AddLog("Sell Agent list changed to: " + sellListSelect.Text);
 			}
-
+			Settings.SellAgent.ListUpdate(sellListSelect.Text, RazorEnhanced.SellAgent.SellBag, true);
 			SellAgent.InitGrid();
 		}
 
@@ -10418,11 +10733,10 @@ namespace Assistant
 		{
 			if (buyListSelect.Focused && buyListSelect.Text != String.Empty)
 			{
-				Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
 				BuyAgent.BuyListName = buyListSelect.Text;
-
 				BuyAgent.AddLog("Buy Agent list changed to: " + buyListSelect.Text);
 			}
+			Settings.BuyAgent.ListUpdate(buyListSelect.Text, true);
 			RazorEnhanced.BuyAgent.InitGrid();
 		}
 
@@ -10537,21 +10851,21 @@ namespace Assistant
 
 		private void vendorbuydataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
-				DataGridViewCell cell = vendorbuydataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
+			DataGridViewCell cell = vendorbuydataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
-				if (e.ColumnIndex == 4)
-				{
-					cell.Value = Utility.FormatDatagridColorCell(cell);
-				}
-				else if (e.ColumnIndex == 3)
-				{
-					cell.Value = Utility.FormatDatagridAmountCell(cell, false);
-				}
-				else if (e.ColumnIndex == 2)
-				{
-					cell.Value = Utility.FormatDatagridItemIDCell(cell);
-				}
-				RazorEnhanced.BuyAgent.CopyTable();
+			if (e.ColumnIndex == 4)
+			{
+				cell.Value = Utility.FormatDatagridColorCell(cell);
+			}
+			else if (e.ColumnIndex == 3)
+			{
+				cell.Value = Utility.FormatDatagridAmountCell(cell, false);
+			}
+			else if (e.ColumnIndex == 2)
+			{
+				cell.Value = Utility.FormatDatagridItemIDCell(cell);
+			}
+			RazorEnhanced.BuyAgent.CopyTable();
 		}
 
 		private void vendorbuydataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
@@ -10568,15 +10882,13 @@ namespace Assistant
 		// --------------- DRESS START ---------
 		private void dressListSelect_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.Dress.ListDetailsRead(dressListSelect.Text, out int bag, out int delay, out bool conflict);
-			RazorEnhanced.Dress.DressBag = bag;
-			RazorEnhanced.Dress.DressDelay = delay;
-			RazorEnhanced.Dress.DressConflict = conflict;
-			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-			RazorEnhanced.Dress.RefreshItems();
-
-			if (dressListSelect.Text != String.Empty)
+			if (dressListSelect.Focused && dressListSelect.Text != String.Empty)
+			{
 				RazorEnhanced.Dress.AddLog("Dress list changed to: " + dressListSelect.Text);
+			}
+			RazorEnhanced.Dress.UpdateListParam(dressListSelect.Text);
+			Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshItems();
 		}
 
 		private void dressAddListB_Click(object sender, EventArgs e)
@@ -10610,19 +10922,25 @@ namespace Assistant
 			}
 		}
 
-		private void dressDragDelay_TextChanged(object sender, EventArgs e)
+		private void dressDragDelay_Leave(object sender, EventArgs e)
 		{
-			if (dressDragDelay.Focused)
-			{
-				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-				RazorEnhanced.Dress.RefreshLists();
-			}
+			if (dressDragDelay.Text == String.Empty)
+				dressDragDelay.Text = "100";
+
+			RazorEnhanced.Dress.DressDelay = Convert.ToInt32(dressDragDelay.Text);
+
+			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			RazorEnhanced.Dress.RefreshLists();
 		}
 
 		private void dressConflictCheckB_CheckedChanged(object sender, EventArgs e)
 		{
-			RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
-			RazorEnhanced.Dress.RefreshLists();
+			if (dressConflictCheckB.Focused)
+			{
+				RazorEnhanced.Dress.DressConflict = dressConflictCheckB.Checked;
+				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+				RazorEnhanced.Dress.RefreshLists();
+			}
 		}
 
 		private void dressReadB_Click(object sender, EventArgs e)
@@ -10663,8 +10981,10 @@ namespace Assistant
 				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
 
-			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true); });
-			this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Dress.RefreshLists(); });
+			this.BeginInvoke((MethodInvoker)delegate {
+				RazorEnhanced.Settings.Dress.ListUpdate(dressListSelect.Text, RazorEnhanced.Dress.DressDelay, RazorEnhanced.Dress.DressBag, RazorEnhanced.Dress.DressConflict, true);
+			    RazorEnhanced.Dress.RefreshLists();
+			});
 		}
 
 		private void dressRemoveB_Click(object sender, EventArgs e)
@@ -10755,21 +11075,26 @@ namespace Assistant
 
 		internal void UndressStart()
 		{
-			if (World.Player != null)
-			{
-				RazorEnhanced.Dress.UndressStart();
-
-				RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
-				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
-
-				UndressStartWork();
-			}
-			else
+			if (World.Player == null) // non loggato
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
 				UndressFinishWork();
+				return;
 			}
+
+			if (dressListSelect.Text == String.Empty)
+			{
+				RazorEnhanced.Dress.AddLog("Item List not selected!");
+				UndressFinishWork();
+				return;
+			}
+
+			UndressStartWork();
+			RazorEnhanced.Dress.UndressStart();
+			RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
+
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
 		}
 
 		private delegate void UndressFinishWorkCallback();
@@ -10841,21 +11166,26 @@ namespace Assistant
 
 		internal void DressStart()
 		{
-			if (World.Player != null)
-			{
-				RazorEnhanced.Dress.DressStart();
-
-				RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
-				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
-
-				UndressStartWork();
-			}
-			else
+			if (World.Player == null) // non loggato
 			{
 				RazorEnhanced.Dress.AddLog("You are not logged in game!");
 				UndressFinishWork();
+				return;
 			}
+
+			if (dressListSelect.Text == String.Empty)
+			{
+				RazorEnhanced.Dress.AddLog("Item List not selected!");
+				UndressFinishWork();
+				return;
+			}
+
+			UndressStartWork();
+			RazorEnhanced.Dress.DressStart();
+			RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
+
+			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
+				RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
 		}
 
 		private void dressStopButton_Click(object sender, EventArgs e)
@@ -11098,10 +11428,9 @@ namespace Assistant
 			if (restockListSelect.Focused && restockListSelect.Text != String.Empty)
 			{
 				Restock.UpdateListParam(restockListSelect.Text);
-				Settings.Restock.ListUpdate(restockListSelect.Text, Restock.RestockDelay, Restock.RestockSource, Restock.RestockDestination, true);
-
 				RazorEnhanced.Restock.AddLog("Restock list changed to: " + restockListSelect.Text);
 			}
+			Settings.Restock.ListUpdate(restockListSelect.Text, Restock.RestockDelay, Restock.RestockSource, Restock.RestockDestination, true);
 			RazorEnhanced.Restock.InitGrid();
 		}
 
@@ -11371,7 +11700,7 @@ namespace Assistant
 		private void restockdataGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
 		{
 			DataGridViewCell cell = restockdataGridView.Rows[e.RowIndex].Cells[e.ColumnIndex];
-			
+
 			if (e.ColumnIndex == 3)
 			{
 				cell.Value = Utility.FormatDatagridColorCell(cell);
@@ -12059,14 +12388,23 @@ namespace Assistant
 
 		private void toolboxstyleComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (toolboxstyleComboBox.Text != "TitleBar")
+			{
+				toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = true;
+				ClientCommunication.SetTitleStr(""); // Restore titlebar standard
+			}
+			else
+				toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = false;
+
 			if (toolboxstyleComboBox.Focused)
 			{
 				RazorEnhanced.Settings.General.WriteString("ToolBoxStyleComboBox", toolboxstyleComboBox.Text);
+
 				RazorEnhanced.ToolBar.Close();
 				RazorEnhanced.ToolBar.Open();
 			}
 		}
-		 
+
 		private void toolboxsizeComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (toolboxsizeComboBox.Focused)
@@ -12433,20 +12771,20 @@ namespace Assistant
 			}
 
 
-		/*	if (ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
-			{
-				RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.LightFilter).ToString());
+			/*	if (ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors))
+				{
+					RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.LightFilter).ToString());
 
-				//RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors).ToString());
-				autoOpenDoors.Checked = false;
-				autoOpenDoors.Enabled = false;
-				Settings.General.WriteBoolNoSave("AutoOpenDoors", false);
-			}
-			else
-			{
-				if (!autoOpenDoors.Enabled)
-					autoOpenDoors.Enabled = true;
-			}*/
+					//RazorEnhanced.AutoLoot.AddLog(ClientCommunication.AllowBit(FeatureBit.AutoOpenDoors).ToString());
+					autoOpenDoors.Checked = false;
+					autoOpenDoors.Enabled = false;
+					Settings.General.WriteBoolNoSave("AutoOpenDoors", false);
+				}
+				else
+				{
+					if (!autoOpenDoors.Enabled)
+						autoOpenDoors.Enabled = true;
+				}*/
 
 
 			if (!ClientCommunication.AllowBit(FeatureBit.UnequipBeforeCast))
@@ -12485,16 +12823,16 @@ namespace Assistant
 					blockhealpoisonCheckBox.Enabled = true;
 			}
 
-		/*	if (!ClientCommunication.AllowBit(FeatureBit.SellAgent))
-			{
-				sellEnableCheckBox.Enabled = false;
-				sellEnableCheckBox.Checked = false;
-			}
-			else
-			{
-				if (!sellEnableCheckBox.Enabled)
-					sellEnableCheckBox.Enabled = true;
-			}*/
+			/*	if (!ClientCommunication.AllowBit(FeatureBit.SellAgent))
+				{
+					sellEnableCheckBox.Enabled = false;
+					sellEnableCheckBox.Checked = false;
+				}
+				else
+				{
+					if (!sellEnableCheckBox.Enabled)
+						sellEnableCheckBox.Enabled = true;
+				}*/
 
 
 			/*if (!ClientCommunication.AllowBit(FeatureBit.BuyAgent))
@@ -12561,57 +12899,6 @@ namespace Assistant
 		}
 		// ----------------- FEATURE END -------------------
 
-		// ----------------- CHECK UPDATE START -------------------
-
-		private static string UniqueMachineId()
-		{
-			string cpuInfo = string.Empty;
-			ManagementClass mc = new ManagementClass("win32_processor");
-			ManagementObjectCollection moc = mc.GetInstances();
-
-			foreach (ManagementObject mo in moc)
-			{
-				cpuInfo = mo.Properties["processorID"].Value.ToString();
-				break;
-			}
-			return cpuInfo;
-		}
-
-
-		internal static void VersionCheckWorker()
-		{
-			WebClient client = new WebClient();
-
-			// Controllo versione
-			try // Try catch in caso che il server sia irraggiungibile
-			{
-				string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
-
-				if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
-				{
-					DialogResult dialogResult = MessageBox.Show("A newer version of Razor Enhanced is available! Do you want to open your browser to download it?", "Newer Version Available", MessageBoxButtons.YesNo);
-					if (dialogResult == DialogResult.Yes)
-					{
-						System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
-					}
-				}
-			}
-			catch
-			{
-			}
-
-			// Utilizzo
-			try // Try catch in caso che il server sia irraggiungibile
-			{
-				string reply = client.DownloadString("http://razorenhanced.org/use.php?Serial=" + UniqueMachineId());
-			}
-			catch
-			{
-			}
-
-		}
-		// ----------------- CHECK UPDATE END -------------------
-
 		// ----------------- GRID START -------------------
 
 		private void gridopen_button_Click(object sender, EventArgs e)
@@ -12647,7 +12934,7 @@ namespace Assistant
 			if (item.Group != "Empty")
 			{
 				gridborder_ComboBox.Enabled = true;
-				
+
 				gridborder_ComboBox.SelectedIndex = gridborder_ComboBox.Items.IndexOf(item.Color.Name);
 				if (item.Group != "Script")
 				{
@@ -13070,6 +13357,13 @@ namespace Assistant
 			if (e.Effect == DragDropEffects.Move)
 			{
 				DataGridViewRow rowToMove = e.Data.GetData(typeof(DataGridViewRow)) as DataGridViewRow;
+
+				if (rowIndexOfItemUnderMouseToDrop >= (grid.RowCount - 1)) // Blocca il drag fuori dalle celle salvate
+					return;
+
+				if (rowIndexFromMouseDown >= (grid.RowCount - 1)) // Blocca il drag di una cella non salvata
+					return;
+
 				grid.Rows.RemoveAt(rowIndexFromMouseDown);
 				grid.Rows.Insert(rowIndexOfItemUnderMouseToDrop, rowToMove);
 				switch (grid.Name)
@@ -13382,5 +13676,93 @@ namespace Assistant
 			this.Cursor = Cursors.Default;
 		}
 		// ----------------- STOP VIDEO RECORDER -------------------
+
+		// ----------------- START DPS METER -------------------
+		private void DPSMeterStartButton_Click(object sender, EventArgs e)
+		{
+			DpsMeterGridView.Rows.Clear();
+			DPSMeter.Clear();
+			DPSMeter.Enabled = DPSMeterStopButton.Enabled = DPSMeterPauseButton.Enabled = true;
+			DPSMeterStartButton.Enabled = DpsMeterGridView.Enabled = false;
+			DPSMeterStatusLabel.Text = "Collecting Data...";
+			Misc.SendMessage("DPS METER: Collecting Data...");
+		}
+
+		private void DPSMeterStopButton_Click(object sender, EventArgs e)
+		{
+			DPSMeterStartButton.Enabled = DpsMeterGridView.Enabled = true;
+			DPSMeterStopButton.Enabled = DPSMeter.Enabled = DPSMeterPauseButton.Enabled = false;
+			DPSMeterStatusLabel.Text = "Idle";
+			DPSMeter.ShowResult(DpsMeterGridView); 
+			Misc.SendMessage("DPS METER: Stop.");
+		}
+
+		private void DPSMeterClearButton_Click(object sender, EventArgs e)
+		{
+			DpsMeterGridView.Rows.Clear();
+			DPSMeter.Clear();
+		}
+
+		private void DPSMeterPauseButton_Click(object sender, EventArgs e)
+		{
+			if (DPSMeter.Enabled)
+			{
+				DPSMeterStatusLabel.Text = "Pause";
+				DPSMeter.Enabled = false;
+				DPSMeterPauseButton.Text = "Resume";
+				DPSMeter.ShowResult(DpsMeterGridView);
+				DpsMeterGridView.Enabled = true;
+				Misc.SendMessage("DPS METER: Pause.");
+			}
+			else
+			{
+				DpsMeterGridView.Rows.Clear();
+				DPSMeterPauseButton.Text = "Pause";
+				DPSMeterStatusLabel.Text = "Collecting Data...";
+				DPSMeter.Enabled = true;
+				DpsMeterGridView.Enabled = false;
+				Misc.SendMessage("DPS METER: Collecting Data...");
+			}
+		}
+
+		private void DPSMeterApplyFilterButton_Click(object sender, EventArgs e)
+		{
+			if (DPSMeter.Enabled)
+				return;
+
+			int max = -1;
+			if (DPSmetermaxdamage.Text != string.Empty)
+				max = Convert.ToInt32(DPSmetermaxdamage.Text);
+
+			int min = -1;
+			if (DPSmetermindamage.Text != string.Empty)
+				min = Convert.ToInt32(DPSmetermindamage.Text);
+
+			int serial = -1;
+			if (DPSmeterserial.Text != string.Empty)
+			{
+				try
+				{
+					serial = Convert.ToInt32(DPSmeterserial.Text, 16);
+				}
+				catch { }
+			}
+
+			string name = null;
+			if (DPSmetername.Text != string.Empty)
+				name = DPSmetername.Text;
+
+			DPSMeter.ShowResult(DpsMeterGridView, max, min, serial, name);
+		}
+
+		private void DPSMeterClearFilterButton_Click(object sender, EventArgs e)
+		{
+			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
+			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
+		}
+
+
+
+		// ----------------- STOP DPS METER -------------------
 	}
 }

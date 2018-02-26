@@ -645,6 +645,7 @@ namespace Assistant
 			Direction = dir;
 		}
 
+		internal int WalkScriptRequest = 0;
 		internal bool HasWalkEntry(byte seq)
 		{
 			return m_MoveInfo[seq] != null;

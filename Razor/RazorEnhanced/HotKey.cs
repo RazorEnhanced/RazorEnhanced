@@ -375,6 +375,18 @@ namespace RazorEnhanced
 					}
 					break;
 
+				case "DPS Meter Start":
+					DPSMeter.Start();
+					break;
+
+				case "DPS Meter Pause / Resume":
+					DPSMeter.Pause();
+					break;
+
+				case "DPS Meter Stop":
+					DPSMeter.Stop();
+					break;
+
 				default:
 					break;
 			}
@@ -652,14 +664,17 @@ namespace RazorEnhanced
 					Assistant.SpecialMoves.ClearAbilities();
 					break;
 				case "Primary ON/OFF":
-					if (Player.HasSpecial)
+					if (SpecialMoves.HasSecondary)
+						Assistant.SpecialMoves.SetPrimaryAbility();
+					else if (SpecialMoves.HasPrimary)
 						Assistant.SpecialMoves.ClearAbilities();
 					else
 						Assistant.SpecialMoves.SetPrimaryAbility();
-
 					break;
 				case "Secondary ON/OFF":
-					if (Player.HasSpecial)
+					if (SpecialMoves.HasPrimary)
+						Assistant.SpecialMoves.SetSecondaryAbility();
+					else if (SpecialMoves.HasSecondary)
 						Assistant.SpecialMoves.ClearAbilities();
 					else
 						Assistant.SpecialMoves.SetSecondaryAbility();
@@ -682,6 +697,9 @@ namespace RazorEnhanced
 				case "Attack Last":
 					if (Targeting.LastAttack != 0)
 						Assistant.ClientCommunication.SendToServer(new AttackReq(Targeting.LastAttack));
+					break;
+				case "WarMode ON/OFF":
+					SpecialMoves.ToggleWarPeace();
 					break;
 				default:
 					break;

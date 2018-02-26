@@ -112,33 +112,36 @@
     <Reference Include="Accord.Video.FFMPEG, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=x86">
       <HintPath>..\packages\Accord.Video.FFMPEG.3.8.0\lib\net45\Accord.Video.FFMPEG.dll</HintPath>
     </Reference>
+    <Reference Include="AutoUpdater.NET, Version=1.4.7.0, Culture=neutral, PublicKeyToken=942f95247e354701, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autoupdater.NET.Official.1.4.7\lib\net40\AutoUpdater.NET.dll</HintPath>
+    </Reference>
     <Reference Include="CrashReporter.NET, Version=1.5.3.0, Culture=neutral, PublicKeyToken=986591a91592b7e6, processorArchitecture=MSIL">
       <HintPath>..\packages\CrashReporter.NET.Official.1.5.3\lib\net40\CrashReporter.NET.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython, Version=2.7.7.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.2.7.7\lib\Net45\IronPython.dll</HintPath>
+    <Reference Include="IronPython, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.SQLite, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Wpf, Version=2.7.8.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\IronPython.2.7.8\lib\net45\IronPython.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.2.0.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim, Version=15.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicLanguageRuntime.1.2.1\lib\net45\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="IronPython.Modules, Version=2.7.7.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.2.7.7\lib\Net45\IronPython.Modules.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.SQLite, Version=2.7.7.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.2.7.7\lib\Net45\IronPython.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Wpf, Version=2.7.7.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\IronPython.2.7.7\lib\Net45\IronPython.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamic, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.AspNet, Version=1.1.1.21, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.AspNet.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="PathFinderAStar3D, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -166,6 +169,7 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\TitleBar.cs" />
     <Compile Include="Core\VideoCapture.cs" />
     <Compile Include="Core\Commands.cs">
       <SubType>Code</SubType>
@@ -283,6 +287,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="RazorEnhanced\HotKey.cs" />
+    <Compile Include="RazorEnhanced\DPSMeter.cs" />
     <Compile Include="RazorEnhanced\ToolBar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1059,7 +1064,10 @@
     <None Include="RazorEnhanced\Resources\accessories-text-editor-5.ico" />
     <None Include="RazorEnhanced\Resources\applications-utilities.png" />
     <None Include="RazorEnhanced\Resources\applications-utilities.ico" />
+    <Content Include="Lib\clrtype.py" />
     <Content Include="Lib\site-packages\README.txt" />
+    <Content Include="Lib\socket.py" />
+    <Content Include="Lib\wpf.py" />
     <Content Include="razor-enhanced.ico" />
     <None Include="RazorEnhanced\Resources\bug.png" />
     <None Include="RazorEnhanced\Resources\BarraGrandeOrizzontaBordoDestro.png" />

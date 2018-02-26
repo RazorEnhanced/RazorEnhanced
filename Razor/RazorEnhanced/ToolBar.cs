@@ -290,6 +290,12 @@ namespace RazorEnhanced
 			if (Assistant.World.Player == null)
 				return;
 
+			if (Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
+			{
+				TitleBar.UpdateTitleBar();
+				return;
+			}
+
 			if (m_form == null)
 				DrawToolBar();
 
@@ -316,7 +322,10 @@ namespace RazorEnhanced
 				if (i >= m_slot)
 					break;
 			}
-			Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
+			if (index > slotlimit)
+				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = slotlimit-1;
+			else
+				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
 		}
 
 		internal static void UpdatePanelImage()
@@ -328,7 +337,7 @@ namespace RazorEnhanced
 
 			for (int x = 0; x < m_slot; x++)
 			{
-				if (x > (m_panellist.Count - 1))
+				if (x > (m_panellist.Count - 1) || x > (items.Count - 1))
 					return;
 
 				if (items[x].Graphics != 0)
@@ -377,7 +386,16 @@ namespace RazorEnhanced
 
 		internal static void UpdateCount()
 		{
-			if (Assistant.World.Player == null || m_form == null) // || m_changingmap)
+			if (Assistant.World.Player == null)
+				return;
+
+			if (Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
+			{
+				TitleBar.UpdateTitleBar();
+				return;
+			}
+
+			if (m_form == null)
 				return;
 
 			List<RazorEnhanced.ToolBar.ToolBarItem> items = Settings.Toolbar.ReadItems();
@@ -419,6 +437,7 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.ToolBoxSizeComboBox.Items.Add("Small");
 
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Clear();
+			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("TitleBar");
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Horizontal");
 			Assistant.Engine.MainWindow.ToolBoxStyleComboBox.Items.Add("Vertical");
 

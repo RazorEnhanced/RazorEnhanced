@@ -9,7 +9,7 @@
 #include "Obfuscation.h"
 #include <iostream>
 
-//#define NO_CHECKSUM_VERSION
+#define NO_CHECKSUM_VERSION
 
 //*************************************************************************************
 //**************************************Varaibles**************************************
@@ -546,7 +546,7 @@ DLLFUNCTION void BringToFront(HWND hWnd)
 #define CHEATPROC_STR "jTjAjHjC"
 #define CHEATPROC_LEN 8
 
-DLLFUNCTION void DoFeatures(int realFeatures)
+DLLFUNCTION void DoFeatures(int realFeatures, bool fakeversion)
 {
 	int i, c, size = 8;
 	char pkt[512];
@@ -587,9 +587,18 @@ DLLFUNCTION void DoFeatures(int realFeatures)
 	memcpy(&str[c], CryptChecksum, 16);
 	c += 16;
 
-	memcpy(&str[c], DLL_VERSION, strlen(DLL_VERSION));
-	c += (int)strlen(DLL_VERSION);
-	str[c++] = 0;
+	if (fakeversion)
+	{
+		memcpy(&str[c], DLL_VERSION_DEMISE, strlen(DLL_VERSION_DEMISE));
+		c += (int)strlen(DLL_VERSION_DEMISE);
+		str[c++] = 0;
+	}
+	else
+	{
+		memcpy(&str[c], DLL_VERSION, strlen(DLL_VERSION));
+		c += (int)strlen(DLL_VERSION);
+		str[c++] = 0;
+	}
 
 	for (i = 0; i < c; i++)
 		str[i] = str[i] ^ pShared->CheatKey[i & 0xF];
@@ -2009,7 +2018,7 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 		ClientEncrypted = (wParam & 0x08) != 0;
 		ServerEncrypted = (wParam & 0x10) != 0;
 
-		//InitThemes();
+		InitThemes();
 
 		if (!pShared) // If this failed the first time or was not run at all, try it once more before panicing
 			OnAttach(NULL, 0);
@@ -2166,7 +2175,7 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 	case WM_SETFOCUS:
 		PostMessage(hPostWnd, WM_UONETEVENT, FOCUS, TRUE);
 		break;
-		/*
+
 		//Custom title bar:
 	case WM_NCACTIVATE:
 		Active = wParam;
@@ -2177,7 +2186,7 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 	case WM_CUSTOMTITLE:
 		CheckTitlebarAttr(hWnd);
 		RedrawTitleBar( hWnd, Active );
-		break;*/
+		break;
 	}
 }
 

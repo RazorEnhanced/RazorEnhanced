@@ -42,6 +42,7 @@ namespace Assistant
 			PacketHandler.RegisterClientToServerViewer(0xF8, new PacketViewerCallback(CreateCharacter));
 
 			//Server -> Client handlers
+			PacketHandler.RegisterServerToClientViewer(0x0B, new PacketViewerCallback(Damage));
 			PacketHandler.RegisterServerToClientViewer(0x11, new PacketViewerCallback(MobileStatus));
 			PacketHandler.RegisterServerToClientViewer(0x16, new PacketViewerCallback(SAMobileStatus));
 			PacketHandler.RegisterServerToClientViewer(0x17, new PacketViewerCallback(NewMobileStatus));
@@ -625,6 +626,9 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
+			if (World.Player.WalkScriptRequest == 1)
+				World.Player.WalkScriptRequest = 3;
+
 			byte seq = p.ReadByte();
 			int x = p.ReadUInt16();
 			int y = p.ReadUInt16();
@@ -638,6 +642,9 @@ namespace Assistant
 		{
 			if (World.Player == null)
 				return;
+
+			if (World.Player.WalkScriptRequest == 1)
+				World.Player.WalkScriptRequest = 2;
 
 			byte oldNoto = World.Player.Notoriety;
 
@@ -1541,6 +1548,12 @@ namespace Assistant
 			}
 		}
 
+		private static void Damage(PacketReader p, PacketHandlerEventArgs args)
+		{
+			if (RazorEnhanced.DPSMeter.Enabled)
+				RazorEnhanced.DPSMeter.AddDamage(p.ReadUInt32(), p.ReadUInt16());
+		}
+
 		private static void MobileStatus(PacketReader p, PacketHandlerEventArgs args)
 		{
 			Serial serial = p.ReadUInt32();
@@ -2384,7 +2397,10 @@ namespace Assistant
 				p.Seek(3, SeekOrigin.Begin);
 				p.WriteAsciiFixed("", (int)p.Length - 3);
 
-				ClientCommunication.DoFeatures(World.Player.Features);
+				if (World.ShardName.Contains("Demise"))  // Demise version check
+					ClientCommunication.DoFeatures(World.Player.Features, true);
+				else
+					ClientCommunication.DoFeatures(World.Player.Features, false);
 			}
 			else
 			{
@@ -2725,7 +2741,7 @@ namespace Assistant
 				case 0x21: // Special ability execute
 					{
 						RazorEnhanced.SpellGrid.UpdateSAHighLight(0);
-						World.Player.HasSpecial = false;
+						World.Player.HasSpecial = SpecialMoves.HasPrimary = SpecialMoves.HasSecondary = false;
 						break;
 					}
 			}

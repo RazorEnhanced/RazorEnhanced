@@ -155,6 +155,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UOArt.cpp" />
     <ClCompile Include="uo_huffman.cpp" />
   </ItemGroup>
   <ItemGroup>

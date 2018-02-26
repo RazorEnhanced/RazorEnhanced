@@ -2,6 +2,7 @@
 #pragma pack(1)
 
 #define DLL_VERSION "0.6.24"
+#define DLL_VERSION_DEMISE "1.0.14"  // Not change IT!
 
 #define DLLFUNCTION __declspec(dllexport)
 #define DLLVAR DLLFUNCTION
@@ -150,8 +151,8 @@ void MemoryPatch(unsigned long, int, int);
 void MemoryPatch(unsigned long, const void *, int);
 void RedrawTitleBar(HWND, bool);
 void CheckTitlebarAttr(HWND);
-//void FreeArt();
-//void InitThemes();
+void FreeArt();
+void InitThemes();
 bool PatchStatusBar(BOOL preAOS);
 
 //#define PACKET_TBL_STR "Got Logout OK packet!\0\0\0"

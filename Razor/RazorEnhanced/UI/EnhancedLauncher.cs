@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
+using AutoUpdaterDotNET;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace RazorEnhanced.UI
@@ -223,28 +222,9 @@ namespace RazorEnhanced.UI
 
 		private void checkupdatebutton_Click(object sender, EventArgs e)
 		{
-			WebClient client = new WebClient();
-			try // Try catch in caso che il server sia irraggiungibile
-			{
-				string reply = client.DownloadString("http://razorenhanced.org/download/version.dat");
-
-				if (reply != Assembly.GetEntryAssembly().GetName().Version.ToString())
-				{
-					DialogResult dialogResult = MessageBox.Show("New Version of Razor Enhanced is avaibale! Want open webpage for download it?", "New Version Available", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-					if (dialogResult == DialogResult.Yes)
-					{
-						System.Diagnostics.Process.Start("http://www.razorenhanced.org/");
-					}
-				}
-				else
-				{
-					DialogResult dialogResult = MessageBox.Show("You already have latest version of Razor Enhanced", "No New Update", MessageBoxButtons.OK);
-				}
-			}
-			catch (Exception ex)
-			{
-				DialogResult dialogResult = MessageBox.Show("Connection on version check server has failed. " + ex, "Fail to connecto", MessageBoxButtons.OK);
-			}
+			// AutoUpdater
+			AutoUpdater.ReportErrors = true;
+			AutoUpdater.Start("http://razorenhanced.org/download/RazorAutoUpdater.xml");
 		}
 	}
 }

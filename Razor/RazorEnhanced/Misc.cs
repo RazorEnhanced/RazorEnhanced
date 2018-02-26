@@ -387,6 +387,11 @@ namespace RazorEnhanced
 			ClientCommunication.SendToServerWait(new RenameRequest((uint)mob.Serial, name));
 		}
 
+		public static void test()
+		{
+			TitleBar.UpdateTitleBar();
+		}
+
 
 	}
 }

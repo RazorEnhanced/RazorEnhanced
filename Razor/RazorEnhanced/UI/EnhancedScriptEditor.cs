@@ -23,6 +23,8 @@ namespace RazorEnhanced.UI
 
 		private delegate void SetStatusLabelDelegate(string text, Color color);
 
+		private delegate void SetRecordButtonDelegate(string text);
+
 		private delegate string GetFastTextBoxTextDelegate();
 
 		private delegate void SetTracebackDelegate(string text);
@@ -125,7 +127,7 @@ namespace RazorEnhanced.UI
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
 				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
-				"Player.Walk", "Player.PathFindTo", "Player.PathFindToPacket", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
+				"Player.Walk", "Player.Run", "Player.PathFindTo", "Player.PathFindToPacket", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
 				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial", "Player.Flying"
 			};
@@ -393,8 +395,11 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.InvokeVirtue(string)", new string[] { "string VirtueName" }, "void", "Invoke a chracter virtue by name");
 			descriptionPlayer.Add("Player.InvokeVirtue", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.Walk(string)", new string[] { "string Direction" }, "void", "Move character in a specific direction\n\tCheck the wiki for the possible strings");
+			tooltip = new ToolTipDescriptions("Player.Walk(string)", new string[] { "string Direction" }, "int", "Move character in a specific direction\n\tCheck the wiki for the possible strings\n\t Return 2 For success move, 3 for fail");
 			descriptionPlayer.Add("Player.Walk", tooltip);
+
+			tooltip = new ToolTipDescriptions("Player.Run(string)", new string[] { "string Direction" }, "int", "Move character (run speed) in a specific direction\n\tCheck the wiki for the possible strings\n\t Return 2 For success move, 3 for fail");
+			descriptionPlayer.Add("Player.Run", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.PathFindTo(Point3D or (int, int, int))", new string[] { "Point3D Coords or ( int X, int Y, int Z )" }, "void", "Client pathfinder to specific location with Point3D or XYZ coordinates");
 			descriptionPlayer.Add("Player.PathFindTo", tooltip);
@@ -1350,6 +1355,22 @@ namespace RazorEnhanced.UI
 			}
 		}
 
+		private void SetRecordButton(string text)
+		{
+			if (this.m_onclosing)
+				return;
+
+			if (this.InvokeRequired)
+			{
+				SetRecordButtonDelegate d = new SetRecordButtonDelegate(SetRecordButton);
+				this.Invoke(d, new object[] { text });
+			}
+			else
+			{
+				toolStripButtonGumps.Text = text;
+			}
+		}
+
 		private string GetFastTextBoxText()
 		{
 			if (this.fastColoredTextBoxEditor.InvokeRequired)
@@ -1554,10 +1575,13 @@ namespace RazorEnhanced.UI
 			};
 			if (open.ShowDialog() == DialogResult.OK)
 			{
-				m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
-				m_Filepath = open.FileName;
-				this.Text = m_Title + " - " + m_Filename + ".py";
-				fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
+				if (open.FileName != null && File.Exists(open.FileName))
+				{
+					m_Filename = Path.GetFileNameWithoutExtension(open.FileName);
+					m_Filepath = open.FileName;
+					this.Text = m_Title + " - " + m_Filename + ".py";
+					fastColoredTextBoxEditor.Text = File.ReadAllText(open.FileName);
+				}
 			}
 		}
 
@@ -1724,6 +1748,7 @@ namespace RazorEnhanced.UI
 					SetErrorBox("RECORDER: Stop Record");
 					ScriptRecorder.OnRecord = false;
 					SetStatusLabel("IDLE", Color.DarkTurquoise);
+					SetRecordButton("Record");
 					return;
 				}
 				else
@@ -1731,6 +1756,7 @@ namespace RazorEnhanced.UI
 					SetErrorBox("RECORDER: Start Record");
 					ScriptRecorder.OnRecord = true;
 					SetStatusLabel("ON RECORD", Color.Red);
+					SetRecordButton("Stop Record");
 					return;
 				}
 			}

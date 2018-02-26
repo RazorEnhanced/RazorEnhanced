@@ -529,7 +529,7 @@ namespace Assistant
 		internal static unsafe extern void BringToFront(IntPtr hWnd);
 
 		[DllImport("Crypt.dll")]
-		internal static unsafe extern void DoFeatures(int features);
+		internal static unsafe extern void DoFeatures(int features, bool fakeversion);
 
 		[DllImport("Crypt.dll")]
 		internal static unsafe extern bool AllowBit(uint bit);
@@ -571,6 +571,9 @@ namespace Assistant
 		[DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
 		internal static extern IntPtr memcpy(IntPtr dest, IntPtr src, UIntPtr count);
 
+		/*[DllImport("msvcrt.dll")]
+		internal static unsafe extern void memcpy(void* to, void* from, int len);
+		*/
 		[DllImport("user32.dll")]
 		internal static extern uint PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
@@ -619,7 +622,7 @@ namespace Assistant
 		private static Buffer* m_OutRecv;
 		private static Buffer* m_InSend;
 		private static Buffer* m_OutSend;
-		private static IntPtr m_TitleStr;
+		private unsafe static byte* m_TitleStr;
 		private static Mutex CommMutex;
 
 		// ZIPPY REV 80		private static Mutex FwdMutex;
@@ -772,12 +775,12 @@ namespace Assistant
 			m_InSend = (Buffer*)(baseAddr+sizeof(Buffer)*3);
 			m_OutSend = (Buffer*)(baseAddr+sizeof(Buffer)*4);
 			m_TitleStr = (byte*)(baseAddr+sizeof(Buffer)*5);*/
-
+			
 			m_InRecv = (Buffer*)baseAddr;
 			m_OutRecv = (Buffer*)(baseAddr + sizeof(Buffer));
 			m_InSend = (Buffer*)(baseAddr + sizeof(Buffer) * 2);
 			m_OutSend = (Buffer*)(baseAddr + sizeof(Buffer) * 3);
-			m_TitleStr = (IntPtr)(baseAddr + sizeof(Buffer) * 4);
+			m_TitleStr = baseAddr + sizeof(ClientCommunication.Buffer) * 4;
 
 			SetServer(m_ServerIP, m_ServerPort);
 
@@ -1463,5 +1466,34 @@ namespace Assistant
 			m_QueueSend = false;
 			m_ScriptWaitSend = false;
         }
+
+		// Titlebar
+		private static string m_LastStr = string.Empty;
+
+		internal static void SetTitleStr(string str)
+		{
+			if (m_LastStr == str)
+			{
+				return;
+			}
+			m_LastStr = str;
+			byte[] bytes = Encoding.ASCII.GetBytes(str);
+			int num = bytes.Length;
+			if (num >= 512)
+			{
+				num = 511;
+			}
+			CommMutex.WaitOne();
+			if (num > 0)
+			{
+				fixed (byte* ptr = bytes)
+				{
+					memcpy((IntPtr)m_TitleStr, (IntPtr)ptr, (UIntPtr)num);
+				}
+			}
+			*(m_TitleStr + num) = 0;
+			CommMutex.ReleaseMutex();
+			PostMessage(FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
+		}
 	}
 }

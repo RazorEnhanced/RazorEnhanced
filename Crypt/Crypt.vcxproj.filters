@@ -45,6 +45,9 @@
     <ClCompile Include="uo_huffman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UOArt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crypt.h">
