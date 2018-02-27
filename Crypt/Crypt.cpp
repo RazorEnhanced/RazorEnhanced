@@ -58,6 +58,7 @@ bool UltimaDLLHaxed = false;
 bool ClientEncrypted = false;
 bool ServerEncrypted = false;
 bool DwmAttrState = true;
+bool connected = false;
 
 enum CLIENT_TYPE { TWOD = 1, THREED = 2 };
 CLIENT_TYPE ClientType = TWOD;
@@ -662,15 +663,24 @@ DLLFUNCTION BOOL HandleNegotiate(__int64 features)
 SIZE *SizePtr = NULL;
 void __stdcall OnSetUOWindowSize(int width)
 {
-	if (width != 800 && width != 600) // in case it actually the height for some reason
+	if (connected)
+		*SizePtr = DesiredSize;
+	else
+	{
+		SizePtr->cx = 640;
+		SizePtr->cy = 480;
+	}
+
+	// Vecchia
+/*	if (width != 800 && width != 600) // in case it actually the height for some reason
 	{
 		SizePtr->cx = 640;
 		SizePtr->cy = 480;
 	}
 	else
 	{
-		*SizePtr = DesiredSize;
-	}
+	*SizePtr = DesiredSize;
+	}*/
 }
 
 DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
@@ -1647,6 +1657,7 @@ int PASCAL HookConnect(SOCKET sock, const sockaddr *addr, int addrlen)
 			ReleaseMutex(CommMutex);
 
 			PostMessage(hPostWnd, WM_UONETEVENT, CONNECT, useAddr.sin_addr.S_un.S_addr);
+			connected = true;
 		}
 	}
 	else
@@ -1679,6 +1690,7 @@ int PASCAL HookCloseSocket(SOCKET sock)
 		memset(pShared->AuthBits, 0, 8);
 
 		PostMessage(hPostWnd, WM_UONETEVENT, DISCONNECT, 0);
+		connected = false;
 	}
 
 	return retVal;
