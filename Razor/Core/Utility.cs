@@ -335,7 +335,10 @@ namespace Assistant
 		private static int m_maxvalue = 65535;
 		internal static string FormatDatagridAmountCell(DataGridViewCell cell, bool allowall)
 		{
-			if (cell.Value != null && cell.Value.ToString() == "-1" && allowall)
+			if (cell.Value == null)
+				return "0";
+
+			if (cell.Value.ToString() == "-1" && allowall)
 			{
 				return "All";
 			}
