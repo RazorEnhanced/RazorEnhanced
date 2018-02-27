@@ -3143,7 +3143,7 @@ namespace Assistant
 				{
 					string tempstring = pComp.ReadUnicodeString(len);
 					stringlistparse[x1] = tempstring;
-					World.Player.CurrentGumpStrings.Add(tempstring);
+					//World.Player.CurrentGumpStrings.Add(tempstring);
 					x1++;
 				}
 
@@ -3152,6 +3152,7 @@ namespace Assistant
 					stringlist.AddRange(ParseGumpString(gumpPieces, stringlistparse));
 				}
 				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+				World.Player.CurrentGumpStrings.AddRange(stringlist);
 			}
 			catch { }
 		}
