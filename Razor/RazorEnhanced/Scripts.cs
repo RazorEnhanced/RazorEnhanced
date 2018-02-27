@@ -492,6 +492,7 @@ namespace RazorEnhanced
 			scope.SetVariable("Restock", new RazorEnhanced.Restock());
 			scope.SetVariable("BandageHeal", new RazorEnhanced.BandageHeal());
 			scope.SetVariable("PathFinding", new RazorEnhanced.PathFinding());
+			scope.SetVariable("DPSMeter", new RazorEnhanced.DPSMeter());
 
 			return scope;
 		}

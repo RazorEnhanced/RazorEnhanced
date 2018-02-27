@@ -24,7 +24,6 @@ namespace RazorEnhanced
 		}
 
 		internal static bool Enabled = false;
-		//internal static ConcurrentDictionary<uint, DamageData> Data { get { return m_damagedata; } }
 		private static ConcurrentDictionary<uint, DamageData> m_damagedata = new ConcurrentDictionary<uint, DamageData>();
 
 		internal static void AddDamage(uint serial, ushort damage)
@@ -84,6 +83,11 @@ namespace RazorEnhanced
 		}
 
 		// Parte comandi da script
+
+		public static bool Status()
+		{
+			return Enabled;
+		}
 
 		public static void Start()
 		{

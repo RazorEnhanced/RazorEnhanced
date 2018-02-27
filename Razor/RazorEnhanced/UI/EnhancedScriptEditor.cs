@@ -110,7 +110,7 @@ namespace RazorEnhanced.UI
 			{
 				"Player", "Spells", "Mobile", "Mobiles", "Item", "Items", "Misc", "Target", "Gumps", "Journal",
 				"AutoLoot", "Scavenger", "Organizer", "Restock", "SellAgent", "BuyAgent", "Dress", "Friend", "BandageHeal",
-				"Statics"
+				"Statics", "DPSMeter"
 			};
 
 			#endregion
@@ -228,6 +228,11 @@ namespace RazorEnhanced.UI
 				"BandageHeal.Status", "BandageHeal.Start", "BandageHeal.Stop"
 			};
 
+			string[] methodsDPSMeter =
+			{
+				"DPSMeter.Status", "DPSMeter.Start", "DPSMeter.Stop", "DPSMeter.Pause", "DPSMeter.GetDamage"
+			};
+
 			string[] methodsStatics =
 			{
 				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo"
@@ -256,6 +261,7 @@ namespace RazorEnhanced.UI
 					.Union(methodsFriend)
 					.Union(methodsBandageHeal)
 					.Union(methodsStatics)
+					.Union(methodsDPSMeter)
 					.ToArray();
 
 			#endregion
@@ -958,6 +964,27 @@ namespace RazorEnhanced.UI
 
 			#endregion
 
+			#region Description DPSMeter
+
+			Dictionary<string, ToolTipDescriptions> descriptionDPSMeter = new Dictionary<string, ToolTipDescriptions>();
+
+			tooltip = new ToolTipDescriptions("DPSMeter.Status()", new string[] { "none" }, "bool", "Get status of DPS Meter engine\n\tTrue: is running, False: is not running");
+			descriptionBandageHeal.Add("DPSMeter.Status", tooltip);
+
+			tooltip = new ToolTipDescriptions("DPSMeter.Start()", new string[] { "none" }, "void", "Start Dps Meter engine");
+			descriptionBandageHeal.Add("DPSMeter.Start", tooltip);
+
+			tooltip = new ToolTipDescriptions("DPSMeter.Stop()", new string[] { "none" }, "void", "Stop Dps Meter engine");
+			descriptionBandageHeal.Add("DPSMeter.Stop", tooltip);
+
+			tooltip = new ToolTipDescriptions("DPSMeter.Pause()", new string[] { "none" }, "void", "Pause Dps Meter engine");
+			descriptionBandageHeal.Add("DPSMeter.Pause", tooltip);
+
+			tooltip = new ToolTipDescriptions("DPSMeter.GetDamage()", new string[] { "int serial" }, "int", "Get damage recorded by specific serial.");
+			descriptionBandageHeal.Add("DPSMeter.GetDamage", tooltip);
+
+			#endregion
+
 			#region Description Statics
 
 			Dictionary<string, ToolTipDescriptions> descriptionStatics = new Dictionary<string, ToolTipDescriptions>();
@@ -1007,6 +1034,7 @@ namespace RazorEnhanced.UI
 				.Union(descriptionFriend)
 				.Union(descriptionBandageHeal)
 				.Union(descriptionStatics)
+				.Union(descriptionDPSMeter)
 				.ToDictionary(x => x.Key, x => x.Value);
 
 			#endregion
