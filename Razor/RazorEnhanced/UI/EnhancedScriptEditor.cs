@@ -174,7 +174,7 @@ namespace RazorEnhanced.UI
 			{
 				"Gumps.CurrentGump", "Gumps.HasGump", "Gumps.CloseGump", "Gumps.ResetGump", "Gumps.WaitForGump", "Gumps.SendAction",
 				"Gumps.SendAdvancedAction", "Gumps.LastGumpGetLine", "Gumps.LastGumpGetLineList", "Gumps.LastGumpTextExist",
-				"Gumps.LastGumpTextExistByLine"
+				"Gumps.LastGumpTextExistByLine", "Gumps.LastGumpRawData"
 			};
 
 			string[] methodsJournal =
@@ -764,6 +764,9 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Gumps.LastGumpTextExistByLine(int, string)", new string[] { "int LineNumber", "string TextToSearch" }, "bool", "Search text inside a gump text by line number\n\tTrue: found, False: not found\n\tGump must be still open to get data");
 			descriptionGumps.Add("Gumps.LastGumpTextExistByLine", tooltip);
 
+			tooltip = new ToolTipDescriptions("Gumps.LastGumpRawData()", new string[] { "none" }, "string", "Get last gump RawData structure.");
+			descriptionGumps.Add("Gumps.LastGumpRawData", tooltip);
+			
 			#endregion
 
 			#region Description Journal

@@ -177,5 +177,17 @@ namespace RazorEnhanced
 				return false;
 			}
 		}
+
+		public static string LastGumpRawData()
+		{
+			try
+			{
+				return World.Player.CurrentGumpRawData;
+			}
+			catch
+			{
+				return string.Empty;
+			}
+		}
 	}
 }
