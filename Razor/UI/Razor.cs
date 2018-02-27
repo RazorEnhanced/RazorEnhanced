@@ -9157,7 +9157,7 @@ namespace Assistant
 			}
 			else
 			{
-				ClientCommunication.SetGameSize(800, 600);
+				ClientCommunication.SetGameSize(0, 0);
 			}
 
 			if (World.Player != null)

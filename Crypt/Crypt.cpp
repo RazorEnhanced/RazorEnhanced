@@ -37,7 +37,7 @@ LARGE_INTEGER PerfFreq, Counter;
 DWORD DeathMsgAddr = 0xFFFFFFFF;
 HWND hUOAWnd = NULL;
 
-SIZE DesiredSize = { 800,600 };
+SIZE DesiredSize = { 0,0 };
 
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
 unsigned long RecvAddress, SendAddress, ConnectAddress, CloseSocketAddress, SelectAddress, CreateFileAAddress;
@@ -663,24 +663,44 @@ DLLFUNCTION BOOL HandleNegotiate(__int64 features)
 SIZE *SizePtr = NULL;
 void __stdcall OnSetUOWindowSize(int width)
 {
-	if (connected)
-		*SizePtr = DesiredSize;
-	else
+	if (DesiredSize.cx != 0)   // Se diverso da 0 settata risoluzione definita da utente
 	{
-		SizePtr->cx = 640;
-		SizePtr->cy = 480;
+		if (connected) // Forza resize solo se connesso
+			*SizePtr = DesiredSize;
+		else // Dimensione standard finestra di login
+		{
+			SizePtr->cx = 640;
+			SizePtr->cy = 480;
+		}
 	}
-
-	// Vecchia
-/*	if (width != 800 && width != 600) // in case it actually the height for some reason
+	else // In caso che non sia settata risoluzione dall'utente usa risoluzioni impostate nel client OSI
 	{
-		SizePtr->cx = 640;
-		SizePtr->cy = 480;
+		if (width == 800 && connected)
+		{
+			SizePtr->cx = 800;
+			SizePtr->cy = 600;
+		}
+		else if (width == 640 && connected)
+		{
+			SizePtr->cx = 640;
+			SizePtr->cy = 480;
+		}
+		else if (width == 1024 && connected)
+		{
+			SizePtr->cx = 1024;
+			SizePtr->cy = 768;
+		}
+		else if (width == 1152 && connected)
+		{
+			SizePtr->cx = 1152;
+			SizePtr->cy = 864;
+		}
+		else if (width == 1280 && connected)
+		{
+			SizePtr->cx = 1280;
+			SizePtr->cy = 720;
+		}
 	}
-	else
-	{
-	*SizePtr = DesiredSize;
-	}*/
 }
 
 DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
