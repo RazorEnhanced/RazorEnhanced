@@ -322,7 +322,7 @@ namespace RazorEnhanced
 				if (i >= m_slot)
 					break;
 			}
-			if (index > slotlimit)
+			if (index > slotlimit && slotlimit != 0)
 				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = slotlimit-1;
 			else
 				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
