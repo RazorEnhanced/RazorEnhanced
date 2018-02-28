@@ -388,46 +388,49 @@ namespace RazorEnhanced
 					}
 				}
 
-				if (AutoLoot.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoLootThread))
+				if (World.Player != null && Assistant.Engine.Running) // Parte agent 
 				{
-					m_AutoLootThread = new Thread(AutoLoot.AutoRun);
-					m_AutoLootThread.Start();
-				}
+					if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
+					{
+						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
+						m_AutoLootThread.Start();
+					}
 
-				if (Scavenger.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_ScavengerThread))
-				{
-					m_ScavengerThread = new Thread(Scavenger.AutoRun);
-					m_ScavengerThread.Start();
-				}
+					if (Scavenger.AutoMode && !IsRunningThread(m_ScavengerThread))
+					{
+						m_ScavengerThread = new Thread(Scavenger.AutoRun);
+						m_ScavengerThread.Start();
+					}
 
-				if (BandageHeal.AutoMode && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_BandageHealThread))
-				{
-					m_BandageHealThread = new Thread(BandageHeal.AutoRun);
-					m_BandageHealThread.Start();
-				}
+					if (BandageHeal.AutoMode && !IsRunningThread(m_BandageHealThread))
+					{
+						m_BandageHealThread = new Thread(BandageHeal.AutoRun);
+						m_BandageHealThread.Start();
+					}
 
-				if (World.Player != null && (Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && Assistant.Engine.Running && !IsRunningThread(m_DragDropThread))
-				{
-					m_DragDropThread = new Thread(DragDropManager.AutoRun);
-					m_DragDropThread.Start();
-				}
+					if ((Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && !IsRunningThread(m_DragDropThread))
+					{
+						m_DragDropThread = new Thread(DragDropManager.AutoRun);
+						m_DragDropThread.Start();
+					}
 
-				if (Filters.AutoCarver && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoCarverThread))
-				{
-					m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
-					m_AutoCarverThread.Start();
-				}
+					if (Filters.AutoCarver && !IsRunningThread(m_AutoCarverThread))
+					{
+						m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
+						m_AutoCarverThread.Start();
+					}
 
-				if (Filters.BoneCutter && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_BoneCutterThread))
-				{
-					m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
-					m_BoneCutterThread.Start();
-				}
+					if (Filters.BoneCutter && !IsRunningThread(m_BoneCutterThread))
+					{
+						m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
+						m_BoneCutterThread.Start();
+					}
 
-				if (Filters.AutoModeRemount && World.Player != null && Assistant.Engine.Running && !IsRunningThread(m_AutoRemountThread))
-				{
-					m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
-					m_AutoRemountThread.Start();
+					if (Filters.AutoModeRemount && !IsRunningThread(m_AutoRemountThread))
+					{
+						m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
+						m_AutoRemountThread.Start();
+					}
 				}
 			}
 		}
