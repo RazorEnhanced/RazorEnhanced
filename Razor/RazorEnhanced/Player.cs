@@ -1737,7 +1737,7 @@ namespace RazorEnhanced
 
 		public static void PathFindTo(int x, int y, int z)
 		{
-			RazorEnhanced.UoNet.UOHandler.PathFind(x, y, z);
+			RazorEnhanced.UoWarper.UODLLHandleClass.Pathfind(x, y, z);
 		}
 
 		internal static void PathFindToPacket(Assistant.Point3D Location)

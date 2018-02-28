@@ -1181,10 +1181,11 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox") && RazorEnhanced.SpellGrid.SpellGridForm == null)
 				RazorEnhanced.SpellGrid.Open();
 
-			if (RazorEnhanced.UoNet.UO.Open())
+			// UO.DLL warper per pathfind
+			if (RazorEnhanced.UoWarper.UODLLHandleClass == null)
 			{
-				RazorEnhanced.UoNet.UO.Lock_Item = new object();
-				RazorEnhanced.UoNet.UOHandler = new RazorEnhanced.UoNet.UO();
+				RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+				RazorEnhanced.UoWarper.UODLLHandleClass.Open(1);
 			}
 
 			// Avvio automatico script selezionati come autostart

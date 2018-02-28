@@ -204,7 +204,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Network\UoMod.cs" />
-    <Compile Include="Network\UoNet.cs" />
+    <Compile Include="Network\UoWarper.cs" />
     <Compile Include="RazorEnhanced\EncodedSpeech.cs" />
     <Compile Include="RazorEnhanced\ScriptRecorder.cs" />
     <Compile Include="RazorEnhanced\PathFinding.cs" />
