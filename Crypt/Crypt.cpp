@@ -38,6 +38,7 @@ DWORD DeathMsgAddr = 0xFFFFFFFF;
 HWND hUOAWnd = NULL;
 
 SIZE DesiredSize = { 0,0 };
+DWORD ResizeFuncaddr = 0;
 
 unsigned long OldRecv, OldSend, OldConnect, OldCloseSocket, OldSelect, OldCreateFileA;
 unsigned long RecvAddress, SendAddress, ConnectAddress, CloseSocketAddress, SelectAddress, CreateFileAAddress;
@@ -680,11 +681,6 @@ void __stdcall OnSetUOWindowSize(int width)
 			SizePtr->cx = 800;
 			SizePtr->cy = 600;
 		}
-		else if (width == 640 && connected)
-		{
-			SizePtr->cx = 640;
-			SizePtr->cy = 480;
-		}
 		else if (width == 1024 && connected)
 		{
 			SizePtr->cx = 1024;
@@ -700,6 +696,12 @@ void __stdcall OnSetUOWindowSize(int width)
 			SizePtr->cx = 1280;
 			SizePtr->cy = 720;
 		}
+		else
+		{
+			SizePtr->cx = 640;
+			SizePtr->cy = 480;
+		}
+
 	}
 }
 
@@ -756,6 +758,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 		addr = mf.GetAddress("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16);
 		if (addr)
 		{
+			ResizeFuncaddr = addr;
 			int i;
 			DWORD origAddr = addr;
 
@@ -795,6 +798,7 @@ DLLFUNCTION void __stdcall OnAttach(void *params, int paramsLen)
 			addr = mf.GetAddress("\x8B\x44\x24\x04\xBA\x80\x02\x00\x00\x3B\xC2\xB9\xE0\x01\x00\x00", 16);
 			if (addr)
 			{
+				ResizeFuncaddr = addr;
 				int i;
 				DWORD origAddr = addr;
 
@@ -1255,6 +1259,10 @@ int RecvData()
 		{
 			Compression::Reset();
 			FirstRecv = false;
+
+			// Chiamata resize appena viene aperta connessione
+			if (ResizeFuncaddr)
+				((void(*)(void))ResizeFuncaddr)();
 		}
 
 		WaitForSingleObject(CommMutex, INFINITE);

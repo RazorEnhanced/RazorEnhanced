@@ -9167,16 +9167,11 @@ namespace Assistant
 		private void forceSizeX_TextChanged(object sender, System.EventArgs e)
 		{
 			int x = Utility.ToInt32(forceSizeX.Text, 600);
-			if (x >= 100 && x <= 3000)
-				RazorEnhanced.Settings.General.WriteInt("ForceSizeX", x);
-
-			if (!m_Initializing)
+			if (forceSizeX.Focused && x >= 100 && x <= 3000)
 			{
-				if (x > 100 && x < 3000)
-				{
-					m_ResizeTimer.Stop();
-					m_ResizeTimer.Start();
-				}
+				RazorEnhanced.Settings.General.WriteInt("ForceSizeX", x);
+				m_ResizeTimer.Stop();
+				m_ResizeTimer.Start();
 			}
 		}
 
@@ -9189,16 +9184,11 @@ namespace Assistant
 		private void forceSizeY_TextChanged(object sender, System.EventArgs e)
 		{
 			int y = Utility.ToInt32(forceSizeY.Text, 600);
-			if (y >= 100 && y <= 3000)
-				RazorEnhanced.Settings.General.WriteInt("ForceSizeY", y);
-
-			if (!m_Initializing)
+			if (forceSizeY.Focused && y >= 100 && y <= 3000)
 			{
-				if (y > 100 && y < 2000)
-				{
-					m_ResizeTimer.Stop();
-					m_ResizeTimer.Start();
-				}
+				RazorEnhanced.Settings.General.WriteInt("ForceSizeY", y);
+				m_ResizeTimer.Stop();
+				m_ResizeTimer.Start();
 			}
 		}
 
