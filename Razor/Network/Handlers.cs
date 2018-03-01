@@ -1174,7 +1174,6 @@ namespace Assistant
 			}
 
 			// Apertura automatica toolbar se abilitata
-<<<<<<< HEAD
 			if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
 				TitleBar.Start();
 			else
@@ -1182,10 +1181,6 @@ namespace Assistant
 				if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox") && RazorEnhanced.ToolBar.ToolBarForm == null)
 					RazorEnhanced.ToolBar.Open();
 			}
-=======
-			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox") && RazorEnhanced.ToolBar.ToolBarForm == null)
-				RazorEnhanced.ToolBar.Open();
->>>>>>> parent of a583e70... Fix titlebar drawing image for client > 7.0.35
 
 			// Apertura automatica spellgrit se abilitata
 			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox") && RazorEnhanced.SpellGrid.SpellGridForm == null)

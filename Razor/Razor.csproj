@@ -169,6 +169,7 @@
     <Compile Include="Core\ActionQueue.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Core\Native.cs" />
     <Compile Include="Core\TitleBar.cs" />
     <Compile Include="Core\VideoCapture.cs" />
     <Compile Include="Core\Commands.cs">
