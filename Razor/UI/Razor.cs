@@ -12379,17 +12379,15 @@ namespace Assistant
 		private void toolboxstyleComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (toolboxstyleComboBox.Text != "TitleBar")
+			{
 				toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = true;
+				ClientCommunication.SetTitleStr(""); // Restore titlebar standard
+			}
 			else
 				toolboxsizeComboBox.Enabled = toolbar_trackBar.Enabled = false;
 
 			if (toolboxstyleComboBox.Focused)
 			{
-				if (toolboxstyleComboBox.Text != "TitleBar")
-					Assistant.TitleBar.Stop();
-				else
-					Assistant.TitleBar.Start();
-
 				RazorEnhanced.Settings.General.WriteString("ToolBoxStyleComboBox", toolboxstyleComboBox.Text);
 
 				RazorEnhanced.ToolBar.Close();
