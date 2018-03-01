@@ -10,7 +10,6 @@ namespace RazorEnhanced
 	{
 		// Stats
 		public static int Hits { get { return Assistant.World.Player.Hits; } }
-
 		public static int HitsMax { get { return Assistant.World.Player.HitsMax; } }
 		public static int Str { get { return Assistant.World.Player.Str; } }
 		public static int Mana { get { return Assistant.World.Player.Mana; } }
@@ -1737,6 +1736,11 @@ namespace RazorEnhanced
 
 		public static void PathFindTo(int x, int y, int z)
 		{
+			RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+			while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open(1))
+			{
+				Thread.Sleep(10);
+			}
 			RazorEnhanced.UoWarper.UODLLHandleClass.Pathfind(x, y, z);
 
 		}
