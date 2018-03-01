@@ -390,7 +390,6 @@ namespace RazorEnhanced
 
 		public static void test()
 		{
-			
 
 		}
 

@@ -1174,9 +1174,13 @@ namespace Assistant
 			}
 
 			// Apertura automatica toolbar se abilitata
-			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox") && RazorEnhanced.ToolBar.ToolBarForm == null)
-				RazorEnhanced.ToolBar.Open();
-
+			if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
+				TitleBar.Start();
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox") && RazorEnhanced.ToolBar.ToolBarForm == null)
+					RazorEnhanced.ToolBar.Open();
+			}
 			// Apertura automatica spellgrit se abilitata
 			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox") && RazorEnhanced.SpellGrid.SpellGridForm == null)
 				RazorEnhanced.SpellGrid.Open();
