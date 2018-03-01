@@ -227,9 +227,6 @@ namespace RazorEnhanced
 		    PasswordMemory.ProfileChangeInit();
             Assistant.Engine.MainWindow.Initializing = true;
 
-			// Stop timer update toolbar
-			Assistant.TitleBar.Stop();
-
 			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
@@ -326,15 +323,9 @@ namespace RazorEnhanced
 			// Reinizzializzo razor
 			Assistant.Engine.MainWindow.LoadSettings();
 
-			// Apertura automatica toolbar se abilitata
-			if (RazorEnhanced.Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
-				TitleBar.Start();
-			else
-			{
-				// Riapro toollbar se le condizioni lo permettono
-				if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox"))
-					RazorEnhanced.ToolBar.Open();
-			}
+			// Riapro toollbar se le condizioni lo permettono
+			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox"))
+				RazorEnhanced.ToolBar.Open();
 
 			// Riapro la spellgrid se le condizioni lo permettono
 			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox"))

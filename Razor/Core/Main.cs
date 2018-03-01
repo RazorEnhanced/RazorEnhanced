@@ -362,9 +362,6 @@ namespace Assistant
 
 			RazorEnhanced.Settings.General.SaveExitData();
 
-			// Stop timer update titlebar
-				Assistant.TitleBar.Stop();
-
 			// Chiuto toolbar
 			if (RazorEnhanced.ToolBar.ToolBarForm!= null)
 				RazorEnhanced.ToolBar.ToolBarForm.Close();

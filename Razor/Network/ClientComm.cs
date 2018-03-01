@@ -920,9 +920,6 @@ namespace Assistant
 				m_ConnStart = DateTime.MinValue;
 			}
 
-			// Stop timer update toolbar
-			Assistant.TitleBar.Stop();
-
 			// Stop forzato di tutti i thread agent
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;
