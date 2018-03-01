@@ -2058,7 +2058,7 @@ void MessageProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam, MSG *pMsg)
 		ClientEncrypted = (wParam & 0x08) != 0;
 		ServerEncrypted = (wParam & 0x10) != 0;
 
-		InitThemes();
+	//	InitThemes();
 
 		if (!pShared) // If this failed the first time or was not run at all, try it once more before panicing
 			OnAttach(NULL, 0);
