@@ -323,9 +323,14 @@ namespace RazorEnhanced
 					break;
 			}
 			if (index > slotlimit && slotlimit != 0)
-				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = slotlimit-1;
+				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = slotlimit - 1;
 			else
-				Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
+			{
+				if (Assistant.Engine.MainWindow.ToolBoxCountComboBox.Items.Count > index)
+					Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = index;
+				else
+					Assistant.Engine.MainWindow.ToolBoxCountComboBox.SelectedIndex = -1;
+			}
 		}
 
 		internal static void UpdatePanelImage()
