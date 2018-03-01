@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using RazorEnhanced;
 using System.Drawing;
 using System.Timers;
-
+using System.Threading;
 namespace Assistant
 {
 	internal class TitleBar
@@ -20,44 +20,42 @@ namespace Assistant
 			init = true;
 		}
 
-		private static volatile bool m_drawing = false;
-
-		internal static void Draw(object sender, ElapsedEventArgs e)
+		internal static void Draw()
 		{
-			if (Assistant.World.Player == null)
-				return;
-
-			if (m_drawing)
-				return;
-
-			m_drawing = true;
-
-			Check();
-		
-
-			Native.WindowPlacement place = new Native.WindowPlacement();
-			Native.RECT rect = new Native.RECT();
-			IntPtr hdc = Native.GetWindowDC(ClientHandle);
-			Native.GetWindowPlacement(ClientHandle, ref place);
-			Native.GetWindowRect(ClientHandle, out rect);
-			rect.Top = Native.GetSystemMetrics(Native.SystemMetric.SM_CYFRAME);
-			rect.Bottom = rect.Top + Native.GetSystemMetrics(Native.SystemMetric.SM_CYCAPTION);
-			rect.Right = (rect.Right - rect.Left) - (4 * Native.GetSystemMetrics(Native.SystemMetric.SM_CXSIZE) + Native.GetSystemMetrics(Native.SystemMetric.SM_CXFRAME));
-			rect.Left = Native.GetSystemMetrics(Native.SystemMetric.SM_CXSIZEFRAME) + Native.GetSystemMetrics(Native.SystemMetric.SM_CXSMICON) + 5;
-			if (_hThemes != IntPtr.Zero)
+			while (true)
 			{
-				IntPtr hthemes = Native.OpenThemeData(ClientHandle, "WINDOW");
-				DrawBar(hthemes, ClientHandle, rect, hdc, place.showCmd == 3);
-				Native.CloseThemeData(hthemes);
-			}
-			else
-			{
-				rect.Left += Native.GetSystemMetrics(Native.SystemMetric.SM_CXFRAME);
-				DrawBar(IntPtr.Zero, ClientHandle, rect, hdc, place.showCmd == 3);
-			}
+				if (Assistant.World.Player == null)
+				{
+					Thread.Sleep(50);
+					return;
+				}
 
-			Native.ReleaseDC(ClientHandle, hdc);
-			m_drawing = false;
+				Check();
+
+				Native.WindowPlacement place = new Native.WindowPlacement();
+				Native.RECT rect = new Native.RECT();
+				IntPtr hdc = Native.GetWindowDC(ClientHandle);
+				Native.GetWindowPlacement(ClientHandle, ref place);
+				Native.GetWindowRect(ClientHandle, out rect);
+				rect.Top = Native.GetSystemMetrics(Native.SystemMetric.SM_CYFRAME);
+				rect.Bottom = rect.Top + Native.GetSystemMetrics(Native.SystemMetric.SM_CYCAPTION);
+				rect.Right = (rect.Right - rect.Left) - (4 * Native.GetSystemMetrics(Native.SystemMetric.SM_CXSIZE) + Native.GetSystemMetrics(Native.SystemMetric.SM_CXFRAME));
+				rect.Left = Native.GetSystemMetrics(Native.SystemMetric.SM_CXSIZEFRAME) + Native.GetSystemMetrics(Native.SystemMetric.SM_CXSMICON) + 5;
+				if (_hThemes != IntPtr.Zero)
+				{
+					IntPtr hthemes = Native.OpenThemeData(ClientHandle, "WINDOW");
+					DrawBar(hthemes, ClientHandle, rect, hdc, place.showCmd == 3);
+					Native.CloseThemeData(hthemes);
+				}
+				else
+				{
+					rect.Left += Native.GetSystemMetrics(Native.SystemMetric.SM_CXFRAME);
+					DrawBar(IntPtr.Zero, ClientHandle, rect, hdc, place.showCmd == 3);
+				}
+
+				Native.ReleaseDC(ClientHandle, hdc);
+				Thread.Sleep(50);
+			}
 		}
 
 		private static Font m_standard_font = new Font("Arial", 9, FontStyle.Regular);
@@ -270,20 +268,19 @@ namespace Assistant
 		}
 
 		// Timer update
-		internal static System.Timers.Timer UpdateTimer;
+		private static Thread m_update_titlebar;
 		internal static void Start()
 		{
-			m_drawing = false;
-			UpdateTimer = new System.Timers.Timer(100);
-			UpdateTimer.Elapsed += new ElapsedEventHandler(Draw);
-			UpdateTimer.Enabled = true;
-			UpdateTimer.Start();
+			m_update_titlebar = new Thread(new ThreadStart(Draw));
+			m_update_titlebar.Start();
 		}
 		internal static void Stop()
 		{
-			m_drawing = false;
-			if (UpdateTimer != null)
-				UpdateTimer.Dispose();
+			try
+			{
+				m_update_titlebar.Abort();
+			}
+			catch { }
 		}
 	}
 }
