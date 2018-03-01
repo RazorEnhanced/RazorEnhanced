@@ -244,7 +244,7 @@ namespace RazorEnhanced
 		}
 
 
-		internal static Color GetColor(int percent)
+		private static Color GetColor(int percent)
 		{
 			if (percent <= 10)
 				return Color.DarkViolet;
@@ -291,7 +291,10 @@ namespace RazorEnhanced
 				return;
 
 			if (Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
+			{
+				TitleBar.UpdateTitleBar();
 				return;
+			}
 
 			if (m_form == null)
 				DrawToolBar();
@@ -390,6 +393,12 @@ namespace RazorEnhanced
 		{
 			if (Assistant.World.Player == null)
 				return;
+
+			if (Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
+			{
+				TitleBar.UpdateTitleBar();
+				return;
+			}
 
 			if (m_form == null)
 				return;
@@ -1583,7 +1592,7 @@ namespace RazorEnhanced
 		}
 
 		
-		internal static Bitmap CropImage(Bitmap img)
+		public static Bitmap CropImage(Bitmap img)
 		{
 			Point min = new Point(int.MaxValue, int.MaxValue);
 			Point max = new Point(int.MinValue, int.MinValue);
