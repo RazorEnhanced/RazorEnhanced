@@ -363,7 +363,7 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Start()
 		{
-			if (!ClientCommunication.AllowBit(FeatureBit.AutoBandage))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.AutoBandage))
 			{
 				Scripts.SendMessageScriptError("AutoBandage Not Allowed!");
 				return;

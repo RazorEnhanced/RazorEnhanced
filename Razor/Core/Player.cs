@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 
 namespace Assistant
 {
@@ -687,7 +686,7 @@ namespace Assistant
 		{
 			get
 			{
-				if (!m_ExternZ || !ClientCommunication.IsCalibrated())
+				if (!m_ExternZ || !DLLImport.Razor.IsCalibrated())
 					return Assistant.Facet.ZTop(Map, Position.X, Position.Y, Position.Z);
 				else
 					return Position.Z;
@@ -698,7 +697,7 @@ namespace Assistant
 		{
 			get
 			{
-				if (m_ExternZ && ClientCommunication.IsCalibrated())
+				if (m_ExternZ && DLLImport.Razor.IsCalibrated())
 				{
 					Point3D p = new Point3D(base.Position);
 					p.Z = ClientCommunication.GetZ(p.X, p.Y, p.Z);

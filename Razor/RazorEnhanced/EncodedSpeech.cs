@@ -1,16 +1,13 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
+using Assistant;
 using System.Linq;
 
 namespace RazorEnhanced
 {
 	public class EncodedSpeech
 	{
-		[DllImport("Kernel32", EntryPoint = "_lread")]
-		private static extern unsafe int lread(IntPtr hFile, void* lpBuffer, int wBytes);
-
 		internal class SpeechEntry : IComparable<SpeechEntry>
 		{
 			internal short m_KeywordID;
@@ -47,7 +44,7 @@ namespace RazorEnhanced
 
 		private static unsafe int NativeRead(FileStream fs, void* pBuffer, int bytes)
 		{
-			return lread(fs.Handle, pBuffer, bytes);
+			return DLLImport.Win.lread(fs.Handle, pBuffer, bytes);
 		}
 
 		private static unsafe int NativeRead(FileStream fs, byte[] buffer, int offset, int length)

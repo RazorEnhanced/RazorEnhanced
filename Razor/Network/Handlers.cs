@@ -2392,9 +2392,9 @@ namespace Assistant
 				p.WriteAsciiFixed("", (int)p.Length - 3);
 
 				if (World.ShardName.Contains("Demise"))  // Demise version check
-					ClientCommunication.DoFeatures(World.Player.Features, true);
+					DLLImport.Razor.DoFeatures(World.Player.Features, true);
 				else
-					ClientCommunication.DoFeatures(World.Player.Features, false);
+					DLLImport.Razor.DoFeatures(World.Player.Features, false);
 			}
 			else
 			{
@@ -2788,7 +2788,7 @@ namespace Assistant
 					{
 						ulong features = p.ReadRawUInt64();
 
-						if (ClientCommunication.HandleNegotiate(features))
+						if (DLLImport.Razor.HandleNegotiate(features))
 						{
 							ClientCommunication.SendToServer(new RazorNegotiateResponse());
 							Engine.MainWindow.UpdateControlLocks();

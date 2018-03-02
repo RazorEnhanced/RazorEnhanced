@@ -188,7 +188,7 @@ namespace RazorEnhanced
 				DrawSpellGrid();
 
 			UpdatePanelImage();
-			ClientCommunication.ShowWindow(m_form.Handle, 8);
+			DLLImport.Win.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new System.Drawing.Point(Settings.General.ReadInt("PosXGrid"), Settings.General.ReadInt("PosYGrid"));
 			m_form.Opacity =((double)RazorEnhanced.Settings.General.ReadInt("GridOpacity")) / 100.0;
 			m_form.Refresh();
@@ -409,12 +409,12 @@ namespace RazorEnhanced
 					break;
 			}
 
-			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
+			DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
 		}
 
 		internal static void SpellGrid_MouseClick(object sender, MouseEventArgs e)
 		{
-            ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
+			DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
 		}
 
 		internal static void InitEvent()

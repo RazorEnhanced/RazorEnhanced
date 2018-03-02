@@ -881,7 +881,7 @@ namespace Assistant
 
 				if (fullLen > 4 && destLen > 0)
 				{
-					if (ZLib.uncompress(buff, ref destLen, CopyBytes(this.Position, fullLen - 4), fullLen - 4) != ZLibError.Z_OK)
+					if (DLLImport.ZLib.uncompress(buff, ref destLen, CopyBytes(this.Position, fullLen - 4), fullLen - 4) != ZLibError.Z_OK)
 					{
 						destLen = 0;
 						buff = new byte[1];

@@ -324,7 +324,7 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Enable()
 		{
-			if (!ClientCommunication.AllowBit(FeatureBit.SellAgent))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.SellAgent))
 			{
 				Scripts.SendMessageScriptError("SellAgent Not Allowed!");
 				return;
@@ -628,7 +628,7 @@ namespace RazorEnhanced
 		// Funzioni da script
 		public static void Enable()
 		{
-			if (!ClientCommunication.AllowBit(FeatureBit.BuyAgent))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.BuyAgent))
 			{
 				Scripts.SendMessageScriptError("BuyAgent Not Allowed!");
 				return;

@@ -39,7 +39,7 @@ namespace Assistant
 		{
 			uint wParam = ((uint)ClientCommunication.UONetMessage.FindData) | 0xFFFF0000;
 			World.Player.SendMessage(MsgLevel.Force, "Clearing addr list.");
-			ClientCommunication.PostMessage(ClientCommunication.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)wParam, IntPtr.Zero);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)wParam, IntPtr.Zero);
 		}
 
 		public static void Walk(string[] args)
@@ -97,7 +97,7 @@ namespace Assistant
 
 				World.Player.SendMessage(MsgLevel.Force, "Finding 0x{0:X8} ({1})...", val, size);
 
-				ClientCommunication.PostMessage(ClientCommunication.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)(((uint)ClientCommunication.UONetMessage.FindData) | (((uint)size) << 16)), (IntPtr)((int)val));
+				DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), ClientCommunication.WM_UONETEVENT, (IntPtr)(((uint)ClientCommunication.UONetMessage.FindData) | (((uint)size) << 16)), (IntPtr)((int)val));
 			}
 			catch (Exception e)
 			{

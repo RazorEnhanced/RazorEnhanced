@@ -7,15 +7,12 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Net;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Linq;
-using System.Management;
 using Accord.Video.DirectShow;
 using AutoUpdaterDotNET;
 
@@ -624,12 +621,6 @@ namespace Assistant
 		private RazorAgentNumOnlyTextBox DPSmetermindamage;
 		private RazorButton DPSMeterClearFilterButton;
 		private System.Drawing.Point windowspt;
-
-		[DllImport("User32.dll")]
-		private static extern IntPtr GetSystemMenu(IntPtr wnd, bool reset);
-
-		[DllImport("User32.dll")]
-		private static extern IntPtr EnableMenuItem(IntPtr menu, uint item, uint options);
 
 		// Enhanced Toolbar
 		internal Label LocationToolBarLabel { get { return locationToolBarLabel; } }
@@ -7747,8 +7738,8 @@ namespace Assistant
 
 		private void DisableCloseButton()
 		{
-			IntPtr menu = GetSystemMenu(this.Handle, false);
-			EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
+			IntPtr menu = DLLImport.Win.GetSystemMenu(this.Handle, false);
+			DLLImport.Win.EnableMenuItem(menu, 0xF060, 0x00000002); //menu, SC_CLOSE, MF_BYCOMMAND|MF_GRAYED
 			m_CanClose = false;
 		}
 
@@ -8122,8 +8113,8 @@ namespace Assistant
 
 			uint ps = m_OutPrev;
 			uint pr = m_InPrev;
-			m_OutPrev = ClientCommunication.TotalOut();
-			m_InPrev = ClientCommunication.TotalIn();
+			m_OutPrev = DLLImport.Razor.TotalOut();
+			m_InPrev = DLLImport.Razor.TotalIn();
 
 			int time = 0;
 			if (ClientCommunication.ConnectionStart != DateTime.MinValue)
@@ -8913,7 +8904,7 @@ namespace Assistant
 		{
 			// Fuck windows, seriously.
 
-			ClientCommunication.BringToFront(this.Handle);
+			DLLImport.Razor.BringToFront(this.Handle);
 			if (RazorEnhanced.Settings.General.ReadBool("AlwaysOnTop"))
 				this.TopMost = true;
 			if (WindowState != FormWindowState.Normal)
@@ -9227,9 +9218,6 @@ namespace Assistant
 				ClientCommunication.SetNegotiate(negotiate.Checked);
 			}
 		}
-
-		[System.Runtime.InteropServices.DllImport("user32.dll")]
-		private static extern IntPtr SetParent(IntPtr child, IntPtr newParent);
 
 		private void showHealthOH_CheckedChanged(object sender, System.EventArgs e)
 		{
@@ -12745,7 +12733,7 @@ namespace Assistant
 			if (File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "bypassnegoziate")))
 				return;
 
-			if (!ClientCommunication.AllowBit(FeatureBit.AutolootAgent))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.AutolootAgent))
 			{
 				autoLootCheckBox.Enabled = false;
 				autoLootCheckBox.Checked = false;
@@ -12758,7 +12746,7 @@ namespace Assistant
 					autoLootCheckBox.Enabled = true;
 			}
 
-			if (!ClientCommunication.AllowBit(FeatureBit.RangeCheckLT))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.RangeCheckLT))
 			{
 				rangeCheckLT.Checked = false;
 				rangeCheckLT.Enabled = false;
@@ -12787,7 +12775,7 @@ namespace Assistant
 				}*/
 
 
-			if (!ClientCommunication.AllowBit(FeatureBit.UnequipBeforeCast))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.UnequipBeforeCast))
 			{
 				spellUnequip.Checked = false;
 				spellUnequip.Enabled = false;
@@ -12799,7 +12787,7 @@ namespace Assistant
 					spellUnequip.Enabled = true;
 			}
 
-			if (!ClientCommunication.AllowBit(FeatureBit.AutoPotionEquip))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.AutoPotionEquip))
 			{
 				potionEquip.Checked = false;
 				potionEquip.Enabled = false;
@@ -12811,7 +12799,7 @@ namespace Assistant
 					potionEquip.Enabled = true;
 			}
 
-			if (!ClientCommunication.AllowBit(FeatureBit.BlockHealPoisoned))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.BlockHealPoisoned))
 			{
 				blockhealpoisonCheckBox.Checked = false;
 				blockhealpoisonCheckBox.Enabled = false;
@@ -12846,7 +12834,7 @@ namespace Assistant
 					buyEnableCheckBox.Enabled = true;
 			}*/
 
-			if (!ClientCommunication.AllowBit(FeatureBit.OverheadHealth))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.OverheadHealth))
 			{
 				chkPartyOverhead.Checked = false;
 				chkPartyOverhead.Enabled = false;
@@ -12858,7 +12846,7 @@ namespace Assistant
 					chkPartyOverhead.Enabled = true;
 			}
 
-			if (!ClientCommunication.AllowBit(FeatureBit.BoneCutterAgent))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.BoneCutterAgent))
 			{
 				bonecutterCheckBox.Checked = false;
 				bonecutterCheckBox.Enabled = false;
@@ -12870,7 +12858,7 @@ namespace Assistant
 					bonecutterCheckBox.Enabled = true;
 			}
 
-			if (!ClientCommunication.AllowBit(FeatureBit.AutoRemount))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.AutoRemount))
 			{
 				remountcheckbox.Checked = false;
 				remountcheckbox.Enabled = false;
@@ -12883,7 +12871,7 @@ namespace Assistant
 			}
 
 
-			if (!ClientCommunication.AllowBit(FeatureBit.AutoBandage))
+			if (!DLLImport.Razor.AllowBit(FeatureBit.AutoBandage))
 			{
 				bandagehealenableCheckBox.Enabled = false;
 				bandagehealenableCheckBox.Checked = false;

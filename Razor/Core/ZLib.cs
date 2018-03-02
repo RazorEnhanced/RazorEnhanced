@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace Assistant
 {
@@ -26,20 +25,7 @@ namespace Assistant
 		Z_DEFAULT_COMPRESSION = (-1)
 	}
 
-	internal class ZLib
-	{
-		[DllImport("zlib")]
-		internal static extern string zlibVersion();
-
-		[DllImport("zlib")]
-		internal static extern ZLibError compress(byte[] dest, ref int destLength, byte[] source, int sourceLength);
-
-		[DllImport("zlib")]
-		internal static extern ZLibError compress2(byte[] dest, ref int destLength, byte[] source, int sourceLength, ZLibCompressionLevel level);
-
-		[DllImport("zlib")]
-		internal static extern ZLibError uncompress(byte[] dest, ref int destLen, byte[] source, int sourceLen);
-	}
+	
 
 	// Be careful when writing raw data, as it may confuse the GZBlockIn if not accounted for when reading.
 	// Seeking in the compressed stream is HIGHLY unrecommended
@@ -121,7 +107,7 @@ namespace Assistant
 			else
 				outLen = m_CompBuff.Length;
 
-			ZLibError error = ZLib.compress2(m_CompBuff, ref outLen, m_Buffer.ToArray(), (int)m_Buffer.Position, ZLibCompressionLevel.Z_BEST_COMPRESSION);
+			ZLibError error = DLLImport.ZLib.compress2(m_CompBuff, ref outLen, m_Buffer.ToArray(), (int)m_Buffer.Position, ZLibCompressionLevel.Z_BEST_COMPRESSION);
 			if (error != ZLibError.Z_OK)
 				throw new Exception("ZLib error during copression: " + error.ToString());
 
@@ -253,7 +239,7 @@ namespace Assistant
 
 					Raw.Read(m_ReadBuff, 0, block);
 
-					ZLibError error = ZLib.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
+					ZLibError error = DLLImport.ZLib.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
 					if (error != ZLibError.Z_OK)
 						throw new Exception("ZLib error uncompressing: " + error.ToString());
 
@@ -301,7 +287,7 @@ namespace Assistant
 
 					Raw.Read(m_ReadBuff, 0, block);
 
-					ZLibError error = ZLib.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
+					ZLibError error = DLLImport.ZLib.uncompress(m_CompBuff, ref ucLen, m_ReadBuff, block);
 					if (error != ZLibError.Z_OK)
 						throw new Exception("ZLib error uncompressing: " + error.ToString());
 

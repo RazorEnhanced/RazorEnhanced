@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Microsoft.Win32.SafeHandles;
-using System.Runtime.CompilerServices;
 
 namespace Assistant
 {
@@ -144,8 +143,8 @@ namespace Assistant
 				string str = sb.ToString();
 				ushort atom = 0;
 				if (!string.IsNullOrEmpty(str))
-					atom = GlobalAddAtom(str);
-				PostMessage(hWnd, Msg, (IntPtr)atom, IntPtr.Zero);
+					atom = DLLImport.Win.GlobalAddAtom(str);
+				DLLImport.Win.PostMessage(hWnd, Msg, (IntPtr)atom, IntPtr.Zero);
 			}
 		}
 
@@ -188,7 +187,7 @@ namespace Assistant
 							foreach (Item item in World.Items.Values)
 							{
 								if (item.ItemID >= 0x4000)
-									PostMessage((IntPtr)wParam, (uint)UOAMessage.ADD_MULTI, (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))), (IntPtr)item.ItemID.Value);
+									DLLImport.Win.PostMessage((IntPtr)wParam, (uint)UOAMessage.ADD_MULTI, (IntPtr)((int)((item.Position.X & 0xFFFF) | ((item.Position.Y & 0xFFFF) << 16))), (IntPtr)item.ItemID.Value);
 							}
 						}
 
@@ -216,7 +215,7 @@ namespace Assistant
 								{
 									try
 									{
-										return GlobalAddAtom(((SkillName)wParam).ToString());
+										return DLLImport.Win.GlobalAddAtom(((SkillName)wParam).ToString());
 									}
 									catch
 									{
@@ -253,14 +252,14 @@ namespace Assistant
 
 						int hue = wParam & 0xFFFF;
 						StringBuilder sb = new StringBuilder(256);
-						if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
+						if (DLLImport.Win.GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
 							return 0;
 
 						if ((wParam & 0x00010000) != 0)
 							ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", sb.ToString()));
 						else
 							World.Player.OverheadMessage(hue, sb.ToString());
-						GlobalDeleteAtom((ushort)lParam);
+						DLLImport.Win.GlobalDeleteAtom((ushort)lParam);
 						return 1;
 					}
 				case UOAMessage.REQUEST_MULTIS:
@@ -270,7 +269,7 @@ namespace Assistant
 				case UOAMessage.ADD_CMD:
 					{
 						StringBuilder sb = new StringBuilder(256);
-						if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
+						if (DLLImport.Win.GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
 							return 0;
 
 						if (wParam == 0)
@@ -291,7 +290,7 @@ namespace Assistant
 				case UOAMessage.GET_SHARDNAME:
 					{
 						if (!string.IsNullOrEmpty(World.ShardName))
-							return GlobalAddAtom(World.ShardName);
+							return DLLImport.Win.GlobalAddAtom(World.ShardName);
 						else
 							return 0;
 					}
@@ -301,7 +300,7 @@ namespace Assistant
 					}
 				case UOAMessage.GET_UO_HWND:
 					{
-						return FindUOWindow().ToInt32();
+						return DLLImport.Razor.FindUOWindow().ToInt32();
 					}
 				case UOAMessage.GET_POISON:
 					{
@@ -371,7 +370,7 @@ namespace Assistant
 			foreach (WndRegEnt t in m_WndReg)
 			{
 				if (t.Type == 1)
-					PostMessage((IntPtr)t.Handle, (uint)UOAMessage.REM_MULTI, pos, (IntPtr)item.ItemID.Value);
+					DLLImport.Win.PostMessage((IntPtr)t.Handle, (uint)UOAMessage.REM_MULTI, pos, (IntPtr)item.ItemID.Value);
 			}
 		}
 
@@ -385,7 +384,7 @@ namespace Assistant
 			foreach (WndRegEnt t in m_WndReg)
 			{
 				if (t.Type == 1)
-					PostMessage((IntPtr)t.Handle, (uint)UOAMessage.ADD_MULTI, pos, (IntPtr)iid.Value);
+					DLLImport.Win.PostMessage((IntPtr)t.Handle, (uint)UOAMessage.ADD_MULTI, pos, (IntPtr)iid.Value);
 			}
 		}
 
@@ -411,7 +410,7 @@ namespace Assistant
 		{
 			if (World.Player != null)
 			{
-				PostToWndReg(1425, (IntPtr)GlobalAddAtom(text), IntPtr.Zero);
+				PostToWndReg(1425, (IntPtr)DLLImport.Win.GlobalAddAtom(text), IntPtr.Zero);
 			}
 		}
 
@@ -420,7 +419,7 @@ namespace Assistant
 			List<WndRegEnt> rem = null;
 			foreach (WndRegEnt t in m_WndReg)
 			{
-				if (PostMessage((IntPtr) (t).Handle, Msg, wParam, lParam) != 0)
+				if (DLLImport.Win.PostMessage((IntPtr) (t).Handle, Msg, wParam, lParam) != 0)
 					continue;
 
 				if (rem == null)
@@ -471,81 +470,6 @@ namespace Assistant
 			internal byte Buff0;
 		}
 
-		[DllImport("Crypt.dll")]
-		private static unsafe extern int InstallLibrary(IntPtr thisWnd, int procid, int features);
-
-		[DllImport("Crypt.dll")]
-		private static unsafe extern void Shutdown(bool closeClient);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern IntPtr FindUOWindow();
-
-		[DllImport("Crypt.dll")]
-		private static unsafe extern IntPtr GetSharedAddress();
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern int GetPacketLength(byte* data, int bufLen);//GetPacketLength( [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)] byte[] data, int bufLen );
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern bool IsDynLength(byte packetId);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern int GetUOProcId();
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern int InitializeLibrary(string version);
-
-		[DllImport("Crypt.dll")]
-		private static unsafe extern IntPtr GetCommMutex();
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern uint TotalIn();
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern uint TotalOut();
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern IntPtr CaptureScreen(bool isFullScreen, string msgStr);
-
-		[DllImport("Crypt.dll")]
-		private static unsafe extern void WaitForWindow(int pid);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern void SetDataPath(string path);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern void SetDeathMsg(string msg);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern void CalibratePosition(int x, int y, int z);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern bool IsCalibrated();
-
-		[DllImport("Crypt.dll")]
-		private static unsafe extern bool GetPosition(int* x, int* y, int* z);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern void BringToFront(IntPtr hWnd);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern void DoFeatures(int features, bool fakeversion);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern bool AllowBit(uint bit);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern void SetAllowDisconn(bool allowed);
-
-		[DllImport("Crypt.dll")]
-		private static unsafe extern void SetServer(uint ip, ushort port);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern bool HandleNegotiate(ulong word);
-
-		[DllImport("Crypt.dll")]
-		internal static unsafe extern IntPtr GetUOVersion();
-
 		internal enum Loader_Error
 		{
 			SUCCESS = 0,
@@ -562,50 +486,12 @@ namespace Assistant
 
 			UNKNOWN_ERROR = 99
 		};
-		[DllImport("user32.dll")]
-		internal static extern bool ShowWindow(IntPtr handle, int flags);
-
-		[DllImport("Loader.dll")]
-		private static unsafe extern uint Load(string exe, string dll, string func, void* dllData, int dataLen, out uint pid);
-
-		[DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
-		internal static extern IntPtr memcpy(IntPtr dest, IntPtr src, UIntPtr count);
-
-		/*[DllImport("msvcrt.dll")]
-		internal static unsafe extern void memcpy(void* to, void* from, int len);
-		*/
-		[DllImport("user32.dll")]
-		internal static extern uint PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
-
-		[DllImport("user32.dll")]
-		internal static extern bool SetForegroundWindow(IntPtr hWnd);
-
-		[DllImport("kernel32.dll")]
-		private static extern ushort GlobalAddAtom(string str);
-
-		[DllImport("kernel32.dll")]
-		private static extern ushort GlobalDeleteAtom(ushort atom);
-
-		[DllImport("kernel32.dll")]
-		private static extern uint GlobalGetAtomName(ushort atom, StringBuilder buff, int bufLen);
-
-		[DllImport("kernel32.dll")]
-		private static extern IntPtr LoadLibrary(string path);
-
-		[DllImport("kernel32.dll")]
-		private static extern bool FreeLibrary(IntPtr hModule);
-
-		[DllImport("kernel32.dll")]
-		private static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
-
-		[DllImport("Advapi32.dll")]
-		private static extern int GetUserNameA(StringBuilder buff, int* len);
-
+		
 		internal static string GetWindowsUserName()
 		{
 			int len = 1024;
 			StringBuilder sb = new StringBuilder(len);
-			return GetUserNameA(sb, &len) != 0 ? sb.ToString() : "";
+			return DLLImport.Win.GetUserNameA(sb, &len) != 0 ? sb.ToString() : "";
 		}
 
 		private static ConcurrentQueue<Packet> m_SendQueue;
@@ -654,7 +540,7 @@ namespace Assistant
 				}
 				catch
 				{
-					return ClientProc != null && FindUOWindow() != IntPtr.Zero;
+					return ClientProc != null && DLLImport.Razor.FindUOWindow() != IntPtr.Zero;
 				}
 			}
 		}
@@ -681,22 +567,22 @@ namespace Assistant
 			{
 				return;
 			}
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.DwmFree, IntPtr.Zero);
 		}
      
 		internal static void SetMapWndHandle(Form mapWnd)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetMapHWnd, mapWnd.Handle);
 		}
 
 		internal static void RequestStatbarPatch(bool preAOS)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.StatBar, preAOS ? (IntPtr)1 : IntPtr.Zero);
 		}
 
 		internal static void SetCustomNotoHue(int hue)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.NotoHue, (IntPtr)hue);
 		}
 
 		internal static void SetSmartCPU(bool enabled)
@@ -705,19 +591,19 @@ namespace Assistant
 				try { ClientCommunication.ClientProcess.PriorityClass = System.Diagnostics.ProcessPriorityClass.Normal; }
 				catch { }
 
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SmartCPU, (IntPtr)(enabled ? 1 : 0));
 		}
 
 		internal static void SetGameSize(int x, int y)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.SetGameSize, (IntPtr)((x & 0xFFFF) | ((y & 0xFFFF) << 16)));
 		}
 
 		internal static Loader_Error LaunchClient(string client)
 		{
 			string dll = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Crypt.dll");
 			uint pid = 0;
-			Loader_Error err = (Loader_Error)Load(client, dll, "OnAttach", null, 0, out pid);
+			Loader_Error err = (Loader_Error)DLLImport.Razor.Load(client, dll, "OnAttach", null, 0, out pid);
 
 			if (err == Loader_Error.SUCCESS)
 			{
@@ -756,9 +642,9 @@ namespace Assistant
 				flags |= 0x10;
 
 			//ClientProc.WaitForInputIdle();
-			WaitForWindow(ClientProc.Id);
+			DLLImport.Razor.WaitForWindow(ClientProc.Id);
 
-			error = (InitError)InstallLibrary(mainWindow, ClientProc.Id, flags);
+			error = (InitError)DLLImport.Razor.InstallLibrary(mainWindow, ClientProc.Id, flags);
 
 			if (error != InitError.SUCCESS)
 			{
@@ -766,7 +652,7 @@ namespace Assistant
 				return false;
 			}
 
-			byte* baseAddr = (byte*)GetSharedAddress().ToPointer();
+			byte* baseAddr = (byte*)DLLImport.Razor.GetSharedAddress().ToPointer();
 
 			// ZIPPY REV 80
 			/*m_OutFwd = (Buffer*)baseAddr;
@@ -782,9 +668,9 @@ namespace Assistant
 			m_OutSend = (Buffer*)(baseAddr + sizeof(Buffer) * 3);
 			m_TitleStr = baseAddr + sizeof(ClientCommunication.Buffer) * 4;
 
-			SetServer(m_ServerIP, m_ServerPort);
+			DLLImport.Razor.SetServer(m_ServerIP, m_ServerPort);
 
-			CommMutex = new Mutex {SafeWaitHandle = (new SafeWaitHandle(GetCommMutex(), true))};
+			CommMutex = new Mutex {SafeWaitHandle = (new SafeWaitHandle(DLLImport.Razor.GetCommMutex(), true))};
 
 			// ZIPPY REV 80			FwdMutex = new Mutex( false, String.Format( "UONetFwd_{0:X}", ClientProc.Id ) );
 			// ZIPPY REV 80			m_FwdWnd = IntPtr.Zero;
@@ -793,13 +679,13 @@ namespace Assistant
 			{
 				string path = Ultima.Files.GetFilePath("art.mul");
 				if (!string.IsNullOrEmpty(path))
-					SetDataPath(Path.GetDirectoryName(path));
+					DLLImport.Razor.SetDataPath(Path.GetDirectoryName(path));
 				else
-					SetDataPath(Path.GetDirectoryName(Ultima.Files.Directory));
+					DLLImport.Razor.SetDataPath(Path.GetDirectoryName(Ultima.Files.Directory));
 			}
 			catch
 			{
-				SetDataPath("");
+				DLLImport.Razor.SetDataPath("");
 			}
 
 			if (RazorEnhanced.Settings.General.ReadBool("OldStatBar"))
@@ -825,7 +711,7 @@ namespace Assistant
 
 		internal static void SetNegotiate(bool negotiate)
 		{
-			PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Negotiate, (IntPtr)(negotiate ? 1 : 0));
 		}
 
 		internal static bool Attach(int pid)
@@ -837,7 +723,7 @@ namespace Assistant
 
 		internal static void Close()
 		{
-			Shutdown(true);
+			DLLImport.Razor.Shutdown(true);
 			if (ClientProc != null && !ClientProc.HasExited)
 				ClientProc.CloseMainWindow();
 			ClientProc = null;
@@ -845,9 +731,9 @@ namespace Assistant
 
 		internal static int GetZ(int x, int y, int z)
 		{
-			if (IsCalibrated())
+			if (DLLImport.Razor.IsCalibrated())
 			{
-				if (GetPosition(null, null, &z))
+				if (DLLImport.Razor.GetPosition(null, null, &z))
 					return z;
 			}
 
@@ -867,7 +753,7 @@ namespace Assistant
 
 			if (pos != Point3D.Zero && m_CalPos == pos)
 			{
-				CalibratePosition(pos.X, pos.Y, pos.Z);
+				DLLImport.Razor.CalibratePosition(pos.X, pos.Y, pos.Z);
 				System.Threading.Thread.Sleep(TimeSpan.FromSeconds(0.1));
 			}
 
@@ -882,7 +768,7 @@ namespace Assistant
 
 		internal static void BeginCalibratePosition()
 		{
-			if (World.Player == null || IsCalibrated())
+			if (World.Player == null || DLLImport.Razor.IsCalibrated())
 				return;
 
 			if (m_CalTimer != null)
@@ -916,7 +802,7 @@ namespace Assistant
 
 				Engine.MainWindow.UpdateTitle();
 				foreach (WndRegEnt t in m_WndReg)
-					PostMessage((IntPtr)((WndRegEnt)t).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
+					DLLImport.Win.PostMessage((IntPtr)((WndRegEnt)t).Handle, (uint)UOAMessage.LOGOUT, IntPtr.Zero, IntPtr.Zero);
 				m_ConnStart = DateTime.MinValue;
 			}
 
@@ -986,9 +872,9 @@ namespace Assistant
 						if (Engine.MainWindow != null)
 						{
 							StringBuilder sb = new StringBuilder(256);
-							if (GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
+							if (DLLImport.Win.GlobalGetAtomName((ushort)lParam, sb, 256) == 0)
 								return false;
-							BringToFront(FindUOWindow());
+							DLLImport.Razor.BringToFront(DLLImport.Razor.FindUOWindow());
 							//PacketPlayer.Open(sb.ToString());
 							Engine.MainWindow.ShowMe();
 						}
@@ -1009,11 +895,11 @@ namespace Assistant
 
 					try
 					{
-						SetDataPath(Ultima.Files.Directory);
+						DLLImport.Razor.SetDataPath(Ultima.Files.Directory);
 					}
 					catch
 					{
-						SetDataPath("");
+						DLLImport.Razor.SetDataPath("");
 					}
 					UoMod.InjectUoMod();
 					m_Ready = true;
@@ -1103,12 +989,12 @@ namespace Assistant
 						else
 						{
 							if (RazorEnhanced.ToolBar.ToolBarForm != null)
-								ShowWindow(RazorEnhanced.ToolBar.ToolBarForm.Handle, 8);
+								DLLImport.Win.ShowWindow(RazorEnhanced.ToolBar.ToolBarForm.Handle, 8);
 
 							if (RazorEnhanced.SpellGrid.SpellGridForm != null)
-								ShowWindow(RazorEnhanced.SpellGrid.SpellGridForm.Handle, 8);
+								DLLImport.Win.ShowWindow(RazorEnhanced.SpellGrid.SpellGridForm.Handle, 8);
 
-							SetForegroundWindow(FindUOWindow());
+							DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
 						}
 					}
 
@@ -1141,7 +1027,7 @@ namespace Assistant
 						if (lParam != 0 && !razor.TopMost)
 						{
 							razor.TopMost = true;
-							SetForegroundWindow(FindUOWindow());
+							DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
 						}
 						else if (lParam == 0 && razor.TopMost)
 						{
@@ -1330,7 +1216,7 @@ namespace Assistant
 		private static void InitSendFlush()
 		{
 			if (m_OutSend->Length == 0)
-				PostMessage(FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
+				DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_UONETEVENT, (IntPtr)UONetMessage.Send, IntPtr.Zero);
 		}
 
 		private static void CopyToBuffer(Buffer* buffer, byte* data, int len)
@@ -1340,7 +1226,7 @@ namespace Assistant
 
 			IntPtr to = (IntPtr)(&buffer->Buff0 + buffer->Start + buffer->Length);
 			IntPtr from = (IntPtr)data;
-			memcpy(to, from, new UIntPtr((uint)len));
+			DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
 			buffer->Length += len;
 		}
 
@@ -1357,7 +1243,7 @@ namespace Assistant
 			{
 				byte* buff = (&inBuff->Buff0) + inBuff->Start;
 
-				int len = GetPacketLength(buff, inBuff->Length);
+				int len = DLLImport.Razor.GetPacketLength(buff, inBuff->Length);
 				if (len > inBuff->Length || len <= 0)
 					break;
 
@@ -1384,7 +1270,7 @@ namespace Assistant
 				PacketReader pr = null;
 				if (viewer)
 				{
-					pr = new PacketReader(buff, len, IsDynLength(buff[0]));
+					pr = new PacketReader(buff, len, DLLImport.Razor.IsDynLength(buff[0]));
 					if (filter)
 						p = MakePacketFrom(pr);
 				}
@@ -1395,9 +1281,9 @@ namespace Assistant
 					{
 						IntPtr to = (IntPtr)ptr;
 						IntPtr from = (IntPtr)buff;
-						memcpy(to, from, new UIntPtr((uint)len));
+						DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
 					}
-					p = new Packet(temp, len, IsDynLength(buff[0]));
+					p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
 				}
 
 				bool blocked = false;
@@ -1488,12 +1374,12 @@ namespace Assistant
 			{
 				fixed (byte* ptr = bytes)
 				{
-					memcpy((IntPtr)m_TitleStr, (IntPtr)ptr, (UIntPtr)num);
+					DLLImport.Win.memcpy((IntPtr)m_TitleStr, (IntPtr)ptr, (UIntPtr)num);
 				}
 			}
 			*(m_TitleStr + num) = 0;
 			CommMutex.ReleaseMutex();
-			PostMessage(FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
+			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
 		}
 	}
 }

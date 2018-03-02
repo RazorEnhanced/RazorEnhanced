@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Windows.Forms;
 using Assistant;
 
@@ -302,7 +301,7 @@ namespace RazorEnhanced
 			UpdateAll();
 			UpdatePanelImage();
 			UpdateCount();
-			ClientCommunication.ShowWindow(m_form.Handle, 8);
+			DLLImport.Win.ShowWindow(m_form.Handle, 8);
 			m_form.Location = new Point(Settings.General.ReadInt("PosXToolBar"), Settings.General.ReadInt("PosYToolBar"));
 			m_form.Opacity = ((double)Settings.General.ReadInt("ToolBarOpacity")) / 100.0; ;
 		}
@@ -590,7 +589,7 @@ namespace RazorEnhanced
 
 		internal static void ToolbarForm_MouseClick(object sender, MouseEventArgs e)
 		{
-			ClientCommunication.SetForegroundWindow(ClientCommunication.FindUOWindow());
+			DLLImport.Win.SetForegroundWindow(DLLImport.Razor.FindUOWindow());
 		}
 
 		internal static void InitEvent()

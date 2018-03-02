@@ -1,10 +1,7 @@
 using System;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Runtime.InteropServices;
 using Accord.Video;
 using Accord.Video.FFMPEG;
 namespace Assistant
@@ -42,26 +39,12 @@ namespace Assistant
 				list.Items.Add(Path.GetFileName(files[i]));
 		}
 
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-		[StructLayout(LayoutKind.Sequential)]
-		public struct RECT
-		{
-			public int Left;        // x position of upper-left corner
-			public int Top;         // y position of upper-left corner
-			public int Right;       // x position of lower-right corner
-			public int Bottom;      // y position of lower-right corner
-		}
-
-
-		public static bool Record(int fps, int codec)
+		internal static bool Record(int fps, int codec)
 		{
 			if (!Assistant.Engine.CDepPresent)
 				return false;
 
-			GetWindowRect(ClientCommunication.FindUOWindow(), out RECT lpRect);
+			DLLImport.Win.GetWindowRect(DLLImport.Razor.FindUOWindow(), out DLLImport.Win.RECT lpRect);
 			Rectangle screenArea = new Rectangle(lpRect.Left, lpRect.Top, (lpRect.Right - lpRect.Left), (lpRect.Bottom - lpRect.Top));
 			foreach (System.Windows.Forms.Screen screen in
 					  System.Windows.Forms.Screen.AllScreens)

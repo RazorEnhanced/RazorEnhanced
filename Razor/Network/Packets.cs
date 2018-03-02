@@ -1584,7 +1584,7 @@ namespace Assistant
 				byte[] inflatedBuffer = m_PlaneBuffers[i];
 
 				int deflatedLength = m_DeflatedBuffer.Length;
-				ZLibError ce = ZLib.compress2(m_DeflatedBuffer, ref deflatedLength, inflatedBuffer, size, ZLibCompressionLevel.Z_DEFAULT_COMPRESSION);
+				ZLibError ce = DLLImport.ZLib.compress2(m_DeflatedBuffer, ref deflatedLength, inflatedBuffer, size, ZLibCompressionLevel.Z_DEFAULT_COMPRESSION);
 
 				if (ce != ZLibError.Z_OK)
 				{
@@ -1618,7 +1618,7 @@ namespace Assistant
 				byte[] inflatedBuffer = m_StairBuffers[i];
 
 				int deflatedLength = m_DeflatedBuffer.Length;
-				ZLibError ce = ZLib.compress2(m_DeflatedBuffer, ref deflatedLength, inflatedBuffer, size, ZLibCompressionLevel.Z_DEFAULT_COMPRESSION);
+				ZLibError ce = DLLImport.ZLib.compress2(m_DeflatedBuffer, ref deflatedLength, inflatedBuffer, size, ZLibCompressionLevel.Z_DEFAULT_COMPRESSION);
 
 				if (ce != ZLibError.Z_OK)
 				{

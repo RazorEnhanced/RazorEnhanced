@@ -62,7 +62,7 @@ namespace Assistant
 			{
 				if (m_ClientVersion == null || m_ClientVersion.Major < 2)
 				{
-					IntPtr version = ClientCommunication.GetUOVersion();
+					IntPtr version = DLLImport.Razor.GetUOVersion();
 					string[] split = GetManagedString(version).Split('.');
 
 					if (split.Length < 3)
@@ -233,7 +233,7 @@ namespace Assistant
 			m_Running = true;
 			Thread.CurrentThread.Name = "Razor Main Thread";
 
-			if (ClientCommunication.InitializeLibrary(Engine.Version) == 0)
+			if (DLLImport.Razor.InitializeLibrary(Engine.Version) == 0)
 				throw new InvalidOperationException("This Razor installation is corrupted.");
 
 			DateTime local = DateTime.Now;
