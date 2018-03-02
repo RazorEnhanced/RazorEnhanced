@@ -372,12 +372,12 @@ namespace Assistant
 		private Label label37;
 		private RazorButton toolboxcountClearButton;
 		private RazorButton toolboxcountTargetButton;
-		private RazorTextBox toolboxcountWarningTextBox;
+		private RazorAgentNumOnlyTextBox toolboxcountWarningTextBox;
 		private Label label36;
 		private RazorCheckBox toolboxcountHueWarningCheckBox;
 		private RazorTextBox toolboxcountHueTextBox;
 		private Label label35;
-		private RazorTextBox toolboxcountGraphTextBox;
+		private RazorAgentNumHexTextBox toolboxcountGraphTextBox;
 		private Label label18;
 		private RazorComboBox toolboxcountComboBox;
 		private TabPage enhancedHotKeytabPage;
@@ -1014,12 +1014,12 @@ namespace Assistant
 			this.label37 = new System.Windows.Forms.Label();
 			this.toolboxcountClearButton = new RazorEnhanced.UI.RazorButton();
 			this.toolboxcountTargetButton = new RazorEnhanced.UI.RazorButton();
-			this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.toolboxcountWarningTextBox = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.label36 = new System.Windows.Forms.Label();
 			this.toolboxcountHueWarningCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.toolboxcountHueTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.label35 = new System.Windows.Forms.Label();
-			this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.toolboxcountGraphTextBox = new RazorEnhanced.UI.RazorAgentNumHexTextBox();
 			this.label18 = new System.Windows.Forms.Label();
 			this.toolboxcountComboBox = new RazorEnhanced.UI.RazorComboBox();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -3216,6 +3216,7 @@ namespace Assistant
 			this.toolboxcountNameTextBox.Size = new System.Drawing.Size(144, 20);
 			this.toolboxcountNameTextBox.TabIndex = 69;
 			this.toolboxcountNameTextBox.TextChanged += new System.EventHandler(this.toolboxcountNameTextBox_TextChanged);
+			this.toolboxcountNameTextBox.Leave += new System.EventHandler(this.toolboxcountNameTextBox_Leave);
 			// 
 			// label37
 			// 
@@ -3256,6 +3257,7 @@ namespace Assistant
 			this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
 			this.toolboxcountWarningTextBox.TabIndex = 66;
 			this.toolboxcountWarningTextBox.TextChanged += new System.EventHandler(this.toolboxcountWarningTextBox_TextChanged);
+
 			// 
 			// label36
 			// 
@@ -3308,7 +3310,7 @@ namespace Assistant
 			this.toolboxcountGraphTextBox.Name = "toolboxcountGraphTextBox";
 			this.toolboxcountGraphTextBox.Size = new System.Drawing.Size(61, 20);
 			this.toolboxcountGraphTextBox.TabIndex = 2;
-			this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountGraphTextBox_TextChanged);
+			this.toolboxcountGraphTextBox.TextChanged += new System.EventHandler(this.toolboxcountNameTextBox_Leave);
 			// 
 			// label18
 			// 
@@ -12276,6 +12278,9 @@ namespace Assistant
 
 		private void toolboxcountComboBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			if (toolboxcomboupdate)
+				return;
+
 			int index = toolboxcountComboBox.SelectedIndex;
 			RazorEnhanced.ToolBar.ToolBarItem item = RazorEnhanced.Settings.Toolbar.ReadSelectedItem(index);
 
@@ -12289,15 +12294,20 @@ namespace Assistant
 				RazorEnhanced.ToolBar.Open();
 		}
 
+		private bool toolboxcomboupdate = false;
 		private void toolboxcountNameTextBox_TextChanged(object sender, EventArgs e)
 		{
 			if (toolboxcountNameTextBox.Focused)
 			{
-				int index = toolboxcountComboBox.SelectedIndex;
-				RazorEnhanced.Settings.Toolbar.UpdateItem(index, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
-				RazorEnhanced.ToolBar.UptateToolBarComboBox(index);
-				RazorEnhanced.ToolBar.Open();
+				toolboxcomboupdate = true;
+				toolboxcountComboBox.Items[toolboxcountComboBox.SelectedIndex] = "Slot " + toolboxcountComboBox.SelectedIndex + ": " + toolboxcountNameTextBox.Text;
+				toolboxcomboupdate = false;
 			}
+		}
+		private void toolboxcountNameTextBox_Leave(object sender, EventArgs e)
+		{
+			RazorEnhanced.Settings.Toolbar.UpdateItem(toolboxcountComboBox.SelectedIndex, toolboxcountNameTextBox.Text, toolboxcountGraphTextBox.Text, toolboxcountHueTextBox.Text, toolboxcountHueWarningCheckBox.Checked, toolboxcountWarningTextBox.Text);
+			RazorEnhanced.ToolBar.Open();
 		}
 
 		private void toolboxcountGraphTextBox_TextChanged(object sender, EventArgs e)
@@ -13750,9 +13760,6 @@ namespace Assistant
 			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
-
-
-
 		// ----------------- STOP DPS METER -------------------
 	}
 }
