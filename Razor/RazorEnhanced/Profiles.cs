@@ -227,6 +227,10 @@ namespace RazorEnhanced
 		    PasswordMemory.ProfileChangeInit();
             Assistant.Engine.MainWindow.Initializing = true;
 
+			// Stop timer script
+			if (RazorEnhanced.Scripts.Timer != null)
+				RazorEnhanced.Scripts.Timer.Close();
+
 			// Stop forzato di tutti i thread agent
 			if (Assistant.Engine.MainWindow.AutolootCheckBox.Checked == true)
 				Assistant.Engine.MainWindow.AutolootCheckBox.Checked = false;
@@ -258,6 +262,9 @@ namespace RazorEnhanced
 
 			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Enabled == true)
 				Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = false;
+
+			// Stop video recorder
+			Assistant.MainForm.StopVideoRecorder();
 
 			// Svuoto logbox e reset select index
 			Assistant.Engine.MainWindow.AutoLootLogBox.Items.Clear();
@@ -336,8 +343,8 @@ namespace RazorEnhanced
 
 			PasswordMemory.ProfileChangeEnd();
 
-			// Stop video recorder
-			Assistant.MainForm.StopVideoRecorder();
+			if (World.Player != null) // Reinit script timer se cambio profilo avvene da loggati
+				RazorEnhanced.Scripts.Init();
 		}
 
 		internal static void Save()
