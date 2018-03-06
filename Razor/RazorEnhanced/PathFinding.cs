@@ -14,6 +14,28 @@ namespace RazorEnhanced
 {
     public class PathFinding
     {
+        public enum DiagonalDirection
+        {
+            NONE        = 0,
+            SOUTHEAST   = 1,
+            SOUTHWEST   = 2,
+            NORTHEAST   = 3,
+            NORTHWEST   = 4
+        }
+
+        public enum Direction
+        {
+            NONE        = 0,
+            UP          = 1,
+            WEST        = 2,
+            LEFT        = 3,
+            SOUTH       = 4,
+            DOWN        = 5,
+            EAST        = 6,
+            RIGHT       = 7,
+            NORTH       = 8
+        }
+
         public class WalkableTiles
         {
             public int x;
@@ -260,7 +282,7 @@ namespace RazorEnhanced
                         //Se in queste x-y c'è una casa, setta tutta la Z a False
                         for (int z = 0, zz = -127; z < walkgrid.Back; z++, zz++)
                         {
-                            walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(x, y, z), false);
+                            walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(x, y, z), true);
                             if (zz == startz)
                                 isWalkable = true;
                         }
@@ -282,7 +304,7 @@ namespace RazorEnhanced
                                 }
                                 else
                                 { 
-                                    walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(x, y, z), false);
+                                    walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(x, y, z), true);
                                     if (zz == startz)
                                         isWalkable = true;
                                 }
@@ -343,7 +365,7 @@ namespace RazorEnhanced
             bmp.SetPixel(endPos.X, endPos.Y, end);            
 
             bool skippedMovement = false;
-         /*   var draw = PathFinder.FindPath(walkgrid, startPos, endPos);
+            var draw = PathFinder.FindPath(walkgrid, startPos, endPos);
 
             PathFinderAStar3D.Point3D stepp = draw.next.position;
             while (draw.next != null)
@@ -353,9 +375,8 @@ namespace RazorEnhanced
                     break;
                 bmp.SetPixel(stepp.X, stepp.Y, walked);
                 draw = PathFinder.FindPath(walkgrid, stepp, endPos);
-            }*/
-
-            //bmp.Save("C:\\Cose\\test.png");
+            }
+            bmp.Save("C:\\Cose\\test.png");
 
             //Calcolo il percorso
             SearchNode PathList = PathFinder.FindPath(walkgrid, startPos, endPos);
@@ -393,411 +414,78 @@ namespace RazorEnhanced
                 if (oldstep.X != step.X && oldstep.Y != step.Y && IsSurrounded(walkgrid, oldstep, newStepX, newStepY))
                 {
                     //Movimento diagonale
-
                     Assistant.Point3D pp2 = Assistant.World.Player.Position;
                     Assistant.Direction dd2 = Assistant.World.Player.Direction;
 
-                    //SE
-                    if (newStepX == 1 && newStepY == 1)
+                    Assistant.Point2D newStep = new Assistant.Point2D(newStepX, newStepY);
+
+                    //Calcolo il tipo di direzione diagonale da fare
+                    switch(GetDiagonalDirection(newStepX, newStepY))
                     {
-                        if (walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X + 1, oldstep.Y,
-                            coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X + 1, pp2.Y, Player.Map)).Key)))
-                        {
-
-                            Console.WriteLine("East e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "East")
+                        case DiagonalDirection.SOUTHEAST:
+                            if (CheckPosition(pp2, oldstep, walkgrid, +1, 0, coordsZ))
+                                TurnCorner(pp2, "East", "South");
+                            else if (CheckPosition(pp2, oldstep, walkgrid, 0, +1, coordsZ))
+                                TurnCorner(pp2, "South", "East");
+                            else
                             {
-                                RazorEnhanced.Player.Walk("East");
-                                while (RazorEnhanced.Player.Direction != "East")
-                                    Misc.Pause(10);
+                                walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
+                                PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
+                                skippedMovement = true;
                             }
+                            break;
 
-                            //Si muove
-                            RazorEnhanced.Player.Run("East");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "South")
+                        case DiagonalDirection.SOUTHWEST:
+                            if (CheckPosition(pp2, oldstep, walkgrid, -1, 0, coordsZ))
+                                TurnCorner(pp2, "West", "South");
+                            else if (CheckPosition(pp2, oldstep, walkgrid, 0, -1, coordsZ))
+                                TurnCorner(pp2, "South", "West");
+                            else
                             {
-                                RazorEnhanced.Player.Walk("South");
-                                while (RazorEnhanced.Player.Direction != "South")
-                                    Misc.Pause(10);
+                                walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
+                                PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
+                                skippedMovement = true;
                             }
+                            break;
 
-                            //Si muove
-                            RazorEnhanced.Player.Run("South");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                        }
-                        else if (walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X, oldstep.Y + 1,
-                            coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X, pp2.Y + 1, Player.Map)).Key)))
-                        {
-                            Console.WriteLine("South e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "South")
+                        case DiagonalDirection.NORTHEAST:
+                            if (CheckPosition(pp2, oldstep, walkgrid, +1, 0, coordsZ))
+                                TurnCorner(pp2, "East", "North");
+                            else if (CheckPosition(pp2, oldstep, walkgrid, 0, -1, coordsZ))
+                                TurnCorner(pp2, "North", "East");
+                            else
                             {
-                                RazorEnhanced.Player.Walk("South");
-                                while (RazorEnhanced.Player.Direction != "South")
-                                    Misc.Pause(10);
+                                walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
+                                PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
+                                skippedMovement = true;
                             }
+                            break;
 
-                            //Si muove
-                            RazorEnhanced.Player.Run("South");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "East")
+                        case DiagonalDirection.NORTHWEST:
+                            if (CheckPosition(pp2, oldstep, walkgrid, -1, 0, coordsZ))
+                                TurnCorner(pp2, "West", "North");
+                            else if (CheckPosition(pp2, oldstep, walkgrid, 0, -1, coordsZ))
+                                TurnCorner(pp2, "North", "West");
+                            else
                             {
-                                RazorEnhanced.Player.Walk("East");
-                                while (RazorEnhanced.Player.Direction != "East")
-                                    Misc.Pause(10);
+                                walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
+                                PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
+                                skippedMovement = true;
                             }
+                            break;
 
-                            //Si muove
-                            RazorEnhanced.Player.Run("East");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-                        }
-                        else
-                        {
-                            walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
-                            PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
-                            skippedMovement = true;
-                        }
-                    }
-                    //NW
-                    else if (newStepX == -1 && newStepY == -1)
-                    {
-                        if (
-                            walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X - 1, oldstep.Y,
-                                coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X - 1, pp2.Y, Player.Map)).Key)))
-                        {
-                            Console.WriteLine("West e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "West")
-                            {
-                                RazorEnhanced.Player.Walk("West");
-                                while (RazorEnhanced.Player.Direction != "West")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("West");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "North")
-                            {
-                                RazorEnhanced.Player.Walk("North");
-                                while (RazorEnhanced.Player.Direction != "North")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("North");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-                        }
-                        else if (
-                            walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X, oldstep.Y - 1,
-                                coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X, pp2.Y - 1, Player.Map)).Key)))
-                        {
-                            Console.WriteLine("North e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "North")
-                            {
-                                RazorEnhanced.Player.Walk("North");
-                                while (RazorEnhanced.Player.Direction != "North")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("North");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "West")
-                            {
-                                RazorEnhanced.Player.Walk("West");
-                                while (RazorEnhanced.Player.Direction != "West")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("West");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-                        }
-                        else
-                        {
-                            walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
-                            PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
-                            skippedMovement = true;
-                        }
-                    }
-                    //NE
-                    else if (newStepX == 1 && newStepY == -1)
-                    {
-                        if (
-                            walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X + 1, oldstep.Y,
-                                coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X + 1, pp2.Y, Player.Map)).Key)))
-                        {
-                            Console.WriteLine("East e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "East")
-                            {
-                                RazorEnhanced.Player.Walk("East");
-                                while (RazorEnhanced.Player.Direction != "East")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("East");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "North")
-                            {
-                                RazorEnhanced.Player.Walk("North");
-                                while (RazorEnhanced.Player.Direction != "North")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("North");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-                        }
-                        else if (
-                            walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X, oldstep.Y - 1,
-                                coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X, pp2.Y - 1, Player.Map)).Key)))
-                        {
-                            Console.WriteLine("North e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "North")
-                            {
-                                RazorEnhanced.Player.Walk("North");
-                                while (RazorEnhanced.Player.Direction != "North")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("North");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "East")
-                            {
-                                RazorEnhanced.Player.Walk("East");
-                                while (RazorEnhanced.Player.Direction != "East")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("East");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-                        }
-                        else
-                        {
-                            walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
-                            PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
-                            skippedMovement = true;
-                        }
-                    }
-                    //SW
-                    else if (newStepX == -1 && newStepY == 1)
-                    {
-                        if (
-                            walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X - 1, oldstep.Y,
-                                coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X - 1, pp2.Y, Player.Map)).Key)))
-                        {
-                            Console.WriteLine("West e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "West")
-                            {
-                                RazorEnhanced.Player.Walk("West");
-                                while (RazorEnhanced.Player.Direction != "West")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("West");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "South")
-                            {
-                                RazorEnhanced.Player.Walk("South");
-                                while (RazorEnhanced.Player.Direction != "South")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("South");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-                        }
-                        else if (
-                            walkgrid.PositionIsFree(new PathFinderAStar3D.Point3D(oldstep.X, oldstep.Y + 1,
-                                coordsZ.First(z => z.Value == (short)Statics.GetLandZ(pp2.X, pp2.Y + 1, Player.Map)).Key)))
-                        {
-                            Console.WriteLine("South e' libera!");
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "South")
-                            {
-                                RazorEnhanced.Player.Walk("South");
-                                while (RazorEnhanced.Player.Direction != "South")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("South");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-
-                            //Reset della posizione corrente
-                            pp2 = Assistant.World.Player.Position;
-
-                            //Switcha la direzione
-                            if (RazorEnhanced.Player.Direction != "West")
-                            {
-                                RazorEnhanced.Player.Walk("West");
-                                while (RazorEnhanced.Player.Direction != "West")
-                                    Misc.Pause(10);
-                            }
-
-                            //Si muove
-                            RazorEnhanced.Player.Run("West");
-                            while (pp2 == Assistant.World.Player.Position)
-                                Misc.Pause(10);
-                        }
-                        else
-                        {
-                            walkgrid.MarkPosition(new PathFinderAStar3D.Point3D(step.X, step.Y, step.Z), true);
-                            PathList = PathFinder.FindPath(walkgrid, oldstep, endPos);
-                            skippedMovement = true;
-                        }
-                    }
-                    else
-                    {
-
-                        int xx1 = step.X - oldstep.X;
-                        int yy1 = step.Y - oldstep.Y;
-                        Assistant.Point3D oldplayerpos = Assistant.World.Player.Position;
-
-                        while (Assistant.World.Player.Position.X != oldplayerpos.X + xx1 ||
-                               Assistant.World.Player.Position.Y != oldplayerpos.Y + yy1)
-                        {
-                            pp2 = Assistant.World.Player.Position;
-                            dd2 = Assistant.World.Player.Direction;
-
-                            if (xx1 <= -1 && yy1 <= -1)
-                                RazorEnhanced.Player.Run("Up");
-                            else if (xx1 <= -1 && yy1 == 0)
-                                RazorEnhanced.Player.Run("West");
-                            else if (xx1 <= -1 && yy1 >= 1)
-                                RazorEnhanced.Player.Run("Left");
-                            else if (xx1 == 0 && yy1 >= 1)
-                                RazorEnhanced.Player.Run("South");
-                            else if (xx1 >= 1 && yy1 >= 1)
-                                RazorEnhanced.Player.Run("Down");
-                            else if (xx1 >= 1 && yy1 == 0)
-                                RazorEnhanced.Player.Run("East");
-                            else if (xx1 >= 1 && yy1 <= -1)
-                                RazorEnhanced.Player.Run("Right");
-                            else if (xx1 == 0 && yy1 <= -1)
-                                RazorEnhanced.Player.Run("North");
-
-                            while (pp2 == Assistant.World.Player.Position && dd2 == Assistant.World.Player.Direction)
-                            {
-                                Misc.Pause(10);
-                            }
-                        }
+                        case DiagonalDirection.NONE:
+                        default:
+                            MoveStraightForward(step.X - oldstep.X, step.Y - oldstep.Y);
+                            break;
                     }
                 }
                 else
-                {
-                    int xx1 = step.X - oldstep.X;
-                    int yy1 = step.Y - oldstep.Y;
-                    Assistant.Point3D oldplayerpos = Assistant.World.Player.Position;
+                    MoveStraightForward(step.X - oldstep.X, step.Y - oldstep.Y);
 
-                    Console.WriteLine("Posizione Corrente Step - X: " + oldplayerpos.X + " - Y:  " + oldplayerpos.Y);
-                    Console.WriteLine("Prossimo Step - X: " + (int)(oldplayerpos.X + xx1) + " - Y:  " + (int)(oldplayerpos.Y + yy1));
-
-                    while (Assistant.World.Player.Position.X != oldplayerpos.X + xx1 ||
-                           Assistant.World.Player.Position.Y != oldplayerpos.Y + yy1)
-                    {
-                        Assistant.Point3D pp2 = Assistant.World.Player.Position;
-                        Assistant.Direction dd2 = Assistant.World.Player.Direction;
-
-                        if (xx1 <= -1 && yy1 <= -1)
-                            RazorEnhanced.Player.Run("Up");
-                        else if (xx1 <= -1 && yy1 == 0)
-                            RazorEnhanced.Player.Run("West");
-                        else if (xx1 <= -1 && yy1 >= 1)
-                            RazorEnhanced.Player.Run("Left");
-                        else if (xx1 == 0 && yy1 >= 1)
-                            RazorEnhanced.Player.Run("South");
-                        else if (xx1 >= 1 && yy1 >= 1)
-                            RazorEnhanced.Player.Run("Down");
-                        else if (xx1 >= 1 && yy1 == 0)
-                            RazorEnhanced.Player.Run("East");
-                        else if (xx1 >= 1 && yy1 <= -1)
-                            RazorEnhanced.Player.Run("Right");
-                        else if (xx1 == 0 && yy1 <= -1)
-                            RazorEnhanced.Player.Run("North");
-
-                        while (pp2 == Assistant.World.Player.Position && dd2 == Assistant.World.Player.Direction)
-                        {
-                            Misc.Pause(10);
-                        }
-                    }
-                }
-
-                Console.WriteLine("Prossimo Step - X: " + step.X + " - Y:  " + step.Y);
 
                 if(PathList == null)
                 {
-                    Misc.SendMessage("Riavvio dio");
                     TestRoute(endx, endy, endz);
                     break;
                 }
@@ -850,6 +538,133 @@ namespace RazorEnhanced
                 return true;
             else
                 return false;
+        }
+
+        private static bool CheckPosition(Assistant.Point3D playerPos, PathFinderAStar3D.Point3D oldStep, WorldGrid walkGrid, int x, int y, Dictionary<int, int> coordsZ)
+        {
+            int coordZ = coordsZ.First(z => z.Value == (short)Statics.GetLandZ(playerPos.X + x, playerPos.Y + y, Player.Map)).Key;
+
+            PathFinderAStar3D.Point3D position = new PathFinderAStar3D.Point3D(oldStep.X + x, oldStep.Y + y, coordZ);
+
+            if(walkGrid.PositionIsFree(position))
+                return true;
+            else
+                return false;
+        }
+
+        private static Direction GetDirection(int x, int y)
+        {
+            if (x <= -1 && y <= -1)
+                return Direction.UP;
+            else if (x <= -1 && y == 0)
+                return Direction.WEST;
+            else if (x <= -1 && y >= 1)
+                return Direction.LEFT;
+            else if (x == 0 && y >= 1)
+                return Direction.SOUTH;
+            else if (x >= 1 && y >= 1)
+                return Direction.DOWN;
+            else if (x >= 1 && y == 0)
+                return Direction.EAST;
+            else if (x >= 1 && y <= -1)
+                return Direction.RIGHT;
+            else if (x == 0 && y <= -1)
+                return Direction.NORTH;
+            else
+                return Direction.NONE;
+        }
+
+        private static DiagonalDirection GetDiagonalDirection(int x, int y)
+        {
+            if(x == 1 && y == 1)
+                return DiagonalDirection.SOUTHEAST;
+            else if (x == -1 && y == 1)
+                return DiagonalDirection.SOUTHWEST;
+            else if (x == 1 && y == -1)
+                return DiagonalDirection.NORTHEAST;
+            else if (x == -1 && y == -1)
+                return DiagonalDirection.NORTHWEST;
+            else
+                return DiagonalDirection.NONE;
+        }
+
+        private static void MoveStraightForward(int x, int y)
+        {
+            Assistant.Point3D oldplayerpos = Assistant.World.Player.Position;
+            while (Assistant.World.Player.Position.X != oldplayerpos.X + x ||
+                   Assistant.World.Player.Position.Y != oldplayerpos.Y + y)
+            {
+                Assistant.Point3D pp2 = Assistant.World.Player.Position;
+                Assistant.Direction dd2 = Assistant.World.Player.Direction;
+
+                switch(GetDirection(x, y))
+                {
+                    case Direction.UP:
+                        RazorEnhanced.Player.Run("Up");
+                        break;
+                    case Direction.WEST:
+                        RazorEnhanced.Player.Run("West");
+                        break;
+                    case Direction.LEFT:
+                        RazorEnhanced.Player.Run("Left");
+                        break;
+                    case Direction.SOUTH:
+                        RazorEnhanced.Player.Run("South");
+                        break;
+                    case Direction.DOWN:
+                        RazorEnhanced.Player.Run("Down");
+                        break;
+                    case Direction.EAST:
+                        RazorEnhanced.Player.Run("East");
+                        break;
+                    case Direction.RIGHT:
+                        RazorEnhanced.Player.Run("Right");
+                        break;
+                    case Direction.NORTH:
+                        RazorEnhanced.Player.Run("North");
+                        break;
+
+                    case Direction.NONE:
+                    default:
+                        break;
+                }
+
+                while (pp2 == Assistant.World.Player.Position && dd2 == Assistant.World.Player.Direction)
+                    Misc.Pause(10);
+            }
+        }
+
+        private static void RotateDirection(string direction)
+        {
+            //Switcha la direzione
+            if (RazorEnhanced.Player.Direction != direction)
+            {
+                RazorEnhanced.Player.Walk(direction);
+                while (RazorEnhanced.Player.Direction != direction)
+                    Misc.Pause(10);
+            }
+        }
+
+        private static Assistant.Point3D MoveToDirection(Assistant.Point3D playerPos, string direction)
+        {
+            //Si muove
+            RazorEnhanced.Player.Run(direction);
+            while (playerPos == Assistant.World.Player.Position)
+                Misc.Pause(10);
+            return Assistant.World.Player.Position;
+        }
+
+        private static void TurnCorner(Assistant.Point3D playerPos, string direction1, string direction2)
+        {
+            //Ruota la direzione
+            RotateDirection(direction1);
+            //Si muove in questa direzione
+            playerPos = MoveToDirection(playerPos, direction1);
+
+            //Ruota la direzione
+            RotateDirection(direction2);
+            //Si muove in questa direzione
+            playerPos = MoveToDirection(playerPos, direction2);
         }
     }
 }
