@@ -184,7 +184,7 @@ namespace Assistant
 			internal static unsafe extern void BringToFront(IntPtr hWnd);
 
 			[DllImport("Crypt.dll")]
-			internal static unsafe extern void DoFeatures(int features, bool fakeversion);
+			internal static unsafe extern void DoFeatures(int features, bool oldversion);
 
 			[DllImport("Crypt.dll")]
 			internal static unsafe extern bool AllowBit(uint bit);

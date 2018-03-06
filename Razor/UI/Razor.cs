@@ -12747,8 +12747,9 @@ namespace Assistant
 
 		public void UpdateControlLocks()
 		{
-			if (File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "bypassnegoziate")))
-				return;
+			// ENABLE IT ONLY FOR DEBUG 
+			//if (File.Exists(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "bypassnegotiate")))
+			//	return;
 
 			if (!DLLImport.Razor.AllowBit(FeatureBit.AutolootAgent))
 			{

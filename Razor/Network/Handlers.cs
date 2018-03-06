@@ -2391,7 +2391,7 @@ namespace Assistant
 				p.Seek(3, SeekOrigin.Begin);
 				p.WriteAsciiFixed("", (int)p.Length - 3);
 
-				if (World.ShardName.Contains("Demise"))  // Demise version check
+				if (World.ShardName.Contains("Demise"))  // Use old Version
 					DLLImport.Razor.DoFeatures(World.Player.Features, true);
 				else
 					DLLImport.Razor.DoFeatures(World.Player.Features, false);

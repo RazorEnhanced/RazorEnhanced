@@ -548,7 +548,7 @@ DLLFUNCTION void BringToFront(HWND hWnd)
 #define CHEATPROC_STR "jTjAjHjC"
 #define CHEATPROC_LEN 8
 
-DLLFUNCTION void DoFeatures(int realFeatures, bool fakeversion)
+DLLFUNCTION void DoFeatures(int realFeatures, bool oldversion)
 {
 	int i, c, size = 8;
 	char pkt[512];
@@ -589,19 +589,18 @@ DLLFUNCTION void DoFeatures(int realFeatures, bool fakeversion)
 	memcpy(&str[c], CryptChecksum, 16);
 	c += 16;
 
-	if (fakeversion)
+	if (oldversion)
 	{
-		memcpy(&str[c], DLL_VERSION_DEMISE, strlen(DLL_VERSION_DEMISE));
-		c += (int)strlen(DLL_VERSION_DEMISE);
-		str[c++] = 0;
+		memcpy(&str[c], DLL_VERSION_OLD, strlen(DLL_VERSION_OLD));
+		c += (int)strlen(DLL_VERSION_OLD);
 	}
 	else
 	{
 		memcpy(&str[c], DLL_VERSION, strlen(DLL_VERSION));
 		c += (int)strlen(DLL_VERSION);
-		str[c++] = 0;
 	}
 
+	str[c++] = 0;
 	for (i = 0; i < c; i++)
 		str[i] = str[i] ^ pShared->CheatKey[i & 0xF];
 
