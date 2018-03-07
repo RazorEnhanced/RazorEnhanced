@@ -21,25 +21,47 @@ namespace RazorEnhanced
 
 		internal EnhancedEntity(UOEntity entity)
 		{
-			m_Serial = new Serial(entity.Serial);
+			if (entity == null)
+				m_Serial = new Serial(0);
+			else
+				m_Serial = new Serial(entity.Serial);
 			m_UOEntity = entity;
 		}
 
 		public int Serial { get { return m_Serial.Value; } }
 
-		public virtual Point3D Position { get { return new RazorEnhanced.Point3D(m_UOEntity.Position); } }
+		public virtual Point3D Position
+		{
+			get
+			{
+				if (m_UOEntity == null)
+					return new RazorEnhanced.Point3D(0,0,0);
+				else
+					return new RazorEnhanced.Point3D(m_UOEntity.Position);
+
+			}
+		}
 
 		public bool Deleted
 		{
 			get
 			{
-				return m_UOEntity.Deleted;
+				if (m_UOEntity == null)
+					return true;
+				else
+					return m_UOEntity.Deleted;
 			}
 		}
 
 		public virtual int Hue
 		{
-			get { return m_UOEntity.Hue; }
+			get
+			{
+				if (m_UOEntity == null)
+					return 0;
+				else
+					return m_UOEntity.Hue;
+			}
 		}
 	}
 }

@@ -33,6 +33,11 @@ namespace RazorEnhanced
 			m_AssistantPoint3D = point3D;
 		}
 
+		internal Point3D(int x, int y, int z)
+		{
+			m_AssistantPoint3D = new Assistant.Point3D(x, y, z);
+		}
+
 		public int X { get { return m_AssistantPoint3D.X; } }
 		public int Y { get { return m_AssistantPoint3D.Y; } }
 		public int Z { get { return m_AssistantPoint3D.Z; } }
