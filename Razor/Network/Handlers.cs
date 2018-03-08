@@ -1894,58 +1894,8 @@ namespace Assistant
 			Item.UpdateContainers();
 
 			// Filtro muri
-			if (!Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
-				return;
-
-			switch (item.ItemID)
-			{
-				case 0x0080:
-				case 0x0082:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x3B1;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Wall Of Stone]"));
-					return;
-				case 0x3996:
-				case 0x398C:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x0845;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Fire Field]"));
-					return;
-				case 0x3915:
-				case 0x3920:
-                case 0x3922:
-                    args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x016A;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Poison Field]"));
-					return;
-				case 0x3967:
-				case 0x3979:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x00DA;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Paralyze Field]"));
-					return;
-				case 0x3946:
-				case 0x3956:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x0125;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Energy Field]"));
-					return;
-			}
+			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+				args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
 		}
 
 		private static void SAWorldItem(PacketReader p, PacketHandlerEventArgs args)
@@ -2063,59 +2013,8 @@ namespace Assistant
 
 			Item.UpdateContainers();
 
-			// Filtro muri
-			if (!Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
-				return;
-
-			switch (item.ItemID)
-			{
-				case 0x0080:
-				case 0x0082:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x3B1;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Wall Of Stone]"));
-					return;
-				case 0x3996:
-				case 0x398C:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x0845;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Fire Field]"));
-					return;
-				case 0x3915:
-				case 0x3920:
-				case 0x3922:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x016A;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Poison Field]"));
-					return;
-				case 0x3967:
-				case 0x3979:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x00DA;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Paralyze Field]"));
-					return;
-				case 0x3946:
-				case 0x3956:
-					args.Block = true;
-					item.ItemID = 0x28A8;
-					item.Hue = 0x0125;
-					ClientCommunication.SendToClient(new WorldItem(item));
-					if (RazorEnhanced.Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						ClientCommunication.SendToClient(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, 10, 3, Language.CliLocName, item.Name, "[Energy Field]"));
-					return;
-			}
+			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+				args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
 		}
 
 		private static void MoveBoatHS(PacketReader p, PacketHandlerEventArgs args)

@@ -9,10 +9,70 @@ namespace RazorEnhanced
 {
 	public class Filters
 	{
-		////////////////////////////////////////////////////////////////
-		/////////////////// START - FLAG HIGHLIGHT /////////////////////
-		////////////////////////////////////////////////////////////////
+		/////////////////// START - STATIC FIELD ///////////////////////
+		const ushort WallStaticID = 0x28A8;
 
+		internal enum WallColor : ushort
+		{
+			Stone = 0x3B1,
+			Fire = 0x0845,
+			Poison = 0x016A,
+			Paralyze = 0x00DA,
+			Energy = 0x0125
+		}
+		internal static bool MakeWallStatic(Assistant.Item wall)
+		{
+			switch (wall.ItemID)
+			{
+				case 0x0080:
+				case 0x0082:
+					wall.ItemID = WallStaticID;
+					wall.Hue = (ushort)WallColor.Stone;
+					ClientCommunication.SendToClient(new WorldItem(wall));
+					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
+						ClientCommunication.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Stone, 3, Language.CliLocName, wall.Name, "[Wall Of Stone]"));
+					return true;
+				case 0x3996:
+				case 0x398C:
+					wall.ItemID = WallStaticID;
+					wall.Hue = (ushort)WallColor.Fire;
+					ClientCommunication.SendToClient(new WorldItem(wall));
+					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
+						ClientCommunication.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Fire, 3, Language.CliLocName, wall.Name, "[Fire Field]"));
+					return true;
+				case 0x3915:
+				case 0x3920:
+				case 0x3922:
+					wall.ItemID = WallStaticID;
+					wall.Hue = (ushort)WallColor.Poison;
+					ClientCommunication.SendToClient(new WorldItem(wall));
+					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
+						ClientCommunication.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Poison, 3, Language.CliLocName, wall.Name, "[Poison Field]"));
+					return true;
+				case 0x3967:
+				case 0x3979:
+					wall.ItemID = WallStaticID;
+					wall.Hue = (ushort)WallColor.Paralyze;
+					ClientCommunication.SendToClient(new WorldItem(wall));
+					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
+						ClientCommunication.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Paralyze, 3, Language.CliLocName, wall.Name, "[Paralyze Field]"));
+					return true;
+				case 0x3946:
+				case 0x3956:
+					wall.ItemID = WallStaticID;
+					wall.Hue = (ushort)WallColor.Energy;
+					ClientCommunication.SendToClient(new WorldItem(wall));
+					if (Engine.MainWindow.ShowMessageFieldCheckBox.Checked)
+						ClientCommunication.SendToClient(new UnicodeMessage(wall.Serial, wall.ItemID, MessageType.Regular, (ushort)WallColor.Energy, 3, Language.CliLocName, wall.Name, "[Energy Field]"));
+					return true;
+				default:
+					return false;
+			}
+		}
+		/////////////////// END - STATIC FIELD /////////////////////////
+
+
+		/////////////////// START - FLAG HIGHLIGHT /////////////////////
 		internal static void ProcessMessage(Assistant.Mobile m)
 		{
 			if (m.Serial == World.Player.Serial)      // Skip Self
@@ -39,15 +99,10 @@ namespace RazorEnhanced
 					Mobiles.MessageNoWait(m.Serial, 10, "*[Target]*");
 			}
 		}
-
-		////////////////////////////////////////////////////////////////
 		//////////////////// END - FLAG HIGHLIGHT //////////////////////
-		////////////////////////////////////////////////////////////////
 
 
-		////////////////////////////////////////////////////////////////
 		/////////////////// START - GRAPH FILTER ///////////////////////
-		////////////////////////////////////////////////////////////////
 		[Serializable]
 		public class GraphChangeData
 		{
@@ -121,15 +176,10 @@ namespace RazorEnhanced
 			}
 			return p;
 		}
-		////////////////////////////////////////////////////////////////
 		/////////////////// END - GRAPH FILTER /////////////////////////
-		////////////////////////////////////////////////////////////////
 
 
-		////////////////////////////////////////////////////////////////
 		///////////////////// START - AUTOCARVER ///////////////////////
-		////////////////////////////////////////////////////////////////
-
 		private static Queue<int> m_IgnoreCutCorpiQueue = new Queue<int>();
 		private static bool m_AutoCarver;
 		private static int m_carverblade;
@@ -187,15 +237,10 @@ namespace RazorEnhanced
 		{
 			AutoCarverEngine(m_corpsefilter);
 		}
-
-		////////////////////////////////////////////////////////////////
 		/////////////////////// END - AUTOCARVER ///////////////////////
-		////////////////////////////////////////////////////////////////
 
-		////////////////////////////////////////////////////////////////
+
 		///////////////////// START - BONE CUTTER //////////////////////
-		////////////////////////////////////////////////////////////////
-
 		private static bool m_BoneCutter;
 		private static int m_bonecutterblade;
 
@@ -259,14 +304,10 @@ namespace RazorEnhanced
 
 			BoneCutterEngine(m_bonefilter);
 		}
-
-		////////////////////////////////////////////////////////////////
 		/////////////////////// END - BONE CUTTER //////////////////////
-		////////////////////////////////////////////////////////////////
 
-		////////////////////////////////////////////////////////////////
+
 		///////////////////// START - AUTO REMOUNT /////////////////////
-		////////////////////////////////////////////////////////////////
 		private static bool m_AutoModeRemount;
 		private static int m_autoremountdelay;
 		private static int m_autoremountedelay;
@@ -341,17 +382,10 @@ namespace RazorEnhanced
 				}
 			}
 		}
-
-		////////////////////////////////////////////////////////////////
 		/////////////////////// END - AUTO REMOUNT /////////////////////
-		////////////////////////////////////////////////////////////////
 
 
-		////////////////////////////////////////////////////////////////
 		///////////////////// START - FLAG COLOR ///////////////////////
-		////////////////////////////////////////////////////////////////
-
-		// COLORI FLAG HIGHLIGHT //
 		internal enum HighLightColor : ushort
 		{
 			Poison = 0x0042,
@@ -537,11 +571,7 @@ namespace RazorEnhanced
 			p.Seek(+1, SeekOrigin.Current);
 			return p;
 		}
-
-
-		////////////////////////////////////////////////////////////////
 		///////////////////// END -  FLAG COLOR ////////////////////////
-		////////////////////////////////////////////////////////////////
 
 
 		//////////////// Load settings ////////////////
