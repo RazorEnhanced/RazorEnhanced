@@ -3149,6 +3149,9 @@ namespace Assistant
 						break;
 				}
 			}
+
+			if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+				RazorEnhanced.Filters.ApplyColor(World.Player, Convert.ToBoolean(action));
 		}
 
 		private static void AttackRequest(Packet p, PacketHandlerEventArgs args)

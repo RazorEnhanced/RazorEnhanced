@@ -342,7 +342,8 @@ namespace RazorEnhanced
 		{
 			Poison = 0x0042,
 			Paralized = 0x013C,
-			Mortal = 0x002E
+			Mortal = 0x002E,
+			BloodOath = 0x0038
 		}
 
 		private static List<Assistant.Layer> m_colorized_layer = new List<Layer>
@@ -380,7 +381,7 @@ namespace RazorEnhanced
 				ClientCommunication.SendToClient(new EquipmentItem(i, i.Hue, m.Serial));
 			}
 		}
-		internal static void ApplyColor(Assistant.Mobile m)
+		internal static void ApplyColor(Assistant.Mobile m, bool isbloodoath = false)
 		{
 			int color = 0;
 			if (m.Poisoned)
@@ -389,6 +390,8 @@ namespace RazorEnhanced
 				color = (int)HighLightColor.Paralized;
 			else if (m.Blessed) // Mortal
 				color = (int)HighLightColor.Mortal;
+			else if (isbloodoath)
+				color = (int)HighLightColor.BloodOath;
 			else
 			{
 				Decolorize(m);

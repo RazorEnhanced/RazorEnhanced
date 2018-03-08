@@ -376,7 +376,7 @@ namespace Assistant
 		internal void ProcessPacketFlags(byte flags)
 		{
 			if (!PacketHandlers.UseNewStatus)
-				m_Poisoned = (flags & 0x04) != 0;			
+				m_Poisoned = (flags & 0x04) != 0;
 			else
 				m_Flying = (flags & 0x04) != 0;
 
@@ -386,11 +386,17 @@ namespace Assistant
 			m_Visible = (flags & 0x80) == 0;
 			m_Paralized = (flags & 0x01) != 0;
 
-			if (this == World.Player && RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox")) // if self e enabled filter
+			if (this == World.Player)
 			{
-				RazorEnhanced.Filters.ApplyColor(this);
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+					RazorEnhanced.Filters.ApplyColor(this);
 			}
-		}
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+					RazorEnhanced.Filters.ApplyColor(this);
+			}
+		} 
 
 		internal List<Item> Contains { get { return m_Items; } }
 
