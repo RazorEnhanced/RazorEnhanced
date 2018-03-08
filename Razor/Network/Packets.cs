@@ -893,9 +893,11 @@ namespace Assistant
 			else   // Inizio controllo flag
 			{
 				if (m.Poisoned) // Caso Poison
-					hue = RazorEnhanced.Filters.PoisonHighLightColor[0];
+					hue = (int)RazorEnhanced.Filters.HighLightColor.Poison;
 				else if (m.Blessed) // Caso Mortal
-					hue = RazorEnhanced.Filters.PoisonHighLightColor[2];
+					hue = (int)RazorEnhanced.Filters.HighLightColor.Mortal;
+				else if (m.Paralized) // Caso Paral
+					hue = (int)RazorEnhanced.Filters.HighLightColor.Paralized;
 			}
 
 			EnsureCapacity(3 + 4 + 2 + 2 + 2 + 1 + 1 + 2 + 1 + 1 + 4 + count * (4 + 2 + 1 + 2));
@@ -920,9 +922,11 @@ namespace Assistant
 				else   // Inizio controllo flag
 				{
 					if (m.Poisoned) // Caso Poison
-						Write((ushort)RazorEnhanced.Filters.PoisonHighLightColor[0]);
+						hue = (int)RazorEnhanced.Filters.HighLightColor.Poison;
 					else if (m.Blessed) // Caso Mortal
-						Write((ushort)RazorEnhanced.Filters.PoisonHighLightColor[2]);
+						hue = (int)RazorEnhanced.Filters.HighLightColor.Mortal;
+					else if (m.Paralized) // Caso Paral
+						hue = (int)RazorEnhanced.Filters.HighLightColor.Paralized;
 					else
 						Write((ushort)item.Hue);
 				}
@@ -1082,12 +1086,12 @@ namespace Assistant
 		internal EquipmentItem(Item item, ushort hue, Serial owner)
 			: base(0x2E, 15)
 		{
-			Write((uint)item.Serial);
-			Write((ushort)item.ItemID);
-			Write((sbyte)0);
+			Write(item.Serial);
+			Write(item.ItemID);
+			Write((byte)0x00);
 			Write((byte)item.Layer);
-			Write((uint)owner);
-			Write((ushort)hue);
+			Write(owner);
+			Write(hue);
 		}
 	}
 

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
+using System.IO;
 
 namespace RazorEnhanced
 {
@@ -333,7 +334,7 @@ namespace RazorEnhanced
 
 
 		////////////////////////////////////////////////////////////////
-		///////////////////// START - SELF FLAG COLOR //////////////////
+		///////////////////// START - FLAG COLOR ///////////////////////
 		////////////////////////////////////////////////////////////////
 
 		// COLORI FLAG HIGHLIGHT //
@@ -405,11 +406,116 @@ namespace RazorEnhanced
 			}
 		}
 
+		internal static Packet MobileColorize(Packet p, Assistant.Mobile m)
+		{
+			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			if (ltHue != 0 && Targeting.IsLastTarget(m))
+				p = RewriteColorAndFlag(p, (ushort)ltHue);
 
-		
+			else
+			{
+				// Blocco Color Highlight flag
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				{
+					if (m.Poisoned)
+						p = RewriteColorAndFlag(p, (ushort)HighLightColor.Poison);
+
+					else if (m.Paralized)
+						p = RewriteColorAndFlag(p, (ushort)HighLightColor.Paralized);
+
+					else if (m.Blessed) // Mortal
+						p = RewriteColorAndFlag(p, (ushort)HighLightColor.Mortal);
+				}
+			}
+			return p;
+		}
+
+		internal static Packet MobileIncomingItemColorize(Packet p, Assistant.Mobile m, bool newmobincoming, Assistant.Item item = null)
+		{
+			int ltHue = Settings.General.ReadInt("LTHilight");
+			if (newmobincoming)
+			{
+				if (ltHue != 0 && Targeting.IsLastTarget(m))
+					p = RewriteColor(p, (ushort)ltHue);
+				else
+				{
+					// Blocco Color Highlight flag
+					if (Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+					{
+						if (m.Poisoned)
+							p = RewriteColor(p, (ushort)HighLightColor.Poison);
+
+						else if (m.Paralized)
+							p = RewriteColor(p, (ushort)HighLightColor.Paralized);
+
+						else if (m.Blessed) // Mortal
+							p = RewriteColor(p, (ushort)HighLightColor.Mortal);
+					}
+				}
+			}
+			else
+			{
+				if (ltHue != 0 && Targeting.IsLastTarget(m))
+				{
+					ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)(ltHue & 16383), m.Serial));
+				}
+				else
+				{
+					int color = 0;
+					if (m.Poisoned)
+						color = (int)HighLightColor.Poison;
+					else if (m.Paralized)
+						color = (int)HighLightColor.Paralized;
+					else if (m.Blessed) // Mortal
+						color = (int)HighLightColor.Mortal;
+
+					if (color != 0)
+						ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)color, m.Serial));
+				}
+			}
+			return p;
+		}
+
+		internal static Packet EquipmentUpdateColorize(Packet p, Assistant.Item i)
+		{
+			int ltHue = Settings.General.ReadInt("LTHilight");
+			if (ltHue != 0 && Targeting.IsLastTarget(i.Container as Assistant.Mobile))
+				p = RewriteColor(p, (ushort)ltHue);
+			else
+			{
+				// Blocco Color Highlight flag
+				if (Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				{
+					if ((i.Container as Assistant.Mobile) != null && (i.Container as Assistant.Mobile).Poisoned)
+						p = RewriteColor(p, (ushort)HighLightColor.Poison);
+
+					else if ((i.Container as Assistant.Mobile) != null && (i.Container as Assistant.Mobile).Paralized)
+						p = RewriteColor(p, (ushort)HighLightColor.Paralized);
+
+					else if ((i.Container as Assistant.Mobile) != null && (i.Container as Assistant.Mobile).Blessed) // Mortal
+						p = RewriteColor(p, (ushort)HighLightColor.Mortal);
+				}
+			}
+			return p;
+		}
+
+		private static Packet RewriteColor(Packet p, ushort color)
+		{
+			p.Seek(-2, SeekOrigin.Current);
+			p.Write(color);
+			return p;
+		}
+		private static Packet RewriteColorAndFlag(Packet p, ushort color)
+		{
+			p.Seek(-3, SeekOrigin.Current);
+			p.Write((short)color);
+			p.Seek(+1, SeekOrigin.Current);
+			return p;
+		}
+
 
 		////////////////////////////////////////////////////////////////
-		///////////////////// END - SELF FLAG COLOR ////////////////////
+		///////////////////// END -  FLAG COLOR ////////////////////////
 		////////////////////////////////////////////////////////////////
 
 

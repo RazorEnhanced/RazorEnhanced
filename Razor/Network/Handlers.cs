@@ -957,35 +957,8 @@ namespace Assistant
 
 			i.Container = ser;
 
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-			if (ltHue != 0 && Targeting.IsLastTarget(i.Container as Mobile))
-			{
-				p.Seek(-2, SeekOrigin.Current);
-				p.Write((ushort)ltHue);
-			}
-			else
-			{
-				// Blocco Color Highlight flag
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-				{
-					if ((i.Container as Mobile) != null && (i.Container as Mobile).Poisoned)
-					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Poison);
-					}
-					else if ((i.Container as Mobile) != null && (i.Container as Mobile).Paralized)
-					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Paralized);
-					}
-
-					else if ((i.Container as Mobile) != null && (i.Container as Mobile).Blessed) // Mortal
-					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Mortal);
-					}
-				}
-			}
+			// Apply flag color if enabled
+			p = RazorEnhanced.Filters.EquipmentUpdateColorize(p, i);
 
 			if (i.Layer != Layer.Backpack || !isNew || ser != World.Player.Serial)
 				return;
@@ -1224,40 +1197,8 @@ namespace Assistant
 			m.Hue = p.ReadUInt16();
 			m.ProcessPacketFlags(p.ReadByte());
 
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-			if (ltHue != 0 && Targeting.IsLastTarget(m))
-			{
-				p.Seek(-3, SeekOrigin.Current);
-				p.Write((short)(ltHue | 32768));
-				p.Seek(+1, SeekOrigin.Current);
-
-			}
-			else
-			{
-				// Blocco Color Highlight flag
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-				{
-					if (m.Poisoned)
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.HighLightColor.Poison));
-						p.Seek(+1, SeekOrigin.Current);
-					}
-					else if (m.Paralized)
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.HighLightColor.Paralized));
-						p.Seek(+1, SeekOrigin.Current);
-					}
-
-					else if (m.Blessed) // Mortal
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.HighLightColor.Mortal));
-						p.Seek(+1, SeekOrigin.Current);
-					}
-				}
-			}
+			// Apply color flag on mob if enabled
+			p = RazorEnhanced.Filters.MobileColorize(p, m);
 
 			m.Notoriety = p.ReadByte();
 
@@ -1500,11 +1441,17 @@ namespace Assistant
 				case 2:
 					m.Blessed = (flag != 0);
 					break;
-			} 
+			}
 
-			if (m == World.Player && RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox")) // if self e enabled filter
+			if (m == World.Player)
 			{
-				RazorEnhanced.Filters.ApplyColor(m);
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+					RazorEnhanced.Filters.ApplyColor(m);
+			}
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+					RazorEnhanced.Filters.ApplyColor(m);
 			}
 		}
 
@@ -1546,9 +1493,15 @@ namespace Assistant
 					break;
 			}
 
-			if (m == World.Player && RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox")) // if self e enabled filter
+			if (m == World.Player)
 			{
-				RazorEnhanced.Filters.ApplyColor(m);
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+					RazorEnhanced.Filters.ApplyColor(m);
+			}
+			else
+			{
+				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+					RazorEnhanced.Filters.ApplyColor(m);
 			}
 		}
 
@@ -1701,40 +1654,8 @@ namespace Assistant
 			m.Hue = p.ReadUInt16();
 			m.ProcessPacketFlags(p.ReadByte());
 
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-
-			if (ltHue != 0 && Targeting.IsLastTarget(m))
-			{
-				p.Seek(-3, SeekOrigin.Current);
-				p.Write((ushort)(ltHue | 32768));
-				p.Seek(+1, SeekOrigin.Current);
-			}
-			else
-			{
-				//Blocco Color Highlight flag
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-				{
-					if (m.Poisoned)
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Poison);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-					else if (m.Paralized)
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Paralized);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-
-					else if (m.Blessed) // Mortal
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Mortal);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-				}
-			}
+			// Apply flag color on mob if enabled
+			p = RazorEnhanced.Filters.MobileColorize(p, m);
 
 			if (m == World.Player)
 			{
@@ -1809,7 +1730,7 @@ namespace Assistant
 				Targeting.CheckTextFlags(m);
 
 			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
-			bool isLT = ltHue != 0 && Targeting.IsLastTarget(m);
+			
 
 			m.Body = body;
 
@@ -1820,38 +1741,8 @@ namespace Assistant
 			m.Hue = p.ReadUInt16();
 			m.ProcessPacketFlags(p.ReadByte());
 
-			if (isLT)
-			{
-				p.Seek(-3, SeekOrigin.Current);
-				p.Write((short)(ltHue | 32768));
-				p.Seek(+1, SeekOrigin.Current);
-			}
-			else
-			{
-				// Blocco Color Highlight flag
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
-				{
-					if (m.Poisoned)
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Poison);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-					else if (m.Paralized)
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Paralized);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-
-					else if (m.Blessed) // Mortal
-					{
-						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.HighLightColor.Mortal);
-						p.Seek(+1, SeekOrigin.Current);
-					}
-				}
-			}
+			// Apply color flag on mob if enabled
+			p = RazorEnhanced.Filters.MobileColorize(p, m);
 
 			m.Notoriety = p.ReadByte();
 
@@ -1900,19 +1791,15 @@ namespace Assistant
 					if (Engine.UseNewMobileIncoming || (num & 32768) != 0)
 					{
 						item.Hue = p.ReadUInt16();
-						if (isLT)
-						{
-							p.Seek(-2, SeekOrigin.Current);
-							p.Write((short)(ltHue & 16383));
-						}
+						
+						// Colorize item 
+						p = RazorEnhanced.Filters.MobileIncomingItemColorize(p, m, true);
 					}
 					else
 					{
 						item.Hue = 0;
-						if (isLT)
-						{
-							ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)(ltHue & 16383), m.Serial));
-						}
+						// Colorize item 
+						RazorEnhanced.Filters.MobileIncomingItemColorize(p, m, false, item);
 					}
 					if ((item.Layer == Layer.Backpack & isNew) && m == World.Player && m != null)
 					{
