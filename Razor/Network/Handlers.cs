@@ -2036,6 +2036,7 @@ namespace Assistant
 			switch (item.ItemID)
 			{
 				case 0x0080:
+				case 0x0082:
 					args.Block = true;
 					item.ItemID = 0x28A8;
 					item.Hue = 0x3B1;
@@ -2205,6 +2206,7 @@ namespace Assistant
 			switch (item.ItemID)
 			{
 				case 0x0080:
+				case 0x0082:
 					args.Block = true;
 					item.ItemID = 0x28A8;
 					item.Hue = 0x3B1;
