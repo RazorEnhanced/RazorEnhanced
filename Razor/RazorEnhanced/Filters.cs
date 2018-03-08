@@ -418,7 +418,7 @@ namespace RazorEnhanced
 			else
 			{
 				// Blocco Color Highlight flag
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				if ((m != World.Player && Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked) || (m == World.Player && Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked))
 				{
 					if (m.Poisoned)
 						p = RewriteColorAndFlag(p, (ushort)HighLightColor.Poison);
@@ -443,7 +443,7 @@ namespace RazorEnhanced
 				else
 				{
 					// Blocco Color Highlight flag
-					if (Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+					if ((m != World.Player && Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked) || (m == World.Player && Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked))
 					{
 						if (m.Poisoned)
 							p = RewriteColor(p, (ushort)HighLightColor.Poison);
@@ -486,17 +486,21 @@ namespace RazorEnhanced
 				p = RewriteColor(p, (ushort)ltHue);
 			else
 			{
-				// Blocco Color Highlight flag
-				if (Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				Assistant.Mobile m = (i.Container as Assistant.Mobile);
+				if (m != null)
 				{
-					if ((i.Container as Assistant.Mobile) != null && (i.Container as Assistant.Mobile).Poisoned)
-						p = RewriteColor(p, (ushort)HighLightColor.Poison);
+					// Blocco Color Highlight flag
+					if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked || Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
+					{
+						if (m.Poisoned)
+							p = RewriteColor(p, (ushort)HighLightColor.Poison);
 
-					else if ((i.Container as Assistant.Mobile) != null && (i.Container as Assistant.Mobile).Paralized)
-						p = RewriteColor(p, (ushort)HighLightColor.Paralized);
+						else if (m.Paralized)
+							p = RewriteColor(p, (ushort)HighLightColor.Paralized);
 
-					else if ((i.Container as Assistant.Mobile) != null && (i.Container as Assistant.Mobile).Blessed) // Mortal
-						p = RewriteColor(p, (ushort)HighLightColor.Mortal);
+						else if (m.Blessed) // Mortal
+							p = RewriteColor(p, (ushort)HighLightColor.Mortal);
+					}
 				}
 			}
 			return p;

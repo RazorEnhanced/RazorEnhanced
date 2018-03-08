@@ -3148,10 +3148,11 @@ namespace Assistant
 						}
 						break;
 				}
-			}
 
-			if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
-				RazorEnhanced.Filters.ApplyColor(World.Player, Convert.ToBoolean(action));
+				// Highlight for bloodOath
+				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked && buff == BuffIcon.BloodOathCurse)
+					RazorEnhanced.Filters.ApplyColor(World.Player, Convert.ToBoolean(action));
+			}
 		}
 
 		private static void AttackRequest(Packet p, PacketHandlerEventArgs args)
