@@ -769,6 +769,7 @@ namespace Assistant
 		internal RazorCheckBox BlockChivalryHealCheckBox { get { return blockchivalryhealCheckBox; } }
 		internal RazorCheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
 		internal RazorCheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
+		internal RazorCheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;

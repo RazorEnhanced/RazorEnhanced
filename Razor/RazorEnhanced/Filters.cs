@@ -525,26 +525,26 @@ namespace RazorEnhanced
 		//////////////// Load settings ////////////////
 		internal static void LoadSettings()
 		{
-			Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked = Settings.General.ReadBool("HighlightTargetCheckBox");
-			Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked = Settings.General.ReadBool("FlagsHighlightCheckBox");
-			Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked = Settings.General.ReadBool("ShowStaticFieldCheckBox");
-			Assistant.Engine.MainWindow.BlockTradeRequestCheckBox.Checked = Settings.General.ReadBool("BlockTradeRequestCheckBox");
-			Assistant.Engine.MainWindow.BlockPartyInviteCheckBox.Checked = Settings.General.ReadBool("BlockPartyInviteCheckBox");
-			Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = Settings.General.ReadBool("MobFilterCheckBox");
-			Assistant.Engine.MainWindow.AutoCarverCheckBox.Checked = Settings.General.ReadBool("AutoCarverCheckBox");
-			Assistant.Engine.MainWindow.BoneCutterCheckBox.Checked = Settings.General.ReadBool("BoneCutterCheckBox");
+			Engine.MainWindow.HighlightTargetCheckBox.Checked = Settings.General.ReadBool("HighlightTargetCheckBox");
+			Engine.MainWindow.FlagsHighlightCheckBox.Checked = Settings.General.ReadBool("FlagsHighlightCheckBox");
+			Engine.MainWindow.ShowStaticFieldCheckBox.Checked = Settings.General.ReadBool("ShowStaticFieldCheckBox");
+			Engine.MainWindow.BlockTradeRequestCheckBox.Checked = Settings.General.ReadBool("BlockTradeRequestCheckBox");
+			Engine.MainWindow.BlockPartyInviteCheckBox.Checked = Settings.General.ReadBool("BlockPartyInviteCheckBox");
+			Engine.MainWindow.MobFilterCheckBox.Checked = Settings.General.ReadBool("MobFilterCheckBox");
+			Engine.MainWindow.AutoCarverCheckBox.Checked = Settings.General.ReadBool("AutoCarverCheckBox");
+			Engine.MainWindow.BoneCutterCheckBox.Checked = Settings.General.ReadBool("BoneCutterCheckBox");
 			AutoCarverBlade = Settings.General.ReadInt("AutoCarverBladeLabel");
 			BoneCutterBlade = Settings.General.ReadInt("BoneBladeLabel");
-			Assistant.Engine.MainWindow.RemountCheckbox.Checked = Settings.General.ReadBool("RemountCheckbox");
-			Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked = Settings.General.ReadBool("ShowHeadTargetCheckBox");
-			Assistant.Engine.MainWindow.BlockHealPoisonCheckBox.Checked = Settings.General.ReadBool("BlockHealPoison");
-			Assistant.Engine.MainWindow.BlockChivalryHealCheckBox.Checked = Settings.General.ReadBool("BlockChivalryHealCheckBox");
-			Assistant.Engine.MainWindow.BlockBigHealCheckBox.Checked = Settings.General.ReadBool("BlockBigHealCheckBox");
-			Assistant.Engine.MainWindow.BlockMiniHealCheckBox.Checked = Settings.General.ReadBool("BlockMiniHealCheckBox");
-			Assistant.Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked = Settings.General.ReadBool("ColorFlagsHighlightCheckBox");
-			Assistant.Engine.MainWindow.ShowMessageFieldCheckBox.Checked = Settings.General.ReadBool("ShowMessageFieldCheckBox");
-			Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked = Settings.General.ReadBool("ShowAgentMessageCheckBox");
-
+			Engine.MainWindow.RemountCheckbox.Checked = Settings.General.ReadBool("RemountCheckbox");
+			Engine.MainWindow.ShowHeadTargetCheckBox.Checked = Settings.General.ReadBool("ShowHeadTargetCheckBox");
+			Engine.MainWindow.BlockHealPoisonCheckBox.Checked = Settings.General.ReadBool("BlockHealPoison");
+			Engine.MainWindow.BlockChivalryHealCheckBox.Checked = Settings.General.ReadBool("BlockChivalryHealCheckBox");
+			Engine.MainWindow.BlockBigHealCheckBox.Checked = Settings.General.ReadBool("BlockBigHealCheckBox");
+			Engine.MainWindow.BlockMiniHealCheckBox.Checked = Settings.General.ReadBool("BlockMiniHealCheckBox");
+			Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked = Settings.General.ReadBool("ColorFlagsHighlightCheckBox");
+			Engine.MainWindow.ShowMessageFieldCheckBox.Checked = Settings.General.ReadBool("ShowMessageFieldCheckBox");
+			Engine.MainWindow.ShowAgentMessageCheckBox.Checked = Settings.General.ReadBool("ShowAgentMessageCheckBox");
+			Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked = Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox");
 			AutoRemountDelay = Settings.General.ReadInt("MountDelay");
 			AutoRemountEDelay = Settings.General.ReadInt("EMountDelay");
 			AutoRemountSerial = Settings.General.ReadInt("MountSerial");

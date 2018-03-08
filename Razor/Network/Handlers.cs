@@ -1445,12 +1445,12 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
 					RazorEnhanced.Filters.ApplyColor(m);
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked)
 					RazorEnhanced.Filters.ApplyColor(m);
 			}
 		}
@@ -1495,12 +1495,12 @@ namespace Assistant
 
 			if (m == World.Player)
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
 					RazorEnhanced.Filters.ApplyColor(m);
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked)
 					RazorEnhanced.Filters.ApplyColor(m);
 			}
 		}
@@ -3150,7 +3150,7 @@ namespace Assistant
 				}
 			}
 
-			if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+			if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
 				RazorEnhanced.Filters.ApplyColor(World.Player, Convert.ToBoolean(action));
 		}
 

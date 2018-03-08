@@ -388,12 +388,12 @@ namespace Assistant
 
 			if (this == World.Player)
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox"))
+				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
 					RazorEnhanced.Filters.ApplyColor(this);
 			}
 			else
 			{
-				if (RazorEnhanced.Settings.General.ReadBool("ColorFlagsHighlightCheckBox"))
+				if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked)
 					RazorEnhanced.Filters.ApplyColor(this);
 			}
 		} 
