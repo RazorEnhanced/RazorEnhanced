@@ -1473,6 +1473,11 @@ namespace RazorEnhanced
 		}
 
 		// Game Message
+		public static void ChatSay(int hue, int num)
+		{
+			ChatSay(hue, num.ToString());
+		}
+
 		public static void ChatSay(int hue, string msg)
 		{
 			List<ushort> kw = EncodedSpeech.GetKeywords(msg);
@@ -1485,10 +1490,19 @@ namespace RazorEnhanced
 				ClientCommunication.SendToServerWait(new ClientUniMessage(Assistant.MessageType.Encoded, hue, 3, Language.CliLocName, kw, msg));
 			}
 		}
+		public static void ChatGuild(int num)
+		{
+			ChatGuild(num.ToString());
+		}
 
 		public static void ChatGuild(string msg)
 		{
 			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
+		}
+
+		public static void ChatAlliance(int num)
+		{
+			ChatAlliance(num.ToString());
 		}
 
 		public static void ChatAlliance(string msg)
@@ -1496,9 +1510,19 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
+		public static void ChatEmote(int hue, int num)
+		{
+			ChatEmote(hue, num.ToString());
+		}
+
 		public static void ChatEmote(int hue, string msg)
 		{
 			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
+		}
+
+		public static void ChatWhisper(int hue, int num)
+		{
+			ChatWhisper(hue, num.ToString());
 		}
 
 		public static void ChatWhisper(int hue, string msg)
@@ -1506,9 +1530,19 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
 		}
 
+		public static void ChatYell(int hue, int num)
+		{
+			ChatYell(hue, num.ToString());
+		}
+
 		public static void ChatYell(int hue, string msg)
 		{
 			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
+		}
+
+		public static void ChatChannel(int num)
+		{
+			ChatChannel(num.ToString());
 		}
 
 		public static void ChatChannel(string msg)
@@ -1773,6 +1807,10 @@ namespace RazorEnhanced
 		}
 
 		// Message
+		public static void HeadMessage(int hue, int num)
+		{
+			HeadMessage(hue, num.ToString());
+		}
 
 		public static void HeadMessage(int hue, string message)
 		{

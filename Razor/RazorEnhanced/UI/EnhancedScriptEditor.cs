@@ -311,7 +311,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.GetBuffDescription(BuffIcon)", new string[] { "BuffIcon Name" }, "string", "Get description of a specific BuffIcon");
 			descriptionPlayer.Add("Player.GetBuffDescription", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.HeadMessage(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Display a message over self character with specified color");
+			tooltip = new ToolTipDescriptions("Player.HeadMessage(int, string or int)", new string[] { "int MessageColor", "string Message or int number" }, "void", "Display a message over self character with specified color");
 			descriptionPlayer.Add("Player.HeadMessage", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.InRangeMobile(Mobile or int, int)", new string[] { "Mobile MobileToCheck or int SerialMobileToCheck", "int range" }, "bool", "Retrieves a bool value if specific mobile is in a certain range");
@@ -350,25 +350,25 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.UseSkill(string)", new string[] { "string SkillName" }, "void", "Use a specific skill\n\tCheck the wiki for the possible strings");
 			descriptionPlayer.Add("Player.UseSkill", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatSay(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Send a message in say with a specific color");
+			tooltip = new ToolTipDescriptions("Player.ChatSay(int, string or int)", new string[] { "int MessageColor", "string Message or int number" }, "void", "Send a message in say with a specific color");
 			descriptionPlayer.Add("Player.ChatSay", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatEmote(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Send a message in emote with a specific color");
+			tooltip = new ToolTipDescriptions("Player.ChatEmote(int, string or int)", new string[] { "int MessageColor", "string Message or int number" }, "void", "Send a message in emote with a specific color");
 			descriptionPlayer.Add("Player.ChatEmote", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatWhisper(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Send a message in wishper with a specific color");
+			tooltip = new ToolTipDescriptions("Player.ChatWhisper(int, string or int)", new string[] { "int MessageColor", "string Message or int number" }, "void", "Send a message in wishper with a specific color");
 			descriptionPlayer.Add("Player.ChatWhisper", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatChannel(string)", new string[] { "string Message" }, "void", "Send a message in chat channel.");
+			tooltip = new ToolTipDescriptions("Player.ChatChannel(string or int)", new string[] { "string Message or int number" }, "void", "Send a message in chat channel.");
 			descriptionPlayer.Add("Player.ChatChannel", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatYell(int, string)", new string[] { "int MessageColor", "string Message" }, "void", "Send a message in yell with a specific color");
+			tooltip = new ToolTipDescriptions("Player.ChatYell(int, string or int)", new string[] { "int MessageColor", "string Message or int number" }, "void", "Send a message in yell with a specific color");
 			descriptionPlayer.Add("Player.ChatYell", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatGuild(string)", new string[] { "string Message" }, "void", "Send a message in guild chat");
+			tooltip = new ToolTipDescriptions("Player.ChatGuild(string or int)", new string[] { "string Message or int number" }, "void", "Send a message in guild chat");
 			descriptionPlayer.Add("Player.ChatGuild", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatAlliance(string)", new string[] { "string Message" }, "void", "Send a message in alliance chat");
+			tooltip = new ToolTipDescriptions("Player.ChatAlliance(string or int)", new string[] { "string Message or int number" }, "void", "Send a message in alliance chat");
 			descriptionPlayer.Add("Player.ChatAlliance", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.SetWarMode(bool)", new string[] { "bool WarStatus" }, "void", "Set character warmode status\n\t True: set Warmode ON, False: set Warmode OFF");
