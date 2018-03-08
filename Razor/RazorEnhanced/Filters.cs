@@ -39,14 +39,6 @@ namespace RazorEnhanced
 			}
 		}
 
-		// COLORI FLAG HIGHLIGHT //
-		internal static int[] PoisonHighLightColor = new int[3]
-		{
-			0x0042, // Poison color
-			0x013C, // Paralized color
-			0x002E, // Blessed COlor
-		};
-
 		////////////////////////////////////////////////////////////////
 		//////////////////// END - FLAG HIGHLIGHT //////////////////////
 		////////////////////////////////////////////////////////////////
@@ -129,7 +121,7 @@ namespace RazorEnhanced
 
 		internal static int AutoCarverBlade
 		{
-			get{ return m_carverblade; }
+			get { return m_carverblade; }
 
 			set
 			{
@@ -163,7 +155,7 @@ namespace RazorEnhanced
 				{
 					DragDropManager.CorpseToCutSerial.Enqueue(corpo.Serial);
 					m_IgnoreCutCorpiQueue.Enqueue(corpo.Serial);
-                }			
+				}
 			}
 		}
 
@@ -225,14 +217,14 @@ namespace RazorEnhanced
 			foreach (RazorEnhanced.Item bone in bones)
 			{
 				Target.Cancel();
-                if (Items.FindBySerial(BoneCutterBlade) != null)
+				if (Items.FindBySerial(BoneCutterBlade) != null)
 				{
 					Items.UseItem(Items.FindBySerial(BoneCutterBlade));
 					Target.WaitForTarget(1000, true);
 					Target.TargetExecute(bone.Serial);
 					Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
 				}
-            }
+			}
 		}
 
 		private static Items.Filter m_bonefilter = new Items.Filter
@@ -338,6 +330,88 @@ namespace RazorEnhanced
 		////////////////////////////////////////////////////////////////
 		/////////////////////// END - AUTO REMOUNT /////////////////////
 		////////////////////////////////////////////////////////////////
+
+
+		////////////////////////////////////////////////////////////////
+		///////////////////// START - SELF FLAG COLOR //////////////////
+		////////////////////////////////////////////////////////////////
+
+		// COLORI FLAG HIGHLIGHT //
+		internal enum HighLightColor : ushort
+		{
+			Poison = 0x0042,
+			Paralized = 0x013C,
+			Mortal = 0x002E
+		}
+
+		private static List<Assistant.Layer> m_colorized_layer = new List<Layer>
+		{
+			Layer.Invalid,
+			Layer.FirstValid,
+			Layer.RightHand,
+			Layer.LeftHand,
+			Layer.Shoes,
+			Layer.Pants,
+			Layer.Shirt,
+			Layer.Head,
+			Layer.Neck,
+			Layer.Gloves,
+			Layer.InnerTorso,
+			Layer.MiddleTorso,
+			Layer.Arms,
+			Layer.Cloak,
+			Layer.OuterTorso,
+			Layer.OuterLegs,
+			Layer.InnerLegs,
+			Layer.LastUserValid,
+			Layer.Mount,
+			Layer.LastValid,
+		};
+
+		internal static void Decolorize(Assistant.Mobile m)
+		{
+			foreach (Assistant.Layer l in m_colorized_layer)
+			{
+				Assistant.Item i = m.GetItemOnLayer(l);
+				if (i == null)
+					continue;
+
+				ClientCommunication.SendToClient(new EquipmentItem(i, i.Hue, m.Serial));
+			}
+		}
+		internal static void ApplyColor(Assistant.Mobile m)
+		{
+			int color = 0;
+			if (m.Poisoned)
+				color = (int)HighLightColor.Poison;
+			else if (m.Paralized)
+				color = (int)HighLightColor.Paralized;
+			else if (m.Blessed) // Mortal
+				color = (int)HighLightColor.Mortal;
+			else
+			{
+				Decolorize(m);
+				return;
+			}
+
+			// Apply color for valid flag
+			foreach (Assistant.Layer l in m_colorized_layer)
+			{
+				Assistant.Item i = m.GetItemOnLayer(l);
+				if (i == null)
+					continue;
+
+				ClientCommunication.SendToClient(new EquipmentItem(i, (ushort)color, m.Serial));
+			}
+		}
+
+
+		
+
+		////////////////////////////////////////////////////////////////
+		///////////////////// END - SELF FLAG COLOR ////////////////////
+		////////////////////////////////////////////////////////////////
+
 
 		//////////////// Load settings ////////////////
 		internal static void LoadSettings()

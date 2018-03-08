@@ -385,6 +385,11 @@ namespace Assistant
 			m_Warmode = (flags & 0x40) != 0;
 			m_Visible = (flags & 0x80) == 0;
 			m_Paralized = (flags & 0x01) != 0;
+
+			if (this == World.Player && RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox")) // if self e enabled filter
+			{
+				RazorEnhanced.Filters.ApplyColor(this);
+			}
 		}
 
 		internal List<Item> Contains { get { return m_Items; } }

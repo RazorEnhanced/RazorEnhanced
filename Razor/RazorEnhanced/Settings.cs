@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 46;
+		private static int SettingVersion = 47;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -5589,6 +5589,15 @@ namespace RazorEnhanced
 
 				realVersion = 46;
 				General.WriteInt("SettingVersion", 46);
+			}
+
+			if (realVersion == 46)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("ColorFlagsSelfHighlightCheckBox", typeof(bool));
+				General.WriteBool("ColorFlagsSelfHighlightCheckBox", false);
+
+				realVersion = 47;
+				General.WriteInt("SettingVersion", 47);
 			}
 			Save(true);
 		}

@@ -971,18 +971,18 @@ namespace Assistant
 					if ((i.Container as Mobile) != null && (i.Container as Mobile).Poisoned)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[0]);
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Poison);
 					}
 					else if ((i.Container as Mobile) != null && (i.Container as Mobile).Paralized)
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[1]);
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Paralized);
 					}
 
 					else if ((i.Container as Mobile) != null && (i.Container as Mobile).Blessed) // Mortal
 					{
 						p.Seek(-2, SeekOrigin.Current);
-						p.Write((short)RazorEnhanced.Filters.PoisonHighLightColor[2]);
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Mortal);
 					}
 				}
 			}
@@ -1240,20 +1240,20 @@ namespace Assistant
 					if (m.Poisoned)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[0] | 32768));
+						p.Write((short)(RazorEnhanced.Filters.HighLightColor.Poison));
 						p.Seek(+1, SeekOrigin.Current);
 					}
 					else if (m.Paralized)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[1] | 32768));
+						p.Write((short)(RazorEnhanced.Filters.HighLightColor.Paralized));
 						p.Seek(+1, SeekOrigin.Current);
 					}
 
 					else if (m.Blessed) // Mortal
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[2] | 32768));
+						p.Write((short)(RazorEnhanced.Filters.HighLightColor.Mortal));
 						p.Seek(+1, SeekOrigin.Current);
 					}
 				}
@@ -1500,6 +1500,11 @@ namespace Assistant
 				case 2:
 					m.Blessed = (flag != 0);
 					break;
+			} 
+
+			if (m == World.Player && RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox")) // if self e enabled filter
+			{
+				RazorEnhanced.Filters.ApplyColor(m);
 			}
 		}
 
@@ -1539,6 +1544,11 @@ namespace Assistant
 				case 2:
 					m.Blessed = (flag != 0);
 					break;
+			}
+
+			if (m == World.Player && RazorEnhanced.Settings.General.ReadBool("ColorFlagsSelfHighlightCheckBox")) // if self e enabled filter
+			{
+				RazorEnhanced.Filters.ApplyColor(m);
 			}
 		}
 
@@ -1707,20 +1717,20 @@ namespace Assistant
 					if (m.Poisoned)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[0] | 32768));
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Poison);
 						p.Seek(+1, SeekOrigin.Current);
 					}
 					else if (m.Paralized)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[1] | 32768));
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Paralized);
 						p.Seek(+1, SeekOrigin.Current);
 					}
 
 					else if (m.Blessed) // Mortal
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[2] | 32768));
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Mortal);
 						p.Seek(+1, SeekOrigin.Current);
 					}
 				}
@@ -1824,20 +1834,20 @@ namespace Assistant
 					if (m.Poisoned)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[0] | 32768));
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Poison);
 						p.Seek(+1, SeekOrigin.Current);
 					}
 					else if (m.Paralized)
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[1] | 32768));
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Paralized);
 						p.Seek(+1, SeekOrigin.Current);
 					}
 
 					else if (m.Blessed) // Mortal
 					{
 						p.Seek(-3, SeekOrigin.Current);
-						p.Write((short)(RazorEnhanced.Filters.PoisonHighLightColor[2] | 32768));
+						p.Write((short)RazorEnhanced.Filters.HighLightColor.Mortal);
 						p.Seek(+1, SeekOrigin.Current);
 					}
 				}

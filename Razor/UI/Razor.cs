@@ -772,6 +772,7 @@ namespace Assistant
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
+		private RazorCheckBox colorflagsselfHighlightCheckBox;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1425,6 +1426,7 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.colorflagsselfHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -2448,7 +2450,7 @@ namespace Assistant
 			this.uomodgroupbox.Controls.Add(this.uomodpaperdoolCheckBox);
 			this.uomodgroupbox.Controls.Add(this.uomodglobalsoundCheckBox);
 			this.uomodgroupbox.Controls.Add(this.uomodFPSCheckBox);
-			this.uomodgroupbox.Location = new System.Drawing.Point(192, 266);
+			this.uomodgroupbox.Location = new System.Drawing.Point(192, 285);
 			this.uomodgroupbox.Name = "uomodgroupbox";
 			this.uomodgroupbox.Size = new System.Drawing.Size(283, 65);
 			this.uomodgroupbox.TabIndex = 69;
@@ -2582,6 +2584,7 @@ namespace Assistant
 			// 
 			// groupBox24
 			// 
+			this.groupBox24.Controls.Add(this.colorflagsselfHighlightCheckBox);
 			this.groupBox24.Controls.Add(this.showagentmessageCheckBox);
 			this.groupBox24.Controls.Add(this.showmessagefieldCheckBox);
 			this.groupBox24.Controls.Add(this.colorflagsHighlightCheckBox);
@@ -2597,14 +2600,14 @@ namespace Assistant
 			this.groupBox24.Controls.Add(this.showstaticfieldCheckBox);
 			this.groupBox24.Location = new System.Drawing.Point(8, 14);
 			this.groupBox24.Name = "groupBox24";
-			this.groupBox24.Size = new System.Drawing.Size(178, 317);
+			this.groupBox24.Size = new System.Drawing.Size(178, 336);
 			this.groupBox24.TabIndex = 67;
 			this.groupBox24.TabStop = false;
 			this.groupBox24.Text = "Misc";
 			// 
 			// showagentmessageCheckBox
 			// 
-			this.showagentmessageCheckBox.Location = new System.Drawing.Point(6, 290);
+			this.showagentmessageCheckBox.Location = new System.Drawing.Point(6, 313);
 			this.showagentmessageCheckBox.Name = "showagentmessageCheckBox";
 			this.showagentmessageCheckBox.Size = new System.Drawing.Size(166, 22);
 			this.showagentmessageCheckBox.TabIndex = 70;
@@ -2613,7 +2616,7 @@ namespace Assistant
 			// 
 			// showmessagefieldCheckBox
 			// 
-			this.showmessagefieldCheckBox.Location = new System.Drawing.Point(6, 108);
+			this.showmessagefieldCheckBox.Location = new System.Drawing.Point(6, 131);
 			this.showmessagefieldCheckBox.Name = "showmessagefieldCheckBox";
 			this.showmessagefieldCheckBox.Size = new System.Drawing.Size(157, 22);
 			this.showmessagefieldCheckBox.TabIndex = 69;
@@ -2631,7 +2634,7 @@ namespace Assistant
 			// 
 			// blockchivalryhealCheckBox
 			// 
-			this.blockchivalryhealCheckBox.Location = new System.Drawing.Point(6, 267);
+			this.blockchivalryhealCheckBox.Location = new System.Drawing.Point(6, 290);
 			this.blockchivalryhealCheckBox.Name = "blockchivalryhealCheckBox";
 			this.blockchivalryhealCheckBox.Size = new System.Drawing.Size(166, 22);
 			this.blockchivalryhealCheckBox.TabIndex = 67;
@@ -2640,7 +2643,7 @@ namespace Assistant
 			// 
 			// blockbighealCheckBox
 			// 
-			this.blockbighealCheckBox.Location = new System.Drawing.Point(6, 244);
+			this.blockbighealCheckBox.Location = new System.Drawing.Point(6, 267);
 			this.blockbighealCheckBox.Name = "blockbighealCheckBox";
 			this.blockbighealCheckBox.Size = new System.Drawing.Size(157, 22);
 			this.blockbighealCheckBox.TabIndex = 66;
@@ -2649,7 +2652,7 @@ namespace Assistant
 			// 
 			// blockminihealCheckBox
 			// 
-			this.blockminihealCheckBox.Location = new System.Drawing.Point(6, 221);
+			this.blockminihealCheckBox.Location = new System.Drawing.Point(6, 244);
 			this.blockminihealCheckBox.Name = "blockminihealCheckBox";
 			this.blockminihealCheckBox.Size = new System.Drawing.Size(157, 22);
 			this.blockminihealCheckBox.TabIndex = 65;
@@ -2658,7 +2661,7 @@ namespace Assistant
 			// 
 			// blockhealpoisonCheckBox
 			// 
-			this.blockhealpoisonCheckBox.Location = new System.Drawing.Point(6, 198);
+			this.blockhealpoisonCheckBox.Location = new System.Drawing.Point(6, 221);
 			this.blockhealpoisonCheckBox.Name = "blockhealpoisonCheckBox";
 			this.blockhealpoisonCheckBox.Size = new System.Drawing.Size(166, 22);
 			this.blockhealpoisonCheckBox.TabIndex = 64;
@@ -2667,7 +2670,7 @@ namespace Assistant
 			// 
 			// showheadtargetCheckBox
 			// 
-			this.showheadtargetCheckBox.Location = new System.Drawing.Point(6, 175);
+			this.showheadtargetCheckBox.Location = new System.Drawing.Point(6, 198);
 			this.showheadtargetCheckBox.Name = "showheadtargetCheckBox";
 			this.showheadtargetCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.showheadtargetCheckBox.TabIndex = 63;
@@ -2676,7 +2679,7 @@ namespace Assistant
 			// 
 			// blockpartyinviteCheckBox
 			// 
-			this.blockpartyinviteCheckBox.Location = new System.Drawing.Point(6, 152);
+			this.blockpartyinviteCheckBox.Location = new System.Drawing.Point(6, 175);
 			this.blockpartyinviteCheckBox.Name = "blockpartyinviteCheckBox";
 			this.blockpartyinviteCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.blockpartyinviteCheckBox.TabIndex = 62;
@@ -2685,7 +2688,7 @@ namespace Assistant
 			// 
 			// blocktraderequestCheckBox
 			// 
-			this.blocktraderequestCheckBox.Location = new System.Drawing.Point(6, 130);
+			this.blocktraderequestCheckBox.Location = new System.Drawing.Point(6, 153);
 			this.blocktraderequestCheckBox.Name = "blocktraderequestCheckBox";
 			this.blocktraderequestCheckBox.Size = new System.Drawing.Size(141, 22);
 			this.blocktraderequestCheckBox.TabIndex = 61;
@@ -2712,7 +2715,7 @@ namespace Assistant
 			// 
 			// showstaticfieldCheckBox
 			// 
-			this.showstaticfieldCheckBox.Location = new System.Drawing.Point(6, 85);
+			this.showstaticfieldCheckBox.Location = new System.Drawing.Point(6, 108);
 			this.showstaticfieldCheckBox.Name = "showstaticfieldCheckBox";
 			this.showstaticfieldCheckBox.Size = new System.Drawing.Size(118, 22);
 			this.showstaticfieldCheckBox.TabIndex = 60;
@@ -2727,7 +2730,7 @@ namespace Assistant
 			this.groupBox23.Controls.Add(this.mobfilterCheckBox);
 			this.groupBox23.Location = new System.Drawing.Point(192, 14);
 			this.groupBox23.Name = "groupBox23";
-			this.groupBox23.Size = new System.Drawing.Size(283, 246);
+			this.groupBox23.Size = new System.Drawing.Size(283, 265);
 			this.groupBox23.TabIndex = 66;
 			this.groupBox23.TabStop = false;
 			this.groupBox23.Text = "Mobile Graphics Change Filter";
@@ -2767,7 +2770,7 @@ namespace Assistant
 			this.mobfilterlistView.Location = new System.Drawing.Point(6, 47);
 			this.mobfilterlistView.MultiSelect = false;
 			this.mobfilterlistView.Name = "mobfilterlistView";
-			this.mobfilterlistView.Size = new System.Drawing.Size(192, 193);
+			this.mobfilterlistView.Size = new System.Drawing.Size(192, 208);
 			this.mobfilterlistView.TabIndex = 67;
 			this.mobfilterlistView.UseCompatibleStateImageBehavior = false;
 			this.mobfilterlistView.View = System.Windows.Forms.View.Details;
@@ -3248,7 +3251,6 @@ namespace Assistant
 			this.toolboxcountWarningTextBox.Size = new System.Drawing.Size(61, 20);
 			this.toolboxcountWarningTextBox.TabIndex = 66;
 			this.toolboxcountWarningTextBox.TextChanged += new System.EventHandler(this.toolboxcountWarningTextBox_TextChanged);
-
 			// 
 			// label36
 			// 
@@ -7573,6 +7575,15 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
+			// 
+			// colorflagsselfHighlightCheckBox
+			// 
+			this.colorflagsselfHighlightCheckBox.Location = new System.Drawing.Point(6, 86);
+			this.colorflagsselfHighlightCheckBox.Name = "colorflagsselfHighlightCheckBox";
+			this.colorflagsselfHighlightCheckBox.Size = new System.Drawing.Size(145, 22);
+			this.colorflagsselfHighlightCheckBox.TabIndex = 71;
+			this.colorflagsselfHighlightCheckBox.Text = "Color Flag Self Highlight";
+			this.colorflagsselfHighlightCheckBox.CheckedChanged += new System.EventHandler(this.colorflagsselfHighlightCheckBox_CheckedChanged);
 			// 
 			// MainForm
 			// 
@@ -12111,6 +12122,19 @@ namespace Assistant
 		{
 			if (colorflagsHighlightCheckBox.Focused)
 				RazorEnhanced.Settings.General.WriteBool("ColorFlagsHighlightCheckBox", colorflagsHighlightCheckBox.Checked);
+		}
+
+		private void colorflagsselfHighlightCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (colorflagsselfHighlightCheckBox.Focused)
+			{
+				if (colorflagsselfHighlightCheckBox.Checked)
+					RazorEnhanced.Filters.ApplyColor(World.Player);
+				else
+					RazorEnhanced.Filters.Decolorize(World.Player);
+
+				RazorEnhanced.Settings.General.WriteBool("ColorFlagsSelfHighlightCheckBox", colorflagsselfHighlightCheckBox.Checked);
+			}
 		}
 
 		private void blockminihealCheckBox_CheckedChanged(object sender, EventArgs e)
