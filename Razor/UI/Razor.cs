@@ -12130,7 +12130,7 @@ namespace Assistant
 			if (colorflagsselfHighlightCheckBox.Focused)
 			{
 				if (colorflagsselfHighlightCheckBox.Checked)
-					RazorEnhanced.Filters.ApplyColor(World.Player);
+					RazorEnhanced.Filters.ApplyColor(World.Player, Player.BuffsExist("Bload Oath (curse)"));
 				else
 					RazorEnhanced.Filters.Decolorize(World.Player);
 

@@ -1167,20 +1167,9 @@ namespace Assistant
 
 			m.Body = p.ReadUInt16();
 
-			// Blocco filtro graph mobs
-			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-			{
-				List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
-				foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
-				{
-					if (m.Body != graphdata.GraphReal)
-						continue;
-
-					p.Seek(-2, SeekOrigin.Current);
-					p.Write((ushort)(graphdata.GraphNew));
-					break;
-				}
-			}
+			// Chiamata funzione cambio grafica mob.
+			if (Engine.MainWindow.MobFilterCheckBox.Checked)
+				p = RazorEnhanced.Filters.GraphChange(p, m.Body);
 
 			m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
@@ -1690,21 +1679,9 @@ namespace Assistant
 			Serial serial = p.ReadUInt32();
 			ushort body = p.ReadUInt16();
 
-			// Blocco filtro graph mobs
-			if (Assistant.Engine.MainWindow.MobFilterCheckBox.Checked)
-			{
-				List<RazorEnhanced.Filters.GraphChangeData> graphdatas = RazorEnhanced.Settings.GraphFilter.ReadAll();
-				foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
-				{
-					if (body == graphdata.GraphReal)
-					{
-						p.Seek(-2, SeekOrigin.Current);
-						p.Write((ushort)(graphdata.GraphNew));
-						body = (ushort)graphdata.GraphNew;
-						break;
-					}
-				}
-			}
+			// Chiamata funzione cambio grafica mob.
+			if (Engine.MainWindow.MobFilterCheckBox.Checked)
+				p = RazorEnhanced.Filters.GraphChange(p, body);
 
 			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 

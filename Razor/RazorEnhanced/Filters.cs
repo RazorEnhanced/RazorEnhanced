@@ -18,25 +18,25 @@ namespace RazorEnhanced
 			if (m.Serial == World.Player.Serial)      // Skip Self
 				return;
 
-			if (Assistant.Engine.MainWindow.FlagsHighlightCheckBox.Checked)
+			if (Engine.MainWindow.FlagsHighlightCheckBox.Checked)
 			{
 				if (m.Poisoned)
-					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Poisoned]");
+					Mobiles.MessageNoWait(m.Serial, 10, "[Poisoned]");
 				if (m.IsGhost)
 				{
 					if (m.PropsUpdated)
-						RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Dead]");
+						Mobiles.MessageNoWait(m.Serial, 10, "[Dead]");
 				}
 				if (m.Paralized)
-					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Paralized]");
+					Mobiles.MessageNoWait(m.Serial, 10, "[Paralized]");
 				if (m.Blessed)
-					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "[Mortalled]");
+					Mobiles.MessageNoWait(m.Serial, 10, "[Mortalled]");
 			}
 
-			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
+			if (Engine.MainWindow.HighlightTargetCheckBox.Checked)
 			{
 				if (Targeting.IsLastTarget(m))
-					RazorEnhanced.Mobiles.MessageNoWait(m.Serial, 10, "*[Target]*");
+					Mobiles.MessageNoWait(m.Serial, 10, "*[Target]*");
 			}
 		}
 
@@ -70,11 +70,11 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			List<RazorEnhanced.Filters.GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
+			List<GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
 
-			Assistant.Engine.MainWindow.MobFilterlistView.Items.Clear();
+			Engine.MainWindow.MobFilterlistView.Items.Clear();
 
-			foreach (RazorEnhanced.Filters.GraphChangeData graphdata in graphdatas)
+			foreach (GraphChangeData graphdata in graphdatas)
 			{
 				ListViewItem listitem = new ListViewItem
 				{
@@ -84,29 +84,43 @@ namespace RazorEnhanced
 				listitem.SubItems.Add("0x" + graphdata.GraphReal.ToString("X4"));
 				listitem.SubItems.Add("0x" + graphdata.GraphNew.ToString("X4"));
 
-				Assistant.Engine.MainWindow.MobFilterlistView.Items.Add(listitem);
+				Engine.MainWindow.MobFilterlistView.Items.Add(listitem);
 			}
 		}
 
 		internal static void UpdateSelectedItems(int i)
 		{
-			List<RazorEnhanced.Filters.GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
+			List<GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
 
-			if (graphdatas.Count != Assistant.Engine.MainWindow.MobFilterlistView.Items.Count)
+			if (graphdatas.Count != Engine.MainWindow.MobFilterlistView.Items.Count)
 			{
 				return;
 			}
 
-			ListViewItem lvi = Assistant.Engine.MainWindow.MobFilterlistView.Items[i];
+			ListViewItem lvi = Engine.MainWindow.MobFilterlistView.Items[i];
 			GraphChangeData old = graphdatas[i];
 
 			if (lvi != null && old != null)
 			{
 				GraphChangeData graph = new GraphChangeData(lvi.Checked, old.GraphReal, old.GraphNew);
-				RazorEnhanced.Settings.GraphFilter.Replace(i, graph);
+				Settings.GraphFilter.Replace(i, graph);
 			}
 		}
 
+		internal static Packet GraphChange(Packet p, ushort body)
+		{
+			List<GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
+			foreach (GraphChangeData graphdata in graphdatas)
+			{
+				if (body != graphdata.GraphReal)
+					continue;
+
+				p.Seek(-2, SeekOrigin.Current);
+				p.Write((ushort)(graphdata.GraphNew));
+				break;
+			}
+			return p;
+		}
 		////////////////////////////////////////////////////////////////
 		/////////////////// END - GRAPH FILTER /////////////////////////
 		////////////////////////////////////////////////////////////////
@@ -127,7 +141,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_carverblade = value;
-				Assistant.Engine.MainWindow.AutoCarverBladeLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.AutoCarverBladeLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.AutoCarverBladeLabel.Invoke(new Action(() => Engine.MainWindow.AutoCarverBladeLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
@@ -139,7 +153,7 @@ namespace RazorEnhanced
 
 		internal static void AutoCarverEngine(Items.Filter filter)
 		{
-			if (!Assistant.Engine.Running)
+			if (!Engine.Running)
 				return;
 
 			if (World.Player == null)       // Esce se non loggato
@@ -148,9 +162,9 @@ namespace RazorEnhanced
 			if (m_carverblade == 0)       // Esce in caso di errore lettura blade
 				return;
 
-			List<Item> corpi = RazorEnhanced.Items.ApplyFilter(filter);
+			List<Item> corpi = Items.ApplyFilter(filter);
 
-			foreach (RazorEnhanced.Item corpo in corpi)
+			foreach (Item corpo in corpi)
 			{
 				if (!m_IgnoreCutCorpiQueue.Contains(corpo.Serial))
 				{
@@ -192,7 +206,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_bonecutterblade = value;
-				Assistant.Engine.MainWindow.BoneBladeLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.BoneBladeLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.BoneBladeLabel.Invoke(new Action(() => Engine.MainWindow.BoneBladeLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
@@ -204,7 +218,7 @@ namespace RazorEnhanced
 
 		internal static void BoneCutterEngine(Items.Filter filter)
 		{
-			if (!Assistant.Engine.Running)
+			if (!Engine.Running)
 				return;
 
 			if (World.Player == null)       // Esce se non loggato
@@ -213,9 +227,9 @@ namespace RazorEnhanced
 			if (m_bonecutterblade == 0)       // Esce in caso di errore lettura blade
 				return;
 
-			List<Item> bones = RazorEnhanced.Items.ApplyFilter(filter);
+			List<Item> bones = Items.ApplyFilter(filter);
 
-			foreach (RazorEnhanced.Item bone in bones)
+			foreach (Item bone in bones)
 			{
 				Target.Cancel();
 				if (Items.FindBySerial(BoneCutterBlade) != null)
@@ -223,7 +237,7 @@ namespace RazorEnhanced
 					Items.UseItem(Items.FindBySerial(BoneCutterBlade));
 					Target.WaitForTarget(1000, true);
 					Target.TargetExecute(bone.Serial);
-					Thread.Sleep(RazorEnhanced.Settings.General.ReadInt("ObjectDelay"));
+					Thread.Sleep(Settings.General.ReadInt("ObjectDelay"));
 				}
 			}
 		}
@@ -265,7 +279,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_autoremountdelay = value;
-				Assistant.Engine.MainWindow.RemountDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountDelay.Text = value.ToString()));
+				Engine.MainWindow.RemountDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountDelay.Text = value.ToString()));
 			}
 		}
 
@@ -276,7 +290,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_autoremountedelay = value;
-				Assistant.Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountEDelay.Text = value.ToString()));
+				Engine.MainWindow.RemountEDelay.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountEDelay.Text = value.ToString()));
 			}
 		}
 
@@ -287,7 +301,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_autoremountserial = value;
-				Assistant.Engine.MainWindow.RemountSerialLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountSerialLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.RemountSerialLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.RemountSerialLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
@@ -322,7 +336,7 @@ namespace RazorEnhanced
 				Assistant.Mobile mount = Assistant.World.FindMobile(m_autoremountserial);
 				if (mount != null && mount.Serial.IsMobile)
 				{
-					RazorEnhanced.Mobiles.UseMobile(m_autoremountserial);
+					Mobiles.UseMobile(m_autoremountserial);
 					Thread.Sleep(m_autoremountdelay);
 				}
 			}
@@ -343,7 +357,7 @@ namespace RazorEnhanced
 			Poison = 0x0042,
 			Paralized = 0x013C,
 			Mortal = 0x002E,
-			BloodOath = 0x0038
+			BloodOath = 0x0026
 		}
 
 		private static List<Assistant.Layer> m_colorized_layer = new List<Layer>
@@ -368,11 +382,12 @@ namespace RazorEnhanced
 			Layer.LastUserValid,
 			Layer.Mount,
 			Layer.LastValid,
+			Layer.Hair
 		};
 
 		internal static void Decolorize(Assistant.Mobile m)
 		{
-			foreach (Assistant.Layer l in m_colorized_layer)
+			foreach (Layer l in m_colorized_layer)
 			{
 				Assistant.Item i = m.GetItemOnLayer(l);
 				if (i == null)
@@ -399,7 +414,7 @@ namespace RazorEnhanced
 			}
 
 			// Apply color for valid flag
-			foreach (Assistant.Layer l in m_colorized_layer)
+			foreach (Layer l in m_colorized_layer)
 			{
 				Assistant.Item i = m.GetItemOnLayer(l);
 				if (i == null)
@@ -411,7 +426,7 @@ namespace RazorEnhanced
 
 		internal static Packet MobileColorize(Packet p, Assistant.Mobile m)
 		{
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 				p = RewriteColorAndFlag(p, (ushort)ltHue);
 
@@ -500,6 +515,9 @@ namespace RazorEnhanced
 
 						else if (m.Blessed) // Mortal
 							p = RewriteColor(p, (ushort)HighLightColor.Mortal);
+
+						else if (m == World.Player && Player.BuffsExist("Bload Oath (curse)"))
+							p = RewriteColor(p, (ushort)HighLightColor.BloodOath);
 					}
 				}
 			}
