@@ -449,7 +449,7 @@ namespace Assistant
 
 		private static void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
 		{
-			if (e.Exception is FileNotFoundException)
+			if (e.Exception is FileNotFoundException || e.Exception is FileLoadException) // Mancanza dipendenze c++
 				Assistant.Engine.MainWindow.DisableRecorder();
 			else
 				ReportCrash(e.Exception);
