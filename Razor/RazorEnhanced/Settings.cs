@@ -1981,7 +1981,11 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					items.AddRange(from DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.AutoLoot.AutoLootItem) row["Item"]);
+					foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_ITEMS"].Rows)
+					{
+						if ((string)row["List"] == list)
+							items.Add((RazorEnhanced.AutoLoot.AutoLootItem)row["Item"]);
+					}
 				}
 
 				return items;
