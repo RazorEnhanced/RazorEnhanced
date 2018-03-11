@@ -1409,28 +1409,35 @@ namespace Assistant
 
 			UseNewStatus = true;
 
-			if (p.ReadUInt16() == 0)
+			if (p.ReadUInt16() == 0) // 0 packet end
 				return;
+
 			// 00 01 Poison
 			// 00 02 Yellow Health Bar
-
 			ushort id = p.ReadUInt16();
 
 			// 00 Off
 			// 01 On
 			// For Poison: Poison Level + 1
-
 			byte flag = p.ReadByte();
 
+			bool needrefresh = false;
 			switch (id)
 			{
 				case 1:
+					if (m.Poisoned != (flag != 0))
+						needrefresh = true;
 					m.Poisoned = (flag != 0);
 					break;
 				case 2:
+					if (m.Blessed != (flag != 0))
+						needrefresh = true;
 					m.Blessed = (flag != 0);
 					break;
 			}
+
+			if (!needrefresh) // Non richiede aggiornamento colori in quanto flag non cambiati
+				return;
 
 			if (m == World.Player)
 			{
@@ -1459,28 +1466,34 @@ namespace Assistant
 			UseNewStatus = true;
 
 			// 00 01
-			p.ReadUInt16();
+			p.ReadUInt16(); // i
 
 			// 00 01 Poison
 			// 00 02 Yellow Health Bar
-
 			ushort id = p.ReadUInt16();
 
 			// 00 Off
 			// 01 On
 			// For Poison: Poison Level + 1
-
 			byte flag = p.ReadByte();
 
+			bool needrefresh = false;
 			switch (id)
 			{
 				case 1:
+					if (m.Poisoned != (flag != 0))
+						needrefresh = true;
 					m.Poisoned = (flag != 0);
 					break;
 				case 2:
+					if (m.Blessed != (flag != 0))
+						needrefresh = true;
 					m.Blessed = (flag != 0);
 					break;
 			}
+
+			if (!needrefresh) // Non richiede aggiornamento colori in quanto flag non cambiati
+				return;
 
 			if (m == World.Player)
 			{
