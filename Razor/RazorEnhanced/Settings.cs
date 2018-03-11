@@ -3902,7 +3902,7 @@ namespace RazorEnhanced
 		{
 			internal static bool ReadBool(string name)
 			{
-				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Columns.Contains(name))
 				{
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
 					return (bool)row[name];
@@ -3932,7 +3932,7 @@ namespace RazorEnhanced
 
 			internal static string ReadString(string name)
 			{
-				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Columns.Contains(name))
 				{
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
 					return (string)row[name];
@@ -3953,7 +3953,7 @@ namespace RazorEnhanced
 
 			internal static int ReadInt(string name)
 			{
-				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Columns.Contains(name))
 				{
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
 					return (int)row[name];
@@ -3974,7 +3974,7 @@ namespace RazorEnhanced
 
 			internal static Keys ReadKey(string name)
 			{
-				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Rows.Count > 0)
+				if (m_Dataset != null && m_Dataset.Tables["GENERAL"].Columns.Contains(name))
 				{
 					DataRow row = m_Dataset.Tables["GENERAL"].Rows[0];
 					return (Keys)row[name];
