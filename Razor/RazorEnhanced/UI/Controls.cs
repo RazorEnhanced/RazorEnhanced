@@ -43,10 +43,25 @@ namespace RazorEnhanced.UI
 	{
 		public RazorTextBox()
 		{
-		
+
 		}
 	}
 
+	public class RazorHotKeyTextBox : TextBox
+	{
+		public RazorHotKeyTextBox()
+		{
+
+		}
+		private Keys LastKey = Keys.None;
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			if (LastKey != keyData)
+				RazorEnhanced.HotKey.KeyDown(keyData);
+			LastKey = keyData;
+			return true;
+		}
+	}
 	public class RazorAgentNumOnlyTextBox : TextBox
 	{
 		protected override void OnKeyPress(KeyPressEventArgs e)

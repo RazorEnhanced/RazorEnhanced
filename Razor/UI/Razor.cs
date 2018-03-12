@@ -379,7 +379,7 @@ namespace Assistant
 		private RazorComboBox toolboxcountComboBox;
 		private TabPage enhancedHotKeytabPage;
 		private TreeView hotkeytreeView;
-		private RazorTextBox hotkeytextbox;
+		private RazorHotKeyTextBox hotkeytextbox;
 		private GroupBox groupBox27;
 		private RazorButton hotkeyClearButton;
 		private RazorButton hotkeySetButton;
@@ -389,7 +389,7 @@ namespace Assistant
 		private RazorButton hotkeyMasterSetButton;
 		private Label label42;
 		private Label hotkeyKeyMasterLabel;
-		private RazorTextBox hotkeyKeyMasterTextBox;
+		private RazorHotKeyTextBox hotkeyKeyMasterTextBox;
 		private Label hotkeyStatusLabel;
 		private RazorCheckBox hotkeypassCheckBox;
 		private GroupBox groupBox8;
@@ -944,6 +944,7 @@ namespace Assistant
 			this.remountsetbutton = new RazorEnhanced.UI.RazorButton();
 			this.remountcheckbox = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox24 = new System.Windows.Forms.GroupBox();
+			this.colorflagsselfHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.showagentmessageCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.showmessagefieldCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.colorflagsHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
@@ -1369,7 +1370,7 @@ namespace Assistant
 			this.enhancedHotKeytabPage = new System.Windows.Forms.TabPage();
 			this.groupBox8 = new System.Windows.Forms.GroupBox();
 			this.hotkeyMasterClearButton = new RazorEnhanced.UI.RazorButton();
-			this.hotkeyKeyMasterTextBox = new RazorEnhanced.UI.RazorTextBox();
+			this.hotkeyKeyMasterTextBox = new RazorEnhanced.UI.RazorHotKeyTextBox();
 			this.hotkeyMasterSetButton = new RazorEnhanced.UI.RazorButton();
 			this.label42 = new System.Windows.Forms.Label();
 			this.groupBox28 = new System.Windows.Forms.GroupBox();
@@ -1382,7 +1383,7 @@ namespace Assistant
 			this.hotkeyClearButton = new RazorEnhanced.UI.RazorButton();
 			this.hotkeySetButton = new RazorEnhanced.UI.RazorButton();
 			this.label39 = new System.Windows.Forms.Label();
-			this.hotkeytextbox = new RazorEnhanced.UI.RazorTextBox();
+			this.hotkeytextbox = new RazorEnhanced.UI.RazorHotKeyTextBox();
 			this.hotkeytreeView = new System.Windows.Forms.TreeView();
 			this.videoTab = new System.Windows.Forms.TabPage();
 			this.videoRecStatuslabel = new System.Windows.Forms.Label();
@@ -1427,7 +1428,6 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.colorflagsselfHighlightCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -2605,6 +2605,15 @@ namespace Assistant
 			this.groupBox24.TabIndex = 67;
 			this.groupBox24.TabStop = false;
 			this.groupBox24.Text = "Misc";
+			// 
+			// colorflagsselfHighlightCheckBox
+			// 
+			this.colorflagsselfHighlightCheckBox.Location = new System.Drawing.Point(6, 86);
+			this.colorflagsselfHighlightCheckBox.Name = "colorflagsselfHighlightCheckBox";
+			this.colorflagsselfHighlightCheckBox.Size = new System.Drawing.Size(145, 22);
+			this.colorflagsselfHighlightCheckBox.TabIndex = 71;
+			this.colorflagsselfHighlightCheckBox.Text = "Color Flag Self Highlight";
+			this.colorflagsselfHighlightCheckBox.CheckedChanged += new System.EventHandler(this.colorflagsselfHighlightCheckBox_CheckedChanged);
 			// 
 			// showagentmessageCheckBox
 			// 
@@ -6983,8 +6992,6 @@ namespace Assistant
 			this.hotkeyKeyMasterTextBox.ReadOnly = true;
 			this.hotkeyKeyMasterTextBox.Size = new System.Drawing.Size(104, 20);
 			this.hotkeyKeyMasterTextBox.TabIndex = 5;
-			this.hotkeyKeyMasterTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
-			this.hotkeyKeyMasterTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyUp);
 			this.hotkeyKeyMasterTextBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeyKeyMasterTextBox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
 			// 
@@ -7122,8 +7129,6 @@ namespace Assistant
 			this.hotkeytextbox.ReadOnly = true;
 			this.hotkeytextbox.Size = new System.Drawing.Size(104, 20);
 			this.hotkeytextbox.TabIndex = 1;
-			this.hotkeytextbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyDown);
-			this.hotkeytextbox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.HotKey_KeyUp);
 			this.hotkeytextbox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseDown);
 			this.hotkeytextbox.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.HotKey_MouseRoll);
 			// 
@@ -7576,15 +7581,6 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
-			// 
-			// colorflagsselfHighlightCheckBox
-			// 
-			this.colorflagsselfHighlightCheckBox.Location = new System.Drawing.Point(6, 86);
-			this.colorflagsselfHighlightCheckBox.Name = "colorflagsselfHighlightCheckBox";
-			this.colorflagsselfHighlightCheckBox.Size = new System.Drawing.Size(145, 22);
-			this.colorflagsselfHighlightCheckBox.TabIndex = 71;
-			this.colorflagsselfHighlightCheckBox.Text = "Color Flag Self Highlight";
-			this.colorflagsselfHighlightCheckBox.CheckedChanged += new System.EventHandler(this.colorflagsselfHighlightCheckBox_CheckedChanged);
 			// 
 			// MainForm
 			// 
@@ -8971,23 +8967,6 @@ namespace Assistant
 		{
 			if (rememberPwds.Focused)
 				RazorEnhanced.Settings.General.WriteBool("RememberPwds", rememberPwds.Checked);
-		}
-
-		private bool m_isKeyPressed;
-		private Keys m_lastKey;
-		private void HotKey_KeyDown(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			if (!m_isKeyPressed || m_lastKey != e.KeyData)
-				RazorEnhanced.HotKey.KeyDown(e.KeyData);
-			m_isKeyPressed = true;
-			m_lastKey = e.KeyData;
-			e.SuppressKeyPress = true;
-		}
-
-		private void HotKey_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
-		{
-			m_isKeyPressed = false;
-			m_lastKey = Keys.None;
 		}
 
 		private void HotKey_MouseRoll(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -13791,6 +13770,8 @@ namespace Assistant
 			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
+
+
 		// ----------------- STOP DPS METER -------------------
 	}
 }
