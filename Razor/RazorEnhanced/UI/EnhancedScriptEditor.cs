@@ -1370,7 +1370,7 @@ namespace RazorEnhanced.UI
 
 		private void SetStatusLabel(string text, Color color)
 		{
-			if (this.m_onclosing)
+			if (this.m_onclosing || this.Disposing)
 				return;
 
 			if (this.InvokeRequired)
@@ -1388,7 +1388,7 @@ namespace RazorEnhanced.UI
 
 		private void SetRecordButton(string text)
 		{
-			if (this.m_onclosing)
+			if (this.m_onclosing || this.Disposing)
 				return;
 
 			if (this.InvokeRequired)
