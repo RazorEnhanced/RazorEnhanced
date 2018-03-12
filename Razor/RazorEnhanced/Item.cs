@@ -546,10 +546,7 @@ namespace RazorEnhanced
 		{
 			Assistant.Item assistantItem = Assistant.World.FindItem((Assistant.Serial)((uint)serial));
 			if (assistantItem == null)
-			{
-				Scripts.SendMessageScriptError("Script Error: FindBySerial: Item serial: (" + serial + ") not found");
 				return null;
-			}
 			else
 			{
 				RazorEnhanced.Item enhancedItem = new RazorEnhanced.Item(assistantItem);
