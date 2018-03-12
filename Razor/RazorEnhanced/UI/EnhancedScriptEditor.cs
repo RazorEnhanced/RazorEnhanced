@@ -686,7 +686,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Target.TargetExecute(int or Item or Mobile or (int, int, int, (optional)int))", new string[] { "int Serial or Item ItemInstance or Mobile MobileInstance or ( int X, int Y, int Z, int TileID )" }, "void", "Send target execute to specific serial, item, mobile\n\tIn case of X Y Z coordinates, can be defined a tileid");
 			descriptionTarget.Add("Target.TargetExecute", tooltip);
 
-			tooltip = new ToolTipDescriptions("Target.PromptTarget()", new string[] { "none" }, "int", "Pick the serial from item or mobile");
+			tooltip = new ToolTipDescriptions("Target.PromptTarget()", new string[] { "none or string message" }, "int", "Pick the serial from item or mobile\n\tCan specific string in parameters for prompt message");
 			descriptionTarget.Add("Target.PromptTarget", tooltip);
 
 			tooltip = new ToolTipDescriptions("Target.Cancel()", new string[] { "none" }, "void", "Cancel target cursor");

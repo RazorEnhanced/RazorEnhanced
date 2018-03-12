@@ -146,10 +146,10 @@ namespace RazorEnhanced
 			Assistant.Targeting.ClearLast();
 		}
 
-		public int PromptTarget()
+		public int PromptTarget(string message= "Select Item or Mobile" )
 		{
 			m_ptarget = -1;
-			Misc.SendMessage("Select Item or Mobile", 945);
+			Misc.SendMessage(message, 945);
 			Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
 
 			while (!Targeting.HasTarget)
@@ -162,8 +162,6 @@ namespace RazorEnhanced
 
 			if (m_ptarget == -1)
 				Misc.SendMessage("PromptTarget Cancelled", 945);
-			else
-				Misc.SendMessage("PromptTarget on Serial: " + m_ptarget, 945);
 
 			return m_ptarget;
 		}
