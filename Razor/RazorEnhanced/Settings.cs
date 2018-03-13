@@ -1603,6 +1603,7 @@ namespace RazorEnhanced
 				general.Columns.Add("BlockChivalryHealCheckBox", typeof(bool));
 				general.Columns.Add("ShowMessageFieldCheckBox", typeof(bool));
 				general.Columns.Add("ShowAgentMessageCheckBox", typeof(bool));
+				general.Columns.Add("ColorFlagsSelfHighlightCheckBox", typeof(bool));
 
 				// Parametri Tab (Enhanced ToolBar)
 				general.Columns.Add("LockToolBarCheckBox", typeof(bool));
@@ -1786,7 +1787,7 @@ namespace RazorEnhanced
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1,
 
                     // Parametri primo avvio per tab Enhanced Filters
-                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true,
+                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
 
                     // Parametri primo avvio per tab Enhanced ToolBar
                     false, false, 10, 10, 2, "Big", "Vertical", true, true, true, true, true, 100,

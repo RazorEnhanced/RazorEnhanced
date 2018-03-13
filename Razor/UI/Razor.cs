@@ -12108,11 +12108,14 @@ namespace Assistant
 		{
 			if (colorflagsselfHighlightCheckBox.Focused)
 			{
-				if (colorflagsselfHighlightCheckBox.Checked)
-					RazorEnhanced.Filters.ApplyColor(World.Player, Player.BuffsExist("Bload Oath (curse)"));
-				else
-					RazorEnhanced.Filters.Decolorize(World.Player);
+				if (World.Player != null)
+				{
+					if (colorflagsselfHighlightCheckBox.Checked)
 
+						RazorEnhanced.Filters.ApplyColor(World.Player, Player.BuffsExist("Bload Oath (curse)"));
+					else
+						RazorEnhanced.Filters.Decolorize(World.Player);
+				}
 				RazorEnhanced.Settings.General.WriteBool("ColorFlagsSelfHighlightCheckBox", colorflagsselfHighlightCheckBox.Checked);
 			}
 		}
