@@ -3470,7 +3470,7 @@ namespace RazorEnhanced
 
 				RazorEnhanced.ToolBar.ToolBarItem item = new RazorEnhanced.ToolBar.ToolBarItem(name, convgraphics, convcolor, warning, convwarninglimit);
 
-				if (index >= m_Dataset.Tables["TOOLBAR_ITEMS"].Rows.Count) //out of range
+				if (index >= m_Dataset.Tables["TOOLBAR_ITEMS"].Rows.Count || index == -1) //out of range
 					return;
 
 				m_Dataset.Tables["TOOLBAR_ITEMS"].Rows[index]["Item"] = item;

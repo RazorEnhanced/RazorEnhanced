@@ -12309,7 +12309,8 @@ namespace Assistant
 			if (toolboxcountNameTextBox.Focused)
 			{
 				toolboxcomboupdate = true;
-				toolboxcountComboBox.Items[toolboxcountComboBox.SelectedIndex] = "Slot " + toolboxcountComboBox.SelectedIndex + ": " + toolboxcountNameTextBox.Text;
+				if (toolboxcountComboBox.SelectedIndex != -1)
+					toolboxcountComboBox.Items[toolboxcountComboBox.SelectedIndex] = "Slot " + toolboxcountComboBox.SelectedIndex + ": " + toolboxcountNameTextBox.Text;
 				toolboxcomboupdate = false;
 			}
 		}
