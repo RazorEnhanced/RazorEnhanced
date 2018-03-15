@@ -12112,7 +12112,7 @@ namespace Assistant
 				{
 					if (colorflagsselfHighlightCheckBox.Checked)
 
-						RazorEnhanced.Filters.ApplyColor(World.Player, Player.BuffsExist("Bload Oath (curse)"));
+						RazorEnhanced.Filters.ApplyColor(World.Player);
 					else
 						RazorEnhanced.Filters.Decolorize(World.Player);
 				}

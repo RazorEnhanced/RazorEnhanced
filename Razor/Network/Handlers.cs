@@ -77,7 +77,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientViewer(0xA2, new PacketViewerCallback(ManaUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA3, new PacketViewerCallback(StamUpdate));
 			PacketHandler.RegisterServerToClientViewer(0xA8, new PacketViewerCallback(ServerList));
-			PacketHandler.RegisterServerToClientViewer(0xA9, new PacketViewerCallback(CharList));
+			//PacketHandler.RegisterServerToClientViewer(0xA9, new PacketViewerCallback(CharList));
 			PacketHandler.RegisterServerToClientViewer(0xAB, new PacketViewerCallback(DisplayStringQuery));
 			PacketHandler.RegisterServerToClientViewer(0xAF, new PacketViewerCallback(DeathAnimation));
 			PacketHandler.RegisterServerToClientFilter(0xAE, new PacketFilterCallback(UnicodeSpeech));
@@ -91,7 +91,7 @@ namespace Assistant
 			PacketHandler.RegisterServerToClientFilter(0xCC, new PacketFilterCallback(OnLocalizedMessageAffix));
 			PacketHandler.RegisterServerToClientViewer(0xD6, new PacketViewerCallback(EncodedPacket));//0xD6 "encoded" packets
 			PacketHandler.RegisterServerToClientViewer(0xD8, new PacketViewerCallback(CustomHouseInfo));
-			PacketHandler.RegisterServerToClientFilter(0xDC, new PacketFilterCallback(ServOPLHash));
+			//PacketHandler.RegisterServerToClientFilter(0xDC, new PacketFilterCallback(ServOPLHash));
 			PacketHandler.RegisterServerToClientViewer(0xDD, new PacketViewerCallback(CompressedGump));
 			PacketHandler.RegisterServerToClientViewer(0xDF, new PacketViewerCallback(BuffDebuff));
 			PacketHandler.RegisterServerToClientViewer(0xF0, new PacketViewerCallback(RunUOProtocolExtention)); // Special RunUO protocol extentions (for KUOC/Razor)
@@ -166,9 +166,9 @@ namespace Assistant
 			}
 		}
 
-		private static void ServOPLHash(Packet p, PacketHandlerEventArgs args)
+		/*private static void ServOPLHash(Packet p, PacketHandlerEventArgs args)
 		{
-		/*	Serial s = p.ReadUInt32();
+			Serial s = p.ReadUInt32();
 			int hash = p.ReadInt32();
 
 			if (s.IsItem)
@@ -190,8 +190,8 @@ namespace Assistant
 					p.Seek(-4, SeekOrigin.Current);
 					p.Write((uint)m.OPLHash);
 				}
-			}*/
-		}
+			}
+		}*/
 
 		private static void ClientSingleClick(PacketReader p, PacketHandlerEventArgs args)
 		{
@@ -460,37 +460,6 @@ namespace Assistant
 				p.ReadSByte(); // time zone
 				p.ReadUInt32(); // ip
 			}
-		}
-
-		private static void CharList(PacketReader p, PacketHandlerEventArgs args)
-		{
-		/*	byte ccount = p.ReadByte();
-			for (int i = 0; i < ccount; ++i)
-			{
-				string name = p.ReadString(30);
-				p.ReadString(30); // pass
-				//RazorEnhanced.AutoLoot.AddLog(name);
-			}
-			byte cicount = p.ReadByte();
-			for (int i = 0; i < cicount; ++i)
-			{
-				p.ReadByte(); // index
-				string name = p.ReadString(32);
-				p.ReadString(32); // build name
-				p.ReadUInt32(); //x
-				p.ReadUInt32(); //y
-				p.ReadUInt32(); // z
-				p.ReadUInt32(); // map
-				p.ReadUInt32(); // cliloc
-				p.ReadUInt32(); // 0
-			//	RazorEnhanced.AutoLoot.AddLog(name);
-			}
-			uint flags = p.ReadUInt32();
-			RazorEnhanced.AutoLoot.AddLog(flags.ToString("X4"));
-			if ((flags & 0x08) != 0)
-			{
-				RazorEnhanced.AutoLoot.AddLog("presente");
-			}*/
 		}
 
 		private static void PlayServer(PacketReader p, PacketHandlerEventArgs args)
@@ -2925,7 +2894,6 @@ namespace Assistant
 				{
 					string tempstring = pComp.ReadUnicodeString(len);
 					stringlistparse[x1] = tempstring;
-					//World.Player.CurrentGumpStrings.Add(tempstring);
 					x1++;
 				}
 
@@ -2952,7 +2920,6 @@ namespace Assistant
 
 					case "croppedtext":
 						testipresenti.Add(gumpLines[int.Parse(gumpParams[6])]);
-						//RazorEnhanced.AutoLoot.AddLog("croppedtext " + gumpLines[int.Parse(gumpParams[6])]);
 						// CroppedText [x] [y] [width] [height] [color] [text-id]
 						// Adds a text field to the gump. gump is similar to the text command, but the text is cropped to the defined area.
 						//gump.AddControl(new CroppedText(gump, gumpParams, gumpLines), currentGUMPPage);
@@ -2961,7 +2928,6 @@ namespace Assistant
 
 					case "htmlgump":
 						testipresenti.Add(gumpLines[int.Parse(gumpParams[5])]);
-						//RazorEnhanced.AutoLoot.AddLog("htmlgump " + gumpLines[int.Parse(gumpParams[5])]);
 						// HtmlGump [x] [y] [width] [height] [text-id] [background] [scrollbar]
 						// Defines a text-area where Html-commands are allowed.
 						// [background] and [scrollbar] can be 0 or 1 and define whether the background is transparent and a scrollbar is displayed.
@@ -2970,7 +2936,6 @@ namespace Assistant
 
 					case "text":
 						testipresenti.Add(gumpLines[int.Parse(gumpParams[4])]);
-						//RazorEnhanced.AutoLoot.AddLog("text " + gumpLines[int.Parse(gumpParams[4])]);
 						// Text [x] [y] [color] [text-id]
 						// Defines the position and color of a text (data) entry.
 						//gump.AddControl(new TextLabel(gump, gumpParams, gumpLines), currentGUMPPage);
@@ -3040,7 +3005,7 @@ namespace Assistant
 
 				// Highlight for bloodOath
 				if (Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked && buff == BuffIcon.BloodOathCurse)
-					RazorEnhanced.Filters.ApplyColor(World.Player, Convert.ToBoolean(action));
+					RazorEnhanced.Filters.ApplyColor(World.Player);
 			}
 		}
 

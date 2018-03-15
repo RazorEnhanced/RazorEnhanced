@@ -430,7 +430,7 @@ namespace RazorEnhanced
 				ClientCommunication.SendToClient(new EquipmentItem(i, i.Hue, m.Serial));
 			}
 		}
-		internal static void ApplyColor(Assistant.Mobile m, bool isbloodoath = false)
+		internal static void ApplyColor(Assistant.Mobile m)
 		{
 			int color = 0;
 			if (m.Poisoned)
@@ -439,7 +439,7 @@ namespace RazorEnhanced
 				color = (int)HighLightColor.Paralized;
 			else if (m.Blessed) // Mortal
 				color = (int)HighLightColor.Mortal;
-			else if (isbloodoath)
+			else if (m == World.Player && Player.BuffsExist("Bload Oath (curse)"))
 				color = (int)HighLightColor.BloodOath;
 			else
 			{
