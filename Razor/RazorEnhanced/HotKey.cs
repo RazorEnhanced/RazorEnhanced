@@ -970,8 +970,7 @@ namespace RazorEnhanced
 				case "Wrath Grapes":
 					if (pack != null)
 					{
-						World.Player.SendMessage("Da implementare");
-						if (!UseItemByIdHue(pack, 13848, 0))
+						if (!UseItemByIdHue(pack, 0x2FD7, 0x0482))
 							World.Player.SendMessage(MsgLevel.Warning, "No item left");
 					}
 					break;
