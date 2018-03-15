@@ -758,7 +758,7 @@ namespace RazorEnhanced
 				case "Use Only":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3617))
+						if (!UseItemByIdHue(pack, 3617, 0))
 							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 					}
 					break;
@@ -776,7 +776,7 @@ namespace RazorEnhanced
 				case "Potion Agility":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3848))
+						if (!UseItemByIdHue(pack, 3848, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
@@ -784,7 +784,7 @@ namespace RazorEnhanced
 				case "Potion Cure":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3847))
+						if (!UseItemByIdHue(pack, 3847, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
@@ -792,7 +792,7 @@ namespace RazorEnhanced
 				case "Potion Explosion":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3853))
+						if (!UseItemByIdHue(pack, 3853, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
@@ -800,7 +800,7 @@ namespace RazorEnhanced
 				case "Potion Heal":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3852))
+						if (!UseItemByIdHue(pack, 3852, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
@@ -808,7 +808,7 @@ namespace RazorEnhanced
 				case "Potion Refresh":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3851))
+						if (!UseItemByIdHue(pack, 3851, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
@@ -816,7 +816,7 @@ namespace RazorEnhanced
 				case "Potion Strenght":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3849))
+						if (!UseItemByIdHue(pack, 0x0F09, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
@@ -824,7 +824,7 @@ namespace RazorEnhanced
 				case "Potion Nightsight":
 					if (pack != null)
 					{
-						if (!UseItemById(pack, 3846))
+						if (!UseItemByIdHue(pack, 3846, 0))
 							World.Player.SendMessage(MsgLevel.Warning, "No potions left");
 					}
 					break;
@@ -1734,26 +1734,6 @@ namespace RazorEnhanced
 		{
 			RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", Keys.None);
 			Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + KeyString(RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"));
-		}
-
-		private static bool UseItemById(Assistant.Item cont, ushort find)
-		{
-			foreach (Assistant.Item t in cont.Contains)
-			{
-				Assistant.Item item = (Assistant.Item)t;
-
-				if (item.ItemID == find)
-				{
-					Assistant.PlayerData.DoubleClick(item);
-					return true;
-				}
-				else if (item.Contains != null && item.Contains.Count > 0)
-				{
-					if (UseItemById(item, find))
-						return true;
-				}
-			}
-			return false;
 		}
 
 		private static bool UseItemByIdHue(Assistant.Item cont, ushort find, ushort hue)
