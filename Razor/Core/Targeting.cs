@@ -1135,6 +1135,9 @@ namespace Assistant
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_Target(info);
 
+			if (info.Serial != 0)
+				RazorEnhanced.Target.TargetMessage(info.Serial);
+
 			// check for cancel
 			if (info.X == 0xFFFF && info.X == 0xFFFF && (info.Serial <= 0 || info.Serial >= 0x80000000))
 			{

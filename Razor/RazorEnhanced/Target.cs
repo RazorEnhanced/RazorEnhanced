@@ -8,7 +8,7 @@ namespace RazorEnhanced
 	{
 		private int m_ptarget;
 
-		internal static bool TargetMessage = false;
+		//internal static bool TargetMessage = false;
 
 		public static bool HasTarget()
 		{
@@ -27,7 +27,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void WaitForTarget(int delay, bool noshow) 
+		public static void WaitForTarget(int delay, bool noshow)
 		{
 			if (!noshow)
 				WaitForTarget(delay);
@@ -82,8 +82,8 @@ namespace RazorEnhanced
 		public static void Cancel()
 		{
 			Assistant.Targeting.CancelClientTargetByScript();
-            Assistant.Targeting.CancelOneTimeTargetByScript();
-        }
+			Assistant.Targeting.CancelOneTimeTargetByScript();
+		}
 
 		public static void Self()
 		{
@@ -146,7 +146,7 @@ namespace RazorEnhanced
 			Assistant.Targeting.ClearLast();
 		}
 
-		public int PromptTarget(string message= "Select Item or Mobile" )
+		public int PromptTarget(string message = "Select Item or Mobile")
 		{
 			m_ptarget = -1;
 			Misc.SendMessage(message, 945);
@@ -239,16 +239,8 @@ namespace RazorEnhanced
 				if (mobtarget == null)
 					return;
 
-				if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
-				{
-					if (Friend.IsFriend(mobtarget.Serial))
-						Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
-					else
-						Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
-				}
+				TargetMessage(mobtarget.Serial); // Process message for highlight
 
-				if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-					Mobiles.MessageNoWait(mobtarget.Serial, 10, "* Target *");
 				RazorEnhanced.Target.SetLast(mobtarget);
 			}
 		}
@@ -271,17 +263,7 @@ namespace RazorEnhanced
 			if (mobtarget == null)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
-			{
-				if (Friend.IsFriend(mobtarget.Serial))
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
-				else
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
-			}
-
-			if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-				Mobiles.MessageNoWait(mobtarget.Serial, 10, "* Target *");
-
+			TargetMessage(mobtarget.Serial); // Process message for highlight
 
 			Assistant.Mobile mobile = World.FindMobile(mobtarget.Serial);
 			if (mobile != null)
@@ -306,16 +288,7 @@ namespace RazorEnhanced
 			if (mobtarget == null)
 				return;
 
-			if (RazorEnhanced.Settings.General.ReadBool("ShowHeadTargetCheckBox"))
-			{
-				if (Friend.IsFriend(mobtarget.Serial))
-					Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
-				else
-					Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(mobtarget), 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(mobtarget.Serial) + "]"));
-			}
-
-			if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-				Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+			TargetMessage(mobtarget.Serial); // Process message for highlight
 
 			TargetExecute(mobtarget.Serial);
 			SetLast(mobtarget);
@@ -339,9 +312,38 @@ namespace RazorEnhanced
 			if (mobtarget == null)
 				return;
 
-			RazorEnhanced.Player.Attack(mobtarget.Serial);
-			if (RazorEnhanced.Settings.General.ReadBool("HighlightTargetCheckBox"))
-				Mobiles.Message(mobtarget.Serial, 10, "* Target *");
+			AttackMessage(mobtarget.Serial); // Process message for highlight
+
+			RazorEnhanced.Player.Attack(mobtarget.Serial); // Real attack
 		}
+
+		internal static void TargetMessage(int serial)
+		{
+			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
+			{
+				if (Friend.IsFriend(serial))
+					Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(serial) + "]"));
+				else
+					Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(Mobiles.FindBySerial(serial)), 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(serial) + "]"));
+			}
+
+			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
+				Mobiles.Message(serial, 10, "* Target *");
+		}
+
+		internal static void AttackMessage(int serial)
+		{
+			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
+			{
+				if (Friend.IsFriend(serial))
+					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Attack: [" + GetPlayerName(serial) + "]"));
+				else
+					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(Mobiles.FindBySerial(serial)), 3, Language.CliLocName, World.Player.Name, "Attack: [" + GetPlayerName(serial) + "]"));
+			}
+
+			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
+				Mobiles.Message(serial, 10, "* Target *");
+		}
+
 	}
 }

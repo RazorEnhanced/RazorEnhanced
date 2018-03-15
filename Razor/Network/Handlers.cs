@@ -3030,6 +3030,8 @@ namespace Assistant
 					return;
 				}
 			}
+
+			RazorEnhanced.Target.AttackMessage((int)serialbersaglio); // Process message for highlight
 			Targeting.LastAttack = serialbersaglio;
         }
 
