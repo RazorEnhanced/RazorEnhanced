@@ -1135,7 +1135,7 @@ namespace Assistant
 			if (RazorEnhanced.ScriptRecorder.OnRecord)
 				RazorEnhanced.ScriptRecorder.Record_Target(info);
 
-			if (info.Serial != 0)
+			if (info.Serial != 0 && info.Serial.IsMobile)
 				RazorEnhanced.Target.TargetMessage(info.Serial);
 
 			// check for cancel

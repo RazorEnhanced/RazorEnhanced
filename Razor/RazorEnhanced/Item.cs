@@ -858,7 +858,7 @@ namespace RazorEnhanced
 			if (World.Player != null && World.Player.Expansion <= 3) //  Expansion <= 3. Non esistono le props
 				return;
 
-			Assistant.Item i = Assistant.World.FindItem((Assistant.Serial)((uint)itemserial));
+			Assistant.Item i = Assistant.World.FindItem(itemserial);
 
 			if (i == null)
 				return;

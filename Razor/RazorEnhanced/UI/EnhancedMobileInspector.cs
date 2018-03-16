@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Drawing;
 using System.Collections.Generic;
+using Assistant;
 
 namespace RazorEnhanced.UI
 {
@@ -10,7 +11,6 @@ namespace RazorEnhanced.UI
 	{
 		private Thread m_ProcessInfo;
 		private Assistant.Mobile m_mobile;
-		private List<string> m_props = new List<string>();
 
 		internal EnhancedMobileInspector(Assistant.Mobile mobileTarg)
 		{
@@ -43,243 +43,99 @@ namespace RazorEnhanced.UI
 			catch { }
 		}
 
+		// Props to show
+		private List<string> m_props = new List<string>
+		{
+			"Fire Resist",
+			"Cold Resist",
+			"Poison Resist",
+			"Energy Resist",
+			"Physical Resist",
+			"Swing Speed Increase",
+			"Damage Chance Increase",
+			"Damage Increase",
+			"Hit Fireball",
+			"Hit Chance Increase",
+			"Mage Armor",
+			"Lower Reagent Cost",
+			"Hit Point Increase",
+			"Hit Point Regeneration",
+			"Stamina Regeneration",
+			"Mana Regeneration",
+			"Reflect Physical Damage",
+			"Enhance Potions",
+			"Defense Chance Increase",
+			"Spell Damage Increase",
+			"Faster Cast Recovery",
+			"Faster Casting",
+			"Lower Mana Cost",
+			"Strength Increase",
+			"Dexterity Increase",
+			"Dexterity Bonus",
+			"Intelligence Bonus",
+			"Strength Bonus",
+			"Intelligence Increase",
+			"Hit Point Increase",
+			"Stamina Increase",
+			"Mana Increase",
+			"Maximum Hit Point Increase",
+			"Maximum Stamina Increase",
+			"Maximum Mana Increase",
+			"Self Repair",
+			"Luck",
+			"Hit Lower Defense",
+			// Sa props
+			"Casting Focus",
+			"Fire Eater",
+			"Energy Eaters",
+			"Cold Eaters",
+			"Poison Eater",
+			"Damage Eater",
+			"Kinetic Eater",
+		};
+
+		// Layer to scan
+		private static List<Assistant.Layer> m_layer_props = new List<Layer>
+		{
+			Layer.RightHand,
+			Layer.LeftHand,
+			Layer.Shoes,
+			Layer.Pants,
+			Layer.Shirt,
+			Layer.Head,
+			Layer.Gloves,
+			Layer.Ring,
+			Layer.Talisman,
+			Layer.Neck,
+			Layer.Waist,
+			Layer.InnerTorso,
+			Layer.Bracelet,
+			Layer.Unused_xF,
+			Layer.MiddleTorso,
+			Layer.Earrings,
+			Layer.Arms,
+			Layer.Cloak,
+			Layer.Backpack,
+			Layer.OuterTorso,
+			Layer.OuterLegs,
+			Layer.InnerLegs
+		};
+
 		private int GetAttribute(string attributename)
 		{
 			int attributevalue = 0;
 
-			Assistant.Item itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Arms);
-			if (itemtocheck != null)
+			foreach (Layer l in m_layer_props)
 			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-                }
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-            }
+				Assistant.Item itemtocheck = m_mobile.GetItemOnLayer(l);
+				if (itemtocheck == null) // Slot vuoto
+					continue;
 
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Bracelet);
-			if (itemtocheck != null)
-			{
 				if (!itemtocheck.PropsUpdated)
-				{
 					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
+
 				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
 			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Cloak);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Earrings);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Gloves);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Head);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.InnerLegs);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.InnerTorso);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.LeftHand);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.MiddleTorso);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Neck);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-					
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.OuterLegs);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.OuterTorso);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Pants);
-			if (itemtocheck != null)
-			{ 
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.RightHand);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Ring);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Shirt);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Shoes);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Talisman);
-			if (itemtocheck != null)
-			{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Unused_xF);
-			if (itemtocheck != null)
-			{ 
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);					
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
-			itemtocheck = m_mobile.GetItemOnLayer(Assistant.Layer.Waist);
-			if (itemtocheck != null)
-				{
-				if (!itemtocheck.PropsUpdated)
-				{
-					RazorEnhanced.Items.WaitForProps(itemtocheck.Serial, 1000);
-					Thread.Sleep(50);
-				}
-				attributevalue = attributevalue + RazorEnhanced.Items.GetPropValue(itemtocheck.Serial, attributename);
-			}
-
 			return attributevalue;
         }
 
@@ -353,58 +209,12 @@ namespace RazorEnhanced.UI
 			catch { }
 		}
 
+
+
 		private void EnhancedMobileInspector_Load(object sender, EventArgs e)
 		{
 			if (m_mobile == null)
-				this.Close();
-
-			// Genero lista props da leggere
-			m_props.Add("Fire Resist");
-			m_props.Add("Cold Resist");
-			m_props.Add("Poison Resist");
-			m_props.Add("Energy Resist");
-			m_props.Add("Physical Resist");
-			m_props.Add("Swing Speed Increase");
-			m_props.Add("Damage Chance Increase");
-			m_props.Add("Damage Increase");
-			m_props.Add("Hit Fireball");
-			m_props.Add("Hit Chance Increase");
-			m_props.Add("Mage Armor");
-			m_props.Add("Lower Reagent Cost");
-			m_props.Add("Hit Point Increase");
-			m_props.Add("Hit Point Regeneration");
-			m_props.Add("Stamina Regeneration");
-			m_props.Add("Mana Regeneration");
-			m_props.Add("Reflect Physical Damage");
-			m_props.Add("Enhance Potions");
-			m_props.Add("Defense Chance Increase");
-			m_props.Add("Spell Damage Increase");
-			m_props.Add("Faster Cast Recovery");
-			m_props.Add("Faster Casting");
-			m_props.Add("Lower Mana Cost");
-			m_props.Add("Strength Increase");
-			m_props.Add("Dexterity Increase");
-			m_props.Add("Dexterity Bonus");
-			m_props.Add("Intelligence Bonus");
-			m_props.Add("Strength Bonus");
-			m_props.Add("Intelligence Increase");
-			m_props.Add("Hit Point Increase");
-			m_props.Add("Stamina Increase");
-			m_props.Add("Mana Increase");
-			m_props.Add("Maximum Hit Point Increase");
-			m_props.Add("Maximum Stamina Increase");
-			m_props.Add("Maximum Mana Increase");
-			m_props.Add("Self Repair");
-			m_props.Add("Luck");
-			m_props.Add("Hit Lower Defense");
-			// Sa props
-			m_props.Add("Casting Focus");
-			m_props.Add("Fire Eater");
-			m_props.Add("Energy Eaters");
-			m_props.Add("Cold Eaters");
-			m_props.Add("Poison Eater");
-			m_props.Add("Damage Eater");
-			m_props.Add("Kinetic Eater");
+				Close();
 
 			// general
 			lName.Text = m_mobile.Name.ToString();

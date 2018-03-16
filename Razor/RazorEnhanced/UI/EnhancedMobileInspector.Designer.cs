@@ -55,6 +55,8 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.bContainerCopy = new System.Windows.Forms.Button();
 			this.groupBox3 = new System.Windows.Forms.GroupBox();
+			this.lFlagFlying = new System.Windows.Forms.Label();
+			this.label15 = new System.Windows.Forms.Label();
 			this.lFlagParalized = new System.Windows.Forms.Label();
 			this.label17 = new System.Windows.Forms.Label();
 			this.lFlagBlessed = new System.Windows.Forms.Label();
@@ -70,8 +72,6 @@
 			this.lFlagGhost = new System.Windows.Forms.Label();
 			this.groupBox4 = new System.Windows.Forms.GroupBox();
 			this.listBoxAttributes = new System.Windows.Forms.ListBox();
-			this.label15 = new System.Windows.Forms.Label();
-			this.lFlagFlying = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.groupBox3.SuspendLayout();
@@ -120,9 +120,9 @@
 			// imagepanel
 			// 
 			this.imagepanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-			this.imagepanel.Location = new System.Drawing.Point(177, 67);
+			this.imagepanel.Location = new System.Drawing.Point(186, 62);
 			this.imagepanel.Name = "imagepanel";
-			this.imagepanel.Size = new System.Drawing.Size(133, 108);
+			this.imagepanel.Size = new System.Drawing.Size(124, 113);
 			this.imagepanel.TabIndex = 18;
 			// 
 			// lName
@@ -468,6 +468,24 @@
 			this.groupBox3.TabStop = false;
 			this.groupBox3.Text = "Flags";
 			// 
+			// lFlagFlying
+			// 
+			this.lFlagFlying.AutoSize = true;
+			this.lFlagFlying.Location = new System.Drawing.Point(87, 210);
+			this.lFlagFlying.Name = "lFlagFlying";
+			this.lFlagFlying.Size = new System.Drawing.Size(13, 13);
+			this.lFlagFlying.TabIndex = 31;
+			this.lFlagFlying.Text = "0";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.Location = new System.Drawing.Point(6, 210);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(37, 13);
+			this.label15.TabIndex = 30;
+			this.label15.Text = "Flying:";
+			// 
 			// lFlagParalized
 			// 
 			this.lFlagParalized.AutoSize = true;
@@ -603,24 +621,6 @@
 			this.listBoxAttributes.Name = "listBoxAttributes";
 			this.listBoxAttributes.Size = new System.Drawing.Size(289, 329);
 			this.listBoxAttributes.TabIndex = 0;
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.Location = new System.Drawing.Point(6, 210);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(37, 13);
-			this.label15.TabIndex = 30;
-			this.label15.Text = "Flying:";
-			// 
-			// lFlagFlying
-			// 
-			this.lFlagFlying.AutoSize = true;
-			this.lFlagFlying.Location = new System.Drawing.Point(87, 210);
-			this.lFlagFlying.Name = "lFlagFlying";
-			this.lFlagFlying.Size = new System.Drawing.Size(13, 13);
-			this.lFlagFlying.TabIndex = 31;
-			this.lFlagFlying.Text = "0";
 			// 
 			// EnhancedMobileInspector
 			// 

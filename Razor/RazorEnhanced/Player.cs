@@ -1913,7 +1913,6 @@ namespace RazorEnhanced
 
 			foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 			{
-				RazorEnhanced.Misc.SendMessage(prop.Args);
 				if (!prop.ToString().ToLower().Contains(name.ToLower()))
 					continue;
 
