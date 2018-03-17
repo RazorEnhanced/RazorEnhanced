@@ -29,100 +29,104 @@ namespace RazorEnhanced.UI
 
 		private void razorButton1_Click(object sender, EventArgs e)
 		{
-			this.Close();
+			Close();
 		}
+
+		internal static List<string> m_default_prop = new List<string>
+		{
+			"Balanced",
+			"Cold Resist",
+			"Damage Increase",
+			"Defense Chance Increase",
+			"Dexterity Bonus",
+			"Energy Resists",
+			"Faster Cast Recovery",
+			"Enhance Potion",
+			"Energy Damage",
+			"Poison Damage",
+			"Fire Damage",
+			"Cold Damage",
+			"Physical Damage",
+			"Faster Casting",
+			"Gold Increase",
+			"Fire Resist",
+			"Hit Chance Increase",
+			"Hit Energy Area",
+			"Hit Dispel",
+			"Hit Cold Area",
+			"Hit Fire Area",
+			"Hit Fireball",
+			"Hit Life Leech",
+			"Hit Point Increase",
+			"Hit Point Regeneration",
+			"Hit Stamina Leech",
+			"Hit Poison Area",
+			"Hit Physical Area",
+			"Hit Mana Leech",
+			"Hit Magic Arrow",
+			"Hit Lower Defense",
+			"Hit Lower Attack",
+			"Hit Lightning",
+			"Hit Harm",
+			"Intelligence Bonus",
+			"Lower Mana Cost",
+			"Lower Reagent Cost",
+			"Lower Requirements",
+			"Luck",
+			"Mana Increase",
+			"Mana Regeneration",
+			"Physical Resist",
+			"Poison Resist",
+			"Night Sight",
+			"Spell Channeling",
+			"Spell Damage Increase",
+			"Splintering Weapon",
+			"Stamina Increase",
+			"Stamina Regeneration",
+			"Swing Speed Increase",
+			"Velocity",
+			"Balanced",
+			"Self Repair",
+			"Reflect Physical Damage",
+			"Night Sight",
+			"Mage Armor",
+			"Swing Speed Increase",
+			"Strenght Bonus",
+			"Water Elemental Slayer",
+			"Troll Slayer",
+			"Undead Slayer",
+			"Terathan Slayer",
+			"Spider Slayer",
+			"Snow Elemental Slayer",
+			"Snake Slayer",
+			"Scorpion Slayer",
+			"Reptile Slayer",
+			"Repond Slayer",
+			"Poison Elemental Slayer",
+			"Orc Slayer",
+			"Ophidian Slayer",
+			"Ogre Slayer",
+			"Lizardman Slayer",
+			"Gargoyle Slayer",
+			"Fire Elemental Slayer",
+			"Elemental Slayer",
+			"Earth Elemental Slayer",
+			"Dragon Slayer",
+			"Demon Slayer",
+			"Blood Elemental Slayer",
+			"Arachnid Slayer",
+			"Air Elemental Slayer",
+			"Magic Arrow Charges",
+			"Lightning Charges",
+			"Healing Charges",
+			"Harm Charges",
+			"Greater Healing Charges",
+			"Fireball Charges",
+		};
+
 		private void EnhancedScavengerEditItemProps_Load(object sender, EventArgs e)
 		{
-			// Popola combobox props
-			comboboxProp.Items.Add("Balanced");
-			comboboxProp.Items.Add("Cold Resist");
-			comboboxProp.Items.Add("Damage Increase");
-			comboboxProp.Items.Add("Defense Chance Increase");
-			comboboxProp.Items.Add("Dexterity Bonus");
-			comboboxProp.Items.Add("Energy Resists");
-			comboboxProp.Items.Add("Faster Cast Recovery");
-			comboboxProp.Items.Add("Enhance Potion");
-			comboboxProp.Items.Add("Energy Damage");
-			comboboxProp.Items.Add("Poison Damage");
-			comboboxProp.Items.Add("Fire Damage");
-			comboboxProp.Items.Add("Cold Damage");
-			comboboxProp.Items.Add("Physical Damage");
-			comboboxProp.Items.Add("Faster Casting");
-			comboboxProp.Items.Add("Gold Increase");
-			comboboxProp.Items.Add("Fire Resist");
-			comboboxProp.Items.Add("Hit Chance Increase");
-			comboboxProp.Items.Add("Hit Energy Area");
-			comboboxProp.Items.Add("Hit Dispel");
-			comboboxProp.Items.Add("Hit Cold Area");
-			comboboxProp.Items.Add("Hit Fire Area");
-			comboboxProp.Items.Add("Hit Fireball");
-			comboboxProp.Items.Add("Hit Life Leech");
-			comboboxProp.Items.Add("Hit Point Increase");
-			comboboxProp.Items.Add("Hit Point Regeneration");
-			comboboxProp.Items.Add("Hit Stamina Leech");
-			comboboxProp.Items.Add("Hit Poison Area");
-			comboboxProp.Items.Add("Hit Physical Area");
-			comboboxProp.Items.Add("Hit Mana Leech");
-			comboboxProp.Items.Add("Hit Magic Arrow");
-			comboboxProp.Items.Add("Hit Lower Defense");
-			comboboxProp.Items.Add("Hit Lower Attack");
-			comboboxProp.Items.Add("Hit Lightning");
-			comboboxProp.Items.Add("Hit Harm");
-			comboboxProp.Items.Add("Intelligence Bonus");
-			comboboxProp.Items.Add("Lower Mana Cost");
-			comboboxProp.Items.Add("Lower Reagent Cost");
-			comboboxProp.Items.Add("Lower Requirements");
-			comboboxProp.Items.Add("Luck");
-			comboboxProp.Items.Add("Mana Increase");
-			comboboxProp.Items.Add("Mana Regeneration");
-			comboboxProp.Items.Add("Physical Resist");
-			comboboxProp.Items.Add("Poison Resist");
-			comboboxProp.Items.Add("Night Sight");
-			comboboxProp.Items.Add("Spell Channeling");
-			comboboxProp.Items.Add("Spell Damage Increase");
-			comboboxProp.Items.Add("Splintering Weapon");
-			comboboxProp.Items.Add("Stamina Increase");
-			comboboxProp.Items.Add("Stamina Regeneration");
-			comboboxProp.Items.Add("Swing Speed Increase");
-			comboboxProp.Items.Add("Velocity");
-			comboboxProp.Items.Add("Balanced");
-			comboboxProp.Items.Add("Self Repair");
-			comboboxProp.Items.Add("Reflect Physical Damage");
-			comboboxProp.Items.Add("Night Sight");
-			comboboxProp.Items.Add("Mage Armor");
-			comboboxProp.Items.Add("Swing Speed Increase");
-			comboboxProp.Items.Add("Strenght Bonus");
-			comboboxProp.Items.Add("Water Elemental Slayer");
-			comboboxProp.Items.Add("Troll Slayer");
-			comboboxProp.Items.Add("Undead Slayer");
-			comboboxProp.Items.Add("Terathan Slayer");
-			comboboxProp.Items.Add("Spider Slayer");
-			comboboxProp.Items.Add("Snow Elemental Slayer");
-			comboboxProp.Items.Add("Snake Slayer");
-			comboboxProp.Items.Add("Scorpion Slayer");
-			comboboxProp.Items.Add("Reptile Slayer");
-			comboboxProp.Items.Add("Repond Slayer");
-			comboboxProp.Items.Add("Poison Elemental Slayer");
-			comboboxProp.Items.Add("Orc Slayer");
-			comboboxProp.Items.Add("Ophidian Slayer");
-			comboboxProp.Items.Add("Ogre Slayer");
-			comboboxProp.Items.Add("Lizardman Slayer");
-			comboboxProp.Items.Add("Gargoyle Slayer");
-			comboboxProp.Items.Add("Fire Elemental Slayer");
-			comboboxProp.Items.Add("Elemental Slayer");
-			comboboxProp.Items.Add("Earth Elemental Slayer");
-			comboboxProp.Items.Add("Dragon Slayer");
-			comboboxProp.Items.Add("Demon Slayer");
-			comboboxProp.Items.Add("Blood Elemental Slayer");
-			comboboxProp.Items.Add("Arachnid Slayer");
-			comboboxProp.Items.Add("Air Elemental Slayer");
-			comboboxProp.Items.Add("Magic Arrow Charges");
-			comboboxProp.Items.Add("Lightning Charges");
-			comboboxProp.Items.Add("Healing Charges");
-			comboboxProp.Items.Add("Harm Charges");
-			comboboxProp.Items.Add("Greater Healing Charges");
-			comboboxProp.Items.Add("Fireball Charges");
-
+			comboboxProp.DataSource = m_default_prop;
 			lName.Text = m_name;
 			lGraphics.Text = m_graphics;
             lColor.Text = m_color;
