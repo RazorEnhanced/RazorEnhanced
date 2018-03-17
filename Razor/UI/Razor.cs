@@ -121,7 +121,7 @@ namespace Assistant
 		private List<RazorEnhanced.Organizer.OrganizerItem> organizerItemList = new List<RazorEnhanced.Organizer.OrganizerItem>();
 		private List<RazorEnhanced.SellAgent.SellAgentItem> sellItemList = new List<RazorEnhanced.SellAgent.SellAgentItem>();
 		private List<RazorEnhanced.BuyAgent.BuyAgentItem> buyItemList = new List<RazorEnhanced.BuyAgent.BuyAgentItem>();
-		private List<RazorEnhanced.Dress.DressItem> dressItemList = new List<RazorEnhanced.Dress.DressItem>();
+		private List<RazorEnhanced.Dress.DressItemNew> dressItemList = new List<RazorEnhanced.Dress.DressItemNew>();
 		private TabPage EnhancedAgent;
 		private TabControl tabControl1;
 		private TabPage eautoloot;
@@ -10984,7 +10984,7 @@ namespace Assistant
 
 					if (RazorEnhanced.Settings.Dress.ListExists(selection))
 					{
-						List<Dress.DressItem> items = Settings.Dress.ItemsRead(selection);
+						List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(selection);
 						if (index <= items.Count - 1)
 						{
 							RazorEnhanced.Settings.Dress.ItemDelete(selection, items[index]);

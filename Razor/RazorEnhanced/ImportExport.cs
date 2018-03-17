@@ -694,10 +694,10 @@ namespace RazorEnhanced
 						else
 						{
 							Dress.AddList(m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString());
-							List<RazorEnhanced.Dress.DressItem> itemlist = new List<Dress.DressItem>();
+							List<RazorEnhanced.Dress.DressItemNew> itemlist = new List<Dress.DressItemNew>();
 							foreach (DataRow row in m_Dataset.Tables["DESS_ITEMS"].Rows)
 							{
-								itemlist.Add((RazorEnhanced.Dress.DressItem)row["Item"]);
+								itemlist.Add((RazorEnhanced.Dress.DressItemNew)row["Item"]);
 							}
 							RazorEnhanced.Settings.Dress.ItemInsertFromImport(m_Dataset.Tables["DESS_ITEMS"].Rows[0]["List"].ToString(), itemlist);
 							RazorEnhanced.Dress.RefreshItems();
@@ -735,13 +735,13 @@ namespace RazorEnhanced
 				DataSet m_Dataset = new DataSet();
 				DataTable dress_items = new DataTable("DRESS_ITEMS");
 				dress_items.Columns.Add("List", typeof(string));
-				dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItem));
+				dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItemNew));
 				m_Dataset.Tables.Add(dress_items);
 				m_Dataset.AcceptChanges();
 
-				List<Dress.DressItem> items = Settings.Dress.ItemsRead(listname);
+				List<Dress.DressItemNew> items = Settings.Dress.ItemsRead(listname);
 
-				foreach (RazorEnhanced.Dress.DressItem item in items)
+				foreach (RazorEnhanced.Dress.DressItemNew item in items)
 				{
 					DataRow row = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
 					row["List"] = listname;

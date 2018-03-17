@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 47;
+		private static int SettingVersion = 48;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -171,7 +171,7 @@ namespace RazorEnhanced
 
 				DataTable dress_items = new DataTable("DRESS_ITEMS");
 				dress_items.Columns.Add("List", typeof(string));
-				dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItem));
+				dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItemNew));
 				m_Dataset.Tables.Add(dress_items);
 
 				// ----------- FRIEND ----------
@@ -2700,13 +2700,13 @@ namespace RazorEnhanced
 				lists = listsOut;
 			}
 
-			internal static List<RazorEnhanced.Dress.DressItem> ItemsRead(string list)
+			internal static List<RazorEnhanced.Dress.DressItemNew> ItemsRead(string list)
 			{
-				List<RazorEnhanced.Dress.DressItem> items = new List<RazorEnhanced.Dress.DressItem>();
+				List<RazorEnhanced.Dress.DressItemNew> items = new List<RazorEnhanced.Dress.DressItemNew>();
 
 				if (ListExists(list))
 				{
-					items.AddRange(from DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Dress.DressItem) row["Item"]);
+					items.AddRange(from DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Dress.DressItemNew) row["Item"]);
 				}
 
 				return items;
@@ -2744,7 +2744,7 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemInsert(string list, RazorEnhanced.Dress.DressItem item)
+			internal static void ItemInsert(string list, RazorEnhanced.Dress.DressItemNew item)
 			{
 				DataRow row = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
 				row["List"] = list;
@@ -2754,9 +2754,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemInsertFromImport(string list, List<RazorEnhanced.Dress.DressItem> itemlist)
+			internal static void ItemInsertFromImport(string list, List<RazorEnhanced.Dress.DressItemNew> itemlist)
 			{
-				foreach (RazorEnhanced.Dress.DressItem item in itemlist)
+				foreach (RazorEnhanced.Dress.DressItemNew item in itemlist)
 				{
 					DataRow row = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
 					row["List"] = list;
@@ -2766,12 +2766,12 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemDelete(string list, RazorEnhanced.Dress.DressItem item)
+			internal static void ItemDelete(string list, RazorEnhanced.Dress.DressItemNew item)
 			{
 				for (int i = m_Dataset.Tables["DRESS_ITEMS"].Rows.Count - 1; i >= 0; i--)
 				{
 					DataRow row = m_Dataset.Tables["DRESS_ITEMS"].Rows[i];
-					if ((string)row["List"] == list && (RazorEnhanced.Dress.DressItem)row["Item"] == item)
+					if ((string)row["List"] == list && (RazorEnhanced.Dress.DressItemNew)row["Item"] == item)
 					{
 						row.Delete();
 						break;
@@ -2781,7 +2781,7 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemReplace(string list, int index, RazorEnhanced.Dress.DressItem item)
+			internal static void ItemReplace(string list, int index, RazorEnhanced.Dress.DressItemNew item)
 			{
 				int count = -1;
 				foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
@@ -2798,15 +2798,15 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ItemInsertByLayer(string list, RazorEnhanced.Dress.DressItem item)
+			internal static void ItemInsertByLayer(string list, RazorEnhanced.Dress.DressItemNew item)
 			{
 				bool found = false;
 				foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
 				{
 					if ((string)row["List"] == list)
 					{
-						RazorEnhanced.Dress.DressItem itemtoscan;
-						itemtoscan = (RazorEnhanced.Dress.DressItem)row["Item"];
+						RazorEnhanced.Dress.DressItemNew itemtoscan;
+						itemtoscan = (RazorEnhanced.Dress.DressItemNew)row["Item"];
 						if (itemtoscan.Layer == item.Layer)
 						{
 							RazorEnhanced.Dress.AddLog("Item repaced");
@@ -5607,6 +5607,112 @@ namespace RazorEnhanced
 
 				realVersion = 47;
 				General.WriteInt("SettingVersion", 47);
+			}
+
+			if (realVersion == 47) // Conversione vecchi dati dress engine
+			{
+				if (m_Dataset.Tables.Contains("DRESS_ITEMS"))
+
+				{
+					List<string> listname = new List<string>();
+					List<RazorEnhanced.Dress.DressItem> item = new List<RazorEnhanced.Dress.DressItem>();
+
+					Dictionary<string, RazorEnhanced.Dress.DressItem> olddata = new Dictionary<string, RazorEnhanced.Dress.DressItem>();
+
+					foreach (DataRow row in m_Dataset.Tables["DRESS_ITEMS"].Rows)
+					{
+						listname.Add((string)row["List"]);
+						item.Add((RazorEnhanced.Dress.DressItem)row["Item"]);
+					}
+
+					m_Dataset.Tables.Remove("DRESS_ITEMS");
+
+					DataTable dress_items = new DataTable("DRESS_ITEMS");
+					dress_items.Columns.Add("List", typeof(string));
+					dress_items.Columns.Add("Item", typeof(RazorEnhanced.Dress.DressItemNew));
+					m_Dataset.Tables.Add(dress_items);
+
+					int i = 0;
+					foreach (string l in listname)
+					{
+						DataRow newRow = m_Dataset.Tables["DRESS_ITEMS"].NewRow();
+						newRow["List"] = l;
+						try
+						{
+							Assistant.Layer reallayer = Layer.RightHand;
+							switch (item[i].Layer)
+							{
+								case 0:
+									reallayer = Assistant.Layer.RightHand;
+									break;
+								case 1:
+									reallayer = Assistant.Layer.LeftHand;
+									break;
+								case 2:
+									reallayer = Assistant.Layer.Shoes;
+									break;
+								case 3:
+									reallayer = Assistant.Layer.Pants;
+									break;
+								case 4:
+									reallayer = Assistant.Layer.Shirt;
+									break;
+								case 5:
+									reallayer = Assistant.Layer.Head;
+									break;
+								case 6:
+									reallayer = Assistant.Layer.Gloves;
+									break;
+								case 7:
+									reallayer = Assistant.Layer.Ring;
+									break;
+								case 8:
+									reallayer = Assistant.Layer.Neck;
+									break;
+								case 9:
+									reallayer = Assistant.Layer.Waist;
+									break;
+								case 10:
+									reallayer = Assistant.Layer.InnerTorso;
+									break;
+								case 11:
+									reallayer = Assistant.Layer.Bracelet;
+									break;
+								case 12:
+									reallayer = Assistant.Layer.MiddleTorso;
+									break;
+								case 13:
+									reallayer = Assistant.Layer.Earrings;
+									break;
+								case 14:
+									reallayer = Assistant.Layer.Arms;
+									break;
+								case 15:
+									reallayer = Assistant.Layer.Cloak;
+									break;
+								case 16:
+									reallayer = Assistant.Layer.OuterTorso;
+									break;
+								case 17:
+									reallayer = Assistant.Layer.OuterLegs;
+									break;
+								case 18:
+									reallayer = Assistant.Layer.InnerLegs;
+									break;
+								case 19:
+									reallayer = Assistant.Layer.Talisman;
+									break;
+							}
+							newRow["Item"] = new RazorEnhanced.Dress.DressItemNew(item[i].Name, reallayer, item[i].Serial, item[i].Selected);
+							m_Dataset.Tables["DRESS_ITEMS"].Rows.Add(newRow);
+						}
+						catch { }
+						i++;
+					}
+				}
+
+				realVersion = 48;
+				General.WriteInt("SettingVersion", 48);
 			}
 			Save(true);
 		}
