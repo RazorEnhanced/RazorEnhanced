@@ -1344,7 +1344,7 @@ namespace FastColoredTextBoxNS
 			string MobileFunctions = "UseMobile|ContextExist";
 			string ItemsFunctions = "DistanceTo|Move|MoveOnGround|DropItemGroundSelf|UseItem|WaitForContents|BackpackCount|ContainerCount|GetPropByCliloc|GetPropByString|UseItemByID|Hide|ContextExist|UseItemOnTarget";
 			string MiscFunctions = "SendMessage|Resync|Pause|Beep|Disconnect|WaitForContext|ContextReply|ReadSharedValue|RemoveSharedValue|CheckSharedValue|SetSharedValue|HasMenu|CloseMenu|MenuContains|GetMenuTitle|WaitForMenu|MenuResponse|HasQueryString|WaitForQueryString|QueryStringResponse|NoOperation|ScriptRun|ScriptStop|ScriptStatus|PetRename";
-			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList|PromptTarget";
+			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList|PromptTarget|TargetExecuteRelative";
 			string GumpsFunctions = "CurrentGump|HasGump|CloseGump|ResetGump|WaitForGump|SendAction|SendAdvancedAction|LastGump|LastGumpGetLineList|LastGumpTextExist|LastGumpTextExistByLine|LastGumpRawData";
 			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal";
 			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend|Pause|GetDamage";

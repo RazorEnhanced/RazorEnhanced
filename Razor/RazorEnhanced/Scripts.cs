@@ -37,16 +37,16 @@ namespace RazorEnhanced
 				if (IsRunning || !IsUnstarted)
 					return;
 
-				try
+			//	try
+				//{
+				m_Thread.Start();
+				while (!m_Thread.IsAlive)
 				{
-					m_Thread.Start();
-					while (!m_Thread.IsAlive)
-					{
-					}
-
-					m_Run = true;
 				}
-				catch { }
+
+				m_Run = true;
+			//	}
+			//	catch { }
 			}
 
 			private void AsyncStart()
@@ -54,13 +54,15 @@ namespace RazorEnhanced
 				if (m_Source == null)
 					return;
 
-				try
+				m_Source.Execute(m_Scope);
+
+				/*try
 				{
 					m_Source.Execute(m_Scope);
 				}
 				catch
 				{
-				}
+				}*/
 			}
 
 			internal void Stop()
@@ -230,7 +232,8 @@ namespace RazorEnhanced
 				{
 					lock (m_Lock)
 					{
-						if (m_Thread.ThreadState == ThreadState.Unstarted)
+						if ((m_Thread.ThreadState & ThreadState.Unstarted) != 0)
+					//	if (m_Thread.ThreadState == ThreadState.Unstarted)
 							return true;
 						else
 							return false;
@@ -347,33 +350,31 @@ namespace RazorEnhanced
 						if (script.Loop)
 						{
 							if (script.IsStopped)
-							{
 								script.Reset();
-							}
 
 							if (script.IsUnstarted)
-							{
+								script.Start();
+						/*	{
 								try
 								{
 									script.Start();
 								}
 								catch { }
-							}
+							}*/
 						}
 						else
 						{
 							if (script.IsStopped)
-							{
 								script.Reset();
-							}
 							else if (script.IsUnstarted)
-							{
+								script.Start();
+							/*{
 								try
 								{
 									script.Start();
 								}
 								catch { }
-							}
+							}*/
 						}
 					}
 					else

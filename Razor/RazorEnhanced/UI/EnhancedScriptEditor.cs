@@ -165,7 +165,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsTarget =
 			{
-				"Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.PromptTarget", "Target.Cancel", "Target.Last", "Target.LastQueued",
+				"Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.TargetExecuteRelative" ,"Target.PromptTarget", "Target.Cancel", "Target.Last", "Target.LastQueued",
 				"Target.Self", "Target.SelfQueued", "Target.SetLast", "Target.ClearLast", "Target.ClearQueue", "Target.ClearLastandQueue", "Target.SetLastTargetFromList",
 				"Target.PerformTargetFromList", "Target.AttackTargetFromList"
 			};
@@ -685,6 +685,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Target.TargetExecute(int or Item or Mobile or (int, int, int, (optional)int))", new string[] { "int Serial or Item ItemInstance or Mobile MobileInstance or ( int X, int Y, int Z, int TileID )" }, "void", "Send target execute to specific serial, item, mobile\n\tIn case of X Y Z coordinates, can be defined a tileid");
 			descriptionTarget.Add("Target.TargetExecute", tooltip);
+
+			tooltip = new ToolTipDescriptions("Target.TargetExecuteRelative(Mobile or int, int)", new string[] { "int Serial or Mobile Mobiletarget, int offset)" }, "void", "Send target execute to ground by mobile position whit offset distance.\n\tDistance is calculate in base of mobile direction");
+			descriptionTarget.Add("Target.TargetExecuteRelative", tooltip);
 
 			tooltip = new ToolTipDescriptions("Target.PromptTarget()", new string[] { "none or string message" }, "int", "Pick the serial from item or mobile\n\tCan specific string in parameters for prompt message");
 			descriptionTarget.Add("Target.PromptTarget", tooltip);
