@@ -4333,6 +4333,7 @@ namespace Assistant
 			this.labelTimerDelay.Size = new System.Drawing.Size(92, 13);
 			this.labelTimerDelay.TabIndex = 24;
 			this.labelTimerDelay.Text = "Engine Delay (ms)";
+			this.labelTimerDelay.Visible = false;
 			// 
 			// textBoxDelay
 			// 
@@ -4341,6 +4342,7 @@ namespace Assistant
 			this.textBoxDelay.Size = new System.Drawing.Size(42, 20);
 			this.textBoxDelay.TabIndex = 23;
 			this.textBoxDelay.Text = "100";
+			this.textBoxDelay.Visible = false;
 			this.textBoxDelay.TextChanged += new System.EventHandler(this.textBoxEngineDelay_TextChanged);
 			// 
 			// buttonScriptUp
@@ -9403,10 +9405,6 @@ namespace Assistant
 
 			Scripts.EnhancedScripts.Clear();
 
-			int selindex = -1;
-			if (scriptlistView.SelectedItems.Count == 1)
-				selindex = scriptlistView.SelectedIndices[0];
-
 			scriptlistView.BeginUpdate();
 			scriptlistView.Items.Clear();
 
@@ -9487,8 +9485,6 @@ namespace Assistant
 				}
 			}
 			scriptlistView.EndUpdate();
-			if (selindex != -1)
-				scriptlistView.Items[selindex].Selected = true; // restore index
 		}
 
 		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
@@ -9821,7 +9817,7 @@ namespace Assistant
 			}
 			else
 			{
-				if (!scriptwaitmodecheckbox.Focused)
+				if (!scriptautostartcheckbox.Focused)
 					return;
 
 				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = scriptautostartcheckbox.Checked;
