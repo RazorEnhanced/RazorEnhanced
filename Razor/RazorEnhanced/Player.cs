@@ -1558,14 +1558,24 @@ namespace RazorEnhanced
 
 		public static void Attack(int serial)
 		{
+			if (World.FindMobile(serial) == null) // Mob non piu esistente
+				return;
+
+			Target.AttackMessage(serial);
 			Assistant.ClientCommunication.SendToServerWait(new AttackReq(serial));
 			Targeting.LastAttack = (uint)serial;
         }
 
 		public static void AttackLast()
 		{
-			if (Targeting.LastAttack != 0)
-				Assistant.ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
+			if (Targeting.LastAttack == 0) // Nessun last attack presente
+				return;
+			
+			if (World.FindMobile(Targeting.LastAttack) == null) // Mob non piu esistente
+				return;
+
+			Target.AttackMessage((int)Targeting.LastAttack);
+			Assistant.ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
 		}
 
 		// Virtue

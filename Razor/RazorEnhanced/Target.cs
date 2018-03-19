@@ -314,7 +314,7 @@ namespace RazorEnhanced
 
 			AttackMessage(mobtarget.Serial); // Process message for highlight
 
-			RazorEnhanced.Player.Attack(mobtarget.Serial); // Real attack
+			Assistant.ClientCommunication.SendToServer(new AttackReq(mobtarget.Serial)); // Real attack
 		}
 
 		internal static void TargetMessage(int serial)
