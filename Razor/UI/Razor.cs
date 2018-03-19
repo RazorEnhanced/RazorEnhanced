@@ -774,6 +774,19 @@ namespace Assistant
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
 		private RazorCheckBox colorflagsselfHighlightCheckBox;
+		private ContextMenuStrip scriptgridMenuStrip;
+		private ToolStripMenuItem modifyToolStripMenuItem;
+		private ToolStripMenuItem addToolStripMenuItem;
+		private ToolStripMenuItem removeToolStripMenuItem;
+		private ToolStripMenuItem openToolStripMenuItem;
+		private ToolStripMenuItem moveUpToolStripMenuItem;
+		private ToolStripMenuItem moveDownToolStripMenuItem;
+		private ToolStripMenuItem flagsToolStripMenuItem;
+		private ToolStripMenuItem loopModeToolStripMenuItem;
+		private ToolStripMenuItem waitBeforeInterruptToolStripMenuItem;
+		private ToolStripMenuItem autoStartAtLoginToolStripMenuItem;
+		private ToolStripMenuItem playToolStripMenuItem;
+		private ToolStripMenuItem stopToolStripMenuItem;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1428,6 +1441,19 @@ namespace Assistant
 			this.timerupdatestatus = new System.Windows.Forms.Timer(this.components);
 			this.datagridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.scriptgridMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.modifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.moveUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.moveDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.flagsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.loopModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.waitBeforeInterruptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.autoStartAtLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -1512,6 +1538,7 @@ namespace Assistant
 			this.filtergroup.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DpsMeterGridView)).BeginInit();
 			this.datagridMenuStrip.SuspendLayout();
+			this.scriptgridMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -4435,6 +4462,7 @@ namespace Assistant
 			this.scriptlistView.UseCompatibleStateImageBehavior = false;
 			this.scriptlistView.View = System.Windows.Forms.View.Details;
 			this.scriptlistView.SelectedIndexChanged += new System.EventHandler(this.scriptlistView_SelectedIndexChanged);
+			this.scriptlistView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.scriptlistView_MouseClick);
 			// 
 			// columnHeader62
 			// 
@@ -7582,6 +7610,108 @@ namespace Assistant
 			this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
 			this.deleteRowToolStripMenuItem.Text = "Delete Row";
 			// 
+			// scriptgridMenuStrip
+			// 
+			this.scriptgridMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modifyToolStripMenuItem,
+            this.flagsToolStripMenuItem,
+            this.playToolStripMenuItem,
+            this.stopToolStripMenuItem});
+			this.scriptgridMenuStrip.Name = "scriptgridMenuStrip";
+			this.scriptgridMenuStrip.Size = new System.Drawing.Size(113, 92);
+			// 
+			// modifyToolStripMenuItem
+			// 
+			this.modifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addToolStripMenuItem,
+            this.removeToolStripMenuItem,
+            this.openToolStripMenuItem,
+            this.moveUpToolStripMenuItem,
+            this.moveDownToolStripMenuItem});
+			this.modifyToolStripMenuItem.Name = "modifyToolStripMenuItem";
+			this.modifyToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+			this.modifyToolStripMenuItem.Text = "Modify";
+			// 
+			// addToolStripMenuItem
+			// 
+			this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+			this.addToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.addToolStripMenuItem.Text = "Add";
+			this.addToolStripMenuItem.Click += new System.EventHandler(this.addToolStripMenuItem_Click);
+			// 
+			// removeToolStripMenuItem
+			// 
+			this.removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+			this.removeToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.removeToolStripMenuItem.Text = "Remove";
+			this.removeToolStripMenuItem.Click += new System.EventHandler(this.removeToolStripMenuItem_Click);
+			// 
+			// openToolStripMenuItem
+			// 
+			this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+			this.openToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.openToolStripMenuItem.Text = "Open";
+			this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+			// 
+			// moveUpToolStripMenuItem
+			// 
+			this.moveUpToolStripMenuItem.Name = "moveUpToolStripMenuItem";
+			this.moveUpToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.moveUpToolStripMenuItem.Text = "Move Up";
+			this.moveUpToolStripMenuItem.Click += new System.EventHandler(this.moveUpToolStripMenuItem_Click);
+			// 
+			// moveDownToolStripMenuItem
+			// 
+			this.moveDownToolStripMenuItem.Name = "moveDownToolStripMenuItem";
+			this.moveDownToolStripMenuItem.Size = new System.Drawing.Size(138, 22);
+			this.moveDownToolStripMenuItem.Text = "Move Down";
+			this.moveDownToolStripMenuItem.Click += new System.EventHandler(this.moveDownToolStripMenuItem_Click);
+			// 
+			// flagsToolStripMenuItem
+			// 
+			this.flagsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loopModeToolStripMenuItem,
+            this.waitBeforeInterruptToolStripMenuItem,
+            this.autoStartAtLoginToolStripMenuItem});
+			this.flagsToolStripMenuItem.Name = "flagsToolStripMenuItem";
+			this.flagsToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+			this.flagsToolStripMenuItem.Text = "Flags";
+			// 
+			// loopModeToolStripMenuItem
+			// 
+			this.loopModeToolStripMenuItem.Name = "loopModeToolStripMenuItem";
+			this.loopModeToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.loopModeToolStripMenuItem.Text = "Loop Mode";
+			this.loopModeToolStripMenuItem.Click += new System.EventHandler(this.loopModeToolStripMenuItem_Click);
+			// 
+			// waitBeforeInterruptToolStripMenuItem
+			// 
+			this.waitBeforeInterruptToolStripMenuItem.Name = "waitBeforeInterruptToolStripMenuItem";
+			this.waitBeforeInterruptToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.waitBeforeInterruptToolStripMenuItem.Text = "Wait Before Interrupt";
+			this.waitBeforeInterruptToolStripMenuItem.Click += new System.EventHandler(this.waitBeforeInterruptToolStripMenuItem_Click);
+			// 
+			// autoStartAtLoginToolStripMenuItem
+			// 
+			this.autoStartAtLoginToolStripMenuItem.Name = "autoStartAtLoginToolStripMenuItem";
+			this.autoStartAtLoginToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+			this.autoStartAtLoginToolStripMenuItem.Text = "AutoStart at Login";
+			this.autoStartAtLoginToolStripMenuItem.Click += new System.EventHandler(this.autoStartAtLoginToolStripMenuItem_Click);
+			// 
+			// playToolStripMenuItem
+			// 
+			this.playToolStripMenuItem.Name = "playToolStripMenuItem";
+			this.playToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+			this.playToolStripMenuItem.Text = "Play";
+			this.playToolStripMenuItem.Click += new System.EventHandler(this.playToolStripMenuItem_Click);
+			// 
+			// stopToolStripMenuItem
+			// 
+			this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
+			this.stopToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+			this.stopToolStripMenuItem.Text = "Stop";
+			this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7722,6 +7852,7 @@ namespace Assistant
 			this.filtergroup.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.DpsMeterGridView)).EndInit();
 			this.datagridMenuStrip.ResumeLayout(false);
+			this.scriptgridMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -9272,9 +9403,15 @@ namespace Assistant
 
 			Scripts.EnhancedScripts.Clear();
 
+			int selindex = -1;
+			if (scriptlistView.SelectedItems.Count == 1)
+				selindex = scriptlistView.SelectedIndices[0];
+
+			scriptlistView.BeginUpdate();
 			scriptlistView.Items.Clear();
 
 			DataTable scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
+			
 			foreach (DataRow row in scriptTable.Rows)
 			{
 				string filename = (string)row["Filename"];
@@ -9324,8 +9461,6 @@ namespace Assistant
 
 					scriptlistView.Items.Add(listitem);
 
-
-					row["Flag"] = Assistant.Properties.Resources.red;
 					row["Status"] = "Stopped";
 				}
 				else
@@ -9348,15 +9483,24 @@ namespace Assistant
 
 					scriptlistView.Items.Add(listitem);
 
-
-					row["Flag"] = Assistant.Properties.Resources.red;
 					row["Status"] = "Error";
 				}
 			}
+			scriptlistView.EndUpdate();
+			if (selindex != -1)
+				scriptlistView.Items[selindex].Selected = true; // restore index
 		}
 
+		private void moveUpToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScriptGridMoveUp();
+		}
 
-		private void MoveDown()
+		private void moveDownToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScriptGridMoveDown();
+		}
+		private void ScriptGridMoveDown()
 		{
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
@@ -9379,7 +9523,7 @@ namespace Assistant
 			}
 		}
 
-		private void MoveUp()
+		private void ScriptGridMoveUp()
 		{
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
@@ -9466,6 +9610,16 @@ namespace Assistant
 
 		}
 
+		private void playToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RunCurrentScript(true);
+		}
+
+		private void stopToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RunCurrentScript(false);
+		}
+
 		private void RunCurrentScript(bool run)
 		{
 			if (scriptlistView.SelectedItems.Count == 1)
@@ -9479,7 +9633,7 @@ namespace Assistant
 			}
 		}
 
-		private void buttonScriptAdd_Click(object sender, EventArgs e)
+		private void AddScriptInGrid()
 		{
 			DialogResult result = openFileDialogscript.ShowDialog();
 
@@ -9503,6 +9657,16 @@ namespace Assistant
 					MessageBox.Show("Error, Script file must be in Scripts folder!");
 				}
 			}
+		}
+
+		private void addToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			AddScriptInGrid();
+		}
+
+		private void buttonScriptAdd_Click(object sender, EventArgs e)
+		{
+			AddScriptInGrid();
 		}
 
 		private void buttonScriptRefresh_Click(object sender, EventArgs e)
@@ -9541,7 +9705,7 @@ namespace Assistant
 			}
 		}
 
-		private void buttonScriptRemove_Click(object sender, EventArgs e)
+		private void RemoveScriptInGrid()
 		{
 			if (scriptTable != null && scriptTable.Rows.Count > 0 && scriptlistView.SelectedItems.Count == 1)
 			{
@@ -9551,18 +9715,38 @@ namespace Assistant
 				ReloadScriptTable();
 			}
 		}
+		private void buttonScriptRemove_Click(object sender, EventArgs e)
+		{
+			RemoveScriptInGrid();
+		}
+
+		private void scriptlistView_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+				scriptgridMenuStrip.Show(Cursor.Position);
+		}
+
+		private void removeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			RemoveScriptInGrid();
+		}
 
 		private void buttonScriptDown_Click(object sender, EventArgs e)
 		{
-			MoveDown();
+			ScriptGridMoveDown();
 		}
 
 		private void buttonScriptUp_Click(object sender, EventArgs e)
 		{
-			MoveUp();
+			ScriptGridMoveUp();
 		}
 
-		private void buttonOpenEditor_Click(object sender, EventArgs e)
+		private void openToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScriptGridOpen();
+		}
+
+		private void ScriptGridOpen()
 		{
 			string fullPath = null;
 
@@ -9573,21 +9757,19 @@ namespace Assistant
 			}
 			EnhancedScriptEditor.Init(fullPath);
 		}
+		private void buttonOpenEditor_Click(object sender, EventArgs e)
+		{
+			ScriptGridOpen();
+		}
 
 		private void buttonScriptPlay_Click(object sender, EventArgs e)
 		{
-			if (scriptlistView.SelectedItems.Count == 1)
-			{
-				RunCurrentScript(true);
-			}
+			RunCurrentScript(true);
 		}
 
 		private void buttonScriptStop_Click(object sender, EventArgs e)
 		{
-			if (scriptlistView.SelectedItems.Count == 1)
-			{
-				RunCurrentScript(false);
-			}
+			RunCurrentScript(false);
 		}
 
 		private void textBoxEngineDelay_TextChanged(object sender, EventArgs e)
@@ -9626,40 +9808,100 @@ namespace Assistant
 			}
 		}
 
-		private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
+		private void ScriptGridAutoStartAtLogin(bool stripmenu)
 		{
-			if (scriptautostartcheckbox.Focused && scriptlistView.SelectedItems.Count == 1)
+			if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
+				return;
+
+			if (stripmenu)
 			{
-				if (scriptautostartcheckbox.Checked)
-					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = true;
-				else
-					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = false;
+				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = !scriptautostartcheckbox.Checked;
+				scriptautostartcheckbox.Checked = !scriptautostartcheckbox.Checked;
 				ReloadScriptTable();
 			}
+			else
+			{
+				if (!scriptwaitmodecheckbox.Focused)
+					return;
+
+				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["AutoStart"] = scriptautostartcheckbox.Checked;
+			}
+
+			ReloadScriptTable();
+		}
+
+		private void scriptautostartcheckbox_CheckedChanged(object sender, EventArgs e)
+		{
+			ScriptGridAutoStartAtLogin(false);
+		}
+
+		private void autoStartAtLoginToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScriptGridAutoStartAtLogin(true);
+		}
+
+		private void ScriptGridLoopMode(bool stripmenu)
+		{
+			if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
+				return;
+
+			if (stripmenu)
+			{
+				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Loop"] = !scriptloopmodecheckbox.Checked;
+				scriptloopmodecheckbox.Checked = !scriptloopmodecheckbox.Checked;
+				ReloadScriptTable();
+			}
+			else
+			{
+				if (!scriptloopmodecheckbox.Focused)
+					return;
+
+				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Loop"] = scriptloopmodecheckbox.Checked;
+			}
+
+			ReloadScriptTable();
 		}
 
 		private void scriptloopmodecheckbox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (scriptloopmodecheckbox.Focused && scriptlistView.SelectedItems.Count == 1)
+			ScriptGridLoopMode(false);
+		}
+
+		private void loopModeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScriptGridLoopMode(true);
+		}
+
+		private void ScriptGridWaitBeforeInterrupt(bool stripmenu)
+		{
+			if (scriptlistView.SelectedItems.Count != 1) // Selezione multipla o mancata
+				return;
+
+			if (stripmenu)
 			{
-				if (scriptloopmodecheckbox.Checked)
-					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Loop"] = true;
-				else
-					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Loop"] = false;
+				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Wait"] = !scriptwaitmodecheckbox.Checked;
+				scriptwaitmodecheckbox.Checked = !scriptwaitmodecheckbox.Checked;
 				ReloadScriptTable();
 			}
+			else
+			{
+				if (!scriptwaitmodecheckbox.Focused)
+					return;
+
+				scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Wait"] = scriptwaitmodecheckbox.Checked;
+			}
+
+			ReloadScriptTable();
 		}
 
 		private void scriptwaitmodecheckbox_CheckedChanged(object sender, EventArgs e)
 		{
-			if (scriptwaitmodecheckbox.Focused && scriptlistView.SelectedItems.Count == 1)
-			{
-				if (scriptwaitmodecheckbox.Checked)
-					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Wait"] = true;
-				else
-					scriptTable.Rows[scriptlistView.SelectedItems[0].Index]["Wait"] = false;
-				ReloadScriptTable();
-			}
+			ScriptGridWaitBeforeInterrupt(false);
+		}
+
+		private void waitBeforeInterruptToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ScriptGridWaitBeforeInterrupt(true);
 		}
 
 		// ------------------- SCRIPTING END ----------------------------
@@ -13442,7 +13684,7 @@ namespace Assistant
 					agentrowindex = e.RowIndex;
 					agenttype = grid.Name;
 					grid.CurrentCell = grid.Rows[e.RowIndex].Cells[1];
-					datagridMenuStrip.Show(grid, e.Location);
+					//datagridMenuStrip.Show(grid, e.Location);
 					datagridMenuStrip.Show(Cursor.Position);
 				}
 			}
@@ -13774,8 +14016,6 @@ namespace Assistant
 			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
-
-
 		// ----------------- STOP DPS METER -------------------
 	}
 }
