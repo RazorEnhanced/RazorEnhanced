@@ -67,6 +67,55 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static void TargetExecuteRelative(int serial, int offset)
+		{
+			Mobile m = Mobiles.FindBySerial(serial);
+			if (m != null)
+				TargetExecuteRelative(m, offset);
+		}
+
+		public static void TargetExecuteRelative(Mobile m, int offset)
+		{
+			Assistant.Point2D relpos = new Assistant.Point2D();
+			switch (m.Direction)
+				{
+				case "North":
+					relpos.X = m.Position.X;
+					relpos.Y = m.Position.Y - offset;
+					break;
+				case "South":
+					relpos.X = m.Position.X;
+					relpos.Y = m.Position.Y + offset;
+					break;
+				case "West":
+					relpos.X = m.Position.X - offset;
+					relpos.Y = m.Position.Y;
+					break;
+				case "East":
+					relpos.X = m.Position.X + offset;
+					relpos.Y = m.Position.Y;
+					break;
+				case "Up":
+					relpos.X = m.Position.X - offset;
+					relpos.Y = m.Position.Y - offset;
+					break;
+				case "Down":
+					relpos.X = m.Position.X + offset;
+					relpos.Y = m.Position.Y + offset;
+					break;
+				case "Left":
+					relpos.X = m.Position.X - offset;
+					relpos.Y = m.Position.Y + offset;
+					break;
+				case "Right":
+					relpos.X = m.Position.X + offset;
+					relpos.Y = m.Position.Y - offset;
+					break;
+			}
+			Assistant.Point3D location = new Assistant.Point3D(relpos.X, relpos.Y, Statics.GetLandZ(relpos.X, relpos.Y, Player.Map));
+			Assistant.Targeting.TargetByScript(location);
+		}
+
 		public static void TargetExecute(int x, int y, int z)
 		{
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
