@@ -200,7 +200,8 @@ namespace RazorEnhanced
 				{
 					lock (m_Lock)
 					{
-						if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
+						if ( (m_Thread.ThreadState & ThreadState.Running) != 0 || (m_Thread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_Thread.ThreadState & ThreadState.AbortRequested) != 0 )
+						//if (m_Thread.ThreadState == ThreadState.Running || m_Thread.ThreadState == ThreadState.WaitSleepJoin || m_Thread.ThreadState == ThreadState.AbortRequested)
 							return true;
 						else
 							return false;
@@ -214,7 +215,8 @@ namespace RazorEnhanced
 				{
 					lock (m_Lock)
 					{
-						if (m_Thread.ThreadState == ThreadState.Stopped || m_Thread.ThreadState == ThreadState.Aborted)
+						if ( (m_Thread.ThreadState & ThreadState.Stopped) != 0 || (m_Thread.ThreadState & ThreadState.Aborted) != 0 )
+							//if (m_Thread.ThreadState == ThreadState.Stopped || m_Thread.ThreadState == ThreadState.Aborted)
 							return true;
 						else
 							return false;
@@ -293,7 +295,7 @@ namespace RazorEnhanced
 				if (thread == null)
 					return false;
 
-				if (thread != null && (thread.ThreadState == ThreadState.Running || /*thread.ThreadState == ThreadState.Unstarted ||*/ thread.ThreadState == ThreadState.WaitSleepJoin))
+				if (thread != null && ( (thread.ThreadState & ThreadState.Running) != 0 || (thread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (thread.ThreadState & ThreadState.AbortRequested) != 0 ))
 					return true;
 				else
 					return false;
