@@ -37,16 +37,16 @@ namespace RazorEnhanced
 				if (IsRunning || !IsUnstarted)
 					return;
 
-			//	try
-				//{
-				m_Thread.Start();
-				while (!m_Thread.IsAlive)
+				try
 				{
-				}
+					m_Thread.Start();
+					while (!m_Thread.IsAlive)
+					{
+					}
 
-				m_Run = true;
-			//	}
-			//	catch { }
+					m_Run = true;
+				}
+				catch { }
 			}
 
 			private void AsyncStart()
@@ -54,15 +54,11 @@ namespace RazorEnhanced
 				if (m_Source == null)
 					return;
 
-				m_Source.Execute(m_Scope);
-
-				/*try
+				try
 				{
 					m_Source.Execute(m_Scope);
 				}
-				catch
-				{
-				}*/
+				catch {	}
 			}
 
 			internal void Stop()
