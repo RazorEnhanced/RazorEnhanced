@@ -318,7 +318,7 @@ namespace RazorEnhanced
 				if (!RazorEnhanced.Settings.Friend.PlayerExists(selection, player))
 				{
 					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-						RazorEnhanced.Misc.SendMessage("Friend added: " + name);
+						RazorEnhanced.Misc.SendMessage("Friend added: " + name, false);
 					RazorEnhanced.Friend.AddLog("Friend added: " + name);
 					RazorEnhanced.Settings.Friend.PlayerInsert(selection, player);
 					RazorEnhanced.Friend.RefreshPlayers();
@@ -326,7 +326,7 @@ namespace RazorEnhanced
 				else
 				{
 					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-						RazorEnhanced.Misc.SendMessage(name + " is already in friend list");
+						RazorEnhanced.Misc.SendMessage(name + " is already in friend list", false);
 					RazorEnhanced.Friend.AddLog(name + " is already in friend list");
 				}
 			}

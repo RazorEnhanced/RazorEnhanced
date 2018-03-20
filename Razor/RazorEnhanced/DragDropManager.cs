@@ -88,7 +88,7 @@ namespace RazorEnhanced
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{
 								RazorEnhanced.AutoLoot.AddLog("- Max weight reached, Wait untill free some space");
-								RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space");
+								RazorEnhanced.Misc.SendMessage("AUTOLOOT: Max weight reached, Wait untill free some space", true);
 								Thread.Sleep(2000);
 							}
 							else
@@ -134,7 +134,7 @@ namespace RazorEnhanced
 							if ((World.Player.MaxWeight - World.Player.Weight) < 5)
 							{
 								RazorEnhanced.Scavenger.AddLog("- Max weight reached, Wait untill free some space");
-								RazorEnhanced.Misc.SendMessage("SCAVENGER: Max weight reached, Wait untill free some space");
+								RazorEnhanced.Misc.SendMessage("SCAVENGER: Max weight reached, Wait untill free some space", true);
 								Thread.Sleep(2000);
 							}
 							else

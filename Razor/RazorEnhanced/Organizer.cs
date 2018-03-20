@@ -288,7 +288,7 @@ namespace RazorEnhanced
 
 			RazorEnhanced.Organizer.AddLog("Finish!");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!", 945);
+				RazorEnhanced.Misc.SendMessage("Enhanced Organizer: Finish!", 945, true);
 			Assistant.Engine.MainWindow.OrganizerFinishWork();
 			return 0;
 		}
@@ -300,7 +300,7 @@ namespace RazorEnhanced
 			if (sbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Organizer: Invalid Source Bag", 945);
+					Misc.SendMessage("Organizer: Invalid Source Bag", 945, true);
 				AddLog("Invalid Source Bag");
 				Assistant.Engine.MainWindow.OrganizerFinishWork();
 				return;
@@ -309,7 +309,7 @@ namespace RazorEnhanced
 			if (dbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Organizer: Invalid Destination Bag", 945);
+					Misc.SendMessage("Organizer: Invalid Destination Bag", 945, true);
 				AddLog("Invalid Destination Bag");
 				Assistant.Engine.MainWindow.OrganizerFinishWork();
 				return;

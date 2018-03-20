@@ -421,7 +421,7 @@ namespace RazorEnhanced
 					m_panellist[x].BackColor = Color.Orange;
 					if (amount < oldamount)
 					{
-						RazorEnhanced.Misc.SendMessage("COUNTER WARNING: Item: " + items[x].Name + " under limit left: " + amount.ToString());
+						RazorEnhanced.Misc.SendMessage("COUNTER WARNING: Item: " + items[x].Name + " under limit left: " + amount.ToString(), false);
 					}
 				}
 				else

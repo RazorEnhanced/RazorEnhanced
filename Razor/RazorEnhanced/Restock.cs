@@ -277,7 +277,7 @@ namespace RazorEnhanced
 
 			RazorEnhanced.Restock.AddLog("Finish!");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!", 945);
+				RazorEnhanced.Misc.SendMessage("Enhanced Restock: Finish!", 945, true);
 			Assistant.Engine.MainWindow.RestockFinishWork();
 			return 0;
 		}
@@ -289,7 +289,7 @@ namespace RazorEnhanced
 			if (sbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Restock: Invalid Source Bag", 945);
+					Misc.SendMessage("Restock: Invalid Source Bag", 945, true);
 				AddLog("Invalid Source Bag");
 				Assistant.Engine.MainWindow.RestockFinishWork();
 				return;
@@ -298,7 +298,7 @@ namespace RazorEnhanced
 			if (dbag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Restock: Invalid Destination Bag", 945);
+					Misc.SendMessage("Restock: Invalid Destination Bag", 945, true);
 				AddLog("Invalid Destination Bag");
 				Assistant.Engine.MainWindow.RestockFinishWork();
 				return;

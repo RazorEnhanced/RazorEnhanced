@@ -2632,13 +2632,13 @@ namespace Assistant
 								{
 									RazorEnhanced.Friend.AddLog("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
 									if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-										RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")");
+										RazorEnhanced.Misc.SendMessage("AutoAccept party from: " + leader.Name + " (0x" + leader.Serial.Value.ToString("X8") + ")", false);
 								}
 								else
 								{
                                     RazorEnhanced.Friend.AddLog("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")");
 									if (RazorEnhanced.Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-										RazorEnhanced.Misc.SendMessage("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")");
+										RazorEnhanced.Misc.SendMessage("AutoAccept party from: [NO NAME] (0x" + PartyLeader.Value.ToString("X8") + ")", false);
 								}
 								ClientCommunication.SendToServer(new AcceptParty(PacketHandlers.PartyLeader));
 								PacketHandlers.PartyLeader = Serial.Zero;
@@ -3024,7 +3024,7 @@ namespace Assistant
 					if (bersaglio != null)
 					{
 						RazorEnhanced.Friend.AddLog("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
-						RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")");
+						RazorEnhanced.Misc.SendMessage("Can't attack a friend player: " + bersaglio.Name + " (0x" + bersaglio.Serial.Value.ToString("X8") + ")", false);
 					}
 					args.Block = true;
 					return;

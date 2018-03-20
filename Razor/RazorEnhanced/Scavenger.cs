@@ -361,7 +361,7 @@ namespace RazorEnhanced
 				if (bag.RootContainer != World.Player)
 				{
 					if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-						Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack", 945);
+						Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack", 945, true);
 					AddLog("Invalid Bag, Switch to backpack");
 					ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 				}
@@ -369,7 +369,7 @@ namespace RazorEnhanced
 			else
 			{
 				if (Settings.General.ReadBool("ShowMessageFieldCheckBox"))
-					Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack", 945);
+					Misc.SendMessage("Scavenger: Invalid Bag, Switch to backpack", 945, true);
 				AddLog("Invalid Bag, Switch to backpack");
 				ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}

@@ -70,14 +70,14 @@ namespace RazorEnhanced
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessageNoWait("HotKey: DISABLED", 37);
+							RazorEnhanced.Misc.SendMessage("HotKey: DISABLED", 37, false);
 					}
 					else
 					{
 						Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
 						RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
 						if (World.Player != null)
-							RazorEnhanced.Misc.SendMessageNoWait("HotKey: ENABLED", 168);
+							RazorEnhanced.Misc.SendMessage("HotKey: ENABLED", 168, false);
 					}
 				}
 			}
@@ -286,7 +286,7 @@ namespace RazorEnhanced
 					case "Script":
 						if (RazorEnhanced.Settings.HotKey.FindString(k) == "Stop All")
 						{
-							RazorEnhanced.Misc.SendMessageNoWait("Stopping all scripts...",33);
+							RazorEnhanced.Misc.SendMessage("Stopping all scripts...",33, false);
 							foreach (RazorEnhanced.Scripts.EnhancedScript scriptdata in RazorEnhanced.Scripts.EnhancedScripts.Values.ToList())
 							{
 								scriptdata.Run = false;
@@ -401,12 +401,12 @@ namespace RazorEnhanced
 					break;
 
 				case "Grab Item":
-					RazorEnhanced.Misc.SendMessage("Target item to Grab.");
+					RazorEnhanced.Misc.SendMessage("Target item to Grab.", false);
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(grabitemTarget_Callback));
 					break;
 
 				case "Drop Item":
-					RazorEnhanced.Misc.SendMessage("Target item to Drop at feet.");
+					RazorEnhanced.Misc.SendMessage("Target item to Drop at feet.", false);
 					Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(dropitemTarget_Callback));
 					break;
 
@@ -425,7 +425,7 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtograb.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 			}
 			else
-				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
+				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.", false);
 		}
 
 		private static void dropitemTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -438,7 +438,7 @@ namespace RazorEnhanced
 				Assistant.ClientCommunication.SendToServer(new DropRequest(itemtodrop.Serial, World.Player.Position, Assistant.Serial.MinusOne));
 			}
 			else
-				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.");
+				RazorEnhanced.Misc.SendMessage("Invalid or inaccessible item.", false);
 		}
 
 		private static void ProcessUse(string function)

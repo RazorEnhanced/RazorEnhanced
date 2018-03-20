@@ -261,7 +261,7 @@ namespace RazorEnhanced
 				RazorEnhanced.Dress.RefreshItems();
 			}
 			else
-				Misc.SendMessage("This item not have valid layer");
+				Misc.SendMessage("This item not have valid layer", false);
 		}
 
 		// Undress
@@ -300,7 +300,7 @@ namespace RazorEnhanced
 
 			}
 			RazorEnhanced.Dress.AddLog("Finish!");
-			RazorEnhanced.Misc.SendMessage("Enhanced UnDress: Finish!");
+			RazorEnhanced.Misc.SendMessage("Enhanced UnDress: Finish!", false);
 			Assistant.Engine.MainWindow.UndressFinishWork();
 			return 0;
 		}
@@ -336,7 +336,7 @@ namespace RazorEnhanced
 			Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
 			if (bag == null)
 			{
-				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack");
+				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", true);
 				AddLog("Invalid Bag, Switch to backpack");
 				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -483,7 +483,7 @@ namespace RazorEnhanced
 				}
 			}
 			RazorEnhanced.Dress.AddLog("Finish!");
-			RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945);
+			RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
 			Assistant.Engine.MainWindow.UndressFinishWork();
 			return 0;
 		}
@@ -496,7 +496,7 @@ namespace RazorEnhanced
 			Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
 			if (bag == null)
 			{
-				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945);
+				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
 				AddLog("Invalid Bag, Switch to backpack");
 				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}

@@ -198,7 +198,7 @@ namespace RazorEnhanced
 		public int PromptTarget(string message = "Select Item or Mobile")
 		{
 			m_ptarget = -1;
-			Misc.SendMessage(message, 945);
+			Misc.SendMessage(message, 945, true);
 			Targeting.OneTimeTarget(false, new Targeting.TargetResponseCallback(PromptTargetExex_Callback));
 
 			while (!Targeting.HasTarget)
@@ -210,7 +210,7 @@ namespace RazorEnhanced
 			Thread.Sleep(100);
 
 			if (m_ptarget == -1)
-				Misc.SendMessage("PromptTarget Cancelled", 945);
+				Misc.SendMessage("PromptTarget Cancelled", 945, true);
 
 			return m_ptarget;
 		}
@@ -271,6 +271,9 @@ namespace RazorEnhanced
 
 		private static int GetPlayerColor(Mobile mob)
 		{
+			if (mob == null)
+				return 0;
+
 			return m_NotoHues[mob.Notoriety];
 		}
 		public static void SetLastTargetFromList(string targetid)
@@ -391,9 +394,9 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
 			{
 				if (Friend.IsFriend(serial))
-					Mobiles.Message(serial, 63, "Target: [" + GetPlayerName(serial) + "]", wait);
+					Mobiles.Message(World.Player.Serial, 63, "Target: [" + GetPlayerName(serial) + "]", wait);
 				else
-					Mobiles.Message(serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Target: [" + GetPlayerName(serial) + "]", wait);
+					Mobiles.Message(World.Player.Serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Target: [" + GetPlayerName(serial) + "]", wait);
 			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
@@ -405,9 +408,9 @@ namespace RazorEnhanced
 			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
 			{
 				if (Friend.IsFriend(serial))
-					Mobiles.Message(serial, 63, "Attack: [" + GetPlayerName(serial) + "]", wait);
+					Mobiles.Message(World.Player.Serial, 63, "Attack: [" + GetPlayerName(serial) + "]", wait);
 				else
-					Mobiles.Message(serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Attack: [" + GetPlayerName(serial) + "]", wait);
+					Mobiles.Message(World.Player.Serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Attack: [" + GetPlayerName(serial) + "]", wait);
 			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)

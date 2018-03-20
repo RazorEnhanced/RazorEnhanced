@@ -162,14 +162,14 @@ namespace Assistant
 				string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
 				byte[] buffer = Encoding.ASCII.GetBytes(data);
 				int timeout = 1000;
-				RazorEnhanced.Misc.SendMessage("Address: " + ClientCommunication.LastConnection.ToString(), 33);
+				RazorEnhanced.Misc.SendMessage("Address: " + ClientCommunication.LastConnection.ToString(), 33, false);
 				for (int i = 0; i < 5; i++)
 				{
 					PingReply reply = pingSender.Send(ClientCommunication.LastConnection, timeout, buffer, options);
 					if (reply.Status == IPStatus.Success)
 					{
 						total += (int)reply.RoundtripTime;
-                        RazorEnhanced.Misc.SendMessage("- RoundTrip time: " + reply.RoundtripTime +"ms", 33);
+                        RazorEnhanced.Misc.SendMessage("- RoundTrip time: " + reply.RoundtripTime +"ms", 33, false);
 						if (reply.RoundtripTime > max)
 							max = (int)reply.RoundtripTime;
 						if (reply.RoundtripTime < min)
@@ -178,13 +178,13 @@ namespace Assistant
 					else
 					if (reply.Status == IPStatus.Success)
 					{
-						RazorEnhanced.Misc.SendMessage("Ping Failed", 33);
+						RazorEnhanced.Misc.SendMessage("Ping Failed", 33, false);
 					}
 				}
 				if (max == int.MinValue)
-					RazorEnhanced.Misc.SendMessage("Server not respond to ping request", 33);
+					RazorEnhanced.Misc.SendMessage("Server not respond to ping request", 33, false);
 				else
-					RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / 4).ToString() + "ms - Min: " + min + "ms", 33);
+					RazorEnhanced.Misc.SendMessage("Max: " + max + "ms - Avg: " + (total / 4).ToString() + "ms - Min: " + min + "ms", 33, false);
 
 
 			}).Start();
@@ -201,7 +201,7 @@ namespace Assistant
 				script.Run = true;
 			}
 			else
-				RazorEnhanced.Misc.SendMessage("Script not exist",33);
+				RazorEnhanced.Misc.SendMessage("Script not exist",33, false);
 		}
 	}
 
@@ -219,10 +219,10 @@ namespace Assistant
 
 		internal static void ListCommands(string[] param)
 		{
-			RazorEnhanced.Misc.SendMessage("Command List:", 33);
+			RazorEnhanced.Misc.SendMessage("Command List:", 33, false);
 			foreach (string cmd in m_List.Keys)
 			{
-				RazorEnhanced.Misc.SendMessage("-" + cmd, 33);
+				RazorEnhanced.Misc.SendMessage("-" + cmd, 33, false);
 			}
 		}
 

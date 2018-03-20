@@ -9952,14 +9952,14 @@ namespace Assistant
 			if (autoLootBag != null && autoLootBag.Serial.IsItem && autoLootBag.IsContainer && autoLootBag.RootContainer == Assistant.World.Player)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString());
+					RazorEnhanced.Misc.SendMessage("Autoloot Container set to: " + autoLootBag.ToString(), false);
 				RazorEnhanced.AutoLoot.AddLog("Autoloot Container set to: " + autoLootBag.ToString());
 				AutoLoot.AutoLootBag = (int)autoLootBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Autoloot Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Autoloot Container, set backpack", false);
 				RazorEnhanced.AutoLoot.AddLog("Invalid Autoloot Container, set backpack");
 				AutoLoot.AutoLootBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -9983,14 +9983,14 @@ namespace Assistant
 			if (autoLootItem != null && autoLootItem.Serial.IsItem)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString());
+					RazorEnhanced.Misc.SendMessage("Autoloot item added: " + autoLootItem.ToString(), false);
 				RazorEnhanced.AutoLoot.AddLog("Autoloot item added: " + autoLootItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.AutoLoot.AddItemToList(autoLootItem.Name, autoLootItem.ItemID, autoLootItem.Hue); });
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
 				RazorEnhanced.AutoLoot.AddLog("Invalid target");
 			}
 		}
@@ -10050,7 +10050,7 @@ namespace Assistant
 				RazorEnhanced.DragDropManager.HoldingItem = false;
 				AutoLoot.AddLog("Autoloot Engine Start...");
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("AUTOLOOT: Engine Start...");
+					Misc.SendMessage("AUTOLOOT: Engine Start...", false);
 			}
 			else
 			{
@@ -10066,7 +10066,7 @@ namespace Assistant
 				AutoLoot.AutoMode = false;
 				RazorEnhanced.DragDropManager.HoldingItem = false;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("AUTOLOOT: Engine Stop...");
+					Misc.SendMessage("AUTOLOOT: Engine Stop...", false);
 				AutoLoot.AddLog("Autoloot Engine Stop...");
 			}
 		}
@@ -10222,14 +10222,14 @@ namespace Assistant
 			if (scavengerItem != null && scavengerItem.Serial.IsItem)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString());
+					RazorEnhanced.Misc.SendMessage("Scavenger item added: " + scavengerItem.ToString(), false);
 				RazorEnhanced.Scavenger.AddLog("Scavenger item added: " + scavengerItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Scavenger.AddItemToList(scavengerItem.Name, scavengerItem.ItemID, scavengerItem.Hue); });
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
 				RazorEnhanced.Scavenger.AddLog("Invalid target");
 			}
 		}
@@ -10252,14 +10252,14 @@ namespace Assistant
 			if (scavengerBag != null && scavengerBag.Serial.IsItem && scavengerBag.IsContainer && scavengerBag.RootContainer == Assistant.World.Player)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Scavenger Container set to: " + scavengerBag.ToString());
+					RazorEnhanced.Misc.SendMessage("Scavenger Container set to: " + scavengerBag.ToString(), false);
 				RazorEnhanced.Scavenger.AddLog("Scavenger Container set to: " + scavengerBag.ToString());
 				Scavenger.ScavengerBag = (int)scavengerBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Scavenger Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Scavenger Container, set backpack", false);
 				RazorEnhanced.Scavenger.AddLog("Invalid Scavenger Container, set backpack");
 				Scavenger.ScavengerBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -10349,7 +10349,7 @@ namespace Assistant
 				Scavenger.AddLog("Scavenger Engine Start...");
 				RazorEnhanced.DragDropManager.HoldingItem = false;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("SCAVENGER: Engine Start...");
+					Misc.SendMessage("SCAVENGER: Engine Start...", false);
 			}
 			else
 			{
@@ -10365,7 +10365,7 @@ namespace Assistant
 				Scavenger.AddLog("Scavenger Engine Stop...");
 				RazorEnhanced.DragDropManager.HoldingItem = false;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("SCAVENGER: Engine Stop...");
+					Misc.SendMessage("SCAVENGER: Engine Stop...", false);
 			}
 		}
 
@@ -10474,7 +10474,7 @@ namespace Assistant
 			if (organizerBag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack", false);
 				RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -10483,14 +10483,14 @@ namespace Assistant
 			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Source Container set to: " + organizerBag.ToString());
+					RazorEnhanced.Misc.SendMessage("Source Container set to: " + organizerBag.ToString(), false);
 				RazorEnhanced.Organizer.AddLog("Source Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.OrganizerSource = (int)organizerBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Source Container, set backpack", false);
 				RazorEnhanced.Organizer.AddLog("Invalid Source Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerSource = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -10516,7 +10516,7 @@ namespace Assistant
 			if (organizerBag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack", false);
 				RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -10525,14 +10525,14 @@ namespace Assistant
 			if (organizerBag != null && organizerBag.Serial.IsItem && organizerBag.IsContainer)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Destination Container set to: " + organizerBag.ToString());
+					RazorEnhanced.Misc.SendMessage("Destination Container set to: " + organizerBag.ToString(), false);
 				RazorEnhanced.Organizer.AddLog("Destination Container set to: " + organizerBag.ToString());
 				RazorEnhanced.Organizer.OrganizerDestination = (int)organizerBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Destination Container, set backpack", false);
 				RazorEnhanced.Organizer.AddLog("Invalid Destination Container, set backpack");
 				RazorEnhanced.Organizer.OrganizerDestination = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -10570,14 +10570,14 @@ namespace Assistant
 			if (organizerItem != null && organizerItem.Serial.IsItem)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString());
+					RazorEnhanced.Misc.SendMessage("Organizer item added: " + organizerItem.ToString(), false);
 				RazorEnhanced.Organizer.AddLog("Organizer item added: " + organizerItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Organizer.AddItemToList(organizerItem.Name, organizerItem.ItemID, organizerItem.Hue); });
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
 				RazorEnhanced.Organizer.AddLog("Invalid target");
 			}
 		}
@@ -10614,7 +10614,7 @@ namespace Assistant
 			Organizer.Start();
 			Organizer.AddLog("Organizer Engine Start...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				Misc.SendMessage("ORGANIZER: Engine Start...");
+				Misc.SendMessage("ORGANIZER: Engine Start...", false);
 
 			OrganizerStartWork();
 		}
@@ -10630,7 +10630,7 @@ namespace Assistant
 
 			Organizer.AddLog("Organizer Engine force stop...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				Misc.SendMessage("ORGANIZER: Organizer Engine force stop...");
+				Misc.SendMessage("ORGANIZER: Organizer Engine force stop...", false);
 			OrganizerFinishWork();
 		}
 
@@ -10790,14 +10790,14 @@ namespace Assistant
 			if (sellItem != null && sellItem.Serial.IsItem)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString());
+					RazorEnhanced.Misc.SendMessage("Sell Agent item added: " + sellItem.ToString(), false);
 				RazorEnhanced.SellAgent.AddLog("Sell Agent item added: " + sellItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.SellAgent.AddItemToList(sellItem.Name, sellItem.ItemID, 999, sellItem.Hue); });
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
 				RazorEnhanced.SellAgent.AddLog("Invalid target");
 			}
 		}
@@ -10832,7 +10832,7 @@ namespace Assistant
 				{
 					SellAgent.AddLog("Invalid or not accessible Container!");
 					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-						Misc.SendMessage("Invalid or not accessible Container!");
+						Misc.SendMessage("Invalid or not accessible Container!", false);
 					sellEnableCheckBox.Checked = false;
 				}
 				else
@@ -10844,7 +10844,7 @@ namespace Assistant
 					sellExportListButton.Enabled = false;
 					SellAgent.AddLog("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-						Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+						Misc.SendMessage("Apply item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
 					SellAgent.EnableSellFilter();
 				}
 			}
@@ -10859,7 +10859,7 @@ namespace Assistant
 				{
 					RazorEnhanced.SellAgent.AddLog("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
 					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-						RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!");
+						RazorEnhanced.Misc.SendMessage("Remove item list " + sellListSelect.SelectedItem.ToString() + " filter ok!", false);
 				}
 			}
 		}
@@ -10883,14 +10883,14 @@ namespace Assistant
 			if (sellBag != null && sellBag.Serial.IsItem && sellBag.IsContainer && sellBag.RootContainer == Assistant.World.Player)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Container set to: " + sellBag.ToString());
+					Misc.SendMessage("Container set to: " + sellBag.ToString(), false);
 				SellAgent.AddLog("Container set to: " + sellBag.ToString());
 				SellAgent.SellBag = (int)sellBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Invalid container, set backpack");
+					Misc.SendMessage("Invalid container, set backpack", false);
 				SellAgent.AddLog("Invalid container, set backpack");
 				SellAgent.SellBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -11005,14 +11005,14 @@ namespace Assistant
 			if (buyItem != null && buyItem.Serial.IsItem)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Buy Agent item added: " + buyItem.ToString());
+					Misc.SendMessage("Buy Agent item added: " + buyItem.ToString(), false);
 				BuyAgent.AddLog("Buy Agent item added: " + buyItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.BuyAgent.AddItemToList(buyItem.Name, buyItem.ItemID, 999, buyItem.Hue); });
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Invalid target");
+					Misc.SendMessage("Invalid target", false);
 				BuyAgent.AddLog("Invalid target");
 			}
 		}
@@ -11042,7 +11042,7 @@ namespace Assistant
 				buyExportListButton.Enabled = false;
 				BuyAgent.AddLog("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+					Misc.SendMessage("Apply item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
 				BuyAgent.EnableBuyFilter();
 			}
 			else
@@ -11054,7 +11054,7 @@ namespace Assistant
 				buyExportListButton.Enabled = true;
 				BuyAgent.AddLog("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!");
+					Misc.SendMessage("Remove item list " + buyListSelect.SelectedItem.ToString() + " filter ok!", false);
 			}
 		}
 
@@ -11193,14 +11193,14 @@ namespace Assistant
 			if (dressBag != null && dressBag.Serial.IsItem && dressBag.IsContainer)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString());
+					RazorEnhanced.Misc.SendMessage("Undress Container set to: " + dressBag.ToString(), false);
 				RazorEnhanced.Dress.AddLog("Undress Container set to: " + dressBag.ToString());
 				RazorEnhanced.Dress.DressBag = (int)dressBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack");
+					RazorEnhanced.Misc.SendMessage("Invalid Undress Container, set backpack", false);
 				RazorEnhanced.Dress.AddLog("Invalid Undress Container, set backpack");
 				RazorEnhanced.Dress.DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -11260,7 +11260,7 @@ namespace Assistant
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
 				RazorEnhanced.Dress.AddLog("Invalid target");
 			}
 		}
@@ -11318,7 +11318,7 @@ namespace Assistant
 			RazorEnhanced.Organizer.AddLog("Undress Engine Start...");
 
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...");
+				RazorEnhanced.Misc.SendMessage("UNDRESS: Engine Start...", false);
 		}
 
 		private delegate void UndressFinishWorkCallback();
@@ -11409,7 +11409,7 @@ namespace Assistant
 			RazorEnhanced.Organizer.AddLog("Dress Engine Start...");
 
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...");
+				RazorEnhanced.Misc.SendMessage("DRESS: Engine Start...", false);
 		}
 
 		private void dressStopButton_Click(object sender, EventArgs e)
@@ -11423,7 +11423,7 @@ namespace Assistant
 
 			RazorEnhanced.Dress.AddLog("Dress / Undress Engine force stop...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...");
+				RazorEnhanced.Misc.SendMessage("DRESS/UNDRESS: Engine force stop...", false);
 			UndressFinishWork();
 		}
 
@@ -11538,7 +11538,7 @@ namespace Assistant
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
 				RazorEnhanced.Friend.AddLog("Invalid target");
 			}
 		}
@@ -11717,7 +11717,7 @@ namespace Assistant
 			if (restockBag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Invalid Source Container, set backpack");
+					Misc.SendMessage("Invalid Source Container, set backpack", false);
 				Restock.AddLog("Invalid Source Container, set backpack");
 				Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -11726,14 +11726,14 @@ namespace Assistant
 			if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Source Container set to: " + restockBag.ToString());
+					Misc.SendMessage("Source Container set to: " + restockBag.ToString(), false);
 				Restock.AddLog("Source Container set to: " + restockBag.ToString());
 				Restock.RestockSource = (int)restockBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Invalid Source Container, set backpack");
+					Misc.SendMessage("Invalid Source Container, set backpack", false);
 				Restock.AddLog("Invalid Source Container, set backpack");
 				Restock.RestockSource = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -11759,7 +11759,7 @@ namespace Assistant
 			if (restockBag == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Invalid Destination Container, set backpack");
+					Misc.SendMessage("Invalid Destination Container, set backpack", false);
 				Restock.AddLog("Invalid Destination Container, set backpack");
 				Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
 				return;
@@ -11768,14 +11768,14 @@ namespace Assistant
 			if (restockBag != null && restockBag.Serial.IsItem && restockBag.IsContainer)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Destination Container set to: " + restockBag.ToString());
+					Misc.SendMessage("Destination Container set to: " + restockBag.ToString(), false);
 				Restock.AddLog("Destination Container set to: " + restockBag.ToString());
 				Restock.RestockDestination = (int)restockBag.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Invalid Destination Container, set backpack");
+					Misc.SendMessage("Invalid Destination Container, set backpack", false);
 				Restock.AddLog("Invalid Destination Container, set backpack");
 				Restock.RestockDestination = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -11820,7 +11820,7 @@ namespace Assistant
 			Restock.Start();
 			Restock.AddLog("Restock Engine Start...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				Misc.SendMessage("RESTOCK: Engine Start...");
+				Misc.SendMessage("RESTOCK: Engine Start...", false);
 			RestockStartWork();
 		}
 
@@ -11835,7 +11835,7 @@ namespace Assistant
 
 			RazorEnhanced.Restock.AddLog("Restock Engine force stop...");
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-				RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...");
+				RazorEnhanced.Misc.SendMessage("RESTOCK: Organizer Engine force stop...", false);
 			RestockFinishWork();
 		}
 
@@ -11911,14 +11911,14 @@ namespace Assistant
 			if (restockItem != null && restockItem.Serial.IsItem)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString());
+					RazorEnhanced.Misc.SendMessage("Restock item added: " + restockItem.ToString(), false);
 				RazorEnhanced.Restock.AddLog("Restock item added: " + restockItem.ToString());
 				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Restock.AddItemToList(restockItem.Name, restockItem.ItemID, restockItem.Hue); });
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid target");
+					RazorEnhanced.Misc.SendMessage("Invalid target", false);
 				RazorEnhanced.Restock.AddLog("Invalid target");
 			}
 		}
@@ -11964,14 +11964,14 @@ namespace Assistant
 					RazorEnhanced.BandageHeal.AutoMode = true;
 					RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Start...");
 					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...");
+						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Start...", false);
 				}
 				else
 				{
 					// Stop BANDAGEHEAL
 					RazorEnhanced.BandageHeal.AutoMode = false;
 					if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...");
+						RazorEnhanced.Misc.SendMessage("BANDAGE HEAL: Engine Stop...", false);
 					RazorEnhanced.BandageHeal.AddLog("BANDAGE HEAL: Engine Stop...");
 				}
 			}
@@ -12017,7 +12017,7 @@ namespace Assistant
 			if (mobile == null)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Target!");
+					RazorEnhanced.Misc.SendMessage("Invalid Target!", false);
 				RazorEnhanced.BandageHeal.AddLog("Invalid Target!");
 				return;
 			}
@@ -12025,7 +12025,7 @@ namespace Assistant
 			if (mobile.Serial.IsMobile)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Bandage Heal target set to: " + mobile.Name);
+					RazorEnhanced.Misc.SendMessage("Bandage Heal target set to: " + mobile.Name, false);
 				RazorEnhanced.BandageHeal.AddLog("Bandage Heal target set to: " + mobile.Name);
 				BandageHeal.TargetSerial = mobile.Serial;
 				RazorEnhanced.Settings.General.WriteInt("BandageHealtargetLabel", mobile.Serial);
@@ -12033,7 +12033,7 @@ namespace Assistant
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid Target!");
+					RazorEnhanced.Misc.SendMessage("Invalid Target!", false);
 				RazorEnhanced.Scavenger.AddLog("Invalid Target!");
 			}
 		}
@@ -12215,13 +12215,13 @@ namespace Assistant
 			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString());
+					RazorEnhanced.Misc.SendMessage("AutoCarve Blade Set to: " + blade.ToString(), false);
 				RazorEnhanced.Filters.AutoCarverBlade = (int)blade.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("Invalid AutoCarve Blade");
+					RazorEnhanced.Misc.SendMessage("Invalid AutoCarve Blade", false);
 				RazorEnhanced.Filters.AutoCarverBlade = 0;
 			}
 
@@ -12243,13 +12243,13 @@ namespace Assistant
 			if (blade != null && blade.Serial.IsItem && blade.RootContainer == Assistant.World.Player)
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString());
+					Misc.SendMessage("BoneCutter Blade Set to: " + blade.ToString(), false);
 				RazorEnhanced.Filters.BoneCutterBlade = (int)blade.Serial.Value;
 			}
 			else
 			{
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("Invalid BoneCutter Blade");
+					Misc.SendMessage("Invalid BoneCutter Blade", false);
 				RazorEnhanced.Filters.BoneCutterBlade = 0;
 			}
 
@@ -12262,13 +12262,13 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.AutoCarver = true;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("AutoCarver Engine Start...");
+					Misc.SendMessage("AutoCarver Engine Start...", false);
 			}
 			else
 			{
 				RazorEnhanced.Filters.AutoCarver = false;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("AutoCarver Engine Stop...");
+					Misc.SendMessage("AutoCarver Engine Stop...", false);
 			}
 
 			if (autocarverCheckBox.Focused)
@@ -12281,13 +12281,13 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.BoneCutter = true;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("BoneCutter Engine Start...");
+					Misc.SendMessage("BoneCutter Engine Start...", false);
 			}
 			else
 			{
 				RazorEnhanced.Filters.BoneCutter = false;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					Misc.SendMessage("BoneCutter Engine Start...");
+					Misc.SendMessage("BoneCutter Engine Start...", false);
 			}
 
 			if (bonecutterCheckBox.Focused)
@@ -12429,9 +12429,9 @@ namespace Assistant
 			if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
 			{
 				if (mobfilterCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!");
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: ENABLED!", false);
 				else
-					RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!");
+					RazorEnhanced.Misc.SendMessage("Graphics changer filter: DISABLED!", false);
 			}
 
 			if (mobfilterCheckBox.Focused)
@@ -12461,13 +12461,13 @@ namespace Assistant
 			{
 				RazorEnhanced.Filters.AutoModeRemount = true;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Start...");
+					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Start...", false);
 			}
 			else
 			{
 				RazorEnhanced.Filters.AutoModeRemount = false;
 				if (Settings.General.ReadBool("ShowAgentMessageCheckBox"))
-					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Stop...");
+					RazorEnhanced.Misc.SendMessage("AutoRemount Engine Stop...", false);
 			}
 
 			if (remountcheckbox.Focused)
@@ -12855,7 +12855,7 @@ namespace Assistant
 			Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Enable";
 			RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", true);
 			if (World.Player != null)
-				RazorEnhanced.Misc.SendMessageNoWait("HotKey: ENABLED", 168);
+				RazorEnhanced.Misc.SendMessage("HotKey: ENABLED", 168, false);
 		}
 
 		private void hotkeyDisableButton_Click(object sender, EventArgs e)
@@ -12863,7 +12863,7 @@ namespace Assistant
 			RazorEnhanced.Settings.General.WriteBool("HotKeyEnable", false);
 			Assistant.Engine.MainWindow.HotKeyStatusLabel.Text = "Status: Disable";
 			if (World.Player != null)
-				RazorEnhanced.Misc.SendMessageNoWait("HotKey: DISABLED", 37);
+				RazorEnhanced.Misc.SendMessage("HotKey: DISABLED", 37, false);
 		}
 
 		// ----------------- HOT KEY END -------------------
@@ -12935,7 +12935,7 @@ namespace Assistant
 
 			RazorEnhanced.Profiles.Link(World.Player.Serial, profilesComboBox.Text, World.Player.Name);
 			profilelinklabel.Text = "Linked to: " + World.Player.Name;
-			Misc.SendMessage("Profile: " + profilesComboBox.Text + " linked to player: " + World.Player.Name);
+			Misc.SendMessage("Profile: " + profilesComboBox.Text + " linked to player: " + World.Player.Name, false);
 		}
 
 		private void profilesUnlinkButton_Click(object sender, EventArgs e)
@@ -13865,10 +13865,10 @@ namespace Assistant
 
 			if (VideoCapture.Recording) // already on record
 			{
-				RazorEnhanced.Misc.SendMessage("Already on Record");
+				RazorEnhanced.Misc.SendMessage("Already on Record", false);
 				return;
 			}
-			RazorEnhanced.Misc.SendMessage("Start Video Record");
+			RazorEnhanced.Misc.SendMessage("Start Video Record", false);
 			Engine.MainWindow.videoRecStatuslabel.Text = "Recording";
 			Engine.MainWindow.videoRecStatuslabel.ForeColor = Color.Red;
 
@@ -13885,7 +13885,7 @@ namespace Assistant
 			if (!Assistant.Engine.CDepPresent) // DIsable mancanza librerie c++
 				return;
 
-			RazorEnhanced.Misc.SendMessage("Stop Video Record");
+			RazorEnhanced.Misc.SendMessage("Stop Video Record", false);
 			Engine.MainWindow.videoRecStatuslabel.Text = "Idle";
 			Engine.MainWindow.videoRecStatuslabel.ForeColor = Color.Green;
 			VideoCapture.Stop();
@@ -13937,7 +13937,7 @@ namespace Assistant
 			DPSMeter.Enabled = DPSMeterStopButton.Enabled = DPSMeterPauseButton.Enabled = true;
 			DPSMeterStartButton.Enabled = DpsMeterGridView.Enabled = false;
 			DPSMeterStatusLabel.Text = "Collecting Data...";
-			Misc.SendMessage("DPS METER: Collecting Data...");
+			Misc.SendMessage("DPS METER: Collecting Data...", false);
 		}
 
 		private void DPSMeterStopButton_Click(object sender, EventArgs e)
@@ -13946,7 +13946,7 @@ namespace Assistant
 			DPSMeterStopButton.Enabled = DPSMeter.Enabled = DPSMeterPauseButton.Enabled = false;
 			DPSMeterStatusLabel.Text = "Idle";
 			DPSMeter.ShowResult(DpsMeterGridView); 
-			Misc.SendMessage("DPS METER: Stop.");
+			Misc.SendMessage("DPS METER: Stop.", false);
 		}
 
 		private void DPSMeterClearButton_Click(object sender, EventArgs e)
@@ -13964,7 +13964,7 @@ namespace Assistant
 				DPSMeterPauseButton.Text = "Resume";
 				DPSMeter.ShowResult(DpsMeterGridView);
 				DpsMeterGridView.Enabled = true;
-				Misc.SendMessage("DPS METER: Pause.");
+				Misc.SendMessage("DPS METER: Pause.", false);
 			}
 			else
 			{
@@ -13973,7 +13973,7 @@ namespace Assistant
 				DPSMeterStatusLabel.Text = "Collecting Data...";
 				DPSMeter.Enabled = true;
 				DpsMeterGridView.Enabled = false;
-				Misc.SendMessage("DPS METER: Collecting Data...");
+				Misc.SendMessage("DPS METER: Collecting Data...", false);
 			}
 		}
 

@@ -242,15 +242,15 @@ namespace RazorEnhanced
             //Crea la griglia 3D
             WorldGrid walkgrid = new WorldGrid(gridSize, gridSize, 256);
 
-            Misc.SendMessage("Grid dim: " + gridSize + "x" + gridSize);
+            Misc.SendMessage("Grid dim: " + gridSize + "x" + gridSize, true);
 
             int minx = startx > endx ? endx : startx;
             int maxx = startx > endx ? startx : endx;
             int miny = starty > endy ? starty : endy;
             int maxy = starty > endy ? endy : starty;
 
-            Misc.SendMessage("Min x: " + minx + " Max x: " + maxx);
-            Misc.SendMessage("Min y: " + miny + " Max y: " + maxy);
+            Misc.SendMessage("Min x: " + minx + " Max x: " + maxx, true);
+            Misc.SendMessage("Min y: " + miny + " Max y: " + maxy, true);
 
             int mediumXPoint = (startx + endx) / 2;
             int mediumYPoint = (starty + endy) / 2;

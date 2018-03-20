@@ -32,102 +32,70 @@ namespace RazorEnhanced
 		// Sysmessage
 		public static void SendMessage(int num)
 		{
-			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, num.ToString());
+			SendMessage(num.ToString(), true);
 		}
-
+		
 		public static void SendMessage(object obj)
 		{
-			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, obj.ToString());
+			SendMessage(obj.ToString(), true);
 		}
 
 		public static void SendMessage(uint num)
 		{
-			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, num.ToString());
-		}
-
-		public static void SendMessage(string msg)
-		{
-			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, msg);
+			SendMessage(num.ToString(), true);
 		}
 
 		public static void SendMessage(bool msg)
 		{
-			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
+			SendMessage(msg.ToString(), true);
 		}
 
 		public static void SendMessage(double msg)
 		{
-			if (Assistant.World.Player != null)
-				Assistant.World.Player.SendMessage(MsgLevel.Info, msg.ToString());
+			SendMessage(msg.ToString(), true);
 		}
 
-		internal static void SendMessageNoWait(object obj, int color)
-		{
-			if (Assistant.World.Player != null)
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
-		}
-
-		internal static void SendMessageNoWait(uint num, int color)
-		{
-			if (Assistant.World.Player != null)
-				ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
-		}
 
 		public static void SendMessage(int num, int color)
 		{
-			if (Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
-			}
+			SendMessage(num.ToString(), color, true);
 		}
 
 		public static void SendMessage(object obj, int color)
 		{
-			if (Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", obj.ToString()));
-			}
+			SendMessage(obj.ToString(), color, true);
 		}
 
 		public static void SendMessage(uint num, int color)
 		{
-			if (Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", num.ToString()));
-			}
-		}
-
-		public static void SendMessage(string msg, int color)
-		{
-			if (Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
-			}
+			SendMessage(num.ToString(), color, true);
 		}
 
 		public static void SendMessage(bool msg, int color)
 		{
-			if (Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
-			}
+			SendMessage(msg.ToString(), color, true);
 		}
 
 		public static void SendMessage(double msg, int color)
 		{
-			if (Assistant.World.Player != null)
-			{
-				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
-			}
-
+			SendMessage(msg.ToString(), color, true);
 		}
 
+		public static void SendMessage(string msg, bool wait = true)
+		{
+			SendMessage(msg, 945, wait);
+		}
 
+		internal static void SendMessage(string msg, int color, bool wait) //Main function of sendmessage
+		{
+			if (Assistant.World.Player != null)
+			{
+				if (wait)
+					ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+				else
+					ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, color, 3, Language.CliLocName, "System", msg.ToString()));
+			}
+		}
 
 		public static void Beep()
 		{
@@ -141,7 +109,6 @@ namespace RazorEnhanced
 		}
 
 		// Context Menu
-
 		public static void WaitForContext(Mobile mob, int delay) // Delay in MS
 		{
 			WaitForContext(mob.Serial, delay);
