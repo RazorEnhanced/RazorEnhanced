@@ -578,21 +578,33 @@ namespace RazorEnhanced
 
 		// Message
 
-		internal static void MessageNoWait(int serial, int hue, string message)
+		public static void Message(Mobile mobile, int hue, string message, bool wait = true)
 		{
-			Mobile mobile = FindBySerial(serial);
-			Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+			// Prevent spamm message on left bottom screen
+			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
+				return;
+
+			if (wait)
+				Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+			else
+				Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
-		public static void Message(Mobile mobile, int hue, string message)
-		{
-			Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
-		}
-
-		public static void Message(int serial, int hue, string message)
+		public static void Message(int serial, int hue, string message, bool wait = true)
 		{
 			Mobile mobile = FindBySerial(serial);
-			Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+
+			if (mobile == null) // Mob not exist
+				return;
+
+			// Prevent spamm message on left bottom screen
+			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, mobile.Position.X, mobile.Position.Y) > 11)
+				return;
+
+			if (wait)
+				Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
+			else
+				Assistant.ClientCommunication.SendToClient(new UnicodeMessage(mobile.Serial, mobile.Body, MessageType.Regular, hue, 3, Language.CliLocName, mobile.Name, message));
 		}
 
 		// Props

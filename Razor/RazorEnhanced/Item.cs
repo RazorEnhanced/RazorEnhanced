@@ -960,12 +960,24 @@ namespace RazorEnhanced
 
 		public static void Message(Item item, int hue, string message)
 		{
+			// Prevent spamm message on left bottom screen
+			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
+				return;
+
 			ClientCommunication.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 
 		public static void Message(int serial, int hue, string message)
 		{
 			Item item = FindBySerial(serial);
+
+			if (item == null) //Intem 
+				return;
+
+			// Prevent spamm message on left bottom screen
+			if (World.Player == null || Utility.Distance(World.Player.Position.X, World.Player.Position.Y, item.Position.X, item.Position.Y) > 11)
+				return;
+
 			ClientCommunication.SendToClientWait(new UnicodeMessage(item.Serial, item.ItemID, MessageType.Regular, hue, 3, Language.CliLocName, item.Name, message));
 		}
 

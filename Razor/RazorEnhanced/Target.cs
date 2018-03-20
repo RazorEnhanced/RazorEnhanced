@@ -50,20 +50,20 @@ namespace RazorEnhanced
 		{
 			if (!CheckHealPoisonTarg(serial))
 			{
-				Assistant.Targeting.TargetByScript(serial);
+				Assistant.Targeting.Target(serial, true);
 			}
 		}
 
 		public static void TargetExecute(RazorEnhanced.Item item)
 		{
-			Assistant.Targeting.TargetByScript(item.Serial);
+			Assistant.Targeting.Target(item.Serial, true);
 		}
 
 		public static void TargetExecute(RazorEnhanced.Mobile mobile)
 		{
 			if (!CheckHealPoisonTarg(mobile.Serial))
 			{
-				Assistant.Targeting.TargetByScript(mobile.Serial);
+				Assistant.Targeting.Target(mobile.Serial, true);
 			}
 		}
 
@@ -113,25 +113,25 @@ namespace RazorEnhanced
 					break;
 			}
 			Assistant.Point3D location = new Assistant.Point3D(relpos.X, relpos.Y, Statics.GetLandZ(relpos.X, relpos.Y, Player.Map));
-			Assistant.Targeting.TargetByScript(location);
+			Assistant.Targeting.Target(location, true);
 		}
 
 		public static void TargetExecute(int x, int y, int z)
 		{
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
-			Assistant.Targeting.TargetByScript(location);
+			Assistant.Targeting.Target(location, true);
 		}
 
 		public static void TargetExecute(int x, int y, int z, int gfx)
 		{
 			Assistant.Point3D location = new Assistant.Point3D(x, y, z);
-			Assistant.Targeting.TargetByScript(location, gfx);
+			Assistant.Targeting.Target(location, gfx, true);
 		}
 
 		public static void Cancel()
 		{
-			Assistant.Targeting.CancelClientTargetByScript();
-			Assistant.Targeting.CancelOneTimeTargetByScript();
+			Assistant.Targeting.CancelClientTarget(true);
+			Assistant.Targeting.CancelOneTimeTarget(true);
 		}
 
 		public static void Self()
@@ -169,14 +169,14 @@ namespace RazorEnhanced
 		{
 			Assistant.Mobile mobile = World.FindMobile(mob.Serial);
 			if (mobile != null)
-				Assistant.Targeting.SetLastTargetWait(mobile, 0);
+				Assistant.Targeting.SetLastTarget(mobile, 0, true);
 		}
 
 		public static void SetLast(int serial)
 		{
 			Assistant.Mobile mobile = World.FindMobile(serial);
 			if (mobile != null)
-				Assistant.Targeting.SetLastTargetWait(mobile, 0);
+				Assistant.Targeting.SetLastTarget(mobile, 0, true);
 		}
 
 		public static void ClearQueue()
@@ -288,10 +288,30 @@ namespace RazorEnhanced
 				if (mobtarget == null)
 					return;
 
-				TargetMessage(mobtarget.Serial); // Process message for highlight
+				TargetMessage(mobtarget.Serial, true); // Process message for highlight
 
 				RazorEnhanced.Target.SetLast(mobtarget);
 			}
+		}
+
+		public static Mobile GetTargetFromList(string targetid)
+		{
+			TargetGUI.TargetGUIObject targetdata = Settings.Target.TargetRead(targetid);
+			if (targetdata == null)
+				return null;
+
+			
+			Mobiles.Filter filter = targetdata.Filter;
+			string selector = targetdata.Selector;
+
+			List<Mobile> filterresult;
+			filterresult = Mobiles.ApplyFilter(filter);
+
+			Mobile mobtarget = Mobiles.Select(filterresult, selector);
+			if (mobtarget == null)
+				return null;
+
+			return mobtarget;
 		}
 
 		internal static void SetLastTargetFromListHotKey(string targetid)
@@ -312,11 +332,11 @@ namespace RazorEnhanced
 			if (mobtarget == null)
 				return;
 
-			TargetMessage(mobtarget.Serial); // Process message for highlight
+			TargetMessage(mobtarget.Serial, false); // Process message for highlight
 
 			Assistant.Mobile mobile = World.FindMobile(mobtarget.Serial);
 			if (mobile != null)
-				Targeting.SetLastTargetWait(mobile, 0);
+				Targeting.SetLastTarget(mobile, 0, false);
 		}
 
 		public static void PerformTargetFromList(string targetid)
@@ -337,7 +357,7 @@ namespace RazorEnhanced
 			if (mobtarget == null)
 				return;
 
-			TargetMessage(mobtarget.Serial); // Process message for highlight
+			TargetMessage(mobtarget.Serial, true); // Process message for highlight
 
 			TargetExecute(mobtarget.Serial);
 			SetLast(mobtarget);
@@ -361,37 +381,37 @@ namespace RazorEnhanced
 			if (mobtarget == null)
 				return;
 
-			AttackMessage(mobtarget.Serial); // Process message for highlight
+			AttackMessage(mobtarget.Serial, true); // Process message for highlight
 
 			Assistant.ClientCommunication.SendToServer(new AttackReq(mobtarget.Serial)); // Real attack
 		}
 
-		internal static void TargetMessage(int serial)
+		internal static void TargetMessage(int serial, bool wait)
 		{
 			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
 			{
 				if (Friend.IsFriend(serial))
-					Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(serial) + "]"));
+					Mobiles.Message(serial, 63, "Target: [" + GetPlayerName(serial) + "]", wait);
 				else
-					Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(Mobiles.FindBySerial(serial)), 3, Language.CliLocName, World.Player.Name, "Target: [" + GetPlayerName(serial) + "]"));
+					Mobiles.Message(serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Target: [" + GetPlayerName(serial) + "]", wait);
 			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
-				Mobiles.Message(serial, 10, "* Target *");
+				Mobiles.Message(serial, 10, "* Target *", wait);
 		}
 
-		internal static void AttackMessage(int serial)
+		internal static void AttackMessage(int serial, bool wait)
 		{
 			if (Assistant.Engine.MainWindow.ShowHeadTargetCheckBox.Checked)
 			{
 				if (Friend.IsFriend(serial))
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, 63, 3, Language.CliLocName, World.Player.Name, "Attack: [" + GetPlayerName(serial) + "]"));
+					Mobiles.Message(serial, 63, "Attack: [" + GetPlayerName(serial) + "]", wait);
 				else
-					Assistant.ClientCommunication.SendToClient(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, GetPlayerColor(Mobiles.FindBySerial(serial)), 3, Language.CliLocName, World.Player.Name, "Attack: [" + GetPlayerName(serial) + "]"));
+					Mobiles.Message(serial, GetPlayerColor(Mobiles.FindBySerial(serial)), "Attack: [" + GetPlayerName(serial) + "]", wait);
 			}
 
 			if (Assistant.Engine.MainWindow.HighlightTargetCheckBox.Checked)
-				Mobiles.Message(serial, 10, "* Target *");
+				Mobiles.Message(serial, 10, "* Target *", wait);
 		}
 
 	}

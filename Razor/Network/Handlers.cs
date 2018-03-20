@@ -3031,7 +3031,7 @@ namespace Assistant
 				}
 			}
 
-			RazorEnhanced.Target.AttackMessage((int)serialbersaglio); // Process message for highlight
+			RazorEnhanced.Target.AttackMessage((int)serialbersaglio, false); // Process message for highlight
 			Targeting.LastAttack = serialbersaglio;
         }
 

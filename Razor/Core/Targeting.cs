@@ -137,7 +137,7 @@ namespace Assistant
 			if (m_Intercept && m_OnCancel != null)
 			{
 				m_OnCancel();
-				CancelOneTimeTarget();
+				CancelOneTimeTarget(false);
 			}
 
 			if (m_HasTarget && m_CurrentID != 0 && m_CurrentID != LocalTargID)
@@ -159,19 +159,14 @@ namespace Assistant
 			ClearQueue();
 		}
 
-		internal static void CancelOneTimeTarget()
+		internal static void CancelOneTimeTarget(bool wait)
 		{
 			m_ClientTarget = m_HasTarget = false;
 
-			ClientCommunication.SendToClient(new CancelTarget(LocalTargID));
-			EndIntercept();
-		}
-
-		internal static void CancelOneTimeTargetByScript()
-		{
-			m_ClientTarget = m_HasTarget = false;
-
-			ClientCommunication.SendToClientWait(new CancelTarget(LocalTargID));
+			if (wait)
+				ClientCommunication.SendToClientWait(new CancelTarget(LocalTargID));
+			else
+				ClientCommunication.SendToClient(new CancelTarget(LocalTargID));
 			EndIntercept();
 		}
 
@@ -355,7 +350,7 @@ namespace Assistant
 			LastTargetChanged();
 		}
 
-		internal static void SetLastTarget(Mobile m, byte flagType)
+		internal static void SetLastTarget(Mobile m, byte flagType, bool wait)
 		{
 			TargetInfo targ = new TargetInfo();
 			m_LastGroundTarg = m_LastTarget = targ;
@@ -376,36 +371,13 @@ namespace Assistant
 			targ.Y = m.Position.Y;
 			targ.Z = m.Position.Z;
 
-			ClientCommunication.SendToClient(new ChangeCombatant(m));
+			if (wait)
+				ClientCommunication.SendToClientWait(new ChangeCombatant(m));
+			else
+				ClientCommunication.SendToClient(new ChangeCombatant(m));
+
 			m_LastCombatant = m.Serial;
 			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
-
-			LastTargetChanged();
-		}
-
-		internal static void SetLastTargetWait(Mobile m, byte flagType)
-		{
-			TargetInfo targ = new TargetInfo();
-			m_LastGroundTarg = m_LastTarget = targ;
-
-			if ((m_HasTarget && m_CurFlags == 1) || flagType == 1)
-				m_LastHarmTarg = targ;
-			else if ((m_HasTarget && m_CurFlags == 2) || flagType == 2)
-				m_LastBeneTarg = targ;
-			else if (flagType == 0)
-				m_LastHarmTarg = m_LastBeneTarg = targ;
-
-			targ.Type = 0;
-			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
-
-			targ.Gfx = m.Body;
-			targ.Serial = m.Serial;
-			targ.X = m.Position.X;
-			targ.Y = m.Position.Y;
-			targ.Z = m.Position.Z;
-
-			ClientCommunication.SendToClientWait(new ChangeCombatant(m));
-			m_LastCombatant = m.Serial;
 
 			LastTargetChanged();
 		}
@@ -448,7 +420,7 @@ namespace Assistant
 			if (CheckHealPoisonTarg(m_CurrentID, World.Player.Serial))
 				return false;
 
-			CancelClientTarget();
+			CancelClientTarget(false);
 			m_HasTarget = false;
 
 			if (m_Intercept)
@@ -579,7 +551,7 @@ namespace Assistant
 			if (CheckHealPoisonTarg(m_CurrentID, targ.Serial))
 				return false;
 
-			CancelClientTarget();
+			CancelClientTarget(false);
 			m_HasTarget = false;
 
 			targ.TargID = m_CurrentID;
@@ -627,7 +599,7 @@ namespace Assistant
 		private static void CancelTarget()
 		{
 			OnClearQueue();
-			CancelClientTarget();
+			CancelClientTarget(false);
 
 			if (!m_HasTarget)
 				return;
@@ -636,27 +608,20 @@ namespace Assistant
 			m_HasTarget = false;
 		}
 
-		internal static void CancelClientTarget()
+		internal static void CancelClientTarget(bool wait)
 		{
 			if (!m_ClientTarget)
 				return;
 
 			m_FilterCancel.Add((uint)m_CurrentID);
-			ClientCommunication.SendToClient(new CancelTarget(m_CurrentID));
+			if (wait)
+				ClientCommunication.SendToClientWait(new CancelTarget(m_CurrentID));
+			else
+				ClientCommunication.SendToClient(new CancelTarget(m_CurrentID));
 			m_ClientTarget = false;
 		}
 
-		internal static void CancelClientTargetByScript()
-		{
-			if (m_ClientTarget)
-			{
-				m_FilterCancel.Add((uint)m_CurrentID);
-				ClientCommunication.SendToClientWait(new CancelTarget(m_CurrentID));
-				m_ClientTarget = false;
-			}
-		}
-
-		internal static void Target(TargetInfo info)
+		internal static void Target(TargetInfo info, bool wait)
 		{
 			if (m_Intercept)
 			{
@@ -666,31 +631,18 @@ namespace Assistant
 			{
 				info.TargID = m_CurrentID;
 				m_LastGroundTarg = m_LastTarget = info;
-				ClientCommunication.SendToServer(new TargetResponse(info));
+				if (wait)
+					ClientCommunication.SendToServerWait(new TargetResponse(info));
+				else
+					ClientCommunication.SendToServer(new TargetResponse(info));
 			}
 
-			CancelClientTarget();
+			CancelClientTarget(wait);
 			m_HasTarget = false;
 		}
 
-		internal static void TargetByScript(TargetInfo info)
-		{
-			if (m_Intercept)
-			{
-				OneTimeResponse(info);
-			}
-			else if (m_HasTarget)
-			{
-				info.TargID = m_CurrentID;
-				m_LastGroundTarg = m_LastTarget = info;
-				ClientCommunication.SendToServerWait(new TargetResponse(info));
-			}
-
-			CancelClientTargetByScript();
-			m_HasTarget = false;
-		}
-
-		internal static void Target(Point3D pt)
+	
+		internal static void Target(Point3D pt, bool wait)
 		{
 			TargetInfo info = new TargetInfo
 			{
@@ -703,42 +655,10 @@ namespace Assistant
 				Gfx = 0
 			};
 
-			Target(info);
+			Target(info, wait);
 		}
 
-		internal static void TargetByScript(Point3D pt)
-		{
-			TargetInfo info = new TargetInfo
-			{
-				Type = 1,
-				Flags = 0,
-				Serial = 0,
-				X = pt.X,
-				Y = pt.Y,
-				Z = pt.Z,
-				Gfx = 0
-			};
-
-			TargetByScript(info);
-		}
-
-		internal static void TargetByScript(Point3D pt, int gfx)
-		{
-			TargetInfo info = new TargetInfo
-			{
-				Type = 1,
-				Flags = 0,
-				Serial = 0,
-				X = pt.X,
-				Y = pt.Y,
-				Z = pt.Z,
-				Gfx = (ushort) (gfx & 0x3FFF)
-			};
-
-			TargetByScript(info);
-		}
-
-		internal static void Target(Point3D pt, int gfx)
+		internal static void Target(Point3D pt, int gfx, bool wait)
 		{
 			TargetInfo info = new TargetInfo();
 			info.Type = 1;
@@ -749,10 +669,10 @@ namespace Assistant
 			info.Z = pt.Z;
 			info.Gfx = (ushort)(gfx & 0x3FFF);
 
-			Target(info);
+			Target(info, wait);
 		}
 
-		internal static void Target(Serial s)
+		internal static void Target(Serial s, bool wait)
 		{
 			TargetInfo info = new TargetInfo
 			{
@@ -784,45 +704,11 @@ namespace Assistant
 				}
 			}
 
-			Target(info);
+			Target(info, wait);
 		}
 
-		internal static void TargetByScript(Serial s)
-		{
-			TargetInfo info = new TargetInfo
-			{
-				Type = 0,
-				Flags = 0,
-				Serial = s
-			};
-
-			if (s.IsItem)
-			{
-				Item item = World.FindItem(s);
-				if (item != null)
-				{
-					info.X = item.Position.X;
-					info.Y = item.Position.Y;
-					info.Z = item.Position.Z;
-					info.Gfx = item.ItemID;
-				}
-			}
-			else if (s.IsMobile)
-			{
-				Mobile m = World.FindMobile(s);
-				if (m != null)
-				{
-					info.X = m.Position.X;
-					info.Y = m.Position.Y;
-					info.Z = m.Position.Z;
-					info.Gfx = m.Body;
-				}
-			}
-
-			TargetByScript(info);
-		}
-
-		internal static void TargetByScript(object o)
+		
+		internal static void Target(object o, bool wait)
 		{
 			if (o is Item)
 			{
@@ -837,7 +723,7 @@ namespace Assistant
 					Z = item.Position.Z,
 					Gfx = item.ItemID
 				};
-				TargetByScript(info);
+				Target(info, wait);
 			}
 			else if (o is Mobile)
 			{
@@ -852,57 +738,15 @@ namespace Assistant
 					Z = m.Position.Z,
 					Gfx = m.Body
 				};
-				TargetByScript(info);
+				Target(info, wait);
 			}
 			else if (o is Serial)
 			{
-				TargetByScript((Serial)o);
+				Target((Serial)o, wait);
 			}
 			else if (o is TargetInfo)
 			{
-				TargetByScript((TargetInfo)o);
-			}
-		}
-
-		internal static void Target(object o)
-		{
-			if (o is Item)
-			{
-				Item item = (Item)o;
-				TargetInfo info = new TargetInfo
-				{
-					Type = 0,
-					Flags = 0,
-					Serial = item.Serial,
-					X = item.Position.X,
-					Y = item.Position.Y,
-					Z = item.Position.Z,
-					Gfx = item.ItemID
-				};
-				Target(info);
-			}
-			else if (o is Mobile)
-			{
-				Mobile m = (Mobile)o;
-				TargetInfo info = new TargetInfo
-				{
-					Type = 0,
-					Flags = 0,
-					Serial = m.Serial,
-					X = m.Position.X,
-					Y = m.Position.Y,
-					Z = m.Position.Z,
-					Gfx = m.Body
-				};
-				Target(info);
-			}
-			else if (o is Serial)
-			{
-				Target((Serial)o);
-			}
-			else if (o is TargetInfo)
-			{
-				Target((TargetInfo)o);
+				Target((TargetInfo)o, wait);
 			}
 		}
 
@@ -1136,7 +980,7 @@ namespace Assistant
 				RazorEnhanced.ScriptRecorder.Record_Target(info);
 
 			if (info.Serial != 0 && info.Serial.IsMobile)
-				RazorEnhanced.Target.TargetMessage(info.Serial);
+				RazorEnhanced.Target.TargetMessage(info.Serial, false);
 
 			// check for cancel
 			if (info.X == 0xFFFF && info.X == 0xFFFF && (info.Serial <= 0 || info.Serial >= 0x80000000))
@@ -1283,7 +1127,7 @@ namespace Assistant
 					m_ClientTarget = true;
 
 					if (!m_Intercept)
-						CancelClientTarget();
+						CancelClientTarget(false);
 				}
 			}
 			else
@@ -1306,7 +1150,7 @@ namespace Assistant
 		{
 			if (!m_ClientTarget || !m_HasTarget)
 			{
-				CancelClientTarget();
+				CancelClientTarget(false);
 				m_ClientTarget = m_HasTarget = true;
 				ClientCommunication.SendToClient(new Target(m_CurrentID, m_AllowGround, m_CurFlags));
 			}

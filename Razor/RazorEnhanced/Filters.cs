@@ -82,23 +82,23 @@ namespace RazorEnhanced
 			if (Engine.MainWindow.FlagsHighlightCheckBox.Checked)
 			{
 				if (m.Poisoned)
-					Mobiles.MessageNoWait(m.Serial, 10, "[Poisoned]");
+					Mobiles.Message(m.Serial, 10, "[Poisoned]", false);
 				if (m.IsGhost)
 				{
 					if (m.PropsUpdated)
-						Mobiles.MessageNoWait(m.Serial, 10, "[Dead]");
+						Mobiles.Message(m.Serial, 10, "[Dead]", false);
 				}
 				if (m.Paralized)
-					Mobiles.MessageNoWait(m.Serial, 10, "[Paralized]");
+					Mobiles.Message(m.Serial, 10, "[Paralized]", false);
 				if (m.Blessed)
-					Mobiles.MessageNoWait(m.Serial, 10, "[Mortalled]");
+					Mobiles.Message(m.Serial, 10, "[Mortalled]", false);
 			}
 
-			if (Engine.MainWindow.HighlightTargetCheckBox.Checked)
+		/*	if (Engine.MainWindow.HighlightTargetCheckBox.Checked)
 			{
 				if (Targeting.IsLastTarget(m))
-					Mobiles.MessageNoWait(m.Serial, 10, "*[Target]*");
-			}
+					Mobiles.Message(m.Serial, 10, "*[Target]*", false);
+			}*/
 		}
 		//////////////////// END - FLAG HIGHLIGHT //////////////////////
 

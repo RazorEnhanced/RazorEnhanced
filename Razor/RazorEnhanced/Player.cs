@@ -1561,7 +1561,7 @@ namespace RazorEnhanced
 			if (World.FindMobile(serial) == null) // Mob non piu esistente
 				return;
 
-			Target.AttackMessage(serial);
+			Target.AttackMessage(serial, true);
 			Assistant.ClientCommunication.SendToServerWait(new AttackReq(serial));
 			Targeting.LastAttack = (uint)serial;
         }
@@ -1574,7 +1574,7 @@ namespace RazorEnhanced
 			if (World.FindMobile(Targeting.LastAttack) == null) // Mob non piu esistente
 				return;
 
-			Target.AttackMessage((int)Targeting.LastAttack);
+			Target.AttackMessage((int)Targeting.LastAttack, true);
 			Assistant.ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
 		}
 
