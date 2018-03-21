@@ -166,7 +166,7 @@ namespace RazorEnhanced.UI
 			string[] methodsTarget =
 			{
 				"Target.HasTarget", "Target.GetLast", "Target.GetLastAttack", "Target.WaitForTarget", "Target.TargetExecute", "Target.TargetExecuteRelative" ,"Target.PromptTarget", "Target.Cancel", "Target.Last", "Target.LastQueued",
-				"Target.Self", "Target.SelfQueued", "Target.SetLast", "Target.ClearLast", "Target.ClearQueue", "Target.ClearLastandQueue", "Target.SetLastTargetFromList",
+				"Target.Self", "Target.SelfQueued", "Target.SetLast", "Target.ClearLast", "Target.ClearQueue", "Target.ClearLastandQueue", "Target.SetLastTargetFromList", "Target.GetTargetFromList",
 				"Target.PerformTargetFromList", "Target.AttackTargetFromList"
 			};
 
@@ -727,6 +727,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Target.AttackTargetFromList(string)", new string[] { "string TargetFilterName" }, "bool", "Attack Target from GUI Filter selector");
 			descriptionTarget.Add("Target.AttackTargetFromList", tooltip);
+
+			tooltip = new ToolTipDescriptions("Target.GetTargetFromList(string)", new string[] { "string TargetFilterName" }, "Mobile", "Get Mobile object from GUI Filter selector\n\tIf no mobile found return null");
+			descriptionTarget.Add("Target.GetTargetFromList", tooltip);
 
 			#endregion
 
