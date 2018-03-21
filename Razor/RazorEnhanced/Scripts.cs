@@ -26,7 +26,7 @@ namespace RazorEnhanced
 			if (Assistant.World.Player == null)
 				return;
 
-			if (Settings.General.ReadBool("ShowScriptMessageCheckBox"))
+			if (Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
 				ClientCommunication.SendToClientWait(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, 945, 3, Language.CliLocName, "System", msg.ToString()));
 		}
 

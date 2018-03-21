@@ -292,16 +292,17 @@ namespace RazorEnhanced
 				{
 					foreach (int serial in itemtoundress)
 					{
-						RazorEnhanced.Dress.AddLog("Item 0x" + serial.ToString("X8") + " undressed!");
-						RazorEnhanced.Items.Move(serial, undressbagserial, 0);
+						Dress.AddLog("Item 0x" + serial.ToString("X8") + " undressed!");
+						Items.Move(serial, undressbagserial, 0);
 						Thread.Sleep(mseconds);
 					}
 				}
 
 			}
-			RazorEnhanced.Dress.AddLog("Finish!");
-			RazorEnhanced.Misc.SendMessage("Enhanced UnDress: Finish!", false);
-			Assistant.Engine.MainWindow.UndressFinishWork();
+			Dress.AddLog("Finish!");
+			if (Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+				Misc.SendMessage("Enhanced UnDress: Finish!", false);
+			Engine.MainWindow.UndressFinishWork();
 			return 0;
 		}
 
@@ -336,7 +337,8 @@ namespace RazorEnhanced
 			Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
 			if (bag == null)
 			{
-				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", true);
+				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+					Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", true);
 				AddLog("Invalid Bag, Switch to backpack");
 				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}
@@ -483,7 +485,8 @@ namespace RazorEnhanced
 				}
 			}
 			RazorEnhanced.Dress.AddLog("Finish!");
-			RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
+			if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+				RazorEnhanced.Misc.SendMessage("Enhanced Dress: Finish!", 945, true);
 			Assistant.Engine.MainWindow.UndressFinishWork();
 			return 0;
 		}
@@ -496,7 +499,8 @@ namespace RazorEnhanced
 			Assistant.Item bag = Assistant.World.FindItem(m_dressbag);
 			if (bag == null)
 			{
-				Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
+				if (Assistant.Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+					Misc.SendMessage("Dress: Invalid Bag, Switch to backpack", 945, true);
 				AddLog("Invalid Bag, Switch to backpack");
 				DressBag = (int)World.Player.Backpack.Serial.Value;
 			}

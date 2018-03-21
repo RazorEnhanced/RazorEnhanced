@@ -421,6 +421,7 @@ namespace RazorEnhanced
 				RazorEnhanced.Mobile enhancedMobile = new RazorEnhanced.Mobile(assistantMobile);
 				result.Add(enhancedMobile);
 			}
+
 			return result;
 		}
 
