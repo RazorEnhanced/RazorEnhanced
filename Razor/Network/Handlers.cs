@@ -133,32 +133,18 @@ namespace Assistant
 						{
 							Item item = World.FindItem(s);
 							if (item == null)
-							{
-								World.AddItem(item = new Item(s));
-							}
+								return;
 
 							item.ReadPropertyList(p);
-						/*	if (item.ModifiedOPL)
-							{
-								args.Block = true;
-								ClientCommunication.SendToClient(item.ObjPropList.BuildPacket());
-							}*/
-
 							item.PropsUpdated = true;
 						}
 						else if (s.IsMobile)
 						{
 							Mobile m = World.FindMobile(s);
 							if (m == null)
-								World.AddMobile(m = new Mobile(s));
+								return;
 
 							m.ReadPropertyList(p);
-						/*	if (m.ModifiedOPL)
-							{
-								args.Block = true;
-								ClientCommunication.SendToClient(m.ObjPropList.BuildPacket());
-							}*/
-
 							m.PropsUpdated = true;
 						}
 						break;
@@ -1370,11 +1356,7 @@ namespace Assistant
             Mobile m = World.FindMobile(serial);
 
 			if (m == null)
-			{
-				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
-			}
+				return;
 
 			UseNewStatus = true;
 
@@ -1426,11 +1408,7 @@ namespace Assistant
             Mobile m = World.FindMobile(serial);
 
 			if (m == null)
-			{
-				World.AddMobile(m = new Mobile(serial));
-				ClientCommunication.SendToServer(new StatusQuery(serial));
-				ClientCommunication.SendToServer(new QueryProperties(serial));
-			}
+				return;
 
 			UseNewStatus = true;
 
@@ -1611,11 +1589,6 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (!ClientCommunication.ServerEncrypted)
-				{
-					ClientCommunication.SendToServer(new QueryProperties(serial));
-					ClientCommunication.SendToServer(new StatusQuery(serial));
-				}
             }
 
 			bool wasHidden = !m.Visible;
@@ -1674,11 +1647,6 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-				if (!ClientCommunication.ServerEncrypted)
-				{
-					ClientCommunication.SendToServer(new QueryProperties(serial));
-					ClientCommunication.SendToServer(new StatusQuery(serial));
-				}
 			}
 
 			bool wasHidden = !m.Visible;
@@ -2525,9 +2493,6 @@ namespace Assistant
 							{
 								World.AddMobile(mobile = new Mobile(serial));
 								mobile.Visible = false;
-								if (!mobile.PropsUpdated)
-									ClientCommunication.SendToServer(new QueryProperties(mobile.Serial));
-								ClientCommunication.SendToServer(new StatusQuery(mobile.Serial));
 							}
 
 							if (mobile.Name == null || mobile.Name.Length <= 0)
