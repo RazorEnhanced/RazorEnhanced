@@ -397,6 +397,7 @@ namespace RazorEnhanced
 
 		private static List<Assistant.Layer> m_colorized_layer = new List<Layer>
 		{
+			Layer.Backpack,
 			Layer.Invalid,
 			Layer.FirstValid,
 			Layer.RightHand,
@@ -430,6 +431,9 @@ namespace RazorEnhanced
 				Assistant.Item i = m.GetItemOnLayer(l);
 				if (i == null)
 					continue;
+
+				if (i.ItemID == 0x204E && i.Hue == 0x08FD) // Death Shround
+					i.ItemID = 0x1F03;
 
 				ClientCommunication.SendToClient(new EquipmentItem(i, i.Hue, m.Serial));
 			}
@@ -549,7 +553,7 @@ namespace RazorEnhanced
 			else
 			{
 				Assistant.Mobile m = (i.Container as Assistant.Mobile);
-				if (m != null)
+				if (m != null && !m.IsGhost)
 				{
 					// Blocco Color Highlight flag
 					if (Engine.MainWindow.ColorFlagsHighlightCheckBox.Checked || Engine.MainWindow.ColorFlagsSelfHighlightCheckBox.Checked)
