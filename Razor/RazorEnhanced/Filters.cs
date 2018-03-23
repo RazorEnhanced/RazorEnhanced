@@ -422,6 +422,9 @@ namespace RazorEnhanced
 
 		internal static void Decolorize(Assistant.Mobile m)
 		{
+			if (m.IsGhost) // Non eseguire azione se fantasma
+				return;
+
 			foreach (Layer l in m_colorized_layer)
 			{
 				Assistant.Item i = m.GetItemOnLayer(l);
@@ -433,6 +436,9 @@ namespace RazorEnhanced
 		}
 		internal static void ApplyColor(Assistant.Mobile m)
 		{
+			if (m.IsGhost) // Non eseguire azione se fantasma
+				return;
+
 			int color = 0;
 			if (m.Poisoned)
 				color = (int)HighLightColor.Poison;
@@ -461,6 +467,9 @@ namespace RazorEnhanced
 
 		internal static Packet MobileColorize(Packet p, Assistant.Mobile m)
 		{
+			if (m.IsGhost) // Non eseguire azione se fantasma
+				return p;
+
 			int ltHue = Settings.General.ReadInt("LTHilight");
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 				p = RewriteColorAndFlag(p, (ushort)ltHue);
@@ -508,6 +517,9 @@ namespace RazorEnhanced
 			}
 			else
 			{
+				if (m.IsGhost) // Non eseguire azione se fantasma
+					return p;
+
 				if (ltHue != 0 && Targeting.IsLastTarget(m))
 				{
 					ClientCommunication.SendToClient(new EquipmentItem(item, (ushort)(ltHue & 16383), m.Serial));
