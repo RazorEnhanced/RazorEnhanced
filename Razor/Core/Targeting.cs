@@ -352,6 +352,9 @@ namespace Assistant
 
 		internal static void SetLastTarget(Mobile m, byte flagType, bool wait)
 		{
+			if (m_LastTarget != null && m_LastTarget.Serial == m.Serial) // Non settare last se già il serial corrente
+				return;
+
 			TargetInfo targ = new TargetInfo();
 			m_LastGroundTarg = m_LastTarget = targ;
 
