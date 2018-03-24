@@ -374,7 +374,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.SetWarMode(bool)", new string[] { "bool WarStatus" }, "void", "Set character warmode status\n\t True: set Warmode ON, False: set Warmode OFF");
 			descriptionPlayer.Add("Player.SetWarMode", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.Attack(int)", new string[] { "int TargetSerial" }, "void", "Force character to atttack a specific serial");
+			tooltip = new ToolTipDescriptions("Player.Attack(int or mobile)", new string[] { "int TargetSerial ot Mobile mobiletoattack" }, "void", "Force character to atttack a specific serial or mobile object");
 			descriptionPlayer.Add("Player.Attack", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.AttackLast()", new string[] { "none" }, "void", "Force character to attack last target");

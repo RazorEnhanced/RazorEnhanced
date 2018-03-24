@@ -113,10 +113,7 @@ namespace Assistant
 
 		private static void SetUpdateRange(Packet p, PacketHandlerEventArgs args)
 		{
-			if (Engine.ClientMajor >= 7 && Engine.ClientBuild < 49)
-				args.Block = true;
-			else
-				World.Player.VisRange = (int)p.ReadByte();
+			World.Player.VisRange = (int)p.ReadByte();
 		}
 
 		private static void EncodedPacket(PacketReader p, PacketHandlerEventArgs args)

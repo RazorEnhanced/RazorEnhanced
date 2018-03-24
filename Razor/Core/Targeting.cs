@@ -99,24 +99,6 @@ namespace Assistant
 				m_LastCombatant = ser;
 		}
 
-		private static void AttackLastComb()
-		{
-			if (m_LastCombatant.IsMobile)
-				ClientCommunication.SendToServer(new AttackReq(m_LastCombatant));
-		}
-
-		private static void AttackLastTarg()
-		{
-			if (m_LastTarget != null && m_LastTarget.Serial.IsMobile)
-				ClientCommunication.SendToServer(new AttackReq(m_LastTarget.Serial));
-		}
-
-		private static void OnClearQueue()
-		{
-			Targeting.ClearQueue();
-			World.Player.OverheadMessage(LocString.TQCleared);
-		}
-
 		internal static void OneTimeTarget(TargetResponseCallback onTarget)
 		{
 			OneTimeTarget(false, onTarget, null);
@@ -170,107 +152,14 @@ namespace Assistant
 			EndIntercept();
 		}
 
-		private static bool m_LTWasSet;
-
-		internal static void TargetSetLastTarget()
-		{
-			if (World.Player == null)
-				return;
-
-			m_LTWasSet = false;
-			OneTimeTarget(false, new TargetResponseCallback(OnSetLastTarget), new CancelTargetCallback(OnSLTCancel));
-			World.Player.SendMessage(MsgLevel.Force, LocString.TargSetLT);
-		}
-
-		private static void OnSLTCancel()
-		{
-			if (m_LastTarget != null)
-				m_LTWasSet = true;
-		}
-
-		private static void OnSetLastTarget(bool location, Serial serial, Point3D p, ushort gfxid)
-		{
-			if (serial == World.Player.Serial)
-			{
-				OnSLTCancel();
-				return;
-			}
-
-			m_LastBeneTarg = m_LastHarmTarg = m_LastGroundTarg = m_LastTarget = new TargetInfo();
-			m_LastTarget.Flags = 0;
-			m_LastTarget.Gfx = gfxid;
-			m_LastTarget.Serial = serial;
-			m_LastTarget.Type = (byte)(location ? 1 : 0);
-			m_LastTarget.X = p.X;
-			m_LastTarget.Y = p.Y;
-			m_LastTarget.Z = p.Z;
-
-			m_LTWasSet = true;
-
-			World.Player.SendMessage(MsgLevel.Force, LocString.LTSet);
-			if (serial.IsMobile)
-			{
-				LastTargetChanged();
-				ClientCommunication.SendToClient(new ChangeCombatant(serial));
-				m_LastCombatant = serial;
-			}
-		}
-
 		private static Serial m_OldLT = Serial.Zero;
-
-		private static void RemoveTextFlags(UOEntity m)
-		{
-			if (m == null)
-				return;
-
-			bool oplchanged = false;
-
-			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.LastTarget));
-			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.HarmfulTarget));
-			oplchanged |= m.ObjPropList.Remove(Language.GetString(LocString.BeneficialTarget));
-
-			if (oplchanged)
-				m.OPLChanged();
-		}
-
-		private static void AddTextFlags(UOEntity m)
-		{
-			if (m == null)
-				return;
-
-			bool oplchanged = false;
-
-			if (RazorEnhanced.Settings.General.ReadBool("SmartLastTarget"))
-			{
-				if (m_LastHarmTarg != null && m_LastHarmTarg.Serial == m.Serial)
-				{
-					oplchanged = true;
-					m.ObjPropList.Add(Language.GetString(LocString.HarmfulTarget));
-				}
-
-				if (m_LastBeneTarg != null && m_LastBeneTarg.Serial == m.Serial)
-				{
-					oplchanged = true;
-					m.ObjPropList.Add(Language.GetString(LocString.BeneficialTarget));
-				}
-			}
-
-			if (!oplchanged && m_LastTarget != null && m_LastTarget.Serial == m.Serial)
-			{
-				oplchanged = true;
-				m.ObjPropList.Add(Language.GetString(LocString.LastTarget));
-			}
-
-			if (oplchanged)
-				m.OPLChanged();
-		}
 
 		private static void LastTargetChanged()
 		{
 			if (m_LastTarget == null)
 				return;
 
-			bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
+		/*	bool lth = RazorEnhanced.Settings.General.ReadInt("LTHilight") != 0;
 
 			if (m_OldLT.IsItem)
 			{
@@ -304,12 +193,10 @@ namespace Assistant
 
 					AddTextFlags(m);
 				}
-			}
+			}*/
 
 			m_OldLT = m_LastTarget.Serial;
 		}
-
-		internal static bool LTWasSet { get { return m_LTWasSet; } }
 		
 		internal static void SetLastTargetTo(Mobile m)
 		{
@@ -352,7 +239,7 @@ namespace Assistant
 
 		internal static void SetLastTarget(Mobile m, byte flagType, bool wait)
 		{
-			if (m_LastTarget != null && m_LastTarget.Serial == m.Serial) // Non settare last se già il serial corrente
+			if (m_LastTarget != null && m != null && m_LastTarget.Serial == m.Serial) // Non settare last se già il serial corrente
 				return;
 
 			TargetInfo targ = new TargetInfo();
@@ -380,7 +267,6 @@ namespace Assistant
 				ClientCommunication.SendToClient(new ChangeCombatant(m));
 
 			m_LastCombatant = m.Serial;
-			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
 
 			LastTargetChanged();
 		}
@@ -599,18 +485,6 @@ namespace Assistant
 			EndIntercept();
 		}
 
-		private static void CancelTarget()
-		{
-			OnClearQueue();
-			CancelClientTarget(false);
-
-			if (!m_HasTarget)
-				return;
-
-			ClientCommunication.SendToServer(new TargetCancelResponse(m_CurrentID));
-			m_HasTarget = false;
-		}
-
 		internal static void CancelClientTarget(bool wait)
 		{
 			if (!m_ClientTarget)
@@ -644,7 +518,6 @@ namespace Assistant
 			m_HasTarget = false;
 		}
 
-	
 		internal static void Target(Point3D pt, bool wait)
 		{
 			TargetInfo info = new TargetInfo
@@ -710,7 +583,6 @@ namespace Assistant
 			Target(info, wait);
 		}
 
-		
 		internal static void Target(object o, bool wait)
 		{
 			if (o is Item)
@@ -788,136 +660,6 @@ namespace Assistant
 			return false;
 		}
 
-		private static int m_NextTargIdx = 0;
-
-		internal static void NextTarget()
-		{
-			List<Mobile> list = World.MobilesInRange(12);
-			TargetInfo targ = new TargetInfo();
-			Mobile m = null, old = World.FindMobile(m_LastTarget == null ? Serial.Zero : m_LastTarget.Serial);
-
-			if (list.Count <= 0)
-			{
-				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
-				return;
-			}
-
-			for (int i = 0; i < 3; i++)
-			{
-				m_NextTargIdx++;
-
-				if (m_NextTargIdx >= list.Count)
-					m_NextTargIdx = 0;
-
-				m = (Mobile)list[m_NextTargIdx];
-
-				if (m != null && m != World.Player && m != old)
-					break;
-				else
-					m = null;
-			}
-
-			if (m == null)
-				m = old;
-
-			if (m == null)
-			{
-				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
-				return;
-			}
-
-			m_LastGroundTarg = m_LastTarget = targ;
-
-			m_LastHarmTarg = m_LastBeneTarg = targ;
-
-			if (m_HasTarget)
-				targ.Flags = m_CurFlags;
-			else
-				targ.Type = 0;
-
-			targ.Gfx = m.Body;
-			targ.Serial = m.Serial;
-			targ.X = m.Position.X;
-			targ.Y = m.Position.Y;
-			targ.Z = m.Position.Z;
-
-			ClientCommunication.SendToClient(new ChangeCombatant(m));
-			m_LastCombatant = m.Serial;
-			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
-
-			/*if ( m_HasTarget )
-			{
-				DoLastTarget();
-				ClearQueue();
-			}*/
-		}
-
-		private static int m_NextTargHumanoidIdx = 0;
-
-		internal static void NextTargetHumanoid()
-		{
-			List<Mobile> mobiles = World.MobilesInRange(12);
-			List<Mobile> list = mobiles.Where(mob => mob.Body == 0x0190 || mob.Body == 0x0191 || mob.Body == 0x025D || mob.Body == 0x025E).ToList();
-
-			if (list.Count <= 0)
-			{
-				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
-				return;
-			}
-
-			TargetInfo targ = new TargetInfo();
-			Mobile m = null, old = World.FindMobile(m_LastTarget == null ? Serial.Zero : m_LastTarget.Serial);
-
-			for (int i = 0; i < 3; i++)
-			{
-				m_NextTargHumanoidIdx++;
-
-				if (m_NextTargHumanoidIdx >= list.Count)
-					m_NextTargHumanoidIdx = 0;
-
-				m = (Mobile)list[m_NextTargHumanoidIdx];
-
-				if (m != null && m != World.Player && m != old)
-					break;
-				else
-					m = null;
-			}
-
-			if (m == null)
-				m = old;
-
-			if (m == null)
-			{
-				World.Player.SendMessage(MsgLevel.Warning, LocString.TargNoOne);
-				return;
-			}
-
-			m_LastGroundTarg = m_LastTarget = targ;
-
-			m_LastHarmTarg = m_LastBeneTarg = targ;
-
-			if (m_HasTarget)
-				targ.Flags = m_CurFlags;
-			else
-				targ.Type = 0;
-
-			targ.Gfx = m.Body;
-			targ.Serial = m.Serial;
-			targ.X = m.Position.X;
-			targ.Y = m.Position.Y;
-			targ.Z = m.Position.Z;
-
-			ClientCommunication.SendToClient(new ChangeCombatant(m));
-			m_LastCombatant = m.Serial;
-			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
-
-			/*if ( m_HasTarget )
-			{
-				DoLastTarget();
-				ClearQueue();
-			}*/
-		}
-
 		internal static void CheckLastTargetRange(Mobile m)
 		{
 			if (World.Player == null)
@@ -959,7 +701,6 @@ namespace Assistant
 					return true;
 				}
 			}
-
 			return false;
 		}
 

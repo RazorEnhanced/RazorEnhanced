@@ -1555,6 +1555,10 @@ namespace RazorEnhanced
 		{
 			Assistant.ClientCommunication.SendToServerWait(new SetWarMode(warflag));
 		}
+		public static void Attack(Mobile m)
+		{
+			Attack(m.Serial);
+		}
 
 		public static void Attack(int serial)
 		{
@@ -1562,8 +1566,12 @@ namespace RazorEnhanced
 				return;
 
 			Target.AttackMessage(serial, true);
+			if (Targeting.LastAttack != serial)
+			{
+				ClientCommunication.SendToClientWait(new ChangeCombatant(serial));
+				Targeting.LastAttack = (uint)serial;
+			}
 			Assistant.ClientCommunication.SendToServerWait(new AttackReq(serial));
-			Targeting.LastAttack = (uint)serial;
         }
 
 		public static void AttackLast()
@@ -1575,6 +1583,7 @@ namespace RazorEnhanced
 				return;
 
 			Target.AttackMessage((int)Targeting.LastAttack, true);
+
 			Assistant.ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
 		}
 

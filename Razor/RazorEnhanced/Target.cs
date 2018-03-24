@@ -385,8 +385,12 @@ namespace RazorEnhanced
 				return;
 
 			AttackMessage(mobtarget.Serial, true); // Process message for highlight
-
-			Assistant.ClientCommunication.SendToServer(new AttackReq(mobtarget.Serial)); // Real attack
+			if (Targeting.LastAttack != mobtarget.Serial)
+			{
+				ClientCommunication.SendToClientWait(new ChangeCombatant(mobtarget.Serial));
+				Targeting.LastAttack = (uint)mobtarget.Serial;
+			}
+			ClientCommunication.SendToServerWait(new AttackReq(mobtarget.Serial)); // Real attack
 		}
 
 		internal static void TargetMessage(int serial, bool wait)
