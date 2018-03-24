@@ -180,8 +180,8 @@ namespace Assistant
 		{
 			Serial ser = p.ReadUInt32();
 
-			if (RazorEnhanced.ScriptRecorder.OnRecord)
-				RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);
+		/*	if (RazorEnhanced.ScriptRecorder.OnRecord)
+				RazorEnhanced.ScriptRecorder.Record_ClientSingleClick(ser);*/
 
 			// if you modify this, don't forget to modify the allnames hotkey
 			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))

@@ -40,7 +40,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static void Record_ClientSingleClick(Assistant.Serial ser)
+		/*internal static void Record_ClientSingleClick(Assistant.Serial ser)
 		{
 			int serint = ser;
 			if (ser.IsItem)
@@ -48,7 +48,7 @@ namespace RazorEnhanced
 			else
 				AddLog("Mobiles.SingleClick(0x" + serint.ToString("X8") + ")");
 		}
-
+		*/
 		internal static void Record_ClientTextCommand(int type, int id)
 		{
 			if (type == 1) // Use Skill
