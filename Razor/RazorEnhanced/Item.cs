@@ -19,7 +19,14 @@ namespace RazorEnhanced
 
 		public bool Updated { get { return m_AssistantItem.Updated; } }
 
-		public int ItemID { get { return m_AssistantItem.ItemID.Value; } }
+		public int ItemID {
+			get {
+				if (m_AssistantItem != null)
+					return m_AssistantItem.ItemID.Value;
+				else
+					return 0;
+				}
+		}
 
 		public int Amount { get { return m_AssistantItem.Amount; } }
 
