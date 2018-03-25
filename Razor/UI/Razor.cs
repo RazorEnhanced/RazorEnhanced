@@ -787,6 +787,7 @@ namespace Assistant
 		private ToolStripMenuItem autoStartAtLoginToolStripMenuItem;
 		private ToolStripMenuItem playToolStripMenuItem;
 		private ToolStripMenuItem stopToolStripMenuItem;
+		private System.Windows.Forms.Timer timertitlestatusbar;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1454,6 +1455,7 @@ namespace Assistant
 			this.autoStartAtLoginToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
@@ -7714,6 +7716,12 @@ namespace Assistant
 			this.stopToolStripMenuItem.Text = "Stop";
 			this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
 			// 
+			// timertitlestatusbar
+			// 
+			this.timertitlestatusbar.Enabled = true;
+			this.timertitlestatusbar.Interval = 200;
+			this.timertitlestatusbar.Tick += new System.EventHandler(this.timertitlestatusbar_Tick);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -12494,8 +12502,15 @@ namespace Assistant
 		{
 			UpdateRazorStatus();
 			UpdateScriptGrid();
-			RazorEnhanced.ToolBar.UpdateCount();
-			RazorEnhanced.SpellGrid.UpdateSAIcon();
+			if (toolboxstyleComboBox.Text != "TitleBar")
+				RazorEnhanced.ToolBar.UpdateCount();
+			SpellGrid.UpdateSAIcon();
+		}
+
+		private void timertitlestatusbar_Tick(object sender, EventArgs e)
+		{
+			if (toolboxstyleComboBox.Text == "TitleBar")
+				TitleBar.UpdateTitleBar();
 		}
 
 		// ---------------- TOOLBAR START ----------------

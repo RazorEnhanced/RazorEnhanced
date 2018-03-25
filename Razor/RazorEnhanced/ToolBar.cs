@@ -393,7 +393,7 @@ namespace RazorEnhanced
 			if (Assistant.World.Player == null)
 				return;
 
-			if (Settings.General.ReadString("ToolBoxStyleComboBox") == "TitleBar")
+			if (Engine.MainWindow.ToolBoxStyleComboBox.Text == "TitleBar")
 			{
 				TitleBar.UpdateTitleBar();
 				return;
