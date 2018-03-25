@@ -745,7 +745,7 @@ namespace Assistant
 		// Target
 		internal ListView TargetListView { get { return targetlistView; } }
 
-		// Enhanced Filrers
+		// Enhanced Filters
 		internal RazorCheckBox BlockPartyInviteCheckBox { get { return blockpartyinviteCheckBox; } }
 		internal RazorCheckBox BlockTradeRequestCheckBox { get { return blocktraderequestCheckBox; } }
 		internal RazorCheckBox ShowStaticFieldCheckBox { get { return showstaticfieldCheckBox; } }
@@ -770,6 +770,7 @@ namespace Assistant
 		internal RazorCheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
 		internal RazorCheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
 		internal RazorCheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
+		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } } 
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
@@ -788,6 +789,7 @@ namespace Assistant
 		private ToolStripMenuItem playToolStripMenuItem;
 		private ToolStripMenuItem stopToolStripMenuItem;
 		private System.Windows.Forms.Timer timertitlestatusbar;
+		private RazorCheckBox chknorunStealth;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -887,6 +889,7 @@ namespace Assistant
 			this.opacityLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.moreOptTab = new System.Windows.Forms.TabPage();
+			this.chknorunStealth = new RazorEnhanced.UI.RazorCheckBox();
 			this.nosearchpouches = new RazorEnhanced.UI.RazorCheckBox();
 			this.autosearchcontainers = new RazorEnhanced.UI.RazorCheckBox();
 			this.uo3dEquipUnEquip = new RazorEnhanced.UI.RazorCheckBox();
@@ -1880,6 +1883,7 @@ namespace Assistant
 			// 
 			// moreOptTab
 			// 
+			this.moreOptTab.Controls.Add(this.chknorunStealth);
 			this.moreOptTab.Controls.Add(this.nosearchpouches);
 			this.moreOptTab.Controls.Add(this.autosearchcontainers);
 			this.moreOptTab.Controls.Add(this.uo3dEquipUnEquip);
@@ -1942,9 +1946,18 @@ namespace Assistant
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
 			// 
+			// chknorunStealth
+			// 
+			this.chknorunStealth.Location = new System.Drawing.Point(204, 264);
+			this.chknorunStealth.Name = "chknorunStealth";
+			this.chknorunStealth.Size = new System.Drawing.Size(190, 22);
+			this.chknorunStealth.TabIndex = 78;
+			this.chknorunStealth.Text = "No run if Stealthed";
+			this.chknorunStealth.CheckedChanged += new System.EventHandler(this.chknorunStealth_CheckedChanged);
+			// 
 			// nosearchpouches
 			// 
-			this.nosearchpouches.Location = new System.Drawing.Point(455, 316);
+			this.nosearchpouches.Location = new System.Drawing.Point(455, 306);
 			this.nosearchpouches.Name = "nosearchpouches";
 			this.nosearchpouches.Size = new System.Drawing.Size(185, 22);
 			this.nosearchpouches.TabIndex = 77;
@@ -1953,7 +1966,7 @@ namespace Assistant
 			// 
 			// autosearchcontainers
 			// 
-			this.autosearchcontainers.Location = new System.Drawing.Point(437, 296);
+			this.autosearchcontainers.Location = new System.Drawing.Point(436, 285);
 			this.autosearchcontainers.Name = "autosearchcontainers";
 			this.autosearchcontainers.Size = new System.Drawing.Size(214, 22);
 			this.autosearchcontainers.TabIndex = 76;
@@ -1962,7 +1975,7 @@ namespace Assistant
 			// 
 			// uo3dEquipUnEquip
 			// 
-			this.uo3dEquipUnEquip.Location = new System.Drawing.Point(437, 274);
+			this.uo3dEquipUnEquip.Location = new System.Drawing.Point(436, 264);
 			this.uo3dEquipUnEquip.Name = "uo3dEquipUnEquip";
 			this.uo3dEquipUnEquip.Size = new System.Drawing.Size(214, 22);
 			this.uo3dEquipUnEquip.TabIndex = 75;
@@ -1971,7 +1984,7 @@ namespace Assistant
 			// 
 			// hiddedAutoOpenDoors
 			// 
-			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 294);
+			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 306);
 			this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
 			this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.hiddedAutoOpenDoors.TabIndex = 74;
@@ -1980,7 +1993,7 @@ namespace Assistant
 			// 
 			// chkPartyOverhead
 			// 
-			this.chkPartyOverhead.Location = new System.Drawing.Point(437, 209);
+			this.chkPartyOverhead.Location = new System.Drawing.Point(436, 202);
 			this.chkPartyOverhead.Name = "chkPartyOverhead";
 			this.chkPartyOverhead.Size = new System.Drawing.Size(226, 21);
 			this.chkPartyOverhead.TabIndex = 72;
@@ -1989,7 +2002,7 @@ namespace Assistant
 			// 
 			// label10
 			// 
-			this.label10.Location = new System.Drawing.Point(453, 188);
+			this.label10.Location = new System.Drawing.Point(453, 184);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(80, 17);
 			this.label10.TabIndex = 73;
@@ -1997,7 +2010,7 @@ namespace Assistant
 			// 
 			// label8
 			// 
-			this.label8.Location = new System.Drawing.Point(453, 121);
+			this.label8.Location = new System.Drawing.Point(452, 119);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(37, 18);
 			this.label8.TabIndex = 72;
@@ -2005,7 +2018,7 @@ namespace Assistant
 			// 
 			// label5
 			// 
-			this.label5.Location = new System.Drawing.Point(453, 60);
+			this.label5.Location = new System.Drawing.Point(452, 58);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(71, 18);
 			this.label5.TabIndex = 70;
@@ -2013,7 +2026,7 @@ namespace Assistant
 			// 
 			// label6
 			// 
-			this.label6.Location = new System.Drawing.Point(568, 59);
+			this.label6.Location = new System.Drawing.Point(568, 57);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(30, 18);
 			this.label6.TabIndex = 71;
@@ -2053,7 +2066,7 @@ namespace Assistant
 			// 
 			// label4
 			// 
-			this.label4.Location = new System.Drawing.Point(384, 102);
+			this.label4.Location = new System.Drawing.Point(384, 98);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(36, 16);
 			this.label4.TabIndex = 24;
@@ -2098,7 +2111,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.healthFmt.BackColor = System.Drawing.Color.White;
 			this.healthFmt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.healthFmt.Location = new System.Drawing.Point(539, 185);
+			this.healthFmt.Location = new System.Drawing.Point(537, 181);
 			this.healthFmt.Name = "healthFmt";
 			this.healthFmt.Size = new System.Drawing.Size(46, 20);
 			this.healthFmt.TabIndex = 71;
@@ -2106,7 +2119,7 @@ namespace Assistant
 			// 
 			// showHealthOH
 			// 
-			this.showHealthOH.Location = new System.Drawing.Point(437, 162);
+			this.showHealthOH.Location = new System.Drawing.Point(436, 159);
 			this.showHealthOH.Name = "showHealthOH";
 			this.showHealthOH.Size = new System.Drawing.Size(222, 22);
 			this.showHealthOH.TabIndex = 69;
@@ -2115,7 +2128,7 @@ namespace Assistant
 			// 
 			// showtargtext
 			// 
-			this.showtargtext.Location = new System.Drawing.Point(437, 140);
+			this.showtargtext.Location = new System.Drawing.Point(436, 138);
 			this.showtargtext.Name = "showtargtext";
 			this.showtargtext.Size = new System.Drawing.Size(190, 22);
 			this.showtargtext.TabIndex = 53;
@@ -2129,7 +2142,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.ltRange.BackColor = System.Drawing.Color.White;
 			this.ltRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.ltRange.Location = new System.Drawing.Point(491, 119);
+			this.ltRange.Location = new System.Drawing.Point(491, 117);
 			this.ltRange.Name = "ltRange";
 			this.ltRange.Size = new System.Drawing.Size(32, 20);
 			this.ltRange.TabIndex = 41;
@@ -2137,7 +2150,7 @@ namespace Assistant
 			// 
 			// rangeCheckLT
 			// 
-			this.rangeCheckLT.Location = new System.Drawing.Point(437, 99);
+			this.rangeCheckLT.Location = new System.Drawing.Point(436, 94);
 			this.rangeCheckLT.Name = "rangeCheckLT";
 			this.rangeCheckLT.Size = new System.Drawing.Size(185, 22);
 			this.rangeCheckLT.TabIndex = 40;
@@ -2146,7 +2159,7 @@ namespace Assistant
 			// 
 			// smartLT
 			// 
-			this.smartLT.Location = new System.Drawing.Point(437, 77);
+			this.smartLT.Location = new System.Drawing.Point(436, 75);
 			this.smartLT.Name = "smartLT";
 			this.smartLT.Size = new System.Drawing.Size(185, 22);
 			this.smartLT.TabIndex = 52;
@@ -2160,7 +2173,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtObjDelay.BackColor = System.Drawing.Color.White;
 			this.txtObjDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.txtObjDelay.Location = new System.Drawing.Point(530, 56);
+			this.txtObjDelay.Location = new System.Drawing.Point(530, 54);
 			this.txtObjDelay.Name = "txtObjDelay";
 			this.txtObjDelay.Size = new System.Drawing.Size(32, 20);
 			this.txtObjDelay.TabIndex = 37;
@@ -2168,7 +2181,7 @@ namespace Assistant
 			// 
 			// QueueActions
 			// 
-			this.QueueActions.Location = new System.Drawing.Point(437, 36);
+			this.QueueActions.Location = new System.Drawing.Point(436, 33);
 			this.QueueActions.Name = "QueueActions";
 			this.QueueActions.Size = new System.Drawing.Size(222, 22);
 			this.QueueActions.TabIndex = 34;
@@ -2177,7 +2190,7 @@ namespace Assistant
 			// 
 			// actionStatusMsg
 			// 
-			this.actionStatusMsg.Location = new System.Drawing.Point(437, 14);
+			this.actionStatusMsg.Location = new System.Drawing.Point(436, 12);
 			this.actionStatusMsg.Name = "actionStatusMsg";
 			this.actionStatusMsg.Size = new System.Drawing.Size(222, 22);
 			this.actionStatusMsg.TabIndex = 38;
@@ -2201,7 +2214,7 @@ namespace Assistant
 			// 
 			// potionEquip
 			// 
-			this.potionEquip.Location = new System.Drawing.Point(437, 252);
+			this.potionEquip.Location = new System.Drawing.Point(436, 243);
 			this.potionEquip.Name = "potionEquip";
 			this.potionEquip.Size = new System.Drawing.Size(214, 22);
 			this.potionEquip.TabIndex = 67;
@@ -2210,7 +2223,7 @@ namespace Assistant
 			// 
 			// spellUnequip
 			// 
-			this.spellUnequip.Location = new System.Drawing.Point(437, 230);
+			this.spellUnequip.Location = new System.Drawing.Point(436, 222);
 			this.spellUnequip.Name = "spellUnequip";
 			this.spellUnequip.Size = new System.Drawing.Size(214, 22);
 			this.spellUnequip.TabIndex = 39;
@@ -2219,7 +2232,7 @@ namespace Assistant
 			// 
 			// autoOpenDoors
 			// 
-			this.autoOpenDoors.Location = new System.Drawing.Point(204, 274);
+			this.autoOpenDoors.Location = new System.Drawing.Point(204, 285);
 			this.autoOpenDoors.Name = "autoOpenDoors";
 			this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.autoOpenDoors.TabIndex = 59;
@@ -2228,7 +2241,7 @@ namespace Assistant
 			// 
 			// alwaysStealth
 			// 
-			this.alwaysStealth.Location = new System.Drawing.Point(204, 252);
+			this.alwaysStealth.Location = new System.Drawing.Point(204, 243);
 			this.alwaysStealth.Name = "alwaysStealth";
 			this.alwaysStealth.Size = new System.Drawing.Size(190, 22);
 			this.alwaysStealth.TabIndex = 57;
@@ -2237,7 +2250,7 @@ namespace Assistant
 			// 
 			// chkStealth
 			// 
-			this.chkStealth.Location = new System.Drawing.Point(204, 230);
+			this.chkStealth.Location = new System.Drawing.Point(204, 222);
 			this.chkStealth.Name = "chkStealth";
 			this.chkStealth.Size = new System.Drawing.Size(190, 22);
 			this.chkStealth.TabIndex = 12;
@@ -2246,7 +2259,7 @@ namespace Assistant
 			// 
 			// preAOSstatbar
 			// 
-			this.preAOSstatbar.Location = new System.Drawing.Point(204, 13);
+			this.preAOSstatbar.Location = new System.Drawing.Point(204, 12);
 			this.preAOSstatbar.Name = "preAOSstatbar";
 			this.preAOSstatbar.Size = new System.Drawing.Size(190, 22);
 			this.preAOSstatbar.TabIndex = 57;
@@ -2255,7 +2268,7 @@ namespace Assistant
 			// 
 			// negotiate
 			// 
-			this.negotiate.Location = new System.Drawing.Point(204, 186);
+			this.negotiate.Location = new System.Drawing.Point(204, 180);
 			this.negotiate.Name = "negotiate";
 			this.negotiate.Size = new System.Drawing.Size(224, 22);
 			this.negotiate.TabIndex = 56;
@@ -2282,7 +2295,7 @@ namespace Assistant
 			// 
 			// filterSnoop
 			// 
-			this.filterSnoop.Location = new System.Drawing.Point(204, 143);
+			this.filterSnoop.Location = new System.Drawing.Point(204, 138);
 			this.filterSnoop.Name = "filterSnoop";
 			this.filterSnoop.Size = new System.Drawing.Size(230, 22);
 			this.filterSnoop.TabIndex = 49;
@@ -2296,7 +2309,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.corpseRange.BackColor = System.Drawing.Color.White;
 			this.corpseRange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.corpseRange.Location = new System.Drawing.Point(355, 100);
+			this.corpseRange.Location = new System.Drawing.Point(355, 96);
 			this.corpseRange.Name = "corpseRange";
 			this.corpseRange.Size = new System.Drawing.Size(24, 20);
 			this.corpseRange.TabIndex = 23;
@@ -2304,7 +2317,7 @@ namespace Assistant
 			// 
 			// incomingCorpse
 			// 
-			this.incomingCorpse.Location = new System.Drawing.Point(204, 208);
+			this.incomingCorpse.Location = new System.Drawing.Point(204, 201);
 			this.incomingCorpse.Name = "incomingCorpse";
 			this.incomingCorpse.Size = new System.Drawing.Size(226, 22);
 			this.incomingCorpse.TabIndex = 48;
@@ -2313,7 +2326,7 @@ namespace Assistant
 			// 
 			// incomingMob
 			// 
-			this.incomingMob.Location = new System.Drawing.Point(204, 165);
+			this.incomingMob.Location = new System.Drawing.Point(204, 159);
 			this.incomingMob.Name = "incomingMob";
 			this.incomingMob.Size = new System.Drawing.Size(244, 22);
 			this.incomingMob.TabIndex = 47;
@@ -2387,7 +2400,7 @@ namespace Assistant
 			// 
 			// autoStackRes
 			// 
-			this.autoStackRes.Location = new System.Drawing.Point(204, 78);
+			this.autoStackRes.Location = new System.Drawing.Point(204, 75);
 			this.autoStackRes.Name = "autoStackRes";
 			this.autoStackRes.Size = new System.Drawing.Size(228, 22);
 			this.autoStackRes.TabIndex = 35;
@@ -2396,7 +2409,7 @@ namespace Assistant
 			// 
 			// queueTargets
 			// 
-			this.queueTargets.Location = new System.Drawing.Point(204, 35);
+			this.queueTargets.Location = new System.Drawing.Point(204, 33);
 			this.queueTargets.Name = "queueTargets";
 			this.queueTargets.Size = new System.Drawing.Size(228, 22);
 			this.queueTargets.TabIndex = 34;
@@ -2405,7 +2418,7 @@ namespace Assistant
 			// 
 			// spamFilter
 			// 
-			this.spamFilter.Location = new System.Drawing.Point(204, 121);
+			this.spamFilter.Location = new System.Drawing.Point(204, 117);
 			this.spamFilter.Name = "spamFilter";
 			this.spamFilter.Size = new System.Drawing.Size(228, 22);
 			this.spamFilter.TabIndex = 26;
@@ -2414,7 +2427,7 @@ namespace Assistant
 			// 
 			// openCorpses
 			// 
-			this.openCorpses.Location = new System.Drawing.Point(204, 100);
+			this.openCorpses.Location = new System.Drawing.Point(204, 96);
 			this.openCorpses.Name = "openCorpses";
 			this.openCorpses.Size = new System.Drawing.Size(156, 22);
 			this.openCorpses.TabIndex = 22;
@@ -2423,7 +2436,7 @@ namespace Assistant
 			// 
 			// blockDis
 			// 
-			this.blockDis.Location = new System.Drawing.Point(204, 56);
+			this.blockDis.Location = new System.Drawing.Point(204, 54);
 			this.blockDis.Name = "blockDis";
 			this.blockDis.Size = new System.Drawing.Size(184, 22);
 			this.blockDis.TabIndex = 55;
@@ -8133,6 +8146,7 @@ namespace Assistant
 			uo3dEquipUnEquip.Checked = RazorEnhanced.Settings.General.ReadBool("UO3dEquipUnEquip");
 			autosearchcontainers.Checked = RazorEnhanced.Settings.General.ReadBool("AutoSearch");
 			nosearchpouches.Checked = RazorEnhanced.Settings.General.ReadBool("NoSearchPouches");
+			chknorunStealth.Checked = RazorEnhanced.Settings.General.ReadBool("ChkNoRunStealth");
 
 			chkForceSpeechHue.Checked = setSpeechHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue");
 			chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpellHue");
@@ -9327,6 +9341,12 @@ namespace Assistant
 		{
 			if (uo3dEquipUnEquip.Focused)
 				RazorEnhanced.Settings.General.WriteBool("UO3DEquipUnEquip", uo3dEquipUnEquip.Checked);
+		}
+
+		private void chknorunStealth_CheckedChanged(object sender, EventArgs e)
+		{
+			if (chknorunStealth.Focused)
+				RazorEnhanced.Settings.General.WriteBool("ChkNoRunStealth", chknorunStealth.Checked);
 		}
 
 		private void autosearchcontainers_CheckedChanged(object sender, EventArgs e)

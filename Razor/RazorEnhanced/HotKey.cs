@@ -392,6 +392,11 @@ namespace RazorEnhanced
 					DPSMeter.Stop();
 					break;
 
+				case "No Run Stealth ON/OFF":
+					Misc.NoRunStealthToggle(!Misc.NoRunStealthStatus());
+					Misc.SendMessage("No Run Stealth Enabled: " + Misc.NoRunStealthStatus().ToString(), false);
+					break;
+
 				default:
 					break;
 			}

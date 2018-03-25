@@ -355,10 +355,15 @@ namespace RazorEnhanced
 			ClientCommunication.SendToServerWait(new RenameRequest((uint)mob.Serial, name));
 		}
 
-		public static void test()
+		// Lock stealth run
+		public static void NoRunStealthToggle(bool enable)
 		{
-			
+				Engine.MainWindow.ChkNoRunStealth.Invoke(new Action(() => Engine.MainWindow.ChkNoRunStealth.Checked = enable));
+		}
 
+		public static bool NoRunStealthStatus()
+		{
+			return Engine.MainWindow.ChkNoRunStealth.Checked;
 		}
 
 
