@@ -1343,7 +1343,11 @@ namespace RazorEnhanced.UI
 
 			if (Scripts.ScriptEditorThread != null && Scripts.ScriptEditorThread.ThreadState != ThreadState.Stopped)
 			{
-				Scripts.ScriptEditorThread.Abort();
+				try
+				{
+					Scripts.ScriptEditorThread.Abort();
+				}
+				catch { }
 				SetErrorBox("Script stopped: " + m_Filename);
 				Scripts.ScriptEditorThread = null;
             }
