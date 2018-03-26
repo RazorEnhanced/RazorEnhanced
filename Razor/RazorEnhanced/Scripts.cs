@@ -350,13 +350,6 @@ namespace RazorEnhanced
 
 							if (script.IsUnstarted)
 								script.Start();
-						/*	{
-								try
-								{
-									script.Start();
-								}
-								catch { }
-							}*/
 						}
 						else
 						{
@@ -364,13 +357,6 @@ namespace RazorEnhanced
 								script.Reset();
 							else if (script.IsUnstarted)
 								script.Start();
-							/*{
-								try
-								{
-									script.Start();
-								}
-								catch { }
-							}*/
 						}
 					}
 					else
@@ -392,43 +378,71 @@ namespace RazorEnhanced
 					if (AutoLoot.AutoMode && !IsRunningThread(m_AutoLootThread))
 					{
 						m_AutoLootThread = new Thread(AutoLoot.AutoRun);
-						m_AutoLootThread.Start();
+						try
+						{
+							m_AutoLootThread.Start();
+						}
+						catch { }
 					}
 
 					if (Scavenger.AutoMode && !IsRunningThread(m_ScavengerThread))
 					{
 						m_ScavengerThread = new Thread(Scavenger.AutoRun);
-						m_ScavengerThread.Start();
+						try
+						{ 
+							m_ScavengerThread.Start();
+						}
+						catch { }
 					}
 
 					if (BandageHeal.AutoMode && !IsRunningThread(m_BandageHealThread))
 					{
 						m_BandageHealThread = new Thread(BandageHeal.AutoRun);
-						m_BandageHealThread.Start();
+						try
+						{ 
+							m_BandageHealThread.Start();
+						}
+						catch { }
 					}
 
 					if ((Scavenger.AutoMode || AutoLoot.AutoMode || Filters.AutoCarver) && !IsRunningThread(m_DragDropThread))
 					{
 						m_DragDropThread = new Thread(DragDropManager.AutoRun);
-						m_DragDropThread.Start();
+						try
+						{
+							m_DragDropThread.Start();
+						}
+						catch { }
 					}
 
 					if (Filters.AutoCarver && !IsRunningThread(m_AutoCarverThread))
 					{
 						m_AutoCarverThread = new Thread(Filters.CarveAutoRun);
-						m_AutoCarverThread.Start();
+						try
+						{ 
+							m_AutoCarverThread.Start();
+						}
+						catch { }
 					}
 
 					if (Filters.BoneCutter && !IsRunningThread(m_BoneCutterThread))
 					{
 						m_BoneCutterThread = new Thread(Filters.BoneCutterRun);
-						m_BoneCutterThread.Start();
+						try
+						{
+							m_BoneCutterThread.Start();
+						}
+						catch { }
 					}
 
 					if (Filters.AutoModeRemount && !IsRunningThread(m_AutoRemountThread))
 					{
 						m_AutoRemountThread = new Thread(Filters.RemountAutoRun);
-						m_AutoRemountThread.Start();
+						try
+						{ 
+							m_AutoRemountThread.Start();
+						}
+						catch { }
 					}
 				}
 			}
