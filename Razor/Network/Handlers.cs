@@ -2089,12 +2089,14 @@ namespace Assistant
 				// Filtro messsaggi poison (33 colore poison message)
 				if (type == MessageType.Regular && hue == 33 && ser != World.Player.Serial)
 				{
-					if (text.EndsWith("*"))
+					if (Assistant.Engine.MainWindow.FilterPoison.Checked)
 					{
-						args.Block = true;
-						return;
+						if (text.EndsWith("*"))
+						{
+							args.Block = true;
+							return;
+						}
 					}
-
 				}
 
 				if ((type == MessageType.Emote || type == MessageType.Regular || type == MessageType.Whisper || type == MessageType.Yell) && ser.IsMobile && ser != World.Player.Serial)

@@ -769,8 +769,11 @@ namespace Assistant
 		internal RazorCheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
 		internal RazorCheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
 		internal RazorCheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
+
+		// General Filter
 		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } }
 		internal RazorCheckBox ChkStealth { get { return chkStealth; } }
+		internal RazorCheckBox FilterPoison { get { return filterPoison; } }
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
@@ -790,6 +793,7 @@ namespace Assistant
 		private ToolStripMenuItem stopToolStripMenuItem;
 		private System.Windows.Forms.Timer timertitlestatusbar;
 		private RazorCheckBox chknorunStealth;
+		private RazorCheckBox filterPoison;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -889,6 +893,7 @@ namespace Assistant
 			this.opacityLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.moreOptTab = new System.Windows.Forms.TabPage();
+			this.filterPoison = new RazorEnhanced.UI.RazorCheckBox();
 			this.chknorunStealth = new RazorEnhanced.UI.RazorCheckBox();
 			this.nosearchpouches = new RazorEnhanced.UI.RazorCheckBox();
 			this.autosearchcontainers = new RazorEnhanced.UI.RazorCheckBox();
@@ -1882,6 +1887,7 @@ namespace Assistant
 			// 
 			// moreOptTab
 			// 
+			this.moreOptTab.Controls.Add(this.filterPoison);
 			this.moreOptTab.Controls.Add(this.chknorunStealth);
 			this.moreOptTab.Controls.Add(this.nosearchpouches);
 			this.moreOptTab.Controls.Add(this.autosearchcontainers);
@@ -1944,9 +1950,18 @@ namespace Assistant
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
 			// 
+			// filterPoison
+			// 
+			this.filterPoison.Location = new System.Drawing.Point(204, 159);
+			this.filterPoison.Name = "filterPoison";
+			this.filterPoison.Size = new System.Drawing.Size(216, 22);
+			this.filterPoison.TabIndex = 79;
+			this.filterPoison.Text = "Filter Poison Messages";
+			this.filterPoison.CheckedChanged += new System.EventHandler(this.filterPoison_CheckedChanged);
+			// 
 			// chknorunStealth
 			// 
-			this.chknorunStealth.Location = new System.Drawing.Point(204, 243);
+			this.chknorunStealth.Location = new System.Drawing.Point(204, 264);
 			this.chknorunStealth.Name = "chknorunStealth";
 			this.chknorunStealth.Size = new System.Drawing.Size(190, 22);
 			this.chknorunStealth.TabIndex = 78;
@@ -1982,7 +1997,7 @@ namespace Assistant
 			// 
 			// hiddedAutoOpenDoors
 			// 
-			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 285);
+			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 306);
 			this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
 			this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.hiddedAutoOpenDoors.TabIndex = 74;
@@ -2230,7 +2245,7 @@ namespace Assistant
 			// 
 			// autoOpenDoors
 			// 
-			this.autoOpenDoors.Location = new System.Drawing.Point(204, 264);
+			this.autoOpenDoors.Location = new System.Drawing.Point(204, 285);
 			this.autoOpenDoors.Name = "autoOpenDoors";
 			this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.autoOpenDoors.TabIndex = 59;
@@ -2239,7 +2254,7 @@ namespace Assistant
 			// 
 			// chkStealth
 			// 
-			this.chkStealth.Location = new System.Drawing.Point(204, 222);
+			this.chkStealth.Location = new System.Drawing.Point(204, 243);
 			this.chkStealth.Name = "chkStealth";
 			this.chkStealth.Size = new System.Drawing.Size(190, 22);
 			this.chkStealth.TabIndex = 12;
@@ -2257,7 +2272,7 @@ namespace Assistant
 			// 
 			// negotiate
 			// 
-			this.negotiate.Location = new System.Drawing.Point(204, 180);
+			this.negotiate.Location = new System.Drawing.Point(204, 201);
 			this.negotiate.Name = "negotiate";
 			this.negotiate.Size = new System.Drawing.Size(224, 22);
 			this.negotiate.TabIndex = 56;
@@ -2286,7 +2301,7 @@ namespace Assistant
 			// 
 			this.filterSnoop.Location = new System.Drawing.Point(204, 138);
 			this.filterSnoop.Name = "filterSnoop";
-			this.filterSnoop.Size = new System.Drawing.Size(230, 22);
+			this.filterSnoop.Size = new System.Drawing.Size(208, 22);
 			this.filterSnoop.TabIndex = 49;
 			this.filterSnoop.Text = "Filter Snooping Messages";
 			this.filterSnoop.CheckedChanged += new System.EventHandler(this.filterSnoop_CheckedChanged);
@@ -2306,7 +2321,7 @@ namespace Assistant
 			// 
 			// incomingCorpse
 			// 
-			this.incomingCorpse.Location = new System.Drawing.Point(204, 201);
+			this.incomingCorpse.Location = new System.Drawing.Point(204, 222);
 			this.incomingCorpse.Name = "incomingCorpse";
 			this.incomingCorpse.Size = new System.Drawing.Size(226, 22);
 			this.incomingCorpse.TabIndex = 48;
@@ -2315,7 +2330,7 @@ namespace Assistant
 			// 
 			// incomingMob
 			// 
-			this.incomingMob.Location = new System.Drawing.Point(204, 159);
+			this.incomingMob.Location = new System.Drawing.Point(204, 180);
 			this.incomingMob.Name = "incomingMob";
 			this.incomingMob.Size = new System.Drawing.Size(244, 22);
 			this.incomingMob.TabIndex = 47;
@@ -8123,6 +8138,7 @@ namespace Assistant
 			corpseRange.Text = RazorEnhanced.Settings.General.ReadInt("CorpseRange").ToString();
 			spamFilter.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSpam");
 			filterSnoop.Checked = RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg");
+			filterPoison.Checked = RazorEnhanced.Settings.General.ReadBool("FilterPoison");
 			incomingMob.Checked = RazorEnhanced.Settings.General.ReadBool("ShowMobNames");
 			negotiate.Checked = RazorEnhanced.Settings.General.ReadBool("Negotiate");
 			incomingCorpse.Checked = RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames");
@@ -9163,6 +9179,12 @@ namespace Assistant
 			catch
 			{
 			}
+		}
+
+		private void filterPoison_CheckedChanged(object sender, EventArgs e)
+		{
+			if (filterPoison.Focused)
+				RazorEnhanced.Settings.General.WriteBool("FilterPoison", filterPoison.Checked);
 		}
 
 		private void filterSnoop_CheckedChanged(object sender, System.EventArgs e)
@@ -14028,6 +14050,7 @@ namespace Assistant
 			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
+
 		// ----------------- STOP DPS METER -------------------
 	}
 }

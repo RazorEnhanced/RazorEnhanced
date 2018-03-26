@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 49;
+		private static int SettingVersion = 50;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1709,6 +1709,7 @@ namespace RazorEnhanced
 				general.Columns.Add("HiddedAutoOpenDoors", typeof(bool));
 				general.Columns.Add("UO3DEquipUnEquip", typeof(bool));
 				general.Columns.Add("ChkNoRunStealth", typeof(bool));
+				general.Columns.Add("FilterPoison", typeof(bool));
 
 				// Parametri Tab (Options -> Hues)
 				general.Columns.Add("LTHilight", typeof(int));
@@ -1792,7 +1793,7 @@ namespace RazorEnhanced
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1,
 
                     // Parametri primo avvio per tab Enhanced Filters
-                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
+                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false, false,
 
                     // Parametri primo avvio per tab Enhanced ToolBar
                     false, false, 10, 10, 2, "Big", "Vertical", true, true, true, true, true, 100,
@@ -5734,6 +5735,15 @@ namespace RazorEnhanced
 
 				realVersion = 49;
 				General.WriteInt("SettingVersion", 49);
+			}
+
+			if (realVersion == 49)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("FilterPoison", typeof(bool));
+				General.WriteBool("FilterPoison", false);
+
+				realVersion = 50;
+				General.WriteInt("SettingVersion", 50);
 			}
 			Save(true);
 		}
