@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Windows.Forms;
 using System.Drawing;
+using Assistant;
 
 namespace RazorEnhanced.UI
 {
@@ -29,52 +30,52 @@ namespace RazorEnhanced.UI
 
 		private void bNameCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lName.Text);
+			Utility.ClipBoardCopy(lName.Text);
 		}
 
 		private void bSerialCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lSerial.Text);
+			Utility.ClipBoardCopy(lSerial.Text);
 		}
 
 		private void bItemIdCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lItemID.Text);
+			Utility.ClipBoardCopy(lItemID.Text);
 		}
 
 		private void bColorCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lColor.Text);
+			Utility.ClipBoardCopy(lColor.Text);
 		}
 
 		private void bPositionCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lPosition.Text);
+			Utility.ClipBoardCopy(lPosition.Text);
 		}
 
 		private void bContainerCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lContainer.Text);
+			Utility.ClipBoardCopy(lContainer.Text);
 		}
 
 		private void bRContainerCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lRootContainer.Text);
+			Utility.ClipBoardCopy(lRootContainer.Text);
 		}
 
 		private void bAmountCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lAmount.Text);
+			Utility.ClipBoardCopy(lAmount.Text);
 		}
 
 		private void bLayerCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lLayer.Text);
+			Utility.ClipBoardCopy(lLayer.Text);
 		}
 
 		private void bOwnedCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lOwned.Text);
+			Utility.ClipBoardCopy(lOwned.Text);
 		}
 
 		private void EnhancedItemInspector_FormClosing(object sender, FormClosingEventArgs e)

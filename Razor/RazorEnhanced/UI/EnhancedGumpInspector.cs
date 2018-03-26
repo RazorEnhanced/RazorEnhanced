@@ -47,7 +47,7 @@ namespace RazorEnhanced.UI
 			if (EnhancedGumpInspectorListBox.SelectedItem != null)
 			{
 				string selected = EnhancedGumpInspectorListBox.SelectedItem.ToString();
-				Clipboard.SetText(selected.Substring(selected.IndexOf(':') + 1));
+				Assistant.Utility.ClipBoardCopy(selected.Substring(selected.IndexOf(':') + 1));
 			}
 		}
 	}

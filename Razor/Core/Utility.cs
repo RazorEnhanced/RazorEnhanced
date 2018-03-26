@@ -413,5 +413,14 @@ namespace Assistant
 				return def;
 			}
 		}
+
+		internal static void ClipBoardCopy(string txt)
+		{
+			try
+			{
+				Clipboard.SetText(txt);
+			}
+			catch (System.Runtime.InteropServices.ExternalException) { }
+		}
 	}
 }

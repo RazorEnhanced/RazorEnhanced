@@ -152,52 +152,52 @@ namespace RazorEnhanced.UI
 
 		private void bNameCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lName.Text);
+			Utility.ClipBoardCopy(lName.Text);
 		}
 
 		private void bSerialCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lSerial.Text);
+			Utility.ClipBoardCopy(lSerial.Text);
 		}
 
 		private void bItemIdCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lMobileID.Text);
+			Utility.ClipBoardCopy(lMobileID.Text);
 		}
 
 		private void bColorCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lColor.Text);
+			Utility.ClipBoardCopy(lColor.Text);
 		}
 
 		private void bPositionCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lPosition.Text);
+			Utility.ClipBoardCopy(lPosition.Text);
 		}
 
 		private void bContainerCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lSex.Text);
+			Utility.ClipBoardCopy(lSex.Text);
 		}
 
 		private void bRContainerCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lHits.Text);
+			Utility.ClipBoardCopy(lHits.Text);
 		}
 
 		private void bAmountCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lMaxHits.Text);
+			Utility.ClipBoardCopy(lMaxHits.Text);
 		}
 
 		private void bLayerCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lNotoriety.Text);
+			Utility.ClipBoardCopy(lNotoriety.Text);
 		}
 
 		private void bOwnedCopy_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(lDirection.Text);
+			Utility.ClipBoardCopy(lDirection.Text);
 		}
 
 		private void EnhancedMobileInspector_FormClosing(object sender, FormClosingEventArgs e)
