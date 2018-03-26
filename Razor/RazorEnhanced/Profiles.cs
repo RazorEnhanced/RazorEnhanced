@@ -94,10 +94,13 @@ namespace RazorEnhanced
 
 		internal static string LastUsed()
 		{
-			foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+			if (m_Dataset != null)
 			{
-				if ((bool)row["Last"])
-					return (string)row["Name"];
+				foreach (DataRow row in m_Dataset.Tables["PROFILES"].Rows)
+				{
+					if ((bool)row["Last"])
+						return (string)row["Name"];
+				}
 			}
 
 			return "default";
