@@ -1054,11 +1054,15 @@ namespace RazorEnhanced
 			if (function == "Last Used")
 			{
 				if (World.Player.LastSkill != -1)
+				{
 					ClientCommunication.SendToServer(new UseSkill(World.Player.LastSkill));
+					if ((World.Player.LastSkill == (int)SkillName.Stealth && !World.Player.Visible) || World.Player.LastSkill == (int)SkillName.Hiding) // Trigger stealth step counter
+						StealthSteps.Hide();
+				}
 			}
 			else
 			{
-				RazorEnhanced.Player.UseSkill(function);
+				RazorEnhanced.Player.UseSkill(function,false);
 			}
 		}
 

@@ -621,7 +621,7 @@ namespace Assistant
 				foreach (int t in errors)
 					sb.AppendFormat("Line {0}\r\n", t);
 
-				new MessageDialog("Language Pack Load Errors", true, sb.ToString()).Show();
+				MessageBox.Show("Language Pack Load Errors \r\n" + sb.ToString(), "ERROR!", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
 			LoadCliLoc();
@@ -648,7 +648,7 @@ namespace Assistant
 				}
 				catch { }
 
-				new MessageDialog("Error loading CliLoc", true, "There was an exception while attempting to load '{0}':\n{1}", fileName, e).ShowDialog(Engine.ActiveWindow);
+				MessageBox.Show("There was an exception while attempting to load \r\n" + fileName + "\r\n" + e, "Error loading CliLoc", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 
 			if (m_CliLoc == null || m_CliLoc.Entries == null || m_CliLoc.Entries.Count < 10)

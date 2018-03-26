@@ -10,12 +10,19 @@ namespace Assistant
 
 		internal static void OnMove()
 		{
-			if (m_Hidden && RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
+			if (World.Player.Visible && m_Hidden)
 			{
+				m_Hidden = false;
+				return;
+			}
+
+			if (m_Hidden && Engine.MainWindow.ChkStealth.Checked && World.Player != null)
+			{
+				if (m_Count == 0)
+					RazorEnhanced.Misc.SendMessage(Language.Format(LocString.StealthStart), 33, false);
+
 				m_Count++;
-				World.Player.SendMessage(MsgLevel.Error, LocString.StealthSteps, m_Count);
-				if (m_Count > 30)
-					Unhide();
+				RazorEnhanced.Misc.SendMessage(Language.Format(LocString.StealthSteps, m_Count), 33, false);
 			}
 		}
 
@@ -23,8 +30,6 @@ namespace Assistant
 		{
 			m_Hidden = true;
 			m_Count = 0;
-			if (RazorEnhanced.Settings.General.ReadBool("CountStealthSteps") && World.Player != null)
-				World.Player.SendMessage(MsgLevel.Error, LocString.StealthStart);
 		}
 
 		internal static void Unhide()

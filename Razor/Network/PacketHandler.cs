@@ -213,7 +213,6 @@ namespace Assistant
 				catch (Exception e)
 				{
 					Engine.LogCrash(e);
-					new MessageDialog("WARNING: Packet viewer exception!", true, e.ToString()).Show();
 				}
 			}
 
@@ -238,7 +237,6 @@ namespace Assistant
 				catch (Exception e)
 				{
 					Engine.LogCrash(e);
-					new MessageDialog("WARNING: Packet filter exception!", true, e.ToString()).Show();
 				}
 			}
 

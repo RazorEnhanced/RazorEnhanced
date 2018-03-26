@@ -326,7 +326,7 @@ namespace Assistant
 						if (World.Player != null)
 							World.Player.LastSkill = skillIndex;
 
-						if (skillIndex == (int)SkillName.Stealth && !World.Player.Visible)
+						if ((skillIndex == (int)SkillName.Stealth && !World.Player.Visible) || skillIndex == (int)SkillName.Hiding)
 							StealthSteps.Hide();
 						break;
 					}
@@ -1616,7 +1616,7 @@ namespace Assistant
 
 				if (!wasHidden && !m.Visible)
 				{
-					if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
+					if (Engine.MainWindow.ChkStealth.Checked)
 						StealthSteps.Hide();
 				}
 				else if (wasHidden && m.Visible)
@@ -1686,7 +1686,7 @@ namespace Assistant
 
 				if (!wasHidden && !m.Visible)
 				{
-					if (RazorEnhanced.Settings.General.ReadBool("AlwaysStealth"))
+					if (Engine.MainWindow.ChkStealth.Checked)
 						StealthSteps.Hide();
 				}
 				else if (wasHidden && m.Visible)
@@ -2018,6 +2018,7 @@ namespace Assistant
 		{
 			if (World.Player == null)
 				return;
+
 			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name));          // Journal buffer
 			if (World.Player.Journal.Count > 100)
 			{
@@ -2083,6 +2084,17 @@ namespace Assistant
 					{
 						World.Player.ResetCriminalTimer();
 					}
+				}
+
+				// Filtro messsaggi poison (33 colore poison message)
+				if (type == MessageType.Regular && hue == 33 && ser != World.Player.Serial)
+				{
+					if (text.EndsWith("*"))
+					{
+						args.Block = true;
+						return;
+					}
+
 				}
 
 				if ((type == MessageType.Emote || type == MessageType.Regular || type == MessageType.Whisper || type == MessageType.Yell) && ser.IsMobile && ser != World.Player.Serial)

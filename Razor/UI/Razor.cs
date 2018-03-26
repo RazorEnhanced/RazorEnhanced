@@ -313,7 +313,6 @@ namespace Assistant
 		private RazorTextBox forceSizeX;
 		private RazorTextBox forceSizeY;
 		private RazorCheckBox chkStealth;
-		private RazorCheckBox alwaysStealth;
 		private RazorCheckBox autoOpenDoors;
 		private RazorCheckBox spellUnequip;
 		private RazorCheckBox potionEquip;
@@ -770,7 +769,8 @@ namespace Assistant
 		internal RazorCheckBox ShowMessageFieldCheckBox { get { return showmessagefieldCheckBox; } }
 		internal RazorCheckBox ShowAgentMessageCheckBox { get { return showagentmessageCheckBox; } }
 		internal RazorCheckBox ColorFlagsSelfHighlightCheckBox { get { return colorflagsselfHighlightCheckBox; } }
-		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } } 
+		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } }
+		internal RazorCheckBox ChkStealth { get { return chkStealth; } }
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
@@ -921,7 +921,6 @@ namespace Assistant
 			this.potionEquip = new RazorEnhanced.UI.RazorCheckBox();
 			this.spellUnequip = new RazorEnhanced.UI.RazorCheckBox();
 			this.autoOpenDoors = new RazorEnhanced.UI.RazorCheckBox();
-			this.alwaysStealth = new RazorEnhanced.UI.RazorCheckBox();
 			this.chkStealth = new RazorEnhanced.UI.RazorCheckBox();
 			this.preAOSstatbar = new RazorEnhanced.UI.RazorCheckBox();
 			this.negotiate = new RazorEnhanced.UI.RazorCheckBox();
@@ -1915,7 +1914,6 @@ namespace Assistant
 			this.moreOptTab.Controls.Add(this.potionEquip);
 			this.moreOptTab.Controls.Add(this.spellUnequip);
 			this.moreOptTab.Controls.Add(this.autoOpenDoors);
-			this.moreOptTab.Controls.Add(this.alwaysStealth);
 			this.moreOptTab.Controls.Add(this.chkStealth);
 			this.moreOptTab.Controls.Add(this.preAOSstatbar);
 			this.moreOptTab.Controls.Add(this.negotiate);
@@ -1948,7 +1946,7 @@ namespace Assistant
 			// 
 			// chknorunStealth
 			// 
-			this.chknorunStealth.Location = new System.Drawing.Point(204, 264);
+			this.chknorunStealth.Location = new System.Drawing.Point(204, 243);
 			this.chknorunStealth.Name = "chknorunStealth";
 			this.chknorunStealth.Size = new System.Drawing.Size(190, 22);
 			this.chknorunStealth.TabIndex = 78;
@@ -1984,7 +1982,7 @@ namespace Assistant
 			// 
 			// hiddedAutoOpenDoors
 			// 
-			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 306);
+			this.hiddedAutoOpenDoors.Location = new System.Drawing.Point(222, 285);
 			this.hiddedAutoOpenDoors.Name = "hiddedAutoOpenDoors";
 			this.hiddedAutoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.hiddedAutoOpenDoors.TabIndex = 74;
@@ -2232,21 +2230,12 @@ namespace Assistant
 			// 
 			// autoOpenDoors
 			// 
-			this.autoOpenDoors.Location = new System.Drawing.Point(204, 285);
+			this.autoOpenDoors.Location = new System.Drawing.Point(204, 264);
 			this.autoOpenDoors.Name = "autoOpenDoors";
 			this.autoOpenDoors.Size = new System.Drawing.Size(190, 22);
 			this.autoOpenDoors.TabIndex = 59;
 			this.autoOpenDoors.Text = "Automatically open doors";
 			this.autoOpenDoors.CheckedChanged += new System.EventHandler(this.autoOpenDoors_CheckedChanged);
-			// 
-			// alwaysStealth
-			// 
-			this.alwaysStealth.Location = new System.Drawing.Point(204, 243);
-			this.alwaysStealth.Name = "alwaysStealth";
-			this.alwaysStealth.Size = new System.Drawing.Size(190, 22);
-			this.alwaysStealth.TabIndex = 57;
-			this.alwaysStealth.Text = "Always show stealth steps ";
-			this.alwaysStealth.CheckedChanged += new System.EventHandler(this.alwaysStealth_CheckedChanged);
 			// 
 			// chkStealth
 			// 
@@ -8138,7 +8127,6 @@ namespace Assistant
 			negotiate.Checked = RazorEnhanced.Settings.General.ReadBool("Negotiate");
 			incomingCorpse.Checked = RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames");
 			chkStealth.Checked = RazorEnhanced.Settings.General.ReadBool("CountStealthSteps");
-			alwaysStealth.Checked = RazorEnhanced.Settings.General.ReadBool("AlwaysStealth");
 			autoOpenDoors.Checked = hiddedAutoOpenDoors.Enabled = RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors");
 			hiddedAutoOpenDoors.Checked = RazorEnhanced.Settings.General.ReadBool("HiddedAutoOpenDoors");
 			spellUnequip.Checked = RazorEnhanced.Settings.General.ReadBool("SpellUnequip");
@@ -9225,13 +9213,6 @@ namespace Assistant
 			else
 				RazorEnhanced.Settings.General.WriteString("ImageFormat", "jpg");
 		}
-
-		private void alwaysStealth_CheckedChanged(object sender, System.EventArgs e)
-		{
-			if (alwaysStealth.Focused)
-				RazorEnhanced.Settings.General.WriteBool("AlwaysStealth", alwaysStealth.Checked);
-		}
-
 		private void autoOpenDoors_CheckedChanged(object sender, System.EventArgs e)
 		{
 			if (autoOpenDoors.Focused)

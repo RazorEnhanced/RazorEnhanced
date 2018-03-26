@@ -673,9 +673,7 @@ namespace Assistant
 				return !e.FilterAck;
 			}
 			else
-			{
 				return true;
-			}
 		}
 
 		private static bool m_ExternZ = false;

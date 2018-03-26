@@ -9,71 +9,71 @@ namespace RazorEnhanced
 	public class Player
 	{
 		// Stats
-		public static int Hits { get { return Assistant.World.Player.Hits; } }
+		public static int Hits { get { return World.Player.Hits; } }
 
-		public static int HitsMax { get { return Assistant.World.Player.HitsMax; } }
-		public static int Str { get { return Assistant.World.Player.Str; } }
-		public static int Mana { get { return Assistant.World.Player.Mana; } }
-		public static int ManaMax { get { return Assistant.World.Player.ManaMax; } }
-		public static int Int { get { return Assistant.World.Player.Int; } }
-		public static int Stam { get { return Assistant.World.Player.Stam; } }
-		public static int StamMax { get { return Assistant.World.Player.StamMax; } }
-		public static int Dex { get { return Assistant.World.Player.Dex; } }
-		public static int StatCap { get { return Assistant.World.Player.StatCap; } }
+		public static int HitsMax { get { return World.Player.HitsMax; } }
+		public static int Str { get { return World.Player.Str; } }
+		public static int Mana { get { return World.Player.Mana; } }
+		public static int ManaMax { get { return World.Player.ManaMax; } }
+		public static int Int { get { return World.Player.Int; } }
+		public static int Stam { get { return World.Player.Stam; } }
+		public static int StamMax { get { return World.Player.StamMax; } }
+		public static int Dex { get { return World.Player.Dex; } }
+		public static int StatCap { get { return World.Player.StatCap; } }
 
 		// Resistance
-		public static int AR { get { return Assistant.World.Player.AR; } }
+		public static int AR { get { return World.Player.AR; } }
 
-		public static int FireResistance { get { return Assistant.World.Player.FireResistance; } }
-		public static int ColdResistance { get { return Assistant.World.Player.ColdResistance; } }
-		public static int EnergyResistance { get { return Assistant.World.Player.EnergyResistance; } }
-		public static int PoisonResistance { get { return Assistant.World.Player.PoisonResistance; } }
+		public static int FireResistance { get { return World.Player.FireResistance; } }
+		public static int ColdResistance { get { return World.Player.ColdResistance; } }
+		public static int EnergyResistance { get { return World.Player.EnergyResistance; } }
+		public static int PoisonResistance { get { return World.Player.PoisonResistance; } }
 
 		// KR Attribute
-		public static int SwingSpeedIncrease { get { return Assistant.World.Player.SwingSpeedIncrease; } }
-		public static int DamageChanceIncrease { get { return Assistant.World.Player.DamageChanceIncrease; } }
-		public static int LowerReagentCost { get { return Assistant.World.Player.LowerReagentCost; } }
-		public static int HitPointsRegeneration { get { return Assistant.World.Player.HitPointsRegeneration; } }
-		public static int StaminaRegeneration { get { return Assistant.World.Player.StaminaRegeneration; } }
-		public static int ManaRegeneration { get { return Assistant.World.Player.ManaRegeneration; } }
-		public static int ReflectPhysicalDamage { get { return Assistant.World.Player.ReflectPhysicalDamage; } }
-		public static int EnhancePotions { get { return Assistant.World.Player.EnhancePotions; } }
-		public static int DefenseChanceIncrease { get { return Assistant.World.Player.DefenseChanceIncrease; } }
-		public static int SpellDamageIncrease { get { return Assistant.World.Player.SpellDamageIncrease; } }
-		public static int FasterCastRecovery { get { return Assistant.World.Player.FasterCastRecovery; } }
-		public static int FasterCasting { get { return Assistant.World.Player.FasterCasting; } }
-		public static int LowerManaCost { get { return Assistant.World.Player.LowerManaCost; } }
-		public static int StrengthIncrease { get { return Assistant.World.Player.StrengthIncrease; } }
-		public static int DexterityIncrease { get { return Assistant.World.Player.DexterityIncrease; } }
-		public static int IntelligenceIncrease { get { return Assistant.World.Player.IntelligenceIncrease; } }
-		public static int HitPointsIncrease { get { return Assistant.World.Player.HitPointsIncrease; } }
-		public static int StaminaIncrease { get { return Assistant.World.Player.StaminaIncrease; } }
-		public static int ManaIncrease { get { return Assistant.World.Player.ManaIncrease; } }
-		public static int MaximumHitPointsIncrease { get { return Assistant.World.Player.MaximumHitPointsIncrease; } }
-		public static int MaximumStaminaIncrease { get { return Assistant.World.Player.MaximumStaminaIncrease; } }
-		public static int MaximumManaIncrease { get { return Assistant.World.Player.MaximumManaIncrease; } }
+		public static int SwingSpeedIncrease { get { return World.Player.SwingSpeedIncrease; } }
+		public static int DamageChanceIncrease { get { return World.Player.DamageChanceIncrease; } }
+		public static int LowerReagentCost { get { return World.Player.LowerReagentCost; } }
+		public static int HitPointsRegeneration { get { return World.Player.HitPointsRegeneration; } }
+		public static int StaminaRegeneration { get { return World.Player.StaminaRegeneration; } }
+		public static int ManaRegeneration { get { return World.Player.ManaRegeneration; } }
+		public static int ReflectPhysicalDamage { get { return World.Player.ReflectPhysicalDamage; } }
+		public static int EnhancePotions { get { return World.Player.EnhancePotions; } }
+		public static int DefenseChanceIncrease { get { return World.Player.DefenseChanceIncrease; } }
+		public static int SpellDamageIncrease { get { return World.Player.SpellDamageIncrease; } }
+		public static int FasterCastRecovery { get { return World.Player.FasterCastRecovery; } }
+		public static int FasterCasting { get { return World.Player.FasterCasting; } }
+		public static int LowerManaCost { get { return World.Player.LowerManaCost; } }
+		public static int StrengthIncrease { get { return World.Player.StrengthIncrease; } }
+		public static int DexterityIncrease { get { return World.Player.DexterityIncrease; } }
+		public static int IntelligenceIncrease { get { return World.Player.IntelligenceIncrease; } }
+		public static int HitPointsIncrease { get { return World.Player.HitPointsIncrease; } }
+		public static int StaminaIncrease { get { return World.Player.StaminaIncrease; } }
+		public static int ManaIncrease { get { return World.Player.ManaIncrease; } }
+		public static int MaximumHitPointsIncrease { get { return World.Player.MaximumHitPointsIncrease; } }
+		public static int MaximumStaminaIncrease { get { return World.Player.MaximumStaminaIncrease; } }
+		public static int MaximumManaIncrease { get { return World.Player.MaximumManaIncrease; } }
 
 		// Flags
-		public static bool IsGhost { get { return Assistant.World.Player.IsGhost; } }
+		public static bool IsGhost { get { return World.Player.IsGhost; } }
 
-		public static bool Poisoned { get { return Assistant.World.Player.Poisoned; } }
-		public static bool YellowHits { get { return Assistant.World.Player.Blessed; } }
-		public static bool Visible { get { return Assistant.World.Player.Visible; } }
-		public static bool WarMode { get { return Assistant.World.Player.Warmode; } }
-		public static bool Paralized { get { return Assistant.World.Player.Paralized; } }
-		public static bool HasSpecial { get { return Assistant.World.Player.HasSpecial; } }
+		public static bool Poisoned { get { return World.Player.Poisoned; } }
+		public static bool YellowHits { get { return World.Player.Blessed; } }
+		public static bool Visible { get { return World.Player.Visible; } }
+		public static bool WarMode { get { return World.Player.Warmode; } }
+		public static bool Paralized { get { return World.Player.Paralized; } }
+		public static bool HasSpecial { get { return World.Player.HasSpecial; } }
 
 		// Self
-		public static bool Female { get { return Assistant.World.Player.Female; } }
+		public static bool Female { get { return World.Player.Female; } }
 
-		public static String Name { get { return Assistant.World.Player.Name; } }
-		public static byte Notoriety { get { return Assistant.World.Player.Notoriety; } }
+		public static String Name { get { return World.Player.Name; } }
+		public static byte Notoriety { get { return World.Player.Notoriety; } }
 
 		public static Item Backpack
 		{
 			get
 			{
-				Assistant.Item assistantBackpack = Assistant.World.Player.Backpack;
+				Assistant.Item assistantBackpack = World.Player.Backpack;
 				if (assistantBackpack == null)
 					return null;
 				else
@@ -88,7 +88,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				Assistant.Item assistantBank = Assistant.World.Player.GetItemOnLayer(Layer.Bank);
+				Assistant.Item assistantBank = World.Player.GetItemOnLayer(Layer.Bank);
 				if (assistantBank == null)
 					return null;
 				else
@@ -103,7 +103,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				Assistant.Item assistantQuiver = Assistant.World.Player.Quiver;
+				Assistant.Item assistantQuiver = World.Player.Quiver;
 				if (assistantQuiver == null)
 					return null;
 				else
@@ -118,7 +118,7 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				Assistant.Item assistantMount = Assistant.World.Player.GetItemOnLayer(Assistant.Layer.Mount);
+				Assistant.Item assistantMount = World.Player.GetItemOnLayer(Assistant.Layer.Mount);
 				if (assistantMount == null)
 					return null;
 				else
@@ -129,29 +129,29 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static int Gold { get { return Convert.ToInt32(Assistant.World.Player.Gold); } }
-		public static int Luck { get { return Assistant.World.Player.Luck; } }
-		public static int Body { get { return Assistant.World.Player.Body; } }
-		public static int Serial { get { return Assistant.World.Player.Serial; } }
+		public static int Gold { get { return Convert.ToInt32(World.Player.Gold); } }
+		public static int Luck { get { return World.Player.Luck; } }
+		public static int Body { get { return World.Player.Body; } }
+		public static int Serial { get { return World.Player.Serial; } }
 
 		// Follower
-		public static int FollowersMax { get { return Assistant.World.Player.FollowersMax; } }
+		public static int FollowersMax { get { return World.Player.FollowersMax; } }
 
-		public static int Followers { get { return Assistant.World.Player.Followers; } }
+		public static int Followers { get { return World.Player.Followers; } }
 
 		// Weight
-		public static int MaxWeight { get { return Assistant.World.Player.MaxWeight; } }
+		public static int MaxWeight { get { return World.Player.MaxWeight; } }
 
-		public static int Weight { get { return Assistant.World.Player.Weight; } }
+		public static int Weight { get { return World.Player.Weight; } }
 
 		// Position
-		public static Point3D Position { get { return new Point3D(Assistant.World.Player.Position); } }
+		public static Point3D Position { get { return new Point3D(World.Player.Position); } }
 		public static int Map { get { return World.Player.Map; } }
 		public static string Direction
 		{
 			get
 			{
-				switch (Assistant.World.Player.Direction & Assistant.Direction.Mask)
+				switch (World.Player.Direction & Assistant.Direction.Mask)
 				{
 					case Assistant.Direction.North: return "North";
 					case Assistant.Direction.South: return "South";
@@ -645,7 +645,7 @@ namespace RazorEnhanced
 			get
 			{
 				List<string> buffs = new List<string>();
-				foreach (BuffIcon icon in Assistant.World.Player.Buffs)
+				foreach (BuffIcon icon in World.Player.Buffs)
 				{
 					buffs.Add(GetBuffDescription(icon));
 				}
@@ -655,7 +655,7 @@ namespace RazorEnhanced
 
 		public static bool BuffsExist(string buffname)
 		{
-			return Assistant.World.Player.Buffs.Any(icon => GetBuffDescription(icon) == buffname);
+			return World.Player.Buffs.Any(icon => GetBuffDescription(icon) == buffname);
 		}
 
 		// Layer
@@ -765,12 +765,12 @@ namespace RazorEnhanced
 		{
 			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
 
-			Assistant.Item item = Assistant.World.Player.GetItemOnLayer(assistantLayer);
+			Assistant.Item item = World.Player.GetItemOnLayer(assistantLayer);
 
 			if (item != null)
 			{
-				Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				Assistant.ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+				ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+				ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
 			}
 			else
 			{
@@ -780,32 +780,32 @@ namespace RazorEnhanced
 
 		public static void EquipItem(int serial)
 		{
-			Assistant.Item item = Assistant.World.FindItem((Assistant.Serial)serial);
+			Assistant.Item item = World.FindItem((Assistant.Serial)serial);
 			if (item == null)
 			{
 				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + serial + ") not found");
 				return;
 			}
 
-			if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), Assistant.World.Player.Position) > 3)
+			if (item.Container == null && Assistant.Utility.Distance(item.GetWorldPosition(), World.Player.Position) > 3)
 			{
 				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + serial + ") too away");
 				return;
 			}
-			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
-			Assistant.ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.Layer)); // Equippa
+			ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
+			ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, World.Player.Serial, item.Layer)); // Equippa
 		}
 
 		public static void EquipItem(Item item)
 		{
-			Assistant.Mobile player = Assistant.World.Player;
+			Assistant.Mobile player = World.Player;
 			if (item.Container == null && Misc.DistanceSqrt(item.GetWorldPosition(), Position) > 3)
 			{
 				Scripts.SendMessageScriptError("Script Error: EquipItem: Item serial: (" + item.Serial + ") too away");
 				return;
 			}
-			Assistant.ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
-			Assistant.ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, Assistant.World.Player.Serial, item.AssistantLayer)); // Equippa
+			ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount)); // Prende
+			ClientCommunication.SendToServerWait(new EquipRequest(item.Serial, World.Player.Serial, item.AssistantLayer)); // Equippa
 		}
 
 		public static void EquipUO3D(List<int> serials)
@@ -821,7 +821,7 @@ namespace RazorEnhanced
 		{
 			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
 
-			Assistant.Item item = Assistant.World.Player.GetItemOnLayer(assistantLayer);
+			Assistant.Item item = World.Player.GetItemOnLayer(assistantLayer);
 
 			if (item != null)
 				return true;
@@ -836,7 +836,7 @@ namespace RazorEnhanced
 			Assistant.Item assistantItem = null;
 			if (assistantLayer != Assistant.Layer.Invalid)
 			{
-				assistantItem = Assistant.World.Player.GetItemOnLayer(assistantLayer);
+				assistantItem = World.Player.GetItemOnLayer(assistantLayer);
 				if (assistantItem == null)
 					return null;
 				else
@@ -855,166 +855,166 @@ namespace RazorEnhanced
 			switch (skillname)
 			{
 				case "Alchemy":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Alchemy)].Value;
+					return World.Player.Skills[(int)SkillName.Alchemy].Value;
 
 				case "Animal Lore":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalLore)].Value;
+					return World.Player.Skills[(int)SkillName.AnimalLore].Value;
 
 				case "Item ID":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ItemID)].Value;
+					return World.Player.Skills[(int)SkillName.ItemID].Value;
 
 				case "Arms Lore":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ArmsLore)].Value;
+					return World.Player.Skills[(int)SkillName.ArmsLore].Value;
 
 				case "Parry":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Parry)].Value;
+					return World.Player.Skills[(int)SkillName.Parry].Value;
 
 				case "Begging":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Begging)].Value;
+					return World.Player.Skills[(int)SkillName.Begging].Value;
 
 				case "Blacksmith":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Blacksmith)].Value;
+					return World.Player.Skills[(int)SkillName.Blacksmith].Value;
 
 				case "Fletching":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fletching)].Value;
+					return World.Player.Skills[(int)SkillName.Fletching].Value;
 
 				case "Peacemaking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Peacemaking)].Value;
+					return World.Player.Skills[(int)SkillName.Peacemaking].Value;
 
 				case "Camping":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Camping)].Value;
+					return World.Player.Skills[(int)SkillName.Camping].Value;
 
 				case "Carpentry":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Carpentry)].Value;
+					return World.Player.Skills[(int)SkillName.Carpentry].Value;
 
 				case "Cartography":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cartography)].Value;
+					return World.Player.Skills[(int)SkillName.Cartography].Value;
 
 				case "Cooking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cooking)].Value;
+					return World.Player.Skills[(int)SkillName.Cooking].Value;
 
 				case "Detect Hidden":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.DetectHidden)].Value;
+					return World.Player.Skills[(int)SkillName.DetectHidden].Value;
 
 				case "Discordance":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Discordance)].Value;
+					return World.Player.Skills[(int)SkillName.Discordance].Value;
 
 				case "Eval Int":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.EvalInt)].Value;
+					return World.Player.Skills[(int)SkillName.EvalInt].Value;
 
 				case "Healing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Healing)].Value;
+					return World.Player.Skills[(int)SkillName.Healing].Value;
 
 				case "Fishing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fishing)].Value;
+					return World.Player.Skills[(int)SkillName.Fishing].Value;
 
 				case "Forensics":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Forensics)].Value;
+					return World.Player.Skills[(int)SkillName.Forensics].Value;
 
 				case "Herding":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Herding)].Value;
+					return World.Player.Skills[(int)SkillName.Herding].Value;
 
 				case "Hiding":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Hiding)].Value;
+					return World.Player.Skills[(int)SkillName.Hiding].Value;
 
 				case "Provocation":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Provocation)].Value;
+					return World.Player.Skills[(int)SkillName.Provocation].Value;
 
 				case "Inscribe":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Inscribe)].Value;
+					return World.Player.Skills[(int)SkillName.Inscribe].Value;
 
 				case "Lockpicking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Lockpicking)].Value;
+					return World.Player.Skills[(int)SkillName.Lockpicking].Value;
 
 				case "Magery":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Magery)].Value;
+					return World.Player.Skills[(int)SkillName.Magery].Value;
 
 				case "Magic Resist":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.MagicResist)].Value;
+					return World.Player.Skills[(int)SkillName.MagicResist].Value;
 
 				case "Tactics":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tactics)].Value;
+					return World.Player.Skills[(int)SkillName.Tactics].Value;
 
 				case "Snooping":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Snooping)].Value;
+					return World.Player.Skills[(int)SkillName.Snooping].Value;
 
 				case "Musicianship":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Musicianship)].Value;
+					return World.Player.Skills[(int)SkillName.Musicianship].Value;
 
 				case "Poisoning":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Poisoning)].Value;
+					return World.Player.Skills[(int)SkillName.Poisoning].Value;
 
 				case "Archery":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Archery)].Value;
+					return World.Player.Skills[(int)SkillName.Archery].Value;
 
 				case "Spirit Speak":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpiritSpeak)].Value;
+					return World.Player.Skills[(int)SkillName.SpiritSpeak].Value;
 
 				case "Stealing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealing)].Value;
+					return World.Player.Skills[(int)SkillName.Stealing].Value;
 
 				case "Tailoring":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tailoring)].Value;
+					return World.Player.Skills[(int)SkillName.Tailoring].Value;
 
 				case "Animal Taming":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalTaming)].Value;
+					return World.Player.Skills[(int)SkillName.AnimalTaming].Value;
 
 				case "Taste ID":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.TasteID)].Value;
+					return World.Player.Skills[(int)SkillName.TasteID].Value;
 
 				case "Tinkering":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tinkering)].Value;
+					return World.Player.Skills[(int)SkillName.Tinkering].Value;
 
 				case "Tracking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tracking)].Value;
+					return World.Player.Skills[(int)SkillName.Tracking].Value;
 
 				case "Veterinary":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Veterinary)].Value;
+					return World.Player.Skills[(int)SkillName.Veterinary].Value;
 
 				case "Swords":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Swords)].Value;
+					return World.Player.Skills[(int)SkillName.Swords].Value;
 
 				case "Macing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Macing)].Value;
+					return World.Player.Skills[(int)SkillName.Macing].Value;
 
 				case "Fencing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fencing)].Value;
+					return World.Player.Skills[(int)SkillName.Fencing].Value;
 
 				case "Wrestling":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Wrestling)].Value;
+					return World.Player.Skills[(int)SkillName.Wrestling].Value;
 
 				case "Lumberjacking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Lumberjacking)].Value;
+					return World.Player.Skills[(int)SkillName.Lumberjacking].Value;
 
 				case "Mining":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Mining)].Value;
+					return World.Player.Skills[(int)SkillName.Mining].Value;
 
 				case "Meditation":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Meditation)].Value;
+					return World.Player.Skills[(int)SkillName.Meditation].Value;
 
 				case "Stealth":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealth)].Value;
+					return World.Player.Skills[(int)SkillName.Stealth].Value;
 
 				case "Remove Trap":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.RemoveTrap)].Value;
+					return World.Player.Skills[(int)SkillName.RemoveTrap].Value;
 
 				case "Necromancy":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Necromancy)].Value;
+					return World.Player.Skills[(int)SkillName.Necromancy].Value;
 
 				case "Focus":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Focus)].Value;
+					return World.Player.Skills[(int)SkillName.Focus].Value;
 
 				case "Chivalry":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Chivalry)].Value;
+					return World.Player.Skills[(int)SkillName.Chivalry].Value;
 
 				case "Bushido":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Bushido)].Value;
+					return World.Player.Skills[(int)SkillName.Bushido].Value;
 
 				case "Ninjitsu":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Ninjitsu)].Value;
+					return World.Player.Skills[(int)SkillName.Ninjitsu].Value;
 
 				case "Spell Weaving":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Value;
+					return World.Player.Skills[(int)SkillName.SpellWeaving].Value;
 
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetSkillValue: Invalid skill name: " + skillname);
@@ -1027,166 +1027,166 @@ namespace RazorEnhanced
 			switch (skillname)
 			{
 				case "Alchemy":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Alchemy)].Cap;
+					return World.Player.Skills[(int)SkillName.Alchemy].Cap;
 
 				case "Animal Lore":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalLore)].Cap;
+					return World.Player.Skills[(int)SkillName.AnimalLore].Cap;
 
 				case "Item ID":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ItemID)].Cap;
+					return World.Player.Skills[(int)SkillName.ItemID].Cap;
 
 				case "ArmsLore":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ArmsLore)].Cap;
+					return World.Player.Skills[(int)SkillName.ArmsLore].Cap;
 
 				case "Parry":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Parry)].Cap;
+					return World.Player.Skills[(int)SkillName.Parry].Cap;
 
 				case "Begging":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Begging)].Cap;
+					return World.Player.Skills[(int)SkillName.Begging].Cap;
 
 				case "Blacksmith":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Blacksmith)].Cap;
+					return World.Player.Skills[(int)SkillName.Blacksmith].Cap;
 
 				case "Fletching":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fletching)].Cap;
+					return World.Player.Skills[(int)SkillName.Fletching].Cap;
 
 				case "Peacemaking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Peacemaking)].Cap;
+					return World.Player.Skills[(int)SkillName.Peacemaking].Cap;
 
 				case "Camping":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Camping)].Cap;
+					return World.Player.Skills[(int)SkillName.Camping].Cap;
 
 				case "Carpentry":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Carpentry)].Cap;
+					return World.Player.Skills[(int)SkillName.Carpentry].Cap;
 
 				case "Cartography":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cartography)].Cap;
+					return World.Player.Skills[(int)SkillName.Cartography].Cap;
 
 				case "Cooking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cooking)].Cap;
+					return World.Player.Skills[(int)SkillName.Cooking].Cap;
 
 				case "Detect Hidden":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.DetectHidden)].Cap;
+					return World.Player.Skills[(int)SkillName.DetectHidden].Cap;
 
 				case "Discordance":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Discordance)].Cap;
+					return World.Player.Skills[(int)SkillName.Discordance].Cap;
 
 				case "EvalInt":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.EvalInt)].Cap;
+					return World.Player.Skills[(int)SkillName.EvalInt].Cap;
 
 				case "Healing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Healing)].Cap;
+					return World.Player.Skills[(int)SkillName.Healing].Cap;
 
 				case "Fishing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fishing)].Cap;
+					return World.Player.Skills[(int)SkillName.Fishing].Cap;
 
 				case "Forensics":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Forensics)].Cap;
+					return World.Player.Skills[(int)SkillName.Forensics].Cap;
 
 				case "Herding":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Herding)].Cap;
+					return World.Player.Skills[(int)SkillName.Herding].Cap;
 
 				case "Hiding":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Hiding)].Cap;
+					return World.Player.Skills[(int)SkillName.Hiding].Cap;
 
 				case "Provocation":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Provocation)].Cap;
+					return World.Player.Skills[(int)SkillName.Provocation].Cap;
 
 				case "Inscribe":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Inscribe)].Cap;
+					return World.Player.Skills[(int)SkillName.Inscribe].Cap;
 
 				case "Lockpicking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Lockpicking)].Cap;
+					return World.Player.Skills[(int)SkillName.Lockpicking].Cap;
 
 				case "Magery":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Magery)].Cap;
+					return World.Player.Skills[(int)SkillName.Magery].Cap;
 
 				case "Magic Resist":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.MagicResist)].Cap;
+					return World.Player.Skills[(int)SkillName.MagicResist].Cap;
 
 				case "Tactics":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tactics)].Cap;
+					return World.Player.Skills[(int)SkillName.Tactics].Cap;
 
 				case "Snooping":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Snooping)].Cap;
+					return World.Player.Skills[(int)SkillName.Snooping].Cap;
 
 				case "Musicianship":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Musicianship)].Cap;
+					return World.Player.Skills[(int)SkillName.Musicianship].Cap;
 
 				case "Poisoning":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Poisoning)].Cap;
+					return World.Player.Skills[(int)SkillName.Poisoning].Cap;
 
 				case "Archery":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Archery)].Cap;
+					return World.Player.Skills[(int)SkillName.Archery].Cap;
 
 				case "Spirit Speak":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpiritSpeak)].Cap;
+					return World.Player.Skills[(int)SkillName.SpiritSpeak].Cap;
 
 				case "Stealing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealing)].Cap;
+					return World.Player.Skills[(int)SkillName.Stealing].Cap;
 
 				case "Tailoring":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tailoring)].Cap;
+					return World.Player.Skills[(int)SkillName.Tailoring].Cap;
 
 				case "Animal Taming":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalTaming)].Cap;
+					return World.Player.Skills[(int)SkillName.AnimalTaming].Cap;
 
 				case "Taste ID":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.TasteID)].Cap;
+					return World.Player.Skills[(int)SkillName.TasteID].Cap;
 
 				case "Tinkering":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tinkering)].Cap;
+					return World.Player.Skills[(int)SkillName.Tinkering].Cap;
 
 				case "Tracking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tracking)].Cap;
+					return World.Player.Skills[(int)SkillName.Tracking].Cap;
 
 				case "Veterinary":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Veterinary)].Cap;
+					return World.Player.Skills[(int)SkillName.Veterinary].Cap;
 
 				case "Swords":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Swords)].Cap;
+					return World.Player.Skills[(int)SkillName.Swords].Cap;
 
 				case "Macing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Macing)].Cap;
+					return World.Player.Skills[(int)SkillName.Macing].Cap;
 
 				case "Fencing":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fencing)].Cap;
+					return World.Player.Skills[(int)SkillName.Fencing].Cap;
 
 				case "Wrestling":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Wrestling)].Cap;
+					return World.Player.Skills[(int)SkillName.Wrestling].Cap;
 
 				case "Lumberjacking":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Lumberjacking)].Cap;
+					return World.Player.Skills[(int)SkillName.Lumberjacking].Cap;
 
 				case "Mining":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Mining)].Cap;
+					return World.Player.Skills[(int)SkillName.Mining].Cap;
 
 				case "Meditation":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Meditation)].Cap;
+					return World.Player.Skills[(int)SkillName.Meditation].Cap;
 
 				case "Stealth":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealth)].Cap;
+					return World.Player.Skills[(int)SkillName.Stealth].Cap;
 
 				case "Remove Trap":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.RemoveTrap)].Cap;
+					return World.Player.Skills[(int)SkillName.RemoveTrap].Cap;
 
 				case "Necromancy":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Necromancy)].Cap;
+					return World.Player.Skills[(int)SkillName.Necromancy].Cap;
 
 				case "Focus":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Focus)].Cap;
+					return World.Player.Skills[(int)SkillName.Focus].Cap;
 
 				case "Chivalry":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Chivalry)].Cap;
+					return World.Player.Skills[(int)SkillName.Chivalry].Cap;
 
 				case "Bushido":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Bushido)].Cap;
+					return World.Player.Skills[(int)SkillName.Bushido].Cap;
 
 				case "Ninjitsu":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Ninjitsu)].Cap;
+					return World.Player.Skills[(int)SkillName.Ninjitsu].Cap;
 
 				case "Spell Weaving":
-					return Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Cap;
+					return World.Player.Skills[(int)SkillName.SpellWeaving].Cap;
 
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetSkillCap: Invalid skill name: " + skillname);
@@ -1199,166 +1199,166 @@ namespace RazorEnhanced
 			switch (skillname)
 			{
 				case "Alchemy":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Alchemy)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Alchemy].Lock;
 
 				case "Animal Lore":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalLore)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.AnimalLore].Lock;
 
 				case "Item ID":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ItemID)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.ItemID].Lock;
 
 				case "Arms Lore":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.ArmsLore)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.ArmsLore].Lock;
 
 				case "Parry":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Parry)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Parry].Lock;
 
 				case "Begging":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Begging)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Begging].Lock;
 
 				case "Blacksmith":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Blacksmith)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Blacksmith].Lock;
 
 				case "Fletching":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fletching)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Fletching].Lock;
 
 				case "Peacemaking":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Peacemaking)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Peacemaking].Lock;
 
 				case "Camping":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Camping)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Camping].Lock;
 
 				case "Carpentry":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Carpentry)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Carpentry].Lock;
 
 				case "Cartography":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cartography)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Cartography].Lock;
 
 				case "Cooking":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Cooking)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Cooking].Lock;
 
 				case "Detect Hidden":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.DetectHidden)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.DetectHidden].Lock;
 
 				case "Discordance":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Discordance)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Discordance].Lock;
 
 				case "Eval Int":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.EvalInt)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.EvalInt].Lock;
 
 				case "Healing":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Healing)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Healing].Lock;
 
 				case "Fishing":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fishing)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Fishing].Lock;
 
 				case "Forensics":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Forensics)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Forensics].Lock;
 
 				case "Herding":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Herding)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Herding].Lock;
 
 				case "Hiding":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Hiding)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Hiding].Lock;
 
 				case "Provocation":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Provocation)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Provocation].Lock;
 
 				case "Inscribe":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Inscribe)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Inscribe].Lock;
 
 				case "Lockpicking":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Lockpicking)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Lockpicking].Lock;
 
 				case "Magery":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Magery)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Magery].Lock;
 
 				case "Magic Resist":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.MagicResist)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.MagicResist].Lock;
 
 				case "Tactics":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tactics)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Tactics].Lock;
 
 				case "Snooping":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Snooping)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Snooping].Lock;
 
 				case "Musicianship":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Musicianship)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Musicianship].Lock;
 
 				case "Poisoning":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Poisoning)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Poisoning].Lock;
 
 				case "Archery":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Archery)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Archery].Lock;
 
 				case "Spirit Speak":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpiritSpeak)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.SpiritSpeak].Lock;
 
 				case "Stealing":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealing)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Stealing].Lock;
 
 				case "Tailoring":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tailoring)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Tailoring].Lock;
 
 				case "Animal Taming":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.AnimalTaming)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.AnimalTaming].Lock;
 
 				case "Taste ID":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.TasteID)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.TasteID].Lock;
 
 				case "Tinkering":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tinkering)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Tinkering].Lock;
 
 				case "Tracking":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Tracking)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Tracking].Lock;
 
 				case "Veterinary":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Veterinary)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Veterinary].Lock;
 
 				case "Swords":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Swords)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Swords].Lock;
 
 				case "Macing":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Macing)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Macing].Lock;
 
 				case "Fencing":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Fencing)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Fencing].Lock;
 
 				case "Wrestling":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Wrestling)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Wrestling].Lock;
 
 				case "Lumberjacking":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Lumberjacking)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Lumberjacking].Lock;
 
 				case "Mining":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Mining)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Mining].Lock;
 
 				case "Meditation":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Meditation)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Meditation].Lock;
 
 				case "Stealth":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Stealth)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Stealth].Lock;
 
 				case "Remove Trap":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.RemoveTrap)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.RemoveTrap].Lock;
 
 				case "Necromancy":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Necromancy)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Necromancy].Lock;
 
 				case "Focus":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Focus)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Focus].Lock;
 
 				case "Chivalry":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Chivalry)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Chivalry].Lock;
 
 				case "Bushido":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Bushido)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Bushido].Lock;
 
 				case "Ninjitsu":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.Ninjitsu)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.Ninjitsu].Lock;
 
 				case "Spell Weaving":
-					return Convert.ToInt16(Assistant.World.Player.Skills[Convert.ToInt16(Assistant.SkillName.SpellWeaving)].Lock);
+					return (int)World.Player.Skills[(int)SkillName.SpellWeaving].Lock;
 
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
@@ -1366,109 +1366,121 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void UseSkill(string skillname)
+		public static void UseSkill(string skillname, bool wait = true)
 		{
+			short skillID = 0;
 			switch (skillname)
 			{
 				case "Animal Lore":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalLore)));
+					skillID = (int)SkillName.AnimalLore;
 					break;
 
 				case "Item ID":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.ItemID)));
+					skillID = (int)SkillName.ItemID;
 					break;
 
 				case "Arms Lore":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.ArmsLore)));
+					skillID = (int)SkillName.ArmsLore;
 					break;
 
 				case "Begging":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Begging)));
+					skillID = (int)SkillName.Begging;
 					break;
 
 				case "Peacemaking":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Peacemaking)));
+					skillID = (int)SkillName.Peacemaking;
 					break;
 
 				case "Cartography":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Cartography)));
+					skillID = (int)SkillName.Cartography;
 					break;
 
 				case "Detect Hidden":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.DetectHidden)));
+					skillID = (int)SkillName.DetectHidden;
 					break;
 
 				case "Discordance":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Discordance)));
+					skillID = (int)SkillName.Discordance;					
 					break;
 
 				case "Eval Int":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.EvalInt)));
+					skillID = (int)SkillName.EvalInt;
 					break;
 
 				case "Forensics":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Forensics)));
+					skillID = (int)SkillName.Forensics;
 					break;
 
 				case "Hiding":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Hiding)));
+					skillID = (int)SkillName.Hiding;
+					StealthSteps.Hide();
 					break;
 
 				case "Provocation":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Provocation)));
+					skillID = (int)SkillName.Provocation;
 					break;
 
 				case "Poisoning":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Poisoning)));
+					skillID = (int)SkillName.Poisoning;
 					break;
 
 				case "Spirit Speak":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.SpiritSpeak)));
+					skillID = (int)SkillName.SpiritSpeak;
 					break;
 
 				case "Stealing":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealing)));
+					skillID = (int)SkillName.Stealing;
 					break;
 
 				case "Animal Taming":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.AnimalTaming)));
+					skillID = (int)SkillName.AnimalTaming;
 					break;
 
 				case "Taste ID":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.TasteID)));
+					skillID = (int)SkillName.TasteID;
 					break;
 
 				case "Tracking":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Tracking)));
+					skillID = (int)SkillName.Tracking;
 					break;
 
 				case "Meditation":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Meditation)));
+					skillID = (int)SkillName.Meditation;
 					break;
 
 				case "Stealth":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Stealth)));
+					skillID = (int)SkillName.Stealth;
+					if (!World.Player.Visible) // Trigger stealth step counter
+						StealthSteps.Hide();
 					break;
 
 				case "Remove Trap":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.RemoveTrap)));
+					skillID = (int)SkillName.RemoveTrap;
 					break;
 
 				case "Inscribe":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Inscribe)));
+					skillID = (int)SkillName.Inscribe;
 					break;
 
 				case "Anatomy":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Anatomy)));
+					skillID = (int)SkillName.Anatomy;
 					break;
 
 				case "Imbuing":
-					Assistant.ClientCommunication.SendToServerWait(new UseSkill(Convert.ToInt16(Assistant.SkillName.Imbuing)));
+					skillID = (int)SkillName.Imbuing;
 					break;
 					
 				default:
 					Scripts.SendMessageScriptError("Script Error: UseSkill: Invalid skill name: " + skillname);
 					break;
+			}
+
+			if (skillID != 0)
+			{
+				if (wait)
+					ClientCommunication.SendToServerWait(new UseSkill(skillID));
+				else
+					ClientCommunication.SendToServer(new UseSkill(skillID));
 			}
 		}
 
@@ -1497,7 +1509,7 @@ namespace RazorEnhanced
 
 		public static void ChatGuild(string msg)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
+			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Guild, 1, 1, msg));
 		}
 
 		public static void ChatAlliance(int num)
@@ -1507,7 +1519,7 @@ namespace RazorEnhanced
 
 		public static void ChatAlliance(string msg)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
+			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Alliance, 1, 1, msg));
 		}
 
 		public static void ChatEmote(int hue, int num)
@@ -1517,7 +1529,7 @@ namespace RazorEnhanced
 
 		public static void ChatEmote(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
+			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Emote, hue, 1, msg));
 		}
 
 		public static void ChatWhisper(int hue, int num)
@@ -1527,7 +1539,7 @@ namespace RazorEnhanced
 
 		public static void ChatWhisper(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
+			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Whisper, hue, 1, msg));
 		}
 
 		public static void ChatYell(int hue, int num)
@@ -1537,7 +1549,7 @@ namespace RazorEnhanced
 
 		public static void ChatYell(int hue, string msg)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
+			ClientCommunication.SendToServerWait(new ClientAsciiMessage(Assistant.MessageType.Yell, hue, 1, msg));
 		}
 
 		public static void ChatChannel(int num)
@@ -1553,7 +1565,7 @@ namespace RazorEnhanced
 		// attack
 		public static void SetWarMode(bool warflag)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new SetWarMode(warflag));
+			ClientCommunication.SendToServerWait(new SetWarMode(warflag));
 		}
 		public static void Attack(Mobile m)
 		{
@@ -1571,7 +1583,7 @@ namespace RazorEnhanced
 				ClientCommunication.SendToClientWait(new ChangeCombatant(serial));
 				Targeting.LastAttack = (uint)serial;
 			}
-			Assistant.ClientCommunication.SendToServerWait(new AttackReq(serial));
+			ClientCommunication.SendToServerWait(new AttackReq(serial));
         }
 
 		public static void AttackLast()
@@ -1584,7 +1596,7 @@ namespace RazorEnhanced
 
 			Target.AttackMessage((int)Targeting.LastAttack, true);
 
-			Assistant.ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
+			ClientCommunication.SendToServerWait(new AttackReq(Targeting.LastAttack));
 		}
 
 		// Virtue
@@ -1593,31 +1605,31 @@ namespace RazorEnhanced
 			switch (virtue)
 			{
 				case "Honor":
-					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(1));
+					ClientCommunication.SendToServerWait(new InvokeVirtue(1));
 					break;
 
 				case "Sacrifice":
-					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(2));
+					ClientCommunication.SendToServerWait(new InvokeVirtue(2));
 					break;
 
 				case "Valor":
-					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(3));
+					ClientCommunication.SendToServerWait(new InvokeVirtue(3));
 					break;
 
 				case "Compassion":
-					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(4));
+					ClientCommunication.SendToServerWait(new InvokeVirtue(4));
 					break;
 
 				case "Honesty":
-					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(5));
+					ClientCommunication.SendToServerWait(new InvokeVirtue(5));
 					break;
 
 				case "Humility":
-					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(6));
+					ClientCommunication.SendToServerWait(new InvokeVirtue(6));
 					break;
 
 				case "Justice":
-					Assistant.ClientCommunication.SendToServerWait(new InvokeVirtue(7));
+					ClientCommunication.SendToServerWait(new InvokeVirtue(7));
 					break;
 
 				default:
@@ -1628,31 +1640,31 @@ namespace RazorEnhanced
 
 		public static void ChatParty(string msg)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new SendPartyMessage(Assistant.World.Player.Serial, msg));
+			ClientCommunication.SendToServerWait(new SendPartyMessage(World.Player.Serial, msg));
 		}
 
 		public static void PartyInvite()
 		{
-			Assistant.ClientCommunication.SendToServerWait(new PartyInvite());
+			ClientCommunication.SendToServerWait(new PartyInvite());
 		}
 
 		public static void LeaveParty()
 		{
-			Assistant.ClientCommunication.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
+			ClientCommunication.SendToServerWait(new PartyRemoveMember(World.Player.Serial));
 		}
 
 		public static void KickMember(int serial)
 		{
 			uint userial = Convert.ToUInt16(serial);
-			Assistant.ClientCommunication.SendToServerWait(new PartyRemoveMember(userial));
+			ClientCommunication.SendToServerWait(new PartyRemoveMember(userial));
 		}
 
 		public static void PartyCanLoot(bool CanLoot)
 		{
 			if (CanLoot)
-					Assistant.ClientCommunication.SendToServerWait(new PartyCanLoot(0x1));
+					ClientCommunication.SendToServerWait(new PartyCanLoot(0x1));
 				else
-					Assistant.ClientCommunication.SendToServerWait(new PartyCanLoot(0x0));
+					ClientCommunication.SendToServerWait(new PartyCanLoot(0x0));
 		}
 
 		// Moving
@@ -1790,12 +1802,12 @@ namespace RazorEnhanced
 
 		public static void PathFindTo(int x, int y, int z)
 		{
-			RazorEnhanced.UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
-			while (!RazorEnhanced.UoWarper.UODLLHandleClass.Open(1))
+			UoWarper.UODLLHandleClass = new RazorEnhanced.UoWarper.UO();
+			while (!UoWarper.UODLLHandleClass.Open(1))
 			{
 				Thread.Sleep(10);
 			}
-			RazorEnhanced.UoWarper.UODLLHandleClass.Pathfind(x, y, z);
+			UoWarper.UODLLHandleClass.Pathfind(x, y, z);
 
 		}
 
@@ -1833,24 +1845,24 @@ namespace RazorEnhanced
 
 		public static void HeadMessage(int hue, string message)
 		{
-			Assistant.ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
+			ClientCommunication.SendToClientWait(new UnicodeMessage(World.Player.Serial, World.Player.Body, MessageType.Regular, hue, 3, Language.CliLocName, World.Player.Name, message));
 		}
 
 		// Paperdool button click
 		public static void QuestButton()
 		{
-			Assistant.ClientCommunication.SendToServerWait(new QuestButton(World.Player.Serial));
+			ClientCommunication.SendToServerWait(new QuestButton(World.Player.Serial));
 		}
 
 		public static void GuildButton()
 		{
-			Assistant.ClientCommunication.SendToServerWait(new GuildButton(World.Player.Serial));
+			ClientCommunication.SendToServerWait(new GuildButton(World.Player.Serial));
 		}
 
 		// Range
 		public static bool InRangeMobile(Mobile mob, int range)
 		{
-			return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
+			return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
 		}
 
 		public static bool InRangeMobile(int mobserial, int range)
@@ -1858,7 +1870,7 @@ namespace RazorEnhanced
 			Assistant.Mobile mob = World.FindMobile(mobserial);
 			if (mob != null)
 			{
-				return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
+				return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
 			}
 			else
 				return false;
@@ -1866,7 +1878,7 @@ namespace RazorEnhanced
 
 		public static bool InRangeItem(Item mob, int range)
 		{
-			return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
+			return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(mob.Position.X, mob.Position.Y), range);
 		}
 
 		public static bool InRangeItem(int itemserial, int range)
@@ -1874,7 +1886,7 @@ namespace RazorEnhanced
 			Assistant.Item item = World.FindItem(itemserial);
 			if (item != null)
 			{
-				return Utility.InRange(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), range);
+				return Utility.InRange(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(item.Position.X, item.Position.Y), range);
 			}
 			else
 				return false;
@@ -1883,27 +1895,27 @@ namespace RazorEnhanced
 		// Weapon SA
 		public static void WeaponPrimarySA()
 		{
-			Assistant.SpecialMoves.SetPrimaryAbility();
+			SpecialMoves.SetPrimaryAbility();
 		}
 
 		public static void WeaponSecondarySA()
 		{
-			Assistant.SpecialMoves.SetSecondaryAbility();
+			SpecialMoves.SetSecondaryAbility();
 		}
 
 		public static void WeaponClearSA()
 		{
-			Assistant.SpecialMoves.ClearAbilities();
+			SpecialMoves.ClearAbilities();
 		}
 
 		public static void WeaponDisarmSA()
 		{
-			Assistant.SpecialMoves.OnDisarm();
+			SpecialMoves.OnDisarm();
 		}
 
 		public static void WeaponStunSA()
 		{
-			Assistant.SpecialMoves.OnStun();
+			SpecialMoves.OnStun();
 		}
 
 		// Props 

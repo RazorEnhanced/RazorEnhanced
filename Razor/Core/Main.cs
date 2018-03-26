@@ -29,6 +29,8 @@ namespace Assistant
 			if (exception == null || (exception is ThreadAbortException))
 				return;
 
+			ReportCrash((Exception)exception);
+
 			using (StreamWriter txt = new StreamWriter("Crash.log", true))
 			{
 				txt.AutoFlush = true;
@@ -455,7 +457,7 @@ namespace Assistant
 				ReportCrash(e.Exception);
 		}
 
-		private static void ReportCrash(Exception exception)
+		internal static void ReportCrash(Exception exception)
 		{
 			ReportCrash reportCrash = new ReportCrash("razorenhanced@gmail.com");
 			reportCrash.CaptureScreen = true;
