@@ -2071,6 +2071,17 @@ namespace Assistant
 				if (m != null && m.Name.IndexOf(text) != 5 && m != World.Player && !(text.StartsWith("(") && text.EndsWith(")")))
 					m.Name = text;
 			}
+			else if (ser != World.Player.Serial && type == MessageType.Focus) // Filter poison message OSI
+			{
+				if (Engine.MainWindow.FilterPoison.Checked)
+				{
+					if (text.EndsWith("*"))
+					{
+						args.Block = true;
+						return;
+					}
+				}
+			}
 			else
 			{
 				if (ser == Serial.MinusOne && name == "System")
@@ -2089,7 +2100,7 @@ namespace Assistant
 				// Filtro messsaggi poison (33 colore poison message)
 				if (type == MessageType.Regular && hue == 33 && ser != World.Player.Serial)
 				{
-					if (Assistant.Engine.MainWindow.FilterPoison.Checked)
+					if (Engine.MainWindow.FilterPoison.Checked)
 					{
 						if (text.EndsWith("*"))
 						{
