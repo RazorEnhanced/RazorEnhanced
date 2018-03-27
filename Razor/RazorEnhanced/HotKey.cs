@@ -1,7 +1,9 @@
 ﻿using Assistant;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace RazorEnhanced
 {
@@ -392,9 +394,30 @@ namespace RazorEnhanced
 					DPSMeter.Stop();
 					break;
 
-				case "No Run Stealth ON/OFF":
-					Misc.NoRunStealthToggle(!Misc.NoRunStealthStatus());
-					Misc.SendMessage("No Run Stealth Enabled: " + Misc.NoRunStealthStatus().ToString(), false);
+				case "Open Enhanced Map":
+					string mappath = Settings.General.ReadString("EnhancedMapPath");
+					if (!File.Exists(mappath))
+						Misc.SendMessage("Enhanced Map path not correct or not accessible!", 33, false);
+					else
+					{
+						Process[] processlist = Process.GetProcesses();
+
+						foreach (Process process in processlist)
+						{
+							if (process.ProcessName == "EnhancedMap")
+							{
+								Misc.SendMessage("Enhanced Map already running", 33, false);
+								return;
+							}
+						}
+
+						ProcessStartInfo info = new ProcessStartInfo()
+						{
+							WorkingDirectory = Path.GetDirectoryName(mappath),
+							FileName = mappath
+						};
+						Process.Start(info);
+					}
 					break;
 
 				default:

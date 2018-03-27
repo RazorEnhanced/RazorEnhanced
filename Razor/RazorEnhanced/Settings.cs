@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 50;
+		private static int SettingVersion = 51;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -307,6 +307,10 @@ namespace RazorEnhanced
 
 				hotkeyrow = hotkey.NewRow();
 				hotkeyrow.ItemArray = new object[] { "General", "No Run Stealth ON/OFF", Keys.None, true };
+				hotkey.Rows.Add(hotkeyrow);
+
+				hotkeyrow = hotkey.NewRow();
+				hotkeyrow.ItemArray = new object[] { "General", "Open Enhanced Map", Keys.None, true };
 				hotkey.Rows.Add(hotkeyrow);
 
 				hotkeyrow = hotkey.NewRow();
@@ -1710,6 +1714,7 @@ namespace RazorEnhanced
 				general.Columns.Add("UO3DEquipUnEquip", typeof(bool));
 				general.Columns.Add("ChkNoRunStealth", typeof(bool));
 				general.Columns.Add("FilterPoison", typeof(bool));
+				general.Columns.Add("EnhancedMapPath", typeof(string));
 
 				// Parametri Tab (Options -> Hues)
 				general.Columns.Add("LTHilight", typeof(int));
@@ -1814,7 +1819,7 @@ namespace RazorEnhanced
                     false, false, -1,
 
                     // Parametri primo avvio tab Options
-                    false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false, false, false, @"{power} [{spell}]", 0, false, false, false,
+                    false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false, false, false, @"{power} [{spell}]", 0, false, false, false, string.Empty,
 
                     // Parametri primo avvio tab Options -> Hues
                     (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,
@@ -5744,6 +5749,22 @@ namespace RazorEnhanced
 
 				realVersion = 50;
 				General.WriteInt("SettingVersion", 50);
+			}
+
+			if (realVersion == 50)
+			{
+				DataRow newRow = m_Dataset.Tables["HOTKEYS"].NewRow();
+				newRow["Group"] = "General";
+				newRow["Name"] = "Open Enhanced Map";
+				newRow["Key"] = Keys.None;
+				newRow["Pass"] = true;
+				m_Dataset.Tables["HOTKEYS"].Rows.Add(newRow);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("EnhancedMapPath", typeof(string));
+				General.WriteString("EnhancedMapPath", string.Empty);
+
+				realVersion = 51;
+				General.WriteInt("SettingVersion", 51);
 			}
 			Save(true);
 		}

@@ -794,6 +794,12 @@ namespace Assistant
 		private System.Windows.Forms.Timer timertitlestatusbar;
 		private RazorCheckBox chknorunStealth;
 		private RazorCheckBox filterPoison;
+		private Label label71;
+		private GroupBox groupBox17;
+		private Label label72;
+		private RazorTextBox enhancedmappathTextBox;
+		private Button setpathmapbutton;
+		private OpenFileDialog openmaplocation;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -893,6 +899,10 @@ namespace Assistant
 			this.opacityLabel = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.moreOptTab = new System.Windows.Forms.TabPage();
+			this.groupBox17 = new System.Windows.Forms.GroupBox();
+			this.setpathmapbutton = new System.Windows.Forms.Button();
+			this.label72 = new System.Windows.Forms.Label();
+			this.enhancedmappathTextBox = new RazorEnhanced.UI.RazorTextBox();
 			this.filterPoison = new RazorEnhanced.UI.RazorCheckBox();
 			this.chknorunStealth = new RazorEnhanced.UI.RazorCheckBox();
 			this.nosearchpouches = new RazorEnhanced.UI.RazorCheckBox();
@@ -1120,6 +1130,7 @@ namespace Assistant
 			this.screenPrev = new System.Windows.Forms.PictureBox();
 			this.dispTime = new RazorEnhanced.UI.RazorCheckBox();
 			this.statusTab = new System.Windows.Forms.TabPage();
+			this.label71 = new System.Windows.Forms.Label();
 			this.discordrazorButton = new RazorEnhanced.UI.RazorButton();
 			this.labelHotride = new System.Windows.Forms.Label();
 			this.panelLogo = new System.Windows.Forms.Panel();
@@ -1463,12 +1474,14 @@ namespace Assistant
 			this.playToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.timertitlestatusbar = new System.Windows.Forms.Timer(this.components);
+			this.openmaplocation = new System.Windows.Forms.OpenFileDialog();
 			this.tabs.SuspendLayout();
 			this.generalTab.SuspendLayout();
 			this.groupBox29.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.opacity)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			this.moreOptTab.SuspendLayout();
+			this.groupBox17.SuspendLayout();
 			this.enhancedFilterTab.SuspendLayout();
 			this.uomodgroupbox.SuspendLayout();
 			this.groupBox32.SuspendLayout();
@@ -1887,6 +1900,7 @@ namespace Assistant
 			// 
 			// moreOptTab
 			// 
+			this.moreOptTab.Controls.Add(this.groupBox17);
 			this.moreOptTab.Controls.Add(this.filterPoison);
 			this.moreOptTab.Controls.Add(this.chknorunStealth);
 			this.moreOptTab.Controls.Add(this.nosearchpouches);
@@ -1949,6 +1963,46 @@ namespace Assistant
 			this.moreOptTab.Size = new System.Drawing.Size(666, 366);
 			this.moreOptTab.TabIndex = 5;
 			this.moreOptTab.Text = "Options";
+			// 
+			// groupBox17
+			// 
+			this.groupBox17.Controls.Add(this.setpathmapbutton);
+			this.groupBox17.Controls.Add(this.label72);
+			this.groupBox17.Controls.Add(this.enhancedmappathTextBox);
+			this.groupBox17.Location = new System.Drawing.Point(7, 285);
+			this.groupBox17.Name = "groupBox17";
+			this.groupBox17.Size = new System.Drawing.Size(187, 58);
+			this.groupBox17.TabIndex = 80;
+			this.groupBox17.TabStop = false;
+			this.groupBox17.Text = "Enhanced Map Integration";
+			// 
+			// setpathmapbutton
+			// 
+			this.setpathmapbutton.BackgroundImage = global::Assistant.Properties.Resources.document_open_7;
+			this.setpathmapbutton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+			this.setpathmapbutton.Location = new System.Drawing.Point(157, 22);
+			this.setpathmapbutton.Name = "setpathmapbutton";
+			this.setpathmapbutton.Size = new System.Drawing.Size(20, 20);
+			this.setpathmapbutton.TabIndex = 10;
+			this.setpathmapbutton.UseVisualStyleBackColor = true;
+			this.setpathmapbutton.Click += new System.EventHandler(this.setpathmapbutton_Click);
+			// 
+			// label72
+			// 
+			this.label72.AutoSize = true;
+			this.label72.Location = new System.Drawing.Point(6, 25);
+			this.label72.Name = "label72";
+			this.label72.Size = new System.Drawing.Size(32, 13);
+			this.label72.TabIndex = 1;
+			this.label72.Text = "Path:";
+			// 
+			// enhancedmappathTextBox
+			// 
+			this.enhancedmappathTextBox.Location = new System.Drawing.Point(41, 22);
+			this.enhancedmappathTextBox.Name = "enhancedmappathTextBox";
+			this.enhancedmappathTextBox.ReadOnly = true;
+			this.enhancedmappathTextBox.Size = new System.Drawing.Size(110, 20);
+			this.enhancedmappathTextBox.TabIndex = 0;
 			// 
 			// filterPoison
 			// 
@@ -4159,6 +4213,7 @@ namespace Assistant
 			// 
 			// statusTab
 			// 
+			this.statusTab.Controls.Add(this.label71);
 			this.statusTab.Controls.Add(this.discordrazorButton);
 			this.statusTab.Controls.Add(this.labelHotride);
 			this.statusTab.Controls.Add(this.panelLogo);
@@ -4173,6 +4228,15 @@ namespace Assistant
 			this.statusTab.Size = new System.Drawing.Size(666, 366);
 			this.statusTab.TabIndex = 9;
 			this.statusTab.Text = "Help / Status";
+			// 
+			// label71
+			// 
+			this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label71.Location = new System.Drawing.Point(8, 323);
+			this.label71.Name = "label71";
+			this.label71.Size = new System.Drawing.Size(650, 38);
+			this.label71.TabIndex = 10;
+			this.label71.Text = "Many thanks also for developer of UO.DLL and ULTIMA.DLL";
 			// 
 			// discordrazorButton
 			// 
@@ -7739,6 +7803,14 @@ namespace Assistant
 			this.timertitlestatusbar.Interval = 200;
 			this.timertitlestatusbar.Tick += new System.EventHandler(this.timertitlestatusbar_Tick);
 			// 
+			// openmaplocation
+			// 
+			this.openmaplocation.DefaultExt = "exe";
+			this.openmaplocation.FileName = "EnhancedMap.exe";
+			this.openmaplocation.Filter = "Executable Files|*.exe";
+			this.openmaplocation.RestoreDirectory = true;
+			this.openmaplocation.Title = "Select Enhanced Map";
+			// 
 			// MainForm
 			// 
 			this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
@@ -7766,6 +7838,8 @@ namespace Assistant
 			this.groupBox1.ResumeLayout(false);
 			this.moreOptTab.ResumeLayout(false);
 			this.moreOptTab.PerformLayout();
+			this.groupBox17.ResumeLayout(false);
+			this.groupBox17.PerformLayout();
 			this.enhancedFilterTab.ResumeLayout(false);
 			this.uomodgroupbox.ResumeLayout(false);
 			this.groupBox32.ResumeLayout(false);
@@ -8151,6 +8225,7 @@ namespace Assistant
 			autosearchcontainers.Checked = RazorEnhanced.Settings.General.ReadBool("AutoSearch");
 			nosearchpouches.Checked = RazorEnhanced.Settings.General.ReadBool("NoSearchPouches");
 			chknorunStealth.Checked = RazorEnhanced.Settings.General.ReadBool("ChkNoRunStealth");
+			enhancedmappathTextBox.Text = Settings.General.ReadString("EnhancedMapPath");
 
 			chkForceSpeechHue.Checked = setSpeechHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue");
 			chkForceSpellHue.Checked = setBeneHue.Enabled = setNeuHue.Enabled = setHarmHue.Enabled = RazorEnhanced.Settings.General.ReadBool("ForceSpellHue");
@@ -8782,6 +8857,16 @@ namespace Assistant
 		{
 			if (chkStealth.Focused)
 				RazorEnhanced.Settings.General.WriteBool("CountStealthSteps", chkStealth.Checked);
+		}
+
+		private void setpathmapbutton_Click(object sender, EventArgs e)
+		{
+			openmaplocation.RestoreDirectory = true;
+			if (openmaplocation.ShowDialog(this) == DialogResult.OK)
+			{
+				enhancedmappathTextBox.Text = openmaplocation.FileName;
+				Settings.General.WriteString("EnhancedMapPath", openmaplocation.FileName);
+			}
 		}
 
 		private void MainForm_Activated(object sender, System.EventArgs e)
@@ -14050,7 +14135,6 @@ namespace Assistant
 			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
 		}
-
 		// ----------------- STOP DPS METER -------------------
 	}
 }
