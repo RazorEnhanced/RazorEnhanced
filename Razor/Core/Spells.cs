@@ -106,16 +106,13 @@ namespace Assistant
 			ClientCommunication.SendToServer(p);
 		}
 
-		internal void OnCast(Packet p)
+		internal void OnCast(Packet p, bool wait)
 		{
 			Cast();
-			ClientCommunication.SendToServer(p);
-		}
-
-		internal void OnCastByScript(Packet p)
-		{
-			Cast();
-			ClientCommunication.SendToServerWait(p);
+			if (wait)
+				ClientCommunication.SendToServerWait(p);
+			else
+				ClientCommunication.SendToServer(p);
 		}
 
 		private void Cast()
@@ -324,16 +321,6 @@ namespace Assistant
 		internal static void Initialize()
 		{
 			// no code, this is here to make sure out static ctor is init'd by the core
-		}
-
-		internal static void OnHotKey(ref object state)
-		{
-			ushort id = (ushort)state;
-			Spell s = Spell.Get(id);
-			if (s != null)
-			{
-				s.OnCast(new CastSpellFromMacro(id));
-			}
 		}
 
 		internal static int ToID(int circle, int num)

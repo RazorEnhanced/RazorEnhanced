@@ -285,7 +285,7 @@ namespace Assistant
 						Spell s = Spell.Get(sid);
 						if (s != null)
 						{
-							s.OnCast(p);
+							s.OnCast(p, false);
 							args.Block = true;
 						}
 						break;

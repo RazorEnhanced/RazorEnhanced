@@ -373,34 +373,34 @@ namespace RazorEnhanced
 			switch (pl.Group)
 			{
 				case "Magery":
-					RazorEnhanced.Spells.CastMagery(pl.Spell, true);
+					RazorEnhanced.Spells.CastMagery(pl.Spell, false);
 					break;
 				case "Abilities":
 					if (pl.Spell == "Primary")
-						Assistant.SpecialMoves.SetPrimaryAbility();
+						Assistant.SpecialMoves.SetPrimaryAbility(false);
 					else
-						Assistant.SpecialMoves.SetSecondaryAbility();
+						Assistant.SpecialMoves.SetSecondaryAbility(false);
 					break;
 				case "Bushido":
-					RazorEnhanced.Spells.CastBushido(pl.Spell, true);
+					RazorEnhanced.Spells.CastBushido(pl.Spell, false);
 					break;
 				case "Chivalry":
-					RazorEnhanced.Spells.CastChivalry(pl.Spell, true);
+					RazorEnhanced.Spells.CastChivalry(pl.Spell, false);
 					break;
 				case "Necromancy":
-					RazorEnhanced.Spells.CastNecro(pl.Spell, true);
+					RazorEnhanced.Spells.CastNecro(pl.Spell, false);
 					break;
 				case "Ninjitsu":
-					RazorEnhanced.Spells.CastNinjitsu(pl.Spell, true);
+					RazorEnhanced.Spells.CastNinjitsu(pl.Spell, false);
 					break;
 				case "Mysticism":
-					RazorEnhanced.Spells.CastMysticism(pl.Spell, true);
+					RazorEnhanced.Spells.CastMysticism(pl.Spell, false);
 					break;
 				case "Spellweaving":
-					RazorEnhanced.Spells.CastSpellweaving(pl.Spell, true);
+					RazorEnhanced.Spells.CastSpellweaving(pl.Spell, false);
 					break;
 				case "Mastery":
-					RazorEnhanced.Spells.CastMastery(pl.Spell, true);
+					RazorEnhanced.Spells.CastMastery(pl.Spell, false);
 					break;
 				case "Script":
 					RazorEnhanced.Misc.ScriptRun(pl.Spell);

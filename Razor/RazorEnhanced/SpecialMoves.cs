@@ -284,21 +284,27 @@ namespace Assistant
 			ClientCommunication.SendToServer(new SetWarMode(!World.Player.Warmode));
 		}
 
-		internal static void OnStun()
+		internal static void OnStun(bool wait)
 		{
 			if (m_LastToggle + TimeSpan.FromSeconds(0.5) < DateTime.Now)
 			{
 				m_LastToggle = DateTime.Now;
-				ClientCommunication.SendToServer(new StunRequest());
+				if (wait)
+					ClientCommunication.SendToServerWait(new StunRequest());
+				else
+					ClientCommunication.SendToServer(new StunRequest());
 			}
 		}
 
-		internal static void OnDisarm()
+		internal static void OnDisarm(bool wait)
 		{
 			if (m_LastToggle + TimeSpan.FromSeconds(0.5) < DateTime.Now)
 			{
 				m_LastToggle = DateTime.Now;
-				ClientCommunication.SendToServer(new DisarmRequest());
+				if (wait)
+					ClientCommunication.SendToServerWait(new DisarmRequest());
+				else
+					ClientCommunication.SendToServer(new DisarmRequest());
 			}
 		}
 
@@ -313,7 +319,7 @@ namespace Assistant
 			return AOSAbility.Invalid;
 		}
 
-		internal static void SetPrimaryAbility()
+		internal static void SetPrimaryAbility(bool wait)
 		{
 			Item right = World.Player.GetItemOnLayer(Layer.RightHand);
 			Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
@@ -333,13 +339,21 @@ namespace Assistant
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
 				World.Player.HasSpecial = HasPrimary = true;
 				HasSecondary = false;
-				ClientCommunication.SendToServer(new UseAbility(a));
-				ClientCommunication.SendToClient(ClearAbility.Instance);
+				if (wait)
+				{
+					ClientCommunication.SendToServerWait(new UseAbility(a));
+					ClientCommunication.SendToClientWait(ClearAbility.Instance);
+				}
+				else
+				{
+					ClientCommunication.SendToServer(new UseAbility(a));
+					ClientCommunication.SendToClient(ClearAbility.Instance);
+				}
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
 		}
 
-		internal static void SetSecondaryAbility()
+		internal static void SetSecondaryAbility(bool wait)
 		{
 			Item right = World.Player.GetItemOnLayer(Layer.RightHand);
 			Item left = World.Player.GetItemOnLayer(Layer.LeftHand);
@@ -369,8 +383,16 @@ namespace Assistant
 				RazorEnhanced.SpellGrid.UpdateSAHighLight((int)a);
 				World.Player.HasSpecial = HasSecondary = true;
 				HasPrimary = false;
-				ClientCommunication.SendToServer(new UseAbility(a));
-				ClientCommunication.SendToClient(ClearAbility.Instance);
+				if (wait)
+				{
+					ClientCommunication.SendToServerWait(new UseAbility(a));
+					ClientCommunication.SendToClientWait(ClearAbility.Instance);
+				}
+				else
+				{
+					ClientCommunication.SendToServer(new UseAbility(a));
+					ClientCommunication.SendToClient(ClearAbility.Instance);
+				}
 				World.Player.SendMessage(LocString.SettingAOSAb, a);
 			}
 		}
@@ -405,11 +427,19 @@ namespace Assistant
 				return Icon[id];
 		}
 
-		internal static void ClearAbilities()
+		internal static void ClearAbilities(bool wait)
 		{
 			World.Player.HasSpecial = HasPrimary = HasSecondary = false;
-			ClientCommunication.SendToServer(new UseAbility(AOSAbility.Clear));
-			ClientCommunication.SendToClient(ClearAbility.Instance);
+			if (wait)
+			{
+				ClientCommunication.SendToServerWait(new UseAbility(AOSAbility.Clear));
+				ClientCommunication.SendToClientWait(ClearAbility.Instance);
+			}
+			else
+			{
+				ClientCommunication.SendToServer(new UseAbility(AOSAbility.Clear));
+				ClientCommunication.SendToClient(ClearAbility.Instance);
+			}
 			World.Player.SendMessage(LocString.AOSAbCleared);
 		}
 	}

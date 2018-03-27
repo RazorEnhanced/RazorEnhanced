@@ -5,7 +5,7 @@ namespace RazorEnhanced
 	public class Spells
 	{
 		// spell
-		public static void CastMagery(string SpellName, bool nowait=false)
+		public static void CastMagery(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -277,14 +277,11 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if(nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 
-		public static void CastNecro(string SpellName, bool nowait = false)
+		public static void CastNecro(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -367,14 +364,11 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if (nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 
-		public static void CastChivalry(string SpellName, bool nowait=false)
+		public static void CastChivalry(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -429,14 +423,11 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if (nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 
-		public static void CastBushido(string SpellName, bool nowait=false)
+		public static void CastBushido(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -475,14 +466,11 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if (nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 
-		public static void CastNinjitsu(string SpellName, bool nowait=false)
+		public static void CastNinjitsu(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -529,14 +517,11 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if (nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 
-		public static void CastSpellweaving(string SpellName, bool nowait=false)
+		public static void CastSpellweaving(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -615,14 +600,11 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if (nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 
-		public static void CastMysticism(string SpellName, bool nowait=false)
+		public static void CastMysticism(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -701,14 +683,11 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if (nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 
-		public static void CastMastery(string SpellName, bool nowait = false)
+		public static void CastMastery(string SpellName, bool wait = true)
 		{
 			if (World.Player == null)
 				return;
@@ -903,10 +882,7 @@ namespace RazorEnhanced
 			}
 			if (s != null)
 			{
-				if (nowait)
-					s.OnCast(new CastSpellFromMacro((ushort)s.GetID()));
-				else
-					s.OnCastByScript(new CastSpellFromMacro((ushort)s.GetID()));
+				s.OnCast(new CastSpellFromMacro((ushort)s.GetID()), wait);
 			}
 		}
 		public static void Interrupt()

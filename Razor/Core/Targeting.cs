@@ -198,44 +198,6 @@ namespace Assistant
 			m_OldLT = m_LastTarget.Serial;
 		}
 		
-		internal static void SetLastTargetTo(Mobile m)
-		{
-			SetLastTargetTo(m, 0);
-		}
-
-		internal static void SetLastTargetTo(Mobile m, byte flagType)
-		{
-			TargetInfo targ = new TargetInfo();
-			m_LastGroundTarg = m_LastTarget = targ;
-
-			if ((m_HasTarget && m_CurFlags == 1) || flagType == 1)
-				m_LastHarmTarg = targ;
-			else if ((m_HasTarget && m_CurFlags == 2) || flagType == 2)
-				m_LastBeneTarg = targ;
-			else if (flagType == 0)
-				m_LastHarmTarg = m_LastBeneTarg = targ;
-
-			targ.Type = 0;
-			targ.Flags = m_HasTarget ? m_CurFlags : flagType;
-
-			targ.Gfx = m.Body;
-			targ.Serial = m.Serial;
-			targ.X = m.Position.X;
-			targ.Y = m.Position.Y;
-			targ.Z = m.Position.Z;
-
-			ClientCommunication.SendToClient(new ChangeCombatant(m));
-			m_LastCombatant = m.Serial;
-			World.Player.SendMessage(MsgLevel.Force, LocString.NewTargSet);
-
-			bool wasSmart = RazorEnhanced.Settings.General.ReadBool("SmartLastTarget");
-			if (wasSmart)
-				RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", false);
-			LastTarget();
-			if (wasSmart)
-				RazorEnhanced.Settings.General.WriteBool("SmartLastTarget", true);
-			LastTargetChanged();
-		}
 
 		internal static void SetLastTarget(Mobile m, byte flagType, bool wait)
 		{

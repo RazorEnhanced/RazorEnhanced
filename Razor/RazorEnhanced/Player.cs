@@ -1668,7 +1668,7 @@ namespace RazorEnhanced
 		}
 
 		// Moving
-		public static bool Walk(string direction)  // Return true se walk ok false se rifiutato da server
+		public static bool Walk(string direction, bool wait = true)  // Return true se walk ok false se rifiutato da server
 		{
 			Direction dir;
 			switch (direction)
@@ -1715,7 +1715,12 @@ namespace RazorEnhanced
 			{
 				int timeout = 0;
 				World.Player.WalkScriptRequest = 1;
-				ClientCommunication.SendToServer(new WalkRequest(dir, World.Player.WalkSequence));
+
+				if (wait)
+					ClientCommunication.SendToServerWait(new WalkRequest(dir, World.Player.WalkSequence));
+				else
+					ClientCommunication.SendToServer(new WalkRequest(dir, World.Player.WalkSequence));
+
 				while (World.Player.WalkScriptRequest < 2)
 				{
 					Thread.Sleep(10);
@@ -1732,7 +1737,7 @@ namespace RazorEnhanced
 				return false;
 		}
 
-		public static bool Run(string direction)    // Return true se walk ok false se rifiutato da server
+		public static bool Run(string direction, bool wait = true)    // Return true se walk ok false se rifiutato da server
 		{
 			Direction dir;
 			switch (direction)
@@ -1778,7 +1783,12 @@ namespace RazorEnhanced
 			{
 				int timeout = 0;
 				World.Player.WalkScriptRequest = 1;
-				ClientCommunication.SendToServer(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
+
+				if (wait)
+					ClientCommunication.SendToServerWait(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
+				else
+					ClientCommunication.SendToServer(new WalkRequest(dir | Assistant.Direction.Running, World.Player.WalkSequence));
+
 				while (World.Player.WalkScriptRequest < 2)
 				{
 					Thread.Sleep(10);
@@ -1895,27 +1905,27 @@ namespace RazorEnhanced
 		// Weapon SA
 		public static void WeaponPrimarySA()
 		{
-			SpecialMoves.SetPrimaryAbility();
+			SpecialMoves.SetPrimaryAbility(true);
 		}
 
 		public static void WeaponSecondarySA()
 		{
-			SpecialMoves.SetSecondaryAbility();
+			SpecialMoves.SetSecondaryAbility(true);
 		}
 
 		public static void WeaponClearSA()
 		{
-			SpecialMoves.ClearAbilities();
+			SpecialMoves.ClearAbilities(true);
 		}
 
 		public static void WeaponDisarmSA()
 		{
-			SpecialMoves.OnDisarm();
+			SpecialMoves.OnDisarm(true);
 		}
 
 		public static void WeaponStunSA()
 		{
-			SpecialMoves.OnStun();
+			SpecialMoves.OnStun(true);
 		}
 
 		// Props 

@@ -246,35 +246,35 @@ namespace RazorEnhanced
 						break;
 
 					case "SpellsMagery":
-						RazorEnhanced.Spells.CastMagery(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastMagery(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "SpellsNecro":
-						RazorEnhanced.Spells.CastNecro(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastNecro(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "SpellsBushido":
-						RazorEnhanced.Spells.CastBushido(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastBushido(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "SpellsNinjitsu":
-						RazorEnhanced.Spells.CastNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastNinjitsu(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "SpellsSpellweaving":
-						RazorEnhanced.Spells.CastSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastSpellweaving(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "SpellsMysticism":
-						RazorEnhanced.Spells.CastMysticism(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastMysticism(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "SpellsChivalry":
-						RazorEnhanced.Spells.CastChivalry(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastChivalry(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "SpellsMastery":
-						RazorEnhanced.Spells.CastMastery(RazorEnhanced.Settings.HotKey.FindString(k), true);
+						RazorEnhanced.Spells.CastMastery(RazorEnhanced.Settings.HotKey.FindString(k), false);
 						break;
 
 					case "Target":
@@ -682,35 +682,35 @@ namespace RazorEnhanced
 			switch (function)
 			{
 				case "Primary":
-					Assistant.SpecialMoves.SetPrimaryAbility();
+					Assistant.SpecialMoves.SetPrimaryAbility(false);
 					break;
 				case "Secondary":
-					Assistant.SpecialMoves.SetSecondaryAbility();
+					Assistant.SpecialMoves.SetSecondaryAbility(false);
 					break;
 				case "Stun":
-					Assistant.SpecialMoves.OnStun();
+					Assistant.SpecialMoves.OnStun(false);
 					break;
 				case "Disarm":
-					Assistant.SpecialMoves.OnDisarm();
+					Assistant.SpecialMoves.OnDisarm(false);
 					break;
 				case "Cancel":
-					Assistant.SpecialMoves.ClearAbilities();
+					Assistant.SpecialMoves.ClearAbilities(false);
 					break;
 				case "Primary ON/OFF":
 					if (SpecialMoves.HasSecondary)
-						Assistant.SpecialMoves.SetPrimaryAbility();
+						Assistant.SpecialMoves.SetPrimaryAbility(false);
 					else if (SpecialMoves.HasPrimary)
-						Assistant.SpecialMoves.ClearAbilities();
+						Assistant.SpecialMoves.ClearAbilities(false);
 					else
-						Assistant.SpecialMoves.SetPrimaryAbility();
+						Assistant.SpecialMoves.SetPrimaryAbility(false);
 					break;
 				case "Secondary ON/OFF":
 					if (SpecialMoves.HasPrimary)
-						Assistant.SpecialMoves.SetSecondaryAbility();
+						Assistant.SpecialMoves.SetSecondaryAbility(false);
 					else if (SpecialMoves.HasSecondary)
-						Assistant.SpecialMoves.ClearAbilities();
+						Assistant.SpecialMoves.ClearAbilities(false);
 					else
-						Assistant.SpecialMoves.SetSecondaryAbility();
+						Assistant.SpecialMoves.SetSecondaryAbility(false);
 					break;
 				default:
 					break;

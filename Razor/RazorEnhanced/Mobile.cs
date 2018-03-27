@@ -574,7 +574,7 @@ namespace RazorEnhanced
 				Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
 				return;
 			}
-			ClientCommunication.SendToServer(new SingleClick(mobile));
+			ClientCommunication.SendToServerWait(new SingleClick(mobile));
 		}
 
 		// Message

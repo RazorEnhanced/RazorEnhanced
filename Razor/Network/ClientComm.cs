@@ -1052,9 +1052,9 @@ namespace Assistant
 						break;
 					}
 
-				case UONetMessage.FindData:
-					FindData.Message((wParam & 0xFFFF0000) >> 16, lParam);
-					break;
+				//case UONetMessage.FindData:
+				//	FindData.Message((wParam & 0xFFFF0000) >> 16, lParam);
+				//	break;
 
 				// ZIPPY REV 80
 				/*case UONetMessage.SetFwdHWnd:
