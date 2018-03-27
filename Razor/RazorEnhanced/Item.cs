@@ -927,13 +927,14 @@ namespace RazorEnhanced
 
 		public static int GetPropValue(int serial, string name)
 		{
-			Assistant.Item assistantItem = Assistant.World.FindItem((uint)serial);
+			Assistant.Item assistantItem = World.FindItem((uint)serial);
 
 			if (assistantItem != null)
 			{
-				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantItem.ObjPropList.Content;
+				if (assistantItem.ObjPropList == null && assistantItem.ObjPropList.Content.Count == 0)
+					return 0;
 
-				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props.ToList())
+				foreach (ObjectPropertyList.OPLEntry prop in assistantItem.ObjPropList.Content)
 				{
 					if (!prop.ToString().ToLower().Contains(name.ToLower()))
 						continue;
