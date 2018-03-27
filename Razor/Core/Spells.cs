@@ -82,13 +82,13 @@ namespace Assistant
 				switch (Flag)
 				{
 					case SpellFlag.Beneficial:
-						return RazorEnhanced.Settings.General.ReadInt("BeneficialSpellHue");
+						return Engine.MainWindow.BeneficialSpellHue;
 
 					case SpellFlag.Harmful:
-						return RazorEnhanced.Settings.General.ReadInt("HarmfulSpellHue");
+						return Engine.MainWindow.HarmfulSpellHue;
 
 					case SpellFlag.Neutral:
-						return RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue");
+						return Engine.MainWindow.NeutralSpellHue;
 
 					default:
 						return def;

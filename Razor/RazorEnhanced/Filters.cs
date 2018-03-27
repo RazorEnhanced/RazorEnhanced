@@ -474,7 +474,7 @@ namespace RazorEnhanced
 			if (m.IsGhost) // Non eseguire azione se fantasma
 				return p;
 
-			int ltHue = Settings.General.ReadInt("LTHilight");
+			int ltHue = Engine.MainWindow.LTHilight;
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 				p = RewriteColorAndFlag(p, (ushort)ltHue);
 
@@ -498,7 +498,7 @@ namespace RazorEnhanced
 
 		internal static Packet MobileIncomingItemColorize(Packet p, Assistant.Mobile m, bool newmobincoming, Assistant.Item item = null)
 		{
-			int ltHue = Settings.General.ReadInt("LTHilight");
+			int ltHue = Engine.MainWindow.LTHilight;
 			if (newmobincoming)
 			{
 				if (ltHue != 0 && Targeting.IsLastTarget(m))
@@ -547,7 +547,7 @@ namespace RazorEnhanced
 
 		internal static Packet EquipmentUpdateColorize(Packet p, Assistant.Item i)
 		{
-			int ltHue = Settings.General.ReadInt("LTHilight");
+			int ltHue = Engine.MainWindow.LTHilight;
 			if (ltHue != 0 && Targeting.IsLastTarget(i.Container as Assistant.Mobile))
 				p = RewriteColor(p, (ushort)ltHue);
 			else

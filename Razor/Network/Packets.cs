@@ -885,7 +885,7 @@ namespace Assistant
 			: base(0x78)
 		{
 			int count = m.Contains.Count;
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = Engine.MainWindow.LTHilight;
 			int hue = m.Hue;
 
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
@@ -1703,7 +1703,7 @@ namespace Assistant
 			Write((int)m.Serial);
 			Write((short)m.Body);
 			Write((byte)0);
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = Engine.MainWindow.LTHilight;
 			if (ltHue != 0 && Targeting.IsLastTarget(m))
 				Write((short)(ltHue | 0x8000));
 			else

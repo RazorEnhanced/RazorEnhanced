@@ -1109,11 +1109,11 @@ namespace Assistant
 			}
 
 			// Apertura automatica toolbar se abilitata
-			if (RazorEnhanced.Settings.General.ReadBool("AutoopenToolBarCheckBox") && RazorEnhanced.ToolBar.ToolBarForm == null)
+			if (Engine.MainWindow.AutoopenToolBarCheckBox.Checked && RazorEnhanced.ToolBar.ToolBarForm == null)
 				RazorEnhanced.ToolBar.Open();
 
 			// Apertura automatica spellgrit se abilitata
-			if (RazorEnhanced.Settings.General.ReadBool("GridOpenLoginCheckBox") && RazorEnhanced.SpellGrid.SpellGridForm == null)
+			if (Engine.MainWindow.GridOpenLoginCheckBox.Checked && RazorEnhanced.SpellGrid.SpellGridForm == null)
 				RazorEnhanced.SpellGrid.Open();
 
 			// Avvio automatico script selezionati come autostart
@@ -1228,7 +1228,7 @@ namespace Assistant
 				ClientCommunication.PostHitsUpdate();
 			}
 
-			if (!RazorEnhanced.Settings.General.ReadBool("ShowHealth"))
+			if (Engine.MainWindow.ShowHealthOH.Checked)
 				return;
 
 			int percent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
@@ -1663,7 +1663,7 @@ namespace Assistant
 			if (RazorEnhanced.Settings.General.ReadBool("LastTargTextFlags"))
 				Targeting.CheckTextFlags(m);
 
-			int ltHue = RazorEnhanced.Settings.General.ReadInt("LTHilight");
+			int ltHue = Engine.MainWindow.LTHilight;
 			
 
 			m.Body = body;
@@ -1837,10 +1837,10 @@ namespace Assistant
 			{
 				if (item.ItemID == 0x2006) // corpse itemid = 0x2006
 				{
-					if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
+					if (Engine.MainWindow.ShowCorpseNames.Checked)
 						ClientCommunication.SendToServer(new SingleClick(item));
 					if (World.Player != null && !RazorEnhanced.AutoLoot.AutoMode && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player.Visible)
-						Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+						ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 				}
 				else if (item.IsMulti)
 				{
@@ -1851,7 +1851,7 @@ namespace Assistant
 			Item.UpdateContainers();
 
 			// Filtro muri
-			if (Assistant.Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
+			if (Engine.MainWindow.ShowStaticFieldCheckBox.Checked)
 				args.Block = RazorEnhanced.Filters.MakeWallStatic(item);
 		}
 
@@ -1956,10 +1956,10 @@ namespace Assistant
 			{
 				if (item.ItemID == 0x2006)// corpse itemid = 0x2006
 				{
-					if (RazorEnhanced.Settings.General.ReadBool("ShowCorpseNames"))
+					if (Engine.MainWindow.ShowCorpseNames.Checked)
 						ClientCommunication.SendToServer(new SingleClick(item));
 					if (World.Player != null && !RazorEnhanced.AutoLoot.AutoMode && RazorEnhanced.Settings.General.ReadBool("AutoOpenCorpses") && Utility.InRange(item.Position, World.Player.Position, RazorEnhanced.Settings.General.ReadInt("CorpseRange")) && World.Player.Visible)
-						Assistant.ClientCommunication.SendToServer(new DoubleClick(item.Serial));
+						ClientCommunication.SendToServer(new DoubleClick(item.Serial));
 				}
 				else if (item.IsMulti)
 				{
@@ -2062,7 +2062,7 @@ namespace Assistant
 					if (s != null)
 						p.Write((ushort)s.GetHue(hue));
 					else
-						p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("NeutralSpellHue"));
+						p.Write((ushort)Engine.MainWindow.NeutralSpellHue);
 				}
 			}
 			else if (ser.IsMobile && type == MessageType.Label)
@@ -2086,7 +2086,7 @@ namespace Assistant
 			{
 				if (ser == Serial.MinusOne && name == "System")
 				{
-					if (RazorEnhanced.Settings.General.ReadBool("FilterSnoopMsg") && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
+					if (Engine.MainWindow.FilterSnoopMsg.Checked && text.IndexOf(World.Player.Name) == -1 && text.StartsWith("You notice") && text.IndexOf("attempting to peek into") != -1 && text.IndexOf("belongings") != -1)
 					{
 						args.Block = true;
 						return;
@@ -2124,15 +2124,14 @@ namespace Assistant
 
 				if ((type == MessageType.Emote || type == MessageType.Regular || type == MessageType.Whisper || type == MessageType.Yell) && ser.IsMobile && ser != World.Player.Serial)
 				{
-					if (RazorEnhanced.Settings.General.ReadBool("ForceSpeechHue"))
+					if (Engine.MainWindow.ForceSpeechHue.Checked)
 					{
 						p.Seek(10, SeekOrigin.Begin);
-						p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("SpeechHue"));
+						p.Write((ushort)Engine.MainWindow.SpeechHue);
 					}
-
 				}
 
-				if (RazorEnhanced.Settings.General.ReadBool("FilterSpam") && (ser == Serial.MinusOne || ser == Serial.Zero))
+				if (Engine.MainWindow.FilterSpam.Checked && (ser == Serial.MinusOne || ser == Serial.Zero))
 				{
 					if (!MessageQueue.Enqueue(ser, body, type, hue, font, lang, name, text))
 					{

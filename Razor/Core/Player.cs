@@ -591,7 +591,7 @@ namespace Assistant
 
 			e.Position = Position;
 
-			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && RazorEnhanced.Settings.General.ReadBool("AutoOpenDoors") && CheckHiddedOpenDoor())
+			if (Body != 0x03DB && !IsGhost && ((int)(e.Dir & Direction.Mask)) % 2 == 0 && Engine.MainWindow.AutoOpenDoors.Checked && CheckHiddedOpenDoor())
 			{
 					int x = Position.X, y = Position.Y;
 					Utility.Offset(e.Dir, ref x, ref y);
@@ -882,11 +882,11 @@ namespace Assistant
 			{
 				case MsgLevel.Error:
 				case MsgLevel.Warning:
-					hue = RazorEnhanced.Settings.General.ReadInt("WarningColor");
+					hue = Engine.MainWindow.WarningColor;
 					break;
 
 				default:
-					hue = RazorEnhanced.Settings.General.ReadInt("SysColor");
+					hue = Engine.MainWindow.SysColor;
 					break;
 			}
 			ClientCommunication.SendToClient(new UnicodeMessage(0xFFFFFFFF, -1, MessageType.Regular, hue, 3, Language.CliLocName, "System", text));

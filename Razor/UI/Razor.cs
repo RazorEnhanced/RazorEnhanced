@@ -74,7 +74,6 @@ namespace Assistant
 		private RazorRadioButton taskbar;
 		private System.Windows.Forms.Label label11;
 		private RazorCheckBox autoStackRes;
-		private RazorButton setExHue;
 		private RazorButton setMsgHue;
 		private RazorButton setWarnHue;
 		private RazorButton setSpeechHue;
@@ -83,7 +82,6 @@ namespace Assistant
 		private RazorButton setNeuHue;
 		private System.Windows.Forms.Label lblWarnHue;
 		private System.Windows.Forms.Label lblMsgHue;
-		private System.Windows.Forms.Label lblExHue;
 		private System.Windows.Forms.Label lblBeneHue;
 		private System.Windows.Forms.Label lblHarmHue;
 		private System.Windows.Forms.Label lblNeuHue;
@@ -774,6 +772,21 @@ namespace Assistant
 		internal RazorCheckBox ChkNoRunStealth { get { return chknorunStealth; } }
 		internal RazorCheckBox ChkStealth { get { return chkStealth; } }
 		internal RazorCheckBox FilterPoison { get { return filterPoison; } }
+		internal RazorCheckBox ShowHealthOH { get { return showHealthOH; } }
+		internal RazorCheckBox AutoOpenDoors { get { return autoOpenDoors; } }
+		internal RazorCheckBox ShowCorpseNames { get { return incomingCorpse; } }
+		internal RazorCheckBox FilterSnoopMsg { get { return filterSnoop; } }
+		internal RazorCheckBox FilterSpam { get { return filterSnoop; } }
+		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
+
+		// Colori override
+		internal int SysColor = 0;
+		internal int WarningColor = 0;
+		internal int SpeechHue = 0;
+		internal int LTHilight = 0;
+		internal int BeneficialSpellHue = 0;
+		internal int HarmfulSpellHue = 0;
+		internal int NeutralSpellHue = 0;
 
 		// GumpInspector Flag
 		internal bool GumpInspectorEnable = false;
@@ -921,7 +934,6 @@ namespace Assistant
 			this.label4 = new System.Windows.Forms.Label();
 			this.lblWarnHue = new System.Windows.Forms.Label();
 			this.lblMsgHue = new System.Windows.Forms.Label();
-			this.lblExHue = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.healthFmt = new RazorEnhanced.UI.RazorTextBox();
 			this.showHealthOH = new RazorEnhanced.UI.RazorCheckBox();
@@ -951,7 +963,6 @@ namespace Assistant
 			this.setSpeechHue = new RazorEnhanced.UI.RazorButton();
 			this.setWarnHue = new RazorEnhanced.UI.RazorButton();
 			this.setMsgHue = new RazorEnhanced.UI.RazorButton();
-			this.setExHue = new RazorEnhanced.UI.RazorButton();
 			this.autoStackRes = new RazorEnhanced.UI.RazorCheckBox();
 			this.queueTargets = new RazorEnhanced.UI.RazorCheckBox();
 			this.spamFilter = new RazorEnhanced.UI.RazorCheckBox();
@@ -1919,7 +1930,6 @@ namespace Assistant
 			this.moreOptTab.Controls.Add(this.label4);
 			this.moreOptTab.Controls.Add(this.lblWarnHue);
 			this.moreOptTab.Controls.Add(this.lblMsgHue);
-			this.moreOptTab.Controls.Add(this.lblExHue);
 			this.moreOptTab.Controls.Add(this.label3);
 			this.moreOptTab.Controls.Add(this.healthFmt);
 			this.moreOptTab.Controls.Add(this.showHealthOH);
@@ -1949,7 +1959,6 @@ namespace Assistant
 			this.moreOptTab.Controls.Add(this.setSpeechHue);
 			this.moreOptTab.Controls.Add(this.setWarnHue);
 			this.moreOptTab.Controls.Add(this.setMsgHue);
-			this.moreOptTab.Controls.Add(this.setExHue);
 			this.moreOptTab.Controls.Add(this.autoStackRes);
 			this.moreOptTab.Controls.Add(this.queueTargets);
 			this.moreOptTab.Controls.Add(this.spamFilter);
@@ -2101,7 +2110,7 @@ namespace Assistant
 			// 
 			// label17
 			// 
-			this.label17.Location = new System.Drawing.Point(7, 250);
+			this.label17.Location = new System.Drawing.Point(7, 228);
 			this.label17.Name = "label17";
 			this.label17.Size = new System.Drawing.Size(92, 18);
 			this.label17.TabIndex = 68;
@@ -2109,7 +2118,7 @@ namespace Assistant
 			// 
 			// lblHarmHue
 			// 
-			this.lblHarmHue.Location = new System.Drawing.Point(77, 167);
+			this.lblHarmHue.Location = new System.Drawing.Point(77, 142);
 			this.lblHarmHue.Name = "lblHarmHue";
 			this.lblHarmHue.Size = new System.Drawing.Size(45, 14);
 			this.lblHarmHue.TabIndex = 46;
@@ -2117,7 +2126,7 @@ namespace Assistant
 			// 
 			// lblNeuHue
 			// 
-			this.lblNeuHue.Location = new System.Drawing.Point(135, 167);
+			this.lblNeuHue.Location = new System.Drawing.Point(135, 142);
 			this.lblNeuHue.Name = "lblNeuHue";
 			this.lblNeuHue.Size = new System.Drawing.Size(42, 14);
 			this.lblNeuHue.TabIndex = 45;
@@ -2125,7 +2134,7 @@ namespace Assistant
 			// 
 			// lblBeneHue
 			// 
-			this.lblBeneHue.Location = new System.Drawing.Point(17, 167);
+			this.lblBeneHue.Location = new System.Drawing.Point(17, 142);
 			this.lblBeneHue.Name = "lblBeneHue";
 			this.lblBeneHue.Size = new System.Drawing.Size(55, 14);
 			this.lblBeneHue.TabIndex = 44;
@@ -2141,7 +2150,7 @@ namespace Assistant
 			// 
 			// lblWarnHue
 			// 
-			this.lblWarnHue.Location = new System.Drawing.Point(7, 69);
+			this.lblWarnHue.Location = new System.Drawing.Point(7, 44);
 			this.lblWarnHue.Name = "lblWarnHue";
 			this.lblWarnHue.Size = new System.Drawing.Size(139, 16);
 			this.lblWarnHue.TabIndex = 16;
@@ -2149,23 +2158,15 @@ namespace Assistant
 			// 
 			// lblMsgHue
 			// 
-			this.lblMsgHue.Location = new System.Drawing.Point(7, 44);
+			this.lblMsgHue.Location = new System.Drawing.Point(7, 19);
 			this.lblMsgHue.Name = "lblMsgHue";
 			this.lblMsgHue.Size = new System.Drawing.Size(139, 17);
 			this.lblMsgHue.TabIndex = 15;
 			this.lblMsgHue.Text = "Razor Message Hue";
 			// 
-			// lblExHue
-			// 
-			this.lblExHue.Location = new System.Drawing.Point(7, 20);
-			this.lblExHue.Name = "lblExHue";
-			this.lblExHue.Size = new System.Drawing.Size(139, 16);
-			this.lblExHue.TabIndex = 14;
-			this.lblExHue.Text = "Search Exemption Hue";
-			// 
 			// label3
 			// 
-			this.label3.Location = new System.Drawing.Point(7, 220);
+			this.label3.Location = new System.Drawing.Point(7, 198);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(86, 16);
 			this.label3.TabIndex = 4;
@@ -2273,7 +2274,7 @@ namespace Assistant
             "Warnings & Errors",
             "Errors Only",
             "None"});
-			this.msglvl.Location = new System.Drawing.Point(106, 246);
+			this.msglvl.Location = new System.Drawing.Point(106, 224);
 			this.msglvl.Name = "msglvl";
 			this.msglvl.Size = new System.Drawing.Size(88, 23);
 			this.msglvl.TabIndex = 69;
@@ -2335,7 +2336,7 @@ namespace Assistant
 			// 
 			// setLTHilight
 			// 
-			this.setLTHilight.Location = new System.Drawing.Point(152, 115);
+			this.setLTHilight.Location = new System.Drawing.Point(152, 90);
 			this.setLTHilight.Name = "setLTHilight";
 			this.setLTHilight.Size = new System.Drawing.Size(32, 20);
 			this.setLTHilight.TabIndex = 51;
@@ -2344,7 +2345,7 @@ namespace Assistant
 			// 
 			// lthilight
 			// 
-			this.lthilight.Location = new System.Drawing.Point(7, 118);
+			this.lthilight.Location = new System.Drawing.Point(7, 93);
 			this.lthilight.Name = "lthilight";
 			this.lthilight.Size = new System.Drawing.Size(139, 22);
 			this.lthilight.TabIndex = 50;
@@ -2394,7 +2395,7 @@ namespace Assistant
 			// setHarmHue
 			// 
 			this.setHarmHue.Enabled = false;
-			this.setHarmHue.Location = new System.Drawing.Point(83, 184);
+			this.setHarmHue.Location = new System.Drawing.Point(83, 159);
 			this.setHarmHue.Name = "setHarmHue";
 			this.setHarmHue.Size = new System.Drawing.Size(32, 20);
 			this.setHarmHue.TabIndex = 42;
@@ -2404,7 +2405,7 @@ namespace Assistant
 			// setNeuHue
 			// 
 			this.setNeuHue.Enabled = false;
-			this.setNeuHue.Location = new System.Drawing.Point(140, 184);
+			this.setNeuHue.Location = new System.Drawing.Point(140, 159);
 			this.setNeuHue.Name = "setNeuHue";
 			this.setNeuHue.Size = new System.Drawing.Size(31, 20);
 			this.setNeuHue.TabIndex = 43;
@@ -2413,7 +2414,7 @@ namespace Assistant
 			// 
 			// setBeneHue
 			// 
-			this.setBeneHue.Location = new System.Drawing.Point(28, 184);
+			this.setBeneHue.Location = new System.Drawing.Point(28, 159);
 			this.setBeneHue.Name = "setBeneHue";
 			this.setBeneHue.Size = new System.Drawing.Size(33, 20);
 			this.setBeneHue.TabIndex = 41;
@@ -2422,7 +2423,7 @@ namespace Assistant
 			// 
 			// setSpeechHue
 			// 
-			this.setSpeechHue.Location = new System.Drawing.Point(152, 91);
+			this.setSpeechHue.Location = new System.Drawing.Point(152, 66);
 			this.setSpeechHue.Name = "setSpeechHue";
 			this.setSpeechHue.Size = new System.Drawing.Size(32, 20);
 			this.setSpeechHue.TabIndex = 40;
@@ -2431,7 +2432,7 @@ namespace Assistant
 			// 
 			// setWarnHue
 			// 
-			this.setWarnHue.Location = new System.Drawing.Point(152, 67);
+			this.setWarnHue.Location = new System.Drawing.Point(152, 42);
 			this.setWarnHue.Name = "setWarnHue";
 			this.setWarnHue.Size = new System.Drawing.Size(32, 20);
 			this.setWarnHue.TabIndex = 39;
@@ -2440,21 +2441,12 @@ namespace Assistant
 			// 
 			// setMsgHue
 			// 
-			this.setMsgHue.Location = new System.Drawing.Point(152, 43);
+			this.setMsgHue.Location = new System.Drawing.Point(152, 18);
 			this.setMsgHue.Name = "setMsgHue";
 			this.setMsgHue.Size = new System.Drawing.Size(32, 19);
 			this.setMsgHue.TabIndex = 38;
 			this.setMsgHue.Text = "Set";
 			this.setMsgHue.Click += new System.EventHandler(this.setMsgHue_Click);
-			// 
-			// setExHue
-			// 
-			this.setExHue.Location = new System.Drawing.Point(152, 18);
-			this.setExHue.Name = "setExHue";
-			this.setExHue.Size = new System.Drawing.Size(32, 20);
-			this.setExHue.TabIndex = 37;
-			this.setExHue.Text = "Set";
-			this.setExHue.Click += new System.EventHandler(this.setExHue_Click);
 			// 
 			// autoStackRes
 			// 
@@ -2508,7 +2500,7 @@ namespace Assistant
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtSpellFormat.BackColor = System.Drawing.Color.White;
 			this.txtSpellFormat.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.txtSpellFormat.Location = new System.Drawing.Point(106, 218);
+			this.txtSpellFormat.Location = new System.Drawing.Point(106, 196);
 			this.txtSpellFormat.Name = "txtSpellFormat";
 			this.txtSpellFormat.Size = new System.Drawing.Size(87, 20);
 			this.txtSpellFormat.TabIndex = 5;
@@ -2516,7 +2508,7 @@ namespace Assistant
 			// 
 			// chkForceSpellHue
 			// 
-			this.chkForceSpellHue.Location = new System.Drawing.Point(7, 142);
+			this.chkForceSpellHue.Location = new System.Drawing.Point(7, 117);
 			this.chkForceSpellHue.Name = "chkForceSpellHue";
 			this.chkForceSpellHue.Size = new System.Drawing.Size(139, 22);
 			this.chkForceSpellHue.TabIndex = 2;
@@ -2525,7 +2517,7 @@ namespace Assistant
 			// 
 			// chkForceSpeechHue
 			// 
-			this.chkForceSpeechHue.Location = new System.Drawing.Point(7, 94);
+			this.chkForceSpeechHue.Location = new System.Drawing.Point(7, 69);
 			this.chkForceSpeechHue.Name = "chkForceSpeechHue";
 			this.chkForceSpeechHue.Size = new System.Drawing.Size(139, 22);
 			this.chkForceSpeechHue.TabIndex = 0;
@@ -8238,7 +8230,6 @@ namespace Assistant
 			{
 				lthilight.Checked = setLTHilight.Enabled = false;
 			}
-			InitPreviewHue(lblExHue, "ExemptColor");
 			InitPreviewHue(lblMsgHue, "SysColor");
 			InitPreviewHue(lblWarnHue, "WarningColor");
 			InitPreviewHue(chkForceSpeechHue, "SpeechHue");
@@ -8749,21 +8740,39 @@ namespace Assistant
 			int hueIdx = RazorEnhanced.Settings.General.ReadInt(cfg);
 			if (hueIdx > 0 && hueIdx < 3000)
 			{
-				if (ctrl.Name == "mapChatColorlabel")
-					ctrl.ForeColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
-				else
-					ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
+				ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
 			}
 			else
 			{
-				if (ctrl.Name == "mapChatColorlabel")
-					ctrl.ForeColor = SystemColors.Control;
-				else
-					ctrl.BackColor = SystemColors.Control;
+				ctrl.BackColor = SystemColors.Control;
 			}
 
-			if (ctrl.Name != "mapChatColorlabel")
-				ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? System.Drawing.Color.White : System.Drawing.Color.Black);
+			ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? System.Drawing.Color.White : System.Drawing.Color.Black);
+
+			switch (cfg)
+			{
+				case "SysColor":
+					SysColor = hueIdx;
+					break;
+				case "WarningColor":
+					WarningColor = hueIdx;
+					break;
+				case "SpeechHue":
+					SpeechHue = hueIdx;
+					break;
+				case "LTHilight":
+					LTHilight = hueIdx;
+					break;
+				case "BeneficialSpellHue":
+					BeneficialSpellHue = hueIdx;
+					break;
+				case "HarmfulSpellHue":
+					HarmfulSpellHue = hueIdx;
+					break;
+				case "NeutralSpellHue":
+					NeutralSpellHue = hueIdx;
+					break;
+			}
 		}
 
 		private bool SetHue(Control ctrl, string cfg)
@@ -8774,23 +8783,42 @@ namespace Assistant
 			{
 				int hueIdx = h.Hue;
 				RazorEnhanced.Settings.General.WriteInt(cfg, hueIdx);
+
+				switch (cfg)
+				{
+					case "SysColor":
+						SysColor = hueIdx;
+						break;
+					case "WarningColor":
+						WarningColor = hueIdx;
+						break;
+					case "SpeechHue":
+						SpeechHue = hueIdx;
+						break;
+					case "LTHilight":
+						LTHilight = hueIdx;
+						break;
+					case "BeneficialSpellHue":
+						BeneficialSpellHue = hueIdx;
+						break;
+					case "HarmfulSpellHue":
+						HarmfulSpellHue = hueIdx;
+						break;
+					case "NeutralSpellHue":
+						NeutralSpellHue = hueIdx;
+						break;
+				}
+
 				if (hueIdx > 0 && hueIdx < 3000)
 				{
-					if (ctrl.Name == "mapChatColorlabel")
-						ctrl.ForeColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
-					else
-						ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
+					ctrl.BackColor = Ultima.Hues.GetHue(hueIdx - 1).GetColor(HueEntry.TextHueIDX);
 				}
 				else
 				{
-					if (ctrl.Name == "mapChatColorlabel")
-						ctrl.ForeColor = System.Drawing.Color.White;
-					else
-						ctrl.BackColor = System.Drawing.Color.White;
+					ctrl.BackColor = System.Drawing.Color.White;
 				}
 
-				if (ctrl.Name != "mapChatColorlabel")
-					ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? System.Drawing.Color.White : System.Drawing.Color.Black);
+				ctrl.ForeColor = (ctrl.BackColor.GetBrightness() < 0.35 ? System.Drawing.Color.White : System.Drawing.Color.Black);
 
 				return true;
 			}
@@ -8798,11 +8826,6 @@ namespace Assistant
 			{
 				return false;
 			}
-		}
-
-		private void setExHue_Click(object sender, System.EventArgs e)
-		{
-			SetHue(lblExHue, "ExemptColor");
 		}
 
 		private void setMsgHue_Click(object sender, System.EventArgs e)
@@ -8823,7 +8846,7 @@ namespace Assistant
 		private void setLTHilight_Click(object sender, System.EventArgs e)
 		{
 			if (SetHue(lthilight, "LTHilight"))
-				ClientCommunication.SetCustomNotoHue(RazorEnhanced.Settings.General.ReadInt("LTHilight"));
+				ClientCommunication.SetCustomNotoHue(LTHilight);
 		}
 
 		private void setBeneHue_Click(object sender, System.EventArgs e)

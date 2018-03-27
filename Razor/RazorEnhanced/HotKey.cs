@@ -573,7 +573,7 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				RazorEnhanced.Player.ChatSay(RazorEnhanced.Settings.General.ReadInt("SpeechHue"), function);
+				RazorEnhanced.Player.ChatSay(Engine.MainWindow.SpeechHue, function);
 			}
 		}
 

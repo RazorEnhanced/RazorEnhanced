@@ -66,23 +66,18 @@ namespace Assistant
 
 		internal static void AddItem(Item item)
 		{
-			if (!m_Items.ContainsKey(item.Serial))
-				m_Items[item.Serial] = item;
+			m_Items[item.Serial] = item;
 		}
 
 		internal static void AddMulti(Item item)
 		{
-			if (!m_Multis.ContainsKey(item.Serial))
-			{
-				Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
-				m_Multis[item.Serial] = new RazorEnhanced.Multi.MultiData(item.Position, new Point2D(item.Position.X + multiinfo.Min.X , item.Position.Y + multiinfo.Min.Y), new Point2D(item.Position.X - multiinfo.Min.X, item.Position.Y - multiinfo.Min.Y));
-			}
+			Ultima.MultiComponentList multiinfo = Ultima.Multis.GetComponents(item.ItemID);
+			m_Multis[item.Serial] = new RazorEnhanced.Multi.MultiData(item.Position, new Point2D(item.Position.X + multiinfo.Min.X , item.Position.Y + multiinfo.Min.Y), new Point2D(item.Position.X - multiinfo.Min.X, item.Position.Y - multiinfo.Min.Y));
 		}
 
 		internal static void AddMobile(Mobile mob)
 		{
-			if (!m_Mobiles.ContainsKey(mob.Serial))
-				m_Mobiles[mob.Serial] = mob;
+			m_Mobiles[mob.Serial] = mob;
 		}
 
 		internal static void RemoveMobile(Mobile mob)
@@ -101,8 +96,7 @@ namespace Assistant
 
 		internal static void RemoveMulti(Item item)
 		{
-			RazorEnhanced.Multi.MultiData removed;
-			m_Multis.TryRemove(item.Serial, out removed);
+			m_Multis.TryRemove(item.Serial, out RazorEnhanced.Multi.MultiData removed);
 		}
 
 		internal static PlayerData Player
