@@ -1,12 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-using System.Net;
 using RazorEnhanced;
 
 
@@ -46,7 +40,7 @@ namespace Assistant
 			sb.Append(String.Format("~SL{0}", statStr));
 
 			// Hits
-			if (Settings.General.ReadBool("ShowHitsToolBarCheckBox"))
+			if (Engine.MainWindow.ShowHitsToolBarCheckBox.Checked)
 			{
 				if (World.Player.Poisoned)
 					sb.Append(String.Format("H:~#FF8000{0}~#~/{1} ", World.Player.Hits, World.Player.HitsMax));
@@ -55,19 +49,19 @@ namespace Assistant
 			}
 
 			// Mana
-			if (Settings.General.ReadBool("ShowManaToolBarCheckBox"))
+			if (Engine.MainWindow.ShowManaToolBarCheckBox.Checked)
 				sb.Append(String.Format("M:{0}/{1} ", EncodeColorStat(World.Player.Mana, World.Player.ManaMax), World.Player.ManaMax));
 
 			// Stam
-			if (Settings.General.ReadBool("ShowStaminaToolBarCheckBox"))
+			if (Engine.MainWindow.ShowStaminaToolBarCheckBox.Checked)
 				sb.Append(String.Format("S:{0}/{1} ", EncodeColorStat(World.Player.Stam, World.Player.StamMax), World.Player.StamMax));
 
 			// Follower
-			if (Settings.General.ReadBool("ShowFollowerToolBarCheckBox"))
+			if (Engine.MainWindow.ShowFollowerToolBarCheckBox.Checked)
 				sb.Append(String.Format("F:{0}/{1} ", World.Player.Followers, World.Player.FollowersMax));
 
 			// Weight
-			if (Settings.General.ReadBool("ShowWeightToolBarCheckBox"))
+			if (Engine.MainWindow.ShowWeightToolBarCheckBox.Checked)
 			{
 				if (World.Player.Weight >= World.Player.MaxWeight)
 					sb.Append(String.Format("W:~#FF0000{0}~#~/{1} ", World.Player.Weight, World.Player.MaxWeight));

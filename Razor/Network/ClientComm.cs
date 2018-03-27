@@ -806,6 +806,8 @@ namespace Assistant
 				m_ConnStart = DateTime.MinValue;
 			}
 
+			ClientCommunication.SetTitleStr(""); // Restore titlebar standard
+
 			// Stop forzato di tutti i thread agent
 			RazorEnhanced.AutoLoot.AutoMode = false;
 			RazorEnhanced.Scavenger.AutoMode = false;

@@ -792,7 +792,8 @@ namespace RazorEnhanced
 
 		public static void UseItem(Item item)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new DoubleClick((Assistant.Serial)item.Serial));
+			if (item != null)
+				UseItem(item.Serial);
 		}
 
 		public static void UseItem(int itemserial)
@@ -1048,24 +1049,15 @@ namespace RazorEnhanced
 
         public static int BackpackCount(int itemid, int color)
 		{
-			// Genero filtro item
-			Items.Filter itemFilter = new Items.Filter
-			{
-				Enabled = true
-			};
-			itemFilter.Graphics.Add(itemid);
+			List<Assistant.Item> items = World.Items.Values.ToList();
+			items = items.Where((i) => i.ItemID == itemid && i.RootContainer == World.Player && i.IsInBank == false).ToList();
 
 			if (color != -1)
-				itemFilter.Hues.Add(color);
-
-			List<Item> containeritem = RazorEnhanced.Items.ApplyFilter(itemFilter);
+				items = items.Where((i) => i.Hue == color).ToList();
 
 			int amount = 0;
-			foreach (Item found in containeritem)
-			{
-				if (!found.IsInBank && found.RootContainer == World.Player)
-					amount = amount + found.Amount;
-			}
+			foreach (Assistant.Item i in items)
+					amount = amount + i.Amount;
 
 			return amount;
 		}
