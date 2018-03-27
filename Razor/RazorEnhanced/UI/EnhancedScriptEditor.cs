@@ -127,7 +127,7 @@ namespace RazorEnhanced.UI
 				"Player.ChatYell", "Player.ChatGuild", "Player.ChatAlliance", "Player.SetWarMode", "Player.Attack",
 				"Player.AttackLast", "Player.InParty", "Player.ChatParty",
 				"Player.PartyCanLoot", "Player.PartyInvite", "Player.PartyLeave", "Player.KickMember", "Player.InvokeVirtue",
-				"Player.Walk", "Player.Run", "Player.PathFindTo", "Player.PathFindToPacket", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
+				"Player.Walk", "Player.Run", "Player.PathFindTo", "Player.GetPropValue", "Player.GetPropStringByIndex", "GetPropStringList", "Player.QuestButton",
 				"Player.GuildButton", "Player.WeaponPrimarySA", "Player.WeaponSecondarySA", "Player.WeaponClearSA",
 				"Player.WeaponStunSA", "Player.WeaponDisarmSA, Player.HasSpecial", "Player.Flying"
 			};
@@ -410,9 +410,6 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.PathFindTo(Point3D or (int, int, int))", new string[] { "Point3D Coords or ( int X, int Y, int Z )" }, "void", "Client pathfinder to specific location with Point3D or XYZ coordinates");
 			descriptionPlayer.Add("Player.PathFindTo", tooltip);
 
-            tooltip = new ToolTipDescriptions("Player.PathFindToPacket(int, int, int)", new string[] { "int X, int Y, int Z" }, "void", "Client pathfinder to specific location with XYZ coordinates\n\tPlayer can be blocked with items in path");
-            descriptionPlayer.Add("Player.PathFindToPacket", tooltip);
-
             tooltip = new ToolTipDescriptions("Player.GetPropValue(string)", new string[] { "string PropName" }, "int", "Get property value of player");
 			descriptionPlayer.Add("Player.GetPropValue", tooltip);
 
@@ -575,8 +572,8 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Items.UseItemByID(int, int)", new string[] { "int ItemID", "int Color" }, "void", "Use item whit specific ID\n\tColor -1 is wildcard for all color");
 			descriptionItems.Add("Items.UseItemByID", tooltip);
 
-			tooltip = new ToolTipDescriptions("Items.UseItemOnTarget(int, int)", new string[] { "int itemserial", "int targetserial" }, "void", "Use a item on target direct whitout using target system.");
-			descriptionItems.Add("Items.UseItemOnTarget", tooltip);
+			tooltip = new ToolTipDescriptions("Items.UseItemOnMobile(int, int)", new string[] { "int itemserial", "int targetserial" }, "void", "Use a item on target direct whitout using target system.");
+			descriptionItems.Add("Items.UseItemOnMobile", tooltip);
 
 			tooltip = new ToolTipDescriptions("Items.Hide(int or item)", new string[] { "int serial or item itemtohide"}, "void", "Use to hide a item in screen");
 			descriptionItems.Add("Items.Hide", tooltip);

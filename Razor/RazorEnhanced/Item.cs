@@ -781,9 +781,12 @@ namespace RazorEnhanced
 			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(i.Serial, targetserial));
 		}
 
-		public static void UseItemOnMobile(int itemserial, int targetserial)
+		public static void UseItemOnMobile(int itemserial, int targetserial, bool wait = true)
 		{
-			Assistant.ClientCommunication.SendToServerWait(new UseItemOnTarget(itemserial, targetserial));
+			if (wait)
+				ClientCommunication.SendToServerWait(new UseItemOnTarget(itemserial, targetserial));
+			else
+				ClientCommunication.SendToServer(new UseItemOnTarget(itemserial, targetserial));
 		}
 
 
