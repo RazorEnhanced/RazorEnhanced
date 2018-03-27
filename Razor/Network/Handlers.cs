@@ -2097,12 +2097,24 @@ namespace Assistant
 					}
 				}
 
-				// Filtro messsaggi poison (33 colore poison message)
+				// Filtro messsaggi poison 
 				if (type == MessageType.Regular && hue == 33 && ser != World.Player.Serial)
 				{
 					if (Engine.MainWindow.FilterPoison.Checked)
 					{
 						if (text.EndsWith("*"))
+						{
+							args.Block = true;
+							return;
+						}
+					}
+				}
+				// Filtro messsaggi poison "seems to have no effect" 
+				if (type == MessageType.Emote && hue == 946 && ser != World.Player.Serial)
+				{
+					if (Engine.MainWindow.FilterPoison.Checked)
+					{
+						if (text.EndsWith("t. *"))
 						{
 							args.Block = true;
 							return;
@@ -2117,6 +2129,7 @@ namespace Assistant
 						p.Seek(10, SeekOrigin.Begin);
 						p.Write((ushort)RazorEnhanced.Settings.General.ReadInt("SpeechHue"));
 					}
+
 				}
 
 				if (RazorEnhanced.Settings.General.ReadBool("FilterSpam") && (ser == Serial.MinusOne || ser == Serial.Zero))
