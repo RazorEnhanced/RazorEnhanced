@@ -23,7 +23,7 @@ namespace Assistant
 		private static StringBuilder m_TBBuilder = new StringBuilder();
 		internal static void UpdateTitleBar()
 		{
-			if (World.Player == null)
+			if (!ClientCommunication.Ready || World.Player == null)
 				return;
 
 			m_TBBuilder.Remove(0, m_TBBuilder.Length);

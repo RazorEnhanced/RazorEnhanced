@@ -519,6 +519,7 @@ namespace Assistant
 		// ZIPPY REV 80		public static IntPtr FwdWnd { get { return m_FwdWnd; } }
 
 		private static bool m_Ready = false;
+		internal static bool Ready { get { return m_Ready; } }
 		private static DateTime m_ConnStart;
 		private static IPAddress m_LastConnection;
 
