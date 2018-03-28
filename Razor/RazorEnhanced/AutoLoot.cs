@@ -184,7 +184,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			RazorEnhanced.Settings.AutoLoot.ListsRead(out List<AutoLootList> lists);
+			List<AutoLootList> lists = Settings.AutoLoot.ListsRead();
 
 			AutoLootList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.AutoLootListSelect.Text)
@@ -209,7 +209,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			RazorEnhanced.Settings.AutoLoot.ListsRead(out List<AutoLootList> lists);
+			List<AutoLootList> lists = Settings.AutoLoot.ListsRead();
 
 			Assistant.Engine.MainWindow.AutoLootDataGridView.Rows.Clear();
 

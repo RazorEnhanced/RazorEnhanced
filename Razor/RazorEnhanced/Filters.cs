@@ -163,13 +163,20 @@ namespace RazorEnhanced
 			}
 		}
 
-		internal static Packet GraphChange(Packet p, ushort body)
+		internal static Packet GraphChange(Packet p, ushort body, out bool block)
 		{
+			block = false;
 			List<GraphChangeData> graphdatas = Settings.GraphFilter.ReadAll();
 			foreach (GraphChangeData graphdata in graphdatas)
 			{
 				if (body != graphdata.GraphReal)
 					continue;
+
+				if (graphdata.GraphNew == 0)
+				{
+					block = true;
+					break;
+				}
 
 				p.Seek(-2, SeekOrigin.Current);
 				p.Write((ushort)(graphdata.GraphNew));

@@ -1131,7 +1131,14 @@ namespace Assistant
 
 			// Chiamata funzione cambio grafica mob.
 			if (Engine.MainWindow.MobFilterCheckBox.Checked)
-				p = RazorEnhanced.Filters.GraphChange(p, m.Body);
+			{
+				p = RazorEnhanced.Filters.GraphChange(p, m.Body, out bool block);
+				if (block)
+				{
+					args.Block = true;
+					return;
+				}
+			}
 
 			m.Position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 
@@ -1643,7 +1650,15 @@ namespace Assistant
 
 			// Chiamata funzione cambio grafica mob.
 			if (Engine.MainWindow.MobFilterCheckBox.Checked)
-				p = RazorEnhanced.Filters.GraphChange(p, body);
+			{
+				p = RazorEnhanced.Filters.GraphChange(p, body, out bool block);
+				if (block)
+				{ 
+					args.Block = true;
+					return;
+				}
+			}
+
 
 			Point3D position = new Point3D(p.ReadUInt16(), p.ReadUInt16(), p.ReadSByte());
 

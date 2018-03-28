@@ -94,19 +94,19 @@ namespace RazorEnhanced
 
 			Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Add(addlog)));
 			Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.SelectedIndex = Engine.MainWindow.FriendLogBox.Items.Count - 1));
-			if (Assistant.Engine.MainWindow.FriendLogBox.Items.Count > 300)
-				Assistant.Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendLogBox.Items.Clear()));
+			if (Engine.MainWindow.FriendLogBox.Items.Count > 300)
+				Engine.MainWindow.FriendLogBox.Invoke(new Action(() => Engine.MainWindow.FriendLogBox.Items.Clear()));
 		}
 
 		internal static bool IncludeParty
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked;
+				return Engine.MainWindow.FriendIncludePartyCheckBox.Checked;
 			}
 			set
 			{
-				Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked = value));
+				Engine.MainWindow.FriendIncludePartyCheckBox.Invoke(new Action(() => Engine.MainWindow.FriendIncludePartyCheckBox.Checked = value));
 			}
 		}
 
@@ -114,11 +114,11 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked;
+				return Engine.MainWindow.FriendAttackCheckBox.Checked;
 			}
 			set
 			{
-				Assistant.Engine.MainWindow.FriendAttackCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked = value));
+				Engine.MainWindow.FriendAttackCheckBox.Invoke(new Action(() => Engine.MainWindow.FriendAttackCheckBox.Checked = value));
 			}
 		}
 
@@ -126,11 +126,11 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.FriendPartyCheckBox.Checked;
+				return Engine.MainWindow.FriendPartyCheckBox.Checked;
 			}
 			set
 			{
-				Assistant.Engine.MainWindow.FriendPartyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendPartyCheckBox.Checked = value));
+				Engine.MainWindow.FriendPartyCheckBox.Invoke(new Action(() => Engine.MainWindow.FriendPartyCheckBox.Checked = value));
 			}
 		}
 
@@ -138,11 +138,11 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.FriendSLCheckBox.Checked;
+				return Engine.MainWindow.FriendSLCheckBox.Checked;
 			}
 			set
 			{
-				Assistant.Engine.MainWindow.FriendSLCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendSLCheckBox.Checked = value));
+				Engine.MainWindow.FriendSLCheckBox.Invoke(new Action(() => Engine.MainWindow.FriendSLCheckBox.Checked = value));
 			}
 		}
 
@@ -150,11 +150,11 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.FriendTBCheckBox.Checked;
+				return Engine.MainWindow.FriendTBCheckBox.Checked;
 			}
 			set
 			{ 
-				Assistant.Engine.MainWindow.FriendTBCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendTBCheckBox.Checked = value));
+				Engine.MainWindow.FriendTBCheckBox.Invoke(new Action(() => Engine.MainWindow.FriendTBCheckBox.Checked = value));
 			}
 		}
 
@@ -162,11 +162,11 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked;
+				return Engine.MainWindow.FriendCOMCheckBox.Checked;
 			}
 			set
 			{
-				Assistant.Engine.MainWindow.FriendTBCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked = value));
+				Engine.MainWindow.FriendTBCheckBox.Invoke(new Action(() => Engine.MainWindow.FriendCOMCheckBox.Checked = value));
 			}
 		}
 
@@ -174,11 +174,11 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return Assistant.Engine.MainWindow.FriendMINCheckBox.Checked;
+				return Engine.MainWindow.FriendMINCheckBox.Checked;
 			}
 			set
 			{
-				Assistant.Engine.MainWindow.FriendMINCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendMINCheckBox.Checked = value));
+				Engine.MainWindow.FriendMINCheckBox.Invoke(new Action(() => Engine.MainWindow.FriendMINCheckBox.Checked = value));
 			}
 		}
 
@@ -186,46 +186,46 @@ namespace RazorEnhanced
 		{
 			get
 			{
-				return (string)Assistant.Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Assistant.Engine.MainWindow.FriendListSelect.Text));
+				return (string)Engine.MainWindow.FriendListSelect.Invoke(new Func<string>(() => Engine.MainWindow.FriendListSelect.Text));
 			}
 
 			set
 			{
-				Assistant.Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendListSelect.Text = value));
+				Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Engine.MainWindow.FriendListSelect.Text = value));
 			}
 		}
 
 
 		internal static void RefreshLists()
 		{
-			RazorEnhanced.Settings.Friend.ListsRead(out List<FriendList> lists);
+			List<FriendList> lists = Settings.Friend.ListsRead();
 
 			if (lists.Count == 0)
 			{
-				Assistant.Engine.MainWindow.FriendListView.Items.Clear();
-				Assistant.Engine.MainWindow.FriendAttackCheckBox.Checked = false;
-				Assistant.Engine.MainWindow.FriendIncludePartyCheckBox.Checked = false;
-				Assistant.Engine.MainWindow.FriendPartyCheckBox.Checked = false;
-				Assistant.Engine.MainWindow.FriendSLCheckBox.Checked = false;
-				Assistant.Engine.MainWindow.FriendTBCheckBox.Checked = false;
-				Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked = false;
-				Assistant.Engine.MainWindow.FriendMINCheckBox.Checked = false;
+				Engine.MainWindow.FriendListView.Items.Clear();
+				Engine.MainWindow.FriendAttackCheckBox.Checked = false;
+				Engine.MainWindow.FriendIncludePartyCheckBox.Checked = false;
+				Engine.MainWindow.FriendPartyCheckBox.Checked = false;
+				Engine.MainWindow.FriendSLCheckBox.Checked = false;
+				Engine.MainWindow.FriendTBCheckBox.Checked = false;
+				Engine.MainWindow.FriendCOMCheckBox.Checked = false;
+				Engine.MainWindow.FriendMINCheckBox.Checked = false;
 
 			}
 
 			FriendList selectedList = lists.FirstOrDefault(l => l.Selected);
-			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.FriendListSelect.Text)
+			if (selectedList != null && selectedList.Description == Engine.MainWindow.FriendListSelect.Text)
 				return;
 
-			Assistant.Engine.MainWindow.FriendListSelect.Items.Clear();
+			Engine.MainWindow.FriendListSelect.Items.Clear();
 			foreach (FriendList l in lists)
 			{
-				Assistant.Engine.MainWindow.FriendListSelect.Items.Add(l.Description);
+				Engine.MainWindow.FriendListSelect.Items.Add(l.Description);
 
 				if (!l.Selected)
 					continue;
 
-				Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = Assistant.Engine.MainWindow.FriendListSelect.Items.IndexOf(l.Description);
+				Engine.MainWindow.FriendListSelect.SelectedIndex = Engine.MainWindow.FriendListSelect.Items.IndexOf(l.Description);
 				IncludeParty = l.IncludeParty;
 				PreventAttack = l.PreventAttack;
 				AutoacceptParty = l.AutoacceptParty;
@@ -238,9 +238,9 @@ namespace RazorEnhanced
 
 		internal static void RefreshPlayers()
 		{
-			RazorEnhanced.Settings.Friend.ListsRead(out List<FriendList> lists);
+			List<FriendList> lists = Settings.Friend.ListsRead();
 
-			Assistant.Engine.MainWindow.FriendListView.Items.Clear();
+			Engine.MainWindow.FriendListView.Items.Clear();
 			foreach (FriendList l in lists)
 			{
 				if (!l.Selected)
@@ -258,16 +258,16 @@ namespace RazorEnhanced
 					listitem.SubItems.Add(player.Name);
 					listitem.SubItems.Add("0x" + player.Serial.ToString("X8"));
 
-					Assistant.Engine.MainWindow.FriendListView.Items.Add(listitem);
+					Engine.MainWindow.FriendListView.Items.Add(listitem);
 				}
 			}
 		}
 
 		internal static void RefreshGuilds()
 		{
-			RazorEnhanced.Settings.Friend.ListsRead(out List<FriendList> lists);
+			List<FriendList> lists = Settings.Friend.ListsRead();
 
-			Assistant.Engine.MainWindow.FriendGuildListView.Items.Clear();
+			Engine.MainWindow.FriendGuildListView.Items.Clear();
 			foreach (FriendList l in lists)
 			{
 				if (!l.Selected)
@@ -284,7 +284,7 @@ namespace RazorEnhanced
 
 					listitem.SubItems.Add(guild.Name);
 
-					Assistant.Engine.MainWindow.FriendGuildListView.Items.Add(listitem);
+					Engine.MainWindow.FriendGuildListView.Items.Add(listitem);
 				}
 			}
 		}
@@ -310,7 +310,7 @@ namespace RazorEnhanced
 
 		internal static void AddPlayerToList(string name, int serial)
 		{
-			string selection = Assistant.Engine.MainWindow.FriendListSelect.Text;
+			string selection = Engine.MainWindow.FriendListSelect.Text;
 			FriendPlayer player = new FriendPlayer(name, serial, true);
 
 			if (RazorEnhanced.Settings.Friend.ListExists(selection))
@@ -334,7 +334,7 @@ namespace RazorEnhanced
 
 		internal static void AddGuildToList(string name)
 		{
-			string selection = Assistant.Engine.MainWindow.FriendListSelect.Text;
+			string selection = Engine.MainWindow.FriendListSelect.Text;
 			FriendGuild guild = new FriendGuild(name, true);
 
 			if (RazorEnhanced.Settings.Friend.ListExists(selection))
@@ -349,12 +349,12 @@ namespace RazorEnhanced
 		{
 			RazorEnhanced.Settings.Friend.PlayersRead(FriendListName, out List<FriendPlayer> players);
 
-			if (players.Count != Assistant.Engine.MainWindow.FriendListView.Items.Count)
+			if (players.Count != Engine.MainWindow.FriendListView.Items.Count)
 			{
 				return;
 			}
 
-			ListViewItem lvi = Assistant.Engine.MainWindow.FriendListView.Items[i];
+			ListViewItem lvi = Engine.MainWindow.FriendListView.Items[i];
 			FriendPlayer old = players[i];
 
 			if (lvi != null && old != null)
@@ -380,25 +380,25 @@ namespace RazorEnhanced
 				return true;
 
 
-			if (Assistant.Engine.MainWindow.FriendSLCheckBox.Checked)
+			if (Engine.MainWindow.FriendSLCheckBox.Checked)
 			{
 				if (GetFaction("SL", serial))
 					return true;
 			}
 
-			if (Assistant.Engine.MainWindow.FriendTBCheckBox.Checked)
+			if (Engine.MainWindow.FriendTBCheckBox.Checked)
 			{
 				if (GetFaction("TB", serial))
 					return true;
 			}
 
-			if (Assistant.Engine.MainWindow.FriendCOMCheckBox.Checked)
+			if (Engine.MainWindow.FriendCOMCheckBox.Checked)
 			{
 				if (GetFaction("CoM", serial))
 					return true;
 			}
 
-			if (Assistant.Engine.MainWindow.FriendMINCheckBox.Checked)
+			if (Engine.MainWindow.FriendMINCheckBox.Checked)
 			{
 				if (GetFaction("MiN", serial))
 					return true;
@@ -454,13 +454,13 @@ namespace RazorEnhanced
 
 		public static void ChangeList(string nomelista)
 		{
-			if (!Assistant.Engine.MainWindow.FriendListSelect.Items.Contains(nomelista))
+			if (!Engine.MainWindow.FriendListSelect.Items.Contains(nomelista))
 			{
 				Scripts.SendMessageScriptError("Script Error: Friend.ChangeList: Friend List: " + nomelista + " not exist");
 			}
 			else
 			{
-				Assistant.Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.FriendListSelect.SelectedIndex = Assistant.Engine.MainWindow.FriendListSelect.Items.IndexOf(nomelista)));  // cambio lista
+				Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Engine.MainWindow.FriendListSelect.SelectedIndex = Engine.MainWindow.FriendListSelect.Items.IndexOf(nomelista)));  // cambio lista
 			}
 		}
 	}

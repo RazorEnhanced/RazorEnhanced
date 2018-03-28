@@ -140,7 +140,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			RazorEnhanced.Settings.Dress.ListsRead(out List<DressList> lists);
+			List<DressList> lists = Settings.Dress.ListsRead();
 
 			if (lists.Count == 0)
 				Assistant.Engine.MainWindow.DressListView.Items.Clear();
@@ -203,8 +203,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshItems()
 		{
-			RazorEnhanced.Settings.Dress.ListsRead(out List<DressList> lists);
-
+			List<DressList> lists = Settings.Dress.ListsRead();
 			Assistant.Engine.MainWindow.DressListView.Items.Clear();
 			foreach (DressList l in lists)
 			{

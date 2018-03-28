@@ -71,7 +71,7 @@ namespace RazorEnhanced
 			set
 			{
 				m_sellbag = value;
-				Assistant.Engine.MainWindow.SellBagLabel.Invoke(new Action(() => Assistant.Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8")));
+				Engine.MainWindow.SellBagLabel.Invoke(new Action(() => Engine.MainWindow.SellBagLabel.Text = "0x" + value.ToString("X8")));
 			}
 		}
 
@@ -79,29 +79,29 @@ namespace RazorEnhanced
 		{
 			if (Engine.Running)
 			{
-				Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Add(addlog)));
-				Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.SelectedIndex = Assistant.Engine.MainWindow.SellLogBox.Items.Count - 1));
-				if (Assistant.Engine.MainWindow.SellLogBox.Items.Count > 300)
-					Assistant.Engine.MainWindow.SellLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellLogBox.Items.Clear()));
+				Engine.MainWindow.SellLogBox.Invoke(new Action(() => Engine.MainWindow.SellLogBox.Items.Add(addlog)));
+				Engine.MainWindow.SellLogBox.Invoke(new Action(() => Engine.MainWindow.SellLogBox.SelectedIndex = Engine.MainWindow.SellLogBox.Items.Count - 1));
+				if (Engine.MainWindow.SellLogBox.Items.Count > 300)
+					Engine.MainWindow.SellLogBox.Invoke(new Action(() => Engine.MainWindow.SellLogBox.Items.Clear()));
 			}
 		}
 
 		internal static void RefreshLists()
 		{
-			RazorEnhanced.Settings.SellAgent.ListsRead(out List<SellAgentList> lists);
+			List<SellAgentList> lists = Settings.SellAgent.ListsRead();
 
 			SellAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
-			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.SellListSelect.Text)
+			if (selectedList != null && selectedList.Description == Engine.MainWindow.SellListSelect.Text)
 				return;
 
-			Assistant.Engine.MainWindow.SellListSelect.Items.Clear();
+			Engine.MainWindow.SellListSelect.Items.Clear();
 			foreach (SellAgentList l in lists)
 			{
-				Assistant.Engine.MainWindow.SellListSelect.Items.Add(l.Description);
+				Engine.MainWindow.SellListSelect.Items.Add(l.Description);
 
 				if (l.Selected)
 				{
-					Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(l.Description);
+					Engine.MainWindow.SellListSelect.SelectedIndex = Engine.MainWindow.SellListSelect.Items.IndexOf(l.Description);
 					SellBag = l.Bag;
 					m_listname = l.Description;
 				}
@@ -110,7 +110,7 @@ namespace RazorEnhanced
 
 		internal static void CopyTable()
 		{
-			Settings.SellAgent.ClearList(Assistant.Engine.MainWindow.SellListSelect.Text); // Rimuove vecchi dati dal save
+			Settings.SellAgent.ClearList(Engine.MainWindow.SellListSelect.Text); // Rimuove vecchi dati dal save
 
 			foreach (DataGridViewRow row in Engine.MainWindow.VendorSellGridView.Rows)
 			{
@@ -125,7 +125,7 @@ namespace RazorEnhanced
 
 				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
-				Settings.SellAgent.ItemInsert(Assistant.Engine.MainWindow.SellListSelect.Text, new SellAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
+				Settings.SellAgent.ItemInsert(Engine.MainWindow.SellListSelect.Text, new SellAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
 
 			Settings.Save(); // Salvo dati
@@ -133,7 +133,7 @@ namespace RazorEnhanced
 
         internal static void InitGrid()
 		{
-			RazorEnhanced.Settings.SellAgent.ListsRead(out List<SellAgentList> lists);
+			List<SellAgentList> lists = Settings.SellAgent.ListsRead();
 
 			Engine.MainWindow.VendorSellGridView.Rows.Clear();
 
@@ -149,7 +149,7 @@ namespace RazorEnhanced
 						if (item.Color != -1)
 							color = "0x" + item.Color.ToString("X4");
 							
-						Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
+						Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x"+item.Graphics.ToString("X4"), item.Amount, color });
 					}
 
 					break;
@@ -178,7 +178,7 @@ namespace RazorEnhanced
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			Assistant.Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
+			Engine.MainWindow.VendorSellGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
 			CopyTable();
 		}
 
@@ -198,7 +198,7 @@ namespace RazorEnhanced
 
 		private static void OnVendorSell(PacketReader pvSrc, PacketHandlerEventArgs args)
 		{
-			if (!Assistant.Engine.MainWindow.SellCheckBox.Checked) // Filtro disabilitato
+			if (!Engine.MainWindow.SellCheckBox.Checked) // Filtro disabilitato
 				return;
 
 			Assistant.Item bag = new Assistant.Item(SellBag);
@@ -330,27 +330,27 @@ namespace RazorEnhanced
 				return;
 			}
 
-			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true)
+			if (Engine.MainWindow.SellCheckBox.Checked == true)
 			{
 				Scripts.SendMessageScriptError("Script Error: Sell.Enable: Filter alredy enabled");
 			}
 			else
-				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
+				Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Engine.MainWindow.SellCheckBox.Checked = true));
 		}
 
 		public static void Disable()
 		{
-			if (Assistant.Engine.MainWindow.SellCheckBox.Checked == false)
+			if (Engine.MainWindow.SellCheckBox.Checked == false)
 			{
 				Scripts.SendMessageScriptError("Script Error: Sell.Disable: Filter alredy disabled");
 			}
 			else
-				Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
+				Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Engine.MainWindow.SellCheckBox.Checked = false));
 		}
 
 		public static bool Status()
 		{
-			return Assistant.Engine.MainWindow.SellCheckBox.Checked;
+			return Engine.MainWindow.SellCheckBox.Checked;
 		}
 
 		public static void ChangeList(string nomelista)
@@ -361,15 +361,15 @@ namespace RazorEnhanced
 			}
 			else
 			{
-				if (Assistant.Engine.MainWindow.SellCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+				if (Engine.MainWindow.SellCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
 				{
-					Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = false));
-					Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
-					Assistant.Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.SellCheckBox.Checked = true));
+					Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Engine.MainWindow.SellCheckBox.Checked = false));
+					Engine.MainWindow.SellListSelect.Invoke(new Action(() => Engine.MainWindow.SellListSelect.SelectedIndex = Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Engine.MainWindow.SellCheckBox.Invoke(new Action(() => Engine.MainWindow.SellCheckBox.Checked = true));
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.SellListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.SellListSelect.SelectedIndex = Assistant.Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Engine.MainWindow.SellListSelect.Invoke(new Action(() => Engine.MainWindow.SellListSelect.SelectedIndex = Engine.MainWindow.SellListSelect.Items.IndexOf(nomelista)));  // cambio lista
 				}
 			}
 		}
@@ -442,37 +442,37 @@ namespace RazorEnhanced
 		{
 			if (Engine.Running)
 			{
-				Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
-				Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.SelectedIndex = Assistant.Engine.MainWindow.BuyLogBox.Items.Count - 1));
-				if (Assistant.Engine.MainWindow.BuyLogBox.Items.Count > 300)
-					Assistant.Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyLogBox.Items.Clear()));
+				Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Engine.MainWindow.BuyLogBox.Items.Add(addlog)));
+				Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Engine.MainWindow.BuyLogBox.SelectedIndex = Engine.MainWindow.BuyLogBox.Items.Count - 1));
+				if (Engine.MainWindow.BuyLogBox.Items.Count > 300)
+					Engine.MainWindow.BuyLogBox.Invoke(new Action(() => Engine.MainWindow.BuyLogBox.Items.Clear()));
 			}
 		}
 
 		internal static void RefreshLists()
 		{
-			RazorEnhanced.Settings.BuyAgent.ListsRead(out List<BuyAgentList> lists);
+			List<BuyAgentList> lists = Settings.BuyAgent.ListsRead();
 
 			BuyAgentList selectedList = lists.FirstOrDefault(l => l.Selected);
-			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.BuyListSelect.Text)
+			if (selectedList != null && selectedList.Description == Engine.MainWindow.BuyListSelect.Text)
 				return;
 
-			Assistant.Engine.MainWindow.BuyListSelect.Items.Clear();
+			Engine.MainWindow.BuyListSelect.Items.Clear();
 			foreach (BuyAgentList l in lists)
 			{
-				Assistant.Engine.MainWindow.BuyListSelect.Items.Add(l.Description);
+				Engine.MainWindow.BuyListSelect.Items.Add(l.Description);
 
 				if (l.Selected)
 				{
 					m_listname = l.Description;
-					Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(l.Description);
+					Engine.MainWindow.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(l.Description);
 				}
 			}
 		}
 
 		internal static void CopyTable()
 		{
-			Settings.BuyAgent.ClearList(Assistant.Engine.MainWindow.BuyListSelect.Text); // Rimuove vecchi dati dal save
+			Settings.BuyAgent.ClearList(Engine.MainWindow.BuyListSelect.Text); // Rimuove vecchi dati dal save
 
 			foreach (DataGridViewRow row in Engine.MainWindow.VendorBuyDataGridView.Rows)
 			{
@@ -487,7 +487,7 @@ namespace RazorEnhanced
 				
 				bool.TryParse(row.Cells[0].Value.ToString(), out bool check);
 
-				Settings.BuyAgent.ItemInsert(Assistant.Engine.MainWindow.BuyListSelect.Text, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
+				Settings.BuyAgent.ItemInsert(Engine.MainWindow.BuyListSelect.Text, new BuyAgentItem((string)row.Cells[1].Value, Convert.ToInt32((string)row.Cells[2].Value, 16), Convert.ToInt32(row.Cells[3].Value), color, check));
 			}
 
 			Settings.Save(); // Salvo dati
@@ -495,7 +495,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			RazorEnhanced.Settings.BuyAgent.ListsRead(out List<BuyAgentList> lists);
+			List<BuyAgentList> lists = Settings.BuyAgent.ListsRead();
 
 			Engine.MainWindow.VendorBuyDataGridView.Rows.Clear();
 
@@ -503,7 +503,7 @@ namespace RazorEnhanced
 			{
 				if (l.Selected)
 				{
-					List<BuyAgent.BuyAgentItem> items = Settings.BuyAgent.ItemsRead(l.Description);
+					List<BuyAgentItem> items = Settings.BuyAgent.ItemsRead(l.Description);
 
 					foreach (BuyAgentItem item in items)
 					{
@@ -511,7 +511,7 @@ namespace RazorEnhanced
 						if (item.Color != -1)
 							color = "0x" + item.Color.ToString("X4");
 
-						Assistant.Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
+						Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { item.Selected.ToString(), item.Name, "0x" + item.Graphics.ToString("X4"), item.Amount, color });
 					}
 
 					break;
@@ -540,7 +540,7 @@ namespace RazorEnhanced
 
 		internal static void AddItemToList(string name, int graphics, int amount, int color)
 		{
-			Assistant.Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
+			Engine.MainWindow.VendorBuyDataGridView.Rows.Add(new object[] { "False", name, "0x" + graphics.ToString("X4"), amount, "0x" + color.ToString("X4") });
 			CopyTable();
 		}
 
@@ -562,7 +562,7 @@ namespace RazorEnhanced
 
 		private static void DisplayBuy(PacketReader p, PacketHandlerEventArgs args)
 		{
-			if (!Assistant.Engine.MainWindow.BuyCheckBox.Checked) // Filtro disabilitato
+			if (!Engine.MainWindow.BuyCheckBox.Checked) // Filtro disabilitato
 				return;
 
 			Assistant.Serial serial = p.ReadUInt32();
@@ -634,47 +634,47 @@ namespace RazorEnhanced
 				return;
 			}
 
-			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true)
+			if (Engine.MainWindow.BuyCheckBox.Checked == true)
 			{
 				Scripts.SendMessageScriptError("Script Error: Buy.Enable: Filter alredy enabled");
 			}
 			else
-				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
+				Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Engine.MainWindow.BuyCheckBox.Checked = true));
 		}
 
 		public static void Disable()
 		{
-			if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == false)
+			if (Engine.MainWindow.BuyCheckBox.Checked == false)
 			{
 				Scripts.SendMessageScriptError("Script Error: Buy.Disable: Filter alredy disabled");
 			}
 			else
-				Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
+				Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Engine.MainWindow.BuyCheckBox.Checked = false));
 		}
 
 		public static bool Status()
 		{
-			return Assistant.Engine.MainWindow.BuyCheckBox.Checked;
+			return Engine.MainWindow.BuyCheckBox.Checked;
 		}
 
 		public static void ChangeList(string nomelista)
 		{
-			if (!Assistant.Engine.MainWindow.BuyListSelect.Items.Contains(nomelista))
+			if (!Engine.MainWindow.BuyListSelect.Items.Contains(nomelista))
 			{
 				Scripts.SendMessageScriptError("Script Error: Buy.ChangeList: Scavenger list: " + nomelista + " not exist");
 			}
 			else
 			{
 				m_listname = nomelista;
-				if (Assistant.Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
+				if (Engine.MainWindow.BuyCheckBox.Checked == true) // Se è in esecuzione forza stop cambio lista e restart
 				{
-					Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = false));
-					Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
-					Assistant.Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyCheckBox.Checked = true));
+					Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Engine.MainWindow.BuyCheckBox.Checked = false));
+					Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Engine.MainWindow.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Engine.MainWindow.BuyCheckBox.Invoke(new Action(() => Engine.MainWindow.BuyCheckBox.Checked = true));
 				}
 				else
 				{
-					Assistant.Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Assistant.Engine.MainWindow.BuyListSelect.SelectedIndex = Assistant.Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
+					Engine.MainWindow.BuyListSelect.Invoke(new Action(() => Engine.MainWindow.BuyListSelect.SelectedIndex = Engine.MainWindow.BuyListSelect.Items.IndexOf(nomelista)));  // cambio lista
 				}
 			}
 		}

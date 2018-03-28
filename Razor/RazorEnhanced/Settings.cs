@@ -1947,9 +1947,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.AutoLoot.AutoLootList> lists)
+			internal static List<RazorEnhanced.AutoLoot.AutoLootList> ListsRead()
 			{
-				List<RazorEnhanced.AutoLoot.AutoLootList> listsOut = new List<RazorEnhanced.AutoLoot.AutoLootList>();
+				List<RazorEnhanced.AutoLoot.AutoLootList> lists = new List<RazorEnhanced.AutoLoot.AutoLootList>();
 
 				foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
@@ -1961,10 +1961,10 @@ namespace RazorEnhanced
 					int range = (int)row["Range"];
 
 					RazorEnhanced.AutoLoot.AutoLootList list = new RazorEnhanced.AutoLoot.AutoLootList(description, delay, bag, selected, noopencorspe, range);
-					listsOut.Add(list);
+					lists.Add(list);
 				}
 
-				lists = listsOut;
+				return lists;
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.AutoLoot.AutoLootItem item)
@@ -2005,25 +2005,21 @@ namespace RazorEnhanced
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool noopencorpse, out int range)
 			{
-				int bagOut = 0;
-				int delayOut = 0;
-				int rangeOut = 0;
-				bool noopencorpseOut = false;
+				bag = 0;
+				delay = 0;
+				range = 0;
+				noopencorpse = false;
 
                 foreach (DataRow row in m_Dataset.Tables["AUTOLOOT_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bagOut = (int)row["Bag"];
-						delayOut = (int)row["Delay"];
-						noopencorpseOut = (bool)row["NoOpenCorpse"];
-						rangeOut = (int)row["Range"];
+						bag = (int)row["Bag"];
+						delay = (int)row["Delay"];
+						noopencorpse = (bool)row["NoOpenCorpse"];
+						range = (int)row["Range"];
 					}
 				}
-				bag = bagOut;
-				delay = delayOut;
-				noopencorpse = noopencorpseOut;
-				range = rangeOut;
 			}
 		}
 
@@ -2113,9 +2109,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.Scavenger.ScavengerList> lists)
+			internal static List<RazorEnhanced.Scavenger.ScavengerList> ListsRead()
 			{
-				List<RazorEnhanced.Scavenger.ScavengerList> listsOut = new List<RazorEnhanced.Scavenger.ScavengerList>();
+				List<RazorEnhanced.Scavenger.ScavengerList> lists = new List<RazorEnhanced.Scavenger.ScavengerList>();
 
 				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
@@ -2126,10 +2122,10 @@ namespace RazorEnhanced
 					int range = (int)row["Range"];
 
 					RazorEnhanced.Scavenger.ScavengerList list = new RazorEnhanced.Scavenger.ScavengerList(description, delay, bag, selected, range);
-					listsOut.Add(list);
+					lists.Add(list);
 				}
 
-				lists = listsOut;
+				return lists;
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.Scavenger.ScavengerItem item)
@@ -2166,21 +2162,18 @@ namespace RazorEnhanced
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out int range)
 			{
-				int bagOut = 0;
-				int delayOut = 0;
-				int rangeOut = 0;
+				bag = 0;
+				delay = 0;
+				range = 0;
 				foreach (DataRow row in m_Dataset.Tables["SCAVENGER_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bagOut = (int)row["Bag"];
-						delayOut = (int)row["Delay"];
-						rangeOut = (int)row["Range"];
+						bag = (int)row["Bag"];
+						delay = (int)row["Delay"];
+						range = (int)row["Range"];
 					}
 				}
-				bag = bagOut;
-				delay = delayOut;
-				range = rangeOut;
 			}
 		}
 
@@ -2271,9 +2264,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.Organizer.OrganizerList> lists)
+			internal static List<RazorEnhanced.Organizer.OrganizerList> ListsRead()
 			{
-				List<RazorEnhanced.Organizer.OrganizerList> listsOut = new List<RazorEnhanced.Organizer.OrganizerList>();
+				List<RazorEnhanced.Organizer.OrganizerList> lists = new List<RazorEnhanced.Organizer.OrganizerList>();
 
 				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
 				{
@@ -2284,10 +2277,10 @@ namespace RazorEnhanced
 					bool selected = (bool)row["Selected"];
 
 					RazorEnhanced.Organizer.OrganizerList list = new RazorEnhanced.Organizer.OrganizerList(description, delay, source, destination, selected);
-					listsOut.Add(list);
+					lists.Add(list);
 				}
 
-				lists = listsOut;
+				return lists;
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.Organizer.OrganizerItem item)
@@ -2324,21 +2317,18 @@ namespace RazorEnhanced
 
 			internal static void ListDetailsRead(string listname, out int bags, out int bagd, out int delay)
 			{
-				int bagsOut = 0;
-				int bagdOut = 0;
-				int delayOut = 0;
+				bags = 0;
+				bagd = 0;
+				delay = 0;
 				foreach (DataRow row in m_Dataset.Tables["ORGANIZER_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bagsOut = (int)row["Source"];
-						bagdOut = (int)row["Destination"];
-						delayOut = (int)row["Delay"];
+						bags = (int)row["Source"];
+						bagd = (int)row["Destination"];
+						delay = (int)row["Delay"];
 					}
 				}
-				bags = bagsOut;
-				bagd = bagdOut;
-				delay = delayOut;
 			}
 		}
 
@@ -2415,9 +2405,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.SellAgent.SellAgentList> lists)
+			internal static List<RazorEnhanced.SellAgent.SellAgentList> ListsRead()
 			{
-				List<RazorEnhanced.SellAgent.SellAgentList> listsOut = new List<RazorEnhanced.SellAgent.SellAgentList>();
+				List<RazorEnhanced.SellAgent.SellAgentList> lists = new List<RazorEnhanced.SellAgent.SellAgentList>();
 
 				foreach (DataRow row in m_Dataset.Tables["SELL_LISTS"].Rows)
 				{
@@ -2426,10 +2416,10 @@ namespace RazorEnhanced
 					bool selected = (bool)row["Selected"];
 
 					RazorEnhanced.SellAgent.SellAgentList list = new RazorEnhanced.SellAgent.SellAgentList(description, bag, selected);
-					listsOut.Add(list);
+					lists.Add(list);
 				}
 
-				lists = listsOut;
+				return lists;
 			}
 
 			internal static int BagRead(string listname)
@@ -2566,11 +2556,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.BuyAgent.BuyAgentList> lists)
+			internal static List<RazorEnhanced.BuyAgent.BuyAgentList> ListsRead()
 			{
-				List<RazorEnhanced.BuyAgent.BuyAgentList> listsOut = (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows let description = (string) row["Description"] let selected = (bool) row["Selected"] select new RazorEnhanced.BuyAgent.BuyAgentList(description, selected)).ToList();
-
-				lists = listsOut;
+				return (from DataRow row in m_Dataset.Tables["BUY_LISTS"].Rows let description = (string) row["Description"] let selected = (bool) row["Selected"] select new RazorEnhanced.BuyAgent.BuyAgentList(description, selected)).ToList();
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.BuyAgent.BuyAgentItem item)
@@ -2692,9 +2680,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.Dress.DressList> lists)
+			internal static List<RazorEnhanced.Dress.DressList> ListsRead()
 			{
-				List<RazorEnhanced.Dress.DressList> listsOut = new List<RazorEnhanced.Dress.DressList>();
+				List<RazorEnhanced.Dress.DressList> lists = new List<RazorEnhanced.Dress.DressList>();
 
 				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
 				{
@@ -2705,10 +2693,10 @@ namespace RazorEnhanced
 					bool selected = (bool)row["Selected"];
 
 					RazorEnhanced.Dress.DressList list = new RazorEnhanced.Dress.DressList(description, delay, bag, conflict, selected);
-					listsOut.Add(list);
+					lists.Add(list);
 				}
 
-				lists = listsOut;
+				return lists;
 			}
 
 			internal static List<RazorEnhanced.Dress.DressItemNew> ItemsRead(string list)
@@ -2725,21 +2713,18 @@ namespace RazorEnhanced
 
 			internal static void ListDetailsRead(string listname, out int bag, out int delay, out bool conflict)
 			{
-				int bagOut = 0;
-				int delayOut = 0;
-				bool conflictOut = false;
+				bag = 0;
+				delay = 0;
+				conflict = false;
 				foreach (DataRow row in m_Dataset.Tables["DRESS_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bagOut = (int)row["Bag"];
-						delayOut = (int)row["Delay"];
-						conflictOut = (bool)row["Conflict"];
+						bag = (int)row["Bag"];
+						delay = (int)row["Delay"];
+						conflict = (bool)row["Conflict"];
 					}
 				}
-				bag = bagOut;
-				delay = delayOut;
-				conflict = conflictOut;
 			}
 
 			internal static void ItemClear(string list)
@@ -2927,9 +2912,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.Friend.FriendList> lists)
+			internal static List<RazorEnhanced.Friend.FriendList> ListsRead()
 			{
-				List<RazorEnhanced.Friend.FriendList> listsOut = new List<RazorEnhanced.Friend.FriendList>();
+				List<RazorEnhanced.Friend.FriendList> lists = new List<RazorEnhanced.Friend.FriendList>();
 
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
 				{
@@ -2946,9 +2931,10 @@ namespace RazorEnhanced
 					bool selected = (bool)row["Selected"];
 
 					RazorEnhanced.Friend.FriendList list = new RazorEnhanced.Friend.FriendList(description, autoacceptparty, preventattack, includeparty, slfriend, tbfriend, comfriend, minfriend, selected);
-					listsOut.Add(list);
+					lists.Add(list);
 				}
-				lists = listsOut;
+
+				return lists;
 			}
 
 			internal static bool PlayerExists(string list, RazorEnhanced.Friend.FriendPlayer player)
@@ -3073,60 +3059,47 @@ namespace RazorEnhanced
 
 			internal static void PlayersRead(string list, out List<RazorEnhanced.Friend.FriendPlayer> players)
 			{
-				List<RazorEnhanced.Friend.FriendPlayer> playersOut = new List<RazorEnhanced.Friend.FriendPlayer>();
+				players = new List<RazorEnhanced.Friend.FriendPlayer>();
 
 				if (ListExists(list))
 				{
-					playersOut.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendPlayer) row["Player"]);
+					players.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_PLAYERS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendPlayer) row["Player"]);
 				}
-
-				players = playersOut;
 			}
 
 			internal static void GuildRead(string list, out List<RazorEnhanced.Friend.FriendGuild> guilds)
 			{
-				List<RazorEnhanced.Friend.FriendGuild> guildsOut = new List<RazorEnhanced.Friend.FriendGuild>();
+				guilds = new List<RazorEnhanced.Friend.FriendGuild>();
 
 				if (ListExists(list))
 				{
-					guildsOut.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendGuild) row["Guild"]);
+					guilds.AddRange(from DataRow row in m_Dataset.Tables["FRIEND_GUILDS"].Rows where (string) row["List"] == list select (RazorEnhanced.Friend.FriendGuild) row["Guild"]);
 				}
-
-				guilds = guildsOut;
 			}
 
-			internal static void ListDetailsRead(string listname, out bool includeparty, out bool preventattack, out bool autoacceptparty, out bool slfriend, out bool tbfiriend, out bool comfriend, out bool minfriend)
+			internal static void ListDetailsRead(string listname, out bool includeparty, out bool preventattack, out bool autoacceptparty, out bool slfriend, out bool tbfriend, out bool comfriend, out bool minfriend)
 			{
-				bool includepartyOut = false;
-				bool preventattackOut = false;
-				bool autoacceptpartyOut = false;
-				bool slfriendOut = false;
-				bool tbfriendOut = false;
-				bool comfriendOut = false;
-				bool minfriendOut = false;
-
-
+				includeparty = false;
+				preventattack = false;
+				autoacceptparty = false;
+				slfriend = false;
+				tbfriend = false;
+				comfriend = false;
+				minfriend = false;
 
 				foreach (DataRow row in m_Dataset.Tables["FRIEND_LISTS"].Rows)
 				{
 					if ((string) row["Description"] != listname)
 						continue;
 
-					includepartyOut = (bool)row["IncludeParty"];
-					preventattackOut = (bool)row["PreventAttack"];
-					autoacceptpartyOut = (bool)row["AutoacceptParty"];
-					slfriendOut = (bool)row["SLFrinedCheckBox"];
-					tbfriendOut = (bool)row["TBFrinedCheckBox"];
-					comfriendOut = (bool)row["COMFrinedCheckBox"];
-					minfriendOut = (bool)row["MINFrinedCheckBox"];
+					includeparty = (bool)row["IncludeParty"];
+					preventattack = (bool)row["PreventAttack"];
+					autoacceptparty = (bool)row["AutoacceptParty"];
+					slfriend = (bool)row["SLFrinedCheckBox"];
+					tbfriend = (bool)row["TBFrinedCheckBox"];
+					comfriend = (bool)row["COMFrinedCheckBox"];
+					minfriend = (bool)row["MINFrinedCheckBox"];
 				}
-				includeparty = includepartyOut;
-				preventattack = preventattackOut;
-				autoacceptparty = autoacceptpartyOut;
-				slfriend = slfriendOut;
-				tbfiriend = tbfriendOut;
-				minfriend = minfriendOut;
-				comfriend = comfriendOut;
 			}
 		}
 
@@ -3217,9 +3190,9 @@ namespace RazorEnhanced
 				Save();
 			}
 
-			internal static void ListsRead(out List<RazorEnhanced.Restock.RestockList> lists)
+			internal static List<RazorEnhanced.Restock.RestockList> ListsRead()
 			{
-				List<RazorEnhanced.Restock.RestockList> listsOut = new List<RazorEnhanced.Restock.RestockList>();
+				List<RazorEnhanced.Restock.RestockList> lists = new List<RazorEnhanced.Restock.RestockList>();
 
 				foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
 				{
@@ -3229,11 +3202,9 @@ namespace RazorEnhanced
 					int destination = (int)row["Destination"];
 					bool selected = (bool)row["Selected"];
 
-					RazorEnhanced.Restock.RestockList list = new RazorEnhanced.Restock.RestockList(description, delay, source, destination, selected);
-					listsOut.Add(list);
+					RazorEnhanced.Restock.RestockList list  = new RazorEnhanced.Restock.RestockList(description, delay, source, destination, selected);
 				}
-
-				lists = listsOut;
+				return lists;
 			}
 
 			internal static void ItemInsert(string list, RazorEnhanced.Restock.RestockItem item)
@@ -3276,21 +3247,18 @@ namespace RazorEnhanced
 
 			internal static void ListDetailsRead(string listname, out int bags, out int bagd, out int delay)
 			{
-				int bagsOut = 0;
-				int bagdOut = 0;
-				int delayOut = 0;
+				bags = 0;
+				bagd = 0;
+				delay = 0;
 				foreach (DataRow row in m_Dataset.Tables["RESTOCK_LISTS"].Rows)
 				{
 					if ((string)row["Description"] == listname)
 					{
-						bagsOut = (int)row["Source"];
-						bagdOut = (int)row["Destination"];
-						delayOut = (int)row["Delay"];
+						bags = (int)row["Source"];
+						bagd = (int)row["Destination"];
+						delay = (int)row["Delay"];
 					}
 				}
-				bags = bagsOut;
-				bagd = bagdOut;
-				delay = delayOut;
 			}
 		}
 
@@ -3829,18 +3797,16 @@ namespace RazorEnhanced
 
 			internal static void FindTargetData(string name, out Keys k, out bool pass)
 			{
-				Keys kOut = Keys.None;
-				bool passOut = true;
+				k = Keys.None;
+				pass = true;
 				foreach (DataRow row in m_Dataset.Tables["TARGETS"].Rows)
 				{
 					if ((string)row["Name"] == name)
 					{
-						kOut = (Keys)row["HotKey"];
-						passOut = (bool)row["HotKeyPass"];
+						k = (Keys)row["HotKey"];
+						pass = (bool)row["HotKeyPass"];
 					}
 				}
-				k = kOut;
-				pass = passOut;
 			}
 
 			internal static string FindScript(Keys key)

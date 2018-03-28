@@ -150,7 +150,7 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			RazorEnhanced.Settings.Scavenger.ListsRead(out List<ScavengerList> lists);
+			List<ScavengerList> lists = Settings.Scavenger.ListsRead();
 
 			ScavengerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.ScavengerListSelect.Text)
@@ -174,8 +174,8 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			RazorEnhanced.Settings.Scavenger.ListsRead(out List<ScavengerList> lists);
-
+			List<ScavengerList> lists = Settings.Scavenger.ListsRead();
+	
 			Assistant.Engine.MainWindow.ScavengerDataGridView.Rows.Clear();
 
 			foreach (ScavengerList l in lists)

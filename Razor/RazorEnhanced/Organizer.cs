@@ -120,8 +120,8 @@ namespace RazorEnhanced
 
 		internal static void RefreshLists()
 		{
-			RazorEnhanced.Settings.Organizer.ListsRead(out List<OrganizerList> lists);
-
+			List<OrganizerList> lists = Settings.Organizer.ListsRead();
+	
 			OrganizerList selectedList = lists.FirstOrDefault(l => l.Selected);
 			if (selectedList != null && selectedList.Description == Assistant.Engine.MainWindow.OrganizerListSelect.Text)
 				return;
@@ -173,7 +173,7 @@ namespace RazorEnhanced
 
 		internal static void InitGrid()
 		{
-			RazorEnhanced.Settings.Organizer.ListsRead(out List<OrganizerList> lists);
+			List<OrganizerList> lists = Settings.Organizer.ListsRead();
 
 			Assistant.Engine.MainWindow.OrganizerDataGridView.Rows.Clear();
 
@@ -398,10 +398,10 @@ namespace RazorEnhanced
 			if (Settings.Organizer.ListExists(nomelista))
 			{
 				Settings.Organizer.ListDetailsRead(nomelista, out int bagsource, out int bagdestination, out int delay);
-				Organizer.OrganizerDelay = delay;
-				Organizer.OrganizerSource = bagsource;
-				Organizer.OrganizerDestination = bagdestination;
-				Organizer.OrganizerListName = nomelista;
+				OrganizerDelay = delay;
+				OrganizerSource = bagsource;
+				OrganizerDestination = bagdestination;
+				OrganizerListName = nomelista;
 				return true;
 			}
 			return false;

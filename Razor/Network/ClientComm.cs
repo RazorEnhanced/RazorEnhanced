@@ -1317,7 +1317,7 @@ namespace Assistant
 				}
 				else
 				{
-					Packet.Log(path, buff, len, blocked);
+					//Packet.Log(path, buff, len, blocked);
 					if (!blocked)
 						CopyToBuffer(outBuff, buff, len);
 				}
