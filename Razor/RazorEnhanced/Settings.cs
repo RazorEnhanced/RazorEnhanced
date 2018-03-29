@@ -1798,7 +1798,7 @@ namespace RazorEnhanced
                     false, "Self", 0, false, 0, 0, false, 1000, 100, false, false, false, 1,
 
                     // Parametri primo avvio per tab Enhanced Filters
-                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false, false,
+                    false, false, false, false, false, false, false, false, 0, 0, false, false, false, false, false, true, true, false,
 
                     // Parametri primo avvio per tab Enhanced ToolBar
                     false, false, 10, 10, 2, "Big", "Vertical", true, true, true, true, true, 100,
@@ -1819,7 +1819,13 @@ namespace RazorEnhanced
                     false, false, -1,
 
                     // Parametri primo avvio tab Options
-                    false, false, 600, false, false, 12, false, false, "[{0}%]", false, false, false, false, false, false, 2, false, false, false, false, false, false, false, false, false, false, false, false, @"{power} [{spell}]", 0, false, false, false, string.Empty,
+                    false, false, 600,
+					false, false, 12,
+					false, false, "[{0}%]",
+					false, false, false,
+					false, false, false, 2,
+					false, false, false, false, false, false, false, false, false,
+					false, false, false, @"{power} [{spell}]", 0, false, false, false, false, string.Empty,
 
                     // Parametri primo avvio tab Options -> Hues
                     (int)0, (int)0x03B1, (int)0x0025, (int)0x0005, (int)0x03B1, (int)0x0480, (int)0x0025, (int)0x03B1,

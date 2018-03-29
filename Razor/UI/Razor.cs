@@ -12640,6 +12640,12 @@ namespace Assistant
 
 		private void timertitlestatusbar_Tick(object sender, EventArgs e)
 		{
+			if (Initializing || !Assistant.Engine.Running)
+				return;
+
+			if (!ClientCommunication.Ready || World.Player == null)
+				return;
+
 			if (toolboxstyleComboBox.Text == "TitleBar")
 				TitleBar.UpdateTitleBar();
 		}

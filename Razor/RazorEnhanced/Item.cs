@@ -1050,10 +1050,10 @@ namespace RazorEnhanced
         public static int BackpackCount(int itemid, int color)
 		{
 			List<Assistant.Item> items = World.Items.Values.ToList();
-			items = items.Where((i) => i.ItemID == itemid && i.RootContainer == World.Player && i.IsInBank == false).ToList();
-
-			if (color != -1)
-				items = items.Where((i) => i.Hue == color).ToList();
+			if (color == -1)
+				items = items.Where((i) => i.RootContainer == World.Player && i.ItemID == itemid && i.IsInBank == false).ToList();
+			else
+				items = items.Where((i) => i.RootContainer == World.Player && i.ItemID == itemid && i.Hue == color && i.IsInBank == false).ToList();
 
 			int amount = 0;
 			foreach (Assistant.Item i in items)
