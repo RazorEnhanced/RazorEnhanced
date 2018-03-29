@@ -1235,7 +1235,7 @@ namespace Assistant
 				ClientCommunication.PostHitsUpdate();
 			}
 
-			if (Engine.MainWindow.ShowHealthOH.Checked)
+			if (!Engine.MainWindow.ShowHealthOH.Checked)
 				return;
 
 			int percent = (int)(m.Hits * 100 / (m.HitsMax == 0 ? (ushort)1 : m.HitsMax));
