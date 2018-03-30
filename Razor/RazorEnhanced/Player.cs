@@ -761,7 +761,7 @@ namespace RazorEnhanced
 			return result;
 		}
 
-		public static void UnEquipItemByLayer(String layer)
+		public static void UnEquipItemByLayer(String layer, bool wait = true)
 		{
 			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
 
@@ -769,8 +769,16 @@ namespace RazorEnhanced
 
 			if (item != null)
 			{
-				ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
-				ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+				if (wait)
+				{
+					ClientCommunication.SendToServerWait(new LiftRequest(item.Serial, item.Amount));
+					ClientCommunication.SendToServerWait(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+				}
+				else
+				{
+					ClientCommunication.SendToServer(new LiftRequest(item.Serial, item.Amount));
+					ClientCommunication.SendToServer(new DropRequest(item.Serial, Assistant.Point3D.MinusOne, World.Player.Backpack.Serial));
+				}
 			}
 			else
 			{

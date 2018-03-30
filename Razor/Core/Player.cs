@@ -743,7 +743,6 @@ namespace Assistant
 
 		internal override void OnMapChange(byte old, byte cur)
 		{
-		//	RazorEnhanced.ToolBar.ChangingMap = true;
 			List<Mobile> list = new List<Mobile>(World.Mobiles.Values);
 			foreach (Mobile t in list)
 			{
@@ -758,36 +757,12 @@ namespace Assistant
 				if (i.RootContainer != World.Player)
 					i.Remove();
 			}
-
-			//			World.Items.Clear();
-
-			//Counter.Reset();
-		//	foreach (Item t in Contains)
-		//	{
-			//	World.AddItem(t);
-				//t.Contains.Clear();
-		//	}
-
 			if (RazorEnhanced.Settings.General.ReadBool("AutoSearch") && Backpack != null)
 				PlayerData.DoubleClick(Backpack);
-			
 
 			ClientCommunication.PostMapChange(cur);
-			//RazorEnhanced.ToolBar.ChangingMap = false;
+			m_HandCheck.Start();
 		}
-
-		/*public override void OnMapChange( byte old, byte cur )
-		{
-			World.Mobiles.Clear();
-			World.Items.Clear();
-			Counter.Reset();
-
-			Contains.Clear();
-
-			World.AddMobile( this );
-
-			ClientCommunication.PostMapChange( cur );
-		}*/
 
 		protected override void OnNotoChange(byte old, byte cur)
 		{
@@ -908,6 +883,7 @@ namespace Assistant
 		internal List<string> CurrentGumpStrings = new List<string>();
 		internal string CurrentGumpRawData;
 		internal ConcurrentQueue<RazorEnhanced.Journal.JournalEntry> Journal = new ConcurrentQueue<RazorEnhanced.Journal.JournalEntry>();
+		internal uint LastWeaponRight, LastWeaponLeft = 0;
 
 		// Menu Old
 		internal uint CurrentMenuS;
@@ -1021,5 +997,24 @@ namespace Assistant
 
 			return false;
 		}
+
+		// Set last weapon on login
+		private Timer m_HandCheck = Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new TimerCallback(HandCheck));
+
+		private static void HandCheck()
+		{
+			if (World.Player == null)
+				return;
+
+			Item righthand = World.Player.GetItemOnLayer(Layer.RightHand);
+			if (righthand != null)
+				World.Player.LastWeaponRight = righthand.Serial;
+
+			Item lefthand = World.Player.GetItemOnLayer(Layer.LeftHand);
+			if (lefthand != null)
+				World.Player.LastWeaponRight = lefthand.Serial;
+		}
+
+
 	}
 }

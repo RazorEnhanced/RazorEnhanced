@@ -1047,14 +1047,81 @@ namespace RazorEnhanced
 
 		private static void ProcessHands(string function)
 		{
+			Assistant.Item i;
 			switch (function)
 			{
 				case "Clear Left":
-					RazorEnhanced.Player.UnEquipItemByLayer("LeftHand");
+					if (Player.CheckLayer("LeftHand"))
+					{
+						World.Player.LastWeaponLeft = World.Player.GetItemOnLayer(Layer.LeftHand).Serial;
+						Player.UnEquipItemByLayer("LeftHand", false);
+					}
 					break;
 
 				case "Clear Right":
-					RazorEnhanced.Player.UnEquipItemByLayer("RightHand");
+					if (Player.CheckLayer("RightHand"))
+					{
+						World.Player.LastWeaponRight = World.Player.GetItemOnLayer(Layer.RightHand).Serial;
+						Player.UnEquipItemByLayer("RightHand", false);
+					}
+					break;
+
+				case "Equip Right":
+					if (Player.CheckLayer("RightHand")) // Layer già occupato
+						return;
+
+					i = World.FindItem(World.Player.LastWeaponRight);
+					if (i != null)
+					{
+						ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount)); 
+						ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+					}
+					break;
+
+				case "Equip Left":
+					if (Player.CheckLayer("LeftHand")) // Layer già occupato
+						return;
+
+					i = World.FindItem(World.Player.LastWeaponLeft);
+					if (i != null)
+					{
+						ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount));
+						ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+					}
+					break;
+
+				case "Toggle Right":
+					if (Player.CheckLayer("RightHand"))
+					{
+						World.Player.LastWeaponRight = World.Player.GetItemOnLayer(Layer.RightHand).Serial;
+						Player.UnEquipItemByLayer("RightHand", false);
+					}
+					else
+					{
+						i = World.FindItem(World.Player.LastWeaponRight);
+						if (i != null)
+						{
+							ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount));
+							ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+						}
+					}
+					break;
+
+				case "Toggle Left":
+					if (Player.CheckLayer("RightLeft"))
+					{
+						World.Player.LastWeaponLeft = World.Player.GetItemOnLayer(Layer.LeftHand).Serial;
+						Player.UnEquipItemByLayer("LeftHand", false);
+					}
+					else
+					{
+						i = World.FindItem(World.Player.LastWeaponLeft);
+						if (i != null)
+						{
+							ClientCommunication.SendToServer(new LiftRequest(i.Serial, i.Amount));
+							ClientCommunication.SendToServer(new EquipRequest(i.Serial, World.Player.Serial, i.Layer));
+						}
+					}
 					break;
 
 				default:

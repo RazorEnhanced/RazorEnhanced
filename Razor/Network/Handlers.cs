@@ -630,63 +630,6 @@ namespace Assistant
 				RazorEnhanced.ScriptRecorder.Record_Movement(dir);
 		}
 
-		internal static byte[] HandleRPVContainerContentUpdate(Packet p)
-		{
-			// This function will ignore the item if the container item has not been sent to the client yet.
-			// We can do this because we can't really count on getting all of the container info anyway.
-			// (So we'd need to request the container be updated, so why bother with the extra stuff required to find the container once its been sent?)
-			bool isPostKR = false, decided = false;
-
-			Serial serial = p.ReadUInt32();
-			ushort itemid = p.ReadUInt16();
-			itemid = (ushort)(itemid + p.ReadSByte()); // signed, itemID offset
-			ushort amount = p.ReadUInt16();
-			if (amount == 0)
-				amount = 1;
-			Point3D pos = new Point3D(p.ReadUInt16(), p.ReadUInt16(), 0);
-			byte gridPos = 0;
-			if (!decided)
-			{
-				byte nextByte = p.ReadByte();
-
-				isPostKR = ((nextByte & 0x40) == 0);
-				decided = true;
-
-				if (isPostKR == Engine.UsePostKRPackets)
-					return p.Compile(); // not need to change anything
-
-				p.Seek(-1, SeekOrigin.Current);
-			}
-
-			if (isPostKR)
-				gridPos = p.ReadByte();
-
-			Serial cser = p.ReadUInt32();
-			ushort hue = p.ReadUInt16();
-
-			Item i = World.FindItem(serial);
-			if (i == null)
-			{
-				if (!serial.IsItem)
-					return p.Compile();
-
-				World.AddItem(i = new Item(serial));
-				i.IsNew = i.AutoStack = true;
-			}
-
-			i.ItemID = itemid;
-			i.Amount = amount;
-			i.Position = pos;
-			i.GridNum = gridPos;
-			i.Hue = hue;
-			i.Container = cser;
-
-			if (i.IsNew)
-				Item.UpdateContainers();
-
-			return new ContainerItem(i, Engine.UsePostKRPackets).Compile();
-		}
-
 		private static void ContainerContentUpdate(Packet p, PacketHandlerEventArgs args)
 		{
 			// This function will ignore the item if the container item has not been sent to the client yet.
@@ -921,6 +864,12 @@ namespace Assistant
 
 			// Apply flag color if enabled
 			p = RazorEnhanced.Filters.EquipmentUpdateColorize(p, i);
+
+			// Set last weapon in equip
+			if (i.Layer == Layer.RightHand || i.Layer == Layer.FirstValid)
+				World.Player.LastWeaponRight = i.Serial;
+			else if (i.Layer == Layer.LeftHand)
+				World.Player.LastWeaponLeft = i.Serial;
 
 			if (i.Layer != Layer.Backpack || !isNew || ser != World.Player.Serial)
 				return;
