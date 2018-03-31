@@ -308,8 +308,7 @@ namespace RazorEnhanced
 		public static List<Item> ApplyFilter(Filter filter)
 		{
 			List<Item> result = new List<Item>();
-
-			List<Assistant.Item> assistantItems = Assistant.World.Items.Values.ToList();
+			List<Assistant.Item> assistantItems = new List<Assistant.Item>(Assistant.World.Items.Values.ToList());
 
 			if (filter.Enabled)
 			{

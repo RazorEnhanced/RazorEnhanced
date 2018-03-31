@@ -322,8 +322,7 @@ namespace RazorEnhanced
 		public static List<Mobile> ApplyFilter(Filter filter)
 		{
 			List<Mobile> result = new List<Mobile>();
-
-			List<Assistant.Mobile> assistantMobiles = Assistant.World.Mobiles.Values.ToList();
+			List<Assistant.Mobile> assistantMobiles = new List<Assistant.Mobile>(Assistant.World.Mobiles.Values.ToList());
 
 			if (filter.Enabled)
 			{
