@@ -1051,7 +1051,7 @@ namespace RazorEnhanced
 			switch (function)
 			{
 				case "Clear Left":
-					if (Player.CheckLayer("LeftHand"))
+					if (World.Player.GetItemOnLayer(Layer.LeftHand) != null)
 					{
 						World.Player.LastWeaponLeft = World.Player.GetItemOnLayer(Layer.LeftHand).Serial;
 						Player.UnEquipItemByLayer("LeftHand", false);
@@ -1059,7 +1059,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Clear Right":
-					if (Player.CheckLayer("RightHand"))
+					if (World.Player.GetItemOnLayer(Layer.RightHand) != null)
 					{
 						World.Player.LastWeaponRight = World.Player.GetItemOnLayer(Layer.RightHand).Serial;
 						Player.UnEquipItemByLayer("RightHand", false);
@@ -1067,7 +1067,11 @@ namespace RazorEnhanced
 					break;
 
 				case "Equip Right":
-					if (Player.CheckLayer("RightHand")) // Layer già occupato
+					if (World.Player.GetItemOnLayer(Layer.RightHand) != null) // Layer già occupato
+						return;
+
+					// arma a due mani equippata
+					if (World.Player.GetItemOnLayer(Layer.LeftHand) != null && World.Player.GetItemOnLayer(Layer.LeftHand).IsTwoHanded)
 						return;
 
 					i = World.FindItem(World.Player.LastWeaponRight);
@@ -1079,7 +1083,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Equip Left":
-					if (Player.CheckLayer("LeftHand")) // Layer già occupato
+					if (World.Player.GetItemOnLayer(Layer.LeftHand) != null) // Layer già occupato
 						return;
 
 					i = World.FindItem(World.Player.LastWeaponLeft);
@@ -1091,13 +1095,17 @@ namespace RazorEnhanced
 					break;
 
 				case "Toggle Right":
-					if (Player.CheckLayer("RightHand"))
+					if (World.Player.GetItemOnLayer(Layer.RightHand) != null)
 					{
 						World.Player.LastWeaponRight = World.Player.GetItemOnLayer(Layer.RightHand).Serial;
 						Player.UnEquipItemByLayer("RightHand", false);
 					}
 					else
 					{
+						// arma a due mani equippata
+						if (World.Player.GetItemOnLayer(Layer.LeftHand) != null && World.Player.GetItemOnLayer(Layer.LeftHand).IsTwoHanded)
+							return;
+
 						i = World.FindItem(World.Player.LastWeaponRight);
 						if (i != null)
 						{
@@ -1108,7 +1116,7 @@ namespace RazorEnhanced
 					break;
 
 				case "Toggle Left":
-					if (Player.CheckLayer("RightLeft"))
+					if (World.Player.GetItemOnLayer(Layer.LeftHand) != null)
 					{
 						World.Player.LastWeaponLeft = World.Player.GetItemOnLayer(Layer.LeftHand).Serial;
 						Player.UnEquipItemByLayer("LeftHand", false);
