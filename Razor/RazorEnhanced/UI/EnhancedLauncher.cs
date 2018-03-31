@@ -15,13 +15,13 @@ namespace RazorEnhanced.UI
 		{
 			InitializeComponent();
 			MaximizeBox = false;
-
 			this.Text = m_Title;
 		}
 
 		private void RefreshGUI()
 		{
 			RazorEnhanced.Shard.Read(out List<Shard> shards);
+			clientFolderLabel.Text = clientPathLabel.Text = String.Empty;
 
 			foreach (Shard shard in shards)
 			{

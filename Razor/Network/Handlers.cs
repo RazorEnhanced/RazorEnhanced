@@ -1552,7 +1552,9 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
-            }
+				if (!ClientCommunication.ServerEncrypted)
+					ClientCommunication.SendToServer(new StatusQuery(serial));
+			}
 
 			bool wasHidden = !m.Visible;
 
@@ -1618,6 +1620,8 @@ namespace Assistant
 			if (m == null)
 			{
 				World.AddMobile(m = new Mobile(serial));
+				if (!ClientCommunication.ServerEncrypted)
+					ClientCommunication.SendToServer(new StatusQuery(serial));
 			}
 
 			bool wasHidden = !m.Visible;
