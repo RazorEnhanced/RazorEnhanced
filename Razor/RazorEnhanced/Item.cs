@@ -308,7 +308,7 @@ namespace RazorEnhanced
 		public static List<Item> ApplyFilter(Filter filter)
 		{
 			List<Item> result = new List<Item>();
-			List<Assistant.Item> assistantItems = new List<Assistant.Item>(Assistant.World.Items.Values.ToList());
+			List<Assistant.Item> assistantItems = new List<Assistant.Item>(World.Items.Values.ToList());
 
 			if (filter.Enabled)
 			{
@@ -1048,7 +1048,7 @@ namespace RazorEnhanced
 
         public static int BackpackCount(int itemid, int color)
 		{
-			List<Assistant.Item> items = World.Items.Values.ToList();
+			List<Assistant.Item> items = new List<Assistant.Item>(World.Items.Values.ToList());
 			if (color == -1)
 				items = items.Where((i) => i.RootContainer == World.Player && i.ItemID == itemid && i.IsInBank == false).ToList();
 			else
