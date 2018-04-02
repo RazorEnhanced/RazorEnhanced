@@ -533,5 +533,17 @@ namespace RazorEnhanced
 			}
 			return false;
 		}
+
+		// Autostart al login 
+		private static Assistant.Timer m_autostart = Assistant.Timer.DelayedCallback(TimeSpan.FromSeconds(3.0), new Assistant.TimerCallback(Start));
+
+		internal static void LoginAutostart()
+		{
+			if (!Status())
+			{
+				m_autostart.Start();
+			}
+		}
+
 	}
 }

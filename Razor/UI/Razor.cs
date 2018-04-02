@@ -653,6 +653,7 @@ namespace Assistant
 		internal RazorComboBox AutoLootListSelect { get { return autolootListSelect; } }
 		internal CheckBox AutoLootNoOpenCheckBox { get { return autoLootnoopenCheckBox; } }
 		internal DataGridView AutoLootDataGridView { get { return autolootdataGridView; } }
+		internal RazorCheckBox AutolootAutostartCheckBox { get { return autolootautostartCheckBox; } }
 
 		// Scavenger
 		internal RazorCheckBox ScavengerCheckBox { get { return scavengerCheckBox; } }
@@ -662,6 +663,7 @@ namespace Assistant
 		internal ListBox ScavengerLogBox { get { return scavengerLogBox; } }
 		internal RazorComboBox ScavengerListSelect { get { return scavengerListSelect; } }
 		internal DataGridView ScavengerDataGridView { get { return scavengerdataGridView; } }
+		internal RazorCheckBox ScavengerAutostartCheckBox { get { return scavengerautostartCheckBox; } }
 
 		// Organizer
 		internal RazorAgentNumOnlyTextBox OrganizerDragDelay { get { return organizerDragDelay; } }
@@ -813,6 +815,8 @@ namespace Assistant
 		private RazorTextBox enhancedmappathTextBox;
 		private Button setpathmapbutton;
 		private OpenFileDialog openmaplocation;
+		private RazorCheckBox autolootautostartCheckBox;
+		private RazorCheckBox scavengerautostartCheckBox;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -1181,6 +1185,7 @@ namespace Assistant
 			this.EnhancedAgent = new System.Windows.Forms.TabPage();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.eautoloot = new System.Windows.Forms.TabPage();
+			this.autolootautostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.label60 = new System.Windows.Forms.Label();
 			this.autoLootTextBoxMaxRange = new RazorEnhanced.UI.RazorAgentNumOnlyTextBox();
 			this.autolootItemPropsB = new RazorEnhanced.UI.RazorButton();
@@ -1208,6 +1213,7 @@ namespace Assistant
 			this.autolootLogBox = new System.Windows.Forms.ListBox();
 			this.autoLootCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.escavenger = new System.Windows.Forms.TabPage();
+			this.scavengerautostartCheckBox = new RazorEnhanced.UI.RazorCheckBox();
 			this.label61 = new System.Windows.Forms.Label();
 			this.groupBox41 = new System.Windows.Forms.GroupBox();
 			this.label54 = new System.Windows.Forms.Label();
@@ -4615,6 +4621,7 @@ namespace Assistant
 			// 
 			// eautoloot
 			// 
+			this.eautoloot.Controls.Add(this.autolootautostartCheckBox);
 			this.eautoloot.Controls.Add(this.label60);
 			this.eautoloot.Controls.Add(this.autoLootTextBoxMaxRange);
 			this.eautoloot.Controls.Add(this.autolootItemPropsB);
@@ -4639,6 +4646,15 @@ namespace Assistant
 			this.eautoloot.TabIndex = 0;
 			this.eautoloot.Text = "Autoloot";
 			this.eautoloot.UseVisualStyleBackColor = true;
+			// 
+			// autolootautostartCheckBox
+			// 
+			this.autolootautostartCheckBox.Location = new System.Drawing.Point(275, 73);
+			this.autolootautostartCheckBox.Name = "autolootautostartCheckBox";
+			this.autolootautostartCheckBox.Size = new System.Drawing.Size(126, 22);
+			this.autolootautostartCheckBox.TabIndex = 66;
+			this.autolootautostartCheckBox.Text = "Autostart OnLogin";
+			this.autolootautostartCheckBox.CheckedChanged += new System.EventHandler(this.autolootautostartCheckBox_CheckedChanged);
 			// 
 			// label60
 			// 
@@ -4788,7 +4804,7 @@ namespace Assistant
 			// 
 			// autoLootnoopenCheckBox
 			// 
-			this.autoLootnoopenCheckBox.Location = new System.Drawing.Point(275, 65);
+			this.autoLootnoopenCheckBox.Location = new System.Drawing.Point(275, 55);
 			this.autoLootnoopenCheckBox.Name = "autoLootnoopenCheckBox";
 			this.autoLootnoopenCheckBox.Size = new System.Drawing.Size(126, 22);
 			this.autoLootnoopenCheckBox.TabIndex = 61;
@@ -4892,7 +4908,7 @@ namespace Assistant
 			// 
 			// autoLootCheckBox
 			// 
-			this.autoLootCheckBox.Location = new System.Drawing.Point(275, 42);
+			this.autoLootCheckBox.Location = new System.Drawing.Point(275, 37);
 			this.autoLootCheckBox.Name = "autoLootCheckBox";
 			this.autoLootCheckBox.Size = new System.Drawing.Size(126, 22);
 			this.autoLootCheckBox.TabIndex = 48;
@@ -4901,6 +4917,7 @@ namespace Assistant
 			// 
 			// escavenger
 			// 
+			this.escavenger.Controls.Add(this.scavengerautostartCheckBox);
 			this.escavenger.Controls.Add(this.label61);
 			this.escavenger.Controls.Add(this.groupBox41);
 			this.escavenger.Controls.Add(this.scavengerdataGridView);
@@ -4924,6 +4941,15 @@ namespace Assistant
 			this.escavenger.TabIndex = 1;
 			this.escavenger.Text = "Scavenger";
 			this.escavenger.UseVisualStyleBackColor = true;
+			// 
+			// scavengerautostartCheckBox
+			// 
+			this.scavengerautostartCheckBox.Location = new System.Drawing.Point(275, 67);
+			this.scavengerautostartCheckBox.Name = "scavengerautostartCheckBox";
+			this.scavengerautostartCheckBox.Size = new System.Drawing.Size(126, 22);
+			this.scavengerautostartCheckBox.TabIndex = 76;
+			this.scavengerautostartCheckBox.Text = "Autostart OnLogin";
+			this.scavengerautostartCheckBox.CheckedChanged += new System.EventHandler(this.scavengerautostartCheckBox_CheckedChanged);
 			// 
 			// label61
 			// 
@@ -5122,7 +5148,7 @@ namespace Assistant
 			// scavengerCheckBox
 			// 
 			this.scavengerCheckBox.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.scavengerCheckBox.Location = new System.Drawing.Point(275, 56);
+			this.scavengerCheckBox.Location = new System.Drawing.Point(275, 47);
 			this.scavengerCheckBox.Name = "scavengerCheckBox";
 			this.scavengerCheckBox.Size = new System.Drawing.Size(115, 22);
 			this.scavengerCheckBox.TabIndex = 65;
@@ -8082,35 +8108,37 @@ namespace Assistant
 		internal void LoadSettings()
 		{
 			// -------------- SCRIPTING --------------------
-			scriptTable = RazorEnhanced.Settings.Dataset.Tables["SCRIPTING"];
+			scriptTable = Settings.Dataset.Tables["SCRIPTING"];
 			ReloadScriptTable();
 
 			// ---------------- AUTOLOOT -----------------
-			RazorEnhanced.AutoLoot.RefreshLists();
+			AutoLoot.RefreshLists();
+			autolootautostartCheckBox.Checked = Settings.General.ReadBool("AutolootAutostartCheckBox");
 
 			// ------------ SCAVENGER -------------------
-			RazorEnhanced.Scavenger.RefreshLists();
+			Scavenger.RefreshLists();
+			scavengerautostartCheckBox.Checked = Settings.General.ReadBool("ScavengerAutostartCheckBox");
 
 			// ---------------- ORGANIZER ----------------
-			RazorEnhanced.Organizer.RefreshLists();
+			Organizer.RefreshLists();
 
 			// ----------- SELL AGENT -----------------
-			RazorEnhanced.SellAgent.RefreshLists();
+			SellAgent.RefreshLists();
 
 			// ------------------- BUY AGENT ----------------------
-			RazorEnhanced.BuyAgent.RefreshLists();
+			BuyAgent.RefreshLists();
 
 			// ------------------ DRESS AGENT -------------------------
 			RazorEnhanced.Dress.RefreshLists();
 
 			// ------------------ FRIEND -------------------------
-			RazorEnhanced.Friend.RefreshLists();
+			Friend.RefreshLists();
 
 			// ------------------ RESTOCK -------------------------
-			RazorEnhanced.Restock.RefreshLists();
+			Restock.RefreshLists();
 
 			// ------------------ BANDAGE HEAL --------------------
-			RazorEnhanced.BandageHeal.LoadSettings();
+			BandageHeal.LoadSettings();
 
 			// ------------------ ENHANCED FILTERS --------------------
 			RazorEnhanced.Filters.LoadSettings();
@@ -8124,10 +8152,10 @@ namespace Assistant
 			spellgrid_trackBar.Value = RazorEnhanced.Settings.General.ReadInt("GridOpacity");
 
 			// ------------------ TARGETS --------------------
-			RazorEnhanced.TargetGUI.RefreshTarget();
+			TargetGUI.RefreshTarget();
 
 			// ------------------ HOTKEY --------------------
-			RazorEnhanced.HotKey.Init();
+			HotKey.Init();
 
 			// ------------------ DPS METER --------------------
 			DPSMeterStopButton.Enabled = DPSMeterPauseButton.Enabled = false;
@@ -10072,13 +10100,18 @@ namespace Assistant
 		}
 
 		// ------------ AUTOLOOT ----------------
+		private void autolootautostartCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (autolootautostartCheckBox.Focused)
+				Settings.General.WriteBool("AutolootAutostartCheckBox", autolootautostartCheckBox.Checked);
+		}
 
 		private void autolootContainerButton_Click(object sender, EventArgs e)
 		{
 			if (autolootListSelect.Text != String.Empty)
 				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(autoLootSetContainerTarget_Callback));
 			else
-				RazorEnhanced.AutoLoot.AddLog("Item list not selected!");
+				AutoLoot.AddLog("Item list not selected!");
 		}
 
 		private void autoLootSetContainerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
@@ -10328,6 +10361,12 @@ namespace Assistant
 		// ------------ AUTOLOOT END ----------------
 
 		// ------------ SCAVENGER ----------------
+
+		private void scavengerautostartCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			if (scavengerautostartCheckBox.Focused)
+				Settings.General.WriteBool("ScavengerAutostartCheckBox", scavengerautostartCheckBox.Checked);
+		}
 
 		private void scavengerEditProps_Click(object sender, EventArgs e)
 		{
@@ -12191,7 +12230,7 @@ namespace Assistant
 			}
 
 			if (bandagehealcustomCheckBox.Focused)
-				RazorEnhanced.Settings.General.WriteBool("BandageHealcustomCheckBox", bandagehealcustomCheckBox.Checked);
+				Settings.General.WriteBool("BandageHealcustomCheckBox", bandagehealcustomCheckBox.Checked);
 		}
 
 		private void bandagehealcustomIDTextBox_Leave(object sender, EventArgs e)

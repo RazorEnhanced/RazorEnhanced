@@ -14,7 +14,7 @@ namespace RazorEnhanced
 	internal class Settings
 	{
 		// Versione progressiva della struttura dei salvataggi per successive modifiche
-		private static int SettingVersion = 52;
+		private static int SettingVersion = 53;
 
 		private static string m_Save = "RazorEnhanced.settings";
 		internal static string ProfileFiles
@@ -1808,6 +1808,10 @@ namespace RazorEnhanced
 				// Parametri finestra script
 				general.Columns.Add("ShowScriptMessageCheckBox", typeof(bool));
 
+				// Parametri AgentAutostart
+				general.Columns.Add("ScavengerAutostartCheckBox", typeof(bool));
+				general.Columns.Add("AutolootAutostartCheckBox", typeof(bool));
+				
 				// Composizione Parematri base primo avvio
 				object[] generalstartparam = new object[] {
                     // Parametri primo avvio per tab agent Bandage heal
@@ -1871,7 +1875,10 @@ namespace RazorEnhanced
                      Path.GetDirectoryName(Application.ExecutablePath), 25, "Full Size", 1, 100, false, false, false,
 
 					 // Parametri finestra script
-                     true
+                     true,
+
+					 // Parametri AgentAutostart
+                     false, false
 				};
 
 				DataRow generalsettings = general.NewRow();
@@ -4448,6 +4455,18 @@ namespace RazorEnhanced
 
 				realVersion = 52;
 				General.WriteInt("SettingVersion", 52);
+			}
+
+			if (realVersion == 52)
+			{
+				m_Dataset.Tables["GENERAL"].Columns.Add("ScavengerAutostartCheckBox", typeof(bool));
+				General.WriteBool("ScavengerAutostartCheckBox", false);
+
+				m_Dataset.Tables["GENERAL"].Columns.Add("AutolootAutostartCheckBox", typeof(bool));
+				General.WriteBool("AutolootAutostartCheckBox", false);
+
+				realVersion = 53;
+				General.WriteInt("SettingVersion", 53);
 			}
 			Save(true);
 		}

@@ -1067,7 +1067,13 @@ namespace Assistant
 
 			// Avvio automatico script selezionati come autostart
 			RazorEnhanced.Scripts.AutoStart();
-        }
+
+			// Avvio agent selezioanti come autostart
+			if (Engine.MainWindow.AutolootAutostartCheckBox.Checked)
+				RazorEnhanced.AutoLoot.LoginAutostart();
+			if (Engine.MainWindow.ScavengerAutostartCheckBox.Checked)
+				RazorEnhanced.Scavenger.LoginAutostart();
+		}
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
 		{

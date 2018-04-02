@@ -685,7 +685,7 @@ namespace RazorEnhanced
 
 			if (assistantMobile != null)
 			{
-				List<Assistant.ObjectPropertyList.OPLEntry> props = assistantMobile.ObjPropList.Content;
+				List<ObjectPropertyList.OPLEntry> props = new List<ObjectPropertyList.OPLEntry>(assistantMobile.ObjPropList.Content);
 
 				foreach (Assistant.ObjectPropertyList.OPLEntry prop in props)
 				{

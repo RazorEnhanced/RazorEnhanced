@@ -934,10 +934,9 @@ namespace RazorEnhanced
 
 			if (assistantItem != null)
 			{
-				if (assistantItem.ObjPropList == null && assistantItem.ObjPropList.Content.Count == 0)
-					return 0;
+				List<ObjectPropertyList.OPLEntry> props = new List<ObjectPropertyList.OPLEntry>(assistantItem.ObjPropList.Content);
 
-				foreach (ObjectPropertyList.OPLEntry prop in assistantItem.ObjPropList.Content)
+				foreach (ObjectPropertyList.OPLEntry prop in props)
 				{
 					if (!prop.ToString().ToLower().Contains(name.ToLower()))
 						continue;
