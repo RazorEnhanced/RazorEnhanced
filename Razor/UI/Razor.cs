@@ -13024,7 +13024,8 @@ namespace Assistant
 				RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out bool passkey);
 				hotkeytextbox.Text = HotKey.KeyString(k);
 				hotkeypassCheckBox.Checked = passkey;
-			}
+				hotkeytextbox.LastKey = Keys.None;
+	}
 		}
 
 		private void hotkeyMasterSetButton_Click(object sender, EventArgs e)
@@ -13413,7 +13414,7 @@ namespace Assistant
 			{
 				case "Empty":
 					{
-						gridspell_ComboBox.Items.Clear();
+						gridspell_ComboBox.DataSource = null;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = false;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = -1;
 						gridscript_ComboBox.Enabled = false;
@@ -13423,9 +13424,7 @@ namespace Assistant
 					}
 				case "Magery":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconMagery.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconMagery.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13433,9 +13432,7 @@ namespace Assistant
 					}
 				case "Abilities":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconAbilities.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconAbilities.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13443,9 +13440,7 @@ namespace Assistant
 					}
 				case "Mastery":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconMastery.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconMastery.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13453,9 +13448,7 @@ namespace Assistant
 					}
 				case "Bushido":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconBushido.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconBushido.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13463,9 +13456,7 @@ namespace Assistant
 					}
 				case "Chivalry":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconChivalry.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconChivalry.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13473,9 +13464,7 @@ namespace Assistant
 					}
 				case "Necromancy":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconNecromancy.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconNecromancy.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13483,9 +13472,7 @@ namespace Assistant
 					}
 				case "Ninjitsu":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconNinjitsu.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconNinjitsu.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13493,9 +13480,7 @@ namespace Assistant
 					}
 				case "Mysticism":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconMysticism.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconMysticism.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
@@ -13503,9 +13488,7 @@ namespace Assistant
 					}
 				case "Spellweaving":
 					{
-						gridspell_ComboBox.Items.Clear();
-						foreach (string spell in SpellGrid.SpellIconSpellweaving.Keys)
-							gridspell_ComboBox.Items.Add(spell);
+						gridspell_ComboBox.DataSource = SpellGrid.SpellIconSpellweaving.Keys.ToList();
 						gridscript_ComboBox.Enabled = false;
 						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;

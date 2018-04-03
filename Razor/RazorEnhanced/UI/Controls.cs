@@ -53,7 +53,7 @@ namespace RazorEnhanced.UI
 		{
 
 		}
-		private Keys LastKey = Keys.None;
+		internal Keys LastKey = Keys.None;
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
 		{
 			if (LastKey != keyData)

@@ -137,17 +137,6 @@ namespace RazorEnhanced
 			get	{return m_form;} set {m_form = value;}
 		}
 
-		private static bool m_dicloaded = false;
-		internal static Dictionary<string, int> SpellIconAbilities = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconMagery = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconMastery = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconBushido = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconChivalry = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconNecromancy = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconNinjitsu = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconMysticism = new Dictionary<string, int>();
-		internal static Dictionary<string, int> SpellIconSpellweaving = new Dictionary<string, int>();
-
 		internal static void SpellGrid_close(object sender, EventArgs e)
 		{
 			m_form = null;
@@ -625,238 +614,14 @@ namespace RazorEnhanced
 			Engine.MainWindow.GridVSlotLabel.Text = m_vslot.ToString();
 			Engine.MainWindow.GridHSlotLabel.Text = m_hslot.ToString();
 
-			Engine.MainWindow.GridGroupComboBox.Items.Clear();
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Empty");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Abilities");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Bushido");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Chivalry");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Necromancy");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Ninjitsu");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Magery");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Mysticism");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Spellweaving");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Mastery");
-			Engine.MainWindow.GridGroupComboBox.Items.Add("Script");
-
-			//////////////////////////////////////////////////////////////
-			// Dizionari
-			//////////////////////////////////////////////////////////////
-
-			if (!m_dicloaded)
-			{
-				// Abilities
-				SpellIconAbilities.Add("Primary", 0x5204);
-				SpellIconAbilities.Add("Secondary", 0x5206);
-
-				// Mastery
-				SpellIconMastery.Add("Inspire", 0x945);
-				SpellIconMastery.Add("Invigorate", 0x946);
-				SpellIconMastery.Add("Resilience", 0x947);
-				SpellIconMastery.Add("Perseverance", 0x948);
-				SpellIconMastery.Add("Tribulation", 0x949);
-				SpellIconMastery.Add("Despair", 0x946A);
-				SpellIconMastery.Add("Death Ray", 0x9B8B);
-				SpellIconMastery.Add("Ethereal Blast", 0x9B8C);
-				SpellIconMastery.Add("Nether Blast", 0x9B8D);
-				SpellIconMastery.Add("Mystic Weapon", 0x9B8E);
-				SpellIconMastery.Add("Command Undead", 0x9B8F);
-				SpellIconMastery.Add("Conduit", 0x9B90);
-				SpellIconMastery.Add("Mana Shield", 0x9B91);
-				SpellIconMastery.Add("Summon Reaper", 0x9B92);
-				SpellIconMastery.Add("Enchanted Summoning", 0x9B93);
-				SpellIconMastery.Add("Anticipate Hit", 0x9B94);
-				SpellIconMastery.Add("Warcry", 0x9B95);
-				SpellIconMastery.Add("Intuition", 0x9B96);
-				SpellIconMastery.Add("Rejuvenate", 0x9B97);
-				SpellIconMastery.Add("Holy Fist", 0x9B98);
-				SpellIconMastery.Add("Shadow", 0x9B99);
-				SpellIconMastery.Add("White Tiger Form", 0x9B9A);
-				SpellIconMastery.Add("Flaming Shot", 0x9B9B);
-				SpellIconMastery.Add("Playing The Odds", 0x9B9C);
-				SpellIconMastery.Add("Thrust", 0x9B9D);
-				SpellIconMastery.Add("Pierce", 0x9B9E);
-				SpellIconMastery.Add("Stagger", 0x9B9F);
-				SpellIconMastery.Add("Toughness", 0x9BA0);
-				SpellIconMastery.Add("Onslaught", 0x9BA1);
-				SpellIconMastery.Add("Focused Eye", 0x9BA2);
-				SpellIconMastery.Add("Elemental Fury", 0x9BA3);
-				SpellIconMastery.Add("Called Shot", 0x9BA4);
-				SpellIconMastery.Add("Saving Throw", 0x9BA5);
-				SpellIconMastery.Add("Shield Bash", 0x9BA6);
-				SpellIconMastery.Add("Bodyguard", 0x9BA7);
-				SpellIconMastery.Add("Heighten Senses", 0x9BA8);
-				SpellIconMastery.Add("Tolerance", 0x9BA9);
-				SpellIconMastery.Add("Injected Strike", 0x9BAA);
-				SpellIconMastery.Add("Potency", 0x9BAB);
-				SpellIconMastery.Add("Rampage", 0x9BAC);
-				SpellIconMastery.Add("Fists Of Fury", 0x9BAD);
-				SpellIconMastery.Add("Knockout", 0x9BAE);
-				SpellIconMastery.Add("Whispering", 0x9BAF);
-				SpellIconMastery.Add("Combat Training", 0x9BB0);
-				SpellIconMastery.Add("Boarding", 0x9BB1);
-
-				// Mysticism
-				SpellIconMysticism.Add("Nether Bolt", 0x5DC0);
-                SpellIconMysticism.Add("Healing Stone", 0x5DC1);
-				SpellIconMysticism.Add("Purge Magic", 0x5DC2);
-				SpellIconMysticism.Add("Enchant", 0x5DC3);
-				SpellIconMysticism.Add("Sleep", 0x5DC4);
-				SpellIconMysticism.Add("Eagle Strike", 0x5DC5);
-				SpellIconMysticism.Add("Animated Weapon", 0x5DC6);
-                SpellIconMysticism.Add("Stone Form", 0x5DC7);
-				SpellIconMysticism.Add("Spell Trigger", 0x5DC8);
-				SpellIconMysticism.Add("Mass Sleep", 0x5DC9);
-				SpellIconMysticism.Add("Cleansing Winds", 0x5DCA);
-				SpellIconMysticism.Add("Bombard", 0x5DCB);
-				SpellIconMysticism.Add("Spell Plague", 0x5DCC);
-				SpellIconMysticism.Add("Hail Storm", 0x5DCD);
-				SpellIconMysticism.Add("Nether Cyclone", 0x5DCE);
-				SpellIconMysticism.Add("Rising Colossus", 0x5DCF);
-
-				// SpellWeaving
-				SpellIconSpellweaving.Add("Arcane Circle", 0x59D8);
-                SpellIconSpellweaving.Add("Gift Of Renewal", 0x59D9);
-                SpellIconSpellweaving.Add("Immolating Weapon", 0x59DA);
-				SpellIconSpellweaving.Add("Attune Weapon", 0x59DB);
-				SpellIconSpellweaving.Add("Thunderstorm", 0x59DC);
-				SpellIconSpellweaving.Add("Natures Fury", 0x59DD);
-				SpellIconSpellweaving.Add("Summon Fey", 0x59DE);
-				SpellIconSpellweaving.Add("Summon Fiend", 0x59DF);
-				SpellIconSpellweaving.Add("Reaper Form", 0x59E0);
-				SpellIconSpellweaving.Add("Wildfire", 0x59E1);
-				SpellIconSpellweaving.Add("Essence Of Wind", 0x59E2);
-                SpellIconSpellweaving.Add("Dryad Allure", 0x59E3);
-				SpellIconSpellweaving.Add("Ethereal Voyage", 0x59E4);
-				SpellIconSpellweaving.Add("Word Of Death", 0x59E5);
-				SpellIconSpellweaving.Add("Gift Of Life", 0x59E6);
-				SpellIconSpellweaving.Add("Arcane Empowerment", 0x59E7);
-
-				// Ninjitsu
-				SpellIconNinjitsu.Add("Focus Attack", 0x5320);
-				SpellIconNinjitsu.Add("Death Strike", 0x5321);
-				SpellIconNinjitsu.Add("Animal Form", 0x5322);
-				SpellIconNinjitsu.Add("Ki Attack", 0x5323);
-				SpellIconNinjitsu.Add("Surprise Attack", 0x5324);
-				SpellIconNinjitsu.Add("Backstab", 0x5325);
-				SpellIconNinjitsu.Add("Shadow jump", 0x5326);
-				SpellIconNinjitsu.Add("Mirror Image", 0x5327);
-
-				// Bushido
-				SpellIconBushido.Add("Honorable Execution", 0x5420);
-				SpellIconBushido.Add("Confidence", 0x5421);
-				SpellIconBushido.Add("Evasion", 0x5422);
-				SpellIconBushido.Add("Counter Attack", 0x5423);
-				SpellIconBushido.Add("Lightning Strike", 0x5424);
-				SpellIconBushido.Add("Momentum Strike", 0x5425);
-
-				// Chivalry
-				SpellIconChivalry.Add("Cleanse By Fire", 0x5100);
-                SpellIconChivalry.Add("Close Wounds", 0x5101);
-				SpellIconChivalry.Add("Consecrate Weapon", 0x5102);
-				SpellIconChivalry.Add("Dispel Evil", 0x5103);
-				SpellIconChivalry.Add("Divine Fury", 0x5104);
-				SpellIconChivalry.Add("Enemy Of One", 0x5105);
-				SpellIconChivalry.Add("Holy Light", 0x5106);
-				SpellIconChivalry.Add("Noble Sacrifice", 0x5107);
-				SpellIconChivalry.Add("Remove Curse", 0x5108);
-				SpellIconChivalry.Add("Sacred Journey", 0x5109);
-
-				// Necromancy
-				SpellIconNecromancy.Add("Animate Dead", 0x5000);
-				SpellIconNecromancy.Add("Blood Oath", 0x5001);
-				SpellIconNecromancy.Add("Corpse Skin", 0x5002);
-				SpellIconNecromancy.Add("Curse Weapon", 0x503);
-				SpellIconNecromancy.Add("Evil Omen", 0x5004);
-				SpellIconNecromancy.Add("Horrific Beast", 0x5005);
-				SpellIconNecromancy.Add("Lich Form", 0x5006);
-				SpellIconNecromancy.Add("Mind Rot", 0x5007);
-				SpellIconNecromancy.Add("Pain Spike", 0x5008);
-				SpellIconNecromancy.Add("Poison Strike", 0x5009);
-				SpellIconNecromancy.Add("Strangle", 0x500A);
-				SpellIconNecromancy.Add("Summon Familiar", 0x500B);
-				SpellIconNecromancy.Add("Vampiric Embrace", 0x500C);
-				SpellIconNecromancy.Add("Vengeful Spirit", 0x500D);
-				SpellIconNecromancy.Add("Wither", 0x500E);
-				SpellIconNecromancy.Add("Wraith Form", 0x500F);
-				SpellIconNecromancy.Add("Exorcism", 0x5010);
-
-				// Magery
-				SpellIconMagery.Add("Clumsy", 0x8c0);
-				SpellIconMagery.Add("Create Food", 0x8c1);
-				SpellIconMagery.Add("Feeblemind", 0x8c2);
-				SpellIconMagery.Add("Heal", 0x8c3);
-				SpellIconMagery.Add("Magic Arrow", 0x8c4);
-				SpellIconMagery.Add("Night Sight", 0x8c5);
-				SpellIconMagery.Add("Reactive Armor", 0x8c6);
-				SpellIconMagery.Add("Weaken", 0x8c7);
-				SpellIconMagery.Add("Agility", 0x8c8);
-				SpellIconMagery.Add("Cunning", 0x8c9);
-				SpellIconMagery.Add("Cure", 0x8cA);
-				SpellIconMagery.Add("Harm", 0x8cB);
-				SpellIconMagery.Add("Magic Trap", 0x8cC);
-				SpellIconMagery.Add("Magic Untrap", 0x8cD);
-				SpellIconMagery.Add("Protection", 0x8cE);
-				SpellIconMagery.Add("Strength", 0x8cF);
-				SpellIconMagery.Add("Bless", 0x8D0);
-				SpellIconMagery.Add("Fireball", 0x8D1);
-				SpellIconMagery.Add("Magic Lock", 0x8D2);
-				SpellIconMagery.Add("Poison", 0x8D3);
-				SpellIconMagery.Add("Telekinesis", 0x8D4);
-				SpellIconMagery.Add("Teleport", 0x8D5);
-				SpellIconMagery.Add("Unlock", 0x8D6);
-				SpellIconMagery.Add("Wall of Stone", 0x8D7);
-				SpellIconMagery.Add("Arch Cure", 0x8D8);
-				SpellIconMagery.Add("Arch Protection", 0x8D9);
-				SpellIconMagery.Add("Curse", 0x8DA);
-				SpellIconMagery.Add("Fire Field", 0x8DB);
-				SpellIconMagery.Add("Greater Heal", 0x8DC);
-				SpellIconMagery.Add("Lightning", 0x8DD);
-				SpellIconMagery.Add("Mana Drain", 0x8DE);
-				SpellIconMagery.Add("Recall", 0x8DF);
-				SpellIconMagery.Add("Blade Spirits", 0x8E0);
-				SpellIconMagery.Add("Dispel Field", 0x8E1);
-				SpellIconMagery.Add("Incognito", 0x8E2);
-				SpellIconMagery.Add("Magic Reflection", 0x8E3);
-				SpellIconMagery.Add("Mind Blast", 0x8E4);
-				SpellIconMagery.Add("Paralyze", 0x8E5);
-				SpellIconMagery.Add("Poison Field", 0x8E6);
-				SpellIconMagery.Add("Summon Creature", 0x8E7);
-				SpellIconMagery.Add("Dispel", 0x8E8);
-				SpellIconMagery.Add("Energy Bolt", 0x8E9);
-				SpellIconMagery.Add("Explosion", 0x8EA);
-				SpellIconMagery.Add("Invisibility", 0x8EB);
-				SpellIconMagery.Add("Mark", 0x8EC);
-				SpellIconMagery.Add("Mass Curse", 0x8ED);
-				SpellIconMagery.Add("Paralyze Field", 0x8EE);
-				SpellIconMagery.Add("Reveal", 0x8EF);
-				SpellIconMagery.Add("Chain Lightning", 0x8F0);
-				SpellIconMagery.Add("Energy Field", 0x8F1);
-				SpellIconMagery.Add("Flamestrike", 0x8F2);
-				SpellIconMagery.Add("Gate Travel", 0x8F3);
-				SpellIconMagery.Add("Mana Vampire", 0x8F4);
-				SpellIconMagery.Add("Mass Dispel", 0x8F5);
-				SpellIconMagery.Add("Meteor Swarm", 0x8F6);
-				SpellIconMagery.Add("Polymorph", 0x8F7);
-				SpellIconMagery.Add("Earthquake", 0x8F8);
-				SpellIconMagery.Add("Energy Vortex", 0x8F9);
-				SpellIconMagery.Add("Resurrection", 0x8FA);
-				SpellIconMagery.Add("Summon Air Elemental", 0x8FB);
-				SpellIconMagery.Add("Summon Daemon", 0x8FC);
-				SpellIconMagery.Add("Summon Earth Elemental", 0x8FD);
-				SpellIconMagery.Add("Summon Fire Elemental", 0x8FE);
-				SpellIconMagery.Add("Summon Water Elemental", 0x8FF);
-
-				m_dicloaded = true;
-            }
+			Engine.MainWindow.GridGroupComboBox.DataSource = m_group_list;
 
 			// Color Picked Combobox
 			Engine.MainWindow.GridBorderComboBox.Items.Clear();
 			Type colorType = typeof(System.Drawing.Color);
 			PropertyInfo[] propInfoList = colorType.GetProperties(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public);
 			foreach (PropertyInfo c in propInfoList)
-			{
 				Engine.MainWindow.GridBorderComboBox.Items.Add(c.Name);
-			}
 
 			// Carico Item
 			List<SpellGridItem> items = Settings.SpellGrid.ReadItems();
@@ -873,5 +638,244 @@ namespace RazorEnhanced
             }
 			Engine.MainWindow.GridSlotComboBox.SelectedIndex = 0;
 		}
+
+		//////////////////////////////////////////////////////////////
+		// Dizionari
+		//////////////////////////////////////////////////////////////
+
+		internal static List<string> m_group_list = new List<string>
+		{
+			"Empty",
+			"Abilities",
+			"Bushido",
+			"Chivalry",
+			"Necromancy",
+			"Ninjitsu",
+			"Magery",
+			"Mysticism",
+			"Spellweaving",
+			"Mastery",
+			"Script"
+		};
+
+		internal static Dictionary<string, int> SpellIconAbilities = new Dictionary<string, int>
+		{
+			{ "Primary", 0x5204 },
+			{ "Secondary", 0x5206 }
+		};
+
+		internal static Dictionary<string, int> SpellIconMastery = new Dictionary<string, int>
+		{
+			{ "Inspire", 0x945},
+			{ "Invigorate", 0x946},
+			{ "Resilience", 0x947},
+			{ "Perseverance", 0x948},
+			{ "Tribulation", 0x949},
+			{ "Despair", 0x946A},
+			{ "Death Ray", 0x9B8B},
+			{ "Ethereal Blast", 0x9B8C},
+			{ "Nether Blast", 0x9B8D},
+			{ "Mystic Weapon", 0x9B8E},
+			{ "Command Undead", 0x9B8F},
+			{ "Conduit", 0x9B90},
+			{ "Mana Shield", 0x9B91},
+			{ "Summon Reaper", 0x9B92},
+			{ "Enchanted Summoning", 0x9B93},
+			{ "Anticipate Hit", 0x9B94},
+			{ "Warcry", 0x9B95},
+			{ "Intuition", 0x9B96},
+			{ "Rejuvenate", 0x9B97},
+			{ "Holy Fist", 0x9B98},
+			{ "Shadow", 0x9B99},
+			{ "White Tiger Form", 0x9B9A},
+			{ "Flaming Shot", 0x9B9B},
+			{ "Playing The Odds", 0x9B9C},
+			{ "Thrust", 0x9B9D},
+			{ "Pierce", 0x9B9E},
+			{ "Stagger", 0x9B9F},
+			{ "Toughness", 0x9BA0},
+			{ "Onslaught", 0x9BA1},
+			{ "Focused Eye", 0x9BA2},
+			{ "Elemental Fury", 0x9BA3},
+			{ "Called Shot", 0x9BA4},
+			{ "Saving Throw", 0x9BA5},
+			{ "Shield Bash", 0x9BA6},
+			{ "Bodyguard", 0x9BA7},
+			{ "Heighten Senses", 0x9BA8},
+			{ "Tolerance", 0x9BA9},
+			{ "Injected Strike", 0x9BAA},
+			{ "Potency", 0x9BAB},
+			{ "Rampage", 0x9BAC},
+			{ "Fists Of Fury", 0x9BAD},
+			{ "Knockout", 0x9BAE},
+			{ "Whispering", 0x9BAF},
+			{ "Combat Training", 0x9BB0},
+			{ "Boarding", 0x9BB1}
+		};
+
+		internal static Dictionary<string, int> SpellIconMysticism = new Dictionary<string, int>
+		{
+			{ "Nether Bolt", 0x5DC0},
+			{ "Healing Stone", 0x5DC1},
+			{ "Purge Magic", 0x5DC2},
+			{ "Enchant", 0x5DC3},
+			{ "Sleep", 0x5DC4},
+			{ "Eagle Strike", 0x5DC5},
+			{ "Animated Weapon", 0x5DC6},
+			{ "Stone Form", 0x5DC7},
+			{ "Spell Trigger", 0x5DC8},
+			{ "Mass Sleep", 0x5DC9},
+			{ "Cleansing Winds", 0x5DCA},
+			{ "Bombard", 0x5DCB},
+			{ "Spell Plague", 0x5DCC},
+			{ "Hail Storm", 0x5DCD},
+			{ "Nether Cyclone", 0x5DCE},
+			{ "Rising Colossus", 0x5DCF},
+		};
+
+		internal static Dictionary<string, int> SpellIconSpellweaving = new Dictionary<string, int>
+		{
+			{ "Arcane Circle", 0x59D8},
+			{ "Gift Of Renewal", 0x59D9},
+			{ "Immolating Weapon", 0x59DA},
+			{ "Attune Weapon", 0x59DB},
+			{ "Thunderstorm", 0x59DC},
+			{ "Natures Fury", 0x59DD},
+			{ "Summon Fey", 0x59DE},
+			{ "Summon Fiend", 0x59DF},
+			{ "Reaper Form", 0x59E0},
+			{ "Wildfire", 0x59E1},
+			{ "Essence Of Wind", 0x59E2},
+			{ "Dryad Allure", 0x59E3},
+			{ "Ethereal Voyage", 0x59E4},
+			{ "Word Of Death", 0x59E5},
+			{ "Gift Of Life", 0x59E6},
+			{ "Arcane Empowerment", 0x59E7}
+		};
+
+		internal static Dictionary<string, int> SpellIconNinjitsu = new Dictionary<string, int>
+		{
+			{ "Focus Attack", 0x5320},
+			{ "Death Strike", 0x5321},
+			{ "Animal Form", 0x5322},
+			{ "Ki Attack", 0x5323},
+			{ "Surprise Attack", 0x5324},
+			{ "Backstab", 0x5325},
+			{ "Shadow jump", 0x5326},
+			{ "Mirror Image", 0x5327}
+		};
+
+		internal static Dictionary<string, int> SpellIconBushido = new Dictionary<string, int>
+		{
+			{ "Honorable Execution", 0x5420},
+			{ "Confidence", 0x5421},
+			{ "Evasion", 0x5422},
+			{ "Counter Attack", 0x5423},
+			{ "Lightning Strike", 0x5424},
+			{ "Momentum Strike", 0x5425}
+		};
+
+		internal static Dictionary<string, int> SpellIconChivalry = new Dictionary<string, int>
+		{
+			{ "Cleanse By Fire", 0x5100},
+			{ "Close Wounds", 0x5101},
+			{ "Consecrate Weapon", 0x5102},
+			{ "Dispel Evil", 0x5103},
+			{ "Divine Fury", 0x5104},
+			{ "Enemy Of One", 0x5105},
+			{ "Holy Light", 0x5106},
+			{ "Noble Sacrifice", 0x5107},
+			{ "Remove Curse", 0x5108},
+			{ "Sacred Journey", 0x5109}
+		};
+
+		internal static Dictionary<string, int> SpellIconNecromancy = new Dictionary<string, int>
+		{
+			{ "Animate Dead", 0x5000},
+			{ "Blood Oath", 0x5001},
+			{ "Corpse Skin", 0x5002},
+			{ "Curse Weapon", 0x503},
+			{ "Evil Omen", 0x5004},
+			{ "Horrific Beast", 0x5005},
+			{ "Lich Form", 0x5006},
+			{ "Mind Rot", 0x5007},
+			{ "Pain Spike", 0x5008},
+			{ "Poison Strike", 0x5009},
+			{ "Strangle", 0x500A},
+			{ "Summon Familiar", 0x500B},
+			{ "Vampiric Embrace", 0x500C},
+			{ "Vengeful Spirit", 0x500D},
+			{ "Wither", 0x500E},
+			{ "Wraith Form", 0x500F},
+			{ "Exorcism", 0x5010}
+		};
+
+		internal static Dictionary<string, int> SpellIconMagery = new Dictionary<string, int>
+		{
+			{ "Clumsy", 0x8c0},
+			{ "Create Food", 0x8c1},
+			{ "Feeblemind", 0x8c2},
+			{ "Heal", 0x8c3},
+			{ "Magic Arrow", 0x8c4},
+			{ "Night Sight", 0x8c5},
+			{ "Reactive Armor", 0x8c6},
+			{ "Weaken", 0x8c7},
+			{ "Agility", 0x8c8},
+			{ "Cunning", 0x8c9},
+			{ "Cure", 0x8cA},
+			{ "Harm", 0x8cB},
+			{ "Magic Trap", 0x8cC},
+			{ "Magic Untrap", 0x8cD},
+			{ "Protection", 0x8cE},
+			{ "Strength", 0x8cF},
+			{ "Bless", 0x8D0},
+			{ "Fireball", 0x8D1},
+			{ "Magic Lock", 0x8D2},
+			{ "Poison", 0x8D3},
+			{ "Telekinesis", 0x8D4},
+			{ "Teleport", 0x8D5},
+			{ "Unlock", 0x8D6},
+			{ "Wall of Stone", 0x8D7},
+			{ "Arch Cure", 0x8D8},
+			{ "Arch Protection", 0x8D9},
+			{ "Curse", 0x8DA},
+			{ "Fire Field", 0x8DB},
+			{ "Greater Heal", 0x8DC},
+			{ "Lightning", 0x8DD},
+			{ "Mana Drain", 0x8DE},
+			{ "Recall", 0x8DF},
+			{ "Blade Spirits", 0x8E0},
+			{ "Dispel Field", 0x8E1},
+			{ "Incognito", 0x8E2},
+			{ "Magic Reflection", 0x8E3},
+			{ "Mind Blast", 0x8E4},
+			{ "Paralyze", 0x8E5},
+			{ "Poison Field", 0x8E6},
+			{ "Summon Creature", 0x8E7},
+			{ "Dispel", 0x8E8},
+			{ "Energy Bolt", 0x8E9},
+			{ "Explosion", 0x8EA},
+			{ "Invisibility", 0x8EB},
+			{ "Mark", 0x8EC},
+			{ "Mass Curse", 0x8ED},
+			{ "Paralyze Field", 0x8EE},
+			{ "Reveal", 0x8EF},
+			{ "Chain Lightning", 0x8F0},
+			{ "Energy Field", 0x8F1},
+			{ "Flamestrike", 0x8F2},
+			{ "Gate Travel", 0x8F3},
+			{ "Mana Vampire", 0x8F4},
+			{ "Mass Dispel", 0x8F5},
+			{ "Meteor Swarm", 0x8F6},
+			{ "Polymorph", 0x8F7},
+			{ "Earthquake", 0x8F8},
+			{ "Energy Vortex", 0x8F9},
+			{ "Resurrection", 0x8FA},
+			{ "Summon Air Elemental", 0x8FB},
+			{ "Summon Daemon", 0x8FC},
+			{ "Summon Earth Elemental", 0x8FD},
+			{ "Summon Fire Elemental", 0x8FE},
+			{ "Summon Water Elemental", 0x8FF}
+		};
 	}
 }
