@@ -3231,7 +3231,7 @@ namespace RazorEnhanced
 					int destination = (int)row["Destination"];
 					bool selected = (bool)row["Selected"];
 
-					RazorEnhanced.Restock.RestockList list  = new RazorEnhanced.Restock.RestockList(description, delay, source, destination, selected);
+					lists.Add(new RazorEnhanced.Restock.RestockList(description, delay, source, destination, selected));
 				}
 				return lists;
 			}
