@@ -527,10 +527,11 @@ namespace RazorEnhanced
 				}
 				else // Script -1
 				{
-					m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell);
+					m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell.Substring(0, items[x].Spell.LastIndexOf(".") + 1));
 					m_panellist[x].Enabled = true;
 					m_panellist[x].Spell = items[x].Spell;
 				}
+
 				m_panellist[x].Group = items[x].Group;
 			}
 		}
