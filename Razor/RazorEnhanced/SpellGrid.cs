@@ -362,37 +362,40 @@ namespace RazorEnhanced
 			switch (pl.Group)
 			{
 				case "Magery":
-					RazorEnhanced.Spells.CastMagery(pl.Spell, false);
+					Spells.CastMagery(pl.Spell, false);
 					break;
 				case "Abilities":
 					if (pl.Spell == "Primary")
-						Assistant.SpecialMoves.SetPrimaryAbility(false);
+						SpecialMoves.SetPrimaryAbility(false);
 					else
-						Assistant.SpecialMoves.SetSecondaryAbility(false);
+						SpecialMoves.SetSecondaryAbility(false);
 					break;
 				case "Bushido":
-					RazorEnhanced.Spells.CastBushido(pl.Spell, false);
+					Spells.CastBushido(pl.Spell, false);
 					break;
 				case "Chivalry":
-					RazorEnhanced.Spells.CastChivalry(pl.Spell, false);
+					Spells.CastChivalry(pl.Spell, false);
 					break;
 				case "Necromancy":
-					RazorEnhanced.Spells.CastNecro(pl.Spell, false);
+					Spells.CastNecro(pl.Spell, false);
 					break;
 				case "Ninjitsu":
-					RazorEnhanced.Spells.CastNinjitsu(pl.Spell, false);
+					Spells.CastNinjitsu(pl.Spell, false);
 					break;
 				case "Mysticism":
-					RazorEnhanced.Spells.CastMysticism(pl.Spell, false);
+					Spells.CastMysticism(pl.Spell, false);
 					break;
 				case "Spellweaving":
-					RazorEnhanced.Spells.CastSpellweaving(pl.Spell, false);
+					Spells.CastSpellweaving(pl.Spell, false);
 					break;
 				case "Mastery":
-					RazorEnhanced.Spells.CastMastery(pl.Spell, false);
+					Spells.CastMastery(pl.Spell, false);
 					break;
 				case "Script":
-					RazorEnhanced.Misc.ScriptRun(pl.Spell);
+					Misc.ScriptRun(pl.Spell);
+					break;
+				case "Skills":
+					Player.UseSkill(pl.Spell, false);
 					break;
 				default:
 					break;
@@ -508,30 +511,38 @@ namespace RazorEnhanced
 					case "Script":
 						imageid = -1;
 						break;
+					case "Skills":
+						imageid = -2;
+						break;
 					default:
 						imageid = 0;
 						break;
 				}
 
-				if (imageid > 0)
+				switch (imageid)
 				{
-					Bitmap image = Ultima.Gumps.GetGump(imageid);
-					m_panellist[x].BackgroundImage = image;
-					m_panellist[x].Enabled = true;
-					m_panellist[x].Spell = items[x].Spell;
-				}
-				else if (imageid == 0) //empty
-				{
-				//	m_panellist[x].BackgroundImage = null;
-					m_panellist[x].Enabled = false;
-				}
-				else // Script -1
-				{
-					m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell.Substring(0, items[x].Spell.LastIndexOf(".") + 1));
-					m_panellist[x].Enabled = true;
-					m_panellist[x].Spell = items[x].Spell;
-				}
+					case 0:
+						m_panellist[x].Enabled = false;
+						break;
 
+					case -1:  // Script
+						m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell.Substring(0, items[x].Spell.LastIndexOf(".") + 1));
+						m_panellist[x].Enabled = true;						
+						break;
+
+					case -2:  // Skill
+						m_panellist[x].BackgroundImage = SkillsIcon[items[x].Spell];
+						m_panellist[x].Enabled = true;
+						break;
+
+					default:
+						Bitmap image = Ultima.Gumps.GetGump(imageid);
+						m_panellist[x].BackgroundImage = image;
+						m_panellist[x].Enabled = true;
+						break;
+				}
+	
+				m_panellist[x].Spell = items[x].Spell;
 				m_panellist[x].Group = items[x].Group;
 			}
 		}
@@ -656,7 +667,8 @@ namespace RazorEnhanced
 			"Mysticism",
 			"Spellweaving",
 			"Mastery",
-			"Script"
+			"Script",
+			"Skills"
 		};
 
 		internal static Dictionary<string, int> SpellIconAbilities = new Dictionary<string, int>
@@ -877,6 +889,34 @@ namespace RazorEnhanced
 			{ "Summon Earth Elemental", 0x8FD},
 			{ "Summon Fire Elemental", 0x8FE},
 			{ "Summon Water Elemental", 0x8FF}
+		};
+
+		internal static Dictionary<string, Bitmap> SkillsIcon = new Dictionary<string, Bitmap>
+		{
+			{ "Anatomy", Assistant.Properties.Resources.Skill_Icon_Anatomy},
+			{ "Animal Lore", Assistant.Properties.Resources.Skill_Icon_AnimalLore},
+			{ "Animal Taming", Assistant.Properties.Resources.Skill_Icon_AnimalTaming},
+			{ "ArmsLore", Assistant.Properties.Resources.Skill_Icon_ArmsLore},
+			{ "Begging", Assistant.Properties.Resources.Skill_Icon_Begging},
+			{ "Cartography", Assistant.Properties.Resources.Skill_Icon_Cartography},
+			{ "Detect Hidden", Assistant.Properties.Resources.Skill_Icon_DetectingHidden},
+			{ "Discordance", Assistant.Properties.Resources.Skill_Icon_Discordance},
+			{ "EvalInt", Assistant.Properties.Resources.Skill_Icon_EvalInt},
+			{ "Forensics", Assistant.Properties.Resources.Skill_Icon_ForesicEvalutation},
+			{ "Hiding", Assistant.Properties.Resources.Skill_Icon_Hiding},
+			{ "Imbuing", Assistant.Properties.Resources.Skill_Icon_Imbuing},
+			{ "Inscribe", Assistant.Properties.Resources.Skill_Icon_Inscription},
+			{ "Item ID", Assistant.Properties.Resources.Skill_Icon_ItemID},
+			{ "Meditation", Assistant.Properties.Resources.Skill_Icon_Meditation},
+			{ "Peacemaking", Assistant.Properties.Resources.Skill_Icon_Peacemaking},
+			{ "Poisoning", Assistant.Properties.Resources.Skill_Icon_Poisoning},
+			{ "Provocation", Assistant.Properties.Resources.Skill_Icon_Provocation},
+			{ "Remove Trap", Assistant.Properties.Resources.Skill_Icon_RemoveTrap},
+			{ "Spirit Speak", Assistant.Properties.Resources.Skill_Icon_SpiritSpeak},
+			{ "Stealing", Assistant.Properties.Resources.Skill_Icon_Stealing},
+			{ "Stealth", Assistant.Properties.Resources.Skill_Icon_Stealth},
+			{ "Taste ID", Assistant.Properties.Resources.Skill_Icon_TasteID},
+			{ "Tracking", Assistant.Properties.Resources.Skill_Icon_Tracking}
 		};
 	}
 }

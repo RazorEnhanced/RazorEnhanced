@@ -13494,6 +13494,14 @@ namespace Assistant
 						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
 						break;
 					}
+				case "Skills":
+					{
+						gridspell_ComboBox.DataSource = SpellGrid.SkillsIcon.Keys.ToList();
+						gridscript_ComboBox.Enabled = false;
+						gridspell_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
+						gridspell_ComboBox.SelectedIndex = gridborder_ComboBox.SelectedIndex = 0;
+						break;
+					}
 				case "Script":
 					{
 						gridscript_ComboBox.Enabled = gridborder_ComboBox.Enabled = true;
