@@ -298,4 +298,76 @@
   <data name="importa" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\RazorEnhanced\Resources\importa.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Skill_Icon_Anatomy" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Anatomy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_AnimalLore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_AnimalLore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_AnimalTaming" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_AnimalTaming.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_ArmsLore" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_ArmsLore.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Begging" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Begging.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Cartography" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Cartography.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_DetectingHidden" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_DetectingHidden.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Discordance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Discordance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_EvalInt" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_EvalInt.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_ForesicEvalutation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_ForesicEvalutation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Hiding" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Hiding.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Imbuing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Imbuing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Inscription" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Inscription.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_ItemID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_ItemID.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Meditation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Meditation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Peacemaking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Peacemaking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Poisoning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Poisoning.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Provocation" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Provocation.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_RemoveTrap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_RemoveTrap.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_SpiritSpeak" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_SpiritSpeak.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Stealing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Stealing.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Stealth" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Stealth.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_TasteID" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_TasteID.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Skill_Icon_Tracking" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\RazorEnhanced\Resources\Skill_Icon_Tracking.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
