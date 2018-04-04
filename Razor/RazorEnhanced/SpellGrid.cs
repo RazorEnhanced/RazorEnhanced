@@ -526,8 +526,11 @@ namespace RazorEnhanced
 						break;
 
 					case -1:  // Script
-						m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell.Substring(0, items[x].Spell.LastIndexOf(".") + 1));
-						m_panellist[x].Enabled = true;						
+						if (items[x].Spell != string.Empty)
+						{
+							m_panellist[x].BackgroundImage = CreateBitmap(items[x].Spell.Substring(0, items[x].Spell.LastIndexOf(".")));
+							m_panellist[x].Enabled = true;
+						}
 						break;
 
 					case -2:  // Skill
@@ -536,8 +539,7 @@ namespace RazorEnhanced
 						break;
 
 					default:
-						Bitmap image = Ultima.Gumps.GetGump(imageid);
-						m_panellist[x].BackgroundImage = image;
+						m_panellist[x].BackgroundImage = Ultima.Gumps.GetGump(imageid);
 						m_panellist[x].Enabled = true;
 						break;
 				}
