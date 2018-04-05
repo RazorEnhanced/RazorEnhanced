@@ -1077,10 +1077,15 @@ namespace Assistant
 
 		private static void MobileMoving(Packet p, PacketHandlerEventArgs args)
 		{
-			Mobile m = World.FindMobile(p.ReadUInt32());
+			uint serial = p.ReadUInt32();
+			Mobile m = World.FindMobile(serial);
 
 			if (m == null)
-				return;
+			{
+				World.AddMobile(m = new Mobile(serial));
+				if (!ClientCommunication.ServerEncrypted)
+					ClientCommunication.SendToServer(new StatusQuery(serial));
+			}
 
 			m.Body = p.ReadUInt16();
 

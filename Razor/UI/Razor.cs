@@ -11700,25 +11700,7 @@ namespace Assistant
 
 		private void friendAddTargetButton_Click(object sender, EventArgs e)
 		{
-			if (friendListSelect.Text != String.Empty)
-				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(FriendPlayerTarget_Callback));
-			else
-				RazorEnhanced.Friend.AddLog("Friends list not selected!");
-		}
-
-		private void FriendPlayerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
-		{
-			Assistant.Mobile friendplayer = Assistant.World.FindMobile(serial);
-			if (friendplayer != null && friendplayer.Serial.IsMobile && friendplayer.Serial != World.Player.Serial)
-			{
-				this.BeginInvoke((MethodInvoker)delegate { RazorEnhanced.Friend.AddPlayerToList(friendplayer.Name, friendplayer.Serial); });
-			}
-			else
-			{
-				if (showagentmessageCheckBox.Checked)
-					RazorEnhanced.Misc.SendMessage("Invalid target", false);
-				RazorEnhanced.Friend.AddLog("Invalid target");
-			}
+			Friend.AddFriendTarget();
 		}
 
 		private void friendRemoveButton_Click(object sender, EventArgs e)

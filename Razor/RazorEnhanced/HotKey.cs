@@ -672,6 +672,10 @@ namespace RazorEnhanced
 						Assistant.Engine.MainWindow.MobFilterCheckBox.Checked = true;
 					break;
 
+				case "Add Friend":
+					Friend.AddFriendTarget();
+					break;
+
 				default:
 					break;
 			}
@@ -1352,7 +1356,7 @@ namespace RazorEnhanced
 				};
 				if (keydata.Key != Keys.None)
 					a.ForeColor = System.Drawing.Color.DarkGreen;
-				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[16].Nodes.Add(a);
+				Engine.MainWindow.HotKeyTreeView.Nodes[0].Nodes[2].Nodes[17].Nodes.Add(a);
 			}
 
 			// Combats

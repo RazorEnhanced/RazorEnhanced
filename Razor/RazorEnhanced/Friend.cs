@@ -463,5 +463,33 @@ namespace RazorEnhanced
 				Engine.MainWindow.FriendListSelect.Invoke(new Action(() => Engine.MainWindow.FriendListSelect.SelectedIndex = Engine.MainWindow.FriendListSelect.Items.IndexOf(nomelista)));  // cambio lista
 			}
 		}
+
+		// Fiend target callback
+		internal static void AddFriendTarget()
+		{
+			if (Engine.MainWindow.FriendListSelect.Text == string.Empty)
+			{
+				Friend.AddLog("Friends list not selected!");
+			}
+			else
+			{
+				Targeting.OneTimeTarget(new Targeting.TargetResponseCallback(FriendPlayerTarget_Callback));
+			}
+		}
+
+		private static void FriendPlayerTarget_Callback(bool loc, Assistant.Serial serial, Assistant.Point3D pt, ushort itemid)
+		{
+			Assistant.Mobile friendplayer = World.FindMobile(serial);
+			if (friendplayer != null && friendplayer.Serial.IsMobile && friendplayer.Serial != World.Player.Serial)
+			{
+				Engine.MainWindow.BeginInvoke((MethodInvoker)delegate { Friend.AddPlayerToList(friendplayer.Name, friendplayer.Serial); });
+			}
+			else
+			{
+				if (Engine.MainWindow.ShowAgentMessageCheckBox.Checked)
+					Misc.SendMessage("Invalid target", false);
+				Friend.AddLog("Invalid target");
+			}
+		}
 	}
 }
