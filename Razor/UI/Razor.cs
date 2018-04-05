@@ -2554,7 +2554,7 @@ namespace Assistant
 			this.uomodgroupbox.Size = new System.Drawing.Size(283, 65);
 			this.uomodgroupbox.TabIndex = 69;
 			this.uomodgroupbox.TabStop = false;
-			this.uomodgroupbox.Text = "UoMod (Client < 7.0.50.x)";
+			this.uomodgroupbox.Text = "UoMod (Client > 7.0.0.0)";
 			// 
 			// uomodpaperdoolCheckBox
 			// 
@@ -8273,14 +8273,9 @@ namespace Assistant
 			// UoMod
 			if (Engine.ClientMajor >= 7)
 			{
-				if (Engine.ClientBuild < 49)
-				{
-					uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
-					uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
-					uomodglobalsoundCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModSound");
-				}
-				else
-					uomodgroupbox.Enabled = false;
+				uomodFPSCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModFPS");
+				uomodpaperdoolCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModPaperdool");
+				uomodglobalsoundCheckBox.Checked = RazorEnhanced.Settings.General.ReadBool("UoModSound");
 			}
 			else
 			{
@@ -8736,7 +8731,8 @@ namespace Assistant
 		{
 			if (!(setLTHilight.Enabled = lthilight.Checked))
 			{
-				RazorEnhanced.Settings.General.WriteInt("LTHilight", 0);
+				Settings.General.WriteInt("LTHilight", 0);
+				LTHilight = 0;
 				ClientCommunication.SetCustomNotoHue(0);
 				lthilight.BackColor = SystemColors.Control;
 				lthilight.ForeColor = SystemColors.ControlText;

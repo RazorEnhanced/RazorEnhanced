@@ -424,6 +424,7 @@ namespace RazorEnhanced
 			return result;
 		}
 
+		private static int m_lastidx = 0;
 		public static Mobile Select(List<Mobile> mobiles, string selector)
 		{
 			Mobile result = null;
@@ -526,6 +527,23 @@ namespace RazorEnhanced
 							}
 							result = strongest;
 						}
+						break;
+					case "Next":
+						if (mobiles.Count() > 0)
+						{
+							if (m_lastidx > mobiles.Count() -1) // Fuori range
+							{
+								m_lastidx = 0;
+								result = mobiles[m_lastidx];
+							}
+							else
+								result = mobiles[m_lastidx];
+
+							m_lastidx++;
+						}
+						else
+							m_lastidx = 0;
+
 						break;
 				}
 			}

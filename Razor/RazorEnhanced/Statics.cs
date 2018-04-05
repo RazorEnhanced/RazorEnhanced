@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Ultima;
 
 namespace RazorEnhanced
 {
@@ -67,6 +68,11 @@ namespace RazorEnhanced
 					Scripts.SendMessageScriptError("Script Error: GetLandZ Invalid Map!");
 					return 0;
 			}
+		}
+
+		public static int GetTileFlag(int id)
+		{
+			return (int)TileData.ItemTable[id].Flags;
 		}
 
 		// Blocco info su statici

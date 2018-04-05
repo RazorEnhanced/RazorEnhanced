@@ -28,6 +28,7 @@ namespace RazorEnhanced.UI
 			SelectorComboBox.Items.Add("Farthest");
 			SelectorComboBox.Items.Add("Weakest");
 			SelectorComboBox.Items.Add("Strongest");
+			SelectorComboBox.Items.Add("Next");
 			SelectorComboBox.Text = "Random";
 
 			notocolorComboBox.Items.Add("Innocent");
