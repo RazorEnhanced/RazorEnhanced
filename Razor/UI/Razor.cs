@@ -12337,7 +12337,7 @@ namespace Assistant
 		{
 			if (targetlistView.SelectedItems.Count == 1)
 			{
-				RazorEnhanced.Target.PerformTargetFromList(targetlistView.SelectedItems[0].SubItems[1].Text);
+				RazorEnhanced.Target.SetLastTargetFromListHotKey(targetlistView.SelectedItems[0].SubItems[1].Text);
 			}
 		}
 
