@@ -817,6 +817,7 @@ namespace Assistant
 		private OpenFileDialog openmaplocation;
 		private RazorCheckBox autolootautostartCheckBox;
 		private RazorCheckBox scavengerautostartCheckBox;
+		private RazorButton paypalButton;
 
 		// Hotkey
 		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
@@ -887,6 +888,7 @@ namespace Assistant
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
 			this.tabs = new System.Windows.Forms.TabControl();
 			this.generalTab = new System.Windows.Forms.TabPage();
+			this.paypalButton = new RazorEnhanced.UI.RazorButton();
 			this.openchangelogButton = new RazorEnhanced.UI.RazorButton();
 			this.notshowlauncher = new RazorEnhanced.UI.RazorCheckBox();
 			this.groupBox29 = new System.Windows.Forms.GroupBox();
@@ -1607,6 +1609,7 @@ namespace Assistant
 			// 
 			// generalTab
 			// 
+			this.generalTab.Controls.Add(this.paypalButton);
 			this.generalTab.Controls.Add(this.openchangelogButton);
 			this.generalTab.Controls.Add(this.notshowlauncher);
 			this.generalTab.Controls.Add(this.groupBox29);
@@ -1629,6 +1632,20 @@ namespace Assistant
 			this.generalTab.Size = new System.Drawing.Size(666, 366);
 			this.generalTab.TabIndex = 0;
 			this.generalTab.Text = "General";
+			// 
+			// paypalButton
+			// 
+			this.paypalButton.BackColor = System.Drawing.SystemColors.Control;
+			this.paypalButton.BackgroundImage = global::Assistant.Properties.Resources.PayPal;
+			this.paypalButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.paypalButton.FlatAppearance.BorderSize = 0;
+			this.paypalButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.paypalButton.Location = new System.Drawing.Point(542, 53);
+			this.paypalButton.Name = "paypalButton";
+			this.paypalButton.Size = new System.Drawing.Size(95, 33);
+			this.paypalButton.TabIndex = 69;
+			this.paypalButton.UseVisualStyleBackColor = false;
+			this.paypalButton.Click += new System.EventHandler(this.paypalButton_Click);
 			// 
 			// openchangelogButton
 			// 
@@ -14171,6 +14188,11 @@ namespace Assistant
 		{
 			DPSmetermaxdamage.Text = DPSmetermindamage.Text = DPSmeterserial.Text = DPSmetername.Text = string.Empty;
 			DPSMeter.ShowResult(DpsMeterGridView, -1, -1, -1, null);
+		}
+
+		private void paypalButton_Click(object sender, EventArgs e)
+		{
+			Process.Start("https://www.paypal.me/Alexdan82");
 		}
 		// ----------------- STOP DPS METER -------------------
 	}

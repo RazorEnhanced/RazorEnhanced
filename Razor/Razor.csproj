@@ -583,6 +583,7 @@
     <None Include="RazorEnhanced\Resources\importa.png" />
     <Content Include="RazorEnhanced\Resources\loop.png" />
     <None Include="RazorEnhanced\Resources\playagent.png" />
+    <None Include="RazorEnhanced\Resources\PayPal.png" />
     <Content Include="RazorEnhanced\Resources\razor-enhanced-splash.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.Off.png" />
     <Content Include="RazorEnhanced\Resources\RazorCheckBox.On.png" />
