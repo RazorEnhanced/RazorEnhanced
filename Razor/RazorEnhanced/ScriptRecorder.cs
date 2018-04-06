@@ -159,7 +159,7 @@ namespace RazorEnhanced
 					AddLog("Spells.CastMagery(\"" + Language.GetString(s.Name) + "\")");
 				else if (id >= 101 && id <= 117)
 					AddLog("Spells.CastNecro(\"" + Language.GetString(s.Name) + "\")");
-				else if (id >= 201 && id <= 201)
+				else if (id >= 201 && id <= 210)
 					AddLog("Spells.CastChivalry(\"" + Language.GetString(s.Name) + "\")");
 				else if (id >= 401 && id <= 406)
 					AddLog("Spells.CastBushido(\"" + Language.GetString(s.Name) + "\")");
@@ -179,7 +179,7 @@ namespace RazorEnhanced
 						AddLog("Spells.CastMastery(\"" + Language.GetString(s.Name) + "\")");
 				}
 				else
-					AddLog("ERROR Spell not listed");
+					AddLog("ERROR Spell not listed " + id);
 			}
 			else // InvokeVirtue
 			{
