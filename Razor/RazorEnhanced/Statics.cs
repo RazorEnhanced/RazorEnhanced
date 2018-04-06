@@ -70,9 +70,94 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static int GetTileFlag(int id)
+		public static bool GetTileFlag(int itemid, string flagname)
 		{
-			return (int)TileData.ItemTable[id].Flags;
+			switch (flagname)
+			{
+				case "None":
+					if (TileData.ItemTable[itemid].Flags == TileFlag.None)
+						return true;
+					else
+						return false;
+
+				case "Translucent": // The tile is rendered with partial alpha-transparency.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Translucent) != 0)
+						return true;
+					else
+						return false;
+
+				case "Wall": // The tile is a wall.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Wall) != 0)
+						return true;
+					else
+						return false;
+
+				case "Damaging": // The tile can cause damage when moved over.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Damaging) != 0)
+						return true;
+					else
+						return false;
+
+				case "Impassable": // The tile may not be moved over or through.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Impassable) != 0)
+						return true;
+					else
+						return false;
+
+				case "Surface": // The tile is a surface. It may be moved over, but not through.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Surface) != 0)
+						return true;
+					else
+						return false;
+
+				case "Bridge": // The tile is a stair, ramp, or ladder.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Bridge) != 0)
+						return true;
+					else
+						return false;
+
+				case "Window": // The tile is a window.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Window) != 0)
+						return true;
+					else
+						return false;
+
+				case "NoShoot": // The tile blocks line of sight.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.NoShoot) != 0)
+						return true;
+					else
+						return false;
+
+				case "Foliage": // The tile becomes translucent when walked behind. Boat masts also have this flag.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Foliage) != 0)
+						return true;
+					else
+						return false;
+
+				case "HoverOver": // Gargoyles can fly over
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.HoverOver) != 0)
+						return true;
+					else
+						return false;
+
+				case "Roof": // The tile is a slanted roof.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Roof) != 0)
+						return true;
+					else
+						return false;
+
+				case "Door": // The tile is a door. Tiles with this flag can be moved through by ghosts and GMs.
+					if ((TileData.ItemTable[itemid].Flags & TileFlag.Door) != 0)
+						return true;
+					else
+						return false;
+
+				default:
+					Scripts.SendMessageScriptError("GetTileFlag: Invalid Flag to check");
+					return false;
+			}
+
+	
 		}
 
 		// Blocco info su statici
