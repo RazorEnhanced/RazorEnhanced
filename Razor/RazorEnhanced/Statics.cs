@@ -156,8 +156,6 @@ namespace RazorEnhanced
 					Scripts.SendMessageScriptError("GetTileFlag: Invalid Flag to check");
 					return false;
 			}
-
-	
 		}
 
 		// Blocco info su statici

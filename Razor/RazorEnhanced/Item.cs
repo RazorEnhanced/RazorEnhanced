@@ -344,17 +344,23 @@ namespace RazorEnhanced
 
 					if (filter.RangeMin != -1)
 					{
+						if (World.Player == null)
+							return result;
+
 						assistantItems = assistantItems.Where((i) =>
 							Utility.DistanceSqrt
-							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) >= filter.RangeMin
+							(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) >= filter.RangeMin
 						).ToList();
 					}
 
 					if (filter.RangeMax != -1)
 					{
+						if (World.Player == null)
+							return result;
+
 						assistantItems = assistantItems.Where((i) =>
 							Utility.DistanceSqrt
-							(new Assistant.Point2D(Assistant.World.Player.Position.X, Assistant.World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) <= filter.RangeMax
+							(new Assistant.Point2D(World.Player.Position.X, World.Player.Position.Y), new Assistant.Point2D(i.Position.X, i.Position.Y)) <= filter.RangeMax
 						).ToList();
 					}
 

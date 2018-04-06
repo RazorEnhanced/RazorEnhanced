@@ -2187,7 +2187,11 @@ namespace RazorEnhanced
 
 				if (ListExists(list))
 				{
-					items.AddRange(from DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows where (string) row["List"] == list select (RazorEnhanced.Scavenger.ScavengerItem) row["Item"]);
+					foreach (DataRow row in m_Dataset.Tables["SCAVENGER_ITEMS"].Rows)
+					{
+						if (row.RowState != DataRowState.Deleted && row.RowState != DataRowState.Detached && (string)row["List"] == list)
+							items.Add((RazorEnhanced.Scavenger.ScavengerItem)row["Item"]);
+					}
 				}
 
 				return items;

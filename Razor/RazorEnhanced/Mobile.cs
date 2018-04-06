@@ -431,14 +431,12 @@ namespace RazorEnhanced
 
 			if (mobiles.Count > 0)
 			{
+				// Esclude Last e self dalla ricerca
+				mobiles = mobiles.Where((m) => m.Serial != Targeting.GetLastTarger || m.Serial != World.Player.Serial).ToList();
+
 				switch (selector)
 				{
 					case "Random":
-						// Esclude Last dalla ricerca
-
-						if (mobiles.Count > 1)
-							mobiles = mobiles.Where((m) => m.Serial != Target.GetLast()).ToList();
-
 						try
 						{
 							result = mobiles[Utility.Random(mobiles.Count)] as Mobile;
@@ -453,9 +451,6 @@ namespace RazorEnhanced
 
 						foreach (Mobile m in mobiles)
 						{
-							if (m.Serial == World.Player.Serial)
-								continue;
-
 							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
 
 							if (!(dist < closestDist) && closest != null)
@@ -473,9 +468,6 @@ namespace RazorEnhanced
 
 						foreach (Mobile m in mobiles)
 						{
-							if (m.Serial == World.Player.Serial)
-								continue;
-
 							double dist = Utility.DistanceSqrt(new Assistant.Point2D(m.Position.X, m.Position.Y), World.Player.Position);
 
 							if (!(dist > farthestDist) && farthest != null)
@@ -528,26 +520,20 @@ namespace RazorEnhanced
 							result = strongest;
 						}
 						break;
-					case "Next":
-						if (mobiles.Count() > 0)
-						{
-							if (m_lastidx > mobiles.Count() -1) // Fuori range
-							{
-								m_lastidx = 0;
-								result = mobiles[m_lastidx];
-							}
-							else
-								result = mobiles[m_lastidx];
 
-							m_lastidx++;
+					case "Next":
+						if (m_lastidx > mobiles.Count() -1) // Fuori range
+						{
+							m_lastidx = 0;
+							result = mobiles[m_lastidx];
 						}
 						else
-							m_lastidx = 0;
+							result = mobiles[m_lastidx];
 
+						m_lastidx++;
 						break;
 				}
 			}
-
 			return result;
 		}
 
