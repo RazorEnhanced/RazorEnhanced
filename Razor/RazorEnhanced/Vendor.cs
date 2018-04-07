@@ -316,7 +316,7 @@ namespace RazorEnhanced
 			ClientCommunication.SendToServer(new VendorSellResponse(vendor, list));
 			AddLog("Sold " + sold.ToString() + " items for " + total.ToString() + " gold coins");
 			string message = "Enhanced Sell Agent: sold " + sold.ToString() + " items for " + total.ToString() + " gold coins";
-			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor"));          // Journal buffer
+			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
 			World.Player.SendMessage(message);
 			args.Block = true;
 		}
@@ -620,7 +620,7 @@ namespace RazorEnhanced
 			ClientCommunication.SendToServer(new VendorBuyResponse(serial, buyList));
 
 			string message = "Enhanced Buy Agent: bought " + total.ToString() + " items for " + cost.ToString() + " gold coins";
-			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor"));          // Journal buffer
+			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(message, "System", 1, "Vendor", vendor.Serial));          // Journal buffer
 			World.Player.SendMessage(message);
 			AddLog("Bought " + total.ToString() + " items for " + cost.ToString() + " gold coins");
 		}

@@ -1998,7 +1998,7 @@ namespace Assistant
 			if (World.Player == null)
 				return;
 
-			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name));          // Journal buffer
+			World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, type.ToString(), hue, name, ser));          // Journal buffer
 			if (World.Player.Journal.Count > 100)
 			{
 				RazorEnhanced.Journal.JournalEntry ra;
@@ -2339,7 +2339,7 @@ namespace Assistant
 							{
 								ushort nameLengh = p.ReadUInt16();
 								string ownername = p.ReadString(nameLengh);
-								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name));          // Journal buffer
+								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(ownername, "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
 								if (World.Player.Journal.Count > 100)
 								{
 									RazorEnhanced.Journal.JournalEntry ra;
@@ -2358,14 +2358,14 @@ namespace Assistant
 									try
 									{
 										ushort charge = p.ReadUInt16();
-										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name));          // Journal buffer
+										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(charge.ToString(), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
 										if (World.Player.Journal.Count > 100)
 										{
 											RazorEnhanced.Journal.JournalEntry ra;
 											World.Player.Journal.TryDequeue(out ra);
 										}
 
-										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name));          // Journal buffer
+										World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(Language.GetCliloc((int)attrib), "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
 										if (World.Player.Journal.Count > 100)
 										{
 											RazorEnhanced.Journal.JournalEntry ra;
@@ -2378,7 +2378,7 @@ namespace Assistant
 							}
 							else
 							{
-								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name));          // Journal buffer
+								World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry("Unidentified", "System", 1, World.FindItem(serial).Name, (int)serial));          // Journal buffer
 								if (World.Player.Journal.Count > 100)
 								{
 									RazorEnhanced.Journal.JournalEntry ra;
@@ -2594,7 +2594,7 @@ namespace Assistant
 					{
 						Serial from = p.ReadUInt32();
 						string text = p.ReadUnicodeStringSafe();
-						World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null"));          // Journal buffer
+						World.Player.Journal.Enqueue(new RazorEnhanced.Journal.JournalEntry(text, "Party", 0, "null", from));          // Journal buffer
 						if (World.Player.Journal.Count > 100)
 						{
 							RazorEnhanced.Journal.JournalEntry ra;

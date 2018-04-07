@@ -22,12 +22,16 @@ namespace RazorEnhanced
 			private string m_Name;
 			public string Name { get { return m_Name; } }
 
-			public JournalEntry(string text, string type, int color, string name)
+			private int m_Serial;
+			public int Serial { get { return m_Serial; } }
+
+			public JournalEntry(string text, string type, int color, string name, int serial)
 			{
 				m_Text = text;
 				m_Type = type;
 				m_Color = color;
 				m_Name = name;
+				m_Serial = serial;
 			}
 		}
 
@@ -94,6 +98,26 @@ namespace RazorEnhanced
 				{
 					if (entrys.Text.Contains(text))
 						result = entrys.Text;
+				}
+				return result;
+			}
+			catch
+			{
+				return result;
+			}
+		}
+
+		public static List<string> GetTestBySerial(int serial)
+		{
+			List<string> result = new List<string>();
+			try
+			{
+				foreach (JournalEntry entrys in World.Player.Journal)
+				{
+					if (entrys.Serial == serial)
+					{
+						result.Add(entrys.Text);
+					}
 				}
 				return result;
 			}

@@ -10606,6 +10606,7 @@ namespace Assistant
 			{
 				cell.Value = Utility.FormatDatagridItemIDCell(cell);
 			}
+
 			RazorEnhanced.Scavenger.CopyTable();
 		}
 		private void scavengerdataGridView_DefaultValuesNeeded(object sender, DataGridViewRowEventArgs e)
