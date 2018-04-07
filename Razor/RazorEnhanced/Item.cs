@@ -855,7 +855,7 @@ namespace RazorEnhanced
 		public static void SingleClick(int itemserial)
 		{
 			Assistant.Item item = Assistant.World.FindItem(itemserial);
-			if (item != null)
+			if (item == null)
 			{
 				Scripts.SendMessageScriptError("Script Error: SingleClick: Invalid Serial");
 				return;
