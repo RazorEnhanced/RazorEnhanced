@@ -107,7 +107,7 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static List<string> GetTestBySerial(int serial)
+		public static List<string> GetTextBySerial(int serial)
 		{
 			List<string> result = new List<string>();
 			try
@@ -115,6 +115,66 @@ namespace RazorEnhanced
 				foreach (JournalEntry entrys in World.Player.Journal)
 				{
 					if (entrys.Serial == serial)
+					{
+						result.Add(entrys.Text);
+					}
+				}
+				return result;
+			}
+			catch
+			{
+				return result;
+			}
+		}
+
+		public static List<string> GetTextByColor(int color)
+		{
+			List<string> result = new List<string>();
+			try
+			{
+				foreach (JournalEntry entrys in World.Player.Journal)
+				{
+					if (entrys.Color == color)
+					{
+						result.Add(entrys.Text);
+					}
+				}
+				return result;
+			}
+			catch
+			{
+				return result;
+			}
+		}
+
+		public static List<string> GetTextByName(string name)
+		{
+			List<string> result = new List<string>();
+			try
+			{
+				foreach (JournalEntry entrys in World.Player.Journal)
+				{
+					if (entrys.Name == name)
+					{
+						result.Add(entrys.Text);
+					}
+				}
+				return result;
+			}
+			catch
+			{
+				return result;
+			}
+		}
+
+		public static List<string> GetTextByType(string type)
+		{
+			List<string> result = new List<string>();
+			try
+			{
+				foreach (JournalEntry entrys in World.Player.Journal)
+				{
+					if (entrys.Type == type)
 					{
 						result.Add(entrys.Text);
 					}
