@@ -140,7 +140,7 @@ namespace RazorEnhanced.UI
 			string[] methodsMobiles =
 			{
 				"Mobile.GetItemOnLayer", "Mobile.GetAssistantLayer", "Mobiles.FindBySerial", "Mobiles.UseMobile", "Mobiles.SingleClick",
-				"Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
+				"Mobiles.Filter", "Mobiles.ApplyFilter", "Mobiles.Select", "Mobiles.Message", "Mobiles.WaitForProps", "Mobiles.GetPropValue",
 				"Mobiles.GetPropStringByIndex", "Mobiles.GetPropStringList", "Mobiles.Flying", "Mobiles.ContextExist"
 			};
 
@@ -148,7 +148,7 @@ namespace RazorEnhanced.UI
 			{
 				"Items.FindBySerial", "Items.Move", "Items.MoveOnGround", "Items.DropItemOnGroundSelf", "Items.UseItem", "Items.SingleClick",
 				"Items.WaitForProps", "Items.GetPropValue", "Items.GetPropStringByIndex", "Items.GetPropStringList",
-				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID", "Items.Hide",
+				"Items.WaitForContents", "Items.Message", "Items.Filter", "Items.ApplyFilter", "Items.Select", "Items.BackpackCount", "Items.ContainerCount", "Items.UseItemByID", "Items.Hide",
 				"Items.ContextExist", "Items.UseItemOnTarget"
 			};
 
@@ -180,7 +180,8 @@ namespace RazorEnhanced.UI
 			string[] methodsJournal =
 			{
 				"Journal.Clear", "Journal.Search", "Journal.SearchByName", "Journal.SearchByColor",
-				"Journal.SearchByType", "Journal.GetLineText", "Journal.GetSpeechName", "Journal.WaitJournal"
+				"Journal.SearchByType", "Journal.GetLineText", "Journal.GetSpeechName", "Journal.WaitJournal",
+				"Journal.GetTextBySerial", "Journal.GetTextByColor", "Journal.GetTextByName", "Journal.GetTextByType"
 			};
 
 			string[] methodsAutoLoot =
@@ -235,7 +236,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsStatics =
 			{
-				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo"
+				"Statics.GetLandID", "Statics.GetLandZ", "Statics.GetStaticsTileInfo", "Statics.GetTileFlag"
 			};
 
 			string[] methodsGeneric =
@@ -497,6 +498,9 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Mobiles.ApplyFilter(Filter)", new string[] { "Filter MobileFilter" }, "List<Mobile>", "Search mobiles by filter");
 			descriptionMobiles.Add("Mobiles.ApplyFilter", tooltip);
 
+			tooltip = new ToolTipDescriptions("Mobiles.Select(<List>Mobile, string)", new string[] { "<List>Mobile, string selectortype" }, "Mobile", "Select a specific mobile from a list by using a selector type\n\tSee wiki for selecto type");
+			descriptionMobiles.Add("Mobiles.Select", tooltip);
+
 			tooltip = new ToolTipDescriptions("Mobiles.Message(Mobile or int, int, string)", new string[] { "Mobile MobileIstance or int MobileSerial", "int ColorMessage", "string Message" }, "void", "Display a message with a certain color over a specified mobile");
 			descriptionMobiles.Add("Mobiles.Message", tooltip);
 
@@ -562,6 +566,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Items.ApplyFilter(Filter)", new string[] { "Filter ItemFilter" }, "List<Item>", "Search items by filter");
 			descriptionItems.Add("Items.ApplyFilter", tooltip);
+
+			tooltip = new ToolTipDescriptions("Items.Select(<List>Item, string)", new string[] { "<List>Item, string selectortype" }, "Item", "Select a specific item from a list by using a selector type\n\tSee wiki for selecto type");
+			descriptionMobiles.Add("Items.Select", tooltip);
 
 			tooltip = new ToolTipDescriptions("Items.BackpackCount(int, int)", new string[] { "int ItemID", "int Color" }, "int", "Returns amount of specific item (by ItemID) and color in backpack and subcontainer\n\tColor -1 is wildcard for all color");
 			descriptionItems.Add("Items.BackpackCount", tooltip);
@@ -797,6 +804,18 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Journal.GetSpeechName()", new string[] { "none" }, "List<string>", "Get a list of all players name and object speech");
 			descriptionJournal.Add("Journal.GetSpeechName", tooltip);
 
+			tooltip = new ToolTipDescriptions("Journal.GetTextBySerial(int)", new string[] { "int serial" }, "List<string>", "Get a list of all line speeched by specific serial");
+			descriptionJournal.Add("Journal.GetTextBySerial", tooltip);
+
+			tooltip = new ToolTipDescriptions("Journal.GetTextByColor(int)", new string[] { "int color" }, "List<string>", "Get a list of all line speeched by specific color");
+			descriptionJournal.Add("Journal.GetTextByColor", tooltip);
+
+			tooltip = new ToolTipDescriptions("Journal.GetTextByName(string)", new string[] { "string name" }, "List<string>", "Get a list of all line speeched by specific name");
+			descriptionJournal.Add("Journal.GetTextBySerial", tooltip);
+
+			tooltip = new ToolTipDescriptions("Journal.GetTextByType(string)", new string[] { "string type" }, "List<string>", "Get a list of all line speeched by specific type\n\tCheck on wiki for type list");
+			descriptionJournal.Add("Journal.GetTextBySerial", tooltip);
+
 			tooltip = new ToolTipDescriptions("Journal.WaitJournal(string, int)", new string[] { "string TextToSearch", "int TimeoutJournal" }, "void", "Pause script and wait until text is present in journal, and text is case sensitive\n\tTimeout in Milliseconds");
 			descriptionJournal.Add("Journal.WaitJournal", tooltip);
 
@@ -1003,6 +1022,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Statics.GetStaticsTileInfo(int, int, int)", new string[] { "int X", "int Y", "int MapValue" }, "List<TileInfo>", "Get tiles info in a certain map at X, Y coordinates");
 			descriptionStatics.Add("Statics.GetStaticsTileInfo", tooltip);
+
+			tooltip = new ToolTipDescriptions("Statics.GetTileFlag(int, string)", new string[] { "int itemID", "string flagname" }, "bool", "Get true or false if flag is present for specific itemID\n\tSee wiki for flag name list.");
+			descriptionStatics.Add("Statics.GetTileFlag", tooltip);
 
 			#endregion
 
