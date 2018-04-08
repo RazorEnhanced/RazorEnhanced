@@ -811,10 +811,10 @@ namespace RazorEnhanced.UI
 			descriptionJournal.Add("Journal.GetTextByColor", tooltip);
 
 			tooltip = new ToolTipDescriptions("Journal.GetTextByName(string)", new string[] { "string name" }, "List<string>", "Get a list of all line speeched by specific name");
-			descriptionJournal.Add("Journal.GetTextBySerial", tooltip);
+			descriptionJournal.Add("Journal.GetTextByName", tooltip);
 
 			tooltip = new ToolTipDescriptions("Journal.GetTextByType(string)", new string[] { "string type" }, "List<string>", "Get a list of all line speeched by specific type\n\tCheck on wiki for type list");
-			descriptionJournal.Add("Journal.GetTextBySerial", tooltip);
+			descriptionJournal.Add("Journal.GetTextByType", tooltip);
 
 			tooltip = new ToolTipDescriptions("Journal.WaitJournal(string, int)", new string[] { "string TextToSearch", "int TimeoutJournal" }, "void", "Pause script and wait until text is present in journal, and text is case sensitive\n\tTimeout in Milliseconds");
 			descriptionJournal.Add("Journal.WaitJournal", tooltip);
