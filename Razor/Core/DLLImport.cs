@@ -87,8 +87,8 @@ namespace Assistant
 			[DllImport("user32.dll")]
 			internal static extern bool ShowWindow(IntPtr handle, int flags);
 
-			[DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
-			internal static extern IntPtr memcpy(IntPtr dest, IntPtr src, UIntPtr count);
+			[DllImport("msvcrt.dll", CallingConvention = CallingConvention.Cdecl)]
+			internal static unsafe extern void memcpy(void* to, void* from, int len);
 
 			[DllImport("user32.dll")]
 			internal static extern uint PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);

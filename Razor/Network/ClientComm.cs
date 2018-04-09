@@ -1227,9 +1227,12 @@ namespace Assistant
 			//if ( buffer->Length + buffer->Start + len >= SHARED_BUFF_SIZE )
 			//	throw new NullReferenceException( String.Format( "Buffer OVERFLOW in CopyToBuffer [{0} + {1}] <- {2}", buffer->Start, buffer->Length, len ) );
 
-			IntPtr to = (IntPtr)(&buffer->Buff0 + buffer->Start + buffer->Length);
-			IntPtr from = (IntPtr)data;
-			DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
+			/*		IntPtr to = (IntPtr)(&buffer->Buff0 + buffer->Start + buffer->Length);
+					IntPtr from = (IntPtr)data;
+					DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
+					buffer->Length += len;*/
+
+			DLLImport.Win.memcpy((&buffer->Buff0) + buffer->Start + buffer->Length, data, len);
 			buffer->Length += len;
 		}
 
@@ -1281,12 +1284,19 @@ namespace Assistant
 				{
 					byte[] temp = new byte[len];
 					fixed (byte* ptr = temp)
+						DLLImport.Win.memcpy(ptr, buff, len);
+					p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
+
+					/*byte[] temp = new byte[len];
+					fixed (byte* ptr = temp)
 					{
 						IntPtr to = (IntPtr)ptr;
 						IntPtr from = (IntPtr)buff;
 						DLLImport.Win.memcpy(to, from, new UIntPtr((uint)len));
 					}
 					p = new Packet(temp, len, DLLImport.Razor.IsDynLength(buff[0]));
+					*/
+
 				}
 
 				bool blocked = false;
@@ -1362,26 +1372,23 @@ namespace Assistant
 		internal static void SetTitleStr(string str)
 		{
 			if (m_LastStr == str)
-			{
 				return;
-			}
+
 			m_LastStr = str;
-			byte[] bytes = Encoding.ASCII.GetBytes(str);
-			int num = bytes.Length;
-			if (num >= 512)
-			{
-				num = 511;
-			}
+			byte[] copy = System.Text.Encoding.ASCII.GetBytes(str);
+			int clen = copy.Length;
+			if (clen >= 512)
+				clen = 511;
+
 			CommMutex.WaitOne();
-			if (num > 0)
+			if (clen > 0)
 			{
-				fixed (byte* ptr = bytes)
-				{
-					DLLImport.Win.memcpy((IntPtr)m_TitleStr, (IntPtr)ptr, (UIntPtr)num);
-				}
+				fixed (byte* array = copy)
+					DLLImport.Win.memcpy(m_TitleStr, array, clen);
 			}
-			*(m_TitleStr + num) = 0;
+			*(m_TitleStr + clen) = 0;
 			CommMutex.ReleaseMutex();
+
 			DLLImport.Win.PostMessage(DLLImport.Razor.FindUOWindow(), WM_CUSTOMTITLE, IntPtr.Zero, IntPtr.Zero);
 		}
 	}
