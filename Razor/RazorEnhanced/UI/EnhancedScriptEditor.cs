@@ -612,7 +612,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Misc.WaitForContext(int or Mobile or Item, int)", new string[] { "int Serial or Mobile MobileInstance or Item ItemInstance", "int Timeout" }, "void", "Wait a server response for a context menu request");
 			descriptionMisc.Add("Misc.WaitForContext", tooltip);
 
-			tooltip = new ToolTipDescriptions("Misc.ContextReply(int or Mobile or Item, int)", new string[] { "int Serial or Mobile MobileInstance or Item ItemInstance", "int MenuID" }, "void", "Response to a context menu on mobile or item. MenuID is base zero");
+			tooltip = new ToolTipDescriptions("Misc.ContextReply(int or Mobile or Item, int or string)", new string[] { "int Serial or Mobile MobileInstance or Item ItemInstance", "int MenuID or MenuText" }, "void", "Response to a context menu on mobile or item. \n\tMenuID is base zero if use number, if use string is menu text");
 			descriptionMisc.Add("Misc.ContextReply", tooltip);
 
 			tooltip = new ToolTipDescriptions("Misc.ReadSharedValue(string)", new string[] { "string NameOfValue" }, "object", "Read a shared value, if value not exist return null");

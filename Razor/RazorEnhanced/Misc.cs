@@ -1,6 +1,6 @@
 ﻿using Assistant;
 using System;
-using System.Drawing;
+using System.Collections.Generic;
 using System.Media;
 using System.Threading;
 
@@ -146,6 +146,47 @@ namespace RazorEnhanced
 		public static void ContextReply(Item item, int idx)
 		{
 			ContextReply(item.Serial, idx);
+		}
+
+		public static void ContextReply(Mobile mob, string menuname)
+		{
+			ContextReply(mob.Serial, menuname);
+		}
+
+		public static void ContextReply(Item item, string menuname)
+		{
+			ContextReply(item.Serial, menuname);
+		}
+
+		public static void ContextReply(int serial, string menuname)
+		{
+			int idx = -1;
+			UOEntity e = World.FindItem(serial);
+			if (e == null)
+				e = World.FindMobile(serial);
+
+			if (e != null)
+			{
+				foreach (KeyValuePair<ushort, int> menu in e.ContextMenu)
+				{
+					if (Language.GetCliloc(menu.Value).ToLower() == menuname.ToLower())
+					{
+						idx = menu.Key;
+						break;
+					}
+				}
+				if (idx >= 0)
+				{
+					ClientCommunication.SendToServerWait(new ContextMenuResponse(serial, (ushort)idx));
+					World.Player.HasContext = false;
+					World.Player.ContextID = 0;
+				}
+				else
+					Scripts.SendMessageScriptError("Script Error: ContextReply: Menu entry " + menuname + " not exist");
+			}
+			else
+				Scripts.SendMessageScriptError("Script Error: ContextReply: Mobile or item not exit");
+
 		}
 
 		// Prompt Message Stuff
