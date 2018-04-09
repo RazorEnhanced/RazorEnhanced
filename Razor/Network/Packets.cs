@@ -1733,13 +1733,26 @@ namespace Assistant
 
 	internal sealed class SendPartyMessage : Packet
 	{
-		internal SendPartyMessage(uint serial, string Message)
+		internal SendPartyMessage(string message)
 			: base(0xBF)
 		{
-			EnsureCapacity(2 + 2 + 2 + Message.Length + 1);
+			EnsureCapacity(2 + 2 + 2 + message.Length + 1);
+			Write((ushort)0x06);	// Command
+			Write((byte)0x04);      // Party command message to all
+			WriteBigUniNull(message);
+		}
+	}
+
+	internal sealed class SendPartyMessagePrivate : Packet
+	{
+		internal SendPartyMessagePrivate(int serial, string message)
+			: base(0xBF)
+		{
+			EnsureCapacity(2 + 2 + 2 + message.Length + 1);
 			Write((ushort)0x06);   // Command
-			Write((byte)0x04);       // Party command
-			WriteBigUniNull(Message);
+			Write((byte)0x03);       // Party command message pricate
+			Write((uint)serial);    // serial to send private message
+			WriteBigUniNull(message);
 		}
 	}
 

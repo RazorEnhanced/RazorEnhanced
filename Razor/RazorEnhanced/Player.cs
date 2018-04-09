@@ -1646,9 +1646,12 @@ namespace RazorEnhanced
 			}
 		}
 
-		public static void ChatParty(string msg)
+		public static void ChatParty(string msg, int serial = 0)
 		{
-			ClientCommunication.SendToServerWait(new SendPartyMessage(World.Player.Serial, msg));
+			if (serial != 0)
+				ClientCommunication.SendToServerWait(new SendPartyMessagePrivate(serial, msg));
+			else
+				ClientCommunication.SendToServerWait(new SendPartyMessage(msg));
 		}
 
 		public static void PartyInvite()

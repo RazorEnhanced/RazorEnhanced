@@ -384,7 +384,7 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Player.InParty()", new string[] { "none" }, "bool", "Check if a character is in party\n\tTrue: is in party, False: is not in party");
 			descriptionPlayer.Add("Player.InParty", tooltip);
 
-			tooltip = new ToolTipDescriptions("Player.ChatParty(string)", new string[] { "string Message" }, "void", "Send a message to party chat");
+			tooltip = new ToolTipDescriptions("Player.ChatParty(string, optional int)", new string[] { "string Message, optional int serial" }, "void", "Send a message to party chat, if specific a serial send private message");
 			descriptionPlayer.Add("Player.ChatParty", tooltip);
 
 			tooltip = new ToolTipDescriptions("Player.PartyCanLoot(bool)", new string[] { "bool Flag" }, "void", "Set player party CanLoot flag\n\tTrue: Members can loot me, False: Member can't loot me");
