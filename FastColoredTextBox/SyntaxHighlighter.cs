@@ -1347,7 +1347,7 @@ namespace FastColoredTextBoxNS
 			string TargetFunctions = "HasTarget|GetLast|GetLastAttack|WaitForTarget|TargetExecute|Cancel|Last|LastQueued|Self|SelfQueued|SetLast|ClearLast|ClearQueue|ClearLastandQueue|SetLastTargetFromList|PerformTargetFromList|AttackTargetFromList|PromptTarget|TargetExecuteRelative|GetTargetFromList";
 			string GumpsFunctions = "CurrentGump|HasGump|CloseGump|ResetGump|WaitForGump|SendAction|SendAdvancedAction|LastGump|LastGumpGetLineList|LastGumpTextExist|LastGumpTextExistByLine|LastGumpRawData";
 			string JournalFunctions = "Clear|Search|SearchByName|SearchByColor|SearchByType|GetLineText|GetSpeechName|WaitJournal|GetTextBySerial|GetTextByColor|GetTextByName|GetTextByType";
-			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend|Pause|GetDamage";
+			string AgentsFunctions = "Status|Start|Stop|FStart|FStop|ChangeList|RunOnce|Enable|Disable|IsFriend|Pause|GetDamage|GetList";
 			string DressUndressAgentFunctions = "DessStatus|UnDressStatus|DressFStart|UnDressFStart|DressFStop|UnDressFStop";
 			string StaticsFunctions = "GetLandID|GetLandZ|GetStaticsTileInfo|GetTileFlag";
 			RazorFunctionsKeywordRegex = new Regex(String.Format(@"\b({0}|{1}|{2}|{3}|{4}|{5}|{6}|{7}|{8}|{9}|{10}|{11})\b", GenericFunctions, PlayerFunctions, SpellsFunctions, MobileFunctions, ItemsFunctions, MiscFunctions, TargetFunctions, JournalFunctions, GumpsFunctions, AgentsFunctions, DressUndressAgentFunctions, StaticsFunctions), RegexCompiledOption);

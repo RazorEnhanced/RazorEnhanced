@@ -464,6 +464,23 @@ namespace RazorEnhanced
 			}
 		}
 
+		public static List<int> GetList(string nomelista)
+		{
+			List<int> friendserials = new List<int>();
+			if (!Engine.MainWindow.FriendListSelect.Items.Contains(nomelista))
+			{
+				Scripts.SendMessageScriptError("Script Error: Friend.GetList: Friend List: " + nomelista + " not exist");
+			}
+			else
+			{
+				RazorEnhanced.Settings.Friend.PlayersRead(nomelista, out List<FriendPlayer> players);
+				foreach (FriendPlayer player in players)
+					friendserials.Add(player.Serial);
+			}
+			return friendserials;
+		}
+
+
 		// Fiend target callback
 		internal static void AddFriendTarget()
 		{

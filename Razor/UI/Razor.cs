@@ -13021,7 +13021,8 @@ namespace Assistant
 				hotkeytextbox.Text = HotKey.KeyString(k);
 				hotkeypassCheckBox.Checked = passkey;
 				hotkeytextbox.LastKey = Keys.None;
-	}
+				HotKey.NormalKey = k;
+			}
 		}
 
 		private void hotkeyMasterSetButton_Click(object sender, EventArgs e)

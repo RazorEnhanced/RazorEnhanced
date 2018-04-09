@@ -221,7 +221,7 @@ namespace RazorEnhanced.UI
 
 			string[] methodsFriend =
 			{
-				"Friend.IsFriend", "Friend.ChangeList"
+				"Friend.IsFriend", "Friend.ChangeList", "Friend.GetList"
 			};
 
 			string[] methodsBandageHeal =
@@ -971,6 +971,9 @@ namespace RazorEnhanced.UI
 
 			tooltip = new ToolTipDescriptions("Friend.ChangeList(string)", new string[] { "string ListName" }, "void", "Change friend list, List must be exist in friend list GUI configuration");
 			descriptionFriend.Add("Friend.ChangeList", tooltip);
+
+			tooltip = new ToolTipDescriptions("Friend.GetList(string)", new string[] { "string ListName" }, "<list> int", "Retrive list of serial in list, List must be exist in friend list GUI configuration");
+			descriptionFriend.Add("Friend.GetList", tooltip);
 
 			#endregion
 
