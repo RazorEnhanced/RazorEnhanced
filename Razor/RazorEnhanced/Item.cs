@@ -533,7 +533,7 @@ namespace RazorEnhanced
 					Item strongest = items[0] as Item;
 					if (strongest != null)
 					{
-						int maxDur = strongest.Amount;
+						int maxDur = strongest.Durability;
 						foreach (Item t in items)
 						{
 							if (t == null)

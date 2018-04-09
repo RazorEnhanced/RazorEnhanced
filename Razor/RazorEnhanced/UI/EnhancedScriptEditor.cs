@@ -157,7 +157,7 @@ namespace RazorEnhanced.UI
 				"Misc.SendMessage", "Misc.Resync", "Misc.Pause", "Misc.Beep", "Misc.Disconnect", "Misc.WaitForContext",
 				"Misc.ContextReply", "Misc.ReadSharedValue", "Misc.RemoveSharedValue", "Misc.CheckSharedValue",
 				"Misc.SetSharedValue",
-				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContains", "Misc.GetMenuTitle", "Misc.WaitForMenu",
+				"Misc.HasMenu", "Misc.CloseMenu", "Misc.MenuContain", "Misc.GetMenuTitle", "Misc.WaitForMenu",
 				"Misc.MenuResponse", "Misc.HasQueryString",
 				"Misc.WaitForQueryString", "Misc.QueryStringResponse", "Misc.NoOperation", "Misc.ScriptRun", "Misc.ScriptStop",
 				"Misc.ScriptStatus", "Misc.PetRename"
@@ -633,8 +633,8 @@ namespace RazorEnhanced.UI
 			tooltip = new ToolTipDescriptions("Misc.CloseMenu()", new string[] { "none" }, "void", "Close opened menu");
 			descriptionMisc.Add("Misc.CloseMenu", tooltip);
 
-			tooltip = new ToolTipDescriptions("Misc.MenuContains(string)", new string[] { "string TextToSearch" }, "bool", "Search in opened menu if contains a specific text");
-			descriptionMisc.Add("Misc.MenuContains", tooltip);
+			tooltip = new ToolTipDescriptions("Misc.MenuContain(string)", new string[] { "string TextToSearch" }, "bool", "Search in opened menu if contains a specific text");
+			descriptionMisc.Add("Misc.MenuContain", tooltip);
 
 			tooltip = new ToolTipDescriptions("Misc.GetMenuTitle()", new string[] { "none" }, "string", "Return title for opened menu");
 			descriptionMisc.Add("Misc.GetMenuTitle", tooltip);
