@@ -820,11 +820,11 @@ namespace Assistant
 		private RazorButton paypalButton;
 
 		// Hotkey
-		internal RazorHotKeyTextBox HotKeyTextBox { get { return hotkeytextbox; } }
+		internal TextBox HotKeyTextBox { get { return hotkeytextbox; } }
 		internal TreeView HotKeyTreeView { get { return hotkeytreeView; } }
 		internal Label HotKeyKeyMasterLabel { get { return hotkeyKeyMasterLabel; } }
 		internal Label HotKeyStatusLabel { get { return hotkeyStatusLabel; } }
-		internal RazorHotKeyTextBox HotKeyKeyMasterTextBox { get { return hotkeyKeyMasterTextBox; } }
+		internal TextBox HotKeyKeyMasterTextBox { get { return hotkeyKeyMasterTextBox; } }
 
 		// Profiles
 		internal RazorComboBox ProfilesComboBox { get { return profilesComboBox; } }
@@ -13020,8 +13020,8 @@ namespace Assistant
 				RazorEnhanced.Settings.HotKey.FindKeyGui(hotkeytreeView.SelectedNode.Name, out k, out bool passkey);
 				hotkeytextbox.Text = HotKey.KeyString(k);
 				hotkeypassCheckBox.Checked = passkey;
-				hotkeytextbox.LastKey = k;
-			}
+				hotkeytextbox.LastKey = Keys.None;
+	}
 		}
 
 		private void hotkeyMasterSetButton_Click(object sender, EventArgs e)

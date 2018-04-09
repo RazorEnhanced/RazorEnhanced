@@ -24,8 +24,8 @@ namespace RazorEnhanced
 			}
 		}
 
-		private static Keys m_key { get { return Engine.MainWindow.HotKeyTextBox.LastKey; } }
-		internal static Keys m_Masterkey { get { return Engine.MainWindow.HotKeyKeyMasterTextBox.LastKey; } }
+		internal static Keys m_key;
+		internal static Keys m_Masterkey;
 
 		internal static void OnMouse(int button, int wheel)
 		{
@@ -86,12 +86,13 @@ namespace RazorEnhanced
 
 			if (Engine.MainWindow.HotKeyTextBox.Focused)                // In caso di assegnazione hotKey normale
 			{
+				m_key = k;
 				Engine.MainWindow.HotKeyTextBox.Text = KeyString(k);
 				return false;
 			}
 			else if (Engine.MainWindow.HotKeyKeyMasterTextBox.Focused)                // In caso di assegnazione hotKey primaria
 			{
-			//	m_Masterkey = k;
+				m_Masterkey = k;
 				Engine.MainWindow.HotKeyKeyMasterTextBox.Text = KeyString(k);
 				return false;
 			}
@@ -1822,7 +1823,6 @@ namespace RazorEnhanced
 					RazorEnhanced.Settings.HotKey.UnassignKey(m_Masterkey);
 					RazorEnhanced.Settings.General.WriteKey("HotKeyMasterKey", RazorEnhanced.HotKey.m_Masterkey);
 					Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + KeyString(RazorEnhanced.HotKey.m_Masterkey);
-					HotKey.Init();
 				}
 			}
 		}
