@@ -336,7 +336,7 @@ namespace RazorEnhanced
 
 		internal static void ForceStop()
 		{
-			if (m_OrganizerThread != null && m_OrganizerThread.ThreadState != ThreadState.Stopped)
+			if (Status())
 			{
 				RazorEnhanced.DragDropManager.HoldingItem = false;
 				m_OrganizerThread.Abort();
@@ -366,7 +366,7 @@ namespace RazorEnhanced
 
 		public static bool Status()
 		{
-			if (m_OrganizerThread != null && m_OrganizerThread.ThreadState != ThreadState.Stopped)
+			if (m_OrganizerThread != null && ((m_OrganizerThread.ThreadState & ThreadState.Running) != 0 || (m_OrganizerThread.ThreadState & ThreadState.WaitSleepJoin) != 0 || (m_OrganizerThread.ThreadState & ThreadState.AbortRequested) != 0))
 				return true;
 			else
 				return false;
