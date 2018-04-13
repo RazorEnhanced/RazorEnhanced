@@ -1024,6 +1024,15 @@ namespace RazorEnhanced
 				case "Spell Weaving":
 					return World.Player.Skills[(int)SkillName.SpellWeaving].Value;
 
+				case "Mysticism":
+					return World.Player.Skills[(int)SkillName.Mysticism].Value;
+
+				case "Imbuing":
+					return World.Player.Skills[(int)SkillName.Imbuing].Value;
+
+				case "Throwing ":
+					return World.Player.Skills[(int)SkillName.Throwing].Value;
+
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetSkillValue: Invalid skill name: " + skillname);
 					return 0;
@@ -1196,6 +1205,15 @@ namespace RazorEnhanced
 				case "Spell Weaving":
 					return World.Player.Skills[(int)SkillName.SpellWeaving].Cap;
 
+				case "Mysticism":
+					return World.Player.Skills[(int)SkillName.Mysticism].Cap;
+
+				case "Imbuing":
+					return World.Player.Skills[(int)SkillName.Imbuing].Cap;
+
+				case "Throwing ":
+					return World.Player.Skills[(int)SkillName.Throwing].Cap;
+
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetSkillCap: Invalid skill name: " + skillname);
 					return 0;
@@ -1367,6 +1385,15 @@ namespace RazorEnhanced
 
 				case "Spell Weaving":
 					return (int)World.Player.Skills[(int)SkillName.SpellWeaving].Lock;
+
+				case "Mysticism":
+					return (int)World.Player.Skills[(int)SkillName.Mysticism].Lock;
+
+				case "Imbuing":
+					return (int)World.Player.Skills[(int)SkillName.Imbuing].Lock;
+
+				case "Throwing ":
+					return (int)World.Player.Skills[(int)SkillName.Throwing].Lock;
 
 				default:
 					Scripts.SendMessageScriptError("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
