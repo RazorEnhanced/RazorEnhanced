@@ -658,114 +658,11 @@ namespace RazorEnhanced
 			return World.Player.Buffs.Any(icon => GetBuffDescription(icon) == buffname);
 		}
 
-		// Layer
-		internal static Assistant.Layer GetAssistantLayer(string layer)
-		{
-			Assistant.Layer result = Layer.Invalid;
-
-			switch (layer)
-			{
-				case "RightHand":
-					result = Assistant.Layer.RightHand;
-					break;
-
-				case "LeftHand":
-					result = Assistant.Layer.LeftHand;
-					break;
-
-				case "Shoes":
-					result = Assistant.Layer.Shoes;
-					break;
-
-				case "Pants":
-					result = Assistant.Layer.Pants;
-					break;
-
-				case "Shirt":
-					result = Assistant.Layer.Shirt;
-					break;
-
-				case "Head":
-					result = Assistant.Layer.Head;
-					break;
-
-				case "Gloves":
-					result = Assistant.Layer.Gloves;
-					break;
-
-				case "Ring":
-					result = Assistant.Layer.Ring;
-					break;
-
-				case "Neck":
-					result = Assistant.Layer.Neck;
-					break;
-
-				case "Hair":
-					result = Assistant.Layer.Hair;
-					break;
-
-				case "Waist":
-					result = Assistant.Layer.Waist;
-					break;
-
-				case "InnerTorso":
-					result = Assistant.Layer.InnerTorso;
-					break;
-
-				case "Bracelet":
-					result = Assistant.Layer.Bracelet;
-					break;
-
-				case "FacialHair":
-					result = Assistant.Layer.FacialHair;
-					break;
-
-				case "MiddleTorso":
-					result = Assistant.Layer.MiddleTorso;
-					break;
-
-				case "Earrings":
-					result = Assistant.Layer.Earrings;
-					break;
-
-				case "Arms":
-					result = Assistant.Layer.Arms;
-					break;
-
-				case "Cloak":
-					result = Assistant.Layer.Cloak;
-					break;
-
-				case "OuterTorso":
-					result = Assistant.Layer.OuterTorso;
-					break;
-
-				case "OuterLegs":
-					result = Assistant.Layer.OuterLegs;
-					break;
-
-				case "InnerLegs":
-					result = Assistant.Layer.InnerLegs;
-					break;
-
-				case "Talisman":
-					result = Assistant.Layer.Talisman;
-					break;
-
-				default:
-					result = Assistant.Layer.Invalid;
-					break;
-			}
-
-			return result;
-		}
-
 		public static void UnEquipItemByLayer(String layer, bool wait = true)
 		{
-			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
+			Enum.TryParse<Layer>(layer, out Layer l);
 
-			Assistant.Item item = World.Player.GetItemOnLayer(assistantLayer);
+			Assistant.Item item = World.Player.GetItemOnLayer(l);
 
 			if (item != null)
 			{
@@ -827,9 +724,9 @@ namespace RazorEnhanced
 		}
 		public static bool CheckLayer(String layer)
 		{
-			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
-
-			Assistant.Item item = World.Player.GetItemOnLayer(assistantLayer);
+			Enum.TryParse<Layer>(layer, out Layer l);
+			
+			Assistant.Item item = World.Player.GetItemOnLayer(l);
 
 			if (item != null)
 				return true;
@@ -839,12 +736,12 @@ namespace RazorEnhanced
 
 		public Item GetItemOnLayer(String layer)
 		{
-			Assistant.Layer assistantLayer = GetAssistantLayer(layer);
+			Enum.TryParse<Layer>(layer, out Layer l);
 
 			Assistant.Item assistantItem = null;
-			if (assistantLayer != Assistant.Layer.Invalid)
+			if (l != Assistant.Layer.Invalid)
 			{
-				assistantItem = World.Player.GetItemOnLayer(assistantLayer);
+				assistantItem = World.Player.GetItemOnLayer(l);
 				if (assistantItem == null)
 					return null;
 				else
@@ -860,663 +757,39 @@ namespace RazorEnhanced
 		// Skill
 		public static double GetSkillValue(string skillname)
 		{
-			switch (skillname)
-			{
-				case "Alchemy":
-					return World.Player.Skills[(int)SkillName.Alchemy].Value;
-
-				case "Animal Lore":
-					return World.Player.Skills[(int)SkillName.AnimalLore].Value;
-
-				case "Item ID":
-					return World.Player.Skills[(int)SkillName.ItemID].Value;
-
-				case "Arms Lore":
-					return World.Player.Skills[(int)SkillName.ArmsLore].Value;
-
-				case "Parry":
-					return World.Player.Skills[(int)SkillName.Parry].Value;
-
-				case "Begging":
-					return World.Player.Skills[(int)SkillName.Begging].Value;
-
-				case "Blacksmith":
-					return World.Player.Skills[(int)SkillName.Blacksmith].Value;
-
-				case "Fletching":
-					return World.Player.Skills[(int)SkillName.Fletching].Value;
-
-				case "Peacemaking":
-					return World.Player.Skills[(int)SkillName.Peacemaking].Value;
-
-				case "Camping":
-					return World.Player.Skills[(int)SkillName.Camping].Value;
-
-				case "Carpentry":
-					return World.Player.Skills[(int)SkillName.Carpentry].Value;
-
-				case "Cartography":
-					return World.Player.Skills[(int)SkillName.Cartography].Value;
-
-				case "Cooking":
-					return World.Player.Skills[(int)SkillName.Cooking].Value;
-
-				case "Detect Hidden":
-					return World.Player.Skills[(int)SkillName.DetectHidden].Value;
-
-				case "Discordance":
-					return World.Player.Skills[(int)SkillName.Discordance].Value;
-
-				case "Eval Int":
-					return World.Player.Skills[(int)SkillName.EvalInt].Value;
-
-				case "Healing":
-					return World.Player.Skills[(int)SkillName.Healing].Value;
-
-				case "Fishing":
-					return World.Player.Skills[(int)SkillName.Fishing].Value;
-
-				case "Forensics":
-					return World.Player.Skills[(int)SkillName.Forensics].Value;
-
-				case "Herding":
-					return World.Player.Skills[(int)SkillName.Herding].Value;
-
-				case "Hiding":
-					return World.Player.Skills[(int)SkillName.Hiding].Value;
-
-				case "Provocation":
-					return World.Player.Skills[(int)SkillName.Provocation].Value;
-
-				case "Inscribe":
-					return World.Player.Skills[(int)SkillName.Inscribe].Value;
-
-				case "Lockpicking":
-					return World.Player.Skills[(int)SkillName.Lockpicking].Value;
-
-				case "Magery":
-					return World.Player.Skills[(int)SkillName.Magery].Value;
-
-				case "Magic Resist":
-					return World.Player.Skills[(int)SkillName.MagicResist].Value;
-
-				case "Tactics":
-					return World.Player.Skills[(int)SkillName.Tactics].Value;
-
-				case "Snooping":
-					return World.Player.Skills[(int)SkillName.Snooping].Value;
-
-				case "Musicianship":
-					return World.Player.Skills[(int)SkillName.Musicianship].Value;
-
-				case "Poisoning":
-					return World.Player.Skills[(int)SkillName.Poisoning].Value;
-
-				case "Archery":
-					return World.Player.Skills[(int)SkillName.Archery].Value;
-
-				case "Spirit Speak":
-					return World.Player.Skills[(int)SkillName.SpiritSpeak].Value;
-
-				case "Stealing":
-					return World.Player.Skills[(int)SkillName.Stealing].Value;
-
-				case "Tailoring":
-					return World.Player.Skills[(int)SkillName.Tailoring].Value;
-
-				case "Animal Taming":
-					return World.Player.Skills[(int)SkillName.AnimalTaming].Value;
-
-				case "Taste ID":
-					return World.Player.Skills[(int)SkillName.TasteID].Value;
-
-				case "Tinkering":
-					return World.Player.Skills[(int)SkillName.Tinkering].Value;
-
-				case "Tracking":
-					return World.Player.Skills[(int)SkillName.Tracking].Value;
-
-				case "Veterinary":
-					return World.Player.Skills[(int)SkillName.Veterinary].Value;
-
-				case "Swords":
-					return World.Player.Skills[(int)SkillName.Swords].Value;
-
-				case "Macing":
-					return World.Player.Skills[(int)SkillName.Macing].Value;
-
-				case "Fencing":
-					return World.Player.Skills[(int)SkillName.Fencing].Value;
-
-				case "Wrestling":
-					return World.Player.Skills[(int)SkillName.Wrestling].Value;
-
-				case "Lumberjacking":
-					return World.Player.Skills[(int)SkillName.Lumberjacking].Value;
-
-				case "Mining":
-					return World.Player.Skills[(int)SkillName.Mining].Value;
-
-				case "Meditation":
-					return World.Player.Skills[(int)SkillName.Meditation].Value;
-
-				case "Stealth":
-					return World.Player.Skills[(int)SkillName.Stealth].Value;
-
-				case "Remove Trap":
-					return World.Player.Skills[(int)SkillName.RemoveTrap].Value;
-
-				case "Necromancy":
-					return World.Player.Skills[(int)SkillName.Necromancy].Value;
-
-				case "Focus":
-					return World.Player.Skills[(int)SkillName.Focus].Value;
-
-				case "Chivalry":
-					return World.Player.Skills[(int)SkillName.Chivalry].Value;
-
-				case "Bushido":
-					return World.Player.Skills[(int)SkillName.Bushido].Value;
-
-				case "Ninjitsu":
-					return World.Player.Skills[(int)SkillName.Ninjitsu].Value;
-
-				case "Spell Weaving":
-					return World.Player.Skills[(int)SkillName.SpellWeaving].Value;
-
-				case "Mysticism":
-					return World.Player.Skills[(int)SkillName.Mysticism].Value;
-
-				case "Imbuing":
-					return World.Player.Skills[(int)SkillName.Imbuing].Value;
-
-				case "Throwing ":
-					return World.Player.Skills[(int)SkillName.Throwing].Value;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: GetSkillValue: Invalid skill name: " + skillname);
-					return 0;
-			}
+			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			return World.Player.Skills[(int)skill].Value;
 		}
 
 		public static double GetSkillCap(string skillname)
 		{
-			switch (skillname)
-			{
-				case "Alchemy":
-					return World.Player.Skills[(int)SkillName.Alchemy].Cap;
-
-				case "Animal Lore":
-					return World.Player.Skills[(int)SkillName.AnimalLore].Cap;
-
-				case "Item ID":
-					return World.Player.Skills[(int)SkillName.ItemID].Cap;
-
-				case "ArmsLore":
-					return World.Player.Skills[(int)SkillName.ArmsLore].Cap;
-
-				case "Parry":
-					return World.Player.Skills[(int)SkillName.Parry].Cap;
-
-				case "Begging":
-					return World.Player.Skills[(int)SkillName.Begging].Cap;
-
-				case "Blacksmith":
-					return World.Player.Skills[(int)SkillName.Blacksmith].Cap;
-
-				case "Fletching":
-					return World.Player.Skills[(int)SkillName.Fletching].Cap;
-
-				case "Peacemaking":
-					return World.Player.Skills[(int)SkillName.Peacemaking].Cap;
-
-				case "Camping":
-					return World.Player.Skills[(int)SkillName.Camping].Cap;
-
-				case "Carpentry":
-					return World.Player.Skills[(int)SkillName.Carpentry].Cap;
-
-				case "Cartography":
-					return World.Player.Skills[(int)SkillName.Cartography].Cap;
-
-				case "Cooking":
-					return World.Player.Skills[(int)SkillName.Cooking].Cap;
-
-				case "Detect Hidden":
-					return World.Player.Skills[(int)SkillName.DetectHidden].Cap;
-
-				case "Discordance":
-					return World.Player.Skills[(int)SkillName.Discordance].Cap;
-
-				case "EvalInt":
-					return World.Player.Skills[(int)SkillName.EvalInt].Cap;
-
-				case "Healing":
-					return World.Player.Skills[(int)SkillName.Healing].Cap;
-
-				case "Fishing":
-					return World.Player.Skills[(int)SkillName.Fishing].Cap;
-
-				case "Forensics":
-					return World.Player.Skills[(int)SkillName.Forensics].Cap;
-
-				case "Herding":
-					return World.Player.Skills[(int)SkillName.Herding].Cap;
-
-				case "Hiding":
-					return World.Player.Skills[(int)SkillName.Hiding].Cap;
-
-				case "Provocation":
-					return World.Player.Skills[(int)SkillName.Provocation].Cap;
-
-				case "Inscribe":
-					return World.Player.Skills[(int)SkillName.Inscribe].Cap;
-
-				case "Lockpicking":
-					return World.Player.Skills[(int)SkillName.Lockpicking].Cap;
-
-				case "Magery":
-					return World.Player.Skills[(int)SkillName.Magery].Cap;
-
-				case "Magic Resist":
-					return World.Player.Skills[(int)SkillName.MagicResist].Cap;
-
-				case "Tactics":
-					return World.Player.Skills[(int)SkillName.Tactics].Cap;
-
-				case "Snooping":
-					return World.Player.Skills[(int)SkillName.Snooping].Cap;
-
-				case "Musicianship":
-					return World.Player.Skills[(int)SkillName.Musicianship].Cap;
-
-				case "Poisoning":
-					return World.Player.Skills[(int)SkillName.Poisoning].Cap;
-
-				case "Archery":
-					return World.Player.Skills[(int)SkillName.Archery].Cap;
-
-				case "Spirit Speak":
-					return World.Player.Skills[(int)SkillName.SpiritSpeak].Cap;
-
-				case "Stealing":
-					return World.Player.Skills[(int)SkillName.Stealing].Cap;
-
-				case "Tailoring":
-					return World.Player.Skills[(int)SkillName.Tailoring].Cap;
-
-				case "Animal Taming":
-					return World.Player.Skills[(int)SkillName.AnimalTaming].Cap;
-
-				case "Taste ID":
-					return World.Player.Skills[(int)SkillName.TasteID].Cap;
-
-				case "Tinkering":
-					return World.Player.Skills[(int)SkillName.Tinkering].Cap;
-
-				case "Tracking":
-					return World.Player.Skills[(int)SkillName.Tracking].Cap;
-
-				case "Veterinary":
-					return World.Player.Skills[(int)SkillName.Veterinary].Cap;
-
-				case "Swords":
-					return World.Player.Skills[(int)SkillName.Swords].Cap;
-
-				case "Macing":
-					return World.Player.Skills[(int)SkillName.Macing].Cap;
-
-				case "Fencing":
-					return World.Player.Skills[(int)SkillName.Fencing].Cap;
-
-				case "Wrestling":
-					return World.Player.Skills[(int)SkillName.Wrestling].Cap;
-
-				case "Lumberjacking":
-					return World.Player.Skills[(int)SkillName.Lumberjacking].Cap;
-
-				case "Mining":
-					return World.Player.Skills[(int)SkillName.Mining].Cap;
-
-				case "Meditation":
-					return World.Player.Skills[(int)SkillName.Meditation].Cap;
-
-				case "Stealth":
-					return World.Player.Skills[(int)SkillName.Stealth].Cap;
-
-				case "Remove Trap":
-					return World.Player.Skills[(int)SkillName.RemoveTrap].Cap;
-
-				case "Necromancy":
-					return World.Player.Skills[(int)SkillName.Necromancy].Cap;
-
-				case "Focus":
-					return World.Player.Skills[(int)SkillName.Focus].Cap;
-
-				case "Chivalry":
-					return World.Player.Skills[(int)SkillName.Chivalry].Cap;
-
-				case "Bushido":
-					return World.Player.Skills[(int)SkillName.Bushido].Cap;
-
-				case "Ninjitsu":
-					return World.Player.Skills[(int)SkillName.Ninjitsu].Cap;
-
-				case "Spell Weaving":
-					return World.Player.Skills[(int)SkillName.SpellWeaving].Cap;
-
-				case "Mysticism":
-					return World.Player.Skills[(int)SkillName.Mysticism].Cap;
-
-				case "Imbuing":
-					return World.Player.Skills[(int)SkillName.Imbuing].Cap;
-
-				case "Throwing ":
-					return World.Player.Skills[(int)SkillName.Throwing].Cap;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: GetSkillCap: Invalid skill name: " + skillname);
-					return 0;
-			}
+			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			return World.Player.Skills[(int)skill].Cap;
 		}
 
 		public static int GetSkillStatus(string skillname)
 		{
-			switch (skillname)
-			{
-				case "Alchemy":
-					return (int)World.Player.Skills[(int)SkillName.Alchemy].Lock;
-
-				case "Animal Lore":
-					return (int)World.Player.Skills[(int)SkillName.AnimalLore].Lock;
-
-				case "Item ID":
-					return (int)World.Player.Skills[(int)SkillName.ItemID].Lock;
-
-				case "Arms Lore":
-					return (int)World.Player.Skills[(int)SkillName.ArmsLore].Lock;
-
-				case "Parry":
-					return (int)World.Player.Skills[(int)SkillName.Parry].Lock;
-
-				case "Begging":
-					return (int)World.Player.Skills[(int)SkillName.Begging].Lock;
-
-				case "Blacksmith":
-					return (int)World.Player.Skills[(int)SkillName.Blacksmith].Lock;
-
-				case "Fletching":
-					return (int)World.Player.Skills[(int)SkillName.Fletching].Lock;
-
-				case "Peacemaking":
-					return (int)World.Player.Skills[(int)SkillName.Peacemaking].Lock;
-
-				case "Camping":
-					return (int)World.Player.Skills[(int)SkillName.Camping].Lock;
-
-				case "Carpentry":
-					return (int)World.Player.Skills[(int)SkillName.Carpentry].Lock;
-
-				case "Cartography":
-					return (int)World.Player.Skills[(int)SkillName.Cartography].Lock;
-
-				case "Cooking":
-					return (int)World.Player.Skills[(int)SkillName.Cooking].Lock;
-
-				case "Detect Hidden":
-					return (int)World.Player.Skills[(int)SkillName.DetectHidden].Lock;
-
-				case "Discordance":
-					return (int)World.Player.Skills[(int)SkillName.Discordance].Lock;
-
-				case "Eval Int":
-					return (int)World.Player.Skills[(int)SkillName.EvalInt].Lock;
-
-				case "Healing":
-					return (int)World.Player.Skills[(int)SkillName.Healing].Lock;
-
-				case "Fishing":
-					return (int)World.Player.Skills[(int)SkillName.Fishing].Lock;
-
-				case "Forensics":
-					return (int)World.Player.Skills[(int)SkillName.Forensics].Lock;
-
-				case "Herding":
-					return (int)World.Player.Skills[(int)SkillName.Herding].Lock;
-
-				case "Hiding":
-					return (int)World.Player.Skills[(int)SkillName.Hiding].Lock;
-
-				case "Provocation":
-					return (int)World.Player.Skills[(int)SkillName.Provocation].Lock;
-
-				case "Inscribe":
-					return (int)World.Player.Skills[(int)SkillName.Inscribe].Lock;
-
-				case "Lockpicking":
-					return (int)World.Player.Skills[(int)SkillName.Lockpicking].Lock;
-
-				case "Magery":
-					return (int)World.Player.Skills[(int)SkillName.Magery].Lock;
-
-				case "Magic Resist":
-					return (int)World.Player.Skills[(int)SkillName.MagicResist].Lock;
-
-				case "Tactics":
-					return (int)World.Player.Skills[(int)SkillName.Tactics].Lock;
-
-				case "Snooping":
-					return (int)World.Player.Skills[(int)SkillName.Snooping].Lock;
-
-				case "Musicianship":
-					return (int)World.Player.Skills[(int)SkillName.Musicianship].Lock;
-
-				case "Poisoning":
-					return (int)World.Player.Skills[(int)SkillName.Poisoning].Lock;
-
-				case "Archery":
-					return (int)World.Player.Skills[(int)SkillName.Archery].Lock;
-
-				case "Spirit Speak":
-					return (int)World.Player.Skills[(int)SkillName.SpiritSpeak].Lock;
-
-				case "Stealing":
-					return (int)World.Player.Skills[(int)SkillName.Stealing].Lock;
-
-				case "Tailoring":
-					return (int)World.Player.Skills[(int)SkillName.Tailoring].Lock;
-
-				case "Animal Taming":
-					return (int)World.Player.Skills[(int)SkillName.AnimalTaming].Lock;
-
-				case "Taste ID":
-					return (int)World.Player.Skills[(int)SkillName.TasteID].Lock;
-
-				case "Tinkering":
-					return (int)World.Player.Skills[(int)SkillName.Tinkering].Lock;
-
-				case "Tracking":
-					return (int)World.Player.Skills[(int)SkillName.Tracking].Lock;
-
-				case "Veterinary":
-					return (int)World.Player.Skills[(int)SkillName.Veterinary].Lock;
-
-				case "Swords":
-					return (int)World.Player.Skills[(int)SkillName.Swords].Lock;
-
-				case "Macing":
-					return (int)World.Player.Skills[(int)SkillName.Macing].Lock;
-
-				case "Fencing":
-					return (int)World.Player.Skills[(int)SkillName.Fencing].Lock;
-
-				case "Wrestling":
-					return (int)World.Player.Skills[(int)SkillName.Wrestling].Lock;
-
-				case "Lumberjacking":
-					return (int)World.Player.Skills[(int)SkillName.Lumberjacking].Lock;
-
-				case "Mining":
-					return (int)World.Player.Skills[(int)SkillName.Mining].Lock;
-
-				case "Meditation":
-					return (int)World.Player.Skills[(int)SkillName.Meditation].Lock;
-
-				case "Stealth":
-					return (int)World.Player.Skills[(int)SkillName.Stealth].Lock;
-
-				case "Remove Trap":
-					return (int)World.Player.Skills[(int)SkillName.RemoveTrap].Lock;
-
-				case "Necromancy":
-					return (int)World.Player.Skills[(int)SkillName.Necromancy].Lock;
-
-				case "Focus":
-					return (int)World.Player.Skills[(int)SkillName.Focus].Lock;
-
-				case "Chivalry":
-					return (int)World.Player.Skills[(int)SkillName.Chivalry].Lock;
-
-				case "Bushido":
-					return (int)World.Player.Skills[(int)SkillName.Bushido].Lock;
-
-				case "Ninjitsu":
-					return (int)World.Player.Skills[(int)SkillName.Ninjitsu].Lock;
-
-				case "Spell Weaving":
-					return (int)World.Player.Skills[(int)SkillName.SpellWeaving].Lock;
-
-				case "Mysticism":
-					return (int)World.Player.Skills[(int)SkillName.Mysticism].Lock;
-
-				case "Imbuing":
-					return (int)World.Player.Skills[(int)SkillName.Imbuing].Lock;
-
-				case "Throwing ":
-					return (int)World.Player.Skills[(int)SkillName.Throwing].Lock;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error: GetSkillStatus: Invalid skill name: " + skillname);
-					return 0;
-			}
+			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+			return (int)World.Player.Skills[(int)skill].Lock;
 		}
 
 		public static void UseSkill(string skillname, bool wait = true)
 		{
-			short skillID = 0;
-			switch (skillname)
+			Enum.TryParse<SkillName>(skillname.Replace(" ", ""), out SkillName skill);
+
+			if (wait)
+				ClientCommunication.SendToServerWait(new UseSkill((int)skill));
+			else
+				ClientCommunication.SendToServer(new UseSkill((int)skill));
+
+			if (skill == SkillName.Hiding)
+				StealthSteps.Hide();
+
+			else if (skill == SkillName.Stealth)
 			{
-				case "Animal Lore":
-					skillID = (int)SkillName.AnimalLore;
-					break;
-
-				case "Item ID":
-					skillID = (int)SkillName.ItemID;
-					break;
-
-				case "Arms Lore":
-					skillID = (int)SkillName.ArmsLore;
-					break;
-
-				case "Begging":
-					skillID = (int)SkillName.Begging;
-					break;
-
-				case "Peacemaking":
-					skillID = (int)SkillName.Peacemaking;
-					break;
-
-				case "Cartography":
-					skillID = (int)SkillName.Cartography;
-					break;
-
-				case "Detect Hidden":
-					skillID = (int)SkillName.DetectHidden;
-					break;
-
-				case "Discordance":
-					skillID = (int)SkillName.Discordance;					
-					break;
-
-				case "Eval Int":
-					skillID = (int)SkillName.EvalInt;
-					break;
-
-				case "Forensics":
-					skillID = (int)SkillName.Forensics;
-					break;
-
-				case "Hiding":
-					skillID = (int)SkillName.Hiding;
+				if (!World.Player.Visible) // Trigger stealth step counter
 					StealthSteps.Hide();
-					break;
-
-				case "Provocation":
-					skillID = (int)SkillName.Provocation;
-					break;
-
-				case "Poisoning":
-					skillID = (int)SkillName.Poisoning;
-					break;
-
-				case "Spirit Speak":
-					skillID = (int)SkillName.SpiritSpeak;
-					break;
-
-				case "Stealing":
-					skillID = (int)SkillName.Stealing;
-					break;
-
-				case "Animal Taming":
-					skillID = (int)SkillName.AnimalTaming;
-					break;
-
-				case "Taste ID":
-					skillID = (int)SkillName.TasteID;
-					break;
-
-				case "Tracking":
-					skillID = (int)SkillName.Tracking;
-					break;
-
-				case "Meditation":
-					skillID = (int)SkillName.Meditation;
-					break;
-
-				case "Stealth":
-					skillID = (int)SkillName.Stealth;
-					if (!World.Player.Visible) // Trigger stealth step counter
-						StealthSteps.Hide();
-					break;
-
-				case "Remove Trap":
-					skillID = (int)SkillName.RemoveTrap;
-					break;
-
-				case "Inscribe":
-					skillID = (int)SkillName.Inscribe;
-					break;
-
-				case "Anatomy":
-					skillID = (int)SkillName.Anatomy;
-					break;
-
-				case "Imbuing":
-					skillID = (int)SkillName.Imbuing;
-					break;
-					
-				default:
-					Scripts.SendMessageScriptError("Script Error: UseSkill: Invalid skill name: " + skillname);
-					break;
-			}
-
-			if (skillID != 0)
-			{
-				if (wait)
-					ClientCommunication.SendToServerWait(new UseSkill(skillID));
-				else
-					ClientCommunication.SendToServer(new UseSkill(skillID));
-			}
+			}		
 		}
 
 		// Game Message
@@ -1637,40 +910,8 @@ namespace RazorEnhanced
 		// Virtue
 		public static void InvokeVirtue(string virtue)
 		{
-			switch (virtue)
-			{
-				case "Honor":
-					ClientCommunication.SendToServerWait(new InvokeVirtue(1));
-					break;
-
-				case "Sacrifice":
-					ClientCommunication.SendToServerWait(new InvokeVirtue(2));
-					break;
-
-				case "Valor":
-					ClientCommunication.SendToServerWait(new InvokeVirtue(3));
-					break;
-
-				case "Compassion":
-					ClientCommunication.SendToServerWait(new InvokeVirtue(4));
-					break;
-
-				case "Honesty":
-					ClientCommunication.SendToServerWait(new InvokeVirtue(5));
-					break;
-
-				case "Humility":
-					ClientCommunication.SendToServerWait(new InvokeVirtue(6));
-					break;
-
-				case "Justice":
-					ClientCommunication.SendToServerWait(new InvokeVirtue(7));
-					break;
-
-				default:
-					Scripts.SendMessageScriptError("Script Error - InvokeVirtue: Invalid virtue name: " + virtue);
-					break;
-			}
+			Enum.TryParse<Virtues>(virtue, out Virtues v);
+			ClientCommunication.SendToServerWait(new InvokeVirtue((byte)v));
 		}
 
 		public static void ChatParty(string msg, int serial = 0)
@@ -1708,46 +949,8 @@ namespace RazorEnhanced
 		// Moving
 		public static bool Walk(string direction, bool wait = true)  // Return true se walk ok false se rifiutato da server
 		{
-			Direction dir;
-			switch (direction)
-			{
-				case "North":
-					dir = Assistant.Direction.North;
-					break;
-
-				case "South":
-					dir = Assistant.Direction.South;
-					break;
-
-				case "East":
-					dir = Assistant.Direction.East;
-					break;
-
-				case "West":
-					dir = Assistant.Direction.West;
-					break;
-
-				case "Up":
-					dir = Assistant.Direction.Up;
-					break;
-
-				case "Down":
-					dir = Assistant.Direction.Down;
-					break;
-
-				case "Left":
-					dir = Assistant.Direction.Left;
-					break;
-
-				case "Right":
-					dir = Assistant.Direction.Right;
-					break;
-
-				default:
-					dir = Assistant.Direction.ValueMask;
-					break;
-			}
-
+			Enum.TryParse<Direction>(direction, out Direction dir);
+			
 			int state = 0;
 			if (dir != Assistant.Direction.ValueMask)
 			{
@@ -1777,45 +980,8 @@ namespace RazorEnhanced
 
 		public static bool Run(string direction, bool wait = true)    // Return true se walk ok false se rifiutato da server
 		{
-			Direction dir;
-			switch (direction)
-			{
-				case "North":
-					dir = Assistant.Direction.North;
-					break;
+			Enum.TryParse<Direction>(direction, out Direction dir);
 
-				case "South":
-					dir = Assistant.Direction.South;
-					break;
-
-				case "East":
-					dir = Assistant.Direction.East;
-					break;
-
-				case "West":
-					dir = Assistant.Direction.West;
-					break;
-
-				case "Up":
-					dir = Assistant.Direction.Up;
-					break;
-
-				case "Down":
-					dir = Assistant.Direction.Down;
-					break;
-
-				case "Left":
-					dir = Assistant.Direction.Left;
-					break;
-
-				case "Right":
-					dir = Assistant.Direction.Right;
-					break;
-
-				default:
-					dir = Assistant.Direction.ValueMask;
-					break;
-			}
 			int state = 0;
 			if (dir != Assistant.Direction.ValueMask)
 			{

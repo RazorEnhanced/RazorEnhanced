@@ -372,10 +372,10 @@ namespace RazorEnhanced
 
 						foreach (string text in filter.Layers)
 						{
-							Assistant.Layer layer = RazorEnhanced.Player.GetAssistantLayer(text);
-							if (layer != Assistant.Layer.Invalid)
+							Enum.TryParse<Layer>(text, out Layer l);
+							if (l != Assistant.Layer.Invalid)
 							{
-								list.Add(layer);
+								list.Add(l);
 							}
 						}
 

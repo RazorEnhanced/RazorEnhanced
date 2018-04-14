@@ -91,6 +91,18 @@ namespace Assistant
 		}
 	}
 
+	internal enum Virtues
+	{
+		None = 0x0,
+		Honor = 0x1,
+		Sacrifice = 0x2,
+		Valor = 0x3,
+		Compassion = 0x4,
+		Honesty = 0x5,
+		Humility = 0x6,
+		Justice = 0x7
+	}
+
 	internal enum SkillName
 	{
 		Alchemy = 0,
