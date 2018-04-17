@@ -749,10 +749,12 @@ namespace RazorEnhanced
 		private static void ProcessBandage(string function)
 		{
 			Assistant.Item pack = World.Player.Backpack;
+			if (pack == null)
+				return;
+
 			switch (function)
 			{
 				case "Self":
-					if (pack != null)
 					{
 						int bandageserial = BandageHeal.SearchBandage(3617, -1);
 
@@ -773,7 +775,6 @@ namespace RazorEnhanced
 					break;
 
 				case "Last":
-					if (pack != null)
 					{
 						int bandageserial = BandageHeal.SearchBandage(3617, -1);
 
@@ -790,16 +791,12 @@ namespace RazorEnhanced
 								Target.TargetExecute(Target.GetLast());
 							}
 						}
-						
 					}
 					break;
 
 				case "Use Only":
-					if (pack != null)
-					{
-						if (!UseItemByIdHue(pack, 3617, 0))
-							World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
-					}
+					if (!UseItemByIdHue(pack, 3617, -1))
+						World.Player.SendMessage(MsgLevel.Warning, LocString.NoBandages);
 					break;
 
 				default:
@@ -1613,7 +1610,7 @@ namespace RazorEnhanced
 			Assistant.Engine.MainWindow.HotKeyKeyMasterLabel.Text = "ON/OFF Key: " + KeyString(RazorEnhanced.Settings.General.ReadKey("HotKeyMasterKey"));
 		}
 
-		private static bool UseItemByIdHue(Assistant.Item cont, ushort find, ushort hue)
+		private static bool UseItemByIdHue(Assistant.Item cont, ushort find, int hue)
 		{
 			foreach (Assistant.Item t in cont.Contains)
 			{
@@ -1621,7 +1618,12 @@ namespace RazorEnhanced
 
 				if (item.ItemID == find && item.Hue == hue)
 				{
-					Assistant.PlayerData.DoubleClick(item);
+					PlayerData.DoubleClick(item);
+					return true;
+				}
+				else if (item.ItemID == find && hue == -1) // All color
+				{
+					PlayerData.DoubleClick(item);
 					return true;
 				}
 				else if (item.Contains != null && item.Contains.Count > 0)
