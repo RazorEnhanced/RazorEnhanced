@@ -2866,10 +2866,7 @@ namespace Assistant
 					{
 						int i = int.Parse(value);
 						if ((i >= 500000 && i <= 503405) || (i >= 1000000 && i <= 1155584) || (i >= 3000000 && i <= 3011032))
-						{
-							World.Player.CurrentGumpStrings.Add(Language.GetString(i));
 							stringlist.Add(Language.GetString(i));
-						}
 					}
 				}
 
@@ -2890,6 +2887,7 @@ namespace Assistant
 					stringlist.AddRange(ParseGumpString(gumpPieces, stringlistparse));
 				}
 				RazorEnhanced.GumpInspector.NewGumpCompressedAddLog(World.Player.CurrentGumpS, World.Player.CurrentGumpI, stringlist);
+
 				World.Player.CurrentGumpStrings.AddRange(stringlist);
 
 				World.Player.CurrentGumpRawData = layout; // Get raw data of current gump
