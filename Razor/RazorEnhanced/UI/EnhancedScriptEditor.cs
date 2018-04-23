@@ -1510,6 +1510,7 @@ namespace RazorEnhanced.UI
 			m_EnhancedScriptEditor.m_onclosing = true;
 			Stop();
 			End();
+			CloseAndSave();
 			m_EnhancedScriptEditor.m_onclosing = false;
 		}
 
