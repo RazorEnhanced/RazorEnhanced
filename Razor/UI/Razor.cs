@@ -778,7 +778,7 @@ namespace Assistant
 		internal RazorCheckBox AutoOpenDoors { get { return autoOpenDoors; } }
 		internal RazorCheckBox ShowCorpseNames { get { return incomingCorpse; } }
 		internal RazorCheckBox FilterSnoopMsg { get { return filterSnoop; } }
-		internal RazorCheckBox FilterSpam { get { return filterSnoop; } }
+		internal RazorCheckBox FilterSpam { get { return spamFilter; } }
 		internal RazorCheckBox ForceSpeechHue { get { return chkForceSpeechHue; } }
 
 		// Colori override
