@@ -192,7 +192,7 @@ namespace Assistant
 
 		private static void PlayScript(string[] param)
 		{
-			if (param[0] == null)
+			if (param == null && param[0] == null)
 				return;
 
 			RazorEnhanced.Scripts.EnhancedScript script = RazorEnhanced.Scripts.Search(param[0]);
