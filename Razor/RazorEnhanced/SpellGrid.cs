@@ -218,6 +218,9 @@ namespace RazorEnhanced
 
 		private static Bitmap ColorizeIcon(Bitmap icon)
 		{
+			if (icon == null)
+				return null;
+
 			Bitmap mImage = new Bitmap(icon.Width, icon.Height);
 			float[][] coeff = new float[][] {
 						new float[] { 0, 0, 0, 0, 0 },
